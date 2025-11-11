@@ -19,9 +19,11 @@ import type { ComponentPreviewProps } from "./component-preview";
 import { ComponentPreview } from "./component-preview";
 import { ComponentsList } from "./components-list";
 import { InstallTab, InstallTabs } from "./install-tabs";
+import { PageTabPanel, PageTabs } from "./page-tabs";
 import type { PaletteProps } from "./palette";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
+import { Example, ExampleProps } from "./example";
 
 export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,
@@ -129,6 +131,8 @@ export const mdxComponents: MDXComponents = {
   ),
   Tab,
   Tabs,
+  PageTabs,
+  PageTabPanel,
   Choice,
   Choices: (props: ChoicesProps) => (
     <Choices {...props} className={cn("mt-4", props.className)} />
@@ -138,6 +142,7 @@ export const mdxComponents: MDXComponents = {
   ComponentPreview: (props: ComponentPreviewProps) => (
     <ComponentPreview containerClassName="not-first:mt-4" {...props} />
   ),
+  Example: (props: ExampleProps) => <Example {...props} />,
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(

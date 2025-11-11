@@ -36,15 +36,10 @@ export default function Page() {
           </div>
         ))}
       </div>
-      <div className="max-xl:hidden">
-        <div className="sticky top-20 h-[calc(100svh-calc(var(--spacing)*20))]">
-          <div className="mb-3 -ml-1.5 flex items-center gap-2">
-            <AlignLeftIcon className="size-4 text-fg-muted" />
-            <p className="text-sm text-fg-muted">On this page</p>
-          </div>
-          <TableOfContents toc={toc} />
-        </div>
-      </div>
+      <TableOfContents
+        toc={toc}
+        className="sticky top-20 h-[calc(100svh-calc(var(--spacing)*20))] max-xl:hidden"
+      />
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import React from "react";
 import * as TocPrimitive from "fumadocs-core/toc";
+import { AlignLeftIcon } from "lucide-react";
 import type {
   TOCItemType,
   TableOfContents as TocType,
@@ -12,18 +13,27 @@ import { cn } from "@dotui/registry/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTocThumb } from "@/modules/docs/hooks/use-toc-thumb";
 
-export const TableOfContents = ({ toc }: { toc: TocType }) => {
+export const TableOfContents = ({
+  toc,
+  ...props
+}: React.ComponentProps<"div"> & { toc: TocType }) => {
   if (toc.length === 0) return null;
 
   return (
-    <TocPrimitive.AnchorProvider toc={toc}>
-      <ScrollArea
-        containerClassName="flex flex-col"
-        className="relative min-h-0 pb-4 text-sm"
-      >
-        <TocItems toc={toc} />
-      </ScrollArea>
-    </TocPrimitive.AnchorProvider>
+    <div {...props}>
+      <div className="mb-3 -ml-1.5 flex items-center gap-2">
+        <AlignLeftIcon className="size-4 text-fg-muted" />
+        <p className="text-sm text-fg-muted">On this page</p>
+      </div>
+      <TocPrimitive.AnchorProvider toc={toc}>
+        <ScrollArea
+          containerClassName="flex flex-col"
+          className="relative min-h-0 pb-4 text-sm"
+        >
+          <TocItems toc={toc} />
+        </ScrollArea>
+      </TocPrimitive.AnchorProvider>
+    </div>
   );
 };
 

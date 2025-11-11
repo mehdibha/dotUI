@@ -8,36 +8,39 @@ links:
     href: https://github.com/mehdibha/dotUI/issues/new/choose
 ---
 
-<ComponentPreview
-  name="button/demos/default"
-  preview={`<Button>button</Button>`}
-/>
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Installation
+    <ComponentPreview
+      name="button/demos/default"
+      preview={`<Button>button</Button>`}
+    />
 
-```package-install
-npx shadcn@latest add @dotui/button
-```
+    ## Installation
 
-## Usage
+    ```package-install
+    npx shadcn@latest add @dotui/button
+    ```
 
-Button allow users to initiate an action or command with mouse, touch or keyboard interaction.<br/>
-The button's label indicates the purpose of the action to the user. You may also include an icon for additional context.
+    ## Usage
 
-## Options
+    Button allow users to initiate an action or command with mouse, touch or keyboard interaction.<br/>
+    The button's label indicates the purpose of the action to the user. You may also include an icon for additional context.
 
-<ComponentPreview
-  name="button/demos/variants"
-  preview={`<Button variant="default">default</Button>
-<Button variant="primary">primary</Button>
-<Button variant="quiet">quiet</Button>
-<Button variant="success">success</Button>
-<Button variant="warning">warning</Button>
-<Button variant="danger">danger</Button>
-<Button variant="accent">accent</Button>`}
-/>
+    ## Options
 
-## API Reference
+    <ComponentPreview
+      name="button/demos/variants"
+      preview={`<Button variant="default">default</Button>
+    <Button variant="primary">primary</Button>
+    <Button variant="quiet">quiet</Button>
+    <Button variant="success">success</Button>
+    <Button variant="warning">warning</Button>
+    <Button variant="danger">danger</Button>
+    <Button variant="accent">accent</Button>`}
+    />
+
+    ## API Reference
 
 | Prop             | Type                                                                                                | Default       | Description                                                                                                 |
 | ---------------- | --------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -96,3 +99,17 @@ The button's label indicates the purpose of the action to the user. You may also
 | ------- | --------------------- |
 | `Space` | Activates the button. |
 | `Enter` | Activates the button. |
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="button/demos/default" />
+    <Example name="button/demos/variants" />
+    <Example name="button/demos/sizes" />
+    <Example name="button/demos/shapes"  />
+    <Example name="button/demos/prefix-and-suffix" />
+    <Example name="button/demos/loading" />
+    <Example name="button/demos/disabled" />
+    <Example name="button/demos/link-button" />
+  </PageTabPanel>
+</PageTabs>
