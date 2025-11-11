@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { createContext, useContext } from "react";
 import * as TocPrimitive from "fumadocs-core/toc";
 import { AlignLeftIcon } from "lucide-react";
 import type {
@@ -13,11 +13,40 @@ import { cn } from "@dotui/registry/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTocThumb } from "@/modules/docs/hooks/use-toc-thumb";
 
-export const TableOfContents = ({
+// TocContext to provide toc to components
+interface TocContextValue {
+  toc: TocType | null;
+}
+
+const TocContext = createContext<TocContextValue>({
+  toc: null,
+});
+
+// Hook to get toc: prop > context > null
+export function useToc(): TocType | null {
+  const context = useContext(TocContext);
+  return context.toc;
+}
+
+// Provider component that wraps content and provides toc via context
+export function TocProvider({
+  children,
   toc,
+}: {
+  children: React.ReactNode;
+  toc: TocType | null;
+}) {
+  return <TocContext.Provider value={{ toc }}>{children}</TocContext.Provider>;
+}
+
+export const TableOfContents = ({
+  toc: tocProp,
   ...props
-}: React.ComponentProps<"div"> & { toc: TocType }) => {
-  if (toc.length === 0) return null;
+}: React.ComponentProps<"div"> & { toc?: TocType | null }) => {
+  const tocFromContext = useToc();
+  const toc = tocProp ?? tocFromContext;
+
+  if (!toc || toc.length === 0) return null;
 
   return (
     <div {...props}>
@@ -53,7 +82,7 @@ const TocItems = ({ toc }: { toc: TocType }) => {
             height: pos[1],
           }}
         />
-        <div ref={containerRef} className={cn("flex flex-col border-s-[1px]")}>
+        <div ref={containerRef} className={cn("flex flex-col border-s-px")}>
           {toc.map((item) => (
             <TOCItem key={item.url} item={item} />
           ))}
@@ -68,7 +97,7 @@ function TOCItem({ item }: { item: TOCItemType }): React.ReactElement {
     <TocPrimitive.TOCItem
       href={item.url}
       className={cn(
-        "py-1 text-sm [overflow-wrap:anywhere] text-fg-muted transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
+        "py-1 text-sm wrap-anywhere text-fg-muted transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
         item.depth <= 2 && "pl-4",
         item.depth === 3 && "pl-8",
         item.depth >= 4 && "pl-12",

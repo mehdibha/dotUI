@@ -2,39 +2,14 @@
 
 import type React from "react";
 import { createContext, useContext } from "react";
+import { parseAsString, useQueryState } from "nuqs";
 import type { TableOfContents as TocType } from "fumadocs-core/toc";
+import type { Key } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
-import { TableOfContents } from "./toc";
-
-// TocContext to provide toc to components
-interface TocContextValue {
-  toc: TocType | null;
-}
-
-const TocContext = createContext<TocContextValue>({
-  toc: null,
-});
-
-// Hook to get toc: prop > context > null
-export function useToc(tocProp?: TocType | null): TocType | null {
-  const context = useContext(TocContext);
-  if (tocProp !== undefined) return tocProp;
-  return context.toc;
-}
-
-// Provider component that wraps content and provides toc via context
-export function TocProvider({
-  children,
-  toc,
-}: {
-  children: React.ReactNode;
-  toc: TocType | null;
-}) {
-  return <TocContext.Provider value={{ toc }}>{children}</TocContext.Provider>;
-}
+import { TableOfContents, useToc } from "./toc";
 
 // Context to track if PageTabs is active
 interface PageTabsContextValue {
@@ -51,10 +26,17 @@ export function usePageTabs() {
 
 // PageTabs component that wraps DotUI Tabs with sticky tab list styling
 export function PageTabs({ children }: { children: React.ReactNode }) {
+  const [selectedTab, setSelectedTab] = useQueryState(
+    "view",
+    parseAsString.withDefault("overview"),
+  );
+
   return (
     <PageTabsContext.Provider value={{ isActive: true }}>
       <Tabs
         data-page-tabs
+        selectedKey={selectedTab}
+        onSelectionChange={(key: Key) => setSelectedTab(key as string)}
         className="mt-4 **:data-page-tab-panel:container **:data-page-tab-panel:max-w-3xl **:data-page-tab-panel:xl:max-w-5xl **:data-page-tab-panel:md:mt-6 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:mt-2"
       >
         <div className="border-b">
@@ -81,12 +63,8 @@ interface PageTabPanelProps {
   toc?: TocType | null;
 }
 
-export function PageTabPanel({
-  id,
-  children,
-  toc: tocProp,
-}: PageTabPanelProps) {
-  const toc = useToc(tocProp);
+export function PageTabPanel({ id, children }: PageTabPanelProps) {
+  const toc = useToc();
   const hasToc = toc && toc.length > 0;
 
   return (
