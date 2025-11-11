@@ -68,7 +68,11 @@ const ScrollArea = React.forwardRef<
         type={type}
         className={containerClassName}
       >
-        <ScrollAreaViewPort ref={ref} data-scroll-area-viewport {...viewportProps}>
+        <ScrollAreaViewPort
+          ref={ref}
+          data-scroll-area-viewport
+          {...viewportProps}
+        >
           {children}
         </ScrollAreaViewPort>
         {scrollbars !== "vertical" && (

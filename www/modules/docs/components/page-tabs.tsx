@@ -53,16 +53,21 @@ export function usePageTabs() {
 export function PageTabs({ children }: { children: React.ReactNode }) {
   return (
     <PageTabsContext.Provider value={{ isActive: true }}>
-      <Tabs data-page-tabs className="mt-4">
-        <TabList
-          className={cn(
-            "*:py-3 *:px-4 *:not-selected:text-fg-muted *:not-selected:hover:text-fg *:duration-100",
-            // "*:transition-colors w-400 -ml-80 *:translate-x-80 sticky top-12 z-5 bg-bg",
-          )}
-        >
-          <Tab id="overview">Overview</Tab>
-          <Tab id="examples">Examples</Tab>
-        </TabList>
+      <Tabs
+        data-page-tabs
+        className="mt-4 **:data-page-tab-panel:container **:data-page-tab-panel:max-w-3xl **:data-page-tab-panel:xl:max-w-5xl **:data-page-tab-panel:md:mt-6 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:mt-2"
+      >
+        <div className="border-b">
+          <TabList
+            className={cn(
+              "*:py-3 *:px-4 *:not-selected:text-fg-muted *:not-selected:hover:text-fg *:duration-100",
+              "container max-w-3xl xl:max-w-5xl border-b-0",
+            )}
+          >
+            <Tab id="overview">Overview</Tab>
+            <Tab id="examples">Examples</Tab>
+          </TabList>
+        </div>
         {children}
       </Tabs>
     </PageTabsContext.Provider>
@@ -84,32 +89,27 @@ export function PageTabPanel({
   const toc = useToc(tocProp);
   const hasToc = toc && toc.length > 0;
 
-  if (id === "overview") {
-    return (
-      <TabPanel id={id}>
+  return (
+    <TabPanel id={id} data-page-tab-panel>
+      {id === "overview" && (
         <div
           className={cn(
             hasToc &&
               "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(160px,180px)]",
           )}
         >
-          <div className="flex min-h-[calc(100svh-(var(--spacing)*14))] flex-col">
-            <div className="mt-10 flex-1 text-sm md:text-base">{children}</div>
-          </div>
+          <div>{children}</div>
           {hasToc && (
             <TableOfContents
               toc={toc}
-              className="sticky max-xl:hidden top-10 pt-10 h-[calc(100svh-calc(var(--spacing)*10))]"
+              className="sticky max-xl:hidden top-18 **:data-scroll-area-viewport:h-[calc(100svh-calc(var(--spacing)*22))]"
             />
           )}
         </div>
-      </TabPanel>
-    );
-  }
-
-  return (
-    <TabPanel id={id} className="mt-4 grid grid-cols-2 gap-8">
-      {children}
+      )}
+      {id === "examples" && (
+        <div className="grid grid-cols-2 gap-8">{children}</div>
+      )}
     </TabPanel>
   );
 }

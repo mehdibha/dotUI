@@ -126,6 +126,7 @@ interface TabPanelProps extends React.ComponentProps<typeof AriaTabPanel> {}
 const TabPanel = ({ className, ...props }: TabPanelProps) => {
   return (
     <AriaTabPanel
+      data-tab-panel
       className={composeRenderProps(className, (cn) =>
         panel({ className: cn }),
       )}
