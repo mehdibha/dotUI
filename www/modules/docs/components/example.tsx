@@ -1,8 +1,5 @@
-import { TerminalIcon } from "lucide-react";
-
 import { Button } from "@dotui/registry/ui/button";
 import { Index } from "@dotui/registry/ui/demos";
-import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 

@@ -23,7 +23,7 @@ import { PageTabPanel, PageTabs } from "./page-tabs";
 import type { PaletteProps } from "./palette";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
-import { Example, ExampleProps } from "./example";
+import { Example, type ExampleProps } from "./example";
 
 export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,

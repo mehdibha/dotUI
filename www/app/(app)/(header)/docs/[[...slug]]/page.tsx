@@ -12,6 +12,7 @@ import { Group } from "@dotui/registry/ui/group";
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
+import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TocProvider } from "@/modules/docs/components/page-tabs";
 import { TableOfContents } from "@/modules/docs/components/toc";
@@ -107,6 +108,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
           </div>
         )}
       </div>
+      {lastModified && <PageLastUpdate date={lastModified} />}
     </div>
   );
 }
