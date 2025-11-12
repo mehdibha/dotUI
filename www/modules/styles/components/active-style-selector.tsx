@@ -45,9 +45,9 @@ export function ActiveStyleSelector({
       <SelectTrigger {...buttonProps}>
         <span className="text-fg-muted">Style:</span>{" "}
         {activeStyleQuery.isPending ? (
-          <span className="flex-1 truncate text-left">loading...</span>
+          <span className="flex-1 truncate text-center">loading...</span>
         ) : (
-          <span className="flex-1 truncate text-left">
+          <span className="flex-1 truncate text-center">
             <SelectValue />
           </span>
         )}

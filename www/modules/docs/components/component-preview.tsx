@@ -1,6 +1,14 @@
 import { cn } from "@dotui/registry/lib/utils";
 import { Alert } from "@dotui/registry/ui/alert";
 import { Index } from "@dotui/registry/ui/demos";
+import { Label } from "@dotui/registry/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
+import { Switch } from "@dotui/registry/ui/switch";
 
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
@@ -20,6 +28,7 @@ export interface ComponentPreviewProps {
   resizable?: boolean;
   suspense?: boolean;
   primary?: boolean;
+  controls?: boolean;
 }
 
 export const ComponentPreview = async ({
@@ -30,6 +39,7 @@ export const ComponentPreview = async ({
   fullWidth = false,
   resizable = false,
   primary = false,
+  controls = false,
 }: ComponentPreviewProps) => {
   const demoItem = Index[name];
 
@@ -57,9 +67,9 @@ export const ComponentPreview = async ({
 
   return (
     <div className={cn("space-y-2", containerClassName)}>
-      <div className="relative rounded-md border">
-        <div className="bg-[radial-gradient(circle_at_2px_2px,var(--neutral-300)_1px,transparent_0)] bg-size-[15px_15px] rounded-t-md">
-          <ActiveStyleProvider unstyled>
+      <div className="relative flex flex-col">
+        <div className="flex items-stretch">
+          <ActiveStyleProvider className="rounded-t-lg border flex-1">
             <ComponentPreviewHeader />
             <ResizableContainer resizable={resizable}>
               <div
@@ -81,6 +91,35 @@ export const ComponentPreview = async ({
               </div>
             </ResizableContainer>
           </ActiveStyleProvider>
+          {controls && (
+            <div className="w-32 -ml-2 p-3 pl-5 bg-card/50 border border-l-0 rounded-tr-md **:data-[slot=label]:text-xs space-y-2">
+              <Select defaultValue="primary" className="w-full">
+                <Label>Variant</Label>
+                <SelectTrigger
+                  size="sm"
+                  className="h-7 border-0 w-full text-xs"
+                />
+                <SelectContent>
+                  <SelectItem id="primary">Primary</SelectItem>
+                  <SelectItem id="secondary">Secondary</SelectItem>
+                  <SelectItem id="quiet">Quiet</SelectItem>
+                  <SelectItem id="link">Link</SelectItem>
+                  <SelectItem id="danger">Danger</SelectItem>
+                  <SelectItem id="success">Success</SelectItem>
+                  <SelectItem id="warning">Warning</SelectItem>
+                  <SelectItem id="info">Info</SelectItem>
+                </SelectContent>
+              </Select>
+              <div>
+                <Label>isPending</Label>
+                <Switch size="sm" />
+              </div>
+              <div>
+                <Label>isDisabled</Label>
+                <Switch size="sm" />
+              </div>
+            </div>
+          )}
         </div>
         <CodeBlock
           files={code.map((file) => ({
@@ -89,7 +128,7 @@ export const ComponentPreview = async ({
             lang: "tsx",
           }))}
           preview={preview}
-          className={"w-full rounded-t-none border-x-0 border-b-0"}
+          className={"w-full rounded-t-none border border-t-0"}
           expandable={expandable}
         />
       </div>

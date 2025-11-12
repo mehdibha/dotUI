@@ -1,6 +1,10 @@
 "use client";
 
 import type React from "react";
+import { MoonIcon, SunIcon } from "lucide-react";
+
+import { Button } from "@dotui/registry/ui/button";
+import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
@@ -45,18 +49,23 @@ export const ComponentPreviewHeader = () => {
   return (
     <div className="z-3 flex items-center justify-between gap-2 p-2 pb-0 w-full absolute top-0 left-0 right-0">
       <ActiveStyleSelector
-        buttonProps={{ size: "sm", className: "text-xs w-38 h-7" }}
+        buttonProps={{
+          size: "sm",
+          variant: "quiet",
+          className: "text-xs h-7 border-0",
+        }}
       />
       {style && style.theme.colors.activeModes.length > 1 && isMounted && (
-        <ThemeModeSwitch
+        <Button
           size="sm"
-          shape="square"
-          isSelected={activeMode === "dark"}
-          onChange={(isSelected) =>
-            setActiveMode(isSelected ? "dark" : "light")
+          variant="quiet"
+          className="size-7! border-0"
+          onPress={() =>
+            setActiveMode(activeMode === "dark" ? "light" : "dark")
           }
-          className="h-7"
-        />
+        >
+          {activeMode === "dark" ? <MoonIcon /> : <SunIcon />}
+        </Button>
       )}
     </div>
   );

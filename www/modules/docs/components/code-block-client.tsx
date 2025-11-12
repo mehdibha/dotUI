@@ -1,10 +1,16 @@
 "use client";
 
 import React from "react";
-import { CheckIcon, CopyIcon } from "lucide-react";
-import { tv } from "tailwind-variants";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  CopyIcon,
+} from "lucide-react";
 import type { Key } from "react-aria-components";
+import { tv } from "tailwind-variants";
 
+import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { ButtonProps } from "@dotui/registry/ui/button";
@@ -18,7 +24,7 @@ const codeBlockStyles = tv({
     root: "block w-fit max-w-full rounded-md",
     header:
       "flex items-center justify-end gap-2 rounded-t-[inherit] border-y bg-card p-2",
-    body: "p-4 text-sm bg-card/50 rounded-b-md relative",
+    body: "px-4 py-6 text-sm bg-card/50 dark:bg-[color-mix(in_srgb,var(--color-card)_50%,black)] rounded-b-md relative",
   },
 });
 
@@ -57,7 +63,7 @@ const CodeBlockClient = ({
       onSelectionChange={setActiveTab}
       {...props}
     >
-      <CodeBlockHeader>
+      {/* <CodeBlockHeader>
         {(preview || expandable) && (
           <Button
             variant="default"
@@ -75,21 +81,51 @@ const CodeBlockClient = ({
               : files.find(({ fileName }) => fileName === activeTab)?.codeStr)!
           }
         />
-      </CodeBlockHeader>
-      <CodeBlockBody>
-        {preview && !isExpanded ? (
-          // @ts-expect-error fix later
-          <TabPanel id={files[0].fileName} className="mt-0!">
-            {preview}
-          </TabPanel>
-        ) : (
-          files.map(({ fileName, code }, index) => (
-            <TabPanel key={index} id={fileName} className="mt-0!">
-              {code}
+      </CodeBlockHeader> */}
+      <div className="relative">
+        <CodeBlockBody>
+          {preview && !isExpanded ? (
+            // @ts-expect-error fix later
+            <TabPanel id={files[0].fileName} className="mt-0!">
+              {preview}
             </TabPanel>
-          ))
+          ) : (
+            files.map(({ fileName, code }, index) => (
+              <TabPanel key={index} id={fileName} className="mt-0!">
+                {code}
+              </TabPanel>
+            ))
+          )}
+        </CodeBlockBody>
+        {(preview || expandable) && (
+          <Button
+            variant="link"
+            size="sm"
+            className="text-xs h-7 no-underline! text-fg-muted hover:text-fg absolute bottom-2 left-1/2 -translate-x-1/2"
+            onPress={handleExpand}
+          >
+            <span className="flex items-center gap-1">
+              {isExpanded ? (
+                <>
+                  <ChevronUpIcon /> Collapse
+                </>
+              ) : (
+                <>
+                  <ChevronDownIcon /> Expand
+                </>
+              )}
+            </span>
+          </Button>
         )}
-      </CodeBlockBody>
+        <CodeBlockCopyButton
+          className="absolute top-3.25 border-0 right-2.5"
+          code={
+            (previewStr && !isExpanded
+              ? previewStr
+              : files.find(({ fileName }) => fileName === activeTab)?.codeStr)!
+          }
+        />
+      </div>
     </CodeBlockRoot>
   );
 };
@@ -127,11 +163,10 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
   return (
     <Button
       size="sm"
-      variant="default"
-      aspect="square"
-      className="size-7! [&_svg]:size-3"
-      onPress={handleCopy}
+      variant="quiet"
       {...props}
+      className={cn("size-7! [&_svg]:size-3.5", props.className)}
+      onPress={handleCopy}
     >
       {copied ? (
         <CheckIcon className="animate-in fade-in" />

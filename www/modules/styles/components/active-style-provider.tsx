@@ -4,6 +4,7 @@ import React from "react";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/registry";
+import { cn } from "@dotui/registry/lib/utils";
 import { Alert } from "@dotui/registry/ui/alert";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 
@@ -19,7 +20,11 @@ export function ActiveStyleProvider({
   const { data: activeStyle, isPending, isError } = useActiveStyle();
 
   if (isPending) {
-    return <Skeleton>{props.children}</Skeleton>;
+    return (
+      <Skeleton {...props} className={cn("rounded-none", props.className)}>
+        {props.children}
+      </Skeleton>
+    );
   }
 
   if (isError) {
