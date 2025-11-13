@@ -2,14 +2,13 @@ import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { findNeighbour } from "fumadocs-core/page-tree";
-import { ChevronDownIcon, CopyIcon, ExternalLinkIcon } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { Group } from "@dotui/registry/ui/group";
 
 import {
   PageHeaderDescription,

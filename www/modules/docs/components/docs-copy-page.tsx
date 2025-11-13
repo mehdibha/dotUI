@@ -1,7 +1,6 @@
 "use client";
 
 import type { Route } from "next";
-import { IconCheck, IconChevronDown, IconCopy } from "@tabler/icons-react";
 
 import { CheckIcon, ChevronDownIcon, CopyIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
