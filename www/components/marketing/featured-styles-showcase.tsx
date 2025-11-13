@@ -15,7 +15,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 
 const MotionTabPanel = motion.create(TabPanel);
 
-const X_OFFSET_PER_CARD = 12;
+const X_OFFSET_PER_CARD = 10;
 const Y_OFFSET_PER_CARD = 10;
 const SCALE_REDUCTION_PER_CARD = 0.01;
 const INITIAL_ANIMATION_SCALE = 0.6;
