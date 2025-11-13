@@ -15,19 +15,40 @@ import { useDebounce } from "@/hooks/use-debounce";
 
 const MotionTabPanel = motion.create(TabPanel);
 
-const cardVariants = {
-  initial: (position: number) => ({
-    x: position * ((position - 10) / 5) * 12,
-    y: position * 10,
-    scale: 1 - 0.05 - position * 0.1,
-  }),
-  animate: (position: number) => ({
-    x: position * ((position - 10) / 5) * 12,
-    y: position * 10,
-    scale: 1 - position * 0.1,
-    opacity: 1,
+const X_OFFSET_PER_CARD = 12;
+const Y_OFFSET_PER_CARD = 10;
+const SCALE_REDUCTION_PER_CARD = 0.01;
+const INITIAL_ANIMATION_SCALE = 0.6;
 
-    filter: "blur(0px)",
+const cardVariants = {
+  initial: ({
+    position,
+    visibleCards,
+  }: {
+    position: number;
+    visibleCards: number;
+  }) => ({
+    x:
+      position *
+      ((position - visibleCards * 2) / visibleCards) *
+      X_OFFSET_PER_CARD *
+      INITIAL_ANIMATION_SCALE,
+    y: position * Y_OFFSET_PER_CARD * INITIAL_ANIMATION_SCALE,
+    scale: 1 - position * SCALE_REDUCTION_PER_CARD,
+  }),
+  animate: ({
+    position,
+    visibleCards,
+  }: {
+    position: number;
+    visibleCards: number;
+  }) => ({
+    x:
+      position *
+      ((position - visibleCards * 2) / visibleCards) *
+      X_OFFSET_PER_CARD,
+    y: position * Y_OFFSET_PER_CARD,
+    scale: 1 - position * SCALE_REDUCTION_PER_CARD,
   }),
   exit: {
     opacity: 0,
@@ -131,10 +152,10 @@ export const FeaturedStylesShowcase = ({
                   variants={cardVariants}
                   initial="initial"
                   animate={isVisible ? "animate" : "exit"}
-                  custom={position}
+                  custom={{ position, visibleCards }}
                   transition={{
                     duration: 0.6,
-                    delay: hasAnimated.current ? 0 : position * 0.05,
+                    // delay: hasAnimated.current ? 0 : position * 0.05,
                     ease: [0.4, 0, 0.2, 1],
                   }}
                   style={{
