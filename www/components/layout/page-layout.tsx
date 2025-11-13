@@ -13,7 +13,11 @@ export function PageHeader({
   ...props
 }: React.ComponentProps<"section">) {
   return (
-    <section className={cn("container py-8 lg:py-14", className)} {...props}>
+    <section
+      data-page-header
+      className={cn("container py-8 lg:py-14", className)}
+      {...props}
+    >
       {children}
     </section>
   );

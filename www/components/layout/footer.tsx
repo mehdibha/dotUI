@@ -56,7 +56,7 @@ const links = [
 
 export const Footer = () => {
   return (
-    <div className="@container border-t">
+    <div className="@container border-t mt-6 md:mt-10 lg:mt-16 ">
       <div className="container space-y-10 py-6 md:py-12">
         <div className="flex flex-col items-start justify-between gap-10 @3xl:flex-row">
           <div className="space-y-1">

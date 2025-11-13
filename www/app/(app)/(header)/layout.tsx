@@ -21,7 +21,7 @@ export default function WithHeaderLayout({
         />
         {pageHeader}
       </div>
-      <main className="pb-12">{children}</main>
+      <main>{children}</main>
     </PageLayout>
   );
 }

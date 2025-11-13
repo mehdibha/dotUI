@@ -5,10 +5,17 @@ import { ChevronDownIcon, CopyIcon, ExternalLinkIcon } from "lucide-react";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Group } from "@dotui/registry/ui/group";
 
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+  PageLayout,
+} from "@/components/layout/page-layout";
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
@@ -28,55 +35,52 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
   const hasToc = toc && toc.length > 0;
 
   return (
-    <div className="container max-w-3xl xl:max-w-5xl py-6 md:py-10 lg:py-16 has-data-page-tabs:*:data-page-header:border-b-0">
-      <div
-        data-page-header
-        className="flex justify-between items-start border-b pb-8"
-      >
-        <div className="space-y-3">
-          <h1 className="text-3xl font-bold lg:text-4xl leading-none">
+    <PageLayout className="container max-w-3xl xl:max-w-5xl pt-6 md:pt-10 lg:pt-16 has-data-page-tabs:*:data-page-header:border-b-0">
+      <div className="space-y-3 border-b pb-8">
+        <div className="flex justify-between items-center">
+          <PageHeaderHeading className="xl:leading-none">
             {page.data.title}
-          </h1>
-          <p className="text-fg-muted">{page.data.description}</p>
-          {page.data.links && page.data.links.length > 0 && (
-            <div className="flex items-center gap-2 mt-2">
-              {page.data.links.map((link, index) => {
-                const icon = getIcon(link.href);
-                return (
-                  <Button
-                    key={index}
-                    asChild
-                    size="sm"
-                    className="h-6 text-xs font-semibold [&_svg]:size-3"
-                  >
-                    <Link href={link.href as Route} target="_blank">
-                      {icon}
-                      {link.label}
-                      <ExternalLinkIcon />
-                    </Link>
-                  </Button>
-                );
-              })}
-            </div>
-          )}
+          </PageHeaderHeading>
+          <div className="flex items-center gap-2">
+            <Group>
+              <Button size="sm">
+                <CopyIcon /> Copy page
+              </Button>
+              <Button size="sm">
+                <ChevronDownIcon />
+              </Button>
+            </Group>
+            <DocsPager currentPathname={page.url} />
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Group>
-            <Button size="sm">
-              <CopyIcon /> Copy page
-            </Button>
-            <Button size="sm">
-              <ChevronDownIcon />
-            </Button>
-          </Group>
-          <DocsPager currentPathname={page.url} />
-        </div>
+        <PageHeaderDescription className="text-wrap">{page.data.description}</PageHeaderDescription>
+        {page.data.links && page.data.links.length > 0 && (
+          <div className="flex items-center gap-2 mt-2">
+            {page.data.links.map((link, index) => {
+              const icon = getIcon(link.href);
+              return (
+                <Button
+                  key={index}
+                  asChild
+                  size="sm"
+                  className="h-6 text-xs text-fg-muted hover:text-fg font-semibold [&_svg]:size-3"
+                >
+                  <Link href={link.href as Route} target="_blank">
+                    {icon}
+                    {link.label}
+                    <ExternalLinkIcon />
+                  </Link>
+                </Button>
+              );
+            })}
+          </div>
+        )}
       </div>
       <div
         className={cn(
           "not-has-data-page-tabs:mt-12 has-data-page-tabs:**:data-outer-toc:hidden",
           hasToc &&
-            "not-has-data-page-tabs:grid not-has-data-page-tabs:grid-cols-[1fr_180px] not-has-data-page-tabs:gap-10",
+            "not-has-data-page-tabs:xl:grid not-has-data-page-tabs:xl:grid-cols-[1fr_180px] not-has-data-page-tabs:xl:gap-10",
         )}
       >
         <TocProvider toc={toc}>
@@ -89,19 +93,20 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
             <TableOfContents
               toc={toc}
               data-outer-toc
-              className="sticky top-22 **:data-scroll-area-viewport:h-[calc(100svh-calc(var(--spacing)*20))]"
+              className="sticky top-22 max-xl:hidden **:data-scroll-area-viewport:max-h-[calc(100svh-calc(var(--spacing)*20))]"
             />
           </div>
         )}
       </div>
-      {lastModified && <PageLastUpdate date={lastModified} />}
-    </div>
+      {lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}
+    </PageLayout>
   );
 }
 
 const getIcon = (url: string) => {
   if (url.includes("adobe")) return <AdobeIcon />;
   if (url.includes("github")) return <GitHubIcon />;
+  if (url.includes("shadcn")) return <ShadcnIcon />;
   return null;
 };
 
