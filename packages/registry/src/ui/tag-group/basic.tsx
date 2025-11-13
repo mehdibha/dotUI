@@ -22,7 +22,7 @@ const tagGroupStyles = tv({
     list: "flex w-full flex-wrap gap-1",
     tag: [
       "focus-reset focus-visible:focus-ring",
-      "focus-reset focus-visible:focus-ring ring-offset-background inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium transition-colors disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
+      "focus-reset focus-visible:focus-ring inline-flex cursor-pointer items-center justify-center gap-2 rounded-md font-medium text-sm leading-normal ring-offset-background transition-colors disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
     ],
   },
 });

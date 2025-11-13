@@ -27,9 +27,9 @@ const checkboxStyles = tv({
       // read-only state
       "read-only:cursor-default",
       // disabled state
-      "disabled:cursor-not-allowed disabled:border-border-disabled indeterminate:disabled:bg-disabled selected:disabled:bg-disabled selected:disabled:text-fg-disabled",
+      "disabled:cursor-not-allowed disabled:border-border-disabled selected:disabled:bg-disabled selected:disabled:text-fg-disabled indeterminate:disabled:bg-disabled",
       // invalid state
-      "invalid:selected:text-fg-onMutedDanger invalid:border-border-danger invalid:selected:bg-danger-muted",
+      "invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-onMutedDanger",
       // indeterminate state
       "indeterminate:border-transparent indeterminate:bg-primary indeterminate:text-fg-on-primary",
     ],

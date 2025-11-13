@@ -16,7 +16,7 @@ import { Loader } from "@dotui/registry/ui/loader";
 
 const buttonStyles = tv({
   base: [
-    "relative box-border inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-md text-sm leading-normal font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
+    "relative box-border inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm leading-normal transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
     "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
     // focus state
     "focus-reset focus-visible:focus-ring",
@@ -28,17 +28,17 @@ const buttonStyles = tv({
   variants: {
     variant: {
       default:
-        "border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:bg-neutral-active pressed:border-border-active",
+        "border pressed:border-border-active bg-neutral pressed:bg-neutral-active text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover",
       primary:
-        "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0 pressed:bg-primary-active",
-      quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
+        "pending:border-0 bg-primary pressed:bg-primary-active text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0",
+      quiet: "bg-transparent pressed:bg-inverse/20 text-fg hover:bg-inverse/10",
       link: "text-fg underline-offset-4 hover:underline",
       success:
-        "bg-success text-fg-on-success hover:bg-success-hover pressed:bg-success-active",
+        "bg-success pressed:bg-success-active text-fg-on-success hover:bg-success-hover",
       warning:
-        "bg-warning text-fg-on-warning hover:bg-warning-hover pressed:bg-warning-active",
+        "bg-warning pressed:bg-warning-active text-fg-on-warning hover:bg-warning-hover",
       danger:
-        "bg-danger text-fg-on-danger hover:bg-danger-hover pressed:bg-danger-active",
+        "bg-danger pressed:bg-danger-active text-fg-on-danger hover:bg-danger-hover",
     },
     size: {
       sm: "h-8 px-3 data-icon-only:w-8 [&_svg]:size-4",
@@ -119,7 +119,7 @@ const Button = (localProps: ButtonProps) => {
             <Loader
               data-slot="spinner"
               aria-label="loading"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2"
               size={16}
             />
           )}

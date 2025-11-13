@@ -21,7 +21,7 @@ export default function Demo() {
           <Checkbox value="gatsby">Gatsby</Checkbox>
         </FieldGroup>
       </CheckboxGroup>
-      <p className="text-xs text-fg-muted">
+      <p className="text-fg-muted text-xs">
         {frameworks.length === 0
           ? "You haven't selected any frameworks."
           : `You selected ${frameworks.join(", ")}.`}

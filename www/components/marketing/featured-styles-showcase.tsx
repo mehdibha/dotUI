@@ -100,13 +100,13 @@ export const FeaturedStylesShowcase = ({
           }}
           className="gap-4"
         >
-          <TabList className="flex-wrap border-b-0 gap-1">
+          <TabList className="flex-wrap gap-1 border-b-0">
             {styles.map((style) => {
               return (
                 <Tab
                   key={style.name}
                   id={style.name}
-                  className="py-1 px-3 *:data-tab-indicator:h-full *:data-tab-indicator:-z-1 *:data-tab-indicator:rounded-xl *:data-tab-indicator:bg-selected"
+                  className="*:data-tab-indicator:-z-1 px-3 py-1 *:data-tab-indicator:h-full *:data-tab-indicator:rounded-xl *:data-tab-indicator:bg-selected"
                 >
                   {style.name}
                 </Tab>
@@ -152,13 +152,13 @@ export const FeaturedStylesShowcase = ({
                     <PortalProvider getContainer={() => containerRef.current}>
                       {position > 0 && (
                         <div
-                          className="dark:hidden absolute inset-0 rounded-[inherit] bg-black transition-opacity duration-600"
+                          className="absolute inset-0 rounded-[inherit] bg-black transition-opacity duration-600 dark:hidden"
                           style={{
                             opacity: Math.min(position * 0.15, 0.6),
                           }}
                         />
                       )}
-                      <div className="rounded-[inherit] border h-full">
+                      <div className="h-full rounded-[inherit] border">
                         {(position === 0 || delayedPosition === 0) && <Cards />}
                       </div>
                     </PortalProvider>

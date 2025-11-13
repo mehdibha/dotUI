@@ -8,11 +8,11 @@ import { TableOfContents } from "@/modules/docs/components/toc";
 
 export default function Page() {
   return (
-    <div className="relative container xl:grid xl:grid-cols-[1fr_150px] xl:gap-12">
+    <div className="container relative xl:grid xl:grid-cols-[1fr_150px] xl:gap-12">
       <div className="space-y-12">
         {data.map((category) => (
           <div key={category.title}>
-            <h2 className="text-2xl font-medium">{category.title}</h2>
+            <h2 className="font-medium text-2xl">{category.title}</h2>
             <div
               className={cn(
                 "mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
@@ -64,7 +64,7 @@ function ComponentCard({
     <div className={cn("flex flex-col items-center", className)}>
       <div
         className={cn(
-          "h-32 border rounded-lg overflow-hidden bg-muted",
+          "h-32 overflow-hidden rounded-lg border bg-muted",
           previewClassName,
         )}
       >

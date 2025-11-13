@@ -8,7 +8,7 @@ import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 export default function Page() {
   return (
-    <div className="flex items-end justify-center h-20 w-40 pb-2">
+    <div className="flex h-20 w-40 items-end justify-center pb-2">
       <Tooltip defaultOpen>
         <Button>
           <SquarePenIcon />

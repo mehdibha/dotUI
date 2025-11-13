@@ -11,10 +11,10 @@ import type { ImageLoadingStatus } from "@dotui/registry/hooks/use-image-loading
 const avatarStyles = tv({
   slots: {
     group:
-      "flex flex-wrap -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-bg",
+      "-space-x-2 flex flex-wrap *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-bg",
     root: "relative inline-flex shrink-0 overflow-hidden rounded-full bg-bg align-middle",
     image: "aspect-square size-full",
-    fallback: "flex size-full items-center justify-center bg-muted select-none",
+    fallback: "flex size-full select-none items-center justify-center bg-muted",
     placeholder:
       "flex size-full h-full animate-pulse items-center justify-center bg-muted",
   },

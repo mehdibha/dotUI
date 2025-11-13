@@ -30,17 +30,17 @@ const switchStyles = tv({
       sm: {
         indicator: "h-5 w-9",
         thumb:
-          "size-4 group-pressed/switch:w-5 group-selected/switch:ml-4 group-selected/switch:group-pressed/switch:ml-3",
+          "size-4 group-selected/switch:group-pressed/switch:ml-3 group-selected/switch:ml-4 group-pressed/switch:w-5",
       },
       md: {
         indicator: "h-6 w-11",
         thumb:
-          "size-5 group-pressed/switch:w-6 group-selected/switch:ml-5 group-selected/switch:group-pressed/switch:ml-4",
+          "size-5 group-selected/switch:group-pressed/switch:ml-4 group-selected/switch:ml-5 group-pressed/switch:w-6",
       },
       lg: {
         indicator: "h-7 w-13",
         thumb:
-          "size-6 group-pressed/switch:w-7 group-selected/switch:ml-6 group-selected/switch:group-pressed/switch:ml-5",
+          "size-6 group-selected/switch:group-pressed/switch:ml-5 group-selected/switch:ml-6 group-pressed/switch:w-7",
       },
     },
   },

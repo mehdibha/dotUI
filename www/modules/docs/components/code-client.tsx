@@ -55,9 +55,9 @@ const CodeClient = ({
         onPress={handleCopy}
       >
         {copied ? (
-          <CheckIcon className="animate-in fade-in" />
+          <CheckIcon className="fade-in animate-in" />
         ) : (
-          <CopyIcon className="animate-in fade-in" />
+          <CopyIcon className="fade-in animate-in" />
         )}
       </Button>
     </div>

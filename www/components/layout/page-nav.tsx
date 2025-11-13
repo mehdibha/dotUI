@@ -27,7 +27,7 @@ export function PageNav({
             href={tab.href as Route}
             className={cn(
               "flex h-7 items-center gap-2 rounded-full px-4 text-sm",
-              fade && "animate-in fade-in",
+              fade && "fade-in animate-in",
             )}
           >
             {tab.label}

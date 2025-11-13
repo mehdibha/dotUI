@@ -24,7 +24,7 @@ const codeBlockStyles = tv({
     root: "block w-fit max-w-full rounded-md",
     header:
       "flex items-center justify-end gap-2 rounded-t-[inherit] border-y bg-card p-2",
-    body: "p-4 text-[0.8125rem] bg-card/50 dark:bg-[color-mix(in_srgb,var(--color-card)_50%,black)] rounded-b-md relative",
+    body: "relative rounded-b-md bg-card/50 p-4 text-[0.8125rem] dark:bg-[color-mix(in_srgb,var(--color-card)_50%,black)]",
   },
 });
 
@@ -97,13 +97,13 @@ const CodeBlockClient = ({
             ))
           )}
         </CodeBlockBody>
-        <div className="absolute top-3.25 border-0 right-2.5 flex items-center gap-1 ">
+        <div className="absolute top-3.25 right-2.5 flex items-center gap-1 border-0">
           {(preview || expandable) && (
             <Button
               variant="quiet"
               size="sm"
               onPress={handleExpand}
-              className="h-7 text-xs gap-1 pl-1 pr-2"
+              className="h-7 gap-1 pr-2 pl-1 text-xs"
             >
               {isExpanded ? (
                 <>
@@ -170,9 +170,9 @@ const CodeBlockCopyButton = ({ code, ...props }: CodeBlockCopyButtonProps) => {
       onPress={handleCopy}
     >
       {copied ? (
-        <CheckIcon className="animate-in fade-in" />
+        <CheckIcon className="fade-in animate-in" />
       ) : (
-        <CopyIcon className="animate-in fade-in" />
+        <CopyIcon className="fade-in animate-in" />
       )}
     </Button>
   );

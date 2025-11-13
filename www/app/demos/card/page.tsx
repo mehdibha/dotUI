@@ -65,7 +65,7 @@ export default function Page() {
         <Button variant="primary" className="mt-4 w-full" type="submit">
           Continue with email
         </Button>
-        <p className="mt-4 text-sm text-fg-muted">
+        <p className="mt-4 text-fg-muted text-sm">
           Don&apos;t have an account?{" "}
           <Link href="#" variant="quiet">
             register

@@ -51,9 +51,9 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 
   return (
     <Sidebar className="[--color-sidebar:var(--color-bg)]">
-      <SidebarHeader className="relative flex flex-row items-center border-b pl-3.5 h-12 overflow-hidden">
+      <SidebarHeader className="relative flex h-12 flex-row items-center overflow-hidden border-b pl-3.5">
         <Logo />
-        <div className="absolute right-0 top-0 bg-sidebar h-full w-[calc(var(--sidebar-width-icon)-1px)] group-data-expanded:w-auto px-2 flex items-center justify-center group-hover:opacity-100 not-group-data-expanded:opacity-0">
+        <div className="absolute top-0 right-0 flex h-full w-[calc(var(--sidebar-width-icon)-1px)] items-center justify-center bg-sidebar px-2 not-group-data-expanded:opacity-0 group-hover:opacity-100 group-data-expanded:w-auto">
           <Button slot="sidebar-trigger" variant="quiet" size="sm" />
         </div>
       </SidebarHeader>
@@ -66,7 +66,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
         }}
       >
         <SidebarSection>
-          <SidebarList className="**:[svg]:text-fg-muted/70 **:data-[slot=button]:text-fg/85">
+          <SidebarList className="**:data-[slot=button]:text-fg/85 **:[svg]:text-fg-muted/70">
             <SearchCommand items={items} keyboardShortcut>
               <SidebarItem>
                 <SidebarTooltip content="Search">
@@ -100,7 +100,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 
         <AriaDisclosure isExpanded={isOpen} className="group/disclosure">
           <AriaHeading className="sr-only">Documentation</AriaHeading>
-          <AriaDisclosurePanel className="overflow-clip h-(--disclosure-panel-height) duration-250 ease-drawer transition-[opacity,height] group-expanded/disclosure:opacity-100 opacity-0">
+          <AriaDisclosurePanel className="h-(--disclosure-panel-height) overflow-clip opacity-0 transition-[opacity,height] duration-250 ease-drawer group-expanded/disclosure:opacity-100">
             {items.map((item) => {
               return (
                 <SidebarSection key={item.$id}>
@@ -116,7 +116,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
                               <Link
                                 href={item.url as Route}
                                 data-active={item.url === pathname || undefined}
-                                className="text-[0.8rem] w-full flex pl-3 py-1 border-l text-fg-muted hover:text-fg transition-colors data-active:text-fg data-active:border-fg"
+                                className="flex w-full border-l py-1 pl-3 text-[0.8rem] text-fg-muted transition-colors hover:text-fg data-active:border-fg data-active:text-fg"
                               >
                                 {item.name}
                               </Link>

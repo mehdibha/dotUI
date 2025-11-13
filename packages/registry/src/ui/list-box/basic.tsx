@@ -36,7 +36,7 @@ const listboxStyles = tv({
     ],
     item: [
       "relative flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-inverse/10 disabled:pointer-events-none disabled:**:text-fg-disabled",
-      "selection-single:pr-4 selection-multiple:pr-4",
+      "selection-multiple:pr-4 selection-single:pr-4",
     ],
     section: "",
     sectionTitle: "",

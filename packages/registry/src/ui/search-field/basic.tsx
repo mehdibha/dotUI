@@ -11,7 +11,7 @@ import { fieldStyles } from "@dotui/registry/ui/field";
 
 const searchFieldStyles = tv({
   base: [
-    "[&.w-full]:*:data-[slot=input]:w-full [&.flex-1]:*:data-[slot=input]:w-full",
+    "[&.flex-1]:*:data-[slot=input]:w-full [&.w-full]:*:data-[slot=input]:w-full",
     fieldStyles().field(),
   ],
 });

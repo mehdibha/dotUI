@@ -26,7 +26,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
           <span
             className={cn(
               "top-0.25",
-              isOpen && "translate-y-[0.31rem] -rotate-45",
+              isOpen && "-rotate-45 translate-y-[0.31rem]",
             )}
           />
           <span className={cn("top-1.5", isOpen && "-rotate-45 opacity-0")} />
@@ -41,13 +41,13 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
       <Popover
         offset={12}
         containerPadding={0}
-        className="size-full max-w-none border-0 rounded-none bg-bg/95 backdrop-blur-md"
+        className="size-full max-w-none rounded-none border-0 bg-bg/95 backdrop-blur-md"
       >
         <DialogContent className="overflow-y-auto pt-4">
           {({ close }) => (
             <div className="flex flex-col gap-12">
               <div className="space-y-2">
-                <div className="text-lg font-medium text-fg-muted">Menu</div>
+                <div className="font-medium text-fg-muted text-lg">Menu</div>
                 <div className="flex flex-col gap-3">
                   {(
                     [
@@ -72,7 +72,7 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
                 if (group.type === "folder") {
                   return (
                     <div key={index} className="flex flex-col gap-3">
-                      <div className="text-lg font-medium text-fg-muted">
+                      <div className="font-medium text-fg-muted text-lg">
                         {group.name}
                       </div>
                       <div className="flex flex-col gap-3">
@@ -125,7 +125,7 @@ function MobileLink<T extends string>({
         router.push(hrefString as Route);
         onOpenChange?.(false);
       }}
-      className={cn("text-2xl font-medium", className)}
+      className={cn("font-medium text-2xl", className)}
       {...props}
     >
       {children}

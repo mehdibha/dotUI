@@ -25,22 +25,22 @@ const sliderStyles = tv({
       "pointer-events-none absolute rounded-full bg-accent disabled:bg-disabled",
     thumb: [
       "size-4 rounded-full bg-white shadow-md ring-primary/30 transition-[width,height,box-shadow]",
-      "ring-accent/30 hover:ring-4 dragging:size-5 dragging:ring-0",
+      "dragging:size-5 dragging:ring-0 ring-accent/30 hover:ring-4",
       "top-[50%] left-[50%]",
       "focus-visible:focus-ring",
       "disabled:border disabled:border-bg disabled:bg-disabled",
     ],
-    output: "text-sm text-fg-muted disabled:text-fg-disabled",
+    output: "text-fg-muted text-sm disabled:text-fg-disabled",
   },
   variants: {
     orientation: {
       horizontal: {
-        track: "w-48 h-1.5",
+        track: "h-1.5 w-48",
         filler: "top-0 h-full",
       },
       vertical: {
         root: "items-center",
-        track: "w-2 h-48",
+        track: "h-48 w-2",
         filler: "bottom-0 w-full",
       },
     },

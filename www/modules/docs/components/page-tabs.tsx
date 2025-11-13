@@ -12,9 +12,9 @@ export function PageTabs({ children }: { children: React.ReactNode }) {
   return (
     <Tabs
       data-page-tabs
-      className="**:data-page-tab-panel:md:mt-6 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:mt-2"
+      className="**:data-page-tab-panel:mt-2 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:md:mt-6"
     >
-      <TabList className="*:pb-3 *:px-4">
+      <TabList className="*:px-4 *:pb-3">
         <Tab id="overview">Overview</Tab>
         <Tab id="examples">Examples</Tab>
       </TabList>
@@ -46,7 +46,7 @@ export function PageTabPanel({ id, children }: PageTabPanelProps) {
             <div>
               <TableOfContents
                 toc={toc}
-                className="sticky max-xl:hidden top-18 **:data-scroll-area-viewport:h-[calc(100svh-calc(var(--spacing)*22))]"
+                className="sticky top-18 **:data-scroll-area-viewport:h-[calc(100svh-calc(var(--spacing)*22))] max-xl:hidden"
               />
             </div>
           )}

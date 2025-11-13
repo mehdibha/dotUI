@@ -13,7 +13,7 @@ export default function Demo() {
         <SwitchIndicator />
         <Label>Focus mode</Label>
       </Switch>
-      <p className="text-xs text-fg-muted">
+      <p className="text-fg-muted text-xs">
         You are {!isSelected && "not"} on{" "}
         <span className="font-bold">focus mode</span>.
       </p>

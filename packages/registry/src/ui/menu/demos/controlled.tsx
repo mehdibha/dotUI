@@ -23,7 +23,7 @@ export default function Demo() {
           </MenuContent>
         </Popover>
       </Menu>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         state: {isOpen ? "open" : "closed"}
       </p>
     </div>

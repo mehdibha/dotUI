@@ -408,7 +408,7 @@ export default function InternalPage() {
       <div className="space-y-12">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold lg:text-4xl">Playground</h1>
+            <h1 className="font-bold text-3xl lg:text-4xl">Playground</h1>
             <p className="text-fg-muted">
               Internal page for testing the components.
             </p>
@@ -442,9 +442,9 @@ export default function InternalPage() {
       </div>
       <div className="max-xl:hidden">
         <div className="sticky top-6 h-[calc(100svh-calc(var(--spacing)*20))]">
-          <div className="mb-3 -ml-1.5 flex items-center gap-2">
+          <div className="-ml-1.5 mb-3 flex items-center gap-2">
             <AlignLeftIcon className="size-4 text-fg-muted" />
-            <p className="text-sm text-fg-muted">On this page</p>
+            <p className="text-fg-muted text-sm">On this page</p>
           </div>
           <TableOfContents toc={toc} />
         </div>
@@ -514,16 +514,16 @@ const Section = ({
       <div className="flex items-center justify-between gap-2">
         <h3
           id={id}
-          className="mt-8 scroll-m-20 font-heading text-xl font-semibold tracking-tight first:mt-0"
+          className="mt-8 scroll-m-20 font-heading font-semibold text-xl tracking-tight first:mt-0"
         >
           {title}
         </h3>
       </div>
-      {description && <p className="text-sm text-fg-muted">{description}</p>}
+      {description && <p className="text-fg-muted text-sm">{description}</p>}
       <div
         className={cn("relative rounded-lg border bg-bg p-6 pt-12", className)}
       >
-        <div className="absolute top-4 right-4 flex gap-8 text-sm text-fg-muted">
+        <div className="absolute top-4 right-4 flex gap-8 text-fg-muted text-sm">
           {uniqueProps.map((prop) => (
             <Switch
               key={prop}
@@ -577,7 +577,7 @@ const Group = ({
     <div className="flex flex-col gap-2">
       <h2
         id={id}
-        className="mt-12 scroll-m-20 border-b pb-2 font-heading text-2xl font-semibold tracking-tight first:mt-0"
+        className="mt-12 scroll-m-20 border-b pb-2 font-heading font-semibold text-2xl tracking-tight first:mt-0"
       >
         {title}
       </h2>

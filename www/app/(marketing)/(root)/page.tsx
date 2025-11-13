@@ -35,18 +35,18 @@ export default async function HomePage() {
       <section className="container flex flex-col pt-10 sm:pt-18">
         <div className="flex max-w-5xl flex-col items-start gap-2 sm:gap-3">
           <Announcement />
-          <h1 className="text-3xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl text-balance">
+          <h1 className="text-balance text-3xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl">
             Build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="text-base sm:text-lg text-fg-muted max-w-2xl text-balance">
+          <p className="max-w-2xl text-balance text-base text-fg-muted sm:text-lg">
             Beautiful components, accessibility out of the box, composition, and
-            more, all powered by <AdobeIcon className="size-4 inline-flex" />{" "}
+            more, all powered by <AdobeIcon className="inline-flex size-4" />{" "}
             <span className="font-medium text-fg">react-aria-components</span>{" "}
-            and <ShadcnIcon className="size-5 inline-flex" />
+            and <ShadcnIcon className="inline-flex size-5" />
             <span className="font-medium text-fg">shadcn&nbsp;CLI</span>.
           </p>
-          <div className="flex flex-col w-full sm:w-auto gap-2 sm:flex-row sm:items-center sm:gap-4 pt-2">
+          <div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
             <Button asChild variant="primary" size="lg" className="h-10">
               <Link href="/docs">Get started</Link>
             </Button>
@@ -68,7 +68,7 @@ export default async function HomePage() {
       </section>
       <section className="mt-10 border-y py-12 shadow-xs">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
-          <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
+          <h2 className="text-pretty font-mono text-fg-muted text-sm xs:text-base tracking-wide lg:text-base">
             Built on modern tools
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
@@ -116,7 +116,7 @@ export default async function HomePage() {
       </section>
       {/* Call to action */}
       <section className="container max-w-2xl py-20 sm:py-32">
-        <h2 className="text-2xl font-medium tracking-tighter text-pretty lg:text-3xl xl:text-4xl">
+        <h2 className="text-pretty font-medium text-2xl tracking-tighter lg:text-3xl xl:text-4xl">
           Fueled by your <span className="">stars</span>.
         </h2>
         <p className="mt-2 text-base text-fg-muted">

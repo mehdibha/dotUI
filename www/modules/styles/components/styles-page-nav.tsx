@@ -36,8 +36,8 @@ export function StylesPageNav({
 
   return (
     <Tabs selectedKey={pathname} className={className}>
-      <div className="sticky top-0 z-10 h-12 bg-bg pt-1 border-b flex items-end">
-        <TabList className="container border-b-0 translate-y-px">
+      <div className="sticky top-0 z-10 flex h-12 items-end border-b bg-bg pt-1">
+        <TabList className="container translate-y-px border-b-0">
           {items.map((tab) => (
             <Tab
               key={tab.href}
@@ -47,7 +47,7 @@ export function StylesPageNav({
                 "flex h-7 items-center gap-2 px-4 pt-6 pb-5 text-sm opacity-0",
                 isMounted &&
                   !isPending &&
-                  "animate-in opacity-100 fade-in slide-in-from-bottom-1",
+                  "fade-in slide-in-from-bottom-1 animate-in opacity-100",
               )}
             >
               {tab.label}

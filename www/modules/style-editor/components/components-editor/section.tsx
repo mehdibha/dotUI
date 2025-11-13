@@ -38,7 +38,7 @@ export const Section = ({
   return (
     <div className={cn(className)} {...props}>
       <p
-        className={cn("text-base font-semibold", title !== "Loader" && "mt-6")}
+        className={cn("font-semibold text-base", title !== "Loader" && "mt-6")}
       >
         {title}
       </p>

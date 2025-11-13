@@ -104,7 +104,7 @@ export function AutocompleteDemo() {
                   question: question,
                 }))}
                 className={cn(
-                  "!w-full overflow-y-auto transition-[height] duration-100 ease-out not-data-empty:h-[300px] empty:h-0 empty:p-0",
+                  "!w-full not-data-empty:h-[300px] overflow-y-auto transition-[height] duration-100 ease-out empty:h-0 empty:p-0",
                 )}
               >
                 {(item) => (

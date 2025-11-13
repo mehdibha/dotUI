@@ -9,7 +9,7 @@ import {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <StyleEditorProvider>
-      <div className="relative grid grid-cols-[1fr_auto] max-xl:grid-cols-1 **:data-[slot='label']:text-sm **:data-[slot='label']:font-medium **:data-[slot='label']:text-fg-muted">
+      <div className="relative grid grid-cols-[1fr_auto] **:data-[slot='label']:font-medium **:data-[slot='label']:text-fg-muted **:data-[slot='label']:text-sm max-xl:grid-cols-1">
         <div className="@container min-w-0 py-8">
           <StyleEditorForm>
             <StyleEditorHeader />

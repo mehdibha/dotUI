@@ -69,12 +69,12 @@ export const ComponentPreview = async ({
     <div className={cn("space-y-2", containerClassName)}>
       <div className="relative flex flex-col">
         <div className="flex items-stretch">
-          <ActiveStyleProvider className="rounded-t-lg border flex-1">
+          <ActiveStyleProvider className="flex-1 rounded-t-lg border">
             <ComponentPreviewHeader />
             <ResizableContainer resizable={resizable}>
               <div
                 className={cn(
-                  "flex pt-20 pb-14 bg-bg rounded-t-md",
+                  "flex rounded-t-md bg-bg pt-20 pb-14",
                   primary && "min-h-48 pt-24 pb-20",
                   fullWidth
                     ? "px-8 lg:px-12"
@@ -92,12 +92,12 @@ export const ComponentPreview = async ({
             </ResizableContainer>
           </ActiveStyleProvider>
           {controls && (
-            <div className="w-32 -ml-2 p-3 pl-5 bg-card/50 border border-l-0 rounded-tr-md **:data-[slot=label]:text-xs space-y-2">
+            <div className="-ml-2 w-32 space-y-2 rounded-tr-md border border-l-0 bg-card/50 p-3 pl-5 **:data-[slot=label]:text-xs">
               <Select defaultValue="primary" className="w-full">
                 <Label>Variant</Label>
                 <SelectTrigger
                   size="sm"
-                  className="h-7 border-0 w-full text-xs"
+                  className="h-7 w-full border-0 text-xs"
                 />
                 <SelectContent>
                   <SelectItem id="primary">Primary</SelectItem>

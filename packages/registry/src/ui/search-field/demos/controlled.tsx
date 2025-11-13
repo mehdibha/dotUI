@@ -18,7 +18,7 @@ export default function Demo() {
       >
         <Input />
       </SearchField>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         mirrored search text: {inputValue}
       </p>
     </div>

@@ -6,7 +6,7 @@ export function SeparatorDemo() {
   return (
     <div>
       <div className="space-y-1">
-        <h4 className="text-sm leading-none font-medium">Tanstack start</h4>
+        <h4 className="font-medium text-sm leading-none">Tanstack start</h4>
         <p className="text- fg-muted text-sm">
           Full-stack Framework for React and Solid
         </p>

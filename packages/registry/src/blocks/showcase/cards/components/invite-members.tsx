@@ -114,7 +114,7 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
       </CardContent>
       <Separator />
       <CardFooter className="flex items-center justify-between">
-        <p className="text-sm text-fg-muted">
+        <p className="text-fg-muted text-sm">
           Learn more about{" "}
           <a href="#" className="text-fg-accent underline underline-offset-4">
             inviting members

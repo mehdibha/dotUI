@@ -116,7 +116,7 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
 
   return (
     <div>
-      <p className="text-sm text-fg-muted">Color keys</p>
+      <p className="text-fg-muted text-sm">Color keys</p>
       <div className="mt-2 flex items-center gap-2">
         <form.AppField
           name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys`}
@@ -198,7 +198,7 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
 
   return (
     <div className="flex-1">
-      <p className="text-sm text-fg-muted">Contrast ratios</p>
+      <p className="text-fg-muted text-sm">Contrast ratios</p>
       <div className="flex items-stretch gap-4">
         {/* Contrast ratios slider */}
         <form.AppField
@@ -219,7 +219,7 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
               minValue={1}
               maxValue={16}
               step={0.05}
-              className="h-auto [&_[data-slot='slider-filler']]:hidden [&_[data-slot='slider-thumb']]:size-3 [&_[data-slot='slider-thumb']]:dragging:size-4 [&_[data-slot='slider-track']]:w-40 [&_[data-slot='slider-track']]:rounded-sm [&_[data-slot='slider-track']]:[background:var(--dynamic-gradient)]"
+              className="h-auto [&_[data-slot='slider-filler']]:hidden [&_[data-slot='slider-thumb']]:dragging:size-4 [&_[data-slot='slider-thumb']]:size-3 [&_[data-slot='slider-track']]:w-40 [&_[data-slot='slider-track']]:rounded-sm [&_[data-slot='slider-track']]:[background:var(--dynamic-gradient)]"
               style={
                 {
                   "--dynamic-gradient": dynamicGradient,
@@ -253,7 +253,7 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
                       <TableRow key={i}>
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <span className="font-mono text-xs text-fg-muted">
+                            <span className="font-mono text-fg-muted text-xs">
                               {`${scaleId}-${step}`}
                             </span>
                           </div>

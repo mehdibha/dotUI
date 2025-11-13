@@ -30,7 +30,7 @@ import { CreateStyleModal } from "@/modules/styles/components/create-style-modal
 
 export function StyleEditorHeader() {
   return (
-    <div className="container max-w-4xl flex justify-between">
+    <div className="container flex max-w-4xl justify-between">
       <StyleSelector />
       <StyleEditorHeaderActions />
     </div>
@@ -42,7 +42,7 @@ function StyleSelector() {
   return (
     <Skeleton show={isPending}>
       <div className="flex items-center gap-2">
-        <span className="text-fg-muted flex items-center gap-2 text-sm">
+        <span className="flex items-center gap-2 text-fg-muted text-sm">
           <Avatar
             src={data?.user.image ?? undefined}
             fallback={data?.user.username.slice(0, 2)}

@@ -30,7 +30,7 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
       )}
     >
       <div className="pt-4 pb-24 md:pt-10 lg:pt-16">
-        <h1 className="text-2xl font-semibold lg:text-3xl">
+        <h1 className="font-semibold text-2xl lg:text-3xl">
           {page.data.title}
         </h1>
         <p className="mt-2 text-fg-muted">{page.data.description}</p>
@@ -41,7 +41,7 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
                 key={index}
                 asChild
                 size="sm"
-                className="h-6 text-xs font-semibold [&_svg]:size-3"
+                className="h-6 font-semibold text-xs [&_svg]:size-3"
               >
                 <a href={link.href as string} target="_blank">
                   {link.label}

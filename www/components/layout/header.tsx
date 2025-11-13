@@ -51,11 +51,11 @@ export function Header({
 
   return (
     <header
-      className={cn("sticky top-0 z-30 w-full bg-bg h-14 border-b", className)}
+      className={cn("sticky top-0 z-30 h-14 w-full border-b bg-bg", className)}
     >
       <div
         className={cn(
-          "relative container flex h-full items-center justify-between",
+          "container relative flex h-full items-center justify-between",
           containerClassName,
         )}
       >

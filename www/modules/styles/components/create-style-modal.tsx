@@ -141,7 +141,7 @@ export function CreateStyleModalContent({
                     createStyleMutation.error?.message ??
                     "An error occurred while creating the style."
                   }
-                  className="text-xs font-normal"
+                  className="font-normal text-xs"
                 />
               )}
               <div className="flex items-start gap-2">
@@ -233,7 +233,7 @@ export function CreateStyleModalContent({
                 </form.AppField>
               </div>
               {renamedTo && (
-                <Alert className="mt-3 text-xs font-normal">
+                <Alert className="mt-3 font-normal text-xs">
                   Your style will be renamed to "{renamedTo}"
                 </Alert>
               )}

@@ -69,7 +69,7 @@ const MenuSub = (props: MenuSubProps) => {
 const menuItemStyles = tv({
   base: [
     "flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-inverse/10 disabled:pointer-events-none disabled:text-fg-disabled",
-    "selection-single:pl-0 selection-multiple:pl-0",
+    "selection-multiple:pl-0 selection-single:pl-0",
     "group-data-[slot=drawer]/overlay:py-3 group-data-[slot=drawer]/overlay:text-base",
     "group-data-[slot=modal]/overlay:py-2 group-data-[slot=modal]/overlay:text-base",
     "[&_svg]:size-4",
@@ -153,7 +153,7 @@ interface MenuSectionHeaderProps
 const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
   return (
     <AriaHeader
-      className={cn("text-sm font-medium text-fg-muted", className)}
+      className={cn("font-medium text-fg-muted text-sm", className)}
       {...props}
     />
   );

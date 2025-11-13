@@ -18,12 +18,12 @@ export const Example = async ({ name }: ExampleProps) => {
     <div className="relative flex flex-col">
       <ActiveStyleProvider
         unstyled
-        className="flex flex-1 py-14 bg-bg rounded-t-md items-center border justify-center"
+        className="flex flex-1 items-center justify-center rounded-t-md border bg-bg py-14"
       >
         <Component />
       </ActiveStyleProvider>
-      <div className="bg-card/50 border border-t-0 rounded-b-lg flex items-center justify-between p-1.5 pl-3 gap-4">
-        <p className="text-sm text-fg-muted truncate">
+      <div className="flex items-center justify-between gap-4 rounded-b-lg border border-t-0 bg-card/50 p-1.5 pl-3">
+        <p className="truncate text-fg-muted text-sm">
           Basic input component without label
         </p>
         <Button size="sm" className="h-7">

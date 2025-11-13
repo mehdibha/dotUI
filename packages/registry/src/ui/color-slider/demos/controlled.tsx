@@ -21,7 +21,7 @@ export default function Demo() {
       >
         <ColorSliderControl />
       </ColorSlider>
-      <p className="text-xs text-fg-muted">Value: {value.toString("hex")}</p>
+      <p className="text-fg-muted text-xs">Value: {value.toString("hex")}</p>
     </div>
   );
 }

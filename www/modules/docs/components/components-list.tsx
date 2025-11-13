@@ -22,7 +22,7 @@ export function ComponentsList() {
         <Link
           key={component.$id}
           href={component.url as Route}
-          className="text-lg font-medium underline-offset-4 hover:underline md:text-base"
+          className="font-medium text-lg underline-offset-4 hover:underline md:text-base"
         >
           {component.name}
         </Link>

@@ -65,7 +65,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
       <figure
         ref={ref}
         className={cn(
-          "not-prose fd-codeblock bg-fd-secondary/50 group relative my-6 overflow-hidden rounded-lg border bg-muted/30 text-sm",
+          "not-prose fd-codeblock group relative my-6 overflow-hidden rounded-lg border bg-fd-secondary/50 bg-muted/30 text-sm",
           keepBackground &&
             "bg-[var(--shiki-light-bg)] dark:bg-[var(--shiki-dark-bg)]",
           className,
@@ -86,7 +86,7 @@ export const CodeBlock = forwardRef<HTMLElement, CodeBlockProps>(
                     })}
               />
             ) : null}
-            <figcaption className="text-fd-muted-foreground flex-1 truncate">
+            <figcaption className="flex-1 truncate text-fd-muted-foreground">
               {title}
             </figcaption>
             {allowCopy ? (

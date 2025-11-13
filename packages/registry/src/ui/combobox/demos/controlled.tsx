@@ -30,7 +30,7 @@ export default function Demo() {
           <ComboboxItem id="uk">United Kingdom</ComboboxItem>
         </ComboboxContent>
       </Combobox>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         {country ? (
           <>
             You selected: <span className="font-bold text-fg">{country}</span>

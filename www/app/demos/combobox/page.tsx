@@ -32,7 +32,7 @@ export default function Page() {
   }, [inView]);
 
   return (
-    <div ref={containerRef} className="h-42 flex items-start">
+    <div ref={containerRef} className="flex h-42 items-start">
       <Combobox aria-label="Country" menuTrigger="focus">
         <InputGroup>
           <Input placeholder="Select country..." />

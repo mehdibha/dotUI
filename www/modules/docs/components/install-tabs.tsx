@@ -88,7 +88,7 @@ export function InstallTabs({
     <TabsPrimitive.Tabs
       selectedKey={value}
       onSelectionChange={(v) => onValueChange(v as string)}
-      className="install-tabs mt-4 rounded-md border gap-2"
+      className="install-tabs mt-4 gap-2 rounded-md border"
       {...props}
     >
       <TabsPrimitive.TabList className="rounded-t-[inherit] bg-muted">

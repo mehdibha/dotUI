@@ -30,8 +30,8 @@ export function BlocksNav({
 
   return (
     <Tabs selectedKey={pathname} {...props}>
-      <div className="sticky top-0 z-10 h-12 bg-bg pt-1 border-b flex items-end">
-        <TabList className="container border-b-0 translate-y-px">
+      <div className="sticky top-0 z-10 flex h-12 items-end border-b bg-bg pt-1">
+        <TabList className="container translate-y-px border-b-0">
           {[
             {
               href: "/blocks",
@@ -48,7 +48,7 @@ export function BlocksNav({
               key={tab.href}
               id={tab.href}
               href={tab.href as Route}
-              className="flex items-center gap-2 rounded-full py-3 px-4 text-sm"
+              className="flex items-center gap-2 rounded-full px-4 py-3 text-sm"
             >
               {tab.label}
             </Tab>

@@ -1,3 +1,3 @@
 export default function Page() {
-  return <span className="sr-only full-page-sticky" />;
+  return <span className="full-page-sticky sr-only" />;
 }

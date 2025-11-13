@@ -118,11 +118,11 @@ export function MenuDemo() {
           />
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-semibold">mehdibha</span>
-            <span className="text-muted-foreground truncate text-xs">
+            <span className="truncate text-muted-foreground text-xs">
               mehdibha@example.com
             </span>
           </div>
-          <ChevronsUpDownIcon className="text-muted-foreground ml-auto" />
+          <ChevronsUpDownIcon className="ml-auto text-muted-foreground" />
         </Button>
         <Overlay type="popover">
           <div className="flex items-center gap-2 px-4 py-2 text-left text-sm">
@@ -134,7 +134,7 @@ export function MenuDemo() {
             />
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">mehdibha</span>
-              <span className="text-muted-foreground truncate text-xs">
+              <span className="truncate text-muted-foreground text-xs">
                 mehdibha@example.com
               </span>
             </div>

@@ -129,7 +129,7 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
         aria-valuemax={maxWidth}
         tabIndex={0}
         onMouseDown={handleMouseDown}
-        className="absolute top-1/2 -left-3 z-20 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-neutral shadow-sm hover:bg-neutral-hover active:bg-neutral-active"
+        className="-left-3 -translate-y-1/2 absolute top-1/2 z-20 h-15 w-2 cursor-col-resize rounded-full bg-neutral shadow-sm hover:bg-neutral-hover active:bg-neutral-active"
       />
       <motion.div
         ref={containerRef}
@@ -186,7 +186,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
   const isMobile = previewWidth < 480;
 
   return (
-    <div className="flex items-center justify-between gap-2 border-b border-t-inherit bg-card p-1">
+    <div className="flex items-center justify-between gap-2 border-t-inherit border-b bg-card p-1">
       <div className="flex items-center gap-1">
         <Button
           aria-label="Collapse preview"
@@ -220,7 +220,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
                 setActiveMode(isSelected ? "light" : "dark");
               }}
               size="sm"
-              className="size-7 selected:bg-transparent selected:text-fg selected:hover:bg-inverse/10 selected:pressed:bg-inverse/20"
+              className="size-7 selected:bg-transparent selected:pressed:bg-inverse/20 selected:text-fg selected:hover:bg-inverse/10"
             >
               {({ isSelected }) => (isSelected ? <SunIcon /> : <MoonIcon />)}
             </ToggleButton>
@@ -317,9 +317,9 @@ const PreviewModal = ({ children }: { children: React.ReactNode }) => {
     <Modal
       isOpen={isFullscreen}
       onOpenChange={setFullscreen}
-      className="w-screen h-(--visual-viewport-height) max-w-none! rounded-none border-0"
+      className="h-(--visual-viewport-height) w-screen max-w-none! rounded-none border-0"
     >
-      <DialogContent className="p-0! h-full gap-0">{children}</DialogContent>
+      <DialogContent className="h-full gap-0 p-0!">{children}</DialogContent>
     </Modal>
   );
 };

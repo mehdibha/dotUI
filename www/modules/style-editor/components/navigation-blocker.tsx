@@ -116,7 +116,7 @@ export function NavigationBlocker() {
             <DialogHeading>Unsaved changes</DialogHeading>
           </DialogHeader>
           <DialogBody>
-            <p className="text-sm text-fg-muted">
+            <p className="text-fg-muted text-sm">
               You have unsaved changes. Are you sure you want to leave? Your
               changes will be lost.
             </p>

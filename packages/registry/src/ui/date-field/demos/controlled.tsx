@@ -17,7 +17,7 @@ export default function Demo() {
       <DateField aria-label="Event date" value={value} onChange={setValue}>
         <DateInput />
       </DateField>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         selected date: {value ? value.toString() : "none"}
       </p>
     </div>

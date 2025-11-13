@@ -91,7 +91,7 @@ export function EmptyDemo() {
         </EmptyContent>
       </Empty>
 
-      <Empty className="to-background h-full bg-gradient-to-b from-muted/50 from-30%">
+      <Empty className="h-full bg-gradient-to-b from-30% from-muted/50 to-background">
         <EmptyHeader>
           <EmptyMedia variant="icon">
             <IconBell />

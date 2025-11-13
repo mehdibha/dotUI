@@ -19,7 +19,7 @@ export function Cards(props: React.ComponentProps<"div">) {
         <Booking className="w-full max-md:col-span-1 md:w-80" />
         <Filters className="flex-1 max-md:col-span-1" />
       </div>
-      <Notifications className="col-span-11 max-md:h-100 md:col-span-5 md:contain-[size] xl:col-span-3" />
+      <Notifications className="md:contain-[size] col-span-11 max-md:h-100 md:col-span-5 xl:col-span-3" />
       <InviteMembers className="col-span-11 md:col-span-6 lg:col-span-6 xl:col-span-4" />
       <Backlog className="col-span-11 lg:col-span-8 xl:col-span-7" />
       <AccountMenu className="max-lg:hidden lg:col-span-3 lg:block xl:hidden" />

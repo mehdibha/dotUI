@@ -25,7 +25,7 @@ export default function Demo() {
           <Calendar />
         </DatePickerContent>
       </DatePicker>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         selected date: {value?.toString()}
       </p>
     </div>

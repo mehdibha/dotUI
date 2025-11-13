@@ -23,7 +23,7 @@ export default function Demo() {
           <SelectItem id="eleven-labs">ElevenLabs</SelectItem>
         </SelectContent>
       </Select>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         Selected provider: <span className="font-bold text-fg">{provider}</span>
       </p>
     </div>

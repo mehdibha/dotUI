@@ -8,7 +8,7 @@ export function PageLastUpdate({
   ...props
 }: { date: Date } & React.ComponentProps<"p">) {
   return (
-    <p className={cn("text-sm text-fg-muted", className)} {...props}>
+    <p className={cn("text-fg-muted text-sm", className)} {...props}>
       Last updated on {new Date(date).toLocaleDateString()}
     </p>
   );

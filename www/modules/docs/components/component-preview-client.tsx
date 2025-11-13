@@ -32,7 +32,7 @@ export const ResizableContainer = ({
     >
       <div
         onMouseDown={handleMouseDown}
-        className="absolute top-1/2 right-2 z-3 h-15 w-2 -translate-y-1/2 cursor-col-resize rounded-full bg-neutral shadow-sm hover:bg-neutral-hover active:bg-neutral-active"
+        className="-translate-y-1/2 absolute top-1/2 right-2 z-3 h-15 w-2 cursor-col-resize rounded-full bg-neutral shadow-sm hover:bg-neutral-hover active:bg-neutral-active"
       />
       {children}
     </div>
@@ -45,7 +45,7 @@ export const ComponentPreviewHeader = () => {
   const isMounted = useMounted();
 
   return (
-    <div className="z-3 flex items-center justify-between gap-2 p-2 pb-0 w-full absolute top-0 left-0 right-0">
+    <div className="absolute top-0 right-0 left-0 z-3 flex w-full items-center justify-between gap-2 p-2 pb-0">
       <ActiveStyleSelector
         buttonProps={{
           size: "sm",

@@ -14,7 +14,7 @@ export default function Demo() {
       <TimeField aria-label="Event time" value={time} onChange={setTime}>
         <DateInput />
       </TimeField>
-      <p className="text-sm text-fg-muted">selected time: {time?.toString()}</p>
+      <p className="text-fg-muted text-sm">selected time: {time?.toString()}</p>
     </div>
   );
 }

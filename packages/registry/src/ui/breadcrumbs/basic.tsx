@@ -12,11 +12,11 @@ import type { BreadcrumbsProps as AriaBreadcrumbsProps } from "react-aria-compon
 
 const breadcrumbsStyles = tv({
   slots: {
-    root: "flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-fg-muted [&_svg]:size-4",
+    root: "wrap-break-word flex flex-wrap items-center gap-1.5 text-fg-muted text-sm [&_svg]:size-4",
     item: "inline-flex items-center gap-1",
     link: [
       "focus-reset focus-visible:focus-ring",
-      "inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-default disabled:not-current:text-fg-disabled current:text-fg hover:[a]:text-fg",
+      "inline-flex items-center gap-1 rounded px-0.5 current:text-fg leading-none transition-colors disabled:cursor-default disabled:not-current:text-fg-disabled hover:[a]:text-fg",
     ],
   },
 });

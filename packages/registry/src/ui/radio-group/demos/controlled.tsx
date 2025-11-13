@@ -30,7 +30,7 @@ export default function Demo() {
           </Radio>
         </FieldGroup>
       </RadioGroup>
-      <p className="text-xs text-fg-muted">{`You selected: ${size}`}</p>
+      <p className="text-fg-muted text-xs">{`You selected: ${size}`}</p>
     </div>
   );
 }

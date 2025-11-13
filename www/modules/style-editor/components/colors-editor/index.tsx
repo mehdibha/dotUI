@@ -46,7 +46,7 @@ export function ColorsEditor() {
       <Fieldset>
         <Legend>Base colors</Legend>
         <FieldGroup>
-          <div className="flex items-center gap-2 @max-lg:grid @max-lg:grid-cols-2">
+          <div className="flex @max-lg:grid @max-lg:grid-cols-2 items-center gap-2">
             {(["neutral", "accent"] as const).map((color) => {
               return <ColorScaleEditor key={color} scaleId={color} />;
             })}
@@ -62,7 +62,7 @@ export function ColorsEditor() {
       <Fieldset>
         <Legend>Semantic colors</Legend>
         <FieldGroup>
-          <div className="flex items-center gap-2 @max-lg:grid @max-lg:grid-cols-2">
+          <div className="flex @max-lg:grid @max-lg:grid-cols-2 items-center gap-2">
             {(["success", "danger", "warning", "info"] as const).map(
               (color) => {
                 return <ColorScaleEditor key={color} scaleId={color} />;
@@ -104,7 +104,7 @@ export function ColorsEditor() {
             ] as const
           ).map(({ name, category }) => (
             <div key={name}>
-              <Label id={`${name}-label`} className="text-sm font-medium">
+              <Label id={`${name}-label`} className="font-medium text-sm">
                 {name}
               </Label>
               <TokensTable

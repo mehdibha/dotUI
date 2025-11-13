@@ -82,7 +82,7 @@ export function CardDemo() {
             </ol>
           </CardContent>
           <CardFooter>
-            <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+            <div className="-space-x-2 flex *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:grayscale">
               <Avatar src="https://github.com/mehdibha.png" fallback="M" />
               <Avatar src="https://github.com/devongovett.png" fallback="D" />
               <Avatar src="https://github.com/shadcn.png" fallback="S" />

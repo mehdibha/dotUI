@@ -7,7 +7,7 @@ import {
 
 export default function Page() {
   return (
-    <div className="h-40 flex items-start">
+    <div className="flex h-40 items-start">
       <Select aria-label="Provider" defaultOpen>
         <SelectTrigger />
         <SelectContent className="h-30">

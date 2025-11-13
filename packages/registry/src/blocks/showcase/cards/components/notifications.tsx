@@ -47,7 +47,7 @@ export function Notifications({
             >
               <ListBox
                 aria-label="Notifications"
-                className="max-h-none w-full rounded-none border-0 bg-transparent p-0 [&_.separator]:my-0 **:data-[slot=list-box-item]:rounded-none"
+                className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_.separator]:my-0"
               >
                 {notifications
                   .filter((notification) => {
@@ -81,7 +81,7 @@ export function Notifications({
                               )}
                             </p>
                             <div className="mt-1 flex items-start justify-between gap-2">
-                              <p className="text-xs text-fg-muted">
+                              <p className="text-fg-muted text-xs">
                                 {notification.timestamp}
                               </p>
                               {notification.action && (

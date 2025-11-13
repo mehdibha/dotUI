@@ -14,7 +14,7 @@ import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Page() {
   return (
-    <div className="flex items-end justify-center h-60">
+    <div className="flex h-60 items-end justify-center">
       <Dialog defaultOpen>
         <Button>Open Modal</Button>
         <Modal>

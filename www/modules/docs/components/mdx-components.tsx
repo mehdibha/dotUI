@@ -50,7 +50,7 @@ export const mdxComponents: MDXComponents = {
   >,
   p: ({ className, ...props }) => (
     <p
-      className={cn("text-base leading-7 not-first:mt-4", className)}
+      className={cn("not-first:mt-4 text-base leading-7", className)}
       {...props}
     />
   ),
@@ -146,7 +146,7 @@ export const mdxComponents: MDXComponents = {
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
       className={cn(
-        "mt-8 scroll-m-20 font-heading text-base font-semibold tracking-tight",
+        "mt-8 scroll-m-20 font-heading font-semibold text-base tracking-tight",
         className,
       )}
       {...props}
@@ -154,7 +154,7 @@ export const mdxComponents: MDXComponents = {
   ),
   Steps: ({ ...props }: React.ComponentProps<"div">) => (
     <div
-      className="mb-12 ml-4 border-l pl-8 [counter-reset:step] [&>h3]:step"
+      className="[&>h3]:step mb-12 ml-4 border-l pl-8 [counter-reset:step]"
       {...props}
     />
   ),

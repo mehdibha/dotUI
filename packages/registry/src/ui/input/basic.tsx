@@ -86,14 +86,14 @@ const inputStyles = tv({
       false: {
         input: [
           "rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
-          "text-base focus-reset transition-[border-color,box-shadow] data-[slot=date-input]:focus-within:focus-input data-[slot=input]:focus:focus-input sm:text-sm",
+          "focus-reset data-[slot=date-input]:focus-within:focus-input data-[slot=input]:focus:focus-input text-base transition-[border-color,box-shadow] sm:text-sm",
           "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
           "invalid:border-border-danger invalid:text-fg-danger focus-within:has-[input[data-invalid]]:border-border",
           "data-[slot=date-input]:cursor-text",
         ],
         textArea: [
           "flex min-h-16 resize-none rounded-md border border-border-field bg-neutral px-3 py-2 shadow-xs",
-          "text-base focus-reset transition-[border-color,box-shadow] focus:focus-input sm:text-sm",
+          "focus-reset focus:focus-input text-base transition-[border-color,box-shadow] sm:text-sm",
           "disabled:cursor-not-allowed disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
           "invalid:border-border-danger invalid:text-fg-danger focus-within:has-[input[data-invalid]]:border-border",
         ],
@@ -301,7 +301,7 @@ function InputAddon({ className, ...props }: InputAddonProps) {
 const dateInputStyles = tv({
   slots: {
     dateSegment:
-      "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
+      "select-none rounded px-0.5 type-literal:px-0 outline-hidden placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled",
   },
 });
 

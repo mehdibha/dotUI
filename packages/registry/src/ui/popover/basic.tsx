@@ -11,17 +11,17 @@ import { tv } from "tailwind-variants";
 const popoverStyles = tv({
   slots: {
     popover: [
-      "popover z-50 max-w-72 min-w-(--trigger-width) origin-(--trigger-anchor-point) overflow-y-auto rounded-md border bg-popover shadow-md forced-color-adjust-none",
+      "popover z-50 min-w-(--trigger-width) max-w-72 origin-(--trigger-anchor-point) overflow-y-auto rounded-md border bg-popover shadow-md forced-color-adjust-none",
 
       "transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:calc(var(--spacing)*0.5)]",
 
-      "entering:scale-95 entering:transform-(--origin) entering:opacity-0",
-      "exiting:scale-95 exiting:transform-(--origin) exiting:opacity-0 exiting:duration-150",
-      "placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))] placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))]",
+      "entering:transform-(--origin) entering:scale-95 entering:opacity-0",
+      "exiting:transform-(--origin) exiting:scale-95 exiting:opacity-0 exiting:duration-150",
+      "placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))] placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))]",
     ],
     arrow: [
       "block [&>svg]:size-2.5 [&>svg]:fill-tooltip",
-      "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
+      "placement-left:[&>svg]:-rotate-90 placement-bottom:[&>svg]:rotate-180 placement-right:[&>svg]:rotate-90",
     ],
   },
 });

@@ -17,7 +17,7 @@ export default function WithHeaderLayout({
         <Header
           items={docsSource.pageTree.children}
           visibleItems={["menu", "search", "github"]}
-          className="max-md:hidden h-12"
+          className="h-12 max-md:hidden"
         />
         {pageHeader}
       </div>

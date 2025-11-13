@@ -34,9 +34,9 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
   const hasToc = toc && toc.length > 0;
 
   return (
-    <PageLayout className="container max-w-3xl xl:max-w-5xl pt-6 md:pt-10 lg:pt-16 has-data-page-tabs:*:data-page-header:border-b-0">
+    <PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-16 xl:max-w-5xl">
       <div className="space-y-3 border-b pb-8">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <PageHeaderHeading className="xl:leading-none">
             {page.data.title}
           </PageHeaderHeading>
@@ -56,7 +56,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
           {page.data.description}
         </PageHeaderDescription>
         {page.data.links && page.data.links.length > 0 && (
-          <div className="flex items-center gap-2 mt-2">
+          <div className="mt-2 flex items-center gap-2">
             {page.data.links.map((link, index) => {
               const icon = getIcon(link.href);
               return (
@@ -64,7 +64,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
                   key={index}
                   asChild
                   size="sm"
-                  className="h-6 text-xs text-fg-muted hover:text-fg font-semibold [&_svg]:size-3"
+                  className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
                 >
                   <Link href={link.href as Route} target="_blank">
                     {icon}
@@ -94,7 +94,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
             <TableOfContents
               toc={toc}
               data-outer-toc
-              className="sticky top-22 max-xl:hidden **:data-scroll-area-viewport:max-h-[calc(100svh-calc(var(--spacing)*20))]"
+              className="sticky top-22 **:data-scroll-area-viewport:max-h-[calc(100svh-calc(var(--spacing)*20))] max-xl:hidden"
             />
           </div>
         )}

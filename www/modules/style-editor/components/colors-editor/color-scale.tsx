@@ -32,8 +32,8 @@ export function ColorScale({ scaleId }: { scaleId: ScaleId }) {
   }
 
   return (
-    <div className="flex flex-col gap-0.5 @lg:flex-row @lg:items-center @lg:gap-2">
-      <p className="w-16 text-sm text-fg-muted">
+    <div className="flex @lg:flex-row flex-col @lg:items-center @lg:gap-2 gap-0.5">
+      <p className="w-16 text-fg-muted text-sm">
         <form.Subscribe
           selector={(state) =>
             state.values.theme.colors.modes[resolvedMode].scales[scaleId].name

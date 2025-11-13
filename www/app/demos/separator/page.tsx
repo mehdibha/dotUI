@@ -5,7 +5,7 @@ export default function Page() {
     <div className="space-y-2 p-4">
       <div>
         <h3 className="font-bold">dotUI</h3>
-        <p className="text-sm text-fg-muted">Accessible UI components.</p>
+        <p className="text-fg-muted text-sm">Accessible UI components.</p>
       </div>
       <Separator className="my-4" />
       <div className="flex h-5 items-center space-x-4 text-sm">

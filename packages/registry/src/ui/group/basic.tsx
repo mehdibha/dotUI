@@ -16,7 +16,7 @@ const groupStyles = tv({
     root: [
       "flex w-fit items-stretch",
       "has-data-[slot=group]:gap-2",
-      "*:focus-visible:z-10 *:[input]:z-2 *:has-[input]:z-2 *:hover:z-1",
+      "*:hover:z-1 *:focus-visible:z-10 *:has-[input]:z-2 *:[input]:z-2",
       // "*:focus-visible:z-10 *:focus-within:z-10 *:focus:z-10! *:data-[slot=input]:z-2 *:hover:z-3 *:pressed:z-10 *:has-[input]:z-2 *:data-[slot=input]:not-data-focused:z-2",
 
       // "[&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit",
@@ -24,17 +24,17 @@ const groupStyles = tv({
       // "has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-md",
       // "[&>[data-slot=select]>[data-slot=button]]:bg-blue-500",
 
-      "*:data-[slot=label]:bg-card *:data-[slot=label]:px-4 *:data-[slot=label]:border *:data-[slot=label]:rounded-md",
+      "*:data-[slot=label]:rounded-md *:data-[slot=label]:border *:data-[slot=label]:bg-card *:data-[slot=label]:px-4",
     ],
     separator: "",
-    text: "bg-card flex items-center gap-2 rounded-md border px-4 text-sm font-medium shadow-xs [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+    text: "flex items-center gap-2 rounded-md border bg-card px-4 font-medium text-sm shadow-xs [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none",
   },
   variants: {
     orientation: {
       horizontal: {
         root: [
-          "not-has-[>[data-slot=group]]:*:not-first:rounded-l-none not-has-[>[data-slot=group]]:*:not-last:rounded-r-none -space-x-px",
-          "not-has-[>[data-slot=group]]:*:not-[:nth-child(2)]:data-[slot=select]:*:data-[slot=button]:rounded-l-none not-has-[>[data-slot=group]]:*:not-last:data-[slot=select]:*:data-[slot=button]:rounded-r-none",
+          "-space-x-px not-has-[>[data-slot=group]]:*:not-last:rounded-r-none not-has-[>[data-slot=group]]:*:not-first:rounded-l-none",
+          "not-has-[>[data-slot=group]]:*:not-last:data-[slot=select]:*:data-[slot=button]:rounded-r-none not-has-[>[data-slot=group]]:*:not-[:nth-child(2)]:data-[slot=select]:*:data-[slot=button]:rounded-l-none",
         ],
         separator: "",
       },

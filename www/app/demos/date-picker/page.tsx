@@ -5,7 +5,7 @@ import { Popover } from "@dotui/registry/ui/popover";
 
 export default function Page() {
   return (
-    <div className="h-100 w-60 flex items-start justify-start">
+    <div className="flex h-100 w-60 items-start justify-start">
       <DatePicker defaultOpen>
         <DatePickerInput />
         <Popover>

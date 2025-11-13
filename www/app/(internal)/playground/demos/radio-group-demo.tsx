@@ -61,7 +61,7 @@ export function RadioGroupDemo() {
 
       <RadioGroup>
         <Label>Size</Label>
-        <FieldGroup className="*:rounded-md *:border *:bg-card *:p-4 *:transition-colors *:selected:border-border-accent *:selected:bg-accent-muted">
+        <FieldGroup className="*:rounded-md *:border *:selected:border-border-accent *:bg-card *:selected:bg-accent-muted *:p-4 *:transition-colors">
           <Radio value="sm">
             <RadioIndicator />
             <FieldContent>

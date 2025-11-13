@@ -56,16 +56,16 @@ const links = [
 
 export const Footer = () => {
   return (
-    <div className="@container border-t mt-6 md:mt-10 lg:mt-16 ">
+    <div className="@container mt-6 border-t md:mt-10 lg:mt-16">
       <div className="container space-y-10 py-6 md:py-12">
-        <div className="flex flex-col items-start justify-between gap-10 @3xl:flex-row">
+        <div className="flex @3xl:flex-row flex-col items-start justify-between gap-10">
           <div className="space-y-1">
             <Logo type="span" />
             <p className="text-base text-fg-muted">
               Bringing singularity to the web.
             </p>
           </div>
-          <div className="flex flex-wrap gap-6 text-sm @2xl:gap-10">
+          <div className="flex flex-wrap @2xl:gap-10 gap-6 text-sm">
             {links.map((group, index) => (
               <div key={index}>
                 <h2 className="font-bold">{group.label}</h2>
@@ -88,7 +88,7 @@ export const Footer = () => {
             ))}
           </div>
         </div>
-        <p className="text-sm text-fg-muted">
+        <p className="text-fg-muted text-sm">
           Built with passion by{" "}
           <Link
             href="https://x.com/mehdibha_"

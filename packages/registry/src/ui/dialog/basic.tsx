@@ -11,13 +11,13 @@ import { tv } from "tailwind-variants";
 
 const dialogStyles = tv({
   slots: {
-    content: "relative flex flex-col gap-4 p-6 outline-none in-popover:p-4",
+    content: "relative flex flex-col gap-4 in-popover:p-4 p-6 outline-none",
     header: "flex flex-col gap-2 text-left",
     heading:
-      "text-lg leading-none font-semibold in-popover:text-base in-popover:font-medium",
-    description: "text-sm text-fg-muted",
+      "font-semibold in-popover:font-medium in-popover:text-base text-lg leading-none",
+    description: "text-fg-muted text-sm",
     body: "flex flex-1 flex-col gap-2",
-    inset: "-mx-6 border bg-muted px-6 py-4 in-popover:-mx-4 in-popover:px-4",
+    inset: "-mx-6 in-popover:-mx-4 border bg-muted in-popover:px-4 px-6 py-4",
     footer: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
   },
 });

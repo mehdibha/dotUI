@@ -33,7 +33,7 @@ const calendarStyles = tv({
     header: "flex items-center justify-between gap-2",
     grid: "w-full border-collapse",
     gridHeader: "",
-    gridHeaderCell: "text-xs font-normal text-fg-muted",
+    gridHeaderCell: "font-normal text-fg-muted text-xs",
     gridBody: "",
   },
   variants: {
@@ -48,10 +48,10 @@ const calendarStyles = tv({
 const calendarCellStyles = tv({
   slots: {
     cellRoot:
-      "flex items-center justify-center outline-none outside-month:hidden selection-start:rounded-l-md selection-end:rounded-r-md",
+      "flex outside-month:hidden items-center justify-center outline-none selection-end:rounded-r-md selection-start:rounded-l-md",
     cell: [
       "focus-reset focus-visible:focus-ring",
-      "my-1 flex size-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors read-only:cursor-default hover:bg-inverse/10 hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent disabled:text-fg-disabled unavailable:cursor-default unavailable:text-fg-disabled unavailable:not-data-disabled:line-through hover:unavailable:bg-transparent pressed:bg-inverse/20",
+      "my-1 flex size-8 cursor-pointer unavailable:cursor-default items-center justify-center rounded-md pressed:bg-inverse/20 text-sm unavailable:text-fg-disabled unavailable:not-data-disabled:line-through transition-colors read-only:cursor-default hover:bg-inverse/10 hover:unavailable:bg-transparent hover:read-only:bg-transparent disabled:cursor-default disabled:bg-transparent disabled:text-fg-disabled",
     ],
   },
   variants: {
@@ -63,7 +63,7 @@ const calendarCellStyles = tv({
       true: {
         cellRoot:
           "selected: selected:bg-inverse/10 selected:invalid:bg-danger-muted selected:invalid:text-fg-danger",
-        cell: "selection-start:invalid:bg-danger selection-start:invalid:text-fg-on-danger selection-end:invalid:bg-danger selection-end:invalid:text-fg-on-danger",
+        cell: "selection-end:invalid:bg-danger selection-start:invalid:bg-danger selection-end:invalid:text-fg-on-danger selection-start:invalid:text-fg-on-danger",
       },
       false: {
         cell: "selected:invalid:bg-danger selected:invalid:text-fg-on-danger",
@@ -89,14 +89,14 @@ const calendarCellStyles = tv({
       variant: "primary",
       range: true,
       className: {
-        cell: "selection-start:bg-primary selection-start:text-fg-on-primary selection-end:bg-primary selection-end:text-fg-on-primary",
+        cell: "selection-end:bg-primary selection-start:bg-primary selection-end:text-fg-on-primary selection-start:text-fg-on-primary",
       },
     },
     {
       variant: "accent",
       range: true,
       className: {
-        cell: "selection-start:bg-accent selection-start:text-fg-on-accent selection-end:bg-accent selection-end:text-fg-on-accent",
+        cell: "selection-end:bg-accent selection-start:bg-accent selection-end:text-fg-on-accent selection-start:text-fg-on-accent",
       },
     },
   ],
@@ -187,7 +187,7 @@ const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
           <Button slot="previous" variant="default" size="sm">
             <ChevronLeftIcon />
           </Button>
-          <AriaHeading className="text-sm font-medium" />
+          <AriaHeading className="font-medium text-sm" />
           <Button slot="next" variant="default" size="sm">
             <ChevronRightIcon />
           </Button>

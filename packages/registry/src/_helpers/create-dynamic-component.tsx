@@ -177,7 +177,7 @@ function ErrorFallback({
 }) {
   return (
     <div className="flex items-center justify-center rounded-md border border-border-danger p-4">
-      <div className="flex items-start gap-2 rounded-md border-border-danger bg-danger-muted p-2 text-sm text-fg-danger">
+      <div className="flex items-start gap-2 rounded-md border-border-danger bg-danger-muted p-2 text-fg-danger text-sm">
         <AlertCircleIcon />
         <div>
           <span className="font-bold">Error rendering dynamic component:</span>

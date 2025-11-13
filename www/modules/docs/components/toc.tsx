@@ -50,9 +50,9 @@ export const TableOfContents = ({
 
   return (
     <div {...props}>
-      <div className="mb-3 -ml-1.5 flex items-center gap-2">
+      <div className="-ml-1.5 mb-3 flex items-center gap-2">
         <AlignLeftIcon className="size-4 text-fg-muted" />
-        <p className="text-sm text-fg-muted">On this page</p>
+        <p className="text-fg-muted text-sm">On this page</p>
       </div>
       <TocPrimitive.AnchorProvider toc={toc}>
         <ScrollArea
@@ -97,7 +97,7 @@ function TOCItem({ item }: { item: TOCItemType }): React.ReactElement {
     <TocPrimitive.TOCItem
       href={item.url}
       className={cn(
-        "py-1 text-sm wrap-anywhere text-fg-muted transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
+        "wrap-anywhere py-1 text-fg-muted text-sm transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
         item.depth <= 2 && "pl-4",
         item.depth === 3 && "pl-8",
         item.depth >= 4 && "pl-12",

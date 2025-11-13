@@ -13,7 +13,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="flex flex-col items-start h-40">
+    <div className="flex h-40 flex-col items-start">
       <Button
         onPress={() =>
           toast.add({

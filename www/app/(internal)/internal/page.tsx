@@ -1,6 +1,6 @@
 export default function InternalPage() {
   return (
-    <div className="flex h-screen justify-center items-center flex-col gap-8">
+    <div className="flex h-screen flex-col items-center justify-center gap-8">
       <iframe src="/demos/tooltip" className="size-40 border" />
     </div>
   );

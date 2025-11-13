@@ -49,7 +49,7 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
 
   return (
     <div className="flex items-center justify-between px-2">
-      <h2 className="truncate text-lg font-medium tracking-tight">{title}</h2>
+      <h2 className="truncate font-medium text-lg tracking-tight">{title}</h2>
       <div className="flex items-center gap-2">
         <ThemeModeSwitch
           size="sm"
@@ -65,9 +65,9 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
           size="sm"
         >
           {isCopied ? (
-            <CheckIcon className="animate-in fade-in" />
+            <CheckIcon className="fade-in animate-in" />
           ) : (
-            <TerminalIcon className="animate-in fade-in" />
+            <TerminalIcon className="fade-in animate-in" />
           )}
           <span className="truncate text-xs">
             npx shadcn@latest add @dotui/{name}

@@ -28,7 +28,7 @@ export function CodeModal({ children, ...props }: DialogProps) {
             </DialogDescription>
           </DialogHeader>
           <DialogBody className="-mx-6 px-9 pt-0 pb-8">
-            <div className="relative border-l pl-8 [counter-reset:step] [&>h3]:step [&>h3]:mt-4 [&>h3]:text-fg-muted">
+            <div className="[&>h3]:step relative border-l pl-8 [counter-reset:step] [&>h3]:mt-4 [&>h3]:text-fg-muted">
               <h3>Update your components.json</h3>
               <div className="">
                 <pre className="mt-4 rounded-md border bg-card p-4 text-xs">

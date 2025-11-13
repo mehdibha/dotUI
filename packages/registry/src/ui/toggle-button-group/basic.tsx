@@ -14,17 +14,17 @@ const toggleGroupStyles = tv({
   slots: {
     root: "flex w-fit items-center",
     item: [
-      "min-w-0 shrink-0 rounded-none shadow-none hover:z-10 focus:z-10 focus-visible:z-12 selected:z-11 selected:focus-visible:z-12",
+      "selected:z-11 min-w-0 shrink-0 rounded-none shadow-none hover:z-10 focus:z-10 focus-visible:z-12 selected:focus-visible:z-12",
     ],
   },
   variants: {
     orientation: {
       horizontal: {
-        root: "flex-row has-data-[variant=default]:-space-x-px",
+        root: "has-data-[variant=default]:-space-x-px flex-row",
         item: "first:rounded-l-md last:rounded-r-md",
       },
       vertical: {
-        root: "flex-col has-data-[variant=default]:-space-y-px",
+        root: "has-data-[variant=default]:-space-y-px flex-col",
         item: "first:rounded-t-md last:rounded-b-md",
       },
     },

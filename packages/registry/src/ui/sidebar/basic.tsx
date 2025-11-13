@@ -105,7 +105,7 @@ const sidebarStyles = tv({
       "group-placement-right:right-0 group-placement-right:border-l",
     ],
     inner:
-      "bg-sidebar transition-colors duration-250 ease-drawer flex h-full w-full flex-col",
+      "flex h-full w-full flex-col bg-sidebar transition-colors duration-250 ease-drawer",
   },
 });
 
@@ -169,10 +169,10 @@ const sidebarPartsStyles = tv({
       "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
     section: "relative flex w-full min-w-0 flex-col p-2",
     heading: [
-      "text-fg-muted flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-hidden [&>svg]:size-4 [&>svg]:shrink-0 whitespace-nowrap",
+      "flex h-8 shrink-0 items-center whitespace-nowrap rounded-md px-2 font-medium text-fg-muted text-xs outline-hidden [&>svg]:size-4 [&>svg]:shrink-0",
     ],
     list: "flex w-full min-w-0 flex-col gap-1",
-    item: "*:data-[slot=button]:w-full *:data-[slot=button]:text-left *:data-[slot=button]:justify-start *:data-[slot=button]:p-1.75  whitespace-nowrap *:data-[slot=button]:[&>svg]:shrink-0 *:data-[slot=button]:overflow-hidden ",
+    item: "whitespace-nowrap *:data-[slot=button]:w-full *:data-[slot=button]:justify-start *:data-[slot=button]:overflow-hidden *:data-[slot=button]:p-1.75 *:data-[slot=button]:text-left *:data-[slot=button]:[&>svg]:shrink-0",
   },
 });
 

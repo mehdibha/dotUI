@@ -40,7 +40,7 @@ export function ColorSwatchPickerDemo() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <p className="mb-2 text-sm font-medium">Primary Colors</p>
+        <p className="mb-2 font-medium text-sm">Primary Colors</p>
         <ColorSwatchPicker>
           {colors.map((color) => (
             <ColorSwatchPickerItem key={color} color={color} />
@@ -49,7 +49,7 @@ export function ColorSwatchPickerDemo() {
       </div>
 
       <div>
-        <p className="mb-2 text-sm font-medium">Theme Colors</p>
+        <p className="mb-2 font-medium text-sm">Theme Colors</p>
         <ColorSwatchPicker>
           {themeColors.map((color) => (
             <ColorSwatchPickerItem key={color} color={color} />
@@ -58,7 +58,7 @@ export function ColorSwatchPickerDemo() {
       </div>
 
       <div>
-        <p className="mb-2 text-sm font-medium">With Disabled Items</p>
+        <p className="mb-2 font-medium text-sm">With Disabled Items</p>
         <ColorSwatchPicker>
           <ColorSwatchPickerItem color="#ef4444" />
           <ColorSwatchPickerItem color="#f97316" isDisabled />
@@ -69,7 +69,7 @@ export function ColorSwatchPickerDemo() {
       </div>
 
       <div>
-        <p className="mb-2 text-sm font-medium">Different Sizes</p>
+        <p className="mb-2 font-medium text-sm">Different Sizes</p>
         <ColorSwatchPicker className="gap-2">
           {colors.slice(0, 8).map((color) => (
             <ColorSwatchPickerItem
