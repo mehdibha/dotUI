@@ -17,7 +17,7 @@ const tabsStyles = tv({
   slots: {
     root: "flex flex-col gap-2",
     list: "flex",
-    tab: "relative cursor-default p-2 text-sm [&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
+    tab: "relative cursor-default p-2 text-sm [&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden text-fg-muted hover:text-fg transition-colors selected:text-fg",
     selectionIndicator: [
       "absolute rounded-full bg-accent duration-150 ease-out motion-safe:transition-[translate,width,height]",
     ],
