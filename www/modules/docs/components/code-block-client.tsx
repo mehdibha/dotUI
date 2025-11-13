@@ -7,8 +7,8 @@ import {
   ChevronUpIcon,
   CopyIcon,
 } from "lucide-react";
-import type { Key } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type { Key } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
@@ -24,7 +24,7 @@ const codeBlockStyles = tv({
     root: "block w-fit max-w-full rounded-md",
     header:
       "flex items-center justify-end gap-2 rounded-t-[inherit] border-y bg-card p-2",
-    body: "px-4 py-6 text-sm bg-card/50 dark:bg-[color-mix(in_srgb,var(--color-card)_50%,black)] rounded-b-md relative",
+    body: "p-4 text-[0.8125rem] bg-card/50 dark:bg-[color-mix(in_srgb,var(--color-card)_50%,black)] rounded-b-md relative",
   },
 });
 
@@ -97,14 +97,9 @@ const CodeBlockClient = ({
             ))
           )}
         </CodeBlockBody>
-        {(preview || expandable) && (
-          <Button
-            variant="link"
-            size="sm"
-            className="text-xs h-7 no-underline! text-fg-muted hover:text-fg absolute bottom-2 left-1/2 -translate-x-1/2"
-            onPress={handleExpand}
-          >
-            <span className="flex items-center gap-1">
+        <div className="absolute top-3.25 border-0 right-2.5 flex items-center gap-1 ">
+          {(preview || expandable) && (
+            <Button variant="quiet" size="sm" onPress={handleExpand} className="h-7 text-xs gap-1 pl-1 pr-2">
               {isExpanded ? (
                 <>
                   <ChevronUpIcon /> Collapse
@@ -114,17 +109,18 @@ const CodeBlockClient = ({
                   <ChevronDownIcon /> Expand
                 </>
               )}
-            </span>
-          </Button>
-        )}
-        <CodeBlockCopyButton
-          className="absolute top-3.25 border-0 right-2.5"
-          code={
-            (previewStr && !isExpanded
-              ? previewStr
-              : files.find(({ fileName }) => fileName === activeTab)?.codeStr)!
-          }
-        />
+            </Button>
+          )}
+          <CodeBlockCopyButton
+            className="border-0 text-xs"
+            code={
+              (previewStr && !isExpanded
+                ? previewStr
+                : files.find(({ fileName }) => fileName === activeTab)
+                    ?.codeStr)!
+            }
+          />
+        </div>
       </div>
     </CodeBlockRoot>
   );

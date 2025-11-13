@@ -32,19 +32,19 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero section */}
-      <section className="container flex flex-col items-center pt-10 sm:pt-18">
-        <div className="flex max-w-5xl flex-col items-center gap-2 sm:gap-3">
+      <section className="container flex flex-col pt-10 sm:pt-18">
+        <div className="flex max-w-5xl flex-col items-start gap-2 sm:gap-3">
           <Announcement />
-          <h1 className="text-center text-3xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl text-balance">
+          <h1 className="text-3xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl text-balance">
             Build your design system with a{" "}
             <span className="font-bold italic">unique</span> look.
           </h1>
-          <p className="text-center text-base sm:text-lg text-fg-muted text-balance max-sm:px-2">
+          <p className="text-base sm:text-lg text-fg-muted max-w-2xl text-balance">
             Beautiful components, accessibility out of the box, composition, and
             more, all powered by <AdobeIcon className="size-4 inline-flex" />
-            &nbsp;<span className="font-medium">react-aria-components</span> and{" "}
-            <ShadcnIcon className="size-5 inline-flex" />
-            &nbsp;<span className="font-medium">shadcn&nbsp;CLI</span>.
+            <span className="font-medium text-fg">react-aria-components</span>{" "}
+            and <ShadcnIcon className="size-5 inline-flex" />
+            <span className="font-medium text-fg">shadcn&nbsp;CLI</span>.
           </p>
           <div className="flex flex-col w-full sm:w-auto gap-2 sm:flex-row sm:items-center sm:gap-4 pt-2">
             <Button asChild variant="primary" size="lg" className="h-10">
@@ -57,7 +57,7 @@ export default async function HomePage() {
         </div>
       </section>
       {/* Styles overview */}
-      <section className="container mt-10 sm:mt-20 overflow-hidden">
+      <section className="container mt-10 sm:mt-20">
         {feturedStyles.length > 0 ? (
           <FeaturedStylesShowcase styles={feturedStyles} />
         ) : (

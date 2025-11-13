@@ -14,11 +14,14 @@ export function PageTabs({ children }: { children: React.ReactNode }) {
       data-page-tabs
       className="mt-4 **:data-page-tab-panel:container **:data-page-tab-panel:max-w-3xl **:data-page-tab-panel:xl:max-w-5xl **:data-page-tab-panel:md:mt-6 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:mt-2"
     >
-      <div className="border-b">
+      <div 
+      className="container max-w-3xl xl:max-w-5xl"
+      // className="border-b"
+      >
         <TabList
           className={cn(
             "*:py-3 *:px-4 *:not-selected:text-fg-muted *:not-selected:hover:text-fg *:duration-100",
-            "container max-w-3xl xl:max-w-5xl border-b-0",
+            // "container max-w-3xl xl:max-w-5xl",
           )}
         >
           <Tab id="overview">Overview</Tab>

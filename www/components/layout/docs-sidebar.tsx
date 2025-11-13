@@ -11,7 +11,12 @@ import {
   UserIcon,
 } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
-import { Link } from "react-aria-components";
+import {
+  Disclosure as AriaDisclosure,
+  DisclosurePanel as AriaDisclosurePanel,
+  Heading as AriaHeading,
+  Link,
+} from "react-aria-components";
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { Button } from "@dotui/registry/ui/button";
@@ -39,7 +44,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
   const { data: session, isPending } = authClient.useSession();
 
   // we call the hook here to force rerender for motion/react to work
-  useSidebarContext("Sidebar");
+  const { isOpen } = useSidebarContext("Sidebar");
 
   const isMounted = useMounted();
   const pathname = usePathname();
@@ -54,6 +59,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
       </SidebarHeader>
 
       <SidebarContent
+        className=""
         style={{
           maskImage:
             "linear-gradient(transparent 2px, white 8px, white calc(100% - 8px), transparent calc(100% - 2px))",
@@ -92,37 +98,39 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
           </SidebarList>
         </SidebarSection>
 
-        {items.map((item) => {
-          return (
-            <SidebarSection
-              key={item.$id}
-              className="opacity-0 group-data-expanded:opacity-100 transition-opacity duration-150"
-            >
-              <SidebarSectionHeading className="text-fg">
-                {item.name}
-              </SidebarSectionHeading>
-              {item.type === "folder" && (
-                <SidebarList className="gap-0 pl-2">
-                  {item.children.map((item) => {
-                    return (
-                      item.type === "page" && (
-                        <SidebarItem key={item.url}>
-                          <Link
-                            href={item.url as Route}
-                            data-active={item.url === pathname || undefined}
-                            className="text-[0.8rem] w-full flex pl-3 py-1 border-l text-fg-muted hover:text-fg transition-colors data-active:text-fg data-active:border-fg"
-                          >
-                            {item.name}
-                          </Link>
-                        </SidebarItem>
-                      )
-                    );
-                  })}
-                </SidebarList>
-              )}
-            </SidebarSection>
-          );
-        })}
+        <AriaDisclosure isExpanded={isOpen} className="group/disclosure">
+          <AriaHeading className="sr-only">Documentation</AriaHeading>
+          <AriaDisclosurePanel className="overflow-clip h-(--disclosure-panel-height) duration-250 ease-drawer transition-[opacity,height] group-expanded/disclosure:opacity-100 opacity-0">
+            {items.map((item) => {
+              return (
+                <SidebarSection key={item.$id}>
+                  <SidebarSectionHeading className="text-fg">
+                    {item.name}
+                  </SidebarSectionHeading>
+                  {item.type === "folder" && (
+                    <SidebarList className="gap-0 pl-2">
+                      {item.children.map((item) => {
+                        return (
+                          item.type === "page" && (
+                            <SidebarItem key={item.url}>
+                              <Link
+                                href={item.url as Route}
+                                data-active={item.url === pathname || undefined}
+                                className="text-[0.8rem] w-full flex pl-3 py-1 border-l text-fg-muted hover:text-fg transition-colors data-active:text-fg data-active:border-fg"
+                              >
+                                {item.name}
+                              </Link>
+                            </SidebarItem>
+                          )
+                        );
+                      })}
+                    </SidebarList>
+                  )}
+                </SidebarSection>
+              );
+            })}
+          </AriaDisclosurePanel>
+        </AriaDisclosure>
       </SidebarContent>
 
       <SidebarFooter>

@@ -30,7 +30,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
   return (
     <div className="py-6 md:py-10 lg:py-10">
       <div className="container max-w-3xl xl:max-w-5xl flex flex-col sm:flex-row items-stretch sm:items-start justify-between gap-2 sm:gap-6">
-        <div className="space-y-1 sm:space-y-2">
+        <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between gap-2">
             <h1 className="text-3xl font-bold lg:text-4xl truncate">
               {page.data.title}
@@ -48,21 +48,8 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
             </div>
           </div>
           <p className="text-fg-muted">{page.data.description}</p>
-        </div>
-        <div className="flex flex-col items-end gap-4 max-sm:contents">
-          <div className="flex items-center gap-2 max-sm:hidden">
-            <Group>
-              <Button size="sm">
-                <CopyIcon /> Copy page
-              </Button>
-              <Button size="sm">
-                <ChevronDownIcon />
-              </Button>
-            </Group>
-            <DocsPager currentPathname={page.url} />
-          </div>
           {page.data.links && page.data.links.length > 0 && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mt-2">
               {page.data.links.map((link, index) => {
                 const icon = getIcon(link.href);
                 return (
@@ -82,6 +69,19 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
               })}
             </div>
           )}
+        </div>
+        <div className="flex flex-col items-end gap-4 max-sm:contents">
+          <div className="flex items-center gap-2 max-sm:hidden">
+            <Group>
+              <Button size="sm">
+                <CopyIcon /> Copy page
+              </Button>
+              <Button size="sm">
+                <ChevronDownIcon />
+              </Button>
+            </Group>
+            <DocsPager currentPathname={page.url} />
+          </div>
         </div>
       </div>
       <div

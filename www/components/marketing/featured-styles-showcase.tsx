@@ -17,13 +17,16 @@ const MotionTabPanel = motion.create(TabPanel);
 
 const cardVariants = {
   initial: (position: number) => ({
-    y: position * ((position - 10) / 5) * 12,
+    x: position * ((position - 10) / 5) * 12,
+    y: position * 10,
     scale: 1 - 0.05 - position * 0.1,
   }),
   animate: (position: number) => ({
-    y: position * ((position - 10) / 5) * 12,
+    x: position * ((position - 10) / 5) * 12,
+    y: position * 10,
     scale: 1 - position * 0.1,
     opacity: 1,
+
     filter: "blur(0px)",
   }),
   exit: {
@@ -95,9 +98,9 @@ export const FeaturedStylesShowcase = ({
             setCurrentIndex(clickedIndex);
             setTouched(true);
           }}
-          className="gap-20"
+          className="gap-4"
         >
-          <TabList className="flex-wrap justify-center border-b-0 gap-1">
+          <TabList className="flex-wrap border-b-0 gap-1">
             {styles.map((style) => {
               return (
                 <Tab
@@ -135,7 +138,7 @@ export const FeaturedStylesShowcase = ({
                     ease: [0.4, 0, 0.2, 1],
                   }}
                   style={{
-                    transformOrigin: "top center",
+                    transformOrigin: "top left",
                     pointerEvents: isFront ? "auto" : "none",
                     zIndex: visibleCards - position,
                   }}

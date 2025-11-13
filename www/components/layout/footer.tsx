@@ -89,22 +89,15 @@ export const Footer = () => {
           </div>
         </div>
         <p className="text-sm text-fg-muted">
-          Built by{" "}
+          Built with passion by{" "}
           <Link
-            href="https://github.com/mehdibha"
+            href="https://x.com/mehdibha_"
             target="_blank"
-            className="underline"
+            className="underline underline-offset-4"
           >
-            mehdibha
+            @mehdibha
           </Link>
-          . The source code is available on{" "}
-          <Link
-            href="https://github.com/mehdibha"
-            target="_blank"
-            className="underline"
-          >
-            GitHub.
-          </Link>
+          .
         </p>
       </div>
     </div>
