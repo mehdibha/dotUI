@@ -85,6 +85,7 @@ export default async function RootLayout({
     <html
       lang="en"
       className={cn(
+        "overscroll-none",
         inter.className,
         roboto.className,
         openSans.className,
