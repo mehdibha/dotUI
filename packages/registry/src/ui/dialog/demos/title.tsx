@@ -5,9 +5,9 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
-import { Overlay } from "@dotui/registry/ui/overlay";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
+import { Overlay } from "@dotui/registry/ui/overlay";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {

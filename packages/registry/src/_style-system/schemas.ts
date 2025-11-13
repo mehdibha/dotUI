@@ -15,6 +15,7 @@ import { cardVariants } from "@dotui/registry/ui/card/meta";
 import { checkboxVariants } from "@dotui/registry/ui/checkbox/meta";
 import { checkboxGroupVariants } from "@dotui/registry/ui/checkbox-group/meta";
 import { colorAreaVariants } from "@dotui/registry/ui/color-area/meta";
+import { colorEditorVariants } from "@dotui/registry/ui/color-editor/meta";
 import { colorFieldVariants } from "@dotui/registry/ui/color-field/meta";
 import { colorPickerVariants } from "@dotui/registry/ui/color-picker/meta";
 import { colorSliderVariants } from "@dotui/registry/ui/color-slider/meta";
@@ -61,7 +62,6 @@ import { toastVariants } from "@dotui/registry/ui/toast/meta";
 import { toggleButtonVariants } from "@dotui/registry/ui/toggle-button/meta";
 import { toggleButtonGroupVariants } from "@dotui/registry/ui/toggle-button-group/meta";
 import { tooltipVariants } from "@dotui/registry/ui/tooltip/meta";
-import { colorEditorVariants } from "@dotui/registry/ui/color-editor/meta";
 
 // ---------------------------------  Definitions  ----------------------------------- //
 

@@ -4,9 +4,7 @@ import type React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
 
 import { Button } from "@dotui/registry/ui/button";
-import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 
-import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";

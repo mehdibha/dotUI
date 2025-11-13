@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { Route } from "next";
+import Link from "next/link";
 
 import { docsSource } from "@/modules/docs/lib/source";
 

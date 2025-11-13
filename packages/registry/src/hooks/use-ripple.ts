@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
 import type React from "react";
+import { useCallback, useState } from "react";
 import type { PressEvent } from "react-aria-components";
 
 function getUniqueID(prefix: string) {

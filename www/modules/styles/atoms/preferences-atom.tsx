@@ -1,7 +1,7 @@
 import React from "react";
 import { useAtom } from "jotai";
-import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
+import { withImmer } from "jotai-immer";
 
 interface State {
   activeStyleId: string | null;

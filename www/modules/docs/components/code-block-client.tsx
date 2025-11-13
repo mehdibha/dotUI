@@ -99,7 +99,12 @@ const CodeBlockClient = ({
         </CodeBlockBody>
         <div className="absolute top-3.25 border-0 right-2.5 flex items-center gap-1 ">
           {(preview || expandable) && (
-            <Button variant="quiet" size="sm" onPress={handleExpand} className="h-7 text-xs gap-1 pl-1 pr-2">
+            <Button
+              variant="quiet"
+              size="sm"
+              onPress={handleExpand}
+              className="h-7 text-xs gap-1 pl-1 pr-2"
+            >
               {isExpanded ? (
                 <>
                   <ChevronUpIcon /> Collapse

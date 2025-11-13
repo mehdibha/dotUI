@@ -1,9 +1,8 @@
+export { minimizeStyleDefinition } from "./minimize-style";
 export {
   restoreColorScaleDefaults,
   restoreModeDefinitionDefaults,
+  restoreStyleDefinitionDefaults,
   restoreThemeDefinitionDefaults,
   restoreVariantsDefinitionDefaults,
-  restoreStyleDefinitionDefaults,
 } from "./restore-defaults";
-
-export { minimizeStyleDefinition } from "./minimize-style";

@@ -1,7 +1,8 @@
 // ORIGINALLY FROM CLOUDFLARE WRANGLER:
 // https://github.com/cloudflare/wrangler2/blob/main/.github/version-script.js
-import fs from "node:fs";
+
 import { exec } from "node:child_process";
+import fs from "node:fs";
 
 const pkgJsonPath = "packages/tailwindcss-autocontrast/package.json";
 try {

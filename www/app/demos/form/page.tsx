@@ -1,6 +1,6 @@
-import { Form } from "@dotui/registry/ui/form";
 import { Button } from "@dotui/registry/ui/button";
 import { Label } from "@dotui/registry/ui/field";
+import { Form } from "@dotui/registry/ui/form";
 import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 

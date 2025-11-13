@@ -4,6 +4,7 @@
 
 import * as React from "react";
 import * as Lucide from "lucide-react";
+
 import { createIcon } from "../_helpers/create-icon";
 
 export const Loader2Icon = createIcon({

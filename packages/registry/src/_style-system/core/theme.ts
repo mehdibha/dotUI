@@ -1,5 +1,6 @@
 import merge from "deepmerge";
 
+import type { ColorFormat, Theme, ThemeDefinition } from "../types";
 import {
   createColorThemeVars,
   createModeCssVars,
@@ -13,7 +14,6 @@ import {
   createSpacingThemeVars,
   createTextureCss,
 } from "./css";
-import type { ColorFormat, Theme, ThemeDefinition } from "../types";
 
 export const createTheme = (
   themeDefinition: ThemeDefinition,

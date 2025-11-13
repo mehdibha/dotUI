@@ -11,7 +11,6 @@ import { Button } from "@dotui/registry/ui/button";
 import { Group } from "@dotui/registry/ui/group";
 
 import {
-  PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
   PageLayout,
@@ -53,7 +52,9 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
             <DocsPager currentPathname={page.url} />
           </div>
         </div>
-        <PageHeaderDescription className="text-wrap">{page.data.description}</PageHeaderDescription>
+        <PageHeaderDescription className="text-wrap">
+          {page.data.description}
+        </PageHeaderDescription>
         {page.data.links && page.data.links.length > 0 && (
           <div className="flex items-center gap-2 mt-2">
             {page.data.links.map((link, index) => {

@@ -1,11 +1,11 @@
 "use client";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  Table,
   TableRow,
 } from "@dotui/registry/ui/table";
 

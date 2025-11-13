@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 import { docsSource } from "@/modules/docs/lib/source";
 

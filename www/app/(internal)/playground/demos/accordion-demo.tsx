@@ -2,9 +2,9 @@
 
 import {
   Accordion,
+  AccordionHeading,
   AccordionItem,
   AccordionPanel,
-  AccordionHeading,
 } from "@dotui/registry/ui/accordion";
 
 export function AccordionDemo() {

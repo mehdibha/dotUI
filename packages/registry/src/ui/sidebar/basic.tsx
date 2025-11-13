@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 import { useSlotId } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
 import { PanelLeftIcon } from "lucide-react";
@@ -18,7 +19,6 @@ import { useKeyboardShortcut } from "@dotui/registry/hooks/use-keyboard-shortcut
 import { createContext } from "@dotui/registry/lib/context";
 import { cn } from "@dotui/registry/lib/utils";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
-import { Slot } from "@radix-ui/react-slot";
 
 const SIDEBAR_WIDTH = "15rem";
 const SIDEBAR_WIDTH_ICON = "3rem";

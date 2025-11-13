@@ -18,12 +18,12 @@ import { Pre } from "./code-block-mdx";
 import type { ComponentPreviewProps } from "./component-preview";
 import { ComponentPreview } from "./component-preview";
 import { ComponentsList } from "./components-list";
+import { Example, type ExampleProps } from "./example";
 import { InstallTab, InstallTabs } from "./install-tabs";
 import { PageTabPanel, PageTabs } from "./page-tabs";
 import type { PaletteProps } from "./palette";
 import { Palette } from "./palette";
 import { Tab, Tabs } from "./tabs";
-import { Example, type ExampleProps } from "./example";
 
 export const mdxComponents: MDXComponents = {
   ...defaultMdxComponents,
