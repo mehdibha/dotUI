@@ -52,6 +52,10 @@ const config = {
         destination:
           "/style-editor/:section?username=:username&stylename=:stylename",
       },
+      {
+        source: "/docs/:path*.md",
+        destination: "/llm/:path*",
+      },
     ];
   },
 };

@@ -1,6 +1,7 @@
 import type { Metadata, Route } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { findNeighbour } from "fumadocs-core/page-tree";
 import { ChevronDownIcon, CopyIcon, ExternalLinkIcon } from "lucide-react";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
@@ -17,12 +18,15 @@ import {
 } from "@/components/layout/page-layout";
 import { siteConfig } from "@/config";
 import { truncateOnWord } from "@/lib/string";
+import { DocsCopyPage } from "@/modules/docs/components/docs-copy-page";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents, TocProvider } from "@/modules/docs/components/toc";
 import { docsSource } from "@/modules/docs/lib/source";
 
+export const revalidate = false;
+export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
@@ -31,25 +35,21 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
 
   const { body: MDXContent, toc, lastModified } = await page.data.load();
 
+  const rawContent = await page.data.getText("raw");
+  const neighbours = findNeighbour(docsSource.pageTree, page.url);
+
   const hasToc = toc && toc.length > 0;
 
   return (
     <PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-16 xl:max-w-5xl">
-      <div className="space-y-3 border-b pb-8">
+      <div data-page-header="" className="space-y-3 border-b pb-8">
         <div className="flex items-center justify-between">
           <PageHeaderHeading className="xl:leading-none">
             {page.data.title}
           </PageHeaderHeading>
           <div className="flex items-center gap-2">
-            <Group>
-              <Button size="sm">
-                <CopyIcon /> Copy page
-              </Button>
-              <Button size="sm">
-                <ChevronDownIcon />
-              </Button>
-            </Group>
-            <DocsPager currentPathname={page.url} />
+            <DocsCopyPage page={rawContent} url={page.url} />
+            <DocsPager neighbours={neighbours} />
           </div>
         </div>
         <PageHeaderDescription className="text-wrap">
