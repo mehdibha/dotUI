@@ -21,7 +21,7 @@ type HeaderItem =
   | "mobileNav"
   | "search"
   | "github"
-  | "themeToggle"
+  | "themeToggle";
 
 export function Header({
   className,
@@ -80,7 +80,10 @@ export function Header({
         </div>
         <div className="flex items-center gap-2">
           {isVisible("search") && (
-            <SearchCommand keyboardShortcut={searchKeyboardShortcut} items={items}>
+            <SearchCommand
+              keyboardShortcut={searchKeyboardShortcut}
+              items={items}
+            >
               <Button
                 variant="default"
                 size="sm"

@@ -10,7 +10,6 @@ import type { VariantProps } from "tailwind-variants";
 
 import { focusRingGroup } from "@dotui/registry/lib/focus-styles";
 import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
 
 const TRANSITION: Transition = { type: "spring", bounce: 0.05, duration: 0.2 };
 
