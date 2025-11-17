@@ -13,6 +13,7 @@ import { MobileNav } from "@/components/layout/mobile-nav";
 import { Logo } from "@/components/logo";
 import { SearchCommand } from "@/components/search-command";
 import { siteConfig } from "@/config";
+import { SiteThemeToggle } from "../site-theme-toggle";
 
 type HeaderItem =
   | "logo"
@@ -20,29 +21,20 @@ type HeaderItem =
   | "mobileNav"
   | "search"
   | "github"
-  | "themeSwitcher"
-  | "signIn"
-  | "userProfile";
+  | "themeToggle"
 
 export function Header({
   className,
   items,
   containerClassName,
-  visibleItems = [
-    "logo",
-    "menu",
-    "mobileNav",
-    "search",
-    "github",
-    "themeSwitcher",
-    "signIn",
-    "userProfile",
-  ],
+  searchKeyboardShortcut = false,
+  visibleItems = [],
 }: {
   className?: string;
   containerClassName?: string;
   items: PageTree.Node[];
   visibleItems?: HeaderItem[];
+  searchKeyboardShortcut?: boolean;
 }) {
   const isVisible = (item: HeaderItem) => {
     if (!visibleItems) return true;
@@ -88,7 +80,7 @@ export function Header({
         </div>
         <div className="flex items-center gap-2">
           {isVisible("search") && (
-            <SearchCommand keyboardShortcut items={items}>
+            <SearchCommand keyboardShortcut={searchKeyboardShortcut} items={items}>
               <Button
                 variant="default"
                 size="sm"
@@ -113,6 +105,7 @@ export function Header({
               </Link>
             </Button>
           )}
+          {isVisible("themeToggle") && <SiteThemeToggle size="sm" />}
         </div>
       </div>
     </header>

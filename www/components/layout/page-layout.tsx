@@ -15,7 +15,7 @@ export function PageHeader({
   return (
     <section
       data-page-header
-      className={cn("container py-8 lg:py-14", className)}
+      className={cn("container py-6 md:py-8 lg:py-14", className)}
       {...props}
     >
       {children}

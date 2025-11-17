@@ -8,7 +8,6 @@ import {
   BoxIcon,
   PaletteIcon,
   SearchIcon,
-  SunIcon,
   UserIcon,
 } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
@@ -20,6 +19,7 @@ import {
 } from "react-aria-components";
 import type * as PageTree from "fumadocs-core/page-tree";
 
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { Button } from "@dotui/registry/ui/button";
 import { Kbd } from "@dotui/registry/ui/kbd";
 import {
@@ -40,6 +40,7 @@ import { SearchCommand } from "@/components/search-command";
 import { useMounted } from "@/hooks/use-mounted";
 import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
 import { authClient } from "@/modules/auth/lib/client";
+import { SiteThemeToggle } from "../site-theme-toggle";
 
 export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
   const { data: session, isPending } = authClient.useSession();
@@ -53,7 +54,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
   return (
     <Sidebar className="[--color-sidebar:var(--color-bg)]">
       <SidebarHeader className="relative flex h-(--header-height) flex-row items-center overflow-hidden border-b pl-3.5">
-        <Logo />
+        <Logo extanded={false} />
         <div className="absolute top-0 right-0 flex h-full w-[calc(var(--sidebar-width-icon)-1px)] items-center justify-center bg-sidebar px-2 not-group-data-expanded:opacity-0 group-hover:opacity-100 group-data-expanded:w-auto">
           <Button slot="sidebar-trigger" variant="quiet" size="sm" />
         </div>
@@ -79,7 +80,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
                   >
                     <SearchIcon />
                     <span className="flex-1 text-left">Search...</span>
-                    <Kbd>⌘K</Kbd>
+                    <Kbd>⌘ K</Kbd>
                   </Button>
                 </SidebarTooltip>
               </SidebarItem>
@@ -135,21 +136,41 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
       </SidebarContent>
 
       <SidebarFooter>
-        <div className="flex justify-between">
-          <Button variant="quiet" size="sm">
-            <SunIcon />
-          </Button>
-        </div>
-        <AnimatePresence>
-          {isMounted && !isPending && session?.user && (
-            <motion.div layout transition={transition} className="flex">
-              <UserProfileMenu
-                placement="right"
-                size="sm"
-                className="*:data-[slot=avatar]:size-6"
-              />
+        <motion.div
+          layout
+          transition={transition}
+          className="flex flex-col items-start justify-between group-data-expanded:flex-row group-data-expanded:items-center"
+        >
+          <motion.div layout transition={transition}>
+            <Button asChild variant="quiet" size="sm">
+              <Link
+                aria-label="GitHub"
+                href="https://github.com/mehdibha/dotUI"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GitHubIcon />
+              </Link>
+            </Button>
+          </motion.div>
+          <div className="flex flex-col items-center gap-1 group-data-expanded:flex-row">
+            <motion.div layout transition={transition}>
+              <SiteThemeToggle size="sm" variant="quiet" />
             </motion.div>
-          )}
+            <AnimatePresence>
+              {isMounted && !isPending && session?.user && (
+                <motion.div layout transition={transition} className="flex">
+                  <UserProfileMenu
+                    placement="right"
+                    size="sm"
+                    className="*:data-[slot=avatar]:size-6"
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+        <AnimatePresence>
           {isMounted && !isPending && !session?.user && (
             <motion.div
               initial={{ opacity: 0.5, y: 20 }}

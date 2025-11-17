@@ -9,7 +9,7 @@ export default function HomeLayout({
 }) {
   return (
     <div className="[--header-height:calc(var(--spacing)*14)]">
-      <Header items={docsSource.pageTree.children} />
+      <Header items={docsSource.pageTree.children} searchKeyboardShortcut />
       <div className="min-h-[calc(100vh-var(--header-height))]">{children}</div>
       <Footer />
     </div>

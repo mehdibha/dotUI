@@ -1,4 +1,4 @@
-import { DisableFocusTrap } from "@/components/disable-focus-trap";
+import { DisableFocusTrap } from "@/app/demos/disable-focus-trap";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
