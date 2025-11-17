@@ -6,13 +6,7 @@ import { Header } from "@/components/layout/header";
 import { docsSource } from "@/modules/docs/lib/source";
 import { ActiveStylePortalProvider } from "@/modules/styles/components/active-style-provider";
 
-export default function Layout({
-  children,
-  pageHeader,
-}: {
-  children: React.ReactNode;
-  pageHeader: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="[--header-height:calc(var(--spacing)*12)]">
       <ActiveStylePortalProvider>
@@ -23,7 +17,6 @@ export default function Layout({
               items={docsSource.pageTree.children}
               className="md:hidden"
             />
-            <div className="has-[.full-page-sticky]:contents">{pageHeader}</div>
             <div>{children}</div>
             <Footer />
           </div>

@@ -28,12 +28,12 @@ export function Header({
   items,
   containerClassName,
   searchKeyboardShortcut = false,
-  visibleItems = [],
+  visibleItems = null,
 }: {
   className?: string;
   containerClassName?: string;
   items: PageTree.Node[];
-  visibleItems?: HeaderItem[];
+  visibleItems?: HeaderItem[] | null;
   searchKeyboardShortcut?: boolean;
 }) {
   const isVisible = (item: HeaderItem) => {

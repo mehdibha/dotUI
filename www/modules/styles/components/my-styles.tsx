@@ -17,7 +17,9 @@ export function MyStyles() {
 
   React.useEffect(() => {
     if (isMounted && !isPending && !session?.user) {
-      router.push("/login");
+      router.push(
+        `/login?callbackUrl=${encodeURIComponent("/styles/my-styles")}`,
+      );
     }
   }, [isMounted, isPending, session?.user, router]);
 

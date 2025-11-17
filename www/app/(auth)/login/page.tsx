@@ -5,12 +5,21 @@ import { Button } from "@dotui/registry/ui/button";
 
 import { LoginForm } from "@/modules/auth/components/login-form";
 import { getSession } from "@/modules/auth/lib/server";
+import { validateCallbackUrl } from "@/modules/auth/lib/utils";
 
-export default async function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ callbackUrl?: string }>;
+}) {
   const session = await getSession();
+  const { callbackUrl } = await searchParams;
+
+  // Validate and sanitize the callback URL
+  const validatedCallbackUrl = validateCallbackUrl(callbackUrl);
 
   if (session?.user) {
-    redirect("/");
+    redirect(validatedCallbackUrl as never);
   }
 
   return (
@@ -23,7 +32,7 @@ export default async function Page() {
           </a>
         </Button>
       </div>
-      <LoginForm />
+      <LoginForm callbackUrl={validatedCallbackUrl} />
     </div>
   );
 }

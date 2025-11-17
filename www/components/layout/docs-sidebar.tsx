@@ -186,7 +186,9 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
                       size="sm"
                       className="group-data-expanded:justify-center!"
                     >
-                      <Link href="/login">
+                      <Link
+                        href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
+                      >
                         <motion.span
                           layout
                           transition={transition}

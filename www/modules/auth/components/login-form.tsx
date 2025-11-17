@@ -10,7 +10,7 @@ import { toast } from "@dotui/registry/ui/toast";
 import { Logo } from "@/components/logo";
 import { authClient } from "@/modules/auth/lib/client";
 
-export function LoginForm() {
+export function LoginForm({ callbackUrl = "/" }: { callbackUrl?: string }) {
   const [isPending, setPending] = React.useState(false);
 
   return (
@@ -37,7 +37,7 @@ export function LoginForm() {
             setPending(true);
             await authClient.signIn.social({
               provider: "github",
-              callbackURL: "/",
+              callbackURL: callbackUrl,
             });
           } catch (error) {
             const message =
