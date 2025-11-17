@@ -8,9 +8,9 @@ export default function HomeLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="[--header-height:calc(var(--spacing)*14)]">
       <Header items={docsSource.pageTree.children} />
-      <div className="min-h-[70vh]">{children}</div>
+      <div className="min-h-[calc(100vh-var(--header-height))]">{children}</div>
       <Footer />
     </div>
   );

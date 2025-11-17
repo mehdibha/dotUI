@@ -66,7 +66,7 @@ export function StyleEditorNav({
         className={cn("@max-lg:hidden", className)}
         {...props}
       >
-        <div className="sticky top-0 z-10 border-b bg-bg">
+        <div className="sticky top-0 z-20 flex h-(--header-height) items-end border-b bg-bg">
           <TabList className="container max-w-4xl overflow-x-auto border-b-0">
             {menuItems.map((tab) => (
               <Tab

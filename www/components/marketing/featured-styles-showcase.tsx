@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
@@ -67,39 +67,10 @@ export const FeaturedStylesShowcase = ({
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const delayedIndex = useDebounce(currentIndex, 700);
-  const [touched, setTouched] = React.useState(false);
-  const hasAnimated = React.useRef(false);
-  const viewRef = React.useRef(null);
-  const inView = useInView(viewRef, {
-    initial: true,
-    once: false,
-    amount: "all",
-  });
 
   const currentStyle = React.useMemo(() => {
     return styles[currentIndex % styles.length];
   }, [currentIndex, styles]);
-
-  // Mark as animated after initial render
-  React.useEffect(() => {
-    if (!hasAnimated.current) {
-      const timer = setTimeout(
-        () => {
-          hasAnimated.current = true;
-        },
-        600 + visibleCards * 50,
-      ); // duration + max stagger delay
-      return () => clearTimeout(timer);
-    }
-  }, [visibleCards]);
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      if (touched || !inView) return;
-      setCurrentIndex((prev) => (prev + 1) % styles.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [styles.length, touched, inView]);
 
   return (
     <>
@@ -111,13 +82,11 @@ export const FeaturedStylesShowcase = ({
       />
       <div className="flex justify-center gap-4">
         <Tabs
-          ref={viewRef}
           selectedKey={styles[currentIndex % styles.length]?.name}
           onSelectionChange={(key) => {
             const clickedIndex = styles.findIndex((s) => s.name === key);
             if (clickedIndex === -1) return;
             setCurrentIndex(clickedIndex);
-            setTouched(true);
           }}
           className="gap-4"
         >

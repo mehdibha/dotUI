@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 
+import {
+  PageActions,
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+  PageLayout,
+} from "@/components/layout/page-layout";
 import { BlocksNav } from "@/modules/blocks/blocks-nav";
+import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 
 const title = "Blocks that don't lock you in.";
 const description = "Modern UI blocks available in infinite styles.";
@@ -29,5 +37,16 @@ export const metadata: Metadata = {
 };
 
 export default function BlocksLayout({ children }: LayoutProps<"/blocks">) {
-  return <BlocksNav>{children}</BlocksNav>;
+  return (
+    <PageLayout>
+      <PageHeader>
+        <PageHeaderHeading>{title}</PageHeaderHeading>
+        <PageHeaderDescription>{description}</PageHeaderDescription>
+        <PageActions>
+          <ActiveStyleSelector buttonProps={{ className: "px-4" }} />
+        </PageActions>
+      </PageHeader>
+      <BlocksNav>{children}</BlocksNav>
+    </PageLayout>
+  );
 }

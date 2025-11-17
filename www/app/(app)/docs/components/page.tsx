@@ -4,42 +4,62 @@ import Link from "next/link";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 
+import {
+  PageActions,
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+  PageLayout,
+} from "@/components/layout/page-layout";
 import { TableOfContents } from "@/modules/docs/components/toc";
+import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
+
+const title = "Components";
+const description = "Browse all available components in the library.";
 
 export default function Page() {
   return (
-    <div className="container relative xl:grid xl:grid-cols-[1fr_150px] xl:gap-12">
-      <div className="space-y-12">
-        {data.map((category) => (
-          <div key={category.title}>
-            <h2 className="font-medium text-2xl">{category.title}</h2>
-            <div
-              className={cn(
-                "mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
-              )}
-            >
-              {category.components.map((component) => (
-                <ComponentCard
-                  key={component.name}
-                  {...component}
-                  previewClassName={cn(
-                    category.title === "Pickers" && "h-38",
-                    category.title === "Dates" && "h-48",
-                    category.title === "Collections" && "h-40",
-                    category.title === "Navigation" && "h-40",
-                    category.title === "Data display" && "h-40",
-                  )}
-                />
-              ))}
+    <PageLayout>
+      <PageHeader>
+        <PageHeaderHeading>{title}</PageHeaderHeading>
+        <PageHeaderDescription>{description}</PageHeaderDescription>
+        <PageActions>
+          <ActiveStyleSelector buttonProps={{ className: "px-4" }} />
+        </PageActions>
+      </PageHeader>
+      <div className="container relative xl:grid xl:grid-cols-[1fr_150px] xl:gap-12">
+        <div className="space-y-12">
+          {data.map((category) => (
+            <div key={category.title}>
+              <h2 className="font-medium text-2xl">{category.title}</h2>
+              <div
+                className={cn(
+                  "mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
+                )}
+              >
+                {category.components.map((component) => (
+                  <ComponentCard
+                    key={component.name}
+                    {...component}
+                    previewClassName={cn(
+                      category.title === "Pickers" && "h-38",
+                      category.title === "Dates" && "h-48",
+                      category.title === "Collections" && "h-40",
+                      category.title === "Navigation" && "h-40",
+                      category.title === "Data display" && "h-40",
+                    )}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <TableOfContents
+          toc={toc}
+          className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*20))] max-xl:hidden"
+        />
       </div>
-      <TableOfContents
-        toc={toc}
-        className="sticky top-20 h-[calc(100svh-calc(var(--spacing)*20))] max-xl:hidden"
-      />
-    </div>
+    </PageLayout>
   );
 }
 

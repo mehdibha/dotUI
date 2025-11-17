@@ -8,6 +8,7 @@ import {
   BoxIcon,
   PaletteIcon,
   SearchIcon,
+  SunIcon,
   UserIcon,
 } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
@@ -51,7 +52,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 
   return (
     <Sidebar className="[--color-sidebar:var(--color-bg)]">
-      <SidebarHeader className="relative flex h-12 flex-row items-center overflow-hidden border-b pl-3.5">
+      <SidebarHeader className="relative flex h-(--header-height) flex-row items-center overflow-hidden border-b pl-3.5">
         <Logo />
         <div className="absolute top-0 right-0 flex h-full w-[calc(var(--sidebar-width-icon)-1px)] items-center justify-center bg-sidebar px-2 not-group-data-expanded:opacity-0 group-hover:opacity-100 group-data-expanded:w-auto">
           <Button slot="sidebar-trigger" variant="quiet" size="sm" />
@@ -134,6 +135,11 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
       </SidebarContent>
 
       <SidebarFooter>
+        <div className="flex justify-between">
+          <Button variant="quiet" size="sm">
+            <SunIcon />
+          </Button>
+        </div>
         <AnimatePresence>
           {isMounted && !isPending && session?.user && (
             <motion.div layout transition={transition} className="flex">

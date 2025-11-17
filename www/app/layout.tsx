@@ -85,7 +85,6 @@ export default async function RootLayout({
     <html
       lang="en"
       className={cn(
-        "overscroll-none",
         inter.className,
         roboto.className,
         openSans.className,
@@ -111,7 +110,7 @@ export default async function RootLayout({
       </head>
       <body
         className={cn(
-          "font-sans antialiased",
+          "font-sans antialiased [--header-height:calc(var(--spacing)*13)]",
           fontSans.variable,
           fontMono.variable,
           josefinSans.variable,

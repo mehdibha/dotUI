@@ -40,7 +40,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
   const hasToc = toc && toc.length > 0;
 
   return (
-    <PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-16 xl:max-w-5xl">
+    <PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-20 xl:max-w-5xl">
       <div data-page-header="" className="space-y-3 border-b pb-8">
         <div className="flex items-center justify-between">
           <PageHeaderHeading className="xl:leading-none">
@@ -93,7 +93,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
             <TableOfContents
               toc={toc}
               data-outer-toc
-              className="sticky top-22 **:data-scroll-area-viewport:max-h-[calc(100svh-calc(var(--spacing)*20))] max-xl:hidden"
+              className="sticky top-10 **:data-scroll-area-viewport:max-h-[calc(100svh-calc(var(--spacing)*20))] max-xl:hidden"
             />
           </div>
         )}

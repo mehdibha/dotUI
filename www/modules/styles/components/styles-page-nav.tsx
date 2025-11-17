@@ -36,7 +36,7 @@ export function StylesPageNav({
 
   return (
     <Tabs selectedKey={pathname} className={className}>
-      <div className="sticky top-0 z-10 flex h-12 items-end border-b bg-bg pt-1">
+      <div className="sticky top-0 z-10 flex h-(--header-height) items-end border-b bg-bg pt-1">
         <TabList className="container translate-y-px border-b-0">
           {items.map((tab) => (
             <Tab

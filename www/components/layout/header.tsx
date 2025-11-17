@@ -51,7 +51,10 @@ export function Header({
 
   return (
     <header
-      className={cn("sticky top-0 z-30 h-14 w-full border-b bg-bg", className)}
+      className={cn(
+        "sticky top-0 z-30 h-(--header-height) w-full border-b bg-bg",
+        className,
+      )}
     >
       <div
         className={cn(
@@ -63,7 +66,7 @@ export function Header({
           {isVisible("mobileNav") && <MobileNav items={items} />}
           {isVisible("logo") && <Logo className="max-md:hidden" />}
           {isVisible("menu") && (
-            <div className="flex items-center gap-3 text-sm max-md:hidden">
+            <nav className="flex items-center gap-3 text-sm max-md:hidden">
               {(
                 [
                   { label: "Docs", href: "/docs" },
@@ -80,7 +83,7 @@ export function Header({
                   {item.label}
                 </Link>
               ))}
-            </div>
+            </nav>
           )}
         </div>
         <div className="flex items-center gap-2">

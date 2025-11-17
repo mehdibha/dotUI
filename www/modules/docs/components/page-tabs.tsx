@@ -46,7 +46,7 @@ export function PageTabPanel({ id, children }: PageTabPanelProps) {
             <div>
               <TableOfContents
                 toc={toc}
-                className="sticky top-18 **:data-scroll-area-viewport:h-[calc(100svh-calc(var(--spacing)*22))] max-xl:hidden"
+                className="sticky top-10 **:data-scroll-area-viewport:h-[calc(100svh-calc(var(--spacing)*22))] max-xl:hidden"
               />
             </div>
           )}
