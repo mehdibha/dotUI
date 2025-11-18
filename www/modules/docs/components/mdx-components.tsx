@@ -20,6 +20,12 @@ import type {
 } from "@dotui/registry/ui/tabs";
 
 import { CodeBlock, Pre } from "./code-block";
+import {
+  CodeBlockTab,
+  CodeBlockTabs,
+  CodeBlockTabsList,
+  CodeBlockTabsTrigger,
+} from "./code-block-tabs";
 import type { ComponentPreviewProps } from "./component-preview";
 import { ComponentPreview } from "./component-preview";
 
@@ -94,14 +100,16 @@ export const mdxComponents: MDXComponents = {
     <ComponentPreview className="not-first:mt-6" {...props} />
   ),
 
-  // CodeBlockTabs: (props: TabsProps) => <Tabs className="mt-4" {...props} />,
-  // CodeBlockTabsList: (props: TabListProps) => (
-  //   <TabList className="rounded-t-md bg-muted" {...props} />
-  // ),
-  // CodeBlockTabsTrigger: (props: TabProps) => (
-  //   <Tab className="px-3" {...props} />
-  // ),
-  // CodeBlockTab: (props: TabPanelProps) => <TabPanel {...props} />,
+  CodeBlockTabs: ({ defaultValue, ...props }: { defaultValue: string }) => (
+    <CodeBlockTabs defaultSelectedKey={defaultValue} {...props} />
+  ),
+  CodeBlockTabsList,
+  CodeBlockTabsTrigger: ({ value, ...props }: { value: string }) => {
+    return <CodeBlockTabsTrigger id={value} {...props} />;
+  },
+  CodeBlockTab: ({ value, ...props }: { value: string }) => (
+    <CodeBlockTab id={value} {...props} />
+  ),
   //   border: 1px solid;
   // border-color: var(--color-fd-border);
   // background: var(--color-fd-muted);

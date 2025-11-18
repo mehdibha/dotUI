@@ -6,12 +6,14 @@ import { withImmer } from "jotai-immer";
 interface State {
   activeStyleId: string | null;
   activeMode: "light" | "dark";
+  packageManager: "npm" | "yarn" | "pnpm" | "bun";
 }
 
 const preferencesAtom = withImmer(
   atomWithStorage<State>("user-preferences", {
     activeStyleId: null,
     activeMode: "dark",
+    packageManager: "pnpm",
   }),
 );
 
@@ -38,10 +40,22 @@ export const usePreferences = () => {
     });
   };
 
+  const packageManager = React.useMemo(() => {
+    return state.packageManager;
+  }, [state.packageManager]);
+
+  const setPackageManager = (manager: "npm" | "yarn" | "pnpm" | "bun") => {
+    setState((draft) => {
+      draft.packageManager = manager;
+    });
+  };
+
   return {
     activeMode,
     setActiveMode,
     activeStyleId,
     setActiveStyleId,
+    packageManager,
+    setPackageManager,
   };
 };

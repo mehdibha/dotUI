@@ -75,5 +75,10 @@ export default defineConfig({
       },
       tab: true,
     },
+    remarkNpmOptions: {
+      persist: {
+        id: "package-manager",
+      },
+    },
   },
 });

@@ -28,7 +28,7 @@ const tabsStyles = tv({
       horizontal: {
         root: "flex-col",
         list: "flex-row border-b",
-        selectionIndicator: "bottom-0 left-0 h-0.5 w-full",
+        selectionIndicator: "bottom-0 left-0 h-0.5 w-full translate-y-px",
       },
       vertical: {
         root: "flex-row",
@@ -110,7 +110,7 @@ const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
   const orientation = useTabsContext("TabIndicator");
   return (
     <AriaSelectionIndicator
-      data-tab-indicator
+      data-tab-indicator=""
       className={composeRenderProps(className, (cn) =>
         selectionIndicator({ orientation, className: cn }),
       )}
