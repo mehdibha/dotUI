@@ -15,6 +15,7 @@ interface DynamicCodeBlockProps {
   lang?: string;
   options?: Omit<HighlightOptionsCommon, "lang"> & HighlightOptionsThemes;
   wrapInSuspense?: boolean;
+  fallback?: React.ReactNode;
 }
 
 export function DynamicCodeBlock({
@@ -22,6 +23,7 @@ export function DynamicCodeBlock({
   lang = "tsx",
   options,
   wrapInSuspense = true,
+  fallback,
 }: DynamicCodeBlockProps) {
   const id = useId();
   const deferredCode = useDeferredValue(code);
@@ -46,7 +48,9 @@ export function DynamicCodeBlock({
     return highlighted;
   }
 
-  return <Suspense fallback={<Pre>{code}</Pre>}>{highlighted}</Suspense>;
+  return (
+    <Suspense fallback={fallback}>{highlighted}</Suspense>
+  );
 }
 
 function Internal({

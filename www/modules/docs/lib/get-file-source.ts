@@ -28,6 +28,7 @@ export const getFileSource = async (filePath: string) => {
       "",
     ) // Remove function wrapper and return statement
     .replace(/\s*\)?\s*;?\s*\}\s*$/m, "") // Remove closing parenthesis and braces
+    .replace(/\s*\{\s*\.\.\.props\s*\}/g, "") // Remove props spread usage
     .trim();
 
   return {

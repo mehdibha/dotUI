@@ -60,10 +60,6 @@ export function ComponentPreviewTabs({
   const [controlValues, setControlValues] =
     React.useState<Record<string, ControlValue>>(controlDefaults);
 
-  React.useEffect(() => {
-    setControlValues(controlDefaults);
-  }, [controlDefaults]);
-
   const computedControlProps = React.useMemo(() => {
     if (!hasControls) {
       return undefined;
@@ -133,6 +129,7 @@ export function ComponentPreviewTabs({
       <DynamicCodeBlock
         code={(previewWithControls ?? previewSource).trim()}
         lang="tsx"
+        fallback={preview}
       />
     ) : (
       preview
@@ -143,6 +140,7 @@ export function ComponentPreviewTabs({
       <DynamicCodeBlock
         code={(codeWithControls ?? codeSource).trim()}
         lang="tsx"
+        fallback={code}
       />
     ) : (
       code
