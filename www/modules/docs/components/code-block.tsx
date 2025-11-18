@@ -33,10 +33,7 @@ export function CodeBlock({
 
   return (
     <figure
-      className={cn(
-        "overflow-hidden rounded-md border bg-card!",
-        className,
-      )}
+      className={cn("overflow-hidden rounded-md border bg-card!", className)}
       {...props}
     >
       {title && (

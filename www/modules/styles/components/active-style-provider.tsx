@@ -15,14 +15,20 @@ export function ActiveStyleProvider({
   unstyled,
   skeletonClassName,
   ...props
-}: Omit<React.ComponentProps<"div">, "style"> & { unstyled?: boolean, skeletonClassName?: string }) {
+}: Omit<React.ComponentProps<"div">, "style"> & {
+  unstyled?: boolean;
+  skeletonClassName?: string;
+}) {
   const container = useActiveStylePortalContext();
   const { activeMode } = usePreferences();
   const { data: activeStyle, isPending, isError } = useActiveStyle();
 
   if (isPending) {
     return (
-      <Skeleton {...props} className={cn("rounded-none", skeletonClassName, props.className)}>
+      <Skeleton
+        {...props}
+        className={cn("rounded-none", skeletonClassName, props.className)}
+      >
         {props.children}
       </Skeleton>
     );
