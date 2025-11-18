@@ -13,11 +13,9 @@ type SelectControl = {
   defaultValue?: string;
 };
 
-export type ComponentPreviewControl = BooleanControl | SelectControl;
+export type DemoControl = BooleanControl | SelectControl;
 
-export const buildControlDefaults = (
-  controls?: ComponentPreviewControl[],
-) => {
+export const buildControlDefaults = (controls?: DemoControl[]) => {
   if (!controls?.length) {
     return {};
   }
@@ -28,9 +26,7 @@ export const buildControlDefaults = (
   }, {});
 };
 
-export const getControlDefaultValue = (
-  control: ComponentPreviewControl,
-): ControlValue => {
+export const getControlDefaultValue = (control: DemoControl): ControlValue => {
   if (control.type === "boolean") {
     return typeof control.defaultValue === "boolean"
       ? control.defaultValue
@@ -61,4 +57,3 @@ export const areControlValuesEqual = (
 
   return nextKeys.every((key) => Object.is(prev[key], next[key]));
 };
-

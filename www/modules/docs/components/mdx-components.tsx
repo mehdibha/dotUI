@@ -15,10 +15,10 @@ import {
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
 } from "./code-block-tabs";
-import type { ComponentPreviewProps } from "./component-preview";
-import { ComponentPreview } from "./component-preview";
-import { PageTabPanel, PageTabs } from "./page-tabs";
+import type { DemoProps } from "./demo";
+import { Demo } from "./demo";
 import { Example } from "./example";
+import { PageTabPanel, PageTabs } from "./page-tabs";
 
 export const mdxComponents: MDXComponents = {
   h1: (props: HeadingProps) => (
@@ -89,9 +89,7 @@ export const mdxComponents: MDXComponents = {
   CodeBlockTab: ({ value, ...props }: { value: string }) => (
     <CodeBlockTab id={value} {...props} />
   ),
-  ComponentPreview: (props: ComponentPreviewProps) => (
-    <ComponentPreview className="not-first:mt-6" {...props} />
-  ),
+  Demo: (props: DemoProps) => <Demo className="not-first:mt-6" {...props} />,
   Example,
   p: ({ className, ...props }) => (
     <p

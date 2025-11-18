@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/tooltip.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="tooltip/demos/default"
   preview={`<Tooltip content={<span>Create new issue <Kbd>C</Kbd></span>}>
     <Button shape="square">
@@ -67,7 +67,7 @@ Use `Tooltip` to display a description of an element on hover or focus.
 
 Use the `variant` prop to change the appearance of the tooltip.
 
-<ComponentPreview
+<Demo
   name="tooltip/demos/variant"
   preview={`<Tooltip variant="inverse" content="Create new issue">
     <Button shape="square">
@@ -80,7 +80,7 @@ Use the `variant` prop to change the appearance of the tooltip.
 
 The Tooltip's placement with respect to its trigger element can be adjusted using the `placement` prop. See the props table for a full list of available placement combinations.
 
-<ComponentPreview
+<Demo
   name="tooltip/demos/placement"
   preview={`<Tooltip placement="top" content="Create new issue"><Button /></Tooltip>
 <Tooltip placement="bottom" content="Create new issue"><Button /></Tooltip>
@@ -92,7 +92,7 @@ The Tooltip's placement with respect to its trigger element can be adjusted usin
 
 The delay duration (the time from when the mouse enters a tooltip trigger until the tooltip opens) and the close delay can be customised.
 
-<ComponentPreview
+<Demo
   name="tooltip/demos/delay"
   preview={`<Tooltip delay={delay} closeDelay={closeDelay} content="Create new issue">
     <Button>
@@ -105,7 +105,7 @@ The delay duration (the time from when the mouse enters a tooltip trigger until 
 
 Use the `showArrow` prop to add an arrow to the tooltip.
 
-<ComponentPreview
+<Demo
   name="tooltip/demos/arrow"
   preview={`<Tooltip content="Create new issue" arrow>
     <Button>
@@ -118,7 +118,7 @@ Use the `showArrow` prop to add an arrow to the tooltip.
 
 This option determines whether or not a tooltip should be able to switch sides when constrained by space.
 
-<ComponentPreview
+<Demo
   name="tooltip/demos/flip"
   preview={`<Tooltip shouldFlip={shouldFlip} content="Create new issue">
     <Button>
@@ -131,7 +131,7 @@ This option determines whether or not a tooltip should be able to switch sides w
 
 The offset is the distance between the end of the tip and the target.
 
-<ComponentPreview
+<Demo
   name="tooltip/demos/offset"
   preview={`<Tooltip offset={offset} content="Create new issue">
     <Button>
@@ -144,7 +144,7 @@ The offset is the distance between the end of the tip and the target.
 
 To make sure that the tooltip will stay within certain boundaries (e.g., a browser window) it's possible to define a container and a container padding value to respect. The default value for this is 12 px.
 
-<ComponentPreview
+<Demo
   name="tooltip/demos/container-padding"
   preview={`<Tooltip containerPadding={containerPadding} content="Create new issue">
     <Button>

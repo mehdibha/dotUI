@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/checkbox.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="checkbox/demos/default"
   preview={`<Checkbox>I accept the <Link href="/terms">terms and conditions</Link></Checkbox>`}
 />
@@ -46,7 +46,7 @@ import { CheckboxIndicator, CheckboxRoot } from "@/components/core/checkbox";
 
 You can make the checkbox appear as a card using the `appearance` prop.
 
-<ComponentPreview
+<Demo
   name="checkbox/demos/card"
   preview={`<Checkbox variant="card">I accept the terms and conditions</Checkbox>`}
 />
@@ -55,7 +55,7 @@ You can make the checkbox appear as a card using the `appearance` prop.
 
 A checkbox can be in an indeterminate state, controlled using the `isIndeterminate` prop.
 
-<ComponentPreview
+<Demo
   name="checkbox/demos/indeterminate"
   preview={`<Checkbox isIndeterminate>Select all</Checkbox>`}
 />
@@ -64,7 +64,7 @@ A checkbox can be in an indeterminate state, controlled using the `isIndetermina
 
 Use the `isDisabled` prop to disable the checkbox.
 
-<ComponentPreview
+<Demo
   name="checkbox/demos/disabled"
   preview={`<Checkbox isDisabled>I accept the terms and conditions</Checkbox>`}
 />
@@ -73,7 +73,7 @@ Use the `isDisabled` prop to disable the checkbox.
 
 The `isReadOnly` prop makes the selection immutable. Unlike isDisabled, the Checkbox remains focusable.
 
-<ComponentPreview
+<Demo
   name="checkbox/demos/read-only"
   preview={`<Checkbox isReadOnly>I accept the terms and conditions</Checkbox>`}
 />
@@ -82,7 +82,7 @@ The `isReadOnly` prop makes the selection immutable. Unlike isDisabled, the Chec
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview
+<Demo
   name="checkbox/demos/composition"
   preview={`<CheckboxRoot className="..">
     <span>I agree to the terms and conditions</span>
@@ -94,7 +94,7 @@ If you need to customize things further, you can drop down to the composition le
 
 The `defaultSelected` prop can be used to set the default state.
 
-<ComponentPreview
+<Demo
   name="checkbox/demos/uncontrolled"
   preview={`<Checkbox defaultSelected>I accept the terms and conditions</Checkbox>`}
 />
@@ -103,7 +103,7 @@ The `defaultSelected` prop can be used to set the default state.
 
 Use the `isSelected` and `onChange` props to control the value of the input.
 
-<ComponentPreview
+<Demo
   name="checkbox/demos/controlled"
   preview={`const [checked, setChecked] = React.useState(false);
   return (

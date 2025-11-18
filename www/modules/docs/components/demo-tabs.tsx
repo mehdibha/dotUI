@@ -19,29 +19,29 @@ import {
 import {
   areControlValuesEqual,
   buildControlDefaults,
-  type ComponentPreviewControl,
   type ControlValue,
+  type DemoControl,
 } from "@/modules/docs/lib/component-controls";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 import { CodeBlock } from "./code-block";
-import { ComponentPreviewControls } from "./component-preview-controls";
+import { DemoControls } from "./demo-controls";
 import { DynamicCodeBlock } from "./dynamic-code-block";
 
-interface ComponentPreviewTabsProps extends React.ComponentProps<"div"> {
+interface DemoTabsProps extends React.ComponentProps<"div"> {
   component: React.ReactNode;
   code?: React.ReactNode;
   codeSource?: string;
   preview?: React.ReactNode;
   previewSource?: string;
-  controls?: ComponentPreviewControl[];
+  controls?: DemoControl[];
 }
 
-export type { ComponentPreviewControl };
+export type { DemoControl };
 
-export function ComponentPreviewTabs({
+export function DemoTabs({
   component,
   className,
   code,
@@ -50,7 +50,7 @@ export function ComponentPreviewTabs({
   previewSource,
   controls,
   ...props
-}: ComponentPreviewTabsProps) {
+}: DemoTabsProps) {
   const { activeMode, setActiveMode } = usePreferences();
   const { data: style } = useActiveStyle();
   const isMounted = useMounted();
@@ -190,7 +190,7 @@ export function ComponentPreviewTabs({
           {renderedComponent}
         </div>
         {hasControls && controls && (
-          <ComponentPreviewControls
+          <DemoControls
             controls={controls}
             values={controlValues}
             onValueChange={handleControlChange}
@@ -234,7 +234,7 @@ export function ComponentPreviewTabs({
 
 const applyControlsToPreviewSource = (
   previewSource: string,
-  controls: ComponentPreviewControl[],
+  controls: DemoControl[],
   values: Record<string, ControlValue>,
   defaults: Record<string, ControlValue>,
 ) => {
@@ -245,7 +245,7 @@ const applyControlsToPreviewSource = (
 
 const applyControlsToCodeSource = (
   codeSource: string,
-  controls: ComponentPreviewControl[],
+  controls: DemoControl[],
   values: Record<string, ControlValue>,
   defaults: Record<string, ControlValue>,
 ) => {
@@ -256,7 +256,7 @@ const applyControlsToCodeSource = (
 };
 
 const buildControlAttributes = (
-  controls: ComponentPreviewControl[],
+  controls: DemoControl[],
   values: Record<string, ControlValue>,
   defaults: Record<string, ControlValue>,
 ) => {
@@ -277,7 +277,7 @@ const buildControlAttributes = (
 };
 
 const shouldRenderAttribute = (
-  control: ComponentPreviewControl,
+  control: DemoControl,
   value: ControlValue,
   defaultValue: ControlValue,
 ) => {
@@ -300,10 +300,7 @@ const shouldRenderAttribute = (
   return true;
 };
 
-const formatAttribute = (
-  control: ComponentPreviewControl,
-  value: ControlValue,
-) => {
+const formatAttribute = (control: DemoControl, value: ControlValue) => {
   if (control.type === "boolean") {
     return value ? control.name : `${control.name}={false}`;
   }

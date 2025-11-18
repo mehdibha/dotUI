@@ -13,7 +13,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/menus-and-selection/combobox.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="combobox/demos/basic"
   preview={`<Combobox>
     <Item>Canada</Item>
@@ -42,7 +42,7 @@ Use `Combobox` to allow users to filter a list of options to items matching a qu
 
 A visual label can be provided for the combobox using the `label` prop, or a hidden label using `aria-label` prop.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/label"
   preview={`<Combobox label="Country">
     <Item>Canada</Item>
@@ -59,7 +59,7 @@ A visual label can be provided for the combobox using the `label` prop, or a hid
 
 A description can be supplied to the combobox via the `description` prop. The description is always visible unless the `validationState` is `“invalid”` and an error message is provided.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/description"
   preview={`<Combobox label="Country" description="Please select a country.">
     <Item>Canada</Item>
@@ -76,7 +76,7 @@ A description can be supplied to the combobox via the `description` prop. The de
 
 An `errorMessage` can be supplied to a `Combobox`, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/validation"
   preview={`<Combobox isInvalid errorMessage="Please select a country in the list.">
     <Item>Canada</Item>
@@ -93,7 +93,7 @@ An `errorMessage` can be supplied to a `Combobox`, which will be displayed when 
 
 By default, `Combobox` doesn't allow users to specify a value that doesn't exist in the list of options and will revert the input value to the current selected value on blur. By specifying `allowsCustomValue`, this behavior is suppressed.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/custom-value"
   preview={`<Combobox allowsCustomValue>
     <Item>Canada</Item>
@@ -110,7 +110,7 @@ By default, `Combobox` doesn't allow users to specify a value that doesn't exist
 
 The `isDisabled` prop can be used to disable the combobox.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/disabled"
   preview={`<Combobox label="Favorite animal" isDisabled>
     <Item>Red Panda</Item>
@@ -126,7 +126,7 @@ The `isDisabled` prop can be used to disable the combobox.
 
 Use the `isLoading` prop to indicate that the list is loading.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/loading"
   preview={`<Combobox label="Favorite Animal" isLoading>
     <Item>Red Panda</Item>
@@ -143,7 +143,7 @@ Use the `isLoading` prop to indicate that the list is loading.
 Use the `isRequired` prop to mark the combobox as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/required"
   preview={`<Combobox label="Country" isRequired necessityIndicator="icon">
     <Item>Canada</Item>
@@ -161,7 +161,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 Combobox supports sections in order to group options. Sections can be used by wrapping groups of items in a Section element.<br />
 Sections without a `title` must provide an aria-label for accessibility.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/sections"
   preview={`<Combobox>
     <Section title="Africa">
@@ -195,7 +195,7 @@ See [Item options](/components/menus-and-selection/list-box#item-options) for mo
 
 Use `defaultSelectedKey` to provide a default set of selected item.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/uncontrolled"
   preview={`<Combobox aria-label="country" defaultSelectedKey="tn">
     <Item id="ca">Canada</Item>
@@ -212,7 +212,7 @@ Use `defaultSelectedKey` to provide a default set of selected item.
 
 Use `selectedKey` to control the selected item.
 
-<ComponentPreview
+<Demo
   name="combobox/demos/controlled"
   preview={`const [country, setCountry] = React.useState<Key | null>("tn");
   return (
@@ -234,7 +234,7 @@ Use `selectedKey` to control the selected item.
 
 {/* prettier-ignore-start */}
 
-<ComponentPreview 
+<Demo 
   name="combobox/demos/async-loading" 
   preview={`const list = useAsyncList<Character>({
     async load({ signal }) {

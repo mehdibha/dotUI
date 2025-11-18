@@ -13,7 +13,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/menus-and-selection/list-box.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="list-box/demos/basic"
   preview={`<ListBox>
     <Item>Next.js</Item>
@@ -40,7 +40,7 @@ Use `ListBox` to display a list of options and allow a user to select one or mor
 By default, `ListBox` expects items to be arranged in a vertical stack, and implements keyboard navigation and drag and drop accordingly.
 Use the `orientation` prop to change the layout to a horizontal stack.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/horizontal"
   preview={`<ListBox orientation="horizontal" selectionMode="single">
     <Item textValue="Read" label="Read" description="Read Only" />
@@ -53,7 +53,7 @@ Use the `orientation` prop to change the layout to a horizontal stack.
 
 The `layout` prop can be set to `"grid"` to enable two-dimensional keyboard navigation.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/grid"
   preview={`<ListBox layout="grid">
     <Item>Next.js</Item>
@@ -67,7 +67,7 @@ The `layout` prop can be set to `"grid"` to enable two-dimensional keyboard navi
 
 ListBox supports multiple selection modes. By default, selection is disabled, however this can be changed using the `selectionMode` prop.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/selection-mode"
   preview={`<ListBox selectionMode="single">
     <Item>Next.js</Item>
@@ -87,7 +87,7 @@ ListBox supports multiple selection modes. By default, selection is disabled, ho
 
 When `selectionBehavior` is set to `"replace"`, clicking a row with the mouse replaces the selection with only that row. Using the arrow keys moves both focus and selection. To select multiple rows, modifier keys such as `Ctrl`, `Cmd`, and `Shift` can be used. On touch screen devices, selection always behaves as toggle since modifier keys may not be available.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/selection-behavior"
   preview={`<ListBox selectionMode="multiple" selectionBehavior="replace">
     <Item>Next.js</Item>
@@ -101,7 +101,7 @@ When `selectionBehavior` is set to `"replace"`, clicking a row with the mouse re
 
 Use the `isLoading` prop to indicate that the list is loading.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/loading"
   preview={`<ListBox isLoading>
     <Item>User 1</Item>
@@ -114,7 +114,7 @@ Use the `isLoading` prop to indicate that the list is loading.
 
 Use the `renderEmptyState` prop to customize what the ListBox will display if there are no items.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/empty-state"
   preview={`<ListBox renderEmptyState={() => "No results found."} />`}
 />
@@ -125,7 +125,7 @@ Use the `renderEmptyState` prop to customize what the ListBox will display if th
 
 Use the `variant` prop to set the visual style of the item.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/item-variant"
   preview={`<ListBox>
     <Item>View logs</Item>
@@ -139,7 +139,7 @@ Use the `variant` prop to set the visual style of the item.
 
 By default, items in a ListBox are labeled by their text contents for accessibility. Items also support the `"label"` and `"description"` props to separate primary and secondary content.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/label-and-description"
   preview={`<ListBox>
     <Item textValue="Read" label="Read" description="Read Only" />
@@ -152,7 +152,7 @@ By default, items in a ListBox are labeled by their text contents for accessibil
 
 To add additional context for the item, such as icons, use the `prefix` and `suffix` props.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/prefix-and-suffix"
   preview={`<ListBox>
     <Item label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
@@ -165,7 +165,7 @@ To add additional context for the item, such as icons, use the `prefix` and `suf
 
 Items may be links to another page or website. This can be achieved by passing the `href` prop to the `Item` component.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/links"
   preview={`<ListBox>
     <Item href="https://github.com/mehdibha">GitHub</Item>
@@ -178,7 +178,7 @@ Items may be links to another page or website. This can be achieved by passing t
 
 An `Item` can be disabled with the `isDisabled` prop.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/disabled-items"
   preview={`<ListBox>
     <Item>Next.js</Item>
@@ -193,7 +193,7 @@ An `Item` can be disabled with the `isDisabled` prop.
 `ListBox` supports sections in order to group options. Sections can be used by wrapping groups of items in a Section element.<br />
 Sections without a `title` must provide an `aria-label` for accessibility.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/sections"
   preview={`<ListBox selectionMode="multiple">
     <Section title="Sauces">
@@ -219,7 +219,7 @@ Sections without a `title` must provide an `aria-label` for accessibility.
 
 Separators may be added between items or sections in order to create non-labeled groupings.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/separator"
   preview={`<ListBox>
     <Item>New...</Item>
@@ -238,7 +238,7 @@ Separators may be added between items or sections in order to create non-labeled
 
 Use `defaultSelectedKey` to set a default selected item.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/uncontrolled"
   preview={`<ListBox
     selectionMode="multiple"
@@ -255,7 +255,7 @@ Use `defaultSelectedKey` to set a default selected item.
 
 Use `selectedKey` and `onChange` props to control the selected item.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/controlled"
   preview={`const [selected, setSelected] = React.useState<Selection>(new Set(["nextjs", "remix", "astro"]));
   return (
@@ -276,7 +276,7 @@ Use `selectedKey` and `onChange` props to control the selected item.
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview
+<Demo
   name="list-box/demos/composition"
   preview={`<ListBox selectionMode="multiple">
     <Item>
@@ -302,7 +302,7 @@ This example uses the `useAsyncList` hook to handle asynchronous loading of data
 
 {/* prettier-ignore-start */}
 
-<ComponentPreview 
+<Demo 
   name="list-box/demos/async-loading"
   preview={`const list = useAsyncList<Character>({
     async load({ signal }) {

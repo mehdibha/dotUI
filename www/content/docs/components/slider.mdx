@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/slider.mdx?plain=1
 ---
 
-<ComponentPreview
-  name="slider/demos/default"
-  preview={`<Slider defaultValue={50} />`}
-/>
+<Demo name="slider/demos/default" preview={`<Slider defaultValue={50} />`} />
 
 ## Installation
 
@@ -62,7 +59,7 @@ import {
 
 Use the `size` prop to control the size of the slider. The default variant is `"md"`.
 
-<ComponentPreview
+<Demo
   name="slider/demos/sizes"
   preview={`<Slider size="sm" />
 <Slider size="md" />
@@ -73,7 +70,7 @@ Use the `size` prop to control the size of the slider. The default variant is `"
 
 Sliders are horizontally oriented by default. The `orientation` prop can be set to `"vertical"` to create a vertical slider.
 
-<ComponentPreview
+<Demo
   name="slider/demos/vertical"
   preview={`<Slider orientation="vertical" />`}
 />
@@ -82,7 +79,7 @@ Sliders are horizontally oriented by default. The `orientation` prop can be set 
 
 A visual label can be provided using the `label` prop or a hidden label using `aria-label` prop.
 
-<ComponentPreview
+<Demo
   name="slider/demos/label"
   preview={`<Slider label="Opacity" defaultValue={50} />
 <Slider aria-label="Opacity" defaultValue={50} />`}
@@ -92,7 +89,7 @@ A visual label can be provided using the `label` prop or a hidden label using `a
 
 A description can be supplied to the slider using the `description` prop.
 
-<ComponentPreview
+<Demo
   name="slider/demos/description"
   preview={`<Slider label="Opacity" description="Adjust the background opacity." />`}
 />
@@ -101,7 +98,7 @@ A description can be supplied to the slider using the `description` prop.
 
 The `valueLabel` boolean prop can be used to display the current value of the slider. The `valueLabel` prop can also be set to a function that returns a custom value label.
 
-<ComponentPreview
+<Demo
   name="slider/demos/value-label"
   preview={`<Slider label="Donuts to buy" valueLabel />
   <Slider
@@ -114,7 +111,7 @@ The `valueLabel` boolean prop can be used to display the current value of the sl
 
 By default, slider values are precentages between 0 and 100. A different scale can be used by setting the `minValue` and `maxValue` props.
 
-<ComponentPreview
+<Demo
   name="slider/demos/value-scale"
   preview={`<Slider label="Cookies to buy" minValue={1} maxValue={50} />`}
 />
@@ -123,7 +120,7 @@ By default, slider values are precentages between 0 and 100. A different scale c
 
 The `step` prop can be used to snap the value to certain increments.
 
-<ComponentPreview
+<Demo
   name="slider/demos/step"
   preview={`<Slider label="Opacity" step={5} />`}
 />
@@ -133,7 +130,7 @@ The `step` prop can be used to snap the value to certain increments.
 Values are formatted as a percentage by default, but this can be modified by using the `formatOptions` prop to specify a different format.
 `formatOptions` is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
 
-<ComponentPreview
+<Demo
   name="slider/demos/format-options"
   preview={`<Slider label="Price" formatOptions={{ style: "currency", currency: "JPY" }} />`}
 />
@@ -142,7 +139,7 @@ Values are formatted as a percentage by default, but this can be modified by usi
 
 Passing an array to the `defaultValue` or `value` props will create a range slider.
 
-<ComponentPreview
+<Demo
   name="slider/demos/range"
   preview={`<Slider defaultValue={[200, 300]} />`}
 />
@@ -151,16 +148,13 @@ Passing an array to the `defaultValue` or `value` props will create a range slid
 
 Use the `isDisabled` prop to disable the slider.
 
-<ComponentPreview
-  name="slider/demos/disabled"
-  preview={`<Slider isDisabled />`}
-/>
+<Demo name="slider/demos/disabled" preview={`<Slider isDisabled />`} />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview
+<Demo
   name="slider/demos/composition"
   preview={`<SliderRoot>
     <Label>Volume</Label>
@@ -180,7 +174,7 @@ If you need to customize things further, you can drop down to the composition le
 
 The `defaultValue` prop can be used to set the default state.
 
-<ComponentPreview
+<Demo
   name="slider/demos/uncontrolled"
   preview={`<Slider defaultValue={20} />`}
 />
@@ -189,7 +183,7 @@ The `defaultValue` prop can be used to set the default state.
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<ComponentPreview
+<Demo
   name="slider/demos/controlled"
   preview={`const [value, setValue] = React.useState(50);
 return <Slider value={value} onChange={(value) => setValue(value as number)} />;`}

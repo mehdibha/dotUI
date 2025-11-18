@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/switch.mdx?plain=1
 ---
 
-<ComponentPreview
-  name="switch/demos/default"
-  preview={`<Switch>Focus mode</Switch>`}
-/>
+<Demo name="switch/demos/default" preview={`<Switch>Focus mode</Switch>`} />
 
 ## Installation
 
@@ -53,13 +50,13 @@ import {
 
 Use the `variant` prop to control the visual style of the switch.
 
-<ComponentPreview name="switch/demos/card" />
+<Demo name="switch/demos/card" />
 
 ### Size
 
 Use the `size` prop to control the size of the switch. The default variant is `"md"`.
 
-<ComponentPreview
+<Demo
   name="switch/demos/sizes"
   preview={`<Switch size="sm" />
 <Switch size="md" />
@@ -70,7 +67,7 @@ Use the `size` prop to control the size of the switch. The default variant is `"
 
 A visual label can be provided using the component children or a hidden label using `aria-label` prop.
 
-<ComponentPreview
+<Demo
   name="switch/demos/label"
   preview={`<Switch>Focus mode</Switch>
 <Switch aria-label="Focus mode" />`}
@@ -80,7 +77,7 @@ A visual label can be provided using the component children or a hidden label us
 
 Use the `isDisabled` prop to disable the switch.
 
-<ComponentPreview
+<Demo
   name="switch/demos/disabled"
   preview={`<Switch isDisabled>Focus Mode</Switch>`}
 />
@@ -89,7 +86,7 @@ Use the `isDisabled` prop to disable the switch.
 
 The `defaultSelected` prop can be used to set the default state.
 
-<ComponentPreview
+<Demo
   name="switch/demos/uncontrolled"
   preview={`<Switch defaultSelected>Airplane Mode</Switch>`}
 />
@@ -98,7 +95,7 @@ The `defaultSelected` prop can be used to set the default state.
 
 Use the `isSelected` and `onChange` props to control the value of the input.
 
-<ComponentPreview
+<Demo
   name="switch/demos/controlled"
   preview={`const [isSelected, setSelected] = React.useState(true);
   return (
@@ -112,7 +109,7 @@ Use the `isSelected` and `onChange` props to control the value of the input.
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview
+<Demo
   name="switch/demos/composition"
   preview={`<SwitchRoot>
     <SwitchIndicator>

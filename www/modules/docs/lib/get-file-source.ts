@@ -1,7 +1,6 @@
+import { extractPreviewSource } from "@/modules/docs/lib/code-transform";
 import fs from "node:fs/promises";
 import path from "node:path";
-
-import { extractPreviewSource } from "@/modules/docs/lib/code-transform";
 
 export const getFileSource = async (filePath: string) => {
   const fullPath = path.join(

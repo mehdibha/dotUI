@@ -12,7 +12,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/date-and-time/calendar.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/default"
   preview={`<Calendar aria-label="Appointment date" />`}
 />
@@ -86,7 +86,7 @@ import { Heading } from "@/registry/ui/default/core/heading";
 
 An initial, uncontrolled value can be provided to the `Calendar` using the `defaultValue` prop.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/uncontrolled"
   preview={`<Calendar aria-label="Appointment date" defaultValue={parseDate("2025-01-01")} />`}
 />
@@ -95,7 +95,7 @@ An initial, uncontrolled value can be provided to the `Calendar` using the `defa
 
 The `Calendar` component can be controlled by passing the `value` and `onChange` props.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/controlled"
   preview={`const [value, setValue] = React.useState<DateValue>(parseDate('2025-01-01'))
 return <Calendar aria-label="Event date" value={value} onChange={setValue} />`}
@@ -109,7 +109,7 @@ By default, `Calendar` allows selecting any date. The `minValue` and `maxValue` 
 
 This example only accepts dates after today.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/validation"
   preview={`<Calendar aria-label="Appointment date" minValue={today(getLocalTimeZone())} />`}
 />
@@ -122,7 +122,7 @@ This example includes multiple unavailable date ranges, e.g. dates when no appoi
 
 {/* prettier-ignore-start */}
 
-<ComponentPreview 
+<Demo 
   name="calendar/demos/calendar/unvailable-dates" 
   preview={`const now = today(getLocalTimeZone());
   const disabledRanges = [
@@ -154,7 +154,7 @@ This example includes multiple unavailable date ranges, e.g. dates when no appoi
 
 This example validates that the selected date is a weekday and not a weekend according to the current locale.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/error-message"
   preview={`const [date, setDate] = React.useState(today(getLocalTimeZone()));
   const { locale } = useLocale();
@@ -177,7 +177,7 @@ This example validates that the selected date is a weekday and not a weekend acc
 
 The `variant` prop can be used to change the appearance of the `Calendar`.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/variant"
   preview={`<Calendar
     aria-label="Appointment date"
@@ -190,7 +190,7 @@ The `variant` prop can be used to change the appearance of the `Calendar`.
 
 By default, `Calendar` displays a single month. The `visibleMonths` prop allows displaying up to 3 months at a time.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/visible-months"
   preview={`<Calendar aria-label="Appointment date" visibleMonths={2} />`}
 />
@@ -199,7 +199,7 @@ By default, `Calendar` displays a single month. The `visibleMonths` prop allows 
 
 The `pageBehavior` prop allows you to control how the calendar navigates between months.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/page-behaviour"
   preview={`<Calendar aria-label="Appointment date" visibleMonths={2} pageBehavior="single" />`}
 />
@@ -208,7 +208,7 @@ The `pageBehavior` prop allows you to control how the calendar navigates between
 
 The `isDisabled` boolean prop makes the Calendar disabled. Cells cannot be focused or selected.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/disabled"
   preview={`<Calendar aria-label="Appointment date" isDisabled />`}
 />
@@ -217,7 +217,7 @@ The `isDisabled` boolean prop makes the Calendar disabled. Cells cannot be focus
 
 The `isReadOnly` boolean prop makes the Calendar's value immutable. Unlike `isDisabled`, the Calendar remains focusable.
 
-<ComponentPreview
+<Demo
   name="calendar/demos/calendar/read-only"
   preview={`<Calendar aria-label="Appointment date" isReadOnly value={today(getLocalTimeZone())} />`}
 />
@@ -226,7 +226,7 @@ The `isReadOnly` boolean prop makes the Calendar's value immutable. Unlike `isDi
 
 If you need to customize things further, you can drop down to the composition level.
 
-<ComponentPreview
+<Demo
   suspense
   name="calendar/demos/calendar/composition"
   preview={`<CalendarRoot aria-label="Event date">

@@ -11,12 +11,12 @@ import { Switch } from "@dotui/registry/ui/switch";
 
 import {
   buildControlDefaults,
-  type ComponentPreviewControl,
   type ControlValue,
+  type DemoControl,
   getControlDefaultValue,
 } from "@/modules/docs/lib/component-controls";
 
-const getSelectOptions = (control: ComponentPreviewControl) => {
+const getSelectOptions = (control: DemoControl) => {
   if (control.type !== "select") {
     return [];
   }
@@ -31,17 +31,17 @@ const createControlId = (name: string) => {
     .replace(/^-+|-+$/g, "")}`;
 };
 
-interface ComponentPreviewControlsProps {
-  controls: ComponentPreviewControl[];
+interface DemoControlsProps {
+  controls: DemoControl[];
   values: Record<string, ControlValue>;
   onValueChange: (name: string, value: ControlValue) => void;
 }
 
-const ComponentPreviewControls = ({
+const DemoControls = ({
   controls,
   values,
   onValueChange,
-}: ComponentPreviewControlsProps) => {
+}: DemoControlsProps) => {
   if (!controls.length) {
     return null;
   }
@@ -128,14 +128,6 @@ const ComponentPreviewControls = ({
   );
 };
 
-export type {
-  ComponentPreviewControl,
-  ComponentPreviewControlsProps,
-  ControlValue,
-};
+export type { DemoControl, DemoControlsProps, ControlValue };
 
-export {
-  ComponentPreviewControls,
-  buildControlDefaults,
-  getControlDefaultValue,
-};
+export { DemoControls, buildControlDefaults, getControlDefaultValue };

@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/buttons/toggle-button.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="toggle-button/demos/default"
   preview={`<ToggleButton>
     <PinIcon />
@@ -35,7 +35,7 @@ They can have a label, an icon, or both. An icon is provided by passing an icon 
 Use the `variant` prop to control the visual style of the toggle button.
 The default size is `"quiet"`.
 
-<ComponentPreview
+<Demo
   name="toggle-button/demos/variants"
   preview={`<ToggleButton variant="quiet"><PinIcon /></ToggleButton>
 <ToggleButton variant="default"><PinIcon /></ToggleButton>
@@ -47,7 +47,7 @@ The default size is `"quiet"`.
 Use the `size` prop to control the size of the toggle button.<br/>
 The default size is `"md"`.
 
-<ComponentPreview
+<Demo
   name="toggle-button/demos/sizes"
   preview={`<ToggleButton size="sm"><PinIcon /></ToggleButton>
 <ToggleButton size="md"><PinIcon /></ToggleButton>
@@ -59,7 +59,7 @@ The default size is `"md"`.
 Use the `shape` prop to control the shape of the toggle button. The default shape is `"rectangle"`.<br/>
 Icon-only toggle buttons should include an `aria-label`.
 
-<ComponentPreview
+<Demo
   name="toggle-button/demos/shapes"
   preview={`<ToggleButton shape="square"><PinIcon /></ToggleButton>
 <ToggleButton shape="circular"><PinIcon /></ToggleButton>
@@ -70,7 +70,7 @@ Icon-only toggle buttons should include an `aria-label`.
 
 Use the `isDisabled` prop to disable the toggle button.
 
-<ComponentPreview
+<Demo
   name="toggle-button/demos/disabled"
   preview={`<ToggleButton isDisabled><PinIcon /></ToggleButton>`}
 />
@@ -79,7 +79,7 @@ Use the `isDisabled` prop to disable the toggle button.
 
 Use the `defaultSelected` to set the initial state of the toggle button.
 
-<ComponentPreview
+<Demo
   name="toggle-button/demos/uncontrolled"
   preview={`<ToggleButton defaultSelected><PinIcon /></ToggleButton>`}
 />
@@ -88,7 +88,7 @@ Use the `defaultSelected` to set the initial state of the toggle button.
 
 Use the `isSelected` and `onChange` props to control the state of the toggle button.
 
-<ComponentPreview
+<Demo
   name="toggle-button/demos/controlled"
   preview={`const [isSelected, setSelected] = React.useState(true);
   return (

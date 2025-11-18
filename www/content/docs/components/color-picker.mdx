@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/text-field.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="color-picker/demos/default"
   preview={`<ColorPicker defaultValue="#5100FF" />`}
 />
@@ -51,7 +51,7 @@ import { Dialog, DialogRoot } from "@/components/core/dialog";
 
 An initial, uncontrolled value can be provided to the `ColorPicker` using the `defaultValue` prop.
 
-<ComponentPreview
+<Demo
   name="color-picker/demos/uncontrolled"
   preview={`<ColorPicker defaultValue="#5100FF" />`}
 />
@@ -60,7 +60,7 @@ An initial, uncontrolled value can be provided to the `ColorPicker` using the `d
 
 Use the `value` and `onChange` props to control the color picker value.
 
-<ComponentPreview
+<Demo
   name="color-picker/demos/controlled"
   preview={`const [value, setValue] = React.useState(parseColor("hsl(25, 100%, 50%)"));
  <ColorPicker value={value} onChange={setValue} />;`}
@@ -72,13 +72,13 @@ Use the `value` and `onChange` props to control the color picker value.
 
 This example uses [ColorSlider](/docs/components/colors/color-slider) to allow a user to adjust each channel of a color value, with a [Select](/docs/components/menus-and-selection/select) to switch between color spaces.
 
-<ComponentPreview name="color-picker/demos/channel-sliders" />
+<Demo name="color-picker/demos/channel-sliders" />
 
 ### Swatches
 
 This example uses a [ColorSwatchPicker](/docs/components/colors/color-swatch-picker) to provide color presets for a color picker.
 
-<ComponentPreview name="color-picker/demos/swatches" />
+<Demo name="color-picker/demos/swatches" />
 
 ## API Reference
 

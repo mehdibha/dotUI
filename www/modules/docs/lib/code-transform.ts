@@ -75,4 +75,3 @@ export const stripPropsTypeAnnotations = (source: string) => {
 
   return updatedSource;
 };
-

@@ -3,22 +3,17 @@ import { highlight } from "fumadocs-core/highlight";
 import { cn } from "@dotui/registry/lib/utils";
 import { Index } from "@dotui/registry/ui/demos";
 
-import { ComponentPreviewTabs } from "@/modules/docs/components/component-preview-tabs";
-import type { ComponentPreviewControl } from "@/modules/docs/lib/component-controls";
+import { DemoTabs } from "@/modules/docs/components/demo-tabs";
+import type { DemoControl } from "@/modules/docs/lib/component-controls";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { Pre } from "./code-block";
 
-interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
+interface DemoProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
-  controls?: ComponentPreviewControl[];
+  controls?: DemoControl[];
 }
 
-async function ComponentPreview({
-  name,
-  className,
-  controls,
-  ...props
-}: ComponentPreviewProps) {
+async function Demo({ name, className, controls, ...props }: DemoProps) {
   const demoItem = Index[name];
 
   if (!demoItem) {
@@ -75,7 +70,7 @@ async function ComponentPreview({
   ]);
 
   return (
-    <ComponentPreviewTabs
+    <DemoTabs
       className={className}
       component={<Component />}
       code={highlightedCode}
@@ -88,6 +83,6 @@ async function ComponentPreview({
   );
 }
 
-export { ComponentPreview };
+export { Demo };
 
-export type { ComponentPreviewProps };
+export type { DemoProps };

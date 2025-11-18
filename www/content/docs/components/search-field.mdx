@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/search-field.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="search-field/demos/default"
   preview={`<SearchField aria-label="Search" />`}
 />
@@ -58,7 +58,7 @@ import { SearchFieldRoot } from "@/components/core/search-field";
 
 A visual label can be provided for the `SearchField` using the `label` prop or a hidden label using `aria-label` prop.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/label"
   preview={`<SearchField label="Search" />
 <SearchField aria-label="Search" />`}
@@ -68,7 +68,7 @@ A visual label can be provided for the `SearchField` using the `label` prop or a
 
 A description can be supplied to a SearchField via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/description"
   preview={`<SearchField label="Search" description="Enter your search query." />`}
 />
@@ -77,7 +77,7 @@ A description can be supplied to a SearchField via the `description` prop. The d
 
 An `errorMessage` can be supplied to a SearchField, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/error-message"
   preview={`<SearchField
     label="Search"
@@ -90,7 +90,7 @@ An `errorMessage` can be supplied to a SearchField, which will be displayed when
 
 Use the `size` prop to control the size of the `SearchField`. The default size is `"md"`.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/sizes"
   preview={`<SearchField size="sm" />
 <SearchField size="md" />
@@ -101,7 +101,7 @@ Use the `size` prop to control the size of the `SearchField`. The default size i
 
 Use the `isDisabled` prop to disable the SearchField.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/disabled"
   preview={`<SearchField isDisabled />`}
 />
@@ -110,7 +110,7 @@ Use the `isDisabled` prop to disable the SearchField.
 
 The `isReadOnly` boolean prop makes the SearchField's text content immutable. Unlike `isDisabled`, the SearchField remains focusable and the contents can still be copied.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/read-only"
   preview={`<SearchField isReadOnly />`}
 />
@@ -120,7 +120,7 @@ The `isReadOnly` boolean prop makes the SearchField's text content immutable. Un
 Use the `isRequired` prop to mark the SearchField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/required"
   preview={`<SearchField label="Search" isRequired />
 <SearchField label="Search" isRequired necessityIndicator="icon" />
@@ -132,7 +132,7 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 
 Use the `defaultValue` prop to set the default input value.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/uncontrolled"
   preview={`<SearchField defaultValue="Marvel movies" />`}
 />
@@ -141,7 +141,7 @@ Use the `defaultValue` prop to set the default input value.
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<ComponentPreview
+<Demo
   name="search-field/demos/controlled"
   preview={`const [inputValue, setInputValue] = React.useState("Marvel movies");
 return <SearchField value={inputValue} onChange={setInputValue} />;`}

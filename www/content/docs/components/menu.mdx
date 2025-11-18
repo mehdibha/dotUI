@@ -13,7 +13,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/menus-and-selection/menu.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="menu/demos/basic"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -42,7 +42,7 @@ Use `Menu` to display a list of actions or options that a user can choose.
 
 Use the `type` prop to set the overlay type. The default is `"popover"`. You can also set the mobile type using the `mobileType` prop (`"drawer"` by default).
 
-<ComponentPreview
+<Demo
   name="menu/demos/overlay-type"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -59,7 +59,7 @@ Use the `type` prop to set the overlay type. The default is `"popover"`. You can
 
 Use the `placement` prop to set the position of the menu relative to the trigger button.
 
-<ComponentPreview
+<Demo
   name="menu/demos/placement"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -77,7 +77,7 @@ Use the `placement` prop to set the position of the menu relative to the trigger
 
 Set the `selectionMode` prop to `single` for single selection.
 
-<ComponentPreview
+<Demo
   name="menu/demos/single-selection"
   preview={`const [selected, setSelected] = React.useState<Selection>(new Set(["center"]));
   return (
@@ -96,7 +96,7 @@ Set the `selectionMode` prop to `single` for single selection.
 
 Set the `selectionMode` prop to `multiple` for multiple selection.
 
-<ComponentPreview
+<Demo
   name="menu/demos/multiple-selection"
   preview={`<MenuRoot>
     <Button>Panels</Button>
@@ -115,7 +115,7 @@ Set the `selectionMode` prop to `multiple` for multiple selection.
 
 Use the `variant` prop to set the visual style of the menu item.
 
-<ComponentPreview
+<Demo
   name="menu/demos/item-variant"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -132,7 +132,7 @@ Use the `variant` prop to set the visual style of the menu item.
 
 MenuItems also support the `"label"` and `"description"` slots to separate primary and secondary content. You can also use the `Text` component to do the same behaviour.
 
-<ComponentPreview
+<Demo
   name="menu/demos/label-and-description"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -148,7 +148,7 @@ MenuItems also support the `"label"` and `"description"` slots to separate prima
 
 To add additional context for the menu item, such as icons, use the `prefix` and `suffix` props.
 
-<ComponentPreview
+<Demo
   name="menu/demos/prefix-and-suffix"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -164,7 +164,7 @@ To add additional context for the menu item, such as icons, use the `prefix` and
 
 Use the `shortcut` prop to add a keyboard shortcut to a menu item, or use the `Keyboard` component.
 
-<ComponentPreview
+<Demo
   name="menu/demos/shortcut"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -180,7 +180,7 @@ Use the `shortcut` prop to add a keyboard shortcut to a menu item, or use the `K
 
 Alternatively, items may be links to another page or website. This can be achieved by passing the href prop to the `<MenuItem>` component. Link items in a menu are not selectable.
 
-<ComponentPreview
+<Demo
   name="menu/demos/link-items"
   preview={`<MenuRoot>
     <Button>Social</Button>
@@ -202,7 +202,7 @@ Alternatively, items may be links to another page or website. This can be achiev
 
 A MenuItem can be disabled with the `isDisabled` prop.
 
-<ComponentPreview
+<Demo
   name="menu/demos/disabled-items"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -222,7 +222,7 @@ A MenuItem can be disabled with the `isDisabled` prop.
 
 By default, Menu opens by pressing the trigger element or activating it via the Space or Enter keys. This behavior can be changed by providing `"longPress"` to the `trigger` prop.
 
-<ComponentPreview
+<Demo
   name="menu/demos/long-press"
   preview={`<MenuRoot trigger="longPress">
     <Button><MenuIcon /></Button>
@@ -239,7 +239,7 @@ By default, Menu opens by pressing the trigger element or activating it via the 
 Menu supports sections with headings in order to group items. Sections can be used by wrapping groups of MenuItems in a `Section` component.<br />
 A `Header` element may also be included to label the section or using the `title` prop on the `Section` component.
 
-<ComponentPreview
+<Demo
   name="menu/demos/section"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -261,7 +261,7 @@ A `Header` element may also be included to label the section or using the `title
 
 Separators may be added between menu items or sections in order to create non-labeled groupings.
 
-<ComponentPreview
+<Demo
   name="menu/demos/separator"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -283,7 +283,7 @@ Separators may be added between menu items or sections in order to create non-la
 
 Submenus can be created by wrapping a `MenuItem` and a `Menu` in a `MenuSub`.
 
-<ComponentPreview
+<Demo
   name="menu/demos/submenus"
   preview={`<MenuRoot>
     <Button><MenuIcon /></Button>
@@ -311,7 +311,7 @@ Submenus can be created by wrapping a `MenuItem` and a `Menu` in a `MenuSub`.
 
 The open state can be controlled via `isOpen` and `onOpenChange` props.
 
-<ComponentPreview
+<Demo
   name="menu/demos/controlled"
   preview={`const [isOpen, setOpen] = React.useState(false);
   return (
@@ -325,7 +325,6 @@ The open state can be controlled via `isOpen` and `onOpenChange` props.
     </MenuRoot>
   )`}
 />
-
 
 ## API Reference
 

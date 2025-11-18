@@ -1,6 +1,6 @@
 "use client";
 import type React from "react";
-import { CheckIcon, ClipboardIcon, CopyIcon, FileIcon } from "lucide-react";
+import { CheckIcon, CopyIcon, FileIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";

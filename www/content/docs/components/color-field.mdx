@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-field.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="color-field/demos/default"
   preview={`<ColorField label="Color" />`}
 />
@@ -45,7 +45,7 @@ import { Description, FieldError, Label } from "@/components/core/field";
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/controlled"
   preview={`const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"));
 return <ColorField value={color} onChange={setColor} />`}
@@ -55,7 +55,7 @@ return <ColorField value={color} onChange={setColor} />`}
 
 By default, ColorField allows the user to edit the color as a hex value. When the colorSpace and channel props are provided, ColorField displays the value for that channel formatted as a number instead.Rendering multiple ColorFields together can allow a user to edit a color.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/color-channel"
   preview={`<ColorField label="Hue" colorSpace="hsl" channel="hue" />
   <ColorField label="Saturation" colorSpace="hsl" channel="saturation" />
@@ -66,7 +66,7 @@ By default, ColorField allows the user to edit the color as a hex value. When th
 
 A visual label can be provided for the `ColorField` using the `label` prop or a hidden label using `aria-label` prop.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/label"
   preview={`<ColorField label="Background" placeholder="Visible label" />
 <ColorField aria-label="Background" placeholder="Hidden label" />`}
@@ -76,7 +76,7 @@ A visual label can be provided for the `ColorField` using the `label` prop or a 
 
 A description can be supplied to `ColorField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/description"
   preview={`<ColorField label="Color" description="Enter a background color." />`}
 />
@@ -85,7 +85,7 @@ A description can be supplied to `ColorField` via the `description` prop. The de
 
 By default, `ColorField` displays default validation messages provided by the browser. You can customize this using the `errorMessage` prop, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/error-message"
   preview={`<ColorField label="Color" isInvalid errorMessage="Please fill out this field." />`}
 />
@@ -97,7 +97,7 @@ By default, `ColorField` displays default validation messages provided by the br
 Use the `size` prop to control the size of the `ColorField`.<br/>
 The default variant is `"md"`.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/sizes"
   preview={`<ColorField label="small" size="sm" />
 <ColorField label="medium" size="md" />
@@ -108,7 +108,7 @@ The default variant is `"md"`.
 
 To add additional context for the `ColorField`, use the `prefix` and `suffix` props.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/prefix-and-suffix"
   preview={`<ColorField prefix={<PaletteIcon />} />
 <ColorField suffix={<PaletteIcon />} />`}
@@ -118,7 +118,7 @@ To add additional context for the `ColorField`, use the `prefix` and `suffix` pr
 
 Use the `isDisabled` prop to disable the `ColorField`.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/disabled"
   preview={`<ColorField value={parseColor("rgb(222,70,58)")} isDisabled />`}
 />
@@ -127,7 +127,7 @@ Use the `isDisabled` prop to disable the `ColorField`.
 
 The `isReadOnly` boolean prop makes the `ColorField`'s text content immutable. Unlike `isDisabled`, the `ColorField` remains focusable and the contents can still be copied.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/read-only"
   preview={`<ColorField label="Color" isReadOnly value="#121212" />`}
 />
@@ -137,7 +137,7 @@ The `isReadOnly` boolean prop makes the `ColorField`'s text content immutable. U
 Use the `isRequired` prop to mark the `ColorField` as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<ComponentPreview
+<Demo
   name="color-field/demos/required"
   preview={`<ColorField label="Color" isRequired />
 <ColorField label="Color" isRequired necessityIndicator="icon" />

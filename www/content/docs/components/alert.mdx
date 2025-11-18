@@ -3,7 +3,7 @@ title: Alert
 description: Displays a callout for user attention.
 ---
 
-<ComponentPreview
+<Demo
   name="alert/demos/default"
   preview={`<Alert>
     <AlertTitle>Payment information</AlertTitle>
@@ -27,7 +27,7 @@ npx shadcn@latest add @dotui/alert
 
 Use the `variant` prop to change the visual style of the alert.
 
-<ComponentPreview
+<Demo
   name="alert/demos/variants"
   preview={`<Alert variant="neutral" title="This is a neutral alert" />
 <Alert variant="info" title="This is a neutral alert" />
@@ -42,7 +42,7 @@ Use the `variant` prop to change the visual style of the alert.
 
 Use the `title` prop to add a title to the alert.
 
-<ComponentPreview
+<Demo
   name="alert/demos/title"
   preview={`<Alert variant="warning" fill title="Your account has been suspended." />`}
   fullWidth
@@ -53,7 +53,7 @@ Use the `title` prop to add a title to the alert.
 
 Pass children to the alert to add content.
 
-<ComponentPreview
+<Demo
   name="alert/demos/content"
   preview={`<Alert title="Payment Information">
     Enter your payment method to complete your purchase.
@@ -66,7 +66,7 @@ Pass children to the alert to add content.
 
 Use the `icon` prop to add a custom icon to the alert. An explicit `null` value can be used to remove the default icon.
 
-<ComponentPreview
+<Demo
   name="alert/demos/custom-icon"
   preview={`<Alert icon={<GlobeIcon />}>Hello world!</Alert>`}
   fullWidth
@@ -77,7 +77,7 @@ Use the `icon` prop to add a custom icon to the alert. An explicit `null` value 
 
 Use the `action` prop to add an action to the alert.
 
-<ComponentPreview
+<Demo
   name="alert/demos/action"
   preview={`<Alert
     action={<Button>Upgrade</Button>}

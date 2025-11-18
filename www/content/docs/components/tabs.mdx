@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/navigation/tabs.mdx?plain=1
 ---
 
-<ComponentPreview
+<Demo
   name="tabs/demos/basic"
   preview={`<Tabs>
     <TabList>
@@ -34,7 +34,7 @@ npx shadcn@latest add @dotui/tabs
 
 Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
-<ComponentPreview
+<Demo
   name="tabs/demos/controlled"
   preview={`const [selectedTab, setSelectedTab] = React.useState<Key>("overview");
   return (
@@ -57,7 +57,7 @@ Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
 Use the `variant` prop to set the visual style of the tabs.
 
-<ComponentPreview
+<Demo
   name="tabs/demos/variant"
   preview={`<Tabs variant="solid">
     <TabList>
@@ -75,7 +75,7 @@ Use the `variant` prop to set the visual style of the tabs.
 
 Use the `orientation` prop to set the orientation of the tabs.
 
-<ComponentPreview
+<Demo
   name="tabs/demos/vertical"
   preview={`<Tabs orientation="vertical">
     <TabList>
@@ -93,7 +93,7 @@ Use the `orientation` prop to set the orientation of the tabs.
 
 Use the `isDisabled` prop on `Tabs` or `Tab` to disable the entire tab list or individual tabs.
 
-<ComponentPreview
+<Demo
   name="tabs/demos/disabled"
   preview={`<Tabs isDisabled> {/* All tabs disabled */}
     <TabList>
@@ -122,7 +122,7 @@ Use the `isDisabled` prop on `Tabs` or `Tab` to disable the entire tab list or i
 
 Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'manual'`.
 
-<ComponentPreview
+<Demo
   name="tabs/demos/keyboard-activation"
   preview={`<Tabs keyboardActivation="manual">
     <TabList>
