@@ -54,19 +54,29 @@ async function ComponentPreview({
     );
   }
 
-  const { content: rawCode } = await getFileSource(filePath);
-  const highlightedCode = await highlight(rawCode, {
-    lang: "tsx",
-    components: {
-      pre: (props) => <Pre {...props} />,
-    },
-  });
+  const { content: rawCode, preview: rawPreview } =
+    await getFileSource(filePath);
+  const [highlightedCode, highlightedPreview] = await Promise.all([
+    highlight(rawCode, {
+      lang: "tsx",
+      components: {
+        pre: (props) => <Pre {...props} />,
+      },
+    }),
+    highlight(rawPreview, {
+      lang: "tsx",
+      components: {
+        pre: (props) => <Pre {...props} />,
+      },
+    }),
+  ]);
 
   return (
     <ComponentPreviewTabs
       className={className}
       component={<Component />}
       code={highlightedCode}
+      preview={highlightedPreview}
       {...props}
     />
   );

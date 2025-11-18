@@ -28,6 +28,7 @@ export function ComponentPreviewTabs({
   component,
   className,
   code,
+  preview,
   ...props
 }: ComponentPreviewTabsProps) {
   const { activeMode, setActiveMode } = usePreferences();
@@ -82,7 +83,7 @@ export function ComponentPreviewTabs({
           </Button>
         }
       >
-        {code}
+        {isExpanded ? code : preview}
       </CodeBlock>
     </div>
   );
