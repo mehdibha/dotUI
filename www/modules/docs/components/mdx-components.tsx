@@ -18,6 +18,7 @@ import {
 import type { ComponentPreviewProps } from "./component-preview";
 import { ComponentPreview } from "./component-preview";
 import { PageTabPanel, PageTabs } from "./page-tabs";
+import { Example } from "./example";
 
 export const mdxComponents: MDXComponents = {
   h1: (props: HeadingProps) => (
@@ -91,6 +92,7 @@ export const mdxComponents: MDXComponents = {
   ComponentPreview: (props: ComponentPreviewProps) => (
     <ComponentPreview className="not-first:mt-6" {...props} />
   ),
+  Example,
   p: ({ className, ...props }) => (
     <p
       className={cn("not-first:mt-4 text-base leading-7", className)}
