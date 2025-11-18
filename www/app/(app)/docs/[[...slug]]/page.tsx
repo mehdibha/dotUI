@@ -98,7 +98,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
           </div>
         )}
       </div>
-      {lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}
+      {/* {lastModified && <PageLastUpdate date={lastModified} className="mt-12" />} */}
     </PageLayout>
   );
 }

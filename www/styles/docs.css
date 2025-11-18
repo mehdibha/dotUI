@@ -9,26 +9,6 @@
   @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 3xl:max-w-screen-2xl;
 }
 
-.shiki {
-  & code span {
-    color: var(--shiki-light);
-  }
-  .dark & code span {
-    color: var(--shiki-dark);
-  }
-  .highlighted {
-    margin: 0 -16px;
-    padding: 2px 16px;
-    background-color: transparent !important;
-  }
-  background-color: transparent !important;
-}
-
-.dark {
-  & .shiki code span {
-    color: var(--shiki-dark);
-  }
-}
 
 @utility step {
   counter-increment: step;
@@ -61,9 +41,4 @@
 @utility diagonal-pattern {
   --pattern-fg: color-mix(in oklab, var(--color-fg) 7%, transparent);
   @apply h-full border-x border-x-(--pattern-fg) bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-[size:10px_10px];
-}
-
-.shiki,
-.shiki span {
-  background-color: transparent;
 }

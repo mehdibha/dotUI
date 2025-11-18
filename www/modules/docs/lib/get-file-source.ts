@@ -1,7 +1,7 @@
-import fs from "node:fs";
+import fs from "node:fs/promises"
 import path from "node:path";
 
-export const getFileSource = (filePath: string) => {
+export const getFileSource = async (filePath: string) => {
   const fullPath = path.join(
     process.cwd(),
     "..",
@@ -10,7 +10,11 @@ export const getFileSource = (filePath: string) => {
     "src",
     filePath,
   );
-  const fileContent = fs.readFileSync(fullPath, "utf-8");
+  let fileContent = await fs.readFile(fullPath, "utf-8");
+  fileContent = fileContent.replaceAll(
+    `@dotui/registry/`,
+    "@/",
+  );
 
   const fileName = path.basename(fullPath);
 

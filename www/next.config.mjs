@@ -35,9 +35,6 @@ const config = {
       },
     ],
   },
-  experimental: {
-    turbopackFileSystemCacheForDev: true,
-  },
   devIndicators: false,
   async rewrites() {
     return [

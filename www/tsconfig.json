@@ -8,7 +8,7 @@
     "paths": {
       "@/*": ["./*"],
       "@dotui/registry/*": ["../packages/registry/src/*"],
-      "@dotui/registry-v2/*": ["../packages/registry-v2/src/*"]
+      "@dotui/registry-v2/*": ["../packages/registry-v2/src/*"],
     },
     "plugins": [{ "name": "next" }],
     "module": "esnext"

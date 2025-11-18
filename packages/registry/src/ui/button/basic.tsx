@@ -105,6 +105,7 @@ const Button = (localProps: ButtonProps) => {
   return (
     <AriaButton
       data-slot="button"
+      data-button=""
       data-icon-only={isIconOnly || undefined}
       className={composeRenderProps(className, (cn) =>
         buttonStyles({ variant, size, className: cn }),

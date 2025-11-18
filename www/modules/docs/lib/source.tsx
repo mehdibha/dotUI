@@ -2,7 +2,7 @@ import { createElement } from "react";
 import { loader } from "fumadocs-core/source";
 import { icons } from "lucide-react";
 
-import { docs, marketing } from "@/.source";
+import { docs, marketing } from "@/.source/server";
 
 export const docsSource = loader({
   baseUrl: "/docs",

@@ -1,0 +1,58 @@
+---
+title: Test Docs
+description: Let's test the docs system.
+links:
+  - label: react aria link
+    href: https://react-spectrum.adobe.com/react-aria/index.html
+  - label: shadcn link
+    href: https://ui.shadcn.com/
+  - label: another link
+    href: https://www.google.com
+---
+
+Hello this is a prop `showLineNumbers` and `lineNumbers`
+
+## Code block
+
+### Basic
+
+```tsx
+<Button>Button</Button>
+```
+
+### Extended
+
+```tsx
+import { Button } from "@/ui/button";
+
+export function Demo() {
+  return <Button>Button</Button>;
+}
+```
+
+### With title and line numbers
+
+```tsx lineNumbers title="app/page.tsx"
+import { Button } from "@/components/ui/button";
+
+export default function Home() {
+  return (
+    <div>
+      {/* [!code highlight] */}
+      <Button>Click me</Button>
+    </div>
+  );
+}
+```
+
+## Component preview
+
+### Not found
+
+<ComponentPreview name="button" />
+
+### Basic
+
+<ComponentPreview name="button/demos/default" />
+
+### With controls

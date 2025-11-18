@@ -1,19 +1,21 @@
+import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins";
 import {
   defineConfig,
   defineDocs,
   frontmatterSchema,
   metaSchema,
 } from "fumadocs-mdx/config";
+import lastModified from "fumadocs-mdx/plugins/last-modified";
 import { z } from "zod";
 
-import { fileGenerator } from "@/modules/docs/lib/mdx-plugins/file-generator";
-import {
-  type RemarkDocGenOptions,
-  remarkDocGen,
-} from "@/modules/docs/lib/mdx-plugins/remark-docgen";
-import remarkInlineCode from "@/modules/docs/lib/mdx-plugins/remark-inline-code";
-import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark-install";
-import { remarkInstall } from "@/modules/docs/lib/mdx-plugins/remark-install";
+// import { fileGenerator } from "@/modules/docs/lib/mdx-plugins/file-generator";
+// import {
+//   type RemarkDocGenOptions,
+//   remarkDocGen,
+// } from "@/modules/docs/lib/mdx-plugins/remark-docgen";
+// import remarkInlineCode from "@/modules/docs/lib/mdx-plugins/remark-inline-code";
+// import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark-install";
+// import { remarkInstall } from "@/modules/docs/lib/mdx-plugins/remark-install";
 
 export const docs = defineDocs({
   dir: "content/docs",
@@ -60,27 +62,17 @@ export const marketing = defineDocs({
 });
 
 export default defineConfig({
-  lastModifiedTime: "git",
+  plugins: [lastModified()],
   mdxOptions: {
-    remarkNpmOptions: false,
-    remarkPlugins: [
-      [
-        remarkInstall,
-        {
-          Tabs: "InstallTabs",
-          Tab: "InstallTab",
-        } satisfies RemarkInstallOptions,
-      ],
-      [remarkInlineCode],
-      [remarkDocGen, { generators: [fileGenerator()] } as RemarkDocGenOptions],
-    ],
     rehypeCodeOptions: {
+      ...rehypeCodeDefaultOptions,
+      langs: ["ts", "js", "html", "tsx", "mdx"],
+      defaultLanguage: "tsx",
+      inline: "tailing-curly-colon",
       themes: {
         light: "github-light",
         dark: "github-dark",
       },
-      inline: "tailing-curly-colon",
-      defaultLanguage: "ts",
       tab: true,
     },
   },
