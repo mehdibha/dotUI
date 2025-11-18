@@ -48,7 +48,9 @@ export function DynamicCodeBlock({
     return highlighted;
   }
 
-  return <Suspense fallback={fallback}>{highlighted}</Suspense>;
+  return (
+    <Suspense fallback={fallback ?? <Pre>{code}</Pre>}>{highlighted}</Suspense>
+  );
 }
 
 function Internal({

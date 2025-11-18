@@ -3,8 +3,8 @@ import { highlight } from "fumadocs-core/highlight";
 import { cn } from "@dotui/registry/lib/utils";
 import { Index } from "@dotui/registry/ui/demos";
 
-import type { ComponentPreviewControl } from "@/modules/docs/components/component-preview-tabs";
 import { ComponentPreviewTabs } from "@/modules/docs/components/component-preview-tabs";
+import type { ComponentPreviewControl } from "@/modules/docs/lib/component-controls";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { Pre } from "./code-block";
 

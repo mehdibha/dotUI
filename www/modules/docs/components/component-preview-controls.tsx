@@ -9,51 +9,12 @@ import {
 } from "@dotui/registry/ui/select";
 import { Switch } from "@dotui/registry/ui/switch";
 
-type ControlValue = string | number | boolean | null | undefined;
-
-type BooleanControl = {
-  name: string;
-  type: "boolean";
-  defaultValue?: boolean;
-};
-
-type SelectControl = {
-  name: string;
-  type: "select";
-  options: string[];
-  defaultValue?: string;
-};
-
-type ComponentPreviewControl = BooleanControl | SelectControl;
-
-const buildControlDefaults = (controls?: ComponentPreviewControl[]) => {
-  if (!controls?.length) {
-    return {};
-  }
-
-  return controls.reduce<Record<string, ControlValue>>((acc, control) => {
-    acc[control.name] = getControlDefaultValue(control);
-    return acc;
-  }, {});
-};
-
-const getControlDefaultValue = (control: ComponentPreviewControl) => {
-  if (control.type === "boolean") {
-    return typeof control.defaultValue === "boolean"
-      ? control.defaultValue
-      : false;
-  }
-
-  if (control.type === "select") {
-    if (typeof control.defaultValue === "string") {
-      return control.defaultValue;
-    }
-
-    return control.options[0] ?? "";
-  }
-
-  return "";
-};
+import {
+  buildControlDefaults,
+  type ComponentPreviewControl,
+  type ControlValue,
+  getControlDefaultValue,
+} from "@/modules/docs/lib/component-controls";
 
 const getSelectOptions = (control: ComponentPreviewControl) => {
   if (control.type !== "select") {

@@ -1,6 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+import { extractPreviewSource } from "@/modules/docs/lib/code-transform";
+
 export const getFileSource = async (filePath: string) => {
   const fullPath = path.join(
     process.cwd(),
@@ -21,15 +23,7 @@ export const getFileSource = async (filePath: string) => {
   fileContent = fileContent.replace(/\n$/, "");
 
   // preview is same as file content but without imports and without export default function ComponentName() { return()}, we only keep what's inside the return statement
-  const preview = fileContent
-    .replace(/^import.*?;\n/gm, "") // Remove all import statements
-    .replace(
-      /^export\s+(default\s+)?function\s+\w+\s*\([^)]*\)\s*\{[\s\S]*?return\s*\(?\s*/m,
-      "",
-    ) // Remove function wrapper and return statement
-    .replace(/\s*\)?\s*;?\s*\}\s*$/m, "") // Remove closing parenthesis and braces
-    .replace(/\s*\{\s*\.\.\.props\s*\}/g, "") // Remove props spread usage
-    .trim();
+  const preview = extractPreviewSource(fileContent);
 
   return {
     fileName,

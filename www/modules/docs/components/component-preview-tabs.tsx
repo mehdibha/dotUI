@@ -12,17 +12,22 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 
 import { useMounted } from "@/hooks/use-mounted";
+import {
+  injectAttributesIntoSource,
+  stripPropsTypeAnnotations,
+} from "@/modules/docs/lib/code-transform";
+import {
+  areControlValuesEqual,
+  buildControlDefaults,
+  type ComponentPreviewControl,
+  type ControlValue,
+} from "@/modules/docs/lib/component-controls";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 import { ActiveStyleProvider } from "@/modules/styles/components/active-style-provider";
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 import { CodeBlock } from "./code-block";
-import {
-  buildControlDefaults,
-  type ComponentPreviewControl,
-  ComponentPreviewControls,
-  type ControlValue,
-} from "./component-preview-controls";
+import { ComponentPreviewControls } from "./component-preview-controls";
 import { DynamicCodeBlock } from "./dynamic-code-block";
 
 interface ComponentPreviewTabsProps extends React.ComponentProps<"div"> {
@@ -59,6 +64,14 @@ export function ComponentPreviewTabs({
 
   const [controlValues, setControlValues] =
     React.useState<Record<string, ControlValue>>(controlDefaults);
+
+  React.useEffect(() => {
+    setControlValues((previous) =>
+      areControlValuesEqual(previous, controlDefaults)
+        ? previous
+        : controlDefaults,
+    );
+  }, [controlDefaults]);
 
   const computedControlProps = React.useMemo(() => {
     if (!hasControls) {
@@ -225,7 +238,7 @@ const applyControlsToPreviewSource = (
   values: Record<string, ControlValue>,
   defaults: Record<string, ControlValue>,
 ) => {
-  const attributes = buildControlAttributeString(controls, values, defaults);
+  const attributes = buildControlAttributes(controls, values, defaults);
   const updated = injectAttributesIntoSource(previewSource, attributes);
   return stripPropsTypeAnnotations(updated);
 };
@@ -236,13 +249,13 @@ const applyControlsToCodeSource = (
   values: Record<string, ControlValue>,
   defaults: Record<string, ControlValue>,
 ) => {
-  const attributes = buildControlAttributeString(controls, values, defaults);
+  const attributes = buildControlAttributes(controls, values, defaults);
   let updated = injectAttributesIntoSource(codeSource, attributes);
   updated = stripPropsTypeAnnotations(updated);
   return updated;
 };
 
-const buildControlAttributeString = (
+const buildControlAttributes = (
   controls: ComponentPreviewControl[],
   values: Record<string, ControlValue>,
   defaults: Record<string, ControlValue>,
@@ -260,7 +273,7 @@ const buildControlAttributeString = (
     attributes.push(formatAttribute(control, value));
   });
 
-  return attributes.join(" ").trim();
+  return attributes;
 };
 
 const shouldRenderAttribute = (
@@ -300,66 +313,4 @@ const formatAttribute = (
   }
 
   return `${control.name}="${value}"`;
-};
-
-const injectAttributesIntoSource = (source: string, attributes: string) => {
-  let updatedSource = source;
-
-  if (attributes) {
-    const spreadPattern = /\s*\{\s*\.\.\.props\s*\}/;
-    if (spreadPattern.test(source)) {
-      updatedSource = source.replace(spreadPattern, ` ${attributes}`);
-    } else {
-      updatedSource = source.replace(/<([A-Za-z][^>\s]*)/, `<$1 ${attributes}`);
-    }
-  }
-
-  updatedSource = updatedSource.replace(/\s*\{\s*\.\.\.props\s*\}/g, "");
-
-  return updatedSource.trim();
-};
-
-const stripPropsTypeAnnotations = (source: string) => {
-  let updatedSource = source;
-
-  const functionPattern =
-    /(export\s+)?function\s+(\w+)\s*\(\s*props(?:\s*:\s*[^)]*)?\s*\)/g;
-  updatedSource = updatedSource.replace(
-    functionPattern,
-    (_match, exp: string | undefined, name: string) => {
-      const prefix = exp ? "export " : "";
-      return `${prefix}function ${name}()`;
-    },
-  );
-
-  updatedSource = updatedSource.replace(/props\s*:\s*[^)\r\n]+/g, "props");
-
-  updatedSource = updatedSource.replace(
-    /import\s+\{([^}]*)\}\s+from\s+([^;]+);?/g,
-    (_match, specifiers: string, from: string) => {
-      const filtered = specifiers
-        .split(",")
-        .map((spec: string) => spec.trim())
-        .filter(Boolean)
-        .filter((spec: string) => !spec.startsWith("type "));
-
-      if (!filtered.length) {
-        return "";
-      }
-
-      return `import { ${filtered.join(", ")} } from ${from};`;
-    },
-  );
-
-  updatedSource = updatedSource.replace(
-    /import\s+type\s+\{[^}]*\}\s+from\s+[^;]+;?/g,
-    "",
-  );
-
-  updatedSource = updatedSource.replace(
-    /import\s+\{\s*\}\s+from\s+[^;]+;?\n?/g,
-    "",
-  );
-
-  return updatedSource;
 };
