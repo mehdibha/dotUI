@@ -14,7 +14,8 @@
       "!**/dist",
       "!**/build",
       "!**/.turbo",
-      "!**/.source"
+      "!**/.source",
+      "!**/*.mdx"
     ]
   },
   "css": {
