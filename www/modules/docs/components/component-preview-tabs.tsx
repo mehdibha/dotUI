@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { startTransition, ViewTransition } from "react";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -68,7 +68,11 @@ export function ComponentPreviewTabs({
             variant="quiet"
             size="sm"
             className="h-7 gap-1 pr-2 pl-1 text-xs"
-            onPress={() => setExpanded(!isExpanded)}
+            onPress={() => {
+              startTransition(() => {
+                setExpanded(!isExpanded);
+              });
+            }}
           >
             {isExpanded && (
               <>
@@ -83,7 +87,9 @@ export function ComponentPreviewTabs({
           </Button>
         }
       >
-        {isExpanded ? code : preview}
+        <ViewTransition default="code-fade">
+          {isExpanded ? code : preview}
+        </ViewTransition>
       </CodeBlock>
     </div>
   );

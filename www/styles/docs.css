@@ -9,7 +9,6 @@
   @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 3xl:max-w-screen-2xl;
 }
 
-
 @utility step {
   counter-increment: step;
 
@@ -41,4 +40,11 @@
 @utility diagonal-pattern {
   --pattern-fg: color-mix(in oklab, var(--color-fg) 7%, transparent);
   @apply h-full border-x border-x-(--pattern-fg) bg-[repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_1px,transparent_0,transparent_50%)] bg-[size:10px_10px];
+}
+
+/* View Transition for code preview */
+::view-transition-old(.code-fade),
+::view-transition-new(.code-fade) {
+  animation-duration: 100ms;
+  animation-timing-function: ease-in-out;
 }
