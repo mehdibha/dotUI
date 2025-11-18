@@ -86,7 +86,7 @@ export const mdxComponents: MDXComponents = {
   ),
   code: (props: React.HTMLAttributes<HTMLElement>) => (
     <code
-      className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-card not-in-[pre]:px-1. not-in-[pre]:py-0.75 not-in-[pre]:font-normal not-in-[pre]:text-[0.8125rem] not-in-[pre]:text-fg-muted"
+      className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-card not-in-[pre]:px-1.25 not-in-[pre]:py-0.75 not-in-[pre]:font-normal not-in-[pre]:text-[0.8125rem] not-in-[pre]:text-fg-muted"
       {...props}
     />
   ),
