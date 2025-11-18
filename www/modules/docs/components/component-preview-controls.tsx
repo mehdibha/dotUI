@@ -1,7 +1,6 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
 import {
   Select,
   SelectContent,
@@ -12,33 +11,20 @@ import { Switch } from "@dotui/registry/ui/switch";
 
 type ControlValue = string | number | boolean | null | undefined;
 
-interface ComponentPreviewControlOption {
-  label?: string;
-  value: string;
-}
-
-interface ComponentPreviewControl {
+type BooleanControl = {
   name: string;
-  type: string;
-  defaultValue?: ControlValue;
-  label?: string;
-  options?: ComponentPreviewControlOption[];
-  placeholder?: string;
-}
+  type: "boolean";
+  defaultValue?: boolean;
+};
 
-const DEFAULT_SELECT_OPTIONS: Record<string, ComponentPreviewControlOption[]> =
-  {
-    variant: [
-      { value: "primary", label: "Primary" },
-      { value: "secondary", label: "Secondary" },
-      { value: "quiet", label: "Quiet" },
-      { value: "link", label: "Link" },
-      { value: "danger", label: "Danger" },
-      { value: "success", label: "Success" },
-      { value: "warning", label: "Warning" },
-      { value: "info", label: "Info" },
-    ],
-  };
+type SelectControl = {
+  name: string;
+  type: "select";
+  options: string[];
+  defaultValue?: string;
+};
+
+type ComponentPreviewControl = BooleanControl | SelectControl;
 
 const buildControlDefaults = (controls?: ComponentPreviewControl[]) => {
   if (!controls?.length) {
@@ -51,64 +37,30 @@ const buildControlDefaults = (controls?: ComponentPreviewControl[]) => {
   }, {});
 };
 
-const getControlDefaultValue = (
-  control: ComponentPreviewControl,
-): ControlValue => {
+const getControlDefaultValue = (control: ComponentPreviewControl) => {
   if (control.type === "boolean") {
-    if (typeof control.defaultValue === "boolean") {
-      return control.defaultValue;
-    }
-    return false;
+    return typeof control.defaultValue === "boolean"
+      ? control.defaultValue
+      : false;
   }
 
   if (control.type === "select") {
-    if (typeof control.defaultValue !== "undefined") {
+    if (typeof control.defaultValue === "string") {
       return control.defaultValue;
     }
 
-    const options = getSelectOptions(control);
-    return options[0]?.value ?? "";
-  }
-
-  if (typeof control.defaultValue !== "undefined") {
-    return control.defaultValue;
+    return control.options[0] ?? "";
   }
 
   return "";
 };
 
 const getSelectOptions = (control: ComponentPreviewControl) => {
-  if (control.options?.length) {
-    return control.options;
+  if (control.type !== "select") {
+    return [];
   }
 
-  const normalizedName = control.name.toLowerCase();
-  return DEFAULT_SELECT_OPTIONS[normalizedName] ?? [];
-};
-
-const toTitleCase = (value: string) => {
-  return value
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/[-_]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-};
-
-const formatControlLabel = (control: ComponentPreviewControl) => {
-  if (control.label) {
-    return control.label;
-  }
-
-  return toTitleCase(control.name);
-};
-
-const formatOptionLabel = (option: ComponentPreviewControlOption) => {
-  if (option.label) {
-    return option.label;
-  }
-
-  return toTitleCase(option.value);
+  return control.options;
 };
 
 const createControlId = (name: string) => {
@@ -136,7 +88,7 @@ const ComponentPreviewControls = ({
   return (
     <div className="-ml-2 min-w-48 space-y-3 rounded-tr-md border border-l-0 bg-card/50 p-3 pl-5 **:data-[slot=label]:text-xs">
       {controls.map((control) => {
-        const label = formatControlLabel(control);
+        const label = control.name;
         const value = values[control.name] ?? getControlDefaultValue(control);
         const controlId = createControlId(control.name);
 
@@ -176,7 +128,7 @@ const ComponentPreviewControls = ({
                 ? value.toString()
                 : typeof control.defaultValue === "string"
                   ? control.defaultValue
-                  : (options[0]?.value ?? "");
+                  : (options[0] ?? "");
 
           return (
             <Select
@@ -186,9 +138,7 @@ const ComponentPreviewControls = ({
               onSelectionChange={(selected) =>
                 onValueChange(
                   control.name,
-                  selected != null
-                    ? selected.toString()
-                    : (options[0]?.value ?? ""),
+                  selected != null ? selected.toString() : (options[0] ?? ""),
                 )
               }
               className="w-full"
@@ -200,8 +150,8 @@ const ComponentPreviewControls = ({
               />
               <SelectContent>
                 {options.map((option) => (
-                  <SelectItem id={option.value} key={option.value}>
-                    {formatOptionLabel(option)}
+                  <SelectItem id={option} key={option}>
+                    {option}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -209,29 +159,9 @@ const ComponentPreviewControls = ({
           );
         }
 
-        return (
-          <div key={control.name} className="space-y-1">
-            <Label htmlFor={controlId} className="text-xs">
-              {label}
-            </Label>
-            <Input
-              id={controlId}
-              size="sm"
-              value={
-                typeof value === "number"
-                  ? value.toString()
-                  : typeof value === "string"
-                    ? value
-                    : ""
-              }
-              placeholder={control.placeholder}
-              onChange={(event) =>
-                onValueChange(control.name, event.target.value)
-              }
-              className="h-8 text-xs"
-            />
-          </div>
-        );
+        const exhaustiveCheck: never = control;
+        void exhaustiveCheck;
+        return null;
       })}
     </div>
   );
@@ -239,7 +169,6 @@ const ComponentPreviewControls = ({
 
 export type {
   ComponentPreviewControl,
-  ComponentPreviewControlOption,
   ComponentPreviewControlsProps,
   ControlValue,
 };

@@ -24,7 +24,7 @@ export const getFileSource = async (filePath: string) => {
   const preview = fileContent
     .replace(/^import.*?;\n/gm, "") // Remove all import statements
     .replace(
-      /^export\s+(default\s+)?function\s+\w+\(\)\s*\{[\s\S]*?return\s*\(?\s*/m,
+      /^export\s+(default\s+)?function\s+\w+\s*\([^)]*\)\s*\{[\s\S]*?return\s*\(?\s*/m,
       "",
     ) // Remove function wrapper and return statement
     .replace(/\s*\)?\s*;?\s*\}\s*$/m, "") // Remove closing parenthesis and braces

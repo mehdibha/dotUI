@@ -59,5 +59,32 @@ export default function Home() {
 
 <ComponentPreview
   name="button/demos/default"
-  controls={[{ name: "isDisabled", type: "boolean", defaultValue: false }]}
+  controls={[
+    {
+      name: "variant",
+      type: "select",
+      defaultValue: "default",
+      options: [
+        "default",
+        "primary",
+        "quiet",
+        "link",
+        "success",
+        "warning",
+        "danger",
+      ],
+    },
+    {
+      name: "size",
+      type: "select",
+      defaultValue: "md",
+      options: ["sm", "md", "lg"],
+    },
+    { name: "isDisabled", type: "boolean", defaultValue: false },
+    {
+      name: "isPending",
+      type: "boolean",
+      defaultValue: false,
+    },
+  ]}
 />

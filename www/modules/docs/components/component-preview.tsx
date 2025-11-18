@@ -57,17 +57,6 @@ async function ComponentPreview({
     );
   }
 
-  if (controls) {
-    return (
-      <ComponentPreviewTabs
-        className={className}
-        component={<Component />}
-        controls={controls}
-        {...props}
-      />
-    );
-  }
-
   const { content: rawCode, preview: rawPreview } =
     await getFileSource(filePath);
   const [highlightedCode, highlightedPreview] = await Promise.all([
@@ -90,7 +79,10 @@ async function ComponentPreview({
       className={className}
       component={<Component />}
       code={highlightedCode}
+      codeSource={rawCode}
       preview={highlightedPreview}
+      previewSource={rawPreview}
+      controls={controls}
       {...props}
     />
   );

@@ -23,11 +23,14 @@ import {
   ComponentPreviewControls,
   type ControlValue,
 } from "./component-preview-controls";
+import { DynamicCodeBlock } from "./dynamic-code-block";
 
 interface ComponentPreviewTabsProps extends React.ComponentProps<"div"> {
   component: React.ReactNode;
   code?: React.ReactNode;
+  codeSource?: string;
   preview?: React.ReactNode;
+  previewSource?: string;
   controls?: ComponentPreviewControl[];
 }
 
@@ -37,7 +40,9 @@ export function ComponentPreviewTabs({
   component,
   className,
   code,
+  codeSource,
   preview,
+  previewSource,
   controls,
   ...props
 }: ComponentPreviewTabsProps) {
@@ -47,25 +52,17 @@ export function ComponentPreviewTabs({
   const [isExpanded, setExpanded] = React.useState(false);
   const hasControls = Boolean(controls?.length);
 
-  const [controlValues, setControlValues] = React.useState<
-    Record<string, ControlValue>
-  >(() => buildControlDefaults(controls));
-
-  const controlsSignature = React.useMemo(
-    () => (hasControls ? JSON.stringify(controls) : undefined),
-    [controls, hasControls],
+  const controlDefaults = React.useMemo(
+    () => buildControlDefaults(controls),
+    [controls],
   );
 
-  const previousControlsSignature = React.useRef<string | undefined>(undefined);
+  const [controlValues, setControlValues] =
+    React.useState<Record<string, ControlValue>>(controlDefaults);
 
   React.useEffect(() => {
-    if (controlsSignature === previousControlsSignature.current) {
-      return;
-    }
-
-    previousControlsSignature.current = controlsSignature;
-    setControlValues(buildControlDefaults(controls));
-  }, [controls, controlsSignature]);
+    setControlValues(controlDefaults);
+  }, [controlDefaults]);
 
   const computedControlProps = React.useMemo(() => {
     if (!hasControls) {
@@ -104,6 +101,52 @@ export function ComponentPreviewTabs({
     },
     [],
   );
+
+  const previewWithControls = React.useMemo(() => {
+    if (!hasControls || !previewSource || !controls?.length) {
+      return undefined;
+    }
+
+    return applyControlsToPreviewSource(
+      previewSource,
+      controls,
+      controlValues,
+      controlDefaults,
+    );
+  }, [controlDefaults, controlValues, controls, hasControls, previewSource]);
+
+  const codeWithControls = React.useMemo(() => {
+    if (!hasControls || !codeSource || !controls?.length) {
+      return undefined;
+    }
+
+    return applyControlsToCodeSource(
+      codeSource,
+      controls,
+      controlValues,
+      controlDefaults,
+    );
+  }, [codeSource, controlDefaults, controlValues, controls, hasControls]);
+
+  const previewContent =
+    hasControls && previewSource ? (
+      <DynamicCodeBlock
+        code={(previewWithControls ?? previewSource).trim()}
+        lang="tsx"
+      />
+    ) : (
+      preview
+    );
+
+  const codeContent =
+    hasControls && codeSource ? (
+      <DynamicCodeBlock
+        code={(codeWithControls ?? codeSource).trim()}
+        lang="tsx"
+      />
+    ) : (
+      code
+    );
 
   return (
     <div className={cn("", className)} {...props}>
@@ -167,9 +210,154 @@ export function ComponentPreviewTabs({
         }
       >
         <ViewTransition default="code-fade">
-          {isExpanded ? code : preview}
+          {isExpanded ? codeContent : previewContent}
         </ViewTransition>
       </CodeBlock>
     </div>
   );
 }
+
+const applyControlsToPreviewSource = (
+  previewSource: string,
+  controls: ComponentPreviewControl[],
+  values: Record<string, ControlValue>,
+  defaults: Record<string, ControlValue>,
+) => {
+  const attributes = buildControlAttributeString(controls, values, defaults);
+  const updated = injectAttributesIntoSource(previewSource, attributes);
+  return stripPropsTypeAnnotations(updated);
+};
+
+const applyControlsToCodeSource = (
+  codeSource: string,
+  controls: ComponentPreviewControl[],
+  values: Record<string, ControlValue>,
+  defaults: Record<string, ControlValue>,
+) => {
+  const attributes = buildControlAttributeString(controls, values, defaults);
+  let updated = injectAttributesIntoSource(codeSource, attributes);
+  updated = stripPropsTypeAnnotations(updated);
+  return updated;
+};
+
+const buildControlAttributeString = (
+  controls: ComponentPreviewControl[],
+  values: Record<string, ControlValue>,
+  defaults: Record<string, ControlValue>,
+) => {
+  const attributes: string[] = [];
+
+  controls.forEach((control) => {
+    const value = values[control.name];
+    const defaultValue = defaults[control.name];
+
+    if (!shouldRenderAttribute(control, value, defaultValue)) {
+      return;
+    }
+
+    attributes.push(formatAttribute(control, value));
+  });
+
+  return attributes.join(" ").trim();
+};
+
+const shouldRenderAttribute = (
+  control: ComponentPreviewControl,
+  value: ControlValue,
+  defaultValue: ControlValue,
+) => {
+  if (typeof value === "undefined" || value === null) {
+    return false;
+  }
+
+  if (value === defaultValue) {
+    return false;
+  }
+
+  if (control.type === "boolean") {
+    return true;
+  }
+
+  if (typeof value === "string") {
+    return value.length > 0;
+  }
+
+  return true;
+};
+
+const formatAttribute = (
+  control: ComponentPreviewControl,
+  value: ControlValue,
+) => {
+  if (control.type === "boolean") {
+    return value ? control.name : `${control.name}={false}`;
+  }
+
+  if (typeof value === "number") {
+    return `${control.name}={${value}}`;
+  }
+
+  return `${control.name}="${value}"`;
+};
+
+const injectAttributesIntoSource = (source: string, attributes: string) => {
+  let updatedSource = source;
+
+  if (attributes) {
+    const spreadPattern = /\s*\{\s*\.\.\.props\s*\}/;
+    if (spreadPattern.test(source)) {
+      updatedSource = source.replace(spreadPattern, ` ${attributes}`);
+    } else {
+      updatedSource = source.replace(/<([A-Za-z][^>\s]*)/, `<$1 ${attributes}`);
+    }
+  }
+
+  updatedSource = updatedSource.replace(/\s*\{\s*\.\.\.props\s*\}/g, "");
+
+  return updatedSource.trim();
+};
+
+const stripPropsTypeAnnotations = (source: string) => {
+  let updatedSource = source;
+
+  const functionPattern =
+    /(export\s+)?function\s+(\w+)\s*\(\s*props(?:\s*:\s*[^)]*)?\s*\)/g;
+  updatedSource = updatedSource.replace(
+    functionPattern,
+    (_match, exp: string | undefined, name: string) => {
+      const prefix = exp ? "export " : "";
+      return `${prefix}function ${name}()`;
+    },
+  );
+
+  updatedSource = updatedSource.replace(/props\s*:\s*[^)\r\n]+/g, "props");
+
+  updatedSource = updatedSource.replace(
+    /import\s+\{([^}]*)\}\s+from\s+([^;]+);?/g,
+    (_match, specifiers: string, from: string) => {
+      const filtered = specifiers
+        .split(",")
+        .map((spec: string) => spec.trim())
+        .filter(Boolean)
+        .filter((spec: string) => !spec.startsWith("type "));
+
+      if (!filtered.length) {
+        return "";
+      }
+
+      return `import { ${filtered.join(", ")} } from ${from};`;
+    },
+  );
+
+  updatedSource = updatedSource.replace(
+    /import\s+type\s+\{[^}]*\}\s+from\s+[^;]+;?/g,
+    "",
+  );
+
+  updatedSource = updatedSource.replace(
+    /import\s+\{\s*\}\s+from\s+[^;]+;?\n?/g,
+    "",
+  );
+
+  return updatedSource;
+};
