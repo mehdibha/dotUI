@@ -22,7 +22,7 @@ export const injectAttributesIntoSource = (
   }
 
   const formatted =
-    attributes.length === 1 && attributes[0].length <= 40
+    attributes.length === 1 && attributes[0] && attributes[0].length <= 40
       ? ` ${attributes[0]}`
       : `${attributes.map((attr) => `\n  ${attr}`).join("")}\n`;
 
