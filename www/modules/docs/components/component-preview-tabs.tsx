@@ -150,8 +150,12 @@ export function ComponentPreviewTabs({
 
   return (
     <div className={cn("", className)} {...props}>
-      <ActiveStyleProvider className="flex items-stretch">
-        <div className="relative z-1 flex min-h-48 flex-1 items-center justify-center rounded-t-lg border bg-bg pt-24 pb-20">
+      <ActiveStyleProvider
+        unstyled
+        className="flex min-h-56 items-stretch"
+        skeletonClassName="border rounded-t-md"
+      >
+        <div className="relative z-1 flex flex-1 items-center justify-center rounded-t-lg border bg-bg pt-24 pb-20">
           <ActiveStyleSelector
             buttonProps={{
               size: "sm",
