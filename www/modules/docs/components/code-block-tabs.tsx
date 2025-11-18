@@ -13,7 +13,7 @@ import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
 export const CodeBlockTabs = ({
   groupId,
   ...props
-}: TabsProps & { groupId: string }) => {
+}: TabsProps & { groupId?: string }) => {
   const { packageManager, setPackageManager } = usePreferences();
 
   return (
