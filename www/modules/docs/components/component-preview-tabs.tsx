@@ -10,14 +10,6 @@ import {
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { Label } from "@dotui/registry/ui/field";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "@dotui/registry/ui/select";
-import { Switch } from "@dotui/registry/ui/switch";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
@@ -25,13 +17,21 @@ import { ActiveStyleProvider } from "@/modules/styles/components/active-style-pr
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
 import { CodeBlock } from "./code-block";
+import {
+  buildControlDefaults,
+  type ComponentPreviewControl,
+  ComponentPreviewControls,
+  type ControlValue,
+} from "./component-preview-controls";
 
 interface ComponentPreviewTabsProps extends React.ComponentProps<"div"> {
   component: React.ReactNode;
   code?: React.ReactNode;
   preview?: React.ReactNode;
-  controls?: { name: string; type: string; defaultValue: any }[];
+  controls?: ComponentPreviewControl[];
 }
+
+export type { ComponentPreviewControl };
 
 export function ComponentPreviewTabs({
   component,
@@ -45,6 +45,65 @@ export function ComponentPreviewTabs({
   const { data: style } = useActiveStyle();
   const isMounted = useMounted();
   const [isExpanded, setExpanded] = React.useState(false);
+  const hasControls = Boolean(controls?.length);
+
+  const [controlValues, setControlValues] = React.useState<
+    Record<string, ControlValue>
+  >(() => buildControlDefaults(controls));
+
+  const controlsSignature = React.useMemo(
+    () => (hasControls ? JSON.stringify(controls) : undefined),
+    [controls, hasControls],
+  );
+
+  const previousControlsSignature = React.useRef<string | undefined>(undefined);
+
+  React.useEffect(() => {
+    if (controlsSignature === previousControlsSignature.current) {
+      return;
+    }
+
+    previousControlsSignature.current = controlsSignature;
+    setControlValues(buildControlDefaults(controls));
+  }, [controls, controlsSignature]);
+
+  const computedControlProps = React.useMemo(() => {
+    if (!hasControls) {
+      return undefined;
+    }
+
+    return Object.entries(controlValues).reduce<Record<string, ControlValue>>(
+      (acc, [key, value]) => {
+        if (typeof value !== "undefined") {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {},
+    );
+  }, [controlValues, hasControls]);
+
+  const renderedComponent = React.useMemo(() => {
+    if (!hasControls || !computedControlProps) {
+      return component;
+    }
+
+    if (!React.isValidElement(component)) {
+      return component;
+    }
+
+    return React.cloneElement(component, computedControlProps);
+  }, [component, computedControlProps, hasControls]);
+
+  const handleControlChange = React.useCallback(
+    (name: string, value: ControlValue) => {
+      setControlValues((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    [],
+  );
 
   return (
     <div className={cn("", className)} {...props}>
@@ -70,36 +129,14 @@ export function ComponentPreviewTabs({
             </Button>
           )}
 
-          {component}
+          {renderedComponent}
         </div>
-        {controls && (
-          <div className="-ml-2 w-32 space-y-2 rounded-tr-md border border-l-0 bg-card/50 p-3 pl-5 **:data-[slot=label]:text-xs">
-            <Select defaultValue="primary" className="w-full">
-              <Label>Variant</Label>
-              <SelectTrigger
-                size="sm"
-                className="h-7 w-full border-0 text-xs"
-              />
-              <SelectContent>
-                <SelectItem id="primary">Primary</SelectItem>
-                <SelectItem id="secondary">Secondary</SelectItem>
-                <SelectItem id="quiet">Quiet</SelectItem>
-                <SelectItem id="link">Link</SelectItem>
-                <SelectItem id="danger">Danger</SelectItem>
-                <SelectItem id="success">Success</SelectItem>
-                <SelectItem id="warning">Warning</SelectItem>
-                <SelectItem id="info">Info</SelectItem>
-              </SelectContent>
-            </Select>
-            <div>
-              <Label>isPending</Label>
-              <Switch size="sm" />
-            </div>
-            <div>
-              <Label>isDisabled</Label>
-              <Switch size="sm" />
-            </div>
-          </div>
+        {hasControls && controls && (
+          <ComponentPreviewControls
+            controls={controls}
+            values={controlValues}
+            onValueChange={handleControlChange}
+          />
         )}
       </ActiveStyleProvider>
       <CodeBlock

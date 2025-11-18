@@ -3,13 +3,14 @@ import { highlight } from "fumadocs-core/highlight";
 import { cn } from "@dotui/registry/lib/utils";
 import { Index } from "@dotui/registry/ui/demos";
 
+import type { ComponentPreviewControl } from "@/modules/docs/components/component-preview-tabs";
 import { ComponentPreviewTabs } from "@/modules/docs/components/component-preview-tabs";
 import { getFileSource } from "@/modules/docs/lib/get-file-source";
 import { Pre } from "./code-block";
 
 interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
-  controls?: { name: string; type: string; defaultValue: any }[];
+  controls?: ComponentPreviewControl[];
 }
 
 async function ComponentPreview({
@@ -57,11 +58,14 @@ async function ComponentPreview({
   }
 
   if (controls) {
-    <ComponentPreviewTabs
-      className={className}
-      component={<Component />}
-      {...props}
-    />;
+    return (
+      <ComponentPreviewTabs
+        className={className}
+        component={<Component />}
+        controls={controls}
+        {...props}
+      />
+    );
   }
 
   const { content: rawCode, preview: rawPreview } =
@@ -87,7 +91,6 @@ async function ComponentPreview({
       component={<Component />}
       code={highlightedCode}
       preview={highlightedPreview}
-      controls={controls}
       {...props}
     />
   );
