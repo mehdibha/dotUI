@@ -43,7 +43,7 @@ export default async function HomePage() {
             Beautiful components, accessibility out of the box, composition, and
             more, all powered by <AdobeIcon className="inline-flex size-4" />{" "}
             <span className="font-medium text-fg">react-aria-components</span>{" "}
-            and <ShadcnIcon className="inline-flex size-5" />
+            and <ShadcnIcon className="inline-flex size-5" />{" "}
             <span className="font-medium text-fg">shadcn&nbsp;CLI</span>.
           </p>
           <div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
