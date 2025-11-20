@@ -54,7 +54,7 @@ export function DemoTabs({
   const { activeMode, setActiveMode } = usePreferences();
   const { data: style } = useActiveStyle();
   const isMounted = useMounted();
-  const [isExpanded, setExpanded] = React.useState(false);
+  const [isExpanded, setExpanded] = React.useState(true);
   const hasControls = Boolean(controls?.length);
 
   const controlDefaults = React.useMemo(
