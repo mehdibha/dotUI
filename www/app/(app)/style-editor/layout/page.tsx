@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { LayoutEditor } from "@/modules/style-editor/components/layout-editor";
+import { LayoutEditor } from "@/modules/style-editor/layout-editor";
 
 export async function generateMetadata({
   searchParams,

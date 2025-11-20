@@ -1,7 +1,7 @@
 import {
   ActiveStylePortalProvider,
   ActiveStyleProvider,
-} from "@/modules/styles/components/active-style-provider";
+} from "@/modules/styles/active-style-provider";
 
 export default function PlaygroundLayout({
   children,

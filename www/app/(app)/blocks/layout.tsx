@@ -8,7 +8,7 @@ import {
   PageLayout,
 } from "@/components/layout/page-layout";
 import { BlocksNav } from "@/modules/blocks/blocks-nav";
-import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
+import { ActiveStyleSelector } from "@/modules/styles/active-style-selector";
 
 const title = "Blocks that don't lock you in.";
 const description = "Modern UI blocks available in infinite styles.";

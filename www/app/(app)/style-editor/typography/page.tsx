@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { TypographyEditor } from "@/modules/style-editor/components/typography-editor";
+import { TypographyEditor } from "@/modules/style-editor/typography-editor";
 
 export async function generateMetadata({
   searchParams,

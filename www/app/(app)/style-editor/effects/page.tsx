@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { EffectsEditor } from "@/modules/style-editor/components/effects-editor";
+import { EffectsEditor } from "@/modules/style-editor/effects-editor";
 
 export async function generateMetadata({
   searchParams,

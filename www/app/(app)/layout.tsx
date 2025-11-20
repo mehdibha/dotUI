@@ -4,7 +4,7 @@ import { DocsSidebar } from "@/components/layout/docs-sidebar";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { docsSource } from "@/modules/docs/source";
-import { ActiveStylePortalProvider } from "@/modules/styles/components/active-style-provider";
+import { ActiveStylePortalProvider } from "@/modules/styles/active-style-provider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

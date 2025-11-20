@@ -1,5 +1,5 @@
 import { caller } from "@/lib/trpc/server";
-import { StylesList } from "@/modules/styles/components/styles-list";
+import { StylesList } from "@/modules/styles/styles-list";
 
 export const dynamic = "force-static";
 export const revalidate = 60;

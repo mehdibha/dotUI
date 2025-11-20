@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ColorsEditor } from "@/modules/style-editor/components/colors-editor";
+import { ColorsEditor } from "@/modules/style-editor/colors-editor";
 
 export async function generateMetadata({
   searchParams,

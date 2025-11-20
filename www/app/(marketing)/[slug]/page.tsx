@@ -7,8 +7,8 @@ import { Button } from "@dotui/registry/ui/button";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
-import { PageLastUpdate } from "@/modules/docs/components/last-update";
-import { mdxComponents } from "@/modules/docs/components/mdx-components";
+import { PageLastUpdate } from "@/modules/docs/last-update";
+import { mdxComponents } from "@/modules/docs/mdx-components";
 import { marketingSource } from "@/modules/docs/source";
 import { TableOfContents } from "@/modules/docs/toc";
 

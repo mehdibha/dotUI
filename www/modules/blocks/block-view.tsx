@@ -10,8 +10,8 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
-import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
-import { useActiveStyle } from "@/modules/styles/hooks/use-active-style";
+import { usePreferences } from "@/modules/preferences/preferences-atom";
+import { useActiveStyle } from "@/modules/styles/use-active-style";
 
 interface BlockViewProps {
   block?: RegistryItem;

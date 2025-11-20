@@ -10,8 +10,8 @@ import { cn } from "@dotui/registry/lib/utils";
 import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
-import { usePreferences } from "@/modules/styles/atoms/preferences-atom";
+import { usePreferences } from "@/modules/preferences/preferences-atom";
+import { useDraftStyle } from "@/modules/style-editor/draft-style-atom";
 
 export const BlockViewLayout = ({
   style: styleProp,

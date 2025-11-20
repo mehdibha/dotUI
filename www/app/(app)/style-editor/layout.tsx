@@ -1,10 +1,10 @@
-import { Preview } from "@/modules/style-editor/components/preview";
-import { StyleEditorHeader } from "@/modules/style-editor/components/style-editor-header";
-import { StyleEditorNav } from "@/modules/style-editor/components/style-editor-nav";
+import { Preview } from "@/modules/style-editor/preview";
+import { StyleEditorHeader } from "@/modules/style-editor/style-editor-header";
+import { StyleEditorNav } from "@/modules/style-editor/style-editor-nav";
 import {
   StyleEditorForm,
   StyleEditorProvider,
-} from "@/modules/style-editor/context/style-editor-provider";
+} from "@/modules/style-editor/style-editor-provider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

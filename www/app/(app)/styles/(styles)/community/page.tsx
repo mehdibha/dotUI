@@ -1,4 +1,4 @@
-import { CommunityStyles } from "@/modules/styles/components/community-styles";
+import { CommunityStyles } from "@/modules/styles/community-styles";
 
 export const metadata = {
   title: "Community styles",

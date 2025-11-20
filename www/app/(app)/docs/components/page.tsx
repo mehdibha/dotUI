@@ -12,7 +12,7 @@ import {
   PageLayout,
 } from "@/components/layout/page-layout";
 import { TableOfContents } from "@/modules/docs/toc";
-import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
+import { ActiveStyleSelector } from "@/modules/styles/active-style-selector";
 
 const title = "Components";
 const description = "Browse all available components in the library.";

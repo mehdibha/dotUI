@@ -10,8 +10,8 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from "@/components/layout/page-layout";
-import { CreateStyleModal } from "@/modules/styles/components/create-style-modal";
-import { StylesPageNav } from "@/modules/styles/components/styles-page-nav";
+import { CreateStyleModal } from "@/modules/styles/create-style-modal";
+import { StylesPageNav } from "@/modules/styles/styles-page-nav";
 
 const title = "Find your style or make your own.";
 const description = "Try our hand-picked styles or create yours from scratch.";

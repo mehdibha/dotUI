@@ -17,10 +17,10 @@ import {
 } from "@/components/layout/page-layout";
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
-import { DocsCopyPage } from "@/modules/docs/components/docs-copy-page";
-import { DocsPager } from "@/modules/docs/components/docs-pager";
-import { PageLastUpdate } from "@/modules/docs/components/last-update";
-import { mdxComponents } from "@/modules/docs/components/mdx-components";
+import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
+import { DocsPager } from "@/modules/docs/docs-pager";
+import { PageLastUpdate } from "@/modules/docs/last-update";
+import { mdxComponents } from "@/modules/docs/mdx-components";
 import { docsSource } from "@/modules/docs/source";
 import { TableOfContents, TocProvider } from "@/modules/docs/toc";
 
