@@ -1,7 +1,7 @@
 import { Switch } from "@dotui/registry/ui/switch";
 
+import { Section } from "@/modules/style-editor/components-editor/component-config-section";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
-import { Section } from "@/modules/style-editor/components-editor/section";
 
 export function Switches() {
   return (

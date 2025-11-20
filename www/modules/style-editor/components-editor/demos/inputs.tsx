@@ -10,8 +10,8 @@ import {
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { TextField } from "@dotui/registry/ui/text-field";
 
+import { Section } from "@/modules/style-editor/components-editor/component-config-section";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
-import { Section } from "@/modules/style-editor/components-editor/section";
 
 export function Inputs() {
   return (

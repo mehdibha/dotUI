@@ -2,8 +2,8 @@ import { parseDate } from "@internationalized/date";
 
 import { Calendar } from "@dotui/registry/ui/calendar";
 
+import { Section } from "@/modules/style-editor/components-editor/component-config-section";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
-import { Section } from "@/modules/style-editor/components-editor/section";
 
 export function Calendars() {
   return (

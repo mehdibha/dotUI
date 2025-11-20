@@ -5,8 +5,8 @@ import React from "react";
 import { Button } from "@dotui/registry/ui/button";
 import { Loader } from "@dotui/registry/ui/loader";
 
+import { Section } from "@/modules/style-editor/components-editor/component-config-section";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
-import { Section } from "@/modules/style-editor/components-editor/section";
 
 export function Loaders() {
   const [isPending, setPending] = React.useState(false);

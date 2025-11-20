@@ -3,7 +3,7 @@ import { Checkbox } from "@dotui/registry/ui/checkbox";
 import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
-import { Section } from "@/modules/style-editor/components-editor/section";
+import { Section } from "@/modules/style-editor/components-editor/component-config-section";
 
 export function FocusStyles() {
   return (

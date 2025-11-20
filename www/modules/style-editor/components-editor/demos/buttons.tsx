@@ -12,8 +12,8 @@ import {
 import { Button } from "@dotui/registry/ui/button";
 import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 
+import { Section } from "@/modules/style-editor/components-editor/component-config-section";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
-import { Section } from "@/modules/style-editor/components-editor/section";
 
 export function Buttons() {
   const [isPending, setIsPending] = React.useState(false);
