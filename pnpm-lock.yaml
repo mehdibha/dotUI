@@ -386,6 +386,9 @@ importers:
       sharp:
         specifier: ^0.34.4
         version: 0.34.4
+      shiki:
+        specifier: ^3.15.0
+        version: 3.15.0
       superjson:
         specifier: 2.2.3
         version: 2.2.3
@@ -417,9 +420,6 @@ importers:
       '@types/estree':
         specifier: ^1.0.6
         version: 1.0.8
-      '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
