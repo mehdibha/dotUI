@@ -25,7 +25,7 @@ import { cn } from "@dotui/registry/lib/utils";
 
 const menuStyles = tv({
   base: [
-    "max-h[inherit] rounded-[inherit] p-1 outline-hidden",
+    "max-h-[inherit] rounded-[inherit] p-1 outline-hidden",
     "group-data-[type=drawer]/overlay:p-2",
     "[&_.separator]:-mx-1 [&_.separator]:my-1 [&_.separator]:w-auto",
   ],

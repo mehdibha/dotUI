@@ -4,7 +4,7 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Index } from "@dotui/registry/ui/demos";
 
 import type { DemoControl } from "@/modules/docs/component-controls";
-import { DemoTabs } from "@/modules/docs/demo-tabs";
+import { DemoClient } from "@/modules/docs/demo.client";
 import { getFileSource } from "@/modules/docs/get-file-source";
 import { Pre } from "./code-block";
 
@@ -70,7 +70,7 @@ async function Demo({ name, className, controls, ...props }: DemoProps) {
   ]);
 
   return (
-    <DemoTabs
+    <DemoClient
       className={className}
       component={<Component />}
       code={highlightedCode}
