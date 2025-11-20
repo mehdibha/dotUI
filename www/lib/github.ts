@@ -1,15 +1,5 @@
-import { getGithubLastEdit as getGithubLastEdit_ } from "fumadocs-core/content/github";
-
 const OWNER = "mehdibha";
 const REPO = "dotUI";
-
-export const getGithubLastEdit = async (path: string) => {
-  return await getGithubLastEdit_({
-    owner: OWNER,
-    repo: REPO,
-    path: `www/content/${path}`,
-  });
-};
 
 export const getGitHubContributors = async (): Promise<
   { login: string; avatar_url: string; html_url: string }[]

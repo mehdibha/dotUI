@@ -12,7 +12,7 @@ import { Kbd } from "@dotui/registry/ui/kbd";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { Logo } from "@/components/logo";
 import { SearchCommand } from "@/components/search-command";
-import { siteConfig } from "@/config";
+import { siteConfig } from "@/config/site";
 import { SiteThemeToggle } from "../site-theme-toggle";
 
 type HeaderItem =

@@ -5,8 +5,8 @@ import { ExternalLinkIcon } from "lucide-react";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 
-import { siteConfig } from "@/config";
-import { truncateOnWord } from "@/lib/string";
+import { siteConfig } from "@/config/site";
+import { truncateOnWord } from "@/lib/text";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
 import { TableOfContents } from "@/modules/docs/components/toc";

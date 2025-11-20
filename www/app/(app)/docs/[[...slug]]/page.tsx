@@ -15,8 +15,8 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from "@/components/layout/page-layout";
-import { siteConfig } from "@/config";
-import { truncateOnWord } from "@/lib/string";
+import { siteConfig } from "@/config/site";
+import { truncateOnWord } from "@/lib/text";
 import { DocsCopyPage } from "@/modules/docs/components/docs-copy-page";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";

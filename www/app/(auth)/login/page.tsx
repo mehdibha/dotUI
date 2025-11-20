@@ -3,9 +3,9 @@ import { ArrowLeftIcon } from "lucide-react";
 
 import { Button } from "@dotui/registry/ui/button";
 
+import { getSafeCallbackUrl } from "@/lib/get-safe-callback-url";
 import { LoginForm } from "@/modules/auth/components/login-form";
 import { getSession } from "@/modules/auth/lib/server";
-import { validateCallbackUrl } from "@/modules/auth/lib/utils";
 
 export default async function Page({
   searchParams,
@@ -15,11 +15,10 @@ export default async function Page({
   const session = await getSession();
   const { callbackUrl } = await searchParams;
 
-  // Validate and sanitize the callback URL
-  const validatedCallbackUrl = validateCallbackUrl(callbackUrl);
+  const safeCallbackUrl = getSafeCallbackUrl(callbackUrl);
 
   if (session?.user) {
-    redirect(validatedCallbackUrl as never);
+    redirect(safeCallbackUrl as never);
   }
 
   return (
@@ -32,7 +31,7 @@ export default async function Page({
           </a>
         </Button>
       </div>
-      <LoginForm callbackUrl={validatedCallbackUrl} />
+      <LoginForm callbackUrl={safeCallbackUrl} />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { cn } from "@dotui/registry/lib/utils";
 import { Heading } from "@dotui/registry/ui/heading";
 
-import { siteConfig } from "@/config";
+import { siteConfig } from "@/config/site";
 
 export const Logo = ({
   extanded = true,

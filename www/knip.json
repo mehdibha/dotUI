@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "next.config.mjs",
+    "postcss.config.mjs",
+    "source.config.ts",
+    "scripts/**/*.ts",
+    "app/**/route.tsx",
+    "app/**/{page,layout,loading,error,not-found,template,default}.{ts,tsx}"
+  ],
+  "project": ["**/*.{ts,tsx}"],
+  "ignore": ["**/*.d.ts"],
+  "ignoreDependencies": ["autoprefixer", "postcss", "tailwindcss", "@types/*"]
+}

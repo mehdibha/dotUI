@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { siteConfig } from "@/config";
+import { siteConfig } from "@/config/site";
 import { docsSource, marketingSource } from "@/modules/docs/lib/source";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

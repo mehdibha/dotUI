@@ -17,13 +17,13 @@ import {
   roboto,
   workSans,
 } from "@/lib/fonts";
-import { truncateOnWord } from "@/lib/string";
+import { truncateOnWord } from "@/lib/text";
 
 import "@/styles/globals.css";
 
 import { Toaster } from "@dotui/registry/ui/toast";
 
-import { siteConfig } from "@/config";
+import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { Providers } from "./providers";
 
