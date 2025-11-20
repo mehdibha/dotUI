@@ -74,7 +74,6 @@
   },
   "dependencies": {
     "@adobe/leonardo-contrast-colors": "^1.0.0",
-    "@radix-ui/react-slot": "^1.2.3",
     "@react-aria/utils": "^3.31.0",
     "@react-types/shared": "^3.26.0",
     "culori": "^4.0.2",

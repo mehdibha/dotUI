@@ -1,4 +1,4 @@
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { useTRPC } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/client";
@@ -37,21 +37,5 @@ export function useActiveStyle() {
     }),
     enabled: !!activeStyleId,
     placeholderData: (prev) => prev,
-  });
-}
-
-export function useActiveStyleSuspense() {
-  const trpc = useTRPC();
-
-  const activeStyleId = useActiveStyleId();
-
-  if (!activeStyleId) {
-    throw new Error("No active style ID found");
-  }
-
-  return useSuspenseQuery({
-    ...trpc.style.getById.queryOptions({
-      id: activeStyleId,
-    }),
   });
 }

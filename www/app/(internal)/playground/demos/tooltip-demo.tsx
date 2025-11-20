@@ -2,7 +2,6 @@
 
 import { Edit2Icon } from "lucide-react";
 
-import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 

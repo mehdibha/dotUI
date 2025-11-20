@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { useSlotId } from "@react-aria/utils";
 import { useControlledState } from "@react-stately/utils";
 import { PanelLeftIcon } from "lucide-react";
