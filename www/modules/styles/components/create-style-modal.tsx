@@ -29,8 +29,8 @@ import {
 import { useAppForm } from "@dotui/registry/ui/tanstack-form";
 import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
-import { LoginModal } from "@/modules/auth/components/login-modal";
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
+import { LoginModal } from "@/modules/auth/login-modal";
 import { useCreateStyle } from "../hooks/use-create-style";
 
 const createStyleSchema = z.object({

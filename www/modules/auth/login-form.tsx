@@ -8,7 +8,7 @@ import { Link } from "@dotui/registry/ui/link";
 import { toast } from "@dotui/registry/ui/toast";
 
 import { Logo } from "@/components/logo";
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
 
 export function LoginForm({ callbackUrl = "/" }: { callbackUrl?: string }) {
   const [isPending, setPending] = React.useState(false);

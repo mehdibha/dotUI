@@ -20,7 +20,7 @@ import {
   SwitchThumb,
 } from "@dotui/registry/ui/switch";
 
-import { TableOfContents } from "@/modules/docs/components/toc";
+import { TableOfContents } from "@/modules/docs/toc";
 import * as demos from "./demos";
 
 interface ContentItem {

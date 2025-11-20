@@ -17,7 +17,7 @@ import { Link } from "@dotui/registry/ui/link";
 import { Modal } from "@dotui/registry/ui/modal";
 import { toast } from "@dotui/registry/ui/toast";
 
-import { authClient } from "../lib/client";
+import { authClient } from "./client";
 
 export function LoginModal({ children }: { children: React.ReactNode }) {
   const [isPending, setPending] = React.useState(false);

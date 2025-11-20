@@ -6,7 +6,7 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
 
 export function StylesPageNav({
   className,

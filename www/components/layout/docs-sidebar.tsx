@@ -38,8 +38,8 @@ import {
 import { Logo } from "@/components/logo";
 import { SearchCommand } from "@/components/search-command";
 import { useMounted } from "@/hooks/use-mounted";
-import { UserProfileMenu } from "@/modules/auth/components/user-profile-menu";
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
+import { UserProfileMenu } from "@/modules/auth/user-profile-menu";
 import { SiteThemeToggle } from "../site-theme-toggle";
 
 export function DocsSidebar({ items }: { items: PageTree.Node[] }) {

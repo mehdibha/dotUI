@@ -9,8 +9,8 @@ import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
-import { TableOfContents } from "@/modules/docs/components/toc";
-import { marketingSource } from "@/modules/docs/lib/source";
+import { marketingSource } from "@/modules/docs/source";
+import { TableOfContents } from "@/modules/docs/toc";
 
 export const dynamicParams = false;
 

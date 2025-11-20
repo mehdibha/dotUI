@@ -7,7 +7,7 @@ import type { TRPCQueryOptions } from "@trpc/tanstack-react-query";
 import { appRouter, createTRPCContext } from "@dotui/api";
 import type { AppRouter } from "@dotui/api";
 
-import { auth } from "@/modules/auth/lib/server";
+import { auth } from "@/modules/auth/server";
 import { createQueryClient } from "./query-client";
 
 /**

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { createContext, useContext } from "react";
+import React from "react";
 import * as TocPrimitive from "fumadocs-core/toc";
+import * as Primitive from "fumadocs-core/toc";
 import { AlignLeftIcon } from "lucide-react";
 import type {
   TOCItemType,
@@ -9,35 +10,6 @@ import type {
 } from "fumadocs-core/toc";
 
 import { cn } from "@dotui/registry/lib/utils";
-
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useTocThumb } from "@/modules/docs/hooks/use-toc-thumb";
-
-// TocContext to provide toc to components
-interface TocContextValue {
-  toc: TocType | null;
-}
-
-const TocContext = createContext<TocContextValue>({
-  toc: null,
-});
-
-// Hook to get toc: prop > context > null
-export function useToc(): TocType | null {
-  const context = useContext(TocContext);
-  return context.toc;
-}
-
-// Provider component that wraps content and provides toc via context
-export function TocProvider({
-  children,
-  toc,
-}: {
-  children: React.ReactNode;
-  toc: TocType | null;
-}) {
-  return <TocContext.Provider value={{ toc }}>{children}</TocContext.Provider>;
-}
 
 export const TableOfContents = ({
   toc: tocProp,
@@ -55,12 +27,12 @@ export const TableOfContents = ({
         <p className="text-fg-muted text-sm">On this page</p>
       </div>
       <TocPrimitive.AnchorProvider toc={toc}>
-        <ScrollArea
-          containerClassName="flex flex-col"
-          className="relative min-h-0 pb-4 text-sm"
+        <div
+          data-scroll-area-viewport=""
+          className="relative flex min-h-0 flex-col overflow-auto pr-4 pb-4 text-sm"
         >
           <TocItems toc={toc} />
-        </ScrollArea>
+        </div>
       </TocPrimitive.AnchorProvider>
     </div>
   );
@@ -106,4 +78,82 @@ function TOCItem({ item }: { item: TOCItemType }): React.ReactElement {
       {item.title}
     </TocPrimitive.TOCItem>
   );
+}
+
+interface TocContextValue {
+  toc: TocType | null;
+}
+
+const TocContext = React.createContext<TocContextValue>({
+  toc: null,
+});
+
+export function TocProvider({
+  children,
+  toc,
+}: {
+  children: React.ReactNode;
+  toc: TocType | null;
+}) {
+  return <TocContext.Provider value={{ toc }}>{children}</TocContext.Provider>;
+}
+
+export function useToc(): TocType | null {
+  const context = React.useContext(TocContext);
+  return context.toc;
+}
+
+export type TOCThumb = [top: number, height: number];
+
+export function useTocThumb(
+  containerRef: React.RefObject<HTMLElement>,
+): TOCThumb {
+  const active = Primitive.useActiveAnchors();
+  const [pos, setPos] = React.useState<TOCThumb>([0, 0]);
+
+  React.useEffect(() => {
+    if (!containerRef.current) return;
+    const container = containerRef.current;
+
+    function onResize(): void {
+      if (active.length === 0 || container.clientHeight === 0) {
+        setPos([0, 0]);
+        return;
+      }
+
+      let upper = Number.MAX_VALUE,
+        lower = 0;
+
+      for (const item of active) {
+        const element = container.querySelector<HTMLElement>(
+          `a[href="#${item}"]`,
+        );
+        if (!element) continue;
+
+        const styles = getComputedStyle(element);
+        upper = Math.min(
+          upper,
+          element.offsetTop + parseFloat(styles.paddingTop),
+        );
+        lower = Math.max(
+          lower,
+          element.offsetTop +
+            element.clientHeight -
+            parseFloat(styles.paddingBottom),
+        );
+      }
+
+      setPos([upper, lower - upper]);
+    }
+
+    onResize();
+    const observer = new ResizeObserver(onResize);
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [active, containerRef]);
+
+  return pos;
 }

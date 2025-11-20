@@ -18,8 +18,8 @@ import { Drawer } from "@dotui/registry/ui/drawer";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
-import { LoginModal } from "@/modules/auth/components/login-modal";
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
+import { LoginModal } from "@/modules/auth/login-modal";
 import { useDraftStyle } from "@/modules/style-editor/atoms/draft-style-atom";
 import { CodeModal } from "@/modules/style-editor/components/code-modal";
 import { PreviewFrame } from "@/modules/style-editor/components/preview";

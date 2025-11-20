@@ -21,8 +21,8 @@ import { DocsCopyPage } from "@/modules/docs/components/docs-copy-page";
 import { DocsPager } from "@/modules/docs/components/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/components/last-update";
 import { mdxComponents } from "@/modules/docs/components/mdx-components";
-import { TableOfContents, TocProvider } from "@/modules/docs/components/toc";
-import { docsSource } from "@/modules/docs/lib/source";
+import { docsSource } from "@/modules/docs/source";
+import { TableOfContents, TocProvider } from "@/modules/docs/toc";
 
 export const revalidate = false;
 export const dynamic = "force-static";

@@ -4,8 +4,8 @@ import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@dotui/registry/ui/button";
 
 import { getSafeCallbackUrl } from "@/lib/get-safe-callback-url";
-import { LoginForm } from "@/modules/auth/components/login-form";
-import { getSession } from "@/modules/auth/lib/server";
+import { LoginForm } from "@/modules/auth/login-form";
+import { getSession } from "@/modules/auth/server";
 
 export default async function Page({
   searchParams,

@@ -11,7 +11,7 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from "@/components/layout/page-layout";
-import { TableOfContents } from "@/modules/docs/components/toc";
+import { TableOfContents } from "@/modules/docs/toc";
 import { ActiveStyleSelector } from "@/modules/styles/components/active-style-selector";
 
 const title = "Components";

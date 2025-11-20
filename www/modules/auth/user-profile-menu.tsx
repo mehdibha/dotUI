@@ -11,7 +11,7 @@ import { Overlay } from "@dotui/registry/ui/overlay";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { PopoverProps } from "@dotui/registry/ui/popover";
 
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
 
 export function UserProfileMenu({
   placement = "bottom end",

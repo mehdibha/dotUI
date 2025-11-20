@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
 import { StylesList } from "@/modules/styles/components/styles-list";
 import { useUserStyles } from "@/modules/styles/hooks/use-user-styles";
 

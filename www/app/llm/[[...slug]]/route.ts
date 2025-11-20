@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { docsSource } from "@/modules/docs/lib/source";
+import { docsSource } from "@/modules/docs/source";
 
 export const revalidate = false;
 

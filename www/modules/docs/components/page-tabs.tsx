@@ -6,7 +6,7 @@ import type { TableOfContents as TocType } from "fumadocs-core/toc";
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
-import { TableOfContents, useToc } from "./toc";
+import { TableOfContents, useToc } from "@/modules/docs/toc";
 
 export function PageTabs({ children }: { children: React.ReactNode }) {
   return (

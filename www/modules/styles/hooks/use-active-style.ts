@@ -1,7 +1,7 @@
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { useTRPC } from "@/lib/trpc/react";
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
 import { usePreferences } from "../atoms/preferences-atom";
 
 export function useActiveStyleId() {

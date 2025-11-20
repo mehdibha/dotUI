@@ -11,7 +11,7 @@ import { toast } from "@dotui/registry/ui/toast";
 import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
-import { authClient } from "@/modules/auth/lib/client";
+import { authClient } from "@/modules/auth/client";
 
 interface CreateStyleInput {
   name: string;
