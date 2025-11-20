@@ -1,11 +1,11 @@
 import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Sliders() {
   return (
-    <Section
+    <ComponentConfig
       name="slider"
       title="Sliders"
       variants={getComponentVariants("slider")}
@@ -14,6 +14,6 @@ export function Sliders() {
       <Slider defaultValue={50} aria-label="Basic slider">
         <SliderControl />
       </Slider>
-    </Section>
+    </ComponentConfig>
   );
 }

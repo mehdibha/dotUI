@@ -214,11 +214,6 @@ import { Button } from "@dotui/registry/ui/button";
 
 // Pending state (shows loader automatically)
 <Button isPending>Loading...</Button>
-
-// As child (compose with other components)
-<Button asChild>
-  <a href="/">Link</a>
-</Button>
 ```
 
 ### ToggleButton

@@ -7,7 +7,7 @@ import { CheckIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
 import type { RegistryItem } from "shadcn/schema";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
+import { Button, LinkButton } from "@dotui/registry/ui/button";
 
 import { ThemeModeSwitch } from "@/components/ui/theme-mode-switch";
 import { usePreferences } from "@/modules/preferences/preferences-atom";
@@ -74,17 +74,18 @@ const BlockViewToolbar = ({ name, title }: BlockViewToolbarProps) => {
           </span>
         </Button>
         {activeStyle ? (
-          <Button variant="primary" size="sm" asChild className="max-lg:hidden">
-            <Link
-              href={
-                `/view/${activeStyle.user.username}/${activeStyle.name}/${name}` as Route
-              }
-              target="_blank"
-            >
-              <ExternalLinkIcon />
-              Open in new tab
-            </Link>
-          </Button>
+          <LinkButton
+            href={
+              `/view/${activeStyle.user.username}/${activeStyle.name}/${name}` as Route
+            }
+            variant="primary"
+            size="sm"
+            target="_blank"
+            className="max-lg:hidden"
+          >
+            <ExternalLinkIcon />
+            Open in new tab
+          </LinkButton>
         ) : null}
       </div>
     </div>

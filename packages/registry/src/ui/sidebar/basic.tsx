@@ -106,10 +106,33 @@ const sidebarStyles = tv({
     ],
     inner:
       "flex h-full w-full flex-col bg-sidebar transition-colors duration-250 ease-drawer",
+    header: "flex flex-col gap-2 p-2",
+    footer: "flex flex-col gap-2 p-2",
+    separator: "mx-2 w-auto",
+    content:
+      "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+    section: "relative flex w-full min-w-0 flex-col p-2",
+    heading: [
+      "flex h-8 shrink-0 items-center whitespace-nowrap rounded-md px-2 font-medium text-fg-muted text-xs outline-hidden [&>svg]:size-4 [&>svg]:shrink-0",
+    ],
+    list: "flex w-full min-w-0 flex-col gap-1",
+    item: "whitespace-nowrap *:data-[slot=button]:w-full *:data-[slot=button]:justify-start *:data-[slot=button]:overflow-hidden *:data-[slot=button]:p-1.75 *:data-[slot=button]:text-left *:data-[slot=button]:[&>svg]:shrink-0",
   },
 });
 
-const { root, gap, container, inner } = sidebarStyles();
+const {
+  root,
+  gap,
+  container,
+  inner,
+  header,
+  footer,
+  content,
+  section,
+  heading,
+  list,
+  item,
+} = sidebarStyles();
 
 function Sidebar({
   className,
@@ -159,25 +182,6 @@ function Sidebar({
     </div>
   );
 }
-
-const sidebarPartsStyles = tv({
-  slots: {
-    header: "flex flex-col gap-2 p-2",
-    footer: "flex flex-col gap-2 p-2",
-    separator: "mx-2 w-auto",
-    content:
-      "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
-    section: "relative flex w-full min-w-0 flex-col p-2",
-    heading: [
-      "flex h-8 shrink-0 items-center whitespace-nowrap rounded-md px-2 font-medium text-fg-muted text-xs outline-hidden [&>svg]:size-4 [&>svg]:shrink-0",
-    ],
-    list: "flex w-full min-w-0 flex-col gap-1",
-    item: "whitespace-nowrap *:data-[slot=button]:w-full *:data-[slot=button]:justify-start *:data-[slot=button]:overflow-hidden *:data-[slot=button]:p-1.75 *:data-[slot=button]:text-left *:data-[slot=button]:[&>svg]:shrink-0",
-  },
-});
-
-const { header, footer, content, section, heading, list, item } =
-  sidebarPartsStyles();
 
 function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -253,18 +257,14 @@ function SidebarList({ className, ...props }: React.ComponentProps<"ul">) {
 function SidebarItem({
   tooltip,
   className,
-  asChild,
   ...props
 }: React.ComponentProps<"li"> & {
   tooltip?: React.ReactNode;
-  asChild?: boolean;
 }) {
   const { isOpen } = useSidebarContext("SidebarItem");
 
-  const Comp = asChild ? Slot : "li";
-
   const comp = (
-    <Comp
+    <li
       data-slot="sidebar-menu-item"
       data-sidebar="menu-item"
       className={item({ className })}
@@ -314,6 +314,7 @@ export {
   SidebarItem,
   SidebarList,
   SidebarFooter,
+  sidebarStyles,
 };
 
 export { useSidebarContext };

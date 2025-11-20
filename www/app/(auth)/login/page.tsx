@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry/ui/button";
+import { LinkButton } from "@dotui/registry/ui/button";
 
 import { getSafeCallbackUrl } from "@/lib/get-safe-callback-url";
 import { LoginForm } from "@/modules/auth/login-form";
@@ -24,12 +24,10 @@ export default async function Page({
   return (
     <div className="relative flex min-h-svh w-full">
       <div className="absolute top-4 left-4">
-        <Button variant="quiet" size="sm" asChild>
-          <a href="/">
-            <ArrowLeftIcon />
-            Back to home
-          </a>
-        </Button>
+        <LinkButton variant="quiet" size="sm" href="/">
+          <ArrowLeftIcon />
+          Back to home
+        </LinkButton>
       </div>
       <LoginForm callbackUrl={safeCallbackUrl} />
     </div>

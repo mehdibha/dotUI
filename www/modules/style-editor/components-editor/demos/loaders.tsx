@@ -5,7 +5,7 @@ import React from "react";
 import { Button } from "@dotui/registry/ui/button";
 import { Loader } from "@dotui/registry/ui/loader";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Loaders() {
@@ -24,7 +24,7 @@ export function Loaders() {
   }, [isPending]);
 
   return (
-    <Section
+    <ComponentConfig
       name="loader"
       title="Loaders"
       variants={getComponentVariants("loader")}
@@ -39,6 +39,6 @@ export function Loaders() {
       >
         Click me
       </Button>
-    </Section>
+    </ComponentConfig>
   );
 }

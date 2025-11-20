@@ -3,11 +3,11 @@ import { Checkbox } from "@dotui/registry/ui/checkbox";
 import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 
 export function FocusStyles() {
   return (
-    <Section
+    <ComponentConfig
       name="focus-style"
       title="Focus style"
       variants={[
@@ -24,6 +24,6 @@ export function FocusStyles() {
         </TextField>
         <Checkbox aria-label="Checkbox example" form="none" />
       </div>
-    </Section>
+    </ComponentConfig>
   );
 }

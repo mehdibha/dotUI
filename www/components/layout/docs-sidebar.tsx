@@ -20,7 +20,7 @@ import {
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
-import { Button } from "@dotui/registry/ui/button";
+import { Button, LinkButton } from "@dotui/registry/ui/button";
 import { Kbd } from "@dotui/registry/ui/kbd";
 import {
   Sidebar,
@@ -32,6 +32,7 @@ import {
   SidebarSection,
   SidebarSectionHeading,
   SidebarTooltip,
+  sidebarStyles,
   useSidebarContext,
 } from "@dotui/registry/ui/sidebar";
 
@@ -88,12 +89,10 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
             {navItems.map((item) => (
               <SidebarItem key={item.url}>
                 <SidebarTooltip content={item.name}>
-                  <Button asChild size="sm" variant="quiet">
-                    <Link href={item.url}>
-                      {item.icon}
-                      <span>{item.name}</span>
-                    </Link>
-                  </Button>
+                  <LinkButton href={item.url} size="sm" variant="quiet">
+                    {item.icon}
+                    <span>{item.name}</span>
+                  </LinkButton>
                 </SidebarTooltip>
               </SidebarItem>
             ))}
@@ -142,16 +141,16 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
           className="flex flex-col items-start justify-between group-data-expanded:flex-row group-data-expanded:items-center"
         >
           <motion.div layout transition={transition}>
-            <Button asChild variant="quiet" size="sm">
-              <Link
-                aria-label="GitHub"
-                href="https://github.com/mehdibha/dotUI"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <GitHubIcon />
-              </Link>
-            </Button>
+            <LinkButton
+              aria-label="GitHub"
+              href="https://github.com/mehdibha/dotUI"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="quiet"
+              size="sm"
+            >
+              <GitHubIcon />
+            </LinkButton>
           </motion.div>
           <div className="flex flex-col items-center gap-1 group-data-expanded:flex-row">
             <motion.div layout transition={transition}>
@@ -178,30 +177,24 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
               exit={{ opacity: 0, y: 20 }}
               transition={transition}
             >
-              <SidebarItem asChild>
-                <div>
-                  <SidebarTooltip content="Sign in">
-                    <Button
-                      asChild
-                      size="sm"
-                      className="group-data-expanded:justify-center!"
+              <div data-slot="sidebar-item" className={sidebarStyles().item()}>
+                <SidebarTooltip content="Sign in">
+                  <LinkButton
+                    size="sm"
+                    className="group-data-expanded:justify-center!"
+                    href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
+                  >
+                    <motion.span
+                      layout
+                      transition={transition}
+                      className="flex items-center gap-2"
                     >
-                      <Link
-                        href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
-                      >
-                        <motion.span
-                          layout
-                          transition={transition}
-                          className="flex items-center gap-2"
-                        >
-                          <UserIcon />
-                          <span>Sign in</span>
-                        </motion.span>
-                      </Link>
-                    </Button>
-                  </SidebarTooltip>
-                </div>
-              </SidebarItem>
+                      <UserIcon />
+                      <span>Sign in</span>
+                    </motion.span>
+                  </LinkButton>
+                </SidebarTooltip>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

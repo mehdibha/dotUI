@@ -5,8 +5,8 @@ import { withImmer } from "jotai-immer";
 
 import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
-import { convertThemeColorObjects } from "@/modules/style-editor/lib";
 import { useStyleEditorForm } from "@/modules/style-editor/style-editor-provider";
+import { convertThemeColorObjects } from "@/modules/style-editor/theme-utils";
 import { useStyleEditorParams } from "@/modules/style-editor/use-style-editor-params";
 
 type DraftStyleState = Record<string, StyleDefinition>;

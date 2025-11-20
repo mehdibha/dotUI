@@ -9,7 +9,7 @@ import { TailwindWordmark } from "@dotui/registry/components/icons/tailwind-word
 import { TypeScriptIcon } from "@dotui/registry/components/icons/typescript";
 import { Alert, AlertTitle } from "@dotui/registry/ui/alert";
 import { Avatar } from "@dotui/registry/ui/avatar";
-import { Button } from "@dotui/registry/ui/button";
+import { LinkButton } from "@dotui/registry/ui/button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { Announcement } from "@/components/marketing/announcement";
@@ -47,12 +47,12 @@ export default async function HomePage() {
             <span className="font-medium text-fg">shadcn&nbsp;CLI</span>.
           </p>
           <div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-            <Button asChild variant="primary" size="lg" className="h-10">
-              <Link href="/docs">Get started</Link>
-            </Button>
-            <Button asChild variant="default" size="lg" className="h-10">
-              <Link href="/styles">Explore styles</Link>
-            </Button>
+            <LinkButton variant="primary" size="lg" className="h-10">
+              Get started
+            </LinkButton>
+            <LinkButton variant="default" size="lg" className="h-10">
+              Explore styles
+            </LinkButton>
           </div>
         </div>
       </section>
@@ -153,12 +153,15 @@ export default async function HomePage() {
               ))}
             </div>
           </div>
-          <Button asChild size="lg" className="h-12">
-            <Link href={siteConfig.links.github} target="_blank">
-              <GitHubIcon />
-              Star on GitHub
-            </Link>
-          </Button>
+          <LinkButton
+            size="lg"
+            className="h-12"
+            href={siteConfig.links.github}
+            target="_blank"
+          >
+            <GitHubIcon />
+            Star on GitHub
+          </LinkButton>
         </div>
       </section>
     </div>

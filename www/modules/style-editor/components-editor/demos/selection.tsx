@@ -5,12 +5,12 @@ import {
   SelectTrigger,
 } from "@dotui/registry/ui/select";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Selection() {
   return (
-    <Section
+    <ComponentConfig
       name="selection"
       title="Selection"
       variants={getComponentVariants("select")}
@@ -23,6 +23,6 @@ export function Selection() {
           <SelectItem id="option-3">Option 3</SelectItem>
         </SelectContent>
       </Select>
-    </Section>
+    </ComponentConfig>
   );
 }

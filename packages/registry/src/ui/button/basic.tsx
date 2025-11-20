@@ -1,10 +1,10 @@
 "use client";
 
 import type * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import {
   Button as AriaButton,
   ButtonContext as AriaButtonContext,
+  Link as AriaLink,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -65,7 +65,6 @@ interface ButtonProps
   extends React.ComponentProps<typeof AriaButton>,
     ButtonVariants {
   aspect?: "default" | "square" | "auto";
-  asChild?: boolean;
 }
 
 const Button = (localProps: ButtonProps) => {
@@ -74,7 +73,6 @@ const Button = (localProps: ButtonProps) => {
     size,
     aspect = "auto",
     className,
-    asChild,
     slot,
     style,
     children,
@@ -82,25 +80,6 @@ const Button = (localProps: ButtonProps) => {
   } = useContextProps(localProps);
 
   const isIconOnly = useButtonAspect(children, aspect);
-
-  if (asChild) {
-    return (
-      <Slot
-        data-slot="button"
-        data-icon-only={isIconOnly || undefined}
-        className={buttonStyles({
-          variant,
-          size,
-          className: className as string,
-        })}
-        slot={slot!}
-        style={style as React.CSSProperties}
-        {...props}
-      >
-        {typeof children === "function" ? children({} as any) : children}
-      </Slot>
-    );
-  }
 
   return (
     <AriaButton
@@ -137,6 +116,53 @@ const Button = (localProps: ButtonProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export type { ButtonProps };
+interface LinkButtonProps
+  extends React.ComponentProps<typeof AriaLink>,
+    VariantProps<typeof buttonStyles> {
+  aspect?: "default" | "square" | "auto";
+}
 
-export { Button, ButtonProvider, buttonStyles };
+const LinkButton = (localProps: LinkButtonProps) => {
+  const {
+    variant,
+    size,
+    aspect = "auto",
+    className,
+    slot,
+    style,
+    children,
+    ...props
+  } = useContextProps(localProps);
+
+  const isIconOnly = useButtonAspect(children, aspect);
+
+  return (
+    <AriaLink
+      data-slot="button"
+      data-button=""
+      data-icon-only={isIconOnly || undefined}
+      className={composeRenderProps(className, (cn) =>
+        buttonStyles({ variant, size, className: cn }),
+      )}
+      slot={slot}
+      style={style}
+      {...props}
+    >
+      {composeRenderProps(children, (children) => (
+        <>
+          {typeof children === "string" ? (
+            <span className="truncate">{children}</span>
+          ) : (
+            children
+          )}
+        </>
+      ))}
+    </AriaLink>
+  );
+};
+
+/* -----------------------------------------------------------------------------------------------*/
+
+export type { ButtonProps, LinkButtonProps };
+
+export { Button, LinkButton, ButtonProvider, buttonStyles };

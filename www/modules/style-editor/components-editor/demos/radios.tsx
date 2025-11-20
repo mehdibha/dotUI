@@ -1,11 +1,11 @@
 import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Radios() {
   return (
-    <Section
+    <ComponentConfig
       name="radios"
       title="Radios"
       variants={getComponentVariants("radio-group")}
@@ -30,6 +30,6 @@ export function Radios() {
         <Radio value="option-2">Option 2</Radio>
         <Radio value="option-3">Option 3</Radio>
       </RadioGroup>
-    </Section>
+    </ComponentConfig>
   );
 }

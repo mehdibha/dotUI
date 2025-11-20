@@ -18,7 +18,7 @@ import { useEditorStyle } from "@/modules/style-editor/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/use-resolved-mode";
 import { useStyleEditorParams } from "@/modules/style-editor/use-style-editor-params";
 import { useUpdateStyleMutation } from "@/modules/style-editor/use-update-style-mutation";
-import { convertThemeColorObjects } from "./lib";
+import { convertThemeColorObjects } from "./theme-utils";
 
 const styleEditorFormSchema = createStyleSchema.extend({});
 

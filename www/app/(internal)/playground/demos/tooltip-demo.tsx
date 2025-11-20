@@ -4,11 +4,7 @@ import { Edit2Icon } from "lucide-react";
 
 import { Avatar } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@dotui/registry/ui/tooltip";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 export function TooltipDemo() {
   return (
@@ -31,20 +27,6 @@ export function TooltipDemo() {
             <Edit2Icon />
           </Button>
           <TooltipContent>Edit name</TooltipContent>
-        </Tooltip>
-        {/* Bad example */}
-        <Tooltip>
-          <TooltipTrigger>
-            <Avatar
-              src="https://github.com/mehdibha.png"
-              alt="@mehdibha"
-              fallback="M"
-              size="sm"
-            />
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>@mehdibha</p>
-          </TooltipContent>
         </Tooltip>
       </div>
       <div className="grid gap-2 [grid-template-areas:'top-left_top_top-right'_'left-top_top_right-top'_'left_._right'_'left-bottom_._right-bottom'_'bottom-left_bottom_bottom-right']">

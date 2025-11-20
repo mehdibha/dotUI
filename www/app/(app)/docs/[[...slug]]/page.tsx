@@ -1,5 +1,4 @@
 import type { Metadata, Route } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { findNeighbour } from "fumadocs-core/page-tree";
 import { ExternalLinkIcon } from "lucide-react";
@@ -8,7 +7,7 @@ import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
 import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
+import { LinkButton } from "@dotui/registry/ui/button";
 
 import {
   PageHeaderDescription,
@@ -59,18 +58,17 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
             {page.data.links.map((link, index) => {
               const icon = getIcon(link.href);
               return (
-                <Button
+                <LinkButton
                   key={index}
-                  asChild
+                  href={link.href as Route}
+                  target="_blank"
                   size="sm"
                   className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
                 >
-                  <Link href={link.href as Route} target="_blank">
-                    {icon}
-                    {link.label}
-                    <ExternalLinkIcon />
-                  </Link>
-                </Button>
+                  {icon}
+                  {link.label}
+                  <ExternalLinkIcon />
+                </LinkButton>
               );
             })}
           </div>

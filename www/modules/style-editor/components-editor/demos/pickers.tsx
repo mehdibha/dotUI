@@ -11,12 +11,12 @@ import {
   DatePickerInput,
 } from "@dotui/registry/ui/date-picker";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Pickers() {
   return (
-    <Section
+    <ComponentConfig
       name="pickers"
       title="Pickers"
       variants={getComponentVariants("combobox")}
@@ -40,6 +40,6 @@ export function Pickers() {
           <Calendar aria-label="Pick a date" />
         </DatePickerContent>
       </DatePicker>
-    </Section>
+    </ComponentConfig>
   );
 }

@@ -1,12 +1,12 @@
 import { Button } from "@dotui/registry/ui/button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Tooltips() {
   return (
-    <Section
+    <ComponentConfig
       name="tooltip"
       title="Tooltip"
       variants={getComponentVariants("tooltip")}
@@ -16,6 +16,6 @@ export function Tooltips() {
         <Button>Hover me</Button>
         <TooltipContent>This is a tooltip</TooltipContent>
       </Tooltip>
-    </Section>
+    </ComponentConfig>
   );
 }

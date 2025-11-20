@@ -18,7 +18,7 @@ import { motion } from "motion/react";
 import { registryBlocks } from "@dotui/registry/blocks/registry";
 import { createScopedContext } from "@dotui/registry/lib/context";
 import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
+import { Button, LinkButton } from "@dotui/registry/ui/button";
 import { DialogContent } from "@dotui/registry/ui/dialog";
 import { Modal } from "@dotui/registry/ui/modal";
 import {
@@ -239,22 +239,18 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
           <TooltipContent>{isMobile ? "Mobile" : "Tablet"}</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <Button
-            asChild
+          <LinkButton
+            target="_blank"
+            href={
+              `/view/${slug}/${block}?mode=true&live=true&view=true` as Route
+            }
             aria-label="Open in new tab"
             variant="quiet"
             size="sm"
             className="size-7"
           >
-            <Link
-              target="_blank"
-              href={
-                `/view/${slug}/${block}?mode=true&live=true&view=true` as Route
-              }
-            >
-              <ExternalLinkIcon />
-            </Link>
-          </Button>
+            <ExternalLinkIcon />
+          </LinkButton>
           <TooltipContent>Open in new tab</TooltipContent>
         </Tooltip>
         <Tooltip>

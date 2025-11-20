@@ -10,12 +10,12 @@ import {
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { TextField } from "@dotui/registry/ui/text-field";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Inputs() {
   return (
-    <Section
+    <ComponentConfig
       name="inputs"
       title="Inputs"
       variants={getComponentVariants("input")}
@@ -71,6 +71,6 @@ export function Inputs() {
         <TextArea />
         <Description>Type your description</Description>
       </TextField>
-    </Section>
+    </ComponentConfig>
   );
 }

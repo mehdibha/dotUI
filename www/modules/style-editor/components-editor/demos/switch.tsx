@@ -1,11 +1,11 @@
 import { Switch } from "@dotui/registry/ui/switch";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Switches() {
   return (
-    <Section
+    <ComponentConfig
       name="switch"
       title="Switches"
       variants={getComponentVariants("switch")}
@@ -18,6 +18,6 @@ export function Switches() {
           Dark mode
         </Switch>
       </div>
-    </Section>
+    </ComponentConfig>
   );
 }

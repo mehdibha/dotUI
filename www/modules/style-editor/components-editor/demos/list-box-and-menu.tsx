@@ -15,12 +15,12 @@ import {
   SelectTrigger,
 } from "@dotui/registry/ui/select";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function ListBoxAndMenu() {
   return (
-    <Section
+    <ComponentConfig
       name="list-box-and-menu"
       title="ListBox and menu"
       variants={getComponentVariants("list-box")}
@@ -65,6 +65,6 @@ export function ListBoxAndMenu() {
           </MenuContent>
         </Popover>
       </Menu>
-    </Section>
+    </ComponentConfig>
   );
 }

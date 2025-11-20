@@ -1,11 +1,11 @@
 import { Badge } from "@dotui/registry/ui/badge";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function BadgeAndTagGroup() {
   return (
-    <Section
+    <ComponentConfig
       name="badge-and-tag-group"
       title="Badge & TagGroup"
       variants={getComponentVariants("badge")}
@@ -24,6 +24,6 @@ export function BadgeAndTagGroup() {
         <Badge>Medium</Badge>
         <Badge>Large</Badge>
       </div>
-    </Section>
+    </ComponentConfig>
   );
 }

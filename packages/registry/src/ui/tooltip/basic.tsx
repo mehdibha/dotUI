@@ -1,9 +1,7 @@
 "use client";
 
 import type * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import {
-  Focusable as AriaFocusable,
   OverlayArrow as AriaOverlayArrow,
   Tooltip as AriaTooltip,
   TooltipTrigger as AriaTooltipTrigger,
@@ -29,7 +27,7 @@ const tooltipStyles = tv({
   },
 });
 
-const { content, arrow, trigger } = tooltipStyles();
+const { content, arrow } = tooltipStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 interface TooltipProps
@@ -88,33 +86,6 @@ function TooltipArrow({ className }: TooltipArrowProps) {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface TooltipTriggerProps extends React.ComponentProps<"div"> {
-  asChild?: boolean;
-}
-const TooltipTrigger = ({
-  asChild = false,
-  children,
-  className,
-  ...props
-}: TooltipTriggerProps) => {
-  const Comp = asChild ? Slot : "div";
+export { Tooltip, TooltipContent };
 
-  return (
-    <AriaFocusable>
-      <Comp
-        data-slot="tooltip-trigger"
-        role="button"
-        className={trigger({ className })}
-        {...props}
-      >
-        {children}
-      </Comp>
-    </AriaFocusable>
-  );
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-
-export { Tooltip, TooltipContent, TooltipTrigger };
-
-export type { TooltipProps, TooltipContentProps, TooltipTriggerProps };
+export type { TooltipProps, TooltipContentProps };

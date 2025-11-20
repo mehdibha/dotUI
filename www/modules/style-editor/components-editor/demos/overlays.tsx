@@ -11,12 +11,12 @@ import { Drawer } from "@dotui/registry/ui/drawer";
 import { Modal } from "@dotui/registry/ui/modal";
 import { Popover } from "@dotui/registry/ui/popover";
 
-import { Section } from "@/modules/style-editor/components-editor/component-config-section";
+import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 import { getComponentVariants } from "@/modules/style-editor/components-editor/demos/utils";
 
 export function Overlays() {
   return (
-    <Section
+    <ComponentConfig
       name="overlays"
       title="Overlays"
       variants={getComponentVariants("popover")}
@@ -73,6 +73,6 @@ export function Overlays() {
           </DialogContent>
         </Drawer>
       </Dialog>
-    </Section>
+    </ComponentConfig>
   );
 }

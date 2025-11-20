@@ -1,8 +1,7 @@
 import type { Route } from "next";
-import Link from "next/link";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
+import { LinkButton } from "@dotui/registry/ui/button";
 
 import {
   PageActions,
@@ -100,9 +99,9 @@ function ComponentCard({
           tabIndex={-1}
         />
       </div>
-      <Button asChild size="lg" variant="link">
-        <Link href={href as Route}>{name}</Link>
-      </Button>
+      <LinkButton size="lg" variant="link" href={href as Route}>
+        {name}
+      </LinkButton>
     </div>
   );
 }

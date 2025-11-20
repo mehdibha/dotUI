@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
+import { LinkButton } from "@dotui/registry/ui/button";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
@@ -37,17 +37,17 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
         {page.data.links && page.data.links.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {page.data.links.map((link, index) => (
-              <Button
+              <LinkButton
                 key={index}
-                asChild
+                href={link.href as Route}
+                target="_blank"
+                rel="noopener noreferrer"
                 size="sm"
                 className="h-6 font-semibold text-xs [&_svg]:size-3"
               >
-                <a href={link.href as string} target="_blank">
-                  {link.label}
-                  <ExternalLinkIcon />
-                </a>
-              </Button>
+                {link.label}
+                <ExternalLinkIcon />
+              </LinkButton>
             ))}
           </div>
         )}

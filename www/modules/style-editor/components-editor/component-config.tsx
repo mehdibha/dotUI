@@ -14,7 +14,7 @@ import { DraftStyleProvider } from "@/modules/style-editor/draft-style-provider"
 import { useStyleEditorForm } from "@/modules/style-editor/style-editor-provider";
 import { useEditorStyle } from "@/modules/style-editor/use-editor-style";
 
-interface SectionProps extends React.ComponentProps<"div"> {
+interface ComponentConfigProps extends React.ComponentProps<"div"> {
   name: keyof VariantsDefinition;
   title: string;
   variants: { name: string; label: string }[];
@@ -22,7 +22,7 @@ interface SectionProps extends React.ComponentProps<"div"> {
   tokens?: string[];
 }
 
-export const Section = ({
+export const ComponentConfig = ({
   name,
   title,
   variants,
@@ -31,7 +31,7 @@ export const Section = ({
   children,
   className,
   ...props
-}: SectionProps) => {
+}: ComponentConfigProps) => {
   const form = useStyleEditorForm();
   const { isPending } = useEditorStyle();
 

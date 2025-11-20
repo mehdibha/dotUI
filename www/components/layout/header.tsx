@@ -6,7 +6,7 @@ import type * as PageTree from "fumadocs-core/page-tree";
 
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
+import { Button, LinkButton } from "@dotui/registry/ui/button";
 import { Kbd } from "@dotui/registry/ui/kbd";
 
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -98,15 +98,14 @@ export function Header({
             </SearchCommand>
           )}
           {isVisible("github") && (
-            <Button asChild size="sm">
-              <Link
-                aria-label="GitHub"
-                href={siteConfig.links.github}
-                target="_blank"
-              >
-                <GitHubIcon />
-              </Link>
-            </Button>
+            <LinkButton
+              aria-label="GitHub"
+              href={siteConfig.links.github}
+              target="_blank"
+              size="sm"
+            >
+              <GitHubIcon />
+            </LinkButton>
           )}
           {isVisible("themeToggle") && <SiteThemeToggle size="sm" />}
         </div>
