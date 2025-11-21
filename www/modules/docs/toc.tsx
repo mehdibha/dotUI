@@ -29,7 +29,7 @@ export const TableOfContents = ({
       <TocPrimitive.AnchorProvider toc={toc}>
         <div
           data-scroll-area-viewport=""
-          className="relative flex min-h-0 flex-col overflow-auto pr-4 pb-4 text-sm"
+          className="relative flex min-h-0 flex-col overflow-auto border-l pr-4 pb-4 text-sm"
         >
           <TocItems toc={toc} />
         </div>

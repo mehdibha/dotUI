@@ -23,12 +23,6 @@ export default async function Page({
 
   return (
     <div className="relative flex min-h-svh w-full">
-      <div className="absolute top-4 left-4">
-        <LinkButton variant="quiet" size="sm" href="/">
-          <ArrowLeftIcon />
-          Back to home
-        </LinkButton>
-      </div>
       <LoginForm callbackUrl={safeCallbackUrl} />
     </div>
   );
