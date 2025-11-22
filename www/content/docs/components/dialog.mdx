@@ -10,25 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/dialog.mdx?plain=1
 ---
 
-<Demo
-  name="dialog/demos/basic"
-  preview={`<DialogRoot>
-    <Button prefix={<PenSquareIcon />}>Create issue</Button>
-    <Dialog
-      title="Create a new issue"
-      description="Report an issue or create a feature request."
-    >
-      <DialogBody>
-        <TextField aria-label="Title" placeholder="Title" autoFocus />
-        <TextArea aria-label="Description" placeholder="description" />
-      </DialogBody>
-      <DialogFooter>
-        <Button slot="close">Cancel</Button>
-        <Button slot="close">Save changes</Button>
-      </DialogFooter>
-    </Dialog>
-  </DialogRoot>`}
-/>
+<Demo name="dialog/demos/basic" />
 
 ## Installation
 
@@ -95,122 +77,50 @@ Use dialog to grab the user's attention for critical tasks, like confirming acti
 Dialogs can be rendered as modals, popovers, or drawers using the `type` prop.
 By default, dialogs are displayed as drawers on mobile. You can override this behavior by setting the `mobileType` prop.
 
-<Demo
-  name="dialog/demos/types"
-  preview={`<DialogRoot>
-    <Button>Create issue</Button>
-    <Dialog type={type} mobileType={mobileType}>  {/* "modal", "popover", "drawer" */}
-      {/* Dialog content */}
-    </Dialog>
-  </DialogRoot>`}
-/>
+<Demo name="dialog/demos/types" />
 
 ## Alert Dialog
 
 Use the `role="alertdialog"` prop on the `<Dialog>` element to make an alert dialog.
 If the `isDismissable` prop is not explicitly set, the dialog will be not dismissable.
 
-<Demo
-  name="dialog/demos/alert-dialog"
-  preview={`<DialogRoot>
-    <Button>Delete project</Button>
-    <Dialog role="alertdialog">
-      {/* Dialog content */}
-    </Dialog>
-  </DialogRoot>`}
-/>
+<Demo name="dialog/demos/alert-dialog" />
 
 ## Dismissable
 
 Dialogs are dismissable by default (except alert dialogs) allowing users to click outside to close the dialog.
 
-<Demo
-  name="dialog/demos/dismissable"
-  preview={`<DialogRoot>
-    <Button>Create issue</Button>
-    <Dialog isDismissable={isDismissable}>
-      {/* Dialog content */}
-    </Dialog>
-  </DialogRoot>`}
-/>
+<Demo name="dialog/demos/dismissable" />
 
 ## Inset content
 
 Use the `DialogInset` component to add inset content to the dialog.
 
-<Demo
-  name="dialog/demos/inset-content"
-  preview={`<DialogRoot>
-    <Button>Create issue</Button>
-    <Dialog title=".." description="..">
-      <DialogBody>
-        <DialogInset>
-          Content within the inset.
-        </DialogInset>
-        <p className="mt-4">Content outside the inset.</p>
-      </DialogBody>
-      {/* Dialog footer */}
-    </Dialog>
-  </DialogRoot>`}
-/>
+<Demo name="dialog/demos/inset-content" />
 
 ## Controlled
 
 Use the `isOpen` and `onOpenChange` props to control the dialog's open state.
 
-<Demo
-  name="dialog/demos/controlled"
-  preview={`const [isOpen, setOpen] = React.useState(false);
-  return (
-    <DialogRoot isOpen={isOpen} onOpenChange={setOpen}>
-      <Button>Open dialog</Button>
-      <Dialog title="This is a heading" description="this is a description">
-        content here
-      </Dialog>
-    </DialogRoot>
-  );`}
-/>
+<Demo name="dialog/demos/controlled" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  name="dialog/demos/composition"
-  preview={`<DialogRoot>
-    <Button>Create issue</Button>
-    <Overlay>
-      <DialogContent>
-        <DialogHeader>
-          <DialogHeading>Create a new issue</DialogHeading>
-          <DialogDescription>
-            Report an issue or create a feature request.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogBody>
-          <TextField aria-label="Title" placeholder="Title" autoFocus />
-          <TextArea aria-label="Description" placeholder="description" />
-        </DialogBody>
-        <DialogFooter>
-          <Button>Cancel</Button>
-          <Button>Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Overlay>
-  </DialogRoot>`}
-/>
+<Demo name="dialog/demos/composition" />
 
 ## Examples
 
 ### Async form submission
 
-<Demo name="dialog/demos/async-form-submission" preview={``} />
+<Demo name="dialog/demos/async-form-submission" />
 
 ### Nested dialog
 
 Dialogs support nesting, allowing you to open a dialog from within another dialog.
 
-<Demo name="dialog/demos/nested" preview={``} />
+<Demo name="dialog/demos/nested" />
 
 ## API Reference
 

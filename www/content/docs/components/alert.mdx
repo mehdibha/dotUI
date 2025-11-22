@@ -3,17 +3,7 @@ title: Alert
 description: Displays a callout for user attention.
 ---
 
-<Demo
-  name="alert/demos/default"
-  preview={`<Alert>
-    <AlertTitle>Payment information</AlertTitle>
-    <AlertDescription>
-      You are currently on the free plan. Upgrade to unlock more features.
-    </AlertDescription>
-  </Alert>`}
-  fullWidth
-  resizable
-/>
+<Demo name="alert/demos/default" />
 
 ## Installation
 
@@ -27,64 +17,31 @@ npx shadcn@latest add @dotui/alert
 
 Use the `variant` prop to change the visual style of the alert.
 
-<Demo
-  name="alert/demos/variants"
-  preview={`<Alert variant="neutral" title="This is a neutral alert" />
-<Alert variant="info" title="This is a neutral alert" />
-<Alert variant="danger" title="This is a critical alert" />
-<Alert variant="warning" title="This is a warning alert" />
-<Alert variant="success" title="This is a success alert" />`}
-  fullWidth
-  resizable
-/>
+<Demo name="alert/demos/variants" />
 
 ### Title
 
 Use the `title` prop to add a title to the alert.
 
-<Demo
-  name="alert/demos/title"
-  preview={`<Alert variant="warning" fill title="Your account has been suspended." />`}
-  fullWidth
-  resizable
-/>
+<Demo name="alert/demos/title" />
 
 ### Content
 
 Pass children to the alert to add content.
 
-<Demo
-  name="alert/demos/content"
-  preview={`<Alert title="Payment Information">
-    Enter your payment method to complete your purchase.
-  </Alert>`}
-  fullWidth
-  resizable
-/>
+<Demo name="alert/demos/content" />
 
 ### Custom icon
 
 Use the `icon` prop to add a custom icon to the alert. An explicit `null` value can be used to remove the default icon.
 
-<Demo
-  name="alert/demos/custom-icon"
-  preview={`<Alert icon={<GlobeIcon />}>Hello world!</Alert>`}
-  fullWidth
-  resizable
-/>
+<Demo name="alert/demos/custom-icon" />
 
 ### Action
 
 Use the `action` prop to add an action to the alert.
 
-<Demo
-  name="alert/demos/action"
-  preview={`<Alert
-    action={<Button>Upgrade</Button>}
-  >
-    You are currently on the free plan. Upgrade to unlock more features.
-  </Alert>`}
-/>
+<Demo name="alert/demos/action" />
 
 ## API Reference
 

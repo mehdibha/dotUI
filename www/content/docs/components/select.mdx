@@ -13,15 +13,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/menus-and-selection/select.mdx?plain=1
 ---
 
-<Demo
-  name="select/demos/basic"
-  preview={`<Select>
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/basic" />
 
 ## Installation
 
@@ -39,198 +31,75 @@ Use `Select` to allow users to choose a single option from a collapsible list of
 
 Use the `placeholder` prop to provide a temporary text that occupies the text input when it is empty.
 
-<Demo
-  name="select/demos/placeholder"
-  preview={`<Select placeholder="Select a provider">
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/placeholder" />
 
 ### Label
 
 A visual label can be provided for the `Select` using the `label` prop, or a hidden label using `aria-label` prop.
 
-<Demo
-  name="select/demos/label"
-  preview={`<Select label="Provider">
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/label" />
 
 ### Description
 
 A description can be supplied to a Select via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<Demo
-  name="select/demos/description"
-  preview={`<Select label="Provider" description="Please select a provider.">
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/description" />
 
 ### Validation
 
 An `errorMessage` can be supplied to `Select`, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="select/demos/validation"
-  preview={`<Select label="Provider" isInvalid errorMessage="Please select an item in the list.">
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/validation" />
 
 ### Sections
 
 Select supports sections in order to group options. Sections can be used by wrapping groups of items in a `Section` element.<br />
 Sections without a `title` must provide an `aria-label` for accessibility.
 
-<Demo
-  name="select/demos/sections"
-  preview={`<Select label="Model">
-    <Section title="OpenAI">
-      <Item>GPT-4o</Item>
-      <Item>GPT-4 Turbo</Item>
-      <Item>GPT-4</Item>
-      <Item>GPT-3.5 Turbo</Item>
-    </Section>
-    <Section title="Google">
-      <Item>Gemini 1.5 Flash</Item>
-      <Item>Gemini 1.5 Pro</Item>
-      <Item>Gemini 1.0 Pro</Item>
-    </Section>
-    <Section title="Meta">
-      <Item>Llama 3 (70B)</Item>
-      <Item>Llama 3 (8B)</Item>
-      <Item>Code Llama (70B)</Item>
-    </Section>
-    <Section title="Mistral AI">
-      <Item>Mixtral 8x22B</Item>
-      <Item>Mistral Large</Item>
-      <Item>Mistral 7B</Item>
-    </Section>
-  </Select>`}
-/>
+<Demo name="select/demos/sections" />
 
 ### Links
 
 Items may be links to another page or website. This can be achieved by passing the `href` prop to the `Item` component.
 
-<Demo
-  name="select/demos/links"
-  preview={`<Select label="Project">
-    <Item href="/create-project">Create new...</Item>
-    <Item>DotUI</Item>
-    <Item>Palettify</Item>
-    <Item>Notionfolio</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/links" />
 
 ### Disabled
 
 The `isDisabled` prop can be used to disable the Select.
 
-<Demo
-  name="select/demos/disabled"
-  preview={`<Select isDisabled>
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/disabled" />
 
 ### Loading
 
 Use the `isLoading` prop to indicate that the list is loading.
 
-<Demo
-  name="select/demos/loading"
-  preview={`<Select isLoading>
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/loading" />
 
 ### Required
 
 Use the `isRequired` prop to mark the TextField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="select/demos/required"
-  preview={`<Select label="Provider" isRequired necessityIndicator="icon">
-    <Item>Perplexity</Item>
-    <Item>Replicate</Item>
-    <Item>Together AI</Item>
-    <Item>ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/required" />
 
 ## Uncontrolled
 
 Use `defaultSelectedKey` to provide a default set of selected item.
 
-<Demo
-  name="select/demos/uncontrolled"
-  preview={`<Select defaultSelectedKey="eleven-labs">
-    <Item id="perplexity">Perplexity</Item>
-    <Item id="replicate">Replicate</Item>
-    <Item id="together-ai">Together AI</Item>
-    <Item id="eleven-labs">ElevenLabs</Item>
-  </Select>`}
-/>
+<Demo name="select/demos/uncontrolled" />
 
 ## Controlled
 
 Use `selectedKey` to control the selected item.
 
-<Demo
-  name="select/demos/controlled"
-  preview={`const [provider, setProvider] = React.useState<Key>("eleven-labs");
-  return (
-    <Select selectedKey={provider} onSelectionChange={setProvider}>
-      <Item id="perplexity">Perplexity</Item>
-      <Item id="replicate">Replicate</Item>
-      <Item id="together-ai">Together AI</Item>
-      <Item id="eleven-labs">ElevenLabs</Item>
-    </Select>
-  )`}
-/>
+<Demo name="select/demos/controlled" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  name="select/demos/composition"
-  preview={`<SelectRoot>
-    <Button variant="default" suffix={<ChevronsUpDownIcon className="text-fg-muted" />}>
-      <SelectValue />
-    </Button>
-    <Overlay type="popover">
-      <ListBox>
-        <Item>Perplexity</Item>
-        <Item>Replicate</Item>
-        <Item>Together AI</Item>
-        <Item>ElevenLabs</Item>
-      </ListBox>
-    </Overlay>
-  </SelectRoot>`}
-/>
+<Demo name="select/demos/composition" />
 
 ## Examples
 
@@ -238,24 +107,7 @@ If you need to customize things further, you can drop down to the composition le
 
 {/* prettier-ignore-start */}
 
-<Demo 
-  name="select/demos/async-loading" 
-  preview={`const list = useAsyncList<Character>({
-    async load({ signal }) {
-      const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal });
-      const json = (await res.json()) as { results: Character[] };
-
-      return {
-        items: json.results,
-      };
-    },
-  });
-  return (
-    <Select isLoading={list.isLoading} items={list.items}>
-      {(item) => <Item id={item.name}>{item.name}</Item>}
-    </Select>
-  );`} 
-/>
+<Demo name="select/demos/async-loading" />
 
 {/* prettier-ignore-end */}
 

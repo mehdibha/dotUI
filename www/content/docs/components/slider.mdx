@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/slider.mdx?plain=1
 ---
 
-<Demo name="slider/demos/default" preview={`<Slider defaultValue={50} />`} />
+<Demo name="slider/demos/default" />
 
 ## Installation
 
@@ -59,135 +59,80 @@ import {
 
 Use the `size` prop to control the size of the slider. The default variant is `"md"`.
 
-<Demo
-  name="slider/demos/sizes"
-  preview={`<Slider size="sm" />
-<Slider size="md" />
-<Slider size="lg" />`}
-/>
+<Demo name="slider/demos/sizes" />
 
 ### Orientation
 
 Sliders are horizontally oriented by default. The `orientation` prop can be set to `"vertical"` to create a vertical slider.
 
-<Demo
-  name="slider/demos/vertical"
-  preview={`<Slider orientation="vertical" />`}
-/>
+<Demo name="slider/demos/vertical" />
 
 ### Label
 
 A visual label can be provided using the `label` prop or a hidden label using `aria-label` prop.
 
-<Demo
-  name="slider/demos/label"
-  preview={`<Slider label="Opacity" defaultValue={50} />
-<Slider aria-label="Opacity" defaultValue={50} />`}
-/>
+<Demo name="slider/demos/label" />
 
 ### Description
 
 A description can be supplied to the slider using the `description` prop.
 
-<Demo
-  name="slider/demos/description"
-  preview={`<Slider label="Opacity" description="Adjust the background opacity." />`}
-/>
+<Demo name="slider/demos/description" />
 
 ### Value label
 
 The `valueLabel` boolean prop can be used to display the current value of the slider. The `valueLabel` prop can also be set to a function that returns a custom value label.
 
-<Demo
-  name="slider/demos/value-label"
-  preview={`<Slider label="Donuts to buy" valueLabel />
-  <Slider
-    label="Donuts to buy"
-    valueLabel={(donuts) => \`\${donuts[0]} of 100 Donuts\`}
-  />`}
-/>
+<Demo name="slider/demos/value-label" />
 
 ### Value scale
 
 By default, slider values are precentages between 0 and 100. A different scale can be used by setting the `minValue` and `maxValue` props.
 
-<Demo
-  name="slider/demos/value-scale"
-  preview={`<Slider label="Cookies to buy" minValue={1} maxValue={50} />`}
-/>
+<Demo name="slider/demos/value-scale" />
 
 ### Step
 
 The `step` prop can be used to snap the value to certain increments.
 
-<Demo
-  name="slider/demos/step"
-  preview={`<Slider label="Opacity" step={5} />`}
-/>
+<Demo name="slider/demos/step" />
 
 ### Format options
 
 Values are formatted as a percentage by default, but this can be modified by using the `formatOptions` prop to specify a different format.
 `formatOptions` is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
 
-<Demo
-  name="slider/demos/format-options"
-  preview={`<Slider label="Price" formatOptions={{ style: "currency", currency: "JPY" }} />`}
-/>
+<Demo name="slider/demos/format-options" />
 
 ### Range
 
 Passing an array to the `defaultValue` or `value` props will create a range slider.
 
-<Demo
-  name="slider/demos/range"
-  preview={`<Slider defaultValue={[200, 300]} />`}
-/>
+<Demo name="slider/demos/range" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the slider.
 
-<Demo name="slider/demos/disabled" preview={`<Slider isDisabled />`} />
+<Demo name="slider/demos/disabled" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  name="slider/demos/composition"
-  preview={`<SliderRoot>
-    <Label>Volume</Label>
-    <SliderValueLabel />
-    <div>
-      <Volume1Icon />
-      <SliderTrack>
-        <SliderFiller />
-        <SliderThumb />
-      </SliderTrack>
-      <Volume2Icon />
-    </div>
-  </SliderRoot>`}
-/>
+<Demo name="slider/demos/composition" />
 
 ## Uncontrolled
 
 The `defaultValue` prop can be used to set the default state.
 
-<Demo
-  name="slider/demos/uncontrolled"
-  preview={`<Slider defaultValue={20} />`}
-/>
+<Demo name="slider/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<Demo
-  name="slider/demos/controlled"
-  preview={`const [value, setValue] = React.useState(50);
-return <Slider value={value} onChange={(value) => setValue(value as number)} />;`}
-/>
+<Demo name="slider/demos/controlled" />
 
 ## API Reference
 

@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/text-field.mdx?plain=1
 ---
 
-<Demo
-  name="text-field/demos/default"
-  preview={`<TextField label="Email" placeholder="hello@mehdibha.com" />`}
-/>
+<Demo name="text-field/demos/default" />
 
 ## Installation
 
@@ -48,106 +45,62 @@ import { TextFieldInput, TextFieldRoot } from "@/components/core/text-field";
 
 A visual label can be provided for the `TextField` using the label prop, or a hidden label using `aria-label` prop.
 
-<Demo
-  name="text-field/demos/label"
-  preview={`<TextField label="Email" />
-<TextField aria-label="Email" />`}
-/>
+<Demo name="text-field/demos/label" />
 
 ### Description
 
 A description can be supplied to `TextField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<Demo
-  name="text-field/demos/description"
-  preview={`<TextField label="Email" description="Enter your email." />`}
-/>
+<Demo name="text-field/demos/description" />
 
 ### Error message
 
 An `errorMessage` can be supplied to `TextField`, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="text-field/demos/error-message"
-  preview={`<TextField
-    label="Email"
-    isInvalid
-    errorMessage="This email is already taken."
-  />`}
-/>
+<Demo name="text-field/demos/error-message" />
 
 ### Size
 
 Use the `size` prop to control the size of the `TextField`. The default size is `"md"`.
 
-<Demo
-  name="text-field/demos/sizes"
-  preview={`<TextField size="sm" />
-<TextField size="md" />
-<TextField size="lg" />`}
-/>
+<Demo name="text-field/demos/sizes" />
 
 ### Prefix and suffix
 
 To add additional context for the `TextField`, use the `prefix` and `suffix` props.
 
-<Demo
-  name="text-field/demos/prefix-and-suffix"
-  preview={`<TextField prefix={<span>https://</span>} />
-<TextField suffix={<span>@dotui.org</span>} />
-<TextField suffix={<ClearButton />} />`}
-/>
+<Demo name="text-field/demos/prefix-and-suffix" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the TextField.
 
-<Demo name="text-field/demos/disabled" preview={`<TextField isDisabled />`} />
+<Demo name="text-field/demos/disabled" />
 
 ### ReadOnly
 
 The `isReadOnly` boolean prop makes the TextField's text content immutable. Unlike `isDisabled`, the TextField remains focusable and the contents can still be copied.
 
-<Demo name="text-field/demos/read-only" preview={`<TextField isReadOnly />`} />
+<Demo name="text-field/demos/read-only" />
 
 ### Required
 
 Use the `isRequired` prop to mark the TextField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="text-field/demos/required"
-  preview={`<TextField label="Email" isRequired />
-<TextField label="Email" isRequired necessityIndicator="icon" />
-<TextField label="Email" isRequired necessityIndicator="label" />
-<TextField label="Email" necessityIndicator="label" />`}
-/>
+<Demo name="text-field/demos/required" />
 
 ## Uncontrolled
 
 Use the `defaultValue` prop to set the default input value.
 
-<Demo
-  name="text-field/demos/uncontrolled"
-  preview={`<TextField label="Name" defaultValue="Mehdi" />`}
-/>
+<Demo name="text-field/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<Demo
-  name="text-field/demos/controlled"
-  preview={`const [inputValue, setInputValue] = React.useState("Hello world!");
-  return (
-    <TextField
-      value={inputValue}
-      onChange={(text) => {
-        setInputValue(text);
-      }}
-    />
-  );`}
-/>
+<Demo name="text-field/demos/controlled" />
 
 ## API Reference
 

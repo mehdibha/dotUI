@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-slider.mdx?plain=1
 ---
 
-<Demo
-  name="color-slider/demos/default"
-  preview={`<ColorSlider channel="hue" defaultValue="hsl(200, 100%, 50%)" />`}
-/>
+<Demo name="color-slider/demos/default" />
 
 ## Installation
 
@@ -50,29 +47,19 @@ import { Label } from "@/components/dynamic-core/field";
 
 Use the `value` and `onChange` props to control the value of the slider.
 
-<Demo
-  name="color-slider/demos/controlled"
-  preview={`const [value, setValue] = React.useState(parseColor("hsl(0, 100%, 50%)"));
-  return <ColorSlider value={value} onChange={setValue} channel="hue" />`}
-/>
+<Demo name="color-slider/demos/controlled" />
 
 ## Label
 
 Use the `label` prop to provide a label for the color slider.
 
-<Demo
-  name="color-slider/demos/label"
-  preview={`<ColorSlider label="Hue" channel="hue" defaultValue="hsl(200, 100%, 50%)" />`}
-/>
+<Demo name="color-slider/demos/label" />
 
 ## Channel
 
 `channel` prop may be provided to specify which color channel the color slider should display
 
-<Demo
-  name="color-slider/demos/channel"
-  preview={`<ColorSlider label="Opacity" defaultValue="#f00" channel="alpha" />`}
-/>
+<Demo name="color-slider/demos/channel" />
 
 ## Options
 
@@ -80,19 +67,13 @@ Use the `label` prop to provide a label for the color slider.
 
 `orientation` prop may be provided to specify the orientation of the color slider.
 
-<Demo
-  name="color-slider/demos/vertical"
-  preview={`<ColorSlider orientation="vertical" channel="hue" defaultValue="hsl(0, 100%, 50%)" />`}
-/>
+<Demo name="color-slider/demos/vertical" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the color slider.
 
-<Demo
-  name="color-slider/demos/disabled"
-  preview={`<ColorSlider label="Opacity" defaultValue="#f00" channel="alpha" isDisabled />`}
-/>
+<Demo name="color-slider/demos/disabled" />
 
 ## API Reference
 

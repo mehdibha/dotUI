@@ -10,14 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/radio-group.mdx?plain=1
 ---
 
-<Demo
-  name="radio-group/demos/default"
-  preview={`<RadioGroup defaultValue="sm" label="Size">
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/default" />
 
 ## Installation
 
@@ -71,176 +64,62 @@ import {
 
 RadioGroups are vertically oriented by default. The `orientation` prop can be used to change the orientation to `'horizontal'`.
 
-<Demo
-  name="radio-group/demos/orientation"
-  preview={`<RadioGroup defaultValue="sm" label="Size" orientation="horizontal">
-    <Radio value="sm" title="Small" description="Dimension: 128 x 128" />
-    <Radio value="md" title="Medium" description="Dimension: 256 x 256" />
-    <Radio value="lg" title="Large" description="Dimension: 512 x 512" />
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/orientation" />
 
 ### Variant
 
 Use the `variant` prop to control the visual style of the radio buttons.
 
-<Demo
-  name="radio-group/demos/cards"
-  preview={`<RadioGroup defaultValue="sm" label="Size" orientation="horizontal" variant="card">
-    <Radio value="sm">
-      <div className="flex flex-col gap-1">
-        <span className="font-bold">Small</span>
-        <span className="text-xs text-fg-muted">Dimension: 128 x 128</span>
-      </div>
-    </Radio>
-    <Radio value="md">
-      <div className="flex flex-col gap-1">
-        <span className="font-bold">Medium</span>
-        <span className="text-xs text-fg-muted">Dimension: 256 x 256</span>
-      </div>
-    </Radio>
-    <Radio value="lg">
-      <div className="flex flex-col gap-1">
-        <span className="font-bold">Large</span>
-        <span className="text-xs text-fg-muted">Dimension: 512 x 512</span>
-      </div>
-    </Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/cards" />
 
 ### label
 
 A visual label can be provided for the radio group using the `label` prop or a hidden label using `aria-label` prop.
 
-<Demo
-  name="radio-group/demos/label"
-  preview={`<RadioGroup defaultValue="sm" label="Size">
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>
-  <RadioGroup defaultValue="sm" aria-label="Size">
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/label" />
 
 ### Description
 
 A description can be supplied to a radio group via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<Demo
-  name="radio-group/demos/description"
-  preview={`<RadioGroup defaultValue="sm" label="Size" description="Select a product size.">
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/description" />
 
 ### Error message
 
 An `errorMessage` can be supplied to a `RadioGroup`, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="radio-group/demos/error-message"
-  preview={`<RadioGroup
-    defaultValue={null}
-    label="Size"
-    isInvalid
-    errorMessage="Please select a product size."
-  >
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/error-message" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the `RadioGroup` or a single `Radio`.
 
-<Demo
-  name="radio-group/demos/disabled"
-  preview={`<RadioGroup label="Size" defaultValue="sm" isDisabled>
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>
-  <RadioGroup label="Size" defaultValue="sm">
-    <Radio value="sm">Small</Radio>
-    <Radio value="md" isDisabled>Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/disabled" />
 
 ### Read only
 
 The `isReadOnly` prop makes the selection immutable. Unlike isDisabled, the RadioGroup remains focusable.
 
-<Demo
-  name="radio-group/demos/read-only"
-  preview={`<RadioGroup defaultValue="sm" label="Size" isReadOnly>
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/read-only" />
 
 ### Required
 
 Use the `isRequired` prop to mark the radio group as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="radio-group/demos/required"
-  preview={`<RadioGroup defaultValue="sm" label="Size" isRequired>
-    <Radio value="sm">Small</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>
-  <RadioGroup defaultValue="sm" label="Size" isRequired necessityIndicator="icon">
-    <Radio value="sm">Small</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>
-  <RadioGroup defaultValue="sm" label="Size" isRequired necessityIndicator="label">
-    <Radio value="sm">Small</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>
-  <RadioGroup defaultValue="sm" label="Size" necessityIndicator="label">
-    <Radio value="sm">Small</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/required" />
 
 ## Uncontrolled
 
 The `defaultValue` prop can be used to set the default state.
 
-<Demo
-  name="radio-group/demos/uncontrolled"
-  preview={`<RadioGroup defaultValue="sm" label="Size">
-    <Radio value="sm">Small</Radio>
-    <Radio value="md">Medium</Radio>
-    <Radio value="lg">Large</Radio>
-  </RadioGroup>`}
-/>
+<Demo name="radio-group/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the radio group.
 
-<Demo
-  name="radio-group/demos/controlled"
-  preview={`const [size, setSize] = React.useState("sm");
-  return (
-    <RadioGroup label="Size" value={size} onChange={(value) => setSize(value)}>
-      <Radio value="sm">Small</Radio>
-      <Radio value="md">Medium</Radio>
-      <Radio value="lg">Large</Radio>
-    </RadioGroup>
-  );`}
-/>
+<Demo name="radio-group/demos/controlled" />
 
 ## API Reference
 

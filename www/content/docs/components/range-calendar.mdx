@@ -12,10 +12,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/range-calendar.mdx?plain=1
 ---
 
-<Demo
-  name="calendar/demos/range-calendar/default"
-  preview={`<RangeCalendar aria-label="Trip dates" />`}
-/>
+<Demo name="calendar/demos/range-calendar/default" />
 
 ## Installation
 
@@ -92,29 +89,13 @@ import { Heading } from "@/registry/ui/default/core/heading";
 
 An initial, uncontrolled value can be provided to the `RangeCalendar` using the `defaultValue` prop.
 
-<Demo
-  name="calendar/demos/range-calendar/uncontrolled"
-  preview={`<RangeCalendar
-    aria-label="Trip dates"
-    defaultValue={{
-      start: parseDate("2020-02-03"),
-      end: parseDate("2020-02-12"),
-    }}
-  />`}
-/>
+<Demo name="calendar/demos/range-calendar/uncontrolled" />
 
 ## Controlled
 
 The Range Calendar component can be controlled by passing the `value` and `onChange` props.
 
-<Demo
-  name="calendar/demos/range-calendar/controlled"
-  preview={`const [value, setValue] = React.useState<DateRange>({
-    start: parseDate("2020-02-03"),
-    end: parseDate("2020-02-12"),
-  });
-  return <RangeCalendar aria-label="Trip dates" value={value} onChange={setValue} />`}
-/>
+<Demo name="calendar/demos/range-calendar/controlled" />
 
 ## Validation
 
@@ -124,10 +105,7 @@ By default, Calendar allows selecting any date. The minValue and maxValue props 
 
 This example only accepts dates after today.
 
-<Demo
-  name="calendar/demos/range-calendar/validation"
-  preview={`<RangeCalendar aria-label="Trip dates" minValue={today(getLocalTimeZone())} />`}
-/>
+<Demo name="calendar/demos/range-calendar/validation" />
 
 ### Unavailable dates
 
@@ -137,28 +115,7 @@ This example includes multiple unavailable date ranges, e.g. dates when a rental
 
 {/* prettier-ignore-start */}
 
-<Demo
-  name="calendar/demos/range-calendar/unvailable-dates"
-  preview={`const now = today(getLocalTimeZone());
-  const disabledRanges = [
-    [now, now.add({ days: 5 })],
-    [now.add({ days: 14 }), now.add({ days: 16 })],
-    [now.add({ days: 23 }), now.add({ days: 24 })],
-  ];
-
-  const isDateUnavailable = (date: DateValue) =>
-    disabledRanges.some(
-      (interval) => date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
-    );
-
-  return (
-    <RangeCalendar
-      aria-label="Trip dates"
-      minValue={today(getLocalTimeZone())}
-      isDateUnavailable={isDateUnavailable}
-    />
-  );`}
-/>
+<Demo name="calendar/demos/range-calendar/unvailable-dates" />
 
 {/* prettier-ignore-end */}
 
@@ -168,27 +125,7 @@ The `allowsNonContiguousRanges` prop enables a range to be selected even if ther
 
 This example prevents selecting weekends, but allows selecting ranges that span multiple weeks.
 
-<Demo
-  name="calendar/demos/range-calendar/non-contiguous-ranges"
-  preview={`const now = today(getLocalTimeZone());
-  const disabledRanges = [
-    [now, now.add({ days: 5 })],
-    [now.add({ days: 14 }), now.add({ days: 16 })],
-    [now.add({ days: 23 }), now.add({ days: 24 })],
-  ];
-  const isDateUnavailable = (date: DateValue) =>
-    disabledRanges.some(
-      (interval) => date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0
-    );
-  return (
-    <RangeCalendar
-      aria-label="Trip dates"
-      minValue={today(getLocalTimeZone())}
-      isDateUnavailable={isDateUnavailable}
-      allowsNonContiguousRanges
-    />
-  );`}
-/>
+<Demo name="calendar/demos/range-calendar/non-contiguous-ranges" />
 
 ### Error message
 
@@ -196,23 +133,7 @@ This example prevents selecting weekends, but allows selecting ranges that span 
 
 This example validates that the selected date range is a maximum of 1 week in duration.
 
-<Demo
-  name="calendar/demos/range-calendar/error-message"
-  preview={`const [range, setRange] = React.useState({
-    start: today(getLocalTimeZone()),
-    end: today(getLocalTimeZone()).add({ weeks: 1, days: 3 }),
-  });
-  const isInvalid = range.end.compare(range.start) > 7;
-  return (
-    <RangeCalendar
-      aria-label="Trip dates"
-      value={range}
-      onChange={setRange}
-      isInvalid={isInvalid}
-      errorMessage={isInvalid ? "Maximum stay duration is 1 week" : undefined}
-    />
-  );`}
-/>
+<Demo name="calendar/demos/range-calendar/error-message" />
 
 ## Options
 
@@ -220,72 +141,31 @@ This example validates that the selected date range is a maximum of 1 week in du
 
 By default, the `RangeCalendar` displays a single month. The `visibleMonths` prop allows displaying up to 3 months at a time.
 
-<Demo
-  name="calendar/demos/range-calendar/visible-months"
-  preview={`<RangeCalendar aria-label="Trip dates" visibleMonths={2} />`}
-/>
+<Demo name="calendar/demos/range-calendar/visible-months" />
 
 ### Page behaviour
 
 The `pageBehavior` prop allows you to control how the range-calendar navigates between months.
 
-<Demo
-  name="calendar/demos/range-calendar/page-behaviour"
-  preview={`<RangeCalendar aria-label="Trip dates" visibleMonths={2} pageBehavior="single" />`}
-/>
+<Demo name="calendar/demos/range-calendar/page-behaviour" />
 
 ### Disabled
 
 The `isDisabled` boolean prop makes the `RangeCalendar` disabled. cells cannot be focused or selected.
 
-<Demo
-  name="calendar/demos/range-calendar/disabled"
-  preview={`<RangeCalendar aria-label="Trip dates" isDisabled />`}
-/>
+<Demo name="calendar/demos/range-calendar/disabled" />
 
 ### Read only
 
 The `isReadOnly` boolean prop makes the `RangeCalendar`'s value immutable. Unlike `isDisabled`, the `RangeCalendar` remains focusable.
 
-<Demo
-  name="calendar/demos/range-calendar/read-only"
-  preview={`<RangeCalendar
-    aria-label="Trip dates"
-    isReadOnly
-    value={{
-      start: parseDate("2020-02-03"),
-      end: parseDate("2020-02-12"),
-    }}
-  />`}
-/>
+<Demo name="calendar/demos/range-calendar/read-only" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  suspense
-  name="calendar/demos/range-calendar/composition"
-  preview={`<RangeCalendarRoot aria-label="Trip dates">
-    <CalendarHeader>
-      <Button slot="previous">
-        <ChevronLeftIcon />
-      </Button>
-      <Heading />
-      <Button slot="next">
-        <ChevronRightIcon />
-      </Button>
-    </CalendarHeader>
-    <CalendarGrid>
-      <CalendarGridHeader>
-        {(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}
-      </CalendarGridHeader>
-      <CalendarGridBody>
-        {(date) => <CalendarCell date={date} />}
-      </CalendarGridBody>
-    </CalendarGrid>
-  </RangeCalendarRoot>`}
-/>
+<Demo name="calendar/demos/range-calendar/composition" />
 
 ## API Reference
 

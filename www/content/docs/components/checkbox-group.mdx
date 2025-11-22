@@ -10,14 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/checkbox-group.mdx?plain=1
 ---
 
-<Demo
-  name="checkbox-group/demos/default"
-  preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-    <Checkbox value="gatsby">Gatsby</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/default" />
 
 ## Installation
 
@@ -64,140 +57,56 @@ import { Label } from "@/components/core/field";
 
 Use the `variant` prop to control the visual style of the `CheckBoxGroup`.
 
-<Demo
-  name="checkbox-group/demos/cards"
-  preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]} variant="card">
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-    <Checkbox value="gatsby">Gatsby</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/cards" />
 
 ### Label
 
 A visual label can be provided for the `CheckboxGroup` using the `label` prop or a hidden label using `aria-label` prop.
 
-<Demo
-  name="checkbox-group/demos/label"
-  preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-  </CheckboxGroup>
-  <CheckboxGroup aria-label="React frameworks" defaultValue={["nextjs"]}>
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/label" />
 
 ### Description
 
 A description can be supplied to a `CheckboxGroup` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<Demo
-  name="checkbox-group/demos/description"
-  preview={`<CheckboxGroup
-    label="React frameworks"
-    defaultValue={["nextjs"]}
-    description="You can pick any frameworks."
-  >
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-    <Checkbox value="gatsby">Gatsby</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/description" />
 
 ### Error message
 
 An error message can be supplied to a CheckboxGroup, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="checkbox-group/demos/error-message"
-  preview={`<CheckboxGroup label="React frameworks" isInvalid errorMessage="Please select a framework.">
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-    <Checkbox value="gatsby">Gatsby</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/error-message" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the CheckboxGroup.
 
-<Demo
-  name="checkbox-group/demos/disabled"
-  preview={`<CheckboxGroup label="React frameworks" isDisabled>
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-    <Checkbox value="gatsby">Gatsby</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/disabled" />
 
 ### ReadOnly
 
 The `isReadOnly` boolean prop makes the CheckboxGroup's text content immutable. Unlike isDisabled, the CheckboxGroup remains focusable and the contents can still be copied.
 
-<Demo
-  name="checkbox-group/demos/read-only"
-  preview={`<CheckboxGroup label="React frameworks" isReadOnly>
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-    <Checkbox value="gatsby">Gatsby</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/read-only" />
 
 ### Required
 
 Use the `isRequired` prop to mark the CheckboxGroup as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="checkbox-group/demos/required"
-  preview={`<CheckboxGroup label="React frameworks" isRequired>
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-  </CheckboxGroup>
-  <CheckboxGroup label="React frameworks" isRequired necessityIndicator="icon">
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-  </CheckboxGroup>
-  <CheckboxGroup label="React frameworks" isRequired necessityIndicator="label">
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-  </CheckboxGroup>
-  <CheckboxGroup label="React frameworks" necessityIndicator="label">
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/required" />
 
 ## Uncontrolled
 
 The `defaultValue` prop can be used to set the default state.
 
-<Demo
-  name="checkbox-group/demos/uncontrolled"
-  preview={`<CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
-    <Checkbox value="nextjs">Next.js</Checkbox>
-    <Checkbox value="remix">Remix</Checkbox>
-    <Checkbox value="gatsby">Gatsby</Checkbox>
-  </CheckboxGroup>`}
-/>
+<Demo name="checkbox-group/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<Demo
-  name="checkbox-group/demos/controlled"
-  preview={`const [frameworks, setFrameworks] = React.useState(["nextjs"]);
-  return (
-    <CheckboxGroup label="React frameworks" defaultValue={["nextjs"]}>
-      <Checkbox value="nextjs">Next.js</Checkbox>
-      <Checkbox value="remix">Remix</Checkbox>
-      <Checkbox value="gatsby">Gatsby</Checkbox>
-    </CheckboxGroup>
-  );`}
-/>
+<Demo name="checkbox-group/demos/controlled" />
 
 ## API Reference
 

@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/number-field.mdx?plain=1
 ---
 
-<Demo
-  name="number-field/demos/default"
-  preview={`<NumberField label="Width" defaultValue={1024} />`}
-/>
+<Demo name="number-field/demos/default" />
 
 ## Installation
 
@@ -31,137 +28,62 @@ Use a `NumberField` to allow a user to enter a number.
 
 The NumberField value can be formatted by using the `formatOptions` prop. formatOptions is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
 
-<Demo
-  name="number-field/demos/format-options"
-  preview={`<NumberField
-    label="Decimal"
-    defaultValue={0}
-    formatOptions={{
-      signDisplay: "exceptZero",
-      minimumFractionDigits: 1,
-      maximumFractionDigits: 2,
-    }}
-  />
-  <NumberField
-    label="Percentage"
-    defaultValue={0.05}
-    formatOptions={{
-      style: "percent",
-    }}
-  />
-  <NumberField
-    label="Currency"
-    defaultValue={45}
-    formatOptions={{
-      style: "currency",
-      currency: "EUR",
-      currencyDisplay: "code",
-      currencySign: "accounting",
-    }}
-  />
-  <NumberField
-    label="Unit"
-    defaultValue={4}
-    formatOptions={{
-      style: "unit",
-      unit: "inch",
-      unitDisplay: "long",
-    }}
-  />`}
-/>
+<Demo name="number-field/demos/format-options" />
 
 ### Size
 
 Use the `size` prop to control the size of the `NumberField`. The default size is `"md"`.
 
-<Demo
-  name="number-field/demos/sizes"
-  preview={`<NumberField size="sm" />
-<NumberField size="md" />
-<NumberField size="lg" />`}
-/>
+<Demo name="number-field/demos/sizes" />
 
 ### Label
 
 A visual label can be provided for the `NumberField` using the `label` prop or a hidden label using `aria-label` prop.
 
-<Demo
-  name="number-field/demos/label"
-  preview={`<NumberField label="Width" />
-<NumberField aria-label="Width" />`}
-/>
+<Demo name="number-field/demos/label" />
 
 ### Description
 
 A description can be supplied to a NumberField via the `description` prop. The description is always visible unless the `isInvalid` prop is set to `true` and an error message is provided.
 
-<Demo
-  name="number-field/demos/description"
-  preview={`<NumberField label="Width" description="Enter the desired width." />`}
-/>
+<Demo name="number-field/demos/description" />
 
 ### Error message
 
 An `errorMessage` can be supplied to a `NumberField`, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="number-field/demos/error-message"
-  preview={`<NumberField
-    label="Width"
-    isInvalid
-    errorMessage="Please fill out this field."
-  />`}
-/>
+<Demo name="number-field/demos/error-message" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the NumberField.
 
-<Demo
-  name="number-field/demos/disabled"
-  preview={`<NumberField isDisabled />`}
-/>
+<Demo name="number-field/demos/disabled" />
 
 ### ReadOnly
 
 The `isReadOnly` boolean prop makes the NumberField's text content immutable. Unlike `isDisabled`, the NumberField remains focusable and the contents can still be copied.
 
-<Demo
-  name="number-field/demos/read-only"
-  preview={`<NumberField isReadOnly />`}
-/>
+<Demo name="number-field/demos/read-only" />
 
 ### Required
 
 Use the `isRequired` prop to mark the NumberField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="number-field/demos/required"
-  preview={`<NumberField label="Width" isRequired />
-<NumberField label="Width" isRequired necessityIndicator="icon" />
-<NumberField label="Width" isRequired necessityIndicator="label" />
-<NumberField label="Width" necessityIndicator="label" />`}
-/>
+<Demo name="number-field/demos/required" />
 
 ## Uncontrolled
 
 Use the `defaultValue` prop to set the default input value.
 
-<Demo
-  name="number-field/demos/uncontrolled"
-  preview={`<NumberField defaultValue={80} />`}
-/>
+<Demo name="number-field/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<Demo
-  name="number-field/demos/controlled"
-  preview={`const [value, setValue] = React.useState(69);
-return <NumberField value={value} onChange={setValue} />;`}
-/>
+<Demo name="number-field/demos/controlled" />
 
 ## API Reference
 

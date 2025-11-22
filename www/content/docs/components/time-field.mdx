@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/time-field.mdx?plain=1
 ---
 
-<Demo
-  name="time-field/demos/default"
-  preview={`<TimeField aria-label="Event time" />`}
-/>
+<Demo name="time-field/demos/default" />
 
 ## Installation
 
@@ -50,20 +47,13 @@ import {
 
 An initial, uncontrolled value can be provided to the `TimeField` using the `defaultValue` prop.
 
-<Demo
-  name="time-field/demos/uncontrolled"
-  preview={`<TimeField aria-label="Event time" defaultValue={new Time(11, 45)} />`}
-/>
+<Demo name="time-field/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<Demo
-  name="time-field/demos/controlled"
-  preview={`const [time, setTime] = React.useState(new Time(11, 45));
-return <TimeField aria-label="Event time" value={time} onChange={setTime} />`}
-/>
+<Demo name="time-field/demos/controlled" />
 
 ## Options
 
@@ -71,82 +61,51 @@ return <TimeField aria-label="Event time" value={time} onChange={setTime} />`}
 
 A visual label can be provided for the `TimeField` using the `label` prop or a hidden label using `aria-label` prop.
 
-<Demo
-  name="time-field/demos/label"
-  preview={`<TimeField label="Event time" />
-<TimeField aria-label="Event time" />`}
-/>
+<Demo name="time-field/demos/label" />
 
 ### Size
 
 Use the `size` prop to control the size of the `TimeField`.<br/>
 The default variant is `"md"`.
 
-<Demo
-  name="time-field/demos/sizes"
-  preview={`<TimeField label="small (sm)" size="sm" />
-  <TimeField label="medium (md)" size="md" />
-  <TimeField label="large (lg)" size="lg" />`}
-/>
+<Demo name="time-field/demos/sizes" />
 
 ### Prefix and suffix
 
 To add additional context for the `TimeField`, such as an icon, use the `prefix` and `suffix` props.
 
-<Demo
-  name="time-field/demos/prefix-and-suffix"
-  preview={`<TimeField aria-label="Event time" prefix={<TimerIcon />} />
-  <TimeField aria-label="Event time" suffix={<TimerIcon />} />`}
-/>
+<Demo name="time-field/demos/prefix-and-suffix" />
 
 ### Description
 
 A description can be supplied to `TimeField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<Demo
-  name="time-field/demos/description"
-  preview={`<TimeField label="Appointment" description="Please select a time between 9 AM and 5 PM." />`}
-/>
+<Demo name="time-field/demos/description" />
 
 ### Error message
 
 An `errorMessage` can be supplied to `TimeField` via the `errorMessage` prop, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="time-field/demos/error-message"
-  preview={`<TimeField label="Meeting" isInvalid errorMessage="Meetings start every 15 minutes." />`}
-/>
+<Demo name="time-field/demos/error-message" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the TimeField.
 
-<Demo
-  name="time-field/demos/disabled"
-  preview={`<TimeField label="Event time" isDisabled />`}
-/>
+<Demo name="time-field/demos/disabled" />
 
 ### ReadOnly
 
 The `isReadOnly` boolean prop makes the TimeField's text content immutable. Unlike isDisabled, the TimeField remains focusable and the contents can still be copied.
 
-<Demo
-  name="time-field/demos/read-only"
-  preview={`<TimeField label="Event time" value={new Time(11)} isReadOnly />`}
-/>
+<Demo name="time-field/demos/read-only" />
 
 ### Required
 
 Use the `isRequired` prop to mark the TimeField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="time-field/demos/required"
-  preview={`<TimeField label="Event time" isRequired />
-<TimeField label="Event time" isRequired necessityIndicator="icon" />
-<TimeField label="Event time" isRequired necessityIndicator="label" />
-<TimeField label="Event time" necessityIndicator="label" />`}
-/>
+<Demo name="time-field/demos/required" />
 
 ## Value options
 
@@ -154,26 +113,13 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 
 TimeField is time zone aware when a `ZonedDateTime` object is provided as the value.
 
-<Demo
-  name="time-field/demos/time-zones"
-  preview={`<TimeField
-    aria-label="Event time"
-    defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")}
-  />`}
-/>
+<Demo name="time-field/demos/time-zones" />
 
 ### Granularity
 
 The `granularity` prop allows you to control the smallest unit that is displayed by TimeField.
 
-<Demo
-  name="time-field/demos/granularity"
-  preview={`<TimeField
-    aria-label="Event time"
-    granularity="second"
-    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-  />`}
-/>
+<Demo name="time-field/demos/granularity" />
 
 ## Format Options
 
@@ -182,32 +128,19 @@ The `granularity` prop allows you to control the smallest unit that is displayed
 `placeholderValue` controls the default values of each segment when the user first interacts with them, e.g. using the up and down arrow keys.
 The default value is midnight.
 
-<Demo
-  name="time-field/demos/placeholder"
-  preview={`<TimeField aria-label="Event time" placeholderValue={new Time(9)} />`}
-/>
+<Demo name="time-field/demos/placeholder" />
 
 ### Hide time zone
 
 Use the `hideTimeZone` prop to hide the time zone abbreviation.
 
-<Demo
-  name="time-field/demos/hide-time-zone"
-  preview={`<TimeField
-    aria-label="Appointment time"
-    defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
-    hideTimeZone
-  />`}
-/>
+<Demo name="time-field/demos/hide-time-zone" />
 
 ### Hour cycle
 
 Use the `hourCycle` prop to control the hour cycle of the TimeField.
 
-<Demo
-  name="time-field/demos/hour-cycle"
-  preview={`<TimeField aria-label="Appointment time" hourCycle={24} />`}
-/>
+<Demo name="time-field/demos/hour-cycle" />
 
 ## API Reference
 

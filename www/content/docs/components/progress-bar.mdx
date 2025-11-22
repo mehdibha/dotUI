@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/feedback/progress.mdx?plain=1
 ---
 
-<Demo
-  name="progress-bar/demos/default"
-  preview={`<ProgressBar value={75} />`}
-/>
+<Demo name="progress-bar/demos/default" />
 
 ## Installation
 
@@ -52,25 +49,13 @@ import {
 
 Use the `variant` prop to control the visual style of the `Progress`. The default variant is `"default"`.
 
-<Demo
-  name="progress-bar/demos/variants"
-  preview={`<ProgressBar variant="primary" />
-<ProgressBar variant="success" />
-<ProgressBar variant="accent" />
-<ProgressBar variant="danger" />
-<ProgressBar variant="warning" />`}
-/>
+<Demo name="progress-bar/demos/variants" />
 
 ### Size
 
 Use the `size` prop to control the size of the `Progress`. The default variant is `"md"`.
 
-<Demo
-  name="progress-bar/demos/sizes"
-  preview={`<ProgressBar size="sm" />
-<ProgressBar size="md" />
-<ProgressBar size="lg" />`}
-/>
+<Demo name="progress-bar/demos/sizes" />
 
 ## Labelling
 
@@ -78,48 +63,25 @@ Use the `size` prop to control the size of the `Progress`. The default variant i
 
 A visual label can be provided using the `label` prop, or a hidden label using `aria-label` prop.
 
-<Demo
-  name="progress-bar/demos/label"
-  preview={`<ProgressBar aria-label="loading" />
-<ProgressBar label="loading..." />`}
-/>
+<Demo name="progress-bar/demos/label" />
 
 ### Value label
 
 Set the `showValueLabel` prop to `true` to display the current value of the progress bar.
 
-<Demo
-  name="progress-bar/demos/value-label"
-  preview={`<ProgressBar label="Loading" showValueLabel value={75} />`}
-/>
+<Demo name="progress-bar/demos/value-label" />
 
 ### Format options
 
 Values are formatted as a percentage by default, but this can be modified by using the `formatOptions` prop to specify a different format.
 
-<Demo
-  name="progress-bar/demos/format-options"
-  preview={`<Progress
-    label="Sending…"
-    showValueLabel
-    formatOptions={{ style: "currency", currency: "JPY" }}
-    value={60}
-  />`}
-/>
+<Demo name="progress-bar/demos/format-options" />
 
 ### Custom value label
 
 The `valueLabel` prop allows the formatted value to be replaced with a custom string.
 
-<Demo
-  name="progress-bar/demos/custom-value-label"
-  preview={`<Progress
-    label="Feeding…"
-    showValueLabel
-    valueLabel="30 of 100 dogs"
-    value={30}
-  />`}
-/>
+<Demo name="progress-bar/demos/custom-value-label" />
 
 ## Value
 
@@ -127,46 +89,25 @@ The `valueLabel` prop allows the formatted value to be replaced with a custom st
 
 A custom value scale can be used by setting the `minValue` and `maxValue` props.
 
-<Demo
-  name="progress-bar/demos/min-max-values"
-  preview={`<Progress
-    aria-label="Min and max values"
-    minValue={50}
-    maxValue={150}
-    value={100}
-  />`}
-/>
+<Demo name="progress-bar/demos/min-max-values" />
 
 ### Indeterminate
 
 The `isIndeterminate` prop can be used to represent an interdeterminate operation.
 
-<Demo
-  name="progress-bar/demos/indeterminate"
-  preview={`<ProgressBar isIndeterminate aria-label="Loading" />`}
-/>
+<Demo name="progress-bar/demos/indeterminate" />
 
 ### Duration
 
 Use the `duration` prop to indicate an approximate duration of an indeterminate task. Once the duration times out, the progress bar will start an indeterminate animation.
 
-<Demo
-  name="progress-bar/demos/duration"
-  preview={`<ProgressBar duration="30s" />`}
-/>
+<Demo name="progress-bar/demos/duration" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  name="progress-bar/demos/composition"
-  preview={`<ProgressBarRoot value={50} className="flex-row items-center gap-4">
-    <Label>Progress</Label>
-    <ProgressBarIndicator />
-    <ProgressBarValueLabel />
-  </ProgressBarRoot>`}
-/>
+<Demo name="progress-bar/demos/composition" />
 
 ## API Reference
 

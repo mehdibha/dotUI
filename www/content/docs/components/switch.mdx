@@ -10,7 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/switch.mdx?plain=1
 ---
 
-<Demo name="switch/demos/default" preview={`<Switch>Focus mode</Switch>`} />
+<Demo name="switch/demos/default" />
 
 ## Installation
 
@@ -56,67 +56,37 @@ Use the `variant` prop to control the visual style of the switch.
 
 Use the `size` prop to control the size of the switch. The default variant is `"md"`.
 
-<Demo
-  name="switch/demos/sizes"
-  preview={`<Switch size="sm" />
-<Switch size="md" />
-<Switch size="lg" />`}
-/>
+<Demo name="switch/demos/sizes" />
 
 ### Label
 
 A visual label can be provided using the component children or a hidden label using `aria-label` prop.
 
-<Demo
-  name="switch/demos/label"
-  preview={`<Switch>Focus mode</Switch>
-<Switch aria-label="Focus mode" />`}
-/>
+<Demo name="switch/demos/label" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the switch.
 
-<Demo
-  name="switch/demos/disabled"
-  preview={`<Switch isDisabled>Focus Mode</Switch>`}
-/>
+<Demo name="switch/demos/disabled" />
 
 ## Uncontrolled
 
 The `defaultSelected` prop can be used to set the default state.
 
-<Demo
-  name="switch/demos/uncontrolled"
-  preview={`<Switch defaultSelected>Airplane Mode</Switch>`}
-/>
+<Demo name="switch/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `isSelected` and `onChange` props to control the value of the input.
 
-<Demo
-  name="switch/demos/controlled"
-  preview={`const [isSelected, setSelected] = React.useState(true);
-  return (
-    <Switch isSelected={isSelected} onChange={setSelected}>
-      Airplane Mode
-    </Switch>
-  )`}
-/>
+<Demo name="switch/demos/controlled" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  name="switch/demos/composition"
-  preview={`<SwitchRoot>
-    <SwitchIndicator>
-      <SwitchThumb />
-    </SwitchIndicator>
-  </SwitchRoot>`}
-/>
+<Demo name="switch/demos/composition" />
 
 ## API Reference
 

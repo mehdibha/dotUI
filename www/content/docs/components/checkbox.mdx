@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/checkbox.mdx?plain=1
 ---
 
-<Demo
-  name="checkbox/demos/default"
-  preview={`<Checkbox>I accept the <Link href="/terms">terms and conditions</Link></Checkbox>`}
-/>
+<Demo name="checkbox/demos/default" />
 
 ## Installation
 
@@ -46,72 +43,43 @@ import { CheckboxIndicator, CheckboxRoot } from "@/components/core/checkbox";
 
 You can make the checkbox appear as a card using the `appearance` prop.
 
-<Demo
-  name="checkbox/demos/card"
-  preview={`<Checkbox variant="card">I accept the terms and conditions</Checkbox>`}
-/>
+<Demo name="checkbox/demos/card" />
 
 ### Indeterminate
 
 A checkbox can be in an indeterminate state, controlled using the `isIndeterminate` prop.
 
-<Demo
-  name="checkbox/demos/indeterminate"
-  preview={`<Checkbox isIndeterminate>Select all</Checkbox>`}
-/>
+<Demo name="checkbox/demos/indeterminate" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the checkbox.
 
-<Demo
-  name="checkbox/demos/disabled"
-  preview={`<Checkbox isDisabled>I accept the terms and conditions</Checkbox>`}
-/>
+<Demo name="checkbox/demos/disabled" />
 
 ### Read only
 
 The `isReadOnly` prop makes the selection immutable. Unlike isDisabled, the Checkbox remains focusable.
 
-<Demo
-  name="checkbox/demos/read-only"
-  preview={`<Checkbox isReadOnly>I accept the terms and conditions</Checkbox>`}
-/>
+<Demo name="checkbox/demos/read-only" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  name="checkbox/demos/composition"
-  preview={`<CheckboxRoot className="..">
-    <span>I agree to the terms and conditions</span>
-    <CheckboxIndicator className=".."/>
-  </CheckboxRoot>`}
-/>
+<Demo name="checkbox/demos/composition" />
 
 ## Uncontrolled
 
 The `defaultSelected` prop can be used to set the default state.
 
-<Demo
-  name="checkbox/demos/uncontrolled"
-  preview={`<Checkbox defaultSelected>I accept the terms and conditions</Checkbox>`}
-/>
+<Demo name="checkbox/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `isSelected` and `onChange` props to control the value of the input.
 
-<Demo
-  name="checkbox/demos/controlled"
-  preview={`const [checked, setChecked] = React.useState(false);
-  return (
-    <Checkbox isSelected={checked} onChange={setChecked}>
-      I accept the terms and conditions
-    </Checkbox>
-  );`}
-/>
+<Demo name="checkbox/demos/controlled" />
 
 ## API Reference
 

@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/text-area.mdx?plain=1
 ---
 
-<Demo
-  name="text-area/demos/default"
-  preview={`<TextArea label="Description" placeholder="Type your message here" />`}
-/>
+<Demo name="text-area/demos/default" />
 
 ## Installation
 
@@ -51,96 +48,56 @@ import { TextAreaRoot } from "@/components/core/text-field";
 
 A visual label can be provided for the `TextArea` using the label prop or a hidden label using `aria-label` prop.
 
-<Demo
-  name="text-area/demos/label"
-  preview={`<TextArea label="Description" />
-  <TextArea aria-label="Description" />`}
-/>
+<Demo name="text-area/demos/label" />
 
 ### Description
 
 An `errorMessage` can be supplied to a TextField, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="text-area/demos/description"
-  preview={`<TextArea label="Description" description="Type your description" />`}
-/>
+<Demo name="text-area/demos/description" />
 
 ### Error message
 
 An `errorMessage` can be supplied to a TextArea, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="text-area/demos/error-message"
-  preview={`<TextArea 
-    label="Comment"
-    isInvalid
-    errorMessage="You have exceeded the comment limit for one hour." 
-  />`}
-/>
+<Demo name="text-area/demos/error-message" />
 
 ### Prefix and suffix
 
 To add additional context for the `TextArea`, use the `prefix` and `suffix` props.
 
-<Demo
-  name="text-area/demos/prefix-and-suffix"
-  preview={`<TextArea
-    label="Comment"
-    placeholder="type something here"
-    prefix={<Emojis />}
-    suffix={<Toolbar />}
-  />`}
-/>
+<Demo name="text-area/demos/prefix-and-suffix" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the TextArea.
 
-<Demo name="text-area/demos/disabled" preview={`<TextArea isDisabled />`} />
+<Demo name="text-area/demos/disabled" />
 
 ### ReadOnly
 
 The `isReadOnly` boolean prop makes the TextArea's text content immutable. Unlike `isDisabled`, the text area remains focusable and the contents can still be copied.
 
-<Demo name="text-area/demos/read-only" preview={`<TextArea isReadOnly />`} />
+<Demo name="text-area/demos/read-only" />
 
 ### Required
 
 Use the `isRequired` prop to mark the TextArea as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="text-area/demos/required"
-  preview={`<TextArea label="Description" isRequired necessityIndicator="icon" />`}
-/>
+<Demo name="text-area/demos/required" />
 
 ## Uncontrolled
 
 Use the `defaultValue` prop to set the default input value.
 
-<Demo
-  name="text-area/demos/uncontrolled"
-  preview={`<TextArea label="Essay" defaultValue="Roses are red, violets are blue." />`}
-/>
+<Demo name="text-area/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<Demo
-  name="text-area/demos/controlled"
-  preview={`const [inputValue, setInputValue] = React.useState("Roses are red, violets are blue.");
-  return (
-    <TextArea
-      label="Essay"
-      value={inputValue}
-      onChange={(text) => {
-        setInputValue(text);
-      }}
-    />
-  );`}
-/>
+<Demo name="text-area/demos/controlled" />
 
 ## API Reference
 

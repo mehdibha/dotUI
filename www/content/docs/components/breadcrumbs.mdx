@@ -10,14 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/navigation/breadcrumbs.mdx?plain=1
 ---
 
-<Demo
-  name="breadcrumbs/demos/basic"
-  preview={`<Breadcrumbs>
-    <Breadcrumb href="#">Home</Breadcrumb>
-    <Breadcrumb href="#">Components</Breadcrumb>
-    <Breadcrumb href="#">Breadcrumbs</Breadcrumb>
-  </Breadcrumbs>`}
-/>
+<Demo name="breadcrumbs/demos/basic" />
 
 ## Installation
 
@@ -69,72 +62,23 @@ import {
 
 Use the `isDisabled` prop to disable the breadcrumbs.
 
-<Demo
-  name="breadcrumbs/demos/disabled"
-  preview={`<Breadcrumbs isDisabled>
-    <Breadcrumb href="#">Home</Breadcrumb>
-    <Breadcrumb href="#">Components</Breadcrumb>
-    <Breadcrumb>Breadcrumbs</Breadcrumb>
-  </Breadcrumbs>`}
-/>
+<Demo name="breadcrumbs/demos/disabled" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  name="breadcrumbs/demos/composition"
-  preview={`<Breadcrumbs>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="#">Home</BreadcrumbLink>
-      <ChevronRightCircleIcon />
-    </BreadcrumbItem>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="#">Components</BreadcrumbLink>
-      <ChevronRightCircleIcon />
-    </BreadcrumbItem>
-    <BreadcrumbItem>
-      <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
-      <ChevronRightCircleIcon />
-    </BreadcrumbItem>
-  </Breadcrumbs>`}
-/>
+<Demo name="breadcrumbs/demos/composition" />
 
 ## Examples
 
 ### Icon
 
-<Demo
-  name="breadcrumbs/demos/icon"
-  preview={`<Breadcrumbs>
-    <Breadcrumb href="#">
-      <HomeIcon />
-      Home
-    </Breadcrumb>
-    <Breadcrumb href="#">Components</Breadcrumb>
-    <Breadcrumb href="#">Breadcrumbs</Breadcrumb>
-  </Breadcrumbs>`}
-/>
+<Demo name="breadcrumbs/demos/icon" />
 
 ### Router integration
 
-<Demo
-  name="breadcrumbs/demos/router-integration"
-  preview={`const pathname = usePathname();
-  const pathnames = pathname.split("/").filter((x) => x);
-  return (
-    <Breadcrumbs>
-      {pathnames.map((elem, index) => {
-        const href = \`/\${pathnames.slice(0, index + 1).join("/")}\`;
-        return (
-          <Breadcrumb key={elem} href={href} className="capitalize">
-            {elem}
-          </Breadcrumb>
-        );
-      })}
-    </Breadcrumbs>
-  );`}
-/>
+<Demo name="breadcrumbs/demos/router-integration" />
 
 ## API Reference
 

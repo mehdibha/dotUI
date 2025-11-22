@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/dates/date-field.mdx?plain=1
 ---
 
-<Demo
-  name="date-field/demos/default"
-  preview={`<DateField aria-label="Meeting date" />`}
-/>
+<Demo name="date-field/demos/default" />
 
 ## Installation
 
@@ -47,20 +44,13 @@ import { Description, FieldError, Label } from "@/components/core/field";
 
 An initial, uncontrolled value can be provided to the `DateField` using the `defaultValue` prop.
 
-<Demo
-  name="date-field/demos/uncontrolled"
-  preview={`<DateField defaultValue={parseDate("2020-02-03")} />`}
-/>
+<Demo name="date-field/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<Demo
-  name="date-field/demos/controlled"
-  preview={`const [value, setValue] = React.useState(parseDate("2020-02-03"));
-  return <DateField value={value} onChange={setValue} />`}
-/>
+<Demo name="date-field/demos/controlled" />
 
 ## Options
 
@@ -68,83 +58,51 @@ Use the `value` and `onChange` props to control the value of the input.
 
 A visual label can be provided for the `DateField` using the `label` prop or a hidden label using `aria-label` prop.<br/>
 
-<Demo
-  name="date-field/demos/label"
-  preview={`<DateField label="Meeting date" />
-<DateField aria-label="Meeting date" />`}
-/>
+<Demo name="date-field/demos/label" />
 
 ### Size
 
 Use the `size` prop to control the size of the `DateField`.<br/>
 The default variant is `"md"`.
 
-<Demo
-  name="date-field/demos/sizes"
-  preview={`<DateField size="sm" />
-<DateField size="md" />
-<DateField size="lg" />`}
-/>
+<Demo name="date-field/demos/sizes" />
 
 ### Prefix and suffix
 
 To add additional context for the `DateField`, such as an icon, use the `prefix` and `suffix` props.
 
-<Demo
-  name="date-field/demos/prefix-and-suffix"
-  preview={`<DateField prefix={<CalendarIcon />} />
-<DateField suffix={<CalendarIcon />} />`}
-/>
+<Demo name="date-field/demos/prefix-and-suffix" />
 
 ### Description
 
 A description can be supplied to `DateField` via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<Demo
-  name="date-field/demos/description"
-  preview={`<DateField label="Appointment" description="Please select a date." />`}
-/>
+<Demo name="date-field/demos/description" />
 
 ### Error message
 
 An `errorMessage` can be supplied to `DateField`, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="date-field/demos/error-message"
-  preview={`<DateField
-    label="Meeting"
-    isInvalid
-    errorMessage="Meetings can't be scheduled in the past."
-  />`}
-/>
+<Demo name="date-field/demos/error-message" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the DateField.
 
-<Demo
-  name="date-field/demos/disabled"
-  preview={`<DateField label="Event date" isDisabled />`}
-/>
+<Demo name="date-field/demos/disabled" />
 
 ### ReadOnly
 
 The `isReadOnly` boolean prop makes the DateField's text content immutable. Unlike isDisabled, the DateField remains focusable and the contents can still be copied.
 
-<Demo
-  name="date-field/demos/read-only"
-  preview={`<DateField label="Event date" value={new CalendarDate(1980, 1, 1)} isReadOnly />`}
-/>
+<Demo name="date-field/demos/read-only" />
 
 ### Required
 
 Use the `isRequired` prop to mark the DateField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="date-field/demos/required"
-  preview={`<DateField label="Event date" isRequired />`}
-/>
+<Demo name="date-field/demos/required" />
 
 ## Value options
 
@@ -152,36 +110,13 @@ Use the `necessityIndicator` prop to control the visual style of the required st
 
 `DateField` is time zone aware when a ZonedDateTime object is provided as the value.
 
-<Demo
-  name="date-field/demos/time-zones"
-  preview={`<DateField
-    aria-label="Meeting time"
-    defaultValue={parseZonedDateTime("2022-11-07T00:45[America/Los_Angeles]")}
-  />`}
-/>
+<Demo name="date-field/demos/time-zones" />
 
 ### Granularity
 
 The `granularity` prop allows you to control the smallest unit that is displayed by DateField.
 
-<Demo
-  name="date-field/demos/granularity"
-  preview={`<DateField
-    label="Hour"
-    granularity="hour"
-    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-  />
-  <DateField
-    label="Minute"
-    granularity="minute"
-    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-  />
-  <DateField
-    label="Second"
-    granularity="second"
-    defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}
-  />`}
-/>
+<Demo name="date-field/demos/granularity" />
 
 ## Format Options
 
@@ -189,33 +124,19 @@ The `granularity` prop allows you to control the smallest unit that is displayed
 
 Use the `placeholderValue` prop to control the default values of each segment. The default value is midnight.
 
-<Demo
-  name="date-field/demos/placeholder"
-  preview={`<DateField label="Meeting date" placeholderValue={new CalendarDate(1980, 1, 1)} />`}
-/>
+<Demo name="date-field/demos/placeholder" />
 
 ### Hide time zone
 
 Use the `hideTimeZone` prop to hide the time zone abbreviation.
 
-<Demo
-  name="date-field/demos/hide-time-zone"
-  preview={`<DateField
-    label="Appointment time"
-    granularity="minute"
-    defaultValue={parseZonedDateTime("2022-11-07T10:45[America/Los_Angeles]")}
-    hideTimeZone
-  />`}
-/>
+<Demo name="date-field/demos/hide-time-zone" />
 
 ### Hour cycle
 
 Use the `hourCycle` prop to control the hour cycle of the DateField.
 
-<Demo
-  name="date-field/demos/hour-cycle"
-  preview={`<DateField aria-label="Meeting time" granularity="minute" hourCycle={24} />`}
-/>
+<Demo name="date-field/demos/hour-cycle" />
 
 ## API Reference
 

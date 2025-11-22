@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/search-field.mdx?plain=1
 ---
 
-<Demo
-  name="search-field/demos/default"
-  preview={`<SearchField aria-label="Search" />`}
-/>
+<Demo name="search-field/demos/default" />
 
 ## Installation
 
@@ -58,94 +55,56 @@ import { SearchFieldRoot } from "@/components/core/search-field";
 
 A visual label can be provided for the `SearchField` using the `label` prop or a hidden label using `aria-label` prop.
 
-<Demo
-  name="search-field/demos/label"
-  preview={`<SearchField label="Search" />
-<SearchField aria-label="Search" />`}
-/>
+<Demo name="search-field/demos/label" />
 
 ### Description
 
 A description can be supplied to a SearchField via the `description` prop. The description is always visible unless the `isInvalid` prop is `true` and an error message is provided.
 
-<Demo
-  name="search-field/demos/description"
-  preview={`<SearchField label="Search" description="Enter your search query." />`}
-/>
+<Demo name="search-field/demos/description" />
 
 ### Error message
 
 An `errorMessage` can be supplied to a SearchField, which will be displayed when the `isInvalid` prop is set to `true`.
 
-<Demo
-  name="search-field/demos/error-message"
-  preview={`<SearchField
-    label="Search"
-    isInvalid
-    errorMessage="Please fill out this field."
-  />`}
-/>
+<Demo name="search-field/demos/error-message" />
 
 ### Size
 
 Use the `size` prop to control the size of the `SearchField`. The default size is `"md"`.
 
-<Demo
-  name="search-field/demos/sizes"
-  preview={`<SearchField size="sm" />
-<SearchField size="md" />
-<SearchField size="lg" />`}
-/>
+<Demo name="search-field/demos/sizes" />
 
 ### Disabled
 
 Use the `isDisabled` prop to disable the SearchField.
 
-<Demo
-  name="search-field/demos/disabled"
-  preview={`<SearchField isDisabled />`}
-/>
+<Demo name="search-field/demos/disabled" />
 
 ### ReadOnly
 
 The `isReadOnly` boolean prop makes the SearchField's text content immutable. Unlike `isDisabled`, the SearchField remains focusable and the contents can still be copied.
 
-<Demo
-  name="search-field/demos/read-only"
-  preview={`<SearchField isReadOnly />`}
-/>
+<Demo name="search-field/demos/read-only" />
 
 ### Required
 
 Use the `isRequired` prop to mark the SearchField as required.
 Use the `necessityIndicator` prop to control the visual style of the required state.
 
-<Demo
-  name="search-field/demos/required"
-  preview={`<SearchField label="Search" isRequired />
-<SearchField label="Search" isRequired necessityIndicator="icon" />
-<SearchField label="Search" isRequired necessityIndicator="label" />
-<SearchField label="Search" necessityIndicator="label" />`}
-/>
+<Demo name="search-field/demos/required" />
 
 ## Uncontrolled
 
 Use the `defaultValue` prop to set the default input value.
 
-<Demo
-  name="search-field/demos/uncontrolled"
-  preview={`<SearchField defaultValue="Marvel movies" />`}
-/>
+<Demo name="search-field/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the value of the input.
 
-<Demo
-  name="search-field/demos/controlled"
-  preview={`const [inputValue, setInputValue] = React.useState("Marvel movies");
-return <SearchField value={inputValue} onChange={setInputValue} />;`}
-/>
+<Demo name="search-field/demos/controlled" />
 
 ## API Reference
 

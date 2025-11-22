@@ -10,19 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/navigation/tabs.mdx?plain=1
 ---
 
-<Demo
-  name="tabs/demos/basic"
-  preview={`<Tabs>
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings">Settings</Tab>
-    </TabList>
-    <TabPanel id="overview">Overview content</TabPanel>
-    <TabPanel id="usage">Usage content</TabPanel>
-    <TabPanel id="settings">Settings content</TabPanel>
-  </Tabs>`}
-/>
+<Demo name="tabs/demos/basic" />
 
 ## Installation
 
@@ -34,22 +22,7 @@ npx shadcn@latest add @dotui/tabs
 
 Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
-<Demo
-  name="tabs/demos/controlled"
-  preview={`const [selectedTab, setSelectedTab] = React.useState<Key>("overview");
-  return (
-    <Tabs selectedKey={selectedTab} onSelectionChange={setSelectedTab}>
-      <TabList>
-        <Tab id="overview">Overview</Tab>
-        <Tab id="usage">Usage</Tab>
-        <Tab id="settings">Settings</Tab>
-      </TabList>
-      <TabPanel id="overview">Overview content</TabPanel>
-      <TabPanel id="usage">Usage content</TabPanel>
-      <TabPanel id="settings">Settings content</TabPanel>
-    </Tabs>
-  )`}
-/>
+<Demo name="tabs/demos/controlled" />
 
 ## Options
 
@@ -57,84 +30,25 @@ Use the `selectedKey` and `onSelectionChange` props to control the selected tab.
 
 Use the `variant` prop to set the visual style of the tabs.
 
-<Demo
-  name="tabs/demos/variant"
-  preview={`<Tabs variant="solid">
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings">Settings</Tab>
-    </TabList>
-    <TabPanel id="overview">Overview content</TabPanel>
-    <TabPanel id="usage">Usage content</TabPanel>
-    <TabPanel id="settings">Settings content</TabPanel>
-  </Tabs>`}
-/>
+<Demo name="tabs/demos/variant" />
 
 ### Orientation
 
 Use the `orientation` prop to set the orientation of the tabs.
 
-<Demo
-  name="tabs/demos/vertical"
-  preview={`<Tabs orientation="vertical">
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings">Settings</Tab>
-    </TabList>
-    <TabPanel id="overview">Overview content</TabPanel>
-    <TabPanel id="usage">Usage content</TabPanel>
-    <TabPanel id="settings">Settings content</TabPanel>
-  </Tabs>`}
-/>
+<Demo name="tabs/demos/vertical" />
 
 ### Disabled
 
 Use the `isDisabled` prop on `Tabs` or `Tab` to disable the entire tab list or individual tabs.
 
-<Demo
-  name="tabs/demos/disabled"
-  preview={`<Tabs isDisabled> {/* All tabs disabled */}
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings">Settings</Tab>
-    </TabList>
-    <TabPanel id="overview">Overview content</TabPanel>
-    <TabPanel id="usage">Usage content</TabPanel>
-    <TabPanel id="settings">Settings content</TabPanel>
-  </Tabs>
-  
-  <Tabs>
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings" isDisabled>Settings</Tab> {/* Individual tab disabled */}
-    </TabList>
-    <TabPanel id="overview">Overview content</TabPanel>
-    <TabPanel id="usage">Usage content</TabPanel>
-    <TabPanel id="settings">Settings content</TabPanel>
-  </Tabs>`}
-/>
+<Demo name="tabs/demos/disabled" />
 
 ### Keyboard activation
 
 Prevent keyboard activation of tabs by setting `keyboardActivation` prop to `'manual'`.
 
-<Demo
-  name="tabs/demos/keyboard-activation"
-  preview={`<Tabs keyboardActivation="manual">
-    <TabList>
-      <Tab id="overview">Overview</Tab>
-      <Tab id="usage">Usage</Tab>
-      <Tab id="settings">Settings</Tab>
-    </TabList>
-    <TabPanel id="overview">Overview content</TabPanel>
-    <TabPanel id="usage">Usage content</TabPanel>
-    <TabPanel id="settings">Settings content</TabPanel>
-  </Tabs>`}
-/>
+<Demo name="tabs/demos/keyboard-activation" />
 
 ## API Reference
 

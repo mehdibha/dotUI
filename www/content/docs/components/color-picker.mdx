@@ -10,10 +10,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/text-field.mdx?plain=1
 ---
 
-<Demo
-  name="color-picker/demos/default"
-  preview={`<ColorPicker defaultValue="#5100FF" />`}
-/>
+<Demo name="color-picker/demos/default" />
 
 ## Installation
 
@@ -51,20 +48,13 @@ import { Dialog, DialogRoot } from "@/components/core/dialog";
 
 An initial, uncontrolled value can be provided to the `ColorPicker` using the `defaultValue` prop.
 
-<Demo
-  name="color-picker/demos/uncontrolled"
-  preview={`<ColorPicker defaultValue="#5100FF" />`}
-/>
+<Demo name="color-picker/demos/uncontrolled" />
 
 ## Controlled
 
 Use the `value` and `onChange` props to control the color picker value.
 
-<Demo
-  name="color-picker/demos/controlled"
-  preview={`const [value, setValue] = React.useState(parseColor("hsl(25, 100%, 50%)"));
- <ColorPicker value={value} onChange={setValue} />;`}
-/>
+<Demo name="color-picker/demos/controlled" />
 
 ## Examples
 

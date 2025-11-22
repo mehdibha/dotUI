@@ -13,15 +13,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/menus-and-selection/list-box.mdx?plain=1
 ---
 
-<Demo
-  name="list-box/demos/basic"
-  preview={`<ListBox>
-    <Item>Next.js</Item>
-    <Item>Remix</Item>
-    <Item>Astro</Item>
-    <Item>Gatsby</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/basic" />
 
 ## Installation
 
@@ -40,84 +32,37 @@ Use `ListBox` to display a list of options and allow a user to select one or mor
 By default, `ListBox` expects items to be arranged in a vertical stack, and implements keyboard navigation and drag and drop accordingly.
 Use the `orientation` prop to change the layout to a horizontal stack.
 
-<Demo
-  name="list-box/demos/horizontal"
-  preview={`<ListBox orientation="horizontal" selectionMode="single">
-    <Item textValue="Read" label="Read" description="Read Only" />
-    <Item textValue="Write" label="Write" description="Read and Write Only" />
-    <Item textValue="Admin" label="Admin" description="Full access" />
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/horizontal" />
 
 ### Layout
 
 The `layout` prop can be set to `"grid"` to enable two-dimensional keyboard navigation.
 
-<Demo
-  name="list-box/demos/grid"
-  preview={`<ListBox layout="grid">
-    <Item>Next.js</Item>
-    <Item>Remix</Item>
-    <Item>Astro</Item>
-    <Item>Gatsby</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/grid" />
 
 ### Selection mode
 
 ListBox supports multiple selection modes. By default, selection is disabled, however this can be changed using the `selectionMode` prop.
 
-<Demo
-  name="list-box/demos/selection-mode"
-  preview={`<ListBox selectionMode="single">
-    <Item>Next.js</Item>
-    <Item>Remix</Item>
-    <Item>Astro</Item>
-    <Item>Gatsby</Item>
-  </ListBox>
-  <ListBox selectionMode="multiple">
-    <Item>Next.js</Item>
-    <Item>Remix</Item>
-    <Item>Astro</Item>
-    <Item>Gatsby</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/selection-mode" />
 
 ### Selection behavior
 
 When `selectionBehavior` is set to `"replace"`, clicking a row with the mouse replaces the selection with only that row. Using the arrow keys moves both focus and selection. To select multiple rows, modifier keys such as `Ctrl`, `Cmd`, and `Shift` can be used. On touch screen devices, selection always behaves as toggle since modifier keys may not be available.
 
-<Demo
-  name="list-box/demos/selection-behavior"
-  preview={`<ListBox selectionMode="multiple" selectionBehavior="replace">
-    <Item>Next.js</Item>
-    <Item>Remix</Item>
-    <Item>Astro</Item>
-    <Item>Gatsby</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/selection-behavior" />
 
 ### Loading
 
 Use the `isLoading` prop to indicate that the list is loading.
 
-<Demo
-  name="list-box/demos/loading"
-  preview={`<ListBox isLoading>
-    <Item>User 1</Item>
-    <Item>User 2</Item>
-    <Item>User 3</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/loading" />
 
 ### Empty state
 
 Use the `renderEmptyState` prop to customize what the ListBox will display if there are no items.
 
-<Demo
-  name="list-box/demos/empty-state"
-  preview={`<ListBox renderEmptyState={() => "No results found."} />`}
-/>
+<Demo name="list-box/demos/empty-state" />
 
 ## Item options
 
@@ -125,174 +70,62 @@ Use the `renderEmptyState` prop to customize what the ListBox will display if th
 
 Use the `variant` prop to set the visual style of the item.
 
-<Demo
-  name="list-box/demos/item-variant"
-  preview={`<ListBox>
-    <Item>View logs</Item>
-    <Item>Manage domains</Item>
-    <Item>Transfer project</Item>
-    <Item variant="danger">Delete project</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/item-variant" />
 
 ### Label and description
 
 By default, items in a ListBox are labeled by their text contents for accessibility. Items also support the `"label"` and `"description"` props to separate primary and secondary content.
 
-<Demo
-  name="list-box/demos/label-and-description"
-  preview={`<ListBox>
-    <Item textValue="Read" label="Read" description="Read Only" />
-    <Item textValue="Write" label="Write" description="Read and Write Only" />
-    <Item textValue="Admin" label="Admin" description="Full access" />
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/label-and-description" />
 
 ### Prefix and suffix
 
 To add additional context for the item, such as icons, use the `prefix` and `suffix` props.
 
-<Demo
-  name="list-box/demos/prefix-and-suffix"
-  preview={`<ListBox>
-    <Item label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
-    <Item label="Copy link" description="Copy the file link" prefix={<CopyIcon />} />
-    <Item label="Edit file" description="Allows you to edit the file" prefix={<SquarePenIcon />}/>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/prefix-and-suffix" />
 
 ### Link
 
 Items may be links to another page or website. This can be achieved by passing the `href` prop to the `Item` component.
 
-<Demo
-  name="list-box/demos/links"
-  preview={`<ListBox>
-    <Item href="https://github.com/mehdibha">GitHub</Item>
-    <Item href="https://linkedin.com/in/mehdibha">LinkedIn</Item>
-    <Item href="https://x.com/mehdibha_" target="_blank">X</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/links" />
 
 ### Disabled
 
 An `Item` can be disabled with the `isDisabled` prop.
 
-<Demo
-  name="list-box/demos/disabled-items"
-  preview={`<ListBox>
-    <Item>Next.js</Item>
-    <Item>Remix</Item>
-    <Item isDisabled>Gatsby</Item>
-    <Item>Astro</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/disabled-items" />
 
 ## Sections
 
 `ListBox` supports sections in order to group options. Sections can be used by wrapping groups of items in a Section element.<br />
 Sections without a `title` must provide an `aria-label` for accessibility.
 
-<Demo
-  name="list-box/demos/sections"
-  preview={`<ListBox selectionMode="multiple">
-    <Section title="Sauces">
-      <Item id="signature-sauce">Signature sauce</Item>
-      <Item id="bbq-sauce">BBQ sauce</Item>
-      <Item id="honey-mustard">Honey mustard</Item>
-      <Item id="tartar-sauce">Tartar sauce</Item>
-    </Section>
-    <Section title="Cheese">
-      <Item id="pepperjack">Pepperjack</Item>
-      <Item id="mozzarella">Mozzarella</Item>
-      <Item id="blue-cheese">Blue cheese</Item>
-    </Section>
-    <Section title="Extras">
-      <Item id="bacon">Bacon</Item>
-      <Item id="sauteed-onions">Sauteed onions</Item>
-      <Item id="green-pepper">Green pepper</Item>
-    </Section>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/sections" />
 
 ## Separator
 
 Separators may be added between items or sections in order to create non-labeled groupings.
 
-<Demo
-  name="list-box/demos/separator"
-  preview={`<ListBox>
-    <Item>New...</Item>
-    <Item>Badges</Item>
-    <Separator />
-    <Item>Save</Item>
-    <Item>Save as...</Item>
-    <Item>Rename...</Item>
-    <Separator />
-    <Item>Page setup…</Item>
-    <Item>Print…</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/separator" />
 
 ## Uncontrolled
 
 Use `defaultSelectedKey` to set a default selected item.
 
-<Demo
-  name="list-box/demos/uncontrolled"
-  preview={`<ListBox
-    selectionMode="multiple"
-    defaultSelectedKeys={["nextjs", "remix", "astro"]}
-  >
-    <Item id="nextjs">Next.js</Item>
-    <Item id="remix">Remix</Item>
-    <Item id="astro">Astro</Item>
-    <Item id="gatsby">Gatsby</Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/uncontrolled" />
 
 ## Controlled
 
 Use `selectedKey` and `onChange` props to control the selected item.
 
-<Demo
-  name="list-box/demos/controlled"
-  preview={`const [selected, setSelected] = React.useState<Selection>(new Set(["nextjs", "remix", "astro"]));
-  return (
-    <ListBox
-      selectionMode="multiple"
-      selectedKeys={selected}
-      onSelectionChange={setSelected}
-    >
-      <Item id="nextjs">Next.js</Item>
-      <Item id="remix">Remix</Item>
-      <Item id="astro">Astro</Item>
-      <Item id="gatsby">Gatsby</Item>
-    </ListBox>
-  )`}
-/>
+<Demo name="list-box/demos/controlled" />
 
 ## Composition
 
 If you need to customize things further, you can drop down to the composition level.
 
-<Demo
-  name="list-box/demos/composition"
-  preview={`<ListBox selectionMode="multiple">
-    <Item>
-      <Text slot="label">Next.js</Text>
-      <Text slot="description">React-based SSR and static site framework.</Text>
-    </Item>
-    <Item>
-      <Text slot="label">Remix</Text>
-      <Text slot="description">Full-stack framework with efficient data loading.</Text>
-    </Item>
-    <Item>
-      <Text slot="label">Astro</Text>
-      <Text slot="description">Lightweight static site builder for performance.</Text>
-    </Item>
-  </ListBox>`}
-/>
+<Demo name="list-box/demos/composition" />
 
 ## Examples
 
@@ -302,29 +135,7 @@ This example uses the `useAsyncList` hook to handle asynchronous loading of data
 
 {/* prettier-ignore-start */}
 
-<Demo 
-  name="list-box/demos/async-loading"
-  preview={`const list = useAsyncList<Character>({
-    async load({ signal }) {
-      const res = await fetch(\`https://pokeapi.co/api/v2/pokemon\`, { signal })
-      const json = (await res.json()) as { results: Character[] }
-      return {
-        items: json.results,
-      }
-    }
-  })
-
-  return (
-    <ListBox
-      aria-label="Pick a Pokemon"
-      items={list.items}
-      isLoading={list.isLoading}
-      selectionMode="single"
-    >
-      {(item) => <Item id={item.name}>{item.name}</Item>}
-    </ListBox>
-  )`} 
-/>
+<Demo name="list-box/demos/async-loading" />
 
 {/* prettier-ignore-end */}
 

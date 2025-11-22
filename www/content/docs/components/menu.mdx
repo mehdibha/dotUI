@@ -13,18 +13,7 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/menus-and-selection/menu.mdx?plain=1
 ---
 
-<Demo
-  name="menu/demos/basic"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem>Account settings</MenuItem>
-      <MenuItem>Create team</MenuItem>
-      <MenuItem>Command menu</MenuItem>
-      <MenuItem>Log out</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/basic" />
 
 ## Installation
 
@@ -42,34 +31,13 @@ Use `Menu` to display a list of actions or options that a user can choose.
 
 Use the `type` prop to set the overlay type. The default is `"popover"`. You can also set the mobile type using the `mobileType` prop (`"drawer"` by default).
 
-<Demo
-  name="menu/demos/overlay-type"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu type={type} mobileType={mobileType}>
-      <MenuItem>Account settings</MenuItem>
-      <MenuItem>Create team</MenuItem>
-      <MenuItem>Command menu</MenuItem>
-      <MenuItem>Log out</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/overlay-type" />
 
 ### Position
 
 Use the `placement` prop to set the position of the menu relative to the trigger button.
 
-<Demo
-  name="menu/demos/placement"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu placement={placement}>
-      <MenuItem>Account settings</MenuItem>
-      <MenuItem>Create team</MenuItem>
-      <MenuItem>Log out</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/placement" />
 
 ### Selection mode
 
@@ -77,37 +45,13 @@ Use the `placement` prop to set the position of the menu relative to the trigger
 
 Set the `selectionMode` prop to `single` for single selection.
 
-<Demo
-  name="menu/demos/single-selection"
-  preview={`const [selected, setSelected] = React.useState<Selection>(new Set(["center"]));
-  return (
-    <MenuRoot>
-      <Button>Align</Button>
-      <Menu selectionMode="single" selectedKeys={selected} onSelectionChange={setSelected}>
-        <MenuItem id="start">Start</MenuItem>
-        <MenuItem id="center">Center</MenuItem>
-        <MenuItem id="end">End</MenuItem>
-      </Menu>
-    </MenuRoot>
-  );`}
-/>
+<Demo name="menu/demos/single-selection" />
 
 #### Multiple selection
 
 Set the `selectionMode` prop to `multiple` for multiple selection.
 
-<Demo
-  name="menu/demos/multiple-selection"
-  preview={`<MenuRoot>
-    <Button>Panels</Button>
-    <Menu selectionMode="multiple" defaultSelectedKeys={["sidebar", "searchbar", "console"]}>
-      <MenuItem id="sidebar">Sidebar</MenuItem>
-      <MenuItem id="searchbar">Searchbar</MenuItem>
-      <MenuItem id="tools">Tools</MenuItem>
-      <MenuItem id="console">Console</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/multiple-selection" />
 
 ## MenuItem options
 
@@ -115,106 +59,37 @@ Set the `selectionMode` prop to `multiple` for multiple selection.
 
 Use the `variant` prop to set the visual style of the menu item.
 
-<Demo
-  name="menu/demos/item-variant"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem>Account settings</MenuItem>
-      <MenuItem>Create team</MenuItem>
-      <MenuItem>Command menu</MenuItem>
-      <MenuItem variant="danger">Delete</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/item-variant" />
 
 ### Label and description
 
 MenuItems also support the `"label"` and `"description"` slots to separate primary and secondary content. You can also use the `Text` component to do the same behaviour.
 
-<Demo
-  name="menu/demos/label-and-description"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem label="New file" description="Create a new file" />
-      <MenuItem label="Copy link" description="Copy the file link" />
-      <MenuItem label="Edit file" description="Allows you to edit the file" />
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/label-and-description" />
 
 ### Prefix and suffix
 
 To add additional context for the menu item, such as icons, use the `prefix` and `suffix` props.
 
-<Demo
-  name="menu/demos/prefix-and-suffix"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem label="New file" description="Create a new file" prefix={<PlusSquareIcon />} />
-      <MenuItem label="Copy link" description="Copy the file link" prefix={<CopyIcon />} />
-      <MenuItem label="Edit file" description="Allows you to edit the file" prefix={<SquarePenIcon />} />
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/prefix-and-suffix" />
 
 ### Keyboard shortcut
 
 Use the `shortcut` prop to add a keyboard shortcut to a menu item, or use the `Keyboard` component.
 
-<Demo
-  name="menu/demos/shortcut"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem shortcut="⌘N">New file</MenuItem>
-      <MenuItem shortcut="⌘C">Copy link</MenuItem>
-      <MenuItem shortcut="⌘⇧E">Edit file</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/shortcut" />
 
 ### Link
 
 Alternatively, items may be links to another page or website. This can be achieved by passing the href prop to the `<MenuItem>` component. Link items in a menu are not selectable.
 
-<Demo
-  name="menu/demos/link-items"
-  preview={`<MenuRoot>
-    <Button>Social</Button>
-    <Menu>
-      <MenuItem prefix={<GitHubIcon />} href="https://github.com/mehdibha/dotUI">
-        Github
-      </MenuItem>
-      <MenuItem prefix={<TwitterIcon />} href="https://x.com/mehdibha_">
-        X
-      </MenuItem>
-      <MenuItem prefix={<DiscordIcon />} href="https://discord.com/invite/DXpj5V2fU8">
-        Discord
-      </MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/link-items" />
 
 ### Disabled
 
 A MenuItem can be disabled with the `isDisabled` prop.
 
-<Demo
-  name="menu/demos/disabled-items"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem>Account settings</MenuItem>
-      <MenuItem prefix={<PlusSquareIcon />} isDisabled>
-        Create team
-      </MenuItem>
-      <MenuItem>Log out</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/disabled-items" />
 
 ## MenuRoot options
 
@@ -222,109 +97,32 @@ A MenuItem can be disabled with the `isDisabled` prop.
 
 By default, Menu opens by pressing the trigger element or activating it via the Space or Enter keys. This behavior can be changed by providing `"longPress"` to the `trigger` prop.
 
-<Demo
-  name="menu/demos/long-press"
-  preview={`<MenuRoot trigger="longPress">
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem>Account settings</MenuItem>
-      <MenuItem>Create team</MenuItem>
-      <MenuItem>Log out</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/long-press" />
 
 ## Sections
 
 Menu supports sections with headings in order to group items. Sections can be used by wrapping groups of MenuItems in a `Section` component.<br />
 A `Header` element may also be included to label the section or using the `title` prop on the `Section` component.
 
-<Demo
-  name="menu/demos/section"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <Section title="Notifications">
-        <MenuItem>Push notifications</MenuItem>
-        <MenuItem>Badges</MenuItem>
-      </Section>
-      <Separator />
-      <Section title="Panels">
-        <MenuItem id="console">Console</MenuItem>
-        <MenuItem>Search</MenuItem>
-      </Section>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/section" />
 
 ## Separator
 
 Separators may be added between menu items or sections in order to create non-labeled groupings.
 
-<Demo
-  name="menu/demos/separator"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem>New...</MenuItem>
-      <MenuItem>Badges</MenuItem>
-      <Separator />
-      <MenuItem>Save</MenuItem>
-      <MenuItem>Save as...</MenuItem>
-      <MenuItem>Rename...</MenuItem>
-      <Separator />
-      <MenuItem>Page setup…</MenuItem>
-      <MenuItem>Print…</MenuItem>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/separator" />
 
 ## Submenus
 
 Submenus can be created by wrapping a `MenuItem` and a `Menu` in a `MenuSub`.
 
-<Demo
-  name="menu/demos/submenus"
-  preview={`<MenuRoot>
-    <Button><MenuIcon /></Button>
-    <Menu>
-      <MenuItem>Account settings</MenuItem>
-      <MenuSub>
-        <MenuItem>Invite users</MenuItem>
-        <Menu>
-          <MenuItem>SMS</MenuItem>
-          <MenuItem>Twitter</MenuItem>
-          <MenuSub>
-            <MenuItem>Email</MenuItem>
-            <Menu>
-              <MenuItem>Work</MenuItem>
-              <MenuItem>Personal</MenuItem>
-            </Menu>
-          </MenuSub>
-        </Menu>
-      </MenuSub>
-    </Menu>
-  </MenuRoot>`}
-/>
+<Demo name="menu/demos/submenus" />
 
 ## Controlled
 
 The open state can be controlled via `isOpen` and `onOpenChange` props.
 
-<Demo
-  name="menu/demos/controlled"
-  preview={`const [isOpen, setOpen] = React.useState(false);
-  return (
-    <MenuRoot isOpen={isOpen} onOpenChange={setOpen}>
-      <Button><MenuIcon /></Button>
-      <Menu>
-        <MenuItem>Account settings</MenuItem>
-        <MenuItem>Create team</MenuItem>
-        <MenuItem>Log out</MenuItem>
-      </Menu>
-    </MenuRoot>
-  )`}
-/>
+<Demo name="menu/demos/controlled" />
 
 ## API Reference
 
