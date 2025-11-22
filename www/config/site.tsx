@@ -1,5 +1,6 @@
 import type { Route } from "next";
 import { BlocksIcon, BookIcon, BoxIcon, PaletteIcon } from "lucide-react";
+import { IconIcons, IconBlocks} from "@tabler/icons-react"
 
 export const siteConfig = {
   url: "https://dotui.org",
@@ -53,12 +54,12 @@ export const navItems = [
     url: "/docs/components",
   },
   {
-    icon: <BlocksIcon />,
+    icon: <IconBlocks />,
     name: "Blocks",
     url: "/blocks",
   },
   {
-    icon: <PaletteIcon />,
+    icon: <IconIcons />,
     name: "Styles",
     url: "/styles",
   },

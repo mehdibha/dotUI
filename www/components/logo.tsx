@@ -40,7 +40,7 @@ export const Logo = ({
       {extanded && (
         <Heading
           level={2}
-          className="mt-1.5 font-bold font-josefin text-base leading-normal tracking-tighter"
+          className="mt-1.5 font-bold font-josefin text-base leading-normal tracking-tighter opacity-0 group-data-expanded:opacity-100"
         >
           {siteConfig.name}
         </Heading>

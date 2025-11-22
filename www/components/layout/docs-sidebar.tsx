@@ -49,7 +49,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
   return (
     <Sidebar className="[--color-sidebar:var(--color-bg)]">
       <SidebarHeader className="relative flex h-(--header-height) flex-row items-center overflow-hidden border-b pl-3.5">
-        <Logo extanded={false} />
+        <Logo />
         <div className="absolute top-0 right-0 flex h-full w-[calc(var(--sidebar-width-icon)-1px)] items-center justify-center bg-sidebar px-2 not-group-data-expanded:opacity-0 group-hover:opacity-100 group-data-expanded:w-auto">
           <Button slot="sidebar-trigger" variant="quiet" size="sm" />
         </div>
@@ -83,7 +83,12 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
             {navItems.map((item) => (
               <SidebarItem key={item.url}>
                 <SidebarTooltip content={item.name}>
-                  <LinkButton href={item.url} size="sm" variant="quiet">
+                  <LinkButton
+                    href={item.url}
+                    size="sm"
+                    variant="quiet"
+                    className="font-normal"
+                  >
                     {item.icon}
                     <span>{item.name}</span>
                   </LinkButton>
