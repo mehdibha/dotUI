@@ -152,18 +152,9 @@ export const mdxComponents: MDXComponents = {
       {children}
     </td>
   ),
-  Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
-    <h3
-      className={cn(
-        "mt-8 scroll-m-20 font-heading font-semibold text-base tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
   Steps: ({ ...props }: React.ComponentProps<"div">) => (
     <div
-      className="[&>h3]:step mb-12 ml-4 border-l pl-8 [counter-reset:step]"
+      className="[&>h3]:step ml-4 border-l pl-8 [counter-reset:step]"
       {...props}
     />
   ),
