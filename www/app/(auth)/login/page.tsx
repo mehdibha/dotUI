@@ -1,7 +1,4 @@
 import { redirect } from "next/navigation";
-import { ArrowLeftIcon } from "lucide-react";
-
-import { LinkButton } from "@dotui/registry/ui/button";
 
 import { getSafeCallbackUrl } from "@/lib/get-safe-callback-url";
 import { LoginForm } from "@/modules/auth/login-form";
