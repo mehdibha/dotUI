@@ -46,7 +46,7 @@ export const navItems = [
   {
     icon: <BookIcon />,
     name: "Docs",
-    url: "/docs/installation",
+    url: "/docs",
   },
   {
     icon: <BoxIcon />,
