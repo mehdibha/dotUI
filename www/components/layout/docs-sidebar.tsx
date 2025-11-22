@@ -2,14 +2,7 @@
 
 import type { Route } from "next";
 import { usePathname } from "next/navigation";
-import {
-  BlocksIcon,
-  BookIcon,
-  BoxIcon,
-  PaletteIcon,
-  SearchIcon,
-  UserIcon,
-} from "lucide-react";
+import { SearchIcon, UserIcon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import {
   Disclosure as AriaDisclosure,
@@ -38,6 +31,7 @@ import {
 
 import { Logo } from "@/components/logo";
 import { SearchCommand } from "@/components/search-command";
+import { navItems } from "@/config/site";
 import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/client";
 import { UserProfileMenu } from "@/modules/auth/user-profile-menu";
@@ -202,29 +196,6 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
     </Sidebar>
   );
 }
-
-const navItems = [
-  {
-    icon: <BookIcon />,
-    name: "Docs",
-    url: "/docs/installation",
-  },
-  {
-    icon: <BoxIcon />,
-    name: "Components",
-    url: "/docs/components",
-  },
-  {
-    icon: <BlocksIcon />,
-    name: "Blocks",
-    url: "/blocks",
-  },
-  {
-    icon: <PaletteIcon />,
-    name: "Styles",
-    url: "/styles",
-  },
-] as { icon: React.ReactNode; name: string; url: Route }[];
 
 const transition: Transition = {
   type: "spring",

@@ -1,3 +1,6 @@
+import type { Route } from "next";
+import { BlocksIcon, BookIcon, BoxIcon, PaletteIcon } from "lucide-react";
+
 export const siteConfig = {
   url: "https://dotui.org",
   name: "dotUI",
@@ -37,3 +40,26 @@ export const siteConfig = {
     creatorGithub: "https://github.com/mehdibha",
   } as const,
 };
+
+export const navItems = [
+  {
+    icon: <BookIcon />,
+    name: "Docs",
+    url: "/docs/installation",
+  },
+  {
+    icon: <BoxIcon />,
+    name: "Components",
+    url: "/docs/components",
+  },
+  {
+    icon: <BlocksIcon />,
+    name: "Blocks",
+    url: "/blocks",
+  },
+  {
+    icon: <PaletteIcon />,
+    name: "Styles",
+    url: "/styles",
+  },
+] as { icon: React.ReactNode; name: string; url: Route }[];

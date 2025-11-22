@@ -47,11 +47,21 @@ export default async function HomePage() {
             <span className="font-medium text-fg">shadcn&nbsp;CLI</span>.
           </p>
           <div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-            <LinkButton variant="primary" size="lg" className="h-10">
+            <LinkButton
+              href="/docs"
+              variant="primary"
+              size="lg"
+              className="h-10"
+            >
               Get started
             </LinkButton>
-            <LinkButton variant="default" size="lg" className="h-10">
-              Explore styles
+            <LinkButton
+              href="/docs/components"
+              variant="default"
+              size="lg"
+              className="h-10"
+            >
+              Explore components
             </LinkButton>
           </div>
         </div>

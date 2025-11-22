@@ -12,7 +12,7 @@ import { Kbd } from "@dotui/registry/ui/kbd";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { Logo } from "@/components/logo";
 import { SearchCommand } from "@/components/search-command";
-import { siteConfig } from "@/config/site";
+import { navItems, siteConfig } from "@/config/site";
 import { SiteThemeToggle } from "../site-theme-toggle";
 
 type HeaderItem =
@@ -59,20 +59,13 @@ export function Header({
           {isVisible("logo") && <Logo className="max-md:hidden" />}
           {isVisible("menu") && (
             <nav className="flex items-center gap-3 text-sm max-md:hidden">
-              {(
-                [
-                  { label: "Docs", href: "/docs" },
-                  { label: "Components", href: "/docs/components" },
-                  { label: "Blocks", href: "/blocks" },
-                  { label: "Styles", href: "/styles" },
-                ] as const
-              ).map((item) => (
+              {navItems.map((item) => (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={item.url}
+                  href={item.url}
                   className="px-0.5 text-fg-muted transition-colors hover:text-fg"
                 >
-                  {item.label}
+                  {item.name}
                 </Link>
               ))}
             </nav>

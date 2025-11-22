@@ -12,6 +12,8 @@ import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Popover } from "@dotui/registry/ui/popover";
 
+import { navItems } from "@/config/site";
+
 export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -49,23 +51,17 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
               <div className="space-y-2">
                 <div className="font-medium text-fg-muted text-lg">Menu</div>
                 <div className="flex flex-col gap-3">
-                  {(
-                    [
-                      { href: "/", label: "Home" },
-                      { href: "/docs", label: "Docs" },
-                      { href: "/docs/components", label: "Components" },
-                      { href: "/blocks", label: "Blocks" },
-                      { href: "/styles", label: "Styles" },
-                    ] as const
-                  ).map((item) => (
-                    <MobileLink
-                      key={item.href}
-                      href={item.href}
-                      onOpenChange={close}
-                    >
-                      {item.label}
-                    </MobileLink>
-                  ))}
+                  {([{ url: "/", name: "Home" }, ...navItems] as const).map(
+                    (item) => (
+                      <MobileLink
+                        key={item.url}
+                        href={item.url}
+                        onOpenChange={close}
+                      >
+                        {item.name}
+                      </MobileLink>
+                    ),
+                  )}
                 </div>
               </div>
               {items?.map((group, index) => {

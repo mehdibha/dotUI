@@ -21,40 +21,21 @@ I evaluated all major options for the foundational layer. Radix is effectively u
 
 The API is designed around composition, where each component generally has a 1:1 relationship with a single DOM element. This makes it easy to style every element, and control the layout and DOM order as needed to implement any pattern.
 
-<div className="grid grid-cols-2 gap-4">
-
 ```tsx
-<Select>
+<Select defaultValue="light">
   <Button>
     <SelectValue />
     <ArrowDownIcon />
   </Button>
   <Popover>
     <ListBox>
-      <Item>Item 1</Item>
-      <Item>Item 2</Item>
-      <Item>Item 3</Item>
+      <Item id="light">Light</Item>
+      <Item id="dark">Dark</Item>
+      <Item id="system">System</Item>
     </ListBox>
   </Popover>
 </Select>
 ```
-
-```tsx
-<Dialog>
-  <Button>Open Dialog</Button>
-  <Popover>
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Dialog Title</DialogTitle>
-        <DialogDescription>Dialog Description</DialogDescription>
-      </DialogHeader>
-      {/* Dialog content */}
-    </DialogContent>
-  </Popover>
-</Dialog>
-```
-
-</div>
 
 ### With default children
 
