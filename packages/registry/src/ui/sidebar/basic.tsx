@@ -147,7 +147,7 @@ function Sidebar({
       className={root()}
       data-expanded={isOpen || undefined}
       data-placement={placement}
-      data-slot="sidebar"
+      data-sidebar="sidebar"
     >
       <div className={gap()} />
       <div data-slot="sidebar-container" className={container()} {...props}>
