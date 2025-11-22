@@ -62,16 +62,16 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
       </SidebarHeader>
 
       <SidebarContent
-        className=""
+        className="gap-0"
         style={{
           maskImage:
             "linear-gradient(transparent 2px, white 8px, white calc(100% - 8px), transparent calc(100% - 2px))",
         }}
       >
         <SidebarSection>
-          <SidebarList className="**:data-[slot=button]:text-fg/85 **:[svg]:text-fg-muted/70">
+          <SidebarList className="gap-0 **:data-[slot=button]:text-fg/85 **:[svg]:text-fg-muted/70">
             <SearchCommand items={items} keyboardShortcut>
-              <SidebarItem>
+              <SidebarItem className="mb-2">
                 <SidebarTooltip content="Search">
                   <Button
                     aria-label="Search"
