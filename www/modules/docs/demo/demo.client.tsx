@@ -23,10 +23,11 @@ export const DemoClient = ({
   highlightedSource,
 }: DemoClientProps) => {
   const [isExpanded, setExpanded] = React.useState(false);
-  const toggleExpanded = React.useCallback(
-    () => setExpanded((prev) => !prev),
-    [],
-  );
+  const toggleExpanded = React.useCallback(() => {
+    React.startTransition(() => {
+      setExpanded((prev) => !prev);
+    });
+  }, []);
 
   return (
     <DemoContext.Provider value={{ isExpanded, toggleExpanded }}>
