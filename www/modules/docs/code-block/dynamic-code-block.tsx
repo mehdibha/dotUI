@@ -9,7 +9,7 @@ import type {
   HighlightOptionsThemes,
 } from "fumadocs-core/highlight";
 
-import { Pre } from ".";
+import { Pre } from "./code-block";
 
 interface DynamicCodeBlockProps {
   code: string;
