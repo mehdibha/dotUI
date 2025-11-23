@@ -1,8 +1,9 @@
 "use client";
 
-import type * as React from "react";
 import { Suspense, useMemo, useState } from "react";
 
+import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
 import { Index } from "@dotui/registry/ui/demos";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
@@ -19,7 +20,6 @@ import { CodeBlock } from "@/modules/docs/code-block";
 import { DynamicCodeBlock } from "@/modules/docs/code-block/dynamic-code-block";
 import { DemoFrame } from "@/modules/docs/demo/demo-frame";
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
-
 import type {
   InteractiveDemoControl,
   InteractiveDemoSharedConfig,
@@ -41,14 +41,7 @@ export function InteractiveDemoClient({
 }: InteractiveDemoClientProps) {
   const demoEntry = Index[name];
   const Component = demoEntry?.component;
-
-  if (!Component) {
-    return (
-      <div className="mt-6 rounded-md border border-border-danger bg-danger-muted/30 p-4 text-sm text-fg-danger">
-        Interactive demo "{name}" failed to load.
-      </div>
-    );
-  }
+  const [showFullCode, setShowFullCode] = useState(false);
   const [demoProps, setDemoProps] = useState<Record<string, unknown>>(() => {
     const controlDefaults: Record<string, unknown> = {};
     for (const control of controls) {
@@ -66,10 +59,29 @@ export function InteractiveDemoClient({
     }));
   };
 
-  const codeSample = useMemo(
-    () => generateCodeSnippet(componentName, importPath, demoProps),
+  const codeSamples = useMemo(
+    () => generateCodeSamples(componentName, importPath, demoProps),
     [componentName, importPath, demoProps],
   );
+
+  if (!Component) {
+    return (
+      <div
+        className={cn(
+          "mt-6",
+          "rounded-md",
+          "border",
+          "border-border-danger",
+          "bg-danger-muted/30",
+          "p-4",
+          "text-sm",
+          "text-fg-danger",
+        )}
+      >
+        Interactive demo "{name}" failed to load.
+      </div>
+    );
+  }
 
   return (
     <div className="not-first:mt-6 space-y-6">
@@ -94,7 +106,7 @@ export function InteractiveDemoClient({
       {controls.length > 0 ? (
         <section className="rounded-lg border bg-card/60 p-4">
           {description ? (
-            <Text className="mb-4 text-sm text-fg-muted">{description}</Text>
+            <Text className="mb-4 text-fg-muted text-sm">{description}</Text>
           ) : null}
           <div className="grid gap-4 md:grid-cols-2">
             {controls.map((control) => (
@@ -109,8 +121,23 @@ export function InteractiveDemoClient({
         </section>
       ) : null}
 
-      <CodeBlock title="Example code">
-        <DynamicCodeBlock code={codeSample} lang="tsx" />
+      <CodeBlock
+        title="Example code"
+        actions={
+          <Button
+            variant="quiet"
+            size="sm"
+            className={cn("h-7", "gap-1", "pr-2", "pl-1", "text-xs")}
+            onPress={() => setShowFullCode((prev) => !prev)}
+          >
+            {showFullCode ? "Hide imports" : "Show imports"}
+          </Button>
+        }
+      >
+        <DynamicCodeBlock
+          code={showFullCode ? codeSamples.full : codeSamples.jsx}
+          lang="tsx"
+        />
       </CodeBlock>
     </div>
   );
@@ -126,7 +153,7 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
   switch (control.control) {
     case "boolean":
       return (
-        <div className="rounded-lg border bg-bg p-3">
+        <div className={cn("bg-bg", "border", "p-3", "rounded-lg")}>
           <Switch
             isSelected={Boolean(value)}
             onChange={(selected) => onChange(control.prop, selected)}
@@ -136,7 +163,7 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
             <Label>{control.label ?? formatPropLabel(control.prop)}</Label>
           </Switch>
           {control.description ? (
-            <Text className="mt-2 text-xs text-fg-muted">
+            <Text className="mt-2 text-fg-muted text-sm">
               {control.description}
             </Text>
           ) : null}
@@ -144,16 +171,18 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
       );
     case "select":
       return (
-        <div className="space-y-2 rounded-lg border bg-bg p-3">
-          <Label className="text-sm font-medium">
+        <div
+          className={cn("bg-bg", "border", "p-3", "rounded-lg", "space-y-2")}
+        >
+          <Label className="font-medium text-sm">
             {control.label ?? formatPropLabel(control.prop)}
           </Label>
           <Select
             aria-label={control.label ?? control.prop}
             selectedKey={
               typeof value === "string" || typeof value === "number"
-                ? (value as React.Key)
-                : null
+                ? String(value)
+                : undefined
             }
             onSelectionChange={(key) =>
               onChange(control.prop, key != null ? key.toString() : undefined)
@@ -169,14 +198,16 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
             </SelectContent>
           </Select>
           {control.description ? (
-            <Text className="text-xs text-fg-muted">{control.description}</Text>
+            <Text className="text-fg-muted text-sm">{control.description}</Text>
           ) : null}
         </div>
       );
     case "text":
       return (
-        <div className="space-y-2 rounded-lg border bg-bg p-3">
-          <Label className="text-sm font-medium">
+        <div
+          className={cn("bg-bg", "border", "p-3", "rounded-lg", "space-y-2")}
+        >
+          <Label className="font-medium text-sm">
             {control.label ?? formatPropLabel(control.prop)}
           </Label>
           <Input
@@ -185,7 +216,7 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
             onChange={(nextValue) => onChange(control.prop, nextValue)}
           />
           {control.description ? (
-            <Text className="text-xs text-fg-muted">{control.description}</Text>
+            <Text className="text-fg-muted text-sm">{control.description}</Text>
           ) : null}
         </div>
       );
@@ -194,7 +225,7 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
   }
 }
 
-function generateCodeSnippet(
+function generateCodeSamples(
   componentName: string,
   importPath: string,
   props: Record<string, unknown>,
@@ -236,12 +267,18 @@ function generateCodeSnippet(
       ? `(\n${indentMultiline(jsx, "    ")}\n  )`
       : jsx;
 
-  return `import { ${componentName} } from "${importPath}";
+  const full = `import { ${componentName} } from "${importPath}";
 
 function Demo() {
   return ${returnBlock};
 }
+
 `;
+
+  return {
+    full,
+    jsx,
+  };
 }
 
 function formatProp(prop: string, value: unknown) {
@@ -296,4 +333,3 @@ function formatPropLabel(prop: string) {
     .replace(/\s+/g, " ")
     .replace(/^\w/, (char) => char.toUpperCase());
 }
-
