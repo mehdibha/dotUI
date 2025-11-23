@@ -247,11 +247,22 @@ function generateCodeSamples(
   const propsBlock = propEntries.length
     ? `\n${propEntries.map((line) => `  ${line}`).join("\n")}\n`
     : "";
+  const inlineProps = propEntries.length ? ` ${propEntries.join(" ")}` : "";
 
   const childrenContent = formatChildren(children);
   let jsx: string;
 
-  if (childrenContent) {
+  const isSimpleTextChild =
+    typeof children === "string" && !children.includes("\n");
+  const inlineLength =
+    componentName.length +
+    inlineProps.length +
+    (isSimpleTextChild ? children.length : 0);
+  const canInlineChildren = isSimpleTextChild && inlineLength <= 60;
+
+  if (canInlineChildren) {
+    jsx = `<${componentName}${inlineProps}>${children}</${componentName}>`;
+  } else if (childrenContent) {
     const childLines = indentMultiline(childrenContent, "  ");
     jsx = propsBlock
       ? `<${componentName}${propsBlock}>\n${childLines}\n</${componentName}>`
