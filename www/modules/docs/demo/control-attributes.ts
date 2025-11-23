@@ -1,7 +1,4 @@
-import type {
-  ControlValue,
-  DemoControl,
-} from "./component-controls";
+import type { ControlValue, DemoControl } from "./controls";
 
 export const buildControlAttributes = (
   controls: DemoControl[],

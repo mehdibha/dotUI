@@ -1,4 +1,4 @@
-import { extractPreviewSource } from "@/modules/docs/code-transform";
+import { extractPreviewSource } from "@/modules/docs/demo/source-transforms";
 import fs from "node:fs/promises";
 import path from "node:path";
 

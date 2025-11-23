@@ -5,8 +5,8 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Index } from "@dotui/registry/ui/demos";
 
 import { Pre } from "@/modules/docs/code-block";
-import type { DemoControl } from "@/modules/docs/component-controls";
-import { getFileSource } from "@/modules/docs/get-file-source";
+import { getFileSource } from "@/modules/docs/demo/get-file-source";
+import type { DemoControl } from "./controls";
 import { DemoShell } from "./demo.client";
 
 interface DemoProps extends React.HTMLAttributes<HTMLDivElement> {

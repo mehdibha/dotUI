@@ -5,7 +5,7 @@ import React, { startTransition } from "react";
 import { cn } from "@dotui/registry/lib/utils";
 
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
-import type { DemoControl } from "./component-controls";
+import type { DemoControl } from "./controls";
 import { DemoCodePanel } from "./demo-code-panel";
 import { DemoControlsPanel } from "./demo-controls-panel";
 import { DemoPreviewFrame } from "./demo-preview-frame";

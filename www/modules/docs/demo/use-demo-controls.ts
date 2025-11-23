@@ -7,11 +7,11 @@ import {
   buildControlDefaults,
   type ControlValue,
   type DemoControl,
-} from "@/modules/docs/component-controls";
+} from "./controls";
 import {
   applyControlsToCodeSource,
   applyControlsToPreviewSource,
-} from "../utils/source-transforms";
+} from "./source-transforms";
 
 interface UseDemoControlsArgs {
   component: React.ReactNode;
