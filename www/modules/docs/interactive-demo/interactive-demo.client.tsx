@@ -278,13 +278,13 @@ function generateCodeSamples(
       ? `(\n${indentMultiline(jsx, "    ")}\n  )`
       : jsx;
 
-  const full = `import { ${componentName} } from "${importPath}";
-
-function Demo() {
-  return ${returnBlock};
-}
-
-`;
+  const full = [
+    `import { ${componentName} } from "${importPath}";`,
+    "",
+    "function Demo() {",
+    `  return ${returnBlock};`,
+    "}",
+  ].join("\n");
 
   return {
     full,
