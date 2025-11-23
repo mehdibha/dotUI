@@ -35,7 +35,56 @@ links:
     Use the `isPending` prop to control the loading state of the button.
     Use the `isDisabled` prop to control the disabled state of the button.
 
-    {/* Insert playground here */}
+    <InteractiveDemo
+      name="button/demos/default"
+      componentName="Button"
+      importPath="@dotui/registry/ui/button"
+      controls={[
+        {
+          control: "select",
+          prop: "variant",
+          label: "Variant",
+          options: [
+            { label: "Default", value: "default" },
+            { label: "Primary", value: "primary" },
+            { label: "Quiet", value: "quiet" },
+            { label: "Link", value: "link" },
+            { label: "Success", value: "success" },
+            { label: "Warning", value: "warning" },
+            { label: "Danger", value: "danger" },
+          ],
+          defaultValue: "default",
+        },
+        {
+          control: "select",
+          prop: "size",
+          label: "Size",
+          options: [
+            { label: "Small", value: "sm" },
+            { label: "Medium", value: "md" },
+            { label: "Large", value: "lg" },
+          ],
+          defaultValue: "md",
+        },
+        {
+          control: "boolean",
+          prop: "isPending",
+          label: "Pending",
+        },
+        {
+          control: "boolean",
+          prop: "isDisabled",
+          label: "Disabled",
+        },
+        {
+          control: "text",
+          prop: "children",
+          label: "Label",
+          placeholder: "Press me",
+          defaultValue: "Press me",
+        },
+      ]}
+    />
 
     ## API Reference
 
