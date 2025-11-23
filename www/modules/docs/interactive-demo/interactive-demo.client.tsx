@@ -231,9 +231,16 @@ function generateCodeSnippet(
     jsx = `<${componentName} />`;
   }
 
+  const returnBlock =
+    jsx.includes("\n") || jsx.length > 60
+      ? `(\n${indentMultiline(jsx, "    ")}\n  )`
+      : jsx;
+
   return `import { ${componentName} } from "${importPath}";
 
-${jsx}
+function Demo() {
+  return ${returnBlock};
+}
 `;
 }
 
