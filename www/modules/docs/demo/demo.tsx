@@ -1,85 +1,51 @@
 import type React from "react";
-import { highlight } from "fumadocs-core/highlight";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Index } from "@dotui/registry/ui/demos";
 
-import { Pre } from "@/modules/docs/code-block";
-import { getFileSource } from "@/modules/docs/demo/get-file-source";
-import type { DemoControl } from "./controls";
-import { DemoShell } from "./demo.client";
+import { DemoClient } from "./demo.client";
+import { loadDemo } from "./load-demo";
 
-interface DemoProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DemoProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
-  controls?: DemoControl[];
 }
 
-const errorContainerClassName =
-  "mt-6 flex items-center gap-2 rounded-md border bg-card/80 p-6 [&>svg]:size-4";
-
-const highlightSource = (source: string) =>
-  highlight(source, {
-    lang: "tsx",
-    components: {
-      pre: (props) => <Pre {...props} />,
-    },
-  });
-
-export async function Demo({ name, controls, className, ...props }: DemoProps) {
-  const renderError = (message: React.ReactNode) => (
-    <div className={cn(errorContainerClassName, className)} {...props}>
-      {message}
-    </div>
-  );
-
-  const demoItem = Index[name];
-
-  if (!demoItem) {
-    return renderError(
-      <>
-        Component{" "}
-        <code className="rounded-sm border bg-neutral px-1.25 py-0.75 text-[0.8125rem] text-fg-muted">
-          {name}
-        </code>{" "}
-        not found in registry.
-      </>,
-    );
-  }
-
-  const filePath = demoItem.files[0];
-
-  if (!filePath) {
-    return renderError(`File path not found for component ${name}.`);
-  }
-
+export async function Demo({ name, className, ...props }: DemoProps) {
   try {
-    const Component = demoItem.component;
-
-    const { content: rawCode, preview: rawPreview } =
-      await getFileSource(filePath);
-
-    const [highlightedCode, highlightedPreview] = await Promise.all([
-      highlightSource(rawCode),
-      highlightSource(rawPreview),
-    ]);
+    const {
+      component: Component,
+      highlightedPreview,
+      highlightedSource,
+    } = await loadDemo(name);
 
     return (
-      <DemoShell
-        className={className}
-        component={<Component />}
-        highlightedCode={highlightedCode}
-        codeSource={rawCode}
-        highlightedPreview={highlightedPreview}
-        previewSource={rawPreview}
-        controls={controls}
-        {...props}
-      />
+      <div className={cn("not-first:mt-6", className)} {...props}>
+        <DemoClient
+          component={<Component />}
+          highlightedPreview={highlightedPreview}
+          highlightedSource={highlightedSource}
+        />
+      </div>
     );
   } catch (error) {
-    return renderError(
-      error instanceof Error ? error.message : "Unknown error",
+    return (
+      <div
+        className={cn(
+          "mt-6",
+          "flex",
+          "items-center",
+          "gap-2",
+          "rounded-md",
+          "border",
+          "bg-card/80",
+          "p-6",
+          "text-sm",
+          "text-fg-muted",
+          className,
+        )}
+        {...props}
+      >
+        {error instanceof Error ? error.message : "Demo failed to load."}
+      </div>
     );
   }
 }
-
-export type { DemoProps };

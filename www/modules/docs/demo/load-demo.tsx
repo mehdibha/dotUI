@@ -6,11 +6,6 @@ import { Pre } from "@/modules/docs/code-block";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import {
-  extractPreviewSource,
-  normalizeRegistrySource,
-} from "./utils";
-
 export const loadDemo = async (name: string) => {
   const demo = Index[name];
   if (!demo) throw new Error(`Demo ${name} not found`);
@@ -18,18 +13,19 @@ export const loadDemo = async (name: string) => {
   const filePath = demo.files[0];
   if (!filePath) throw new Error(`File path not found for demo ${name}`);
 
-  const rawSource = await getFileSource(filePath);
-  const source = normalizeRegistrySource(rawSource);
+  const source = await getFileSource(filePath);
   const preview = extractPreviewSource(source);
 
-  const highlightedSource = await highlightSource(source);
-  const highlightedPreview = await highlightSource(preview);
+  const [highlightedSource, highlightedPreview] = await Promise.all([
+    highlightSource(source),
+    highlightSource(preview),
+  ]);
 
   return {
     component: demo.component,
     source,
-    highlightedSource,
     preview,
+    highlightedSource,
     highlightedPreview,
   };
 };
@@ -51,6 +47,20 @@ const getFileSource = async (filePath: string) => {
     "src",
     filePath,
   );
-  const fileContent = await fs.readFile(fullPath, "utf-8");
-  return fileContent;
+  return fs.readFile(fullPath, "utf-8");
 };
+
+const IMPORT_REGEX = /^\s*import[\s\S]*?;\s*$/gm;
+const EXPORT_FN_REGEX =
+  /export\s+(default\s+)?function\s+\w+\s*\([^)]*\)\s*\{[\s\S]*?return\s*\(?\s*/m;
+const FUNCTION_END_REGEX = /\s*\)?\s*;?\s*\}\s*$/m;
+const PROPS_SPREAD_REGEX = /\{\s*\.\.\.props\s*\}/g;
+
+const extractPreviewSource = (source: string) =>
+  source
+    .replaceAll("@dotui/registry/", "@/")
+    .replace(IMPORT_REGEX, "")
+    .replace(EXPORT_FN_REGEX, "")
+    .replace(FUNCTION_END_REGEX, "")
+    .replace(PROPS_SPREAD_REGEX, "")
+    .trim();

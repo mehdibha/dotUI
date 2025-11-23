@@ -10,11 +10,11 @@ import { usePreferences } from "@/modules/preferences/preferences-atom";
 import { ActiveStyleSelector } from "@/modules/styles/active-style-selector";
 import { useActiveStyle } from "@/modules/styles/use-active-style";
 
-interface DemoPreviewFrameProps {
+interface DemoFrameProps {
   children: React.ReactNode;
 }
 
-export const DemoPreviewFrame = ({ children }: DemoPreviewFrameProps) => {
+export const DemoFrame = ({ children }: DemoFrameProps) => {
   const { activeMode, setActiveMode } = usePreferences();
   const { data: style } = useActiveStyle();
   const isMounted = useMounted();
