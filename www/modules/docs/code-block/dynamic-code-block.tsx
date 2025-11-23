@@ -1,6 +1,7 @@
 "use client";
 
 import React, { Suspense, useDeferredValue, useId } from "react";
+import { highlight } from "fumadocs-core/highlight";
 import { useShiki } from "fumadocs-core/highlight/client";
 import type {
   HighlightOptions,
@@ -48,9 +49,11 @@ export function DynamicCodeBlock({
     return highlighted;
   }
 
-  return (
-    <Suspense fallback={fallback ?? <Pre>{code}</Pre>}>{highlighted}</Suspense>
+  const fallbackNode = fallback ?? (
+    <HighlightedFallback code={code} options={shikiOptions} />
   );
+
+  return <Suspense fallback={fallbackNode}>{highlighted}</Suspense>;
 }
 
 function Internal({
@@ -63,4 +66,26 @@ function Internal({
   options: HighlightOptions;
 }) {
   return useShiki(code, options, [id, options.lang, code]);
+}
+
+function HighlightedFallback({
+  code,
+  options,
+}: {
+  code: string;
+  options: HighlightOptions;
+}) {
+  const highlighted = React.useMemo(() => {
+    try {
+      return highlight(code, options);
+    } catch {
+      return null;
+    }
+  }, [code, options]);
+
+  if (!highlighted) {
+    return <Pre>{code}</Pre>;
+  }
+
+  return highlighted;
 }
