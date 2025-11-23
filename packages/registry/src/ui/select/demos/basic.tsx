@@ -19,19 +19,22 @@ export default function Demo({
   selectionMode = "single",
   isDisabled = false,
 }: DemoProps = {}) {
-  const trimmedLabel = label?.trim();
-  const trimmedPlaceholder = placeholder?.trim();
+  const trimmedLabel =
+    typeof label === "string" ? label.trim() : (label ?? undefined);
+  const trimmedPlaceholder =
+    typeof placeholder === "string" ? placeholder.trim() : undefined;
 
   return (
     <Select
       aria-label={trimmedLabel ? undefined : "Provider"}
       placeholder={trimmedPlaceholder || undefined}
-      selectionMode={selectionMode}
       isDisabled={isDisabled}
     >
       {trimmedLabel ? <Label>{trimmedLabel}</Label> : null}
       <SelectTrigger />
-      <SelectContent>
+      <SelectContent
+        selectionMode={selectionMode === "multiple" ? "multiple" : undefined}
+      >
         <SelectItem>Perplexity</SelectItem>
         <SelectItem>Replicate</SelectItem>
         <SelectItem>Together AI</SelectItem>

@@ -2,6 +2,7 @@
 
 import { Suspense, useMemo, useState } from "react";
 
+import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Index } from "@dotui/registry/ui/demos";
 import { Label } from "@dotui/registry/ui/field";
@@ -19,13 +20,14 @@ import { CodeBlock } from "@/modules/docs/code-block";
 import { DynamicCodeBlock } from "@/modules/docs/code-block/dynamic-code-block";
 import { DemoFrame } from "@/modules/docs/demo/demo-frame";
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
-import { cn } from "@dotui/registry/lib/utils";
-
+import { renderTree } from "./formatter/render";
+import type { RenderNode, RenderText } from "./formatter/types";
 import type {
   InteractiveDemoControl,
   InteractiveDemoSharedConfig,
   JSXTemplate,
   JSXTemplateChild,
+  JSXTemplateCondition,
   JSXTemplateElement,
   JSXTemplateProp,
   JSXTemplateText,
@@ -67,8 +69,7 @@ export function InteractiveDemoClient({
   };
 
   const codeSamples = useMemo(
-    () =>
-      getCodeSamples(jsxTemplate, componentName, importPath, demoProps),
+    () => getCodeSamples(jsxTemplate, componentName, importPath, demoProps),
     [jsxTemplate, componentName, importPath, demoProps],
   );
 
@@ -317,7 +318,8 @@ function generateTemplateCodeSamples(
   template: JSXTemplate,
   props: Record<string, unknown>,
 ) {
-  const jsx = renderTemplateNode(template.tree, props) ?? "";
+  const tree = renderTemplateNode(template.tree, props);
+  const jsx = tree ? renderTree(tree) : "";
   const returnBlock =
     jsx.includes("\n") || jsx.length > 60
       ? `(\n${indentMultiline(jsx, "    ")}\n  )`
@@ -345,81 +347,61 @@ function generateTemplateCodeSamples(
 function renderTemplateNode(
   node: JSXTemplateElement,
   props: Record<string, unknown>,
-  indent = "",
-): string | null {
+): RenderNode | null {
   if (node.condition && !evaluateTemplateCondition(node.condition, props)) {
     return null;
   }
 
   const propStrings =
-    node.props?.map((prop) => renderTemplateProp(prop, props)).filter(Boolean) ??
+    node.props
+      ?.map((prop) => renderTemplateProp(prop, props))
+      .filter(
+        (value): value is string =>
+          typeof value === "string" && value.length > 0,
+      ) ?? [];
+
+  const children =
+    node.children
+      ?.map((child) => renderTemplateChild(child, props))
+      .filter((child): child is RenderNode | RenderText => Boolean(child)) ??
     [];
 
-  const inlineProps = propStrings.length
-    ? ` ${propStrings.join(" ")}`
-    : "";
-  const blockPropsList = propStrings.length
-    ? propStrings.map((line) => `  ${line}`)
-    : null;
-
-  const childStrings =
-    node.children
-      ?.map((child) => renderTemplateChild(child, props, indent + "  "))
-      .filter((child): child is string => Boolean(child)) ?? [];
-
-  if (childStrings.length === 0) {
-    return `<${node.name}${inlineProps} />`;
-  }
-
-  const singleChild = childStrings.length === 1 && !childStrings[0].includes("\n");
-  const inlineLength =
-    node.name.length + inlineProps.length + (singleChild ? childStrings[0].length : 0);
-  if (singleChild && inlineLength <= 60) {
-    return `<${node.name}${inlineProps}>${childStrings[0]}</${node.name}>`;
-  }
-
-  const childrenBlock = childStrings
-    .map((child) => indentMultiline(child, indent + "  "))
-    .join("\n");
-
-  if (blockPropsList) {
-    return [
-      `<${node.name}`,
-      ...blockPropsList,
-      ">",
-      childrenBlock,
-      `${indent}</${node.name}>`,
-    ].join("\n");
-  }
-
-  return `<${node.name}>\n${childrenBlock}\n${indent}</${node.name}>`;
+  return {
+    name: node.name,
+    props: propStrings,
+    children,
+  };
 }
 
 function renderTemplateChild(
   child: JSXTemplateChild,
   props: Record<string, unknown>,
-  indent: string,
-): string | null {
+): RenderNode | RenderText | null {
   if (child.type === "text") {
     return renderTemplateText(child, props);
   }
-  return renderTemplateNode(child, props, indent);
+  return renderTemplateNode(child, props);
 }
 
 function renderTemplateText(
   node: JSXTemplateText,
   props: Record<string, unknown>,
-): string | null {
-  let value =
-    node.value ??
-    (node.prop ? String(props[node.prop] ?? "") : "");
+): RenderText | null {
+  const raw = node.value ?? (node.prop ? props[node.prop] : undefined);
+  if (raw == null) {
+    return null;
+  }
+  let value = typeof raw === "string" ? raw : String(raw);
   if (node.trim) {
     value = value.trim();
   }
   if (!value) {
     return null;
   }
-  return escapeDoubleQuotes(value);
+  return {
+    type: "text",
+    value: escapeDoubleQuotes(value),
+  };
 }
 
 function renderTemplateProp(
@@ -430,10 +412,11 @@ function renderTemplateProp(
     case "literal":
       return formatProp(prop.name, prop.value);
     case "string": {
-      let value = props[prop.prop];
-      if (typeof value !== "string") {
+      const rawValue = props[prop.prop];
+      if (rawValue == null) {
         return null;
       }
+      let value = typeof rawValue === "string" ? rawValue : String(rawValue);
       if (prop.trim) {
         value = value.trim();
       }
@@ -450,8 +433,8 @@ function renderTemplateProp(
       return value ? prop.name : `${prop.name}={false}`;
     }
     case "enum": {
-      const value = props[prop.prop];
-      const mapped = prop.values[String(value)];
+      const rawValue = props[prop.prop];
+      const mapped = prop.values[String(rawValue ?? "")];
       if (!mapped) {
         return null;
       }
