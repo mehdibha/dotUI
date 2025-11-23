@@ -1,13 +1,10 @@
 "use client";
 
-import type {
-  ControlValue,
-  DemoControl,
-} from "@/modules/docs/component-controls";
+import type { ControlValue, DemoControl } from "./component-controls";
 import {
   type DemoControlsProps,
   DemoControls as LegacyDemoControls,
-} from "@/modules/docs/demo-controls";
+} from "./demo-controls";
 
 interface DemoControlsPanelProps {
   controls: DemoControl[];

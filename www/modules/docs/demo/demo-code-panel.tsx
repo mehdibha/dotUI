@@ -4,8 +4,8 @@ import type React from "react";
 import { ViewTransition } from "react";
 
 import { CodeBlock } from "@/modules/docs/code-block";
-import { DynamicCodeBlock } from "@/modules/docs/dynamic-code-block";
-import { DemoActions } from "./DemoActions";
+import { DynamicCodeBlock } from "@/modules/docs/code-block/dynamic-code-block";
+import { DemoActions } from "./demo-actions";
 
 interface DemoCodePanelProps {
   highlightedCode?: React.ReactNode;

@@ -4,12 +4,12 @@ import React, { startTransition } from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 
-import type { DemoControl } from "@/modules/docs/component-controls";
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
-import { DemoCodePanel } from "./components/DemoCodePanel";
-import { DemoControlsPanel } from "./components/DemoControlsPanel";
-import { DemoPreviewFrame } from "./components/DemoPreviewFrame";
-import { useDemoControls } from "./hooks/use-demo-controls";
+import type { DemoControl } from "./component-controls";
+import { DemoCodePanel } from "./demo-code-panel";
+import { DemoControlsPanel } from "./demo-controls-panel";
+import { DemoPreviewFrame } from "./demo-preview-frame";
+import { useDemoControls } from "./use-demo-controls";
 
 interface DemoShellProps extends React.ComponentProps<"div"> {
   component: React.ReactNode;

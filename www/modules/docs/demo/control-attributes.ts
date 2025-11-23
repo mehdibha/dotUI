@@ -1,7 +1,7 @@
 import type {
   ControlValue,
   DemoControl,
-} from "@/modules/docs/component-controls";
+} from "./component-controls";
 
 export const buildControlAttributes = (
   controls: DemoControl[],
