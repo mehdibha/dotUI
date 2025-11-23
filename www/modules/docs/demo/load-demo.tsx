@@ -13,8 +13,16 @@ export const loadDemo = async (name: string) => {
   const filePath = demo.files[0];
   if (!filePath) throw new Error(`File path not found for demo ${name}`);
 
-  const source = await getFileSource(filePath);
-  const preview = extractPreviewSource(source);
+  const rawContent = await getFileSource(filePath);
+
+  const source = rawContent.replaceAll("@dotui/registry/", "@/").trim();
+
+  const preview = rawContent
+    .replaceAll("@dotui/registry/", "@/")
+    .replace(IMPORT_REGEX, "")
+    .replace(EXPORT_FN_REGEX, "")
+    .replace(FUNCTION_END_REGEX, "")
+    .trim();
 
   const [highlightedSource, highlightedPreview] = await Promise.all([
     highlightSource(source),
@@ -54,7 +62,6 @@ const IMPORT_REGEX = /^\s*import[\s\S]*?;\s*$/gm;
 const EXPORT_FN_REGEX =
   /export\s+(default\s+)?function\s+\w+\s*\([^)]*\)\s*\{[\s\S]*?return\s*\(?\s*/m;
 const FUNCTION_END_REGEX = /\s*\)?\s*;?\s*\}\s*$/m;
-const PROPS_SPREAD_REGEX = /\{\s*\.\.\.props\s*\}/g;
 
 const extractPreviewSource = (source: string) =>
   source
@@ -62,5 +69,4 @@ const extractPreviewSource = (source: string) =>
     .replace(IMPORT_REGEX, "")
     .replace(EXPORT_FN_REGEX, "")
     .replace(FUNCTION_END_REGEX, "")
-    .replace(PROPS_SPREAD_REGEX, "")
     .trim();
