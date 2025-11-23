@@ -6,6 +6,11 @@ import { Pre } from "@/modules/docs/code-block";
 import fs from "node:fs/promises";
 import path from "node:path";
 
+import {
+  extractPreviewSource,
+  normalizeRegistrySource,
+} from "./utils";
+
 export const loadDemo = async (name: string) => {
   const demo = Index[name];
   if (!demo) throw new Error(`Demo ${name} not found`);
@@ -14,9 +19,8 @@ export const loadDemo = async (name: string) => {
   if (!filePath) throw new Error(`File path not found for demo ${name}`);
 
   const rawSource = await getFileSource(filePath);
-
-  const source = rawSource; // update imports, replace export default with export
-  const preview = rawSource; // no imports, no export
+  const source = normalizeRegistrySource(rawSource);
+  const preview = extractPreviewSource(source);
 
   const highlightedSource = await highlightSource(source);
   const highlightedPreview = await highlightSource(preview);
