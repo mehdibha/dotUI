@@ -2,7 +2,6 @@
 
 import { Suspense, useMemo, useState } from "react";
 
-import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Index } from "@dotui/registry/ui/demos";
 import { Label } from "@dotui/registry/ui/field";
@@ -20,9 +19,16 @@ import { CodeBlock } from "@/modules/docs/code-block";
 import { DynamicCodeBlock } from "@/modules/docs/code-block/dynamic-code-block";
 import { DemoFrame } from "@/modules/docs/demo/demo-frame";
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
+import { cn } from "@dotui/registry/lib/utils";
+
 import type {
   InteractiveDemoControl,
   InteractiveDemoSharedConfig,
+  JSXTemplate,
+  JSXTemplateChild,
+  JSXTemplateElement,
+  JSXTemplateProp,
+  JSXTemplateText,
 } from "./types";
 
 interface InteractiveDemoClientProps extends InteractiveDemoSharedConfig {
@@ -38,6 +44,7 @@ export function InteractiveDemoClient({
   componentName,
   importPath,
   description,
+  jsxTemplate,
 }: InteractiveDemoClientProps) {
   const demoEntry = Index[name];
   const Component = demoEntry?.component;
@@ -60,8 +67,9 @@ export function InteractiveDemoClient({
   };
 
   const codeSamples = useMemo(
-    () => generateCodeSamples(componentName, importPath, demoProps),
-    [componentName, importPath, demoProps],
+    () =>
+      getCodeSamples(jsxTemplate, componentName, importPath, demoProps),
+    [jsxTemplate, componentName, importPath, demoProps],
   );
 
   if (!Component) {
@@ -225,7 +233,20 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
   }
 }
 
-function generateCodeSamples(
+function getCodeSamples(
+  template: JSXTemplate | undefined,
+  componentName: string,
+  importPath: string,
+  props: Record<string, unknown>,
+) {
+  if (template) {
+    return generateTemplateCodeSamples(template, props);
+  }
+
+  return generateDefaultCodeSamples(componentName, importPath, props);
+}
+
+function generateDefaultCodeSamples(
   componentName: string,
   importPath: string,
   props: Record<string, unknown>,
@@ -290,6 +311,187 @@ function generateCodeSamples(
     full,
     jsx,
   };
+}
+
+function generateTemplateCodeSamples(
+  template: JSXTemplate,
+  props: Record<string, unknown>,
+) {
+  const jsx = renderTemplateNode(template.tree, props) ?? "";
+  const returnBlock =
+    jsx.includes("\n") || jsx.length > 60
+      ? `(\n${indentMultiline(jsx, "    ")}\n  )`
+      : jsx;
+
+  const importLines = template.imports.map(
+    (entry) => `import { ${entry.members.join(", ")} } from "${entry.module}";`,
+  );
+
+  const parts = [...importLines];
+  if (importLines.length) {
+    parts.push("");
+  }
+  parts.push("function Demo() {");
+  parts.push(`  return ${returnBlock};`);
+  parts.push("}");
+  const full = parts.join("\n");
+
+  return {
+    full,
+    jsx,
+  };
+}
+
+function renderTemplateNode(
+  node: JSXTemplateElement,
+  props: Record<string, unknown>,
+  indent = "",
+): string | null {
+  if (node.condition && !evaluateTemplateCondition(node.condition, props)) {
+    return null;
+  }
+
+  const propStrings =
+    node.props?.map((prop) => renderTemplateProp(prop, props)).filter(Boolean) ??
+    [];
+
+  const inlineProps = propStrings.length
+    ? ` ${propStrings.join(" ")}`
+    : "";
+  const blockPropsList = propStrings.length
+    ? propStrings.map((line) => `  ${line}`)
+    : null;
+
+  const childStrings =
+    node.children
+      ?.map((child) => renderTemplateChild(child, props, indent + "  "))
+      .filter((child): child is string => Boolean(child)) ?? [];
+
+  if (childStrings.length === 0) {
+    return `<${node.name}${inlineProps} />`;
+  }
+
+  const singleChild = childStrings.length === 1 && !childStrings[0].includes("\n");
+  const inlineLength =
+    node.name.length + inlineProps.length + (singleChild ? childStrings[0].length : 0);
+  if (singleChild && inlineLength <= 60) {
+    return `<${node.name}${inlineProps}>${childStrings[0]}</${node.name}>`;
+  }
+
+  const childrenBlock = childStrings
+    .map((child) => indentMultiline(child, indent + "  "))
+    .join("\n");
+
+  if (blockPropsList) {
+    return [
+      `<${node.name}`,
+      ...blockPropsList,
+      ">",
+      childrenBlock,
+      `${indent}</${node.name}>`,
+    ].join("\n");
+  }
+
+  return `<${node.name}>\n${childrenBlock}\n${indent}</${node.name}>`;
+}
+
+function renderTemplateChild(
+  child: JSXTemplateChild,
+  props: Record<string, unknown>,
+  indent: string,
+): string | null {
+  if (child.type === "text") {
+    return renderTemplateText(child, props);
+  }
+  return renderTemplateNode(child, props, indent);
+}
+
+function renderTemplateText(
+  node: JSXTemplateText,
+  props: Record<string, unknown>,
+): string | null {
+  let value =
+    node.value ??
+    (node.prop ? String(props[node.prop] ?? "") : "");
+  if (node.trim) {
+    value = value.trim();
+  }
+  if (!value) {
+    return null;
+  }
+  return escapeDoubleQuotes(value);
+}
+
+function renderTemplateProp(
+  prop: JSXTemplateProp,
+  props: Record<string, unknown>,
+): string | null {
+  switch (prop.kind) {
+    case "literal":
+      return formatProp(prop.name, prop.value);
+    case "string": {
+      let value = props[prop.prop];
+      if (typeof value !== "string") {
+        return null;
+      }
+      if (prop.trim) {
+        value = value.trim();
+      }
+      if (prop.omitIfEmpty && value.length === 0) {
+        return null;
+      }
+      return `${prop.name}="${escapeDoubleQuotes(value)}"`;
+    }
+    case "boolean": {
+      const value = Boolean(props[prop.prop]);
+      if (prop.omitIfFalse && !value) {
+        return null;
+      }
+      return value ? prop.name : `${prop.name}={false}`;
+    }
+    case "enum": {
+      const value = props[prop.prop];
+      const mapped = prop.values[String(value)];
+      if (!mapped) {
+        return null;
+      }
+      if (prop.omitIfValue && mapped === prop.omitIfValue) {
+        return null;
+      }
+      return `${prop.name}="${mapped}"`;
+    }
+    default:
+      return null;
+  }
+}
+
+function evaluateTemplateCondition(
+  condition: JSXTemplateCondition,
+  props: Record<string, unknown>,
+): boolean {
+  switch (condition.kind) {
+    case "propTruthy": {
+      let value = props[condition.prop];
+      if (typeof value === "string" && condition.trim) {
+        value = value.trim();
+      }
+      return Boolean(value);
+    }
+    case "propEquals":
+      return props[condition.prop] === condition.value;
+    case "propNotEmpty": {
+      let value = props[condition.prop];
+      if (typeof value === "string" && condition.trim) {
+        value = value.trim();
+      }
+      if (typeof value === "string") {
+        return value.length > 0;
+      }
+      return Boolean(value);
+    }
+    default:
+      return false;
+  }
 }
 
 function formatProp(prop: string, value: unknown) {

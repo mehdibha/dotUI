@@ -17,6 +17,7 @@ export function InteractiveDemo({
   controls,
   initialProps,
   description,
+  jsxTemplate,
 }: InteractiveDemoProps) {
   const demoEntry = Index[name];
 
@@ -40,6 +41,7 @@ export function InteractiveDemo({
       controls={controls}
       initialProps={initialProps}
       description={description}
+      jsxTemplate={jsxTemplate}
     />
   );
 }

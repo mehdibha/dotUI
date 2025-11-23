@@ -1,3 +1,4 @@
+import { Label } from "@dotui/registry/ui/field";
 import {
   Select,
   SelectContent,
@@ -5,9 +6,30 @@ import {
   SelectTrigger,
 } from "@dotui/registry/ui/select";
 
-export default function Demo() {
+interface DemoProps {
+  label?: string;
+  placeholder?: string;
+  selectionMode?: "single" | "multiple";
+  isDisabled?: boolean;
+}
+
+export default function Demo({
+  label,
+  placeholder,
+  selectionMode = "single",
+  isDisabled = false,
+}: DemoProps = {}) {
+  const trimmedLabel = label?.trim();
+  const trimmedPlaceholder = placeholder?.trim();
+
   return (
-    <Select aria-label="Provider">
+    <Select
+      aria-label={trimmedLabel ? undefined : "Provider"}
+      placeholder={trimmedPlaceholder || undefined}
+      selectionMode={selectionMode}
+      isDisabled={isDisabled}
+    >
+      {trimmedLabel ? <Label>{trimmedLabel}</Label> : null}
       <SelectTrigger />
       <SelectContent>
         <SelectItem>Perplexity</SelectItem>
