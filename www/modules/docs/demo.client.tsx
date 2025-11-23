@@ -44,6 +44,26 @@ interface DemoClientProps extends React.ComponentProps<"div"> {
 
 export type { DemoControl };
 
+interface DemoClientExpandedContextValue {
+  isExpanded: boolean;
+  toggleExpanded: () => void;
+}
+
+const DemoClientExpandedContext =
+  React.createContext<DemoClientExpandedContextValue | null>(null);
+
+const useDemoClientExpandedContext = () => {
+  const context = React.useContext(DemoClientExpandedContext);
+
+  if (!context) {
+    throw new Error(
+      "useDemoClientExpandedContext must be used within DemoClient",
+    );
+  }
+
+  return context;
+};
+
 export function DemoClient({
   component,
   className,
@@ -57,8 +77,13 @@ export function DemoClient({
   const { activeMode, setActiveMode } = usePreferences();
   const { data: style } = useActiveStyle();
   const isMounted = useMounted();
-  const [isExpanded, setExpanded] = React.useState(true);
+  const [isExpanded, setExpanded] = React.useState(false);
   const hasControls = Boolean(controls?.length);
+  const toggleExpanded = React.useCallback(() => {
+    startTransition(() => {
+      setExpanded((previous) => !previous);
+    });
+  }, []);
 
   const controlDefaults = React.useMemo(
     () => buildControlDefaults(controls),
@@ -162,17 +187,79 @@ export function DemoClient({
       code
     );
 
-  const actions = (
+  const expandedContextValue = React.useMemo(
+    () => ({
+      isExpanded,
+      toggleExpanded,
+    }),
+    [isExpanded, toggleExpanded],
+  );
+
+  return (
+    <DemoClientExpandedContext.Provider value={expandedContextValue}>
+      <div className={cn("", className)} {...props}>
+        <ActiveStyleProvider
+          unstyled
+          className="flex min-h-56 items-stretch"
+          skeletonClassName="border rounded-t-md"
+        >
+          <div className="relative z-1 flex flex-1 items-center justify-center rounded-t-lg border bg-bg pt-24 pb-20">
+            <ActiveStyleSelector
+              buttonProps={{
+                size: "sm",
+                variant: "quiet",
+                className: "text-xs h-7 border-0 absolute left-1.5 top-1.5",
+              }}
+            />
+            {style &&
+              style.theme.colors.activeModes.length > 1 &&
+              isMounted && (
+                <Button
+                  size="sm"
+                  variant="quiet"
+                  className="absolute top-1.5 right-1.5 size-7! border-0"
+                  onPress={() =>
+                    setActiveMode(activeMode === "dark" ? "light" : "dark")
+                  }
+                >
+                  {activeMode === "dark" ? <MoonIcon /> : <SunIcon />}
+                </Button>
+              )}
+
+            {renderedComponent}
+          </div>
+          {hasControls && controls && (
+            <DemoControls
+              controls={controls}
+              values={controlValues}
+              onValueChange={handleControlChange}
+            />
+          )}
+        </ActiveStyleProvider>
+        <CodeBlock
+          className="rounded-t-none border-t-0"
+          // title="Code"
+          actions={<DemoClientActions />}
+        >
+          <ViewTransition default="code-fade">
+            {isExpanded ? codeContent : previewContent}
+          </ViewTransition>
+        </CodeBlock>
+      </div>
+    </DemoClientExpandedContext.Provider>
+  );
+}
+
+const DemoClientActions = () => {
+  const { isExpanded, toggleExpanded } = useDemoClientExpandedContext();
+
+  return (
     <>
       <Button
         variant="quiet"
         size="sm"
         className="h-7 gap-1 pr-2 pl-1 text-xs"
-        onPress={() => {
-          startTransition(() => {
-            setExpanded(!isExpanded);
-          });
-        }}
+        onPress={toggleExpanded}
       >
         {isExpanded && (
           <>
@@ -237,57 +324,7 @@ export function DemoClient({
       </Menu>
     </>
   );
-
-  return (
-    <div className={cn("", className)} {...props}>
-      <ActiveStyleProvider
-        unstyled
-        className="flex min-h-56 items-stretch"
-        skeletonClassName="border rounded-t-md"
-      >
-        <div className="relative z-1 flex flex-1 items-center justify-center rounded-t-lg border bg-bg pt-24 pb-20">
-          <ActiveStyleSelector
-            buttonProps={{
-              size: "sm",
-              variant: "quiet",
-              className: "text-xs h-7 border-0 absolute left-1.5 top-1.5",
-            }}
-          />
-          {style && style.theme.colors.activeModes.length > 1 && isMounted && (
-            <Button
-              size="sm"
-              variant="quiet"
-              className="absolute top-1.5 right-1.5 size-7! border-0"
-              onPress={() =>
-                setActiveMode(activeMode === "dark" ? "light" : "dark")
-              }
-            >
-              {activeMode === "dark" ? <MoonIcon /> : <SunIcon />}
-            </Button>
-          )}
-
-          {renderedComponent}
-        </div>
-        {hasControls && controls && (
-          <DemoControls
-            controls={controls}
-            values={controlValues}
-            onValueChange={handleControlChange}
-          />
-        )}
-      </ActiveStyleProvider>
-      <CodeBlock
-        className="rounded-t-none border-t-0"
-        // title="Code"
-        actions={actions}
-      >
-        <ViewTransition default="code-fade">
-          {isExpanded ? codeContent : previewContent}
-        </ViewTransition>
-      </CodeBlock>
-    </div>
-  );
-}
+};
 
 const applyControlsToPreviewSource = (
   previewSource: string,

@@ -15,8 +15,8 @@ import {
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
 } from "./code-block-tabs";
-import type { DemoProps } from "./demo";
-import { Demo } from "./demo";
+import type { ComponentDemoProps } from "./demo";
+import { ComponentDemo } from "./demo";
 import { Example } from "./example";
 import { PageTabPanel, PageTabs } from "./page-tabs";
 
@@ -89,7 +89,9 @@ export const mdxComponents: MDXComponents = {
   CodeBlockTab: ({ value, ...props }: { value: string }) => (
     <CodeBlockTab id={value} {...props} />
   ),
-  Demo: (props: DemoProps) => <Demo className="not-first:mt-6" {...props} />,
+  Demo: (props: ComponentDemoProps) => (
+    <ComponentDemo className="not-first:mt-6" {...props} />
+  ),
   Example,
   p: ({ className, ...props }) => (
     <p
