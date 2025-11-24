@@ -13,8 +13,6 @@ links:
     href: https://github.com/mehdibha/dotUI/tree/main/content/components/menus-and-selection/select.mdx?plain=1
 ---
 
-import { selectInteractiveTemplate } from "@/modules/docs/templates/select";
-
 <Demo name="select/demos/basic" />
 
 ## Installation
@@ -30,46 +28,6 @@ Use `Select` to allow users to choose a single option from a collapsible list of
 ## Playground
 
 Use the controls below to configure disabled state, placeholder, label visibility, and selection mode.
-
-<InteractiveDemo
-  name="select/demos/basic"
-  initialProps={{
-    label: "Provider",
-    placeholder: "Select a provider",
-    selectionMode: "single",
-  }}
-  controls={[
-    {
-      control: "text",
-      prop: "label",
-      label: "Label",
-      placeholder: "Provider",
-      defaultValue: "Provider",
-    },
-    {
-      control: "text",
-      prop: "placeholder",
-      label: "Placeholder",
-      placeholder: "Select a provider",
-    },
-    {
-      control: "select",
-      prop: "selectionMode",
-      label: "Selection mode",
-      options: [
-        { label: "Single", value: "single" },
-        { label: "Multiple", value: "multiple" },
-      ],
-      defaultValue: "single",
-    },
-    {
-      control: "boolean",
-      prop: "isDisabled",
-      label: "Disabled",
-    },
-  ]}
-  jsxTemplate={selectInteractiveTemplate}
-/>
 
 ## Options
 

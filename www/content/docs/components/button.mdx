@@ -6,8 +6,6 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Button.html
 ---
 
-import { buttonInteractiveTemplate } from "@/modules/docs/templates/button";
-
 <PageTabs>
   <PageTabPanel id="overview">
 
@@ -37,53 +35,6 @@ import { buttonInteractiveTemplate } from "@/modules/docs/templates/button";
     Use the `isPending` prop to control the loading state of the button.
     Use the `isDisabled` prop to control the disabled state of the button.
 
-    <InteractiveDemo
-      name="button/demos/default"
-      controls={[
-        {
-          control: "select",
-          prop: "variant",
-          label: "Variant",
-          options: [
-            { label: "Default", value: "default" },
-            { label: "Primary", value: "primary" },
-            { label: "Quiet", value: "quiet" },
-            { label: "Link", value: "link" },
-            { label: "Success", value: "success" },
-            { label: "Warning", value: "warning" },
-            { label: "Danger", value: "danger" },
-          ],
-        },
-        {
-          control: "select",
-          prop: "size",
-          label: "Size",
-          options: [
-            { label: "Small", value: "sm" },
-            { label: "Medium", value: "md" },
-            { label: "Large", value: "lg" },
-          ],
-        },
-        {
-          control: "boolean",
-          prop: "isPending",
-          label: "Pending",
-        },
-        {
-          control: "boolean",
-          prop: "isDisabled",
-          label: "Disabled",
-        },
-        {
-          control: "text",
-          prop: "children",
-          label: "Label",
-          placeholder: "Press me",
-          defaultValue: "Press me",
-        },
-      ]}
-      jsxTemplate={buttonInteractiveTemplate}
-    />
 
     ## API Reference
 
