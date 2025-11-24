@@ -11,7 +11,7 @@ import React, {
 import { cn } from "@dotui/registry/lib/utils";
 
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
-import { CodeBlock, Pre } from "../code-block";
+import { CodeBlock, DynamicCodeBlock } from "../code-block";
 import { DemoFrame } from "../demo/demo-frame";
 import { availableIcons, ControlsPanel } from "./controls";
 import { elementToCode } from "./element-to-code";
@@ -133,9 +133,7 @@ export function InteractiveDemoClient({
           title="Code"
           className={cn("rounded-none rounded-b-lg border-0")}
         >
-          <Pre>
-            <code>{code}</code>
-          </Pre>
+          <DynamicCodeBlock code={code} lang="tsx" />
         </CodeBlock>
       </div>
     </div>
