@@ -1,17 +1,6 @@
 "use client";
 
-interface RenderNode {
-  name: string;
-  props: string[];
-  children: Array<RenderNode | RenderText>;
-}
-
-interface RenderText {
-  type: "text";
-  value: string;
-}
-
-type RenderChild = RenderNode | RenderText;
+import type { RenderChild, RenderNode, RenderText } from "./types";
 
 export function renderTree(root: RenderNode) {
   return formatNode(root).trim();
@@ -19,44 +8,59 @@ export function renderTree(root: RenderNode) {
 
 function formatNode(node: RenderNode, indent = ""): string {
   const propStrings = node.props ?? [];
-  let newlines =
+  const newlines =
     node.name.length + countChars(propStrings) > 40 ||
     propStrings.some((prop) => prop.includes("\n"));
 
-  const renderedProps = propStrings
-    .map((prop) => (newlines ? `\n${indent}  ${prop}` : ` ${prop}`))
+  let renderedProps = propStrings
+    .map((prop) => (newlines ? `\n  ${indent}${prop}` : ` ${prop}`))
     .join("");
+  if (newlines) {
+    renderedProps += `\n${indent}`;
+  }
 
   const renderedChildren =
-    node.children?.map((child) => formatChild(child, indent + "  ")) ?? [];
+    node.children?.map((child, index) =>
+      formatChild(child, indent, renderedProps ? index > 0 : false),
+    ) ?? [];
 
   if (!renderedChildren.length) {
-    return `${indent}<${node.name}${renderedProps}${
-      newlines ? `\n${indent}` : ""
-    } />`;
+    return `${indent}<${node.name}${renderedProps}${newlines ? `\n${indent}` : ""} />`;
   }
 
   const singleChild =
     renderedChildren.length === 1 && !renderedChildren[0].includes("\n");
-  if (singleChild && !newlines) {
+  if (
+    singleChild &&
+    !newlines &&
+    renderedProps === propStrings.map((prop) => ` ${prop}`).join("")
+  ) {
     return `${indent}<${node.name}${renderedProps}>${renderedChildren[0].trimStart()}</${node.name}>`;
   }
 
-  newlines = newlines || renderedChildren.some((child) => child.includes("\n"));
-
   const childrenBlock = renderedChildren.join("\n");
-  return `${indent}<${node.name}${renderedProps}>\n${childrenBlock}\n${indent}</${node.name}>`;
+  return [
+    `${indent}<${node.name}${renderedProps}>`,
+    childrenBlock,
+    `${indent}</${node.name}>`,
+  ].join("\n");
 }
 
-function formatChild(child: RenderChild, indent: string) {
+function formatChild(
+  child: RenderChild,
+  indent: string,
+  precedingNewline: boolean,
+) {
+  const newIndent = indent + "  ";
   if (isRenderText(child)) {
-    return `${indent}${child.value}`;
+    return `${precedingNewline ? "\n" : ""}${newIndent}${child.value}`;
   }
-  return formatNode(child, indent);
+  const formatted = formatNode(child, newIndent);
+  return precedingNewline ? `\n${formatted}` : formatted;
 }
 
 function isRenderText(child: RenderChild): child is RenderText {
-  return (child as RenderText).type === "text";
+  return child.type === "text";
 }
 
 function countChars(elements: string[]) {
@@ -67,4 +71,3 @@ function countChars(elements: string[]) {
     return acc;
   }, 0);
 }
-

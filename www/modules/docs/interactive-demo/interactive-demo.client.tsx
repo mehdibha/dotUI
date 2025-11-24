@@ -222,7 +222,14 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
           <Input
             value={typeof value === "string" ? value : ""}
             placeholder={control.placeholder}
-            onChange={(nextValue) => onChange(control.prop, nextValue)}
+            onChange={(nextValue) => {
+              const resolvedValue =
+                typeof nextValue === "string"
+                  ? nextValue
+                  : (nextValue as { target?: { value?: string } })?.target
+                      ?.value ?? "";
+              onChange(control.prop, resolvedValue);
+            }}
           />
           {control.description ? (
             <Text className="text-fg-muted text-sm">{control.description}</Text>
