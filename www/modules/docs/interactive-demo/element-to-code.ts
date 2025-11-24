@@ -26,238 +26,238 @@ interface CodeOutput {
  */
 const COMPONENT_IMPORT_MAP: Record<string, string> = {
   // Button
-  Button: "@dotui/registry/ui/button",
-  LinkButton: "@dotui/registry/ui/button",
-  ButtonProvider: "@dotui/registry/ui/button",
+  Button: "@/components/ui/button",
+  LinkButton: "@/components/ui/button",
+  ButtonProvider: "@/components/ui/button",
 
   // TextField
-  TextField: "@dotui/registry/ui/text-field",
+  TextField: "@/components/ui/text-field",
 
   // Field components
-  Label: "@dotui/registry/ui/field",
-  Description: "@dotui/registry/ui/field",
-  FieldError: "@dotui/registry/ui/field",
-  FieldGroup: "@dotui/registry/ui/field",
-  Fieldset: "@dotui/registry/ui/field",
-  Legend: "@dotui/registry/ui/field",
+  Label: "@/components/ui/field",
+  Description: "@/components/ui/field",
+  FieldError: "@/components/ui/field",
+  FieldGroup: "@/components/ui/field",
+  Fieldset: "@/components/ui/field",
+  Legend: "@/components/ui/field",
 
   // Input
-  Input: "@dotui/registry/ui/input",
-  InputGroup: "@dotui/registry/ui/input",
-  InputAddon: "@dotui/registry/ui/input",
-  TextArea: "@dotui/registry/ui/input",
+  Input: "@/components/ui/input",
+  InputGroup: "@/components/ui/input",
+  InputAddon: "@/components/ui/input",
+  TextArea: "@/components/ui/input",
 
   // Select
-  Select: "@dotui/registry/ui/select",
-  SelectTrigger: "@dotui/registry/ui/select",
-  SelectContent: "@dotui/registry/ui/select",
-  SelectItem: "@dotui/registry/ui/select",
-  SelectSection: "@dotui/registry/ui/select",
+  Select: "@/components/ui/select",
+  SelectTrigger: "@/components/ui/select",
+  SelectContent: "@/components/ui/select",
+  SelectItem: "@/components/ui/select",
+  SelectSection: "@/components/ui/select",
 
   // Checkbox
-  Checkbox: "@dotui/registry/ui/checkbox",
-  CheckboxIndicator: "@dotui/registry/ui/checkbox",
+  Checkbox: "@/components/ui/checkbox",
+  CheckboxIndicator: "@/components/ui/checkbox",
 
   // Switch
-  Switch: "@dotui/registry/ui/switch",
-  SwitchIndicator: "@dotui/registry/ui/switch",
-  SwitchThumb: "@dotui/registry/ui/switch",
+  Switch: "@/components/ui/switch",
+  SwitchIndicator: "@/components/ui/switch",
+  SwitchThumb: "@/components/ui/switch",
 
   // Radio
-  Radio: "@dotui/registry/ui/radio-group",
-  RadioGroup: "@dotui/registry/ui/radio-group",
-  RadioIndicator: "@dotui/registry/ui/radio-group",
+  Radio: "@/components/ui/radio-group",
+  RadioGroup: "@/components/ui/radio-group",
+  RadioIndicator: "@/components/ui/radio-group",
 
   // Dialog
-  Dialog: "@dotui/registry/ui/dialog",
-  DialogContent: "@dotui/registry/ui/dialog",
-  DialogHeader: "@dotui/registry/ui/dialog",
-  DialogBody: "@dotui/registry/ui/dialog",
-  DialogFooter: "@dotui/registry/ui/dialog",
-  DialogHeading: "@dotui/registry/ui/dialog",
-  DialogDescription: "@dotui/registry/ui/dialog",
+  Dialog: "@/components/ui/dialog",
+  DialogContent: "@/components/ui/dialog",
+  DialogHeader: "@/components/ui/dialog",
+  DialogBody: "@/components/ui/dialog",
+  DialogFooter: "@/components/ui/dialog",
+  DialogHeading: "@/components/ui/dialog",
+  DialogDescription: "@/components/ui/dialog",
 
   // Card
-  Card: "@dotui/registry/ui/card",
-  CardHeader: "@dotui/registry/ui/card",
-  CardContent: "@dotui/registry/ui/card",
-  CardFooter: "@dotui/registry/ui/card",
-  CardTitle: "@dotui/registry/ui/card",
-  CardDescription: "@dotui/registry/ui/card",
-  CardAction: "@dotui/registry/ui/card",
+  Card: "@/components/ui/card",
+  CardHeader: "@/components/ui/card",
+  CardContent: "@/components/ui/card",
+  CardFooter: "@/components/ui/card",
+  CardTitle: "@/components/ui/card",
+  CardDescription: "@/components/ui/card",
+  CardAction: "@/components/ui/card",
 
   // Tabs
-  Tabs: "@dotui/registry/ui/tabs",
-  TabList: "@dotui/registry/ui/tabs",
-  Tab: "@dotui/registry/ui/tabs",
-  TabPanel: "@dotui/registry/ui/tabs",
+  Tabs: "@/components/ui/tabs",
+  TabList: "@/components/ui/tabs",
+  Tab: "@/components/ui/tabs",
+  TabPanel: "@/components/ui/tabs",
 
   // Menu
-  Menu: "@dotui/registry/ui/menu",
-  MenuContent: "@dotui/registry/ui/menu",
-  MenuItem: "@dotui/registry/ui/menu",
-  MenuSection: "@dotui/registry/ui/menu",
-  MenuSeparator: "@dotui/registry/ui/menu",
+  Menu: "@/components/ui/menu",
+  MenuContent: "@/components/ui/menu",
+  MenuItem: "@/components/ui/menu",
+  MenuSection: "@/components/ui/menu",
+  MenuSeparator: "@/components/ui/menu",
 
   // Popover
-  Popover: "@dotui/registry/ui/popover",
+  Popover: "@/components/ui/popover",
 
   // Modal
-  Modal: "@dotui/registry/ui/modal",
+  Modal: "@/components/ui/modal",
 
   // Drawer
-  Drawer: "@dotui/registry/ui/drawer",
+  Drawer: "@/components/ui/drawer",
 
   // Overlay
-  Overlay: "@dotui/registry/ui/overlay",
+  Overlay: "@/components/ui/overlay",
 
   // Tooltip
-  Tooltip: "@dotui/registry/ui/tooltip",
-  TooltipContent: "@dotui/registry/ui/tooltip",
+  Tooltip: "@/components/ui/tooltip",
+  TooltipContent: "@/components/ui/tooltip",
 
   // Alert
-  Alert: "@dotui/registry/ui/alert",
-  AlertTitle: "@dotui/registry/ui/alert",
-  AlertDescription: "@dotui/registry/ui/alert",
+  Alert: "@/components/ui/alert",
+  AlertTitle: "@/components/ui/alert",
+  AlertDescription: "@/components/ui/alert",
 
   // Badge
-  Badge: "@dotui/registry/ui/badge",
+  Badge: "@/components/ui/badge",
 
   // Avatar
-  Avatar: "@dotui/registry/ui/avatar",
-  AvatarGroup: "@dotui/registry/ui/avatar",
-  AvatarRoot: "@dotui/registry/ui/avatar",
-  AvatarImage: "@dotui/registry/ui/avatar",
-  AvatarFallback: "@dotui/registry/ui/avatar",
+  Avatar: "@/components/ui/avatar",
+  AvatarGroup: "@/components/ui/avatar",
+  AvatarRoot: "@/components/ui/avatar",
+  AvatarImage: "@/components/ui/avatar",
+  AvatarFallback: "@/components/ui/avatar",
 
   // Accordion
-  Accordion: "@dotui/registry/ui/accordion",
-  AccordionItem: "@dotui/registry/ui/accordion",
-  AccordionHeading: "@dotui/registry/ui/accordion",
-  AccordionPanel: "@dotui/registry/ui/accordion",
+  Accordion: "@/components/ui/accordion",
+  AccordionItem: "@/components/ui/accordion",
+  AccordionHeading: "@/components/ui/accordion",
+  AccordionPanel: "@/components/ui/accordion",
 
   // Loader
-  Loader: "@dotui/registry/ui/loader",
+  Loader: "@/components/ui/loader",
 
   // Link
-  Link: "@dotui/registry/ui/link",
+  Link: "@/components/ui/link",
 
   // Separator
-  Separator: "@dotui/registry/ui/separator",
+  Separator: "@/components/ui/separator",
 
   // Breadcrumbs
-  Breadcrumbs: "@dotui/registry/ui/breadcrumbs",
-  Breadcrumb: "@dotui/registry/ui/breadcrumbs",
+  Breadcrumbs: "@/components/ui/breadcrumbs",
+  Breadcrumb: "@/components/ui/breadcrumbs",
 
   // Kbd
-  Kbd: "@dotui/registry/ui/kbd",
-  KbdGroup: "@dotui/registry/ui/kbd",
+  Kbd: "@/components/ui/kbd",
+  KbdGroup: "@/components/ui/kbd",
 
   // Skeleton
-  Skeleton: "@dotui/registry/ui/skeleton",
-  SkeletonProvider: "@dotui/registry/ui/skeleton",
+  Skeleton: "@/components/ui/skeleton",
+  SkeletonProvider: "@/components/ui/skeleton",
 
   // Calendar
-  Calendar: "@dotui/registry/ui/calendar",
-  CalendarHeader: "@dotui/registry/ui/calendar",
-  CalendarGrid: "@dotui/registry/ui/calendar",
-  CalendarGridHeader: "@dotui/registry/ui/calendar",
-  CalendarGridBody: "@dotui/registry/ui/calendar",
-  CalendarHeaderCell: "@dotui/registry/ui/calendar",
-  CalendarCell: "@dotui/registry/ui/calendar",
+  Calendar: "@/components/ui/calendar",
+  CalendarHeader: "@/components/ui/calendar",
+  CalendarGrid: "@/components/ui/calendar",
+  CalendarGridHeader: "@/components/ui/calendar",
+  CalendarGridBody: "@/components/ui/calendar",
+  CalendarHeaderCell: "@/components/ui/calendar",
+  CalendarCell: "@/components/ui/calendar",
 
   // DatePicker
-  DatePicker: "@dotui/registry/ui/date-picker",
-  DatePickerInput: "@dotui/registry/ui/date-picker",
-  DatePickerContent: "@dotui/registry/ui/date-picker",
+  DatePicker: "@/components/ui/date-picker",
+  DatePickerInput: "@/components/ui/date-picker",
+  DatePickerContent: "@/components/ui/date-picker",
 
   // DateField
-  DateField: "@dotui/registry/ui/date-field",
-  DateInput: "@dotui/registry/ui/input",
+  DateField: "@/components/ui/date-field",
+  DateInput: "@/components/ui/input",
 
   // TimeField
-  TimeField: "@dotui/registry/ui/time-field",
+  TimeField: "@/components/ui/time-field",
 
   // ColorPicker
-  ColorPicker: "@dotui/registry/ui/color-picker",
-  ColorPickerTrigger: "@dotui/registry/ui/color-picker",
-  ColorPickerContent: "@dotui/registry/ui/color-picker",
-  ColorEditor: "@dotui/registry/ui/color-editor",
+  ColorPicker: "@/components/ui/color-picker",
+  ColorPickerTrigger: "@/components/ui/color-picker",
+  ColorPickerContent: "@/components/ui/color-picker",
+  ColorEditor: "@/components/ui/color-editor",
 
   // Slider
-  Slider: "@dotui/registry/ui/slider",
-  SliderControl: "@dotui/registry/ui/slider",
-  SliderTrack: "@dotui/registry/ui/slider",
-  SliderThumb: "@dotui/registry/ui/slider",
+  Slider: "@/components/ui/slider",
+  SliderControl: "@/components/ui/slider",
+  SliderTrack: "@/components/ui/slider",
+  SliderThumb: "@/components/ui/slider",
 
   // ProgressBar
-  ProgressBar: "@dotui/registry/ui/progress-bar",
-  ProgressBarControl: "@dotui/registry/ui/progress-bar",
+  ProgressBar: "@/components/ui/progress-bar",
+  ProgressBarControl: "@/components/ui/progress-bar",
 
   // Toggle
-  ToggleButton: "@dotui/registry/ui/toggle-button",
-  ToggleButtonGroup: "@dotui/registry/ui/toggle-button-group",
+  ToggleButton: "@/components/ui/toggle-button",
+  ToggleButtonGroup: "@/components/ui/toggle-button-group",
 
   // Table
-  Table: "@dotui/registry/ui/table",
-  TableHeader: "@dotui/registry/ui/table",
-  TableBody: "@dotui/registry/ui/table",
-  TableRow: "@dotui/registry/ui/table",
-  TableColumn: "@dotui/registry/ui/table",
-  TableCell: "@dotui/registry/ui/table",
+  Table: "@/components/ui/table",
+  TableHeader: "@/components/ui/table",
+  TableBody: "@/components/ui/table",
+  TableRow: "@/components/ui/table",
+  TableColumn: "@/components/ui/table",
+  TableCell: "@/components/ui/table",
 
   // ListBox
-  ListBox: "@dotui/registry/ui/list-box",
-  ListBoxItem: "@dotui/registry/ui/list-box",
-  ListBoxSection: "@dotui/registry/ui/list-box",
+  ListBox: "@/components/ui/list-box",
+  ListBoxItem: "@/components/ui/list-box",
+  ListBoxSection: "@/components/ui/list-box",
 
   // Combobox
-  Combobox: "@dotui/registry/ui/combobox",
-  ComboboxInput: "@dotui/registry/ui/combobox",
-  ComboboxContent: "@dotui/registry/ui/combobox",
-  ComboboxItem: "@dotui/registry/ui/combobox",
+  Combobox: "@/components/ui/combobox",
+  ComboboxInput: "@/components/ui/combobox",
+  ComboboxContent: "@/components/ui/combobox",
+  ComboboxItem: "@/components/ui/combobox",
 
   // NumberField
-  NumberField: "@dotui/registry/ui/number-field",
+  NumberField: "@/components/ui/number-field",
 
   // SearchField
-  SearchField: "@dotui/registry/ui/search-field",
+  SearchField: "@/components/ui/search-field",
 
   // FileTrigger
-  FileTrigger: "@dotui/registry/ui/file-trigger",
+  FileTrigger: "@/components/ui/file-trigger",
 
   // DropZone
-  DropZone: "@dotui/registry/ui/drop-zone",
-  DropZoneLabel: "@dotui/registry/ui/drop-zone",
+  DropZone: "@/components/ui/drop-zone",
+  DropZoneLabel: "@/components/ui/drop-zone",
 
   // TagGroup
-  TagGroup: "@dotui/registry/ui/tag-group",
-  TagList: "@dotui/registry/ui/tag-group",
-  Tag: "@dotui/registry/ui/tag-group",
+  TagGroup: "@/components/ui/tag-group",
+  TagList: "@/components/ui/tag-group",
+  Tag: "@/components/ui/tag-group",
 
   // Command
-  Command: "@dotui/registry/ui/command",
-  CommandInput: "@dotui/registry/ui/command",
-  CommandContent: "@dotui/registry/ui/command",
-  CommandItem: "@dotui/registry/ui/command",
+  Command: "@/components/ui/command",
+  CommandInput: "@/components/ui/command",
+  CommandContent: "@/components/ui/command",
+  CommandItem: "@/components/ui/command",
 
   // Toast
-  Toaster: "@dotui/registry/ui/toast",
+  Toaster: "@/components/ui/toast",
 
   // Form
-  Form: "@dotui/registry/ui/form",
+  Form: "@/components/ui/form",
 
   // CheckboxGroup
-  CheckboxGroup: "@dotui/registry/ui/checkbox-group",
+  CheckboxGroup: "@/components/ui/checkbox-group",
 
   // Group
-  Group: "@dotui/registry/ui/group",
+  Group: "@/components/ui/group",
 
   // Text
-  Text: "@dotui/registry/ui/text",
+  Text: "@/components/ui/text",
 
   // ColorField
-  ColorField: "@dotui/registry/ui/color-field",
+  ColorField: "@/components/ui/color-field",
 };
 
 /**
@@ -488,7 +488,7 @@ function getImportPath(name: string): string | null {
     .toLowerCase()
     .slice(1);
 
-  return `@dotui/registry/ui/${kebab}`;
+  return `@/components/ui/${kebab}`;
 }
 
 function buildImports(ctx: SerializeContext): string {

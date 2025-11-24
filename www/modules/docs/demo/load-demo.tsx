@@ -15,9 +15,13 @@ export const loadDemo = async (name: string) => {
 
   const rawContent = await getFileSource(filePath);
 
-  const source = rawContent.replaceAll("@dotui/registry/", "@/").trim();
+  const source = rawContent
+    .replaceAll("@dotui/registry/ui/", "@/components/ui/")
+    .replaceAll("@dotui/registry/", "@/")
+    .trim();
 
   const previewRaw = rawContent
+    .replaceAll("@dotui/registry/ui/", "@/components/ui/")
     .replaceAll("@dotui/registry/", "@/")
     .replace(DIRECTIVE_REGEX, "")
     .replace(IMPORT_REGEX, "")
