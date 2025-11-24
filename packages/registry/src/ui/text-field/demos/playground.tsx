@@ -2,11 +2,11 @@
 
 import type { ReactNode } from "react";
 
+import type { Control } from "@dotui/registry/playground";
 import { Description, FieldError, Label } from "@dotui/registry/ui/field";
 import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
-import { TextField } from "@dotui/registry/ui/text-field";
 
-import type { Control } from "../interactive-demo/types";
+import { TextField } from "../index";
 
 /**
  * TextField playground component.
@@ -23,15 +23,6 @@ interface TextFieldPlaygroundProps {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
 }
-
-// Add import path metadata for the code serializer
-TextField.__importPath = "@dotui/registry/ui/text-field";
-Label.__importPath = "@dotui/registry/ui/field";
-Description.__importPath = "@dotui/registry/ui/field";
-FieldError.__importPath = "@dotui/registry/ui/field";
-Input.__importPath = "@dotui/registry/ui/input";
-InputGroup.__importPath = "@dotui/registry/ui/input";
-InputAddon.__importPath = "@dotui/registry/ui/input";
 
 export function TextFieldPlayground({
   label,
@@ -114,4 +105,3 @@ export const textFieldControls: Control[] = [
     label: "End Icon",
   },
 ];
-

@@ -37,7 +37,6 @@ import {
   SwitchThumb,
 } from "@dotui/registry/ui/switch";
 import { TextField } from "@dotui/registry/ui/text-field";
-
 import type {
   BooleanControl,
   Control,
@@ -46,7 +45,7 @@ import type {
   IconControl,
   NumberControl,
   StringControl,
-} from "./types";
+} from "@dotui/registry/playground";
 
 /**
  * Available icons for the icon picker.

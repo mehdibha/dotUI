@@ -1,7 +1,8 @@
 import type { ComponentType } from "react";
 
+import type { Control } from "@dotui/registry/playground";
+
 import { InteractiveDemoClient } from "./interactive-demo.client";
-import type { Control } from "./types";
 
 /**
  * Interactive demo component for documentation.

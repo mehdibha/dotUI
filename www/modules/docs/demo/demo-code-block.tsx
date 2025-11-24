@@ -12,17 +12,20 @@ import { useDemoContext } from "./demo.client";
 interface DemoCodeBlockProps {
   highlightedPreview: React.ReactNode;
   highlightedSource: React.ReactNode;
+  sourceCode: string;
 }
 
 export const DemoCodeBlock = ({
   highlightedPreview,
   highlightedSource,
+  sourceCode,
 }: DemoCodeBlockProps) => {
   const { isExpanded, toggleExpanded } = useDemoContext();
 
   return (
     <CodeBlock
       className="rounded-t-none border-t-0"
+      copyCode={sourceCode}
       actions={
         <Button
           variant="quiet"

@@ -8,15 +8,17 @@ import React, {
   useState,
   ViewTransition,
 } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
+import { Button } from "@dotui/registry/ui/button";
+import type { Control, ControlValues } from "@dotui/registry/playground";
 
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
 import { CodeBlock, DynamicCodeBlock } from "../code-block";
 import { DemoFrame } from "../demo/demo-frame";
 import { availableIcons, ControlsPanel } from "./controls";
-import { elementToCode } from "./element-to-code";
-import type { Control, ControlValues } from "./types";
+import { elementToCode, elementToPreviewCode } from "./element-to-code";
 
 /**
  * Interactive demo client component.
@@ -34,6 +36,9 @@ export function InteractiveDemoClient({
   controls,
   className,
 }: InteractiveDemoClientProps) {
+  // State for code expansion
+  const [isExpanded, setIsExpanded] = useState(false);
+
   // Initialize values from control defaults
   const initialValues = useMemo(() => {
     const values: ControlValues = {};
@@ -87,7 +92,17 @@ export function InteractiveDemoClient({
   }, [Playground, propsWithIcons]);
 
   // Generate code by serializing the rendered element
-  const code = useMemo(() => elementToCode(renderedElement), [renderedElement]);
+  const codeOutput = useMemo(
+    () => elementToCode(renderedElement),
+    [renderedElement],
+  );
+  const previewCode = useMemo(
+    () => elementToPreviewCode(renderedElement),
+    [renderedElement],
+  );
+
+  // Displayed code depends on expanded state
+  const displayedCode = isExpanded ? codeOutput.full : previewCode;
 
   return (
     <div
@@ -133,9 +148,28 @@ export function InteractiveDemoClient({
         <CodeBlock
           title="Code"
           className={cn("rounded-none rounded-b-lg border-0")}
+          copyCode={codeOutput.full}
+          actions={
+            <Button
+              variant="quiet"
+              size="sm"
+              className="h-7 gap-1 pr-2 pl-1 text-xs"
+              onPress={() => setIsExpanded((prev) => !prev)}
+            >
+              {isExpanded ? (
+                <>
+                  <ChevronUpIcon /> Collapse
+                </>
+              ) : (
+                <>
+                  <ChevronDownIcon /> Expand
+                </>
+              )}
+            </Button>
+          }
         >
           <ViewTransition default="code-fade">
-            <DynamicCodeBlock code={code} lang="tsx" />
+            <DynamicCodeBlock code={displayedCode} lang="tsx" />
           </ViewTransition>
         </CodeBlock>
       </div>

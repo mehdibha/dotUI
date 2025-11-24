@@ -2,9 +2,9 @@
 
 import type { ReactNode } from "react";
 
-import { Button } from "@dotui/registry/ui/button";
+import type { Control } from "@dotui/registry/playground";
 
-import type { Control } from "../interactive-demo/types";
+import { Button } from "../index";
 
 /**
  * Button playground component.
@@ -13,16 +13,20 @@ import type { Control } from "../interactive-demo/types";
 
 interface ButtonPlaygroundProps {
   children?: string;
-  variant?: "default" | "primary" | "quiet" | "link" | "success" | "warning" | "danger";
+  variant?:
+    | "default"
+    | "primary"
+    | "quiet"
+    | "link"
+    | "success"
+    | "warning"
+    | "danger";
   size?: "sm" | "md" | "lg";
   isDisabled?: boolean;
   isPending?: boolean;
   prefix?: ReactNode;
   suffix?: ReactNode;
 }
-
-// Add import path metadata for the code serializer
-Button.__importPath = "@dotui/registry/ui/button";
 
 export function ButtonPlayground({
   children = "Button",
@@ -53,7 +57,15 @@ export const buttonControls: Control[] = [
     type: "enum",
     name: "variant",
     label: "Variant",
-    options: ["default", "primary", "quiet", "link", "success", "warning", "danger"],
+    options: [
+      "default",
+      "primary",
+      "quiet",
+      "link",
+      "success",
+      "warning",
+      "danger",
+    ],
     defaultValue: "default",
   },
   {
@@ -86,4 +98,3 @@ export const buttonControls: Control[] = [
     label: "Suffix Icon",
   },
 ];
-

@@ -1,5 +1,7 @@
 "use client";
+
 import type React from "react";
+import { createContext, useContext } from "react";
 import { CheckIcon, CopyIcon, FileIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
@@ -7,10 +9,14 @@ import { Button } from "@dotui/registry/ui/button";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
+// Context for passing code to copy button
+const CodeBlockContext = createContext<string | undefined>(undefined);
+
 export interface CodeBlockProps extends React.ComponentProps<"figure"> {
   title?: string;
   actions?: React.ReactNode;
   icon?: string | React.ReactNode;
+  copyCode?: string;
   "data-line-numbers"?: boolean;
 }
 
@@ -18,13 +24,14 @@ export function CodeBlock({
   title,
   icon,
   actions: actionsProp,
+  copyCode,
   children,
   className,
   ...props
 }: CodeBlockProps) {
   const language = "tsx";
 
-  const actions = (
+  const actionsContent = (
     <>
       {actionsProp}
       <CopyButton />
@@ -32,35 +39,40 @@ export function CodeBlock({
   );
 
   return (
-    <figure
-      className={cn("overflow-hidden rounded-md border bg-card!", className)}
-      {...props}
-    >
-      {title && (
-        <div className="relative flex items-center justify-between gap-2 border-b p-1.5 pl-2.5 [&_svg]:size-4 [&_svg]:text-fg-muted">
-          {getIconForLanguageExtension(language)}
-          <figcaption className="flex-1 truncate font-mono text-fg-muted text-sm">
-            {title}
-          </figcaption>
-          <div className="flex items-center gap-1 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5">
-            {actions}
-          </div>
-        </div>
-      )}
-      <div
-        className="relative"
-        style={{
-          counterReset: "line",
-        }}
+    <CodeBlockContext.Provider value={copyCode}>
+      <figure
+        className={cn(
+          "overflow-hidden rounded-md border bg-card!",
+          className
+        )}
+        {...props}
       >
-        {children}
-        {!title && (
-          <div className="absolute top-1.75 right-1.75 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5">
-            {actions}
+        {title && (
+          <div className="relative flex items-center justify-between gap-2 border-b p-1.5 pl-2.5 [&_svg]:size-4 [&_svg]:text-fg-muted">
+            {getIconForLanguageExtension(language)}
+            <figcaption className="flex-1 truncate font-mono text-fg-muted text-sm">
+              {title}
+            </figcaption>
+            <div className="flex items-center gap-1 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5">
+              {actionsContent}
+            </div>
           </div>
         )}
-      </div>
-    </figure>
+        <div
+          className="relative"
+          style={{
+            counterReset: "line",
+          }}
+        >
+          {children}
+          {!title && (
+            <div className="absolute top-1.75 right-1.75 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5">
+              {actionsContent}
+            </div>
+          )}
+        </div>
+      </figure>
+    </CodeBlockContext.Provider>
   );
 }
 
@@ -83,7 +95,7 @@ export function Pre({
         "**:[.highlighted]:m-0! **:[.highlighted]:bg-selected/70! **:[.highlighted]:before:absolute **:[.highlighted]:before:inset-y-0 **:[.highlighted]:before:left-0 **:[.highlighted]:before:w-0.5 **:[.highlighted]:before:bg-fg/40 **:[.highlighted]:before:content-['']",
         // line numbers
         "in-data-line-numbers:**:[.line]:pl-9! **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:after:content-[counter(line)] **:[.line]:[counter-increment:line]",
-        className,
+        className
       )}
       {...props}
     >
@@ -94,13 +106,26 @@ export function Pre({
 
 const CopyButton = () => {
   const { isCopied, copyToClipboard } = useCopyToClipboard();
+  const codeFromContext = useContext(CodeBlockContext);
+
+  const handleCopy = () => {
+    if (codeFromContext) {
+      copyToClipboard(codeFromContext);
+    }
+  };
+
+  // Only render if we have code to copy
+  if (!codeFromContext) {
+    return null;
+  }
 
   return (
     <Button
       variant="quiet"
       size="sm"
-      onPress={() => copyToClipboard("some code")}
+      onPress={handleCopy}
       className="size-7!"
+      aria-label={isCopied ? "Copied!" : "Copy code"}
     >
       {isCopied ? <CheckIcon /> : <CopyIcon />}
     </Button>
