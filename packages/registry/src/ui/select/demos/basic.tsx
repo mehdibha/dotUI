@@ -35,10 +35,10 @@ export default function Demo({
       <SelectContent
         selectionMode={selectionMode === "multiple" ? "multiple" : undefined}
       >
-        <SelectItem>Perplexity</SelectItem>
-        <SelectItem>Replicate</SelectItem>
-        <SelectItem>Together AI</SelectItem>
-        <SelectItem>ElevenLabs</SelectItem>
+        <SelectItem id="perplexity">Perplexity</SelectItem>
+        <SelectItem id="replicate">Replicate</SelectItem>
+        <SelectItem id="together-ai">Together AI</SelectItem>
+        <SelectItem id="eleven-labs">ElevenLabs</SelectItem>
       </SelectContent>
     </Select>
   );
