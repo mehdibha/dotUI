@@ -27,7 +27,7 @@ export const siteConfig = {
   creator: "mehdibha",
   thumbnail: "https://dotui.org/images/thumbnail.png",
   twitter: {
-    creator: "@mehdibha_",
+    creator: "@mehdibha",
   },
   og: {
     title: "Ship unique.",
@@ -36,7 +36,7 @@ export const siteConfig = {
   },
   links: {
     github: "https://github.com/mehdibha/dotUI",
-    twitter: "https://x.com/mehdibha_",
+    twitter: "https://x.com/mehdibha",
     discord: "https://discord.gg/DXpj5V2fU8",
     creatorGithub: "https://github.com/mehdibha",
   } as const,

@@ -23,7 +23,7 @@ export default function Demo() {
               Make changes to your username.
             </DialogDescription>
           </DialogHeader>
-          <TextField defaultValue="@mehdibha_" className="w-full">
+          <TextField defaultValue="@mehdibha" className="w-full">
             <Label>Username</Label>
             <Input className="w-full" />
           </TextField>

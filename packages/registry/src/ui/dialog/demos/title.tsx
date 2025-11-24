@@ -19,7 +19,7 @@ export default function Demo() {
           <DialogHeader>
             <DialogHeading>Edit username</DialogHeading>
           </DialogHeader>
-          <TextField defaultValue="@mehdibha_" className="w-full">
+          <TextField defaultValue="@mehdibha" className="w-full">
             <Label>Username</Label>
             <Input className="w-full" />
           </TextField>

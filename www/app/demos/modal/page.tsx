@@ -23,7 +23,7 @@ export default function Page() {
               <DialogHeading>Edit username</DialogHeading>
             </DialogHeader>
             <DialogBody>
-              <TextField defaultValue="@mehdibha_" className="w-full">
+              <TextField defaultValue="@mehdibha" className="w-full">
                 <Label>Username</Label>
                 <Input />
               </TextField>

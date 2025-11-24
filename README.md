@@ -9,7 +9,7 @@ To get started, check out the [dotUI documentation](https://dotui.org/docs).
 ## Community
 
 - **Discord** For community support, questions, and tips, join our [Discord](https://discord.gg/DXpj5V2fU8).
-- **X** To stay up-to-date on new releases and announcements follow [@mehdibha](https://x.com/mehdibha_).
+- **X** To stay up-to-date on new releases and announcements follow [@mehdibha](https://x.com/mehdibha).
 
 ## Contributing
 

@@ -17,7 +17,7 @@ export default function Demo() {
             <GitHubIcon />
             Github
           </MenuItem>
-          <MenuItem href="https://twitter.com/mehdibha_" target="_blank">
+          <MenuItem href="https://twitter.com/mehdibha" target="_blank">
             <TwitterIcon />X
           </MenuItem>
           <MenuItem

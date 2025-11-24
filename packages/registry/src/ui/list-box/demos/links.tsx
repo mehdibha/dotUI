@@ -14,7 +14,7 @@ export default function Demo() {
         <DiscordIcon />
         Discord
       </ListBoxItem>
-      <ListBoxItem href="https://x.com/mehdibha_" target="_blank">
+      <ListBoxItem href="https://x.com/mehdibha" target="_blank">
         <TwitterIcon />X
       </ListBoxItem>
     </ListBox>

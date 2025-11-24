@@ -91,7 +91,7 @@ export const Footer = () => {
         <p className="text-fg-muted text-sm">
           Built with passion by{" "}
           <Link
-            href="https://x.com/mehdibha_"
+            href="https://x.com/mehdibha"
             target="_blank"
             className="underline underline-offset-4"
           >

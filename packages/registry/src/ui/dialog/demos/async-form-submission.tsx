@@ -48,7 +48,7 @@ export default function DialogDemo() {
                     close();
                   }}
                 >
-                  <TextField autoFocus defaultValue="@mehdibha_" isRequired>
+                  <TextField autoFocus defaultValue="@mehdibha" isRequired>
                     <Label>Username</Label>
                     <Input className="w-full" />
                   </TextField>
