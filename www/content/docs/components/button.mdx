@@ -6,6 +6,8 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Button.html
 ---
 
+import { buttonInteractiveTemplate } from "@/modules/docs/templates/button";
+
 <PageTabs>
   <PageTabPanel id="overview">
 
@@ -37,8 +39,6 @@ links:
 
     <InteractiveDemo
       name="button/demos/default"
-      componentName="Button"
-      importPath="@dotui/registry/ui/button"
       controls={[
         {
           control: "select",
@@ -82,6 +82,7 @@ links:
           defaultValue: "Press me",
         },
       ]}
+      jsxTemplate={buttonInteractiveTemplate}
     />
 
     ## API Reference

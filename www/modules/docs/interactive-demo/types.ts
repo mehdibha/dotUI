@@ -5,6 +5,31 @@ export type InteractiveDemoControl =
   | InteractiveDemoSelectControl
   | InteractiveDemoTextControl;
 
+export interface InteractiveDemoDependency {
+  kind: "import";
+  module: string;
+  /**
+   * Named exports that should be imported when the dependency is active.
+   */
+  members?: string[];
+  /**
+   * Optional default import identifier.
+   */
+  defaultImport?: string;
+  /**
+   * Optional condition describing when the dependency should be included.
+   * If omitted, the dependency is included whenever the associated prop is truthy.
+   */
+  when?: InteractiveDemoDependencyCondition;
+}
+
+export type InteractiveDemoDependencyCondition =
+  | { type: "truthy"; selector?: string }
+  | { type: "equals"; value: unknown; selector?: string }
+  | { type: "in"; values: unknown[]; selector?: string };
+
+export type InteractiveDemoSlotConfig = Record<string, boolean>;
+
 interface InteractiveDemoBaseControl {
   /** Name of the prop to update on the component. */
   prop: string;
@@ -12,12 +37,16 @@ interface InteractiveDemoBaseControl {
   label?: string;
   /** Optional helper text displayed under the control. */
   description?: ReactNode;
+  /** Optional dependency list evaluated when rendering code samples. */
+  dependencies?: InteractiveDemoDependency[];
 }
 
 export interface InteractiveDemoBooleanControl
   extends InteractiveDemoBaseControl {
   control: "boolean";
   defaultValue?: boolean;
+  /** Omit the prop when false instead of rendering `prop={false}`. */
+  omitIfFalse?: boolean;
 }
 
 export interface InteractiveDemoSelectControl
@@ -25,6 +54,8 @@ export interface InteractiveDemoSelectControl
   control: "select";
   options: Array<{ label: string; value: string }>;
   defaultValue?: string;
+  /** Omit the prop when it equals this value. */
+  omitIfValue?: string;
 }
 
 export interface InteractiveDemoTextControl
@@ -32,6 +63,12 @@ export interface InteractiveDemoTextControl
   control: "text";
   placeholder?: string;
   defaultValue?: string;
+  /** Trim whitespace before evaluating omissions. */
+  trim?: boolean;
+  /** Omit the prop if the resolved value is empty. */
+  omitIfEmpty?: boolean;
+  /** Slot metadata for child composition (e.g., avatar, icon). */
+  slots?: InteractiveDemoSlotConfig;
 }
 
 export interface InteractiveDemoSharedConfig {
@@ -39,14 +76,10 @@ export interface InteractiveDemoSharedConfig {
   initialProps?: Record<string, unknown>;
   /** Manual control definitions configured by the MDX author. */
   controls?: InteractiveDemoControl[];
-  /** Display name used for the generated code sample. */
-  componentName?: string;
-  /** Module path used for the import statement. */
-  importPath?: string;
   /** Optional description displayed above the controls. */
   description?: ReactNode;
-  /** Optional JSX template used to render code. */
-  jsxTemplate?: JSXTemplate;
+  /** JSX template used to render code. */
+  jsxTemplate: JSXTemplate;
 }
 
 export interface JSXTemplate {

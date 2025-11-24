@@ -12,8 +12,6 @@ export interface InteractiveDemoProps extends InteractiveDemoSharedConfig {
 
 export function InteractiveDemo({
   name,
-  componentName,
-  importPath,
   controls,
   initialProps,
   description,
@@ -29,28 +27,20 @@ export function InteractiveDemo({
     );
   }
 
-  const slug = name.split("/")[0] ?? "component";
-  const resolvedComponentName = componentName ?? toPascalCase(slug);
-  const resolvedImportPath = importPath ?? `@dotui/registry/ui/${slug}`;
+  if (!jsxTemplate) {
+    throw new Error(
+      `InteractiveDemo "${name}" requires a jsxTemplate prop to render.`,
+    );
+  }
 
   return (
     <InteractiveDemoClient
       name={name}
-      componentName={resolvedComponentName}
-      importPath={resolvedImportPath}
       controls={controls}
       initialProps={initialProps}
       description={description}
       jsxTemplate={jsxTemplate}
     />
   );
-}
-
-function toPascalCase(value: string) {
-  return value
-    .split(/[\s-_]+/)
-    .filter(Boolean)
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join("");
 }
 

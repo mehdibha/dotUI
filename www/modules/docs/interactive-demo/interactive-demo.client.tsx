@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
@@ -35,31 +35,53 @@ import type {
 
 interface InteractiveDemoClientProps extends InteractiveDemoSharedConfig {
   name: string;
-  componentName: string;
-  importPath: string;
 }
 
 export function InteractiveDemoClient({
   name,
   controls = [],
   initialProps,
-  componentName,
-  importPath,
   description,
   jsxTemplate,
 }: InteractiveDemoClientProps) {
+  if (!jsxTemplate) {
+    throw new Error(
+      `InteractiveDemo "${name}" requires a jsxTemplate prop to render.`,
+    );
+  }
+
   const demoEntry = Index[name];
   const Component = demoEntry?.component;
+  const controlsMap = useMemo(() => normalizeControls(controls), [controls]);
   const [showFullCode, setShowFullCode] = useState(false);
   const [demoProps, setDemoProps] = useState<Record<string, unknown>>(() => {
     const controlDefaults: Record<string, unknown> = {};
-    for (const control of controls) {
+    Object.values(controlsMap).forEach((control) => {
       if ("defaultValue" in control && control.defaultValue !== undefined) {
         controlDefaults[control.prop] = control.defaultValue;
       }
-    }
+    });
     return { ...controlDefaults, ...(initialProps ?? {}) };
   });
+
+  useEffect(() => {
+    setDemoProps((prev) => {
+      let changed = false;
+      const next = { ...prev };
+      Object.values(controlsMap).forEach((control) => {
+        if (
+          control &&
+          "defaultValue" in control &&
+          control.defaultValue !== undefined &&
+          next[control.prop] === undefined
+        ) {
+          next[control.prop] = control.defaultValue;
+          changed = true;
+        }
+      });
+      return changed ? next : prev;
+    });
+  }, [controlsMap]);
 
   const handlePropChange = (prop: string, value: unknown) => {
     setDemoProps((prev) => ({
@@ -69,8 +91,8 @@ export function InteractiveDemoClient({
   };
 
   const codeSamples = useMemo(
-    () => getCodeSamples(jsxTemplate, componentName, importPath, demoProps),
-    [jsxTemplate, componentName, importPath, demoProps],
+    () => generateTemplateCodeSamples(jsxTemplate, demoProps),
+    [jsxTemplate, demoProps],
   );
 
   if (!Component) {
@@ -226,8 +248,8 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
               const resolvedValue =
                 typeof nextValue === "string"
                   ? nextValue
-                  : (nextValue as { target?: { value?: string } })?.target
-                      ?.value ?? "";
+                  : ((nextValue as { target?: { value?: string } })?.target
+                      ?.value ?? "");
               onChange(control.prop, resolvedValue);
             }}
           />
@@ -241,96 +263,13 @@ function ControlCard({ control, value, onChange }: ControlCardProps) {
   }
 }
 
-function getCodeSamples(
-  template: JSXTemplate | undefined,
-  componentName: string,
-  importPath: string,
-  props: Record<string, unknown>,
-) {
-  if (template) {
-    return generateTemplateCodeSamples(template, props);
-  }
-
-  return generateDefaultCodeSamples(componentName, importPath, props);
-}
-
-function generateDefaultCodeSamples(
-  componentName: string,
-  importPath: string,
-  props: Record<string, unknown>,
-) {
-  const sanitizedProps = Object.entries(props).reduce<Record<string, unknown>>(
-    (acc, [key, value]) => {
-      if (value === undefined) return acc;
-      acc[key] = value;
-      return acc;
-    },
-    {},
-  );
-
-  const { children, ...rest } = sanitizedProps;
-  const propEntries = Object.entries(rest)
-    .map(([key, value]) => formatProp(key, value))
-    .filter(Boolean) as string[];
-
-  const propsBlock = propEntries.length
-    ? `\n${propEntries.map((line) => `  ${line}`).join("\n")}\n`
-    : "";
-  const inlineProps = propEntries.length ? ` ${propEntries.join(" ")}` : "";
-
-  const childrenContent = formatChildren(children);
-  let jsx: string;
-
-  const isSimpleTextChild =
-    typeof children === "string" && !children.includes("\n");
-  const inlineLength =
-    componentName.length +
-    inlineProps.length +
-    (isSimpleTextChild ? children.length : 0);
-  const canInlineChildren = isSimpleTextChild && inlineLength <= 60;
-
-  if (canInlineChildren) {
-    jsx = `<${componentName}${inlineProps}>${children}</${componentName}>`;
-  } else if (childrenContent) {
-    const childLines = indentMultiline(childrenContent, "  ");
-    jsx = propsBlock
-      ? `<${componentName}${propsBlock}>\n${childLines}\n</${componentName}>`
-      : `<${componentName}>\n${childLines}\n</${componentName}>`;
-  } else if (propsBlock) {
-    jsx = `<${componentName}${propsBlock}/>`;
-  } else {
-    jsx = `<${componentName} />`;
-  }
-
-  const returnBlock =
-    jsx.includes("\n") || jsx.length > 60
-      ? `(\n${indentMultiline(jsx, "    ")}\n  )`
-      : jsx;
-
-  const full = [
-    `import { ${componentName} } from "${importPath}";`,
-    "",
-    "function Demo() {",
-    `  return ${returnBlock};`,
-    "}",
-  ].join("\n");
-
-  return {
-    full,
-    jsx,
-  };
-}
-
 function generateTemplateCodeSamples(
   template: JSXTemplate,
   props: Record<string, unknown>,
 ) {
   const tree = renderTemplateNode(template.tree, props);
   const jsx = tree ? renderTree(tree) : "";
-  const returnBlock =
-    jsx.includes("\n") || jsx.length > 60
-      ? `(\n${indentMultiline(jsx, "    ")}\n  )`
-      : jsx;
+  const returnBlock = formatReturnBlock(jsx);
 
   const importLines = template.imports.map(
     (entry) => `import { ${entry.members.join(", ")} } from "${entry.module}";`,
@@ -349,6 +288,14 @@ function generateTemplateCodeSamples(
     full,
     jsx,
   };
+}
+
+function formatReturnBlock(jsx: string) {
+  if (!jsx) return "";
+  if (jsx.includes("\n") || jsx.length > 60) {
+    return `(\n${indentMultiline(jsx, "    ")}\n  )`;
+  }
+  return jsx;
 }
 
 function renderTemplateNode(
@@ -417,7 +364,7 @@ function renderTemplateProp(
 ): string | null {
   switch (prop.kind) {
     case "literal":
-      return formatProp(prop.name, prop.value);
+      return formatTemplateProp(prop.name, prop.value);
     case "string": {
       const rawValue = props[prop.prop];
       if (rawValue == null) {
@@ -484,7 +431,7 @@ function evaluateTemplateCondition(
   }
 }
 
-function formatProp(prop: string, value: unknown) {
+function formatTemplateProp(prop: string, value: unknown) {
   if (value === undefined) return null;
   if (typeof value === "string") {
     return `${prop}="${escapeDoubleQuotes(value)}"`;
@@ -504,20 +451,6 @@ function formatProp(prop: string, value: unknown) {
   return null;
 }
 
-function formatChildren(value: unknown) {
-  if (value === undefined || value === null) return "";
-  if (typeof value === "string") {
-    return value;
-  }
-  if (typeof value === "number" || typeof value === "boolean") {
-    return `{${value}}`;
-  }
-  if (typeof value === "object") {
-    return `{${JSON.stringify(value, null, 2)}}`;
-  }
-  return "";
-}
-
 function indentMultiline(value: string, indent: string) {
   return value
     .split("\n")
@@ -535,4 +468,14 @@ function formatPropLabel(prop: string) {
     .replace(/[-_]/g, " ")
     .replace(/\s+/g, " ")
     .replace(/^\w/, (char) => char.toUpperCase());
+}
+
+function normalizeControls(controls: InteractiveDemoControl[]) {
+  return controls.reduce<Record<string, InteractiveDemoControl>>(
+    (acc, control) => {
+      acc[control.prop] = control;
+      return acc;
+    },
+    {},
+  );
 }
