@@ -148,7 +148,7 @@ export function InteractiveDemoClient({
         <CodeBlock
           title="Code"
           className={cn("rounded-none rounded-b-lg border-0")}
-          copyCode={codeOutput.full}
+          copyCode={displayedCode}
           actions={
             <Button
               variant="quiet"

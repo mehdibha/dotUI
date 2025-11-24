@@ -16,6 +16,7 @@ export async function Demo({ name, className, ...props }: DemoProps) {
       highlightedPreview,
       highlightedSource,
       source,
+      preview,
     } = await loadDemo(name);
 
     return (
@@ -25,6 +26,7 @@ export async function Demo({ name, className, ...props }: DemoProps) {
           highlightedPreview={highlightedPreview}
           highlightedSource={highlightedSource}
           sourceCode={source}
+          previewCode={preview}
         />
       </div>
     );

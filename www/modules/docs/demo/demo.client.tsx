@@ -11,6 +11,7 @@ interface DemoClientProps {
   highlightedPreview: React.ReactNode;
   highlightedSource: React.ReactNode;
   sourceCode: string;
+  previewCode: string;
 }
 
 const DemoContext = React.createContext<{
@@ -23,6 +24,7 @@ export const DemoClient = ({
   highlightedPreview,
   highlightedSource,
   sourceCode,
+  previewCode,
 }: DemoClientProps) => {
   const [isExpanded, setExpanded] = React.useState(false);
   const toggleExpanded = React.useCallback(() => {
@@ -44,6 +46,7 @@ export const DemoClient = ({
         highlightedPreview={highlightedPreview}
         highlightedSource={highlightedSource}
         sourceCode={sourceCode}
+        previewCode={previewCode}
       />
     </DemoContext.Provider>
   );

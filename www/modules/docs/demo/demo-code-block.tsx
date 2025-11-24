@@ -13,19 +13,21 @@ interface DemoCodeBlockProps {
   highlightedPreview: React.ReactNode;
   highlightedSource: React.ReactNode;
   sourceCode: string;
+  previewCode: string;
 }
 
 export const DemoCodeBlock = ({
   highlightedPreview,
   highlightedSource,
   sourceCode,
+  previewCode,
 }: DemoCodeBlockProps) => {
   const { isExpanded, toggleExpanded } = useDemoContext();
 
   return (
     <CodeBlock
       className="rounded-t-none border-t-0"
-      copyCode={sourceCode}
+      copyCode={isExpanded ? sourceCode : previewCode}
       actions={
         <Button
           variant="quiet"
