@@ -50,4 +50,3 @@ export type Control =
   | IconControl;
 
 export type ControlValues = Record<string, unknown>;
-

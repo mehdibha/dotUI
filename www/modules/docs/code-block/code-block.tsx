@@ -41,10 +41,7 @@ export function CodeBlock({
   return (
     <CodeBlockContext.Provider value={copyCode}>
       <figure
-        className={cn(
-          "overflow-hidden rounded-md border bg-card!",
-          className
-        )}
+        className={cn("overflow-hidden rounded-md border bg-card!", className)}
         {...props}
       >
         {title && (
@@ -95,7 +92,7 @@ export function Pre({
         "**:[.highlighted]:m-0! **:[.highlighted]:bg-selected/70! **:[.highlighted]:before:absolute **:[.highlighted]:before:inset-y-0 **:[.highlighted]:before:left-0 **:[.highlighted]:before:w-0.5 **:[.highlighted]:before:bg-fg/40 **:[.highlighted]:before:content-['']",
         // line numbers
         "in-data-line-numbers:**:[.line]:pl-9! **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:after:content-[counter(line)] **:[.line]:[counter-increment:line]",
-        className
+        className,
       )}
       {...props}
     >

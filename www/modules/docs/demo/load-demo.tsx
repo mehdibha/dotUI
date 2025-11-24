@@ -62,11 +62,3 @@ const IMPORT_REGEX = /^\s*import[\s\S]*?;\s*$/gm;
 const EXPORT_FN_REGEX =
   /export\s+(default\s+)?function\s+\w+\s*\([^)]*\)\s*\{[\s\S]*?return\s*\(?\s*/m;
 const FUNCTION_END_REGEX = /\s*\)?\s*;?\s*\}\s*$/m;
-
-const extractPreviewSource = (source: string) =>
-  source
-    .replaceAll("@dotui/registry/", "@/")
-    .replace(IMPORT_REGEX, "")
-    .replace(EXPORT_FN_REGEX, "")
-    .replace(FUNCTION_END_REGEX, "")
-    .trim();

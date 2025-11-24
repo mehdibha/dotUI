@@ -18,10 +18,7 @@ import {
 import type { DemoProps } from "./demo";
 import { Demo } from "./demo";
 import { Example } from "./example";
-import {
-  InteractiveDemo,
-  type InteractiveDemoProps,
-} from "./interactive-demo";
+import { InteractiveDemo, type InteractiveDemoProps } from "./interactive-demo";
 import { PageTabPanel, PageTabs } from "./page-tabs";
 
 export const mdxComponents: MDXComponents = {

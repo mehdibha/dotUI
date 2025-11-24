@@ -299,7 +299,7 @@ export function elementToPreviewCode(element: ReactNode): string {
 function serializeNode(
   node: ReactNode,
   ctx: SerializeContext,
-  indent: number
+  indent: number,
 ): string {
   // Handle nullish values - they disappear (exactly what we want!)
   if (node === null || node === undefined || node === false) {
@@ -334,7 +334,7 @@ function serializeNode(
 function serializeElement(
   element: ReactElement,
   ctx: SerializeContext,
-  indent: number
+  indent: number,
 ): string {
   const pad = "  ".repeat(indent);
   const { type, props } = element;
@@ -363,7 +363,7 @@ function serializeElement(
   // Check if children are simple (inline) or complex (multiline)
   const totalChildLength = childStrings.reduce((a, b) => a + b.length, 0);
   const hasNestedElements = childStrings.some(
-    (s) => s.includes("<") || s.includes("\n")
+    (s) => s.includes("<") || s.includes("\n"),
   );
   const isSimple = !hasNestedElements && totalChildLength < 50;
 
@@ -406,7 +406,7 @@ function serializeProps(props: Record<string, unknown>): string {
   const entries = Object.entries(props)
     .filter(([key]) => key !== "children")
     .filter(
-      ([_, value]) => value !== undefined && value !== null && value !== false
+      ([_, value]) => value !== undefined && value !== null && value !== false,
     )
     .map(([key, value]) => {
       // Boolean true: just the prop name
@@ -443,10 +443,10 @@ function serializeProps(props: Record<string, unknown>): string {
   // If props string is long, put on multiple lines
   const propsStr = entries.join(" ");
   if (propsStr.length > 60) {
-    return "\n  " + entries.join("\n  ") + "\n";
+    return `\n  ${entries.join("\n  ")}\n`;
   }
 
-  return " " + propsStr;
+  return ` ${propsStr}`;
 }
 
 function trackImport(name: string, ctx: SerializeContext) {
@@ -504,7 +504,7 @@ function buildImports(ctx: SerializeContext): string {
   return sorted
     .map(
       ([path, names]) =>
-        `import { ${[...names].sort().join(", ")} } from "${path}";`
+        `import { ${[...names].sort().join(", ")} } from "${path}";`,
     )
     .join("\n");
 }

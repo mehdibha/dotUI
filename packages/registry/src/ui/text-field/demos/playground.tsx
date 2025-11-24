@@ -2,9 +2,9 @@
 
 import type { ReactNode } from "react";
 
-import type { Control } from "@dotui/registry/playground";
 import { Description, FieldError, Label } from "@dotui/registry/ui/field";
 import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
+import type { Control } from "@dotui/registry/playground";
 
 import { TextField } from "../index";
 
