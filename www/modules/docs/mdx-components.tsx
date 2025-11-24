@@ -18,6 +18,10 @@ import {
 import type { DemoProps } from "./demo";
 import { Demo } from "./demo";
 import { Example } from "./example";
+import {
+  InteractiveDemo,
+  type InteractiveDemoProps,
+} from "./interactive-demo";
 import { PageTabPanel, PageTabs } from "./page-tabs";
 
 export const mdxComponents: MDXComponents = {
@@ -91,6 +95,9 @@ export const mdxComponents: MDXComponents = {
   ),
   Demo: (props: DemoProps) => <Demo {...props} />,
   Example,
+  InteractiveDemo: (props: InteractiveDemoProps) => (
+    <InteractiveDemo {...props} />
+  ),
   p: ({ className, ...props }) => (
     <p
       className={cn("not-first:mt-4 text-base leading-7", className)}
