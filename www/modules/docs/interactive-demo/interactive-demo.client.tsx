@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useMemo,
   useState,
+  ViewTransition,
 } from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
@@ -133,7 +134,9 @@ export function InteractiveDemoClient({
           title="Code"
           className={cn("rounded-none rounded-b-lg border-0")}
         >
-          <DynamicCodeBlock code={code} lang="tsx" />
+          <ViewTransition default="code-fade">
+            <DynamicCodeBlock code={code} lang="tsx" />
+          </ViewTransition>
         </CodeBlock>
       </div>
     </div>
