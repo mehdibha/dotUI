@@ -284,19 +284,15 @@ function IconControlRenderer({
   );
 }
 
-interface ControlsPanelProps {
+interface ControlsProps {
   controls: Control[];
   values: ControlValues;
   onChange: (name: string, value: unknown) => void;
 }
 
-export function ControlsPanel({
-  controls,
-  values,
-  onChange,
-}: ControlsPanelProps) {
+export function Controls({ controls, values, onChange }: ControlsProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <>
       {controls.map((control) => (
         <ControlRenderer
           key={control.name}
@@ -305,6 +301,6 @@ export function ControlsPanel({
           onChange={onChange}
         />
       ))}
-    </div>
+    </>
   );
 }

@@ -1,130 +1,40 @@
 "use client";
 
-import {
-  type ComponentProps,
-  createContext,
-  type FC,
-  Suspense,
-  use,
-  useDeferredValue,
-  useId,
-} from "react";
+import { useDeferredValue, useId } from "react";
 import { useShiki } from "fumadocs-core/highlight/client";
-import type {
-  HighlightOptions,
-  HighlightOptionsCommon,
-  HighlightOptionsThemes,
-} from "fumadocs-core/highlight";
+import type { HighlightOptions } from "fumadocs-core/highlight";
 
-import { cn } from "@dotui/registry/lib/utils";
-
-import { CodeBlock, type CodeBlockProps, Pre } from "./code-block";
+import { Pre } from "./code-block";
 
 export interface DynamicPreProps {
   lang: string;
   code: string;
-  /**
-   * Extra props for the underlying `<CodeBlock />` component.
-   *
-   * Ignored if you defined your own `pre` component in `options.components`.
-   */
-  codeblock?: CodeBlockProps;
-  /**
-   * Wrap in React `<Suspense />` and provide a fallback.
-   *
-   * @defaultValue true
-   */
-  wrapInSuspense?: boolean;
-  options?: Omit<HighlightOptionsCommon, "lang"> & HighlightOptionsThemes;
 }
 
-const PropsContext = createContext<CodeBlockProps | undefined>(undefined);
+export function DynamicPre({ lang, code }: DynamicPreProps) {
+  const id = useId();
+  const deferredCode = useDeferredValue(code);
 
-function DefaultPre(props: ComponentProps<"pre">) {
-  const extraProps = use(PropsContext);
+  const content = <ShikiHighlighter id={id} lang={lang} code={deferredCode} />;
 
-  return (
-    <CodeBlock
-      {...props}
-      {...extraProps}
-      className={cn("my-0", props.className, extraProps?.className)}
-    >
-      <Pre>{props.children}</Pre>
-    </CodeBlock>
-  );
+  return content;
 }
 
-export function DynamicPre({
+function ShikiHighlighter({
+  id,
   lang,
   code,
-  codeblock,
-  options,
-  wrapInSuspense = false,
-}: DynamicPreProps) {
-  const id = useId();
-  const shikiOptions = {
-    lang,
-    ...options,
-    components: {
-      pre: DefaultPre,
-      ...options?.components,
-    },
-  } satisfies HighlightOptions;
-
-  const children = (
-    <PropsContext value={codeblock}>
-      <Internal
-        id={id}
-        {...useDeferredValue({ code, options: shikiOptions })}
-      />
-    </PropsContext>
-  );
-
-  if (wrapInSuspense)
-    return (
-      <Suspense
-        fallback={
-          <Placeholder code={code} components={shikiOptions.components} />
-        }
-      >
-        {children}
-      </Suspense>
-    );
-
-  return children;
-}
-
-function Placeholder({
-  code,
-  components = {},
-}: {
-  code: string;
-  components: HighlightOptions["components"];
-}) {
-  const { pre: PreComponent = "pre", code: Code = "code" } =
-    components as Record<string, FC>;
-
-  return (
-    <PreComponent>
-      <Code>
-        {code.split("\n").map((line, i) => (
-          <span key={i} className="line">
-            {line}
-          </span>
-        ))}
-      </Code>
-    </PreComponent>
-  );
-}
-
-function Internal({
-  id,
-  code,
-  options,
 }: {
   id: string;
+  lang: string;
   code: string;
-  options: HighlightOptions;
 }) {
-  return useShiki(code, options, [id, options.lang, code]);
+  const options: HighlightOptions = {
+    lang,
+    components: {
+      pre: Pre,
+    },
+  };
+
+  return useShiki(code, options, [id, lang, code]);
 }

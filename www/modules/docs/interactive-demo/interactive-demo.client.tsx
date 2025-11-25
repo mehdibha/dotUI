@@ -9,16 +9,22 @@ import React, {
   useState,
   ViewTransition,
 } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Columns2Icon,
+  Rows2Icon,
+} from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 import type { Control, ControlValues } from "@dotui/registry/playground";
 
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
 import { CodeBlock, DynamicPre } from "../code-block";
 import { DemoFrame } from "../demo/demo-frame";
-import { availableIcons, ControlsPanel } from "./controls";
+import { availableIcons, Controls } from "./controls";
 import { elementToCode, elementToPreviewCode } from "./element-to-code";
 
 /**
@@ -31,6 +37,7 @@ interface InteractiveDemoClientProps {
   controls: Control[];
   className?: string;
   fallback: React.ReactNode;
+  layout?: "horizontal" | "vertical";
 }
 
 export function InteractiveDemoClient({
@@ -38,9 +45,12 @@ export function InteractiveDemoClient({
   controls,
   className,
   fallback,
+  layout: layoutProp = "vertical",
 }: InteractiveDemoClientProps) {
-  // State for code expansion
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [layout, setLayout] = React.useState<"horizontal" | "vertical">(
+    layoutProp,
+  );
+  const [isExpanded, setIsExpanded] = React.useState(false);
 
   // Initialize values from control defaults
   const initialValues = useMemo(() => {
@@ -108,50 +118,38 @@ export function InteractiveDemoClient({
   const displayedCode = isExpanded ? codeOutput.full : previewCode;
 
   return (
-    <div
-      className={cn(
-        "mt-6 overflow-hidden rounded-lg border bg-card",
-        className,
-      )}
-    >
-      {/* Layout grid: preview on left, controls on right, code at bottom */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px]">
-        {/* Preview area */}
+    <div className={cn("", className)}>
+      <div
+        className={cn("flex flex-col", layout === "horizontal" && "flex-row")}
+      >
         <ActiveStyleProvider
           unstyled
-          className="flex min-h-56 items-stretch border-b lg:border-r lg:border-b-0"
-          skeletonClassName="rounded-none"
+          className="flex min-h-56 flex-1 items-stretch text-fg"
+          skeletonClassName="border rounded-t-md"
         >
-          <DemoFrame>
-            <div
-              role="group"
-              aria-label="Rendered component"
-              className="flex min-h-48 w-full items-center justify-center overflow-auto p-6"
-            >
-              {previewElement}
-            </div>
-          </DemoFrame>
+          <DemoFrame>{previewElement}</DemoFrame>
         </ActiveStyleProvider>
 
-        {/* Controls panel */}
-        <div className="border-b p-4 lg:border-b-0">
-          <h3 className="mb-4 font-medium text-fg-muted text-sm uppercase tracking-wide">
-            Controls
-          </h3>
-          <ControlsPanel
+        <div
+          className={cn(
+            "relative flex flex-col gap-2 bg-card p-4 **:data-label:text-fg-muted **:data-label:text-xs",
+            layout === "horizontal" &&
+              "-ml-4 rounded-tr-md border-y border-r pl-8",
+            layout === "vertical" && "border-x border-b",
+          )}
+        >
+          <Controls
             controls={controls}
             values={values}
             onChange={handleChange}
           />
         </div>
       </div>
-
-      <div className="border-t">
-        <ViewTransition default="code-fade">
-          <CodeBlock
-            title="Code"
-            className={cn("rounded-none rounded-b-lg border-0")}
-            actions={
+      <ViewTransition default="code-fade">
+        <CodeBlock
+          className="rounded-t-none border-t-0"
+          actions={
+            <>
               <Button
                 variant="quiet"
                 size="sm"
@@ -168,14 +166,30 @@ export function InteractiveDemoClient({
                   </>
                 )}
               </Button>
-            }
-          >
-            <Suspense fallback={fallback}>
-              <DynamicPre code={displayedCode} lang="tsx" />
-            </Suspense>
-          </CodeBlock>
-        </ViewTransition>
-      </div>
+              <Tooltip>
+                <Button
+                  aria-label="Toggle orientation"
+                  onPress={() =>
+                    setLayout((prev) =>
+                      prev === "horizontal" ? "vertical" : "horizontal",
+                    )
+                  }
+                  variant="quiet"
+                  size="sm"
+                  className="size-7!"
+                >
+                  {layout === "horizontal" ? <Columns2Icon /> : <Rows2Icon />}
+                </Button>
+                <TooltipContent hideArrow>Toggle layout</TooltipContent>
+              </Tooltip>
+            </>
+          }
+        >
+          <Suspense fallback={fallback}>
+            <DynamicPre code={displayedCode} lang="tsx" />
+          </Suspense>
+        </CodeBlock>
+      </ViewTransition>
     </div>
   );
 }

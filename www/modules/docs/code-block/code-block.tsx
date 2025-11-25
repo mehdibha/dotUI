@@ -42,7 +42,7 @@ export function CodeBlock({
     <CodeBlockContext.Provider value={containerRef}>
       <figure
         ref={containerRef}
-        className={cn("overflow-hidden rounded-md border bg-card!", className)}
+        className={cn("rounded-md border bg-card", className)}
         {...props}
       >
         {title && (

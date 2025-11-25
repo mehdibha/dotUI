@@ -2,9 +2,10 @@
 
 import React from "react";
 import { mergeRefs } from "@react-aria/utils";
-import * as Primitive from "fumadocs-core/toc";
 
 import { cn } from "@dotui/registry/lib/utils";
+
+import * as Primitive from "./toc-primitive";
 
 const TOCContext = React.createContext<Primitive.TOCItemType[]>([]);
 

@@ -161,7 +161,12 @@ interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
 const Label = ({ children, className, ...props }: LabelProps) => {
   children = useSkeletonText(children);
   return (
-    <AriaLabel data-slot="label" className={label({ className })} {...props}>
+    <AriaLabel
+      data-slot="label"
+      data-label=""
+      className={label({ className })}
+      {...props}
+    >
       {children}
     </AriaLabel>
   );
