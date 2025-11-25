@@ -31,7 +31,7 @@ export function CodeBlock({
   const containerRef = useRef<HTMLElement>(null);
   const language = "tsx";
 
-  const actionsContent = (
+  const actions = (
     <>
       {actionsProp}
       <CopyButton />
@@ -57,17 +57,19 @@ export function CodeBlock({
                 "**:data-button:bg-card **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))] **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))]",
               )}
             >
-              {actionsContent}
+              {actions}
             </div>
           </div>
         )}
         <div
-          className="relative"
+          className="relative overflow-auto"
           style={{
             counterReset: "line",
           }}
         >
-          {children}
+          <div role="region" className="overflow-auto">
+            {children}
+          </div>
           {!title && (
             <div
               className={cn(
@@ -75,7 +77,7 @@ export function CodeBlock({
                 "**:data-button:bg-card **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))] **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))]",
               )}
             >
-              {actionsContent}
+              {actions}
             </div>
           )}
         </div>
