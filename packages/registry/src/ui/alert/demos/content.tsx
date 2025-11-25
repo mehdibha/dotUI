@@ -1,6 +1,6 @@
 import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
 
-export default function AlertDemo() {
+export default function Demo() {
   return (
     <Alert>
       <AlertTitle>Payment Information</AlertTitle>

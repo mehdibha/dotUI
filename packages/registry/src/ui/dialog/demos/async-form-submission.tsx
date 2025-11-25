@@ -18,7 +18,7 @@ import { Input } from "@dotui/registry/ui/input";
 import { Overlay } from "@dotui/registry/ui/overlay";
 import { TextField } from "@dotui/registry/ui/text-field";
 
-export default function DialogDemo() {
+export default function Demo() {
   const [isPending, setIsPending] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
