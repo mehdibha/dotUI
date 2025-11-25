@@ -6,7 +6,7 @@ import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
 import { DemoCodeBlock } from "./demo-code-block";
 import { DemoFrame } from "./demo-frame";
 
-interface DemoClientProps {
+interface DemoClientProps extends React.ComponentProps<"div"> {
   component: React.ReactNode;
   highlightedPreview: React.ReactNode;
   highlightedSource: React.ReactNode;
@@ -21,6 +21,7 @@ export const DemoClient = ({
   component,
   highlightedPreview,
   highlightedSource,
+  ...props
 }: DemoClientProps) => {
   const [isExpanded, setExpanded] = React.useState(false);
   const toggleExpanded = React.useCallback(() => {
@@ -31,17 +32,19 @@ export const DemoClient = ({
 
   return (
     <DemoContext.Provider value={{ isExpanded, toggleExpanded }}>
-      <ActiveStyleProvider
-        unstyled
-        className="flex min-h-56 items-stretch text-fg"
-        skeletonClassName="border rounded-t-md"
-      >
-        <DemoFrame>{component}</DemoFrame>
-      </ActiveStyleProvider>
-      <DemoCodeBlock
-        highlightedPreview={highlightedPreview}
-        highlightedSource={highlightedSource}
-      />
+      <div {...props}>
+        <ActiveStyleProvider
+          unstyled
+          className="flex min-h-56 items-stretch text-fg"
+          skeletonClassName="border rounded-t-md"
+        >
+          <DemoFrame>{component}</DemoFrame>
+        </ActiveStyleProvider>
+        <DemoCodeBlock
+          highlightedPreview={highlightedPreview}
+          highlightedSource={highlightedSource}
+        />
+      </div>
     </DemoContext.Provider>
   );
 };

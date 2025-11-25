@@ -18,6 +18,7 @@ export const loadDemo = async (name: string) => {
   const source = rawContent
     .replaceAll("@dotui/registry/ui/", "@/components/ui/")
     .replaceAll("@dotui/registry/", "@/")
+    .replace("export default function", "export function")
     .trim();
 
   const previewRaw = rawContent
