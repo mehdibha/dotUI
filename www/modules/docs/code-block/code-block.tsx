@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useRef } from "react";
 import { CheckIcon, CopyIcon, FileIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
@@ -9,14 +9,14 @@ import { Button } from "@dotui/registry/ui/button";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 
-// Context for passing code to copy button
-const CodeBlockContext = createContext<string | undefined>(undefined);
+// Context for passing container ref to copy button
+const CodeBlockContext =
+  createContext<React.RefObject<HTMLElement | null> | null>(null);
 
 export interface CodeBlockProps extends React.ComponentProps<"figure"> {
   title?: string;
   actions?: React.ReactNode;
   icon?: string | React.ReactNode;
-  copyCode?: string;
   "data-line-numbers"?: boolean;
 }
 
@@ -24,11 +24,11 @@ export function CodeBlock({
   title,
   icon,
   actions: actionsProp,
-  copyCode,
   children,
   className,
   ...props
 }: CodeBlockProps) {
+  const containerRef = useRef<HTMLElement>(null);
   const language = "tsx";
 
   const actionsContent = (
@@ -39,8 +39,9 @@ export function CodeBlock({
   );
 
   return (
-    <CodeBlockContext.Provider value={copyCode}>
+    <CodeBlockContext.Provider value={containerRef}>
       <figure
+        ref={containerRef}
         className={cn("overflow-hidden rounded-md border bg-card!", className)}
         {...props}
       >
@@ -103,18 +104,22 @@ export function Pre({
 
 const CopyButton = () => {
   const { isCopied, copyToClipboard } = useCopyToClipboard();
-  const codeFromContext = useContext(CodeBlockContext);
+  const containerRef = useContext(CodeBlockContext);
 
   const handleCopy = () => {
-    if (codeFromContext) {
-      copyToClipboard(codeFromContext);
+    const pre = containerRef?.current?.getElementsByTagName("pre").item(0);
+    if (!pre) return;
+
+    const clone = pre.cloneNode(true) as HTMLElement;
+    clone.querySelectorAll(".nd-copy-ignore").forEach((node) => {
+      node.replaceWith("\n");
+    });
+
+    const text = clone.textContent ?? "";
+    if (text) {
+      copyToClipboard(text);
     }
   };
-
-  // Only render if we have code to copy
-  if (!codeFromContext) {
-    return null;
-  }
 
   return (
     <Button

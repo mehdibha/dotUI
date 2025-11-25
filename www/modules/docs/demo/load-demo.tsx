@@ -39,8 +39,6 @@ export const loadDemo = async (name: string) => {
 
   return {
     component: demo.component,
-    source,
-    preview,
     highlightedSource,
     highlightedPreview,
   };
