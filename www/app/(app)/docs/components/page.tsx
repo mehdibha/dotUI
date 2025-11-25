@@ -1,4 +1,5 @@
 import type { Route } from "next";
+import { AlignLeftIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { LinkButton } from "@dotui/registry/ui/button";
@@ -10,7 +11,7 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from "@/components/layout/page-layout";
-import { TableOfContents } from "@/modules/docs/toc";
+import { TOCItems, TOCProvider, TOCScrollArea } from "@/modules/docs/toc";
 import { ActiveStyleSelector } from "@/modules/styles/active-style-selector";
 
 const title = "Components";
@@ -53,10 +54,17 @@ export default function Page() {
             </div>
           ))}
         </div>
-        <TableOfContents
-          toc={toc}
-          className="sticky top-10 h-[calc(100svh-calc(var(--spacing)*20))] max-xl:hidden"
-        />
+        <TOCProvider toc={toc}>
+          <div className="sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden">
+            <h3 className="inline-flex items-center gap-1.5 text-fd-muted-foreground text-sm">
+              <AlignLeftIcon className="size-4 text-fg-muted" />
+              On this page
+            </h3>
+            <TOCScrollArea>
+              <TOCItems />
+            </TOCScrollArea>
+          </div>
+        </TOCProvider>
       </div>
     </PageLayout>
   );

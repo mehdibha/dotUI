@@ -1,12 +1,13 @@
 "use client";
 
 import type React from "react";
+import { AlignLeftIcon } from "lucide-react";
 import type { TableOfContents as TocType } from "fumadocs-core/toc";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
-import { TableOfContents, useToc } from "@/modules/docs/toc";
+import { TOCItems, TOCScrollArea, useTOCItems } from "./toc";
 
 export function PageTabs({ children }: { children: React.ReactNode }) {
   return (
@@ -31,8 +32,8 @@ interface PageTabPanelProps {
 }
 
 export function PageTabPanel({ id, children }: PageTabPanelProps) {
-  const toc = useToc();
-  const hasToc = toc && toc.length > 0;
+  const tocItems = useTOCItems();
+  const hasToc = tocItems && tocItems.length > 0;
 
   return (
     <TabPanel id={id} data-page-tab-panel>
@@ -44,11 +45,17 @@ export function PageTabPanel({ id, children }: PageTabPanelProps) {
         >
           <div>{children}</div>
           {hasToc && (
-            <div>
-              <TableOfContents
-                toc={toc}
-                className="sticky top-10 **:data-scroll-area-viewport:max-h-[calc(100svh-calc(var(--spacing)*22))] max-xl:hidden"
-              />
+            <div className="sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden">
+              <h3
+                id="toc-title"
+                className="inline-flex items-center gap-1.5 text-fd-muted-foreground text-sm"
+              >
+                <AlignLeftIcon className="size-4 text-fg-muted" />
+                On this page
+              </h3>
+              <TOCScrollArea>
+                <TOCItems />
+              </TOCScrollArea>
             </div>
           )}
         </div>

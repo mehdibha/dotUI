@@ -1,6 +1,6 @@
 import type { Metadata, Route } from "next";
 import { notFound } from "next/navigation";
-import { ExternalLinkIcon } from "lucide-react";
+import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { LinkButton } from "@dotui/registry/ui/button";
@@ -10,7 +10,7 @@ import { truncateOnWord } from "@/lib/text";
 import { PageLastUpdate } from "@/modules/docs/last-update";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { marketingSource } from "@/modules/docs/source";
-import { TableOfContents } from "@/modules/docs/toc";
+import { TOCItems, TOCProvider, TOCScrollArea } from "@/modules/docs/toc";
 
 export const dynamicParams = false;
 
@@ -20,12 +20,13 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
 
   const { body: MDXContent, toc, lastModified } = await page.data.load();
 
+  const hasToc = toc && toc.length > 0;
+
   return (
     <div
       className={cn(
         "container w-full max-w-3xl xl:max-w-4xl",
-        toc &&
-          toc.length > 0 &&
+        hasToc &&
           "grid grid-cols-1 gap-10 xl:max-w-5xl xl:grid-cols-[minmax(0,1fr)_minmax(180px,220px)]",
       )}
     >
@@ -58,13 +59,19 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
           {lastModified && <PageLastUpdate date={lastModified} />}
         </div>
       </div>
-      {toc && toc.length > 0 && (
-        <div className="pt-16 max-xl:hidden">
-          <div className="sticky top-20 h-[calc(100svh-calc(var(--spacing)*20))]">
-            <TableOfContents toc={toc} />
+      <TOCProvider toc={toc}>
+        {hasToc && (
+          <div className="sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden">
+            <h3 className="inline-flex items-center gap-1.5 text-fd-muted-foreground text-sm">
+              <AlignLeftIcon className="size-4 text-fg-muted" />
+              On this page
+            </h3>
+            <TOCScrollArea>
+              <TOCItems />
+            </TOCScrollArea>
           </div>
-        </div>
-      )}
+        )}
+      </TOCProvider>
     </div>
   );
 }

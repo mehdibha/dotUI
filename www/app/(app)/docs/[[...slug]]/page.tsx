@@ -1,7 +1,7 @@
 import type { Metadata, Route } from "next";
 import { notFound } from "next/navigation";
 import { findNeighbour } from "fumadocs-core/page-tree";
-import { ExternalLinkIcon } from "lucide-react";
+import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
@@ -21,7 +21,7 @@ import { DocsPager } from "@/modules/docs/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/last-update";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { docsSource } from "@/modules/docs/source";
-import { TableOfContents, TocProvider } from "@/modules/docs/toc";
+import { TOCItems, TOCProvider, TOCScrollArea } from "@/modules/docs/toc";
 
 export const revalidate = false;
 export const dynamic = "force-static";
@@ -39,65 +39,75 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
   const hasToc = toc && toc.length > 0;
 
   return (
-    <PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-20 xl:max-w-5xl">
-      <div data-page-header="" className="space-y-3 border-b pb-8">
-        <div className="flex items-center justify-between">
-          <PageHeaderHeading className="xl:leading-none">
-            {page.data.title}
-          </PageHeaderHeading>
-          <div className="flex items-center gap-2">
-            <DocsCopyPage page={rawContent} url={page.url} />
-            <DocsPager neighbours={neighbours} />
+    <TOCProvider toc={toc}>
+      <PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-20 xl:max-w-5xl">
+        <div data-page-header="" className="space-y-3 border-b pb-8">
+          <div className="flex items-center justify-between">
+            <PageHeaderHeading className="xl:leading-none">
+              {page.data.title}
+            </PageHeaderHeading>
+            <div className="flex items-center gap-2">
+              <DocsCopyPage page={rawContent} url={page.url} />
+              <DocsPager neighbours={neighbours} />
+            </div>
           </div>
+          <PageHeaderDescription className="text-wrap">
+            {page.data.description}
+          </PageHeaderDescription>
+          {page.data.links && page.data.links.length > 0 && (
+            <div className="mt-2 flex items-center gap-2">
+              {page.data.links.map((link, index) => {
+                const icon = getIcon(link.href);
+                return (
+                  <LinkButton
+                    key={index}
+                    href={link.href as Route}
+                    target="_blank"
+                    size="sm"
+                    className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
+                  >
+                    {icon}
+                    {link.label}
+                    <ExternalLinkIcon />
+                  </LinkButton>
+                );
+              })}
+            </div>
+          )}
         </div>
-        <PageHeaderDescription className="text-wrap">
-          {page.data.description}
-        </PageHeaderDescription>
-        {page.data.links && page.data.links.length > 0 && (
-          <div className="mt-2 flex items-center gap-2">
-            {page.data.links.map((link, index) => {
-              const icon = getIcon(link.href);
-              return (
-                <LinkButton
-                  key={index}
-                  href={link.href as Route}
-                  target="_blank"
-                  size="sm"
-                  className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
-                >
-                  {icon}
-                  {link.label}
-                  <ExternalLinkIcon />
-                </LinkButton>
-              );
-            })}
-          </div>
-        )}
-      </div>
-      <div
-        className={cn(
-          "not-has-data-page-tabs:mt-12 has-data-page-tabs:**:data-outer-toc:hidden",
-          hasToc &&
-            "not-has-data-page-tabs:xl:grid not-has-data-page-tabs:xl:grid-cols-[1fr_180px] not-has-data-page-tabs:xl:gap-10",
-        )}
-      >
-        <TocProvider toc={toc}>
+        <div
+          className={cn(
+            "not-has-data-page-tabs:mt-12 has-data-page-tabs:**:data-outer-toc:hidden",
+            hasToc &&
+              "not-has-data-page-tabs:xl:grid not-has-data-page-tabs:xl:grid-cols-[1fr_180px] not-has-data-page-tabs:xl:gap-10",
+          )}
+        >
           <div>
             <MDXContent components={mdxComponents} />
           </div>
-        </TocProvider>
-        {hasToc && (
-          <div>
-            <TableOfContents
-              toc={toc}
-              data-outer-toc
-              className="sticky top-10 **:data-scroll-area-viewport:max-h-[calc(100svh-calc(var(--spacing)*20))] max-xl:hidden"
-            />
-          </div>
+          {hasToc && (
+            <div
+              data-outer-toc=""
+              className="sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden"
+            >
+              <h3
+                id="toc-title"
+                className="inline-flex items-center gap-1.5 text-fd-muted-foreground text-sm"
+              >
+                <AlignLeftIcon className="size-4 text-fg-muted" />
+                On this page
+              </h3>
+              <TOCScrollArea>
+                <TOCItems />
+              </TOCScrollArea>
+            </div>
+          )}
+        </div>
+        {lastModified && (
+          <PageLastUpdate date={lastModified} className="mt-12" />
         )}
-      </div>
-      {lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}
-    </PageLayout>
+      </PageLayout>
+    </TOCProvider>
   );
 }
 

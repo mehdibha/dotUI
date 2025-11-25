@@ -20,7 +20,7 @@ import {
   SwitchThumb,
 } from "@dotui/registry/ui/switch";
 
-import { TableOfContents } from "@/modules/docs/toc";
+import { TOCItems, TOCProvider, TOCScrollArea } from "@/modules/docs/toc";
 import * as demos from "./demos";
 
 interface ContentItem {
@@ -413,10 +413,7 @@ export default function InternalPage() {
               Internal page for testing the components.
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            {/* <ActiveStyleSelector className="w-44" /> */}
-            {/* <ThemeSwitcher /> */}
-          </div>
+          <div className="flex items-center gap-2"></div>
         </div>
         <div className="space-y-8">
           {content.map((section) => (
@@ -440,15 +437,20 @@ export default function InternalPage() {
           ))}
         </div>
       </div>
-      <div className="max-xl:hidden">
-        <div className="sticky top-6 h-[calc(100svh-calc(var(--spacing)*20))]">
-          <div className="-ml-1.5 mb-3 flex items-center gap-2">
+      <TOCProvider toc={toc}>
+        <div className="sticky top-10 flex h-vh flex-col max-xl:hidden">
+          <h3
+            id="toc-title"
+            className="inline-flex items-center gap-1.5 text-fd-muted-foreground text-sm"
+          >
             <AlignLeftIcon className="size-4 text-fg-muted" />
-            <p className="text-fg-muted text-sm">On this page</p>
-          </div>
-          <TableOfContents toc={toc} />
+            On this page
+          </h3>
+          <TOCScrollArea>
+            <TOCItems />
+          </TOCScrollArea>
         </div>
-      </div>
+      </TOCProvider>
     </div>
   );
 }
