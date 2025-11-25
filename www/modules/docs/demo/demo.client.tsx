@@ -33,7 +33,7 @@ export const DemoClient = ({
     <DemoContext.Provider value={{ isExpanded, toggleExpanded }}>
       <ActiveStyleProvider
         unstyled
-        className="flex min-h-56 items-stretch"
+        className="flex min-h-56 items-stretch text-fg"
         skeletonClassName="border rounded-t-md"
       >
         <DemoFrame>{component}</DemoFrame>

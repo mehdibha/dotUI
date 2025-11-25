@@ -25,7 +25,7 @@ export const DemoFrame = ({ children }: DemoFrameProps) => {
     (style?.theme.colors.activeModes.length ?? 0) > 1;
 
   return (
-    <div className="relative z-1 flex flex-1 items-center justify-center rounded-t-lg border bg-bg pt-24 pb-20">
+    <div className="relative z-1 flex flex-1 items-center justify-center rounded-t-lg border bg-bg pt-14 p-10">
       <ActiveStyleSelector
         buttonProps={{
           size: "sm",

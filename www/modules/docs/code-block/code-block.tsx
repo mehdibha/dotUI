@@ -82,9 +82,9 @@ export function Pre({
   return (
     <pre
       className={cn(
-        "w-max min-w-full py-3 text-[0.8125rem] **:[.line]:px-3!",
+        "w-max min-w-full py-3 **:[.line]:px-3!",
         // shiki
-        "**:[code]:**:[span]:text-(--shiki-light) dark:**:[code]:**:[span]:text-(--shiki-dark)",
+        "**:[code]:text-[0.8125rem] **:[code]:**:[span]:text-(--shiki-light) dark:**:[code]:**:[span]:text-(--shiki-dark)",
         // code
         "*:[code]:flex *:[code]:w-full *:[code]:flex-col",
         // line
