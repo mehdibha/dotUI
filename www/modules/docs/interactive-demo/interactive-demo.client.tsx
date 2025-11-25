@@ -146,36 +146,35 @@ export function InteractiveDemoClient({
         </div>
       </div>
 
-      {/* Code block at bottom */}
       <div className="border-t">
-        <CodeBlock
-          title="Code"
-          className={cn("rounded-none rounded-b-lg border-0")}
-          actions={
-            <Button
-              variant="quiet"
-              size="sm"
-              className="h-7 gap-1 pr-2 pl-1 text-xs"
-              onPress={() => setIsExpanded((prev) => !prev)}
-            >
-              {isExpanded ? (
-                <>
-                  <ChevronUpIcon /> Collapse
-                </>
-              ) : (
-                <>
-                  <ChevronDownIcon /> Expand
-                </>
-              )}
-            </Button>
-          }
-        >
-          <ViewTransition default="code-fade">
+        <ViewTransition default="code-fade">
+          <CodeBlock
+            title="Code"
+            className={cn("rounded-none rounded-b-lg border-0")}
+            actions={
+              <Button
+                variant="quiet"
+                size="sm"
+                className="h-7 gap-1 pr-2 pl-1 text-xs"
+                onPress={() => setIsExpanded((prev) => !prev)}
+              >
+                {isExpanded ? (
+                  <>
+                    <ChevronUpIcon /> Collapse
+                  </>
+                ) : (
+                  <>
+                    <ChevronDownIcon /> Expand
+                  </>
+                )}
+              </Button>
+            }
+          >
             <Suspense fallback={fallback}>
               <DynamicPre code={displayedCode} lang="tsx" />
             </Suspense>
-          </ViewTransition>
-        </CodeBlock>
+          </CodeBlock>
+        </ViewTransition>
       </div>
     </div>
   );

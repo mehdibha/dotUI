@@ -53,7 +53,7 @@ export function CodeBlock({
             </figcaption>
             <div
               className={cn(
-                "flex items-center gap-1 **:data-button:bg-[color-mix(in_oklab,var(--bg-card)_80%,var(--color-bg-inverse))] **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
+                "flex items-center gap-0.5 **:data-button:bg-[color-mix(in_oklab,var(--bg-card)_80%,var(--color-bg-inverse))] **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
                 "**:data-button:bg-card **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))] **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))]",
               )}
             >
@@ -71,7 +71,7 @@ export function CodeBlock({
           {!title && (
             <div
               className={cn(
-                "absolute top-1.75 right-1.75 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
+                "absolute top-1.75 right-1.75 gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
                 "**:data-button:bg-card **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))] **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))]",
               )}
             >
