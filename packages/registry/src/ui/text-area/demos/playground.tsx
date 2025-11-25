@@ -1,9 +1,9 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Description, FieldError, Label } from "@dotui/registry/ui/field";
 import { TextArea } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
+import type { Control } from "@dotui/registry/playground";
 
 interface TextAreaPlaygroundProps {
   label?: string;
@@ -76,4 +76,3 @@ export const textAreaControls: Control[] = [
     defaultValue: false,
   },
 ];
-

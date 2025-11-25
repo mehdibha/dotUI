@@ -22,4 +22,3 @@ export const colorSwatchControls: Control[] = [
     defaultValue: "#ff0000",
   },
 ];
-

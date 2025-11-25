@@ -1,10 +1,10 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Button } from "@dotui/registry/ui/button";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
+import type { Control } from "@dotui/registry/playground";
 
 import { Form } from "../index";
 
@@ -37,4 +37,3 @@ export const formControls: Control[] = [
     defaultValue: "native",
   },
 ];
-

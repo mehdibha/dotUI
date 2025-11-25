@@ -1,8 +1,8 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Button } from "@dotui/registry/ui/button";
 import { Popover } from "@dotui/registry/ui/popover";
+import type { Control } from "@dotui/registry/playground";
 
 import { Menu, MenuContent, MenuItem } from "../index";
 
@@ -10,9 +10,7 @@ interface MenuPlaygroundProps {
   placement?: "bottom" | "top" | "left" | "right";
 }
 
-export function MenuPlayground({
-  placement = "bottom",
-}: MenuPlaygroundProps) {
+export function MenuPlayground({ placement = "bottom" }: MenuPlaygroundProps) {
   return (
     <Menu>
       <Button>Open Menu</Button>
@@ -37,4 +35,3 @@ export const menuControls: Control[] = [
     defaultValue: "bottom",
   },
 ];
-

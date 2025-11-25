@@ -17,14 +17,7 @@ export function AvatarPlayground({
   fallback = "MB",
   size = "md",
 }: AvatarPlaygroundProps) {
-  return (
-    <Avatar
-      src={src}
-      alt={alt}
-      fallback={fallback}
-      size={size}
-    />
-  );
+  return <Avatar src={src} alt={alt} fallback={fallback} size={size} />;
 }
 
 export const avatarControls: Control[] = [
@@ -54,4 +47,3 @@ export const avatarControls: Control[] = [
     defaultValue: "md",
   },
 ];
-

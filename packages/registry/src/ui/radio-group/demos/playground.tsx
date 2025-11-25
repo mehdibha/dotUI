@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { FieldGroup, Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { Radio, RadioGroup, RadioIndicator } from "../index";
 
@@ -71,4 +71,3 @@ export const radioGroupControls: Control[] = [
     defaultValue: false,
   },
 ];
-

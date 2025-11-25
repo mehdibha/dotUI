@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { ColorSlider, ColorSliderControl } from "../index";
 
@@ -51,4 +51,3 @@ export const colorSliderControls: Control[] = [
     defaultValue: false,
   },
 ];
-

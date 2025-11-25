@@ -1,8 +1,8 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
 import { FieldGroup, Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { CheckboxGroup } from "../index";
 
@@ -72,4 +72,3 @@ export const checkboxGroupControls: Control[] = [
     defaultValue: false,
   },
 ];
-

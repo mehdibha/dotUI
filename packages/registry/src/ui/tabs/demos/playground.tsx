@@ -42,4 +42,3 @@ export const tabsControls: Control[] = [
     defaultValue: false,
   },
 ];
-

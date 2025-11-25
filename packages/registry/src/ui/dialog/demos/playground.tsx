@@ -1,8 +1,8 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Button } from "@dotui/registry/ui/button";
 import { Overlay } from "@dotui/registry/ui/overlay";
+import type { Control } from "@dotui/registry/playground";
 
 import {
   Dialog,
@@ -32,7 +32,9 @@ export function DialogPlayground({
         <DialogContent>
           <DialogHeader>
             {title && <DialogHeading>{title}</DialogHeading>}
-            {description && <DialogDescription>{description}</DialogDescription>}
+            {description && (
+              <DialogDescription>{description}</DialogDescription>
+            )}
           </DialogHeader>
           <DialogBody>
             <p>Dialog content goes here.</p>
@@ -69,4 +71,3 @@ export const dialogControls: Control[] = [
     defaultValue: true,
   },
 ];
-

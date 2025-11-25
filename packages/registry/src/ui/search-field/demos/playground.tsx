@@ -1,8 +1,8 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
+import type { Control } from "@dotui/registry/playground";
 
 import { SearchField } from "../index";
 
@@ -52,4 +52,3 @@ export const searchFieldControls: Control[] = [
     defaultValue: false,
   },
 ];
-

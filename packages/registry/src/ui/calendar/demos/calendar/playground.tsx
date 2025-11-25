@@ -13,7 +13,13 @@ export function CalendarPlayground({
   isDisabled = false,
   isReadOnly = false,
 }: CalendarPlaygroundProps) {
-  return <Calendar aria-label="Date" isDisabled={isDisabled} isReadOnly={isReadOnly} />;
+  return (
+    <Calendar
+      aria-label="Date"
+      isDisabled={isDisabled}
+      isReadOnly={isReadOnly}
+    />
+  );
 }
 
 export const calendarControls: Control[] = [
@@ -30,4 +36,3 @@ export const calendarControls: Control[] = [
     defaultValue: false,
   },
 ];
-

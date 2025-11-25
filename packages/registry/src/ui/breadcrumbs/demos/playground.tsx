@@ -28,4 +28,3 @@ export const breadcrumbsControls: Control[] = [
     defaultValue: false,
   },
 ];
-

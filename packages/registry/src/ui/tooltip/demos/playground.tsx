@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Button } from "@dotui/registry/ui/button";
+import type { Control } from "@dotui/registry/playground";
 
 import { Tooltip, TooltipContent } from "../index";
 
@@ -47,4 +47,3 @@ export const tooltipControls: Control[] = [
     defaultValue: false,
   },
 ];
-

@@ -1,8 +1,8 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Calendar } from "@dotui/registry/ui/calendar";
 import { Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { DatePicker, DatePickerContent, DatePickerInput } from "../index";
 
@@ -48,4 +48,3 @@ export const datePickerControls: Control[] = [
     defaultValue: false,
   },
 ];
-

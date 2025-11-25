@@ -31,4 +31,3 @@ export const separatorControls: Control[] = [
     defaultValue: "horizontal",
   },
 ];
-

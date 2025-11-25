@@ -55,4 +55,3 @@ export const tableControls: Control[] = [
     defaultValue: "none",
   },
 ];
-

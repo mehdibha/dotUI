@@ -1,6 +1,5 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
@@ -11,6 +10,7 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
+import type { Control } from "@dotui/registry/playground";
 
 import { Overlay } from "../index";
 
@@ -62,4 +62,3 @@ export const overlayControls: Control[] = [
     defaultValue: "drawer",
   },
 ];
-

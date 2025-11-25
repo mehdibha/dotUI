@@ -34,4 +34,3 @@ export const dropZoneControls: Control[] = [
     defaultValue: false,
   },
 ];
-

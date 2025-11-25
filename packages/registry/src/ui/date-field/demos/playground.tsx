@@ -1,8 +1,8 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
 import { DateInput } from "@dotui/registry/ui/input";
+import type { Control } from "@dotui/registry/playground";
 
 import { DateField } from "../index";
 
@@ -51,4 +51,3 @@ export const dateFieldControls: Control[] = [
     defaultValue: false,
   },
 ];
-

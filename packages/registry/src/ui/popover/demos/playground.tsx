@@ -1,8 +1,12 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent, DialogHeading } from "@dotui/registry/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
+import type { Control } from "@dotui/registry/playground";
 
 import { Popover } from "../index";
 
@@ -19,7 +23,7 @@ export function PopoverPlayground({
       <Popover placement={placement}>
         <DialogContent className="w-56">
           <DialogHeading>Popover Title</DialogHeading>
-          <p className="text-sm text-fg-muted">
+          <p className="text-fg-muted text-sm">
             This is a popover with some content. You can put any content here.
           </p>
         </DialogContent>
@@ -37,4 +41,3 @@ export const popoverControls: Control[] = [
     defaultValue: "bottom",
   },
 ];
-

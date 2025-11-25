@@ -22,4 +22,3 @@ export const colorAreaControls: Control[] = [
     defaultValue: false,
   },
 ];
-

@@ -44,4 +44,3 @@ export const alertControls: Control[] = [
     defaultValue: "neutral",
   },
 ];
-

@@ -1,8 +1,8 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
+import type { Control } from "@dotui/registry/playground";
 
 import { NumberField } from "../index";
 
@@ -51,4 +51,3 @@ export const numberFieldControls: Control[] = [
     defaultValue: false,
   },
 ];
-

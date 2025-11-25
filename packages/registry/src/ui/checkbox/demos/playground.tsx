@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { Checkbox, CheckboxIndicator } from "../index";
 
@@ -57,4 +57,3 @@ export const checkboxControls: Control[] = [
     defaultValue: false,
   },
 ];
-

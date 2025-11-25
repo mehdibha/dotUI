@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { ProgressBar, ProgressBarControl } from "../index";
 
@@ -49,4 +49,3 @@ export const progressBarControls: Control[] = [
     defaultValue: false,
   },
 ];
-

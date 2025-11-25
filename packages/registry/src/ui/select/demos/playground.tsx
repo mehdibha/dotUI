@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../index";
 
@@ -58,4 +58,3 @@ export const selectControls: Control[] = [
     defaultValue: false,
   },
 ];
-

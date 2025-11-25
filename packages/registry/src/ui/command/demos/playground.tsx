@@ -25,7 +25,9 @@ export function CommandPlayground({
         <CommandSection>
           <CommandSectionHeader>Actions</CommandSectionHeader>
           <CommandItem textValue="Create new file">Create new file</CommandItem>
-          <CommandItem textValue="Create new folder">Create new folder</CommandItem>
+          <CommandItem textValue="Create new folder">
+            Create new folder
+          </CommandItem>
           <CommandItem textValue="Open file">Open file</CommandItem>
         </CommandSection>
       </CommandContent>
@@ -41,4 +43,3 @@ export const commandControls: Control[] = [
     defaultValue: "Type a command...",
   },
 ];
-

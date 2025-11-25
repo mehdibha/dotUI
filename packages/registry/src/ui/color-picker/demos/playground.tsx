@@ -16,4 +16,3 @@ export function ColorPickerPlayground() {
 }
 
 export const colorPickerControls = [];
-

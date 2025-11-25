@@ -31,4 +31,3 @@ export const badgeControls: Control[] = [
     defaultValue: "default",
   },
 ];
-

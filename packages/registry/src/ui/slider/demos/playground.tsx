@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { Slider, SliderControl } from "../index";
 
@@ -44,4 +44,3 @@ export const sliderControls: Control[] = [
     defaultValue: false,
   },
 ];
-

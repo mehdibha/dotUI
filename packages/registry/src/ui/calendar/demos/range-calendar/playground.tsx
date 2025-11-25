@@ -37,4 +37,3 @@ export const rangeCalendarControls: Control[] = [
     defaultValue: false,
   },
 ];
-

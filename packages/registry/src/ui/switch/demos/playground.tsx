@@ -1,7 +1,7 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
+import type { Control } from "@dotui/registry/playground";
 
 import { Switch, SwitchIndicator, SwitchThumb } from "../index";
 
@@ -53,4 +53,3 @@ export const switchControls: Control[] = [
     defaultValue: false,
   },
 ];
-

@@ -1,8 +1,8 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
+import type { Control } from "@dotui/registry/playground";
 
 import { ColorField } from "../index";
 
@@ -18,7 +18,11 @@ export function ColorFieldPlayground({
   isReadOnly = false,
 }: ColorFieldPlaygroundProps) {
   return (
-    <ColorField defaultValue="#ff0000" isDisabled={isDisabled} isReadOnly={isReadOnly}>
+    <ColorField
+      defaultValue="#ff0000"
+      isDisabled={isDisabled}
+      isReadOnly={isReadOnly}
+    >
       {label && <Label>{label}</Label>}
       <Input />
     </ColorField>
@@ -45,4 +49,3 @@ export const colorFieldControls: Control[] = [
     defaultValue: false,
   },
 ];
-
