@@ -22,6 +22,9 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    viewTransition: true,
+  },
   typedRoutes: true,
   images: {
     remotePatterns: [
