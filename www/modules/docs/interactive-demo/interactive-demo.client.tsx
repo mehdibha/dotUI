@@ -15,7 +15,7 @@ import { Button } from "@dotui/registry/ui/button";
 import type { Control, ControlValues } from "@dotui/registry/playground";
 
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
-import { CodeBlock, DynamicCodeBlock } from "../code-block";
+import { CodeBlock, DynamicPre } from "../code-block";
 import { DemoFrame } from "../demo/demo-frame";
 import { availableIcons, ControlsPanel } from "./controls";
 import { elementToCode, elementToPreviewCode } from "./element-to-code";
@@ -168,7 +168,7 @@ export function InteractiveDemoClient({
           }
         >
           <ViewTransition default="code-fade">
-            <DynamicCodeBlock code={displayedCode} lang="tsx" />
+            <DynamicPre code={displayedCode} lang="tsx" />
           </ViewTransition>
         </CodeBlock>
       </div>
