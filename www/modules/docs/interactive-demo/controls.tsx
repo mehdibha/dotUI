@@ -177,7 +177,7 @@ function StringControlRenderer({
       className="w-full"
     >
       <Label>{control.label || control.name}</Label>
-      <Input placeholder={control.placeholder} />
+      <Input placeholder={control.placeholder} size="sm" />
     </TextField>
   );
 }
@@ -205,6 +205,7 @@ function NumberControlRenderer({
         min={control.min}
         max={control.max}
         step={control.step}
+        size="sm"
       />
     </TextField>
   );
@@ -222,13 +223,9 @@ function EnumControlRenderer({
   onChange,
 }: EnumControlRendererProps) {
   return (
-    <Select
-      selectedKey={value}
-      onSelectionChange={(key) => onChange(control.name, key)}
-      className="w-full"
-    >
+    <Select value={value} onChange={(key) => onChange(control.name, key)}>
       <Label>{control.label || control.name}</Label>
-      <SelectTrigger />
+      <SelectTrigger size="sm" />
       <SelectContent>
         {control.options.map((option) => (
           <SelectItem key={option} id={option}>
@@ -255,7 +252,7 @@ function IconControlRenderer({
 
   return (
     <Select
-      selectedKey={value || "__none__"}
+      value={value || "__none__"}
       onSelectionChange={(key) =>
         onChange(control.name, key === "__none__" ? null : key)
       }

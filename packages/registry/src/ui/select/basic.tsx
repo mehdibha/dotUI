@@ -42,6 +42,8 @@ interface SelectProps<T extends object> extends AriaSelectProps<T> {}
 const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
   return (
     <AriaSelect
+      data-field=""
+      data-select=""
       data-slot="select"
       className={composeRenderProps(className, (cn) => root({ className: cn }))}
       {...props}

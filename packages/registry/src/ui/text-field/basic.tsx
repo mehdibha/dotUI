@@ -23,6 +23,8 @@ interface TextFieldProps extends React.ComponentProps<typeof AriaTextField> {}
 const TextField = ({ className, ...props }: TextFieldProps) => {
   return (
     <AriaTextField
+      data-field=""
+      data-textfield=""
       data-slot="text-field"
       className={composeRenderProps(className, (className) =>
         textFieldStyles({ className }),

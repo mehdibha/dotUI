@@ -132,9 +132,9 @@ export function InteractiveDemoClient({
 
         <div
           className={cn(
-            "relative flex flex-col gap-2 bg-card p-4 **:data-label:text-fg-muted **:data-label:text-xs",
+            "relative flex flex-col gap-2.5 bg-card p-4 **:data-field:gap-1 **:data-label:text-fg-muted **:data-label:text-xs",
             layout === "horizontal" &&
-              "-ml-4 rounded-tr-md border-y border-r pl-8",
+              "-ml-4 w-48 rounded-tr-md border-y border-r pl-8",
             layout === "vertical" && "border-x border-b",
           )}
         >
