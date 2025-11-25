@@ -12,6 +12,7 @@ export function PageTabs({ children }: { children: React.ReactNode }) {
   return (
     <Tabs
       data-page-tabs
+      defaultSelectedKey="overview"
       className="**:data-page-tab-panel:mt-2 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:md:mt-6"
     >
       <TabList className="*:px-4 *:pb-3">
