@@ -90,10 +90,7 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
               data-outer-toc=""
               className="sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden"
             >
-              <h3
-                id="toc-title"
-                className="inline-flex items-center gap-1.5 text-fd-muted-foreground text-sm"
-              >
+              <h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
                 <AlignLeftIcon className="size-4 text-fg-muted" />
                 On this page
               </h3>
