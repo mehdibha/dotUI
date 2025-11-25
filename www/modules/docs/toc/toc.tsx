@@ -163,10 +163,10 @@ function TOCItem({ item }: { item: Primitive.TOCItemType }) {
     <Primitive.TOCItem
       href={item.url}
       className={cn(
-        "wrap-anywhere py-1.5 text-fg-muted text-sm transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
-        item.depth <= 2 && "ps-3",
-        item.depth === 3 && "ps-6",
-        item.depth >= 4 && "ps-8",
+        "wrap-anywhere py-1 text-fg-muted text-sm transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
+        item.depth <= 2 && "pl-3",
+        item.depth === 3 && "pl-6",
+        item.depth >= 4 && "pl-8",
       )}
     >
       {item.title}

@@ -380,6 +380,9 @@ importers:
       react-stately:
         specifier: ^3.42.0
         version: 3.42.0(react@19.2.0)
+      scroll-into-view-if-needed:
+        specifier: ^3.1.0
+        version: 3.1.0
       shadcn:
         specifier: ^3.2.1
         version: 3.3.1(@types/node@22.18.12)(babel-plugin-macros@3.1.0)(typescript@5.9.3)

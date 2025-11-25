@@ -54,6 +54,7 @@
     "react-error-boundary": "^6.0.0",
     "react-hook-form": "^7.54.2",
     "react-stately": "^3.42.0",
+    "scroll-into-view-if-needed": "^3.1.0",
     "shadcn": "^3.2.1",
     "sharp": "^0.34.4",
     "shiki": "^3.15.0",
