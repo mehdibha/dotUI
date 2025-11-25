@@ -3,6 +3,7 @@
 import React, {
   type ComponentType,
   createElement,
+  Suspense,
   useCallback,
   useMemo,
   useState,
@@ -29,12 +30,14 @@ interface InteractiveDemoClientProps {
   component: ComponentType<Record<string, unknown>>;
   controls: Control[];
   className?: string;
+  fallback: React.ReactNode;
 }
 
 export function InteractiveDemoClient({
   component: Playground,
   controls,
   className,
+  fallback,
 }: InteractiveDemoClientProps) {
   // State for code expansion
   const [isExpanded, setIsExpanded] = useState(false);
@@ -168,7 +171,9 @@ export function InteractiveDemoClient({
           }
         >
           <ViewTransition default="code-fade">
-            <DynamicPre code={displayedCode} lang="tsx" />
+            <Suspense fallback={fallback}>
+              <DynamicPre code={displayedCode} lang="tsx" />
+            </Suspense>
           </ViewTransition>
         </CodeBlock>
       </div>

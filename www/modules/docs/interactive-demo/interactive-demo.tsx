@@ -1,41 +1,37 @@
 import type { ComponentType } from "react";
+import { highlight } from "fumadocs-core/highlight";
 
 import type { Control } from "@dotui/registry/playground";
 
+import { Pre } from "@/modules/docs/code-block";
 import { InteractiveDemoClient } from "./interactive-demo.client";
 
-/**
- * Interactive demo component for documentation.
- * Renders a playground component with controls and live code output.
- *
- * Usage:
- * ```tsx
- * <InteractiveDemo
- *   component={ButtonPlayground}
- *   controls={buttonControls}
- * />
- * ```
- */
-
 export interface InteractiveDemoProps {
-  /** The playground component to render */
   component: ComponentType<Record<string, unknown>>;
-  /** Controls definition array */
   controls: Control[];
-  /** Additional className */
   className?: string;
+  fallback?: string;
 }
 
-export function InteractiveDemo({
+export async function InteractiveDemo({
   component,
   controls,
   className,
+  fallback = "",
 }: InteractiveDemoProps) {
+  const highlightedFallback = await highlight(fallback, {
+    lang: "tsx",
+    components: {
+      pre: (props) => <Pre {...props} />,
+    },
+  });
+
   return (
     <InteractiveDemoClient
       component={component}
       controls={controls}
       className={className}
+      fallback={highlightedFallback}
     />
   );
 }

@@ -59,7 +59,7 @@ export function DynamicPre({
   code,
   codeblock,
   options,
-  wrapInSuspense = true,
+  wrapInSuspense = false,
 }: DynamicPreProps) {
   const id = useId();
   const shikiOptions = {

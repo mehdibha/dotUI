@@ -6,7 +6,7 @@ import type { Control } from "@dotui/registry/playground";
 import { ColorSlider, ColorSliderControl } from "../index";
 
 interface ColorSliderPlaygroundProps {
-  channel?: "hue" | "saturation" | "brightness" | "alpha";
+  channel?: "hue" | "saturation" | "lightness" | "alpha";
   orientation?: "horizontal" | "vertical";
   isDisabled?: boolean;
 }
@@ -18,7 +18,7 @@ export function ColorSliderPlayground({
 }: ColorSliderPlaygroundProps) {
   return (
     <ColorSlider
-      defaultValue="#ff0000"
+      defaultValue="hsl(0, 100%, 50%)"
       channel={channel}
       orientation={orientation}
       isDisabled={isDisabled}
@@ -34,7 +34,7 @@ export const colorSliderControls: Control[] = [
     type: "enum",
     name: "channel",
     label: "Channel",
-    options: ["hue", "saturation", "brightness", "alpha"],
+    options: ["hue", "saturation", "lightness", "alpha"],
     defaultValue: "hue",
   },
   {
