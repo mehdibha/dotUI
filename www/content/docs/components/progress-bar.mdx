@@ -1,128 +1,75 @@
 ---
 title: Progress Bar
-description: Progress bar show either determinate or indeterminate progress of an operation over time.
+description: A progress bar shows the progression of a task.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/ProgressBar.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/feedback/progress.mdx?plain=1
 ---
 
-<Demo name="progress-bar/demos/default" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/progress-bar
-```
-
-## Anatomy
-
-```tsx
-import { ProgressBar } from "@/components/core/progress-bar";
-
-<ProgressBar value={30} />;
-```
-
-```tsx
-import { Label } from "@/components/core/field";
 import {
-  ProgressBarIndicator,
-  ProgressBarRoot,
-  ProgressBarValueLabel,
-} from "@/components/core/progress-bar";
+  ProgressBarPlayground,
+  progressBarControls,
+} from "@dotui/registry/ui/progress-bar/playground";
 
-<ProgressBarRoot value={30}>
-  <div className="flex items-center justify-between gap-2">
-    <Label>Progress</Label>
-    <ProgressBarValueLabel />
-  </div>
-  <ProgressBarIndicator />
-</ProgressBarRoot>;
-```
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Visual options
+    <Demo name="progress-bar/demos/default" />
 
-### Variant
+    ## Installation
 
-Use the `variant` prop to control the visual style of the `Progress`. The default variant is `"default"`.
+    ```npm
+    npx shadcn@latest add @dotui/progress-bar
+    ```
 
-<Demo name="progress-bar/demos/variants" />
+    ## Usage
 
-### Size
+    Use progress bars to show the progression of a system operation or task.
 
-Use the `size` prop to control the size of the `Progress`. The default variant is `"md"`.
+    ```tsx
+    import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
+    ```
 
-<Demo name="progress-bar/demos/sizes" />
+    ```tsx
+    <ProgressBar value={60}>
+      <ProgressBarControl />
+    </ProgressBar>
+    ```
 
-## Labelling
+    ## Playground
 
-### Label
+    Use the controls below to experiment with different progress bar props and see the live preview and code update.
 
-A visual label can be provided using the `label` prop, or a hidden label using `aria-label` prop.
+    <InteractiveDemo component={ProgressBarPlayground} controls={progressBarControls} />
 
-<Demo name="progress-bar/demos/label" />
+    ## API Reference
 
-### Value label
+    | Prop              | Type                        | Default | Description                                          |
+    | ----------------- | --------------------------- | ------- | ---------------------------------------------------- |
+    | `value`           | `number`                    | `0`     | The current value (controlled).                      |
+    | `minValue`        | `number`                    | `0`     | The smallest value allowed.                          |
+    | `maxValue`        | `number`                    | `100`   | The largest value allowed.                           |
+    | `isIndeterminate` | `boolean`                   | `false` | Whether the progress bar is indeterminate.           |
+    | `formatOptions`   | `Intl.NumberFormatOptions`  | -       | The display format of the value label.               |
+    | `children`        | `ReactNode`                 | -       | The children of the component.                       |
 
-Set the `showValueLabel` prop to `true` to display the current value of the progress bar.
+    | Data attribute       | Description                                   |
+    | -------------------- | --------------------------------------------- |
+    | `[data-indeterminate]` | Whether the progress bar is indeterminate.  |
 
-<Demo name="progress-bar/demos/value-label" />
+  </PageTabPanel>
 
-### Format options
-
-Values are formatted as a percentage by default, but this can be modified by using the `formatOptions` prop to specify a different format.
-
-<Demo name="progress-bar/demos/format-options" />
-
-### Custom value label
-
-The `valueLabel` prop allows the formatted value to be replaced with a custom string.
-
-<Demo name="progress-bar/demos/custom-value-label" />
-
-## Value
-
-### Value scale
-
-A custom value scale can be used by setting the `minValue` and `maxValue` props.
-
-<Demo name="progress-bar/demos/min-max-values" />
-
-### Indeterminate
-
-The `isIndeterminate` prop can be used to represent an interdeterminate operation.
-
-<Demo name="progress-bar/demos/indeterminate" />
-
-### Duration
-
-Use the `duration` prop to indicate an approximate duration of an indeterminate task. Once the duration times out, the progress bar will start an indeterminate animation.
-
-<Demo name="progress-bar/demos/duration" />
-
-## Composition
-
-If you need to customize things further, you can drop down to the composition level.
-
-<Demo name="progress-bar/demos/composition" />
-
-## API Reference
-
-| Prop              | Type                                                                                                     | Default              | Description                                                                                                 |
-| ----------------- | -------------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `variant`         | `"primary" \| "primary" \| "danger" \| "success" \| "warning"`                                           | `"default"`          | The visual style of the progress indicator.                                                                 |
-| `size`            | `"sm" \| "md" \| "lg"`                                                                                   | `"md"`               | The size of the progress indicator                                                                          |
-| `isIndeterminate` | `boolean`                                                                                                | -                    | Whether presentation is indeterminate when progress isn't known.                                            |
-| `duration`        | `` `${number}s` \| `${number}ms` ``                                                                      | `'0s'`               | The estimated duration of an indeterminate progress.                                                        |
-| `formatOptions`   | `Intl.NumberFormatOptions`                                                                               | `{style: 'percent'}` | The display format of the value label.                                                                      |
-| `valueLabel`      | `ReactNode`                                                                                              | -                    | The content to display as the value's label (e.g. 1 of 4).                                                  |
-| `showValueLabel`  | `boolean`                                                                                                | `false`              | Whether the value's label is displayed.                                                                     |
-| `value`           | `number`                                                                                                 | `0`                  | The current value (controlled).                                                                             |
-| `minValue`        | `number`                                                                                                 | `0`                  | The smallest value allowed for the input.                                                                   |
-| `maxValue`        | `number`                                                                                                 | `100`                | The largest value allowed for the input.                                                                    |
-| `children`        | `ReactNode \| (values: ProgressBarRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -                    | The children of the component. A function may be provided to alter the children based on component state.   |
-| `className`       | `string`                                                                                                 | -                    | The CSS className for the element.                                                                          |
-| `style`           | `CSSProperties \| (values: ProgressBarRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -                    | The inline style for the element. A function may be provided to compute the style based on component state. |
+  <PageTabPanel id="examples">
+    <Example name="progress-bar/demos/default" />
+    <Example name="progress-bar/demos/sizes" />
+    <Example name="progress-bar/demos/variants" />
+    <Example name="progress-bar/demos/shape" />
+    <Example name="progress-bar/demos/label" />
+    <Example name="progress-bar/demos/value-label" />
+    <Example name="progress-bar/demos/custom-value-label" />
+    <Example name="progress-bar/demos/format-options" />
+    <Example name="progress-bar/demos/min-max-values" />
+    <Example name="progress-bar/demos/indeterminate" />
+    <Example name="progress-bar/demos/duration" />
+  </PageTabPanel>
+</PageTabs>

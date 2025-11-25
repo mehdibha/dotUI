@@ -1,111 +1,84 @@
 ---
 title: Color Slider
-description: ColorSlider allow users to adjust an individual channel of a color value.
+description: A color slider allows users to adjust an individual channel of a color value.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/ColorSlider.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-slider.mdx?plain=1
 ---
 
-<Demo name="color-slider/demos/default" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/color-slider
-```
-
-## Anatomy
-
-```tsx
-import { ColorSlider } from "@/components/core/color-slider";
-
-<ColorSlider label="Hue" channel="hue" defaultValue="#fff" />;
-```
-
-```tsx
 import {
-  ColorSliderControl,
-  ColorSliderOutput,
-  ColorSliderRoot,
-} from "@/components/dynamic-core/color-slider";
-import { Label } from "@/components/dynamic-core/field";
+  ColorSliderPlayground,
+  colorSliderControls,
+} from "@dotui/registry/ui/color-slider/playground";
 
-<ColorSliderRoot defaultValue="#fff">
-  <div className="flex items-center justify-between">
-    <Label>Hue</Label>
-    <ColorSliderOutput />
-  </div>
-  <ColorSliderControl />
-</ColorSliderRoot>;
-```
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Controlled
+    <Demo name="color-slider/demos/default" />
 
-Use the `value` and `onChange` props to control the value of the slider.
+    ## Installation
 
-<Demo name="color-slider/demos/controlled" />
+    ```npm
+    npx shadcn@latest add @dotui/color-slider
+    ```
 
-## Label
+    ## Usage
 
-Use the `label` prop to provide a label for the color slider.
+    Use color sliders to allow users to adjust an individual channel of a color value.
 
-<Demo name="color-slider/demos/label" />
+    ```tsx
+    import { ColorSlider, ColorSliderControl } from "@/components/ui/color-slider";
+    import { Label } from "@/components/ui/field";
+    ```
 
-## Channel
+    ```tsx
+    <ColorSlider defaultValue="#ff0000" channel="hue">
+      <Label>Hue</Label>
+      <ColorSliderControl />
+    </ColorSlider>
+    ```
 
-`channel` prop may be provided to specify which color channel the color slider should display
+    ## Playground
 
-<Demo name="color-slider/demos/channel" />
+    Use the controls below to experiment with different color slider props and see the live preview and code update.
 
-## Options
+    <InteractiveDemo component={ColorSliderPlayground} controls={colorSliderControls} />
 
-### Orientation
+    ## API Reference
 
-`orientation` prop may be provided to specify the orientation of the color slider.
+    | Prop           | Type                             | Default        | Description                              |
+    | -------------- | -------------------------------- | -------------- | ---------------------------------------- |
+    | `value`        | `Color`                          | -              | The current value (controlled).          |
+    | `defaultValue` | `Color`                          | -              | The default value (uncontrolled).        |
+    | `channel`      | `ColorChannel`                   | -              | The color channel that the slider edits. |
+    | `orientation`  | `'horizontal' \| 'vertical'`     | `'horizontal'` | The orientation of the slider.           |
+    | `isDisabled`   | `boolean`                        | -              | Whether the color slider is disabled.    |
+    | `children`     | `ReactNode`                      | -              | The label and control.                   |
 
-<Demo name="color-slider/demos/vertical" />
+    | Event      | Type                     | Description                              |
+    | ---------- | ------------------------ | ---------------------------------------- |
+    | `onChange` | `(value: Color) => void` | Handler that is called when the value changes. |
 
-### Disabled
+    ## Accessibility
 
-Use the `isDisabled` prop to disable the color slider.
+    ### Keyboard interactions
 
-<Demo name="color-slider/demos/disabled" />
+    | Key                   | Description                              |
+    | --------------------- | ---------------------------------------- |
+    | `ArrowLeft` `ArrowDown` | Decreases the value by the step amount. |
+    | `ArrowRight` `ArrowUp`| Increases the value by the step amount.  |
+    | `Page Up` `Page Down` | Moves the thumb by a larger step.        |
+    | `Home` `End`          | Moves the thumb to the minimum/maximum.  |
 
-## API Reference
+  </PageTabPanel>
 
-| Prop           | Type                                                                                                     | Default        | Description                                                                                                                                                                 |
-| -------------- | -------------------------------------------------------------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `channel*`     | `'hue' \| 'saturation' \| 'brightness' \| 'lightness' \| 'red' \| 'green' \| 'blue' \| 'alpha'`          | -              | The color channel that the slider manipulates.                                                                                                                              |
-| `colorSpace`   | `'rgb' \| 'hsl' \| 'hsb'`                                                                                | -              | The color space that the slider operates in. The channel must be in this color space. If not provided, this defaults to the color space of the color or defaultColor value. |
-| `orientation`  | `'horizontal' \| 'vertical'`                                                                             | `'horizontal'` | The orientation of the Slider.                                                                                                                                              |
-| `isDisabled`   | `boolean`                                                                                                | -              | Whether the whole Slider is disabled.                                                                                                                                       |
-| `value`        | `T`                                                                                                      | -              | The current value (controlled).                                                                                                                                             |
-| `defaultValue` | `T`                                                                                                      | -              | The default value (uncontrolled).                                                                                                                                           |
-| `name`         | `string`                                                                                                 | -              | The name of the input element, used when submitting an HTML form.                                                                                                           |
-| `children`     | `ReactNode \| (values: ColorSliderRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -              | The children of the component. A function may be provided to alter the children based on component state.                                                                   |
-| `className`    | `string`                                                                                                 | -              | The CSS className for the element.                                                                                                                                          |
-| `style`        | `CSSProperties \| (values: ColorSliderRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -              | The inline style for the element. A function may be provided to compute the style based on component state.                                                                 |
-
-| Event         | Type                     | Description                                                       |
-| ------------- | ------------------------ | ----------------------------------------------------------------- |
-| `onChange`    | `(value: Color) => void` | Handler that is called when the value changes, as the user drags. |
-| `onChangeEnd` | `(value: Color) => void` | Handler that is called when the user stops dragging.              |
-
-| Data attribute                                | Description                           |
-| --------------------------------------------- | ------------------------------------- |
-| `[data-orientation="horizontal \| vertical"]` | The orientation of the color slider.  |
-| `[data-disabled]`                             | Whether the color slider is disabled. |
-
-## Accessibility
-
-### Keyboard interactions
-
-| Key                                            | Description                                                                                                                             |
-| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `Tab`                                          | Places focus on the handle. If the handle is already in focus, moves focus to the next handle or next element in the page tab sequence. |
-| `Shift+Tab`                                    | Places focus on the previous handle or previous element in the page tab sequence.                                                       |
-| `ArrowUp` `ArrowDown` `ArrowLeft` `ArrowRight` | Moves the handle up/down/left/right.                                                                                                    |
+  <PageTabPanel id="examples">
+    <Example name="color-slider/demos/default" />
+    <Example name="color-slider/demos/label" />
+    <Example name="color-slider/demos/channel" />
+    <Example name="color-slider/demos/vertical" />
+    <Example name="color-slider/demos/disabled" />
+    <Example name="color-slider/demos/uncontrolled" />
+    <Example name="color-slider/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

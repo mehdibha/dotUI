@@ -1,53 +1,63 @@
 ---
 title: Alert
-description: Displays a callout for user attention.
+description: Alerts display a short, important message in a way that attracts the user's attention.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/
 ---
 
-<Demo name="alert/demos/default" />
+import {
+  AlertPlayground,
+  alertControls,
+} from "@dotui/registry/ui/alert/playground";
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```npm
-npx shadcn@latest add @dotui/alert
-```
+    <Demo name="alert/demos/default" />
 
-## Examples
+    ## Installation
 
-### Variants
+    ```npm
+    npx shadcn@latest add @dotui/alert
+    ```
 
-Use the `variant` prop to change the visual style of the alert.
+    ## Usage
 
-<Demo name="alert/demos/variants" />
+    Use alerts to display important messages that require user attention.
 
-### Title
+    ```tsx
+    import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+    ```
 
-Use the `title` prop to add a title to the alert.
+    ```tsx
+    <Alert>
+      <AlertTitle>Alert Title</AlertTitle>
+      <AlertDescription>Alert description</AlertDescription>
+    </Alert>
+    ```
 
-<Demo name="alert/demos/title" />
+    ## Playground
 
-### Content
+    Use the controls below to experiment with different alert props and see the live preview and code update.
 
-Pass children to the alert to add content.
+    <InteractiveDemo component={AlertPlayground} controls={alertControls} />
 
-<Demo name="alert/demos/content" />
+    ## API Reference
 
-### Custom icon
+    | Prop      | Type                                                 | Default     | Description                   |
+    | --------- | ---------------------------------------------------- | ----------- | ----------------------------- |
+    | `variant` | `'default' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'default'` | The visual style of the alert. |
+    | `children`| `ReactNode`                                          | -           | The content of the alert.     |
 
-Use the `icon` prop to add a custom icon to the alert. An explicit `null` value can be used to remove the default icon.
+  </PageTabPanel>
 
-<Demo name="alert/demos/custom-icon" />
-
-### Action
-
-Use the `action` prop to add an action to the alert.
-
-<Demo name="alert/demos/action" />
-
-## API Reference
-
-Alert accepts all HTML `div` element props and the following:
-
-| Prop      | Type                                                         | Default     | Description                                |
-| --------- | ------------------------------------------------------------ | ----------- | ------------------------------------------ |
-| `variant` | `'default' \| 'success' \| 'warning' \| 'danger' \| 'info' ` | `'default'` | The visual style of the alert.             |
-| `fill`    | `boolean`                                                    | `false`     | Weather the visual style should be filled. |
+  <PageTabPanel id="examples">
+    <Example name="alert/demos/default" />
+    <Example name="alert/demos/title" />
+    <Example name="alert/demos/content" />
+    <Example name="alert/demos/variants" />
+    <Example name="alert/demos/custom-icon" />
+    <Example name="alert/demos/action" />
+  </PageTabPanel>
+</PageTabs>

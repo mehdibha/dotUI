@@ -1,54 +1,59 @@
 ---
 title: Badge
-description: Displays a badge or a component that looks like a badge.
+description: Badges are small status descriptors for UI elements.
 links:
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/data-display/badge.mdx?plain=1
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/
 ---
 
-<Demo name="badge/demos/default" />
+import {
+  BadgePlayground,
+  badgeControls,
+} from "@dotui/registry/ui/badge/playground";
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```npm
-npx shadcn@latest add @dotui/badge
-```
+    <Demo name="badge/demos/default" />
 
-## Anatomy
+    ## Installation
 
-```tsx
-import { Badge } from "@/components/core/badge";
+    ```npm
+    npx shadcn@latest add @dotui/badge
+    ```
 
-<Badge>Badge</Badge>;
-```
+    ## Usage
 
-## Options
+    Use badges to highlight status, categorize items, or show counts.
 
-### Variant
+    ```tsx
+    import { Badge } from "@/components/ui/badge";
+    ```
 
-Use the `variant` prop to control the visual style of the `Badge`. The default variant is `primary`.
+    ```tsx
+    <Badge>Badge</Badge>
+    ```
 
-<Demo name="badge/demos/variants" />
+    ## Playground
 
-### Size
+    Use the controls below to experiment with different badge props and see the live preview and code update.
 
-Use the `size` prop to control the size of the `Badge`. The default variant is `sm`.
+    <InteractiveDemo component={BadgePlayground} controls={badgeControls} />
 
-<Demo name="badge/demos/sizes" />
+    ## API Reference
 
-## Examples
+    | Prop      | Type                                                            | Default     | Description                   |
+    | --------- | --------------------------------------------------------------- | ----------- | ----------------------------- |
+    | `variant` | `'default' \| 'success' \| 'warning' \| 'danger' \| 'info' \| 'outline'` | `'default'` | The visual style of the badge. |
+    | `size`    | `'sm' \| 'md' \| 'lg'`                                          | `'md'`      | The size of the badge.        |
+    | `children`| `ReactNode`                                                     | -           | The content of the badge.     |
 
-### With icon
+  </PageTabPanel>
 
-<Demo name="badge/demos/icon" />
-
-## API Reference
-
-Badge accepts all HTML `span` element props and the following:
-
-| Prop      | Type                                                                    | Default                        | Description            |
-| --------- | ----------------------------------------------------------------------- | ------------------------------ | ---------------------- |
-| `neutral` | `'neutral' \| 'accent' \| 'success' \| 'warning' \| 'info' \| 'danger'` | The visual style of the badge. |
-| `size`    | `'sm' \| 'md' \| 'lg'`                                                  | `"sm"`                         | The size of the badge. |
+  <PageTabPanel id="examples">
+    <Example name="badge/demos/default" />
+    <Example name="badge/demos/variants" />
+    <Example name="badge/demos/sizes" />
+    <Example name="badge/demos/icon" />
+  </PageTabPanel>
+</PageTabs>

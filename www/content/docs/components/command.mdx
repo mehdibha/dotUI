@@ -1,23 +1,99 @@
 ---
 title: Command
-description: A command combines a text input with a menu, allowing users to filter a list of options to items matching a query.
+description: A command menu allows users to search and execute commands.
 links:
-  - label: Aria docs
-    href: https://react-spectrum.adobe.com/react-aria/Autocomplete.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/menus-and-selection/command.mdx?plain=1
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/
 ---
 
-<Demo name="command/demos/basic" />
+import {
+  CommandPlayground,
+  commandControls,
+} from "@dotui/registry/ui/command/playground";
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```npm
-npx shadcn@latest add @dotui/command
-```
+    <Demo name="command/demos/basic" />
 
-## Dialog
+    ## Installation
 
-<Demo name="command/demos/dialog" />
+    ```npm
+    npx shadcn@latest add @dotui/command
+    ```
+
+    ## Usage
+
+    Use command menus to provide users with a searchable list of commands or actions.
+
+    ```tsx
+    import {
+      Command,
+      CommandContent,
+      CommandInput,
+      CommandItem,
+    } from "@/components/ui/command";
+    ```
+
+    ```tsx
+    <Command>
+      <CommandInput placeholder="Type a command..." />
+      <CommandContent>
+        <CommandItem textValue="Create file">Create new file</CommandItem>
+        <CommandItem textValue="Open file">Open file</CommandItem>
+      </CommandContent>
+    </Command>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different command props and see the live preview and code update.
+
+    <InteractiveDemo component={CommandPlayground} controls={commandControls} />
+
+    ## API Reference
+
+    ### Command
+
+    | Prop         | Type        | Default | Description                              |
+    | ------------ | ----------- | ------- | ---------------------------------------- |
+    | `children`   | `ReactNode` | -       | The command input and content.           |
+    | `className`  | `string`    | -       | Additional CSS classes for the command.  |
+
+    ### CommandInput
+
+    | Prop          | Type        | Default | Description                              |
+    | ------------- | ----------- | ------- | ---------------------------------------- |
+    | `placeholder` | `string`    | -       | Placeholder text for the input.          |
+    | `value`       | `string`    | -       | The current value (controlled).          |
+    | `onChange`    | `(value: string) => void` | - | Handler that is called when value changes. |
+
+    ### CommandItem
+
+    | Prop         | Type              | Default | Description                              |
+    | ------------ | ----------------- | ------- | ---------------------------------------- |
+    | `textValue`  | `string`          | -       | The text value for filtering.            |
+    | `isDisabled` | `boolean`         | -       | Whether the item is disabled.            |
+    | `children`   | `ReactNode`       | -       | The content of the command item.         |
+
+    | Event      | Type         | Description                              |
+    | ---------- | ------------ | ---------------------------------------- |
+    | `onSelect` | `() => void` | Handler that is called when the item is selected. |
+
+    ## Accessibility
+
+    ### Keyboard interactions
+
+    | Key                   | Description                                      |
+    | --------------------- | ------------------------------------------------ |
+    | `ArrowUp` `ArrowDown` | Moves focus between command items.               |
+    | `Enter`               | Selects the focused command item.                |
+    | `Escape`              | Closes the command menu (when in a dialog).      |
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="command/demos/basic" />
+    <Example name="command/demos/dialog" />
+  </PageTabPanel>
+</PageTabs>

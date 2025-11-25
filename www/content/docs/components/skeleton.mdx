@@ -1,56 +1,70 @@
 ---
 title: Skeleton
-description: Use to show a placeholder while content is loading.
+description: Skeleton is a placeholder component that displays while content is loading.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/
 ---
 
-{/* Work in progress */}
+import {
+  SkeletonPlayground,
+  skeletonControls,
+} from "@dotui/registry/ui/skeleton/playground";
 
-<Demo name="skeleton/demos/card" />
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Installation
+    <Demo name="skeleton/demos/card" />
 
-```npm
-npx shadcn@latest add @dotui/skeleton
-```
+    ## Installation
 
-## Usage
+    ```npm
+    npx shadcn@latest add @dotui/skeleton
+    ```
 
-Use the `Skeleton` component to show a placeholder while content is loading.
+    ## Usage
 
-## Options
+    Use skeleton components as placeholders while content is loading.
 
-## Children
+    ```tsx
+    import { Skeleton, SkeletonProvider } from "@/components/ui/skeleton";
+    ```
 
-If you do not pass a fixed size, skeleton will take the size of the children.
+    ```tsx
+    <SkeletonProvider isLoading={true}>
+      <Skeleton className="h-4 w-32" />
+    </SkeletonProvider>
+    ```
 
-<Demo name="skeleton/demos/children" />
+    ## Playground
 
-## Show
+    Use the controls below to experiment with different skeleton props and see the live preview and code update.
 
-Use the `show` prop to show/hide the skeleton.
+    <InteractiveDemo component={SkeletonPlayground} controls={skeletonControls} />
 
-<Demo name="skeleton/demos/show" />
+    ## API Reference
 
-## Examples
+    ### SkeletonProvider
 
-### Loading data from an API
+    | Prop        | Type      | Default | Description                              |
+    | ----------- | --------- | ------- | ---------------------------------------- |
+    | `isLoading` | `boolean` | `true`  | Whether to show skeleton or children.    |
+    | `children`  | `ReactNode` | -     | The content to wrap.                     |
 
-{/* prettier-ignore-start */}
+    ### Skeleton
 
-<Demo name="skeleton/demos/api-simulation" />
+    | Prop        | Type        | Default | Description                              |
+    | ----------- | ----------- | ------- | ---------------------------------------- |
+    | `className` | `string`    | -       | Custom CSS classes for the skeleton.     |
+    | `children`  | `ReactNode` | -       | Content to render when not loading.      |
 
-{/* prettier-ignore-end */}
+  </PageTabPanel>
 
-### Wrapping children with fixed size
-
-If you do not pass a fixed size, it will be calculated automatically.
-
-<Demo name="skeleton/demos/fixed-size-children" />
-
-## API Reference
-
-`Skeleton` accepts all HTML `div` element props and the following:
-
-| Prop   | Type      | Default | Description                                |
-| ------ | --------- | ------- | ------------------------------------------ |
-| `show` | `boolean` | `true`  | Weather the visual style should be filled. |
+  <PageTabPanel id="examples">
+    <Example name="skeleton/demos/card" />
+    <Example name="skeleton/demos/children" />
+    <Example name="skeleton/demos/fixed-size-children" />
+    <Example name="skeleton/demos/show" />
+    <Example name="skeleton/demos/api-simulation" />
+  </PageTabPanel>
+</PageTabs>

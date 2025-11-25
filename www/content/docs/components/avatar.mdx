@@ -1,70 +1,65 @@
 ---
 title: Avatar
-description: An image element with a fallback for representing the user.
+description: An avatar is a visual representation of a user or entity.
 links:
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/data-display/avatar.mdx?plain=1
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/
 ---
 
-<Demo name="avatar/demos/default" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/avatar
-```
-
-## Anatomy
-
-```tsx
-import { Avatar } from "@/components/core/avatar";
-
-<Avatar src=".." alt=".." />;
-```
-
-```tsx
 import {
-  AvatarFallback,
-  AvatarImage,
-  AvatarPlaceholder,
-  AvatarRoot,
-} from "@/components/core/avatar";
+  AvatarPlayground,
+  avatarControls,
+} from "@dotui/registry/ui/avatar/playground";
 
-<AvatarRoot>
-  <AvatarImage src=".." alt=".." />
-  <AvatarFallback>..</AvatarFallback>
-  <AvatarPlaceholder />
-</AvatarRoot>;
-```
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Options
+    <Demo name="avatar/demos/default" />
 
-### Shape
+    ## Installation
 
-`Avatar` can be either a circle or a square using the `shape` prop.
+    ```npm
+    npx shadcn@latest add @dotui/avatar
+    ```
 
-<Demo name="avatar/demos/shape" />
+    ## Usage
 
-### Size
+    Use avatars to represent users or entities with an image or initials.
 
-Use the `size` prop to control the size of the `Avatar`. The default variant is `md`.
+    ```tsx
+    import { Avatar } from "@/components/ui/avatar";
+    ```
 
-<Demo name="avatar/demos/sizes" />
+    ```tsx
+    <Avatar
+      src="https://github.com/mehdibha.png"
+      alt="@mehdibha"
+      fallback="MB"
+    />
+    ```
 
-## Composition
+    ## Playground
 
-If you need to customize things further, you can drop down to the composition level.
+    Use the controls below to experiment with different avatar props and see the live preview and code update.
 
-<Demo name="avatar/demos/composition" />
+    <InteractiveDemo component={AvatarPlayground} controls={avatarControls} />
 
-## API Reference
+    ## API Reference
 
-`Avatar` accepts all image attributes.
+    | Prop       | Type                         | Default    | Description                              |
+    | ---------- | ---------------------------- | ---------- | ---------------------------------------- |
+    | `src`      | `string`                     | -          | The URL of the avatar image.             |
+    | `alt`      | `string`                     | -          | Alternative text for the avatar image.   |
+    | `fallback` | `string`                     | -          | The fallback text to display when image fails to load. |
+    | `size`     | `'sm' \| 'md' \| 'lg'`       | `'md'`     | The size of the avatar.                  |
+    | `shape`    | `'circle' \| 'square'`       | `'circle'` | The shape of the avatar.                 |
 
-| Prop       | Type                   | Default    | Description                                                    |
-| ---------- | ---------------------- | ---------- | -------------------------------------------------------------- |
-| `shape`    | `'circle' \| 'square'` | `'circle'` | The shape of the avatar.                                       |
-| `size`     | `'sm' \| 'md' \| 'lg'` | `'md'`     | The size of the avatar.                                        |
-| `fallback` | `ReactNode`            | -          | The fallback element to render when an image is not available. |
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="avatar/demos/default" />
+    <Example name="avatar/demos/sizes" />
+    <Example name="avatar/demos/shape" />
+    <Example name="avatar/demos/composition" />
+  </PageTabPanel>
+</PageTabs>

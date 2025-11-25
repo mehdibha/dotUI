@@ -1,62 +1,77 @@
 ---
 title: Color Swatch Picker
-description: A ColorSwatchPicker displays a list of color swatches and allows a user to select one of them.
+description: A color swatch picker allows users to select a color from a list of swatches.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/ColorSwatchPicker.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/colors/color-swatch-picker.mdx?plain=1
 ---
 
-<Demo name="color-swatch-picker/demos/basic" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/color-swatch-picker
-```
-
-## Anatomy
-
-```tsx
 import {
-  ColorSwatchPicker,
-  ColorSwatchPickerItem,
-} from "@/components/core/color-swatch-picker";
+  ColorSwatchPickerPlayground,
+  colorSwatchPickerControls,
+} from "@dotui/registry/ui/color-swatch-picker/playground";
 
-<ColorSwatchPicker>
-  <ColorSwatchPickerItem color="#A00" />
-  <ColorSwatchPickerItem color="#f80" />
-</ColorSwatchPicker>;
-```
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Controlled
+    <Demo name="color-swatch-picker/demos/basic" />
 
-<Demo name="color-swatch-picker/demos/controlled" />
+    ## Installation
 
-## Label
+    ```npm
+    npx shadcn@latest add @dotui/color-swatch-picker
+    ```
 
-By default, `ColorSwatchPicker` has an `aria-label` with the localized string "Color swatches". This can be overridden with a more specific accessibility label using the `aria-label` or `aria-labelledb`y props. All labels should be localized.
+    ## Usage
 
-## Options
+    Use color swatch pickers to allow users to select a color from a list of swatches.
 
-### Disabled
+    ```tsx
+    import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/components/ui/color-swatch-picker";
+    ```
 
-<Demo name="color-swatch-picker/demos/disabled" />
+    ```tsx
+    <ColorSwatchPicker>
+      <ColorSwatchPickerItem color="#ff0000" />
+      <ColorSwatchPickerItem color="#00ff00" />
+      <ColorSwatchPickerItem color="#0000ff" />
+    </ColorSwatchPicker>
+    ```
 
-## API Reference
+    ## Playground
 
-| Prop           | Type                                                                                                                    | Default  | Description                                                                                                  |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------ |
-| `children`     | `ReactNode`                                                                                                             | -        | The children of the component.                                                                               |
-| `layout`       | `'grid' \| 'stack'`                                                                                                     | `'grid'` | Whether the items are arranged in a stack or grid.                                                           |
-| `value`        | `string \| Color`                                                                                                       | -        | The current value (controlled).                                                                              |
-| `defaultValue` | `string \| Color`                                                                                                       | -        | The default value (uncontrolled).                                                                            |
-| `className`    | `string \| (values: ColorSwatchPickerRenderProps & {defaultClassName: string \| undefined}) => string`                  | -        | The CSS className for the element. A function may be provided to compute the class based on component state. |
-| `style`        | `CSSProperties \| (values: ColorSwatchPickerRenderProps & {defaultStyle: CSSProperties}) => CSSProperties \| undefined` | -        | The inline style for the element. A function may be provided to compute the style based on component state.  |
+    Use the controls below to experiment with different color swatch picker props and see the live preview and code update.
 
-| Event      | Type                     | Description                                    |
-| ---------- | ------------------------ | ---------------------------------------------- |
-| `onChange` | `(value: Color) => void` | Handler that is called when the value changes. |
+    <InteractiveDemo component={ColorSwatchPickerPlayground} controls={colorSwatchPickerControls} />
+
+    ## API Reference
+
+    | Prop           | Type        | Default | Description                              |
+    | -------------- | ----------- | ------- | ---------------------------------------- |
+    | `value`        | `Color`     | -       | The current value (controlled).          |
+    | `defaultValue` | `Color`     | -       | The default value (uncontrolled).        |
+    | `isDisabled`   | `boolean`   | -       | Whether the picker is disabled.          |
+    | `children`     | `ReactNode` | -       | The color swatch items.                  |
+
+    | Event      | Type                     | Description                              |
+    | ---------- | ------------------------ | ---------------------------------------- |
+    | `onChange` | `(value: Color) => void` | Handler that is called when the value changes. |
+
+    ## Accessibility
+
+    ### Keyboard interactions
+
+    | Key                   | Description                              |
+    | --------------------- | ---------------------------------------- |
+    | `ArrowLeft` `ArrowRight` | Moves focus between swatches.         |
+    | `ArrowUp` `ArrowDown` | Moves focus between rows (if wrapped).   |
+    | `Enter` `Space`       | Selects the focused swatch.              |
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="color-swatch-picker/demos/basic" />
+    <Example name="color-swatch-picker/demos/disabled" />
+    <Example name="color-swatch-picker/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

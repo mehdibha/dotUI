@@ -2,175 +2,103 @@
 title: Slider
 description: An input where the user selects a value from within a given range.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Slider.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/slider.mdx?plain=1
 ---
 
-<Demo name="slider/demos/default" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/slider
-```
-
-## Usage
-
-Use slider to allow users to select a value from within a given range.
-
-```tsx
-import { Slider } from "@/components/core/slider";
-
-<Slider
-  defaultValue={50}
-  label="Opacity"
-  description="Adjust the background opacity."
-/>;
-```
-
-```tsx
-import { Description, Label } from "@/components/core/field";
 import {
-  SliderFiller,
-  SliderRoot,
-  SliderThumb,
-  SliderTrack,
-  SliderValueLabel,
-} from "@/components/core/switch";
+  SliderPlayground,
+  sliderControls,
+} from "@dotui/registry/ui/slider/playground";
 
-<SliderRoot defaultValue={50}>
-  <Label>Opacity</Label>
-  <ValueLabel />
-  <SliderTrack>
-    <SliderFiller />
-    <SliderThumb />
-  </SliderTrack>
-  <Description>Adjust the background opacity.</Description>
-</SliderRoot>;
-```
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Options
+    <Demo name="slider/demos/default" />
 
-### Size
+    ## Installation
 
-Use the `size` prop to control the size of the slider. The default variant is `"md"`.
+    ```npm
+    npx shadcn@latest add @dotui/slider
+    ```
 
-<Demo name="slider/demos/sizes" />
+    ## Usage
 
-### Orientation
+    Use slider to allow users to select a value from within a given range.
 
-Sliders are horizontally oriented by default. The `orientation` prop can be set to `"vertical"` to create a vertical slider.
+    ```tsx
+    import { Slider, SliderControl } from "@/components/ui/slider";
+    ```
 
-<Demo name="slider/demos/vertical" />
+    ```tsx
+    <Slider defaultValue={50}>
+      <SliderControl />
+    </Slider>
+    ```
 
-### Label
+    ## Playground
 
-A visual label can be provided using the `label` prop or a hidden label using `aria-label` prop.
+    Use the controls below to experiment with different slider props and see the live preview and code update.
 
-<Demo name="slider/demos/label" />
+    <InteractiveDemo component={SliderPlayground} controls={sliderControls} />
 
-### Description
+    ## API Reference
 
-A description can be supplied to the slider using the `description` prop.
+    | Prop            | Type                                                                                                | Default        | Description                                                                                                  |
+    | --------------- | --------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------ |
+    | `size`          | `"sm" \| "md" \| "lg"`                                                                              | `"md"`         | The size of the slider.                                                                                      |
+    | `valueLabel`    | `boolean \| ((value: number[]) => string)`                                                          | `false`        | Weather to display the value label. A function may be provided to customize the value label.                 |
+    | `label`         | `ReactNode`                                                                                         |                | The content to display as the label.                                                                         |
+    | `description`   | `ReactNode`                                                                                         |                | A description for the field. Provides a hint such as specific requirements for what to choose.               |
+    | `formatOptions` | `Intl.NumberFormatOptions`                                                                          | -              | The display format of the value label.                                                                       |
+    | `orientation`   | `'horizontal' \| 'vertical'`                                                                        | `'horizontal'` | The orientation of the Slider.                                                                               |
+    | `isDisabled`    | `boolean`                                                                                           | -              | Whether the whole Slider is disabled.                                                                        |
+    | `minValue`      | `number`                                                                                            | `0`            | The slider's minimum value.                                                                                  |
+    | `maxValue`      | `number`                                                                                            | `100`          | The slider's maximum value.                                                                                  |
+    | `step`          | `number`                                                                                            | `1`            | The slider's step value.                                                                                     |
+    | `value`         | `T`                                                                                                 | -              | The current value (controlled).                                                                              |
+    | `defaultValue`  | `T`                                                                                                 | -              | The default value (uncontrolled).                                                                            |
+    | `name`          | `string`                                                                                            | -              | The name of the input element, used when submitting an HTML form.                                            |
+    | `children`      | `ReactNode \| (values: SliderRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -              | The children of the component. A function may be provided to alter the children based on component state.    |
+    | `className`     | `string \| (values: SliderRenderProps & {defaultClassName: string \| undefined}) => string`         | -              | The CSS className for the element. A function may be provided to compute the class based on component state. |
+    | `style`         | `CSSProperties \| (values: SliderRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -              | The inline style for the element. A function may be provided to compute the style based on component state.  |
 
-<Demo name="slider/demos/description" />
+    | Event         | Type                 | Description                                              |
+    | ------------- | -------------------- | -------------------------------------------------------- |
+    | `onChange`    | `(value: T) => void` | Handler that is called when the value changes.           |
+    | `onChangeEnd` | `(value: T) => void` | Fired when the slider stops moving, due to being let go. |
 
-### Value label
+    | Data attribute                                | Description                     |
+    | --------------------------------------------- | ------------------------------- |
+    | `[data-orientation="horizontal \| vertical"]` | The orientation of the slider.  |
+    | `[data-disabled]`                             | Whether the slider is disabled. |
 
-The `valueLabel` boolean prop can be used to display the current value of the slider. The `valueLabel` prop can also be set to a function that returns a custom value label.
+    ## Accessibility
 
-<Demo name="slider/demos/value-label" />
+    ### Keyboard interactions
 
-### Value scale
+    | Key                                            | Description                                                                                                                             |
+    | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+    | `Tab`                                          | Places focus on the handle. If the handle is already in focus, moves focus to the next handle or next element in the page tab sequence. |
+    | `Shift+Tab`                                    | Places focus on the previous handle or previous element in the page tab sequence.                                                       |
+    | `ArrowUp` `ArrowDown` `ArrowLeft` `ArrowRight` | Moves the handle up/down/left/right.                                                                                                    |
 
-By default, slider values are precentages between 0 and 100. A different scale can be used by setting the `minValue` and `maxValue` props.
+  </PageTabPanel>
 
-<Demo name="slider/demos/value-scale" />
-
-### Step
-
-The `step` prop can be used to snap the value to certain increments.
-
-<Demo name="slider/demos/step" />
-
-### Format options
-
-Values are formatted as a percentage by default, but this can be modified by using the `formatOptions` prop to specify a different format.
-`formatOptions` is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
-
-<Demo name="slider/demos/format-options" />
-
-### Range
-
-Passing an array to the `defaultValue` or `value` props will create a range slider.
-
-<Demo name="slider/demos/range" />
-
-### Disabled
-
-Use the `isDisabled` prop to disable the slider.
-
-<Demo name="slider/demos/disabled" />
-
-## Composition
-
-If you need to customize things further, you can drop down to the composition level.
-
-<Demo name="slider/demos/composition" />
-
-## Uncontrolled
-
-The `defaultValue` prop can be used to set the default state.
-
-<Demo name="slider/demos/uncontrolled" />
-
-## Controlled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<Demo name="slider/demos/controlled" />
-
-## API Reference
-
-| Prop            | Type                                                                                                | Default        | Description                                                                                                  |
-| --------------- | --------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------ |
-| `size`          | `"sm" \| "md" \| "lg"`                                                                              | `"md"`         | The size of the slider.                                                                                      |
-| `valueLabel`    | `boolean \| ((value: number[]) => string)`                                                          | `false`        | Weather to display the value label. A function may be provided to customize the value label.                 |
-| `label`         | `ReactNode`                                                                                         |                | The content to display as the label.                                                                         |
-| `description`   | `ReactNode`                                                                                         |                | A description for the field. Provides a hint such as specific requirements for what to choose.               |
-| `formatOptions` | `Intl.NumberFormatOptions`                                                                          | -              | The display format of the value label.                                                                       |
-| `orientation`   | `'horizontal' \| 'vertical'`                                                                        | `'horizontal'` | The orientation of the Slider.                                                                               |
-| `isDisabled`    | `boolean`                                                                                           | -              | Whether the whole Slider is disabled.                                                                        |
-| `minValue`      | `number`                                                                                            | `0`            | The slider's minimum value.                                                                                  |
-| `maxValue`      | `number`                                                                                            | `100`          | The slider's maximum value.                                                                                  |
-| `step`          | `number`                                                                                            | `1`            | The slider's step value.                                                                                     |
-| `value`         | `T`                                                                                                 | -              | The current value (controlled).                                                                              |
-| `defaultValue`  | `T`                                                                                                 | -              | The default value (uncontrolled).                                                                            |
-| `name`          | `string`                                                                                            | -              | The name of the input element, used when submitting an HTML form.                                            |
-| `children`      | `ReactNode \| (values: SliderRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -              | The children of the component. A function may be provided to alter the children based on component state.    |
-| `className`     | `string \| (values: SliderRenderProps & {defaultClassName: string \| undefined}) => string`         | -              | The CSS className for the element. A function may be provided to compute the class based on component state. |
-| `style`         | `CSSProperties \| (values: SliderRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -              | The inline style for the element. A function may be provided to compute the style based on component state.  |
-
-| Event         | Type                 | Description                                              |
-| ------------- | -------------------- | -------------------------------------------------------- |
-| `onChange`    | `(value: T) => void` | Handler that is called when the value changes.           |
-| `onChangeEnd` | `(value: T) => void` | Fired when the slider stops moving, due to being let go. |
-
-| Data attribute                                | Description                     |
-| --------------------------------------------- | ------------------------------- |
-| `[data-orientation="horizontal \| vertical"]` | The orientation of the slider.  |
-| `[data-disabled]`                             | Whether the slider is disabled. |
-
-## Accessibility
-
-### Keyboard interactions
-
-| Key                                            | Description                                                                                                                             |
-| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `Tab`                                          | Places focus on the handle. If the handle is already in focus, moves focus to the next handle or next element in the page tab sequence. |
-| `Shift+Tab`                                    | Places focus on the previous handle or previous element in the page tab sequence.                                                       |
-| `ArrowUp` `ArrowDown` `ArrowLeft` `ArrowRight` | Moves the handle up/down/left/right.                                                                                                    |
+  <PageTabPanel id="examples">
+    <Example name="slider/demos/default" />
+    <Example name="slider/demos/sizes" />
+    <Example name="slider/demos/vertical" />
+    <Example name="slider/demos/label" />
+    <Example name="slider/demos/description" />
+    <Example name="slider/demos/value-label" />
+    <Example name="slider/demos/value-scale" />
+    <Example name="slider/demos/step" />
+    <Example name="slider/demos/format-options" />
+    <Example name="slider/demos/range" />
+    <Example name="slider/demos/disabled" />
+    <Example name="slider/demos/composition" />
+    <Example name="slider/demos/uncontrolled" />
+    <Example name="slider/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

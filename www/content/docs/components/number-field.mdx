@@ -1,138 +1,113 @@
 ---
-title: NumberField
-description: NumberField allows a user to enter a number, and increment or decrement the value using stepper buttons.
+title: Number Field
+description: A number field allows a user to enter a number value with a keyboard or increment/decrement with step buttons.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/NumberField.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/number-field.mdx?plain=1
 ---
 
-<Demo name="number-field/demos/default" />
+import {
+  NumberFieldPlayground,
+  numberFieldControls,
+} from "@dotui/registry/ui/number-field/playground";
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```npm
-npx shadcn@latest add @dotui/number-field
-```
+    <Demo name="number-field/demos/default" />
 
-## Usage
+    ## Installation
 
-Use a `NumberField` to allow a user to enter a number.
+    ```npm
+    npx shadcn@latest add @dotui/number-field
+    ```
 
-## Options
+    ## Usage
 
-### Number formatting
+    Use `NumberField` to allow users to enter a numeric value with keyboard or increment/decrement buttons.
 
-The NumberField value can be formatted by using the `formatOptions` prop. formatOptions is compatible with the option parameter of [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat) and is applied based on the current locale.
+    ```tsx
+    import { NumberField } from "@/components/ui/number-field";
+    import { Input } from "@/components/ui/input";
+    import { Label } from "@/components/ui/field";
+    ```
 
-<Demo name="number-field/demos/format-options" />
+    ```tsx
+    <NumberField>
+      <Label>Quantity</Label>
+      <Input />
+    </NumberField>
+    ```
 
-### Size
+    ## Playground
 
-Use the `size` prop to control the size of the `NumberField`. The default size is `"md"`.
+    Use the controls below to experiment with different number field props and see the live preview and code update.
 
-<Demo name="number-field/demos/sizes" />
+    <InteractiveDemo component={NumberFieldPlayground} controls={numberFieldControls} />
 
-### Label
+    ## API Reference
 
-A visual label can be provided for the `NumberField` using the `label` prop or a hidden label using `aria-label` prop.
+    | Prop            | Type                                                                                                  | Default | Description                                                                                               |
+    | --------------- | ----------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
+    | `formatOptions` | `Intl.NumberFormatOptions`                                                                            | -       | Formatting options for the value displayed in the number field.                                           |
+    | `isWheelDisabled` | `boolean`                                                                                           | -       | Enables or disables changing the value with scroll.                                                       |
+    | `value`         | `number`                                                                                              | -       | The current value (controlled).                                                                           |
+    | `defaultValue`  | `number`                                                                                              | -       | The default value (uncontrolled).                                                                         |
+    | `minValue`      | `number`                                                                                              | -       | The smallest value allowed for the input.                                                                 |
+    | `maxValue`      | `number`                                                                                              | -       | The largest value allowed for the input.                                                                  |
+    | `step`          | `number`                                                                                              | -       | The amount that the input value changes with each increment or decrement "tick".                          |
+    | `isDisabled`    | `boolean`                                                                                             | -       | Whether the input is disabled.                                                                            |
+    | `isReadOnly`    | `boolean`                                                                                             | -       | Whether the input can be selected but not changed by the user.                                            |
+    | `isRequired`    | `boolean`                                                                                             | -       | Whether user input is required on the input before form submission.                                       |
+    | `isInvalid`     | `boolean`                                                                                             | -       | Whether the input value is invalid.                                                                       |
+    | `name`          | `string`                                                                                              | -       | The name of the input element, used when submitting an HTML form.                                         |
+    | `autoFocus`     | `boolean`                                                                                             | -       | Whether the element should receive focus on render.                                                       |
 
-<Demo name="number-field/demos/label" />
+    | Event           | Type                              | Description                                                     |
+    | --------------- | --------------------------------- | --------------------------------------------------------------- |
+    | `onChange`      | `(value: number) => void`         | Handler that is called when the value changes.                  |
+    | `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.         |
+    | `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.            |
+    | `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
+    | `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                   |
+    | `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                  |
 
-### Description
+    | Data attribute         | Description                                                        |
+    | ---------------------- | ------------------------------------------------------------------ |
+    | `[data-focused]`       | Whether the number field is focused, either via a mouse or keyboard. |
+    | `[data-focus-visible]` | Whether the number field is keyboard focused.                      |
+    | `[data-disabled]`      | Whether the number field is disabled.                              |
+    | `[data-invalid]`       | Whether the number field is invalid.                               |
+    | `[data-readonly]`      | Whether the number field is read only.                             |
 
-A description can be supplied to a NumberField via the `description` prop. The description is always visible unless the `isInvalid` prop is set to `true` and an error message is provided.
+    ## Accessibility
 
-<Demo name="number-field/demos/description" />
+    ### Keyboard interactions
 
-### Error message
+    | Key              | Description                              |
+    | ---------------- | ---------------------------------------- |
+    | `ArrowUp`        | Increments the value by the step amount. |
+    | `ArrowDown`      | Decrements the value by the step amount. |
+    | `Page Up`        | Increments the value by a larger amount. |
+    | `Page Down`      | Decrements the value by a larger amount. |
+    | `Shift+ArrowUp`  | Increments the value by a larger amount. |
+    | `Shift+ArrowDown`| Decrements the value by a larger amount. |
+    | `Home`           | Sets the value to the minimum.           |
+    | `End`            | Sets the value to the maximum.           |
 
-An `errorMessage` can be supplied to a `NumberField`, which will be displayed when the `isInvalid` prop is set to `true`.
+  </PageTabPanel>
 
-<Demo name="number-field/demos/error-message" />
-
-### Disabled
-
-Use the `isDisabled` prop to disable the NumberField.
-
-<Demo name="number-field/demos/disabled" />
-
-### ReadOnly
-
-The `isReadOnly` boolean prop makes the NumberField's text content immutable. Unlike `isDisabled`, the NumberField remains focusable and the contents can still be copied.
-
-<Demo name="number-field/demos/read-only" />
-
-### Required
-
-Use the `isRequired` prop to mark the NumberField as required.
-Use the `necessityIndicator` prop to control the visual style of the required state.
-
-<Demo name="number-field/demos/required" />
-
-## Uncontrolled
-
-Use the `defaultValue` prop to set the default input value.
-
-<Demo name="number-field/demos/uncontrolled" />
-
-## Controlled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<Demo name="number-field/demos/controlled" />
-
-## API Reference
-
-| Prop                 | Type                                                                                                     | Default  | Description                                                                                                                                                                                                                           |
-| -------------------- | -------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `size`               | `"sm" \| "md" \| "lg"`                                                                                   | `"md"`   | The size of the input.                                                                                                                                                                                                                |
-| `label`              | `ReactNode`                                                                                              |          | The content to display as the label.                                                                                                                                                                                                  |
-| `description`        | `ReactNode`                                                                                              |          | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                                                                                        |
-| `errorMessage`       | `ReactNode \| (v: ValidationResult) => ReactNode`                                                        |          | An error message for the field.                                                                                                                                                                                                       |
-| `decrementAriaLabel` | `string`                                                                                                 | -        | A custom aria-label for the decrement button. If not provided, the localized string "Decrement" is used.                                                                                                                              |
-| `incrementAriaLabel` | `string`                                                                                                 | -        | A custom aria-label for the increment button. If not provided, the localized string "Increment" is used.                                                                                                                              |
-| `isWheelDisabled`    | `boolean`                                                                                                | -        | Enables or disables changing the value with scroll.                                                                                                                                                                                   |
-| `formatOptions`      | `Intl.NumberFormatOptions`                                                                               | -        | Formatting options for the value displayed in the number field. This also affects what characters are allowed to be typed by the user.                                                                                                |
-| `isDisabled`         | `boolean`                                                                                                | -        | Whether the input is disabled.                                                                                                                                                                                                        |
-| `isReadOnly`         | `boolean`                                                                                                | -        | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
-| `isRequired`         | `boolean`                                                                                                | -        | Whether user input is required on the input before form submission.                                                                                                                                                                   |
-| `isInvalid`          | `boolean`                                                                                                | -        | Whether the value is invalid.                                                                                                                                                                                                         |
-| `validate`           | `(value: string) => ValidationError \| true \| null \| undefined`                                        | -        | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
-| `autoFocus`          | `boolean`                                                                                                | -        | Whether the element should receive focus on render.                                                                                                                                                                                   |
-| `value`              | `number`                                                                                                 | -        | The current value (controlled).                                                                                                                                                                                                       |
-| `defaultValue`       | `number`                                                                                                 | -        | The default value (uncontrolled).                                                                                                                                                                                                     |
-| `minValue`           | `number`                                                                                                 | -        | The smallest value allowed for the input.                                                                                                                                                                                             |
-| `maxValue`           | `number`                                                                                                 | -        | The largest value allowed for the input.                                                                                                                                                                                              |
-| `step`               | `number`                                                                                                 | -        | The amount that the input value changes with each increment or decrement "tick".                                                                                                                                                      |
-| `validationBehavior` | `'native' \| 'aria'`                                                                                     | 'native' | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
-| `name`               | `string`                                                                                                 | -        | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
-| `children`           | `ReactNode \| (values: NumberFieldRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -        | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
-| `className`          | `string`                                                                                                 | -        | The CSS className for the element.                                                                                                                                                                                                    |
-| `style`              | `CSSProperties \| (values: NumberFieldRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -        | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
-
-| Event                 | Type                                        | Description                                                                                                      |
-| --------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `onFocus`             | `(e: FocusEvent<Target>) => void`           | Handler that is called when the element receives focus.                                                          |
-| `onBlur`              | `(e: FocusEvent<Target>) => void`           | Handler that is called when the element loses focus.                                                             |
-| `onFocusChange`       | `(isFocused: boolean) => void`              | Handler that is called when the element's focus status changes.                                                  |
-| `onKeyDown`           | `(e: KeyboardEvent) => void`                | Handler that is called when a key is pressed.                                                                    |
-| `onKeyUp`             | `(e: KeyboardEvent) => void`                | Handler that is called when a key is released.                                                                   |
-| `onChange`            | `(value: T) => void`                        | Handler that is called when the value changes.                                                                   |
-| `onCopy`              | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user copies text.                                                                |
-| `onCut`               | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user cuts text.                                                                  |
-| `onPaste`             | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user pastes text.                                                                |
-| `onCompositionStart`  | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a text composition system starts a new text composition session.                     |
-| `onCompositionEnd`    | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a text composition system completes or cancels the current text composition session. |
-| `onCompositionUpdate` | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a new character is received in the current text composition session.                 |
-| `onSelect`            | `ReactEventHandler<HTMLInputElement>`       | Handler that is called when text in the input is selected.                                                       |
-| `onBeforeInput`       | `FormEventHandler<HTMLInputElement>`        | Handler that is called when the input value is about to be modified.                                             |
-| `onInput`             | `FormEventHandler<HTMLInputElement>`        | Handler that is called when the input value is modified.                                                         |
-
-| Data attribute    | Description                         |
-| ----------------- | ----------------------------------- |
-| `[data-disabled]` | Whether the text field is disabled. |
-| `[data-invalid]`  | Whether the text field is invalid.  |
+  <PageTabPanel id="examples">
+    <Example name="number-field/demos/default" />
+    <Example name="number-field/demos/sizes" />
+    <Example name="number-field/demos/label" />
+    <Example name="number-field/demos/description" />
+    <Example name="number-field/demos/error-message" />
+    <Example name="number-field/demos/format-options" />
+    <Example name="number-field/demos/disabled" />
+    <Example name="number-field/demos/read-only" />
+    <Example name="number-field/demos/required" />
+    <Example name="number-field/demos/uncontrolled" />
+    <Example name="number-field/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

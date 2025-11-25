@@ -1,44 +1,56 @@
 ---
 title: Separator
-description: Visually or semantically separates content.
+description: A separator visually divides content in lists, menus, or other places.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Separator.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/data-display/separator.mdx?plain=1
 ---
 
-<Demo name="separator/demos/card" />
+import {
+  SeparatorPlayground,
+  separatorControls,
+} from "@dotui/registry/ui/separator/playground";
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```npm
-npx shadcn@latest add @dotui/separator
-```
+    <Demo name="separator/demos/orientation" />
 
-## Anatomy
+    ## Installation
 
-```tsx
-import { Separator } from "@/components/core/separator";
+    ```npm
+    npx shadcn@latest add @dotui/separator
+    ```
 
-<Separator />;
-```
+    ## Usage
 
-## Options
+    Use separators to visually divide content in lists, menus, or other places.
 
-### Orientation
+    ```tsx
+    import { Separator } from "@/components/ui/separator";
+    ```
 
-Use the `orientation` prop to change the direction of the separator.
+    ```tsx
+    <Separator />
+    ```
 
-<Demo name="separator/demos/orientation" />
+    ## Playground
 
-### API Reference
+    Use the controls below to experiment with different separator props and see the live preview and code update.
 
-| Prop          | Type                         | Default        | Description                        |
-| ------------- | ---------------------------- | -------------- | ---------------------------------- |
-| `elementType` | `string`                     | -              | The HTML element type to render.   |
-| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | The orientation of the separator.  |
-| `className`   | `string`                     | -              | The CSS className for the element. |
-| `style`       | `CSSProperties`              | -              | The inline style for the element.  |
+    <InteractiveDemo component={SeparatorPlayground} controls={separatorControls} />
+
+    ## API Reference
+
+    | Prop          | Type                             | Default        | Description                           |
+    | ------------- | -------------------------------- | -------------- | ------------------------------------- |
+    | `orientation` | `'horizontal' \| 'vertical'`     | `'horizontal'` | The orientation of the separator.     |
+    | `elementType` | `string`                         | `'hr'`         | The HTML element type for the separator. |
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="separator/demos/orientation" />
+    <Example name="separator/demos/card" />
+  </PageTabPanel>
+</PageTabs>
