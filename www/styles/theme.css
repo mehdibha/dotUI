@@ -126,6 +126,6 @@
 @theme inline {
   --shadow-shine:
     inset 0px 0px 0px 1px
-    color-mix(in srgb, var(--color-shine) 15%, transparent), inset 0px 1px 0px
-    color-mix(in srgb, var(--color-shine) 30%, transparent);
+    color-mix(in oklab, var(--color-shine) 15%, transparent), inset 0px 1px 0px
+    color-mix(in oklab, var(--color-shine) 30%, transparent);
 }
