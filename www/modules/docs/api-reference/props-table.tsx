@@ -5,6 +5,8 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 
+import { DisclosureGroup } from "./disclosure-group";
+
 export interface PropData {
   name: string;
   type: string;
@@ -17,13 +19,27 @@ export interface PropData {
   required?: boolean;
 }
 
-interface PropsTableProps {
-  data: PropData[];
-  componentName: string;
+export interface GroupedPropsData {
+  ungrouped: PropData[];
+  groups: Record<string, PropData[]>;
 }
 
-export function PropsTable({ data, componentName }: PropsTableProps) {
-  if (data.length === 0) {
+interface PropsTableProps {
+  data: GroupedPropsData;
+  componentName: string;
+  defaultExpandedGroups?: Set<string>;
+}
+
+export function PropsTable({
+  data,
+  componentName,
+  defaultExpandedGroups = new Set(["Content", "Selection", "Value"]),
+}: PropsTableProps) {
+  const hasAnyProps =
+    data.ungrouped.length > 0 ||
+    Object.values(data.groups).some((g) => g.length > 0);
+
+  if (!hasAnyProps) {
     return (
       <p className="text-fg-muted text-sm">
         No props available for this component.
@@ -33,68 +49,104 @@ export function PropsTable({ data, componentName }: PropsTableProps) {
 
   return (
     <div className="my-6 w-full overflow-hidden rounded-md border">
-      {/* Header Row */}
-      <div className="grid grid-cols-[1fr_auto] gap-4 border-b bg-muted/50 px-3 py-2 font-medium text-fg-muted text-xs sm:grid-cols-[minmax(140px,1fr)_2fr_minmax(80px,auto)_auto]">
-        <div>Prop</div>
-        <div className="hidden sm:block">Type</div>
-        <div className="hidden sm:block">Default</div>
-        <div className="w-8" />
-      </div>
+      <table className="w-full border-collapse text-sm">
+        {/* Header */}
+        <thead className="hidden border-b bg-muted/50 sm:table-header-group">
+          <tr>
+            <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+              Prop
+            </th>
+            <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+              Type
+            </th>
+            <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+              Default
+            </th>
+            <th className="w-10 px-3 py-2" />
+          </tr>
+        </thead>
 
-      {/* Props Rows */}
-      <div className="divide-y">
-        {data.map((prop) => (
-          <PropRow key={prop.name} prop={prop} componentName={componentName} />
+        {/* Ungrouped props */}
+        {data.ungrouped.length > 0 && (
+          <tbody className="bg-bg">
+            {data.ungrouped.map((prop) => (
+              <PropRows
+                key={prop.name}
+                prop={prop}
+                componentName={componentName}
+              />
+            ))}
+          </tbody>
+        )}
+
+        {/* Grouped props */}
+        {Object.entries(data.groups).map(([groupName, props]) => (
+          <DisclosureGroup
+            key={groupName}
+            title={groupName}
+            defaultExpanded={defaultExpandedGroups.has(groupName)}
+          >
+            {props.map((prop) => (
+              <PropRows
+                key={prop.name}
+                prop={prop}
+                componentName={componentName}
+              />
+            ))}
+          </DisclosureGroup>
         ))}
-      </div>
+      </table>
     </div>
   );
 }
 
-interface PropRowProps {
+interface PropRowsProps {
   prop: PropData;
   componentName: string;
 }
 
-function PropRow({ prop, componentName }: PropRowProps) {
+function PropRows({ prop, componentName }: PropRowsProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const id = `${componentName}-${prop.name}`;
 
   return (
-    <div className="group">
-      {/* Trigger Row */}
-      <button
-        type="button"
-        id={id}
-        onClick={() => setIsOpen(!isOpen)}
+    <React.Fragment>
+      {/* Main prop row */}
+      <tr
         className={cn(
-          "grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-4 px-3 py-2.5 text-left transition-colors sm:grid-cols-[minmax(140px,1fr)_2fr_minmax(80px,auto)_auto]",
-          "hover:bg-muted/30",
+          "cursor-pointer border-b transition-colors hover:bg-muted/30",
           isOpen && "bg-muted/20",
         )}
-        aria-expanded={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
       >
         {/* Prop Name */}
-        <div className="flex items-baseline gap-1">
-          <code className="rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem] text-fg">
-            {prop.name}
-          </code>
-          {prop.required && (
-            <span className="text-danger text-xs" title="Required">
-              *
-            </span>
-          )}
-        </div>
+        <td className="px-3 py-2.5">
+          <button
+            type="button"
+            id={id}
+            className="flex items-baseline gap-1 text-left"
+            aria-expanded={isOpen}
+          >
+            <code className="rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem] text-fg">
+              {prop.name}
+            </code>
+            {prop.required && (
+              <span className="text-danger text-xs" title="Required">
+                *
+              </span>
+            )}
+          </button>
+        </td>
 
-        {/* Type (desktop) - highlighted */}
-        <div className="hidden overflow-hidden sm:block">
+        {/* Type */}
+        <td className="hidden overflow-hidden px-3 py-2.5 sm:table-cell">
           <code className="truncate rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem]">
             {prop.shortTypeHighlighted ?? prop.shortType}
           </code>
-        </div>
+        </td>
 
-        {/* Default (desktop) - highlighted */}
-        <div className="hidden overflow-hidden sm:block">
+        {/* Default */}
+        <td className="hidden overflow-hidden px-3 py-2.5 sm:table-cell">
           {prop.default !== undefined ? (
             <code className="truncate rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem]">
               {prop.defaultHighlighted ?? prop.default}
@@ -102,63 +154,65 @@ function PropRow({ prop, componentName }: PropRowProps) {
           ) : (
             <span className="text-fg-muted/50">—</span>
           )}
-        </div>
+        </td>
 
         {/* Chevron */}
-        <div className="flex w-8 justify-center">
+        <td className="px-3 py-2.5 text-center">
           <ChevronDownIcon
             className={cn(
-              "size-4 text-fg-muted transition-transform duration-200",
+              "inline-block size-4 text-fg-muted transition-transform duration-200",
               isOpen && "rotate-180",
             )}
           />
-        </div>
-      </button>
+        </td>
+      </tr>
 
-      {/* Expanded Content */}
+      {/* Expanded description row */}
       {isOpen && (
-        <div className="border-t bg-muted/10 px-3 py-3">
-          <dl className="space-y-3 text-sm">
-            {/* Type */}
-            <div>
-              <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
-                Type
-              </dt>
-              <dd>
-                <TypeDisplay
-                  type={prop.type}
-                  highlighted={prop.typeHighlighted}
-                />
-              </dd>
-            </div>
-
-            {/* Default Value */}
-            {prop.default !== undefined && (
+        <tr className="border-b bg-muted/10">
+          <td colSpan={4} className="px-3 py-3">
+            <dl className="space-y-3 text-sm">
+              {/* Type */}
               <div>
                 <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
-                  Default
+                  Type
                 </dt>
-                <dd className="inline-block rounded-md border bg-card px-2 py-1 font-mono text-[0.8125rem]">
-                  {prop.defaultHighlighted ?? prop.default}
+                <dd>
+                  <TypeDisplay
+                    type={prop.type}
+                    highlighted={prop.typeHighlighted}
+                  />
                 </dd>
               </div>
-            )}
 
-            {/* Description */}
-            {prop.description && (
-              <div>
-                <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
-                  Description
-                </dt>
-                <dd className="text-fg-muted leading-relaxed [&_a]:text-fg [&_a]:underline [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.8125rem]">
-                  {prop.description}
-                </dd>
-              </div>
-            )}
-          </dl>
-        </div>
+              {/* Default Value */}
+              {prop.default !== undefined && (
+                <div>
+                  <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
+                    Default
+                  </dt>
+                  <dd className="inline-block rounded-md border bg-card px-2 py-1 font-mono text-[0.8125rem]">
+                    {prop.defaultHighlighted ?? prop.default}
+                  </dd>
+                </div>
+              )}
+
+              {/* Description */}
+              {prop.description && (
+                <div>
+                  <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
+                    Description
+                  </dt>
+                  <dd className="text-fg-muted leading-relaxed [&_a]:text-fg [&_a]:underline [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.8125rem]">
+                    {prop.description}
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </td>
+        </tr>
       )}
-    </div>
+    </React.Fragment>
   );
 }
 

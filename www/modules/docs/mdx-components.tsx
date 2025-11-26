@@ -7,6 +7,8 @@ import { Alert, type AlertProps } from "@dotui/registry/ui/alert";
 import { Heading, type HeadingProps } from "@dotui/registry/ui/heading";
 import { Link as NavLink } from "@dotui/registry/ui/link";
 import type { LinkProps } from "@dotui/registry/ui/link";
+
+import { Reference } from "./api-reference/reference";
 import { CodeBlock, Pre } from "./code-block";
 import {
   CodeBlockTab,
@@ -19,7 +21,6 @@ import { Demo } from "./demo";
 import { Example } from "./example";
 import { InteractiveDemo, type InteractiveDemoProps } from "./interactive-demo";
 import { PageTabPanel, PageTabs } from "./page-tabs";
-import { Reference } from "./api-reference/reference";
 
 export const mdxComponents: MDXComponents = {
   h1: (props: HeadingProps) => (

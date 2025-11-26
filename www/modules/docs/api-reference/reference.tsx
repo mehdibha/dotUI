@@ -1,8 +1,13 @@
 import { highlight } from "fumadocs-core/highlight";
 import Markdown from "markdown-to-jsx";
 
-import { type PropData, PropsTable } from "./props-table";
-import type { ComponentApiReference } from "./types";
+import { DEFAULT_EXPANDED, groupProps } from "./groups";
+import {
+  type GroupedPropsData,
+  type PropData,
+  PropsTable,
+} from "./props-table";
+import type { ComponentApiReference, PropDefinition } from "./types";
 
 interface ReferenceProps {
   /** The name of the component (maps to generated/{name}.json) */
@@ -107,6 +112,41 @@ function getShortType(name: string, type: string | undefined): string {
   return "union";
 }
 
+/**
+ * Transform a PropDefinition to PropData with highlighting
+ */
+async function transformProp(
+  propName: string,
+  prop: PropDefinition,
+): Promise<PropData> {
+  const shortType = getShortType(propName, prop.type);
+
+  return {
+    name: propName,
+    type: prop.type,
+    typeHighlighted: await highlightCode(prop.type, "ts"),
+    shortType,
+    shortTypeHighlighted: await highlightCode(shortType, "ts"),
+    default: prop.default,
+    defaultHighlighted: prop.default
+      ? await highlightCode(prop.default, "ts")
+      : undefined,
+    description: renderDescription(prop.description),
+    required: prop.default === undefined && !prop.type?.includes("undefined"),
+  };
+}
+
+/**
+ * Transform a record of props to an array of PropData
+ */
+async function transformProps(
+  props: Record<string, PropDefinition>,
+): Promise<PropData[]> {
+  return Promise.all(
+    Object.entries(props).map(([name, prop]) => transformProp(name, prop)),
+  );
+}
+
 export async function Reference({ name }: ReferenceProps) {
   const data = await loadApiReference(name);
 
@@ -118,27 +158,27 @@ export async function Reference({ name }: ReferenceProps) {
     );
   }
 
-  // Transform props to PropData with pre-rendered descriptions and highlighted code
-  const propsData: PropData[] = await Promise.all(
-    Object.entries(data.props).map(async ([propName, prop]) => {
-      const shortType = getShortType(propName, prop.type);
+  // Group the props
+  const { ungrouped, groups } = groupProps(data.props);
 
-      return {
-        name: propName,
-        type: prop.type,
-        typeHighlighted: await highlightCode(prop.type, "ts"),
-        shortType,
-        shortTypeHighlighted: await highlightCode(shortType, "ts"),
-        default: prop.default,
-        defaultHighlighted: prop.default
-          ? await highlightCode(prop.default, "ts")
-          : undefined,
-        description: renderDescription(prop.description),
-        required:
-          prop.default === undefined && !prop.type?.includes("undefined"),
-      };
-    }),
+  // Transform all props with highlighting
+  const groupedData: GroupedPropsData = {
+    ungrouped: await transformProps(ungrouped),
+    groups: Object.fromEntries(
+      await Promise.all(
+        Object.entries(groups).map(async ([groupName, groupProps]) => [
+          groupName,
+          await transformProps(groupProps),
+        ]),
+      ),
+    ),
+  };
+
+  return (
+    <PropsTable
+      data={groupedData}
+      componentName={name}
+      defaultExpandedGroups={DEFAULT_EXPANDED}
+    />
   );
-
-  return <PropsTable data={propsData} componentName={name} />;
 }
