@@ -12,21 +12,11 @@ import fs from "node:fs";
 import path from "node:path";
 import type { PropDoc } from "./types";
 
-declare global {
-  // eslint-disable-next-line no-var
-  var __dotuiApiReferenceProject: Project | undefined;
-  // eslint-disable-next-line no-var
-  var __dotuiApiReferenceCache: Map<string, PropDoc[]> | undefined;
-}
-
-const PROP_CACHE =
-  globalThis.__dotuiApiReferenceCache ??
-  (globalThis.__dotuiApiReferenceCache = new Map<string, PropDoc[]>());
+// Lazy-init project (minor optimization to avoid re-creating for multiple pages in same build)
+let project: Project | null = null;
 
 function getProject() {
-  if (globalThis.__dotuiApiReferenceProject) {
-    return globalThis.__dotuiApiReferenceProject;
-  }
+  if (project) return project;
 
   const tsconfigCandidates = [
     path.resolve(process.cwd(), "tsconfig.json"),
@@ -37,12 +27,12 @@ function getProject() {
     tsconfigCandidates.find((candidate) => fs.existsSync(candidate)) ??
     tsconfigCandidates[0];
 
-  globalThis.__dotuiApiReferenceProject = new Project({
+  project = new Project({
     tsConfigFilePath: tsconfigPath,
     skipAddingFilesFromTsConfig: false,
   });
 
-  return globalThis.__dotuiApiReferenceProject;
+  return project;
 }
 
 function resolveSourcePath(source: string) {
@@ -67,31 +57,25 @@ function resolveSourcePath(source: string) {
   throw new Error(`ApiReference: unable to find ${source}`);
 }
 
-export function parseComponentProps(source: string, exportName: string) {
+export function parseComponentProps(
+  source: string,
+  exportName: string,
+): PropDoc[] {
   const absolutePath = resolveSourcePath(source);
-  const cacheKey = `${absolutePath}#${exportName}`;
-  if (PROP_CACHE.has(cacheKey)) {
-    return PROP_CACHE.get(cacheKey)!;
-  }
-
-  const project = getProject();
+  const proj = getProject();
   const sourceFile =
-    project.getSourceFile(absolutePath) ??
-    project.addSourceFileAtPath(absolutePath);
+    proj.getSourceFile(absolutePath) ?? proj.addSourceFileAtPath(absolutePath);
 
   const declarations = sourceFile.getExportedDeclarations().get(exportName);
-  if (!declarations?.length) {
+  const declaration = declarations?.[0];
+  if (!declaration) {
     throw new Error(
       `ApiReference: export "${exportName}" not found in ${source}`,
     );
   }
 
-  const declaration = declarations[0];
   const type = getDeclarationType(declaration);
-  const props = extractPropsFromType(type);
-
-  PROP_CACHE.set(cacheKey, props);
-  return props;
+  return extractPropsFromType(type);
 }
 
 function getDeclarationType(node: Node): Type {
@@ -173,7 +157,9 @@ function symbolToPropDoc(symbol: MorphSymbol): PropDoc | null {
 }
 
 function collectDocs(nodes: Node[]) {
-  const jsDocs = nodes.flatMap((node) => node.getJsDocs());
+  const jsDocs = nodes.flatMap((node) =>
+    Node.isJSDocable(node) ? node.getJsDocs() : [],
+  );
   const descriptions = jsDocs
     .map((doc) => doc.getDescription().trim())
     .filter(Boolean);

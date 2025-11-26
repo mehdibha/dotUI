@@ -58,7 +58,7 @@ export default defineConfig({
     rehypeCodeOptions: {
       ...rehypeCodeDefaultOptions,
       langs: ["ts", "js", "html", "tsx", "mdx"],
-      defaultLanguage: "tsx",
+      defaultLanguage: "plaintext",
       inline: "tailing-curly-colon",
       themes: {
         light: "github-light",
