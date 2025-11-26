@@ -30,21 +30,18 @@ interface PropsTableProps {
   defaultExpandedGroups?: Set<string>;
 }
 
-// Grid layout matching base-ui style
-// Mobile: [Prop] [Chevron]
-// sm: [Prop 192px] [Type 1fr] [Chevron 40px]
-// md+: [Prop 5fr] [Type 7fr] [Default 4.5fr] [Chevron 40px]
+// Grid layout - always show Prop & Type, hide Default on sm
+// sm: [Prop] [Type] [Chevron]
+// md+: [Prop] [Type] [Default] [Chevron]
 const GRID_LAYOUT = cn(
-  "grid grid-cols-[1fr_2.5rem]",
-  "sm:grid-cols-[12rem_1fr_2.5rem]",
+  "grid grid-cols-[minmax(120px,1fr)_1fr_2.5rem]",
   "md:grid-cols-[5fr_7fr_4.5fr_2.5rem]",
 );
 
 // Panel grid layout (aligns with header)
-// 5fr + 11.5fr = 5fr + 7fr + 4.5fr (Type + Default combined)
 const PANEL_GRID_LAYOUT = cn(
   "flex flex-col gap-3",
-  "sm:grid sm:grid-cols-[12rem_1fr_2.5rem] sm:gap-x-4 sm:gap-y-2",
+  "sm:grid sm:grid-cols-[minmax(120px,1fr)_1fr_2.5rem] sm:gap-x-4 sm:gap-y-2",
   "md:grid-cols-[5fr_11.5fr_2.5rem]",
 );
 
@@ -74,7 +71,7 @@ export function PropsTable({
             <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
               Prop
             </th>
-            <th className="hidden px-3 py-2 text-left font-medium text-fg-muted text-xs sm:table-cell">
+            <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
               Type
             </th>
             <th className="hidden px-3 py-2 text-left font-medium text-fg-muted text-xs md:table-cell">
@@ -155,14 +152,14 @@ function PropRows({ prop, componentName }: PropRowsProps) {
           </button>
         </td>
 
-        {/* Type - hidden on mobile */}
-        <td className="hidden overflow-hidden px-3 py-2.5 sm:table-cell">
+        {/* Type - always visible */}
+        <td className="overflow-hidden px-3 py-2.5">
           <code className="whitespace-nowrap break-keep font-mono text-[0.8125rem] text-fg-muted">
             {prop.shortTypeHighlighted ?? prop.shortType}
           </code>
         </td>
 
-        {/* Default - hidden on mobile and tablet */}
+        {/* Default - hidden on sm */}
         <td className="hidden overflow-hidden px-3 py-2.5 md:table-cell">
           {prop.default !== undefined ? (
             <code className="whitespace-nowrap font-mono text-[0.8125rem] text-fg-muted">
