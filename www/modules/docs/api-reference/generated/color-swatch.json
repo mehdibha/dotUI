@@ -2,43 +2,53 @@
   "name": "ColorSwatchProps",
   "props": {
     "aria-label": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Defines a string value that labels the current element."
     },
     "aria-labelledby": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that describes the object."
     },
     "aria-details": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "color": {
-      "type": "string | Color | undefined",
+      "type": "string | Color",
+      "detailedType": "string | Color | undefined",
       "description": "The color value to display in the swatch."
     },
     "colorName": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "A localized accessible name for the color.\nBy default, a description is generated from the color value,\nbut this can be overridden if you have a more specific color\nname (e.g. Pantone colors)."
     },
     "slot": {
-      "type": "string | null | undefined",
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "id": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "className": {
-      "type": "ClassNameOrFunction<ColorSwatchRenderProps> | undefined",
+      "type": "ClassNameOrFunction<ColorSwatchRenderProps>",
+      "detailedType": "ClassNameOrFunction<ColorSwatchRenderProps> | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<ColorSwatchRenderProps> | undefined",
+      "type": "StyleOrFunction<ColorSwatchRenderProps>",
+      "detailedType": "StyleOrFunction<ColorSwatchRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

@@ -2,7 +2,8 @@
   "name": "SkeletonProviderProps",
   "props": {
     "isLoading": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the skeleton loading state is active."
     }
   }

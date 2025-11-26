@@ -2,23 +2,28 @@
   "name": "ListBoxSectionProps",
   "props": {
     "aria-label": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "An accessibility label for the section."
     },
     "value": {
-      "type": "T | undefined",
+      "type": "T",
+      "detailedType": "T | undefined",
       "description": "The object value that this section represents. When using dynamic collections, this is set automatically."
     },
     "dependencies": {
-      "type": "readonly any[] | undefined",
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
       "description": "Values that should invalidate the item cache when using dynamic collections."
     },
     "items": {
-      "type": "Iterable<T> | undefined",
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
       "description": "Item objects in the section."
     },
     "id": {
-      "type": "Key | undefined",
+      "type": "Key",
+      "detailedType": "Key | undefined",
       "description": "The unique id of the section."
     },
     "children": {
@@ -26,11 +31,13 @@
       "description": "Static child items or a function to render children."
     },
     "className": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
-      "type": "CSSProperties | undefined",
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     }
   }

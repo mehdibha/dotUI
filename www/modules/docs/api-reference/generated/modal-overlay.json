@@ -2,46 +2,56 @@
   "name": "ModalOverlayProps",
   "props": {
     "defaultOpen": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the overlay is open by default (uncontrolled)."
     },
     "onOpenChange": {
-      "type": "((isOpen: boolean) => void) | undefined",
+      "type": "((isOpen: boolean) => void)",
+      "detailedType": "((isOpen: boolean) => void) | undefined",
       "description": "Handler that is called when the overlay's open state changes."
     },
     "UNSTABLE_portalContainer": {
-      "type": "Element | undefined",
+      "type": "Element",
+      "detailedType": "Element | undefined",
       "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
       "default": "document.body"
     },
     "isDismissable": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether to close the modal when the user interacts outside it.",
       "default": "false"
     },
     "isEntering": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the modal is currently performing an entry animation."
     },
     "isExiting": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the modal is currently performing an exit animation."
     },
     "isKeyboardDismissDisabled": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether pressing the escape key to close the modal should be disabled.",
       "default": "false"
     },
     "isOpen": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the overlay is open by default (controlled)."
     },
     "shouldCloseOnInteractOutside": {
-      "type": "((element: Element) => boolean) | undefined",
+      "type": "((element: Element) => boolean)",
+      "detailedType": "((element: Element) => boolean) | undefined",
       "description": "When user interacts with the argument element outside of the overlay ref,\nreturn true if onClose should be called.  This gives you a chance to filter\nout interaction with elements that should not dismiss the overlay.\nBy default, onClose will always be called on interaction outside the overlay ref."
     },
     "slot": {
-      "type": "string | null | undefined",
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "children": {
@@ -49,11 +59,13 @@
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "className": {
-      "type": "ClassNameOrFunction<ModalRenderProps> | undefined",
+      "type": "ClassNameOrFunction<ModalRenderProps>",
+      "detailedType": "ClassNameOrFunction<ModalRenderProps> | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<ModalRenderProps> | undefined",
+      "type": "StyleOrFunction<ModalRenderProps>",
+      "detailedType": "StyleOrFunction<ModalRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

@@ -2,15 +2,18 @@
   "name": "TableLoadMoreProps",
   "props": {
     "isLoading": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether or not the loading spinner should be rendered or not."
     },
     "onLoadMore": {
-      "type": "(() => any) | undefined",
+      "type": "(() => any)",
+      "detailedType": "(() => any) | undefined",
       "description": "Handler that is called when more items should be loaded, e.g. while scrolling near the bottom."
     },
     "scrollOffset": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The amount of offset from the bottom of your scrollable region that should trigger load more.\nUses a percentage value relative to the scroll body's client height. Load more is then triggered\nwhen your current scroll position's distance from the bottom of the currently loaded list of items is less than\nor equal to the provided value. (e.g. 1 = 100% of the scroll region's height).",
       "default": "1"
     },
@@ -19,11 +22,13 @@
       "description": "The load more spinner to render when loading additional items."
     },
     "className": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
-      "type": "CSSProperties | undefined",
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     }
   }

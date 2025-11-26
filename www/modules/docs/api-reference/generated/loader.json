@@ -2,66 +2,80 @@
   "name": "LoaderProps",
   "props": {
     "aria-label": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Defines a string value that labels the current element."
     },
     "aria-labelledby": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "size": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The size of the loader in pixels.",
       "default": "20"
     },
     "value": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The current value (controlled).",
       "default": "0"
     },
     "aria-describedby": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that describes the object."
     },
     "aria-details": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "formatOptions": {
-      "type": "NumberFormatOptions | undefined",
+      "type": "NumberFormatOptions",
+      "detailedType": "NumberFormatOptions | undefined",
       "description": "The display format of the value label.",
       "default": "{style: 'percent'}"
     },
     "isIndeterminate": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether presentation is indeterminate when progress isn't known."
     },
     "maxValue": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The largest value allowed for the input.",
       "default": "100"
     },
     "minValue": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The smallest value allowed for the input.",
       "default": "0"
     },
     "slot": {
-      "type": "string | null | undefined",
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "speed": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The animation speed in seconds.",
       "default": "0.8"
     },
     "stroke": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The stroke width of the loader circle.",
       "default": "2"
     },
     "strokeLength": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The length of the stroke as a percentage (0-1).",
       "default": "0.25"
     },
@@ -70,7 +84,8 @@
       "description": "The content to display as the value's label (e.g. 1 of 4)."
     },
     "id": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
@@ -78,11 +93,13 @@
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "className": {
-      "type": "ClassNameOrFunction<ProgressBarRenderProps> | undefined",
+      "type": "ClassNameOrFunction<ProgressBarRenderProps>",
+      "detailedType": "ClassNameOrFunction<ProgressBarRenderProps> | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<ProgressBarRenderProps> | undefined",
+      "type": "StyleOrFunction<ProgressBarRenderProps>",
+      "detailedType": "StyleOrFunction<ProgressBarRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

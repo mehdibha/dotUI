@@ -2,23 +2,28 @@
   "name": "TableContainerProps",
   "props": {
     "onResize": {
-      "type": "((widths: Map<Key, ColumnSize>) => void) | undefined",
+      "type": "((widths: Map<Key, ColumnSize>) => void)",
+      "detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
       "description": "Handler that is called when a user performs a column resize.\nCan be used with the width property on columns to put the column widths into\na controlled state."
     },
     "onResizeEnd": {
-      "type": "((widths: Map<Key, ColumnSize>) => void) | undefined",
+      "type": "((widths: Map<Key, ColumnSize>) => void)",
+      "detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
       "description": "Handler that is called after a user performs a column resize.\nCan be used to store the widths of columns for another future session."
     },
     "onResizeStart": {
-      "type": "((widths: Map<Key, ColumnSize>) => void) | undefined",
+      "type": "((widths: Map<Key, ColumnSize>) => void)",
+      "detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
       "description": "Handler that is called when a user starts a column resize."
     },
     "resizable": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the table columns are resizable."
     },
     "id": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
@@ -26,11 +31,13 @@
       "description": "The children of the component."
     },
     "className": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
-      "type": "CSSProperties | undefined",
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     }
   }

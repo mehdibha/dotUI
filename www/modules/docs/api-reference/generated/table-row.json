@@ -2,79 +2,98 @@
   "name": "TableRowProps",
   "props": {
     "value": {
-      "type": "T | undefined",
+      "type": "T",
+      "detailedType": "T | undefined",
       "description": "The object value that this row represents. When using dynamic collections, this is set automatically."
     },
     "onClick": {
-      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
+      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
+      "detailedType": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
       "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
     },
     "onPress": {
-      "type": "((e: PressEvent) => void) | undefined",
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
       "description": "Handler that is called when the press is released over the target."
     },
     "onPressStart": {
-      "type": "((e: PressEvent) => void) | undefined",
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
       "description": "Handler that is called when a press interaction starts."
     },
     "onPressEnd": {
-      "type": "((e: PressEvent) => void) | undefined",
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
       "description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
     },
     "columns": {
-      "type": "Iterable<T> | undefined",
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
       "description": "A list of columns used when dynamically rendering cells."
     },
     "dependencies": {
-      "type": "readonly any[] | undefined",
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
       "description": "Values that should invalidate the cell cache when using dynamic collections."
     },
     "download": {
-      "type": "string | boolean | undefined",
+      "type": "string | boolean",
+      "detailedType": "string | boolean | undefined",
       "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
     },
     "href": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
     },
     "hrefLang": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
     },
     "onAction": {
-      "type": "(() => void) | undefined",
+      "type": "(() => void)",
+      "detailedType": "(() => void) | undefined",
       "description": "Handler that is called when a user performs an action on the row. The exact user event depends on\nthe collection's `selectionBehavior` prop and the interaction modality."
     },
     "onHoverChange": {
-      "type": "((isHovering: boolean) => void) | undefined",
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
       "description": "Handler that is called when the hover state changes."
     },
     "onHoverEnd": {
-      "type": "((e: HoverEvent) => void) | undefined",
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "description": "Handler that is called when a hover interaction ends."
     },
     "onHoverStart": {
-      "type": "((e: HoverEvent) => void) | undefined",
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "description": "Handler that is called when a hover interaction starts."
     },
     "onPressChange": {
-      "type": "((isPressed: boolean) => void) | undefined",
+      "type": "((isPressed: boolean) => void)",
+      "detailedType": "((isPressed: boolean) => void) | undefined",
       "description": "Handler that is called when the press state changes."
     },
     "onPressUp": {
-      "type": "((e: PressEvent) => void) | undefined",
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
       "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
     },
     "ping": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
     },
     "referrerPolicy": {
-      "type": "HTMLAttributeReferrerPolicy | undefined",
+      "type": "HTMLAttributeReferrerPolicy",
+      "detailedType": "HTMLAttributeReferrerPolicy | undefined",
       "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
     },
     "rel": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
     },
     "routerOptions": {
@@ -82,19 +101,23 @@
       "description": "Options for the configured client side router."
     },
     "target": {
-      "type": "HTMLAttributeAnchorTarget | undefined",
+      "type": "HTMLAttributeAnchorTarget",
+      "detailedType": "HTMLAttributeAnchorTarget | undefined",
       "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
     },
     "textValue": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "A string representation of the row's contents, used for features like typeahead."
     },
     "isDisabled": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the row is disabled."
     },
     "id": {
-      "type": "Key | undefined",
+      "type": "Key",
+      "detailedType": "Key | undefined",
       "description": "The unique id of the row."
     },
     "children": {
@@ -102,11 +125,13 @@
       "description": "The cells within the row. Supports static items or a function for dynamic rendering."
     },
     "className": {
-      "type": "ClassNameOrFunction<RowRenderProps> | undefined",
+      "type": "ClassNameOrFunction<RowRenderProps>",
+      "detailedType": "ClassNameOrFunction<RowRenderProps> | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<RowRenderProps> | undefined",
+      "type": "StyleOrFunction<RowRenderProps>",
+      "detailedType": "StyleOrFunction<RowRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

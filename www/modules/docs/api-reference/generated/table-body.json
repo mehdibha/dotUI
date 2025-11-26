@@ -2,23 +2,28 @@
   "name": "TableBodyProps",
   "props": {
     "dependencies": {
-      "type": "readonly any[] | undefined",
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
       "description": "Values that should invalidate the item cache when using dynamic collections."
     },
     "isLoading": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the table body is in a loading state."
     },
     "items": {
-      "type": "Iterable<T> | undefined",
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
       "description": "Item objects in the collection."
     },
     "onLoadMore": {
-      "type": "(() => void) | undefined",
+      "type": "(() => void)",
+      "detailedType": "(() => void) | undefined",
       "description": "Callback fired when more data needs to be loaded."
     },
     "renderEmptyState": {
-      "type": "((props: TableBodyRenderProps) => ReactNode) | undefined",
+      "type": "((props: TableBodyRenderProps) => ReactNode)",
+      "detailedType": "((props: TableBodyRenderProps) => ReactNode) | undefined",
       "description": "Provides content to display when there are no rows in the table."
     },
     "children": {
@@ -26,11 +31,13 @@
       "description": "The contents of the collection."
     },
     "className": {
-      "type": "ClassNameOrFunction<TableBodyRenderProps> | undefined",
+      "type": "ClassNameOrFunction<TableBodyRenderProps>",
+      "detailedType": "ClassNameOrFunction<TableBodyRenderProps> | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<TableBodyRenderProps> | undefined",
+      "type": "StyleOrFunction<TableBodyRenderProps>",
+      "detailedType": "StyleOrFunction<TableBodyRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

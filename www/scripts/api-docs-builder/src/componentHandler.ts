@@ -12,6 +12,7 @@ export interface ParserContext {
 
 interface FormattedProp {
   type: string;
+  detailedType?: string;
   default?: string;
   required?: boolean;
   description?: string;
@@ -121,8 +122,17 @@ async function getPropsWithTypeChecker(
           // Check if optional
           const isOptional = (prop.flags & ts.SymbolFlags.Optional) !== 0;
 
+          // Full type (for detailedType)
+          const fullType = formatTypeString(typeString);
+
+          // Short type - remove | undefined for optional props (like base-ui)
+          const shortType = isOptional
+            ? removeUndefinedFromType(fullType)
+            : fullType;
+
           result[prop.name] = {
-            type: formatTypeString(typeString),
+            type: shortType,
+            detailedType: shortType !== fullType ? fullType : undefined,
             description: docs,
             default: defaultValue,
             required: !isOptional || undefined,
@@ -165,6 +175,22 @@ function formatTypeString(typeStr: string): string {
     .replace(/ReactNode/g, "ReactNode");
 
   return result;
+}
+
+/**
+ * Remove | undefined from union types (for short type display)
+ */
+function removeUndefinedFromType(typeStr: string): string {
+  // Handle "Type | undefined" at the end
+  let result = typeStr.replace(/\s*\|\s*undefined\s*$/, "");
+
+  // Handle "undefined | Type" at the start
+  result = result.replace(/^undefined\s*\|\s*/, "");
+
+  // Handle "Type | undefined | OtherType" in the middle
+  result = result.replace(/\s*\|\s*undefined\s*\|/g, " |");
+
+  return result.trim();
 }
 
 /**

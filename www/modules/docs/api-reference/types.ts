@@ -7,8 +7,10 @@
  * A single property definition in the API reference
  */
 export interface PropDefinition {
-  /** TypeScript type signature */
+  /** TypeScript type signature (short version without | undefined for optional props) */
   type: string;
+  /** Full type signature including | undefined (only present if different from type) */
+  detailedType?: string;
   /** Description of the prop */
   description?: string;
   /** Default value if any */

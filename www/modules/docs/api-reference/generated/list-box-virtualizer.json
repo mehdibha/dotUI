@@ -2,7 +2,8 @@
   "name": "ListBoxVirtualizerProps",
   "props": {
     "layoutOptions": {
-      "type": "T | undefined",
+      "type": "T",
+      "detailedType": "T | undefined",
       "description": "Options for the layout."
     },
     "children": {

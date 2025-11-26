@@ -7,11 +7,13 @@
       "required": true
     },
     "className": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
-      "type": "CSSProperties | undefined",
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     }
   }

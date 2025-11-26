@@ -2,23 +2,28 @@
   "name": "FileTriggerProps",
   "props": {
     "acceptDirectory": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Enables the selection of directories instead of individual files."
     },
     "acceptedFileTypes": {
-      "type": "readonly string[] | undefined",
+      "type": "readonly string[]",
+      "detailedType": "readonly string[] | undefined",
       "description": "Specifies what mime type of files are allowed."
     },
     "allowsMultiple": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether multiple files can be selected."
     },
     "defaultCamera": {
-      "type": "\"user\" | \"environment\" | undefined",
+      "type": "\"user\" | \"environment\"",
+      "detailedType": "\"user\" | \"environment\" | undefined",
       "description": "Specifies the use of a media capture mechanism to capture the media on the spot."
     },
     "onSelect": {
-      "type": "((files: FileList | null) => void) | undefined",
+      "type": "((files: FileList | null) => void)",
+      "detailedType": "((files: FileList | null) => void) | undefined",
       "description": "Handler when a user selects a file."
     },
     "children": {

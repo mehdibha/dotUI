@@ -2,31 +2,38 @@
   "name": "ColorPickerProps",
   "props": {
     "defaultValue": {
-      "type": "string | Color | undefined",
+      "type": "string | Color",
+      "detailedType": "string | Color | undefined",
       "description": "The default value (uncontrolled)."
     },
     "value": {
-      "type": "string | Color | undefined",
+      "type": "string | Color",
+      "detailedType": "string | Color | undefined",
       "description": "The current value (controlled)."
     },
     "defaultOpen": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the overlay is open by default (uncontrolled)."
     },
     "onOpenChange": {
-      "type": "((isOpen: boolean) => void) | undefined",
+      "type": "((isOpen: boolean) => void)",
+      "detailedType": "((isOpen: boolean) => void) | undefined",
       "description": "Handler that is called when the overlay's open state changes."
     },
     "isOpen": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the overlay is open by default (controlled)."
     },
     "onChange": {
-      "type": "((value: Color) => void) | undefined",
+      "type": "((value: Color) => void)",
+      "detailedType": "((value: Color) => void) | undefined",
       "description": "Handler that is called when the value changes."
     },
     "slot": {
-      "type": "string | null | undefined",
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "children": {

@@ -2,15 +2,18 @@
   "name": "ColorThumbProps",
   "props": {
     "onHoverChange": {
-      "type": "((isHovering: boolean) => void) | undefined",
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
       "description": "Handler that is called when the hover state changes."
     },
     "onHoverEnd": {
-      "type": "((e: HoverEvent) => void) | undefined",
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "description": "Handler that is called when a hover interaction ends."
     },
     "onHoverStart": {
-      "type": "((e: HoverEvent) => void) | undefined",
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "description": "Handler that is called when a hover interaction starts."
     },
     "children": {
@@ -18,7 +21,8 @@
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<ColorThumbRenderProps> | undefined",
+      "type": "StyleOrFunction<ColorThumbRenderProps>",
+      "detailedType": "StyleOrFunction<ColorThumbRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

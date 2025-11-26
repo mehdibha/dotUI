@@ -2,15 +2,18 @@
   "name": "DialogProps",
   "props": {
     "defaultOpen": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the overlay is open by default (uncontrolled)."
     },
     "onOpenChange": {
-      "type": "((isOpen: boolean) => void) | undefined",
+      "type": "((isOpen: boolean) => void)",
+      "detailedType": "((isOpen: boolean) => void) | undefined",
       "description": "Handler that is called when the overlay's open state changes."
     },
     "isOpen": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the overlay is open by default (controlled)."
     }
   }

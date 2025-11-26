@@ -91,19 +91,12 @@ function getShortType(name: string, type: string | undefined): string {
     return "CSSProperties | function";
   }
 
-  // Simple types - return as-is
-  if (
-    type === "boolean" ||
-    type === "string" ||
-    type === "number" ||
-    type === "boolean | undefined" ||
-    type === "string | undefined" ||
-    type === "number | undefined"
-  ) {
+  // Simple types - return as-is (now without | undefined since it's stripped)
+  if (type === "boolean" || type === "string" || type === "number") {
     return type;
   }
 
-  // Short union types
+  // Short union types (less than 4 members and under 50 chars)
   if (!type.includes("|") || (type.split("|").length < 4 && type.length < 50)) {
     return type;
   }
@@ -120,11 +113,15 @@ async function transformProp(
   prop: PropDefinition,
 ): Promise<PropData> {
   const shortType = getShortType(propName, prop.type);
+  // Use detailedType for the full type display (includes | undefined), fallback to type
+  const fullType = prop.detailedType ?? prop.type;
+  // If detailedType exists, the prop is optional (undefined was stripped from type)
+  const isOptional = !!prop.detailedType;
 
   return {
     name: propName,
-    type: prop.type,
-    typeHighlighted: await highlightCode(prop.type, "ts"),
+    type: fullType,
+    typeHighlighted: await highlightCode(fullType, "ts"),
     shortType,
     shortTypeHighlighted: await highlightCode(shortType, "ts"),
     default: prop.default,
@@ -132,7 +129,7 @@ async function transformProp(
       ? await highlightCode(prop.default, "ts")
       : undefined,
     description: renderDescription(prop.description),
-    required: prop.default === undefined && !prop.type?.includes("undefined"),
+    required: prop.default === undefined && !isOptional,
   };
 }
 

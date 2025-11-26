@@ -2,7 +2,8 @@
   "name": "CalendarHeaderCellProps",
   "props": {
     "id": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
@@ -10,11 +11,13 @@
       "description": "The children of the component."
     },
     "className": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
-      "type": "CSSProperties | undefined",
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     }
   }

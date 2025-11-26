@@ -2,23 +2,28 @@
   "name": "TableHeaderProps",
   "props": {
     "columns": {
-      "type": "Iterable<T> | undefined",
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
       "description": "A list of table columns."
     },
     "dependencies": {
-      "type": "readonly any[] | undefined",
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
       "description": "Values that should invalidate the column cache when using dynamic collections."
     },
     "onHoverChange": {
-      "type": "((isHovering: boolean) => void) | undefined",
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
       "description": "Handler that is called when the hover state changes."
     },
     "onHoverEnd": {
-      "type": "((e: HoverEvent) => void) | undefined",
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "description": "Handler that is called when a hover interaction ends."
     },
     "onHoverStart": {
-      "type": "((e: HoverEvent) => void) | undefined",
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "description": "Handler that is called when a hover interaction starts."
     },
     "children": {
@@ -26,11 +31,13 @@
       "description": "A list of `Column(s)` or a function. If the latter, a list of columns must be provided using the `columns` prop."
     },
     "className": {
-      "type": "ClassNameOrFunction<TableHeaderRenderProps> | undefined",
+      "type": "ClassNameOrFunction<TableHeaderRenderProps>",
+      "detailedType": "ClassNameOrFunction<TableHeaderRenderProps> | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<TableHeaderRenderProps> | undefined",
+      "type": "StyleOrFunction<TableHeaderRenderProps>",
+      "detailedType": "StyleOrFunction<TableHeaderRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

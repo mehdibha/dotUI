@@ -2,12 +2,14 @@
   "name": "AccordionPanelProps",
   "props": {
     "role": {
-      "type": "\"group\" | \"region\" | undefined",
+      "type": "\"group\" | \"region\"",
+      "detailedType": "\"group\" | \"region\" | undefined",
       "description": "The accessibility role for the disclosure's panel.",
       "default": "'group'"
     },
     "id": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
@@ -16,11 +18,13 @@
       "required": true
     },
     "className": {
-      "type": "ClassNameOrFunction<DisclosurePanelRenderProps> | undefined",
+      "type": "ClassNameOrFunction<DisclosurePanelRenderProps>",
+      "detailedType": "ClassNameOrFunction<DisclosurePanelRenderProps> | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<DisclosurePanelRenderProps> | undefined",
+      "type": "StyleOrFunction<DisclosurePanelRenderProps>",
+      "detailedType": "StyleOrFunction<DisclosurePanelRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

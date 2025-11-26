@@ -2,7 +2,8 @@
   "name": "MenuSubProps",
   "props": {
     "delay": {
-      "type": "number | undefined",
+      "type": "number",
+      "detailedType": "number | undefined",
       "description": "The delay time in milliseconds for the submenu to appear after hovering over the trigger.",
       "default": "200"
     },

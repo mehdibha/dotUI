@@ -2,24 +2,29 @@
   "name": "CalendarGridProps",
   "props": {
     "offset": {
-      "type": "DateDuration | undefined",
+      "type": "DateDuration",
+      "detailedType": "DateDuration | undefined",
       "description": "An offset from the beginning of the visible date range that this\nCalendarGrid should display. Useful when displaying more than one\nmonth at a time."
     },
     "weekdayStyle": {
-      "type": "\"narrow\" | \"short\" | \"long\" | undefined",
+      "type": "\"narrow\" | \"short\" | \"long\"",
+      "detailedType": "\"narrow\" | \"short\" | \"long\" | undefined",
       "description": "The style of weekday names to display in the calendar grid header,\ne.g. single letter, abbreviation, or full day name.",
       "default": "\"narrow\""
     },
     "children": {
-      "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ReactElement<unknown, string | JSXElementConstructor<any>>[] | ((date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>) | undefined",
+      "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ReactElement<unknown, string | JSXElementConstructor<any>>[] | ((date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
+      "detailedType": "ReactElement<unknown, string | JSXElementConstructor<any>> | ReactElement<unknown, string | JSXElementConstructor<any>>[] | ((date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>) | undefined",
       "description": "Either a function to render calendar cells for each date in the month,\nor children containing a `<CalendarGridHeader>`` and `<CalendarGridBody>`\nwhen additional customization is needed."
     },
     "className": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
-      "type": "CSSProperties | undefined",
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     }
   }

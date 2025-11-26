@@ -2,86 +2,106 @@
   "name": "TableProps",
   "props": {
     "aria-label": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Defines a string value that labels the current element."
     },
     "aria-labelledby": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that describes the object."
     },
     "aria-details": {
-      "type": "string | undefined",
+      "type": "string",
+      "detailedType": "string | undefined",
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultSelectedKeys": {
-      "type": "Iterable<Key> | \"all\" | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "disabledBehavior": {
-      "type": "DisabledBehavior | undefined",
+      "type": "DisabledBehavior",
+      "detailedType": "DisabledBehavior | undefined",
       "description": "Whether `disabledKeys` applies to all interactions, or only selection.",
       "default": "\"selection\""
     },
     "disabledKeys": {
-      "type": "Iterable<Key> | undefined",
+      "type": "Iterable<Key>",
+      "detailedType": "Iterable<Key> | undefined",
       "description": "A list of row keys to disable."
     },
     "disallowEmptySelection": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the collection allows empty selection."
     },
     "dragAndDropHooks": {
-      "type": "DragAndDropHooks<object> | undefined",
+      "type": "DragAndDropHooks<object>",
+      "detailedType": "DragAndDropHooks<object> | undefined",
       "description": "The drag and drop hooks returned by `useDragAndDrop` used to enable drag and drop behavior for the Table."
     },
     "escapeKeyBehavior": {
-      "type": "\"none\" | \"clearSelection\" | undefined",
+      "type": "\"none\" | \"clearSelection\"",
+      "detailedType": "\"none\" | \"clearSelection\" | undefined",
       "description": "Whether pressing the escape key should clear selection in the table or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
       "default": "'clearSelection'"
     },
     "onRowAction": {
-      "type": "((key: Key) => void) | undefined",
+      "type": "((key: Key) => void)",
+      "detailedType": "((key: Key) => void) | undefined",
       "description": "Handler that is called when a user performs an action on the row."
     },
     "onSelectionChange": {
-      "type": "((keys: Selection) => void) | undefined",
+      "type": "((keys: Selection) => void)",
+      "detailedType": "((keys: Selection) => void) | undefined",
       "description": "Handler that is called when the selection changes."
     },
     "onSortChange": {
-      "type": "((descriptor: SortDescriptor) => any) | undefined",
+      "type": "((descriptor: SortDescriptor) => any)",
+      "detailedType": "((descriptor: SortDescriptor) => any) | undefined",
       "description": "Handler that is called when the sorted column or direction changes."
     },
     "resizable": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether the table columns are resizable."
     },
     "selectedKeys": {
-      "type": "Iterable<Key> | \"all\" | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionBehavior": {
-      "type": "SelectionBehavior | undefined",
+      "type": "SelectionBehavior",
+      "detailedType": "SelectionBehavior | undefined",
       "description": "How multiple selection should behave in the collection.",
       "default": "\"toggle\""
     },
     "selectionMode": {
-      "type": "SelectionMode | undefined",
+      "type": "SelectionMode",
+      "detailedType": "SelectionMode | undefined",
       "description": "The type of selection that is allowed in the collection."
     },
     "shouldSelectOnPressUp": {
-      "type": "boolean | undefined",
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "description": "Whether selection should occur on press up instead of press down."
     },
     "slot": {
-      "type": "string | null | undefined",
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "sortDescriptor": {
-      "type": "SortDescriptor | undefined",
+      "type": "SortDescriptor",
+      "detailedType": "SortDescriptor | undefined",
       "description": "The current sorted column and direction."
     },
     "children": {
@@ -89,11 +109,13 @@
       "description": "The elements that make up the table. Includes the TableHeader, TableBody, Columns, and Rows."
     },
     "className": {
-      "type": "ClassNameOrFunction<TableRenderProps> | undefined",
+      "type": "ClassNameOrFunction<TableRenderProps>",
+      "detailedType": "ClassNameOrFunction<TableRenderProps> | undefined",
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<TableRenderProps> | undefined",
+      "type": "StyleOrFunction<TableRenderProps>",
+      "detailedType": "StyleOrFunction<TableRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }
