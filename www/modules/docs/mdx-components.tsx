@@ -8,6 +8,7 @@ import { Heading, type HeadingProps } from "@dotui/registry/ui/heading";
 import { Link as NavLink } from "@dotui/registry/ui/link";
 import type { LinkProps } from "@dotui/registry/ui/link";
 
+import { ApiReference } from "./api-reference";
 import { CodeBlock, Pre } from "./code-block";
 import {
   CodeBlockTab,
@@ -113,6 +114,7 @@ export const mdxComponents: MDXComponents = {
   li: ({ className, ...props }) => (
     <li className={cn("mt-2", className)} {...props} />
   ),
+  ApiReference,
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn("mt-6 border-l-2 pl-6 italic *:text-fg-muted", className)}

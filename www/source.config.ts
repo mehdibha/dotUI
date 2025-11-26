@@ -8,15 +8,6 @@ import {
 import lastModified from "fumadocs-mdx/plugins/last-modified";
 import { z } from "zod";
 
-// import { fileGenerator } from "@/modules/docs/lib/mdx-plugins/file-generator";
-// import {
-//   type RemarkDocGenOptions,
-//   remarkDocGen,
-// } from "@/modules/docs/lib/mdx-plugins/remark-docgen";
-// import remarkInlineCode from "@/modules/docs/lib/mdx-plugins/remark-inline-code";
-// import type { RemarkInstallOptions } from "@/modules/docs/lib/mdx-plugins/remark-install";
-// import { remarkInstall } from "@/modules/docs/lib/mdx-plugins/remark-install";
-
 export const docs = defineDocs({
   dir: "content/docs",
   docs: {
