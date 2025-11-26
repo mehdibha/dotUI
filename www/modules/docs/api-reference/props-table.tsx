@@ -66,7 +66,7 @@ export function PropsTable({
     <div className="my-6 w-full overflow-hidden rounded-md border">
       <table className="w-full border-collapse text-sm">
         {/* Header */}
-        <thead className="border-b bg-muted/50">
+        <thead className="border-b bg-card">
           <tr className={GRID_LAYOUT}>
             <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
               Prop
@@ -130,8 +130,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
       <tr
         className={cn(
           GRID_LAYOUT,
-          "cursor-pointer border-b transition-colors hover:bg-muted/30",
-          isOpen && "bg-muted/20",
+          "cursor-pointer border-b transition-colors hover:bg-muted",
         )}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -183,7 +182,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 
       {/* Expanded panel row */}
       {isOpen && (
-        <tr className="border-b bg-muted/10">
+        <tr className="border-b bg-card">
           <td colSpan={4} className="px-3 py-3">
             <dl className={PANEL_GRID_LAYOUT}>
               {/* Name - with anchor link */}
