@@ -1,11 +1,97 @@
 {
   "name": "TooltipContentProps",
   "props": {
+    "aria-label": {
+      "type": "string | undefined",
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "defaultOpen": {
+      "type": "boolean | undefined",
+      "description": "Whether the overlay is open by default (uncontrolled)."
+    },
+    "onOpenChange": {
+      "type": "((isOpen: boolean) => void) | undefined",
+      "description": "Handler that is called when the overlay's open state changes."
+    },
+    "UNSTABLE_portalContainer": {
+      "type": "Element | undefined",
+      "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
+      "default": "document.body"
+    },
+    "aria-describedby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "arrowBoundaryOffset": {
+      "type": "number | undefined",
+      "description": "The minimum distance the arrow's edge should be from the edge of the overlay element.",
+      "default": "0"
+    },
+    "containerPadding": {
+      "type": "number | undefined",
+      "description": "The placement padding that should be applied between the element and its\nsurrounding container.",
+      "default": "12"
+    },
+    "crossOffset": {
+      "type": "number | undefined",
+      "description": "The additional offset applied along the cross axis between the element and its\nanchor element.",
+      "default": "0"
+    },
     "hideArrow": {
-      "type": "boolean",
-      "default": "false",
+      "type": "boolean | undefined",
       "description": "Whether to hide the tooltip arrow.",
-      "detailedType": "boolean | undefined"
+      "default": "false"
+    },
+    "isEntering": {
+      "type": "boolean | undefined",
+      "description": "Whether the tooltip is currently performing an entry animation."
+    },
+    "isExiting": {
+      "type": "boolean | undefined",
+      "description": "Whether the tooltip is currently performing an exit animation."
+    },
+    "isOpen": {
+      "type": "boolean | undefined",
+      "description": "Whether the element is rendered."
+    },
+    "offset": {
+      "type": "number | undefined",
+      "description": "The additional offset applied along the main axis between the element and its\nanchor element.",
+      "default": "0"
+    },
+    "placement": {
+      "type": "Placement | undefined",
+      "description": "The placement of the tooltip with respect to the trigger.",
+      "default": "'top'"
+    },
+    "shouldFlip": {
+      "type": "boolean | undefined",
+      "description": "Whether the element should flip its orientation (e.g. top to bottom or left to right) when\nthere is insufficient room for it to render completely.",
+      "default": "true"
+    },
+    "triggerRef": {
+      "type": "RefObject<Element | null> | undefined",
+      "description": "The ref for the element which the tooltip positions itself with respect to.\n\nWhen used within a TooltipTrigger this is set automatically. It is only required when used standalone."
+    },
+    "children": {
+      "type": "ChildrenOrFunction<TooltipRenderProps>",
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<TooltipRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<TooltipRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }
 }

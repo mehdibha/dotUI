@@ -1,4 +1,36 @@
 {
   "name": "TooltipProps",
-  "props": {}
+  "props": {
+    "defaultOpen": {
+      "type": "boolean | undefined",
+      "description": "Whether the overlay is open by default (uncontrolled)."
+    },
+    "onOpenChange": {
+      "type": "((isOpen: boolean) => void) | undefined",
+      "description": "Handler that is called when the overlay's open state changes."
+    },
+    "closeDelay": {
+      "type": "number | undefined",
+      "description": "The delay time for the tooltip to close. [See guidelines](https://spectrum.adobe.com/page/tooltip/#Warmup-and-cooldown).",
+      "default": "500"
+    },
+    "delay": {
+      "type": "number | undefined",
+      "description": "The delay time for the tooltip to show up. [See guidelines](https://spectrum.adobe.com/page/tooltip/#Immediate-or-delayed-appearance).",
+      "default": "1500"
+    },
+    "isOpen": {
+      "type": "boolean | undefined",
+      "description": "Whether the overlay is open by default (controlled)."
+    },
+    "trigger": {
+      "type": "\"focus\" | \"hover\" | undefined",
+      "description": "By default, opens for both focus and hover. Can be made to open only for focus.",
+      "default": "'hover'"
+    },
+    "isDisabled": {
+      "type": "boolean | undefined",
+      "description": "Whether the tooltip should be disabled, independent from the trigger."
+    }
+  }
 }

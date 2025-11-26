@@ -1,4 +1,147 @@
 {
   "name": "DateFieldProps",
-  "props": {}
+  "props": {
+    "aria-label": {
+      "type": "string | undefined",
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "name": {
+      "type": "string | undefined",
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+    },
+    "defaultValue": {
+      "type": "T | null | undefined",
+      "description": "The default value (uncontrolled)."
+    },
+    "value": {
+      "type": "T | null | undefined",
+      "description": "The current value (controlled)."
+    },
+    "onFocus": {
+      "type": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "description": "Handler that is called when the element receives focus."
+    },
+    "onBlur": {
+      "type": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "description": "Handler that is called when the element loses focus."
+    },
+    "onKeyDown": {
+      "type": "((e: KeyboardEvent) => void) | undefined",
+      "description": "Handler that is called when a key is pressed."
+    },
+    "onKeyUp": {
+      "type": "((e: KeyboardEvent) => void) | undefined",
+      "description": "Handler that is called when a key is released."
+    },
+    "aria-describedby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "autoComplete": {
+      "type": "string | undefined",
+      "description": "Describes the type of autocomplete functionality the input should provide if any. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete)."
+    },
+    "form": {
+      "type": "string | undefined",
+      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
+    "granularity": {
+      "type": "Granularity | undefined",
+      "description": "Determines the smallest unit that is displayed in the date picker. By default, this is `\"day\"` for dates, and `\"minute\"` for times."
+    },
+    "hideTimeZone": {
+      "type": "boolean | undefined",
+      "description": "Whether to hide the time zone abbreviation.",
+      "default": "false"
+    },
+    "hourCycle": {
+      "type": "12 | 24 | undefined",
+      "description": "Whether to display the time in 12 or 24 hour format. By default, this is determined by the user's locale."
+    },
+    "isDateUnavailable": {
+      "type": "((date: DateValue) => boolean) | undefined",
+      "description": "Callback that is called for each date of the calendar. If it returns true, then the date is unavailable."
+    },
+    "isInvalid": {
+      "type": "boolean | undefined",
+      "description": "Whether the input value is invalid."
+    },
+    "maxValue": {
+      "type": "DateValue | null | undefined",
+      "description": "The maximum allowed date that a user may select."
+    },
+    "minValue": {
+      "type": "DateValue | null | undefined",
+      "description": "The minimum allowed date that a user may select."
+    },
+    "onChange": {
+      "type": "((value: MappedDateValue<T> | null) => void) | undefined",
+      "description": "Handler that is called when the value changes."
+    },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void) | undefined",
+      "description": "Handler that is called when the element's focus status changes."
+    },
+    "placeholderValue": {
+      "type": "T | null | undefined",
+      "description": "A placeholder date that influences the format of the placeholder shown when no value is selected. Defaults to today's date at midnight."
+    },
+    "shouldForceLeadingZeros": {
+      "type": "boolean | undefined",
+      "description": "Whether to always show leading zeros in the month, day, and hour fields.\nBy default, this is determined by the user's locale."
+    },
+    "slot": {
+      "type": "string | null | undefined",
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "validate": {
+      "type": "((value: MappedDateValue<T>) => true | ValidationError | null | undefined) | undefined",
+      "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+    },
+    "validationBehavior": {
+      "type": "\"native\" | \"aria\" | undefined",
+      "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
+      "default": "'native'"
+    },
+    "autoFocus": {
+      "type": "boolean | undefined",
+      "description": "Whether the element should receive focus on render."
+    },
+    "isDisabled": {
+      "type": "boolean | undefined",
+      "description": "Whether the input is disabled."
+    },
+    "isReadOnly": {
+      "type": "boolean | undefined",
+      "description": "Whether the input can be selected but not changed by the user."
+    },
+    "isRequired": {
+      "type": "boolean | undefined",
+      "description": "Whether user input is required on the input before form submission."
+    },
+    "id": {
+      "type": "string | undefined",
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "children": {
+      "type": "ChildrenOrFunction<DateFieldRenderProps>",
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<DateFieldRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<DateFieldRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

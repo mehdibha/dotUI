@@ -1,4 +1,15 @@
 {
   "name": "MenuSubProps",
-  "props": {}
+  "props": {
+    "delay": {
+      "type": "number | undefined",
+      "description": "The delay time in milliseconds for the submenu to appear after hovering over the trigger.",
+      "default": "200"
+    },
+    "children": {
+      "type": "ReactElement<unknown, string | JSXElementConstructor<any>>[]",
+      "description": "The contents of the SubmenuTrigger. The first child should be an Item (the trigger) and the second child should be the Popover (for the submenu).",
+      "required": true
+    }
+  }
 }

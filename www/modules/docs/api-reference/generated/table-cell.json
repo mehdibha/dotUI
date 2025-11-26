@@ -1,4 +1,29 @@
 {
   "name": "TableCellProps",
-  "props": {}
+  "props": {
+    "colSpan": {
+      "type": "number | undefined",
+      "description": "Indicates how many columns the data cell spans."
+    },
+    "textValue": {
+      "type": "string | undefined",
+      "description": "A string representation of the cell's contents, used for features like typeahead."
+    },
+    "id": {
+      "type": "Key | undefined",
+      "description": "The unique id of the cell."
+    },
+    "children": {
+      "type": "ChildrenOrFunction<CellRenderProps>",
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<CellRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<CellRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

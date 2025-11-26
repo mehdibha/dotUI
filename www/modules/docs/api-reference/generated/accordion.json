@@ -1,4 +1,41 @@
 {
   "name": "AccordionProps",
-  "props": {}
+  "props": {
+    "allowsMultipleExpanded": {
+      "type": "boolean | undefined",
+      "description": "Whether multiple items can be expanded at the same time."
+    },
+    "defaultExpandedKeys": {
+      "type": "Iterable<Key> | undefined",
+      "description": "The initial expanded keys in the group (uncontrolled)."
+    },
+    "expandedKeys": {
+      "type": "Iterable<Key> | undefined",
+      "description": "The currently expanded keys in the group (controlled)."
+    },
+    "onExpandedChange": {
+      "type": "((keys: Set<Key>) => any) | undefined",
+      "description": "Handler that is called when items are expanded or collapsed."
+    },
+    "isDisabled": {
+      "type": "boolean | undefined",
+      "description": "Whether all items are disabled."
+    },
+    "id": {
+      "type": "string | undefined",
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "children": {
+      "type": "ChildrenOrFunction<DisclosureGroupRenderProps>",
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<DisclosureGroupRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<DisclosureGroupRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

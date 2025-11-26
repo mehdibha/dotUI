@@ -1,4 +1,14 @@
 {
   "name": "ListBoxVirtualizerProps",
-  "props": {}
+  "props": {
+    "layoutOptions": {
+      "type": "T | undefined",
+      "description": "Options for the layout."
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "The child collection to virtualize (e.g. ListBox, GridList, or Table).",
+      "required": true
+    }
+  }
 }

@@ -1,4 +1,50 @@
 {
   "name": "ColorSwatchPickerProps",
-  "props": {}
+  "props": {
+    "aria-label": {
+      "type": "string | undefined",
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "defaultValue": {
+      "type": "string | Color | undefined",
+      "description": "The default value (uncontrolled)."
+    },
+    "value": {
+      "type": "string | Color | undefined",
+      "description": "The current value (controlled)."
+    },
+    "aria-describedby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "layout": {
+      "type": "\"grid\" | \"stack\" | undefined",
+      "description": "Whether the items are arranged in a stack or grid.",
+      "default": "'grid'"
+    },
+    "onChange": {
+      "type": "((value: Color) => void) | undefined",
+      "description": "Handler that is called when the value changes."
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "The children of the ColorSwatchPicker."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<ColorSwatchPickerRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<ColorSwatchPickerRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

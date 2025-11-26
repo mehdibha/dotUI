@@ -1,9 +1,21 @@
 import * as tae from "typescript-api-extractor";
+import ts from "typescript";
 
 import fs from "node:fs";
 import path from "node:path";
-import { formatProperties, getPropertiesFromType } from "./formatter";
 import memberOrder from "./order.json";
+
+export interface ParserContext {
+  program: ts.Program;
+  checker: ts.TypeChecker;
+}
+
+interface FormattedProp {
+  type: string;
+  default?: string;
+  required?: boolean;
+  description?: string;
+}
 
 const registryDir = path.resolve(process.cwd(), "../packages/registry/src");
 
@@ -26,22 +38,24 @@ const componentGroupNames = fs.existsSync(path.join(registryDir, "ui"))
 export async function formatComponentData(
   exportNode: tae.ExportNode,
   allExports: tae.ExportNode[],
+  context: ParserContext,
 ) {
   const description = exportNode.documentation?.description?.replace(
     /\n\nDocumentation: .*$/ms,
     "",
   );
 
-  // Get properties based on type
-  const props = getPropertiesFromType(exportNode.type);
+  // Get all properties using TypeScript's type checker (includes inherited props)
+  const props = await getPropsWithTypeChecker(
+    exportNode.name,
+    context,
+    allExports,
+  );
 
   const raw = {
     name: exportNode.name,
     description,
-    props: sortObjectByKeys(
-      await formatProperties(props, allExports),
-      memberOrder.props,
-    ),
+    props: sortObjectByKeys(props, memberOrder.props),
   } as Record<string, unknown>;
 
   // Post-process type strings to align naming
@@ -53,22 +67,117 @@ export async function formatComponentData(
 }
 
 /**
- * Check if an export is a public Props type (interface or type alias ending with Props)
+ * Use TypeScript's type checker to get ALL properties including inherited ones
+ */
+async function getPropsWithTypeChecker(
+  typeName: string,
+  context: ParserContext,
+  allExports: tae.ExportNode[],
+): Promise<Record<string, FormattedProp>> {
+  const { program, checker } = context;
+  const result: Record<string, FormattedProp> = {};
+
+  // Find the source file containing this type
+  for (const sourceFile of program.getSourceFiles()) {
+    if (sourceFile.isDeclarationFile && !sourceFile.fileName.includes("@dotui")) {
+      continue;
+    }
+
+    sourceFile.forEachChild((node) => {
+      if (
+        (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) &&
+        node.name.text === typeName
+      ) {
+        const symbol = checker.getSymbolAtLocation(node.name);
+        if (!symbol) return;
+
+        const type = checker.getDeclaredTypeOfSymbol(symbol);
+        const properties = checker.getPropertiesOfType(type);
+
+        for (const prop of properties) {
+          // Skip ref
+          if (prop.name === "ref") continue;
+
+          // Get JSDoc documentation
+          const docs = ts.displayPartsToString(
+            prop.getDocumentationComment(checker),
+          );
+
+          // Only include props with documentation (filters out DOM attributes)
+          if (!docs) continue;
+
+          // Get the type of the property
+          const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+          const typeString = checker.typeToString(
+            propType,
+            undefined,
+            ts.TypeFormatFlags.NoTruncation,
+          );
+
+          // Get default value from JSDoc @default tag
+          const jsDocTags = prop.getJsDocTags(checker);
+          const defaultTag = jsDocTags.find((tag) => tag.name === "default");
+          const defaultValue = defaultTag
+            ? ts.displayPartsToString(defaultTag.text)
+            : undefined;
+
+          // Check if optional
+          const isOptional = (prop.flags & ts.SymbolFlags.Optional) !== 0;
+
+          result[prop.name] = {
+            type: formatTypeString(typeString),
+            description: docs,
+            default: defaultValue,
+            required: !isOptional || undefined,
+          };
+
+          // Remove undefined values
+          Object.keys(result[prop.name]).forEach((key) => {
+            if (
+              result[prop.name][key as keyof FormattedProp] === undefined
+            ) {
+              delete result[prop.name][key as keyof FormattedProp];
+            }
+          });
+        }
+      }
+    });
+  }
+
+  return result;
+}
+
+/**
+ * Format type string to be more readable
+ */
+function formatTypeString(typeStr: string): string {
+  // Clean up React namespace
+  let result = typeStr
+    .replace(/React\./g, "")
+    .replace(/import\([^)]+\)\./g, "");
+
+  // Simplify common React types
+  result = result
+    .replace(/ReactElement<any, string \| JSXElementConstructor<any>>/g, "ReactElement")
+    .replace(/ReactNode/g, "ReactNode");
+
+  return result;
+}
+
+/**
+ * Check if an export is a public Props type
  */
 export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
   const name = exportNode.name;
 
-  // Must end with "Props"
   if (!name.endsWith("Props")) {
     return false;
   }
 
-  // Skip internal types
   if (name.includes("Internal") || name.startsWith("_")) {
     return false;
   }
 
-  // Skip if marked with @ignore or @internal
   if (
     exportNode.documentation?.hasTag("ignore") ||
     exportNode.documentation?.hasTag("internal")
@@ -76,7 +185,6 @@ export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
     return false;
   }
 
-  // Must be a type that can have properties
   const type = exportNode.type;
   return (
     type instanceof tae.ObjectNode ||
@@ -96,20 +204,16 @@ function sortObjectByKeys<T>(
   const sortedObj: Record<string, T> = {};
   const everythingElse: Record<string, T> = {};
 
-  // Gather keys that are not in the order array
   Object.keys(obj).forEach((key) => {
     if (!order.includes(key)) {
       everythingElse[key] = obj[key];
     }
   });
 
-  // Sort the keys of everythingElse
   const sortedEverythingElseKeys = Object.keys(everythingElse).sort();
 
-  // Populate the sorted object according to the order array
   order.forEach((key) => {
     if (key === "__EVERYTHING_ELSE__") {
-      // Insert all "everything else" keys at this position, sorted
       sortedEverythingElseKeys.forEach((sortedKey) => {
         sortedObj[sortedKey] = everythingElse[sortedKey];
       });
@@ -122,10 +226,8 @@ function sortObjectByKeys<T>(
 }
 
 function extractComponentGroup(componentExportName: string): string {
-  // Remove Props suffix first
   const baseName = componentExportName.replace(/Props$/, "");
 
-  // Try to match against known component groups
   const directMatch = componentGroupNames.find((name) =>
     baseName.startsWith(name),
   );
@@ -134,7 +236,6 @@ function extractComponentGroup(componentExportName: string): string {
     return directMatch;
   }
 
-  // Extract the first PascalCase word
   const match = baseName.match(/^[A-Z][a-z0-9]*/);
   return match ? match[0] : baseName;
 }
@@ -142,10 +243,8 @@ function extractComponentGroup(componentExportName: string): string {
 function rewriteTypeValue(value: string, componentGroup: string): string {
   let next = value;
 
-  // Clean up internal type suffixes
   next = next.replaceAll(".RootInternal", ".Root");
 
-  // Apply component namespace shorthand (e.g., ButtonProps -> Button.Props)
   if (componentGroup) {
     const escapedGroup = escapeForRegex(componentGroup);
     next = next.replace(
@@ -166,7 +265,6 @@ function dedupeUnionMembers(value: string): string {
     return value;
   }
 
-  // Handle multi-line unions
   const unionLinePattern = /^\s*\|/m;
   if (unionLinePattern.test(value)) {
     const seen = new Set<string>();
@@ -205,7 +303,6 @@ function dedupeUnionMembers(value: string): string {
     return resultLines.join("\n");
   }
 
-  // Handle single-line unions
   const parts = splitTopLevelUnion(value);
   const seen = new Set<string>();
   const dedupedParts = parts.filter((part) => {

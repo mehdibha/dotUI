@@ -1,4 +1,83 @@
 {
   "name": "ColorSliderProps",
-  "props": {}
+  "props": {
+    "aria-label": {
+      "type": "string | undefined",
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "name": {
+      "type": "string | undefined",
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+    },
+    "defaultValue": {
+      "type": "string | Color | undefined",
+      "description": "The default value (uncontrolled)."
+    },
+    "value": {
+      "type": "string | Color | undefined",
+      "description": "The current value (controlled)."
+    },
+    "aria-describedby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "channel": {
+      "type": "ColorChannel",
+      "description": "The color channel that the slider manipulates.",
+      "required": true
+    },
+    "colorSpace": {
+      "type": "ColorSpace | undefined",
+      "description": "The color space that the slider operates in. The `channel` must be in this color space.\nIf not provided, this defaults to the color space of the `color` or `defaultColor` value."
+    },
+    "form": {
+      "type": "string | undefined",
+      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
+    "onChange": {
+      "type": "((value: Color) => void) | undefined",
+      "description": "Handler that is called when the value changes, as the user drags."
+    },
+    "onChangeEnd": {
+      "type": "((value: Color) => void) | undefined",
+      "description": "Handler that is called when the user stops dragging."
+    },
+    "slot": {
+      "type": "string | null | undefined",
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "isDisabled": {
+      "type": "boolean | undefined",
+      "description": "Whether the whole Slider is disabled."
+    },
+    "orientation": {
+      "type": "Orientation | undefined",
+      "description": "The orientation of the Slider.",
+      "default": "'horizontal'"
+    },
+    "id": {
+      "type": "string | undefined",
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "children": {
+      "type": "ChildrenOrFunction<ColorSliderRenderProps>",
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<ColorSliderRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<ColorSliderRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

@@ -1,4 +1,37 @@
 {
   "name": "TableHeaderProps",
-  "props": {}
+  "props": {
+    "columns": {
+      "type": "Iterable<T> | undefined",
+      "description": "A list of table columns."
+    },
+    "dependencies": {
+      "type": "readonly any[] | undefined",
+      "description": "Values that should invalidate the column cache when using dynamic collections."
+    },
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void) | undefined",
+      "description": "Handler that is called when the hover state changes."
+    },
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void) | undefined",
+      "description": "Handler that is called when a hover interaction ends."
+    },
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void) | undefined",
+      "description": "Handler that is called when a hover interaction starts."
+    },
+    "children": {
+      "type": "ReactNode | ((item: T) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
+      "description": "A list of `Column(s)` or a function. If the latter, a list of columns must be provided using the `columns` prop."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<TableHeaderRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<TableHeaderRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

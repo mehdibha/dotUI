@@ -1,36 +1,53 @@
 {
   "name": "OverlayProps",
   "props": {
+    "defaultOpen": {
+      "type": "boolean | undefined",
+      "description": "Whether the overlay is open by default (uncontrolled)."
+    },
+    "onOpenChange": {
+      "type": "((isOpen: boolean) => void) | undefined",
+      "description": "Handler that is called when the overlay's open state changes."
+    },
     "drawerProps": {
-      "type": "Omit<DrawerProps, 'children' | CommonProps>",
-      "description": "Props to pass to the drawer when type is 'drawer'.",
-      "detailedType": "{ placement?: 'bottom' | 'top' | 'left' | 'right' } | undefined"
+      "type": "Omit<DrawerProps, \"children\" | CommonProps> | undefined",
+      "description": "Props to pass to the drawer when type is 'drawer'."
+    },
+    "isDismissable": {
+      "type": "boolean | undefined",
+      "description": "Whether to close the modal when the user interacts outside it.",
+      "default": "false"
+    },
+    "isKeyboardDismissDisabled": {
+      "type": "boolean | undefined",
+      "description": "Whether pressing the escape key to close the modal should be disabled.",
+      "default": "false"
+    },
+    "isOpen": {
+      "type": "boolean | undefined",
+      "description": "Whether the overlay is open by default (controlled)."
     },
     "mobileType": {
-      "type": "Type | null",
-      "default": "'drawer'",
+      "type": "Type | null | undefined",
       "description": "The type of overlay to display on mobile. Set to null to disable.",
-      "detailedType": "'popover' | 'modal' | 'drawer' | null | undefined"
+      "default": "'drawer'"
     },
     "modalProps": {
-      "type": "Omit<ModalProps, 'children' | CommonProps>",
-      "description": "Props to pass to the modal when type is 'modal'.",
-      "detailedType": "{} | undefined"
+      "type": "Omit<ModalProps, \"children\" | CommonProps> | undefined",
+      "description": "Props to pass to the modal when type is 'modal'."
     },
     "popoverProps": {
-      "type": "Omit<PopoverProps, 'children' | CommonProps>",
-      "description": "Props to pass to the popover when type is 'popover'.",
-      "detailedType": "{ showArrow?: boolean } | undefined"
+      "type": "Omit<PopoverProps, \"children\" | CommonProps> | undefined",
+      "description": "Props to pass to the popover when type is 'popover'."
+    },
+    "shouldCloseOnInteractOutside": {
+      "type": "((element: Element) => boolean) | undefined",
+      "description": "When user interacts with the argument element outside of the overlay ref,\nreturn true if onClose should be called.  This gives you a chance to filter\nout interaction with elements that should not dismiss the overlay.\nBy default, onClose will always be called on interaction outside the overlay ref."
     },
     "type": {
-      "type": "Type",
-      "default": "'modal'",
+      "type": "Type | undefined",
       "description": "The type of overlay to display on desktop.",
-      "detailedType": "'popover' | 'modal' | 'drawer' | undefined"
-    },
-    "children": {
-      "type": "ReactNode",
-      "detailedType": "React.ReactNode"
+      "default": "'modal'"
     }
   }
 }

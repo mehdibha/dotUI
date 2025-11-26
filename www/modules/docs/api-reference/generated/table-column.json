@@ -2,9 +2,52 @@
   "name": "TableColumnProps",
   "props": {
     "allowsResizing": {
-      "type": "boolean",
-      "description": "Whether the column is resizable.",
-      "detailedType": "boolean | undefined"
+      "type": "boolean | undefined",
+      "description": "Whether the column is resizable."
+    },
+    "allowsSorting": {
+      "type": "boolean | undefined",
+      "description": "Whether the column allows sorting."
+    },
+    "defaultWidth": {
+      "type": "ColumnSize | null | undefined",
+      "description": "The default width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
+    },
+    "isRowHeader": {
+      "type": "boolean | undefined",
+      "description": "Whether a column is a [row header](https://www.w3.org/TR/wai-aria-1.1/#rowheader) and should be announced by assistive technology during row navigation."
+    },
+    "maxWidth": {
+      "type": "ColumnStaticSize | null | undefined",
+      "description": "The maximum width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
+    },
+    "minWidth": {
+      "type": "ColumnStaticSize | null | undefined",
+      "description": "The minimum width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
+    },
+    "textValue": {
+      "type": "string | undefined",
+      "description": "A string representation of the column's contents, used for accessibility announcements."
+    },
+    "width": {
+      "type": "ColumnSize | null | undefined",
+      "description": "The width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
+    },
+    "id": {
+      "type": "Key | undefined",
+      "description": "The unique id of the column."
+    },
+    "children": {
+      "type": "ChildrenOrFunction<ColumnRenderProps>",
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<ColumnRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<ColumnRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }
 }

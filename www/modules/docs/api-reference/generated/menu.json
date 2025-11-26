@@ -1,4 +1,22 @@
 {
   "name": "MenuProps",
-  "props": {}
+  "props": {
+    "defaultOpen": {
+      "type": "boolean | undefined",
+      "description": "Whether the overlay is open by default (uncontrolled)."
+    },
+    "onOpenChange": {
+      "type": "((isOpen: boolean) => void) | undefined",
+      "description": "Handler that is called when the overlay's open state changes."
+    },
+    "isOpen": {
+      "type": "boolean | undefined",
+      "description": "Whether the overlay is open by default (controlled)."
+    },
+    "trigger": {
+      "type": "MenuTriggerType | undefined",
+      "description": "How the menu is triggered.",
+      "default": "'press'"
+    }
+  }
 }

@@ -1,4 +1,29 @@
 {
   "name": "FileTriggerProps",
-  "props": {}
+  "props": {
+    "acceptDirectory": {
+      "type": "boolean | undefined",
+      "description": "Enables the selection of directories instead of individual files."
+    },
+    "acceptedFileTypes": {
+      "type": "readonly string[] | undefined",
+      "description": "Specifies what mime type of files are allowed."
+    },
+    "allowsMultiple": {
+      "type": "boolean | undefined",
+      "description": "Whether multiple files can be selected."
+    },
+    "defaultCamera": {
+      "type": "\"user\" | \"environment\" | undefined",
+      "description": "Specifies the use of a media capture mechanism to capture the media on the spot."
+    },
+    "onSelect": {
+      "type": "((files: FileList | null) => void) | undefined",
+      "description": "Handler when a user selects a file."
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "The children of the component."
+    }
+  }
 }

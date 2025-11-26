@@ -2,11 +2,14 @@
  * API Docs Builder
  *
  * Generates JSON reference files for component props by parsing TypeScript
- * using typescript-api-extractor. Output files are written to reference/generated/.
+ * using typescript-api-extractor and TypeScript's type checker for inherited props.
  *
  * Usage:
- *   pnpm generate:api-reference
+ *   pnpm generate:api
  */
+
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import { kebabCase } from "es-toolkit/string";
 import { globby } from "globby";
@@ -15,9 +18,11 @@ import * as tae from "typescript-api-extractor";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import * as fs from "node:fs";
-import * as path from "node:path";
-import { formatComponentData, isPublicPropsType } from "./componentHandler";
+import {
+  formatComponentData,
+  isPublicPropsType,
+  type ParserContext,
+} from "./componentHandler";
 
 interface RunOptions {
   files?: string[];
@@ -43,6 +48,13 @@ async function run(options: RunOptions) {
   // Load config and create TypeScript program
   const config = tae.loadConfig(absoluteConfigPath);
   const program = ts.createProgram(config.fileNames, config.options);
+  const checker = program.getTypeChecker();
+
+  // Create parser context for passing to formatComponentData
+  const parserContext: ParserContext = {
+    program,
+    checker,
+  };
 
   // Get files to process
   const targetFiles = await getFilesToProcess(options, configDir);
@@ -57,8 +69,10 @@ async function run(options: RunOptions) {
     console.log(`Processing ${path.relative(configDir, file)}`);
 
     try {
-      // Use parseFromProgram with the properly configured program
-      const ast = tae.parseFromProgram(file, program);
+      const ast = tae.parseFromProgram(file, program, {
+        followReferences: true,
+        maxDepth: 10,
+      });
       if (ast.exports.length > 0) {
         console.log(
           `  Found ${ast.exports.length} exports: ${ast.exports.map((e) => e.name).join(", ")}`,
@@ -82,7 +96,11 @@ async function run(options: RunOptions) {
   // Generate JSON files
   for (const exportNode of propsExports) {
     try {
-      const componentRef = await formatComponentData(exportNode, allExports);
+      const componentRef = await formatComponentData(
+        exportNode,
+        allExports,
+        parserContext,
+      );
       const json = JSON.stringify(componentRef, null, 2) + "\n";
 
       // Remove "Props" suffix for filename

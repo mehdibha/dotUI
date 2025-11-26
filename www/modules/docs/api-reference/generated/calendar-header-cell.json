@@ -1,4 +1,21 @@
 {
   "name": "CalendarHeaderCellProps",
-  "props": {}
+  "props": {
+    "id": {
+      "type": "string | undefined",
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "children": {
+      "type": "ReactNode",
+      "description": "The children of the component."
+    },
+    "className": {
+      "type": "string | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
+    "style": {
+      "type": "CSSProperties | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    }
+  }
 }

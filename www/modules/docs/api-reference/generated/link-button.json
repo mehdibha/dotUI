@@ -1,23 +1,148 @@
 {
   "name": "LinkButtonProps",
   "props": {
+    "aria-label": {
+      "type": "string | undefined",
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
     "variant": {
-      "type": "'link' | 'danger' | 'warning' | 'success' | 'default' | 'primary' | 'quiet'",
-      "default": "\"default\"",
+      "type": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\" | undefined",
       "description": "The visual style of the button.",
-      "detailedType": "'link' | 'danger' | 'warning' | 'success' | 'default' | 'primary' | 'quiet' | undefined"
+      "default": "\"default\""
     },
     "size": {
-      "type": "'sm' | 'md' | 'lg'",
-      "default": "\"md\"",
+      "type": "\"sm\" | \"md\" | \"lg\" | undefined",
       "description": "The size of the button.",
-      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+      "default": "\"md\""
+    },
+    "onClick": {
+      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
+      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
+    },
+    "onPress": {
+      "type": "((e: PressEvent) => void) | undefined",
+      "description": "Handler that is called when the press is released over the target."
+    },
+    "onPressStart": {
+      "type": "((e: PressEvent) => void) | undefined",
+      "description": "Handler that is called when a press interaction starts."
+    },
+    "onPressEnd": {
+      "type": "((e: PressEvent) => void) | undefined",
+      "description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
+    },
+    "onFocus": {
+      "type": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "description": "Handler that is called when the element receives focus."
+    },
+    "onBlur": {
+      "type": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "description": "Handler that is called when the element loses focus."
+    },
+    "onKeyDown": {
+      "type": "((e: KeyboardEvent) => void) | undefined",
+      "description": "Handler that is called when a key is pressed."
+    },
+    "onKeyUp": {
+      "type": "((e: KeyboardEvent) => void) | undefined",
+      "description": "Handler that is called when a key is released."
+    },
+    "aria-describedby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "aspect": {
-      "type": "'default' | 'square' | 'auto'",
-      "default": "\"auto\"",
+      "type": "\"default\" | \"square\" | \"auto\" | undefined",
       "description": "Controls the button's aspect ratio behavior.\n- `\"auto\"`: Automatically detects if the button contains only an icon and applies square aspect.\n- `\"square\"`: Forces square aspect ratio (equal width and height).\n- `\"default\"`: Standard button sizing with padding.",
-      "detailedType": "'default' | 'square' | 'auto' | undefined"
+      "default": "\"auto\""
+    },
+    "download": {
+      "type": "string | boolean | undefined",
+      "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
+    },
+    "href": {
+      "type": "string | undefined",
+      "description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
+    },
+    "hrefLang": {
+      "type": "string | undefined",
+      "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
+    },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void) | undefined",
+      "description": "Handler that is called when the element's focus status changes."
+    },
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void) | undefined",
+      "description": "Handler that is called when the hover state changes."
+    },
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void) | undefined",
+      "description": "Handler that is called when a hover interaction ends."
+    },
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void) | undefined",
+      "description": "Handler that is called when a hover interaction starts."
+    },
+    "onPressChange": {
+      "type": "((isPressed: boolean) => void) | undefined",
+      "description": "Handler that is called when the press state changes."
+    },
+    "onPressUp": {
+      "type": "((e: PressEvent) => void) | undefined",
+      "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
+    },
+    "ping": {
+      "type": "string | undefined",
+      "description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
+    },
+    "referrerPolicy": {
+      "type": "HTMLAttributeReferrerPolicy | undefined",
+      "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
+    },
+    "rel": {
+      "type": "string | undefined",
+      "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
+    },
+    "routerOptions": {
+      "type": "undefined",
+      "description": "Options for the configured client side router."
+    },
+    "slot": {
+      "type": "string | null | undefined",
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "target": {
+      "type": "HTMLAttributeAnchorTarget | undefined",
+      "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
+    },
+    "autoFocus": {
+      "type": "boolean | undefined",
+      "description": "Whether the element should receive focus on render."
+    },
+    "isDisabled": {
+      "type": "boolean | undefined",
+      "description": "Whether the link is disabled."
+    },
+    "children": {
+      "type": "ChildrenOrFunction<LinkRenderProps>",
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<LinkRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<LinkRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }
 }

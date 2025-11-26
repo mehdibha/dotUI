@@ -1,4 +1,18 @@
 {
   "name": "CalendarGridHeaderProps",
-  "props": {}
+  "props": {
+    "children": {
+      "type": "(day: string) => ReactElement<unknown, string | JSXElementConstructor<any>>",
+      "description": "A function to render a `<CalendarHeaderCell>` for a weekday name.",
+      "required": true
+    },
+    "className": {
+      "type": "string | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
+    "style": {
+      "type": "CSSProperties | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    }
+  }
 }

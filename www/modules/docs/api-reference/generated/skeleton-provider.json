@@ -2,14 +2,8 @@
   "name": "SkeletonProviderProps",
   "props": {
     "isLoading": {
-      "type": "boolean",
-      "description": "Whether the skeleton loading state is active.",
-      "detailedType": "boolean | undefined"
-    },
-    "children": {
-      "type": "ReactNode",
-      "required": true,
-      "detailedType": "React.ReactNode"
+      "type": "boolean | undefined",
+      "description": "Whether the skeleton loading state is active."
     }
   }
 }

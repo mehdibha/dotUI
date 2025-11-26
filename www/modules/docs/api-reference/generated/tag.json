@@ -1,4 +1,97 @@
 {
   "name": "TagProps",
-  "props": {}
+  "props": {
+    "onClick": {
+      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
+      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
+    },
+    "onPress": {
+      "type": "((e: PressEvent) => void) | undefined",
+      "description": "Handler that is called when the press is released over the target."
+    },
+    "onPressStart": {
+      "type": "((e: PressEvent) => void) | undefined",
+      "description": "Handler that is called when a press interaction starts."
+    },
+    "onPressEnd": {
+      "type": "((e: PressEvent) => void) | undefined",
+      "description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
+    },
+    "download": {
+      "type": "string | boolean | undefined",
+      "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
+    },
+    "href": {
+      "type": "string | undefined",
+      "description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
+    },
+    "hrefLang": {
+      "type": "string | undefined",
+      "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
+    },
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void) | undefined",
+      "description": "Handler that is called when the hover state changes."
+    },
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void) | undefined",
+      "description": "Handler that is called when a hover interaction ends."
+    },
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void) | undefined",
+      "description": "Handler that is called when a hover interaction starts."
+    },
+    "onPressChange": {
+      "type": "((isPressed: boolean) => void) | undefined",
+      "description": "Handler that is called when the press state changes."
+    },
+    "onPressUp": {
+      "type": "((e: PressEvent) => void) | undefined",
+      "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
+    },
+    "ping": {
+      "type": "string | undefined",
+      "description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
+    },
+    "referrerPolicy": {
+      "type": "HTMLAttributeReferrerPolicy | undefined",
+      "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
+    },
+    "rel": {
+      "type": "string | undefined",
+      "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
+    },
+    "routerOptions": {
+      "type": "undefined",
+      "description": "Options for the configured client side router."
+    },
+    "target": {
+      "type": "HTMLAttributeAnchorTarget | undefined",
+      "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
+    },
+    "textValue": {
+      "type": "string | undefined",
+      "description": "A string representation of the tags's contents, used for accessibility.\nRequired if children is not a plain text string."
+    },
+    "isDisabled": {
+      "type": "boolean | undefined",
+      "description": "Whether the tag is disabled."
+    },
+    "id": {
+      "type": "Key | undefined",
+      "description": "A unique id for the tag."
+    },
+    "children": {
+      "type": "ChildrenOrFunction<TagRenderProps>",
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<TagRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<TagRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

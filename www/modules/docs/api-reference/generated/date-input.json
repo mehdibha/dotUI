@@ -2,14 +2,21 @@
   "name": "DateInputProps",
   "props": {
     "size": {
-      "type": "'sm' | 'md' | 'lg'",
-      "default": "'md'",
+      "type": "\"sm\" | \"md\" | \"lg\" | undefined",
       "description": "The size of the date input.",
-      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+      "default": "'md'"
     },
-    "children": {
-      "type": "any",
-      "detailedType": "any | undefined"
+    "slot": {
+      "type": "string | null | undefined",
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<DateInputRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<DateInputRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }
 }

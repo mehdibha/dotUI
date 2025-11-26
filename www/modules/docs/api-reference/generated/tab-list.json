@@ -1,4 +1,41 @@
 {
   "name": "TabListProps",
-  "props": {}
+  "props": {
+    "aria-label": {
+      "type": "string | undefined",
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string | undefined",
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "dependencies": {
+      "type": "readonly any[] | undefined",
+      "description": "Values that should invalidate the item cache when using dynamic collections."
+    },
+    "items": {
+      "type": "Iterable<object> | undefined",
+      "description": "Item objects in the collection."
+    },
+    "children": {
+      "type": "ReactNode | ((item: object) => ReactNode)",
+      "description": "The contents of the collection."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<TabListRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<TabListRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

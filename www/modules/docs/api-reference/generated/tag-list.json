@@ -1,4 +1,29 @@
 {
   "name": "TagListProps",
-  "props": {}
+  "props": {
+    "dependencies": {
+      "type": "readonly any[] | undefined",
+      "description": "Values that should invalidate the item cache when using dynamic collections."
+    },
+    "items": {
+      "type": "Iterable<T> | undefined",
+      "description": "Item objects in the collection."
+    },
+    "renderEmptyState": {
+      "type": "((props: TagListRenderProps) => ReactNode) | undefined",
+      "description": "Provides content to display when there are no items in the tag list."
+    },
+    "children": {
+      "type": "ReactNode | ((item: T) => ReactNode)",
+      "description": "The contents of the collection."
+    },
+    "className": {
+      "type": "ClassNameOrFunction<TagListRenderProps> | undefined",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "StyleOrFunction<TagListRenderProps> | undefined",
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  }
 }

@@ -33,7 +33,13 @@ export async function formatProperties(
 
   for (const prop of props) {
     // Skip `ref` for components
-    if (prop.name === "ref" && (allExports?.length ?? -1) > 0) {
+    if (prop.name === "ref") {
+      continue;
+    }
+
+    // Only include props with JSDoc documentation
+    // This excludes DOM attributes (no docs) but includes React Aria props (have docs)
+    if (!prop.documentation?.description) {
       continue;
     }
 
