@@ -1,0 +1,11 @@
+{
+  "name": "AvatarGroupProps",
+  "props": {
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of all avatars in the group.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    }
+  }
+}

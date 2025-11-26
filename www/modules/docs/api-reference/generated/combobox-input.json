@@ -1,0 +1,16 @@
+{
+  "name": "ComboboxInputProps",
+  "props": {
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of the input group.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder text for the input.",
+      "detailedType": "string | undefined"
+    }
+  }
+}

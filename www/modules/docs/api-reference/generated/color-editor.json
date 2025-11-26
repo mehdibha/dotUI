@@ -1,0 +1,23 @@
+{
+  "name": "ColorEditorProps",
+  "props": {
+    "colorFormat": {
+      "type": "ColorFormat",
+      "default": "'hex'",
+      "description": "The initial color format to display.",
+      "detailedType": "'hex' | 'rgb' | 'hsl' | 'hsb' | undefined"
+    },
+    "showAlphaChannel": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether to show the alpha channel slider.",
+      "detailedType": "boolean | undefined"
+    },
+    "showFormatSelector": {
+      "type": "boolean",
+      "default": "true",
+      "description": "Whether to show the color format selector.",
+      "detailedType": "boolean | undefined"
+    }
+  }
+}

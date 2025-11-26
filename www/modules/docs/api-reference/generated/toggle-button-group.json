@@ -1,0 +1,17 @@
+{
+  "name": "ToggleButtonGroupProps",
+  "props": {
+    "variant": {
+      "type": "'default' | 'quiet'",
+      "default": "'default'",
+      "description": "The visual style of the toggle buttons.",
+      "detailedType": "'default' | 'quiet' | undefined"
+    },
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of the toggle buttons.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    }
+  }
+}

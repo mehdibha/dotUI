@@ -1,0 +1,15 @@
+{
+  "name": "TableBodyProps",
+  "props": {
+    "isLoading": {
+      "type": "boolean",
+      "description": "Whether the table body is in a loading state.",
+      "detailedType": "boolean | undefined"
+    },
+    "onLoadMore": {
+      "type": "(() => void)",
+      "description": "Callback fired when more data needs to be loaded.",
+      "detailedType": "(() => void) | undefined"
+    }
+  }
+}

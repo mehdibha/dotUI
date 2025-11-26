@@ -1,0 +1,22 @@
+{
+  "name": "DatePickerContentProps",
+  "props": {
+    "mobileType": {
+      "type": "Type | null",
+      "default": "'drawer'",
+      "description": "The type of overlay to display on mobile. Set to null to disable.",
+      "detailedType": "'popover' | 'modal' | 'drawer' | null | undefined"
+    },
+    "popoverProps": {
+      "type": "Omit<PopoverProps, 'children' | CommonProps>",
+      "description": "Props to pass to the popover when type is 'popover'.",
+      "detailedType": "{ showArrow?: boolean } | undefined"
+    },
+    "type": {
+      "type": "Type",
+      "default": "'modal'",
+      "description": "The type of overlay to display on desktop.",
+      "detailedType": "'popover' | 'modal' | 'drawer' | undefined"
+    }
+  }
+}

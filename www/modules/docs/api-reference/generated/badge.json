@@ -1,0 +1,11 @@
+{
+  "name": "BadgeProps",
+  "props": {
+    "variant": {
+      "type": "'danger' | 'warning' | 'info' | 'success' | 'default'",
+      "default": "'default'",
+      "description": "The visual style of the badge.",
+      "detailedType": "'danger' | 'warning' | 'info' | 'success' | 'default' | undefined"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "SwitchProps",
+  "props": {
+    "variant": {
+      "type": "'default'",
+      "default": "'default'",
+      "description": "The visual style of the switch.",
+      "detailedType": "'default' | undefined"
+    },
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of the switch.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    }
+  }
+}

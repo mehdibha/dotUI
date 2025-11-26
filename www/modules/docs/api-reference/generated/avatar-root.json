@@ -1,0 +1,11 @@
+{
+  "name": "AvatarRootProps",
+  "props": {
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of the avatar.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    }
+  }
+}

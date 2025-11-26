@@ -1,0 +1,10 @@
+{
+  "name": "ListBoxProps",
+  "props": {
+    "isLoading": {
+      "type": "boolean",
+      "description": "Whether the list box is in a loading state.",
+      "detailedType": "boolean | undefined"
+    }
+  }
+}

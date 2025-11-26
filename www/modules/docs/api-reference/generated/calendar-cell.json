@@ -1,0 +1,11 @@
+{
+  "name": "CalendarCellProps",
+  "props": {
+    "variant": {
+      "type": "'primary' | 'accent'",
+      "default": "'accent'",
+      "description": "The color variant of the selected cell.",
+      "detailedType": "'primary' | 'accent' | undefined"
+    }
+  }
+}

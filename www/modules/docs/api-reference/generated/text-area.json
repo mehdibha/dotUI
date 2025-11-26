@@ -1,0 +1,11 @@
+{
+  "name": "TextAreaProps",
+  "props": {
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of the textarea.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    }
+  }
+}

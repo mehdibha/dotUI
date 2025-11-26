@@ -1,0 +1,11 @@
+{
+  "name": "MenuItemProps",
+  "props": {
+    "variant": {
+      "type": "'danger' | 'warning' | 'success' | 'default' | 'accent'",
+      "default": "'default'",
+      "description": "The color variant of the menu item.",
+      "detailedType": "'danger' | 'warning' | 'success' | 'default' | 'accent' | undefined"
+    }
+  }
+}

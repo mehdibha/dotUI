@@ -1,0 +1,11 @@
+{
+  "name": "FieldProps",
+  "props": {
+    "orientation": {
+      "type": "'horizontal' | 'vertical'",
+      "default": "'vertical'",
+      "description": "The orientation of the field layout.",
+      "detailedType": "'horizontal' | 'vertical' | undefined"
+    }
+  }
+}

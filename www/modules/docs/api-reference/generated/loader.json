@@ -1,0 +1,29 @@
+{
+  "name": "LoaderProps",
+  "props": {
+    "size": {
+      "type": "number",
+      "default": "20",
+      "description": "The size of the loader in pixels.",
+      "detailedType": "number | undefined"
+    },
+    "speed": {
+      "type": "number",
+      "default": "0.8",
+      "description": "The animation speed in seconds.",
+      "detailedType": "number | undefined"
+    },
+    "stroke": {
+      "type": "number",
+      "default": "2",
+      "description": "The stroke width of the loader circle.",
+      "detailedType": "number | undefined"
+    },
+    "strokeLength": {
+      "type": "number",
+      "default": "0.25",
+      "description": "The length of the stroke as a percentage (0-1).",
+      "detailedType": "number | undefined"
+    }
+  }
+}

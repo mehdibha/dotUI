@@ -1,0 +1,19 @@
+{
+  "name": "CommandContentProps",
+  "props": {
+    "isLoading": {
+      "type": "boolean",
+      "description": "Whether the list box is in a loading state.",
+      "detailedType": "boolean | undefined"
+    },
+    "placement": {
+      "type": "Placement",
+      "detailedType": "Placement | undefined"
+    },
+    "virtulized": {
+      "type": "boolean",
+      "description": "Whether to use virtualization for large lists.",
+      "detailedType": "boolean | undefined"
+    }
+  }
+}

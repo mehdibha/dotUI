@@ -1,0 +1,8 @@
+{
+  "name": "ComboboxProps",
+  "props": {
+    "className": {
+      "type": "string"
+    }
+  }
+}

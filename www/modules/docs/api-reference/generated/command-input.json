@@ -1,0 +1,10 @@
+{
+  "name": "CommandInputProps",
+  "props": {
+    "placeholder": {
+      "type": "string",
+      "description": "Placeholder text for the search input.",
+      "detailedType": "string | undefined"
+    }
+  }
+}

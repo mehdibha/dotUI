@@ -1,0 +1,11 @@
+{
+  "name": "TooltipContentProps",
+  "props": {
+    "hideArrow": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether to hide the tooltip arrow.",
+      "detailedType": "boolean | undefined"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "LinkProps",
+  "props": {
+    "variant": {
+      "type": "'quiet' | 'accent' | 'unstyled'",
+      "default": "'accent'",
+      "description": "The visual style of the link.",
+      "detailedType": "'quiet' | 'accent' | 'unstyled' | undefined"
+    }
+  }
+}

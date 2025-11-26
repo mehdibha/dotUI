@@ -1,0 +1,11 @@
+{
+  "name": "DrawerProps",
+  "props": {
+    "placement": {
+      "type": "'bottom' | 'top' | 'left' | 'right'",
+      "default": "'bottom'",
+      "description": "The side of the screen where the drawer appears.",
+      "detailedType": "'bottom' | 'top' | 'left' | 'right' | undefined"
+    }
+  }
+}

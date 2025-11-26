@@ -1,0 +1,27 @@
+{
+  "name": "ColorPickerTriggerProps",
+  "props": {
+    "variant": {
+      "type": "'link' | 'danger' | 'warning' | 'success' | 'default' | 'primary' | 'quiet'",
+      "default": "'default'",
+      "description": "The visual style of the button (Vanilla CSS implementation specific).",
+      "detailedType": "'link' | 'danger' | 'warning' | 'success' | 'default' | 'primary' | 'quiet' | undefined"
+    },
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "\"md\"",
+      "description": "The size of the button.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    },
+    "aspect": {
+      "type": "'default' | 'square' | 'auto'",
+      "default": "\"auto\"",
+      "description": "Controls the button's aspect ratio behavior.\n- `\"auto\"`: Automatically detects if the button contains only an icon and applies square aspect.\n- `\"square\"`: Forces square aspect ratio.\n- `\"default\"`: Standard button sizing with padding.",
+      "detailedType": "'default' | 'square' | 'auto' | undefined"
+    },
+    "children": {
+      "type": "ReactNode | ((props: ColorPickerState) => ReactNode)",
+      "detailedType": "React.ReactNode | ((props: ColorPickerState) => ReactNode)"
+    }
+  }
+}

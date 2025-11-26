@@ -1,0 +1,21 @@
+{
+  "name": "AvatarProps",
+  "props": {
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of the avatar.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    },
+    "fallback": {
+      "type": "ReactNode",
+      "description": "Content to display when the image fails to load.",
+      "detailedType": "React.ReactNode"
+    },
+    "src": {
+      "type": "string",
+      "description": "The URL of the avatar image.",
+      "detailedType": "string | undefined"
+    }
+  }
+}

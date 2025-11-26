@@ -1,0 +1,15 @@
+{
+  "name": "DateInputProps",
+  "props": {
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of the date input.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    },
+    "children": {
+      "type": "any",
+      "detailedType": "any | undefined"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "SkeletonProps",
+  "props": {
+    "show": {
+      "type": "boolean",
+      "default": "true",
+      "description": "Whether to show the skeleton. When false, renders children directly.",
+      "detailedType": "boolean | undefined"
+    }
+  }
+}

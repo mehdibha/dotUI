@@ -1,0 +1,11 @@
+{
+  "name": "ListBoxItemProps",
+  "props": {
+    "variant": {
+      "type": "'danger' | 'warning' | 'success' | 'default'",
+      "default": "'default'",
+      "description": "The color variant of the list box item.",
+      "detailedType": "'danger' | 'warning' | 'success' | 'default' | undefined"
+    }
+  }
+}

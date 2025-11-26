@@ -1,0 +1,10 @@
+{
+  "name": "AvatarImageProps",
+  "props": {
+    "src": {
+      "type": "string",
+      "description": "The URL of the avatar image.",
+      "detailedType": "string | undefined"
+    }
+  }
+}

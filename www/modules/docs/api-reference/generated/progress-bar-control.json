@@ -1,0 +1,22 @@
+{
+  "name": "ProgressBarControlProps",
+  "props": {
+    "variant": {
+      "type": "'danger' | 'warning' | 'success' | 'primary' | 'accent'",
+      "default": "'accent'",
+      "description": "The color variant of the progress bar.",
+      "detailedType": "'danger' | 'warning' | 'success' | 'primary' | 'accent' | undefined"
+    },
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "description": "The size of the progress bar.",
+      "detailedType": "'sm' | 'md' | 'lg' | undefined"
+    },
+    "duration": {
+      "type": "any",
+      "description": "Duration of the progress animation.",
+      "detailedType": "any | undefined"
+    }
+  }
+}

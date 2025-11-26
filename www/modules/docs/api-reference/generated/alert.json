@@ -1,0 +1,11 @@
+{
+  "name": "AlertProps",
+  "props": {
+    "variant": {
+      "type": "'neutral' | 'danger' | 'warning' | 'info' | 'success'",
+      "default": "'neutral'",
+      "description": "The visual style of the alert.",
+      "detailedType": "'neutral' | 'danger' | 'warning' | 'info' | 'success' | undefined"
+    }
+  }
+}

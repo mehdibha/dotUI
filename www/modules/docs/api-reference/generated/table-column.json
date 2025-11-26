@@ -1,0 +1,10 @@
+{
+  "name": "TableColumnProps",
+  "props": {
+    "allowsResizing": {
+      "type": "boolean",
+      "description": "Whether the column is resizable.",
+      "detailedType": "boolean | undefined"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "ColorThumbProps",
+  "props": {
+    "className": {
+      "type": "string"
+    }
+  }
+}

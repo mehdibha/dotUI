@@ -1,0 +1,11 @@
+{
+  "name": "GroupProps",
+  "props": {
+    "orientation": {
+      "type": "'horizontal' | 'vertical'",
+      "default": "'horizontal'",
+      "description": "The orientation of the group layout.",
+      "detailedType": "'horizontal' | 'vertical' | undefined"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "ComboboxContentProps",
+  "props": {
+    "isLoading": {
+      "type": "boolean",
+      "description": "Whether the list box is in a loading state.",
+      "detailedType": "boolean | undefined"
+    },
+    "virtulized": {
+      "type": "boolean",
+      "description": "Whether to use virtualization for large lists.",
+      "detailedType": "boolean | undefined"
+    }
+  }
+}

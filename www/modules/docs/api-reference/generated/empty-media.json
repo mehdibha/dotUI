@@ -1,0 +1,11 @@
+{
+  "name": "EmptyMediaProps",
+  "props": {
+    "variant": {
+      "type": "'default' | 'icon'",
+      "default": "'default'",
+      "description": "The visual style of the media container.",
+      "detailedType": "'default' | 'icon' | undefined"
+    }
+  }
+}
