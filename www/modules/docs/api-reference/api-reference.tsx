@@ -29,7 +29,7 @@ export async function ApiReference({
       const decorated = await decorateProps(parsedProps);
       const grouped = groupPropDocs(decorated, groups);
 
-      return { name, label, count: decorated.length, grouped };
+      return { name, label, grouped };
     }),
   );
 

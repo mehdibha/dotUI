@@ -131,55 +131,19 @@ function PropDetailsRow({ prop }: { prop: PropDisplayDoc }) {
 
 function PropDetails({ prop }: { prop: PropDisplayDoc }) {
   return (
-    <div className="space-y-4 text-sm">
-      <Detail label="Name">
-        <InlineCode html={prop.highlightedName} text={prop.name} />
-      </Detail>
-      <Detail label="Type">
-        <InlineCode html={prop.highlightedType} text={prop.type} />
-      </Detail>
-      <Detail label="Default">
-        {prop.defaultValue ? (
-          <InlineCode
-            html={prop.highlightedDefault}
-            text={prop.defaultValue}
-            className="text-fg-muted"
-          />
-        ) : (
-          <span className="text-fg-muted">-</span>
-        )}
-      </Detail>
-      <Detail label="Description">
-        {prop.description ? (
-          <p className="text-fg leading-relaxed">
-            {prop.description.split("\n").map((paragraph, index) => (
-              <React.Fragment key={index}>
-                {index > 0 && <br />}
-                {paragraph}
-              </React.Fragment>
-            ))}
-          </p>
-        ) : (
-          <span aria-hidden="true">—</span>
-        )}
-      </Detail>
-    </div>
-  );
-}
-
-function Detail({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="space-y-1">
-      <p className="font-semibold text-fg-muted text-xs uppercase tracking-wide">
-        {label}
-      </p>
-      <div>{children}</div>
+    <div className="text-sm">
+      {prop.description ? (
+        <p className="text-fg leading-relaxed">
+          {prop.description.split("\n").map((paragraph, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && <br />}
+              {paragraph}
+            </React.Fragment>
+          ))}
+        </p>
+      ) : (
+        <span className="text-fg-muted">No description available.</span>
+      )}
     </div>
   );
 }
