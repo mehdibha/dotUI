@@ -334,7 +334,7 @@ function pushToEnd(
   });
 
   if (index !== -1) {
-    const member = members[index];
+    const member = members[index]!;
     return [...members.slice(0, index), ...members.slice(index + 1), member];
   }
 

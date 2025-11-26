@@ -69,10 +69,7 @@ async function run(options: RunOptions) {
     console.log(`Processing ${path.relative(configDir, file)}`);
 
     try {
-      const ast = tae.parseFromProgram(file, program, {
-        followReferences: true,
-        maxDepth: 10,
-      });
+      const ast = tae.parseFromProgram(file, program);
       if (ast.exports.length > 0) {
         console.log(
           `  Found ${ast.exports.length} exports: ${ast.exports.map((e) => e.name).join(", ")}`,

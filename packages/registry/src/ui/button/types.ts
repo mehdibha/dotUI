@@ -1,9 +1,9 @@
 import type {
-  ButtonProps as AriaButtonProps,
-  LinkProps as AriaLinkProps,
+  Button as AriaButton,
+  Link as AriaLink,
 } from "react-aria-components";
 
-export interface ButtonProps extends AriaButtonProps {
+export interface ButtonProps extends React.ComponentProps<typeof AriaButton> {
   /**
    * The visual style of the button (Vanilla CSS implementation specific).
    * @default 'default'
@@ -33,7 +33,7 @@ export interface ButtonProps extends AriaButtonProps {
   aspect?: "default" | "square" | "auto";
 }
 
-export interface LinkButtonProps extends AriaLinkProps {
+export interface LinkButtonProps extends React.ComponentProps<typeof AriaLink> {
   /**
    * The visual style of the button.
    * @default "default"

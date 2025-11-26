@@ -1,5 +1,5 @@
-import * as tae from "typescript-api-extractor";
 import ts from "typescript";
+import * as tae from "typescript-api-extractor";
 
 import fs from "node:fs";
 import path from "node:path";
@@ -79,7 +79,10 @@ async function getPropsWithTypeChecker(
 
   // Find the source file containing this type
   for (const sourceFile of program.getSourceFiles()) {
-    if (sourceFile.isDeclarationFile && !sourceFile.fileName.includes("@dotui")) {
+    if (
+      sourceFile.isDeclarationFile &&
+      !sourceFile.fileName.includes("@dotui")
+    ) {
       continue;
     }
 
@@ -132,13 +135,16 @@ async function getPropsWithTypeChecker(
           };
 
           // Remove undefined values
-          Object.keys(result[prop.name]).forEach((key) => {
-            if (
-              result[prop.name][key as keyof FormattedProp] === undefined
-            ) {
-              delete result[prop.name][key as keyof FormattedProp];
-            }
-          });
+          const currentProp = result[prop.name];
+          if (currentProp) {
+            (Object.keys(currentProp) as Array<keyof FormattedProp>).forEach(
+              (key) => {
+                if (currentProp[key] === undefined) {
+                  delete currentProp[key];
+                }
+              },
+            );
+          }
         }
       }
     });
@@ -158,7 +164,10 @@ function formatTypeString(typeStr: string): string {
 
   // Simplify common React types
   result = result
-    .replace(/ReactElement<any, string \| JSXElementConstructor<any>>/g, "ReactElement")
+    .replace(
+      /ReactElement<any, string \| JSXElementConstructor<any>>/g,
+      "ReactElement",
+    )
     .replace(/ReactNode/g, "ReactNode");
 
   return result;
@@ -206,7 +215,10 @@ function sortObjectByKeys<T>(
 
   Object.keys(obj).forEach((key) => {
     if (!order.includes(key)) {
-      everythingElse[key] = obj[key];
+      const value = obj[key];
+      if (value !== undefined) {
+        everythingElse[key] = value;
+      }
     }
   });
 
@@ -215,10 +227,16 @@ function sortObjectByKeys<T>(
   order.forEach((key) => {
     if (key === "__EVERYTHING_ELSE__") {
       sortedEverythingElseKeys.forEach((sortedKey) => {
-        sortedObj[sortedKey] = everythingElse[sortedKey];
+        const value = everythingElse[sortedKey];
+        if (value !== undefined) {
+          sortedObj[sortedKey] = value;
+        }
       });
     } else if (Object.hasOwn(obj, key)) {
-      sortedObj[key] = obj[key];
+      const value = obj[key];
+      if (value !== undefined) {
+        sortedObj[key] = value;
+      }
     }
   });
 
