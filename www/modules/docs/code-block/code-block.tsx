@@ -54,7 +54,6 @@ export function CodeBlock({
             <div
               className={cn(
                 "flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
-                "**:data-button:bg-card **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))] **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))]",
               )}
             >
               {actions}
