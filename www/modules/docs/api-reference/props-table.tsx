@@ -8,8 +8,12 @@ import { cn } from "@dotui/registry/lib/utils";
 export interface PropData {
   name: string;
   type: string;
+  typeHighlighted?: React.ReactNode;
+  shortType: string;
+  shortTypeHighlighted?: React.ReactNode;
   default?: string;
-  description?: React.ReactNode; // Pre-rendered on server
+  defaultHighlighted?: React.ReactNode;
+  description?: React.ReactNode;
   required?: boolean;
 }
 
@@ -30,21 +34,17 @@ export function PropsTable({ data, componentName }: PropsTableProps) {
   return (
     <div className="my-6 w-full overflow-hidden rounded-md border">
       {/* Header Row */}
-      <div className="grid grid-cols-[1fr_auto] gap-4 border-b bg-muted/50 px-3 py-2 font-medium text-fg-muted text-xs sm:grid-cols-[minmax(160px,1fr)_2fr_auto]">
+      <div className="grid grid-cols-[1fr_auto] gap-4 border-b bg-muted/50 px-3 py-2 font-medium text-fg-muted text-xs sm:grid-cols-[minmax(140px,1fr)_2fr_minmax(80px,auto)_auto]">
         <div>Prop</div>
         <div className="hidden sm:block">Type</div>
+        <div className="hidden sm:block">Default</div>
         <div className="w-8" />
       </div>
 
       {/* Props Rows */}
       <div className="divide-y">
-        {data.map((prop, index) => (
-          <PropRow
-            key={prop.name}
-            prop={prop}
-            componentName={componentName}
-            index={index}
-          />
+        {data.map((prop) => (
+          <PropRow key={prop.name} prop={prop} componentName={componentName} />
         ))}
       </div>
     </div>
@@ -54,13 +54,11 @@ export function PropsTable({ data, componentName }: PropsTableProps) {
 interface PropRowProps {
   prop: PropData;
   componentName: string;
-  index: number;
 }
 
 function PropRow({ prop, componentName }: PropRowProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const id = `${componentName}-${prop.name}`;
-  const shortType = getShortType(prop.name, prop.type);
 
   return (
     <div className="group">
@@ -70,7 +68,7 @@ function PropRow({ prop, componentName }: PropRowProps) {
         id={id}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-4 px-3 py-2.5 text-left transition-colors sm:grid-cols-[minmax(160px,1fr)_2fr_auto]",
+          "grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-4 px-3 py-2.5 text-left transition-colors sm:grid-cols-[minmax(140px,1fr)_2fr_minmax(80px,auto)_auto]",
           "hover:bg-muted/30",
           isOpen && "bg-muted/20",
         )}
@@ -78,7 +76,7 @@ function PropRow({ prop, componentName }: PropRowProps) {
       >
         {/* Prop Name */}
         <div className="flex items-baseline gap-1">
-          <code className="font-mono text-[0.8125rem] text-fg">
+          <code className="rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem] text-fg">
             {prop.name}
           </code>
           {prop.required && (
@@ -88,11 +86,22 @@ function PropRow({ prop, componentName }: PropRowProps) {
           )}
         </div>
 
-        {/* Type (desktop) */}
+        {/* Type (desktop) - highlighted */}
         <div className="hidden overflow-hidden sm:block">
-          <code className="truncate font-mono text-[0.8125rem] text-fg-muted">
-            {shortType.display}
+          <code className="truncate rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem]">
+            {prop.shortTypeHighlighted ?? prop.shortType}
           </code>
+        </div>
+
+        {/* Default (desktop) - highlighted */}
+        <div className="hidden overflow-hidden sm:block">
+          {prop.default !== undefined ? (
+            <code className="truncate rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem]">
+              {prop.defaultHighlighted ?? prop.default}
+            </code>
+          ) : (
+            <span className="text-fg-muted/50">—</span>
+          )}
         </div>
 
         {/* Chevron */}
@@ -110,13 +119,16 @@ function PropRow({ prop, componentName }: PropRowProps) {
       {isOpen && (
         <div className="border-t bg-muted/10 px-3 py-3">
           <dl className="space-y-3 text-sm">
-            {/* Type (always shown in expanded) */}
+            {/* Type */}
             <div>
               <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
                 Type
               </dt>
               <dd>
-                <TypeDisplay type={prop.type} />
+                <TypeDisplay
+                  type={prop.type}
+                  highlighted={prop.typeHighlighted}
+                />
               </dd>
             </div>
 
@@ -126,15 +138,13 @@ function PropRow({ prop, componentName }: PropRowProps) {
                 <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
                   Default
                 </dt>
-                <dd>
-                  <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[0.8125rem]">
-                    {prop.default}
-                  </code>
+                <dd className="inline-block rounded-md border bg-card px-2 py-1 font-mono text-[0.8125rem]">
+                  {prop.defaultHighlighted ?? prop.default}
                 </dd>
               </div>
             )}
 
-            {/* Description (pre-rendered on server) */}
+            {/* Description */}
             {prop.description && (
               <div>
                 <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
@@ -152,8 +162,12 @@ function PropRow({ prop, componentName }: PropRowProps) {
   );
 }
 
-function TypeDisplay({ type }: { type: string }) {
-  // Format multi-line types nicely
+interface TypeDisplayProps {
+  type: string;
+  highlighted?: React.ReactNode;
+}
+
+function TypeDisplay({ type, highlighted }: TypeDisplayProps) {
   const isMultiLine = type.includes("|") && type.length > 60;
 
   if (isMultiLine) {
@@ -171,53 +185,8 @@ function TypeDisplay({ type }: { type: string }) {
   }
 
   return (
-    <code className="rounded-md border bg-card px-2 py-1 font-mono text-[0.8125rem]">
-      {type}
+    <code className="inline-block rounded-md border bg-card px-2 py-1 font-mono text-[0.8125rem]">
+      {highlighted ?? type}
     </code>
   );
-}
-
-/**
- * Get a shortened version of the type for display in the collapsed row
- */
-function getShortType(
-  name: string,
-  type: string | undefined,
-): { display: string; hasMore: boolean } {
-  if (!type) {
-    return { display: "unknown", hasMore: false };
-  }
-
-  // Event handlers show as "function"
-  if (/^on[A-Z]/.test(name)) {
-    return { display: "function", hasMore: true };
-  }
-
-  // className/style render props
-  if (name === "className" && type.includes("=>")) {
-    return { display: "string | function", hasMore: true };
-  }
-  if (name === "style" && type.includes("=>")) {
-    return { display: "CSSProperties | function", hasMore: true };
-  }
-
-  // Simple types
-  if (
-    type === "boolean" ||
-    type === "string" ||
-    type === "number" ||
-    type === "boolean | undefined" ||
-    type === "string | undefined" ||
-    type === "number | undefined"
-  ) {
-    return { display: type, hasMore: false };
-  }
-
-  // Short union types
-  if (!type.includes("|") || (type.split("|").length < 4 && type.length < 50)) {
-    return { display: type, hasMore: false };
-  }
-
-  // Complex unions
-  return { display: "union", hasMore: true };
 }
