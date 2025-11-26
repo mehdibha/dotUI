@@ -2,16 +2,16 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  SwitchIndicatorProps,
-  SwitchProps,
-  SwitchThumbProps,
-} from "./basic";
 import {
   Switch as _Switch,
   SwitchIndicator as _SwitchIndicator,
   SwitchThumb as _SwitchThumb,
 } from "./basic";
+import type {
+  SwitchIndicatorProps,
+  SwitchProps,
+  SwitchThumbProps,
+} from "./types";
 
 export const Switch = createDynamicComponent<SwitchProps>(
   "switch",

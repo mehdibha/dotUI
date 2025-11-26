@@ -2,13 +2,13 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { ButtonProps, LinkButtonProps } from "./basic";
 import {
   Button as _Button,
   ButtonProvider as _ButtonProvider,
   LinkButton as _LinkButton,
   buttonStyles,
 } from "./basic";
+import type { ButtonProps, LinkButtonProps } from "./types";
 
 export const Button = createDynamicComponent<ButtonProps>(
   "button",
@@ -32,4 +32,4 @@ export const ButtonProvider = createDynamicComponent(
 );
 
 export { buttonStyles };
-export type { ButtonProps };
+export type { ButtonProps, LinkButtonProps };

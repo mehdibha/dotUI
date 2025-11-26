@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { TextFieldProps } from "./basic";
 import { TextField as _TextField } from "./basic";
+import type { TextFieldProps } from "./types";
 
 export const TextField = createDynamicComponent<TextFieldProps>(
   "text-field",

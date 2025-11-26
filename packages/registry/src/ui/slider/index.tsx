@@ -2,13 +2,6 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  SliderControlProps,
-  SliderFillerProps,
-  SliderOutputProps,
-  SliderProps,
-  SliderThumbProps,
-} from "./basic";
 import {
   Slider as _Slider,
   SliderControl as _SliderControl,
@@ -16,6 +9,13 @@ import {
   SliderOutput as _SliderOutput,
   SliderThumb as _SliderThumb,
 } from "./basic";
+import type {
+  SliderControlProps,
+  SliderFillerProps,
+  SliderOutputProps,
+  SliderProps,
+  SliderThumbProps,
+} from "./types";
 
 export const Slider = createDynamicComponent<SliderProps>(
   "slider",

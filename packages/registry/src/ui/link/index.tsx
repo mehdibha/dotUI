@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { LinkProps } from "./basic";
 import { Link as _Link } from "./basic";
+import type { LinkProps } from "./types";
 
 export const Link = createDynamicComponent<LinkProps>(
   "link",

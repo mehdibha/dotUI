@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { SearchFieldProps } from "./basic";
 import { SearchField as _SearchField } from "./basic";
+import type { SearchFieldProps } from "./types";
 
 export const SearchField = createDynamicComponent(
   "search-field",

@@ -2,14 +2,6 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  EmptyContentProps,
-  EmptyDescriptionProps,
-  EmptyHeaderProps,
-  EmptyMediaProps,
-  EmptyProps,
-  EmptyTitleProps,
-} from "./basic";
 import {
   Empty as _Empty,
   EmptyContent as _EmptyContent,
@@ -18,6 +10,14 @@ import {
   EmptyMedia as _EmptyMedia,
   EmptyTitle as _EmptyTitle,
 } from "./basic";
+import type {
+  EmptyContentProps,
+  EmptyDescriptionProps,
+  EmptyHeaderProps,
+  EmptyMediaProps,
+  EmptyProps,
+  EmptyTitleProps,
+} from "./types";
 
 export const Empty = createDynamicComponent<EmptyProps>(
   "empty",

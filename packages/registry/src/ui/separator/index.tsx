@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { SeparatorProps } from "./basic";
 import { Separator as _Separator } from "./basic";
+import type { SeparatorProps } from "./types";
 
 export const Separator = createDynamicComponent<SeparatorProps>(
   "separator",

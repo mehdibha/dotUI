@@ -4,15 +4,6 @@ import type { DateValue } from "react-aria-components";
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  CalendarCellProps,
-  CalendarGridBodyProps,
-  CalendarGridHeaderProps,
-  CalendarGridProps,
-  CalendarHeaderCellProps,
-  CalendarHeaderProps,
-  CalendarProps,
-} from "./basic";
 import {
   Calendar as _Calendar,
   CalendarCell as _CalendarCell,
@@ -22,6 +13,15 @@ import {
   CalendarHeader as _CalendarHeader,
   CalendarHeaderCell as _CalendarHeaderCell,
 } from "./basic";
+import type {
+  CalendarCellProps,
+  CalendarGridBodyProps,
+  CalendarGridHeaderProps,
+  CalendarGridProps,
+  CalendarHeaderCellProps,
+  CalendarHeaderProps,
+  CalendarProps,
+} from "./types";
 
 export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
   "calendar",

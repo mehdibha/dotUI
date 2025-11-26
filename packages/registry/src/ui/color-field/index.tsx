@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { ColorFieldProps } from "./basic";
 import { ColorField as _ColorField } from "./basic";
+import type { ColorFieldProps } from "./types";
 
 export const ColorField = createDynamicComponent<ColorFieldProps>(
   "color-field",

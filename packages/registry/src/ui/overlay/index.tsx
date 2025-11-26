@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { OverlayProps } from "./basic";
 import { Overlay as _Overlay } from "./basic";
+import type { OverlayProps } from "./types";
 
 export const Overlay = createDynamicComponent<OverlayProps>(
   "overlay",

@@ -2,15 +2,6 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  TableBodyProps,
-  TableCellProps,
-  TableColumnProps,
-  TableHeaderProps,
-  TableLoadMoreProps,
-  TableProps,
-  TableRowProps,
-} from "./basic";
 import {
   Table as _Table,
   TableBody as _TableBody,
@@ -20,6 +11,15 @@ import {
   TableLoadMore as _TableLoadMore,
   TableRow as _TableRow,
 } from "./basic";
+import type {
+  TableBodyProps,
+  TableCellProps,
+  TableColumnProps,
+  TableHeaderProps,
+  TableLoadMoreProps,
+  TableProps,
+  TableRowProps,
+} from "./types";
 
 export const Table = createDynamicComponent<TableProps>(
   "table",

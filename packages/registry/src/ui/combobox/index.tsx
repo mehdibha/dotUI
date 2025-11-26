@@ -7,16 +7,16 @@ import {
   ListBoxSectionHeader,
 } from "@dotui/registry/ui/list-box";
 
-import type {
-  ComboboxContentProps,
-  ComboboxInputProps,
-  ComboboxProps,
-} from "./basic";
 import {
   Combobox as _Combobox,
   ComboboxContent as _ComboboxContent,
   ComboboxInput as _ComboboxInput,
 } from "./basic";
+import type {
+  ComboboxContentProps,
+  ComboboxInputProps,
+  ComboboxProps,
+} from "./types";
 
 export const Combobox = <T extends object = object>(
   props: ComboboxProps<T>,

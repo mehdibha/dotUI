@@ -2,13 +2,6 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  ListBoxItemProps,
-  ListBoxProps,
-  ListBoxSectionHeaderProps,
-  ListBoxSectionProps,
-  ListBoxVirtualizerProps,
-} from "./basic";
 import {
   ListBox as _ListBox,
   ListBoxItem as _ListBoxItem,
@@ -16,6 +9,13 @@ import {
   ListBoxSectionHeader as _ListBoxSectionHeader,
   ListBoxVirtualizer as _ListBoxVirtualizer,
 } from "./basic";
+import type {
+  ListBoxItemProps,
+  ListBoxProps,
+  ListBoxSectionHeaderProps,
+  ListBoxSectionProps,
+  ListBoxVirtualizerProps,
+} from "./types";
 
 export const ListBox = <T extends object = object>(props: ListBoxProps<T>) => {
   const Component = createDynamicComponent<ListBoxProps<T>>(

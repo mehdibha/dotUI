@@ -2,16 +2,16 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  ProgressBarControlProps,
-  ProgressBarProps,
-  ProgressBarValueLabelProps,
-} from "./basic";
 import {
   ProgressBar as _ProgressBar,
   ProgressBarControl as _ProgressBarControl,
   ProgressBarValueLabel as _ProgressBarValueLabel,
 } from "./basic";
+import type {
+  ProgressBarControlProps,
+  ProgressBarProps,
+  ProgressBarValueLabelProps,
+} from "./types";
 
 export const ProgressBar = createDynamicComponent<ProgressBarProps>(
   "progress-bar",

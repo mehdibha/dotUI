@@ -2,11 +2,11 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { DropZoneLabelProps, DropZoneProps } from "./basic";
 import {
   DropZone as _DropZone,
   DropZoneLabel as _DropZoneLabel,
 } from "./basic";
+import type { DropZoneLabelProps, DropZoneProps } from "./types";
 
 export const DropZone = createDynamicComponent<DropZoneProps>(
   "drop-zone",

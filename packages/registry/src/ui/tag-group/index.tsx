@@ -2,12 +2,12 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { TagGroupProps, TagListProps, TagProps } from "./basic";
 import {
   Tag as _Tag,
   TagGroup as _TagGroup,
   TagList as _TagList,
 } from "./basic";
+import type { TagGroupProps, TagListProps, TagProps } from "./types";
 
 export const TagGroup = createDynamicComponent<TagGroupProps>(
   "tag-group",

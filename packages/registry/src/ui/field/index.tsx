@@ -2,16 +2,6 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  DescriptionProps,
-  FieldContentProps,
-  FieldErrorProps,
-  FieldGroupProps,
-  FieldProps,
-  FieldsetProps,
-  LabelProps,
-  LegendProps,
-} from "./basic";
 import {
   Description as _Description,
   Field as _Field,
@@ -22,6 +12,16 @@ import {
   Label as _Label,
   Legend as _Legend,
 } from "./basic";
+import type {
+  DescriptionProps,
+  FieldContentProps,
+  FieldErrorProps,
+  FieldGroupProps,
+  FieldProps,
+  FieldsetProps,
+  LabelProps,
+  LegendProps,
+} from "./types";
 
 export const Fieldset = createDynamicComponent<FieldsetProps>(
   "field",

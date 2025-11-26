@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { DrawerProps } from "./basic";
 import { Drawer as _Drawer } from "./basic";
+import type { DrawerProps } from "./types";
 
 export const Drawer = createDynamicComponent("drawer", "Drawer", _Drawer, {});
 

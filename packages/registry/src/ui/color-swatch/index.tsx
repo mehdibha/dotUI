@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { ColorSwatchProps } from "./basic";
 import { ColorSwatch as _ColorSwatch } from "./basic";
+import type { ColorSwatchProps } from "./types";
 
 export const ColorSwatch = createDynamicComponent<ColorSwatchProps>(
   "color-swatch",

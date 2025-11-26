@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { TextProps } from "./basic";
 import { Text as _Text } from "./basic";
+import type { TextProps } from "./types";
 
 export const Text = createDynamicComponent<TextProps>(
   "text",

@@ -2,13 +2,13 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { TabListProps, TabPanelProps, TabProps, TabsProps } from "./basic";
 import {
   Tab as _Tab,
   TabList as _TabList,
   TabPanel as _TabPanel,
   Tabs as _Tabs,
 } from "./basic";
+import type { TabListProps, TabPanelProps, TabProps, TabsProps } from "./types";
 
 export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", _Tabs, {
   // Future variants will be added here

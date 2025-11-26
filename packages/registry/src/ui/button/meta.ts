@@ -18,6 +18,7 @@ const buttonMeta = {
 } satisfies RegistryItem;
 
 export default buttonMeta;
+
 export const buttonVariants = Object.keys(
   buttonMeta.variants,
 ) as (keyof typeof buttonMeta.variants)[];

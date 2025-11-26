@@ -2,16 +2,6 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  DialogBodyProps,
-  DialogContentProps,
-  DialogDescriptionProps,
-  DialogFooterProps,
-  DialogHeaderProps,
-  DialogHeadingProps,
-  DialogInsetProps,
-  DialogProps,
-} from "./basic";
 import {
   Dialog as _Dialog,
   DialogBody as _DialogBody,
@@ -22,6 +12,16 @@ import {
   DialogHeading as _DialogHeading,
   DialogInset as _DialogInset,
 } from "./basic";
+import type {
+  DialogBodyProps,
+  DialogContentProps,
+  DialogDescriptionProps,
+  DialogFooterProps,
+  DialogHeaderProps,
+  DialogHeadingProps,
+  DialogInsetProps,
+  DialogProps,
+} from "./types";
 
 export const Dialog = createDynamicComponent<DialogProps>(
   "dialog",

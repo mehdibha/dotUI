@@ -2,16 +2,16 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  ColorSliderControlProps,
-  ColorSliderOutputProps,
-  ColorSliderProps,
-} from "./basic";
 import {
   ColorSlider as _ColorSlider,
   ColorSliderControl as _ColorSliderControl,
   ColorSliderOutput as _ColorSliderOutput,
 } from "./basic";
+import type {
+  ColorSliderControlProps,
+  ColorSliderOutputProps,
+  ColorSliderProps,
+} from "./types";
 
 export const ColorSlider = createDynamicComponent<ColorSliderProps>(
   "color-slider",

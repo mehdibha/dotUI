@@ -2,14 +2,6 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type {
-  MenuContentProps,
-  MenuItemProps,
-  MenuProps,
-  MenuSectionHeaderProps,
-  MenuSectionProps,
-  MenuSubProps,
-} from "./basic";
 import {
   Menu as _Menu,
   MenuContent as _MenuContent,
@@ -18,6 +10,14 @@ import {
   MenuSectionHeader as _MenuSectionHeader,
   MenuSub as _MenuSub,
 } from "./basic";
+import type {
+  MenuContentProps,
+  MenuItemProps,
+  MenuProps,
+  MenuSectionHeaderProps,
+  MenuSectionProps,
+  MenuSubProps,
+} from "./types";
 
 export const Menu = createDynamicComponent<MenuProps>(
   "menu",

@@ -1,12 +1,6 @@
 "use client";
 
 import { createDynamicComponent } from "../../_helpers/create-dynamic-component";
-import type {
-  AccordionHeadingProps,
-  AccordionItemProps,
-  AccordionPanelProps,
-  AccordionProps,
-} from "./basic";
 import {
   Accordion as _Accordion,
   AccordionHeading as _AccordionHeading,
@@ -14,6 +8,12 @@ import {
   AccordionPanel as _AccordionPanel,
 } from "./basic";
 import type { AccordionVariant } from "./meta";
+import type {
+  AccordionHeadingProps,
+  AccordionItemProps,
+  AccordionPanelProps,
+  AccordionProps,
+} from "./types";
 
 export const Accordion = createDynamicComponent<
   AccordionProps,

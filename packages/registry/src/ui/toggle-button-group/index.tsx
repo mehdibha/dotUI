@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { ToggleButtonGroupProps } from "./basic";
 import { ToggleButtonGroup as _ToggleButtonGroup } from "./basic";
+import type { ToggleButtonGroupProps } from "./types";
 
 export const ToggleButtonGroup = createDynamicComponent<ToggleButtonGroupProps>(
   "toggle-button-group",

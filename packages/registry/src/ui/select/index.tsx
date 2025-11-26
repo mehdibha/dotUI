@@ -8,11 +8,6 @@ import type {
   ListBoxSectionProps,
 } from "@dotui/registry/ui/list-box";
 
-import type {
-  SelectContentProps,
-  SelectProps,
-  SelectValueProps,
-} from "./basic";
 import {
   Select as _Select,
   SelectContent as _SelectContent,
@@ -22,6 +17,11 @@ import {
   SelectTrigger as _SelectTrigger,
   SelectValue as _SelectValue,
 } from "./basic";
+import type {
+  SelectContentProps,
+  SelectProps,
+  SelectValueProps,
+} from "./types";
 
 export const Select = <T extends object = object>(props: SelectProps<T>) => {
   const Component = createDynamicComponent<SelectProps<T>>(

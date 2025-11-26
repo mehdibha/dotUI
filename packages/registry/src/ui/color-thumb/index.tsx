@@ -2,8 +2,8 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import type { ColorThumbProps } from "./basic";
 import { ColorThumb as _ColorThumb } from "./basic";
+import type { ColorThumbProps } from "./types";
 
 export const ColorThumb = createDynamicComponent<ColorThumbProps>(
   "color-thumb",
