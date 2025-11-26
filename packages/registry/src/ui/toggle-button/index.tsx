@@ -2,26 +2,22 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  ToggleButton as _ToggleButton,
-  ToggleButtonProvider as _ToggleButtonProvider,
-  toggleButtonStyles,
-} from "./basic";
+import * as Default from "./basic";
 import type { ToggleButtonProps } from "./types";
 
 export const ToggleButton = createDynamicComponent<ToggleButtonProps>(
   "toggle-button",
   "ToggleButton",
-  _ToggleButton,
+  Default.ToggleButton,
   {},
 );
 
 export const ToggleButtonProvider = createDynamicComponent(
   "toggle-button",
   "ToggleButtonProvider",
-  _ToggleButtonProvider,
+  Default.ToggleButtonProvider,
   {},
 );
 
-export { toggleButtonStyles };
+export { toggleButtonStyles } from "./basic";
 export type { ToggleButtonProps };

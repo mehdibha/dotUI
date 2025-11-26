@@ -1,7 +1,7 @@
 import type {
   ColorSlider as AriaColorSlider,
-  SliderTrack as AriaSliderTrack,
   SliderOutput as AriaSliderOutput,
+  SliderTrack as AriaSliderTrack,
 } from "react-aria-components";
 
 export interface ColorSliderProps
@@ -12,4 +12,3 @@ export interface ColorSliderControlProps
 
 export interface ColorSliderOutputProps
   extends React.ComponentProps<typeof AriaSliderOutput> {}
-

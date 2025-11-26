@@ -1,12 +1,11 @@
 import type {
   Slider as AriaSlider,
-  SliderTrack as AriaSliderTrack,
-  SliderThumb as AriaSliderThumb,
   SliderOutput as AriaSliderOutput,
+  SliderThumb as AriaSliderThumb,
+  SliderTrack as AriaSliderTrack,
 } from "react-aria-components";
 
-export interface SliderProps
-  extends React.ComponentProps<typeof AriaSlider> {}
+export interface SliderProps extends React.ComponentProps<typeof AriaSlider> {}
 
 export interface SliderControlProps
   extends React.ComponentProps<typeof AriaSliderTrack> {}
@@ -18,4 +17,3 @@ export interface SliderThumbProps
 
 export interface SliderOutputProps
   extends React.ComponentProps<typeof AriaSliderOutput> {}
-

@@ -1,12 +1,12 @@
 import type {
-  Table as AriaTable,
-  TableHeaderProps as AriaTableHeaderProps,
-  Column as AriaColumn,
-  TableBodyProps as AriaTableBodyProps,
-  RowProps as AriaRowProps,
   Cell as AriaCell,
-  TableLoadMoreItem as AriaTableLoadMoreItem,
+  Column as AriaColumn,
   ResizableTableContainer as AriaResizableTableContainer,
+  RowProps as AriaRowProps,
+  Table as AriaTable,
+  TableBodyProps as AriaTableBodyProps,
+  TableHeaderProps as AriaTableHeaderProps,
+  TableLoadMoreItem as AriaTableLoadMoreItem,
 } from "react-aria-components";
 
 export interface TableContainerProps
@@ -54,4 +54,3 @@ export interface TableCellProps extends React.ComponentProps<typeof AriaCell> {}
 
 export interface TableLoadMoreProps
   extends React.ComponentProps<typeof AriaTableLoadMoreItem> {}
-

@@ -2,6 +2,7 @@ import type {
   SelectProps as AriaSelectProps,
   SelectValueProps as AriaSelectValueProps,
 } from "react-aria-components";
+
 import type { ListBoxProps } from "@dotui/registry/ui/list-box";
 import type { PopoverProps } from "@dotui/registry/ui/popover";
 
@@ -23,4 +24,3 @@ export interface SelectContentProps<T extends object>
    */
   virtulized?: boolean;
 }
-

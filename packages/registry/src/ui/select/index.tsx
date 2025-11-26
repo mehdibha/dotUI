@@ -8,15 +8,7 @@ import type {
   ListBoxSectionProps,
 } from "@dotui/registry/ui/list-box";
 
-import {
-  Select as _Select,
-  SelectContent as _SelectContent,
-  SelectItem as _SelectItem,
-  SelectSection as _SelectSection,
-  SelectSectionHeader as _SelectSectionHeader,
-  SelectTrigger as _SelectTrigger,
-  SelectValue as _SelectValue,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   SelectContentProps,
   SelectProps,
@@ -27,7 +19,7 @@ export const Select = <T extends object = object>(props: SelectProps<T>) => {
   const Component = createDynamicComponent<SelectProps<T>>(
     "select",
     "Select",
-    _Select,
+    Default.Select,
     {},
   );
 
@@ -37,7 +29,7 @@ export const Select = <T extends object = object>(props: SelectProps<T>) => {
 export const SelectTrigger = createDynamicComponent<ButtonProps>(
   "select",
   "SelectTrigger",
-  _SelectTrigger,
+  Default.SelectTrigger,
   {},
   true,
 );
@@ -48,7 +40,7 @@ export const SelectValue = <T extends object = object>(
   const Component = createDynamicComponent<SelectValueProps<T>>(
     "select",
     "SelectValue",
-    _SelectValue,
+    Default.SelectValue,
     {},
   );
 
@@ -61,7 +53,7 @@ export const SelectContent = <T extends object = object>(
   const Component = createDynamicComponent<SelectContentProps<T>>(
     "select",
     "SelectContent",
-    _SelectContent,
+    Default.SelectContent,
     {},
   );
   return <Component {...props} />;
@@ -73,7 +65,7 @@ export const SelectItem = <T extends object = object>(
   const Component = createDynamicComponent<ListBoxItemProps<T>>(
     "select",
     "SelectItem",
-    _SelectItem,
+    Default.SelectItem,
     {},
   );
 
@@ -86,7 +78,7 @@ export const SelectSection = <T extends object = object>(
   const Component = createDynamicComponent<ListBoxSectionProps<T>>(
     "select",
     "SelectSection",
-    _SelectSection,
+    Default.SelectSection,
     {},
   );
   return <Component {...props} />;
@@ -96,7 +88,7 @@ export const SelectSectionHeader =
   createDynamicComponent<ListBoxSectionHeaderProps>(
     "select",
     "SelectSectionHeader",
-    _SelectSectionHeader,
+    Default.SelectSectionHeader,
     {},
   );
 

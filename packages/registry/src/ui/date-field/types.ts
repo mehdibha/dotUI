@@ -5,4 +5,3 @@ import type {
 
 export interface DateFieldProps<T extends DateValue>
   extends AriaDateFieldProps<T> {}
-

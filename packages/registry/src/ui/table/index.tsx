@@ -2,15 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  Table as _Table,
-  TableBody as _TableBody,
-  TableCell as _TableCell,
-  TableColumn as _TableColumn,
-  TableHeader as _TableHeader,
-  TableLoadMore as _TableLoadMore,
-  TableRow as _TableRow,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   TableBodyProps,
   TableCellProps,
@@ -24,7 +16,7 @@ import type {
 export const Table = createDynamicComponent<TableProps>(
   "table",
   "Table",
-  _Table,
+  Default.Table,
   {},
 );
 
@@ -34,7 +26,7 @@ export const TableHeader = <T extends object = object>(
   const Component = createDynamicComponent<TableHeaderProps<T>>(
     "table",
     "TableHeader",
-    _TableHeader,
+    Default.TableHeader,
     {},
   );
 
@@ -44,7 +36,7 @@ export const TableHeader = <T extends object = object>(
 export const TableColumn = createDynamicComponent<TableColumnProps>(
   "table",
   "TableColumn",
-  _TableColumn,
+  Default.TableColumn,
   {},
 );
 
@@ -54,7 +46,7 @@ export const TableBody = <T extends object = object>(
   const Component = createDynamicComponent<TableBodyProps<T>>(
     "table",
     "TableBody",
-    _TableBody,
+    Default.TableBody,
     {},
   );
 
@@ -67,7 +59,7 @@ export const TableRow = <T extends object = object>(
   const Component = createDynamicComponent<TableRowProps<T>>(
     "table",
     "TableRow",
-    _TableRow,
+    Default.TableRow,
     {},
   );
 
@@ -77,14 +69,14 @@ export const TableRow = <T extends object = object>(
 export const TableCell = createDynamicComponent<TableCellProps>(
   "table",
   "TableCell",
-  _TableCell,
+  Default.TableCell,
   {},
 );
 
 export const TableLoadMore = createDynamicComponent<TableLoadMoreProps>(
   "table",
   "TableLoadMore",
-  _TableLoadMore,
+  Default.TableLoadMore,
   {},
 );
 

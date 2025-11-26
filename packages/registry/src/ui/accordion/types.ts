@@ -1,6 +1,6 @@
 import type {
-  DisclosureGroup as AriaDisclosureGroup,
   Disclosure as AriaDisclosure,
+  DisclosureGroup as AriaDisclosureGroup,
   DisclosurePanel as AriaDisclosurePanel,
   Heading as AriaHeading,
 } from "react-aria-components";
@@ -16,4 +16,3 @@ export interface AccordionPanelProps
 
 export interface AccordionHeadingProps
   extends React.ComponentProps<typeof AriaHeading> {}
-

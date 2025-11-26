@@ -2,14 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  Menu as _Menu,
-  MenuContent as _MenuContent,
-  MenuItem as _MenuItem,
-  MenuSection as _MenuSection,
-  MenuSectionHeader as _MenuSectionHeader,
-  MenuSub as _MenuSub,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   MenuContentProps,
   MenuItemProps,
@@ -22,7 +15,7 @@ import type {
 export const Menu = createDynamicComponent<MenuProps>(
   "menu",
   "Menu",
-  _Menu,
+  Default.Menu,
   {},
 );
 
@@ -32,7 +25,7 @@ export const MenuContent = <T extends object = object>(
   const Component = createDynamicComponent<MenuContentProps<T>>(
     "menu",
     "MenuContent",
-    _MenuContent,
+    Default.MenuContent,
     {},
   );
 
@@ -45,7 +38,7 @@ export const MenuItem = <T extends object = object>(
   const Component = createDynamicComponent<MenuItemProps<T>>(
     "menu",
     "MenuItem",
-    _MenuItem,
+    Default.MenuItem,
     {},
   );
 
@@ -58,7 +51,7 @@ export const MenuSection = <T extends object = object>(
   const Component = createDynamicComponent<MenuSectionProps<T>>(
     "menu",
     "MenuSection",
-    _MenuSection,
+    Default.MenuSection,
     {},
   );
 
@@ -68,13 +61,13 @@ export const MenuSection = <T extends object = object>(
 export const MenuSectionHeader = createDynamicComponent<MenuSectionHeaderProps>(
   "menu",
   "MenuSectionHeader",
-  _MenuSectionHeader,
+  Default.MenuSectionHeader,
   {},
 );
 
 export const MenuSub = createDynamicComponent<MenuSubProps>(
   "menu",
   "MenuSub",
-  _MenuSub,
+  Default.MenuSub,
   {},
 );

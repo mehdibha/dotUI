@@ -11,4 +11,3 @@ export interface AlertTitleProps extends React.ComponentProps<"div"> {}
 export interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
 export interface AlertActionProps extends React.ComponentProps<"div"> {}
-

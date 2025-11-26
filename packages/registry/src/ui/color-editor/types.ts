@@ -19,4 +19,3 @@ export interface ColorEditorProps extends React.ComponentProps<"div"> {
    */
   showFormatSelector?: boolean;
 }
-

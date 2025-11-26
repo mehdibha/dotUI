@@ -1,11 +1,11 @@
 import type {
-  CalendarProps as AriaCalendarProps,
-  RangeCalendarProps as AriaRangeCalendarProps,
+  CalendarCell as AriaCalendarCell,
   CalendarGrid as AriaCalendarGrid,
+  CalendarGridBody as AriaCalendarGridBody,
   CalendarGridHeader as AriaCalendarGridHeader,
   CalendarHeaderCell as AriaCalendarHeaderCell,
-  CalendarGridBody as AriaCalendarGridBody,
-  CalendarCell as AriaCalendarCell,
+  CalendarProps as AriaCalendarProps,
+  RangeCalendarProps as AriaRangeCalendarProps,
   DateValue,
 } from "react-aria-components";
 
@@ -39,4 +39,3 @@ export interface CalendarCellProps
    */
   variant?: "primary" | "accent";
 }
-

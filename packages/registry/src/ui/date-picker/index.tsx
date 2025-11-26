@@ -4,11 +4,7 @@ import type { DateValue } from "react-aria";
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  DatePicker as _DatePicker,
-  DatePickerContent as _DatePickerContent,
-  DatePickerInput as _DatePickerInput,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   DatePickerContentProps,
   DatePickerInputProps,
@@ -19,7 +15,7 @@ export const DatePicker = <T extends DateValue>(props: DatePickerProps<T>) => {
   const Component = createDynamicComponent<DatePickerProps<T>>(
     "date-picker",
     "DatePicker",
-    _DatePicker,
+    Default.DatePicker,
     {},
   );
 
@@ -29,14 +25,14 @@ export const DatePicker = <T extends DateValue>(props: DatePickerProps<T>) => {
 export const DatePickerContent = createDynamicComponent<DatePickerContentProps>(
   "date-picker",
   "DatePickerContent",
-  _DatePickerContent,
+  Default.DatePickerContent,
   {},
 );
 
 export const DatePickerInput = createDynamicComponent<DatePickerInputProps>(
   "date-picker",
   "DatePickerInput",
-  _DatePickerInput,
+  Default.DatePickerInput,
   {},
 );
 

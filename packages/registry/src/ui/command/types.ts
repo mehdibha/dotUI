@@ -19,4 +19,3 @@ export interface CommandContentProps<T extends object> extends ListBoxProps<T> {
    */
   virtulized?: boolean;
 }
-

@@ -1,6 +1,6 @@
 import type {
-  DialogTrigger as AriaDialogTrigger,
   Dialog as AriaDialog,
+  DialogTrigger as AriaDialogTrigger,
   Heading as AriaHeading,
   Text as AriaText,
 } from "react-aria-components";
@@ -24,4 +24,3 @@ export interface DialogBodyProps extends React.ComponentProps<"div"> {}
 export interface DialogFooterProps extends React.ComponentProps<"footer"> {}
 
 export interface DialogInsetProps extends React.ComponentProps<"div"> {}
-

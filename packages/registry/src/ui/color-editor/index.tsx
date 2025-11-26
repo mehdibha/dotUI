@@ -2,13 +2,13 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import { ColorEditor as _ColorEditor } from "./basic";
+import * as Default from "./basic";
 import type { ColorEditorProps } from "./types";
 
 export const ColorEditor = createDynamicComponent<ColorEditorProps>(
   "color-editor",
   "ColorEditor",
-  _ColorEditor,
+  Default.ColorEditor,
   {},
 );
 

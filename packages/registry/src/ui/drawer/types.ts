@@ -7,4 +7,3 @@ export interface DrawerProps extends React.ComponentProps<typeof AriaModal> {
    */
   placement?: "top" | "bottom" | "left" | "right";
 }
-

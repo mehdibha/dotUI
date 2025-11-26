@@ -17,4 +17,3 @@ export interface SwitchProps extends React.ComponentProps<typeof AriaSwitch> {
 export interface SwitchIndicatorProps extends React.ComponentProps<"span"> {}
 
 export interface SwitchThumbProps extends React.ComponentProps<"span"> {}
-

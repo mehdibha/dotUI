@@ -12,4 +12,3 @@ export interface ModalContentProps
   extends React.ComponentProps<typeof AriaModal> {}
 
 export interface ModalBackdropProps extends React.ComponentProps<"div"> {}
-

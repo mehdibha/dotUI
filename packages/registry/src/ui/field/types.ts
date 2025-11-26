@@ -1,7 +1,8 @@
 import type {
-  Label as AriaLabel,
   FieldError as AriaFieldError,
+  Label as AriaLabel,
 } from "react-aria-components";
+
 import type { Text } from "@dotui/registry/ui/text";
 
 export interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
@@ -27,4 +28,3 @@ export interface DescriptionProps
 
 export interface FieldErrorProps
   extends React.ComponentProps<typeof AriaFieldError> {}
-

@@ -7,4 +7,3 @@ export interface GroupProps extends React.ComponentProps<typeof AriaGroup> {
    */
   orientation?: "horizontal" | "vertical";
 }
-

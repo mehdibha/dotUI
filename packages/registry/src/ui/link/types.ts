@@ -7,4 +7,3 @@ export interface LinkProps extends AriaLinkProps {
    */
   variant?: "accent" | "quiet" | "unstyled";
 }
-

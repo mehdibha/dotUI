@@ -1,9 +1,9 @@
 import type {
-  ListBoxProps as AriaListBoxProps,
+  Header as AriaHeader,
   ListBoxItemProps as AriaListBoxItemProps,
+  ListBoxProps as AriaListBoxProps,
   ListBoxSectionProps as AriaListBoxSectionProps,
   VirtualizerProps as AriaVirtualizerProps,
-  Header as AriaHeader,
 } from "react-aria-components";
 
 export interface ListBoxProps<T> extends AriaListBoxProps<T> {
@@ -28,4 +28,3 @@ export interface ListBoxSectionHeaderProps
 
 export interface ListBoxVirtualizerProps<T>
   extends Omit<AriaVirtualizerProps<T>, "layout"> {}
-

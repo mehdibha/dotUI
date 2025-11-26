@@ -8,4 +8,3 @@ export interface DropZoneProps
 
 export interface DropZoneLabelProps
   extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
-

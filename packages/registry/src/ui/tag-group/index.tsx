@@ -2,17 +2,13 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  Tag as _Tag,
-  TagGroup as _TagGroup,
-  TagList as _TagList,
-} from "./basic";
+import * as Default from "./basic";
 import type { TagGroupProps, TagListProps, TagProps } from "./types";
 
 export const TagGroup = createDynamicComponent<TagGroupProps>(
   "tag-group",
   "TagGroup",
-  _TagGroup,
+  Default.TagGroup,
   {},
 );
 
@@ -20,7 +16,7 @@ export const TagList = <T extends object>(props: TagListProps<T>) => {
   const Component = createDynamicComponent<TagListProps<T>>(
     "tag-group",
     "TagList",
-    _TagList,
+    Default.TagList,
     {},
   );
 
@@ -30,7 +26,7 @@ export const TagList = <T extends object>(props: TagListProps<T>) => {
 export const Tag = createDynamicComponent<TagProps>(
   "tag-group",
   "Tag",
-  _Tag,
+  Default.Tag,
   {},
 );
 

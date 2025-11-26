@@ -7,11 +7,7 @@ import {
   ListBoxSectionHeader,
 } from "@dotui/registry/ui/list-box";
 
-import {
-  Command as _Command,
-  CommandContent as _CommandContent,
-  CommandInput as _CommandInput,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   CommandContentProps,
   CommandInputProps,
@@ -21,7 +17,7 @@ import type {
 export const Command = createDynamicComponent<CommandProps>(
   "command",
   "Command",
-  _Command,
+  Default.Command,
   {},
 );
 
@@ -31,7 +27,7 @@ export const CommandContent = <T extends object = object>(
   const Component = createDynamicComponent<CommandContentProps<T>>(
     "command",
     "CommandContent",
-    _CommandContent,
+    Default.CommandContent,
     {},
   );
   return <Component {...props} />;
@@ -41,7 +37,7 @@ export const CommandInput = (props: CommandInputProps) => {
   const Component = createDynamicComponent<CommandInputProps>(
     "command",
     "CommandInput",
-    _CommandInput,
+    Default.CommandInput,
     {},
   );
   return <Component {...props} />;

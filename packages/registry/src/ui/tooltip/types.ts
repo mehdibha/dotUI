@@ -1,6 +1,6 @@
 import type {
-  TooltipTrigger as AriaTooltipTrigger,
   Tooltip as AriaTooltip,
+  TooltipTrigger as AriaTooltipTrigger,
 } from "react-aria-components";
 
 export interface TooltipProps
@@ -14,4 +14,3 @@ export interface TooltipContentProps
    */
   hideArrow?: boolean;
 }
-

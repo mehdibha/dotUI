@@ -5,4 +5,3 @@ export interface BadgeProps extends React.ComponentProps<"span"> {
    */
   variant?: "default" | "danger" | "success" | "warning" | "info";
 }
-

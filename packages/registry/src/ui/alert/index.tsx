@@ -1,12 +1,7 @@
 "use client";
 
 import { createDynamicComponent } from "../../_helpers/create-dynamic-component";
-import {
-  Alert as _Alert,
-  AlertAction as _AlertAction,
-  AlertDescription as _AlertDescription,
-  AlertTitle as _AlertTitle,
-} from "./basic";
+import * as Default from "./basic";
 import type { AlertVariant } from "./meta";
 import type {
   AlertActionProps,
@@ -18,26 +13,26 @@ import type {
 export const Alert = createDynamicComponent<AlertProps, AlertVariant>(
   "alert",
   "Alert",
-  _Alert,
+  Default.Alert,
   {},
 );
 
 export const AlertTitle = createDynamicComponent<AlertTitleProps, AlertVariant>(
   "alert",
   "AlertTitle",
-  _AlertTitle,
+  Default.AlertTitle,
   {},
 );
 
 export const AlertDescription = createDynamicComponent<
   AlertDescriptionProps,
   AlertVariant
->("alert", "AlertDescription", _AlertDescription, {});
+>("alert", "AlertDescription", Default.AlertDescription, {});
 
 export const AlertAction = createDynamicComponent<
   AlertActionProps,
   AlertVariant
->("alert", "AlertAction", _AlertAction, {});
+>("alert", "AlertAction", Default.AlertAction, {});
 
 export type {
   AlertProps,

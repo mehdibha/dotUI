@@ -11,4 +11,3 @@ export interface Toast {
 }
 
 export interface ToastProps extends AriaToastProps<Toast> {}
-

@@ -23,4 +23,3 @@ export interface ToggleButtonProps
    */
   aspect?: "default" | "square" | "auto";
 }
-

@@ -2,14 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  DateInput as _DateInput,
-  DateSegment as _DateSegment,
-  Input as _Input,
-  InputAddon as _InputAddon,
-  InputGroup as _InputGroup,
-  TextArea as _TextArea,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   DateInputProps,
   DateSegmentProps,
@@ -22,42 +15,42 @@ import type {
 export const Input = createDynamicComponent<InputProps>(
   "input",
   "Input",
-  _Input,
+  Default.Input,
   {},
 );
 
 export const TextArea = createDynamicComponent<TextAreaProps>(
   "input",
   "TextAreaInput",
-  _TextArea,
+  Default.TextArea,
   {},
 );
 
 export const InputGroup = createDynamicComponent<InputGroupProps>(
   "input",
   "InputGroup",
-  _InputGroup,
+  Default.InputGroup,
   {},
 );
 
 export const InputAddon = createDynamicComponent<InputAddonProps>(
   "input",
   "InputAddon",
-  _InputAddon,
+  Default.InputAddon,
   {},
 );
 
 export const DateInput = createDynamicComponent<DateInputProps>(
   "input",
   "DateInput",
-  _DateInput,
+  Default.DateInput,
   {},
 );
 
 export const DateSegment = createDynamicComponent<DateSegmentProps>(
   "input",
   "DateSegment",
-  _DateSegment,
+  Default.DateSegment,
   {},
 );
 

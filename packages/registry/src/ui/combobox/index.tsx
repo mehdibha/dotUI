@@ -7,11 +7,7 @@ import {
   ListBoxSectionHeader,
 } from "@dotui/registry/ui/list-box";
 
-import {
-  Combobox as _Combobox,
-  ComboboxContent as _ComboboxContent,
-  ComboboxInput as _ComboboxInput,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   ComboboxContentProps,
   ComboboxInputProps,
@@ -24,7 +20,7 @@ export const Combobox = <T extends object = object>(
   const Component = createDynamicComponent<ComboboxProps<T>>(
     "combobox",
     "Combobox",
-    _Combobox,
+    Default.Combobox,
     {},
   );
 
@@ -34,7 +30,7 @@ export const Combobox = <T extends object = object>(
 export const ComboboxInput = createDynamicComponent<ComboboxInputProps>(
   "combobox",
   "ComboboxInput",
-  _ComboboxInput,
+  Default.ComboboxInput,
   {},
 );
 
@@ -44,7 +40,7 @@ export const ComboboxContent = <T extends object = object>(
   const Component = createDynamicComponent<ComboboxContentProps<T>>(
     "combobox",
     "ComboboxContent",
-    _ComboboxContent,
+    Default.ComboboxContent,
     {},
   );
 

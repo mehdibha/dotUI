@@ -7,4 +7,3 @@ export interface PopoverProps extends React.ComponentProps<typeof AriaPopover> {
    */
   showArrow?: boolean;
 }
-

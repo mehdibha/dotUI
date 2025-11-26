@@ -8,4 +8,3 @@ export interface ColorSwatchPickerProps
 
 export interface ColorSwatchPickerItemProps
   extends React.ComponentProps<typeof AriaColorSwatchPickerItem> {}
-

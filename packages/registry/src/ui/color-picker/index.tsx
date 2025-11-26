@@ -2,11 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
 
-import {
-  ColorPicker as _ColorPicker,
-  ColorPickerContent as _ColorPickerContent,
-  ColorPickerTrigger as _ColorPickerTrigger,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   ColorPickerContentProps,
   ColorPickerProps,
@@ -16,7 +12,7 @@ import type {
 export const ColorPicker = createDynamicComponent<ColorPickerProps>(
   "color-picker",
   "ColorPicker",
-  _ColorPicker,
+  Default.ColorPicker,
   {},
 );
 
@@ -24,7 +20,7 @@ export const ColorPickerTrigger =
   createDynamicComponent<ColorPickerTriggerProps>(
     "color-picker",
     "ColorPickerTrigger",
-    _ColorPickerTrigger,
+    Default.ColorPickerTrigger,
     {},
   );
 
@@ -32,7 +28,7 @@ export const ColorPickerContent =
   createDynamicComponent<ColorPickerContentProps>(
     "color-picker",
     "ColorPickerContent",
-    _ColorPickerContent,
+    Default.ColorPickerContent,
     {},
   );
 

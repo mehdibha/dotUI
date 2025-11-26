@@ -24,4 +24,3 @@ export interface ProgressBarControlProps extends React.ComponentProps<"div"> {
 
 export interface ProgressBarValueLabelProps
   extends React.ComponentProps<"span"> {}
-

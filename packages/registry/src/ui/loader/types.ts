@@ -25,4 +25,3 @@ export interface LoaderProps extends ProgressBarProps {
    */
   strokeLength?: number;
 }
-

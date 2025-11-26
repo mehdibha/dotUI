@@ -2,6 +2,7 @@ import type {
   ColorPickerProps as AriaColorPickerProps,
   ColorPickerState,
 } from "react-aria-components";
+
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type {
   DialogContentProps,
@@ -17,4 +18,3 @@ export interface ColorPickerTriggerProps extends Omit<ButtonProps, "children"> {
 }
 
 export interface ColorPickerContentProps extends DialogContentProps {}
-

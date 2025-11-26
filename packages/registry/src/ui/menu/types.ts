@@ -1,10 +1,10 @@
 import type {
-  MenuTriggerProps as AriaMenuTriggerProps,
-  MenuProps as AriaMenuProps,
-  MenuItemProps as AriaMenuItemProps,
-  MenuSectionProps as AriaMenuSectionProps,
-  SubmenuTriggerProps as AriaSubmenuTriggerProps,
   Header as AriaHeader,
+  MenuItemProps as AriaMenuItemProps,
+  MenuProps as AriaMenuProps,
+  MenuSectionProps as AriaMenuSectionProps,
+  MenuTriggerProps as AriaMenuTriggerProps,
+  SubmenuTriggerProps as AriaSubmenuTriggerProps,
 } from "react-aria-components";
 
 export interface MenuProps extends AriaMenuTriggerProps {}
@@ -25,4 +25,3 @@ export interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {}
 
 export interface MenuSectionHeaderProps
   extends React.ComponentProps<typeof AriaHeader> {}
-

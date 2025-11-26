@@ -11,4 +11,3 @@ export interface CardActionProps extends React.ComponentProps<"div"> {}
 export interface CardContentProps extends React.ComponentProps<"div"> {}
 
 export interface CardFooterProps extends React.ComponentProps<"div"> {}
-

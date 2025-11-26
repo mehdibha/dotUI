@@ -42,4 +42,3 @@ export interface OverlayProps extends Pick<ModalProps, CommonProps> {
    */
   drawerProps?: Omit<DrawerProps, "children" | CommonProps>;
 }
-

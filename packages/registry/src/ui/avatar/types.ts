@@ -27,7 +27,8 @@ export interface AvatarRootProps extends React.ComponentProps<"span"> {
   size?: "sm" | "md" | "lg";
 }
 
-export interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
+export interface AvatarImageProps
+  extends Omit<React.ComponentProps<"img">, "src"> {
   /**
    * The URL of the avatar image.
    */
@@ -37,4 +38,3 @@ export interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src
 export interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
 export interface AvatarPlaceholderProps extends React.ComponentProps<"span"> {}
-

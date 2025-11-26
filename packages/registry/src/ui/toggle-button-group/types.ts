@@ -14,4 +14,3 @@ export interface ToggleButtonGroupProps
    */
   size?: "sm" | "md" | "lg";
 }
-

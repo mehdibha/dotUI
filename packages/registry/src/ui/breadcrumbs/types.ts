@@ -17,4 +17,3 @@ export interface BreadcrumbLinkProps
 
 export type BreadcrumbProps = BreadcrumbItemProps &
   Omit<BreadcrumbLinkProps, "children">;
-

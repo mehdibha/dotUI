@@ -5,4 +5,3 @@ import type {
 
 export interface TimeFieldProps<T extends TimeValue>
   extends AriaTimeFieldProps<T> {}
-

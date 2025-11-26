@@ -3,6 +3,7 @@ import type {
   DateRangePickerProps as AriaDateRangePickerProps,
   DateValue,
 } from "react-aria-components";
+
 import type { DialogContentProps } from "@dotui/registry/ui/dialog";
 import type { InputGroupProps } from "@dotui/registry/ui/input";
 import type { OverlayProps } from "@dotui/registry/ui/overlay";
@@ -27,4 +28,3 @@ export interface DatePickerInputProps extends InputGroupProps {}
 export interface DatePickerContentProps
   extends DialogContentProps,
     Pick<OverlayProps, "type" | "mobileType" | "popoverProps"> {}
-

@@ -1,4 +1,5 @@
 import type { ComboBoxProps as AriaComboboxProps } from "react-aria-components";
+
 import type { InputGroupProps } from "@dotui/registry/ui/input";
 import type { ListBoxProps } from "@dotui/registry/ui/list-box";
 import type { PopoverProps } from "@dotui/registry/ui/popover";
@@ -26,4 +27,3 @@ export interface ComboboxContentProps<T extends object>
    */
   virtulized?: boolean;
 }
-

@@ -1,13 +1,13 @@
 import type {
+  DateInputProps as AriaDateInputProps,
+  DateSegment as AriaDateSegment,
   Group as AriaGroup,
   Input as AriaInput,
   TextArea as AriaTextArea,
-  DateInput as AriaDateInput,
-  DateSegment as AriaDateSegment,
-  DateInputProps as AriaDateInputProps,
 } from "react-aria-components";
 
-export interface InputGroupProps extends React.ComponentProps<typeof AriaGroup> {
+export interface InputGroupProps
+  extends React.ComponentProps<typeof AriaGroup> {
   /**
    * The size of the input group.
    * @default 'md'
@@ -35,8 +35,7 @@ export interface TextAreaProps
 
 export interface InputAddonProps extends React.ComponentProps<"div"> {}
 
-export interface DateInputProps
-  extends Omit<AriaDateInputProps, "children"> {
+export interface DateInputProps extends Omit<AriaDateInputProps, "children"> {
   /**
    * The size of the date input.
    * @default 'md'
@@ -48,4 +47,3 @@ export interface DateInputProps
 
 export interface DateSegmentProps
   extends React.ComponentProps<typeof AriaDateSegment> {}
-
