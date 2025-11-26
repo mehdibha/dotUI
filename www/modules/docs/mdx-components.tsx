@@ -19,6 +19,7 @@ import { Demo } from "./demo";
 import { Example } from "./example";
 import { InteractiveDemo, type InteractiveDemoProps } from "./interactive-demo";
 import { PageTabPanel, PageTabs } from "./page-tabs";
+import { Reference } from "./api-reference/reference";
 
 export const mdxComponents: MDXComponents = {
   h1: (props: HeadingProps) => (
@@ -163,6 +164,7 @@ export const mdxComponents: MDXComponents = {
       {...props}
     />
   ),
+  Reference,
 };
 
 function Link(
