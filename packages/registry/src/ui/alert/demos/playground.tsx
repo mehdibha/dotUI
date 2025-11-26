@@ -13,7 +13,7 @@ interface AlertPlaygroundProps {
 export function AlertPlayground({
   title = "Alert Title",
   description = "This is an alert description.",
-  variant = "neutral",
+  variant,
 }: AlertPlaygroundProps) {
   return (
     <Alert variant={variant}>

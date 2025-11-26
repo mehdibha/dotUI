@@ -45,7 +45,7 @@ export function InteractiveDemoClient({
   controls,
   className,
   fallback,
-  layout: layoutProp = "vertical",
+  layout: layoutProp = "horizontal",
 }: InteractiveDemoClientProps) {
   const [layout, setLayout] = React.useState<"horizontal" | "vertical">(
     layoutProp,
@@ -88,7 +88,33 @@ export function InteractiveDemoClient({
     return props;
   }, [values, controls]);
 
-  // Render the playground element for preview
+  // Create props for code generation (excludes default values unless alwaysShow)
+  const propsForCode = useMemo(() => {
+    const props: Record<string, unknown> = {};
+
+    for (const control of controls) {
+      const value = values[control.name];
+      const defaultValue = getDefaultValue(control);
+      const shouldShow = control.alwaysShow || !isEqual(value, defaultValue);
+
+      if (shouldShow) {
+        if (control.type === "icon") {
+          const iconName = value as string | null;
+          if (iconName && availableIcons[iconName]) {
+            props[control.name] = createElement(availableIcons[iconName], {
+              className: "size-4",
+            });
+          }
+        } else {
+          props[control.name] = value;
+        }
+      }
+    }
+
+    return props;
+  }, [values, controls]);
+
+  // Render the playground element for preview (uses ALL props)
   const previewElement = useMemo(
     () => createElement(Playground, propsWithIcons),
     [Playground, propsWithIcons],
@@ -96,13 +122,14 @@ export function InteractiveDemoClient({
 
   // Call the playground function to get what it actually renders (for code serialization)
   // This gives us <TextField>...</TextField> instead of <Playground ...>
+  // Uses filtered props to hide default values from code output
   const renderedElement = useMemo(() => {
     // All playground components are function components, so we can call them directly
     const PlaygroundFn = Playground as (
       props: Record<string, unknown>,
     ) => React.ReactElement;
-    return PlaygroundFn(propsWithIcons);
-  }, [Playground, propsWithIcons]);
+    return PlaygroundFn(propsForCode);
+  }, [Playground, propsForCode]);
 
   // Generate code by serializing the rendered element
   const codeOutput = useMemo(
@@ -125,7 +152,7 @@ export function InteractiveDemoClient({
         <ActiveStyleProvider
           unstyled
           className="flex min-h-56 flex-1 items-stretch text-fg"
-          skeletonClassName="border rounded-t-md"
+          skeletonClassName="z-1 rounded-t-md border"
         >
           <DemoFrame>{previewElement}</DemoFrame>
         </ActiveStyleProvider>
@@ -209,4 +236,12 @@ function getDefaultValue(control: Control): unknown {
     default:
       return undefined;
   }
+}
+
+function isEqual(a: unknown, b: unknown): boolean {
+  if (a === b) return true;
+  // Handle null/undefined equivalence for icons
+  if ((a === null || a === undefined) && (b === null || b === undefined))
+    return true;
+  return false;
 }
