@@ -30,6 +30,24 @@ interface PropsTableProps {
   defaultExpandedGroups?: Set<string>;
 }
 
+// Grid layout matching base-ui style
+// Mobile: [Prop] [Chevron]
+// sm: [Prop 192px] [Type 1fr] [Chevron 40px]
+// md+: [Prop 5fr] [Type 7fr] [Default 4.5fr] [Chevron 40px]
+const GRID_LAYOUT = cn(
+  "grid grid-cols-[1fr_2.5rem]",
+  "sm:grid-cols-[12rem_1fr_2.5rem]",
+  "md:grid-cols-[5fr_7fr_4.5fr_2.5rem]",
+);
+
+// Panel grid layout (aligns with header)
+// 5fr + 11.5fr = 5fr + 7fr + 4.5fr (Type + Default combined)
+const PANEL_GRID_LAYOUT = cn(
+  "flex flex-col gap-3",
+  "sm:grid sm:grid-cols-[12rem_1fr_2.5rem] sm:gap-x-4 sm:gap-y-2",
+  "md:grid-cols-[5fr_11.5fr_2.5rem]",
+);
+
 export function PropsTable({
   data,
   componentName,
@@ -51,15 +69,15 @@ export function PropsTable({
     <div className="my-6 w-full overflow-hidden rounded-md border">
       <table className="w-full border-collapse text-sm">
         {/* Header */}
-        <thead className="hidden border-b bg-muted/50 sm:table-header-group">
-          <tr>
+        <thead className="border-b bg-muted/50">
+          <tr className={GRID_LAYOUT}>
             <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
               Prop
             </th>
-            <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+            <th className="hidden px-3 py-2 text-left font-medium text-fg-muted text-xs sm:table-cell">
               Type
             </th>
-            <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+            <th className="hidden px-3 py-2 text-left font-medium text-fg-muted text-xs md:table-cell">
               Default
             </th>
             <th className="w-10 px-3 py-2" />
@@ -114,45 +132,44 @@ function PropRows({ prop, componentName }: PropRowsProps) {
       {/* Main prop row */}
       <tr
         className={cn(
+          GRID_LAYOUT,
           "cursor-pointer border-b transition-colors hover:bg-muted/30",
           isOpen && "bg-muted/20",
         )}
         onClick={() => setIsOpen(!isOpen)}
       >
         {/* Prop Name */}
-        <td className="px-3 py-2.5">
+        <td className="overflow-hidden px-3 py-2.5">
           <button
             type="button"
             id={id}
             className="flex items-baseline gap-1 text-left"
             aria-expanded={isOpen}
           >
-            <code className="rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem] text-fg">
+            <code className="whitespace-nowrap font-mono text-[0.8125rem] text-fg">
               {prop.name}
+              {prop.required && (
+                <sup className="top-[-0.3em] ml-0.5 text-danger text-xs">*</sup>
+              )}
             </code>
-            {prop.required && (
-              <span className="text-danger text-xs" title="Required">
-                *
-              </span>
-            )}
           </button>
         </td>
 
-        {/* Type */}
+        {/* Type - hidden on mobile */}
         <td className="hidden overflow-hidden px-3 py-2.5 sm:table-cell">
-          <code className="truncate rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem]">
+          <code className="whitespace-nowrap break-keep font-mono text-[0.8125rem] text-fg-muted">
             {prop.shortTypeHighlighted ?? prop.shortType}
           </code>
         </td>
 
-        {/* Default */}
-        <td className="hidden overflow-hidden px-3 py-2.5 sm:table-cell">
+        {/* Default - hidden on mobile and tablet */}
+        <td className="hidden overflow-hidden px-3 py-2.5 md:table-cell">
           {prop.default !== undefined ? (
-            <code className="truncate rounded bg-muted/50 px-1.5 py-0.5 font-mono text-[0.8125rem]">
+            <code className="whitespace-nowrap font-mono text-[0.8125rem] text-fg-muted">
               {prop.defaultHighlighted ?? prop.default}
             </code>
           ) : (
-            <span className="text-fg-muted/50">—</span>
+            <code className="font-mono text-[0.8125rem] text-fg-muted/50">—</code>
           )}
         </td>
 
@@ -167,52 +184,72 @@ function PropRows({ prop, componentName }: PropRowsProps) {
         </td>
       </tr>
 
-      {/* Expanded description row */}
+      {/* Expanded panel row */}
       {isOpen && (
         <tr className="border-b bg-muted/10">
           <td colSpan={4} className="px-3 py-3">
-            <dl className="space-y-3 text-sm">
-              {/* Type */}
-              <div>
-                <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
-                  Type
-                </dt>
-                <dd>
-                  <TypeDisplay
-                    type={prop.type}
-                    highlighted={prop.typeHighlighted}
-                  />
-                </dd>
-              </div>
-
-              {/* Default Value */}
-              {prop.default !== undefined && (
-                <div>
-                  <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
-                    Default
-                  </dt>
-                  <dd className="inline-block rounded-md border bg-card px-2 py-1 font-mono text-[0.8125rem]">
-                    {prop.defaultHighlighted ?? prop.default}
-                  </dd>
-                </div>
-              )}
+            <dl className={PANEL_GRID_LAYOUT}>
+              {/* Name - with anchor link */}
+              <DescriptionItem label="Name">
+                <a href={`#${id}`} className="hover:underline">
+                  <code className="font-mono text-[0.8125rem] text-primary">
+                    {prop.name}
+                  </code>
+                </a>
+              </DescriptionItem>
 
               {/* Description */}
               {prop.description && (
-                <div>
-                  <dt className="mb-1 font-medium text-fg-muted text-xs uppercase tracking-wide">
-                    Description
-                  </dt>
-                  <dd className="text-fg-muted leading-relaxed [&_a]:text-fg [&_a]:underline [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.8125rem]">
+                <DescriptionItem label="Description" hasSeparator>
+                  <div className="text-fg-muted leading-relaxed [&_a]:text-fg [&_a]:underline [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.8125rem]">
                     {prop.description}
-                  </dd>
-                </div>
+                  </div>
+                </DescriptionItem>
+              )}
+
+              {/* Type */}
+              <DescriptionItem label="Type" hasSeparator>
+                <TypeDisplay
+                  type={prop.type}
+                  highlighted={prop.typeHighlighted}
+                />
+              </DescriptionItem>
+
+              {/* Default */}
+              {prop.default !== undefined && (
+                <DescriptionItem label="Default" hasSeparator>
+                  <code className="font-mono text-[0.8125rem]">
+                    {prop.defaultHighlighted ?? prop.default}
+                  </code>
+                </DescriptionItem>
               )}
             </dl>
           </td>
         </tr>
       )}
     </React.Fragment>
+  );
+}
+
+interface DescriptionItemProps {
+  label: string;
+  children: React.ReactNode;
+  hasSeparator?: boolean;
+}
+
+function DescriptionItem({ label, children, hasSeparator }: DescriptionItemProps) {
+  return (
+    <div
+      className={cn(
+        "sm:col-span-2 sm:grid sm:grid-cols-subgrid",
+        hasSeparator && "border-t border-border/50 pt-2 sm:border-t-0 sm:pt-0",
+      )}
+    >
+      <dt className="mb-1 font-medium text-fg-muted text-xs sm:mb-0 sm:py-1">
+        {label}
+      </dt>
+      <dd className="sm:py-1">{children}</dd>
+    </div>
   );
 }
 
@@ -227,7 +264,7 @@ function TypeDisplay({ type, highlighted }: TypeDisplayProps) {
   if (isMultiLine) {
     const parts = type.split("|").map((p) => p.trim());
     return (
-      <code className="block whitespace-pre-wrap rounded-md border bg-card p-2 font-mono text-[0.8125rem]">
+      <code className="block overflow-x-auto whitespace-pre-wrap rounded-md border bg-card p-2 font-mono text-[0.8125rem]">
         {parts.map((part, i) => (
           <React.Fragment key={i}>
             {i > 0 && <span className="text-fg-muted">{"\n| "}</span>}
@@ -239,7 +276,7 @@ function TypeDisplay({ type, highlighted }: TypeDisplayProps) {
   }
 
   return (
-    <code className="inline-block rounded-md border bg-card px-2 py-1 font-mono text-[0.8125rem]">
+    <code className="font-mono text-[0.8125rem]">
       {highlighted ?? type}
     </code>
   );
