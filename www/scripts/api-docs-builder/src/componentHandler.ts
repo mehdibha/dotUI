@@ -37,7 +37,6 @@ const componentGroupNames = fs.existsSync(path.join(registryDir, "ui"))
 
 export async function formatComponentData(
   exportNode: tae.ExportNode,
-  allExports: tae.ExportNode[],
   context: ParserContext,
 ) {
   const description = exportNode.documentation?.description?.replace(
@@ -46,11 +45,7 @@ export async function formatComponentData(
   );
 
   // Get all properties using TypeScript's type checker (includes inherited props)
-  const props = await getPropsWithTypeChecker(
-    exportNode.name,
-    context,
-    allExports,
-  );
+  const props = await getPropsWithTypeChecker(exportNode.name, context);
 
   const raw = {
     name: exportNode.name,
@@ -72,7 +67,6 @@ export async function formatComponentData(
 async function getPropsWithTypeChecker(
   typeName: string,
   context: ParserContext,
-  allExports: tae.ExportNode[],
 ): Promise<Record<string, FormattedProp>> {
   const { program, checker } = context;
   const result: Record<string, FormattedProp> = {};

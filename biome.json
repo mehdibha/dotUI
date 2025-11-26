@@ -16,7 +16,9 @@
       "!**/build",
       "!**/.turbo",
       "!**/.source",
-      "!**/*.mdx"
+      "!**/*.mdx",
+      "!s2-docs",
+      "!baseui-docs"
     ]
   },
   "css": {

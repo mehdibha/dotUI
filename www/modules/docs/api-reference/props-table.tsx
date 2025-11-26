@@ -165,7 +165,9 @@ function PropRows({ prop, componentName }: PropRowsProps) {
               {prop.defaultHighlighted ?? prop.default}
             </code>
           ) : (
-            <code className="font-mono text-[0.8125rem] text-fg-muted/50">—</code>
+            <code className="font-mono text-[0.8125rem] text-fg-muted/50">
+              —
+            </code>
           )}
         </td>
 
@@ -233,12 +235,16 @@ interface DescriptionItemProps {
   hasSeparator?: boolean;
 }
 
-function DescriptionItem({ label, children, hasSeparator }: DescriptionItemProps) {
+function DescriptionItem({
+  label,
+  children,
+  hasSeparator,
+}: DescriptionItemProps) {
   return (
     <div
       className={cn(
         "sm:col-span-2 sm:grid sm:grid-cols-subgrid",
-        hasSeparator && "border-t border-border/50 pt-2 sm:border-t-0 sm:pt-0",
+        hasSeparator && "border-border/50 border-t pt-2 sm:border-t-0 sm:pt-0",
       )}
     >
       <dt className="mb-1 font-medium text-fg-muted text-xs sm:mb-0 sm:py-1">
@@ -272,8 +278,6 @@ function TypeDisplay({ type, highlighted }: TypeDisplayProps) {
   }
 
   return (
-    <code className="font-mono text-[0.8125rem]">
-      {highlighted ?? type}
-    </code>
+    <code className="font-mono text-[0.8125rem]">{highlighted ?? type}</code>
   );
 }
