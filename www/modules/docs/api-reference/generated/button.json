@@ -1,5 +1,6 @@
 {
   "name": "ButtonProps",
+  "description": "A clickable element that triggers an action. Buttons communicate actions users can take\nand allow users to interact with the page.",
   "props": {
     "aria-label": {
       "type": "string",

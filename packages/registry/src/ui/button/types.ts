@@ -3,6 +3,10 @@ import type {
   Link as AriaLink,
 } from "react-aria-components";
 
+/**
+ * A clickable element that triggers an action. Buttons communicate actions users can take
+ * and allow users to interact with the page.
+ */
 export interface ButtonProps extends React.ComponentProps<typeof AriaButton> {
   /**
    * The visual style of the button (Vanilla CSS implementation specific).

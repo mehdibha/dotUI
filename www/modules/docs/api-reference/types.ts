@@ -15,6 +15,8 @@ export interface PropDefinition {
   description?: string;
   /** Default value if any */
   default?: string;
+  /** Whether the prop is required (only present and true if required) */
+  required?: boolean;
 }
 
 /**
@@ -23,6 +25,8 @@ export interface PropDefinition {
 export interface ComponentApiReference {
   /** Name of the props interface (e.g., "ButtonProps") */
   name: string;
+  /** Description of the component extracted from JSDoc */
+  description?: string;
   /** Map of prop name to prop definition */
   props: Record<string, PropDefinition>;
 }

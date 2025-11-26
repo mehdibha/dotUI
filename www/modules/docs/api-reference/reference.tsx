@@ -115,8 +115,9 @@ async function transformProp(
   const shortType = getShortType(propName, prop.type);
   // Use detailedType for the full type display (includes | undefined), fallback to type
   const fullType = prop.detailedType ?? prop.type;
-  // If detailedType exists, the prop is optional (undefined was stripped from type)
-  const isOptional = !!prop.detailedType;
+
+  // Only include detailedType if it differs from shortType (for tooltip display)
+  const hasDetailedType = prop.detailedType && prop.detailedType !== shortType;
 
   return {
     name: propName,
@@ -124,12 +125,18 @@ async function transformProp(
     typeHighlighted: await highlightCode(fullType, "ts"),
     shortType,
     shortTypeHighlighted: await highlightCode(shortType, "ts"),
+    // Include detailed type for tooltip hover
+    detailedType: hasDetailedType ? prop.detailedType : undefined,
+    detailedTypeHighlighted: hasDetailedType
+      ? await highlightCode(prop.detailedType!, "ts")
+      : undefined,
     default: prop.default,
     defaultHighlighted: prop.default
       ? await highlightCode(prop.default, "ts")
       : undefined,
     description: renderDescription(prop.description),
-    required: prop.default === undefined && !isOptional,
+    // Use the required field from the generated JSON (set by TypeScript's SymbolFlags.Optional)
+    required: prop.required,
   };
 }
 
@@ -172,10 +179,17 @@ export async function Reference({ name }: ReferenceProps) {
   };
 
   return (
-    <PropsTable
-      data={groupedData}
-      componentName={name}
-      defaultExpandedGroups={DEFAULT_EXPANDED}
-    />
+    <>
+      {data.description && (
+        <p className="mb-4 text-fg-muted">
+          {renderDescription(data.description)}
+        </p>
+      )}
+      <PropsTable
+        data={groupedData}
+        componentName={name}
+        defaultExpandedGroups={DEFAULT_EXPANDED}
+      />
+    </>
   );
 }
