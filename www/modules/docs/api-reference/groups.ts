@@ -112,4 +112,3 @@ export const DEFAULT_EXPANDED_GROUPS = new Set([
   "Selection",
   "Value",
 ]);
-

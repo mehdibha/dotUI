@@ -14,6 +14,7 @@ interface PropTableProps {
 
 export function PropTable({ props, variant = "card" }: PropTableProps) {
   const [openKey, setOpenKey] = React.useState<string | null>(null);
+
   const wrapperClass =
     variant === "card"
       ? "overflow-hidden rounded-lg border border-border"
@@ -37,75 +38,94 @@ export function PropTable({ props, variant = "card" }: PropTableProps) {
           {props.map((prop, index) => {
             const key = `${prop.name}-${index}`;
             const isOpen = openKey === key;
-            const columnSpan = 3;
             const hasDefault = Boolean(prop.defaultValue?.trim());
 
             return (
               <React.Fragment key={key}>
-                <tr
-                  role="button"
-                  tabIndex={0}
-                  aria-expanded={isOpen}
-                  className="cursor-default border-border/60 border-t align-top transition-colors hover:bg-inverse/10 focus-visible:bg-inverse/20 focus-visible:outline-none active:bg-inverse/15"
-                  onClick={() => toggle(key)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      toggle(key);
-                    }
-                  }}
-                >
-                  <td className="w-1/3 px-3 py-2 text-sm">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <InlineCode
-                        html={prop.highlightedName}
-                        text={prop.name}
-                      />
-                      {prop.deprecated && (
-                        <Badge variant="danger" label="Deprecated" />
-                      )}
-                    </div>
-                  </td>
-                  <td className="w-1/3 px-3 py-2 font-mono text-[13px]">
-                    <InlineCode
-                      html={prop.highlightedTypeSummary}
-                      text={prop.typeSummary}
-                    />
-                  </td>
-                  <td className="w-1/3 px-3 py-2 text-sm">
-                    <div className="flex items-center justify-between gap-2">
-                      {hasDefault ? (
-                        <InlineCode
-                          html={prop.highlightedDefault}
-                          text={prop.defaultValue ?? ""}
-                          className="text-fg-muted"
-                        />
-                      ) : (
-                        <span className="text-fg-muted">-</span>
-                      )}
-                      <ChevronRightIcon
-                        className={cn(
-                          "size-4 shrink-0 text-fg-muted transition-transform",
-                          isOpen ? "rotate-90" : "rotate-0",
-                        )}
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </td>
-                </tr>
-                {isOpen && (
-                  <tr className="border-border/60 border-t bg-muted/10">
-                    <td colSpan={columnSpan} className="px-4 py-4">
-                      <PropDetails prop={prop} />
-                    </td>
-                  </tr>
-                )}
+                <PropRow
+                  prop={prop}
+                  isOpen={isOpen}
+                  hasDefault={hasDefault}
+                  onToggle={() => toggle(key)}
+                />
+                {isOpen && <PropDetailsRow prop={prop} />}
               </React.Fragment>
             );
           })}
         </tbody>
       </table>
     </div>
+  );
+}
+
+function PropRow({
+  prop,
+  isOpen,
+  hasDefault,
+  onToggle,
+}: {
+  prop: PropDisplayDoc;
+  isOpen: boolean;
+  hasDefault: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <tr
+      role="button"
+      tabIndex={0}
+      aria-expanded={isOpen}
+      className="cursor-default border-border/60 border-t align-top transition-colors hover:bg-inverse/10 focus-visible:bg-inverse/20 focus-visible:outline-none active:bg-inverse/15"
+      onClick={onToggle}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onToggle();
+        }
+      }}
+    >
+      <td className="w-1/3 px-3 py-2 text-sm">
+        <div className="flex flex-wrap items-center gap-2">
+          <InlineCode html={prop.highlightedName} text={prop.name} />
+          {prop.deprecated && <Badge variant="danger" label="Deprecated" />}
+        </div>
+      </td>
+      <td className="w-1/3 px-3 py-2 font-mono text-[13px]">
+        <InlineCode
+          html={prop.highlightedTypeSummary}
+          text={prop.typeSummary}
+        />
+      </td>
+      <td className="w-1/3 px-3 py-2 text-sm">
+        <div className="flex items-center justify-between gap-2">
+          {hasDefault ? (
+            <InlineCode
+              html={prop.highlightedDefault}
+              text={prop.defaultValue ?? ""}
+              className="text-fg-muted"
+            />
+          ) : (
+            <span className="text-fg-muted">-</span>
+          )}
+          <ChevronRightIcon
+            className={cn(
+              "size-4 shrink-0 text-fg-muted transition-transform",
+              isOpen ? "rotate-90" : "rotate-0",
+            )}
+            aria-hidden="true"
+          />
+        </div>
+      </td>
+    </tr>
+  );
+}
+
+function PropDetailsRow({ prop }: { prop: PropDisplayDoc }) {
+  return (
+    <tr className="border-border/60 border-t bg-muted/10">
+      <td colSpan={3} className="px-4 py-4">
+        <PropDetails prop={prop} />
+      </td>
+    </tr>
   );
 }
 

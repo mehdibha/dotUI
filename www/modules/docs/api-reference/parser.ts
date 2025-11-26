@@ -1,5 +1,3 @@
-"use server";
-
 import {
   type Symbol as MorphSymbol,
   Node,
