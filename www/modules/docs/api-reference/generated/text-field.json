@@ -253,5 +253,23 @@
       "detailedType": "StyleOrFunction<TextFieldRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the text field is disabled."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the value is invalid."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the text field is read only."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "description": "Whether the text field is required."
+    }
   }
 }

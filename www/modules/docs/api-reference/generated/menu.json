@@ -23,5 +23,11 @@
       "description": "How the menu is triggered.",
       "default": "'press'"
     }
+  },
+  "renderProps": {
+    "isEmpty": {
+      "selector": "[data-empty]",
+      "description": "Whether the menu has no items and should display its empty state."
+    }
   }
 }

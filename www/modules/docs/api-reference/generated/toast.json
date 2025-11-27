@@ -41,5 +41,15 @@
       "detailedType": "StyleOrFunction<ToastRenderProps<Toast>> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the toast is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the toast is keyboard focused."
+    }
   }
 }

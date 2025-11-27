@@ -23,5 +23,27 @@
       "detailedType": "StyleOrFunction<DateInputRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the date input is currently hovered with a mouse."
+    },
+    "isFocusWithin": {
+      "selector": "[data-focus-within]",
+      "description": "Whether an element within the date input is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether an element within the date input is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the date input is disabled."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the date input is invalid."
+    }
   }
 }

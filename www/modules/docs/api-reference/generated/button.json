@@ -235,5 +235,31 @@
       "detailedType": "StyleOrFunction<ButtonRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the button is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "description": "Whether the button is currently in a pressed state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the button is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the button is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the button is disabled."
+    },
+    "isPending": {
+      "selector": "[data-pending]",
+      "description": "Whether the button is currently in a pending state."
+    }
   }
 }

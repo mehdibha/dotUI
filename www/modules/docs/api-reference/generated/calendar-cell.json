@@ -42,5 +42,59 @@
       "detailedType": "StyleOrFunction<CalendarCellRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the cell is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "description": "Whether the cell is currently being pressed."
+    },
+    "isSelected": {
+      "selector": "[data-selected]",
+      "description": "Whether the cell is selected."
+    },
+    "isSelectionStart": {
+      "selector": "[data-selection-start]",
+      "description": "Whether the cell is the first date in a range selection."
+    },
+    "isSelectionEnd": {
+      "selector": "[data-selection-end]",
+      "description": "Whether the cell is the last date in a range selection."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the cell is focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the cell is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the cell is disabled, according to the calendar's `minValue`, `maxValue`, and `isDisabled` props.\nDisabled dates are not focusable, and cannot be selected by the user. They are typically\ndisplayed with a dimmed appearance."
+    },
+    "isOutsideVisibleRange": {
+      "selector": "[data-outside-visible-range]",
+      "description": "Whether the cell is outside the visible range of the calendar.\nFor example, dates before the first day of a month in the same week."
+    },
+    "isOutsideMonth": {
+      "selector": "[data-outside-month]",
+      "description": "Whether the cell is outside the current month."
+    },
+    "isUnavailable": {
+      "selector": "[data-unavailable]",
+      "description": "Whether the cell is unavailable, according to the calendar's `isDateUnavailable` prop. Unavailable dates remain\nfocusable, but cannot be selected by the user. They should be displayed with a visual affordance to indicate they\nare unavailable, such as a different color or a strikethrough.\n\nNote that because they are focusable, unavailable dates must meet a 4.5:1 color contrast ratio,\n[as defined by WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the cell is part of an invalid selection."
+    },
+    "isToday": {
+      "selector": "[data-today]",
+      "description": "Whether the cell is today."
+    }
   }
 }

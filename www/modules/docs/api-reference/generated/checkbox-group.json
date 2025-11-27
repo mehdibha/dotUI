@@ -122,5 +122,23 @@
       "detailedType": "StyleOrFunction<CheckboxGroupRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the checkbox group is disabled."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the checkbox group is read only."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "description": "Whether the checkbox group is required."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the checkbox group is invalid."
+    }
   }
 }

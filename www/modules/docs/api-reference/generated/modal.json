@@ -69,5 +69,15 @@
       "detailedType": "StyleOrFunction<ModalRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isEntering": {
+      "selector": "[data-entering]",
+      "description": "Whether the modal is currently entering. Use this to apply animations."
+    },
+    "isExiting": {
+      "selector": "[data-exiting]",
+      "description": "Whether the modal is currently exiting. Use this to apply animations."
+    }
   }
 }

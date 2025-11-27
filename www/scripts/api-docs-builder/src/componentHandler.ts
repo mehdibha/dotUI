@@ -18,6 +18,11 @@ interface FormattedProp {
   description?: string;
 }
 
+interface RenderPropInfo {
+  selector: string;
+  description?: string;
+}
+
 const registryDir = path.resolve(process.cwd(), "../packages/registry/src");
 
 function kebabToPascal(str: string): string {
@@ -48,10 +53,15 @@ export async function formatComponentData(
   // Get all properties using TypeScript's type checker (includes inherited props)
   const props = await getPropsWithTypeChecker(exportNode.name, context);
 
+  // Extract render props (CSS state selectors)
+  const renderProps = extractRenderProps(exportNode.name, context);
+
   const raw = {
     name: exportNode.name,
     description,
     props: sortObjectByKeys(props, memberOrder.props),
+    // Add renderProps field (only if not empty)
+    ...(Object.keys(renderProps).length > 0 && { renderProps }),
   } as Record<string, unknown>;
 
   // Post-process type strings to align naming
@@ -148,6 +158,59 @@ async function getPropsWithTypeChecker(
                 }
               },
             );
+          }
+        }
+      }
+    });
+  }
+
+  return result;
+}
+
+/**
+ * Extract render props from component render props interfaces.
+ * Looks for @selector JSDoc tags in properties of render props types
+ * (e.g., ButtonRenderProps from ButtonProps).
+ */
+function extractRenderProps(
+  propsTypeName: string,
+  context: ParserContext,
+): Record<string, RenderPropInfo> {
+  const { program, checker } = context;
+  const result: Record<string, RenderPropInfo> = {};
+
+  // Derive render props type name from props type name
+  // e.g., "ButtonProps" -> "ButtonRenderProps"
+  const renderPropsTypeName = propsTypeName.replace(/Props$/, "RenderProps");
+
+  // Search for the render props interface in all source files (including declaration files)
+  for (const sourceFile of program.getSourceFiles()) {
+    sourceFile.forEachChild((node) => {
+      if (
+        (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) &&
+        node.name.text === renderPropsTypeName
+      ) {
+        const symbol = checker.getSymbolAtLocation(node.name);
+        if (!symbol) return;
+
+        const type = checker.getDeclaredTypeOfSymbol(symbol);
+        const properties = checker.getPropertiesOfType(type);
+
+        for (const prop of properties) {
+          // Get JSDoc tags
+          const jsDocTags = prop.getJsDocTags(checker);
+          const selectorTag = jsDocTags.find((tag) => tag.name === "selector");
+
+          if (selectorTag) {
+            const selectorValue = ts.displayPartsToString(selectorTag.text);
+            const description = ts.displayPartsToString(
+              prop.getDocumentationComment(checker),
+            );
+
+            result[prop.name] = {
+              selector: selectorValue.trim(),
+              ...(description && { description }),
+            };
           }
         }
       }

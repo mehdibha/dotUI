@@ -23,8 +23,8 @@
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultSelectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
+      "type": "\"all\" | Iterable<Key>",
+      "detailedType": "\"all\" | Iterable<Key> | undefined",
       "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "disabledKeys": {
@@ -54,8 +54,8 @@
       "description": "Handler that is called when the selection changes."
     },
     "selectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
+      "type": "\"all\" | Iterable<Key>",
+      "detailedType": "\"all\" | Iterable<Key> | undefined",
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionBehavior": {

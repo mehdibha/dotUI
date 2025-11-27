@@ -184,5 +184,31 @@
       "detailedType": "StyleOrFunction<SelectRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the select is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the select is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the select is disabled."
+    },
+    "isOpen": {
+      "selector": "[data-open]",
+      "description": "Whether the select is currently open."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the select is invalid."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "description": "Whether the select is required."
+    }
   }
 }

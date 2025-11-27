@@ -168,5 +168,23 @@
       "detailedType": "StyleOrFunction<PopoverRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "trigger": {
+      "selector": "[data-trigger=\"...\"]",
+      "description": "The name of the component that triggered the popover, e.g. \"DialogTrigger\" or \"ComboBox\"."
+    },
+    "placement": {
+      "selector": "[data-placement=\"left | right | top | bottom\"]",
+      "description": "The placement of the popover relative to the trigger."
+    },
+    "isEntering": {
+      "selector": "[data-entering]",
+      "description": "Whether the popover is currently entering. Use this to apply animations."
+    },
+    "isExiting": {
+      "selector": "[data-exiting]",
+      "description": "Whether the popover is currently exiting. Use this to apply animations."
+    }
   }
 }

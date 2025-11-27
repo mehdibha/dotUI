@@ -90,5 +90,11 @@
       "detailedType": "StyleOrFunction<ToggleButtonGroupRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the toggle button group is disabled."
+    }
   }
 }

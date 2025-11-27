@@ -136,5 +136,43 @@
       "detailedType": "StyleOrFunction<RadioRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isSelected": {
+      "selector": "[data-selected]",
+      "description": "Whether the radio is selected."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the radio is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "description": "Whether the radio is currently in a pressed state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the radio is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the radio is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the radio is disabled."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the radio is read only."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the radio is invalid."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "description": "Whether the checkbox is required."
+    }
   }
 }

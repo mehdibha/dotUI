@@ -128,5 +128,27 @@
       "detailedType": "StyleOrFunction<RadioGroupRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "orientation": {
+      "selector": "[data-orientation=\"horizontal | vertical\"]",
+      "description": "The orientation of the radio group."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the radio group is disabled."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the radio group is read only."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "description": "Whether the radio group is required."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the radio group is invalid."
+    }
   }
 }

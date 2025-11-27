@@ -136,5 +136,55 @@
       "detailedType": "StyleOrFunction<MenuItemRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "hasSubmenu": {
+      "selector": "[data-has-submenu]",
+      "description": "Whether the item has a submenu."
+    },
+    "isOpen": {
+      "selector": "[data-open]",
+      "description": "Whether the item's submenu is open."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the item is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "description": "Whether the item is currently in a pressed state."
+    },
+    "isSelected": {
+      "selector": "[data-selected]",
+      "description": "Whether the item is currently selected."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the item is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the item is currently keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+    },
+    "selectionMode": {
+      "selector": "[data-selection-mode=\"single | multiple\"]",
+      "description": "The type of selection that is allowed in the collection."
+    },
+    "allowsDragging": {
+      "selector": "[data-allows-dragging]",
+      "description": "Whether the item allows dragging."
+    },
+    "isDragging": {
+      "selector": "[data-dragging]",
+      "description": "Whether the item is currently being dragged."
+    },
+    "isDropTarget": {
+      "selector": "[data-drop-target]",
+      "description": "Whether the item is currently an active drop target."
+    }
   }
 }

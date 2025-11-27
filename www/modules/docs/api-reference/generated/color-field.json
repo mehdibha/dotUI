@@ -202,5 +202,19 @@
       "detailedType": "StyleOrFunction<ColorFieldRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the color field is disabled."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the color field is invalid."
+    },
+    "channel": {
+      "selector": "[data-channel=\"hex | hue | saturation | ...\"]",
+      "description": "The color channel that this field edits, or \"hex\" if no `channel` prop is set."
+    }
   }
 }

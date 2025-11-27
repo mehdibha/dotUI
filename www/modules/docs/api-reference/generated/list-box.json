@@ -33,8 +33,8 @@
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultSelectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
+      "type": "\"all\" | Iterable<Key>",
+      "detailedType": "\"all\" | Iterable<Key> | undefined",
       "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "dependencies": {
@@ -100,8 +100,8 @@
       "description": "Provides content to display when there are no items in the list."
     },
     "selectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
+      "type": "\"all\" | Iterable<Key>",
+      "detailedType": "\"all\" | Iterable<Key> | undefined",
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionBehavior": {
@@ -164,6 +164,28 @@
       "type": "StyleOrFunction<ListBoxRenderProps>",
       "detailedType": "StyleOrFunction<ListBoxRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  },
+  "renderProps": {
+    "isEmpty": {
+      "selector": "[data-empty]",
+      "description": "Whether the listbox has no items and should display its empty state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the listbox is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the listbox is currently keyboard focused."
+    },
+    "isDropTarget": {
+      "selector": "[data-drop-target]",
+      "description": "Whether the listbox is currently the active drop target."
+    },
+    "layout": {
+      "selector": "[data-layout=\"stack | grid\"]",
+      "description": "Whether the items are arranged in a stack or grid."
     }
   }
 }

@@ -31,5 +31,39 @@
       "detailedType": "StyleOrFunction<DateSegmentRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the segment is currently hovered with a mouse."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the segment is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the segment is keyboard focused."
+    },
+    "isPlaceholder": {
+      "selector": "[data-placeholder]",
+      "description": "Whether the value is a placeholder."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the segment is read only."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the date field is disabled."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the date field is in an invalid state."
+    },
+    "type": {
+      "selector": "[data-type=\"...\"]",
+      "description": "The type of segment. Values include `literal`, `year`, `month`, `day`, etc."
+    }
   }
 }

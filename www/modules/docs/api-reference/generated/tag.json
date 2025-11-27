@@ -115,5 +115,39 @@
       "detailedType": "StyleOrFunction<TagRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "allowsRemoving": {
+      "selector": "[data-allows-removing]",
+      "description": "Whether the tag group allows items to be removed."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+    },
+    "isSelected": {
+      "selector": "[data-selected]",
+      "description": "Whether the item is currently selected."
+    },
+    "selectionMode": {
+      "selector": "[data-selection-mode=\"single | multiple\"]",
+      "description": "The type of selection that is allowed in the collection."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the item is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the item is currently keyboard focused."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the item is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "description": "Whether the item is currently in a pressed state."
+    }
   }
 }

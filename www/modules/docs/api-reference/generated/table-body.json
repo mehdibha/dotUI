@@ -41,5 +41,15 @@
       "detailedType": "StyleOrFunction<TableBodyRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isEmpty": {
+      "selector": "[data-empty]",
+      "description": "Whether the table body has no rows and should display its empty state."
+    },
+    "isDropTarget": {
+      "selector": "[data-drop-target]",
+      "description": "Whether the Table is currently the active drop target."
+    }
   }
 }

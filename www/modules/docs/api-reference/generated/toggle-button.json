@@ -194,5 +194,31 @@
       "detailedType": "StyleOrFunction<ToggleButtonRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isSelected": {
+      "selector": "[data-selected]",
+      "description": "Whether the button is currently selected."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the button is disabled."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the button is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the button is keyboard focused."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the button is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "description": "Whether the button is currently in a pressed state."
+    }
   }
 }

@@ -41,5 +41,11 @@
       "detailedType": "StyleOrFunction<TableHeaderRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the table header is currently hovered with a mouse."
+    }
   }
 }

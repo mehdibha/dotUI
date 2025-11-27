@@ -212,5 +212,19 @@
       "detailedType": "StyleOrFunction<NumberFieldRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the number field is disabled."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the number field is invalid."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "description": "Whether the number field is required."
+    }
   }
 }

@@ -40,5 +40,19 @@
       "detailedType": "boolean | undefined",
       "description": "Whether the tooltip should be disabled, independent from the trigger."
     }
+  },
+  "renderProps": {
+    "placement": {
+      "selector": "[data-placement=\"left | right | top | bottom\"]",
+      "description": "The placement of the tooltip relative to the trigger."
+    },
+    "isEntering": {
+      "selector": "[data-entering]",
+      "description": "Whether the tooltip is currently entering. Use this to apply animations."
+    },
+    "isExiting": {
+      "selector": "[data-exiting]",
+      "description": "Whether the tooltip is currently exiting. Use this to apply animations."
+    }
   }
 }

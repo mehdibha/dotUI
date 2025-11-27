@@ -79,5 +79,15 @@
       "detailedType": "StyleOrFunction<ProgressBarRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "valueText": {
+      "selector": "[aria-valuetext]",
+      "description": "A formatted version of the value."
+    },
+    "isIndeterminate": {
+      "selector": ":not([aria-valuenow])",
+      "description": "Whether the progress bar is indeterminate."
+    }
   }
 }

@@ -31,5 +31,19 @@
       "detailedType": "StyleOrFunction<TagListRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isEmpty": {
+      "selector": "[data-empty]",
+      "description": "Whether the tag list has no items and should display its empty state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the tag list is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the tag list is currently keyboard focused."
+    }
   }
 }

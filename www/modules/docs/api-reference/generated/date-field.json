@@ -178,5 +178,19 @@
       "detailedType": "StyleOrFunction<DateFieldRenderProps> | undefined",
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "renderProps": {
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the date field is invalid."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the date field is disabled."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the date field is read only."
+    }
   }
 }
