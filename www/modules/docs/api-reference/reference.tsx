@@ -184,7 +184,7 @@ export async function Reference({ name, className }: ReferenceProps) {
         <p className="text-fg-muted">{renderDescription(data.description)}</p>
       )}
       {data.extendsElement && (
-        <p className="mb-4 text-fg-muted">
+        <p className="text-fg-muted">
           Supports all{" "}
           <a
             href={getHtmlElementLink(data.extendsElement)}

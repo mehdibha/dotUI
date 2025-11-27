@@ -67,8 +67,8 @@ export function PropsTable({
 
   return (
     <TypeRendererProvider links={typeLinks}>
-      <div className="my-6 w-full overflow-hidden rounded-md border text-sm">
-        <table className="w-full border-collapse">
+      <div className="w-full overflow-hidden rounded-md border text-sm">
+        <table className="w-full border-collapse [&>tbody:last-child>tr:last-child]:border-b-0 [&>tbody:last-child>tr:last-child>td]:border-b-0">
           {/* Header */}
           <thead className="border-b bg-card">
             <tr className={GRID_LAYOUT}>

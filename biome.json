@@ -16,9 +16,7 @@
       "!**/build",
       "!**/.turbo",
       "!**/.source",
-      "!**/*.mdx",
-      "!react-spectrum",
-      "!baseui-docs"
+      "!**/*.mdx"
     ]
   },
   "css": {
