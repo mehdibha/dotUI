@@ -7,7 +7,12 @@ import {
   type PropData,
   PropsTable,
 } from "./props-table";
-import type { ComponentApiReference, PropDefinition } from "./types";
+import { type RenderPropData, RenderPropsTable } from "./render-props-table";
+import type {
+  ComponentApiReference,
+  PropDefinition,
+  RenderPropDefinition,
+} from "./types";
 
 export interface ReferenceProps {
   name: string;
@@ -116,20 +121,12 @@ async function transformProp(
   // Use detailedType for the full type display (includes | undefined), fallback to type
   const fullType = prop.detailedType ?? prop.type;
 
-  // Only include detailedType if it differs from shortType (for tooltip display)
-  const hasDetailedType = prop.detailedType && prop.detailedType !== shortType;
-
   return {
     name: propName,
     type: fullType,
     typeHighlighted: await highlightCode(fullType, "ts"),
     shortType,
     shortTypeHighlighted: await highlightCode(shortType, "ts"),
-    // Include detailed type for tooltip hover
-    detailedType: hasDetailedType ? prop.detailedType : undefined,
-    detailedTypeHighlighted: hasDetailedType
-      ? await highlightCode(prop.detailedType!, "ts")
-      : undefined,
     default: prop.default,
     defaultHighlighted: prop.default
       ? await highlightCode(prop.default, "ts")
@@ -148,6 +145,34 @@ async function transformProps(
 ): Promise<PropData[]> {
   return Promise.all(
     Object.entries(props).map(([name, prop]) => transformProp(name, prop)),
+  );
+}
+
+/**
+ * Transform a RenderPropDefinition to RenderPropData with highlighting
+ */
+async function transformRenderProp(
+  name: string,
+  renderProp: RenderPropDefinition,
+): Promise<RenderPropData> {
+  return {
+    name,
+    selector: renderProp.selector,
+    selectorHighlighted: await highlightCode(renderProp.selector, "css"),
+    description: renderDescription(renderProp.description),
+  };
+}
+
+/**
+ * Transform a record of render props to an array of RenderPropData
+ */
+async function transformRenderProps(
+  renderProps: Record<string, RenderPropDefinition>,
+): Promise<RenderPropData[]> {
+  return Promise.all(
+    Object.entries(renderProps).map(([name, prop]) =>
+      transformRenderProp(name, prop),
+    ),
   );
 }
 
@@ -174,6 +199,11 @@ export async function Reference({ name, className }: ReferenceProps) {
     ),
   };
 
+  // Transform render props if available
+  const renderPropsData = data.renderProps
+    ? await transformRenderProps(data.renderProps)
+    : [];
+
   return (
     <div className={className}>
       {data.description && (
@@ -186,6 +216,16 @@ export async function Reference({ name, className }: ReferenceProps) {
         componentName={name}
         defaultExpandedGroups={DEFAULT_EXPANDED}
       />
+      {renderPropsData.length > 0 && (
+        <>
+          <h4 className="mt-8 mb-2 font-semibold text-base">Render Props</h4>
+          <p className="mb-4 text-fg-muted text-sm">
+            State values available in render prop functions. Use the CSS
+            selectors for styling with data attributes.
+          </p>
+          <RenderPropsTable data={renderPropsData} componentName={name} />
+        </>
+      )}
     </div>
   );
 }

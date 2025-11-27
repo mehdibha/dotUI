@@ -20,6 +20,16 @@ export interface PropDefinition {
 }
 
 /**
+ * A render prop definition with CSS selector
+ */
+export interface RenderPropDefinition {
+  /** CSS selector for styling this state (e.g., "[data-hovered]") */
+  selector: string;
+  /** Description of the render prop */
+  description?: string;
+}
+
+/**
  * The full API reference for a component
  */
 export interface ComponentApiReference {
@@ -29,6 +39,8 @@ export interface ComponentApiReference {
   description?: string;
   /** Map of prop name to prop definition */
   props: Record<string, PropDefinition>;
+  /** Map of render prop name to render prop definition (CSS selectors) */
+  renderProps?: Record<string, RenderPropDefinition>;
 }
 
 /**
