@@ -303,15 +303,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -391,15 +386,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -560,15 +550,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -653,15 +638,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -817,15 +797,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",

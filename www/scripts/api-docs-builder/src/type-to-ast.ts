@@ -474,11 +474,14 @@ export function typeToAst(
       .map((t) => typeToAst(t, { ...context, currentDepth: currentDepth + 1 }))
       .filter((t): t is TType => t !== null);
 
-    // Simplify single-element unions
-    const firstElement = elements[0];
-    if (elements.length === 1 && firstElement) return firstElement;
+    // Collapse true | false back to boolean (TypeScript expands boolean to true | false in unions)
+    const collapsedElements = collapseBooleanLiterals(elements);
 
-    return { type: "union", elements } as TUnion;
+    // Simplify single-element unions
+    const firstElement = collapsedElements[0];
+    if (collapsedElements.length === 1 && firstElement) return firstElement;
+
+    return { type: "union", elements: collapsedElements } as TUnion;
   }
 
   // Intersection types
@@ -969,4 +972,28 @@ export function createConversionContext(
     maxDepth,
     currentDepth: 0,
   };
+}
+
+/**
+ * Collapse true | false back to boolean in union types
+ * TypeScript internally represents boolean as true | false, so when iterating
+ * through union members, we get the expanded form. This collapses them back.
+ */
+function collapseBooleanLiterals(elements: TType[]): TType[] {
+  const hasTrue = elements.some(
+    (e) => e.type === "booleanLiteral" && e.value === true,
+  );
+  const hasFalse = elements.some(
+    (e) => e.type === "booleanLiteral" && e.value === false,
+  );
+
+  if (hasTrue && hasFalse) {
+    // Remove both true and false, add boolean keyword
+    return [
+      { type: "boolean" } as TKeyword,
+      ...elements.filter((e) => e.type !== "booleanLiteral"),
+    ];
+  }
+
+  return elements;
 }

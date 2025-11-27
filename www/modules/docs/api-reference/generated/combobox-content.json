@@ -17,15 +17,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -63,6 +58,9 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
           },
           {
@@ -76,14 +74,6 @@
           },
           {
             "type": "bigint"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "application",
@@ -654,21 +644,13 @@
       "description": "The primary orientation of the items. Usually this is the\ndirection that the collection scrolls.",
       "default": "'vertical'"
     },
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "aria-describedby": {
       "type": "string",
@@ -686,13 +668,21 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "shouldSelectOnPressUp": {
       "type": "boolean",
@@ -1559,6 +1549,9 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
                     },
                     {
@@ -1572,14 +1565,6 @@
                     },
                     {
                       "type": "bigint"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",

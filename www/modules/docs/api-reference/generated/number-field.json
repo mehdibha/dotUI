@@ -175,6 +175,14 @@
       },
       "description": "Whether the input is disabled."
     },
+    "defaultValue": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The default value (uncontrolled)."
+    },
     "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -183,21 +191,13 @@
       },
       "description": "Whether the element should receive focus on render."
     },
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "aria-describedby": {
       "type": "string",
@@ -215,21 +215,21 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "defaultValue": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The default value (uncontrolled)."
-    },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onCopy": {
       "type": "ClipboardEventHandler<HTMLInputElement>",
@@ -2171,15 +2171,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",
@@ -3663,15 +3658,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",
@@ -4964,15 +4954,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     }
                   ]
                 },
@@ -9290,15 +9275,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",
@@ -9578,15 +9558,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     }
                   ]
                 },
@@ -9898,15 +9873,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     }
                   ]
                 },

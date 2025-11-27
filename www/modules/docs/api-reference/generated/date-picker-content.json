@@ -8,6 +8,9 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
           },
           {
@@ -21,14 +24,6 @@
           },
           {
             "type": "bigint"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "application",
@@ -1010,6 +1005,9 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
                     },
                     {
@@ -1023,14 +1021,6 @@
                     },
                     {
                       "type": "bigint"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",
@@ -1230,15 +1220,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -1299,15 +1284,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -1322,15 +1302,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -1631,15 +1606,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -1729,15 +1699,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -1788,15 +1753,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -1811,15 +1771,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -1869,15 +1824,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -1892,15 +1842,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -2177,15 +2122,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -2200,15 +2140,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },

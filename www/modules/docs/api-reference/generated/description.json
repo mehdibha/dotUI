@@ -2,38 +2,6 @@
   "name": "DescriptionProps",
   "description": "Missing description.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element that provides a detailed, extended description for the object."
-    },
     "inputMode": {
       "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
       "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
@@ -158,15 +126,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -246,15 +209,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -323,6 +281,14 @@
       },
       "description": "Indicates the element that represents the current item within a container or set of related elements."
     },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
     "aria-description": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -330,6 +296,14 @@
         "type": "string"
       },
       "description": "Defines a string value that describes or annotates the current element."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element that provides a detailed, extended description for the object."
     },
     "aria-disabled": {
       "type": "Booleanish",
@@ -415,15 +389,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -508,15 +477,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",
@@ -565,6 +529,22 @@
         "type": "string"
       },
       "description": "Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-level": {
       "type": "number",
@@ -672,15 +652,10 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "union",

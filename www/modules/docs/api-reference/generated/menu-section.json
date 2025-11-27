@@ -26,6 +26,9 @@
         "type": "union",
         "elements": [
           {
+            "type": "boolean"
+          },
+          {
             "type": "undefined"
           },
           {
@@ -39,14 +42,6 @@
           },
           {
             "type": "bigint"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
           },
           {
             "type": "application",
@@ -264,6 +259,14 @@
       },
       "description": "Values that should invalidate the item cache when using dynamic collections."
     },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An accessibility label for the section."
+    },
     "items": {
       "type": "Iterable<T>",
       "detailedType": "Iterable<T> | undefined",
@@ -298,14 +301,6 @@
         ]
       },
       "description": "Item objects in the section."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "An accessibility label for the section."
     },
     "className": {
       "type": "string",
@@ -1063,6 +1058,9 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
                     },
                     {
@@ -1076,14 +1074,6 @@
                     },
                     {
                       "type": "bigint"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",

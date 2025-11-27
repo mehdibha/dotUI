@@ -201,46 +201,6 @@
       },
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
     },
-    "autoFocus": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should receive focus on render."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
     "defaultValue": {
       "type": "string | Color | null",
       "detailedType": "string | Color | null | undefined",
@@ -265,6 +225,14 @@
       },
       "description": "The default value (uncontrolled)."
     },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -273,6 +241,22 @@
       },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
     "aria-errormessage": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -280,6 +264,22 @@
         "type": "string"
       },
       "description": "Identifies the element that provides an error message for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onCopy": {
       "type": "ClipboardEventHandler<HTMLInputElement>",
@@ -1071,15 +1071,10 @@
             "type": "union",
             "elements": [
               {
+                "type": "boolean"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
               }
             ]
           },
@@ -3438,15 +3433,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",
@@ -4930,15 +4920,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",
@@ -6231,15 +6216,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     }
                   ]
                 },
@@ -10557,15 +10537,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     },
                     {
                       "type": "link",
@@ -10845,15 +10820,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     }
                   ]
                 },
@@ -11165,15 +11135,10 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "boolean"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": false
-                    },
-                    {
-                      "type": "booleanLiteral",
-                      "value": true
                     }
                   ]
                 },
