@@ -1,5 +1,6 @@
 {
   "name": "AccordionHeadingProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

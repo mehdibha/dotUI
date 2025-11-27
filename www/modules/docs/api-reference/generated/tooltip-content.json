@@ -1,5 +1,6 @@
 {
   "name": "TooltipContentProps",
+  "description": "A tooltip displays a description of an element on hover or focus.",
   "props": {
     "aria-label": {
       "type": "string",

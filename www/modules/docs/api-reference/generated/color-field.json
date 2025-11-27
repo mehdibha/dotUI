@@ -1,5 +1,6 @@
 {
   "name": "ColorFieldProps",
+  "description": "A color field allows users to edit a hex color or individual color channel value.",
   "props": {
     "aria-label": {
       "type": "string",

@@ -1,5 +1,6 @@
 {
   "name": "InputAddonProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

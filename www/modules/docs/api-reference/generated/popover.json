@@ -1,5 +1,6 @@
 {
   "name": "PopoverProps",
+  "description": "A popover is an overlay element positioned relative to a trigger.",
   "props": {
     "aria-label": {
       "type": "string",

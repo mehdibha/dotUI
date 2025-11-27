@@ -1,5 +1,6 @@
 {
   "name": "TableLoadMoreProps",
+  "description": "Missing description.",
   "props": {
     "isLoading": {
       "type": "boolean",

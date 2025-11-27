@@ -1,5 +1,6 @@
 {
   "name": "BreadcrumbLinkProps",
+  "description": "A link allows a user to navigate to another page or resource within a web page or application.",
   "props": {
     "aria-label": {
       "type": "string",

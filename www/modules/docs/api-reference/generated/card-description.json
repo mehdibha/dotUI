@@ -1,5 +1,6 @@
 {
   "name": "CardDescriptionProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

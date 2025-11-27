@@ -1,5 +1,6 @@
 {
   "name": "TabProps",
+  "description": "A Tab provides a title for an individual item within a TabList.",
   "props": {
     "aria-label": {
       "type": "string",

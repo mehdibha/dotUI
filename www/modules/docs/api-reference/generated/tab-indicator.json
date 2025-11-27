@@ -1,5 +1,6 @@
 {
   "name": "TabIndicatorProps",
+  "description": "An animated indicator of selection state within a group of items.",
   "props": {
     "aria-label": {
       "type": "string",

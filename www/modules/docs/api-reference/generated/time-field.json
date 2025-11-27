@@ -1,5 +1,6 @@
 {
   "name": "TimeFieldProps",
+  "description": "A time field allows users to enter and edit time values using a keyboard.\nEach part of a time value is displayed in an individually editable segment.",
   "props": {
     "aria-label": {
       "type": "string",

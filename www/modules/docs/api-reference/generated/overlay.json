@@ -1,5 +1,6 @@
 {
   "name": "OverlayProps",
+  "description": "Missing description.",
   "props": {
     "defaultOpen": {
       "type": "boolean",

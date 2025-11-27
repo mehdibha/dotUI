@@ -1,5 +1,6 @@
 {
   "name": "ToggleButtonGroupProps",
+  "description": "A toggle button group allows a user to toggle multiple options, with single or multiple selection.",
   "props": {
     "aria-label": {
       "type": "string",

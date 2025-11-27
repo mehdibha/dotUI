@@ -1,5 +1,8 @@
 type ColorFormat = "hex" | "rgb" | "hsl" | "hsb";
 
+/**
+ * Missing description.
+ */
 export interface ColorEditorProps extends React.ComponentProps<"div"> {
   /**
    * The initial color format to display.

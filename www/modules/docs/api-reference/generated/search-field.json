@@ -1,5 +1,6 @@
 {
   "name": "SearchFieldProps",
+  "description": "A search field allows a user to enter and clear a search query.",
   "props": {
     "aria-label": {
       "type": "string",

@@ -1,5 +1,6 @@
 {
   "name": "AlertActionProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

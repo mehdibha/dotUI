@@ -8,7 +8,7 @@ import { Heading, type HeadingProps } from "@dotui/registry/ui/heading";
 import { Link as NavLink } from "@dotui/registry/ui/link";
 import type { LinkProps } from "@dotui/registry/ui/link";
 
-import { Reference } from "./api-reference/reference";
+import { Reference, ReferenceProps } from "./api-reference/reference";
 import { CodeBlock, Pre } from "./code-block";
 import {
   CodeBlockTab,
@@ -165,7 +165,7 @@ export const mdxComponents: MDXComponents = {
       {...props}
     />
   ),
-  Reference,
+  Reference: ({ name }: ReferenceProps) => <Reference name={name} className="mt-4" />,
 };
 
 function Link(

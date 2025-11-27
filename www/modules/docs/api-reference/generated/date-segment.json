@@ -1,5 +1,6 @@
 {
   "name": "DateSegmentProps",
+  "description": "A date segment displays an individual unit of a date and time, and allows users to edit\nthe value by typing or using the arrow keys to increment and decrement.",
   "props": {
     "onHoverChange": {
       "type": "((isHovering: boolean) => void)",

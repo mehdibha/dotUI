@@ -1,5 +1,6 @@
 {
   "name": "SliderOutputProps",
+  "description": "A slider output displays the current value of a slider as text.",
   "props": {
     "children": {
       "type": "ChildrenOrFunction<SliderRenderProps>",

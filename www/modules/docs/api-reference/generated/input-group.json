@@ -1,5 +1,6 @@
 {
   "name": "InputGroupProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

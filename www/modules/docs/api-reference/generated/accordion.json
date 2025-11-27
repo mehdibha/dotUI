@@ -1,5 +1,6 @@
 {
   "name": "AccordionProps",
+  "description": "A DisclosureGroup is a grouping of related disclosures, sometimes called an accordion.\nIt supports both single and multiple expanded items.",
   "props": {
     "allowsMultipleExpanded": {
       "type": "boolean",

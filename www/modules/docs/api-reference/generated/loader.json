@@ -1,5 +1,6 @@
 {
   "name": "LoaderProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

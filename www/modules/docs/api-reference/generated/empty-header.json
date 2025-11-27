@@ -1,5 +1,6 @@
 {
   "name": "EmptyHeaderProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

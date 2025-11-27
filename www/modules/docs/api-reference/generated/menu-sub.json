@@ -1,5 +1,6 @@
 {
   "name": "MenuSubProps",
+  "description": "A submenu trigger is used to wrap a submenu's trigger item and the submenu itself.",
   "props": {
     "delay": {
       "type": "number",

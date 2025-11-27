@@ -1,5 +1,6 @@
 {
   "name": "SwitchProps",
+  "description": "A switch allows a user to turn a setting on or off.",
   "props": {
     "aria-label": {
       "type": "string",

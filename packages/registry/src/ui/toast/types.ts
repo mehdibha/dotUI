@@ -1,5 +1,8 @@
 import type { ToastProps as AriaToastProps } from "react-aria-components";
 
+/**
+ * Missing description.
+ */
 export interface Toast {
   title: string;
   description?: string;
@@ -10,4 +13,7 @@ export interface Toast {
   variant?: "success" | "error" | "warning" | "info" | "neutral" | "danger";
 }
 
+/**
+ * A Toast displays a brief, temporary notification of actions, errors, or other events in an application.
+ */
 export interface ToastProps extends AriaToastProps<Toast> {}

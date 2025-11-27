@@ -1,5 +1,6 @@
 {
   "name": "AccordionPanelProps",
+  "description": "A DisclosurePanel provides the content for a disclosure.",
   "props": {
     "role": {
       "type": "\"group\" | \"region\"",

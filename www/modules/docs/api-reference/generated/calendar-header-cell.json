@@ -1,5 +1,6 @@
 {
   "name": "CalendarHeaderCellProps",
+  "description": "A calendar header cell displays a week day name at the top of a column within a calendar.",
   "props": {
     "id": {
       "type": "string",

@@ -1,5 +1,6 @@
 {
   "name": "TagGroupProps",
+  "description": "A tag group is a focusable list of labels, categories, keywords, filters, or other items,\nwith support for keyboard navigation, selection, and removal.",
   "props": {
     "aria-label": {
       "type": "string",
@@ -22,8 +23,8 @@
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "disabledKeys": {
@@ -53,8 +54,8 @@
       "description": "Handler that is called when the selection changes."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionBehavior": {

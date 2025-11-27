@@ -1,5 +1,6 @@
 {
   "name": "KbdGroupProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

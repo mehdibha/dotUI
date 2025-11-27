@@ -1,5 +1,6 @@
 {
   "name": "SkeletonProviderProps",
+  "description": "Missing description.",
   "props": {
     "isLoading": {
       "type": "boolean",

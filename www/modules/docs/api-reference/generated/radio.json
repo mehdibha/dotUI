@@ -1,5 +1,6 @@
 {
   "name": "RadioProps",
+  "description": "A radio represents an individual option within a radio group.",
   "props": {
     "aria-label": {
       "type": "string",

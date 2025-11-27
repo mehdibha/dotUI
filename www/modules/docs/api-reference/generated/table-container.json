@@ -1,5 +1,6 @@
 {
   "name": "TableContainerProps",
+  "description": "Missing description.",
   "props": {
     "onResize": {
       "type": "((widths: Map<Key, ColumnSize>) => void)",

@@ -1,5 +1,6 @@
 {
   "name": "MenuSectionProps",
+  "description": "A MenuSection represents a section within a Menu.",
   "props": {
     "aria-label": {
       "type": "string",
@@ -12,8 +13,8 @@
       "description": "The object value that this section represents. When using dynamic collections, this is set automatically."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "dependencies": {
@@ -42,8 +43,8 @@
       "description": "Handler that is called when the selection changes."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionMode": {

@@ -1,5 +1,6 @@
 {
   "name": "AccordionItemProps",
+  "description": "A disclosure is a collapsible section of content. It is composed of a header\nwith a heading and trigger button, and a panel that contains the content.",
   "props": {
     "defaultExpanded": {
       "type": "boolean",

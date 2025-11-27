@@ -12,6 +12,9 @@ type CommonProps =
   | "isKeyboardDismissDisabled"
   | "shouldCloseOnInteractOutside";
 
+/**
+ * Missing description.
+ */
 export interface OverlayProps extends Pick<ModalProps, CommonProps> {
   children?: React.ReactNode;
 

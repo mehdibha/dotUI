@@ -1,5 +1,6 @@
 {
   "name": "TableRowProps",
+  "description": "A row within a Table.",
   "props": {
     "value": {
       "type": "T",

@@ -1,5 +1,6 @@
 {
   "name": "DateFieldProps",
+  "description": "A date field allows users to enter and edit date and time values using a keyboard.\nEach part of a date value is displayed in an individually editable segment.",
   "props": {
     "aria-label": {
       "type": "string",

@@ -1,5 +1,6 @@
 {
   "name": "DrawerProps",
+  "description": "Missing description.",
   "props": {
     "defaultOpen": {
       "type": "boolean",

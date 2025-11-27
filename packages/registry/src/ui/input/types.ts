@@ -6,6 +6,9 @@ import type {
   TextArea as AriaTextArea,
 } from "react-aria-components";
 
+/**
+ * Missing description.
+ */
 export interface InputGroupProps
   extends React.ComponentProps<typeof AriaGroup> {
   /**
@@ -15,6 +18,9 @@ export interface InputGroupProps
   size?: "sm" | "md" | "lg";
 }
 
+/**
+ * An input allows a user to input text.
+ */
 export interface InputProps
   extends Omit<React.ComponentProps<typeof AriaInput>, "size"> {
   /**
@@ -24,6 +30,9 @@ export interface InputProps
   size?: "sm" | "md" | "lg";
 }
 
+/**
+ * A textarea allows a user to input multi-line text.
+ */
 export interface TextAreaProps
   extends Omit<React.ComponentProps<typeof AriaTextArea>, "size"> {
   /**
@@ -33,8 +42,14 @@ export interface TextAreaProps
   size?: "sm" | "md" | "lg";
 }
 
+/**
+ * Missing description.
+ */
 export interface InputAddonProps extends React.ComponentProps<"div"> {}
 
+/**
+ * A date input groups the editable date segments within a date field.
+ */
 export interface DateInputProps extends Omit<AriaDateInputProps, "children"> {
   /**
    * The size of the date input.
@@ -45,5 +60,9 @@ export interface DateInputProps extends Omit<AriaDateInputProps, "children"> {
   children?: AriaDateInputProps["children"];
 }
 
+/**
+ * A date segment displays an individual unit of a date and time, and allows users to edit
+ * the value by typing or using the arrow keys to increment and decrement.
+ */
 export interface DateSegmentProps
   extends React.ComponentProps<typeof AriaDateSegment> {}

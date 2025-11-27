@@ -1,5 +1,6 @@
 {
   "name": "CheckboxGroupProps",
+  "description": "A checkbox group allows a user to select multiple items from a list of options.",
   "props": {
     "aria-label": {
       "type": "string",

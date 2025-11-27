@@ -1,5 +1,6 @@
 {
   "name": "NumberFieldProps",
+  "description": "A number field allows a user to enter a number, and increment or decrement the value using stepper buttons.",
   "props": {
     "aria-label": {
       "type": "string",

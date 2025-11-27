@@ -1,5 +1,6 @@
 {
   "name": "FileTriggerProps",
+  "description": "A FileTrigger allows a user to access the file system with any pressable React Aria\nor React Spectrum component, or custom components built with usePress.",
   "props": {
     "acceptDirectory": {
       "type": "boolean",

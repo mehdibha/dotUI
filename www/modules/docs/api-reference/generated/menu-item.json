@@ -1,5 +1,6 @@
 {
   "name": "MenuItemProps",
+  "description": "A MenuItem represents an individual action in a Menu.",
   "props": {
     "aria-label": {
       "type": "string",

@@ -2,8 +2,14 @@ import type { ListBoxProps } from "@dotui/registry/ui/list-box";
 import type { PopoverProps } from "@dotui/registry/ui/popover";
 import type { SearchFieldProps } from "@dotui/registry/ui/search-field";
 
+/**
+ * Missing description.
+ */
 export interface CommandProps extends React.ComponentProps<"div"> {}
 
+/**
+ * Missing description.
+ */
 export interface CommandInputProps extends SearchFieldProps {
   /**
    * Placeholder text for the search input.
@@ -11,6 +17,9 @@ export interface CommandInputProps extends SearchFieldProps {
   placeholder?: string;
 }
 
+/**
+ * Missing description.
+ */
 export interface CommandContentProps<T extends object> extends ListBoxProps<T> {
   placement?: PopoverProps["placement"];
 

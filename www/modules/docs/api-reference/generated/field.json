@@ -1,5 +1,6 @@
 {
   "name": "FieldProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

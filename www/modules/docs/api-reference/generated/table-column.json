@@ -1,5 +1,6 @@
 {
   "name": "TableColumnProps",
+  "description": "A column within a Table.",
   "props": {
     "allowsResizing": {
       "type": "boolean",

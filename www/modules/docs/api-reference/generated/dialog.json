@@ -1,5 +1,6 @@
 {
   "name": "DialogProps",
+  "description": "A DialogTrigger opens a dialog when a trigger element is pressed.",
   "props": {
     "defaultOpen": {
       "type": "boolean",

@@ -1,5 +1,6 @@
 {
   "name": "SliderControlProps",
+  "description": "A slider track is a container for one or more slider thumbs.",
   "props": {
     "onHoverChange": {
       "type": "((isHovering: boolean) => void)",

@@ -1,5 +1,6 @@
 {
   "name": "ColorPickerProps",
+  "description": "A ColorPicker synchronizes a color value between multiple React Aria color components.\nIt simplifies building color pickers with customizable layouts via composition.",
   "props": {
     "defaultValue": {
       "type": "string | Color",

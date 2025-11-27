@@ -1,5 +1,6 @@
 {
   "name": "ListBoxProps",
+  "description": "A listbox displays a list of options and allows a user to select one or more of them.",
   "props": {
     "aria-label": {
       "type": "string",
@@ -32,8 +33,8 @@
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "dependencies": {
@@ -99,8 +100,8 @@
       "description": "Provides content to display when there are no items in the list."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionBehavior": {

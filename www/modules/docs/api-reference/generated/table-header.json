@@ -1,5 +1,6 @@
 {
   "name": "TableHeaderProps",
+  "description": "A header within a Table, containing the table columns.",
   "props": {
     "columns": {
       "type": "Iterable<T>",

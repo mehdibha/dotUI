@@ -1,5 +1,8 @@
 import type { ProgressBarProps } from "react-aria-components";
 
+/**
+ * Missing description.
+ */
 export interface LoaderProps extends ProgressBarProps {
   /**
    * The size of the loader in pixels.

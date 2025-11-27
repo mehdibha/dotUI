@@ -1,5 +1,6 @@
 {
   "name": "ColorThumbProps",
+  "description": "A color thumb appears within a ColorArea, ColorSlider, or ColorWheel\nand allows a user to drag to adjust the color value.",
   "props": {
     "onHoverChange": {
       "type": "((isHovering: boolean) => void)",

@@ -1,5 +1,6 @@
 {
   "name": "ColorSliderControlProps",
+  "description": "Missing description.",
   "props": {
     "onHoverChange": {
       "type": "((isHovering: boolean) => void)",

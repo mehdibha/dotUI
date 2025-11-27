@@ -1,5 +1,6 @@
 {
   "name": "BreadcrumbsProps",
+  "description": "Breadcrumbs display a hierarchy of links to the current page or resource in an application.",
   "props": {
     "aria-label": {
       "type": "string",

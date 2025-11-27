@@ -1,5 +1,6 @@
 {
   "name": "TooltipProps",
+  "description": "TooltipTrigger wraps around a trigger element and a Tooltip. It handles opening and closing\nthe Tooltip when the user hovers over or focuses the trigger, and positioning the Tooltip relative to the trigger.",
   "props": {
     "defaultOpen": {
       "type": "boolean",

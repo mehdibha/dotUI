@@ -1,6 +1,8 @@
 import { highlight } from "fumadocs-core/highlight";
 import Markdown from "markdown-to-jsx";
 
+import { cn } from "@dotui/registry/lib/utils";
+
 import { DEFAULT_EXPANDED, groupProps } from "./groups";
 import {
   type GroupedPropsData,
@@ -9,9 +11,9 @@ import {
 } from "./props-table";
 import type { ComponentApiReference, PropDefinition } from "./types";
 
-interface ReferenceProps {
-  /** The name of the component (maps to generated/{name}.json) */
+export interface ReferenceProps {
   name: string;
+  className?: string;
 }
 
 async function loadApiReference(
@@ -151,15 +153,11 @@ async function transformProps(
   );
 }
 
-export async function Reference({ name }: ReferenceProps) {
+export async function Reference({ name, className }: ReferenceProps) {
   const data = await loadApiReference(name);
 
   if (!data) {
-    return (
-      <div className="my-4 rounded-md border border-danger bg-danger/10 p-4 text-danger text-sm">
-        API reference not found for "{name}"
-      </div>
-    );
+    throw new Error(`API reference not found for "${name}"`);
   }
 
   // Group the props
@@ -179,7 +177,7 @@ export async function Reference({ name }: ReferenceProps) {
   };
 
   return (
-    <>
+    <div className={className}>
       {data.description && (
         <p className="mb-4 text-fg-muted">
           {renderDescription(data.description)}
@@ -190,6 +188,6 @@ export async function Reference({ name }: ReferenceProps) {
         componentName={name}
         defaultExpandedGroups={DEFAULT_EXPANDED}
       />
-    </>
+    </div>
   );
 }

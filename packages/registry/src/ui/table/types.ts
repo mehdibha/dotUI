@@ -9,6 +9,9 @@ import type {
   TableLoadMoreItem as AriaTableLoadMoreItem,
 } from "react-aria-components";
 
+/**
+ * Missing description.
+ */
 export interface TableContainerProps
   extends React.ComponentProps<typeof AriaResizableTableContainer> {
   /**
@@ -17,6 +20,10 @@ export interface TableContainerProps
   resizable?: boolean;
 }
 
+/**
+ * A table displays data in rows and columns and enables a user to navigate its contents
+ * via directional navigation keys, and optionally supports row selection and sorting.
+ */
 export interface TableProps extends React.ComponentProps<typeof AriaTable> {
   /**
    * Whether the table columns are resizable.
@@ -24,9 +31,15 @@ export interface TableProps extends React.ComponentProps<typeof AriaTable> {
   resizable?: boolean;
 }
 
+/**
+ * A header within a Table, containing the table columns.
+ */
 export interface TableHeaderProps<T extends object>
   extends AriaTableHeaderProps<T> {}
 
+/**
+ * A column within a Table.
+ */
 export interface TableColumnProps
   extends React.ComponentProps<typeof AriaColumn> {
   /**
@@ -35,6 +48,9 @@ export interface TableColumnProps
   allowsResizing?: boolean;
 }
 
+/**
+ * The body of a Table, containing the table rows.
+ */
 export interface TableBodyProps<T extends object>
   extends AriaTableBodyProps<T> {
   /**
@@ -48,9 +64,18 @@ export interface TableBodyProps<T extends object>
   onLoadMore?: () => void;
 }
 
+/**
+ * A row within a Table.
+ */
 export interface TableRowProps<T extends object> extends AriaRowProps<T> {}
 
+/**
+ * A cell within a table row.
+ */
 export interface TableCellProps extends React.ComponentProps<typeof AriaCell> {}
 
+/**
+ * Missing description.
+ */
 export interface TableLoadMoreProps
   extends React.ComponentProps<typeof AriaTableLoadMoreItem> {}

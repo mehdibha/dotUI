@@ -1,5 +1,6 @@
 {
   "name": "CalendarGridProps",
+  "description": "A calendar grid displays a single grid of days within a calendar or range calendar\nwhich can be keyboard navigated and selected by the user.",
   "props": {
     "offset": {
       "type": "DateDuration",

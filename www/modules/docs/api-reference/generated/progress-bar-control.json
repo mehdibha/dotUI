@@ -1,5 +1,6 @@
 {
   "name": "ProgressBarControlProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

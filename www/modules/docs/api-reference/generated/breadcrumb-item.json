@@ -1,5 +1,6 @@
 {
   "name": "BreadcrumbItemProps",
+  "description": "A Breadcrumb represents an individual item in a Breadcrumbs list.",
   "props": {
     "id": {
       "type": "Key",

@@ -1,5 +1,6 @@
 {
   "name": "CalendarGridHeaderProps",
+  "description": "A calendar grid header displays a row of week day names at the top of a month.",
   "props": {
     "children": {
       "type": "(day: string) => ReactElement<unknown, string | JSXElementConstructor<any>>",

@@ -1,5 +1,6 @@
 {
   "name": "TagListProps",
+  "description": "A tag list is a container for tags within a TagGroup.",
   "props": {
     "dependencies": {
       "type": "readonly any[]",

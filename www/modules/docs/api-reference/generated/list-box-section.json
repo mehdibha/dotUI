@@ -1,5 +1,6 @@
 {
   "name": "ListBoxSectionProps",
+  "description": "A ListBoxSection represents a section within a ListBox.",
   "props": {
     "aria-label": {
       "type": "string",

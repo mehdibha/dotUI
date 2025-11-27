@@ -1,5 +1,6 @@
 {
   "name": "TagProps",
+  "description": "A Tag is an individual item within a TagList.",
   "props": {
     "onClick": {
       "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",

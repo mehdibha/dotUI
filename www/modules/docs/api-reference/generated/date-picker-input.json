@@ -1,5 +1,6 @@
 {
   "name": "DatePickerInputProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

@@ -1,5 +1,6 @@
 {
   "name": "ListBoxVirtualizerProps",
+  "description": "A Virtualizer renders a scrollable collection of data using customizable layouts.\nIt supports very large collections by only rendering visible items to the DOM.",
   "props": {
     "layoutOptions": {
       "type": "T",

@@ -1,5 +1,6 @@
 {
   "name": "MenuContentProps",
+  "description": "A menu displays a list of actions or options that a user can choose.",
   "props": {
     "aria-label": {
       "type": "string",
@@ -22,8 +23,8 @@
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "dependencies": {
@@ -73,8 +74,8 @@
       "description": "Provides content to display when there are no items in the list."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionMode": {

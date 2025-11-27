@@ -1,5 +1,6 @@
 {
   "name": "TextAreaProps",
+  "description": "A textarea allows a user to input multi-line text.",
   "props": {
     "aria-label": {
       "type": "string",

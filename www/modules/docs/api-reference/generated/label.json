@@ -1,5 +1,6 @@
 {
   "name": "LabelProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

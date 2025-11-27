@@ -1,5 +1,6 @@
 {
   "name": "ModalOverlayProps",
+  "description": "A ModalOverlay is a wrapper for a Modal which allows customizing the backdrop element.",
   "props": {
     "defaultOpen": {
       "type": "boolean",

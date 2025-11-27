@@ -1,5 +1,6 @@
 {
   "name": "CalendarGridBodyProps",
+  "description": "A calendar grid body displays a grid of calendar cells within a month.",
   "props": {
     "children": {
       "type": "(date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>",

@@ -1,3 +1,6 @@
+/**
+ * Missing description.
+ */
 export interface SkeletonProviderProps {
   children: React.ReactNode;
   /**
@@ -6,6 +9,9 @@ export interface SkeletonProviderProps {
   isLoading?: boolean;
 }
 
+/**
+ * Missing description.
+ */
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Whether to show the skeleton. When false, renders children directly.

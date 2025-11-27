@@ -1,5 +1,6 @@
 {
   "name": "CardFooterProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

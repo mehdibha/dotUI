@@ -1,5 +1,6 @@
 {
   "name": "ProgressBarProps",
+  "description": "Progress bars show either determinate or indeterminate progress of an operation over time.",
   "props": {
     "aria-label": {
       "type": "string",

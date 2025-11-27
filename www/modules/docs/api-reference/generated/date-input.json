@@ -1,5 +1,6 @@
 {
   "name": "DateInputProps",
+  "description": "A date input groups the editable date segments within a date field.",
   "props": {
     "size": {
       "type": "\"sm\" | \"md\" | \"lg\"",

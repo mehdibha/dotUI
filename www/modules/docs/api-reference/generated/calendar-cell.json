@@ -1,5 +1,6 @@
 {
   "name": "CalendarCellProps",
+  "description": "A calendar cell displays a date cell within a calendar grid which can be selected by the user.",
   "props": {
     "variant": {
       "type": "\"primary\" | \"accent\"",

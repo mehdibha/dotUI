@@ -1,5 +1,6 @@
 {
   "name": "ColorSwatchProps",
+  "description": "A ColorSwatch displays a preview of a selected color.",
   "props": {
     "aria-label": {
       "type": "string",

@@ -1,5 +1,6 @@
 {
   "name": "AvatarImageProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

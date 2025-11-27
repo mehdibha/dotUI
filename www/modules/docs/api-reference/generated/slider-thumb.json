@@ -1,5 +1,6 @@
 {
   "name": "SliderThumbProps",
+  "description": "A slider thumb represents an individual value that the user can adjust within a slider track.",
   "props": {
     "aria-label": {
       "type": "string",

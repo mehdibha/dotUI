@@ -1,5 +1,6 @@
 {
   "name": "TableCellProps",
+  "description": "A cell within a table row.",
   "props": {
     "colSpan": {
       "type": "number",

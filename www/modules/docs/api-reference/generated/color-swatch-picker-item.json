@@ -1,5 +1,6 @@
 {
   "name": "ColorSwatchPickerItemProps",
+  "description": "Missing description.",
   "props": {
     "onClick": {
       "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",

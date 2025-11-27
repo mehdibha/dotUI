@@ -1,5 +1,6 @@
 {
   "name": "TabListProps",
+  "description": "A TabList is used within Tabs to group tabs that a user can switch between.",
   "props": {
     "aria-label": {
       "type": "string",

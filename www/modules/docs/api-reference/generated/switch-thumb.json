@@ -1,5 +1,6 @@
 {
   "name": "SwitchThumbProps",
+  "description": "Missing description.",
   "props": {
     "aria-label": {
       "type": "string",

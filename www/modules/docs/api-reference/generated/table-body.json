@@ -1,5 +1,6 @@
 {
   "name": "TableBodyProps",
+  "description": "The body of a Table, containing the table rows.",
   "props": {
     "dependencies": {
       "type": "readonly any[]",

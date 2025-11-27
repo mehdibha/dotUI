@@ -1,5 +1,6 @@
 {
   "name": "FieldErrorProps",
+  "description": "A FieldError displays validation errors for a form field.",
   "props": {
     "id": {
       "type": "string",
