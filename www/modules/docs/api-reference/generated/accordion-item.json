@@ -6,18 +6,8 @@
       "type": "Key",
       "detailedType": "Key | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
+        "type": "identifier",
+        "name": "Key"
       },
       "description": "An id for the disclosure when used within a DisclosureGroup, matching the id used in `expandedKeys`."
     },
@@ -73,32 +63,16 @@
     "children": {
       "type": "ReactNode | (values: DisclosureRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "DisclosureRenderProps",
-                  "name": "DisclosureRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DisclosureRenderProps",
+            "name": "DisclosureRenderProps"
           }
         ]
       },
@@ -258,9 +232,11 @@
     }
   },
   "typeLinks": {
-    "DisclosureRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+disclosure@3.0.8_react@19.2.0/node_modules/@react-stately/disclosure/dist/types.d.ts:DisclosureState": {
       "type": "interface",
-      "name": "DisclosureRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+disclosure@3.0.8_react@19.2.0/node_modules/@react-stately/disclosure/dist/types.d.ts:DisclosureState",
+      "name": "DisclosureState",
+      "extends": [],
       "properties": {
         "isExpanded": {
           "type": "property",
@@ -270,44 +246,83 @@
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the disclosure is expanded."
+          "description": "Whether the disclosure is currently expanded."
         },
-        "isFocusVisibleWithin": {
-          "type": "property",
-          "name": "isFocusVisibleWithin",
+        "setExpanded": {
+          "type": "method",
+          "name": "setExpanded",
           "value": {
-            "type": "boolean"
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "isExpanded",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "Whether the disclosure has keyboard focus."
+          "description": "Sets whether the disclosure is expanded."
         },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
+        "expand": {
+          "type": "method",
+          "name": "expand",
           "value": {
-            "type": "boolean"
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "Whether the disclosure is disabled."
+          "description": "Expand the disclosure."
         },
-        "state": {
-          "type": "property",
-          "name": "state",
+        "collapse": {
+          "type": "method",
+          "name": "collapse",
           "value": {
-            "type": "identifier",
-            "name": "DisclosureState"
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "State of the disclosure."
+          "description": "Collapse the disclosure."
+        },
+        "toggle": {
+          "type": "method",
+          "name": "toggle",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Toggles the disclosure's visibility."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DisclosureRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DisclosureRenderProps",
       "name": "DisclosureRenderProps",
+      "extends": [],
       "properties": {
         "isExpanded": {
           "type": "property",
@@ -343,14 +358,17 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+disclosure@3.0.8_react@19.2.0/node_modules/@react-stately/disclosure/dist/types.d.ts:DisclosureState",
             "name": "DisclosureState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the disclosure."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

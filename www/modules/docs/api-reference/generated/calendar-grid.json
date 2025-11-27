@@ -219,17 +219,8 @@
       "type": "DateDuration",
       "detailedType": "DateDuration | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateDuration",
-            "name": "DateDuration"
-          }
-        ]
+        "type": "identifier",
+        "name": "DateDuration"
       },
       "description": "An offset from the beginning of the visible date range that this\nCalendarGrid should display. Useful when displaying more than one\nmonth at a time."
     },
@@ -268,102 +259,10 @@
       "type": "CSSProperties",
       "detailedType": "CSSProperties | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          }
-        ]
+        "type": "identifier",
+        "name": "CSSProperties"
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
-    }
-  },
-  "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateDuration": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateDuration",
-      "name": "DateDuration",
-      "extends": [],
-      "properties": {
-        "years": {
-          "type": "property",
-          "name": "years",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "The number of years to add or subtract."
-        },
-        "months": {
-          "type": "property",
-          "name": "months",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "The number of months to add or subtract."
-        },
-        "weeks": {
-          "type": "property",
-          "name": "weeks",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "The number of weeks to add or subtract."
-        },
-        "days": {
-          "type": "property",
-          "name": "days",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "The number of days to add or subtract."
-        }
-      },
-      "typeParameters": [],
-      "description": "Represents an amount of time in calendar-specific units, for use when performing arithmetic."
     }
   }
 }

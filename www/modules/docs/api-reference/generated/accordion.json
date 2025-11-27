@@ -129,32 +129,16 @@
     "children": {
       "type": "ReactNode | (values: DisclosureGroupRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "DisclosureGroupRenderProps",
-                  "name": "DisclosureGroupRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DisclosureGroupRenderProps",
+            "name": "DisclosureGroupRenderProps"
           }
         ]
       },
@@ -341,35 +325,18 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
+              "type": "application",
+              "base": {
+                "type": "identifier",
+                "name": "IteratorResult"
+              },
+              "typeParameters": [
                 {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:IteratorReturnResult",
-                    "name": "IteratorReturnResult"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "any"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "Key"
                 },
                 {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:IteratorYieldResult",
-                    "name": "IteratorYieldResult"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Key"
-                    }
-                  ]
+                  "type": "any"
                 }
               ]
             },
@@ -458,9 +425,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -772,9 +739,9 @@
           "optional": false,
           "description": "Returns an iterable of values in the set."
         },
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -797,9 +764,9 @@
           "optional": false,
           "description": "Iterates over values in the set."
         },
-        "__@toStringTag@630": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@630",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },
@@ -811,10 +778,22 @@
       "typeParameters": [],
       "description": ""
     },
-    "DisclosureGroupRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+disclosure@3.0.8_react@19.2.0/node_modules/@react-stately/disclosure/dist/types.d.ts:DisclosureGroupState": {
       "type": "interface",
-      "name": "DisclosureGroupRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+disclosure@3.0.8_react@19.2.0/node_modules/@react-stately/disclosure/dist/types.d.ts:DisclosureGroupState",
+      "name": "DisclosureGroupState",
+      "extends": [],
       "properties": {
+        "allowsMultipleExpanded": {
+          "type": "property",
+          "name": "allowsMultipleExpanded",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether multiple items can be expanded at the same time."
+        },
         "isDisabled": {
           "type": "property",
           "name": "isDisabled",
@@ -823,24 +802,98 @@
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the disclosure group is disabled."
+          "description": "Whether all items are disabled."
         },
-        "state": {
+        "expandedKeys": {
           "type": "property",
-          "name": "state",
+          "name": "expandedKeys",
           "value": {
-            "type": "identifier",
-            "name": "DisclosureGroupState"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+              "name": "Set"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              }
+            ]
           },
           "optional": false,
           "readonly": false,
-          "description": "State of the disclosure group."
+          "description": "A set of keys for items that are expanded."
+        },
+        "toggleKey": {
+          "type": "method",
+          "name": "toggleKey",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "key",
+                "value": {
+                  "type": "identifier",
+                  "name": "Key"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Toggles the expanded state for an item by its key."
+        },
+        "setExpandedKeys": {
+          "type": "method",
+          "name": "setExpandedKeys",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "keys",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "link",
+                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+                    "name": "Set"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Key"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Replaces the set of expanded keys."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DisclosureGroupRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DisclosureGroupRenderProps",
       "name": "DisclosureGroupRenderProps",
+      "extends": [],
       "properties": {
         "isDisabled": {
           "type": "property",
@@ -856,14 +909,17 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+disclosure@3.0.8_react@19.2.0/node_modules/@react-stately/disclosure/dist/types.d.ts:DisclosureGroupState",
             "name": "DisclosureGroupState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the disclosure group."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

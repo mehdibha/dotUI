@@ -278,18 +278,8 @@
       "type": "Key",
       "detailedType": "Key | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
+        "type": "identifier",
+        "name": "Key"
       },
       "description": "The unique id of the item."
     },
@@ -297,18 +287,8 @@
       "type": "T",
       "detailedType": "T | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "typeParameter",
-            "name": "T",
-            "constraint": null,
-            "default": null
-          }
-        ]
+        "type": "identifier",
+        "name": "T"
       },
       "description": "The object value that this item represents. When using dynamic collections, this is set automatically."
     },
@@ -360,32 +340,16 @@
     "children": {
       "type": "ReactNode | (values: ListBoxItemRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ListBoxItemRenderProps",
-                  "name": "ListBoxItemRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ListBoxItemRenderProps",
+            "name": "ListBoxItemRenderProps"
           }
         ]
       },
@@ -544,60 +508,8 @@
       "type": "HTMLAttributeAnchorTarget",
       "detailedType": "HTMLAttributeAnchorTarget | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "intersection",
-            "types": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "identifier",
-                "name": "{}"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "_self"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "_blank"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "_parent"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "_top"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "HTMLAttributeAnchorTarget"
       },
       "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
     },
@@ -645,93 +557,8 @@
       "type": "HTMLAttributeReferrerPolicy",
       "detailedType": "HTMLAttributeReferrerPolicy | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": ""
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "no-referrer"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "no-referrer-when-downgrade"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "origin-when-cross-origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "same-origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "strict-origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "strict-origin-when-cross-origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "unsafe-url"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "HTMLAttributeReferrerPolicy"
       },
       "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
     },
@@ -786,9 +613,11 @@
     }
   },
   "typeLinks": {
-    "ListBoxItemRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ItemRenderProps": {
       "type": "interface",
-      "name": "ListBoxItemRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ItemRenderProps",
+      "name": "ItemRenderProps",
+      "extends": [],
       "properties": {
         "isHovered": {
           "type": "property",
@@ -876,8 +705,20 @@
           "type": "property",
           "name": "allowsDragging",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -887,8 +728,20 @@
           "type": "property",
           "name": "isDragging",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -898,18 +751,40 @@
           "type": "property",
           "name": "isDropTarget",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
           "description": "Whether the item is currently an active drop target."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ListBoxItemRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ListBoxItemRenderProps",
       "name": "ListBoxItemRenderProps",
+      "extends": [
+        {
+          "type": "link",
+          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ItemRenderProps",
+          "name": "ItemRenderProps"
+        }
+      ],
       "properties": {
         "isHovered": {
           "type": "property",
@@ -997,8 +872,20 @@
           "type": "property",
           "name": "allowsDragging",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -1008,8 +895,20 @@
           "type": "property",
           "name": "isDragging",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -1019,14 +918,28 @@
           "type": "property",
           "name": "isDropTarget",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
           "description": "Whether the item is currently an active drop target."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "HoverEvent": {
       "type": "interface",

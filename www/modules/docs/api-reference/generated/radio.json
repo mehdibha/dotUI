@@ -447,6 +447,14 @@
       },
       "description": "A ref for the HTML input element."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the radio button is disabled or not.\nShows that a selection exists, but is not available in that circumstance."
+    },
     "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -454,30 +462,6 @@
         "type": "boolean"
       },
       "description": "Whether the element should receive focus on render."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "aria-label": {
       "type": "string",
@@ -495,13 +479,29 @@
       },
       "description": "Identifies the element (or elements) that labels the current element."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "string"
       },
-      "description": "Whether the radio button is disabled or not.\nShows that a selection exists, but is not available in that circumstance."
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "value": {
       "type": "string",
@@ -514,32 +514,16 @@
     "children": {
       "type": "ReactNode | (values: RadioRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "RadioRenderProps",
-                  "name": "RadioRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:RadioRenderProps",
+            "name": "RadioRenderProps"
           }
         ]
       },
@@ -886,105 +870,11 @@
         }
       }
     },
-    "RadioRenderProps": {
-      "type": "interface",
-      "name": "RadioRenderProps",
-      "properties": {
-        "isSelected": {
-          "type": "property",
-          "name": "isSelected",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio is selected."
-        },
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio is currently hovered with a mouse."
-        },
-        "isPressed": {
-          "type": "property",
-          "name": "isPressed",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio is currently in a pressed state."
-        },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio is focused, either via a mouse or keyboard."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio is keyboard focused."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio is disabled."
-        },
-        "isReadOnly": {
-          "type": "property",
-          "name": "isReadOnly",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio is read only."
-        },
-        "isInvalid": {
-          "type": "property",
-          "name": "isInvalid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio is invalid."
-        },
-        "isRequired": {
-          "type": "property",
-          "name": "isRequired",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the checkbox is required."
-        }
-      }
-    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:RadioRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:RadioRenderProps",
       "name": "RadioRenderProps",
+      "extends": [],
       "properties": {
         "isSelected": {
           "type": "property",
@@ -1076,7 +966,9 @@
           "readonly": false,
           "description": "Whether the checkbox is required."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

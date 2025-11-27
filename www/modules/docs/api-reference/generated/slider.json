@@ -6,19 +6,50 @@
       "type": "NumberFormatOptions",
       "detailedType": "NumberFormatOptions | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-            "name": "NumberFormatOptions"
-          }
-        ]
+        "type": "identifier",
+        "name": "NumberFormatOptions"
       },
       "description": "The display format of the value label."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the whole Slider is disabled."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultValue": {
       "type": "number | number[]",
@@ -49,38 +80,6 @@
         "type": "string"
       },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onChange": {
       "type": "((value: number | number[]) => void)",
@@ -123,14 +122,6 @@
         ]
       },
       "description": "Handler that is called when the value changes."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the whole Slider is disabled."
     },
     "value": {
       "type": "number | number[]",
@@ -227,30 +218,8 @@
       "type": "Orientation",
       "detailedType": "Orientation | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "horizontal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "vertical"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Orientation"
       },
       "description": "The orientation of the Slider.",
       "default": "'horizontal'"
@@ -258,32 +227,16 @@
     "children": {
       "type": "ReactNode | (values: SliderRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "SliderRenderProps",
-                  "name": "SliderRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
+            "name": "SliderRenderProps"
           }
         ]
       },
@@ -453,191 +406,188 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.2_react@19.2.0/node_modules/@react-stately/slider/dist/types.d.ts:SliderState": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-      "name": "NumberFormatOptions",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.2_react@19.2.0/node_modules/@react-stately/slider/dist/types.d.ts:Slider.State",
+      "name": "Slider.State",
       "extends": [],
       "properties": {
-        "localeMatcher": {
+        "values": {
           "type": "property",
-          "name": "localeMatcher",
+          "name": "values",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "lookup"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "best fit"
-                  }
-                ]
-              }
-            ]
+            "type": "array",
+            "elementType": {
+              "type": "number"
+            }
           },
-          "optional": true,
+          "optional": false,
           "readonly": false,
-          "description": ""
+          "description": "Values managed by the slider by thumb index."
         },
-        "style": {
+        "defaultValues": {
           "type": "property",
-          "name": "style",
+          "name": "defaultValues",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "decimal"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "percent"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "currency"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "unit"
-                  }
-                ]
-              }
-            ]
+            "type": "array",
+            "elementType": {
+              "type": "number"
+            }
           },
-          "optional": true,
+          "optional": false,
           "readonly": false,
-          "description": ""
+          "description": "The default values for each thumb."
         },
-        "currency": {
-          "type": "property",
-          "name": "currency",
+        "getThumbValue": {
+          "type": "method",
+          "name": "getThumbValue",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "string"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "number"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Get the value for the specified thumb."
         },
-        "currencyDisplay": {
-          "type": "property",
-          "name": "currencyDisplay",
+        "setThumbValue": {
+          "type": "method",
+          "name": "setThumbValue",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               },
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "symbol"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "code"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "name"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "narrowSymbol"
-                  }
-                ]
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Sets the value for the specified thumb.\nThe actual value set will be clamped and rounded according to min/max/step."
         },
-        "useGrouping": {
-          "type": "property",
-          "name": "useGrouping",
+        "setThumbPercent": {
+          "type": "method",
+          "name": "setThumbPercent",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               },
               {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
+                "type": "parameter",
+                "name": "percent",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Sets value for the specified thumb by percent offset (between 0 and 1)."
         },
-        "minimumIntegerDigits": {
+        "isThumbDragging": {
+          "type": "method",
+          "name": "isThumbDragging",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "boolean"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Whether the specific thumb is being dragged."
+        },
+        "setThumbDragging": {
+          "type": "method",
+          "name": "setThumbDragging",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "dragging",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Set is dragging on the specified thumb."
+        },
+        "focusedThumb": {
           "type": "property",
-          "name": "minimumIntegerDigits",
+          "name": "focusedThumb",
           "value": {
             "type": "union",
             "elements": [
@@ -649,373 +599,399 @@
               }
             ]
           },
-          "optional": true,
+          "optional": false,
           "readonly": false,
-          "description": ""
+          "description": "Currently-focused thumb index."
         },
-        "minimumFractionDigits": {
-          "type": "property",
-          "name": "minimumFractionDigits",
+        "setFocusedThumb": {
+          "type": "method",
+          "name": "setFocusedThumb",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Set focused true on specified thumb. This will remove focus from\nany thumb that had it before."
         },
-        "maximumFractionDigits": {
-          "type": "property",
-          "name": "maximumFractionDigits",
+        "getThumbPercent": {
+          "type": "method",
+          "name": "getThumbPercent",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "number"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Returns the specified thumb's value as a percentage from 0 to 1."
         },
-        "minimumSignificantDigits": {
-          "type": "property",
-          "name": "minimumSignificantDigits",
+        "getValuePercent": {
+          "type": "method",
+          "name": "getValuePercent",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "number"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Returns the value as a percent between the min and max of the slider."
         },
-        "maximumSignificantDigits": {
-          "type": "property",
-          "name": "maximumSignificantDigits",
+        "getThumbValueLabel": {
+          "type": "method",
+          "name": "getThumbValueLabel",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Returns the string label for the specified thumb's value, per props.formatOptions."
         },
-        "numberingSystem": {
-          "type": "property",
-          "name": "numberingSystem",
+        "getFormattedValue": {
+          "type": "method",
+          "name": "getFormattedValue",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "string"
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Returns the string label for the value, per props.formatOptions."
         },
-        "compactDisplay": {
-          "type": "property",
-          "name": "compactDisplay",
+        "getThumbMinValue": {
+          "type": "method",
+          "name": "getThumbMinValue",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "short"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "long"
-                  }
-                ]
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "number"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Returns the min allowed value for the specified thumb."
         },
-        "notation": {
-          "type": "property",
-          "name": "notation",
+        "getThumbMaxValue": {
+          "type": "method",
+          "name": "getThumbMaxValue",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "standard"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "scientific"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "engineering"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "compact"
-                  }
-                ]
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "number"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Returns the max allowed value for the specified thumb."
         },
-        "signDisplay": {
-          "type": "property",
-          "name": "signDisplay",
+        "getPercentValue": {
+          "type": "method",
+          "name": "getPercentValue",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "auto"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "never"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "always"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "exceptZero"
-                  }
-                ]
+                "type": "parameter",
+                "name": "percent",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "number"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Converts a percent along track (between 0 and 1) to the corresponding value."
         },
-        "unit": {
-          "type": "property",
-          "name": "unit",
+        "isThumbEditable": {
+          "type": "method",
+          "name": "isThumbEditable",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
-              },
-              {
-                "type": "string"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "boolean"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Returns if the specified thumb is editable."
         },
-        "unitDisplay": {
-          "type": "property",
-          "name": "unitDisplay",
+        "setThumbEditable": {
+          "type": "method",
+          "name": "setThumbEditable",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               },
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "narrow"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "short"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "long"
-                  }
-                ]
+                "type": "parameter",
+                "name": "editable",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "optional": false,
+          "description": "Set the specified thumb's editable state."
         },
-        "currencySign": {
-          "type": "property",
-          "name": "currencySign",
+        "incrementThumb": {
+          "type": "method",
+          "name": "incrementThumb",
           "value": {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "undefined"
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
               },
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "standard"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "accounting"
-                  }
-                ]
+                "type": "parameter",
+                "name": "stepSize",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
               }
-            ]
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
-          "optional": true,
+          "optional": false,
+          "description": "Increments the value of the thumb by the step or page amount."
+        },
+        "decrementThumb": {
+          "type": "method",
+          "name": "decrementThumb",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "index",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "stepSize",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Decrements the value of the thumb by the step or page amount."
+        },
+        "step": {
+          "type": "property",
+          "name": "step",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
           "readonly": false,
-          "description": ""
+          "description": "The step amount for the slider."
+        },
+        "pageSize": {
+          "type": "property",
+          "name": "pageSize",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The page size for the slider, used to do a bigger step."
+        },
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the slider."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the slider is disabled."
         }
       },
       "typeParameters": [],
       "description": ""
     },
-    "SliderRenderProps": {
-      "type": "interface",
-      "name": "SliderRenderProps",
-      "properties": {
-        "orientation": {
-          "type": "property",
-          "name": "orientation",
-          "value": {
-            "type": "identifier",
-            "name": "Orientation"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The orientation of the slider."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the slider is disabled."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "identifier",
-            "name": "Slider.State"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the slider."
-        }
-      }
-    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
       "name": "SliderRenderProps",
+      "extends": [],
       "properties": {
         "orientation": {
           "type": "property",
@@ -1042,14 +1018,17 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.2_react@19.2.0/node_modules/@react-stately/slider/dist/types.d.ts:Slider.State",
             "name": "Slider.State"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the slider."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

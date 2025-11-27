@@ -280,14 +280,44 @@ export function typeToAst(
 
   // ============================================================================
   // IMPORTANT: Check for type alias FIRST before TypeScript expands it!
-  // This is how we prevent ReactNode from being expanded into a huge union.
+  // This preserves type aliases like HTMLAttributeAnchorTarget, ReactNode, etc.
+  // Similar to baseui-docs approach: if a type has an alias, use the alias name.
   // ============================================================================
   const aliasSymbol = type.aliasSymbol;
   if (aliasSymbol) {
     const aliasName = aliasSymbol.getName();
 
-    // Never expand these types - return as simple identifier
+    // Always preserve types in NEVER_EXPAND_TYPES
     if (NEVER_EXPAND_TYPES.has(aliasName)) {
+      const typeArgs = type.aliasTypeArguments;
+      if (typeArgs && typeArgs.length > 0) {
+        const typeParams = typeArgs
+          .map((t) =>
+            typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
+          )
+          .filter((t): t is TType => t !== null);
+
+        return {
+          type: "application",
+          base: { type: "identifier", name: aliasName } as TIdentifier,
+          typeParameters: typeParams,
+        } as TApplication;
+      }
+      return { type: "identifier", name: aliasName } as TIdentifier;
+    }
+
+    // For other type aliases, preserve them as identifiers if they look like
+    // external/library types (e.g., HTMLAttributeAnchorTarget from @types/react)
+    // This prevents unnecessary expansion of well-known types.
+    const declarations = aliasSymbol.getDeclarations();
+    const isExternalType = declarations?.some((decl) => {
+      const fileName = decl.getSourceFile().fileName;
+      return (
+        fileName.includes("node_modules") || fileName.includes(".d.ts")
+      );
+    });
+
+    if (isExternalType) {
       const typeArgs = type.aliasTypeArguments;
       if (typeArgs && typeArgs.length > 0) {
         const typeParams = typeArgs

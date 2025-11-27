@@ -481,20 +481,18 @@
       "type": "Key",
       "detailedType": "Key | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
+        "type": "identifier",
+        "name": "Key"
       },
       "description": "When used in a ToggleButtonGroup, an identifier for the item in `selectedKeys`. When used standalone, a DOM id."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button is disabled."
     },
     "autoFocus": {
       "type": "boolean",
@@ -504,13 +502,21 @@
       },
       "description": "Whether the element should receive focus on render."
     },
-    "aria-controls": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
@@ -527,6 +533,14 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-controls": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
     },
     "aria-disabled": {
       "type": "boolean | \"true\" | \"false\"",
@@ -690,22 +704,6 @@
       },
       "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
     },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
     "aria-pressed": {
       "type": "boolean | \"true\" | \"false\" | \"mixed\"",
       "detailedType": "boolean | \"true\" | \"false\" | \"mixed\" | undefined",
@@ -779,14 +777,6 @@
       },
       "description": "Handler that is called when the element's selection state changes."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the button is disabled."
-    },
     "preventFocusOnPress": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -841,32 +831,16 @@
     "children": {
       "type": "ReactNode | (values: ToggleButtonRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ToggleButtonRenderProps",
-                  "name": "ToggleButtonRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps",
+            "name": "ToggleButtonRenderProps"
           }
         ]
       },
@@ -1182,9 +1156,11 @@
         }
       }
     },
-    "ToggleButtonRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState": {
       "type": "interface",
-      "name": "ToggleButtonRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:Toggle.State",
+      "name": "Toggle.State",
+      "extends": [],
       "properties": {
         "isSelected": {
           "type": "property",
@@ -1194,74 +1170,89 @@
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the button is currently selected."
+          "description": "Whether the toggle is selected."
         },
-        "state": {
+        "defaultSelected": {
           "type": "property",
-          "name": "state",
-          "value": {
-            "type": "identifier",
-            "name": "Toggle.State"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the toggle button."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
+          "name": "defaultSelected",
           "value": {
             "type": "boolean"
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the button is disabled."
+          "description": "Whether the toggle is selected by default."
         },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
+        "setSelected": {
+          "type": "method",
+          "name": "setSelected",
           "value": {
-            "type": "boolean"
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "isSelected",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "Whether the button is focused, either via a mouse or keyboard."
+          "description": "Updates selection state."
         },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
+        "toggle": {
+          "type": "method",
+          "name": "toggle",
           "value": {
-            "type": "boolean"
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "Whether the button is keyboard focused."
-        },
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the button is currently hovered with a mouse."
-        },
-        "isPressed": {
-          "type": "property",
-          "name": "isPressed",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the button is currently in a pressed state."
+          "description": "Toggle the selection state."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps",
       "name": "ToggleButtonRenderProps",
+      "extends": [
+        {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "Omit"
+          },
+          "typeParameters": [
+            {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
+              "name": "ButtonRenderProps"
+            },
+            {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "stringLiteral",
+                  "value": "isPending"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "properties": {
         "isSelected": {
           "type": "property",
@@ -1277,7 +1268,8 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:Toggle.State",
             "name": "Toggle.State"
           },
           "optional": false,
@@ -1334,7 +1326,9 @@
           "readonly": false,
           "description": "Whether the button is currently in a pressed state."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

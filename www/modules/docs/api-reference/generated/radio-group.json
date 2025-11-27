@@ -117,6 +117,14 @@
       },
       "description": "Handler that is called when the element's focus status changes."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -124,6 +132,38 @@
         "type": "string"
       },
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultValue": {
       "type": "string | null",
@@ -152,22 +192,6 @@
       },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
     "aria-errormessage": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -175,22 +199,6 @@
         "type": "string"
       },
       "description": "Identifies the element that provides an error message for the object."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onChange": {
       "type": "((value: string) => void)",
@@ -216,14 +224,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the value changes."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
     },
     "name": {
       "type": "string",
@@ -340,30 +340,8 @@
       "type": "Orientation",
       "detailedType": "Orientation | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "horizontal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "vertical"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Orientation"
       },
       "description": "The axis the Radio Button(s) should align with.",
       "default": "'vertical'"
@@ -390,32 +368,16 @@
     "children": {
       "type": "ReactNode | (values: RadioGroupRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "RadioGroupRenderProps",
-                  "name": "RadioGroupRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:RadioGroupRenderProps",
+            "name": "RadioGroupRenderProps"
           }
         ]
       },
@@ -597,20 +559,27 @@
     }
   },
   "typeLinks": {
-    "RadioGroupRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+radio@3.11.2_react@19.2.0/node_modules/@react-stately/radio/dist/types.d.ts:RadioGroupState": {
       "type": "interface",
-      "name": "RadioGroupRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+radio@3.11.2_react@19.2.0/node_modules/@react-stately/radio/dist/types.d.ts:RadioGroupState",
+      "name": "RadioGroupState",
+      "extends": [
+        {
+          "type": "link",
+          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.2_react@19.2.0/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
+          "name": "FormValidationState"
+        }
+      ],
       "properties": {
-        "orientation": {
+        "name": {
           "type": "property",
-          "name": "orientation",
+          "name": "name",
           "value": {
-            "type": "identifier",
-            "name": "Orientation"
+            "type": "string"
           },
           "optional": false,
           "readonly": false,
-          "description": "The orientation of the radio group."
+          "description": "The name for the group, used for native form submission."
         },
         "isDisabled": {
           "type": "property",
@@ -642,6 +611,39 @@
           "readonly": false,
           "description": "Whether the radio group is required."
         },
+        "validationState": {
+          "type": "property",
+          "name": "validationState",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "valid"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "invalid"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is valid or invalid."
+        },
         "isInvalid": {
           "type": "property",
           "name": "isInvalid",
@@ -652,22 +654,211 @@
           "readonly": false,
           "description": "Whether the radio group is invalid."
         },
-        "state": {
+        "selectedValue": {
           "type": "property",
-          "name": "state",
+          "name": "selectedValue",
           "value": {
-            "type": "identifier",
-            "name": "RadioGroupState"
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
           },
           "optional": false,
           "readonly": false,
-          "description": "State of the radio group."
+          "description": "The currently selected value."
+        },
+        "defaultSelectedValue": {
+          "type": "property",
+          "name": "defaultSelectedValue",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The default selected value."
+        },
+        "setSelectedValue": {
+          "type": "method",
+          "name": "setSelectedValue",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets the selected value."
+        },
+        "lastFocusedValue": {
+          "type": "property",
+          "name": "lastFocusedValue",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The value of the last focused radio."
+        },
+        "setLastFocusedValue": {
+          "type": "method",
+          "name": "setLastFocusedValue",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets the last focused value."
+        },
+        "realtimeValidation": {
+          "type": "property",
+          "name": "realtimeValidation",
+          "value": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+            "name": "ValidationResult"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Realtime validation results, updated as the user edits the value."
+        },
+        "displayValidation": {
+          "type": "property",
+          "name": "displayValidation",
+          "value": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+            "name": "ValidationResult"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Currently displayed validation results, updated when the user commits their changes."
+        },
+        "updateValidation": {
+          "type": "method",
+          "name": "updateValidation",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "result",
+                "value": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+                  "name": "ValidationResult"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Updates the current validation result. Not displayed to the user until `commitValidation` is called."
+        },
+        "resetValidation": {
+          "type": "method",
+          "name": "resetValidation",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Resets the displayed validation state to valid when the user resets the form."
+        },
+        "commitValidation": {
+          "type": "method",
+          "name": "commitValidation",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Commits the realtime validation so it is displayed to the user."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:RadioGroupRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:RadioGroupRenderProps",
       "name": "RadioGroupRenderProps",
+      "extends": [],
       "properties": {
         "orientation": {
           "type": "property",
@@ -724,14 +915,17 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+radio@3.11.2_react@19.2.0/node_modules/@react-stately/radio/dist/types.d.ts:RadioGroupState",
             "name": "RadioGroupState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the radio group."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

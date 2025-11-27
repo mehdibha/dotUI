@@ -65,16 +65,8 @@
       "type": "Element",
       "detailedType": "Element | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "Element"
-          }
-        ]
+        "type": "identifier",
+        "name": "Element"
       },
       "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
       "default": "document.body"
@@ -83,210 +75,8 @@
       "type": "Placement",
       "detailedType": "Placement | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "bottom"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "bottom left"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "bottom right"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "bottom start"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "bottom end"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "top"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "top left"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "top right"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "top start"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "top end"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "left"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "left top"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "left bottom"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "start"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "start top"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "start bottom"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "right"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "right top"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "right bottom"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "end"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "end top"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "end bottom"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Placement"
       },
       "description": "The placement of the tooltip with respect to the trigger.",
       "default": "'top'"
@@ -412,32 +202,16 @@
     "children": {
       "type": "ReactNode | (values: TooltipRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "TooltipRenderProps",
-                  "name": "TooltipRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TooltipRenderProps",
+            "name": "TooltipRenderProps"
           }
         ]
       },
@@ -578,64 +352,161 @@
     }
   },
   "typeLinks": {
-    "TooltipRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+tooltip@3.5.8_react@19.2.0/node_modules/@react-stately/tooltip/dist/types.d.ts:TooltipTriggerState": {
       "type": "interface",
-      "name": "TooltipRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+tooltip@3.5.8_react@19.2.0/node_modules/@react-stately/tooltip/dist/types.d.ts:TooltipTriggerState",
+      "name": "TooltipTriggerState",
+      "extends": [],
       "properties": {
-        "placement": {
+        "isOpen": {
           "type": "property",
-          "name": "placement",
-          "value": {
-            "type": "identifier",
-            "name": "PlacementAxis | null"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The placement of the tooltip relative to the trigger."
-        },
-        "isEntering": {
-          "type": "property",
-          "name": "isEntering",
+          "name": "isOpen",
           "value": {
             "type": "boolean"
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the tooltip is currently entering. Use this to apply animations."
+          "description": "Whether the tooltip is currently showing."
         },
-        "isExiting": {
-          "type": "property",
-          "name": "isExiting",
+        "open": {
+          "type": "method",
+          "name": "open",
           "value": {
-            "type": "boolean"
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "immediate",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "booleanLiteral",
+                      "value": false
+                    },
+                    {
+                      "type": "booleanLiteral",
+                      "value": true
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "Whether the tooltip is currently exiting. Use this to apply animations."
+          "description": "Shows the tooltip. By default, the tooltip becomes visible after a delay\ndepending on a global warmup timer. The `immediate` option shows the\ntooltip immediately instead."
         },
-        "state": {
-          "type": "property",
-          "name": "state",
+        "close": {
+          "type": "method",
+          "name": "close",
           "value": {
-            "type": "identifier",
-            "name": "TooltipTriggerState"
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "immediate",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "booleanLiteral",
+                      "value": false
+                    },
+                    {
+                      "type": "booleanLiteral",
+                      "value": true
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "State of the tooltip."
+          "description": "Hides the tooltip."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TooltipRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TooltipRenderProps",
       "name": "TooltipRenderProps",
+      "extends": [],
       "properties": {
         "placement": {
           "type": "property",
           "name": "placement",
           "value": {
-            "type": "identifier",
-            "name": "PlacementAxis | null"
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "center"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "bottom"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "top"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "left"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "right"
+                  }
+                ]
+              }
+            ]
           },
           "optional": false,
           "readonly": false,
@@ -665,14 +536,17 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+tooltip@3.5.8_react@19.2.0/node_modules/@react-stately/tooltip/dist/types.d.ts:TooltipTriggerState",
             "name": "TooltipTriggerState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the tooltip."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

@@ -48,30 +48,8 @@
       "type": "Orientation",
       "detailedType": "Orientation | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "horizontal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "vertical"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Orientation"
       },
       "description": "The orientation of the the toggle button group.",
       "default": "'horizontal'"
@@ -254,32 +232,16 @@
     "children": {
       "type": "ReactNode | (values: ToggleButtonGroupRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ToggleButtonGroupRenderProps",
-                  "name": "ToggleButtonGroupRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps",
+            "name": "ToggleButtonGroupRenderProps"
           }
         ]
       },
@@ -483,35 +445,18 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
+              "type": "application",
+              "base": {
+                "type": "identifier",
+                "name": "IteratorResult"
+              },
+              "typeParameters": [
                 {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:IteratorReturnResult",
-                    "name": "IteratorReturnResult"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "any"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "Key"
                 },
                 {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:IteratorYieldResult",
-                    "name": "IteratorYieldResult"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Key"
-                    }
-                  ]
+                  "type": "any"
                 }
               ]
             },
@@ -600,9 +545,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -914,9 +859,9 @@
           "optional": false,
           "description": "Returns an iterable of values in the set."
         },
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -939,9 +884,9 @@
           "optional": false,
           "description": "Iterates over values in the set."
         },
-        "__@toStringTag@630": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@630",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },
@@ -953,10 +898,32 @@
       "typeParameters": [],
       "description": ""
     },
-    "ToggleButtonGroupRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleGroupState": {
       "type": "interface",
-      "name": "ToggleButtonGroupRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleGroupState",
+      "name": "ToggleGroupState",
+      "extends": [],
       "properties": {
+        "selectionMode": {
+          "type": "property",
+          "name": "selectionMode",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "multiple"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "single"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether single or multiple selection is enabled."
+        },
         "isDisabled": {
           "type": "property",
           "name": "isDisabled",
@@ -965,24 +932,132 @@
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the toggle button group is disabled."
+          "description": "Whether all items are disabled."
         },
-        "state": {
+        "selectedKeys": {
           "type": "property",
-          "name": "state",
+          "name": "selectedKeys",
           "value": {
-            "type": "identifier",
-            "name": "ToggleGroupState"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+              "name": "Set"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              }
+            ]
           },
           "optional": false,
           "readonly": false,
-          "description": "State of the toggle button group."
+          "description": "A set of keys for items that are selected."
+        },
+        "toggleKey": {
+          "type": "method",
+          "name": "toggleKey",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "key",
+                "value": {
+                  "type": "identifier",
+                  "name": "Key"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Toggles the selected state for an item by its key."
+        },
+        "setSelected": {
+          "type": "method",
+          "name": "setSelected",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "key",
+                "value": {
+                  "type": "identifier",
+                  "name": "Key"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "isSelected",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets whether the given key is selected."
+        },
+        "setSelectedKeys": {
+          "type": "method",
+          "name": "setSelectedKeys",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "keys",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "link",
+                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+                    "name": "Set"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Key"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Replaces the set of selected keys."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps",
       "name": "ToggleButtonGroupRenderProps",
+      "extends": [],
       "properties": {
         "isDisabled": {
           "type": "property",
@@ -998,14 +1073,17 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleGroupState",
             "name": "ToggleGroupState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the toggle button group."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

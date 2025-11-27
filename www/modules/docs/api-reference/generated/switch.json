@@ -315,6 +315,14 @@
       },
       "description": "A ref for the HTML input element."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -331,21 +339,21 @@
       },
       "description": "Whether the element should receive focus on render."
     },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
     },
-    "aria-controls": {
+    "aria-labelledby": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
@@ -363,21 +371,21 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
-    "aria-labelledby": {
+    "aria-controls": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
     },
     "onChange": {
       "type": "((isSelected: boolean) => void)",
@@ -404,14 +412,6 @@
       },
       "description": "Handler that is called when the Switch's selection state changes."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
     "name": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -436,14 +436,6 @@
       },
       "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
     },
-    "isReadOnly": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input can be selected but not changed by the user."
-    },
     "defaultSelected": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -460,35 +452,27 @@
       },
       "description": "Whether the Switch should be selected (controlled)."
     },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input can be selected but not changed by the user."
+    },
     "children": {
       "type": "ReactNode | (values: SwitchRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "SwitchRenderProps",
-                  "name": "SwitchRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps",
+            "name": "SwitchRenderProps"
           }
         ]
       },
@@ -717,9 +701,11 @@
         }
       }
     },
-    "SwitchRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState": {
       "type": "interface",
-      "name": "SwitchRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState",
+      "name": "ToggleState",
+      "extends": [],
       "properties": {
         "isSelected": {
           "type": "property",
@@ -729,84 +715,65 @@
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the switch is selected."
+          "description": "Whether the toggle is selected."
         },
-        "isHovered": {
+        "defaultSelected": {
           "type": "property",
-          "name": "isHovered",
+          "name": "defaultSelected",
           "value": {
             "type": "boolean"
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the switch is currently hovered with a mouse."
+          "description": "Whether the toggle is selected by default."
         },
-        "isPressed": {
-          "type": "property",
-          "name": "isPressed",
+        "setSelected": {
+          "type": "method",
+          "name": "setSelected",
           "value": {
-            "type": "boolean"
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "isSelected",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "Whether the switch is currently in a pressed state."
+          "description": "Updates selection state."
         },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
+        "toggle": {
+          "type": "method",
+          "name": "toggle",
           "value": {
-            "type": "boolean"
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "Whether the switch is focused, either via a mouse or keyboard."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the switch is keyboard focused."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the switch is disabled."
-        },
-        "isReadOnly": {
-          "type": "property",
-          "name": "isReadOnly",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the switch is read only."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "identifier",
-            "name": "ToggleState"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the switch."
+          "description": "Toggle the selection state."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps",
       "name": "SwitchRenderProps",
+      "extends": [],
       "properties": {
         "isSelected": {
           "type": "property",
@@ -882,14 +849,17 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.2_react@19.2.0/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState",
             "name": "ToggleState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the switch."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

@@ -38,47 +38,8 @@
                       "name": "Key"
                     },
                     {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "number"
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            },
-                            {
-                              "type": "stringLiteral",
-                              "value": "%"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            },
-                            {
-                              "type": "stringLiteral",
-                              "value": "fr"
-                            }
-                          ]
-                        }
-                      ]
+                      "type": "identifier",
+                      "name": "ColumnSize"
                     }
                   ]
                 },
@@ -123,47 +84,8 @@
                       "name": "Key"
                     },
                     {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "number"
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            },
-                            {
-                              "type": "stringLiteral",
-                              "value": "%"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            },
-                            {
-                              "type": "stringLiteral",
-                              "value": "fr"
-                            }
-                          ]
-                        }
-                      ]
+                      "type": "identifier",
+                      "name": "ColumnSize"
                     }
                   ]
                 },
@@ -208,47 +130,8 @@
                       "name": "Key"
                     },
                     {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "number"
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            },
-                            {
-                              "type": "stringLiteral",
-                              "value": "%"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            },
-                            {
-                              "type": "stringLiteral",
-                              "value": "fr"
-                            }
-                          ]
-                        }
-                      ]
+                      "type": "identifier",
+                      "name": "ColumnSize"
                     }
                   ]
                 },
@@ -285,16 +168,8 @@
       "type": "CSSProperties",
       "detailedType": "CSSProperties | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          }
-        ]
+        "type": "identifier",
+        "name": "CSSProperties"
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     },
@@ -369,25 +244,8 @@
                       "type": "parameter",
                       "name": "value",
                       "value": {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "identifier",
-                            "name": "number"
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "`${number}`"
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "`${number}%`"
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "`${number}fr`"
-                          }
-                        ]
+                        "type": "identifier",
+                        "name": "ColumnSize"
                       },
                       "optional": false,
                       "rest": false
@@ -566,47 +424,8 @@
                 "type": "parameter",
                 "name": "value",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "number"
-                    },
-                    {
-                      "type": "template",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "number"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "template",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "number"
-                        },
-                        {
-                          "type": "stringLiteral",
-                          "value": "%"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "template",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "number"
-                        },
-                        {
-                          "type": "stringLiteral",
-                          "value": "fr"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColumnSize"
                 },
                 "optional": false,
                 "rest": false
@@ -625,25 +444,8 @@
                   "name": "Key"
                 },
                 {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "identifier",
-                      "name": "number"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "`${number}`"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "`${number}%`"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "`${number}fr`"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColumnSize"
                 }
               ]
             },
@@ -736,25 +538,8 @@
               },
               "typeParameters": [
                 {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "identifier",
-                      "name": "number"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "`${number}`"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "`${number}%`"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "`${number}fr`"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColumnSize"
                 }
               ]
             },
@@ -763,9 +548,9 @@
           "optional": false,
           "description": "Returns an iterable of values in the map"
         },
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -797,9 +582,9 @@
           "optional": false,
           "description": "Returns an iterable of entries in the map."
         },
-        "__@toStringTag@630": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@630",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },

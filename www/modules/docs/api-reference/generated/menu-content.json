@@ -352,39 +352,8 @@
       "type": "SelectionMode",
       "detailedType": "SelectionMode | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "multiple"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "single"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "none"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "SelectionMode"
       },
       "description": "The type of selection that is allowed in the collection."
     },
@@ -397,22 +366,13 @@
       "description": "Whether the collection allows empty selection."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -431,6 +391,15 @@
               },
               {
                 "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -439,22 +408,13 @@
       "description": "The currently selected keys in the collection (controlled)."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -473,6 +433,15 @@
               },
               {
                 "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -527,13 +496,21 @@
       },
       "description": "Provides content to display when there are no items in the list."
     },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
@@ -551,21 +528,13 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "escapeKeyBehavior": {
       "type": "\"none\" | \"clearSelection\"",
@@ -797,35 +766,18 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
+              "type": "application",
+              "base": {
+                "type": "identifier",
+                "name": "IteratorResult"
+              },
+              "typeParameters": [
                 {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:IteratorReturnResult",
-                    "name": "IteratorReturnResult"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "any"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "Key"
                 },
                 {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:IteratorYieldResult",
-                    "name": "IteratorYieldResult"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Key"
-                    }
-                  ]
+                  "type": "any"
                 }
               ]
             },
@@ -914,9 +866,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -1498,9 +1450,9 @@
           "optional": false,
           "description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
         },
-        "__@toStringTag@630": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@630",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },

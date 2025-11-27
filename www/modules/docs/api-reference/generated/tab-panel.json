@@ -15,18 +15,8 @@
       "type": "Key",
       "detailedType": "Key | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
+        "type": "identifier",
+        "name": "Key"
       },
       "description": "The unique id of the tab."
     },
@@ -65,32 +55,16 @@
     "children": {
       "type": "ReactNode | (values: TabPanelRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "TabPanelRenderProps",
-                  "name": "TabPanelRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabPanelRenderProps",
+            "name": "TabPanelRenderProps"
           }
         ]
       },
@@ -245,56 +219,197 @@
     }
   },
   "typeLinks": {
-    "TabPanelRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+tabs@3.8.6_react@19.2.0/node_modules/@react-stately/tabs/dist/types.d.ts:TabListState": {
       "type": "interface",
-      "name": "TabPanelRenderProps",
-      "properties": {
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
-          "value": {
-            "type": "boolean"
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+tabs@3.8.6_react@19.2.0/node_modules/@react-stately/tabs/dist/types.d.ts:TabListState",
+      "name": "TabListState",
+      "extends": [
+        {
+          "type": "application",
+          "base": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+list@3.13.1_react@19.2.0/node_modules/@react-stately/list/dist/types.d.ts:SingleSelectListState",
+            "name": "SingleSelectListState"
           },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the tab panel is currently focused."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the tab panel is currently keyboard focused."
-        },
-        "isInert": {
-          "type": "property",
-          "name": "isInert",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "identifier",
-            "name": "TabListState<unknown>"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the tab list."
+          "typeParameters": [
+            {
+              "type": "typeParameter",
+              "name": "T",
+              "constraint": null,
+              "default": null
+            }
+          ]
         }
-      }
+      ],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab list is disabled."
+        },
+        "selectedKey": {
+          "type": "property",
+          "name": "selectedKey",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The key for the currently selected item."
+        },
+        "setSelectedKey": {
+          "type": "method",
+          "name": "setSelectedKey",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "key",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets the selected key."
+        },
+        "selectedItem": {
+          "type": "property",
+          "name": "selectedItem",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/collections.d.ts:Node",
+                  "name": "Node"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "unknown"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The value of the currently selected item."
+        },
+        "collection": {
+          "type": "property",
+          "name": "collection",
+          "value": {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/collections.d.ts:Collection",
+              "name": "Collection"
+            },
+            "typeParameters": [
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/collections.d.ts:Node",
+                  "name": "Node"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "unknown"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A collection of items in the list."
+        },
+        "disabledKeys": {
+          "type": "property",
+          "name": "disabledKeys",
+          "value": {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+              "name": "Set"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A set of items that are disabled."
+        },
+        "selectionManager": {
+          "type": "property",
+          "name": "selectionManager",
+          "value": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+selection@3.20.6_react@19.2.0/node_modules/@react-stately/selection/dist/types.d.ts:SelectionManager",
+            "name": "SelectionManager"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A selection manager to read and update multiple selection state."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabPanelRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabPanelRenderProps",
       "name": "TabPanelRenderProps",
+      "extends": [],
       "properties": {
         "isFocused": {
           "type": "property",
@@ -330,14 +445,25 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
-            "name": "TabListState<unknown>"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+tabs@3.8.6_react@19.2.0/node_modules/@react-stately/tabs/dist/types.d.ts:TabListState",
+              "name": "TabListState"
+            },
+            "typeParameters": [
+              {
+                "type": "unknown"
+              }
+            ]
           },
           "optional": false,
           "readonly": false,
           "description": "State of the tab list."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

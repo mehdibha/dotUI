@@ -318,39 +318,8 @@
       "type": "SelectionMode",
       "detailedType": "SelectionMode | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "multiple"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "single"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "none"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "SelectionMode"
       },
       "description": "The type of selection that is allowed in the collection."
     },
@@ -363,22 +332,13 @@
       "description": "Whether the collection allows empty selection."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -397,6 +357,15 @@
               },
               {
                 "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -405,22 +374,13 @@
       "description": "The currently selected keys in the collection (controlled)."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -439,6 +399,15 @@
               },
               {
                 "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -598,30 +567,8 @@
       "type": "SelectionBehavior",
       "detailedType": "SelectionBehavior | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "toggle"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "replace"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "SelectionBehavior"
       },
       "description": "How multiple selection should behave in the collection.",
       "default": "\"toggle\""
@@ -636,26 +583,15 @@
             "type": "undefined"
           },
           {
-            "type": "intersection",
-            "types": [
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "DragAndDropHooks"
+            },
+            "typeParameters": [
               {
-                "type": "application",
-                "base": {
-                  "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DragHooks",
-                  "name": "DragHooks"
-                },
-                "typeParameters": [
-                  {
-                    "type": "identifier",
-                    "name": "NoInfer<T>"
-                  }
-                ]
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropHooks",
-                "name": "DropHooks"
+                "type": "identifier",
+                "name": "NoInfer<T>"
               }
             ]
           }
@@ -712,41 +648,27 @@
       "type": "Orientation",
       "detailedType": "Orientation | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "horizontal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "vertical"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Orientation"
       },
       "description": "The primary orientation of the items. Usually this is the\ndirection that the collection scrolls.",
       "default": "'vertical'"
     },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
@@ -764,21 +686,13 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "shouldSelectOnPressUp": {
       "type": "boolean",
@@ -1013,522 +927,6 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DragHooks": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DragHooks",
-      "name": "DragHooks",
-      "extends": [],
-      "properties": {
-        "useDraggableCollectionState": {
-          "type": "property",
-          "name": "useDraggableCollectionState",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "props",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DraggableCollectionStateOpts<NoInfer<T>>"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "DraggableCollectionState"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "useDraggableCollection": {
-          "type": "property",
-          "name": "useDraggableCollection",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "props",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DraggableCollectionOptions"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "state",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DraggableCollectionState"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "ref",
-                    "value": {
-                      "type": "identifier",
-                      "name": "RefObject<HTMLElement | null>"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "void"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "useDraggableItem": {
-          "type": "property",
-          "name": "useDraggableItem",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "props",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DraggableItemProps"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "state",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DraggableCollectionState"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "DraggableItemResult"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "DragPreview": {
-          "type": "property",
-          "name": "DragPreview",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "props",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DragPreviewProps & RefAttributes<DragPreviewRenderer | null>"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "ReactNode"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "renderDragPreview": {
-          "type": "property",
-          "name": "renderDragPreview",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "items",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DragItem[]"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "Element | { element: Element; x: number; y: number; }"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "isVirtualDragging": {
-          "type": "property",
-          "name": "isVirtualDragging",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [],
-                "return": {
-                  "type": "identifier",
-                  "name": "boolean"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropHooks": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropHooks",
-      "name": "DropHooks",
-      "extends": [],
-      "properties": {
-        "useDroppableCollectionState": {
-          "type": "property",
-          "name": "useDroppableCollectionState",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "props",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DroppableCollectionStateOptions"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "DroppableCollectionState"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "useDroppableCollection": {
-          "type": "property",
-          "name": "useDroppableCollection",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "props",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DroppableCollectionOptions"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "state",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DroppableCollectionState"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "ref",
-                    "value": {
-                      "type": "identifier",
-                      "name": "RefObject<HTMLElement | null>"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "DroppableCollectionResult"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "useDroppableItem": {
-          "type": "property",
-          "name": "useDroppableItem",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "options",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DroppableItemOptions"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "state",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DroppableCollectionState"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "ref",
-                    "value": {
-                      "type": "identifier",
-                      "name": "RefObject<HTMLElement | null>"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "DroppableItemResult"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "useDropIndicator": {
-          "type": "property",
-          "name": "useDropIndicator",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "props",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DropIndicatorProps"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "state",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DroppableCollectionState"
-                    },
-                    "optional": false,
-                    "rest": false
-                  },
-                  {
-                    "type": "parameter",
-                    "name": "ref",
-                    "value": {
-                      "type": "identifier",
-                      "name": "RefObject<HTMLElement | null>"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "DropIndicatorAria"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "renderDropIndicator": {
-          "type": "property",
-          "name": "renderDropIndicator",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "target",
-                    "value": {
-                      "type": "identifier",
-                      "name": "DropTarget"
-                    },
-                    "optional": false,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "Element"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "dropTargetDelegate": {
-          "type": "property",
-          "name": "dropTargetDelegate",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/dnd.d.ts:DropTargetDelegate",
-                "name": "DropTargetDelegate"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "ListDropTargetDelegate": {
-          "type": "property",
-          "name": "ListDropTargetDelegate",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-aria+dnd@3.11.3_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/@react-aria/dnd/dist/types.d.ts:ListDropTargetDelegate",
-            "name": "ListDropTargetDelegate"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
     "ListBoxRenderProps": {
       "type": "interface",
       "name": "ListBoxRenderProps",
@@ -1635,35 +1033,18 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
+              "type": "application",
+              "base": {
+                "type": "identifier",
+                "name": "IteratorResult"
+              },
+              "typeParameters": [
                 {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:IteratorReturnResult",
-                    "name": "IteratorReturnResult"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "any"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "Key"
                 },
                 {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:IteratorYieldResult",
-                    "name": "IteratorYieldResult"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Key"
-                    }
-                  ]
+                  "type": "any"
                 }
               ]
             },
@@ -1752,9 +1133,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -2336,9 +1717,9 @@
           "optional": false,
           "description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
         },
-        "__@toStringTag@630": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@630",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },

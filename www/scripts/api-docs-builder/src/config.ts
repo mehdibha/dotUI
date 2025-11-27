@@ -32,6 +32,11 @@ export const NEVER_EXPAND_TYPES = new Set([
   "ComponentPropsWithoutRef",
   // CSS/Style types
   "CSSProperties",
+  // HTML attribute types (from React's type definitions)
+  "HTMLAttributeAnchorTarget",
+  "HTMLAttributeReferrerPolicy",
+  "HTMLInputTypeAttribute",
+  "HTMLInputAutoComplete",
   // DOM types
   "Element",
   "HTMLElement",

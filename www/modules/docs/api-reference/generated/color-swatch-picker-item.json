@@ -276,32 +276,16 @@
     "children": {
       "type": "ReactNode | (values: ColorSwatchPickerItemRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ColorSwatchPickerItemRenderProps",
-                  "name": "ColorSwatchPickerItemRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerItemRenderProps",
+            "name": "ColorSwatchPickerItemRenderProps"
           }
         ]
       },
@@ -1068,81 +1052,8 @@
                 "type": "parameter",
                 "name": "format",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hex"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "rgb"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsl"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsb"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hexa"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "rgba"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsla"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsba"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorFormat"
                 },
                 "optional": false,
                 "rest": false
@@ -1308,81 +1219,8 @@
                 "type": "parameter",
                 "name": "channel",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 },
                 "optional": false,
                 "rest": false
@@ -1406,81 +1244,8 @@
                 "type": "parameter",
                 "name": "channel",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 },
                 "optional": false,
                 "rest": false
@@ -1515,81 +1280,8 @@
                 "type": "parameter",
                 "name": "channel",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 },
                 "optional": false,
                 "rest": false
@@ -1615,81 +1307,8 @@
                 "type": "parameter",
                 "name": "channel",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 },
                 "optional": false,
                 "rest": false
@@ -1722,81 +1341,8 @@
                 "type": "parameter",
                 "name": "channel",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 },
                 "optional": false,
                 "rest": false
@@ -1822,81 +1368,8 @@
                 "type": "parameter",
                 "name": "channel",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 },
                 "optional": false,
                 "rest": false
@@ -1926,36 +1399,8 @@
             "type": "function",
             "parameters": [],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "rgb"
-                    }
-                  ]
-                },
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "hsl"
-                    }
-                  ]
-                },
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "hsb"
-                    }
-                  ]
-                }
-              ]
+              "type": "identifier",
+              "name": "ColorSpace"
             },
             "typeParameters": []
           },
@@ -2155,261 +1600,8 @@
               }
             ],
             "return": {
-              "type": "objectLiteral",
-              "properties": {
-                "xChannel": {
-                  "type": "property",
-                  "name": "xChannel",
-                  "value": {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "hue"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "saturation"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "brightness"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "lightness"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "red"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "green"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "blue"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "alpha"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "optional": false,
-                  "readonly": false,
-                  "description": ""
-                },
-                "yChannel": {
-                  "type": "property",
-                  "name": "yChannel",
-                  "value": {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "hue"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "saturation"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "brightness"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "lightness"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "red"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "green"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "blue"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "alpha"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "optional": false,
-                  "readonly": false,
-                  "description": ""
-                },
-                "zChannel": {
-                  "type": "property",
-                  "name": "zChannel",
-                  "value": {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "hue"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "saturation"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "brightness"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "lightness"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "red"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "green"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "blue"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "alpha"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "optional": false,
-                  "readonly": false,
-                  "description": ""
-                }
-              }
+              "type": "identifier",
+              "name": "ColorAxes"
             },
             "typeParameters": []
           },
@@ -2426,235 +1618,16 @@
               "type": "tuple",
               "elements": [
                 {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 },
                 {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 },
                 {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "saturation"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "brightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "lightness"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "red"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "green"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "blue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "alpha"
-                        }
-                      ]
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "ColorChannel"
                 }
               ]
             },
@@ -2715,125 +1688,46 @@
       "typeParameters": [],
       "description": "Represents a color value."
     },
-    "ColorSwatchPickerItemRenderProps": {
-      "type": "interface",
-      "name": "ColorSwatchPickerItemRenderProps",
-      "properties": {
-        "color": {
-          "type": "property",
-          "name": "color",
-          "value": {
-            "type": "identifier",
-            "name": "Color"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The color of the swatch."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
-        },
-        "isSelected": {
-          "type": "property",
-          "name": "isSelected",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently selected."
-        },
-        "isDropTarget": {
-          "type": "property",
-          "name": "isDropTarget",
-          "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "Whether the item is currently an active drop target."
-        },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently focused."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently keyboard focused."
-        },
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently hovered with a mouse."
-        },
-        "isPressed": {
-          "type": "property",
-          "name": "isPressed",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently in a pressed state."
-        },
-        "allowsDragging": {
-          "type": "property",
-          "name": "allowsDragging",
-          "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "Whether the item allows dragging."
-        },
-        "isDragging": {
-          "type": "property",
-          "name": "isDragging",
-          "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "Whether the item is currently being dragged."
-        }
-      }
-    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerItemRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerItemRenderProps",
       "name": "ColorSwatchPickerItemRenderProps",
+      "extends": [
+        {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "Omit"
+          },
+          "typeParameters": [
+            {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ListBoxItemRenderProps",
+              "name": "ListBoxItemRenderProps"
+            },
+            {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "stringLiteral",
+                  "value": "selectionBehavior"
+                },
+                {
+                  "type": "stringLiteral",
+                  "value": "selectionMode"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "properties": {
         "color": {
           "type": "property",
           "name": "color",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
             "name": "Color"
           },
           "optional": false,
@@ -2864,8 +1758,20 @@
           "type": "property",
           "name": "isDropTarget",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -2915,8 +1821,20 @@
           "type": "property",
           "name": "allowsDragging",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -2926,14 +1844,28 @@
           "type": "property",
           "name": "isDragging",
           "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
           "description": "Whether the item is currently being dragged."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "HoverEvent": {
       "type": "interface",

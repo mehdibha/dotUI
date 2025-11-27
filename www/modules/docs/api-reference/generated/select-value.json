@@ -2,6 +2,38 @@
   "name": "SelectValueProps",
   "description": "SelectValue renders the current value of a Select, or a placeholder if no value is selected.\nIt is usually placed within the button element.",
   "props": {
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element that provides a detailed, extended description for the object."
+    },
     "inputMode": {
       "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
       "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
@@ -72,38 +104,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute."
     },
@@ -321,14 +323,6 @@
       },
       "description": "Indicates the element that represents the current item within a container or set of related elements."
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
     "aria-description": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -337,50 +331,12 @@
       },
       "description": "Defines a string value that describes or annotates the current element."
     },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element that provides a detailed, extended description for the object."
-    },
     "aria-disabled": {
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable."
     },
@@ -430,38 +386,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed."
     },
@@ -477,38 +403,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates an element's \"grabbed\" state in a drag-and-drop operation."
     },
@@ -600,38 +496,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates whether the element is exposed to an accessibility API."
     },
@@ -700,22 +566,6 @@
       },
       "description": "Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element."
     },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
     "aria-level": {
       "type": "number",
       "detailedType": "number | undefined",
@@ -750,38 +600,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates whether an element is modal when displayed."
     },
@@ -789,38 +609,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates whether a text box accepts multiple lines of input or only a single line."
     },
@@ -828,38 +618,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates that the user may select more than one item from the current selectable descendants."
     },
@@ -957,38 +717,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates that the element is not editable, but is otherwise operable."
     },
@@ -1046,38 +776,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates that user input is required on the element before a form may be submitted."
     },
@@ -1125,38 +825,8 @@
       "type": "Booleanish",
       "detailedType": "Booleanish | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Booleanish"
       },
       "description": "Indicates the current \"selected\" state of various widgets."
     },
@@ -1229,32 +899,29 @@
     "children": {
       "type": "ReactNode | (values: SelectValueRenderProps<T>) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "SelectValueRenderProps<T>",
-                  "name": "SelectValueRenderProps<T>"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+              "name": "SelectValueRenderProps"
             },
-            "typeParameters": []
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "object"
+                },
+                "default": null
+              }
+            ]
           }
         ]
       },
@@ -1429,9 +1096,633 @@
     }
   },
   "typeLinks": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.8.0_react@19.2.0/node_modules/@react-stately/select/dist/types.d.ts:SelectState": {
+      "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.8.0_react@19.2.0/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
+      "name": "Select.State",
+      "extends": [
+        {
+          "type": "application",
+          "base": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+list@3.13.1_react@19.2.0/node_modules/@react-stately/list/dist/types.d.ts:ListState",
+            "name": "ListState"
+          },
+          "typeParameters": [
+            {
+              "type": "typeParameter",
+              "name": "T",
+              "constraint": null,
+              "default": null
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.20_react@19.2.0/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState",
+          "name": "OverlayTriggerState"
+        },
+        {
+          "type": "link",
+          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.2_react@19.2.0/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
+          "name": "FormValidationState"
+        }
+      ],
+      "properties": {
+        "selectedKey": {
+          "type": "property",
+          "name": "selectedKey",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The key for the first selected item."
+        },
+        "defaultSelectedKey": {
+          "type": "property",
+          "name": "defaultSelectedKey",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The default selected key."
+        },
+        "setSelectedKey": {
+          "type": "method",
+          "name": "setSelectedKey",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "key",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets the selected key."
+        },
+        "value": {
+          "type": "property",
+          "name": "value",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "elementType": {
+                  "type": "identifier",
+                  "name": "Key"
+                }
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The current select value."
+        },
+        "defaultValue": {
+          "type": "property",
+          "name": "defaultValue",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "array",
+                "elementType": {
+                  "type": "identifier",
+                  "name": "Key"
+                }
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The default select value."
+        },
+        "setValue": {
+          "type": "method",
+          "name": "setValue",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "array",
+                      "elementType": {
+                        "type": "identifier",
+                        "name": "Key"
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets the select value."
+        },
+        "selectedItem": {
+          "type": "property",
+          "name": "selectedItem",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/collections.d.ts:Node",
+                  "name": "Node"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The value of the first selected item."
+        },
+        "selectedItems": {
+          "type": "property",
+          "name": "selectedItems",
+          "value": {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/collections.d.ts:Node",
+                "name": "Node"
+              },
+              "typeParameters": [
+                {
+                  "type": "identifier",
+                  "name": "T"
+                }
+              ]
+            }
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The value of the selected items."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is currently focused."
+        },
+        "setFocused": {
+          "type": "method",
+          "name": "setFocused",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "isFocused",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets whether the select is focused."
+        },
+        "focusStrategy": {
+          "type": "property",
+          "name": "focusStrategy",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "first"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "last"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Controls which item will be auto focused when the menu opens."
+        },
+        "open": {
+          "type": "method",
+          "name": "open",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "focusStrategy",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "first"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "last"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Opens the menu."
+        },
+        "toggle": {
+          "type": "method",
+          "name": "toggle",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "focusStrategy",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "first"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "last"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Toggles the menu."
+        },
+        "collection": {
+          "type": "property",
+          "name": "collection",
+          "value": {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/collections.d.ts:Collection",
+              "name": "Collection"
+            },
+            "typeParameters": [
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/collections.d.ts:Node",
+                  "name": "Node"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "T"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A collection of items in the list."
+        },
+        "disabledKeys": {
+          "type": "property",
+          "name": "disabledKeys",
+          "value": {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+              "name": "Set"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A set of items that are disabled."
+        },
+        "selectionManager": {
+          "type": "property",
+          "name": "selectionManager",
+          "value": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+selection@3.20.6_react@19.2.0/node_modules/@react-stately/selection/dist/types.d.ts:SelectionManager",
+            "name": "SelectionManager"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A selection manager to read and update multiple selection state."
+        },
+        "isOpen": {
+          "type": "property",
+          "name": "isOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the overlay is currently open."
+        },
+        "setOpen": {
+          "type": "method",
+          "name": "setOpen",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "isOpen",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets whether the overlay is open."
+        },
+        "close": {
+          "type": "method",
+          "name": "close",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Closes the overlay."
+        },
+        "realtimeValidation": {
+          "type": "property",
+          "name": "realtimeValidation",
+          "value": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+            "name": "ValidationResult"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Realtime validation results, updated as the user edits the value."
+        },
+        "displayValidation": {
+          "type": "property",
+          "name": "displayValidation",
+          "value": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+            "name": "ValidationResult"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Currently displayed validation results, updated when the user commits their changes."
+        },
+        "updateValidation": {
+          "type": "method",
+          "name": "updateValidation",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "result",
+                "value": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+                  "name": "ValidationResult"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Updates the current validation result. Not displayed to the user until `commitValidation` is called."
+        },
+        "resetValidation": {
+          "type": "method",
+          "name": "resetValidation",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Resets the displayed validation state to valid when the user resets the form."
+        },
+        "commitValidation": {
+          "type": "method",
+          "name": "commitValidation",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Commits the realtime validation so it is displayed to the user."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
       "name": "SelectValueRenderProps",
+      "extends": [],
       "properties": {
         "isPlaceholder": {
           "type": "property",
@@ -1447,8 +1738,20 @@
           "type": "property",
           "name": "selectedItem",
           "value": {
-            "type": "identifier",
-            "name": "T | null"
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "object"
+                },
+                "default": null
+              }
+            ]
           },
           "optional": false,
           "readonly": false,
@@ -1458,8 +1761,24 @@
           "type": "property",
           "name": "selectedItems",
           "value": {
-            "type": "identifier",
-            "name": "(T | null)[]"
+            "type": "array",
+            "elementType": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "typeParameter",
+                  "name": "T",
+                  "constraint": {
+                    "type": "identifier",
+                    "name": "object"
+                  },
+                  "default": null
+                }
+              ]
+            }
           },
           "optional": false,
           "readonly": false,
@@ -1479,14 +1798,43 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
-            "name": "Select.State<T, \"multiple\" | \"single\">"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.8.0_react@19.2.0/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
+              "name": "Select.State"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "object"
+                },
+                "default": null
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "multiple"
+                  },
+                  {
+                    "type": "stringLiteral",
+                    "value": "single"
+                  }
+                ]
+              }
+            ]
           },
           "optional": false,
           "readonly": false,
           "description": "The state of the select."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

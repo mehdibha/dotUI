@@ -22,16 +22,8 @@
       "type": "Element",
       "detailedType": "Element | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "Element"
-          }
-        ]
+        "type": "identifier",
+        "name": "Element"
       },
       "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
       "default": "document.body"
@@ -123,32 +115,16 @@
     "children": {
       "type": "ReactNode | (values: ModalRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ModalRenderProps",
-                  "name": "ModalRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ModalRenderProps",
+            "name": "ModalRenderProps"
           }
         ]
       },
@@ -308,46 +284,97 @@
     }
   },
   "typeLinks": {
-    "ModalRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.20_react@19.2.0/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState": {
       "type": "interface",
-      "name": "ModalRenderProps",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.20_react@19.2.0/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState",
+      "name": "OverlayTriggerState",
+      "extends": [],
       "properties": {
-        "isEntering": {
+        "isOpen": {
           "type": "property",
-          "name": "isEntering",
+          "name": "isOpen",
           "value": {
             "type": "boolean"
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the modal is currently entering. Use this to apply animations."
+          "description": "Whether the overlay is currently open."
         },
-        "isExiting": {
-          "type": "property",
-          "name": "isExiting",
+        "setOpen": {
+          "type": "method",
+          "name": "setOpen",
           "value": {
-            "type": "boolean"
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "isOpen",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "Whether the modal is currently exiting. Use this to apply animations."
+          "description": "Sets whether the overlay is open."
         },
-        "state": {
-          "type": "property",
-          "name": "state",
+        "open": {
+          "type": "method",
+          "name": "open",
           "value": {
-            "type": "identifier",
-            "name": "OverlayTriggerState"
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           },
           "optional": false,
-          "readonly": false,
-          "description": "State of the modal."
+          "description": "Opens the overlay."
+        },
+        "close": {
+          "type": "method",
+          "name": "close",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Closes the overlay."
+        },
+        "toggle": {
+          "type": "method",
+          "name": "toggle",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Toggles the overlay's visibility."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ModalRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ModalRenderProps",
       "name": "ModalRenderProps",
+      "extends": [],
       "properties": {
         "isEntering": {
           "type": "property",
@@ -373,14 +400,17 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "identifier",
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.20_react@19.2.0/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState",
             "name": "OverlayTriggerState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the modal."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

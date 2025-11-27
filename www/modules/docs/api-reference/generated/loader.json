@@ -50,17 +50,8 @@
       "type": "NumberFormatOptions",
       "detailedType": "NumberFormatOptions | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-            "name": "NumberFormatOptions"
-          }
-        ]
+        "type": "identifier",
+        "name": "NumberFormatOptions"
       },
       "description": "The display format of the value label.",
       "default": "{style: 'percent'}"
@@ -100,13 +91,21 @@
       "description": "The largest value allowed for the input.",
       "default": "100"
     },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
@@ -124,51 +123,27 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ReactNode | (values: ProgressBarRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ProgressBarRenderProps",
-                  "name": "ProgressBarRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps",
+            "name": "ProgressBarRenderProps"
           }
         ]
       },
@@ -328,15 +303,15 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-      "name": "NumberFormatOptions",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps",
+      "name": "ProgressBarRenderProps",
       "extends": [],
       "properties": {
-        "localeMatcher": {
+        "percentage": {
           "type": "property",
-          "name": "localeMatcher",
+          "name": "percentage",
           "value": {
             "type": "union",
             "elements": [
@@ -344,83 +319,17 @@
                 "type": "undefined"
               },
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "lookup"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "best fit"
-                  }
-                ]
+                "type": "number"
               }
             ]
           },
-          "optional": true,
+          "optional": false,
           "readonly": false,
-          "description": ""
+          "description": "The value as a percentage between the minimum and maximum."
         },
-        "style": {
+        "valueText": {
           "type": "property",
-          "name": "style",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "decimal"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "percent"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "currency"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "unit"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "currency": {
-          "type": "property",
-          "name": "currency",
+          "name": "valueText",
           "value": {
             "type": "union",
             "elements": [
@@ -432,499 +341,23 @@
               }
             ]
           },
-          "optional": true,
+          "optional": false,
           "readonly": false,
-          "description": ""
+          "description": "A formatted version of the value."
         },
-        "currencyDisplay": {
+        "isIndeterminate": {
           "type": "property",
-          "name": "currencyDisplay",
+          "name": "isIndeterminate",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "symbol"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "code"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "name"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "narrowSymbol"
-                  }
-                ]
-              }
-            ]
+            "type": "boolean"
           },
-          "optional": true,
+          "optional": false,
           "readonly": false,
-          "description": ""
-        },
-        "useGrouping": {
-          "type": "property",
-          "name": "useGrouping",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "minimumIntegerDigits": {
-          "type": "property",
-          "name": "minimumIntegerDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "minimumFractionDigits": {
-          "type": "property",
-          "name": "minimumFractionDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "maximumFractionDigits": {
-          "type": "property",
-          "name": "maximumFractionDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "minimumSignificantDigits": {
-          "type": "property",
-          "name": "minimumSignificantDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "maximumSignificantDigits": {
-          "type": "property",
-          "name": "maximumSignificantDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "numberingSystem": {
-          "type": "property",
-          "name": "numberingSystem",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "compactDisplay": {
-          "type": "property",
-          "name": "compactDisplay",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "short"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "long"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "notation": {
-          "type": "property",
-          "name": "notation",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "standard"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "scientific"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "engineering"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "compact"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "signDisplay": {
-          "type": "property",
-          "name": "signDisplay",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "auto"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "never"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "always"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "exceptZero"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "unit": {
-          "type": "property",
-          "name": "unit",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "unitDisplay": {
-          "type": "property",
-          "name": "unitDisplay",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "narrow"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "short"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "long"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "currencySign": {
-          "type": "property",
-          "name": "currencySign",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "standard"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "accounting"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
+          "description": "Whether the progress bar is indeterminate."
         }
       },
       "typeParameters": [],
       "description": ""
-    },
-    "ProgressBarRenderProps": {
-      "type": "interface",
-      "name": "ProgressBarRenderProps",
-      "properties": {
-        "percentage": {
-          "type": "property",
-          "name": "percentage",
-          "value": {
-            "type": "identifier",
-            "name": "number | undefined"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The value as a percentage between the minimum and maximum."
-        },
-        "valueText": {
-          "type": "property",
-          "name": "valueText",
-          "value": {
-            "type": "identifier",
-            "name": "string | undefined"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "A formatted version of the value."
-        },
-        "isIndeterminate": {
-          "type": "property",
-          "name": "isIndeterminate",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the progress bar is indeterminate."
-        }
-      }
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps": {
-      "type": "interface",
-      "name": "ProgressBarRenderProps",
-      "properties": {
-        "percentage": {
-          "type": "property",
-          "name": "percentage",
-          "value": {
-            "type": "identifier",
-            "name": "number | undefined"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The value as a percentage between the minimum and maximum."
-        },
-        "valueText": {
-          "type": "property",
-          "name": "valueText",
-          "value": {
-            "type": "identifier",
-            "name": "string | undefined"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "A formatted version of the value."
-        },
-        "isIndeterminate": {
-          "type": "property",
-          "name": "isIndeterminate",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the progress bar is indeterminate."
-        }
-      }
     }
   }
 }

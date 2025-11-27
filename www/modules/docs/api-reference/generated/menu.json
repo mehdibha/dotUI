@@ -6,30 +6,8 @@
       "type": "MenuTriggerType",
       "detailedType": "MenuTriggerType | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "press"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "longPress"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "MenuTriggerType"
       },
       "description": "How the menu is triggered.",
       "default": "'press'"

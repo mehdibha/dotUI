@@ -77,6 +77,14 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
+    },
     "onDrop": {
       "type": "((e: DropEvent) => void)",
       "detailedType": "((e: DropEvent) => void) | undefined",
@@ -101,14 +109,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when a valid drag is dropped on the drop target."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
     },
     "getDropOperation": {
       "type": "((types: DragTypes, allowedOperations: DropOperation[]) => DropOperation)",
@@ -139,45 +139,8 @@
                 "value": {
                   "type": "array",
                   "elementType": {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "link"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "copy"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "move"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "cancel"
-                          }
-                        ]
-                      }
-                    ]
+                    "type": "identifier",
+                    "name": "DropOperation"
                   }
                 },
                 "optional": false,
@@ -185,45 +148,8 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "link"
-                    }
-                  ]
-                },
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "copy"
-                    }
-                  ]
-                },
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "move"
-                    }
-                  ]
-                },
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "cancel"
-                    }
-                  ]
-                }
-              ]
+              "type": "identifier",
+              "name": "DropOperation"
             },
             "typeParameters": []
           }
@@ -334,32 +260,16 @@
     "children": {
       "type": "ReactNode | (values: DropZoneRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "DropZoneRenderProps",
-                  "name": "DropZoneRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropZoneRenderProps",
+            "name": "DropZoneRenderProps"
           }
         ]
       },
@@ -861,65 +771,11 @@
         }
       }
     },
-    "DropZoneRenderProps": {
-      "type": "interface",
-      "name": "DropZoneRenderProps",
-      "properties": {
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the dropzone is currently hovered with a mouse."
-        },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the dropzone is focused, either via a mouse or keyboard."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the dropzone is keyboard focused."
-        },
-        "isDropTarget": {
-          "type": "property",
-          "name": "isDropTarget",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the dropzone is the drop target."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the dropzone is disabled."
-        }
-      }
-    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropZoneRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropZoneRenderProps",
       "name": "DropZoneRenderProps",
+      "extends": [],
       "properties": {
         "isHovered": {
           "type": "property",
@@ -971,7 +827,9 @@
           "readonly": false,
           "description": "Whether the dropzone is disabled."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

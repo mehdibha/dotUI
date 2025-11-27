@@ -6,50 +6,24 @@
       "type": "Key",
       "detailedType": "Key | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
+        "type": "identifier",
+        "name": "Key"
       },
       "description": "A unique id for the breadcrumb, which will be passed to `onAction` when the breadcrumb is pressed."
     },
     "children": {
       "type": "ReactNode | (values: BreadcrumbRenderProps) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "BreadcrumbRenderProps",
-                  "name": "BreadcrumbRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:BreadcrumbRenderProps",
+            "name": "BreadcrumbRenderProps"
           }
         ]
       },
@@ -190,35 +164,11 @@
     }
   },
   "typeLinks": {
-    "BreadcrumbRenderProps": {
-      "type": "interface",
-      "name": "BreadcrumbRenderProps",
-      "properties": {
-        "isCurrent": {
-          "type": "property",
-          "name": "isCurrent",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the breadcrumb is for the current page."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the breadcrumb is disabled."
-        }
-      }
-    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:BreadcrumbRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:BreadcrumbRenderProps",
       "name": "BreadcrumbRenderProps",
+      "extends": [],
       "properties": {
         "isCurrent": {
           "type": "property",
@@ -240,7 +190,9 @@
           "readonly": false,
           "description": "Whether the breadcrumb is disabled."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

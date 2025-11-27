@@ -15,18 +15,8 @@
       "type": "T",
       "detailedType": "T | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "typeParameter",
-            "name": "T",
-            "constraint": null,
-            "default": null
-          }
-        ]
+        "type": "identifier",
+        "name": "T"
       },
       "description": "Options for the layout."
     }

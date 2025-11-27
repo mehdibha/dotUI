@@ -6,30 +6,8 @@
       "type": "Orientation",
       "detailedType": "Orientation | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "horizontal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "vertical"
-              }
-            ]
-          }
-        ]
+        "type": "identifier",
+        "name": "Orientation"
       },
       "description": "The orientation of the separator.",
       "default": "'horizontal'"
@@ -94,16 +72,8 @@
       "type": "CSSProperties",
       "detailedType": "CSSProperties | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          }
-        ]
+        "type": "identifier",
+        "name": "CSSProperties"
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     },

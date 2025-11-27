@@ -611,15 +611,32 @@ async function getPropsWithTypeChecker(
 
           // Get the type of the property
           const propType = checker.getTypeOfSymbolAtLocation(prop, node);
-          // Use TypeScript flags for cleaner output:
-          // - NoTruncation: Don't truncate long types
-          // - UseAliasDefinedOutsideCurrentScope: Preserve type aliases where possible
-          const typeString = checker.typeToString(
-            propType,
-            undefined,
-            ts.TypeFormatFlags.NoTruncation |
-              ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope,
-          );
+
+          // Check if this type has an alias symbol - if so, preserve the alias name
+          // This prevents types like HTMLAttributeAnchorTarget from being expanded
+          let typeString: string;
+          if (propType.aliasSymbol) {
+            // Use the alias name (e.g., "HTMLAttributeAnchorTarget")
+            typeString = propType.aliasSymbol.getName();
+            // Add type arguments if present (e.g., "Array<string>" instead of just "Array")
+            const typeArgs = propType.aliasTypeArguments;
+            if (typeArgs && typeArgs.length > 0) {
+              const argsStr = typeArgs
+                .map((t) => checker.typeToString(t))
+                .join(", ");
+              typeString += `<${argsStr}>`;
+            }
+          } else {
+            // No alias, use typeToString with flags for cleaner output:
+            // - NoTruncation: Don't truncate long types
+            // - UseAliasDefinedOutsideCurrentScope: Preserve type aliases where possible
+            typeString = checker.typeToString(
+              propType,
+              undefined,
+              ts.TypeFormatFlags.NoTruncation |
+                ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope,
+            );
+          }
 
           // Get default value from JSDoc @default tag
           const jsDocTags = prop.getJsDocTags(checker);
@@ -641,11 +658,22 @@ async function getPropsWithTypeChecker(
             : fullType;
 
           // Generate AST type for rich rendering
-          // First try to build a simplified AST from the type string (preserves aliases)
-          // Fall back to full type expansion if no simplification is possible
-          const typeAst =
-            buildTypeAstFromString(shortType, astContext) ??
-            typeToAst(propType, { ...astContext, currentDepth: 0 });
+          // First, try to detect if the type string represents a simple type alias
+          // (TypeScript's typeToString with UseAliasDefinedOutsideCurrentScope shows the alias name)
+          let typeAst: TType | null = null;
+          const simpleAliasMatch = shortType.match(/^([A-Z][A-Za-z0-9]*)$/);
+          if (simpleAliasMatch) {
+            // Simple identifier (e.g., HTMLAttributeAnchorTarget, ReactNode)
+            typeAst = {
+              type: "identifier",
+              name: simpleAliasMatch[1],
+            } as TType;
+          } else {
+            // Not a simple alias - try to build from string or fall back to full type expansion
+            typeAst =
+              buildTypeAstFromString(shortType, astContext) ??
+              typeToAst(propType, { ...astContext, currentDepth: 0 });
+          }
 
           // Scan the AST for link nodes and resolve referenced types
           if (typeAst) {

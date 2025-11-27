@@ -57,32 +57,26 @@
     "children": {
       "type": "ReactNode | (values: ToastRenderProps<Toast>) => ReactNode",
       "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "application",
+        "base": {
+          "type": "identifier",
+          "name": "ChildrenOrFunction"
+        },
+        "typeParameters": [
           {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ToastRenderProps<Toast>",
-                  "name": "ToastRenderProps<Toast>"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps",
+              "name": "ToastRenderProps"
             },
-            "typeParameters": []
+            "typeParameters": [
+              {
+                "type": "link",
+                "id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+                "name": "Toast"
+              }
+            ]
           }
         ]
       },
@@ -512,14 +506,27 @@
     },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps": {
       "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps",
       "name": "ToastRenderProps",
+      "extends": [],
       "properties": {
         "toast": {
           "type": "property",
           "name": "toast",
           "value": {
-            "type": "identifier",
-            "name": "QueuedToast<T>"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.2_react@19.2.0/node_modules/@react-stately/toast/dist/types.d.ts:QueuedToast",
+              "name": "QueuedToast"
+            },
+            "typeParameters": [
+              {
+                "type": "link",
+                "id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+                "name": "Toast"
+              }
+            ]
           },
           "optional": false,
           "readonly": false,
@@ -545,7 +552,9 @@
           "readonly": false,
           "description": "Whether the toast is keyboard focused."
         }
-      }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }
