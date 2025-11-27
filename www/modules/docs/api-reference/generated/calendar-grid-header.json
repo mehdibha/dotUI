@@ -4,17 +4,139 @@
   "props": {
     "children": {
       "type": "(day: string) => ReactElement<unknown, string | JSXElementConstructor<any>>",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "day",
+            "value": {
+              "type": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "ReactElement"
+          },
+          "typeParameters": [
+            {
+              "type": "unknown"
+            },
+            {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "function",
+                  "parameters": [
+                    {
+                      "type": "parameter",
+                      "name": "props",
+                      "value": {
+                        "type": "any"
+                      },
+                      "optional": false,
+                      "rest": false
+                    }
+                  ],
+                  "return": {
+                    "type": "union",
+                    "elements": [
+                      {
+                        "type": "identifier",
+                        "name": "undefined"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "null"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "string"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "number"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "bigint"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "false"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "true"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "Iterable<ReactNode>"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "ReactPortal"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "Promise<AwaitedReactNode>"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "Promise<ReactNode>"
+                      }
+                    ]
+                  },
+                  "typeParameters": []
+                },
+                {
+                  "type": "identifier",
+                  "name": "new (props: any, context: any) => Component<any, any, any>"
+                }
+              ]
+            }
+          ]
+        },
+        "typeParameters": []
+      },
       "description": "A function to render a `<CalendarHeaderCell>` for a weekday name.",
       "required": true
     },
     "className": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
       "type": "CSSProperties",
       "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          }
+        ]
+      },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     }
   }

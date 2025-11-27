@@ -5,52 +5,125 @@
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Defines a string value that labels the current element."
     },
     "aria-labelledby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that describes the object."
     },
     "aria-details": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "elementType": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The HTML element type that will be used to render the separator."
     },
     "slot": {
       "type": "string | null",
       "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "orientation": {
       "type": "Orientation",
       "detailedType": "Orientation | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "horizontal"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "vertical"
+              }
+            ]
+          }
+        ]
+      },
       "description": "The orientation of the separator.",
       "default": "'horizontal'"
     },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "className": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
       "type": "CSSProperties",
       "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          }
+        ]
+      },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
     }
   }

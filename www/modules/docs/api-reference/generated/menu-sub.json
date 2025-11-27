@@ -5,11 +5,109 @@
     "delay": {
       "type": "number",
       "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
       "description": "The delay time in milliseconds for the submenu to appear after hovering over the trigger.",
       "default": "200"
     },
     "children": {
       "type": "ReactElement<unknown, string | JSXElementConstructor<any>>[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "ReactElement"
+          },
+          "typeParameters": [
+            {
+              "type": "unknown"
+            },
+            {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "function",
+                  "parameters": [
+                    {
+                      "type": "parameter",
+                      "name": "props",
+                      "value": {
+                        "type": "any"
+                      },
+                      "optional": false,
+                      "rest": false
+                    }
+                  ],
+                  "return": {
+                    "type": "union",
+                    "elements": [
+                      {
+                        "type": "identifier",
+                        "name": "undefined"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "null"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "string"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "number"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "bigint"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "false"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "true"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "Iterable<ReactNode>"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "ReactPortal"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "Promise<AwaitedReactNode>"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "Promise<ReactNode>"
+                      }
+                    ]
+                  },
+                  "typeParameters": []
+                },
+                {
+                  "type": "identifier",
+                  "name": "new (props: any, context: any) => Component<any, any, any>"
+                }
+              ]
+            }
+          ]
+        }
+      },
       "description": "The contents of the SubmenuTrigger. The first child should be an Item (the trigger) and the second child should be the Popover (for the submenu).",
       "required": true
     }

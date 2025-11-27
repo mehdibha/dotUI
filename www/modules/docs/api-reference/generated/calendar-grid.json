@@ -5,28 +5,365 @@
     "offset": {
       "type": "DateDuration",
       "detailedType": "DateDuration | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateDuration",
+            "name": "DateDuration"
+          }
+        ]
+      },
       "description": "An offset from the beginning of the visible date range that this\nCalendarGrid should display. Useful when displaying more than one\nmonth at a time."
     },
     "weekdayStyle": {
       "type": "\"narrow\" | \"short\" | \"long\"",
       "detailedType": "\"narrow\" | \"short\" | \"long\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "narrow"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "short"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "long"
+          }
+        ]
+      },
       "description": "The style of weekday names to display in the calendar grid header,\ne.g. single letter, abbreviation, or full day name.",
       "default": "\"narrow\""
     },
     "children": {
       "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ReactElement<unknown, string | JSXElementConstructor<any>>[] | ((date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
       "detailedType": "ReactElement<unknown, string | JSXElementConstructor<any>> | ReactElement<unknown, string | JSXElementConstructor<any>>[] | ((date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "ReactElement"
+            },
+            "typeParameters": [
+              {
+                "type": "unknown"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "function",
+                    "parameters": [
+                      {
+                        "type": "parameter",
+                        "name": "props",
+                        "value": {
+                          "type": "any"
+                        },
+                        "optional": false,
+                        "rest": false
+                      }
+                    ],
+                    "return": {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "identifier",
+                          "name": "undefined"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "null"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "string"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "number"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "bigint"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "false"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "true"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "Iterable<ReactNode>"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "ReactPortal"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "Promise<AwaitedReactNode>"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "Promise<ReactNode>"
+                        }
+                      ]
+                    },
+                    "typeParameters": []
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "new (props: any, context: any) => Component<any, any, any>"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "identifier",
+                "name": "ReactElement"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "function",
+                      "parameters": [
+                        {
+                          "type": "parameter",
+                          "name": "props",
+                          "value": {
+                            "type": "identifier",
+                            "name": "any"
+                          },
+                          "optional": false,
+                          "rest": false
+                        }
+                      ],
+                      "return": {
+                        "type": "identifier",
+                        "name": "ReactNode | Promise<ReactNode>"
+                      },
+                      "typeParameters": []
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "new (props: any, context: any) => Component<any, any, any>"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "date",
+                "value": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+                  "name": "CalendarDate"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "identifier",
+                "name": "ReactElement"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "function",
+                      "parameters": [
+                        {
+                          "type": "parameter",
+                          "name": "props",
+                          "value": {
+                            "type": "identifier",
+                            "name": "any"
+                          },
+                          "optional": false,
+                          "rest": false
+                        }
+                      ],
+                      "return": {
+                        "type": "identifier",
+                        "name": "ReactNode | Promise<ReactNode>"
+                      },
+                      "typeParameters": []
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "new (props: any, context: any) => Component<any, any, any>"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "Either a function to render calendar cells for each date in the month,\nor children containing a `<CalendarGridHeader>`` and `<CalendarGridBody>`\nwhen additional customization is needed."
     },
     "className": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "style": {
       "type": "CSSProperties",
       "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          }
+        ]
+      },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    }
+  },
+  "typeLinks": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateDuration": {
+      "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateDuration",
+      "name": "DateDuration",
+      "extends": [],
+      "properties": {
+        "years": {
+          "type": "property",
+          "name": "years",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The number of years to add or subtract."
+        },
+        "months": {
+          "type": "property",
+          "name": "months",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The number of months to add or subtract."
+        },
+        "weeks": {
+          "type": "property",
+          "name": "weeks",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The number of weeks to add or subtract."
+        },
+        "days": {
+          "type": "property",
+          "name": "days",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The number of days to add or subtract."
+        }
+      },
+      "typeParameters": [],
+      "description": "Represents an amount of time in calendar-specific units, for use when performing arithmetic."
     }
   }
 }

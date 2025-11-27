@@ -5,10 +5,28 @@
     "layoutOptions": {
       "type": "T",
       "detailedType": "T | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "typeParameter",
+            "name": "T",
+            "constraint": null,
+            "default": null
+          }
+        ]
+      },
       "description": "Options for the layout."
     },
     "children": {
       "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
       "description": "The child collection to virtualize (e.g. ListBox, GridList, or Table).",
       "required": true
     }

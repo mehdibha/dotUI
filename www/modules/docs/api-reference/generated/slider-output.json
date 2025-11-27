@@ -4,16 +4,104 @@
   "props": {
     "children": {
       "type": "ChildrenOrFunction<SliderRenderProps>",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SliderRenderProps",
+                  "name": "SliderRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "className": {
       "type": "ClassNameOrFunction<SliderRenderProps>",
       "detailedType": "ClassNameOrFunction<SliderRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SliderRenderProps",
+                  "name": "SliderRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
       "type": "StyleOrFunction<SliderRenderProps>",
       "detailedType": "StyleOrFunction<SliderRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SliderRenderProps",
+                  "name": "SliderRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   }

@@ -5,177 +5,909 @@
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Defines a string value that labels the current element."
     },
     "aria-labelledby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "name": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
     "defaultValue": {
       "type": "T | null",
       "detailedType": "T | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "typeParameter",
+            "name": "T",
+            "constraint": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+                  "name": "CalendarDate"
+                },
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+                  "name": "CalendarDateTime"
+                },
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+                  "name": "ZonedDateTime"
+                }
+              ]
+            },
+            "default": null
+          }
+        ]
+      },
       "description": "The default value (uncontrolled)."
     },
     "value": {
       "type": "T | null",
       "detailedType": "T | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "typeParameter",
+            "name": "T",
+            "constraint": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+                  "name": "CalendarDate"
+                },
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+                  "name": "CalendarDateTime"
+                },
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+                  "name": "ZonedDateTime"
+                }
+              ]
+            },
+            "default": null
+          }
+        ]
+      },
       "description": "The current value (controlled)."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
       "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FocusEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "Handler that is called when the element receives focus."
     },
     "onBlur": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
       "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FocusEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "Handler that is called when the element loses focus."
     },
     "onKeyDown": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "KeyboardEvent",
+              "name": "KeyboardEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a key is pressed."
     },
     "onKeyUp": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "KeyboardEvent",
+              "name": "KeyboardEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a key is released."
     },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that describes the object."
     },
     "aria-details": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "autoComplete": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Describes the type of autocomplete functionality the input should provide if any. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete)."
     },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
     },
     "granularity": {
       "type": "Granularity",
       "detailedType": "Granularity | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "day"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "hour"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "minute"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "second"
+              }
+            ]
+          }
+        ]
+      },
       "description": "Determines the smallest unit that is displayed in the date picker. By default, this is `\"day\"` for dates, and `\"minute\"` for times."
     },
     "hideTimeZone": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether to hide the time zone abbreviation.",
       "default": "false"
     },
     "hourCycle": {
       "type": "12 | 24",
       "detailedType": "12 | 24 | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "numberLiteral",
+            "value": 12
+          },
+          {
+            "type": "numberLiteral",
+            "value": 24
+          }
+        ]
+      },
       "description": "Whether to display the time in 12 or 24 hour format. By default, this is determined by the user's locale."
     },
     "isDateUnavailable": {
       "type": "((date: DateValue) => boolean)",
       "detailedType": "((date: DateValue) => boolean) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "date",
+            "value": {
+              "type": "link",
+              "id": "DateValue",
+              "name": "DateValue"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "boolean"
+        },
+        "typeParameters": []
+      },
       "description": "Callback that is called for each date of the calendar. If it returns true, then the date is unavailable."
     },
     "isInvalid": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether the input value is invalid."
     },
     "maxValue": {
       "type": "DateValue | null",
       "detailedType": "DateValue | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+            "name": "CalendarDate"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+            "name": "CalendarDateTime"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+            "name": "ZonedDateTime"
+          }
+        ]
+      },
       "description": "The maximum allowed date that a user may select."
     },
     "minValue": {
       "type": "DateValue | null",
       "detailedType": "DateValue | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+            "name": "CalendarDate"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+            "name": "CalendarDateTime"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+            "name": "ZonedDateTime"
+          }
+        ]
+      },
       "description": "The minimum allowed date that a user may select."
     },
     "onChange": {
       "type": "((value: MappedDateValue<T> | null) => void)",
       "detailedType": "((value: MappedDateValue<T> | null) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "conditional",
+                      "checkType": {
+                        "type": "typeParameter",
+                        "name": "T",
+                        "constraint": {
+                          "type": "identifier",
+                          "name": "DateValue"
+                        },
+                        "default": null
+                      },
+                      "extendsType": {
+                        "type": "link",
+                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+                        "name": "ZonedDateTime"
+                      },
+                      "trueType": {
+                        "type": "link",
+                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+                        "name": "ZonedDateTime"
+                      },
+                      "falseType": {
+                        "type": "conditional",
+                        "checkType": {
+                          "type": "identifier",
+                          "name": "T"
+                        },
+                        "extendsType": {
+                          "type": "identifier",
+                          "name": "CalendarDateTime"
+                        },
+                        "trueType": {
+                          "type": "identifier",
+                          "name": "CalendarDateTime"
+                        },
+                        "falseType": {
+                          "type": "identifier",
+                          "name": "T extends CalendarDate ? CalendarDate : never"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "Handler that is called when the value changes."
     },
     "onFocusChange": {
       "type": "((isFocused: boolean) => void)",
       "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when the element's focus status changes."
     },
     "placeholderValue": {
       "type": "T | null",
       "detailedType": "T | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "typeParameter",
+            "name": "T",
+            "constraint": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+                  "name": "CalendarDate"
+                },
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+                  "name": "CalendarDateTime"
+                },
+                {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+                  "name": "ZonedDateTime"
+                }
+              ]
+            },
+            "default": null
+          }
+        ]
+      },
       "description": "A placeholder date that influences the format of the placeholder shown when no value is selected. Defaults to today's date at midnight."
     },
     "shouldForceLeadingZeros": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether to always show leading zeros in the month, day, and hour fields.\nBy default, this is determined by the user's locale."
     },
     "slot": {
       "type": "string | null",
       "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "validate": {
       "type": "((value: MappedDateValue<T>) => true | ValidationError | null | undefined)",
       "detailedType": "((value: MappedDateValue<T>) => true | ValidationError | null | undefined) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "conditional",
+                  "checkType": {
+                    "type": "typeParameter",
+                    "name": "T",
+                    "constraint": {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "identifier",
+                          "name": "CalendarDate"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "CalendarDateTime"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "ZonedDateTime"
+                        }
+                      ]
+                    },
+                    "default": null
+                  },
+                  "extendsType": {
+                    "type": "link",
+                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+                    "name": "ZonedDateTime"
+                  },
+                  "trueType": {
+                    "type": "link",
+                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+                    "name": "ZonedDateTime"
+                  },
+                  "falseType": {
+                    "type": "conditional",
+                    "checkType": {
+                      "type": "typeParameter",
+                      "name": "T",
+                      "constraint": {
+                        "type": "identifier",
+                        "name": "DateValue"
+                      },
+                      "default": null
+                    },
+                    "extendsType": {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+                      "name": "CalendarDateTime"
+                    },
+                    "trueType": {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+                      "name": "CalendarDateTime"
+                    },
+                    "falseType": {
+                      "type": "conditional",
+                      "checkType": {
+                        "type": "identifier",
+                        "name": "T"
+                      },
+                      "extendsType": {
+                        "type": "identifier",
+                        "name": "CalendarDate"
+                      },
+                      "trueType": {
+                        "type": "identifier",
+                        "name": "CalendarDate"
+                      },
+                      "falseType": {
+                        "type": "identifier",
+                        "name": "never"
+                      }
+                    }
+                  }
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "booleanLiteral",
+                  "value": true
+                },
+                {
+                  "type": "array",
+                  "elementType": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
     },
     "validationBehavior": {
       "type": "\"native\" | \"aria\"",
       "detailedType": "\"native\" | \"aria\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "native"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "aria"
+          }
+        ]
+      },
       "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
       "default": "'native'"
     },
     "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether the element should receive focus on render."
     },
     "isDisabled": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether the input is disabled."
     },
     "isReadOnly": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether the input can be selected but not changed by the user."
     },
     "isRequired": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether user input is required on the input before form submission."
     },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ChildrenOrFunction<DateFieldRenderProps>",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DateFieldRenderProps",
+                  "name": "DateFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "className": {
       "type": "ClassNameOrFunction<DateFieldRenderProps>",
       "detailedType": "ClassNameOrFunction<DateFieldRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DateFieldRenderProps",
+                  "name": "DateFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
       "type": "StyleOrFunction<DateFieldRenderProps>",
       "detailedType": "StyleOrFunction<DateFieldRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DateFieldRenderProps",
+                  "name": "DateFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   },

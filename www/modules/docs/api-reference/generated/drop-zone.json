@@ -5,90 +5,483 @@
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Defines a string value that labels the current element."
     },
     "aria-labelledby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that describes the object."
     },
     "aria-details": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "getDropOperation": {
       "type": "((types: DragTypes, allowedOperations: DropOperation[]) => DropOperation)",
       "detailedType": "((types: DragTypes, allowedOperations: DropOperation[]) => DropOperation) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "types",
+                "value": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes",
+                  "name": "DragTypes"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "allowedOperations",
+                "value": {
+                  "type": "array",
+                  "elementType": {
+                    "type": "union",
+                    "elements": [
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "link"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "copy"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "move"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "cancel"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "stringLiteral",
+                      "value": "link"
+                    }
+                  ]
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "stringLiteral",
+                      "value": "copy"
+                    }
+                  ]
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "stringLiteral",
+                      "value": "move"
+                    }
+                  ]
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "stringLiteral",
+                      "value": "cancel"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "A function returning the drop operation to be performed when items matching the given types are dropped\non the drop target."
     },
     "onDrop": {
       "type": "((e: DropEvent) => void)",
       "detailedType": "((e: DropEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "DropEvent",
+              "name": "DropEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a valid drag is dropped on the drop target."
     },
     "onDropActivate": {
       "type": "((e: DropActivateEvent) => void)",
       "detailedType": "((e: DropActivateEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "DropActivateEvent",
+              "name": "DropActivateEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called after a valid drag is held over the drop target for a period of time.\nThis typically opens the item so that the user can drop within it."
     },
     "onDropEnter": {
       "type": "((e: DropEnterEvent) => void)",
       "detailedType": "((e: DropEnterEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "DropEnterEvent",
+              "name": "DropEnterEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a valid drag enters the drop target."
     },
     "onDropExit": {
       "type": "((e: DropExitEvent) => void)",
       "detailedType": "((e: DropExitEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "DropExitEvent",
+              "name": "DropExitEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a valid drag exits the drop target."
     },
     "onDropMove": {
       "type": "((e: DropMoveEvent) => void)",
       "detailedType": "((e: DropMoveEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "DropMoveEvent",
+              "name": "DropMoveEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a valid drag is moved within the drop target."
     },
     "onHoverChange": {
       "type": "((isHovering: boolean) => void)",
       "detailedType": "((isHovering: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when the hover state changes."
     },
     "onHoverEnd": {
       "type": "((e: HoverEvent) => void)",
       "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a hover interaction ends."
     },
     "onHoverStart": {
       "type": "((e: HoverEvent) => void)",
       "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a hover interaction starts."
     },
     "slot": {
       "type": "string | null",
       "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "isDisabled": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
     },
     "children": {
       "type": "ChildrenOrFunction<DropZoneRenderProps>",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DropZoneRenderProps",
+                  "name": "DropZoneRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "className": {
       "type": "ClassNameOrFunction<DropZoneRenderProps>",
       "detailedType": "ClassNameOrFunction<DropZoneRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DropZoneRenderProps",
+                  "name": "DropZoneRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
       "type": "StyleOrFunction<DropZoneRenderProps>",
       "detailedType": "StyleOrFunction<DropZoneRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DropZoneRenderProps",
+                  "name": "DropZoneRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   },
@@ -112,6 +505,50 @@
     "isDisabled": {
       "selector": "[data-disabled]",
       "description": "Whether the dropzone is disabled."
+    }
+  },
+  "typeLinks": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes": {
+      "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes",
+      "name": "DragTypes",
+      "extends": [],
+      "properties": {
+        "has": {
+          "type": "method",
+          "name": "has",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "type",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "symbol"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "boolean"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns whether the drag contains data of the given type."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

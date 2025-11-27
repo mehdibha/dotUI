@@ -3,6 +3,8 @@
  * Based on the generated JSON structure from the api-docs-builder
  */
 
+import type { TType, TypeLinksRegistry } from "./types/type-ast";
+
 /**
  * A single property definition in the API reference
  */
@@ -11,6 +13,8 @@ export interface PropDefinition {
   type: string;
   /** Full type signature including | undefined (only present if different from type) */
   detailedType?: string;
+  /** AST representation of the type for rich rendering with popovers */
+  typeAst?: TType;
   /** Description of the prop */
   description?: string;
   /** Default value if any */
@@ -41,6 +45,8 @@ export interface ComponentApiReference {
   props: Record<string, PropDefinition>;
   /** Map of render prop name to render prop definition (CSS selectors) */
   renderProps?: Record<string, RenderPropDefinition>;
+  /** Type links registry for navigating to type definitions */
+  typeLinks?: TypeLinksRegistry;
 }
 
 /**

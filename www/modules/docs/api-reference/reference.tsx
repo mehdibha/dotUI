@@ -7,16 +7,11 @@ import {
   type PropData,
   PropsTable,
 } from "./props-table";
-import { type RenderPropData, RenderPropsTable } from "./render-props-table";
-import type {
-  ComponentApiReference,
-  PropDefinition,
-  RenderPropDefinition,
-} from "./types";
+import type { ComponentApiReference, PropDefinition } from "./types";
 
-export interface ReferenceProps {
+interface ReferenceProps {
+  /** The name of the component (maps to generated/{name}.json) */
   name: string;
-  className?: string;
 }
 
 async function loadApiReference(
@@ -88,12 +83,18 @@ function getShortType(name: string, type: string | undefined): string {
     return "function";
   }
 
-  // className/style render props
-  if (name === "className" && type.includes("=>")) {
+  // React Aria render prop patterns - show simplified versions
+  // ChildrenOrFunction<T> → children | function
+  if (type.startsWith("ChildrenOrFunction<")) {
+    return "children | function";
+  }
+  // ClassNameOrFunction<T> → string | function
+  if (type.startsWith("ClassNameOrFunction<")) {
     return "string | function";
   }
-  if (name === "style" && type.includes("=>")) {
-    return "CSSProperties | function";
+  // StyleOrFunction<T> → style | function
+  if (type.startsWith("StyleOrFunction<")) {
+    return "style | function";
   }
 
   // Simple types - return as-is (now without | undefined since it's stripped)
@@ -127,6 +128,8 @@ async function transformProp(
     typeHighlighted: await highlightCode(fullType, "ts"),
     shortType,
     shortTypeHighlighted: await highlightCode(shortType, "ts"),
+    // Include AST type for rich rendering with popovers
+    typeAst: prop.typeAst,
     default: prop.default,
     defaultHighlighted: prop.default
       ? await highlightCode(prop.default, "ts")
@@ -148,76 +151,35 @@ async function transformProps(
   );
 }
 
-/**
- * Sort props: required first, then preserve original order
- * This mirrors React Aria's approach of showing required props at the top
- */
-function sortPropsRequiredFirst(props: PropData[]): PropData[] {
-  return [...props].sort((a, b) => {
-    if (a.required && !b.required) return -1;
-    if (!a.required && b.required) return 1;
-    return 0;
-  });
-}
-
-/**
- * Transform a RenderPropDefinition to RenderPropData with highlighting
- */
-async function transformRenderProp(
-  name: string,
-  renderProp: RenderPropDefinition,
-): Promise<RenderPropData> {
-  return {
-    name,
-    selector: renderProp.selector,
-    selectorHighlighted: await highlightCode(renderProp.selector, "css"),
-    description: renderDescription(renderProp.description),
-  };
-}
-
-/**
- * Transform a record of render props to an array of RenderPropData
- */
-async function transformRenderProps(
-  renderProps: Record<string, RenderPropDefinition>,
-): Promise<RenderPropData[]> {
-  return Promise.all(
-    Object.entries(renderProps).map(([name, prop]) =>
-      transformRenderProp(name, prop),
-    ),
-  );
-}
-
-export async function Reference({ name, className }: ReferenceProps) {
+export async function Reference({ name }: ReferenceProps) {
   const data = await loadApiReference(name);
 
   if (!data) {
-    throw new Error(`API reference not found for "${name}"`);
+    return (
+      <div className="my-4 rounded-md border border-danger bg-danger/10 p-4 text-danger text-sm">
+        API reference not found for "{name}"
+      </div>
+    );
   }
 
   // Group the props
   const { ungrouped, groups } = groupProps(data.props);
 
-  // Transform all props with highlighting and sort required first
+  // Transform all props with highlighting
   const groupedData: GroupedPropsData = {
-    ungrouped: sortPropsRequiredFirst(await transformProps(ungrouped)),
+    ungrouped: await transformProps(ungrouped),
     groups: Object.fromEntries(
       await Promise.all(
         Object.entries(groups).map(async ([groupName, groupProps]) => [
           groupName,
-          sortPropsRequiredFirst(await transformProps(groupProps)),
+          await transformProps(groupProps),
         ]),
       ),
     ),
   };
 
-  // Transform render props if available
-  const renderPropsData = data.renderProps
-    ? await transformRenderProps(data.renderProps)
-    : [];
-
   return (
-    <div className={className}>
+    <>
       {data.description && (
         <p className="mb-4 text-fg-muted">
           {renderDescription(data.description)}
@@ -227,17 +189,8 @@ export async function Reference({ name, className }: ReferenceProps) {
         data={groupedData}
         componentName={name}
         defaultExpandedGroups={DEFAULT_EXPANDED}
+        typeLinks={data.typeLinks}
       />
-      {renderPropsData.length > 0 && (
-        <>
-          <h4 className="mt-8 mb-2 font-semibold text-base">Render Props</h4>
-          <p className="mb-4 text-fg-muted text-sm">
-            State values available in render prop functions. Use the CSS
-            selectors for styling with data attributes.
-          </p>
-          <RenderPropsTable data={renderPropsData} componentName={name} />
-        </>
-      )}
-    </div>
+    </>
   );
 }

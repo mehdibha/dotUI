@@ -5,122 +5,499 @@
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Defines a string value that labels the current element."
     },
     "aria-labelledby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "name": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
       "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FocusEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "Handler that is called when the element receives focus."
     },
     "onBlur": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
       "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FocusEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "Handler that is called when the element loses focus."
     },
     "onKeyDown": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "KeyboardEvent",
+              "name": "KeyboardEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a key is pressed."
     },
     "onKeyUp": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "KeyboardEvent",
+              "name": "KeyboardEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a key is released."
     },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that describes the object."
     },
     "aria-details": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "aria-errormessage": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element that provides an error message for the object."
     },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
     },
     "index": {
       "type": "number",
       "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
       "description": "Index of the thumb within the slider.",
       "default": "0"
     },
     "inputRef": {
       "type": "RefObject<HTMLInputElement | null>",
       "detailedType": "RefObject<HTMLInputElement | null> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "RefObject"
+            },
+            "typeParameters": [
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "link",
+                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                    "name": "HTMLInputElement"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "description": "A ref for the HTML input element."
     },
     "onFocusChange": {
       "type": "((isFocused: boolean) => void)",
       "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when the element's focus status changes."
     },
     "onHoverChange": {
       "type": "((isHovering: boolean) => void)",
       "detailedType": "((isHovering: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when the hover state changes."
     },
     "onHoverEnd": {
       "type": "((e: HoverEvent) => void)",
       "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a hover interaction ends."
     },
     "onHoverStart": {
       "type": "((e: HoverEvent) => void)",
       "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when a hover interaction starts."
     },
     "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether the element should receive focus on render."
     },
     "isDisabled": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
       "description": "Whether the Thumb is disabled."
     },
     "orientation": {
       "type": "Orientation",
       "detailedType": "Orientation | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "horizontal"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "vertical"
+              }
+            ]
+          }
+        ]
+      },
       "description": "The orientation of the Slider.",
       "default": "'horizontal'"
     },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ChildrenOrFunction<SliderThumbRenderProps>",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SliderThumbRenderProps",
+                  "name": "SliderThumbRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "className": {
       "type": "ClassNameOrFunction<SliderThumbRenderProps>",
       "detailedType": "ClassNameOrFunction<SliderThumbRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SliderThumbRenderProps",
+                  "name": "SliderThumbRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
       "type": "StyleOrFunction<SliderThumbRenderProps>",
       "detailedType": "StyleOrFunction<SliderThumbRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SliderThumbRenderProps",
+                  "name": "SliderThumbRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   },

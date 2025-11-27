@@ -5,56 +5,195 @@
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Defines a string value that labels the current element."
     },
     "aria-labelledby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "defaultValue": {
       "type": "string | Color",
       "detailedType": "string | Color | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+            "name": "Color"
+          }
+        ]
+      },
       "description": "The default value (uncontrolled)."
     },
     "value": {
       "type": "string | Color",
       "detailedType": "string | Color | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+            "name": "Color"
+          }
+        ]
+      },
       "description": "The current value (controlled)."
     },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that describes the object."
     },
     "aria-details": {
       "type": "string",
       "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "layout": {
       "type": "\"grid\" | \"stack\"",
       "detailedType": "\"grid\" | \"stack\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "grid"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "stack"
+          }
+        ]
+      },
       "description": "Whether the items are arranged in a stack or grid.",
       "default": "'grid'"
     },
     "onChange": {
       "type": "((value: Color) => void)",
       "detailedType": "((value: Color) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "Color",
+              "name": "Color"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
       "description": "Handler that is called when the value changes."
     },
     "children": {
       "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
       "description": "The children of the ColorSwatchPicker."
     },
     "className": {
       "type": "ClassNameOrFunction<ColorSwatchPickerRenderProps>",
       "detailedType": "ClassNameOrFunction<ColorSwatchPickerRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ColorSwatchPickerRenderProps",
+                  "name": "ColorSwatchPickerRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
       "type": "StyleOrFunction<ColorSwatchPickerRenderProps>",
       "detailedType": "StyleOrFunction<ColorSwatchPickerRenderProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ColorSwatchPickerRenderProps",
+                  "name": "ColorSwatchPickerRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   },
@@ -74,6 +213,2243 @@
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
       "description": "Whether the listbox is currently keyboard focused."
+    }
+  },
+  "typeLinks": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
+      "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+      "name": "ColorChannelRange",
+      "extends": [],
+      "properties": {
+        "minValue": {
+          "type": "property",
+          "name": "minValue",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The minimum value of the color channel."
+        },
+        "maxValue": {
+          "type": "property",
+          "name": "maxValue",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The maximum value of the color channel."
+        },
+        "step": {
+          "type": "property",
+          "name": "step",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The step value of the color channel, used when incrementing and decrementing."
+        },
+        "pageSize": {
+          "type": "property",
+          "name": "pageSize",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The page step value of the color channel, used when incrementing and decrementing."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
+      "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+      "name": "NumberFormatOptions",
+      "extends": [],
+      "properties": {
+        "localeMatcher": {
+          "type": "property",
+          "name": "localeMatcher",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "lookup"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "best fit"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "style": {
+          "type": "property",
+          "name": "style",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "decimal"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "percent"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "currency"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "unit"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "currency": {
+          "type": "property",
+          "name": "currency",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "currencyDisplay": {
+          "type": "property",
+          "name": "currencyDisplay",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "symbol"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "code"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "name"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "narrowSymbol"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "useGrouping": {
+          "type": "property",
+          "name": "useGrouping",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "booleanLiteral",
+                "value": false
+              },
+              {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "minimumIntegerDigits": {
+          "type": "property",
+          "name": "minimumIntegerDigits",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "minimumFractionDigits": {
+          "type": "property",
+          "name": "minimumFractionDigits",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "maximumFractionDigits": {
+          "type": "property",
+          "name": "maximumFractionDigits",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "minimumSignificantDigits": {
+          "type": "property",
+          "name": "minimumSignificantDigits",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "maximumSignificantDigits": {
+          "type": "property",
+          "name": "maximumSignificantDigits",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "numberingSystem": {
+          "type": "property",
+          "name": "numberingSystem",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "compactDisplay": {
+          "type": "property",
+          "name": "compactDisplay",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "short"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "long"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "notation": {
+          "type": "property",
+          "name": "notation",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "standard"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "scientific"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "engineering"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "compact"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "signDisplay": {
+          "type": "property",
+          "name": "signDisplay",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "auto"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "never"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "always"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "exceptZero"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "unit": {
+          "type": "property",
+          "name": "unit",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "unitDisplay": {
+          "type": "property",
+          "name": "unitDisplay",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "narrow"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "short"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "long"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "currencySign": {
+          "type": "property",
+          "name": "currencySign",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "standard"
+                  }
+                ]
+              },
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "accounting"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color": {
+      "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+      "name": "Color",
+      "extends": [],
+      "properties": {
+        "toFormat": {
+          "type": "method",
+          "name": "toFormat",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "format",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hex"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "rgb"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hsl"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hsb"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hexa"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "rgba"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hsla"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hsba"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+              "name": "Color"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Converts the color to the given color format, and returns a new Color object."
+        },
+        "toString": {
+          "type": "method",
+          "name": "toString",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "format",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hex"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "rgb"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hsl"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hsb"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "css"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hexa"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "rgba"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hsla"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hsba"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Converts the color to a string in the given format."
+        },
+        "clone": {
+          "type": "method",
+          "name": "clone",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+              "name": "Color"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns a duplicate of the color value."
+        },
+        "toHexInt": {
+          "type": "method",
+          "name": "toHexInt",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "number"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Converts the color to hex, and returns an integer representation."
+        },
+        "getChannelValue": {
+          "type": "method",
+          "name": "getChannelValue",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "channel",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "number"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns the numeric value for a given channel.\nThrows an error if the channel is unsupported in the current color format."
+        },
+        "withChannelValue": {
+          "type": "method",
+          "name": "withChannelValue",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "channel",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+              "name": "Color"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets the numeric value for a given channel, and returns a new Color object.\nThrows an error if the channel is unsupported in the current color format."
+        },
+        "getChannelRange": {
+          "type": "method",
+          "name": "getChannelRange",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "channel",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+              "name": "ColorChannelRange"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns the minimum, maximum, and step values for a given channel."
+        },
+        "getChannelName": {
+          "type": "method",
+          "name": "getChannelName",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "channel",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "locale",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns a localized color channel name for a given channel and locale,\nfor use in visual or accessibility labels."
+        },
+        "getChannelFormatOptions": {
+          "type": "method",
+          "name": "getChannelFormatOptions",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "channel",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+              "name": "NumberFormatOptions"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns the number formatting options for the given channel."
+        },
+        "formatChannelValue": {
+          "type": "method",
+          "name": "formatChannelValue",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "channel",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "locale",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Formats the numeric value for a given channel for display according to the provided locale."
+        },
+        "getColorSpace": {
+          "type": "method",
+          "name": "getColorSpace",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "stringLiteral",
+                      "value": "rgb"
+                    }
+                  ]
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "stringLiteral",
+                      "value": "hsl"
+                    }
+                  ]
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "stringLiteral",
+                      "value": "hsb"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns the color space, 'rgb', 'hsb' or 'hsl', for the current color."
+        },
+        "getColorSpaceAxes": {
+          "type": "method",
+          "name": "getColorSpaceAxes",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "xyChannels",
+                "value": {
+                  "type": "object",
+                  "properties": {
+                    "xChannel": {
+                      "type": "property",
+                      "name": "xChannel",
+                      "value": {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "undefined"
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "hue"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "saturation"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "brightness"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "lightness"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "red"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "green"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "blue"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "alpha"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "optional": true,
+                      "readonly": false,
+                      "description": ""
+                    },
+                    "yChannel": {
+                      "type": "property",
+                      "name": "yChannel",
+                      "value": {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "undefined"
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "hue"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "saturation"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "brightness"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "lightness"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "red"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "green"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "blue"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "stringLiteral",
+                                "value": "alpha"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "optional": true,
+                      "readonly": false,
+                      "description": ""
+                    }
+                  }
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "object",
+              "properties": {
+                "xChannel": {
+                  "type": "property",
+                  "name": "xChannel",
+                  "value": {
+                    "type": "union",
+                    "elements": [
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "hue"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "saturation"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "brightness"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "lightness"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "red"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "green"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "blue"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "alpha"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "optional": false,
+                  "readonly": false,
+                  "description": ""
+                },
+                "yChannel": {
+                  "type": "property",
+                  "name": "yChannel",
+                  "value": {
+                    "type": "union",
+                    "elements": [
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "hue"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "saturation"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "brightness"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "lightness"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "red"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "green"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "blue"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "alpha"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "optional": false,
+                  "readonly": false,
+                  "description": ""
+                },
+                "zChannel": {
+                  "type": "property",
+                  "name": "zChannel",
+                  "value": {
+                    "type": "union",
+                    "elements": [
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "hue"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "saturation"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "brightness"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "lightness"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "red"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "green"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "blue"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "union",
+                        "elements": [
+                          {
+                            "type": "stringLiteral",
+                            "value": "alpha"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "optional": false,
+                  "readonly": false,
+                  "description": ""
+                }
+              }
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns the color space axes, xChannel, yChannel, zChannel."
+        },
+        "getColorChannels": {
+          "type": "method",
+          "name": "getColorChannels",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "tuple",
+              "elements": [
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "hue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "saturation"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "brightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "lightness"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "red"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "green"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "blue"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "alpha"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns an array of the color channels within the current color space space."
+        },
+        "getColorName": {
+          "type": "method",
+          "name": "getColorName",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "locale",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns a localized name for the color, for use in visual or accessibility labels."
+        },
+        "getHueName": {
+          "type": "method",
+          "name": "getHueName",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "locale",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns a localized name for the hue, for use in visual or accessibility labels."
+        }
+      },
+      "typeParameters": [],
+      "description": "Represents a color value."
     }
   }
 }

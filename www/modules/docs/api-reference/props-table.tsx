@@ -5,7 +5,12 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 
+import {
+  Type,
+  TypeRendererProvider,
+} from "./components/type-renderer";
 import { DisclosureGroup } from "./disclosure-group";
+import type { TType, TypeLinksRegistry } from "./types/type-ast";
 
 export interface PropData {
   name: string;
@@ -13,6 +18,8 @@ export interface PropData {
   typeHighlighted?: React.ReactNode;
   shortType: string;
   shortTypeHighlighted?: React.ReactNode;
+  /** AST representation for rich type rendering with popovers */
+  typeAst?: TType;
   default?: string;
   defaultHighlighted?: React.ReactNode;
   description?: React.ReactNode;
@@ -28,6 +35,8 @@ interface PropsTableProps {
   data: GroupedPropsData;
   componentName: string;
   defaultExpandedGroups?: Set<string>;
+  /** Type links registry for navigating to type definitions */
+  typeLinks?: TypeLinksRegistry;
 }
 
 // Grid layout - always show Prop & Type, hide Default on sm
@@ -49,6 +58,7 @@ export function PropsTable({
   data,
   componentName,
   defaultExpandedGroups = new Set(["Content", "Selection", "Value"]),
+  typeLinks = {},
 }: PropsTableProps) {
   const hasAnyProps =
     data.ungrouped.length > 0 ||
@@ -63,55 +73,57 @@ export function PropsTable({
   }
 
   return (
-    <div className="my-6 w-full overflow-hidden rounded-md border">
-      <table className="w-full border-collapse text-sm">
-        {/* Header */}
-        <thead className="border-b bg-card">
-          <tr className={GRID_LAYOUT}>
-            <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
-              Prop
-            </th>
-            <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
-              Type
-            </th>
-            <th className="hidden px-3 py-2 text-left font-medium text-fg-muted text-xs md:table-cell">
-              Default
-            </th>
-            <th className="w-10 px-3 py-2" />
-          </tr>
-        </thead>
+    <TypeRendererProvider links={typeLinks}>
+      <div className="my-6 w-full overflow-hidden rounded-md border">
+        <table className="w-full border-collapse text-sm">
+          {/* Header */}
+          <thead className="border-b bg-card">
+            <tr className={GRID_LAYOUT}>
+              <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+                Prop
+              </th>
+              <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+                Type
+              </th>
+              <th className="hidden px-3 py-2 text-left font-medium text-fg-muted text-xs md:table-cell">
+                Default
+              </th>
+              <th className="w-10 px-3 py-2" />
+            </tr>
+          </thead>
 
-        {/* Ungrouped props */}
-        {data.ungrouped.length > 0 && (
-          <tbody className="bg-bg">
-            {data.ungrouped.map((prop) => (
-              <PropRows
-                key={prop.name}
-                prop={prop}
-                componentName={componentName}
-              />
-            ))}
-          </tbody>
-        )}
+          {/* Ungrouped props */}
+          {data.ungrouped.length > 0 && (
+            <tbody className="bg-bg">
+              {data.ungrouped.map((prop) => (
+                <PropRows
+                  key={prop.name}
+                  prop={prop}
+                  componentName={componentName}
+                />
+              ))}
+            </tbody>
+          )}
 
-        {/* Grouped props */}
-        {Object.entries(data.groups).map(([groupName, props]) => (
-          <DisclosureGroup
-            key={groupName}
-            title={groupName}
-            defaultExpanded={defaultExpandedGroups.has(groupName)}
-          >
-            {props.map((prop) => (
-              <PropRows
-                key={prop.name}
-                prop={prop}
-                componentName={componentName}
-              />
-            ))}
-          </DisclosureGroup>
-        ))}
-      </table>
-    </div>
+          {/* Grouped props */}
+          {Object.entries(data.groups).map(([groupName, props]) => (
+            <DisclosureGroup
+              key={groupName}
+              title={groupName}
+              defaultExpanded={defaultExpandedGroups.has(groupName)}
+            >
+              {props.map((prop) => (
+                <PropRows
+                  key={prop.name}
+                  prop={prop}
+                  componentName={componentName}
+                />
+              ))}
+            </DisclosureGroup>
+          ))}
+        </table>
+      </div>
+    </TypeRendererProvider>
   );
 }
 
@@ -205,12 +217,16 @@ function PropRows({ prop, componentName }: PropRowsProps) {
                 </DescriptionItem>
               )}
 
-              {/* Type */}
+              {/* Type - use AST renderer if available for rich popovers */}
               <DescriptionItem label="Type" hasSeparator>
-                <TypeDisplay
-                  type={prop.type}
-                  highlighted={prop.typeHighlighted}
-                />
+                {prop.typeAst ? (
+                  <Type type={prop.typeAst} />
+                ) : (
+                  <TypeDisplay
+                    type={prop.type}
+                    highlighted={prop.typeHighlighted}
+                  />
+                )}
               </DescriptionItem>
 
               {/* Default */}

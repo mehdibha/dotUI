@@ -3,7 +3,14 @@ import * as tae from "typescript-api-extractor";
 
 import fs from "node:fs";
 import path from "node:path";
+import type { TType } from "../../../modules/docs/api-reference/types/type-ast";
 import memberOrder from "./order.json";
+import {
+  buildTypeAstFromString,
+  type ConversionContext,
+  createConversionContext,
+  typeToAst,
+} from "./type-to-ast";
 
 export interface ParserContext {
   program: ts.Program;
@@ -13,6 +20,8 @@ export interface ParserContext {
 interface FormattedProp {
   type: string;
   detailedType?: string;
+  /** AST representation of the type for rich rendering */
+  typeAst?: TType;
   default?: string;
   required?: boolean;
   description?: string;
@@ -50,11 +59,22 @@ export async function formatComponentData(
     "",
   );
 
+  // Create AST conversion context for type links
+  const astContext = createConversionContext(context.checker, 4);
+
   // Get all properties using TypeScript's type checker (includes inherited props)
-  const props = await getPropsWithTypeChecker(exportNode.name, context);
+  const props = await getPropsWithTypeChecker(
+    exportNode.name,
+    context,
+    astContext,
+  );
 
   // Extract render props (CSS state selectors)
   const renderProps = extractRenderProps(exportNode.name, context);
+
+  // Collect type links for the component
+  const typeLinks =
+    Object.keys(astContext.links).length > 0 ? astContext.links : undefined;
 
   const raw = {
     name: exportNode.name,
@@ -62,6 +82,8 @@ export async function formatComponentData(
     props: sortObjectByKeys(props, memberOrder.props),
     // Add renderProps field (only if not empty)
     ...(Object.keys(renderProps).length > 0 && { renderProps }),
+    // Add type links for popover navigation
+    ...(typeLinks && { typeLinks }),
   } as Record<string, unknown>;
 
   // Post-process type strings to align naming
@@ -78,6 +100,7 @@ export async function formatComponentData(
 async function getPropsWithTypeChecker(
   typeName: string,
   context: ParserContext,
+  astContext: ConversionContext,
 ): Promise<Record<string, FormattedProp>> {
   const { program, checker } = context;
   const result: Record<string, FormattedProp> = {};
@@ -140,9 +163,17 @@ async function getPropsWithTypeChecker(
             ? removeUndefinedFromType(fullType)
             : fullType;
 
+          // Generate AST type for rich rendering
+          // First try to build a simplified AST from the type string (preserves aliases)
+          // Fall back to full type expansion if no simplification is possible
+          const typeAst =
+            buildTypeAstFromString(shortType, astContext) ??
+            typeToAst(propType, { ...astContext, currentDepth: 0 });
+
           result[prop.name] = {
             type: shortType,
             detailedType: shortType !== fullType ? fullType : undefined,
+            typeAst: typeAst || undefined,
             description: docs,
             default: defaultValue,
             required: !isOptional || undefined,
