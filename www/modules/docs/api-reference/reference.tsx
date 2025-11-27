@@ -83,18 +83,12 @@ function getShortType(name: string, type: string | undefined): string {
     return "function";
   }
 
-  // React Aria render prop patterns - show simplified versions
-  // ChildrenOrFunction<T> → children | function
-  if (type.startsWith("ChildrenOrFunction<")) {
-    return "children | function";
-  }
-  // ClassNameOrFunction<T> → string | function
-  if (type.startsWith("ClassNameOrFunction<")) {
+  // className/style render props
+  if (name === "className" && type.includes("=>")) {
     return "string | function";
   }
-  // StyleOrFunction<T> → style | function
-  if (type.startsWith("StyleOrFunction<")) {
-    return "style | function";
+  if (name === "style" && type.includes("=>")) {
+    return "CSSProperties | function";
   }
 
   // Simple types - return as-is (now without | undefined since it's stripped)
