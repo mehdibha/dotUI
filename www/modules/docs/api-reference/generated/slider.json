@@ -20,6 +20,14 @@
       },
       "description": "The display format of the value label."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the whole Slider is disabled."
+    },
     "defaultValue": {
       "type": "number | number[]",
       "detailedType": "number | number[] | undefined",
@@ -123,14 +131,6 @@
         ]
       },
       "description": "Handler that is called when the value changes."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the whole Slider is disabled."
     },
     "value": {
       "type": "number | number[]",

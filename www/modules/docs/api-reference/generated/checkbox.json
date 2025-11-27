@@ -447,6 +447,14 @@
       },
       "description": "A ref for the HTML input element."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -543,14 +551,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the element's selection state changes."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
     },
     "name": {
       "type": "string",

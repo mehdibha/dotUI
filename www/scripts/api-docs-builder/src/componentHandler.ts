@@ -11,6 +11,7 @@ import {
   buildTypeAstFromString,
   type ConversionContext,
   createConversionContext,
+  parseSimpleType,
   typeToAst,
 } from "./type-to-ast";
 
@@ -482,7 +483,7 @@ function resolveTypeByName(
           const isOptional = (prop.flags & ts.SymbolFlags.Optional) !== 0;
 
           // Create a simple type representation
-          const simpleType = parseSimpleTypeString(typeString);
+          const simpleType = parseSimpleType(typeString);
 
           propsAst[prop.name] = {
             type: "property",
@@ -506,26 +507,6 @@ function resolveTypeByName(
   }
 
   return null;
-}
-
-/**
- * Parse a simple type string into a basic AST node
- * This avoids recursive resolution of complex types
- */
-function parseSimpleTypeString(typeString: string): TType {
-  // Handle primitives
-  if (typeString === "string") return { type: "string" } as TType;
-  if (typeString === "number") return { type: "number" } as TType;
-  if (typeString === "boolean") return { type: "boolean" } as TType;
-  if (typeString === "null") return { type: "null" } as TType;
-  if (typeString === "undefined") return { type: "undefined" } as TType;
-  if (typeString === "void") return { type: "void" } as TType;
-  if (typeString === "any") return { type: "any" } as TType;
-  if (typeString === "unknown") return { type: "unknown" } as TType;
-  if (typeString === "never") return { type: "never" } as TType;
-
-  // For anything else, just return as identifier
-  return { type: "identifier", name: typeString } as TType;
 }
 
 interface FormattedProp {

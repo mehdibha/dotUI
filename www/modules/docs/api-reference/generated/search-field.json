@@ -169,6 +169,14 @@
       },
       "description": "Handler that is called when a key is released."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -907,17 +915,9 @@
       },
       "description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
     "type": {
-      "type": "\"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | (string & {}) | \"password\"",
-      "detailedType": "\"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | (string & {}) | \"password\" | undefined",
+      "type": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\"",
+      "detailedType": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -939,6 +939,18 @@
               {
                 "type": "stringLiteral",
                 "value": "text"
+              }
+            ]
+          },
+          {
+            "type": "intersection",
+            "types": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "identifier",
+                "name": "{}"
               }
             ]
           },
@@ -966,18 +978,6 @@
               {
                 "type": "stringLiteral",
                 "value": "email"
-              }
-            ]
-          },
-          {
-            "type": "intersection",
-            "types": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "identifier",
-                "name": "{}"
               }
             ]
           },

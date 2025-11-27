@@ -169,6 +169,48 @@
       },
       "description": "Handler that is called when a key is released."
     },
+    "children": {
+      "type": "ReactNode | (values: ComboBoxRenderProps) => ReactNode",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ComboBoxRenderProps",
+                  "name": "ComboBoxRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -311,56 +353,6 @@
       },
       "description": "Identifies the element (or elements) that labels the current element."
     },
-    "children": {
-      "type": "ReactNode | (values: ComboBoxRenderProps) => ReactNode",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ComboBoxRenderProps",
-                  "name": "ComboBoxRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-    },
     "disabledKeys": {
       "type": "Iterable<Key>",
       "detailedType": "Iterable<Key> | undefined",
@@ -415,8 +407,7 @@
                 "type": "typeParameter",
                 "name": "T",
                 "constraint": {
-                  "type": "identifier",
-                  "name": "object"
+                  "type": "object"
                 },
                 "default": null
               },
@@ -431,6 +422,14 @@
         ]
       },
       "description": "The list of ComboBox items (controlled)."
+    },
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
     "validationBehavior": {
       "type": "\"native\" | \"aria\"",
@@ -713,8 +712,7 @@
                 "type": "typeParameter",
                 "name": "T",
                 "constraint": {
-                  "type": "identifier",
-                  "name": "object"
+                  "type": "object"
                 },
                 "default": null
               },
@@ -889,7 +887,7 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps": {
+    "ComboBoxRenderProps": {
       "type": "interface",
       "name": "ComboBoxRenderProps",
       "properties": {
@@ -935,7 +933,7 @@
         }
       }
     },
-    "ComboBoxRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps": {
       "type": "interface",
       "name": "ComboBoxRenderProps",
       "properties": {
@@ -1136,9 +1134,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],

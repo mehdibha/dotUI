@@ -496,6 +496,14 @@
       },
       "description": "When used in a ToggleButtonGroup, an identifier for the item in `selectedKeys`. When used standalone, a DOM id."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button is disabled."
+    },
     "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -778,14 +786,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the element's selection state changes."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the button is disabled."
     },
     "preventFocusOnPress": {
       "type": "boolean",

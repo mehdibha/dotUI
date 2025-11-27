@@ -292,6 +292,14 @@
       },
       "description": "The color space that the color field operates in if a `channel` prop is provided.\nIf no `channel` is provided, the color field always displays the color as an RGB hex value."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -806,14 +814,6 @@
         ]
       },
       "description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
     },
     "name": {
       "type": "string",

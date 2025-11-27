@@ -397,22 +397,13 @@
       "description": "Whether the collection allows empty selection."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -431,6 +422,15 @@
               },
               {
                 "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -439,22 +439,13 @@
       "description": "The currently selected keys in the collection (controlled)."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -473,6 +464,15 @@
               },
               {
                 "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -914,9 +914,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -1498,9 +1498,9 @@
           "optional": false,
           "description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
         },
-        "__@toStringTag@630": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@630",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },

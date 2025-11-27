@@ -117,6 +117,14 @@
       },
       "description": "Handler that is called when the element's focus status changes."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -216,14 +224,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the value changes."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
     },
     "name": {
       "type": "string",

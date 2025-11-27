@@ -119,6 +119,42 @@ const NEVER_EXPAND_TYPES = new Set([
 ]);
 
 /**
+ * Parse a simple type name into an AST node
+ * Handles primitives (string, number, boolean, etc.) and returns identifier for others
+ */
+export function parseSimpleType(typeName: string): TType {
+  switch (typeName) {
+    case "void":
+      return { type: "void" } as TKeyword;
+    case "string":
+      return { type: "string" } as TKeyword;
+    case "number":
+      return { type: "number" } as TKeyword;
+    case "boolean":
+      return { type: "boolean" } as TKeyword;
+    case "null":
+      return { type: "null" } as TKeyword;
+    case "undefined":
+      return { type: "undefined" } as TKeyword;
+    case "any":
+      return { type: "any" } as TKeyword;
+    case "unknown":
+      return { type: "unknown" } as TKeyword;
+    case "never":
+      return { type: "never" } as TKeyword;
+    case "object":
+      return { type: "object" } as TKeyword;
+    case "bigint":
+      return { type: "bigint" } as TKeyword;
+    case "symbol":
+      return { type: "symbol" } as TKeyword;
+    default:
+      // For complex types, return as identifier
+      return { type: "identifier", name: typeName } as TIdentifier;
+  }
+}
+
+/**
  * Build a simplified AST directly from the type string
  * This preserves type aliases like ChildrenOrFunction<T> instead of expanding them
  */
@@ -229,20 +265,12 @@ export function buildTypeAstFromString(
   }
 
   // ============================================================================
-  // Pattern: Simple ReactNode
+  // Pattern: Simple primitives and identifiers (e.g., ReactNode, string, number)
   // ============================================================================
-  if (typeString === "ReactNode") {
-    return { type: "identifier", name: "ReactNode" } as TIdentifier;
+  const simpleType = parseSimpleType(typeString);
+  if (simpleType.type !== "identifier") {
+    return simpleType;
   }
-
-  // ============================================================================
-  // Pattern: Simple primitives
-  // ============================================================================
-  if (typeString === "string") return { type: "string" } as TKeyword;
-  if (typeString === "number") return { type: "number" } as TKeyword;
-  if (typeString === "boolean") return { type: "boolean" } as TKeyword;
-  if (typeString === "null") return { type: "null" } as TKeyword;
-  if (typeString === "undefined") return { type: "undefined" } as TKeyword;
 
   // ============================================================================
   // Pattern: String literal unions like "sm" | "md" | "lg"
@@ -289,47 +317,6 @@ export function buildTypeAstFromString(
 
   // No simplification available
   return null;
-}
-
-/**
- * Parse a simple type name into an AST node
- */
-function parseSimpleType(typeName: string): TType {
-  switch (typeName) {
-    case "void":
-      return { type: "void" } as TKeyword;
-    case "string":
-      return { type: "string" } as TKeyword;
-    case "number":
-      return { type: "number" } as TKeyword;
-    case "boolean":
-      return { type: "boolean" } as TKeyword;
-    case "null":
-      return { type: "null" } as TKeyword;
-    case "undefined":
-      return { type: "undefined" } as TKeyword;
-    case "any":
-      return { type: "any" } as TKeyword;
-    case "unknown":
-      return { type: "unknown" } as TKeyword;
-    case "never":
-      return { type: "never" } as TKeyword;
-    default:
-      // For complex types, return as identifier
-      return { type: "identifier", name: typeName } as TIdentifier;
-  }
-}
-
-/**
- * Try to simplify complex type strings like "ReactNode | ((values: T) => ReactNode)"
- * Returns null if the type doesn't need simplification
- * @deprecated Use buildTypeAstFromString instead
- */
-function trySimplifyComplexType(
-  typeString: string,
-  context: ConversionContext,
-): TType | null {
-  return buildTypeAstFromString(typeString, context);
 }
 
 /**
@@ -399,7 +386,7 @@ export function typeToAst(
   // This catches cases where TypeScript has already expanded the alias
   // ============================================================================
   const typeString = checker.typeToString(type);
-  const simplifiedType = trySimplifyComplexType(typeString, context);
+  const simplifiedType = buildTypeAstFromString(typeString, context);
   if (simplifiedType) {
     return simplifiedType;
   }
