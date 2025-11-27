@@ -278,5 +278,326 @@
       "selector": "[data-type=\"...\"]",
       "description": "The type of segment. Values include `literal`, `year`, `month`, `day`, etc."
     }
+  },
+  "typeLinks": {
+    "DateSegmentRenderProps": {
+      "type": "interface",
+      "name": "DateSegmentRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the segment is currently hovered with a mouse."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the segment is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the segment is keyboard focused."
+        },
+        "isPlaceholder": {
+          "type": "property",
+          "name": "isPlaceholder",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the value is a placeholder."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the segment is read only."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the date field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the date field is in an invalid state."
+        },
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "SegmentType"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of segment. Values include `literal`, `year`, `month`, `day`, etc."
+        },
+        "text": {
+          "type": "property",
+          "name": "text",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The formatted text for the segment."
+        },
+        "value": {
+          "type": "property",
+          "name": "value",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The numeric value for the segment, if applicable."
+        },
+        "placeholder": {
+          "type": "property",
+          "name": "placeholder",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A placeholder string for the segment."
+        },
+        "minValue": {
+          "type": "property",
+          "name": "minValue",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The minimum numeric value for the segment, if applicable."
+        },
+        "maxValue": {
+          "type": "property",
+          "name": "maxValue",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The maximum numeric value for the segment, if applicable."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps": {
+      "type": "interface",
+      "name": "DateSegmentRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the segment is currently hovered with a mouse."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the segment is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the segment is keyboard focused."
+        },
+        "isPlaceholder": {
+          "type": "property",
+          "name": "isPlaceholder",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the value is a placeholder."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the segment is read only."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the date field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the date field is in an invalid state."
+        },
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "SegmentType"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of segment. Values include `literal`, `year`, `month`, `day`, etc."
+        },
+        "text": {
+          "type": "property",
+          "name": "text",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The formatted text for the segment."
+        },
+        "value": {
+          "type": "property",
+          "name": "value",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The numeric value for the segment, if applicable."
+        },
+        "placeholder": {
+          "type": "property",
+          "name": "placeholder",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A placeholder string for the segment."
+        },
+        "minValue": {
+          "type": "property",
+          "name": "minValue",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The minimum numeric value for the segment, if applicable."
+        },
+        "maxValue": {
+          "type": "property",
+          "name": "maxValue",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The maximum numeric value for the segment, if applicable."
+        }
+      }
+    },
+    "HoverEvent": {
+      "type": "interface",
+      "name": "HoverEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"hoverstart\" | \"hoverend\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of hover event being fired."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "\"mouse\" | \"pen\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the hover event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "HTMLElement"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the hover event."
+        }
+      }
+    }
   }
 }

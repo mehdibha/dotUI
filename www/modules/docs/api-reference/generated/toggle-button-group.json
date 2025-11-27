@@ -952,6 +952,60 @@
       },
       "typeParameters": [],
       "description": ""
+    },
+    "ToggleButtonGroupRenderProps": {
+      "type": "interface",
+      "name": "ToggleButtonGroupRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the toggle button group is disabled."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "ToggleGroupState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the toggle button group."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps": {
+      "type": "interface",
+      "name": "ToggleButtonGroupRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the toggle button group is disabled."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "ToggleGroupState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the toggle button group."
+        }
+      }
     }
   }
 }

@@ -2459,6 +2459,23 @@
       },
       "typeParameters": [],
       "description": "Represents a color value."
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchRenderProps": {
+      "type": "interface",
+      "name": "ColorSwatchRenderProps",
+      "properties": {
+        "color": {
+          "type": "property",
+          "name": "color",
+          "value": {
+            "type": "identifier",
+            "name": "Color"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The color of the swatch."
+        }
+      }
     }
   }
 }

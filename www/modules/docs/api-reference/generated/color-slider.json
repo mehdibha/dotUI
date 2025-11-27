@@ -2744,6 +2744,82 @@
       },
       "typeParameters": [],
       "description": "Represents a color value."
+    },
+    "ColorSliderRenderProps": {
+      "type": "interface",
+      "name": "ColorSliderRenderProps",
+      "properties": {
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the color slider."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the color slider is disabled."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "ColorSliderState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the color slider."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSliderRenderProps": {
+      "type": "interface",
+      "name": "ColorSliderRenderProps",
+      "properties": {
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the color slider."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the color slider is disabled."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "ColorSliderState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the color slider."
+        }
+      }
     }
   }
 }

@@ -400,5 +400,185 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "typeLinks": {
+    "ColumnRenderProps": {
+      "type": "interface",
+      "name": "ColumnRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently hovered with a mouse."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently keyboard focused."
+        },
+        "allowsSorting": {
+          "type": "property",
+          "name": "allowsSorting",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the column allows sorting."
+        },
+        "sortDirection": {
+          "type": "property",
+          "name": "sortDirection",
+          "value": {
+            "type": "identifier",
+            "name": "SortDirection | undefined"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The current sort direction."
+        },
+        "isResizing": {
+          "type": "property",
+          "name": "isResizing",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the column is currently being resized."
+        },
+        "sort": {
+          "type": "property",
+          "name": "sort",
+          "value": {
+            "type": "identifier",
+            "name": "(direction: SortDirection) => void"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Triggers sorting for this column in the given direction."
+        },
+        "startResize": {
+          "type": "property",
+          "name": "startResize",
+          "value": {
+            "type": "identifier",
+            "name": "() => void"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Starts column resizing if the table is contained in a `<ResizableTableContainer>` element."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColumnRenderProps": {
+      "type": "interface",
+      "name": "ColumnRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently hovered with a mouse."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently keyboard focused."
+        },
+        "allowsSorting": {
+          "type": "property",
+          "name": "allowsSorting",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the column allows sorting."
+        },
+        "sortDirection": {
+          "type": "property",
+          "name": "sortDirection",
+          "value": {
+            "type": "identifier",
+            "name": "SortDirection | undefined"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The current sort direction."
+        },
+        "isResizing": {
+          "type": "property",
+          "name": "isResizing",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the column is currently being resized."
+        },
+        "sort": {
+          "type": "property",
+          "name": "sort",
+          "value": {
+            "type": "identifier",
+            "name": "(direction: SortDirection) => void"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Triggers sorting for this column in the given direction."
+        },
+        "startResize": {
+          "type": "property",
+          "name": "startResize",
+          "value": {
+            "type": "identifier",
+            "name": "() => void"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Starts column resizing if the table is contained in a `<ResizableTableContainer>` element."
+        }
+      }
+    }
   }
 }

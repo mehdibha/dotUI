@@ -1013,6 +1013,138 @@
       },
       "typeParameters": [],
       "description": ""
+    },
+    "SelectRenderProps": {
+      "type": "interface",
+      "name": "SelectRenderProps",
+      "properties": {
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is keyboard focused."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is disabled."
+        },
+        "isOpen": {
+          "type": "property",
+          "name": "isOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is currently open."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is invalid."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is required."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SelectRenderProps": {
+      "type": "interface",
+      "name": "SelectRenderProps",
+      "properties": {
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is keyboard focused."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is disabled."
+        },
+        "isOpen": {
+          "type": "property",
+          "name": "isOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is currently open."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is invalid."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the select is required."
+        }
+      }
     }
   }
 }

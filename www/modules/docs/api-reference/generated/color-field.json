@@ -3868,6 +3868,102 @@
       },
       "typeParameters": [],
       "description": "currentTarget - a reference to the element on which the event listener is registered.\n\ntarget - a reference to the element from which the event was originally dispatched.\nThis might be a child element to the element on which the event listener is registered.\nIf you thought this should be `EventTarget & T`, see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/11508#issuecomment-256045682"
+    },
+    "ColorFieldRenderProps": {
+      "type": "interface",
+      "name": "ColorFieldRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the color field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the color field is invalid."
+        },
+        "channel": {
+          "type": "property",
+          "name": "channel",
+          "value": {
+            "type": "identifier",
+            "name": "\"hex\" | ColorChannel"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The color channel that this field edits, or \"hex\" if no `channel` prop is set."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "ColorFieldState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the color field."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps": {
+      "type": "interface",
+      "name": "ColorFieldRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the color field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the color field is invalid."
+        },
+        "channel": {
+          "type": "property",
+          "name": "channel",
+          "value": {
+            "type": "identifier",
+            "name": "\"hex\" | ColorChannel"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The color channel that this field edits, or \"hex\" if no `channel` prop is set."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "ColorFieldState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the color field."
+        }
+      }
     }
   }
 }

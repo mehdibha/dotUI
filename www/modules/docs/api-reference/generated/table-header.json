@@ -1260,6 +1260,61 @@
       },
       "typeParameters": [],
       "description": "Represents the completion of an asynchronous operation"
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TableHeaderRenderProps": {
+      "type": "interface",
+      "name": "TableHeaderRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the table header is currently hovered with a mouse."
+        }
+      }
+    },
+    "HoverEvent": {
+      "type": "interface",
+      "name": "HoverEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"hoverstart\" | \"hoverend\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of hover event being fired."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "\"mouse\" | \"pen\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the hover event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "HTMLElement"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the hover event."
+        }
+      }
     }
   }
 }

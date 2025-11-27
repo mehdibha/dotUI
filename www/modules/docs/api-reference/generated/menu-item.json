@@ -796,5 +796,438 @@
       "selector": "[data-drop-target]",
       "description": "Whether the item is currently an active drop target."
     }
+  },
+  "typeLinks": {
+    "MenuItemRenderProps": {
+      "type": "interface",
+      "name": "MenuItemRenderProps",
+      "properties": {
+        "hasSubmenu": {
+          "type": "property",
+          "name": "hasSubmenu",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item has a submenu."
+        },
+        "isOpen": {
+          "type": "property",
+          "name": "isOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item's submenu is open."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently hovered with a mouse."
+        },
+        "isPressed": {
+          "type": "property",
+          "name": "isPressed",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently in a pressed state."
+        },
+        "isSelected": {
+          "type": "property",
+          "name": "isSelected",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently selected."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently keyboard focused."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+        },
+        "selectionMode": {
+          "type": "property",
+          "name": "selectionMode",
+          "value": {
+            "type": "identifier",
+            "name": "SelectionMode"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of selection that is allowed in the collection."
+        },
+        "selectionBehavior": {
+          "type": "property",
+          "name": "selectionBehavior",
+          "value": {
+            "type": "identifier",
+            "name": "SelectionBehavior"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The selection behavior for the collection."
+        },
+        "allowsDragging": {
+          "type": "property",
+          "name": "allowsDragging",
+          "value": {
+            "type": "identifier",
+            "name": "boolean | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Whether the item allows dragging."
+        },
+        "isDragging": {
+          "type": "property",
+          "name": "isDragging",
+          "value": {
+            "type": "identifier",
+            "name": "boolean | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Whether the item is currently being dragged."
+        },
+        "isDropTarget": {
+          "type": "property",
+          "name": "isDropTarget",
+          "value": {
+            "type": "identifier",
+            "name": "boolean | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Whether the item is currently an active drop target."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:MenuItemRenderProps": {
+      "type": "interface",
+      "name": "MenuItemRenderProps",
+      "properties": {
+        "hasSubmenu": {
+          "type": "property",
+          "name": "hasSubmenu",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item has a submenu."
+        },
+        "isOpen": {
+          "type": "property",
+          "name": "isOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item's submenu is open."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently hovered with a mouse."
+        },
+        "isPressed": {
+          "type": "property",
+          "name": "isPressed",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently in a pressed state."
+        },
+        "isSelected": {
+          "type": "property",
+          "name": "isSelected",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently selected."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently keyboard focused."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+        },
+        "selectionMode": {
+          "type": "property",
+          "name": "selectionMode",
+          "value": {
+            "type": "identifier",
+            "name": "SelectionMode"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of selection that is allowed in the collection."
+        },
+        "selectionBehavior": {
+          "type": "property",
+          "name": "selectionBehavior",
+          "value": {
+            "type": "identifier",
+            "name": "SelectionBehavior"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The selection behavior for the collection."
+        },
+        "allowsDragging": {
+          "type": "property",
+          "name": "allowsDragging",
+          "value": {
+            "type": "identifier",
+            "name": "boolean | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Whether the item allows dragging."
+        },
+        "isDragging": {
+          "type": "property",
+          "name": "isDragging",
+          "value": {
+            "type": "identifier",
+            "name": "boolean | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Whether the item is currently being dragged."
+        },
+        "isDropTarget": {
+          "type": "property",
+          "name": "isDropTarget",
+          "value": {
+            "type": "identifier",
+            "name": "boolean | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Whether the item is currently an active drop target."
+        }
+      }
+    },
+    "HoverEvent": {
+      "type": "interface",
+      "name": "HoverEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"hoverstart\" | \"hoverend\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of hover event being fired."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "\"mouse\" | \"pen\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the hover event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "HTMLElement"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the hover event."
+        }
+      }
+    },
+    "PressEvent": {
+      "type": "interface",
+      "name": "PressEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of press event being fired."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "PointerType"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the press event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "Element"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the press event."
+        },
+        "shiftKey": {
+          "type": "property",
+          "name": "shiftKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the shift keyboard modifier was held during the press event."
+        },
+        "ctrlKey": {
+          "type": "property",
+          "name": "ctrlKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the ctrl keyboard modifier was held during the press event."
+        },
+        "metaKey": {
+          "type": "property",
+          "name": "metaKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the meta keyboard modifier was held during the press event."
+        },
+        "altKey": {
+          "type": "property",
+          "name": "altKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the alt keyboard modifier was held during the press event."
+        },
+        "x": {
+          "type": "property",
+          "name": "x",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "X position relative to the target."
+        },
+        "y": {
+          "type": "property",
+          "name": "y",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Y position relative to the target."
+        },
+        "continuePropagation": {
+          "type": "property",
+          "name": "continuePropagation",
+          "value": {
+            "type": "identifier",
+            "name": "() => void"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
+        }
+      }
+    }
   }
 }

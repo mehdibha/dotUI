@@ -204,5 +204,121 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "typeLinks": {
+    "CellRenderProps": {
+      "type": "interface",
+      "name": "CellRenderProps",
+      "properties": {
+        "isPressed": {
+          "type": "property",
+          "name": "isPressed",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the cell is currently in a pressed state."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the cell is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the cell is currently keyboard focused."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the cell is currently hovered with a mouse."
+        },
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "identifier",
+            "name": "Key | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The unique id of the cell."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:CellRenderProps": {
+      "type": "interface",
+      "name": "CellRenderProps",
+      "properties": {
+        "isPressed": {
+          "type": "property",
+          "name": "isPressed",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the cell is currently in a pressed state."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the cell is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the cell is currently keyboard focused."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the cell is currently hovered with a mouse."
+        },
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "identifier",
+            "name": "Key | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The unique id of the cell."
+        }
+      }
+    }
   }
 }

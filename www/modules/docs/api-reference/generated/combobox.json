@@ -889,6 +889,98 @@
     }
   },
   "typeLinks": {
+    "ComboBoxRenderProps": {
+      "type": "interface",
+      "name": "ComboBoxRenderProps",
+      "properties": {
+        "isOpen": {
+          "type": "property",
+          "name": "isOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is currently open."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is invalid."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is required."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps": {
+      "type": "interface",
+      "name": "ComboBoxRenderProps",
+      "properties": {
+        "isOpen": {
+          "type": "property",
+          "name": "isOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is currently open."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is invalid."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is required."
+        }
+      }
+    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
       "type": "interface",
       "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",

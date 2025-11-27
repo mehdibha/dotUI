@@ -1565,5 +1565,158 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "typeLinks": {
+    "HoverEvent": {
+      "type": "interface",
+      "name": "HoverEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"hoverstart\" | \"hoverend\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of hover event being fired."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "\"mouse\" | \"pen\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the hover event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "HTMLElement"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the hover event."
+        }
+      }
+    },
+    "GroupRenderProps": {
+      "type": "interface",
+      "name": "GroupRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the group is currently hovered with a mouse."
+        },
+        "isFocusWithin": {
+          "type": "property",
+          "name": "isFocusWithin",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether an element within the group is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether an element within the group is keyboard focused."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the group is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the group is invalid."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps": {
+      "type": "interface",
+      "name": "GroupRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the group is currently hovered with a mouse."
+        },
+        "isFocusWithin": {
+          "type": "property",
+          "name": "isFocusWithin",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether an element within the group is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether an element within the group is keyboard focused."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the group is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the group is invalid."
+        }
+      }
+    }
   }
 }

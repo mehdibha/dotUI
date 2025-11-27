@@ -2399,6 +2399,23 @@
       },
       "typeParameters": [],
       "description": "Represents a color value."
+    },
+    "ColorPickerRenderProps": {
+      "type": "interface",
+      "name": "ColorPickerRenderProps",
+      "properties": {
+        "color": {
+          "type": "property",
+          "name": "color",
+          "value": {
+            "type": "identifier",
+            "name": "Color"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The currently selected color."
+        }
+      }
     }
   }
 }

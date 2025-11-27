@@ -188,5 +188,59 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "typeLinks": {
+    "BreadcrumbRenderProps": {
+      "type": "interface",
+      "name": "BreadcrumbRenderProps",
+      "properties": {
+        "isCurrent": {
+          "type": "property",
+          "name": "isCurrent",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the breadcrumb is for the current page."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the breadcrumb is disabled."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:BreadcrumbRenderProps": {
+      "type": "interface",
+      "name": "BreadcrumbRenderProps",
+      "properties": {
+        "isCurrent": {
+          "type": "property",
+          "name": "isCurrent",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the breadcrumb is for the current page."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the breadcrumb is disabled."
+        }
+      }
+    }
   }
 }

@@ -2014,6 +2014,100 @@
       },
       "typeParameters": [],
       "description": ""
+    },
+    "NumberFieldRenderProps": {
+      "type": "interface",
+      "name": "NumberFieldRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the number field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the number field is invalid."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the number field is required."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "NumberFieldState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the number field."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:NumberFieldRenderProps": {
+      "type": "interface",
+      "name": "NumberFieldRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the number field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the number field is invalid."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the number field is required."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "NumberFieldState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the number field."
+        }
+      }
     }
   }
 }

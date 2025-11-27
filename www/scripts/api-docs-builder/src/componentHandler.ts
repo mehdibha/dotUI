@@ -3,7 +3,10 @@ import * as tae from "typescript-api-extractor";
 
 import fs from "node:fs";
 import path from "node:path";
-import type { TType } from "../../../modules/docs/api-reference/types/type-ast";
+import type {
+  TLink,
+  TType,
+} from "../../../modules/docs/api-reference/types/type-ast";
 import memberOrder from "./order.json";
 import {
   buildTypeAstFromString,
@@ -15,6 +18,222 @@ import {
 export interface ParserContext {
   program: ts.Program;
   checker: ts.TypeChecker;
+}
+
+/**
+ * Recursively collect all TLink nodes from an AST
+ */
+function collectLinksFromAst(ast: TType | null | undefined): TLink[] {
+  if (!ast) return [];
+
+  const links: TLink[] = [];
+
+  function traverse(node: TType): void {
+    if (node.type === "link") {
+      links.push(node as TLink);
+      return;
+    }
+
+    // Traverse nested types based on type kind
+    switch (node.type) {
+      case "union":
+        (node as { elements: TType[] }).elements.forEach(traverse);
+        break;
+      case "intersection":
+        (node as { types: TType[] }).types.forEach(traverse);
+        break;
+      case "function":
+        (node as { parameters: TType[]; return: TType }).parameters.forEach(
+          traverse,
+        );
+        traverse((node as { parameters: TType[]; return: TType }).return);
+        break;
+      case "parameter":
+        traverse((node as { value: TType }).value);
+        break;
+      case "application":
+        traverse((node as { base: TType }).base);
+        (node as { typeParameters: TType[] }).typeParameters.forEach(traverse);
+        break;
+      case "array":
+        traverse((node as { elementType: TType }).elementType);
+        break;
+      case "tuple":
+        (node as { elements: TType[] }).elements.forEach(traverse);
+        break;
+      // Add more cases as needed
+    }
+  }
+
+  traverse(ast);
+  return links;
+}
+
+/**
+ * Types that should be resolved and included in typeLinks
+ * These are typically RenderProps types that users want to explore
+ */
+const RESOLVABLE_TYPE_PATTERNS = [
+  /RenderProps$/,
+  /Props$/,
+  /State$/,
+  /Context$/,
+  /Event$/, // But not DOM events
+];
+
+/**
+ * Types that should NEVER be resolved (built-in types)
+ */
+const SKIP_RESOLVE_TYPES = new Set([
+  // DOM types
+  "Window",
+  "Document",
+  "Element",
+  "HTMLElement",
+  "SVGElement",
+  "Node",
+  "EventTarget",
+  "Navigator",
+  // DOM Events (native)
+  "Event",
+  "MouseEvent",
+  "KeyboardEvent",
+  "FocusEvent",
+  "PointerEvent",
+  "TouchEvent",
+  "DragEvent",
+  // React types
+  "ReactNode",
+  "ReactElement",
+  "CSSProperties",
+  "RefObject",
+  "Ref",
+  // Primitives
+  "string",
+  "number",
+  "boolean",
+  "null",
+  "undefined",
+  "void",
+  "any",
+  "unknown",
+  "never",
+]);
+
+/**
+ * Check if a type name should be resolved
+ */
+function shouldResolveType(typeName: string): boolean {
+  // Skip built-in types
+  if (SKIP_RESOLVE_TYPES.has(typeName)) return false;
+
+  // Skip if it looks like a full path (already resolved elsewhere)
+  if (typeName.includes("/")) return false;
+
+  // Resolve if it matches our patterns (like ButtonRenderProps)
+  return RESOLVABLE_TYPE_PATTERNS.some((pattern) => pattern.test(typeName));
+}
+
+/**
+ * Resolve a type by name and convert it to AST for the links registry
+ * Only resolves types that match RESOLVABLE_TYPE_PATTERNS
+ */
+function resolveTypeByName(
+  typeName: string,
+  context: ParserContext,
+  astContext: ConversionContext,
+): TType | null {
+  // Check if we should resolve this type
+  if (!shouldResolveType(typeName)) {
+    return null;
+  }
+
+  const { program, checker } = context;
+
+  // Search for the type in all source files (including declaration files)
+  for (const sourceFile of program.getSourceFiles()) {
+    let foundType: TType | null = null;
+
+    sourceFile.forEachChild((node) => {
+      if (foundType) return; // Already found
+
+      if (
+        (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) &&
+        node.name.text === typeName
+      ) {
+        const symbol = checker.getSymbolAtLocation(node.name);
+        if (!symbol) return;
+
+        const type = checker.getDeclaredTypeOfSymbol(symbol);
+        const properties = checker.getPropertiesOfType(type);
+
+        // Build an interface AST with properties (simplified, no recursion)
+        const propsAst: Record<
+          string,
+          {
+            type: "property";
+            name: string;
+            value: TType;
+            optional: boolean;
+            readonly: boolean;
+            description: string;
+          }
+        > = {};
+
+        for (const prop of properties) {
+          const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+          // Use a simple type string instead of recursive AST to avoid explosion
+          const typeString = checker.typeToString(propType);
+          const docs = ts.displayPartsToString(
+            prop.getDocumentationComment(checker),
+          );
+          const isOptional = (prop.flags & ts.SymbolFlags.Optional) !== 0;
+
+          // Create a simple type representation
+          const simpleType = parseSimpleTypeString(typeString);
+
+          propsAst[prop.name] = {
+            type: "property",
+            name: prop.name,
+            value: simpleType,
+            optional: isOptional,
+            readonly: false,
+            description: docs || "",
+          };
+        }
+
+        foundType = {
+          type: "interface",
+          name: typeName,
+          properties: propsAst,
+        } as TType;
+      }
+    });
+
+    if (foundType) return foundType;
+  }
+
+  return null;
+}
+
+/**
+ * Parse a simple type string into a basic AST node
+ * This avoids recursive resolution of complex types
+ */
+function parseSimpleTypeString(typeString: string): TType {
+  // Handle primitives
+  if (typeString === "string") return { type: "string" } as TType;
+  if (typeString === "number") return { type: "number" } as TType;
+  if (typeString === "boolean") return { type: "boolean" } as TType;
+  if (typeString === "null") return { type: "null" } as TType;
+  if (typeString === "undefined") return { type: "undefined" } as TType;
+  if (typeString === "void") return { type: "void" } as TType;
+  if (typeString === "any") return { type: "any" } as TType;
+  if (typeString === "unknown") return { type: "unknown" } as TType;
+  if (typeString === "never") return { type: "never" } as TType;
+
+  // For anything else, just return as identifier
+  return { type: "identifier", name: typeString } as TType;
 }
 
 interface FormattedProp {
@@ -202,6 +421,25 @@ async function getPropsWithTypeChecker(
           const typeAst =
             buildTypeAstFromString(shortType, astContext) ??
             typeToAst(propType, { ...astContext, currentDepth: 0 });
+
+          // Scan the AST for link nodes and resolve referenced types
+          if (typeAst) {
+            const linkedTypes = collectLinksFromAst(typeAst);
+            for (const link of linkedTypes) {
+              // Skip if already resolved
+              if (astContext.links[link.id]) continue;
+
+              // Try to resolve the type by name
+              const resolvedType = resolveTypeByName(
+                link.name,
+                context,
+                astContext,
+              );
+              if (resolvedType) {
+                astContext.links[link.id] = resolvedType;
+              }
+            }
+          }
 
           result[prop.name] = {
             type: shortType,

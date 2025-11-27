@@ -573,6 +573,65 @@
     }
   },
   "typeLinks": {
+    "DropEvent": {
+      "type": "interface",
+      "name": "DropEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"drop\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The event type."
+        },
+        "dropOperation": {
+          "type": "property",
+          "name": "dropOperation",
+          "value": {
+            "type": "identifier",
+            "name": "DropOperation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The drop operation that should occur."
+        },
+        "items": {
+          "type": "property",
+          "name": "items",
+          "value": {
+            "type": "identifier",
+            "name": "DropItem[]"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The dropped items."
+        },
+        "x": {
+          "type": "property",
+          "name": "x",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The x coordinate of the event, relative to the target element."
+        },
+        "y": {
+          "type": "property",
+          "name": "y",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The y coordinate of the event, relative to the target element."
+        }
+      }
+    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes": {
       "type": "interface",
       "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes",
@@ -614,6 +673,305 @@
       },
       "typeParameters": [],
       "description": ""
+    },
+    "DropEnterEvent": {
+      "type": "interface",
+      "name": "DropEnterEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"dropenter\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The event type."
+        },
+        "x": {
+          "type": "property",
+          "name": "x",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The x coordinate of the event, relative to the target element."
+        },
+        "y": {
+          "type": "property",
+          "name": "y",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The y coordinate of the event, relative to the target element."
+        }
+      }
+    },
+    "DropMoveEvent": {
+      "type": "interface",
+      "name": "DropMoveEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"dropmove\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The event type."
+        },
+        "x": {
+          "type": "property",
+          "name": "x",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The x coordinate of the event, relative to the target element."
+        },
+        "y": {
+          "type": "property",
+          "name": "y",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The y coordinate of the event, relative to the target element."
+        }
+      }
+    },
+    "DropActivateEvent": {
+      "type": "interface",
+      "name": "DropActivateEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"dropactivate\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The event type."
+        },
+        "x": {
+          "type": "property",
+          "name": "x",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The x coordinate of the event, relative to the target element."
+        },
+        "y": {
+          "type": "property",
+          "name": "y",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The y coordinate of the event, relative to the target element."
+        }
+      }
+    },
+    "DropExitEvent": {
+      "type": "interface",
+      "name": "DropExitEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"dropexit\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The event type."
+        },
+        "x": {
+          "type": "property",
+          "name": "x",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The x coordinate of the event, relative to the target element."
+        },
+        "y": {
+          "type": "property",
+          "name": "y",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The y coordinate of the event, relative to the target element."
+        }
+      }
+    },
+    "HoverEvent": {
+      "type": "interface",
+      "name": "HoverEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"hoverstart\" | \"hoverend\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of hover event being fired."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "\"mouse\" | \"pen\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the hover event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "HTMLElement"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the hover event."
+        }
+      }
+    },
+    "DropZoneRenderProps": {
+      "type": "interface",
+      "name": "DropZoneRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is currently hovered with a mouse."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is keyboard focused."
+        },
+        "isDropTarget": {
+          "type": "property",
+          "name": "isDropTarget",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is the drop target."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is disabled."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropZoneRenderProps": {
+      "type": "interface",
+      "name": "DropZoneRenderProps",
+      "properties": {
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is currently hovered with a mouse."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is keyboard focused."
+        },
+        "isDropTarget": {
+          "type": "property",
+          "name": "isDropTarget",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is the drop target."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the dropzone is disabled."
+        }
+      }
     }
   }
 }

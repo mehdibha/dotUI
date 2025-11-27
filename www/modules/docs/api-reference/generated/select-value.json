@@ -1427,5 +1427,66 @@
       "selector": "[data-placeholder]",
       "description": "Whether the value is a placeholder."
     }
+  },
+  "typeLinks": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps": {
+      "type": "interface",
+      "name": "SelectValueRenderProps",
+      "properties": {
+        "isPlaceholder": {
+          "type": "property",
+          "name": "isPlaceholder",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the value is a placeholder."
+        },
+        "selectedItem": {
+          "type": "property",
+          "name": "selectedItem",
+          "value": {
+            "type": "identifier",
+            "name": "T | null"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The object value of the first selected item."
+        },
+        "selectedItems": {
+          "type": "property",
+          "name": "selectedItems",
+          "value": {
+            "type": "identifier",
+            "name": "(T | null)[]"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The object values of the currently selected items."
+        },
+        "selectedText": {
+          "type": "property",
+          "name": "selectedText",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The textValue of the currently selected items."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "Select.State<T, \"multiple\" | \"single\">"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The state of the select."
+        }
+      }
+    }
   }
 }

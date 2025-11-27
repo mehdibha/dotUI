@@ -767,5 +767,103 @@
       "selector": "[data-exiting]",
       "description": "Whether the popover is currently exiting. Use this to apply animations."
     }
+  },
+  "typeLinks": {
+    "PopoverRenderProps": {
+      "type": "interface",
+      "name": "PopoverRenderProps",
+      "properties": {
+        "trigger": {
+          "type": "property",
+          "name": "trigger",
+          "value": {
+            "type": "identifier",
+            "name": "string | null"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The name of the component that triggered the popover, e.g. \"DialogTrigger\" or \"ComboBox\"."
+        },
+        "placement": {
+          "type": "property",
+          "name": "placement",
+          "value": {
+            "type": "identifier",
+            "name": "PlacementAxis | null"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The placement of the popover relative to the trigger."
+        },
+        "isEntering": {
+          "type": "property",
+          "name": "isEntering",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the popover is currently entering. Use this to apply animations."
+        },
+        "isExiting": {
+          "type": "property",
+          "name": "isExiting",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the popover is currently exiting. Use this to apply animations."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:PopoverRenderProps": {
+      "type": "interface",
+      "name": "PopoverRenderProps",
+      "properties": {
+        "trigger": {
+          "type": "property",
+          "name": "trigger",
+          "value": {
+            "type": "identifier",
+            "name": "string | null"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The name of the component that triggered the popover, e.g. \"DialogTrigger\" or \"ComboBox\"."
+        },
+        "placement": {
+          "type": "property",
+          "name": "placement",
+          "value": {
+            "type": "identifier",
+            "name": "PlacementAxis | null"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The placement of the popover relative to the trigger."
+        },
+        "isEntering": {
+          "type": "property",
+          "name": "isEntering",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the popover is currently entering. Use this to apply animations."
+        },
+        "isExiting": {
+          "type": "property",
+          "name": "isExiting",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the popover is currently exiting. Use this to apply animations."
+        }
+      }
+    }
   }
 }

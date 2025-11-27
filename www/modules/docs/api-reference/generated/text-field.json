@@ -1782,6 +1782,98 @@
       },
       "typeParameters": [],
       "description": "currentTarget - a reference to the element on which the event listener is registered.\n\ntarget - a reference to the element from which the event was originally dispatched.\nThis might be a child element to the element on which the event listener is registered.\nIf you thought this should be `EventTarget & T`, see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/11508#issuecomment-256045682"
+    },
+    "TextFieldRenderProps": {
+      "type": "interface",
+      "name": "TextFieldRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the text field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the value is invalid."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the text field is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the text field is required."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TextFieldRenderProps": {
+      "type": "interface",
+      "name": "TextFieldRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the text field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the value is invalid."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the text field is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the text field is required."
+        }
+      }
     }
   }
 }

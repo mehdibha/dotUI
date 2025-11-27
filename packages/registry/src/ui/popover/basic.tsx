@@ -20,7 +20,7 @@ const popoverStyles = tv({
       "placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))] placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))]",
     ],
     arrow: [
-      "block [&>svg]:size-2.5 [&>svg]:fill-tooltip",
+      "block [&>svg]:size-2.5 [&>svg]:fill-popover",
       "placement-left:[&>svg]:-rotate-90 placement-bottom:[&>svg]:rotate-180 placement-right:[&>svg]:rotate-90",
     ],
   },

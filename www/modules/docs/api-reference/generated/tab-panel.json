@@ -243,5 +243,101 @@
       "selector": "[data-inert]",
       "description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
     }
+  },
+  "typeLinks": {
+    "TabPanelRenderProps": {
+      "type": "interface",
+      "name": "TabPanelRenderProps",
+      "properties": {
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently keyboard focused."
+        },
+        "isInert": {
+          "type": "property",
+          "name": "isInert",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "TabListState<unknown>"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the tab list."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabPanelRenderProps": {
+      "type": "interface",
+      "name": "TabPanelRenderProps",
+      "properties": {
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently keyboard focused."
+        },
+        "isInert": {
+          "type": "property",
+          "name": "isInert",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "TabListState<unknown>"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the tab list."
+        }
+      }
+    }
   }
 }

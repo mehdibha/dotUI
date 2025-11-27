@@ -948,5 +948,288 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "typeLinks": {
+    "PressEvent": {
+      "type": "interface",
+      "name": "PressEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of press event being fired."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "PointerType"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the press event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "Element"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the press event."
+        },
+        "shiftKey": {
+          "type": "property",
+          "name": "shiftKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the shift keyboard modifier was held during the press event."
+        },
+        "ctrlKey": {
+          "type": "property",
+          "name": "ctrlKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the ctrl keyboard modifier was held during the press event."
+        },
+        "metaKey": {
+          "type": "property",
+          "name": "metaKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the meta keyboard modifier was held during the press event."
+        },
+        "altKey": {
+          "type": "property",
+          "name": "altKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the alt keyboard modifier was held during the press event."
+        },
+        "x": {
+          "type": "property",
+          "name": "x",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "X position relative to the target."
+        },
+        "y": {
+          "type": "property",
+          "name": "y",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Y position relative to the target."
+        },
+        "continuePropagation": {
+          "type": "property",
+          "name": "continuePropagation",
+          "value": {
+            "type": "identifier",
+            "name": "() => void"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
+        }
+      }
+    },
+    "HoverEvent": {
+      "type": "interface",
+      "name": "HoverEvent",
+      "properties": {
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"hoverstart\" | \"hoverend\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of hover event being fired."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "\"mouse\" | \"pen\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the hover event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "HTMLElement"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the hover event."
+        }
+      }
+    },
+    "LinkRenderProps": {
+      "type": "interface",
+      "name": "LinkRenderProps",
+      "properties": {
+        "isCurrent": {
+          "type": "property",
+          "name": "isCurrent",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is the current item within a list."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is currently hovered with a mouse."
+        },
+        "isPressed": {
+          "type": "property",
+          "name": "isPressed",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is currently in a pressed state."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is keyboard focused."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is disabled."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:LinkRenderProps": {
+      "type": "interface",
+      "name": "LinkRenderProps",
+      "properties": {
+        "isCurrent": {
+          "type": "property",
+          "name": "isCurrent",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is the current item within a list."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is currently hovered with a mouse."
+        },
+        "isPressed": {
+          "type": "property",
+          "name": "isPressed",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is currently in a pressed state."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is keyboard focused."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is disabled."
+        }
+      }
+    }
   }
 }

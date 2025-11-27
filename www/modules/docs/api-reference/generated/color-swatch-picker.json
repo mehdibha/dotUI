@@ -2515,6 +2515,64 @@
       },
       "typeParameters": [],
       "description": "Represents a color value."
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerRenderProps": {
+      "type": "interface",
+      "name": "ColorSwatchPickerRenderProps",
+      "properties": {
+        "layout": {
+          "type": "property",
+          "name": "layout",
+          "value": {
+            "type": "identifier",
+            "name": "\"grid\" | \"stack\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the items are arranged in a stack or grid."
+        },
+        "isEmpty": {
+          "type": "property",
+          "name": "isEmpty",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the listbox has no items and should display its empty state."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the listbox is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the listbox is currently keyboard focused."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "ListState<unknown>"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the listbox."
+        }
+      }
     }
   }
 }

@@ -583,6 +583,40 @@
       },
       "typeParameters": [],
       "description": ""
+    },
+    "TabsRenderProps": {
+      "type": "interface",
+      "name": "TabsRenderProps",
+      "properties": {
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the tabs."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps": {
+      "type": "interface",
+      "name": "TabsRenderProps",
+      "properties": {
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the tabs."
+        }
+      }
     }
   }
 }

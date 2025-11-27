@@ -823,6 +823,82 @@
       },
       "typeParameters": [],
       "description": ""
+    },
+    "ProgressBarRenderProps": {
+      "type": "interface",
+      "name": "ProgressBarRenderProps",
+      "properties": {
+        "percentage": {
+          "type": "property",
+          "name": "percentage",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The value as a percentage between the minimum and maximum."
+        },
+        "valueText": {
+          "type": "property",
+          "name": "valueText",
+          "value": {
+            "type": "identifier",
+            "name": "string | undefined"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A formatted version of the value."
+        },
+        "isIndeterminate": {
+          "type": "property",
+          "name": "isIndeterminate",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the progress bar is indeterminate."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps": {
+      "type": "interface",
+      "name": "ProgressBarRenderProps",
+      "properties": {
+        "percentage": {
+          "type": "property",
+          "name": "percentage",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The value as a percentage between the minimum and maximum."
+        },
+        "valueText": {
+          "type": "property",
+          "name": "valueText",
+          "value": {
+            "type": "identifier",
+            "name": "string | undefined"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A formatted version of the value."
+        },
+        "isIndeterminate": {
+          "type": "property",
+          "name": "isIndeterminate",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the progress bar is indeterminate."
+        }
+      }
     }
   }
 }

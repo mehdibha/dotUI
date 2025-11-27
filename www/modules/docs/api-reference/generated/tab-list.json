@@ -410,6 +410,34 @@
     }
   },
   "typeLinks": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabListRenderProps": {
+      "type": "interface",
+      "name": "TabListRenderProps",
+      "properties": {
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the tab list."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "TabListState<unknown>"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the tab list."
+        }
+      }
+    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
       "type": "interface",
       "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",

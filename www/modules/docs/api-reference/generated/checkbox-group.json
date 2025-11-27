@@ -563,5 +563,121 @@
       "selector": "[data-invalid]",
       "description": "Whether the checkbox group is invalid."
     }
+  },
+  "typeLinks": {
+    "CheckboxGroupRenderProps": {
+      "type": "interface",
+      "name": "CheckboxGroupRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox group is disabled."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox group is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox group is required."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox group is invalid."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "CheckboxGroupState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the checkbox group."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:CheckboxGroupRenderProps": {
+      "type": "interface",
+      "name": "CheckboxGroupRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox group is disabled."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox group is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox group is required."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox group is invalid."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "CheckboxGroupState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the checkbox group."
+        }
+      }
+    }
   }
 }

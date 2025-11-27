@@ -595,5 +595,143 @@
       "selector": "[data-invalid]",
       "description": "Whether the radio group is invalid."
     }
+  },
+  "typeLinks": {
+    "RadioGroupRenderProps": {
+      "type": "interface",
+      "name": "RadioGroupRenderProps",
+      "properties": {
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the radio group."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is disabled."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is required."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is invalid."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "RadioGroupState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the radio group."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:RadioGroupRenderProps": {
+      "type": "interface",
+      "name": "RadioGroupRenderProps",
+      "properties": {
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the radio group."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is disabled."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is required."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio group is invalid."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "RadioGroupState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the radio group."
+        }
+      }
+    }
   }
 }

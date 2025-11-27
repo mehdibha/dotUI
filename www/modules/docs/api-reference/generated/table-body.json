@@ -447,6 +447,32 @@
     }
   },
   "typeLinks": {
+    "TableBodyRenderProps": {
+      "type": "interface",
+      "name": "TableBodyRenderProps",
+      "properties": {
+        "isEmpty": {
+          "type": "property",
+          "name": "isEmpty",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the table body has no rows and should display its empty state."
+        },
+        "isDropTarget": {
+          "type": "property",
+          "name": "isDropTarget",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the Table is currently the active drop target."
+        }
+      }
+    },
     "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
       "type": "interface",
       "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
@@ -1199,6 +1225,32 @@
       },
       "typeParameters": [],
       "description": "Represents the completion of an asynchronous operation"
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TableBodyRenderProps": {
+      "type": "interface",
+      "name": "TableBodyRenderProps",
+      "properties": {
+        "isEmpty": {
+          "type": "property",
+          "name": "isEmpty",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the table body has no rows and should display its empty state."
+        },
+        "isDropTarget": {
+          "type": "property",
+          "name": "isDropTarget",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the Table is currently the active drop target."
+        }
+      }
     }
   }
 }

@@ -249,7 +249,7 @@ function Identifier({ name }: { name: string }) {
         rel="noopener noreferrer"
         className={cn(
           styles.variable,
-          "underline decoration-dotted hover:decoration-solid",
+          "underline underline-offset-2",
         )}
       >
         {name}

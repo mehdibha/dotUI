@@ -7,15 +7,11 @@
 
 import * as React from "react";
 import { ChevronRightIcon } from "lucide-react";
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  OverlayArrow,
-  Popover,
-} from "react-aria-components";
+import { Button } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Popover } from "@dotui/registry/ui/popover";
 
 import type { TType } from "../types/type-ast";
 import { Type, useTypeLinks } from "./type-renderer";
@@ -50,7 +46,7 @@ export function TypeLink({ name, type }: TypeLinkProps) {
       <button
         type="button"
         onClick={() => navigationCtx.push(name, type)}
-        className="cursor-pointer font-mono text-primary underline decoration-dotted underline-offset-2 hover:decoration-solid"
+        className="cursor-pointer font-mono text-primary underline underline-offset-2"
       >
         {name}
       </button>
@@ -103,65 +99,44 @@ function TypePopover({ name, type }: TypePopoverProps) {
   );
 
   return (
-    <DialogTrigger onOpenChange={handleOpenChange}>
-      <Button className="cursor-pointer rounded-sm font-mono text-primary underline decoration-dotted underline-offset-2 outline-none hover:decoration-solid focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+    <Dialog onOpenChange={handleOpenChange}>
+      <Button className="focus-reset focus-visible:focus-ring cursor-pointer rounded-sm font-mono text-primary underline underline-offset-2">
         {name}
       </Button>
-      <Popover
-        placement="top"
-        offset={8}
-        className={cn(
-          "w-fit min-w-64 max-w-lg",
-          "rounded-lg border bg-bg shadow-xl",
-          "entering:fade-in entering:zoom-in-95 entering:animate-in",
-          "exiting:fade-out exiting:zoom-out-95 exiting:animate-out",
-        )}
-      >
-        <OverlayArrow>
-          <svg
-            width={12}
-            height={12}
-            viewBox="0 0 12 12"
-            className="block fill-bg stroke-border"
-          >
-            <path d="M0 0 L6 6 L12 0" />
-          </svg>
-        </OverlayArrow>
-        <Dialog className="outline-none">
-          <div className="p-3">
-            {/* Breadcrumbs */}
-            {breadcrumbs.length > 1 && (
-              <nav className="mb-3 flex items-center gap-1 border-b pb-2 text-xs">
-                {breadcrumbs.map((item, index) => (
-                  <React.Fragment key={item.id}>
-                    {index > 0 && (
-                      <ChevronRightIcon className="size-3 text-fg-muted" />
+      <Popover placement="top" showArrow>
+        <DialogContent className="outline-none">
+          {/* Breadcrumbs */}
+          {breadcrumbs.length > 1 && (
+            <nav className="mb-3 flex items-center gap-1 border-b pb-2 text-xs">
+              {breadcrumbs.map((item, index) => (
+                <React.Fragment key={item.id}>
+                  {index > 0 && (
+                    <ChevronRightIcon className="size-3 text-fg-muted" />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => navigateTo(index)}
+                    className={cn(
+                      "font-mono transition-colors hover:text-primary",
+                      index === breadcrumbs.length - 1
+                        ? "font-medium text-fg"
+                        : "text-fg-muted",
                     )}
-                    <button
-                      type="button"
-                      onClick={() => navigateTo(index)}
-                      className={cn(
-                        "font-mono transition-colors hover:text-primary",
-                        index === breadcrumbs.length - 1
-                          ? "font-medium text-fg"
-                          : "text-fg-muted",
-                      )}
-                    >
-                      {item.name}
-                    </button>
-                  </React.Fragment>
-                ))}
-              </nav>
-            )}
+                  >
+                    {item.name}
+                  </button>
+                </React.Fragment>
+              ))}
+            </nav>
+          )}
 
-            {/* Type content */}
-            <TypeNavigationContext.Provider value={{ push }}>
-              <TypePopoverContent type={currentItem.type} links={links} />
-            </TypeNavigationContext.Provider>
-          </div>
-        </Dialog>
+          {/* Type content */}
+          <TypeNavigationContext.Provider value={{ push }}>
+            <TypePopoverContent type={currentItem.type} links={links} />
+          </TypeNavigationContext.Provider>
+        </DialogContent>
       </Popover>
-    </DialogTrigger>
+    </Dialog>
   );
 }
 
@@ -204,38 +179,27 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
         )}
 
         {properties.length > 0 && (
-          <div className="max-h-64 overflow-y-auto">
-            <table className="w-full text-xs">
-              <thead className="sticky top-0 bg-bg">
-                <tr className="border-b">
-                  <th className="py-1 pr-3 text-left font-medium text-fg-muted">
-                    Property
-                  </th>
-                  <th className="py-1 text-left font-medium text-fg-muted">
-                    Type
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/50">
-                {properties.map((prop, i) => (
-                  <tr key={i}>
-                    <td className="py-1.5 pr-3">
-                      <code className="font-mono text-fg">
-                        {prop.name}
-                        {prop.optional && (
-                          <span className="text-fg-muted">?</span>
-                        )}
-                      </code>
-                    </td>
-                    <td className="py-1.5">
-                      <Type
-                        type={prop.type === "method" ? prop.value : prop.value}
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="divide-y divide-border/50">
+            {properties.map((prop, i) => (
+              <div key={i} className="py-2 first:pt-0 last:pb-0">
+                <div className="flex items-baseline justify-between gap-3">
+                  <code className="font-mono text-fg text-xs">
+                    {prop.name}
+                    {prop.optional && <span className="text-fg-muted">?</span>}
+                  </code>
+                  <code className="font-mono text-fg-muted text-xs">
+                    <Type
+                      type={prop.type === "method" ? prop.value : prop.value}
+                    />
+                  </code>
+                </div>
+                {prop.description && (
+                  <p className="mt-1 text-fg-muted text-xs leading-relaxed">
+                    {prop.description}
+                  </p>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>

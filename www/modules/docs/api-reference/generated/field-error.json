@@ -177,5 +177,83 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
+  },
+  "typeLinks": {
+    "FieldErrorRenderProps": {
+      "type": "interface",
+      "name": "FieldErrorRenderProps",
+      "properties": {
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the input value is invalid."
+        },
+        "validationErrors": {
+          "type": "property",
+          "name": "validationErrors",
+          "value": {
+            "type": "identifier",
+            "name": "string[]"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The current error messages for the input if it is invalid, otherwise an empty array."
+        },
+        "validationDetails": {
+          "type": "property",
+          "name": "validationDetails",
+          "value": {
+            "type": "identifier",
+            "name": "ValidityState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The native validation details for the input."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:FieldErrorRenderProps": {
+      "type": "interface",
+      "name": "FieldErrorRenderProps",
+      "properties": {
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the input value is invalid."
+        },
+        "validationErrors": {
+          "type": "property",
+          "name": "validationErrors",
+          "value": {
+            "type": "identifier",
+            "name": "string[]"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The current error messages for the input if it is invalid, otherwise an empty array."
+        },
+        "validationDetails": {
+          "type": "property",
+          "name": "validationDetails",
+          "value": {
+            "type": "identifier",
+            "name": "ValidityState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The native validation details for the input."
+        }
+      }
+    }
   }
 }

@@ -1818,6 +1818,100 @@
       },
       "typeParameters": [],
       "description": "currentTarget - a reference to the element on which the event listener is registered.\n\ntarget - a reference to the element from which the event was originally dispatched.\nThis might be a child element to the element on which the event listener is registered.\nIf you thought this should be `EventTarget & T`, see https://github.com/DefinitelyTyped/DefinitelyTyped/issues/11508#issuecomment-256045682"
+    },
+    "SearchFieldRenderProps": {
+      "type": "interface",
+      "name": "SearchFieldRenderProps",
+      "properties": {
+        "isEmpty": {
+          "type": "property",
+          "name": "isEmpty",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is empty."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is invalid."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "SearchFieldState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the search field."
+        }
+      }
+    },
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps": {
+      "type": "interface",
+      "name": "SearchFieldRenderProps",
+      "properties": {
+        "isEmpty": {
+          "type": "property",
+          "name": "isEmpty",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is empty."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is invalid."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "SearchFieldState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the search field."
+        }
+      }
     }
   }
 }
