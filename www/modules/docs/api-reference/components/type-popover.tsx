@@ -41,7 +41,7 @@ interface TypeLinkProps {
   type: TType;
 }
 
-export function TypeLink({ id, name, type }: TypeLinkProps) {
+export function TypeLink({ name, type }: TypeLinkProps) {
   const navigationCtx = React.useContext(TypeNavigationContext);
 
   // If we're already inside a popover, just navigate within it

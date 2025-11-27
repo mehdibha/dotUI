@@ -12,7 +12,6 @@ import type {
   TApplication,
   TArray,
   TBooleanLiteral,
-  TConditional,
   TFunction,
   TIdentifier,
   TIndexedAccess,
@@ -21,22 +20,19 @@ import type {
   TKeyof,
   TKeyword,
   TLink,
-  TMapped,
   TMethod,
   TNumberLiteral,
   TObject,
   TParameter,
-  TParenthesized,
   TProperty,
   TStringLiteral,
   TTemplate,
   TTuple,
   TType,
-  TTypeOperator,
   TTypeParameter,
   TUnion,
   TypeLinksRegistry,
-} from "../../../modules/docs/api-reference/types/type-ast";
+} from "@/modules/docs/api-reference/types/type-ast";
 
 export interface ConversionContext {
   checker: ts.TypeChecker;
@@ -271,12 +267,7 @@ export function buildTypeAstFromString(
   const functionMatch = typeString.match(
     /^\(\((\w+):\s*(\w+)\)\s*=>\s*(\w+)\)$/,
   );
-  if (
-    functionMatch &&
-    functionMatch[1] &&
-    functionMatch[2] &&
-    functionMatch[3]
-  ) {
+  if (functionMatch?.[1] && functionMatch[2] && functionMatch[3]) {
     const paramName = functionMatch[1];
     const paramType = functionMatch[2];
     const returnType = functionMatch[3];
