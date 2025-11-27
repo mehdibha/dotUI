@@ -264,12 +264,32 @@ function Identifier({ name }: { name: string }) {
  * Union type
  * ---------------------------------------------------------------------------------------------*/
 
+/**
+ * Sort union elements so undefined and null come last
+ */
+function sortUnionElements(elements: TType[]): TType[] {
+  return [...elements].sort((a, b) => {
+    const aIsNullish = a.type === "undefined" || a.type === "null";
+    const bIsNullish = b.type === "undefined" || b.type === "null";
+
+    if (aIsNullish && !bIsNullish) return 1; // a goes after b
+    if (!aIsNullish && bIsNullish) return -1; // a goes before b
+
+    // Both nullish: undefined before null
+    if (a.type === "null" && b.type === "undefined") return 1;
+    if (a.type === "undefined" && b.type === "null") return -1;
+
+    return 0; // Keep original order for non-nullish types
+  });
+}
+
 function UnionType({ elements }: { elements: TType[] }) {
-  const shouldWrap = elements.length > 3;
+  const sortedElements = sortUnionElements(elements);
+  const shouldWrap = sortedElements.length > 3;
 
   return (
     <>
-      {elements.map((el, i) => (
+      {sortedElements.map((el, i) => (
         <React.Fragment key={i}>
           {i > 0 && (
             <span className={styles.punctuation}>
