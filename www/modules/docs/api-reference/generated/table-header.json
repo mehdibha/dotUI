@@ -2,6 +2,81 @@
   "name": "TableHeaderProps",
   "description": "A header within a Table, containing the table columns.",
   "props": {
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a hover interaction starts."
+    },
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a hover interaction ends."
+    },
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the hover state changes."
+    },
     "columns": {
       "type": "Iterable<T>",
       "detailedType": "Iterable<T> | undefined",
@@ -39,100 +114,6 @@
         ]
       },
       "description": "A list of table columns."
-    },
-    "dependencies": {
-      "type": "readonly any[]",
-      "detailedType": "readonly any[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "any"
-            }
-          }
-        ]
-      },
-      "description": "Values that should invalidate the column cache when using dynamic collections."
-    },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the hover state changes."
-    },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction ends."
-    },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction starts."
     },
     "children": {
       "type": "ReactNode | ((item: T) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
@@ -361,6 +342,25 @@
         ]
       },
       "description": "A list of `Column(s)` or a function. If the latter, a list of columns must be provided using the `columns` prop."
+    },
+    "dependencies": {
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "any"
+            }
+          }
+        ]
+      },
+      "description": "Values that should invalidate the column cache when using dynamic collections."
     },
     "className": {
       "type": "string | (values: TableHeaderRenderProps) => string",

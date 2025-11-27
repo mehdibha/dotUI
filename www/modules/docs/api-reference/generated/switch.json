@@ -2,30 +2,6 @@
   "name": "SwitchProps",
   "description": "A switch allows a user to turn a setting on or off.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-    },
     "variant": {
       "type": "\"default\"",
       "detailedType": "\"default\" | undefined",
@@ -63,22 +39,6 @@
       },
       "description": "The size of the switch.",
       "default": "'md'"
-    },
-    "value": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The value of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefvalue)."
-    },
-    "defaultSelected": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the Switch should be selected (uncontrolled)."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
@@ -170,6 +130,31 @@
       },
       "description": "Handler that is called when the element loses focus."
     },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
     "onKeyDown": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
@@ -220,45 +205,80 @@
       },
       "description": "Handler that is called when a key is released."
     },
-    "aria-controls": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+      "description": "Handler that is called when a hover interaction starts."
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Identifies the element (or elements) that describes the object."
+      "description": "Handler that is called when a hover interaction ends."
     },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "excludeFromTabOrder": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-    },
-    "form": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+      "description": "Handler that is called when the hover state changes."
     },
     "inputRef": {
       "type": "RefObject<HTMLInputElement | null>",
@@ -295,13 +315,77 @@
       },
       "description": "A ref for the HTML input element."
     },
-    "isSelected": {
+    "isDisabled": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the Switch should be selected (controlled)."
+      "description": "Whether the input is disabled."
+    },
+    "form": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-controls": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onChange": {
       "type": "((isSelected: boolean) => void)",
@@ -328,140 +412,45 @@
       },
       "description": "Handler that is called when the Switch's selection state changes."
     },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isFocused",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
+        "type": "string"
       },
-      "description": "Handler that is called when the element's focus status changes."
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
+    "value": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
+        "type": "string"
       },
-      "description": "Handler that is called when the hover state changes."
+      "description": "The value of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefvalue)."
     },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction ends."
-    },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction starts."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "autoFocus": {
+    "excludeFromTabOrder": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the element should receive focus on render."
+      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
     },
-    "isDisabled": {
+    "defaultSelected": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the input is disabled."
+      "description": "Whether the Switch should be selected (uncontrolled)."
+    },
+    "isSelected": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the Switch should be selected (controlled)."
     },
     "isReadOnly": {
       "type": "boolean",
@@ -470,14 +459,6 @@
         "type": "boolean"
       },
       "description": "Whether the input can be selected but not changed by the user."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ReactNode | (values: SwitchRenderProps) => ReactNode",
@@ -645,6 +626,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "renderProps": {

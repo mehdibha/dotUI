@@ -2,6 +2,30 @@
   "name": "ProgressBarProps",
   "description": "Progress bars show either determinate or indeterminate progress of an operation over time.",
   "props": {
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -27,21 +51,31 @@
       "description": "The current value (controlled).",
       "default": "0"
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "isIndeterminate": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "boolean"
       },
-      "description": "Identifies the element (or elements) that describes the object."
+      "description": "Whether presentation is indeterminate when progress isn't known."
     },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "minValue": {
+      "type": "number",
+      "detailedType": "number | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "number"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "The smallest value allowed for the input.",
+      "default": "0"
+    },
+    "maxValue": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The largest value allowed for the input.",
+      "default": "100"
     },
     "formatOptions": {
       "type": "NumberFormatOptions",
@@ -62,51 +96,6 @@
       "description": "The display format of the value label.",
       "default": "{style: 'percent'}"
     },
-    "isIndeterminate": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether presentation is indeterminate when progress isn't known."
-    },
-    "maxValue": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The largest value allowed for the input.",
-      "default": "100"
-    },
-    "minValue": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The smallest value allowed for the input.",
-      "default": "0"
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
     "valueLabel": {
       "type": "ReactNode",
       "typeAst": {
@@ -114,14 +103,6 @@
         "name": "ReactNode"
       },
       "description": "The content to display as the value's label (e.g. 1 of 4)."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ReactNode | (values: ProgressBarRenderProps) => ReactNode",
@@ -289,6 +270,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "renderProps": {

@@ -2,15 +2,6 @@
   "name": "MenuSubProps",
   "description": "A submenu trigger is used to wrap a submenu's trigger item and the submenu itself.",
   "props": {
-    "delay": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The delay time in milliseconds for the submenu to appear after hovering over the trigger.",
-      "default": "200"
-    },
     "children": {
       "type": "ReactElement<unknown, string | JSXElementConstructor<any>>[]",
       "typeAst": {
@@ -110,6 +101,15 @@
       },
       "description": "The contents of the SubmenuTrigger. The first child should be an Item (the trigger) and the second child should be the Popover (for the submenu).",
       "required": true
+    },
+    "delay": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The delay time in milliseconds for the submenu to appear after hovering over the trigger.",
+      "default": "200"
     }
   }
 }

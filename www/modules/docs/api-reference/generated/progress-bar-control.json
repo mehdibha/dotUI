@@ -2,22 +2,6 @@
   "name": "ProgressBarControlProps",
   "description": "Missing description.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
     "variant": {
       "type": "\"danger\" | \"warning\" | \"success\" | \"primary\" | \"accent\"",
       "detailedType": "\"danger\" | \"warning\" | \"success\" | \"primary\" | \"accent\" | undefined",
@@ -71,6 +55,101 @@
       },
       "description": "The size of the progress bar.",
       "default": "'md'"
+    },
+    "duration": {
+      "type": "`${number}s` | `${number}ms`",
+      "detailedType": "`${number}s` | `${number}ms` | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "ms"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Duration of the progress animation."
+    },
+    "inputMode": {
+      "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
+      "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "search"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "text"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tel"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "url"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "email"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "numeric"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "decimal"
+          }
+        ]
+      },
+      "description": "Hints at the type of data that might be entered by the user while editing the element or its contents"
+    },
+    "is": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Specify that a standard HTML element should behave like a defined custom built-in element"
+    },
+    "tw": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Specify styles using Tailwind CSS classes. This feature is currently experimental.\nIf `style` prop is also specified, styles generated with `tw` prop will be overridden.\n\nExample:\n- `tw='w-full h-full bg-blue-200'`\n- `tw='text-9xl'`\n- `tw='text-[80px]'`"
     },
     "aria-activedescendant": {
       "type": "string",
@@ -712,6 +791,22 @@
       },
       "description": "Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element."
     },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
     "aria-level": {
       "type": "number",
       "detailedType": "number | undefined",
@@ -1221,101 +1316,6 @@
         "type": "string"
       },
       "description": "Defines the human readable text alternative of aria-valuenow for a range widget."
-    },
-    "duration": {
-      "type": "`${number}s` | `${number}ms`",
-      "detailedType": "`${number}s` | `${number}ms` | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "stringLiteral",
-                "value": "s"
-              }
-            ]
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "stringLiteral",
-                "value": "ms"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Duration of the progress animation."
-    },
-    "inputMode": {
-      "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
-      "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "search"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "text"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "none"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "tel"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "url"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "email"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "numeric"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "decimal"
-          }
-        ]
-      },
-      "description": "Hints at the type of data that might be entered by the user while editing the element or its contents"
-    },
-    "is": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Specify that a standard HTML element should behave like a defined custom built-in element"
-    },
-    "tw": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Specify styles using Tailwind CSS classes. This feature is currently experimental.\nIf `style` prop is also specified, styles generated with `tw` prop will be overridden.\n\nExample:\n- `tw='w-full h-full bg-blue-200'`\n- `tw='text-9xl'`\n- `tw='text-[80px]'`"
     }
   }
 }

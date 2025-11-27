@@ -2,6 +2,34 @@
   "name": "TabPanelProps",
   "description": "A TabPanel provides the content for a tab.",
   "props": {
+    "shouldForceMount": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to mount the tab panel in the DOM even when it is not currently selected.\nInactive tab panels are inert and cannot be interacted with. They must be styled appropriately so this is clear to the user visually.",
+      "default": "false"
+    },
+    "id": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
+      },
+      "description": "The unique id of the tab."
+    },
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -33,34 +61,6 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "shouldForceMount": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to mount the tab panel in the DOM even when it is not currently selected.\nInactive tab panels are inert and cannot be interacted with. They must be styled appropriately so this is clear to the user visually.",
-      "default": "false"
-    },
-    "id": {
-      "type": "Key",
-      "detailedType": "Key | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
-      },
-      "description": "The unique id of the tab."
     },
     "children": {
       "type": "ReactNode | (values: TabPanelRenderProps) => ReactNode",

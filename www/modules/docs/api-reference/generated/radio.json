@@ -2,75 +2,6 @@
   "name": "RadioProps",
   "description": "A radio represents an individual option within a radio group.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "value": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The value of the radio button, used when submitting an HTML form.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#Value).",
-      "required": true
-    },
-    "onClick": {
-      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
-      "detailedType": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "e",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "MouseEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "FocusableElement"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "MouseEvent"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
-    },
     "onPress": {
       "type": "((e: PressEvent) => void)",
       "detailedType": "((e: PressEvent) => void) | undefined",
@@ -145,6 +76,101 @@
         "typeParameters": []
       },
       "description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
+    },
+    "onPressChange": {
+      "type": "((isPressed: boolean) => void)",
+      "detailedType": "((isPressed: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isPressed",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the press state changes."
+    },
+    "onPressUp": {
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "PressEvent",
+              "name": "PressEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
+    },
+    "onClick": {
+      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
+      "detailedType": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "MouseEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "FocusableElement"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "MouseEvent"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
@@ -236,6 +262,31 @@
       },
       "description": "Handler that is called when the element loses focus."
     },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
     "onKeyDown": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
@@ -286,21 +337,80 @@
       },
       "description": "Handler that is called when a key is released."
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Identifies the element (or elements) that describes the object."
+      "description": "Handler that is called when a hover interaction starts."
     },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Handler that is called when a hover interaction ends."
+    },
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the hover state changes."
     },
     "inputRef": {
       "type": "RefObject<HTMLInputElement | null>",
@@ -337,174 +447,13 @@
       },
       "description": "A ref for the HTML input element."
     },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isFocused",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
+        "type": "boolean"
       },
-      "description": "Handler that is called when the element's focus status changes."
-    },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the hover state changes."
-    },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction ends."
-    },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction starts."
-    },
-    "onPressChange": {
-      "type": "((isPressed: boolean) => void)",
-      "detailedType": "((isPressed: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isPressed",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the press state changes."
-    },
-    "onPressUp": {
-      "type": "((e: PressEvent) => void)",
-      "detailedType": "((e: PressEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "PressEvent",
-              "name": "PressEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "Whether the radio button is disabled or not.\nShows that a selection exists, but is not available in that circumstance."
     },
     "autoFocus": {
       "type": "boolean",
@@ -514,14 +463,6 @@
       },
       "description": "Whether the element should receive focus on render."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the radio button is disabled or not.\nShows that a selection exists, but is not available in that circumstance."
-    },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -529,6 +470,46 @@
         "type": "string"
       },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "value": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The value of the radio button, used when submitting an HTML form.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#Value).",
+      "required": true
     },
     "children": {
       "type": "ReactNode | (values: RadioRenderProps) => ReactNode",
@@ -696,6 +677,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "renderProps": {

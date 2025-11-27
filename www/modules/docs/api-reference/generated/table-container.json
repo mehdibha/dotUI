@@ -2,6 +2,99 @@
   "name": "TableContainerProps",
   "description": "Missing description.",
   "props": {
+    "resizable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the table columns are resizable."
+    },
+    "onResizeStart": {
+      "type": "((widths: Map<Key, ColumnSize>) => void)",
+      "detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "widths",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "link",
+                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+                    "name": "Map"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Key"
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "template",
+                          "elements": [
+                            {
+                              "type": "identifier",
+                              "name": "number"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "template",
+                          "elements": [
+                            {
+                              "type": "identifier",
+                              "name": "number"
+                            },
+                            {
+                              "type": "stringLiteral",
+                              "value": "%"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "template",
+                          "elements": [
+                            {
+                              "type": "identifier",
+                              "name": "number"
+                            },
+                            {
+                              "type": "stringLiteral",
+                              "value": "fr"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when a user starts a column resize."
+    },
     "onResize": {
       "type": "((widths: Map<Key, ColumnSize>) => void)",
       "detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
@@ -172,107 +265,6 @@
       },
       "description": "Handler that is called after a user performs a column resize.\nCan be used to store the widths of columns for another future session."
     },
-    "onResizeStart": {
-      "type": "((widths: Map<Key, ColumnSize>) => void)",
-      "detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "widths",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
-                    "name": "Map"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Key"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "number"
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            },
-                            {
-                              "type": "stringLiteral",
-                              "value": "%"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "template",
-                          "elements": [
-                            {
-                              "type": "identifier",
-                              "name": "number"
-                            },
-                            {
-                              "type": "stringLiteral",
-                              "value": "fr"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when a user starts a column resize."
-    },
-    "resizable": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the table columns are resizable."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-    },
     "children": {
       "type": "ReactNode",
       "typeAst": {
@@ -305,6 +297,14 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     }
   },
   "typeLinks": {

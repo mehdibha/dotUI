@@ -2,6 +2,139 @@
   "name": "TabListProps",
   "description": "A TabList is used within Tabs to group tabs that a user can switch between.",
   "props": {
+    "className": {
+      "type": "string | (values: TabListRenderProps) => string",
+      "detailedType": "string | (values: TabListRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabListRenderProps",
+                      "name": "TabListRenderProps"
+                    },
+                    {
+                      "type": "objectLiteral",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "CSSProperties | (values: TabListRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: TabListRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabListRenderProps",
+                      "name": "TabListRenderProps"
+                    },
+                    {
+                      "type": "objectLiteral",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -33,58 +166,6 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "dependencies": {
-      "type": "readonly any[]",
-      "detailedType": "readonly any[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "any"
-            }
-          }
-        ]
-      },
-      "description": "Values that should invalidate the item cache when using dynamic collections."
-    },
-    "items": {
-      "type": "Iterable<object>",
-      "detailedType": "Iterable<object> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "object"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Item objects in the collection."
     },
     "children": {
       "type": "ReactNode | ((item: object) => ReactNode)",
@@ -269,9 +350,9 @@
       },
       "description": "The contents of the collection."
     },
-    "className": {
-      "type": "string | (values: TabListRenderProps) => string",
-      "detailedType": "string | (values: TabListRenderProps) => string | undefined",
+    "items": {
+      "type": "Iterable<object>",
+      "detailedType": "Iterable<object> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -279,65 +360,32 @@
             "type": "undefined"
           },
           {
-            "type": "string"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabListRenderProps",
-                      "name": "TabListRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
             },
-            "typeParameters": []
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "object"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+      "description": "Item objects in the collection."
     },
-    "style": {
-      "type": "CSSProperties | (values: TabListRenderProps) => CSSProperties",
-      "detailedType": "CSSProperties | (values: TabListRenderProps) => CSSProperties | undefined",
+    "dependencies": {
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -345,62 +393,14 @@
             "type": "undefined"
           },
           {
-            "type": "identifier",
-            "name": "CSSProperties"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TabListRenderProps",
-                      "name": "TabListRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
-            },
-            "typeParameters": []
+            "type": "array",
+            "elementType": {
+              "type": "any"
+            }
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "Values that should invalidate the item cache when using dynamic collections."
     }
   },
   "renderProps": {

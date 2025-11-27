@@ -2,22 +2,6 @@
   "name": "InputProps",
   "description": "An input allows a user to input text.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
     "size": {
       "type": "\"sm\" | \"md\" | \"lg\"",
       "detailedType": "\"sm\" | \"md\" | \"lg\" | undefined",
@@ -41,13 +25,271 @@
       "description": "The size of the input.",
       "default": "'md'"
     },
-    "placeholder": {
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a hover interaction starts."
+    },
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a hover interaction ends."
+    },
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the hover state changes."
+    },
+    "style": {
+      "type": "CSSProperties | (values: InputRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: InputRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:InputRenderProps",
+                      "name": "InputRenderProps"
+                    },
+                    {
+                      "type": "objectLiteral",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "className": {
+      "type": "string | (values: InputRenderProps) => string",
+      "detailedType": "string | (values: InputRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:InputRenderProps",
+                      "name": "InputRenderProps"
+                    },
+                    {
+                      "type": "objectLiteral",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "inputMode": {
+      "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
+      "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "search"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "text"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tel"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "url"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "email"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "numeric"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "decimal"
+          }
+        ]
+      },
+      "description": "Hints at the type of data that might be entered by the user while editing the element or its contents"
+    },
+    "is": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Temporary text that occupies the text input when it is empty.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/placeholder)."
+      "description": "Specify that a standard HTML element should behave like a defined custom built-in element"
+    },
+    "tw": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Specify styles using Tailwind CSS classes. This feature is currently experimental.\nIf `style` prop is also specified, styles generated with `tw` prop will be overridden.\n\nExample:\n- `tw='w-full h-full bg-blue-200'`\n- `tw='text-9xl'`\n- `tw='text-[80px]'`"
     },
     "aria-activedescendant": {
       "type": "string",
@@ -689,6 +931,22 @@
       },
       "description": "Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element."
     },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
     "aria-level": {
       "type": "number",
       "detailedType": "number | undefined",
@@ -1199,271 +1457,13 @@
       },
       "description": "Defines the human readable text alternative of aria-valuenow for a range widget."
     },
-    "inputMode": {
-      "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
-      "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "search"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "text"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "none"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "tel"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "url"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "email"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "numeric"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "decimal"
-          }
-        ]
-      },
-      "description": "Hints at the type of data that might be entered by the user while editing the element or its contents"
-    },
-    "is": {
+    "placeholder": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Specify that a standard HTML element should behave like a defined custom built-in element"
-    },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the hover state changes."
-    },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction ends."
-    },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction starts."
-    },
-    "tw": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Specify styles using Tailwind CSS classes. This feature is currently experimental.\nIf `style` prop is also specified, styles generated with `tw` prop will be overridden.\n\nExample:\n- `tw='w-full h-full bg-blue-200'`\n- `tw='text-9xl'`\n- `tw='text-[80px]'`"
-    },
-    "className": {
-      "type": "string | (values: InputRenderProps) => string",
-      "detailedType": "string | (values: InputRenderProps) => string | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:InputRenderProps",
-                      "name": "InputRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-    },
-    "style": {
-      "type": "CSSProperties | (values: InputRenderProps) => CSSProperties",
-      "detailedType": "CSSProperties | (values: InputRenderProps) => CSSProperties | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:InputRenderProps",
-                      "name": "InputRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "Temporary text that occupies the text input when it is empty.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/placeholder)."
     }
   },
   "renderProps": {

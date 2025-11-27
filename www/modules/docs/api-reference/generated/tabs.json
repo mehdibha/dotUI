@@ -2,21 +2,21 @@
   "name": "TabsProps",
   "description": "Tabs organize content into multiple sections and allow users to navigate between them.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "boolean"
       },
-      "description": "Defines a string value that labels the current element."
+      "description": "Whether the TabList is disabled.\nShows that a selection exists, but is not available in that circumstance."
     },
-    "aria-labelledby": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "aria-describedby": {
       "type": "string",
@@ -34,24 +34,21 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "defaultSelectedKey": {
-      "type": "Key",
-      "detailedType": "Key | undefined",
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
+        "type": "string"
       },
-      "description": "The initial selected key in the collection (uncontrolled)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "disabledKeys": {
       "type": "Iterable<Key>",
@@ -86,24 +83,37 @@
       },
       "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
     },
-    "keyboardActivation": {
-      "type": "\"manual\" | \"automatic\"",
-      "detailedType": "\"manual\" | \"automatic\" | undefined",
+    "orientation": {
+      "type": "Orientation",
+      "detailedType": "Orientation | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
-            "type": "stringLiteral",
-            "value": "manual"
+            "type": "undefined"
           },
           {
-            "type": "stringLiteral",
-            "value": "automatic"
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "horizontal"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "vertical"
+              }
+            ]
           }
         ]
       },
-      "description": "Whether tabs are activated automatically on focus or manually.",
-      "default": "'automatic'"
+      "description": "The orientation of the tabs.",
+      "default": "'horizontal'"
     },
     "onSelectionChange": {
       "type": "((key: Key) => void)",
@@ -152,72 +162,43 @@
       },
       "description": "The currently selected key in the collection (controlled)."
     },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
+    "defaultSelectedKey": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "null"
           },
           {
             "type": "string"
+          },
+          {
+            "type": "number"
           }
         ]
       },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "The initial selected key in the collection (uncontrolled)."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the TabList is disabled.\nShows that a selection exists, but is not available in that circumstance."
-    },
-    "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
+    "keyboardActivation": {
+      "type": "\"manual\" | \"automatic\"",
+      "detailedType": "\"manual\" | \"automatic\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
+            "type": "stringLiteral",
+            "value": "manual"
           },
           {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "horizontal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "vertical"
-              }
-            ]
+            "type": "stringLiteral",
+            "value": "automatic"
           }
         ]
       },
-      "description": "The orientation of the tabs.",
-      "default": "'horizontal'"
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Whether tabs are activated automatically on focus or manually.",
+      "default": "'automatic'"
     },
     "children": {
       "type": "ReactNode | (values: TabsRenderProps) => ReactNode",
@@ -385,6 +366,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "renderProps": {

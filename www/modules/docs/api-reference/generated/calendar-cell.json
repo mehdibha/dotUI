@@ -21,29 +21,19 @@
       "description": "The color variant of the selected cell.",
       "default": "'accent'"
     },
-    "date": {
-      "type": "CalendarDate",
-      "typeAst": {
-        "type": "link",
-        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
-        "name": "CalendarDate"
-      },
-      "description": "The date to render in the cell.",
-      "required": true
-    },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
         "type": "function",
         "parameters": [
           {
             "type": "parameter",
-            "name": "isHovering",
+            "name": "e",
             "value": {
               "type": "link",
-              "id": "boolean",
-              "name": "boolean"
+              "id": "HoverEvent",
+              "name": "HoverEvent"
             },
             "optional": false,
             "rest": false
@@ -54,7 +44,7 @@
         },
         "typeParameters": []
       },
-      "description": "Handler that is called when the hover state changes."
+      "description": "Handler that is called when a hover interaction starts."
     },
     "onHoverEnd": {
       "type": "((e: HoverEvent) => void)",
@@ -81,19 +71,19 @@
       },
       "description": "Handler that is called when a hover interaction ends."
     },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
       "typeAst": {
         "type": "function",
         "parameters": [
           {
             "type": "parameter",
-            "name": "e",
+            "name": "isHovering",
             "value": {
               "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
+              "id": "boolean",
+              "name": "boolean"
             },
             "optional": false,
             "rest": false
@@ -104,7 +94,17 @@
         },
         "typeParameters": []
       },
-      "description": "Handler that is called when a hover interaction starts."
+      "description": "Handler that is called when the hover state changes."
+    },
+    "date": {
+      "type": "CalendarDate",
+      "typeAst": {
+        "type": "link",
+        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+        "name": "CalendarDate"
+      },
+      "description": "The date to render in the cell.",
+      "required": true
     },
     "children": {
       "type": "ReactNode | (values: CalendarCellRenderProps) => ReactNode",

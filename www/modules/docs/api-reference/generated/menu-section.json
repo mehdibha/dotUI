@@ -2,13 +2,24 @@
   "name": "MenuSectionProps",
   "description": "A MenuSection represents a section within a Menu.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "id": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
       },
-      "description": "An accessibility label for the section."
+      "description": "The unique id of the section."
     },
     "value": {
       "type": "T",
@@ -28,269 +39,6 @@
         ]
       },
       "description": "The object value that this section represents. When using dynamic collections, this is set automatically."
-    },
-    "defaultSelectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The initial selected keys in the collection (uncontrolled)."
-    },
-    "dependencies": {
-      "type": "readonly any[]",
-      "detailedType": "readonly any[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "any"
-            }
-          }
-        ]
-      },
-      "description": "Values that should invalidate the item cache when using dynamic collections."
-    },
-    "disabledKeys": {
-      "type": "Iterable<Key>",
-      "detailedType": "Iterable<Key> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The currently disabled keys in the collection (controlled)."
-    },
-    "disallowEmptySelection": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the collection allows empty selection."
-    },
-    "items": {
-      "type": "Iterable<T>",
-      "detailedType": "Iterable<T> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "typeParameter",
-                "name": "T",
-                "constraint": null,
-                "default": null
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Item objects in the section."
-    },
-    "onSelectionChange": {
-      "type": "((keys: Selection) => void)",
-      "detailedType": "((keys: Selection) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "keys",
-            "value": {
-              "type": "link",
-              "id": "Selection",
-              "name": "Selection"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the selection changes."
-    },
-    "selectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The currently selected keys in the collection (controlled)."
-    },
-    "selectionMode": {
-      "type": "SelectionMode",
-      "detailedType": "SelectionMode | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "multiple"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "single"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "none"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The type of selection that is allowed in the collection."
-    },
-    "id": {
-      "type": "Key",
-      "detailedType": "Key | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
-      },
-      "description": "The unique id of the section."
     },
     "children": {
       "type": "ReactNode | ((item: T) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
@@ -517,6 +265,68 @@
       },
       "description": "Static child items or a function to render children."
     },
+    "dependencies": {
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "any"
+            }
+          }
+        ]
+      },
+      "description": "Values that should invalidate the item cache when using dynamic collections."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An accessibility label for the section."
+    },
+    "items": {
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": null,
+                "default": null
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Item objects in the section."
+    },
     "className": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -541,6 +351,196 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    },
+    "selectionMode": {
+      "type": "SelectionMode",
+      "detailedType": "SelectionMode | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "multiple"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "single"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The type of selection that is allowed in the collection."
+    },
+    "disallowEmptySelection": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the collection allows empty selection."
+    },
+    "selectedKeys": {
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The currently selected keys in the collection (controlled)."
+    },
+    "defaultSelectedKeys": {
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The initial selected keys in the collection (uncontrolled)."
+    },
+    "onSelectionChange": {
+      "type": "((keys: Selection) => void)",
+      "detailedType": "((keys: Selection) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "keys",
+            "value": {
+              "type": "link",
+              "id": "Selection",
+              "name": "Selection"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the selection changes."
+    },
+    "disabledKeys": {
+      "type": "Iterable<Key>",
+      "detailedType": "Iterable<Key> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The currently disabled keys in the collection (controlled)."
     }
   },
   "typeLinks": {

@@ -2,14 +2,6 @@
   "name": "MenuItemProps",
   "description": "A MenuItem represents an individual action in a Menu.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "An accessibility label for this item."
-    },
     "variant": {
       "type": "\"danger\" | \"warning\" | \"success\" | \"default\" | \"accent\"",
       "detailedType": "\"danger\" | \"warning\" | \"success\" | \"default\" | \"accent\" | undefined",
@@ -40,70 +32,6 @@
       },
       "description": "The color variant of the menu item.",
       "default": "'default'"
-    },
-    "value": {
-      "type": "T",
-      "detailedType": "T | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "typeParameter",
-            "name": "T",
-            "constraint": null,
-            "default": null
-          }
-        ]
-      },
-      "description": "The object value that this item represents. When using dynamic collections, this is set automatically."
-    },
-    "onClick": {
-      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
-      "detailedType": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "e",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "MouseEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "FocusableElement"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "MouseEvent"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
     },
     "onPress": {
       "type": "((e: PressEvent) => void)",
@@ -180,142 +108,6 @@
       },
       "description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
     },
-    "download": {
-      "type": "string | boolean",
-      "detailedType": "string | boolean | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "booleanLiteral",
-            "value": false
-          },
-          {
-            "type": "booleanLiteral",
-            "value": true
-          }
-        ]
-      },
-      "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
-    },
-    "href": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
-    },
-    "hrefLang": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
-    },
-    "onAction": {
-      "type": "(() => void)",
-      "detailedType": "(() => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the item is selected."
-    },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the hover state changes."
-    },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction ends."
-    },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction starts."
-    },
     "onPressChange": {
       "type": "((isPressed: boolean) => void)",
       "detailedType": "((isPressed: boolean) => void) | undefined",
@@ -366,17 +158,9 @@
       },
       "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
     },
-    "ping": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
-    },
-    "referrerPolicy": {
-      "type": "HTMLAttributeReferrerPolicy",
-      "detailedType": "HTMLAttributeReferrerPolicy | undefined",
+    "onClick": {
+      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
+      "detailedType": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -384,181 +168,115 @@
             "type": "undefined"
           },
           {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "stringLiteral",
-                "value": ""
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "MouseEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "FocusableElement"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "MouseEvent"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "no-referrer"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "no-referrer-when-downgrade"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "origin-when-cross-origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "same-origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "strict-origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "strict-origin-when-cross-origin"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "unsafe-url"
-              }
-            ]
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           }
         ]
       },
-      "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
+      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
     },
-    "rel": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
-        "type": "string"
-      },
-      "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
-    },
-    "routerOptions": {
-      "type": "undefined",
-      "typeAst": {
-        "type": "undefined"
-      },
-      "description": "Options for the configured client side router."
-    },
-    "target": {
-      "type": "HTMLAttributeAnchorTarget",
-      "detailedType": "HTMLAttributeAnchorTarget | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "function",
+        "parameters": [
           {
-            "type": "undefined"
-          },
-          {
-            "type": "intersection",
-            "types": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "identifier",
-                "name": "{}"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "_self"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "_blank"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "_parent"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "_top"
-              }
-            ]
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
           }
-        ]
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
+      "description": "Handler that is called when a hover interaction starts."
     },
-    "textValue": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "A string representation of the item's contents, used for features like typeahead."
+      "description": "Handler that is called when a hover interaction ends."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Whether the item is disabled."
+      "description": "Handler that is called when the hover state changes."
     },
     "id": {
       "type": "Key",
@@ -578,6 +296,70 @@
         ]
       },
       "description": "The unique id of the item."
+    },
+    "value": {
+      "type": "T",
+      "detailedType": "T | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "typeParameter",
+            "name": "T",
+            "constraint": null,
+            "default": null
+          }
+        ]
+      },
+      "description": "The object value that this item represents. When using dynamic collections, this is set automatically."
+    },
+    "textValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "A string representation of the item's contents, used for features like typeahead."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An accessibility label for this item."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the item is disabled."
+    },
+    "onAction": {
+      "type": "(() => void)",
+      "detailedType": "(() => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the item is selected."
     },
     "children": {
       "type": "ReactNode | (values: MenuItemRenderProps) => ReactNode",
@@ -745,6 +527,224 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "href": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
+    },
+    "hrefLang": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
+    },
+    "target": {
+      "type": "HTMLAttributeAnchorTarget",
+      "detailedType": "HTMLAttributeAnchorTarget | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "intersection",
+            "types": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "identifier",
+                "name": "{}"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "_self"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "_blank"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "_parent"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "_top"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
+    },
+    "rel": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
+    },
+    "download": {
+      "type": "string | boolean",
+      "detailedType": "string | boolean | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "booleanLiteral",
+            "value": false
+          },
+          {
+            "type": "booleanLiteral",
+            "value": true
+          }
+        ]
+      },
+      "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
+    },
+    "ping": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
+    },
+    "referrerPolicy": {
+      "type": "HTMLAttributeReferrerPolicy",
+      "detailedType": "HTMLAttributeReferrerPolicy | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": ""
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "no-referrer"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "no-referrer-when-downgrade"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "origin"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "origin-when-cross-origin"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "same-origin"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "strict-origin"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "strict-origin-when-cross-origin"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "unsafe-url"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
+    },
+    "routerOptions": {
+      "type": "undefined",
+      "typeAst": {
+        "type": "undefined"
+      },
+      "description": "Options for the configured client side router."
     }
   },
   "renderProps": {

@@ -2,99 +2,24 @@
   "name": "PopoverProps",
   "description": "A popover is an overlay element positioned relative to a trigger.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "defaultOpen": {
+    "showArrow": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the overlay is open by default (uncontrolled)."
+      "description": "Whether to show an arrow pointing to the trigger.",
+      "default": "false"
     },
-    "onOpenChange": {
-      "type": "((isOpen: boolean) => void)",
-      "detailedType": "((isOpen: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isOpen",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the overlay's open state changes."
-    },
-    "UNSTABLE_portalContainer": {
-      "type": "Element",
-      "detailedType": "Element | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "Element"
-          }
-        ]
-      },
-      "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
-      "default": "document.body"
-    },
-    "aria-describedby": {
+    "trigger": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that describes the object."
+      "description": "The name of the component that triggered the popover. This is reflected on the element\nas the `data-trigger` attribute, and can be used to provide specific\nstyles for the popover depending on which element triggered it."
     },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "arrowBoundaryOffset": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The minimum distance the arrow's edge should be from the edge of the overlay element.",
-      "default": "0"
-    },
-    "arrowRef": {
+    "triggerRef": {
       "type": "RefObject<Element | null>",
       "detailedType": "RefObject<Element | null> | undefined",
       "typeAst": {
@@ -126,43 +51,7 @@
           }
         ]
       },
-      "description": "A ref for the popover arrow element."
-    },
-    "boundaryElement": {
-      "type": "Element",
-      "detailedType": "Element | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "Element"
-          }
-        ]
-      },
-      "description": "Element that that serves as the positioning boundary.",
-      "default": "document.body"
-    },
-    "containerPadding": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The placement padding that should be applied between the element and its\nsurrounding container.",
-      "default": "12"
-    },
-    "crossOffset": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The additional offset applied along the cross axis between the element and its\nanchor element.",
-      "default": "0"
+      "description": "The ref for the element which the popover positions itself with respect to.\n\nWhen used within a trigger component such as DialogTrigger, MenuTrigger, Select, etc.,\nthis is set automatically. It is only required when used standalone."
     },
     "isEntering": {
       "type": "boolean",
@@ -180,38 +69,23 @@
       },
       "description": "Whether the popover is currently performing an exit animation."
     },
-    "isKeyboardDismissDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "UNSTABLE_portalContainer": {
+      "type": "Element",
+      "detailedType": "Element | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "Element"
+          }
+        ]
       },
-      "description": "Whether pressing the escape key to close the popover should be disabled.\n\nMost popovers should not use this option. When set to true, an alternative\nway to close the popover with a keyboard must be provided.",
-      "default": "false"
-    },
-    "isNonModal": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the popover is non-modal, i.e. elements outside the popover may be\ninteracted with by assistive technologies.\n\nMost popovers should not use this option as it may negatively impact the screen\nreader experience. Only use with components such as combobox, which are designed\nto handle this situation carefully."
-    },
-    "isOpen": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the overlay is open by default (controlled)."
-    },
-    "maxHeight": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The maxHeight specified for the overlay element.\nBy default, it will take all space up to the current viewport height."
+      "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
+      "default": "document.body"
     },
     "offset": {
       "type": "number",
@@ -434,6 +308,85 @@
       "description": "The placement of the element with respect to its anchor element.",
       "default": "'bottom'"
     },
+    "containerPadding": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The placement padding that should be applied between the element and its\nsurrounding container.",
+      "default": "12"
+    },
+    "crossOffset": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The additional offset applied along the cross axis between the element and its\nanchor element.",
+      "default": "0"
+    },
+    "shouldFlip": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should flip its orientation (e.g. top to bottom or left to right) when\nthere is insufficient room for it to render completely.",
+      "default": "true"
+    },
+    "boundaryElement": {
+      "type": "Element",
+      "detailedType": "Element | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "Element"
+          }
+        ]
+      },
+      "description": "Element that that serves as the positioning boundary.",
+      "default": "document.body"
+    },
+    "arrowRef": {
+      "type": "RefObject<Element | null>",
+      "detailedType": "RefObject<Element | null> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "RefObject"
+            },
+            "typeParameters": [
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "Element"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "description": "A ref for the popover arrow element."
+    },
     "scrollRef": {
       "type": "RefObject<Element | null>",
       "detailedType": "RefObject<Element | null> | undefined",
@@ -469,6 +422,49 @@
       "description": "A ref for the scrollable region within the overlay.",
       "default": "overlayRef"
     },
+    "shouldUpdatePosition": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the overlay should update its position automatically.",
+      "default": "true"
+    },
+    "maxHeight": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The maxHeight specified for the overlay element.\nBy default, it will take all space up to the current viewport height."
+    },
+    "arrowBoundaryOffset": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The minimum distance the arrow's edge should be from the edge of the overlay element.",
+      "default": "0"
+    },
+    "isNonModal": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the popover is non-modal, i.e. elements outside the popover may be\ninteracted with by assistive technologies.\n\nMost popovers should not use this option as it may negatively impact the screen\nreader experience. Only use with components such as combobox, which are designed\nto handle this situation carefully."
+    },
+    "isKeyboardDismissDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether pressing the escape key to close the popover should be disabled.\n\nMost popovers should not use this option. When set to true, an alternative\nway to close the popover with a keyboard must be provided.",
+      "default": "false"
+    },
     "shouldCloseOnInteractOutside": {
       "type": "((element: Element) => boolean)",
       "detailedType": "((element: Element) => boolean) | undefined",
@@ -494,93 +490,46 @@
       },
       "description": "When user interacts with the argument element outside of the popover ref,\nreturn true if onClose should be called. This gives you a chance to filter\nout interaction with elements that should not dismiss the popover.\nBy default, onClose will always be called on interaction outside the popover ref."
     },
-    "shouldFlip": {
+    "isOpen": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the element should flip its orientation (e.g. top to bottom or left to right) when\nthere is insufficient room for it to render completely.",
-      "default": "true"
+      "description": "Whether the overlay is open by default (controlled)."
     },
-    "shouldUpdatePosition": {
+    "defaultOpen": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the overlay should update its position automatically.",
-      "default": "true"
+      "description": "Whether the overlay is open by default (uncontrolled)."
     },
-    "showArrow": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "onOpenChange": {
+      "type": "((isOpen: boolean) => void)",
+      "detailedType": "((isOpen: boolean) => void) | undefined",
       "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to show an arrow pointing to the trigger.",
-      "default": "false"
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
+        "type": "function",
+        "parameters": [
           {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "trigger": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the component that triggered the popover. This is reflected on the element\nas the `data-trigger` attribute, and can be used to provide specific\nstyles for the popover depending on which element triggered it."
-    },
-    "triggerRef": {
-      "type": "RefObject<Element | null>",
-      "detailedType": "RefObject<Element | null> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "identifier",
-              "name": "RefObject"
+            "type": "parameter",
+            "name": "isOpen",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
             },
-            "typeParameters": [
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "null"
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "Element"
-                  }
-                ]
-              }
-            ]
+            "optional": false,
+            "rest": false
           }
-        ]
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "The ref for the element which the popover positions itself with respect to.\n\nWhen used within a trigger component such as DialogTrigger, MenuTrigger, Select, etc.,\nthis is set automatically. It is only required when used standalone."
+      "description": "Handler that is called when the overlay's open state changes."
     },
     "children": {
       "type": "ReactNode | (values: PopoverRenderProps) => ReactNode",
@@ -748,6 +697,57 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     }
   },
   "renderProps": {

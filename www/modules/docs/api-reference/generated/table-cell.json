@@ -2,22 +2,6 @@
   "name": "TableCellProps",
   "description": "A cell within a table row.",
   "props": {
-    "colSpan": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Indicates how many columns the data cell spans."
-    },
-    "textValue": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "A string representation of the cell's contents, used for features like typeahead."
-    },
     "id": {
       "type": "Key",
       "detailedType": "Key | undefined",
@@ -36,6 +20,22 @@
         ]
       },
       "description": "The unique id of the cell."
+    },
+    "textValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "A string representation of the cell's contents, used for features like typeahead."
+    },
+    "colSpan": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Indicates how many columns the data cell spans."
     },
     "children": {
       "type": "ReactNode | (values: CellRenderProps) => ReactNode",

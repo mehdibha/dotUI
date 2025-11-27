@@ -2,118 +2,6 @@
   "name": "ComboboxProps",
   "description": "A combo box combines a text input with a listbox, allowing users to filter\na list of options to items matching a query.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-    },
-    "defaultInputValue": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The default value of the ComboBox input (uncontrolled)."
-    },
-    "inputValue": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The value of the ComboBox input (controlled)."
-    },
-    "onOpenChange": {
-      "type": "((isOpen: boolean, menuTrigger?: MenuTriggerAction | undefined) => void)",
-      "detailedType": "((isOpen: boolean, menuTrigger?: MenuTriggerAction | undefined) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "isOpen",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "menuTrigger",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "undefined"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "input"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "focus"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "manual"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": true,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Method that is called when the open state of the menu changes. Returns the new open state and the action that caused the opening of the menu."
-    },
     "onFocus": {
       "type": "((e: FocusEvent<HTMLInputElement, Element>) => void)",
       "detailedType": "((e: FocusEvent<HTMLInputElement, Element>) => void) | undefined",
@@ -206,6 +94,31 @@
       },
       "description": "Handler that is called when the element loses focus."
     },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
     "onKeyDown": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
@@ -256,536 +169,6 @@
       },
       "description": "Handler that is called when a key is released."
     },
-    "allowsCustomValue": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the ComboBox allows a non-item matching input value to be set."
-    },
-    "allowsEmptyCollection": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the combo box allows the menu to be open when the collection is empty."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "defaultFilter": {
-      "type": "((textValue: string, inputValue: string) => boolean)",
-      "detailedType": "((textValue: string, inputValue: string) => boolean) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "textValue",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "inputValue",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "boolean"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The filter function used to determine if a option should be included in the combo box list."
-    },
-    "defaultItems": {
-      "type": "Iterable<T>",
-      "detailedType": "Iterable<T> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "typeParameter",
-                "name": "T",
-                "constraint": {
-                  "type": "identifier",
-                  "name": "object"
-                },
-                "default": null
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The list of ComboBox items (uncontrolled)."
-    },
-    "defaultSelectedKey": {
-      "type": "Key",
-      "detailedType": "Key | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
-      },
-      "description": "The initial selected key in the collection (uncontrolled)."
-    },
-    "disabledKeys": {
-      "type": "Iterable<Key>",
-      "detailedType": "Iterable<Key> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
-    },
-    "form": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
-    },
-    "formValue": {
-      "type": "\"text\" | \"key\"",
-      "detailedType": "\"text\" | \"key\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "text"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "key"
-          }
-        ]
-      },
-      "description": "Whether the text or key of the selected item is submitted as part of an HTML form.\nWhen `allowsCustomValue` is `true`, this option does not apply and the text is always submitted.",
-      "default": "'key'"
-    },
-    "isInvalid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input value is invalid."
-    },
-    "items": {
-      "type": "Iterable<T>",
-      "detailedType": "Iterable<T> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "typeParameter",
-                "name": "T",
-                "constraint": {
-                  "type": "identifier",
-                  "name": "object"
-                },
-                "default": null
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The list of ComboBox items (controlled)."
-    },
-    "menuTrigger": {
-      "type": "MenuTriggerAction",
-      "detailedType": "MenuTriggerAction | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "input"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "focus"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "manual"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The interaction required to display the ComboBox menu.",
-      "default": "'input'"
-    },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isFocused",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the element's focus status changes."
-    },
-    "onInputChange": {
-      "type": "((value: string) => void)",
-      "detailedType": "((value: string) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "value",
-            "value": {
-              "type": "link",
-              "id": "string",
-              "name": "string"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the ComboBox input value changes."
-    },
-    "onSelectionChange": {
-      "type": "((key: Key | null) => void)",
-      "detailedType": "((key: Key | null) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "key",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "null"
-                    },
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "number"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the selection changes."
-    },
-    "selectedKey": {
-      "type": "Key | null",
-      "detailedType": "Key | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
-      },
-      "description": "The currently selected key in the collection (controlled)."
-    },
-    "shouldFocusWrap": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether keyboard navigation is circular."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "validate": {
-      "type": "((value: ComboBoxValidationValue) => true | ValidationError | null | undefined)",
-      "detailedType": "((value: ComboBoxValidationValue) => true | ValidationError | null | undefined) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.13.9_react@19.2.0/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue",
-                  "name": "ComboBoxValidationValue"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "booleanLiteral",
-                  "value": true
-                },
-                {
-                  "type": "array",
-                  "elementType": {
-                    "type": "string"
-                  }
-                }
-              ]
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
-    },
-    "validationBehavior": {
-      "type": "\"native\" | \"aria\"",
-      "detailedType": "\"native\" | \"aria\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "native"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "aria"
-          }
-        ]
-      },
-      "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
-      "default": "'native'"
-    },
-    "autoFocus": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should receive focus on render."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
-    "isReadOnly": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input can be selected but not changed by the user."
-    },
-    "isRequired": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether user input is required on the input before form submission."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-    },
     "children": {
       "type": "ReactNode | (values: ComboBoxRenderProps) => ReactNode",
       "typeAst": {
@@ -819,6 +202,41 @@
         ]
       },
       "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
+    "form": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "style": {
       "type": "CSSProperties | (values: ComboBoxRenderProps) => CSSProperties",
@@ -886,6 +304,588 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "disabledKeys": {
+      "type": "Iterable<Key>",
+      "detailedType": "Iterable<Key> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
+    },
+    "items": {
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "identifier",
+                  "name": "object"
+                },
+                "default": null
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The list of ComboBox items (controlled)."
+    },
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+    },
+    "validationBehavior": {
+      "type": "\"native\" | \"aria\"",
+      "detailedType": "\"native\" | \"aria\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "native"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "aria"
+          }
+        ]
+      },
+      "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
+      "default": "'native'"
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input can be selected but not changed by the user."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether user input is required on the input before form submission."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input value is invalid."
+    },
+    "validate": {
+      "type": "((value: ComboBoxValidationValue) => true | ValidationError | null | undefined)",
+      "detailedType": "((value: ComboBoxValidationValue) => true | ValidationError | null | undefined) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.13.9_react@19.2.0/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue",
+                  "name": "ComboBoxValidationValue"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "booleanLiteral",
+                  "value": true
+                },
+                {
+                  "type": "array",
+                  "elementType": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+    },
+    "onOpenChange": {
+      "type": "((isOpen: boolean, menuTrigger?: MenuTriggerAction | undefined) => void)",
+      "detailedType": "((isOpen: boolean, menuTrigger?: MenuTriggerAction | undefined) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "isOpen",
+                "value": {
+                  "type": "boolean"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "menuTrigger",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "input"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "focus"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "manual"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Method that is called when the open state of the menu changes. Returns the new open state and the action that caused the opening of the menu."
+    },
+    "onSelectionChange": {
+      "type": "((key: Key | null) => void)",
+      "detailedType": "((key: Key | null) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "key",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the selection changes."
+    },
+    "selectedKey": {
+      "type": "Key | null",
+      "detailedType": "Key | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
+      },
+      "description": "The currently selected key in the collection (controlled)."
+    },
+    "defaultSelectedKey": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
+      },
+      "description": "The initial selected key in the collection (uncontrolled)."
+    },
+    "shouldFocusWrap": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether keyboard navigation is circular."
+    },
+    "defaultItems": {
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "identifier",
+                  "name": "object"
+                },
+                "default": null
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The list of ComboBox items (uncontrolled)."
+    },
+    "inputValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The value of the ComboBox input (controlled)."
+    },
+    "defaultInputValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The default value of the ComboBox input (uncontrolled)."
+    },
+    "onInputChange": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the ComboBox input value changes."
+    },
+    "allowsCustomValue": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the ComboBox allows a non-item matching input value to be set."
+    },
+    "menuTrigger": {
+      "type": "MenuTriggerAction",
+      "detailedType": "MenuTriggerAction | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "input"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "focus"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "manual"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The interaction required to display the ComboBox menu.",
+      "default": "'input'"
+    },
+    "defaultFilter": {
+      "type": "((textValue: string, inputValue: string) => boolean)",
+      "detailedType": "((textValue: string, inputValue: string) => boolean) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "textValue",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "inputValue",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "boolean"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The filter function used to determine if a option should be included in the combo box list."
+    },
+    "formValue": {
+      "type": "\"text\" | \"key\"",
+      "detailedType": "\"text\" | \"key\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "text"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "key"
+          }
+        ]
+      },
+      "description": "Whether the text or key of the selected item is submitted as part of an HTML form.\nWhen `allowsCustomValue` is `true`, this option does not apply and the text is always submitted.",
+      "default": "'key'"
+    },
+    "allowsEmptyCollection": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the combo box allows the menu to be open when the collection is empty."
     }
   },
   "typeLinks": {

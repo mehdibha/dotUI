@@ -2,21 +2,13 @@
   "name": "TagGroupProps",
   "description": "A tag group is a focusable list of labels, categories, keywords, filters, or other items,\nwith support for keyboard navigation, selection, and removal.",
   "props": {
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "aria-describedby": {
       "type": "string",
@@ -34,47 +26,21 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "defaultSelectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
-          }
-        ]
+        "type": "string"
       },
-      "description": "The initial selected keys in the collection (uncontrolled)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "disabledKeys": {
       "type": "Iterable<Key>",
@@ -117,67 +83,6 @@
       },
       "description": "Whether the collection allows empty selection."
     },
-    "escapeKeyBehavior": {
-      "type": "\"none\" | \"clearSelection\"",
-      "detailedType": "\"none\" | \"clearSelection\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "none"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "clearSelection"
-          }
-        ]
-      },
-      "description": "Whether pressing the escape key should clear selection in the TagGroup or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
-      "default": "'clearSelection'"
-    },
-    "onRemove": {
-      "type": "((keys: Set<Key>) => void)",
-      "detailedType": "((keys: Set<Key>) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "keys",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
-                    "name": "Set"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Key"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when a user deletes a tag."
-    },
     "onSelectionChange": {
       "type": "((keys: Selection) => void)",
       "detailedType": "((keys: Selection) => void) | undefined",
@@ -202,6 +107,104 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the selection changes."
+    },
+    "selectionBehavior": {
+      "type": "SelectionBehavior",
+      "detailedType": "SelectionBehavior | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "toggle"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "replace"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "How multiple selection should behave in the collection."
+    },
+    "shouldSelectOnPressUp": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether selection should occur on press up instead of press down."
+    },
+    "escapeKeyBehavior": {
+      "type": "\"none\" | \"clearSelection\"",
+      "detailedType": "\"none\" | \"clearSelection\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "clearSelection"
+          }
+        ]
+      },
+      "description": "Whether pressing the escape key should clear selection in the TagGroup or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
+      "default": "'clearSelection'"
+    },
+    "selectionMode": {
+      "type": "SelectionMode",
+      "detailedType": "SelectionMode | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "multiple"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "single"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The type of selection that is allowed in the collection."
     },
     "selectedKeys": {
       "type": "Iterable<Key> | \"all\"",
@@ -245,9 +248,9 @@
       },
       "description": "The currently selected keys in the collection (controlled)."
     },
-    "selectionBehavior": {
-      "type": "SelectionBehavior",
-      "detailedType": "SelectionBehavior | undefined",
+    "defaultSelectedKeys": {
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -255,11 +258,22 @@
             "type": "undefined"
           },
           {
-            "type": "union",
-            "elements": [
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
               {
-                "type": "stringLiteral",
-                "value": "toggle"
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
               }
             ]
           },
@@ -268,17 +282,17 @@
             "elements": [
               {
                 "type": "stringLiteral",
-                "value": "replace"
+                "value": "all"
               }
             ]
           }
         ]
       },
-      "description": "How multiple selection should behave in the collection."
+      "description": "The initial selected keys in the collection (uncontrolled)."
     },
-    "selectionMode": {
-      "type": "SelectionMode",
-      "detailedType": "SelectionMode | undefined",
+    "onRemove": {
+      "type": "((keys: Set<Key>) => void)",
+      "detailedType": "((keys: Set<Key>) => void) | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -286,70 +300,37 @@
             "type": "undefined"
           },
           {
-            "type": "union",
-            "elements": [
+            "type": "function",
+            "parameters": [
               {
-                "type": "stringLiteral",
-                "value": "multiple"
+                "type": "parameter",
+                "name": "keys",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "link",
+                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+                    "name": "Set"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Key"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
               }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "single"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "none"
-              }
-            ]
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
           }
         ]
       },
-      "description": "The type of selection that is allowed in the collection."
-    },
-    "shouldSelectOnPressUp": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether selection should occur on press up instead of press down."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Handler that is called when a user deletes a tag."
     },
     "children": {
       "type": "ReactNode",
@@ -383,6 +364,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "typeLinks": {

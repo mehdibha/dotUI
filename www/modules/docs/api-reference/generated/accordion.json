@@ -10,38 +10,13 @@
       },
       "description": "Whether multiple items can be expanded at the same time."
     },
-    "defaultExpandedKeys": {
-      "type": "Iterable<Key>",
-      "detailedType": "Iterable<Key> | undefined",
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
+        "type": "boolean"
       },
-      "description": "The initial expanded keys in the group (uncontrolled)."
+      "description": "Whether all items are disabled."
     },
     "expandedKeys": {
       "type": "Iterable<Key>",
@@ -75,6 +50,39 @@
         ]
       },
       "description": "The currently expanded keys in the group (controlled)."
+    },
+    "defaultExpandedKeys": {
+      "type": "Iterable<Key>",
+      "detailedType": "Iterable<Key> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The initial expanded keys in the group (uncontrolled)."
     },
     "onExpandedChange": {
       "type": "((keys: Set<Key>) => any)",
@@ -117,22 +125,6 @@
         ]
       },
       "description": "Handler that is called when items are expanded or collapsed."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether all items are disabled."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ReactNode | (values: DisclosureGroupRenderProps) => ReactNode",
@@ -300,6 +292,14 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     }
   },
   "typeLinks": {

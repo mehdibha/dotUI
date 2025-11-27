@@ -1,3 +1,4 @@
+import { Project, SyntaxKind } from "ts-morph";
 import ts from "typescript";
 import * as tae from "typescript-api-extractor";
 
@@ -7,13 +8,281 @@ import type {
   TLink,
   TType,
 } from "../../../modules/docs/api-reference/types/type-ast";
-import memberOrder from "./order.json";
 import {
   buildTypeAstFromString,
   type ConversionContext,
   createConversionContext,
   typeToAst,
 } from "./type-to-ast";
+
+// ts-morph project for getting declaration order
+let morphProject: Project | null = null;
+
+function getMorphProject(tsconfigPath?: string): Project {
+  if (!morphProject) {
+    morphProject = new Project({
+      tsConfigFilePath: tsconfigPath,
+      skipAddingFilesFromTsConfig: false,
+    });
+  }
+  return morphProject;
+}
+
+/**
+ * Get the order of properties as they appear in the source declaration
+ * using ts-morph (preserves declaration order like Babel AST)
+ */
+function getPropertyDeclarationOrder(
+  typeName: string,
+  tsconfigPath?: string,
+): string[] {
+  const project = getMorphProject(tsconfigPath);
+  const order: string[] = [];
+  const visited = new Set<string>();
+  visited.add(typeName);
+
+  // Search all source files for the explicitly EXPORTED type (has export keyword)
+  for (const sourceFile of project.getSourceFiles()) {
+    // Look for explicitly exported interface declarations
+    const interfaceDecl = sourceFile.getInterface(typeName);
+    if (interfaceDecl?.hasExportKeyword()) {
+      // Get properties in declaration order
+      for (const prop of interfaceDecl.getProperties()) {
+        order.push(prop.getName());
+      }
+      // Also get methods
+      for (const method of interfaceDecl.getMethods()) {
+        order.push(method.getName());
+      }
+      // Get inherited properties from extends
+      for (const ext of interfaceDecl.getExtends()) {
+        const extType = ext.getType();
+        const extSymbol = extType.getSymbol();
+        if (extSymbol) {
+          const extName = extSymbol.getName();
+          // Recursively get inherited props (these don't need to be exported)
+          const inheritedOrder = getPropertyDeclarationOrderInternal(
+            extName,
+            project,
+            visited,
+          );
+          for (const prop of inheritedOrder) {
+            if (!order.includes(prop)) {
+              order.push(prop);
+            }
+          }
+        }
+      }
+      return order;
+    }
+
+    // Look for explicitly exported type alias declarations
+    const typeAlias = sourceFile.getTypeAlias(typeName);
+    if (typeAlias?.hasExportKeyword()) {
+      const typeNode = typeAlias.getTypeNode();
+      if (typeNode) {
+        // Handle type literals
+        if (typeNode.getKind() === SyntaxKind.TypeLiteral) {
+          const typeLiteral = typeNode.asKindOrThrow(SyntaxKind.TypeLiteral);
+          for (const member of typeLiteral.getMembers()) {
+            if (member.getKind() === SyntaxKind.PropertySignature) {
+              const propSig = member.asKindOrThrow(
+                SyntaxKind.PropertySignature,
+              );
+              order.push(propSig.getName());
+            }
+          }
+          return order;
+        }
+        // Handle intersection types
+        if (typeNode.getKind() === SyntaxKind.IntersectionType) {
+          const intersectionType = typeNode.asKindOrThrow(
+            SyntaxKind.IntersectionType,
+          );
+          for (const typeRef of intersectionType.getTypeNodes()) {
+            const refType = typeRef.getType();
+            const refSymbol = refType.getSymbol();
+            if (refSymbol) {
+              const refName = refSymbol.getName();
+              const refOrder = getPropertyDeclarationOrderInternal(
+                refName,
+                project,
+                visited,
+              );
+              for (const prop of refOrder) {
+                if (!order.includes(prop)) {
+                  order.push(prop);
+                }
+              }
+            }
+          }
+          return order;
+        }
+      }
+    }
+  }
+
+  return order;
+}
+
+/**
+ * Internal helper to get property order - doesn't require export
+ * Uses a visited set to prevent infinite recursion from circular type references
+ */
+function getPropertyDeclarationOrderInternal(
+  typeName: string,
+  project: Project,
+  visited: Set<string> = new Set(),
+): string[] {
+  // Prevent circular references
+  if (visited.has(typeName)) {
+    return [];
+  }
+  visited.add(typeName);
+
+  const order: string[] = [];
+
+  for (const sourceFile of project.getSourceFiles()) {
+    const interfaceDecl = sourceFile.getInterface(typeName);
+    if (interfaceDecl) {
+      for (const prop of interfaceDecl.getProperties()) {
+        order.push(prop.getName());
+      }
+      for (const method of interfaceDecl.getMethods()) {
+        order.push(method.getName());
+      }
+      for (const ext of interfaceDecl.getExtends()) {
+        const extType = ext.getType();
+        const extSymbol = extType.getSymbol();
+        if (extSymbol) {
+          const extName = extSymbol.getName();
+          const inheritedOrder = getPropertyDeclarationOrderInternal(
+            extName,
+            project,
+            visited,
+          );
+          for (const prop of inheritedOrder) {
+            if (!order.includes(prop)) {
+              order.push(prop);
+            }
+          }
+        }
+      }
+      return order;
+    }
+
+    const typeAlias = sourceFile.getTypeAlias(typeName);
+    if (typeAlias) {
+      const typeNode = typeAlias.getTypeNode();
+      if (typeNode) {
+        if (typeNode.getKind() === SyntaxKind.TypeLiteral) {
+          const typeLiteral = typeNode.asKindOrThrow(SyntaxKind.TypeLiteral);
+          for (const member of typeLiteral.getMembers()) {
+            if (member.getKind() === SyntaxKind.PropertySignature) {
+              const propSig = member.asKindOrThrow(
+                SyntaxKind.PropertySignature,
+              );
+              order.push(propSig.getName());
+            }
+          }
+          return order;
+        }
+        if (typeNode.getKind() === SyntaxKind.IntersectionType) {
+          const intersectionType = typeNode.asKindOrThrow(
+            SyntaxKind.IntersectionType,
+          );
+          for (const typeRef of intersectionType.getTypeNodes()) {
+            const refType = typeRef.getType();
+            const refSymbol = refType.getSymbol();
+            if (refSymbol) {
+              const refName = refSymbol.getName();
+              const refOrder = getPropertyDeclarationOrderInternal(
+                refName,
+                project,
+                visited,
+              );
+              for (const prop of refOrder) {
+                if (!order.includes(prop)) {
+                  order.push(prop);
+                }
+              }
+            }
+          }
+          return order;
+        }
+      }
+    }
+  }
+
+  return order;
+}
+
+/**
+ * Standard order for React Aria event props.
+ * This ensures consistent ordering regardless of TypeScript's internal caching.
+ * Order matches the declaration order in React Aria's type definitions.
+ */
+const REACT_ARIA_EVENT_ORDER = [
+  // Press events (from PressEvents)
+  "onPress",
+  "onPressStart",
+  "onPressEnd",
+  "onPressChange",
+  "onPressUp",
+  "onClick",
+  // Focus events (from FocusableProps -> FocusEvents)
+  "onFocus",
+  "onBlur",
+  "onFocusChange",
+  // Keyboard events (from KeyboardEvents)
+  "onKeyDown",
+  "onKeyUp",
+  // Hover events (from HoverEvents)
+  "onHoverStart",
+  "onHoverEnd",
+  "onHoverChange",
+];
+
+/**
+ * Sort an object's keys based on a reference order array.
+ * Props in the order array come first (in that order),
+ * then remaining props follow in their original order (from TypeScript's type checker).
+ * Event props are sorted according to REACT_ARIA_EVENT_ORDER for consistency.
+ */
+function sortByDeclarationOrder<T>(
+  obj: Record<string, T>,
+  order: string[],
+  originalOrder: string[],
+): Record<string, T> {
+  const sorted: Record<string, T> = {};
+  const seen = new Set<string>();
+
+  // First add props that are in the declaration order array (local props)
+  for (const key of order) {
+    if (key in obj) {
+      sorted[key] = obj[key] as T;
+      seen.add(key);
+    }
+  }
+
+  // Add React Aria events in their standard order
+  for (const key of REACT_ARIA_EVENT_ORDER) {
+    if (!seen.has(key) && key in obj) {
+      sorted[key] = obj[key] as T;
+      seen.add(key);
+    }
+  }
+
+  // Then add remaining props in their original order from TypeScript's type checker
+  for (const key of originalOrder) {
+    if (!seen.has(key) && key in obj) {
+      sorted[key] = obj[key] as T;
+      seen.add(key);
+    }
+  }
+
+  return sorted;
+}
 
 export interface ParserContext {
   program: ts.Program;
@@ -141,7 +410,7 @@ function shouldResolveType(typeName: string): boolean {
 function resolveTypeByName(
   typeName: string,
   context: ParserContext,
-  astContext: ConversionContext,
+  _astContext: ConversionContext,
 ): TType | null {
   // Check if we should resolve this type
   if (!shouldResolveType(typeName)) {
@@ -304,6 +573,7 @@ const componentGroupNames = fs.existsSync(path.join(registryDir, "ui"))
 export async function formatComponentData(
   exportNode: tae.ExportNode,
   context: ParserContext,
+  tsconfigPath?: string,
 ) {
   const description = exportNode.documentation?.description?.replace(
     /\n\nDocumentation: .*$/ms,
@@ -314,10 +584,12 @@ export async function formatComponentData(
   const astContext = createConversionContext(context.checker, 4);
 
   // Get all properties using TypeScript's type checker (includes inherited props)
+  // Pass tsconfigPath to get declaration order via ts-morph
   const props = await getPropsWithTypeChecker(
     exportNode.name,
     context,
     astContext,
+    tsconfigPath,
   );
 
   // Extract render props (CSS state selectors)
@@ -330,7 +602,7 @@ export async function formatComponentData(
   const raw = {
     name: exportNode.name,
     description,
-    props: sortObjectByKeys(props, memberOrder.props),
+    props, // Keep natural TypeScript declaration order (like react-aria)
     // Add renderProps field (only if not empty)
     ...(Object.keys(renderProps).length > 0 && { renderProps }),
     // Add type links for popover navigation
@@ -352,9 +624,16 @@ async function getPropsWithTypeChecker(
   typeName: string,
   context: ParserContext,
   astContext: ConversionContext,
+  tsconfigPath?: string,
 ): Promise<Record<string, FormattedProp>> {
   const { program, checker } = context;
   const result: Record<string, FormattedProp> = {};
+
+  // Get declaration order from ts-morph (for local props)
+  const declarationOrder = getPropertyDeclarationOrder(typeName, tsconfigPath);
+
+  // Track original order from TypeScript's type checker (preserves inherited order)
+  const originalOrder: string[] = [];
 
   // Find the source file containing this type
   for (const sourceFile of program.getSourceFiles()) {
@@ -370,11 +649,21 @@ async function getPropsWithTypeChecker(
         (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) &&
         node.name.text === typeName
       ) {
+        // Only process exported interfaces to avoid duplicates with different orders
+        const isExported = !!(
+          ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export
+        );
+        if (!isExported) return;
+
         const symbol = checker.getSymbolAtLocation(node.name);
         if (!symbol) return;
 
         const type = checker.getDeclaredTypeOfSymbol(symbol);
         const properties = checker.getPropertiesOfType(type);
+
+        for (const prop of properties) {
+          originalOrder.push(prop.name);
+        }
 
         for (const prop of properties) {
           // Skip ref
@@ -466,7 +755,10 @@ async function getPropsWithTypeChecker(
     });
   }
 
-  return result;
+  // Sort props by declaration order (matches react-aria/s2-docs behavior)
+  // Local props come first (in ts-morph declaration order), then React Aria events
+  // in their standard order, then remaining props
+  return sortByDeclarationOrder(result, declarationOrder, originalOrder);
 }
 
 /**
@@ -585,47 +877,6 @@ export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
     type instanceof tae.IntersectionNode ||
     type instanceof tae.ComponentNode
   );
-}
-
-function sortObjectByKeys<T>(
-  obj: Record<string, T>,
-  order: string[],
-): Record<string, T> {
-  if (order.length === 0) {
-    return obj;
-  }
-
-  const sortedObj: Record<string, T> = {};
-  const everythingElse: Record<string, T> = {};
-
-  Object.keys(obj).forEach((key) => {
-    if (!order.includes(key)) {
-      const value = obj[key];
-      if (value !== undefined) {
-        everythingElse[key] = value;
-      }
-    }
-  });
-
-  const sortedEverythingElseKeys = Object.keys(everythingElse).sort();
-
-  order.forEach((key) => {
-    if (key === "__EVERYTHING_ELSE__") {
-      sortedEverythingElseKeys.forEach((sortedKey) => {
-        const value = everythingElse[sortedKey];
-        if (value !== undefined) {
-          sortedObj[sortedKey] = value;
-        }
-      });
-    } else if (Object.hasOwn(obj, key)) {
-      const value = obj[key];
-      if (value !== undefined) {
-        sortedObj[key] = value;
-      }
-    }
-  });
-
-  return sortedObj;
 }
 
 function extractComponentGroup(componentExportName: string): string {

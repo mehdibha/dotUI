@@ -2,186 +2,6 @@
   "name": "DatePickerContentProps",
   "description": "Missing description.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "mobileType": {
-      "type": "Type | null",
-      "detailedType": "Type | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "popover"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "modal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "drawer"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The type of overlay to display on mobile. Set to null to disable.",
-      "default": "'drawer'"
-    },
-    "popoverProps": {
-      "type": "Omit<PopoverProps, \"children\" | CommonProps>",
-      "detailedType": "Omit<PopoverProps, \"children\" | CommonProps> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "Omit<PopoverProps, \"children\" | CommonProps>"
-          }
-        ]
-      },
-      "description": "Props to pass to the popover when type is 'popover'."
-    },
-    "role": {
-      "type": "\"dialog\" | \"alertdialog\"",
-      "detailedType": "\"dialog\" | \"alertdialog\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "dialog"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "alertdialog"
-          }
-        ]
-      },
-      "description": "The accessibility role for the dialog.",
-      "default": "'dialog'"
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "type": {
-      "type": "Type",
-      "detailedType": "Type | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "popover"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "modal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "drawer"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The type of overlay to display on desktop.",
-      "default": "'modal'"
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-    },
     "children": {
       "type": "ReactNode | ((opts: DialogRenderProps) => ReactNode)",
       "typeAst": {
@@ -366,6 +186,65 @@
       },
       "description": "Children of the dialog. A function may be provided to access a function to close the dialog."
     },
+    "role": {
+      "type": "\"dialog\" | \"alertdialog\"",
+      "detailedType": "\"dialog\" | \"alertdialog\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "dialog"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "alertdialog"
+          }
+        ]
+      },
+      "description": "The accessibility role for the dialog.",
+      "default": "'dialog'"
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
     "className": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -390,6 +269,127 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "type": {
+      "type": "Type",
+      "detailedType": "Type | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "popover"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "modal"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "drawer"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The type of overlay to display on desktop.",
+      "default": "'modal'"
+    },
+    "mobileType": {
+      "type": "Type | null",
+      "detailedType": "Type | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "popover"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "modal"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "drawer"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The type of overlay to display on mobile. Set to null to disable.",
+      "default": "'drawer'"
+    },
+    "popoverProps": {
+      "type": "Omit<PopoverProps, \"children\" | CommonProps>",
+      "detailedType": "Omit<PopoverProps, \"children\" | CommonProps> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "Omit<PopoverProps, \"children\" | CommonProps>"
+          }
+        ]
+      },
+      "description": "Props to pass to the popover when type is 'popover'."
     }
   },
   "typeLinks": {

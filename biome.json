@@ -17,7 +17,7 @@
       "!**/.turbo",
       "!**/.source",
       "!**/*.mdx",
-      "!s2-docs",
+      "!react-spectrum",
       "!baseui-docs"
     ]
   },

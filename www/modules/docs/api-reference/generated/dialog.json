@@ -2,6 +2,14 @@
   "name": "DialogProps",
   "description": "A DialogTrigger opens a dialog when a trigger element is pressed.",
   "props": {
+    "isOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the overlay is open by default (controlled)."
+    },
     "defaultOpen": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -34,14 +42,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the overlay's open state changes."
-    },
-    "isOpen": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the overlay is open by default (controlled)."
     }
   }
 }

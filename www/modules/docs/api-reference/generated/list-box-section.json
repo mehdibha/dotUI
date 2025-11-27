@@ -2,13 +2,24 @@
   "name": "ListBoxSectionProps",
   "description": "A ListBoxSection represents a section within a ListBox.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "id": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
       },
-      "description": "An accessibility label for the section."
+      "description": "The unique id of the section."
     },
     "value": {
       "type": "T",
@@ -28,79 +39,6 @@
         ]
       },
       "description": "The object value that this section represents. When using dynamic collections, this is set automatically."
-    },
-    "dependencies": {
-      "type": "readonly any[]",
-      "detailedType": "readonly any[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "any"
-            }
-          }
-        ]
-      },
-      "description": "Values that should invalidate the item cache when using dynamic collections."
-    },
-    "items": {
-      "type": "Iterable<T>",
-      "detailedType": "Iterable<T> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "typeParameter",
-                "name": "T",
-                "constraint": null,
-                "default": null
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Item objects in the section."
-    },
-    "id": {
-      "type": "Key",
-      "detailedType": "Key | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
-      },
-      "description": "The unique id of the section."
     },
     "children": {
       "type": "ReactNode | ((item: T) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
@@ -326,6 +264,68 @@
         ]
       },
       "description": "Static child items or a function to render children."
+    },
+    "dependencies": {
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "any"
+            }
+          }
+        ]
+      },
+      "description": "Values that should invalidate the item cache when using dynamic collections."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An accessibility label for the section."
+    },
+    "items": {
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": null,
+                "default": null
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Item objects in the section."
     },
     "className": {
       "type": "string",

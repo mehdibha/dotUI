@@ -2,145 +2,6 @@
   "name": "ColorPickerTriggerProps",
   "description": "Missing description.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Submitted as a pair with the button's value as part of the form data."
-    },
-    "variant": {
-      "type": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\"",
-      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "link"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "warning"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "success"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "default"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "primary"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "quiet"
-          }
-        ]
-      },
-      "description": "The visual style of the button (Vanilla CSS implementation specific).",
-      "default": "'default'"
-    },
-    "size": {
-      "type": "\"sm\" | \"md\" | \"lg\"",
-      "detailedType": "\"sm\" | \"md\" | \"lg\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "sm"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "md"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "lg"
-          }
-        ]
-      },
-      "description": "The size of the button.",
-      "default": "\"md\""
-    },
-    "value": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The value associated with the button's name when it's submitted with the form data."
-    },
-    "onClick": {
-      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
-      "detailedType": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "e",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "MouseEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "FocusableElement"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "MouseEvent"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
-    },
     "onPress": {
       "type": "((e: PressEvent) => void)",
       "detailedType": "((e: PressEvent) => void) | undefined",
@@ -215,6 +76,101 @@
         "typeParameters": []
       },
       "description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
+    },
+    "onPressChange": {
+      "type": "((isPressed: boolean) => void)",
+      "detailedType": "((isPressed: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isPressed",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the press state changes."
+    },
+    "onPressUp": {
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "PressEvent",
+              "name": "PressEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
+    },
+    "onClick": {
+      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
+      "detailedType": "((e: MouseEvent<FocusableElement, MouseEvent>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "MouseEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "FocusableElement"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "MouseEvent"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
@@ -306,6 +262,31 @@
       },
       "description": "Handler that is called when the element loses focus."
     },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
     "onKeyDown": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
@@ -355,6 +336,265 @@
         "typeParameters": []
       },
       "description": "Handler that is called when a key is released."
+    },
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a hover interaction starts."
+    },
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a hover interaction ends."
+    },
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the hover state changes."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button is disabled."
+    },
+    "form": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The `<form>` element to associate the button with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#form)."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "style": {
+      "type": "CSSProperties | (values: ButtonRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: ButtonRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
+                      "name": "ButtonRenderProps"
+                    },
+                    {
+                      "type": "objectLiteral",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
+    "className": {
+      "type": "string | (values: ButtonRenderProps) => string",
+      "detailedType": "string | (values: ButtonRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
+                      "name": "ButtonRenderProps"
+                    },
+                    {
+                      "type": "objectLiteral",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "aria-controls": {
       "type": "string",
@@ -626,6 +866,22 @@
       },
       "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
     },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
     "aria-pressed": {
       "type": "boolean | \"true\" | \"false\" | \"mixed\"",
       "detailedType": "boolean | \"true\" | \"false\" | \"mixed\" | undefined",
@@ -674,44 +930,36 @@
       },
       "description": "Indicates the current \"pressed\" state of toggle buttons."
     },
-    "aspect": {
-      "type": "\"default\" | \"square\" | \"auto\"",
-      "detailedType": "\"default\" | \"square\" | \"auto\" | undefined",
+    "type": {
+      "type": "\"button\" | \"submit\" | \"reset\"",
+      "detailedType": "\"button\" | \"submit\" | \"reset\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "default"
+            "value": "button"
           },
           {
             "type": "stringLiteral",
-            "value": "square"
+            "value": "submit"
           },
           {
             "type": "stringLiteral",
-            "value": "auto"
+            "value": "reset"
           }
         ]
       },
-      "description": "Controls the button's aspect ratio behavior.\n- `\"auto\"`: Automatically detects if the button contains only an icon and applies square aspect.\n- `\"square\"`: Forces square aspect ratio.\n- `\"default\"`: Standard button sizing with padding.",
-      "default": "\"auto\""
+      "description": "The behavior of the button when used in an HTML form.",
+      "default": "'button'"
     },
-    "excludeFromTabOrder": {
+    "preventFocusOnPress": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-    },
-    "form": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The `<form>` element to associate the button with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#form)."
+      "description": "Whether to prevent focus from moving to the button when pressing it.\n\nCaution, this can make the button inaccessible and should only be used when alternative keyboard interaction is provided,\nsuch as ComboBox's MenuTrigger or a NumberField's increment/decrement control."
     },
     "formAction": {
       "type": "string",
@@ -753,6 +1001,115 @@
       },
       "description": "Overrides the target attribute of the button's form owner."
     },
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Submitted as a pair with the button's value as part of the form data."
+    },
+    "value": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The value associated with the button's name when it's submitted with the form data."
+    },
+    "excludeFromTabOrder": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
+    },
+    "variant": {
+      "type": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\"",
+      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "link"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "danger"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "warning"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "success"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "primary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "quiet"
+          }
+        ]
+      },
+      "description": "The visual style of the button (Vanilla CSS implementation specific).",
+      "default": "'default'"
+    },
+    "size": {
+      "type": "\"sm\" | \"md\" | \"lg\"",
+      "detailedType": "\"sm\" | \"md\" | \"lg\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "lg"
+          }
+        ]
+      },
+      "description": "The size of the button.",
+      "default": "\"md\""
+    },
+    "aspect": {
+      "type": "\"default\" | \"square\" | \"auto\"",
+      "detailedType": "\"default\" | \"square\" | \"auto\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "square"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "auto"
+          }
+        ]
+      },
+      "description": "Controls the button's aspect ratio behavior.\n- `\"auto\"`: Automatically detects if the button contains only an icon and applies square aspect.\n- `\"square\"`: Forces square aspect ratio.\n- `\"default\"`: Standard button sizing with padding.",
+      "default": "\"auto\""
+    },
     "isPending": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -760,363 +1117,6 @@
         "type": "boolean"
       },
       "description": "Whether the button is in a pending state. This disables press and hover events\nwhile retaining focusability, and announces the pending state to screen readers."
-    },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isFocused",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the element's focus status changes."
-    },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the hover state changes."
-    },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction ends."
-    },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction starts."
-    },
-    "onPressChange": {
-      "type": "((isPressed: boolean) => void)",
-      "detailedType": "((isPressed: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isPressed",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the press state changes."
-    },
-    "onPressUp": {
-      "type": "((e: PressEvent) => void)",
-      "detailedType": "((e: PressEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "PressEvent",
-              "name": "PressEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
-    },
-    "preventFocusOnPress": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to prevent focus from moving to the button when pressing it.\n\nCaution, this can make the button inaccessible and should only be used when alternative keyboard interaction is provided,\nsuch as ComboBox's MenuTrigger or a NumberField's increment/decrement control."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "type": {
-      "type": "\"button\" | \"submit\" | \"reset\"",
-      "detailedType": "\"button\" | \"submit\" | \"reset\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "button"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "submit"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "reset"
-          }
-        ]
-      },
-      "description": "The behavior of the button when used in an HTML form.",
-      "default": "'button'"
-    },
-    "autoFocus": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should receive focus on render."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the button is disabled."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-    },
-    "className": {
-      "type": "string | (values: ButtonRenderProps) => string",
-      "detailedType": "string | (values: ButtonRenderProps) => string | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
-                      "name": "ButtonRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-    },
-    "style": {
-      "type": "CSSProperties | (values: ButtonRenderProps) => CSSProperties",
-      "detailedType": "CSSProperties | (values: ButtonRenderProps) => CSSProperties | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
-                      "name": "ButtonRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   },
   "typeLinks": {

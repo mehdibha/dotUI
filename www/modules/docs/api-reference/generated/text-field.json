@@ -2,46 +2,6 @@
   "name": "TextFieldProps",
   "description": "A text field allows a user to enter a plain text value with a keyboard.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-    },
-    "defaultValue": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The default value (uncontrolled)."
-    },
-    "value": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The current value (controlled)."
-    },
     "onFocus": {
       "type": "((e: FocusEvent<HTMLInputElement, Element>) => void)",
       "detailedType": "((e: FocusEvent<HTMLInputElement, Element>) => void) | undefined",
@@ -134,6 +94,31 @@
       },
       "description": "Handler that is called when the element loses focus."
     },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
     "onKeyDown": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
@@ -183,6 +168,158 @@
         "typeParameters": []
       },
       "description": "Handler that is called when a key is released."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the value is invalid."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
+    "form": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
+    "pattern": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Regex pattern that the value of the input must match to be valid. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefpattern)."
+    },
+    "defaultValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The default value (uncontrolled)."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
+    "enterKeyHint": {
+      "type": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\"",
+      "detailedType": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "search"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "enter"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "done"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "go"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "next"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "previous"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "send"
+          }
+        ]
+      },
+      "description": "An enumerated attribute that defines what action label or icon to preset for the enter key on virtual keyboards. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint)."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "spellCheck": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An enumerated attribute that defines whether the element may be checked for spelling errors. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/spellcheck)."
+    },
+    "autoCorrect": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An attribute that takes as its value a space-separated string that describes what, if any, type of autocomplete functionality the input should provide. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#autocomplete)."
+    },
+    "inputMode": {
+      "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
+      "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "search"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "text"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tel"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "url"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "email"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "numeric"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "decimal"
+          }
+        ]
+      },
+      "description": "Hints at the type of data that might be entered by the user while editing the element or its contents. See [MDN](https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-inputmode-attribute)."
     },
     "aria-activedescendant": {
       "type": "string",
@@ -334,145 +471,25 @@
       },
       "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
     },
-    "autoComplete": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Describes the type of autocomplete functionality the input should provide if any. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete)."
+      "description": "Defines a string value that labels the current element."
     },
-    "autoCorrect": {
+    "aria-labelledby": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "An attribute that takes as its value a space-separated string that describes what, if any, type of autocomplete functionality the input should provide. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#autocomplete)."
+      "description": "Identifies the element (or elements) that labels the current element."
     },
-    "enterKeyHint": {
-      "type": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\"",
-      "detailedType": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "search"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "enter"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "done"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "go"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "next"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "previous"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "send"
-          }
-        ]
-      },
-      "description": "An enumerated attribute that defines what action label or icon to preset for the enter key on virtual keyboards. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint)."
-    },
-    "excludeFromTabOrder": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-    },
-    "form": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
-    },
-    "inputMode": {
-      "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
-      "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "search"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "text"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "none"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "tel"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "url"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "email"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "numeric"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "decimal"
-          }
-        ]
-      },
-      "description": "Hints at the type of data that might be entered by the user while editing the element or its contents. See [MDN](https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-inputmode-attribute)."
-    },
-    "isInvalid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the value is invalid."
-    },
-    "maxLength": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The maximum number of characters supported by the input. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefmaxlength)."
-    },
-    "minLength": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The minimum number of characters required by the input. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefminlength)."
-    },
-    "onBeforeInput": {
-      "type": "FormEventHandler<HTMLInputElement>",
-      "detailedType": "FormEventHandler<HTMLInputElement> | undefined",
+    "onCopy": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -489,7 +506,7 @@
                   "type": "application",
                   "base": {
                     "type": "identifier",
-                    "name": "FormEvent"
+                    "name": "ClipboardEvent"
                   },
                   "typeParameters": [
                     {
@@ -510,32 +527,91 @@
           }
         ]
       },
-      "description": "Handler that is called when the input value is about to be modified. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)."
+      "description": "Handler that is called when the user copies text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncopy)."
     },
-    "onChange": {
-      "type": "((value: string) => void)",
-      "detailedType": "((value: string) => void) | undefined",
+    "onCut": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
       "typeAst": {
-        "type": "function",
-        "parameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "parameter",
-            "name": "value",
-            "value": {
-              "type": "link",
-              "id": "string",
-              "name": "string"
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "ClipboardEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "name": "HTMLInputElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
             },
-            "optional": false,
-            "rest": false
+            "typeParameters": []
           }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
+        ]
       },
-      "description": "Handler that is called when the value changes."
+      "description": "Handler that is called when the user cuts text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncut)."
+    },
+    "onPaste": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "ClipboardEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "name": "HTMLInputElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the user pastes text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/onpaste)."
     },
     "onCompositionEnd": {
       "type": "CompositionEventHandler<HTMLInputElement>",
@@ -666,103 +742,19 @@
       },
       "description": "Handler that is called when a new character is received in the current text composition session. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionupdate_event)."
     },
-    "onCopy": {
-      "type": "ClipboardEventHandler<HTMLInputElement>",
-      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "event",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "ClipboardEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
-                      "name": "HTMLInputElement"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the user copies text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncopy)."
-    },
-    "onCut": {
-      "type": "ClipboardEventHandler<HTMLInputElement>",
-      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "event",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "ClipboardEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
-                      "name": "HTMLInputElement"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the user cuts text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncut)."
-    },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
+    "onChange": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
       "typeAst": {
         "type": "function",
         "parameters": [
           {
             "type": "parameter",
-            "name": "isFocused",
+            "name": "value",
             "value": {
               "type": "link",
-              "id": "boolean",
-              "name": "boolean"
+              "id": "string",
+              "name": "string"
             },
             "optional": false,
             "rest": false
@@ -773,7 +765,49 @@
         },
         "typeParameters": []
       },
-      "description": "Handler that is called when the element's focus status changes."
+      "description": "Handler that is called when the value changes."
+    },
+    "onBeforeInput": {
+      "type": "FormEventHandler<HTMLInputElement>",
+      "detailedType": "FormEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FormEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "name": "HTMLInputElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the input value is about to be modified. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)."
     },
     "onInput": {
       "type": "FormEventHandler<HTMLInputElement>",
@@ -816,48 +850,6 @@
         ]
       },
       "description": "Handler that is called when the input value is modified. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)."
-    },
-    "onPaste": {
-      "type": "ClipboardEventHandler<HTMLInputElement>",
-      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "event",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "ClipboardEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
-                      "name": "HTMLInputElement"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the user pastes text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/onpaste)."
     },
     "onSelect": {
       "type": "ReactEventHandler<HTMLInputElement>",
@@ -905,41 +897,6 @@
         ]
       },
       "description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
-    },
-    "pattern": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Regex pattern that the value of the input must match to be valid. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefpattern)."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "spellCheck": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "An enumerated attribute that defines whether the element may be checked for spelling errors. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/spellcheck)."
     },
     "type": {
       "type": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\"",
@@ -1021,6 +978,46 @@
       "description": "The type of input to render. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdeftype).",
       "default": "'text'"
     },
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+    },
+    "value": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The current value (controlled)."
+    },
+    "excludeFromTabOrder": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input can be selected but not changed by the user."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether user input is required on the input before form submission."
+    },
     "validate": {
       "type": "((value: string) => true | ValidationError | null | undefined)",
       "detailedType": "((value: string) => true | ValidationError | null | undefined) | undefined",
@@ -1073,6 +1070,30 @@
       },
       "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
     },
+    "minLength": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The minimum number of characters required by the input. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefminlength)."
+    },
+    "maxLength": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The maximum number of characters supported by the input. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefmaxlength)."
+    },
+    "autoComplete": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Describes the type of autocomplete functionality the input should provide if any. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete)."
+    },
     "validationBehavior": {
       "type": "\"native\" | \"aria\"",
       "detailedType": "\"native\" | \"aria\" | undefined",
@@ -1092,45 +1113,24 @@
       "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
       "default": "'native'"
     },
-    "autoFocus": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
       },
-      "description": "Whether the element should receive focus on render."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
-    "isReadOnly": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input can be selected but not changed by the user."
-    },
-    "isRequired": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether user input is required on the input before form submission."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "children": {
       "type": "ReactNode | (values: TextFieldRenderProps) => ReactNode",

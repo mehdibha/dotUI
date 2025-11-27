@@ -2,6 +2,26 @@
   "name": "ToastProps",
   "description": "A Toast displays a brief, temporary notification of actions, errors, or other events in an application.",
   "props": {
+    "toast": {
+      "type": "QueuedToast<Toast>",
+      "typeAst": {
+        "type": "application",
+        "base": {
+          "type": "link",
+          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.2_react@19.2.0/node_modules/@react-stately/toast/dist/types.d.ts:QueuedToast",
+          "name": "QueuedToast"
+        },
+        "typeParameters": [
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+            "name": "Toast"
+          }
+        ]
+      },
+      "description": "The toast object.",
+      "required": true
+    },
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -33,26 +53,6 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "toast": {
-      "type": "QueuedToast<Toast>",
-      "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.2_react@19.2.0/node_modules/@react-stately/toast/dist/types.d.ts:QueuedToast",
-          "name": "QueuedToast"
-        },
-        "typeParameters": [
-          {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/basic.tsx:Toast",
-            "name": "Toast"
-          }
-        ]
-      },
-      "description": "The toast object.",
-      "required": true
     },
     "children": {
       "type": "ReactNode | (values: ToastRenderProps<Toast>) => ReactNode",
@@ -119,7 +119,7 @@
                       "typeParameters": [
                         {
                           "type": "link",
-                          "id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/basic.tsx:Toast",
+                          "id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
                           "name": "Toast"
                         }
                       ]
@@ -196,7 +196,7 @@
                       "typeParameters": [
                         {
                           "type": "link",
-                          "id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/basic.tsx:Toast",
+                          "id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
                           "name": "Toast"
                         }
                       ]

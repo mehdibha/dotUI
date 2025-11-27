@@ -450,6 +450,9 @@ importers:
       es-toolkit:
         specifier: ^1.41.0
         version: 1.42.0
+      globals-docs:
+        specifier: ^2.4.1
+        version: 2.4.1
       globby:
         specifier: ^14.0.0
         version: 14.1.0
@@ -468,6 +471,9 @@ importers:
       tailwindcss-react-aria-components:
         specifier: ^2.0.1
         version: 2.0.1(tailwindcss@4.1.15)
+      ts-morph:
+        specifier: ^25.0.1
+        version: 25.0.1
       tsx:
         specifier: ^4.19.2
         version: 4.20.6
@@ -4010,6 +4016,9 @@ packages:
     resolution: {integrity: sha512-2Nim7dha1KVkaiF4q6Dj+ngPPMdfvLJEOpZk/jKiUAkqKebpGAWQXAq9z1xu9HKu5lWfqw/FASuccEjyznjPaA==}
     engines: {node: 20 || >=22}
     hasBin: true
+
+  globals-docs@2.4.1:
+    resolution: {integrity: sha512-qpPnUKkWnz8NESjrCvnlGklsgiQzlq+rcCxoG5uNQ+dNA7cFMCmn231slLAwS2N/PlkzZ3COL8CcS10jXmLHqg==}
 
   globby@11.1.0:
     resolution: {integrity: sha512-jhIXaOzy1sb8IyocaruWSn1TjmnBVs8Ayhcy83rmxNJ8q2uWKCAj3CnJY+KpGSXCueAPc0i05kVvVKtP1t9S3g==}
@@ -9959,6 +9968,8 @@ snapshots:
       minipass: 7.1.2
       package-json-from-dist: 1.0.1
       path-scurry: 2.0.0
+
+  globals-docs@2.4.1: {}
 
   globby@11.1.0:
     dependencies:

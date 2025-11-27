@@ -2,68 +2,6 @@
   "name": "RadioGroupProps",
   "description": "A radio group allows a user to select a single item from a list of mutually exclusive options.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-    },
-    "defaultValue": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "The default value (uncontrolled)."
-    },
-    "value": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "The current value (controlled)."
-    },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
       "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
@@ -154,6 +92,74 @@
       },
       "description": "Handler that is called when the element loses focus."
     },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
+    "form": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
+    "defaultValue": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "The default value (uncontrolled)."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -178,21 +184,21 @@
       },
       "description": "Identifies the element that provides an error message for the object."
     },
-    "form": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+      "description": "Defines a string value that labels the current element."
     },
-    "isInvalid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "string"
       },
-      "description": "Whether the input value is invalid."
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onChange": {
       "type": "((value: string) => void)",
@@ -219,32 +225,15 @@
       },
       "description": "Handler that is called when the value changes."
     },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isFocused",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
+        "type": "string"
       },
-      "description": "Handler that is called when the element's focus status changes."
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
-    "slot": {
+    "value": {
       "type": "string | null",
       "detailedType": "string | null | undefined",
       "typeAst": {
@@ -261,7 +250,31 @@
           }
         ]
       },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "The current value (controlled)."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input can be selected but not changed by the user."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether user input is required on the input before form submission."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input value is invalid."
     },
     "validate": {
       "type": "((value: string | null) => true | ValidationError | null | undefined)",
@@ -323,49 +336,6 @@
       },
       "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
     },
-    "validationBehavior": {
-      "type": "\"native\" | \"aria\"",
-      "detailedType": "\"native\" | \"aria\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "native"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "aria"
-          }
-        ]
-      },
-      "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
-      "default": "'native'"
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
-    "isReadOnly": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input can be selected but not changed by the user."
-    },
-    "isRequired": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether user input is required on the input before form submission."
-    },
     "orientation": {
       "type": "Orientation",
       "detailedType": "Orientation | undefined",
@@ -398,13 +368,24 @@
       "description": "The axis the Radio Button(s) should align with.",
       "default": "'vertical'"
     },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "validationBehavior": {
+      "type": "\"native\" | \"aria\"",
+      "detailedType": "\"native\" | \"aria\" | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "native"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "aria"
+          }
+        ]
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
+      "default": "'native'"
     },
     "children": {
       "type": "ReactNode | (values: RadioGroupRenderProps) => ReactNode",
@@ -572,6 +553,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "renderProps": {

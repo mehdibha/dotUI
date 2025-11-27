@@ -2,6 +2,91 @@
   "name": "ModalProps",
   "description": "A modal is an overlay element which blocks interaction with elements outside it.",
   "props": {
+    "isEntering": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the modal is currently performing an entry animation."
+    },
+    "isExiting": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the modal is currently performing an exit animation."
+    },
+    "UNSTABLE_portalContainer": {
+      "type": "Element",
+      "detailedType": "Element | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "Element"
+          }
+        ]
+      },
+      "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
+      "default": "document.body"
+    },
+    "isDismissable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to close the modal when the user interacts outside it.",
+      "default": "false"
+    },
+    "isKeyboardDismissDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether pressing the escape key to close the modal should be disabled.",
+      "default": "false"
+    },
+    "shouldCloseOnInteractOutside": {
+      "type": "((element: Element) => boolean)",
+      "detailedType": "((element: Element) => boolean) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "element",
+            "value": {
+              "type": "link",
+              "id": "Element",
+              "name": "Element"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "boolean"
+        },
+        "typeParameters": []
+      },
+      "description": "When user interacts with the argument element outside of the overlay ref,\nreturn true if onClose should be called.  This gives you a chance to filter\nout interaction with elements that should not dismiss the overlay.\nBy default, onClose will always be called on interaction outside the overlay ref."
+    },
+    "isOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the overlay is open by default (controlled)."
+    },
     "defaultOpen": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -34,110 +119,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the overlay's open state changes."
-    },
-    "UNSTABLE_portalContainer": {
-      "type": "Element",
-      "detailedType": "Element | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "Element"
-          }
-        ]
-      },
-      "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
-      "default": "document.body"
-    },
-    "isDismissable": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to close the modal when the user interacts outside it.",
-      "default": "false"
-    },
-    "isEntering": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the modal is currently performing an entry animation."
-    },
-    "isExiting": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the modal is currently performing an exit animation."
-    },
-    "isKeyboardDismissDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether pressing the escape key to close the modal should be disabled.",
-      "default": "false"
-    },
-    "isOpen": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the overlay is open by default (controlled)."
-    },
-    "shouldCloseOnInteractOutside": {
-      "type": "((element: Element) => boolean)",
-      "detailedType": "((element: Element) => boolean) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "element",
-            "value": {
-              "type": "link",
-              "id": "Element",
-              "name": "Element"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "boolean"
-        },
-        "typeParameters": []
-      },
-      "description": "When user interacts with the argument element outside of the overlay ref,\nreturn true if onClose should be called.  This gives you a chance to filter\nout interaction with elements that should not dismiss the overlay.\nBy default, onClose will always be called on interaction outside the overlay ref."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "children": {
       "type": "ReactNode | (values: ModalRenderProps) => ReactNode",
@@ -305,6 +286,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "renderProps": {

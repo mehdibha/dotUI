@@ -44,72 +44,6 @@
       },
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
-    "className": {
-      "type": "string | (values: DateInputRenderProps) => string",
-      "detailedType": "string | (values: DateInputRenderProps) => string | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateInputRenderProps",
-                      "name": "DateInputRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-    },
     "style": {
       "type": "CSSProperties | (values: DateInputRenderProps) => CSSProperties",
       "detailedType": "CSSProperties | (values: DateInputRenderProps) => CSSProperties | undefined",
@@ -176,6 +110,72 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "className": {
+      "type": "string | (values: DateInputRenderProps) => string",
+      "detailedType": "string | (values: DateInputRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateInputRenderProps",
+                      "name": "DateInputRenderProps"
+                    },
+                    {
+                      "type": "objectLiteral",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     }
   },
   "renderProps": {

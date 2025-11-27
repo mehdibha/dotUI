@@ -2,47 +2,6 @@
   "name": "CalendarGridProps",
   "description": "A calendar grid displays a single grid of days within a calendar or range calendar\nwhich can be keyboard navigated and selected by the user.",
   "props": {
-    "offset": {
-      "type": "DateDuration",
-      "detailedType": "DateDuration | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateDuration",
-            "name": "DateDuration"
-          }
-        ]
-      },
-      "description": "An offset from the beginning of the visible date range that this\nCalendarGrid should display. Useful when displaying more than one\nmonth at a time."
-    },
-    "weekdayStyle": {
-      "type": "\"narrow\" | \"short\" | \"long\"",
-      "detailedType": "\"narrow\" | \"short\" | \"long\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "narrow"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "short"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "long"
-          }
-        ]
-      },
-      "description": "The style of weekday names to display in the calendar grid header,\ne.g. single letter, abbreviation, or full day name.",
-      "default": "\"narrow\""
-    },
     "children": {
       "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ReactElement<unknown, string | JSXElementConstructor<any>>[] | ((date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
       "detailedType": "ReactElement<unknown, string | JSXElementConstructor<any>> | ReactElement<unknown, string | JSXElementConstructor<any>>[] | ((date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>) | undefined",
@@ -255,6 +214,47 @@
         ]
       },
       "description": "Either a function to render calendar cells for each date in the month,\nor children containing a `<CalendarGridHeader>`` and `<CalendarGridBody>`\nwhen additional customization is needed."
+    },
+    "offset": {
+      "type": "DateDuration",
+      "detailedType": "DateDuration | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateDuration",
+            "name": "DateDuration"
+          }
+        ]
+      },
+      "description": "An offset from the beginning of the visible date range that this\nCalendarGrid should display. Useful when displaying more than one\nmonth at a time."
+    },
+    "weekdayStyle": {
+      "type": "\"narrow\" | \"short\" | \"long\"",
+      "detailedType": "\"narrow\" | \"short\" | \"long\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "narrow"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "short"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "long"
+          }
+        ]
+      },
+      "description": "The style of weekday names to display in the calendar grid header,\ne.g. single letter, abbreviation, or full day name.",
+      "default": "\"narrow\""
     },
     "className": {
       "type": "string",

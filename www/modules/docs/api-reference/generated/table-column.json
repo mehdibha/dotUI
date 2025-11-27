@@ -10,6 +10,25 @@
       },
       "description": "Whether the column is resizable."
     },
+    "id": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
+      },
+      "description": "The unique id of the column."
+    },
     "allowsSorting": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -18,57 +37,6 @@
       },
       "description": "Whether the column allows sorting."
     },
-    "defaultWidth": {
-      "type": "ColumnSize | null",
-      "detailedType": "ColumnSize | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "number"
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              }
-            ]
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "stringLiteral",
-                "value": "%"
-              }
-            ]
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "stringLiteral",
-                "value": "fr"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The default width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
-    },
     "isRowHeader": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -76,84 +44,6 @@
         "type": "boolean"
       },
       "description": "Whether a column is a [row header](https://www.w3.org/TR/wai-aria-1.1/#rowheader) and should be announced by assistive technology during row navigation."
-    },
-    "maxWidth": {
-      "type": "ColumnStaticSize | null",
-      "detailedType": "ColumnStaticSize | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "number"
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              }
-            ]
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "stringLiteral",
-                "value": "%"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The maximum width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
-    },
-    "minWidth": {
-      "type": "ColumnStaticSize | null",
-      "detailedType": "ColumnStaticSize | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "number"
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              }
-            ]
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "stringLiteral",
-                "value": "%"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The minimum width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
     },
     "textValue": {
       "type": "string",
@@ -214,9 +104,9 @@
       },
       "description": "The width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
     },
-    "id": {
-      "type": "Key",
-      "detailedType": "Key | undefined",
+    "defaultWidth": {
+      "type": "ColumnSize | null",
+      "detailedType": "ColumnSize | null | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -224,14 +114,124 @@
             "type": "undefined"
           },
           {
-            "type": "string"
+            "type": "null"
           },
           {
             "type": "number"
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "%"
+              }
+            ]
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "fr"
+              }
+            ]
           }
         ]
       },
-      "description": "The unique id of the column."
+      "description": "The default width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
+    },
+    "minWidth": {
+      "type": "ColumnStaticSize | null",
+      "detailedType": "ColumnStaticSize | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "%"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The minimum width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
+    },
+    "maxWidth": {
+      "type": "ColumnStaticSize | null",
+      "detailedType": "ColumnStaticSize | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "type": "template",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "%"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The maximum width of the column. This prop only applies when the `<Table>` is wrapped in a `<ResizableTableContainer>`."
     },
     "children": {
       "type": "ReactNode | (values: ColumnRenderProps) => ReactNode",

@@ -2,6 +2,46 @@
   "name": "MenuProps",
   "description": "Missing description.",
   "props": {
+    "trigger": {
+      "type": "MenuTriggerType",
+      "detailedType": "MenuTriggerType | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "press"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "longPress"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "How the menu is triggered.",
+      "default": "'press'"
+    },
+    "isOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the overlay is open by default (controlled)."
+    },
     "defaultOpen": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -34,46 +74,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the overlay's open state changes."
-    },
-    "isOpen": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the overlay is open by default (controlled)."
-    },
-    "trigger": {
-      "type": "MenuTriggerType",
-      "detailedType": "MenuTriggerType | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "press"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "longPress"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "How the menu is triggered.",
-      "default": "'press'"
     }
   },
   "renderProps": {

@@ -2,29 +2,21 @@
   "name": "ColorSliderProps",
   "description": "A color slider allows users to adjust an individual channel of a color value.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "boolean"
       },
-      "description": "Defines a string value that labels the current element."
+      "description": "Whether the whole Slider is disabled."
     },
-    "aria-labelledby": {
+    "form": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
     },
     "defaultValue": {
       "type": "string | Color",
@@ -47,6 +39,79 @@
       },
       "description": "The default value (uncontrolled)."
     },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "onChange": {
+      "type": "((value: Color) => void)",
+      "detailedType": "((value: Color) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "Color",
+              "name": "Color"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the value changes, as the user drags."
+    },
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+    },
     "value": {
       "type": "string | Color",
       "detailedType": "string | Color | undefined",
@@ -68,21 +133,102 @@
       },
       "description": "The current value (controlled)."
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onChangeEnd": {
+      "type": "((value: Color) => void)",
+      "detailedType": "((value: Color) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "Color",
+              "name": "Color"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Identifies the element (or elements) that describes the object."
+      "description": "Handler that is called when the user stops dragging."
     },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "orientation": {
+      "type": "Orientation",
+      "detailedType": "Orientation | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "horizontal"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "vertical"
+              }
+            ]
+          }
+        ]
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "The orientation of the Slider.",
+      "default": "'horizontal'"
+    },
+    "colorSpace": {
+      "type": "ColorSpace",
+      "detailedType": "ColorSpace | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "rgb"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "hsl"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "hsb"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The color space that the slider operates in. The `channel` must be in this color space.\nIf not provided, this defaults to the color space of the `color` or `defaultColor` value."
     },
     "channel": {
       "type": "ColorChannel",
@@ -165,171 +311,6 @@
       },
       "description": "The color channel that the slider manipulates.",
       "required": true
-    },
-    "colorSpace": {
-      "type": "ColorSpace",
-      "detailedType": "ColorSpace | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "rgb"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "hsl"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "hsb"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The color space that the slider operates in. The `channel` must be in this color space.\nIf not provided, this defaults to the color space of the `color` or `defaultColor` value."
-    },
-    "form": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
-    },
-    "onChange": {
-      "type": "((value: Color) => void)",
-      "detailedType": "((value: Color) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "value",
-            "value": {
-              "type": "link",
-              "id": "Color",
-              "name": "Color"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the value changes, as the user drags."
-    },
-    "onChangeEnd": {
-      "type": "((value: Color) => void)",
-      "detailedType": "((value: Color) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "value",
-            "value": {
-              "type": "link",
-              "id": "Color",
-              "name": "Color"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the user stops dragging."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the whole Slider is disabled."
-    },
-    "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "horizontal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "vertical"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The orientation of the Slider.",
-      "default": "'horizontal'"
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ReactNode | (values: ColorSliderRenderProps) => ReactNode",
@@ -497,6 +478,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "renderProps": {

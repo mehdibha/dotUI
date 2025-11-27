@@ -2,60 +2,6 @@
   "name": "TagListProps",
   "description": "A tag list is a container for tags within a TagGroup.",
   "props": {
-    "dependencies": {
-      "type": "readonly any[]",
-      "detailedType": "readonly any[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "any"
-            }
-          }
-        ]
-      },
-      "description": "Values that should invalidate the item cache when using dynamic collections."
-    },
-    "items": {
-      "type": "Iterable<T>",
-      "detailedType": "Iterable<T> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "typeParameter",
-                "name": "T",
-                "constraint": null,
-                "default": null
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Item objects in the collection."
-    },
     "renderEmptyState": {
       "type": "((props: TagListRenderProps) => ReactNode)",
       "detailedType": "((props: TagListRenderProps) => ReactNode) | undefined",
@@ -266,6 +212,60 @@
         ]
       },
       "description": "The contents of the collection."
+    },
+    "items": {
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": null,
+                "default": null
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Item objects in the collection."
+    },
+    "dependencies": {
+      "type": "readonly any[]",
+      "detailedType": "readonly any[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "any"
+            }
+          }
+        ]
+      },
+      "description": "Values that should invalidate the item cache when using dynamic collections."
     },
     "className": {
       "type": "string | (values: TagListRenderProps) => string",

@@ -2,78 +2,6 @@
   "name": "ColorFieldProps",
   "description": "A color field allows users to edit a hex color or individual color channel value.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-    },
-    "defaultValue": {
-      "type": "string | Color | null",
-      "detailedType": "string | Color | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-            "name": "Color"
-          }
-        ]
-      },
-      "description": "The default value (uncontrolled)."
-    },
-    "value": {
-      "type": "string | Color | null",
-      "detailedType": "string | Color | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-            "name": "Color"
-          }
-        ]
-      },
-      "description": "The current value (controlled)."
-    },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
       "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
@@ -164,6 +92,31 @@
       },
       "description": "Handler that is called when the element loses focus."
     },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
     "onKeyDown": {
       "type": "((e: KeyboardEvent) => void)",
       "detailedType": "((e: KeyboardEvent) => void) | undefined",
@@ -213,30 +166,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when a key is released."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "aria-errormessage": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element that provides an error message for the object."
     },
     "channel": {
       "type": "ColorChannel",
@@ -363,13 +292,13 @@
       },
       "description": "The color space that the color field operates in if a `channel` prop is provided.\nIf no `channel` is provided, the color field always displays the color as an RGB hex value."
     },
-    "excludeFromTabOrder": {
+    "isDisabled": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
+      "description": "Whether the input is disabled."
     },
     "form": {
       "type": "string",
@@ -379,25 +308,89 @@
       },
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
     },
-    "isInvalid": {
+    "defaultValue": {
+      "type": "string | Color | null",
+      "detailedType": "string | Color | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+            "name": "Color"
+          }
+        ]
+      },
+      "description": "The default value (uncontrolled)."
+    },
+    "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the input value is invalid."
+      "description": "Whether the element should receive focus on render."
     },
-    "isWheelDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "string"
       },
-      "description": "Enables or disables changing the value with scroll."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
-    "onBeforeInput": {
-      "type": "FormEventHandler<HTMLInputElement>",
-      "detailedType": "FormEventHandler<HTMLInputElement> | undefined",
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-errormessage": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element that provides an error message for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "onCopy": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -414,7 +407,7 @@
                   "type": "application",
                   "base": {
                     "type": "identifier",
-                    "name": "FormEvent"
+                    "name": "ClipboardEvent"
                   },
                   "typeParameters": [
                     {
@@ -435,11 +428,11 @@
           }
         ]
       },
-      "description": "Handler that is called when the input value is about to be modified. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)."
+      "description": "Handler that is called when the user copies text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncopy)."
     },
-    "onChange": {
-      "type": "((color: Color | null) => void)",
-      "detailedType": "((color: Color | null) => void) | undefined",
+    "onCut": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -451,17 +444,18 @@
             "parameters": [
               {
                 "type": "parameter",
-                "name": "color",
+                "name": "event",
                 "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "null"
-                    },
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "ClipboardEvent"
+                  },
+                  "typeParameters": [
                     {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-                      "name": "Color"
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "name": "HTMLInputElement"
                     }
                   ]
                 },
@@ -476,7 +470,49 @@
           }
         ]
       },
-      "description": "Handler that is called when the value changes."
+      "description": "Handler that is called when the user cuts text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncut)."
+    },
+    "onPaste": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "ClipboardEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "name": "HTMLInputElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the user pastes text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/onpaste)."
     },
     "onCompositionEnd": {
       "type": "CompositionEventHandler<HTMLInputElement>",
@@ -607,9 +643,50 @@
       },
       "description": "Handler that is called when a new character is received in the current text composition session. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionupdate_event)."
     },
-    "onCopy": {
-      "type": "ClipboardEventHandler<HTMLInputElement>",
-      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
+    "onChange": {
+      "type": "((color: Color | null) => void)",
+      "detailedType": "((color: Color | null) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "color",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+                      "name": "Color"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the value changes."
+    },
+    "onBeforeInput": {
+      "type": "FormEventHandler<HTMLInputElement>",
+      "detailedType": "FormEventHandler<HTMLInputElement> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -626,7 +703,7 @@
                   "type": "application",
                   "base": {
                     "type": "identifier",
-                    "name": "ClipboardEvent"
+                    "name": "FormEvent"
                   },
                   "typeParameters": [
                     {
@@ -647,74 +724,7 @@
           }
         ]
       },
-      "description": "Handler that is called when the user copies text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncopy)."
-    },
-    "onCut": {
-      "type": "ClipboardEventHandler<HTMLInputElement>",
-      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "event",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "ClipboardEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
-                      "name": "HTMLInputElement"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the user cuts text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncut)."
-    },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isFocused",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the element's focus status changes."
+      "description": "Handler that is called when the input value is about to be modified. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)."
     },
     "onInput": {
       "type": "FormEventHandler<HTMLInputElement>",
@@ -757,48 +767,6 @@
         ]
       },
       "description": "Handler that is called when the input value is modified. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)."
-    },
-    "onPaste": {
-      "type": "ClipboardEventHandler<HTMLInputElement>",
-      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "event",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "ClipboardEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
-                      "name": "HTMLInputElement"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the user pastes text. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/onpaste)."
     },
     "onSelect": {
       "type": "ReactEventHandler<HTMLInputElement>",
@@ -847,9 +815,17 @@
       },
       "description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
     },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+    },
+    "value": {
+      "type": "string | Color | null",
+      "detailedType": "string | Color | null | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -861,10 +837,47 @@
           },
           {
             "type": "string"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+            "name": "Color"
           }
         ]
       },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "The current value (controlled)."
+    },
+    "excludeFromTabOrder": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input can be selected but not changed by the user."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether user input is required on the input before form submission."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input value is invalid."
     },
     "validate": {
       "type": "((value: Color | null) => true | ValidationError | null | undefined)",
@@ -928,6 +941,14 @@
       },
       "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
     },
+    "isWheelDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Enables or disables changing the value with scroll."
+    },
     "validationBehavior": {
       "type": "\"native\" | \"aria\"",
       "detailedType": "\"native\" | \"aria\" | undefined",
@@ -946,46 +967,6 @@
       },
       "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
       "default": "'native'"
-    },
-    "autoFocus": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should receive focus on render."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
-    "isReadOnly": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input can be selected but not changed by the user."
-    },
-    "isRequired": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether user input is required on the input before form submission."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ReactNode | (values: ColorFieldRenderProps) => ReactNode",
@@ -1153,6 +1134,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "renderProps": {

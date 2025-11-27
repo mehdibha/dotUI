@@ -2,37 +2,113 @@
   "name": "DropZoneProps",
   "description": "A drop zone is an area into which one or multiple objects can be dragged and dropped.",
   "props": {
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverStart": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Defines a string value that labels the current element."
+      "description": "Handler that is called when a hover interaction starts."
     },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverEnd": {
+      "type": "((e: HoverEvent) => void)",
+      "detailedType": "((e: HoverEvent) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "HoverEvent",
+              "name": "HoverEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "Handler that is called when a hover interaction ends."
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "onHoverChange": {
+      "type": "((isHovering: boolean) => void)",
+      "detailedType": "((isHovering: boolean) => void) | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isHovering",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
       },
-      "description": "Identifies the element (or elements) that describes the object."
+      "description": "Handler that is called when the hover state changes."
     },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "boolean"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
+    },
+    "onDrop": {
+      "type": "((e: DropEvent) => void)",
+      "detailedType": "((e: DropEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "DropEvent",
+              "name": "DropEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a valid drag is dropped on the drop target."
     },
     "getDropOperation": {
       "type": "((types: DragTypes, allowedOperations: DropOperation[]) => DropOperation)",
@@ -155,56 +231,6 @@
       },
       "description": "A function returning the drop operation to be performed when items matching the given types are dropped\non the drop target."
     },
-    "onDrop": {
-      "type": "((e: DropEvent) => void)",
-      "detailedType": "((e: DropEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "DropEvent",
-              "name": "DropEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a valid drag is dropped on the drop target."
-    },
-    "onDropActivate": {
-      "type": "((e: DropActivateEvent) => void)",
-      "detailedType": "((e: DropActivateEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "DropActivateEvent",
-              "name": "DropActivateEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called after a valid drag is held over the drop target for a period of time.\nThis typically opens the item so that the user can drop within it."
-    },
     "onDropEnter": {
       "type": "((e: DropEnterEvent) => void)",
       "detailedType": "((e: DropEnterEvent) => void) | undefined",
@@ -229,31 +255,6 @@
         "typeParameters": []
       },
       "description": "Handler that is called when a valid drag enters the drop target."
-    },
-    "onDropExit": {
-      "type": "((e: DropExitEvent) => void)",
-      "detailedType": "((e: DropExitEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "DropExitEvent",
-              "name": "DropExitEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a valid drag exits the drop target."
     },
     "onDropMove": {
       "type": "((e: DropMoveEvent) => void)",
@@ -280,34 +281,9 @@
       },
       "description": "Handler that is called when a valid drag is moved within the drop target."
     },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the hover state changes."
-    },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
+    "onDropActivate": {
+      "type": "((e: DropActivateEvent) => void)",
+      "detailedType": "((e: DropActivateEvent) => void) | undefined",
       "typeAst": {
         "type": "function",
         "parameters": [
@@ -316,8 +292,8 @@
             "name": "e",
             "value": {
               "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
+              "id": "DropActivateEvent",
+              "name": "DropActivateEvent"
             },
             "optional": false,
             "rest": false
@@ -328,11 +304,11 @@
         },
         "typeParameters": []
       },
-      "description": "Handler that is called when a hover interaction ends."
+      "description": "Handler that is called after a valid drag is held over the drop target for a period of time.\nThis typically opens the item so that the user can drop within it."
     },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
+    "onDropExit": {
+      "type": "((e: DropExitEvent) => void)",
+      "detailedType": "((e: DropExitEvent) => void) | undefined",
       "typeAst": {
         "type": "function",
         "parameters": [
@@ -341,8 +317,8 @@
             "name": "e",
             "value": {
               "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
+              "id": "DropExitEvent",
+              "name": "DropExitEvent"
             },
             "optional": false,
             "rest": false
@@ -353,34 +329,7 @@
         },
         "typeParameters": []
       },
-      "description": "Handler that is called when a hover interaction starts."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
+      "description": "Handler that is called when a valid drag exits the drop target."
     },
     "children": {
       "type": "ReactNode | (values: DropZoneRenderProps) => ReactNode",
@@ -548,6 +497,57 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     }
   },
   "renderProps": {

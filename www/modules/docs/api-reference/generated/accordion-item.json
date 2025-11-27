@@ -2,21 +2,32 @@
   "name": "AccordionItemProps",
   "description": "A disclosure is a collapsible section of content. It is composed of a header\nwith a heading and trigger button, and a panel that contains the content.",
   "props": {
-    "defaultExpanded": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "id": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
       },
-      "description": "Whether the disclosure is expanded by default (uncontrolled)."
+      "description": "An id for the disclosure when used within a DisclosureGroup, matching the id used in `expandedKeys`."
     },
-    "isExpanded": {
+    "isDisabled": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the disclosure is expanded (controlled)."
+      "description": "Whether the disclosure is disabled."
     },
     "onExpandedChange": {
       "type": "((isExpanded: boolean) => void)",
@@ -43,51 +54,21 @@
       },
       "description": "Handler that is called when the disclosure's expanded state changes."
     },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    },
-    "isDisabled": {
+    "isExpanded": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the disclosure is disabled."
+      "description": "Whether the disclosure is expanded (controlled)."
     },
-    "id": {
-      "type": "Key",
-      "detailedType": "Key | undefined",
+    "defaultExpanded": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          }
-        ]
+        "type": "boolean"
       },
-      "description": "An id for the disclosure when used within a DisclosureGroup, matching the id used in `expandedKeys`."
+      "description": "Whether the disclosure is expanded by default (uncontrolled)."
     },
     "children": {
       "type": "ReactNode | (values: DisclosureRenderProps) => ReactNode",
@@ -255,6 +236,25 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     }
   },
   "typeLinks": {

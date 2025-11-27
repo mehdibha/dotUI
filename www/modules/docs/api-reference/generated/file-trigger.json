@@ -2,14 +2,6 @@
   "name": "FileTriggerProps",
   "description": "A FileTrigger allows a user to access the file system with any pressable React Aria\nor React Spectrum component, or custom components built with usePress.",
   "props": {
-    "acceptDirectory": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Enables the selection of directories instead of individual files."
-    },
     "acceptedFileTypes": {
       "type": "readonly string[]",
       "detailedType": "readonly string[] | undefined",
@@ -103,6 +95,14 @@
         "name": "ReactNode"
       },
       "description": "The children of the component."
+    },
+    "acceptDirectory": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Enables the selection of directories instead of individual files."
     }
   }
 }
