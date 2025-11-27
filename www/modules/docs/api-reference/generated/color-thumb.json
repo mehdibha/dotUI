@@ -77,40 +77,6 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
-    "children": {
-      "type": "ReactNode | (values: ColorThumbRenderProps) => ReactNode",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "ColorThumbRenderProps",
-                  "name": "ColorThumbRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
-    },
     "style": {
       "type": "CSSProperties | (values: ColorThumbRenderProps) => CSSProperties",
       "detailedType": "CSSProperties | (values: ColorThumbRenderProps) => CSSProperties | undefined",
@@ -177,6 +143,40 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "children": {
+      "type": "ReactNode | (values: ColorThumbRenderProps) => ReactNode",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ColorThumbRenderProps",
+                  "name": "ColorThumbRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
     }
   },
   "renderProps": {
@@ -202,7 +202,7 @@
     }
   },
   "typeLinks": {
-    "ColorThumbRenderProps": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorThumbRenderProps": {
       "type": "interface",
       "name": "ColorThumbRenderProps",
       "properties": {
@@ -269,7 +269,7 @@
         }
       }
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorThumbRenderProps": {
+    "ColorThumbRenderProps": {
       "type": "interface",
       "name": "ColorThumbRenderProps",
       "properties": {

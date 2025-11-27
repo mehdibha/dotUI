@@ -167,14 +167,6 @@
       },
       "description": "Handler that is called when a key is released."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -311,6 +303,14 @@
         ]
       },
       "description": "Handler that is called when the value changes."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
     },
     "name": {
       "type": "string",

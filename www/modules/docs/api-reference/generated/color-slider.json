@@ -2,14 +2,6 @@
   "name": "ColorSliderProps",
   "description": "A color slider allows users to adjust an individual channel of a color value.",
   "props": {
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the whole Slider is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -103,6 +95,14 @@
         "typeParameters": []
       },
       "description": "Handler that is called when the value changes, as the user drags."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the whole Slider is disabled."
     },
     "name": {
       "type": "string",

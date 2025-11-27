@@ -315,14 +315,6 @@
       },
       "description": "A ref for the HTML input element."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -412,6 +404,14 @@
       },
       "description": "Handler that is called when the Switch's selection state changes."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "name": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -436,6 +436,14 @@
       },
       "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
     },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input can be selected but not changed by the user."
+    },
     "defaultSelected": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -451,14 +459,6 @@
         "type": "boolean"
       },
       "description": "Whether the Switch should be selected (controlled)."
-    },
-    "isReadOnly": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input can be selected but not changed by the user."
     },
     "children": {
       "type": "ReactNode | (values: SwitchRenderProps) => ReactNode",

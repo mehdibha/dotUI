@@ -509,9 +509,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@111": {
+        "__@iterator@72": {
           "type": "method",
-          "name": "__@iterator@111",
+          "name": "__@iterator@72",
           "value": {
             "type": "function",
             "parameters": [],
@@ -1093,9 +1093,9 @@
           "optional": false,
           "description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
         },
-        "__@toStringTag@114": {
+        "__@toStringTag@630": {
           "type": "property",
-          "name": "__@toStringTag@114",
+          "name": "__@toStringTag@630",
           "value": {
             "type": "string"
           },

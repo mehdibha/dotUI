@@ -176,14 +176,6 @@
       "description": "Temporary text that occupies the select when it is empty.",
       "default": "'Select an item' (localized)"
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -303,6 +295,14 @@
         ]
       },
       "description": "Handler that is called when the value changes."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
     },
     "disabledKeys": {
       "type": "Iterable<Key>",
@@ -979,9 +979,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@111": {
+        "__@iterator@72": {
           "type": "method",
-          "name": "__@iterator@111",
+          "name": "__@iterator@72",
           "value": {
             "type": "function",
             "parameters": [],

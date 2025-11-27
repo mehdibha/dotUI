@@ -496,14 +496,6 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the link is disabled."
-    },
     "referrerPolicy": {
       "type": "HTMLAttributeReferrerPolicy",
       "detailedType": "HTMLAttributeReferrerPolicy | undefined",
@@ -645,6 +637,14 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the link is disabled."
     },
     "href": {
       "type": "string",

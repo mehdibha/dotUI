@@ -447,14 +447,6 @@
       },
       "description": "A ref for the HTML input element."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -552,6 +544,14 @@
       },
       "description": "Handler that is called when the element's selection state changes."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
     "name": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -575,30 +575,6 @@
         "type": "boolean"
       },
       "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-    },
-    "isIndeterminate": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Indeterminism is presentational only.\nThe indeterminate visual representation remains regardless of user interaction."
-    },
-    "defaultSelected": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should be selected (uncontrolled)."
-    },
-    "isSelected": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should be selected (controlled)."
     },
     "isReadOnly": {
       "type": "boolean",
@@ -675,6 +651,30 @@
         ]
       },
       "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+    },
+    "isIndeterminate": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Indeterminism is presentational only.\nThe indeterminate visual representation remains regardless of user interaction."
+    },
+    "defaultSelected": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should be selected (uncontrolled)."
+    },
+    "isSelected": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should be selected (controlled)."
     },
     "validationBehavior": {
       "type": "\"native\" | \"aria\"",

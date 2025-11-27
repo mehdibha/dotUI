@@ -611,10 +611,14 @@ async function getPropsWithTypeChecker(
 
           // Get the type of the property
           const propType = checker.getTypeOfSymbolAtLocation(prop, node);
+          // Use TypeScript flags for cleaner output:
+          // - NoTruncation: Don't truncate long types
+          // - UseAliasDefinedOutsideCurrentScope: Preserve type aliases where possible
           const typeString = checker.typeToString(
             propType,
             undefined,
-            ts.TypeFormatFlags.NoTruncation,
+            ts.TypeFormatFlags.NoTruncation |
+              ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope,
           );
 
           // Get default value from JSDoc @default tag
@@ -627,9 +631,9 @@ async function getPropsWithTypeChecker(
           // Check if optional
           const isOptional = (prop.flags & ts.SymbolFlags.Optional) !== 0;
 
-          // Full type (for detailedType) - also expand aliases
-          const rawType = formatTypeString(typeString);
-          const fullType = expandTypeAliasInString(rawType);
+          // Clean up and expand type aliases
+          const cleanedType = cleanTypeString(typeString);
+          const fullType = expandTypeAliasInString(cleanedType);
 
           // Remove | undefined first for optional props
           const shortType = isOptional
@@ -747,23 +751,13 @@ function extractRenderProps(
 }
 
 /**
- * Format type string to be more readable
+ * Clean up type string by removing namespace prefixes
+ * TypeScript flags handle most formatting, this just cleans up namespaces
  */
-function formatTypeString(typeStr: string): string {
-  // Clean up React namespace
-  let result = typeStr
-    .replace(/React\./g, "")
-    .replace(/import\([^)]+\)\./g, "");
-
-  // Simplify common React types
-  result = result
-    .replace(
-      /ReactElement<any, string \| JSXElementConstructor<any>>/g,
-      "ReactElement",
-    )
-    .replace(/ReactNode/g, "ReactNode");
-
-  return result;
+function cleanTypeString(typeStr: string): string {
+  return typeStr
+    .replace(/React\./g, "") // Remove React. prefix
+    .replace(/import\([^)]+\)\./g, ""); // Remove import(...). prefixes
 }
 
 /**
@@ -826,142 +820,27 @@ function extractComponentGroup(componentExportName: string): string {
   return match ? match[0] : baseName;
 }
 
+/**
+ * Rewrite type strings for consistent naming
+ * - Replaces internal naming conventions (.RootInternal → .Root)
+ * - Formats component type references (ButtonProps → Button.Props)
+ */
 function rewriteTypeValue(value: string, componentGroup: string): string {
-  let next = value;
+  let result = value;
 
-  next = next.replaceAll(".RootInternal", ".Root");
+  // Clean up internal naming
+  result = result.replaceAll(".RootInternal", ".Root");
 
+  // Format component type references (e.g., ButtonProps → Button.Props)
   if (componentGroup) {
-    const escapedGroup = escapeForRegex(componentGroup);
-    next = next.replace(
-      new RegExp(`\\b${escapedGroup}(Props|State)\\b`, "g"),
+    const escaped = componentGroup.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    result = result.replace(
+      new RegExp(`\\b${escaped}(Props|State)\\b`, "g"),
       `${componentGroup}.$1`,
     );
   }
 
-  return dedupeUnionMembers(next);
-}
-
-function escapeForRegex(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function dedupeUnionMembers(value: string): string {
-  if (!value.includes("|")) {
-    return value;
-  }
-
-  const unionLinePattern = /^\s*\|/m;
-  if (unionLinePattern.test(value)) {
-    const seen = new Set<string>();
-    const lines = value.split("\n");
-    const resultLines: string[] = [];
-    let currentEntry: string[] | null = null;
-
-    const flushEntry = () => {
-      if (!currentEntry) {
-        return;
-      }
-
-      const entryText = currentEntry.join("\n");
-      const key = entryText.replace(/^\s*\|\s*/, "").trim();
-      if (!seen.has(key)) {
-        seen.add(key);
-        resultLines.push(entryText);
-      }
-
-      currentEntry = null;
-    };
-
-    lines.forEach((line) => {
-      if (line.trim().startsWith("|")) {
-        flushEntry();
-        currentEntry = [line];
-      } else if (currentEntry) {
-        currentEntry.push(line);
-      } else {
-        resultLines.push(line);
-      }
-    });
-
-    flushEntry();
-
-    return resultLines.join("\n");
-  }
-
-  const parts = splitTopLevelUnion(value);
-  const seen = new Set<string>();
-  const dedupedParts = parts.filter((part) => {
-    const key = part.trim();
-    if (seen.has(key)) {
-      return false;
-    }
-    seen.add(key);
-    return true;
-  });
-
-  return dedupedParts.join(" | ");
-}
-
-function splitTopLevelUnion(value: string): string[] {
-  const parts: string[] = [];
-  let current = "";
-  let depthAngle = 0;
-  let depthParen = 0;
-  let depthCurly = 0;
-  let depthSquare = 0;
-
-  for (let i = 0; i < value.length; i += 1) {
-    const char = value[i];
-
-    switch (char) {
-      case "<":
-        depthAngle += 1;
-        break;
-      case ">":
-        depthAngle = Math.max(0, depthAngle - 1);
-        break;
-      case "(":
-        depthParen += 1;
-        break;
-      case ")":
-        depthParen = Math.max(0, depthParen - 1);
-        break;
-      case "{":
-        depthCurly += 1;
-        break;
-      case "}":
-        depthCurly = Math.max(0, depthCurly - 1);
-        break;
-      case "[":
-        depthSquare += 1;
-        break;
-      case "]":
-        depthSquare = Math.max(0, depthSquare - 1);
-        break;
-      default:
-        break;
-    }
-
-    if (
-      char === "|" &&
-      depthAngle === 0 &&
-      depthParen === 0 &&
-      depthCurly === 0 &&
-      depthSquare === 0
-    ) {
-      parts.push(current.trim());
-      current = "";
-    } else {
-      current += char;
-    }
-  }
-
-  if (current.trim() !== "") {
-    parts.push(current.trim());
-  }
-
-  return parts.length > 0 ? parts : [value];
+  return result;
 }
 
 function rewriteTypeStringsDeep(
