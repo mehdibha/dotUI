@@ -91,16 +91,32 @@
     "children": {
       "type": "ReactNode | (values: ColorPickerRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorPickerRenderProps",
-            "name": "ColorPickerRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ColorPickerRenderProps",
+                  "name": "ColorPickerRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -1373,27 +1389,22 @@
       "typeParameters": [],
       "description": "Represents a color value."
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorPickerRenderProps": {
+    "ColorPickerRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorPickerRenderProps",
       "name": "ColorPickerRenderProps",
-      "extends": [],
       "properties": {
         "color": {
           "type": "property",
           "name": "color",
           "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+            "type": "identifier",
             "name": "Color"
           },
           "optional": false,
           "readonly": false,
           "description": "The currently selected color."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }

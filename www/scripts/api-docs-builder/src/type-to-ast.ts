@@ -89,6 +89,7 @@ export function buildTypeAstFromString(
 ): TType | null {
   // ============================================================================
   // Pattern: ChildrenOrFunction<T> → ReactNode | ((values: T) => ReactNode)
+  // Also matches the expanded form: ReactNode | (values: T) => ReactNode
   // ============================================================================
   const childrenOrFunctionMatch = typeString.match(
     /^ChildrenOrFunction<(\w+(?:<[^>]+>)?)>$/,
@@ -121,8 +122,41 @@ export function buildTypeAstFromString(
     } as TUnion;
   }
 
+  // Expanded form: ReactNode | (values: T) => ReactNode
+  const expandedChildrenMatch = typeString.match(
+    /^ReactNode \| \(values: (\w+)\) => ReactNode$/,
+  );
+  if (expandedChildrenMatch) {
+    const renderPropsName = expandedChildrenMatch[1];
+    return {
+      type: "union",
+      elements: [
+        { type: "identifier", name: "ReactNode" } as TIdentifier,
+        {
+          type: "function",
+          parameters: [
+            {
+              type: "parameter",
+              name: "values",
+              value: {
+                type: "link",
+                id: renderPropsName,
+                name: renderPropsName,
+              } as TLink,
+              optional: false,
+              rest: false,
+            } as TParameter,
+          ],
+          return: { type: "identifier", name: "ReactNode" } as TIdentifier,
+          typeParameters: [],
+        } as TFunction,
+      ],
+    } as TUnion;
+  }
+
   // ============================================================================
   // Pattern: ClassNameOrFunction<T> → string | ((values: T) => string)
+  // Also matches the expanded form: string | (values: T) => string
   // ============================================================================
   const classNameOrFunctionMatch = typeString.match(
     /^ClassNameOrFunction<(\w+(?:<[^>]+>)?)>$/,
@@ -155,14 +189,79 @@ export function buildTypeAstFromString(
     } as TUnion;
   }
 
+  // Expanded form: string | (values: T) => string
+  const expandedClassNameMatch = typeString.match(
+    /^string \| \(values: (\w+)\) => string$/,
+  );
+  if (expandedClassNameMatch) {
+    const renderPropsName = expandedClassNameMatch[1];
+    return {
+      type: "union",
+      elements: [
+        { type: "string" } as TKeyword,
+        {
+          type: "function",
+          parameters: [
+            {
+              type: "parameter",
+              name: "values",
+              value: {
+                type: "link",
+                id: renderPropsName,
+                name: renderPropsName,
+              } as TLink,
+              optional: false,
+              rest: false,
+            } as TParameter,
+          ],
+          return: { type: "string" } as TKeyword,
+          typeParameters: [],
+        } as TFunction,
+      ],
+    } as TUnion;
+  }
+
   // ============================================================================
   // Pattern: StyleOrFunction<T> → CSSProperties | ((values: T) => CSSProperties)
+  // Also matches the expanded form: CSSProperties | (values: T) => CSSProperties
   // ============================================================================
   const styleOrFunctionMatch = typeString.match(
     /^StyleOrFunction<(\w+(?:<[^>]+>)?)>$/,
   );
   if (styleOrFunctionMatch) {
     const renderPropsName = styleOrFunctionMatch[1];
+    return {
+      type: "union",
+      elements: [
+        { type: "identifier", name: "CSSProperties" } as TIdentifier,
+        {
+          type: "function",
+          parameters: [
+            {
+              type: "parameter",
+              name: "values",
+              value: {
+                type: "link",
+                id: renderPropsName,
+                name: renderPropsName,
+              } as TLink,
+              optional: false,
+              rest: false,
+            } as TParameter,
+          ],
+          return: { type: "identifier", name: "CSSProperties" } as TIdentifier,
+          typeParameters: [],
+        } as TFunction,
+      ],
+    } as TUnion;
+  }
+
+  // Expanded form: CSSProperties | (values: T) => CSSProperties
+  const expandedStyleMatch = typeString.match(
+    /^CSSProperties \| \(values: (\w+)\) => CSSProperties$/,
+  );
+  if (expandedStyleMatch) {
+    const renderPropsName = expandedStyleMatch[1];
     return {
       type: "union",
       elements: [

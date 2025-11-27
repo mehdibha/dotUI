@@ -80,16 +80,32 @@
     "children": {
       "type": "ReactNode | (values: DateSegmentRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps",
-            "name": "DateSegmentRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DateSegmentRenderProps",
+                  "name": "DateSegmentRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -102,9 +118,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "string"
           },
           {
@@ -114,39 +127,9 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps",
-                      "name": "DateSegmentRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "DateSegmentRenderProps",
+                  "name": "DateSegmentRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -168,9 +151,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -181,46 +161,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps",
-                      "name": "DateSegmentRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "DateSegmentRenderProps",
+                  "name": "DateSegmentRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -264,35 +215,9 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps": {
+    "DateSegmentRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps",
       "name": "DateSegmentRenderProps",
-      "extends": [
-        {
-          "type": "application",
-          "base": {
-            "type": "identifier",
-            "name": "Omit"
-          },
-          "typeParameters": [
-            {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.15.2_react@19.2.0/node_modules/@react-stately/datepicker/dist/types.d.ts:DateSegment",
-              "name": "DateSegment"
-            },
-            {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "stringLiteral",
-                  "value": "isEditable"
-                }
-              ]
-            }
-          ]
-        }
-      ],
       "properties": {
         "isHovered": {
           "type": "property",
@@ -389,15 +314,8 @@
           "type": "property",
           "name": "value",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
+            "type": "identifier",
+            "name": "number | undefined"
           },
           "optional": true,
           "readonly": false,
@@ -417,15 +335,8 @@
           "type": "property",
           "name": "minValue",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
+            "type": "identifier",
+            "name": "number | undefined"
           },
           "optional": true,
           "readonly": false,
@@ -435,23 +346,14 @@
           "type": "property",
           "name": "maxValue",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
+            "type": "identifier",
+            "name": "number | undefined"
           },
           "optional": true,
           "readonly": false,
           "description": "The maximum numeric value for the segment, if applicable."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     },
     "HoverEvent": {
       "type": "interface",

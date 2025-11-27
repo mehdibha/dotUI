@@ -8,6 +8,7 @@ import type {
   TType,
 } from "../../../modules/docs/api-reference/types/type-ast";
 import {
+  ALWAYS_EXPAND_TYPES,
   REACT_ARIA_EVENT_ORDER,
   RESOLVABLE_TYPE_PATTERNS,
   SKIP_RESOLVE_TYPES,
@@ -661,18 +662,30 @@ async function getPropsWithTypeChecker(
           // First, try to detect if the type string represents a simple type alias
           // (TypeScript's typeToString with UseAliasDefinedOutsideCurrentScope shows the alias name)
           let typeAst: TType | null = null;
-          const simpleAliasMatch = shortType.match(/^([A-Z][A-Za-z0-9]*)$/);
-          if (simpleAliasMatch) {
-            // Simple identifier (e.g., HTMLAttributeAnchorTarget, ReactNode)
-            typeAst = {
-              type: "identifier",
-              name: simpleAliasMatch[1],
-            } as TType;
-          } else {
-            // Not a simple alias - try to build from string or fall back to full type expansion
-            typeAst =
-              buildTypeAstFromString(shortType, astContext) ??
-              typeToAst(propType, { ...astContext, currentDepth: 0 });
+
+          // Check if this type should be expanded (e.g., ChildrenOrFunction)
+          const aliasName = propType.aliasSymbol?.getName();
+          const shouldExpand = aliasName && ALWAYS_EXPAND_TYPES.has(aliasName);
+
+          if (shouldExpand) {
+            // Force expansion using the expanded string
+            typeAst = buildTypeAstFromString(shortType, astContext);
+          }
+
+          if (!typeAst) {
+            const simpleAliasMatch = shortType.match(/^([A-Z][A-Za-z0-9]*)$/);
+            if (simpleAliasMatch) {
+              // Simple identifier (e.g., HTMLAttributeAnchorTarget, ReactNode)
+              typeAst = {
+                type: "identifier",
+                name: simpleAliasMatch[1],
+              } as TType;
+            } else {
+              // Not a simple alias - try to build from string or fall back to full type expansion
+              typeAst =
+                buildTypeAstFromString(shortType, astContext) ??
+                typeToAst(propType, { ...astContext, currentDepth: 0 });
+            }
           }
 
           // Scan the AST for link nodes and resolve referenced types

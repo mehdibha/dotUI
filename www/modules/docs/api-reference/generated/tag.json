@@ -275,16 +275,32 @@
     "children": {
       "type": "ReactNode | (values: TagRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TagRenderProps",
-            "name": "TagRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TagRenderProps",
+                  "name": "TagRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -297,9 +313,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "string"
           },
           {
@@ -309,39 +322,9 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TagRenderProps",
-                      "name": "TagRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "TagRenderProps",
+                  "name": "TagRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -363,9 +346,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -376,46 +356,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TagRenderProps",
-                      "name": "TagRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "TagRenderProps",
+                  "name": "TagRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -540,43 +491,9 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TagRenderProps": {
+    "TagRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TagRenderProps",
       "name": "TagRenderProps",
-      "extends": [
-        {
-          "type": "application",
-          "base": {
-            "type": "identifier",
-            "name": "Omit"
-          },
-          "typeParameters": [
-            {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ItemRenderProps",
-              "name": "ItemRenderProps"
-            },
-            {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "stringLiteral",
-                  "value": "isDropTarget"
-                },
-                {
-                  "type": "stringLiteral",
-                  "value": "allowsDragging"
-                },
-                {
-                  "type": "stringLiteral",
-                  "value": "isDragging"
-                }
-              ]
-            }
-          ]
-        }
-      ],
       "properties": {
         "allowsRemoving": {
           "type": "property",
@@ -670,9 +587,7 @@
           "readonly": false,
           "description": "Whether the item is currently in a pressed state."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     },
     "HoverEvent": {
       "type": "interface",

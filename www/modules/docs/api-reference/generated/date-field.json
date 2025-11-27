@@ -183,46 +183,6 @@
       },
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
     },
-    "autoFocus": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should receive focus on render."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
     "defaultValue": {
       "type": "T | null",
       "detailedType": "T | null | undefined",
@@ -248,6 +208,14 @@
       },
       "description": "The default value (uncontrolled)."
     },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -255,6 +223,38 @@
         "type": "string"
       },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onChange": {
       "type": "((value: MappedDateValue<T> | null) => void)",
@@ -623,16 +623,32 @@
     "children": {
       "type": "ReactNode | (values: DateFieldRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps",
-            "name": "DateFieldRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DateFieldRenderProps",
+                  "name": "DateFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -645,9 +661,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "string"
           },
           {
@@ -657,39 +670,9 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps",
-                      "name": "DateFieldRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "DateFieldRenderProps",
+                  "name": "DateFieldRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -711,9 +694,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -724,46 +704,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps",
-                      "name": "DateFieldRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "DateFieldRenderProps",
+                  "name": "DateFieldRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -806,657 +757,15 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.15.2_react@19.2.0/node_modules/@react-stately/datepicker/dist/types.d.ts:DateFieldState": {
+    "DateFieldRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.15.2_react@19.2.0/node_modules/@react-stately/datepicker/dist/types.d.ts:DateFieldState",
-      "name": "DateFieldState",
-      "extends": [
-        {
-          "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.2_react@19.2.0/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
-          "name": "FormValidationState"
-        }
-      ],
-      "properties": {
-        "value": {
-          "type": "property",
-          "name": "value",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
-                "name": "CalendarDate"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
-                "name": "CalendarDateTime"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
-                "name": "ZonedDateTime"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The current field value."
-        },
-        "defaultValue": {
-          "type": "property",
-          "name": "defaultValue",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
-                "name": "CalendarDate"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
-                "name": "CalendarDateTime"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
-                "name": "ZonedDateTime"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The default field value."
-        },
-        "dateValue": {
-          "type": "property",
-          "name": "dateValue",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Date",
-            "name": "Date"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The current value, converted to a native JavaScript `Date` object."
-        },
-        "calendar": {
-          "type": "property",
-          "name": "calendar",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:Calendar",
-            "name": "Calendar"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The calendar system currently in use."
-        },
-        "setValue": {
-          "type": "method",
-          "name": "setValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "null"
-                    },
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
-                      "name": "CalendarDate"
-                    },
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
-                      "name": "CalendarDateTime"
-                    },
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
-                      "name": "ZonedDateTime"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the field's value."
-        },
-        "segments": {
-          "type": "property",
-          "name": "segments",
-          "value": {
-            "type": "array",
-            "elementType": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.15.2_react@19.2.0/node_modules/@react-stately/datepicker/dist/types.d.ts:DateSegment",
-              "name": "DateSegment"
-            }
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "A list of segments for the current value."
-        },
-        "dateFormatter": {
-          "type": "property",
-          "name": "dateFormatter",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateFormatter",
-            "name": "DateFormatter"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "A date formatter configured for the current locale and format."
-        },
-        "validationState": {
-          "type": "property",
-          "name": "validationState",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "valid"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "invalid"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The current validation state of the date field, based on the `validationState`, `minValue`, and `maxValue` props."
-        },
-        "isInvalid": {
-          "type": "property",
-          "name": "isInvalid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the date field is invalid, based on the `isInvalid`, `minValue`, and `maxValue` props."
-        },
-        "granularity": {
-          "type": "property",
-          "name": "granularity",
-          "value": {
-            "type": "identifier",
-            "name": "Granularity"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The granularity for the field, based on the `granularity` prop and current value."
-        },
-        "maxGranularity": {
-          "type": "property",
-          "name": "maxGranularity",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "day"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "hour"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "minute"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "second"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "year"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "month"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The maximum date or time unit that is displayed in the field."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the field is disabled."
-        },
-        "isReadOnly": {
-          "type": "property",
-          "name": "isReadOnly",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the field is read only."
-        },
-        "isRequired": {
-          "type": "property",
-          "name": "isRequired",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the field is required."
-        },
-        "increment": {
-          "type": "method",
-          "name": "increment",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "type",
-                "value": {
-                  "type": "identifier",
-                  "name": "SegmentType"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Increments the given segment. Upon reaching the minimum or maximum value, the value wraps around to the opposite limit."
-        },
-        "decrement": {
-          "type": "method",
-          "name": "decrement",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "type",
-                "value": {
-                  "type": "identifier",
-                  "name": "SegmentType"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Decrements the given segment. Upon reaching the minimum or maximum value, the value wraps around to the opposite limit."
-        },
-        "incrementPage": {
-          "type": "method",
-          "name": "incrementPage",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "type",
-                "value": {
-                  "type": "identifier",
-                  "name": "SegmentType"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Increments the given segment by a larger amount, rounding it to the nearest increment.\nThe amount to increment by depends on the field, for example 15 minutes, 7 days, and 5 years.\nUpon reaching the minimum or maximum value, the value wraps around to the opposite limit."
-        },
-        "decrementPage": {
-          "type": "method",
-          "name": "decrementPage",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "type",
-                "value": {
-                  "type": "identifier",
-                  "name": "SegmentType"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Decrements the given segment by a larger amount, rounding it to the nearest increment.\nThe amount to decrement by depends on the field, for example 15 minutes, 7 days, and 5 years.\nUpon reaching the minimum or maximum value, the value wraps around to the opposite limit."
-        },
-        "setSegment": {
-          "type": "method",
-          "name": "setSegment",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "type",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "era"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the value of the given segment."
-        },
-        "confirmPlaceholder": {
-          "type": "method",
-          "name": "confirmPlaceholder",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Updates the remaining unfilled segments with the placeholder value."
-        },
-        "clearSegment": {
-          "type": "method",
-          "name": "clearSegment",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "type",
-                "value": {
-                  "type": "identifier",
-                  "name": "SegmentType"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Clears the value of the given segment, reverting it to the placeholder."
-        },
-        "formatValue": {
-          "type": "method",
-          "name": "formatValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "fieldOptions",
-                "value": {
-                  "type": "identifier",
-                  "name": "FieldOptions"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Formats the current date value using the given options."
-        },
-        "getDateFormatter": {
-          "type": "method",
-          "name": "getDateFormatter",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "locale",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "formatOptions",
-                "value": {
-                  "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.15.2_react@19.2.0/node_modules/@react-stately/datepicker/dist/types.d.ts:FormatterOptions",
-                  "name": "FormatterOptions"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:DateFormatter",
-              "name": "DateFormatter"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Gets a formatter based on state's props."
-        },
-        "realtimeValidation": {
-          "type": "property",
-          "name": "realtimeValidation",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
-            "name": "ValidationResult"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Realtime validation results, updated as the user edits the value."
-        },
-        "displayValidation": {
-          "type": "property",
-          "name": "displayValidation",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
-            "name": "ValidationResult"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Currently displayed validation results, updated when the user commits their changes."
-        },
-        "updateValidation": {
-          "type": "method",
-          "name": "updateValidation",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "result",
-                "value": {
-                  "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
-                  "name": "ValidationResult"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Updates the current validation result. Not displayed to the user until `commitValidation` is called."
-        },
-        "resetValidation": {
-          "type": "method",
-          "name": "resetValidation",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Resets the displayed validation state to valid when the user resets the form."
-        },
-        "commitValidation": {
-          "type": "method",
-          "name": "commitValidation",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Commits the realtime validation so it is displayed to the user."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps",
       "name": "DateFieldRenderProps",
-      "extends": [],
       "properties": {
         "state": {
           "type": "property",
           "name": "state",
           "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.15.2_react@19.2.0/node_modules/@react-stately/datepicker/dist/types.d.ts:DateFieldState",
+            "type": "identifier",
             "name": "DateFieldState"
           },
           "optional": false,
@@ -1493,9 +802,7 @@
           "readonly": false,
           "description": "Whether the date field is read only."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }

@@ -80,16 +80,32 @@
     "children": {
       "type": "ReactNode | (values: ColorThumbRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorThumbRenderProps",
-            "name": "ColorThumbRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ColorThumbRenderProps",
+                  "name": "ColorThumbRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -102,9 +118,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -115,46 +128,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorThumbRenderProps",
-                      "name": "ColorThumbRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "ColorThumbRenderProps",
+                  "name": "ColorThumbRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -186,592 +170,15 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color": {
+    "ColorThumbRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-      "name": "Color",
-      "extends": [],
-      "properties": {
-        "toFormat": {
-          "type": "method",
-          "name": "toFormat",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "format",
-                "value": {
-                  "type": "identifier",
-                  "name": "ColorFormat"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-              "name": "Color"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Converts the color to the given color format, and returns a new Color object."
-        },
-        "toString": {
-          "type": "method",
-          "name": "toString",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "format",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "undefined"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hex"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "rgb"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsl"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsb"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "css"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hexa"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "rgba"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsla"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsba"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": true,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Converts the color to a string in the given format."
-        },
-        "clone": {
-          "type": "method",
-          "name": "clone",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-              "name": "Color"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns a duplicate of the color value."
-        },
-        "toHexInt": {
-          "type": "method",
-          "name": "toHexInt",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "number"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Converts the color to hex, and returns an integer representation."
-        },
-        "getChannelValue": {
-          "type": "method",
-          "name": "getChannelValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "channel",
-                "value": {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "number"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the numeric value for a given channel.\nThrows an error if the channel is unsupported in the current color format."
-        },
-        "withChannelValue": {
-          "type": "method",
-          "name": "withChannelValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "channel",
-                "value": {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-              "name": "Color"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the numeric value for a given channel, and returns a new Color object.\nThrows an error if the channel is unsupported in the current color format."
-        },
-        "getChannelRange": {
-          "type": "method",
-          "name": "getChannelRange",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "channel",
-                "value": {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
-              "name": "ColorChannelRange"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the minimum, maximum, and step values for a given channel."
-        },
-        "getChannelName": {
-          "type": "method",
-          "name": "getChannelName",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "channel",
-                "value": {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "locale",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns a localized color channel name for a given channel and locale,\nfor use in visual or accessibility labels."
-        },
-        "getChannelFormatOptions": {
-          "type": "method",
-          "name": "getChannelFormatOptions",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "channel",
-                "value": {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-              "name": "NumberFormatOptions"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the number formatting options for the given channel."
-        },
-        "formatChannelValue": {
-          "type": "method",
-          "name": "formatChannelValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "channel",
-                "value": {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "locale",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Formats the numeric value for a given channel for display according to the provided locale."
-        },
-        "getColorSpace": {
-          "type": "method",
-          "name": "getColorSpace",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "identifier",
-              "name": "ColorSpace"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the color space, 'rgb', 'hsb' or 'hsl', for the current color."
-        },
-        "getColorSpaceAxes": {
-          "type": "method",
-          "name": "getColorSpaceAxes",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "xyChannels",
-                "value": {
-                  "type": "objectLiteral",
-                  "properties": {
-                    "xChannel": {
-                      "type": "property",
-                      "name": "xChannel",
-                      "value": {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "identifier",
-                            "name": "undefined"
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"hue\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"saturation\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"brightness\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"lightness\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"red\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"green\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"blue\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"alpha\""
-                          }
-                        ]
-                      },
-                      "optional": true,
-                      "readonly": false,
-                      "description": ""
-                    },
-                    "yChannel": {
-                      "type": "property",
-                      "name": "yChannel",
-                      "value": {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "identifier",
-                            "name": "undefined"
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"hue\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"saturation\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"brightness\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"lightness\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"red\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"green\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"blue\""
-                          },
-                          {
-                            "type": "identifier",
-                            "name": "\"alpha\""
-                          }
-                        ]
-                      },
-                      "optional": true,
-                      "readonly": false,
-                      "description": ""
-                    }
-                  }
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ColorAxes"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the color space axes, xChannel, yChannel, zChannel."
-        },
-        "getColorChannels": {
-          "type": "method",
-          "name": "getColorChannels",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "tuple",
-              "elements": [
-                {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                },
-                {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                },
-                {
-                  "type": "identifier",
-                  "name": "ColorChannel"
-                }
-              ]
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns an array of the color channels within the current color space space."
-        },
-        "getColorName": {
-          "type": "method",
-          "name": "getColorName",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "locale",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns a localized name for the color, for use in visual or accessibility labels."
-        },
-        "getHueName": {
-          "type": "method",
-          "name": "getHueName",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "locale",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns a localized name for the hue, for use in visual or accessibility labels."
-        }
-      },
-      "typeParameters": [],
-      "description": "Represents a color value."
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorThumbRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorThumbRenderProps",
       "name": "ColorThumbRenderProps",
-      "extends": [],
       "properties": {
         "color": {
           "type": "property",
           "name": "color",
           "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+            "type": "identifier",
             "name": "Color"
           },
           "optional": false,
@@ -828,9 +235,7 @@
           "readonly": false,
           "description": "Whether the thumb is disabled."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     },
     "HoverEvent": {
       "type": "interface",

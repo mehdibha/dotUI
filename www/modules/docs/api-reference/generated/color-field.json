@@ -201,46 +201,6 @@
       },
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
     },
-    "autoFocus": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should receive focus on render."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
     "defaultValue": {
       "type": "string | Color | null",
       "detailedType": "string | Color | null | undefined",
@@ -265,6 +225,14 @@
       },
       "description": "The default value (uncontrolled)."
     },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -273,6 +241,22 @@
       },
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
     "aria-errormessage": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -280,6 +264,22 @@
         "type": "string"
       },
       "description": "Identifies the element that provides an error message for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onCopy": {
       "type": "ClipboardEventHandler<HTMLInputElement>",
@@ -721,16 +721,32 @@
     "children": {
       "type": "ReactNode | (values: ColorFieldRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
-            "name": "ColorFieldRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ColorFieldRenderProps",
+                  "name": "ColorFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -743,9 +759,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "string"
           },
           {
@@ -755,39 +768,9 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
-                      "name": "ColorFieldRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "ColorFieldRenderProps",
+                  "name": "ColorFieldRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -809,9 +792,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -822,46 +802,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
-                      "name": "ColorFieldRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "ColorFieldRenderProps",
+                  "name": "ColorFieldRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -3043,10 +2994,6 @@
                       },
                       {
                         "type": "identifier",
-                        "name": "\"invalid\""
-                      },
-                      {
-                        "type": "identifier",
                         "name": "\"fullscreenchange\""
                       },
                       {
@@ -3212,6 +3159,10 @@
                       {
                         "type": "identifier",
                         "name": "\"gotpointercapture\""
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "\"invalid\""
                       },
                       {
                         "type": "identifier",
@@ -3578,15 +3529,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "reset"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "invalid"
                         }
                       ]
                     },
@@ -3965,6 +3907,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "gotpointercapture"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "invalid"
                         }
                       ]
                     },
@@ -4535,10 +4486,6 @@
                       },
                       {
                         "type": "identifier",
-                        "name": "\"invalid\""
-                      },
-                      {
-                        "type": "identifier",
                         "name": "\"fullscreenchange\""
                       },
                       {
@@ -4704,6 +4651,10 @@
                       {
                         "type": "identifier",
                         "name": "\"gotpointercapture\""
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "\"invalid\""
                       },
                       {
                         "type": "identifier",
@@ -5070,15 +5021,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "reset"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "invalid"
                         }
                       ]
                     },
@@ -5457,6 +5399,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "gotpointercapture"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "invalid"
                         }
                       ]
                     },
@@ -20080,307 +20031,9 @@
       "typeParameters": [],
       "description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+color@3.9.2_react@19.2.0/node_modules/@react-stately/color/dist/types.d.ts:ColorFieldState": {
+    "ColorFieldRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+color@3.9.2_react@19.2.0/node_modules/@react-stately/color/dist/types.d.ts:ColorFieldState",
-      "name": "ColorFieldState",
-      "extends": [
-        {
-          "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.2_react@19.2.0/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
-          "name": "FormValidationState"
-        }
-      ],
-      "properties": {
-        "inputValue": {
-          "type": "property",
-          "name": "inputValue",
-          "value": {
-            "type": "string"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The current text value of the input. Updated as the user types,\nand formatted according to `formatOptions` on blur."
-        },
-        "colorValue": {
-          "type": "property",
-          "name": "colorValue",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-                "name": "Color"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The currently parsed color value, or null if the field is empty.\nUpdated based on the `inputValue` as the user types."
-        },
-        "defaultColorValue": {
-          "type": "property",
-          "name": "defaultColorValue",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-                "name": "Color"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The default value of the color field."
-        },
-        "setColorValue": {
-          "type": "method",
-          "name": "setColorValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "null"
-                    },
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
-                      "name": "Color"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the color value of the field."
-        },
-        "setInputValue": {
-          "type": "method",
-          "name": "setInputValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the current text value of the input."
-        },
-        "commit": {
-          "type": "method",
-          "name": "commit",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Updates the input value based on the currently parsed color value.\nTypically this is called when the field is blurred."
-        },
-        "increment": {
-          "type": "method",
-          "name": "increment",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Increments the current input value to the next step boundary, and fires `onChange`."
-        },
-        "decrement": {
-          "type": "method",
-          "name": "decrement",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Decrements the current input value to the next step boundary, and fires `onChange`."
-        },
-        "incrementToMax": {
-          "type": "method",
-          "name": "incrementToMax",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the current value to the maximum color value, and fires `onChange`."
-        },
-        "decrementToMin": {
-          "type": "method",
-          "name": "decrementToMin",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the current value to the minimum color value, and fires `onChange`."
-        },
-        "validate": {
-          "type": "method",
-          "name": "validate",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "boolean"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Validates a user input string.\nValues can be partially entered, and may be valid even if they cannot currently be parsed to a color.\nCan be used to implement validation as a user types."
-        },
-        "realtimeValidation": {
-          "type": "property",
-          "name": "realtimeValidation",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
-            "name": "ValidationResult"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Realtime validation results, updated as the user edits the value."
-        },
-        "displayValidation": {
-          "type": "property",
-          "name": "displayValidation",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
-            "name": "ValidationResult"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Currently displayed validation results, updated when the user commits their changes."
-        },
-        "updateValidation": {
-          "type": "method",
-          "name": "updateValidation",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "result",
-                "value": {
-                  "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
-                  "name": "ValidationResult"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Updates the current validation result. Not displayed to the user until `commitValidation` is called."
-        },
-        "resetValidation": {
-          "type": "method",
-          "name": "resetValidation",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Resets the displayed validation state to valid when the user resets the form."
-        },
-        "commitValidation": {
-          "type": "method",
-          "name": "commitValidation",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Commits the realtime validation so it is displayed to the user."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
       "name": "ColorFieldRenderProps",
-      "extends": [],
       "properties": {
         "isDisabled": {
           "type": "property",
@@ -20406,90 +20059,8 @@
           "type": "property",
           "name": "channel",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "hex"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "hue"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "saturation"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "brightness"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "lightness"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "red"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "green"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "blue"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "alpha"
-                  }
-                ]
-              }
-            ]
+            "type": "identifier",
+            "name": "\"hex\" | ColorChannel"
           },
           "optional": false,
           "readonly": false,
@@ -20499,17 +20070,14 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+color@3.9.2_react@19.2.0/node_modules/@react-stately/color/dist/types.d.ts:ColorFieldState",
+            "type": "identifier",
             "name": "ColorFieldState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the color field."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }

@@ -137,6 +137,16 @@ export const SKIP_RESOLVE_TYPES = new Set([
 ]);
 
 /**
+ * Types that should ALWAYS be expanded to show their full definition.
+ * These are custom utility types where the expanded form is more readable.
+ */
+export const ALWAYS_EXPAND_TYPES = new Set([
+  "ChildrenOrFunction",
+  "ClassNameOrFunction",
+  "StyleOrFunction",
+]);
+
+/**
  * Standard order for React Aria event props.
  * This ensures consistent ordering regardless of TypeScript's internal caching.
  * Order matches the declaration order in React Aria's type definitions.

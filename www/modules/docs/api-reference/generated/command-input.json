@@ -391,38 +391,6 @@
       },
       "description": "Regex pattern that the value of the input must match to be valid. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefpattern)."
     },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
     "enterKeyHint": {
       "type": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\"",
       "detailedType": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\" | undefined",
@@ -569,6 +537,22 @@
       },
       "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
     },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
     "aria-errormessage": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -660,6 +644,22 @@
         ]
       },
       "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onCopy": {
       "type": "ClipboardEventHandler<HTMLInputElement>",
@@ -905,8 +905,8 @@
       "description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
     },
     "type": {
-      "type": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\"",
-      "detailedType": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\" | undefined",
+      "type": "\"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | (string & {}) | \"password\"",
+      "detailedType": "\"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | (string & {}) | \"password\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -928,18 +928,6 @@
               {
                 "type": "stringLiteral",
                 "value": "text"
-              }
-            ]
-          },
-          {
-            "type": "intersection",
-            "types": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "identifier",
-                "name": "{}"
               }
             ]
           },
@@ -967,6 +955,18 @@
               {
                 "type": "stringLiteral",
                 "value": "email"
+              }
+            ]
+          },
+          {
+            "type": "intersection",
+            "types": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "identifier",
+                "name": "{}"
               }
             ]
           },
@@ -1027,16 +1027,32 @@
     "children": {
       "type": "ReactNode | (values: SearchFieldRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
-            "name": "SearchFieldRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SearchFieldRenderProps",
+                  "name": "SearchFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -1049,9 +1065,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "string"
           },
           {
@@ -1061,39 +1074,9 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
-                      "name": "SearchFieldRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "SearchFieldRenderProps",
+                  "name": "SearchFieldRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -1115,9 +1098,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -1128,46 +1108,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
-                      "name": "SearchFieldRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "SearchFieldRenderProps",
+                  "name": "SearchFieldRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -2111,10 +2062,6 @@
                       },
                       {
                         "type": "identifier",
-                        "name": "\"invalid\""
-                      },
-                      {
-                        "type": "identifier",
                         "name": "\"fullscreenchange\""
                       },
                       {
@@ -2280,6 +2227,10 @@
                       {
                         "type": "identifier",
                         "name": "\"gotpointercapture\""
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "\"invalid\""
                       },
                       {
                         "type": "identifier",
@@ -2646,15 +2597,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "reset"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "invalid"
                         }
                       ]
                     },
@@ -3033,6 +2975,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "gotpointercapture"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "invalid"
                         }
                       ]
                     },
@@ -3603,10 +3554,6 @@
                       },
                       {
                         "type": "identifier",
-                        "name": "\"invalid\""
-                      },
-                      {
-                        "type": "identifier",
                         "name": "\"fullscreenchange\""
                       },
                       {
@@ -3772,6 +3719,10 @@
                       {
                         "type": "identifier",
                         "name": "\"gotpointercapture\""
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "\"invalid\""
                       },
                       {
                         "type": "identifier",
@@ -4138,15 +4089,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "reset"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "invalid"
                         }
                       ]
                     },
@@ -4525,6 +4467,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "gotpointercapture"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "invalid"
                         }
                       ]
                     },
@@ -19148,55 +19099,9 @@
       "typeParameters": [],
       "description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+searchfield@3.5.16_react@19.2.0/node_modules/@react-stately/searchfield/dist/types.d.ts:SearchFieldState": {
+    "SearchFieldRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+searchfield@3.5.16_react@19.2.0/node_modules/@react-stately/searchfield/dist/types.d.ts:SearchFieldState",
-      "name": "SearchFieldState",
-      "extends": [],
-      "properties": {
-        "value": {
-          "type": "property",
-          "name": "value",
-          "value": {
-            "type": "string"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The current value of the search field."
-        },
-        "setValue": {
-          "type": "method",
-          "name": "setValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the value of the search field."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
       "name": "SearchFieldRenderProps",
-      "extends": [],
       "properties": {
         "isEmpty": {
           "type": "property",
@@ -19232,17 +19137,14 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+searchfield@3.5.16_react@19.2.0/node_modules/@react-stately/searchfield/dist/types.d.ts:SearchFieldState",
+            "type": "identifier",
             "name": "SearchFieldState"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the search field."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }

@@ -5,16 +5,32 @@
     "children": {
       "type": "ReactNode | (values: FieldErrorRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:FieldErrorRenderProps",
-            "name": "FieldErrorRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "FieldErrorRenderProps",
+                  "name": "FieldErrorRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -27,9 +43,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "string"
           },
           {
@@ -39,39 +52,9 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:FieldErrorRenderProps",
-                      "name": "FieldErrorRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "FieldErrorRenderProps",
+                  "name": "FieldErrorRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -93,9 +76,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -106,46 +86,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:FieldErrorRenderProps",
-                      "name": "FieldErrorRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "FieldErrorRenderProps",
+                  "name": "FieldErrorRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -163,182 +114,9 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ValidityState": {
+    "FieldErrorRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ValidityState",
-      "name": "ValidityState",
-      "extends": [],
-      "properties": {
-        "badInput": {
-          "type": "property",
-          "name": "badInput",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`badInput`** property of the ValidityState interface indicates if the user has provided input that the browser is unable to convert.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/badInput)"
-        },
-        "customError": {
-          "type": "property",
-          "name": "customError",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`customError`** property of the `ValidityState` interface returns `true` if an element doesn't meet the validation required in the custom validity set by the element's HTMLInputElement.setCustomValidity method.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/customError)"
-        },
-        "patternMismatch": {
-          "type": "property",
-          "name": "patternMismatch",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`patternMismatch`** property of the `ValidityState` interface indicates if the value of an input, after having been edited by the user, does not conform to the constraints set by the element's `pattern` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/patternMismatch)"
-        },
-        "rangeOverflow": {
-          "type": "property",
-          "name": "rangeOverflow",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`rangeOverflow`** property of the `ValidityState` interface indicates if the value of an input, after having been edited by the user, does not conform to the constraints set by the element's `max` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/rangeOverflow)"
-        },
-        "rangeUnderflow": {
-          "type": "property",
-          "name": "rangeUnderflow",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`rangeUnderflow`** property of the `ValidityState` interface indicates if the value of an input, after having been edited by the user, does not conform to the constraints set by the element's `min` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/rangeUnderflow)"
-        },
-        "stepMismatch": {
-          "type": "property",
-          "name": "stepMismatch",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`stepMismatch`** property of the `ValidityState` interface indicates if the value of an input, after having been edited by the user, does not conform to the constraints set by the element's `step` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/stepMismatch)"
-        },
-        "tooLong": {
-          "type": "property",
-          "name": "tooLong",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`tooLong`** property of the `ValidityState` interface indicates if the value of an input or textarea, after having been edited by the user, exceeds the maximum code-unit length established by the element's `maxlength` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/tooLong)"
-        },
-        "tooShort": {
-          "type": "property",
-          "name": "tooShort",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`tooShort`** property of the `ValidityState` interface indicates if the value of an input, button, select, output, fieldset or textarea, after having been edited by the user, is less than the minimum code-unit length established by the element's `minlength` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/tooShort)"
-        },
-        "typeMismatch": {
-          "type": "property",
-          "name": "typeMismatch",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`typeMismatch`** property of the `ValidityState` interface indicates if the value of an input, after having been edited by the user, does not conform to the constraints set by the element's `type` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/typeMismatch)"
-        },
-        "valid": {
-          "type": "property",
-          "name": "valid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`valid`** property of the `ValidityState` interface indicates if the value of an input element meets all its validation constraints, and is therefore considered to be valid.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/valid)"
-        },
-        "valueMissing": {
-          "type": "property",
-          "name": "valueMissing",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The read-only **`valueMissing`** property of the `ValidityState` interface indicates if a `required` control, such as an input, select, or textarea, has an empty value.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState/valueMissing)"
-        }
-      },
-      "typeParameters": [],
-      "description": "The **`ValidityState`** interface represents the _validity states_ that an element can be in, with respect to constraint validation.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/ValidityState)"
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
-      "name": "ValidationResult",
-      "extends": [],
-      "properties": {
-        "isInvalid": {
-          "type": "property",
-          "name": "isInvalid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the input value is invalid."
-        },
-        "validationErrors": {
-          "type": "property",
-          "name": "validationErrors",
-          "value": {
-            "type": "array",
-            "elementType": {
-              "type": "string"
-            }
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The current error messages for the input if it is invalid, otherwise an empty array."
-        },
-        "validationDetails": {
-          "type": "property",
-          "name": "validationDetails",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ValidityState",
-            "name": "ValidityState"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The native validation details for the input."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:FieldErrorRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:FieldErrorRenderProps",
       "name": "FieldErrorRenderProps",
-      "extends": [
-        {
-          "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.0/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
-          "name": "ValidationResult"
-        }
-      ],
       "properties": {
         "isInvalid": {
           "type": "property",
@@ -354,10 +132,8 @@
           "type": "property",
           "name": "validationErrors",
           "value": {
-            "type": "array",
-            "elementType": {
-              "type": "string"
-            }
+            "type": "identifier",
+            "name": "string[]"
           },
           "optional": false,
           "readonly": false,
@@ -367,17 +143,14 @@
           "type": "property",
           "name": "validationDetails",
           "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ValidityState",
+            "type": "identifier",
             "name": "ValidityState"
           },
           "optional": false,
           "readonly": false,
           "description": "The native validation details for the input."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }

@@ -276,16 +276,32 @@
     "children": {
       "type": "ReactNode | (values: ColorSwatchPickerItemRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerItemRenderProps",
-            "name": "ColorSwatchPickerItemRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ColorSwatchPickerItemRenderProps",
+                  "name": "ColorSwatchPickerItemRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -298,9 +314,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "string"
           },
           {
@@ -310,39 +323,9 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerItemRenderProps",
-                      "name": "ColorSwatchPickerItemRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "ColorSwatchPickerItemRenderProps",
+                  "name": "ColorSwatchPickerItemRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -364,9 +347,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -377,46 +357,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerItemRenderProps",
-                      "name": "ColorSwatchPickerItemRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "ColorSwatchPickerItemRenderProps",
+                  "name": "ColorSwatchPickerItemRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -1688,46 +1639,15 @@
       "typeParameters": [],
       "description": "Represents a color value."
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerItemRenderProps": {
+    "ColorSwatchPickerItemRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerItemRenderProps",
       "name": "ColorSwatchPickerItemRenderProps",
-      "extends": [
-        {
-          "type": "application",
-          "base": {
-            "type": "identifier",
-            "name": "Omit"
-          },
-          "typeParameters": [
-            {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ListBoxItemRenderProps",
-              "name": "ListBoxItemRenderProps"
-            },
-            {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "stringLiteral",
-                  "value": "selectionBehavior"
-                },
-                {
-                  "type": "stringLiteral",
-                  "value": "selectionMode"
-                }
-              ]
-            }
-          ]
-        }
-      ],
       "properties": {
         "color": {
           "type": "property",
           "name": "color",
           "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.0/node_modules/@react-types/color/src/index.d.ts:Color",
+            "type": "identifier",
             "name": "Color"
           },
           "optional": false,
@@ -1758,20 +1678,8 @@
           "type": "property",
           "name": "isDropTarget",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
-              }
-            ]
+            "type": "identifier",
+            "name": "boolean | undefined"
           },
           "optional": true,
           "readonly": false,
@@ -1821,20 +1729,8 @@
           "type": "property",
           "name": "allowsDragging",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
-              }
-            ]
+            "type": "identifier",
+            "name": "boolean | undefined"
           },
           "optional": true,
           "readonly": false,
@@ -1844,28 +1740,14 @@
           "type": "property",
           "name": "isDragging",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "booleanLiteral",
-                "value": false
-              },
-              {
-                "type": "booleanLiteral",
-                "value": true
-              }
-            ]
+            "type": "identifier",
+            "name": "boolean | undefined"
           },
           "optional": true,
           "readonly": false,
           "description": "Whether the item is currently being dragged."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     },
     "HoverEvent": {
       "type": "interface",

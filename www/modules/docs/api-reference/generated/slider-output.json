@@ -5,16 +5,32 @@
     "children": {
       "type": "ReactNode | (values: SliderRenderProps) => ReactNode",
       "typeAst": {
-        "type": "application",
-        "base": {
-          "type": "identifier",
-          "name": "ChildrenOrFunction"
-        },
-        "typeParameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
-            "name": "SliderRenderProps"
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SliderRenderProps",
+                  "name": "SliderRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
           }
         ]
       },
@@ -27,9 +43,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "string"
           },
           {
@@ -39,39 +52,9 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
-                      "name": "SliderRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultClassName": {
-                          "type": "property",
-                          "name": "defaultClassName",
-                          "value": {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "identifier",
-                                "name": "undefined"
-                              },
-                              {
-                                "type": "identifier",
-                                "name": "string"
-                              }
-                            ]
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "SliderRenderProps",
+                  "name": "SliderRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -93,9 +76,6 @@
         "type": "union",
         "elements": [
           {
-            "type": "undefined"
-          },
-          {
             "type": "identifier",
             "name": "CSSProperties"
           },
@@ -106,46 +86,17 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "intersection",
-                  "types": [
-                    {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
-                      "name": "SliderRenderProps"
-                    },
-                    {
-                      "type": "objectLiteral",
-                      "properties": {
-                        "defaultStyle": {
-                          "type": "property",
-                          "name": "defaultStyle",
-                          "value": {
-                            "type": "identifier",
-                            "name": "CSSProperties"
-                          },
-                          "optional": false,
-                          "readonly": false,
-                          "description": ""
-                        }
-                      }
-                    }
-                  ]
+                  "type": "link",
+                  "id": "SliderRenderProps",
+                  "name": "SliderRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
@@ -155,592 +106,9 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.2_react@19.2.0/node_modules/@react-stately/slider/dist/types.d.ts:SliderState": {
+    "SliderRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.2_react@19.2.0/node_modules/@react-stately/slider/dist/types.d.ts:Slider.State",
-      "name": "Slider.State",
-      "extends": [],
-      "properties": {
-        "values": {
-          "type": "property",
-          "name": "values",
-          "value": {
-            "type": "array",
-            "elementType": {
-              "type": "number"
-            }
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Values managed by the slider by thumb index."
-        },
-        "defaultValues": {
-          "type": "property",
-          "name": "defaultValues",
-          "value": {
-            "type": "array",
-            "elementType": {
-              "type": "number"
-            }
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The default values for each thumb."
-        },
-        "getThumbValue": {
-          "type": "method",
-          "name": "getThumbValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "number"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Get the value for the specified thumb."
-        },
-        "setThumbValue": {
-          "type": "method",
-          "name": "setThumbValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets the value for the specified thumb.\nThe actual value set will be clamped and rounded according to min/max/step."
-        },
-        "setThumbPercent": {
-          "type": "method",
-          "name": "setThumbPercent",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "percent",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Sets value for the specified thumb by percent offset (between 0 and 1)."
-        },
-        "isThumbDragging": {
-          "type": "method",
-          "name": "isThumbDragging",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "boolean"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Whether the specific thumb is being dragged."
-        },
-        "setThumbDragging": {
-          "type": "method",
-          "name": "setThumbDragging",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "dragging",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Set is dragging on the specified thumb."
-        },
-        "focusedThumb": {
-          "type": "property",
-          "name": "focusedThumb",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Currently-focused thumb index."
-        },
-        "setFocusedThumb": {
-          "type": "method",
-          "name": "setFocusedThumb",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "undefined"
-                    },
-                    {
-                      "type": "number"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Set focused true on specified thumb. This will remove focus from\nany thumb that had it before."
-        },
-        "getThumbPercent": {
-          "type": "method",
-          "name": "getThumbPercent",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "number"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the specified thumb's value as a percentage from 0 to 1."
-        },
-        "getValuePercent": {
-          "type": "method",
-          "name": "getValuePercent",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "number"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the value as a percent between the min and max of the slider."
-        },
-        "getThumbValueLabel": {
-          "type": "method",
-          "name": "getThumbValueLabel",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the string label for the specified thumb's value, per props.formatOptions."
-        },
-        "getFormattedValue": {
-          "type": "method",
-          "name": "getFormattedValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the string label for the value, per props.formatOptions."
-        },
-        "getThumbMinValue": {
-          "type": "method",
-          "name": "getThumbMinValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "number"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the min allowed value for the specified thumb."
-        },
-        "getThumbMaxValue": {
-          "type": "method",
-          "name": "getThumbMaxValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "number"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns the max allowed value for the specified thumb."
-        },
-        "getPercentValue": {
-          "type": "method",
-          "name": "getPercentValue",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "percent",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "number"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Converts a percent along track (between 0 and 1) to the corresponding value."
-        },
-        "isThumbEditable": {
-          "type": "method",
-          "name": "isThumbEditable",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "boolean"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns if the specified thumb is editable."
-        },
-        "setThumbEditable": {
-          "type": "method",
-          "name": "setThumbEditable",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "editable",
-                "value": {
-                  "type": "boolean"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Set the specified thumb's editable state."
-        },
-        "incrementThumb": {
-          "type": "method",
-          "name": "incrementThumb",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "stepSize",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "undefined"
-                    },
-                    {
-                      "type": "number"
-                    }
-                  ]
-                },
-                "optional": true,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Increments the value of the thumb by the step or page amount."
-        },
-        "decrementThumb": {
-          "type": "method",
-          "name": "decrementThumb",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "index",
-                "value": {
-                  "type": "number"
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "stepSize",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "undefined"
-                    },
-                    {
-                      "type": "number"
-                    }
-                  ]
-                },
-                "optional": true,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Decrements the value of the thumb by the step or page amount."
-        },
-        "step": {
-          "type": "property",
-          "name": "step",
-          "value": {
-            "type": "number"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The step amount for the slider."
-        },
-        "pageSize": {
-          "type": "property",
-          "name": "pageSize",
-          "value": {
-            "type": "number"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The page size for the slider, used to do a bigger step."
-        },
-        "orientation": {
-          "type": "property",
-          "name": "orientation",
-          "value": {
-            "type": "identifier",
-            "name": "Orientation"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The orientation of the slider."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the slider is disabled."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
       "name": "SliderRenderProps",
-      "extends": [],
       "properties": {
         "orientation": {
           "type": "property",
@@ -767,17 +135,14 @@
           "type": "property",
           "name": "state",
           "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.2_react@19.2.0/node_modules/@react-stately/slider/dist/types.d.ts:Slider.State",
+            "type": "identifier",
             "name": "Slider.State"
           },
           "optional": false,
           "readonly": false,
           "description": "State of the slider."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }
