@@ -27,8 +27,8 @@
       "description": "Submitted as a pair with the button's value as part of the form data."
     },
     "variant": {
-      "type": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"primary\" | \"default\" | \"quiet\"",
-      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"primary\" | \"default\" | \"quiet\" | undefined",
+      "type": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\"",
+      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -50,11 +50,11 @@
           },
           {
             "type": "stringLiteral",
-            "value": "primary"
+            "value": "default"
           },
           {
             "type": "stringLiteral",
-            "value": "default"
+            "value": "primary"
           },
           {
             "type": "stringLiteral",
@@ -986,11 +986,14 @@
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "className": {
-      "type": "ClassNameOrFunction<ButtonRenderProps>",
-      "detailedType": "ClassNameOrFunction<ButtonRenderProps> | undefined",
+      "type": "string | (values: ButtonRenderProps) => string",
+      "detailedType": "string | (values: ButtonRenderProps) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "string"
           },
@@ -1001,9 +1004,39 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "ButtonRenderProps",
-                  "name": "ButtonRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
+                      "name": "ButtonRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
@@ -1019,11 +1052,14 @@
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<ButtonRenderProps>",
-      "detailedType": "StyleOrFunction<ButtonRenderProps> | undefined",
+      "type": "CSSProperties | (values: ButtonRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: ButtonRenderProps) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "identifier",
             "name": "CSSProperties"
@@ -1035,17 +1071,46 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "ButtonRenderProps",
-                  "name": "ButtonRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
+                      "name": "ButtonRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
             },
             "typeParameters": []
           }

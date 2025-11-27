@@ -5,10 +5,7 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 
-import {
-  Type,
-  TypeRendererProvider,
-} from "./components/type-renderer";
+import { Type, TypeRendererProvider } from "./components/type-renderer";
 import { DisclosureGroup } from "./disclosure-group";
 import type { TType, TypeLinksRegistry } from "./types/type-ast";
 
@@ -74,18 +71,18 @@ export function PropsTable({
 
   return (
     <TypeRendererProvider links={typeLinks}>
-      <div className="my-6 w-full overflow-hidden rounded-md border">
-        <table className="w-full border-collapse text-sm">
+      <div className="my-6 w-full overflow-hidden rounded-md border text-sm">
+        <table className="w-full border-collapse">
           {/* Header */}
           <thead className="border-b bg-card">
             <tr className={GRID_LAYOUT}>
-              <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+              <th className="px-3 py-2 text-left font-medium text-fg-muted">
                 Prop
               </th>
-              <th className="px-3 py-2 text-left font-medium text-fg-muted text-xs">
+              <th className="px-3 py-2 text-left font-medium text-fg-muted">
                 Type
               </th>
-              <th className="hidden px-3 py-2 text-left font-medium text-fg-muted text-xs md:table-cell">
+              <th className="hidden px-3 py-2 text-left font-medium text-fg-muted md:table-cell">
                 Default
               </th>
               <th className="w-10 px-3 py-2" />
@@ -157,7 +154,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
             <code className="whitespace-nowrap font-mono text-[0.8125rem] text-fg">
               {prop.name}
               {prop.required && (
-                <sup className="top-[-0.3em] ml-0.5 text-danger text-xs">*</sup>
+                <sup className="top-[-0.3em] ml-0.5 text-danger">*</sup>
               )}
             </code>
           </button>
@@ -263,7 +260,7 @@ function DescriptionItem({
         hasSeparator && "border-border/50 border-t pt-2 sm:border-t-0 sm:pt-0",
       )}
     >
-      <dt className="mb-1 font-medium text-fg-muted text-xs sm:mb-0 sm:py-1">
+      <dt className="mb-1 font-medium text-fg-muted sm:mb-0 sm:py-1">
         {label}
       </dt>
       <dd className="sm:py-1">{children}</dd>

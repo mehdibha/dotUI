@@ -787,7 +787,7 @@
       "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
-      "type": "ChildrenOrFunction<ComboBoxRenderProps>",
+      "type": "ReactNode | (values: ComboBoxRenderProps) => ReactNode",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -821,11 +821,14 @@
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<ComboBoxRenderProps>",
-      "detailedType": "StyleOrFunction<ComboBoxRenderProps> | undefined",
+      "type": "CSSProperties | (values: ComboBoxRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: ComboBoxRenderProps) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "identifier",
             "name": "CSSProperties"
@@ -837,17 +840,46 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "ComboBoxRenderProps",
-                  "name": "ComboBoxRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps",
+                      "name": "ComboBoxRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
             },
             "typeParameters": []
           }
@@ -1012,9 +1044,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],

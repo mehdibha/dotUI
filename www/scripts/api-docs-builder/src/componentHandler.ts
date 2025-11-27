@@ -34,6 +34,38 @@ interface RenderPropInfo {
 
 const registryDir = path.resolve(process.cwd(), "../packages/registry/src");
 
+/**
+ * Expand type aliases into their readable form
+ * Handles types with or without | undefined suffix
+ * e.g., ChildrenOrFunction<T> | undefined → ReactNode | (values: T) => ReactNode | undefined
+ */
+function expandTypeAliasInString(type: string): string {
+  // Check if type ends with | undefined
+  const hasUndefined = type.endsWith(" | undefined");
+  const baseType = hasUndefined ? type.slice(0, -" | undefined".length) : type;
+  const suffix = hasUndefined ? " | undefined" : "";
+
+  // ChildrenOrFunction<T> → ReactNode | (values: T) => ReactNode
+  const childrenMatch = baseType.match(/^ChildrenOrFunction<(.+)>$/);
+  if (childrenMatch) {
+    return `ReactNode | (values: ${childrenMatch[1]}) => ReactNode${suffix}`;
+  }
+
+  // ClassNameOrFunction<T> → string | (values: T) => string
+  const classNameMatch = baseType.match(/^ClassNameOrFunction<(.+)>$/);
+  if (classNameMatch) {
+    return `string | (values: ${classNameMatch[1]}) => string${suffix}`;
+  }
+
+  // StyleOrFunction<T> → CSSProperties | (values: T) => CSSProperties
+  const styleMatch = baseType.match(/^StyleOrFunction<(.+)>$/);
+  if (styleMatch) {
+    return `CSSProperties | (values: ${styleMatch[1]}) => CSSProperties${suffix}`;
+  }
+
+  return type;
+}
+
 function kebabToPascal(str: string): string {
   return str
     .split("-")
@@ -155,10 +187,11 @@ async function getPropsWithTypeChecker(
           // Check if optional
           const isOptional = (prop.flags & ts.SymbolFlags.Optional) !== 0;
 
-          // Full type (for detailedType)
-          const fullType = formatTypeString(typeString);
+          // Full type (for detailedType) - also expand aliases
+          const rawType = formatTypeString(typeString);
+          const fullType = expandTypeAliasInString(rawType);
 
-          // Short type - remove | undefined for optional props (like base-ui)
+          // Remove | undefined first for optional props
           const shortType = isOptional
             ? removeUndefinedFromType(fullType)
             : fullType;

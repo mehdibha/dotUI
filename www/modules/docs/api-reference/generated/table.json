@@ -35,22 +35,13 @@
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -69,6 +60,15 @@
               },
               {
                 "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -289,22 +289,13 @@
       "description": "Whether the table columns are resizable."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -323,6 +314,15 @@
               },
               {
                 "type": "any"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -456,11 +456,14 @@
       "description": "The elements that make up the table. Includes the TableHeader, TableBody, Columns, and Rows."
     },
     "className": {
-      "type": "ClassNameOrFunction<TableRenderProps>",
-      "detailedType": "ClassNameOrFunction<TableRenderProps> | undefined",
+      "type": "string | (values: TableRenderProps) => string",
+      "detailedType": "string | (values: TableRenderProps) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "string"
           },
@@ -471,9 +474,39 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "TableRenderProps",
-                  "name": "TableRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
+                      "name": "TableRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
@@ -489,11 +522,14 @@
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<TableRenderProps>",
-      "detailedType": "StyleOrFunction<TableRenderProps> | undefined",
+      "type": "CSSProperties | (values: TableRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: TableRenderProps) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "identifier",
             "name": "CSSProperties"
@@ -505,17 +541,46 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "TableRenderProps",
-                  "name": "TableRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
+                      "name": "TableRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
             },
             "typeParameters": []
           }
@@ -1210,9 +1275,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],

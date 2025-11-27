@@ -763,9 +763,9 @@
           "optional": false,
           "description": "Returns an iterable of values in the map"
         },
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -797,9 +797,9 @@
           "optional": false,
           "description": "Returns an iterable of entries in the map."
         },
-        "__@toStringTag@630": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@630",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },

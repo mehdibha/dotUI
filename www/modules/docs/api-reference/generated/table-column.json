@@ -234,7 +234,7 @@
       "description": "The unique id of the column."
     },
     "children": {
-      "type": "ChildrenOrFunction<ColumnRenderProps>",
+      "type": "ReactNode | (values: ColumnRenderProps) => ReactNode",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -268,11 +268,14 @@
       "description": "The children of the component. A function may be provided to alter the children based on component state."
     },
     "className": {
-      "type": "ClassNameOrFunction<ColumnRenderProps>",
-      "detailedType": "ClassNameOrFunction<ColumnRenderProps> | undefined",
+      "type": "string | (values: ColumnRenderProps) => string",
+      "detailedType": "string | (values: ColumnRenderProps) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "string"
           },
@@ -283,9 +286,39 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "ColumnRenderProps",
-                  "name": "ColumnRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColumnRenderProps",
+                      "name": "ColumnRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
@@ -301,11 +334,14 @@
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<ColumnRenderProps>",
-      "detailedType": "StyleOrFunction<ColumnRenderProps> | undefined",
+      "type": "CSSProperties | (values: ColumnRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: ColumnRenderProps) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "identifier",
             "name": "CSSProperties"
@@ -317,17 +353,46 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "ColumnRenderProps",
-                  "name": "ColumnRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColumnRenderProps",
+                      "name": "ColumnRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
             },
             "typeParameters": []
           }

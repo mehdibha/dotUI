@@ -83,11 +83,17 @@ function getShortType(name: string, type: string | undefined): string {
     return "function";
   }
 
-  // className/style render props
-  if (name === "className" && type.includes("=>")) {
+  // Render prop patterns - simplify function signatures
+  // ReactNode | (values: T) => ReactNode → ReactNode | function
+  if (type.includes("=> ReactNode")) {
+    return "ReactNode | function";
+  }
+  // string | (values: T) => string → string | function
+  if (type.includes("=> string") && type.includes("values:")) {
     return "string | function";
   }
-  if (name === "style" && type.includes("=>")) {
+  // CSSProperties | (values: T) => CSSProperties → CSSProperties | function
+  if (type.includes("=> CSSProperties")) {
     return "CSSProperties | function";
   }
 

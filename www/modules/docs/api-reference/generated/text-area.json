@@ -1325,11 +1325,14 @@
       "description": "Specify styles using Tailwind CSS classes. This feature is currently experimental.\nIf `style` prop is also specified, styles generated with `tw` prop will be overridden.\n\nExample:\n- `tw='w-full h-full bg-blue-200'`\n- `tw='text-9xl'`\n- `tw='text-[80px]'`"
     },
     "className": {
-      "type": "ClassNameOrFunction<InputRenderProps>",
-      "detailedType": "ClassNameOrFunction<InputRenderProps> | undefined",
+      "type": "string | (values: InputRenderProps) => string",
+      "detailedType": "string | (values: InputRenderProps) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "string"
           },
@@ -1340,9 +1343,39 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "InputRenderProps",
-                  "name": "InputRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:InputRenderProps",
+                      "name": "InputRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
@@ -1358,11 +1391,14 @@
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<InputRenderProps>",
-      "detailedType": "StyleOrFunction<InputRenderProps> | undefined",
+      "type": "CSSProperties | (values: InputRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: InputRenderProps) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "identifier",
             "name": "CSSProperties"
@@ -1374,17 +1410,46 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "InputRenderProps",
-                  "name": "InputRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:InputRenderProps",
+                      "name": "InputRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
             },
             "typeParameters": []
           }

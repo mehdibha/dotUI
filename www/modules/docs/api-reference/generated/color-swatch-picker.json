@@ -129,11 +129,14 @@
       "description": "The children of the ColorSwatchPicker."
     },
     "className": {
-      "type": "ClassNameOrFunction<ColorSwatchPickerRenderProps>",
-      "detailedType": "ClassNameOrFunction<ColorSwatchPickerRenderProps> | undefined",
+      "type": "string | (values: ColorSwatchPickerRenderProps) => string",
+      "detailedType": "string | (values: ColorSwatchPickerRenderProps) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "string"
           },
@@ -144,9 +147,39 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "ColorSwatchPickerRenderProps",
-                  "name": "ColorSwatchPickerRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerRenderProps",
+                      "name": "ColorSwatchPickerRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultClassName": {
+                          "type": "property",
+                          "name": "defaultClassName",
+                          "value": {
+                            "type": "union",
+                            "elements": [
+                              {
+                                "type": "identifier",
+                                "name": "undefined"
+                              },
+                              {
+                                "type": "identifier",
+                                "name": "string"
+                              }
+                            ]
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
@@ -162,11 +195,14 @@
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "StyleOrFunction<ColorSwatchPickerRenderProps>",
-      "detailedType": "StyleOrFunction<ColorSwatchPickerRenderProps> | undefined",
+      "type": "CSSProperties | (values: ColorSwatchPickerRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: ColorSwatchPickerRenderProps) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "undefined"
+          },
           {
             "type": "identifier",
             "name": "CSSProperties"
@@ -178,17 +214,46 @@
                 "type": "parameter",
                 "name": "values",
                 "value": {
-                  "type": "link",
-                  "id": "ColorSwatchPickerRenderProps",
-                  "name": "ColorSwatchPickerRenderProps"
+                  "type": "intersection",
+                  "types": [
+                    {
+                      "type": "link",
+                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchPickerRenderProps",
+                      "name": "ColorSwatchPickerRenderProps"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "defaultStyle": {
+                          "type": "property",
+                          "name": "defaultStyle",
+                          "value": {
+                            "type": "identifier",
+                            "name": "CSSProperties"
+                          },
+                          "optional": false,
+                          "readonly": false,
+                          "description": ""
+                        }
+                      }
+                    }
+                  ]
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "CSSProperties"
+                }
+              ]
             },
             "typeParameters": []
           }

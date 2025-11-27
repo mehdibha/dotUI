@@ -130,7 +130,7 @@
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
     },
     "children": {
-      "type": "ChildrenOrFunction<ColorPickerRenderProps>",
+      "type": "ReactNode | (values: ColorPickerRenderProps) => ReactNode",
       "typeAst": {
         "type": "union",
         "elements": [
