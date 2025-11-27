@@ -92,7 +92,11 @@ async function run(options: RunOptions) {
   // Generate JSON files
   for (const exportNode of propsExports) {
     try {
-      const componentRef = await formatComponentData(exportNode, parserContext, absoluteConfigPath);
+      const componentRef = await formatComponentData(
+        exportNode,
+        parserContext,
+        absoluteConfigPath,
+      );
       const json = `${JSON.stringify(componentRef, null, 2)}\n`;
 
       // Remove "Props" suffix for filename

@@ -247,10 +247,7 @@ function Identifier({ name }: { name: string }) {
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(
-          styles.variable,
-          "underline underline-offset-2",
-        )}
+        className={cn(styles.variable, "underline underline-offset-2")}
       >
         {name}
       </a>
