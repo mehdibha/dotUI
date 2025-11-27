@@ -181,7 +181,8 @@ export function groupProps(
 
 /**
  * Determines if a prop should be skipped based on special conditions
- * These rules mirror the logic from s2-docs PropTable
+ * These rules mirror the logic from s2-docs PropTable exactly
+ * See: s2-docs/src/PropTable.tsx groupProps function
  */
 function shouldSkipProp(
   propName: string,
@@ -191,52 +192,67 @@ function shouldSkipProp(
   const prop = props[propName];
   if (!prop) return true;
 
-  // "id" should only go to Accessibility if it's a string type
+  // s2-docs: props[propName].value.type !== "string"
+  // "id" should only go to Accessibility if AST type is "string"
   if (propName === "id" && groupName === "Accessibility") {
-    return !prop.type.includes("string");
+    return prop.typeAst?.type !== "string";
   }
 
   // "value" in Value group: only if defaultValue exists
-  // "value" in Forms group: only if type is string
+  // "value" in Forms group: only if AST type is "string"
   if (propName === "value") {
     if (groupName === "Value" && !props.defaultValue) {
       return true;
     }
-    if (groupName === "Forms" && !prop.type.includes("string")) {
+    // s2-docs: props[propName].value.type !== "string"
+    if (groupName === "Forms" && prop.typeAst?.type !== "string") {
       return true;
     }
   }
 
   // "type" in Forms group: only if description mentions form
+  // s2-docs: !props[propName].description?.includes("form")
   if (propName === "type" && groupName === "Forms") {
     return !prop.description?.toLowerCase().includes("form");
   }
 
   // "children" in Content group: only if items or columns exist
+  // s2-docs: !props.items && !props.columns
   if (propName === "children" && groupName === "Content") {
     return !props.items && !props.columns;
   }
 
-  // "target" in Links: skip if not an identifier type (for links)
-  // This is a simplified check
+  // s2-docs: props[propName].value.type !== "identifier"
+  // But s2-docs stores optional separately, so value doesn't include | undefined
+  // Our typeAst includes | undefined as a union, so we check the base type
   if (propName === "target" && groupName === "Links") {
-    // Keep if it looks like a link target type
-    return (
-      !prop.type.includes("_blank") &&
-      !prop.type.includes("_self") &&
-      !prop.type.includes("_parent")
-    );
+    const ast = prop.typeAst;
+    if (!ast) return true;
+
+    // Direct identifier - include in Links
+    if (ast.type === "identifier") return false;
+
+    // Union - check if any non-nullish element exists (the base type)
+    if (ast.type === "union" && "elements" in ast) {
+      const elements = ast.elements as Array<{ type: string }>;
+      const hasNonNullishType = elements.some(
+        (el) => el.type !== "undefined" && el.type !== "null",
+      );
+      return !hasNonNullishType;
+    }
+
+    return true;
   }
 
-  // "placement" in Overlay: only if it's the full placement union (22 elements)
-  // Simplified: check if it has typical overlay placement values
+  // s2-docs: props[propName].value.type !== "union" || props[propName].value.elements.length !== 22
+  // "placement" in Overlay: only if it's a union with exactly 22 elements
   if (propName === "placement" && groupName === "Overlay") {
-    const hasOverlayPlacement =
-      prop.type.includes("top") &&
-      prop.type.includes("bottom") &&
-      prop.type.includes("left") &&
-      prop.type.includes("right");
-    return !hasOverlayPlacement;
+    if (prop.typeAst?.type !== "union") {
+      return true;
+    }
+    const elements =
+      "elements" in prop.typeAst ? prop.typeAst.elements : undefined;
+    return !elements || elements.length !== 22;
   }
 
   return false;
