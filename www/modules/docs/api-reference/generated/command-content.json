@@ -10,275 +10,6 @@
       },
       "description": "Whether to use virtualization for large lists."
     },
-    "isLoading": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the list box is in a loading state."
-    },
-    "onFocus": {
-      "type": "((e: FocusEvent<Element, Element>) => void)",
-      "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "e",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the element receives focus."
-    },
-    "onBlur": {
-      "type": "((e: FocusEvent<Element, Element>) => void)",
-      "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "e",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the element loses focus."
-    },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isFocused",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the element's focus status changes."
-    },
-    "selectionBehavior": {
-      "type": "SelectionBehavior",
-      "detailedType": "SelectionBehavior | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "toggle"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "replace"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "How multiple selection should behave in the collection.",
-      "default": "\"toggle\""
-    },
-    "dragAndDropHooks": {
-      "type": "DragAndDropHooks<NoInfer<T>>",
-      "detailedType": "DragAndDropHooks<NoInfer<T>> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "intersection",
-            "types": [
-              {
-                "type": "application",
-                "base": {
-                  "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DragHooks",
-                  "name": "DragHooks"
-                },
-                "typeParameters": [
-                  {
-                    "type": "identifier",
-                    "name": "NoInfer<T>"
-                  }
-                ]
-              },
-              {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropHooks",
-                "name": "DropHooks"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The drag and drop hooks returned by `useDragAndDrop` used to enable drag and drop behavior for the ListBox."
-    },
-    "renderEmptyState": {
-      "type": "((props: ListBoxRenderProps) => ReactNode)",
-      "detailedType": "((props: ListBoxRenderProps) => ReactNode) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "props",
-            "value": {
-              "type": "link",
-              "id": "ListBoxRenderProps",
-              "name": "ListBoxRenderProps"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "identifier",
-          "name": "ReactNode"
-        },
-        "typeParameters": []
-      },
-      "description": "Provides content to display when there are no items in the list."
-    },
-    "layout": {
-      "type": "\"grid\" | \"stack\"",
-      "detailedType": "\"grid\" | \"stack\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "grid"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "stack"
-          }
-        ]
-      },
-      "description": "Whether the items are arranged in a stack or grid.",
-      "default": "'stack'"
-    },
-    "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "horizontal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "vertical"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The primary orientation of the items. Usually this is the\ndirection that the collection scrolls.",
-      "default": "'vertical'"
-    },
     "autoFocus": {
       "type": "boolean | FocusStrategy",
       "detailedType": "boolean | FocusStrategy | undefined",
@@ -318,150 +49,6 @@
       },
       "description": "Whether to auto focus the listbox or an option."
     },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "disabledKeys": {
-      "type": "Iterable<Key>",
-      "detailedType": "Iterable<Key> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
-    },
-    "items": {
-      "type": "Iterable<T>",
-      "detailedType": "Iterable<T> | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "typeParameter",
-                "name": "T",
-                "constraint": {
-                  "type": "identifier",
-                  "name": "object"
-                },
-                "default": null
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Item objects in the collection."
-    },
-    "disallowEmptySelection": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the collection allows empty selection."
-    },
-    "onSelectionChange": {
-      "type": "((keys: Selection) => void)",
-      "detailedType": "((keys: Selection) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "keys",
-            "value": {
-              "type": "link",
-              "id": "Selection",
-              "name": "Selection"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the selection changes."
-    },
     "shouldFocusWrap": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -469,190 +56,6 @@
         "type": "boolean"
       },
       "description": "Whether focus should wrap around when the end/start is reached."
-    },
-    "shouldSelectOnPressUp": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether selection should occur on press up instead of press down."
-    },
-    "shouldFocusOnHover": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether options should be focused when the user hovers over them."
-    },
-    "onAction": {
-      "type": "((key: Key) => void)",
-      "detailedType": "((key: Key) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "key",
-            "value": {
-              "type": "link",
-              "id": "Key",
-              "name": "Key"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a user performs an action on an item. The exact user event depends on\nthe collection's `selectionBehavior` prop and the interaction modality."
-    },
-    "escapeKeyBehavior": {
-      "type": "\"none\" | \"clearSelection\"",
-      "detailedType": "\"none\" | \"clearSelection\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "none"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "clearSelection"
-          }
-        ]
-      },
-      "description": "Whether pressing the escape key should clear selection in the listbox or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
-      "default": "'clearSelection'"
-    },
-    "selectionMode": {
-      "type": "SelectionMode",
-      "detailedType": "SelectionMode | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "multiple"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "single"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "none"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The type of selection that is allowed in the collection."
-    },
-    "selectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The currently selected keys in the collection (controlled)."
-    },
-    "defaultSelectedKeys": {
-      "type": "Iterable<Key> | \"all\"",
-      "detailedType": "Iterable<Key> | \"all\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "children": {
       "type": "ReactNode | ((item: T) => ReactNode)",
@@ -841,6 +244,603 @@
         ]
       },
       "description": "The contents of the collection."
+    },
+    "items": {
+      "type": "Iterable<T>",
+      "detailedType": "Iterable<T> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "identifier",
+                  "name": "object"
+                },
+                "default": null
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Item objects in the collection."
+    },
+    "disabledKeys": {
+      "type": "Iterable<Key>",
+      "detailedType": "Iterable<Key> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
+    },
+    "selectionMode": {
+      "type": "SelectionMode",
+      "detailedType": "SelectionMode | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "multiple"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "single"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The type of selection that is allowed in the collection."
+    },
+    "disallowEmptySelection": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the collection allows empty selection."
+    },
+    "selectedKeys": {
+      "type": "\"all\" | Iterable<Key>",
+      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
+              }
+            ]
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The currently selected keys in the collection (controlled)."
+    },
+    "defaultSelectedKeys": {
+      "type": "\"all\" | Iterable<Key>",
+      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "all"
+              }
+            ]
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The initial selected keys in the collection (uncontrolled)."
+    },
+    "onSelectionChange": {
+      "type": "((keys: Selection) => void)",
+      "detailedType": "((keys: Selection) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "keys",
+            "value": {
+              "type": "link",
+              "id": "Selection",
+              "name": "Selection"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the selection changes."
+    },
+    "onFocus": {
+      "type": "((e: FocusEvent<Element, Element>) => void)",
+      "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FocusEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the element receives focus."
+    },
+    "onBlur": {
+      "type": "((e: FocusEvent<Element, Element>) => void)",
+      "detailedType": "((e: FocusEvent<Element, Element>) => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FocusEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "Element"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the element loses focus."
+    },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
+    "isLoading": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the list box is in a loading state."
+    },
+    "selectionBehavior": {
+      "type": "SelectionBehavior",
+      "detailedType": "SelectionBehavior | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "toggle"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "replace"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "How multiple selection should behave in the collection.",
+      "default": "\"toggle\""
+    },
+    "dragAndDropHooks": {
+      "type": "DragAndDropHooks<NoInfer<T>>",
+      "detailedType": "DragAndDropHooks<NoInfer<T>> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "intersection",
+            "types": [
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DragHooks",
+                  "name": "DragHooks"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "NoInfer<T>"
+                  }
+                ]
+              },
+              {
+                "type": "link",
+                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/react-aria-components/dist/types.d.ts:DropHooks",
+                "name": "DropHooks"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The drag and drop hooks returned by `useDragAndDrop` used to enable drag and drop behavior for the ListBox."
+    },
+    "renderEmptyState": {
+      "type": "((props: ListBoxRenderProps) => ReactNode)",
+      "detailedType": "((props: ListBoxRenderProps) => ReactNode) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "props",
+            "value": {
+              "type": "link",
+              "id": "ListBoxRenderProps",
+              "name": "ListBoxRenderProps"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "identifier",
+          "name": "ReactNode"
+        },
+        "typeParameters": []
+      },
+      "description": "Provides content to display when there are no items in the list."
+    },
+    "layout": {
+      "type": "\"grid\" | \"stack\"",
+      "detailedType": "\"grid\" | \"stack\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "grid"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "stack"
+          }
+        ]
+      },
+      "description": "Whether the items are arranged in a stack or grid.",
+      "default": "'stack'"
+    },
+    "orientation": {
+      "type": "Orientation",
+      "detailedType": "Orientation | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "horizontal"
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "vertical"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The primary orientation of the items. Usually this is the\ndirection that the collection scrolls.",
+      "default": "'vertical'"
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "shouldSelectOnPressUp": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether selection should occur on press up instead of press down."
+    },
+    "shouldFocusOnHover": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether options should be focused when the user hovers over them."
+    },
+    "onAction": {
+      "type": "((key: Key) => void)",
+      "detailedType": "((key: Key) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "key",
+            "value": {
+              "type": "link",
+              "id": "Key",
+              "name": "Key"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a user performs an action on an item. The exact user event depends on\nthe collection's `selectionBehavior` prop and the interaction modality."
+    },
+    "escapeKeyBehavior": {
+      "type": "\"none\" | \"clearSelection\"",
+      "detailedType": "\"none\" | \"clearSelection\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "clearSelection"
+          }
+        ]
+      },
+      "description": "Whether pressing the escape key should clear selection in the listbox or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
+      "default": "'clearSelection'"
     },
     "dependencies": {
       "type": "readonly any[]",
@@ -1754,9 +1754,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@111": {
+        "__@iterator@72": {
           "type": "method",
-          "name": "__@iterator@111",
+          "name": "__@iterator@72",
           "value": {
             "type": "function",
             "parameters": [],
@@ -2338,9 +2338,9 @@
           "optional": false,
           "description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
         },
-        "__@toStringTag@114": {
+        "__@toStringTag@630": {
           "type": "property",
-          "name": "__@toStringTag@114",
+          "name": "__@toStringTag@630",
           "value": {
             "type": "string"
           },

@@ -1,4 +1,3 @@
-import { Project, SyntaxKind } from "ts-morph";
 import ts from "typescript";
 import * as tae from "typescript-api-extractor";
 
@@ -15,98 +14,116 @@ import {
   typeToAst,
 } from "./type-to-ast";
 
-// ts-morph project for getting declaration order
-let morphProject: Project | null = null;
+/**
+ * Check if a node has the export modifier
+ */
+function hasExportModifier(node: ts.Node): boolean {
+  const modifiers = ts.canHaveModifiers(node)
+    ? ts.getModifiers(node)
+    : undefined;
+  return (
+    modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword) ?? false
+  );
+}
 
-function getMorphProject(tsconfigPath?: string): Project {
-  if (!morphProject) {
-    morphProject = new Project({
-      tsConfigFilePath: tsconfigPath,
-      skipAddingFilesFromTsConfig: false,
-    });
+/**
+ * Get property name from a property signature or method signature
+ */
+function getMemberName(member: ts.TypeElement): string | undefined {
+  if (ts.isPropertySignature(member) || ts.isMethodSignature(member)) {
+    return member.name && ts.isIdentifier(member.name)
+      ? member.name.text
+      : undefined;
   }
-  return morphProject;
+  return undefined;
 }
 
 /**
  * Get the order of properties as they appear in the source declaration
- * using ts-morph (preserves declaration order like Babel AST)
+ * Uses TypeScript's built-in AST (no ts-morph dependency)
  */
 function getPropertyDeclarationOrder(
   typeName: string,
-  tsconfigPath?: string,
+  program: ts.Program,
+  checker: ts.TypeChecker,
 ): string[] {
-  const project = getMorphProject(tsconfigPath);
   const order: string[] = [];
   const visited = new Set<string>();
   visited.add(typeName);
 
-  // Search all source files for the explicitly EXPORTED type (has export keyword)
-  for (const sourceFile of project.getSourceFiles()) {
-    // Look for explicitly exported interface declarations
-    const interfaceDecl = sourceFile.getInterface(typeName);
-    if (interfaceDecl?.hasExportKeyword()) {
-      // Get properties in declaration order
-      for (const prop of interfaceDecl.getProperties()) {
-        order.push(prop.getName());
-      }
-      // Also get methods
-      for (const method of interfaceDecl.getMethods()) {
-        order.push(method.getName());
-      }
-      // Get inherited properties from extends
-      for (const ext of interfaceDecl.getExtends()) {
-        const extType = ext.getType();
-        const extSymbol = extType.getSymbol();
-        if (extSymbol) {
-          const extName = extSymbol.getName();
-          // Recursively get inherited props (these don't need to be exported)
-          const inheritedOrder = getPropertyDeclarationOrderInternal(
-            extName,
-            project,
-            visited,
-          );
-          for (const prop of inheritedOrder) {
-            if (!order.includes(prop)) {
-              order.push(prop);
-            }
-          }
-        }
-      }
-      return order;
+  // Search all source files for the explicitly EXPORTED type
+  for (const sourceFile of program.getSourceFiles()) {
+    // Skip declaration files (except our own)
+    if (
+      sourceFile.isDeclarationFile &&
+      !sourceFile.fileName.includes("@dotui")
+    ) {
+      continue;
     }
 
-    // Look for explicitly exported type alias declarations
-    const typeAlias = sourceFile.getTypeAlias(typeName);
-    if (typeAlias?.hasExportKeyword()) {
-      const typeNode = typeAlias.getTypeNode();
-      if (typeNode) {
-        // Handle type literals
-        if (typeNode.getKind() === SyntaxKind.TypeLiteral) {
-          const typeLiteral = typeNode.asKindOrThrow(SyntaxKind.TypeLiteral);
-          for (const member of typeLiteral.getMembers()) {
-            if (member.getKind() === SyntaxKind.PropertySignature) {
-              const propSig = member.asKindOrThrow(
-                SyntaxKind.PropertySignature,
-              );
-              order.push(propSig.getName());
+    ts.forEachChild(sourceFile, (node) => {
+      // Handle interface declarations
+      if (ts.isInterfaceDeclaration(node) && node.name.text === typeName) {
+        if (!hasExportModifier(node)) return;
+
+        // Get properties in declaration order
+        for (const member of node.members) {
+          const name = getMemberName(member);
+          if (name) order.push(name);
+        }
+
+        // Get inherited properties from extends
+        if (node.heritageClauses) {
+          for (const clause of node.heritageClauses) {
+            if (clause.token === ts.SyntaxKind.ExtendsKeyword) {
+              for (const typeExpr of clause.types) {
+                const exprType = checker.getTypeAtLocation(typeExpr);
+                const symbol = exprType.getSymbol();
+                if (symbol) {
+                  const inheritedOrder = getPropertyDeclarationOrderInternal(
+                    symbol.getName(),
+                    program,
+                    checker,
+                    visited,
+                  );
+                  for (const prop of inheritedOrder) {
+                    if (!order.includes(prop)) {
+                      order.push(prop);
+                    }
+                  }
+                }
+              }
             }
           }
-          return order;
         }
-        // Handle intersection types
-        if (typeNode.getKind() === SyntaxKind.IntersectionType) {
-          const intersectionType = typeNode.asKindOrThrow(
-            SyntaxKind.IntersectionType,
-          );
-          for (const typeRef of intersectionType.getTypeNodes()) {
-            const refType = typeRef.getType();
-            const refSymbol = refType.getSymbol();
-            if (refSymbol) {
-              const refName = refSymbol.getName();
+        return;
+      }
+
+      // Handle type alias declarations
+      if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
+        if (!hasExportModifier(node)) return;
+
+        const typeNode = node.type;
+
+        // Handle type literals: type Foo = { a: string; b: number }
+        if (ts.isTypeLiteralNode(typeNode)) {
+          for (const member of typeNode.members) {
+            const name = getMemberName(member);
+            if (name) order.push(name);
+          }
+          return;
+        }
+
+        // Handle intersection types: type Foo = A & B
+        if (ts.isIntersectionTypeNode(typeNode)) {
+          for (const typeRef of typeNode.types) {
+            const refType = checker.getTypeAtLocation(typeRef);
+            const symbol = refType.getSymbol();
+            if (symbol) {
               const refOrder = getPropertyDeclarationOrderInternal(
-                refName,
-                project,
+                symbol.getName(),
+                program,
+                checker,
                 visited,
               );
               for (const prop of refOrder) {
@@ -116,10 +133,12 @@ function getPropertyDeclarationOrder(
               }
             }
           }
-          return order;
         }
       }
-    }
+    });
+
+    // If we found the type, return early
+    if (order.length > 0) return order;
   }
 
   return order;
@@ -131,8 +150,9 @@ function getPropertyDeclarationOrder(
  */
 function getPropertyDeclarationOrderInternal(
   typeName: string,
-  project: Project,
-  visited: Set<string> = new Set(),
+  program: ts.Program,
+  checker: ts.TypeChecker,
+  visited: Set<string>,
 ): string[] {
   // Prevent circular references
   if (visited.has(typeName)) {
@@ -142,63 +162,65 @@ function getPropertyDeclarationOrderInternal(
 
   const order: string[] = [];
 
-  for (const sourceFile of project.getSourceFiles()) {
-    const interfaceDecl = sourceFile.getInterface(typeName);
-    if (interfaceDecl) {
-      for (const prop of interfaceDecl.getProperties()) {
-        order.push(prop.getName());
-      }
-      for (const method of interfaceDecl.getMethods()) {
-        order.push(method.getName());
-      }
-      for (const ext of interfaceDecl.getExtends()) {
-        const extType = ext.getType();
-        const extSymbol = extType.getSymbol();
-        if (extSymbol) {
-          const extName = extSymbol.getName();
-          const inheritedOrder = getPropertyDeclarationOrderInternal(
-            extName,
-            project,
-            visited,
-          );
-          for (const prop of inheritedOrder) {
-            if (!order.includes(prop)) {
-              order.push(prop);
-            }
-          }
-        }
-      }
-      return order;
-    }
+  for (const sourceFile of program.getSourceFiles()) {
+    let found = false;
 
-    const typeAlias = sourceFile.getTypeAlias(typeName);
-    if (typeAlias) {
-      const typeNode = typeAlias.getTypeNode();
-      if (typeNode) {
-        if (typeNode.getKind() === SyntaxKind.TypeLiteral) {
-          const typeLiteral = typeNode.asKindOrThrow(SyntaxKind.TypeLiteral);
-          for (const member of typeLiteral.getMembers()) {
-            if (member.getKind() === SyntaxKind.PropertySignature) {
-              const propSig = member.asKindOrThrow(
-                SyntaxKind.PropertySignature,
-              );
-              order.push(propSig.getName());
+    ts.forEachChild(sourceFile, (node) => {
+      if (found) return;
+
+      // Handle interface declarations
+      if (ts.isInterfaceDeclaration(node) && node.name.text === typeName) {
+        found = true;
+
+        for (const member of node.members) {
+          const name = getMemberName(member);
+          if (name) order.push(name);
+        }
+
+        if (node.heritageClauses) {
+          for (const clause of node.heritageClauses) {
+            if (clause.token === ts.SyntaxKind.ExtendsKeyword) {
+              for (const typeExpr of clause.types) {
+                const exprType = checker.getTypeAtLocation(typeExpr);
+                const symbol = exprType.getSymbol();
+                if (symbol) {
+                  const inheritedOrder = getPropertyDeclarationOrderInternal(
+                    symbol.getName(),
+                    program,
+                    checker,
+                    visited,
+                  );
+                  for (const prop of inheritedOrder) {
+                    if (!order.includes(prop)) {
+                      order.push(prop);
+                    }
+                  }
+                }
+              }
             }
           }
-          return order;
         }
-        if (typeNode.getKind() === SyntaxKind.IntersectionType) {
-          const intersectionType = typeNode.asKindOrThrow(
-            SyntaxKind.IntersectionType,
-          );
-          for (const typeRef of intersectionType.getTypeNodes()) {
-            const refType = typeRef.getType();
-            const refSymbol = refType.getSymbol();
-            if (refSymbol) {
-              const refName = refSymbol.getName();
+      }
+
+      // Handle type alias declarations
+      if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
+        found = true;
+        const typeNode = node.type;
+
+        if (ts.isTypeLiteralNode(typeNode)) {
+          for (const member of typeNode.members) {
+            const name = getMemberName(member);
+            if (name) order.push(name);
+          }
+        } else if (ts.isIntersectionTypeNode(typeNode)) {
+          for (const typeRef of typeNode.types) {
+            const refType = checker.getTypeAtLocation(typeRef);
+            const symbol = refType.getSymbol();
+            if (symbol) {
               const refOrder = getPropertyDeclarationOrderInternal(
-                refName,
-                project,
+                symbol.getName(),
+                program,
+                checker,
                 visited,
               );
               for (const prop of refOrder) {
@@ -208,10 +230,11 @@ function getPropertyDeclarationOrderInternal(
               }
             }
           }
-          return order;
         }
       }
-    }
+    });
+
+    if (found) return order;
   }
 
   return order;
@@ -573,7 +596,6 @@ const componentGroupNames = fs.existsSync(path.join(registryDir, "ui"))
 export async function formatComponentData(
   exportNode: tae.ExportNode,
   context: ParserContext,
-  tsconfigPath?: string,
 ) {
   const description = exportNode.documentation?.description?.replace(
     /\n\nDocumentation: .*$/ms,
@@ -584,12 +606,10 @@ export async function formatComponentData(
   const astContext = createConversionContext(context.checker, 4);
 
   // Get all properties using TypeScript's type checker (includes inherited props)
-  // Pass tsconfigPath to get declaration order via ts-morph
   const props = await getPropsWithTypeChecker(
     exportNode.name,
     context,
     astContext,
-    tsconfigPath,
   );
 
   // Extract render props (CSS state selectors)
@@ -624,13 +644,16 @@ async function getPropsWithTypeChecker(
   typeName: string,
   context: ParserContext,
   astContext: ConversionContext,
-  tsconfigPath?: string,
 ): Promise<Record<string, FormattedProp>> {
   const { program, checker } = context;
   const result: Record<string, FormattedProp> = {};
 
-  // Get declaration order from ts-morph (for local props)
-  const declarationOrder = getPropertyDeclarationOrder(typeName, tsconfigPath);
+  // Get declaration order using TypeScript's AST (for local props)
+  const declarationOrder = getPropertyDeclarationOrder(
+    typeName,
+    program,
+    checker,
+  );
 
   // Track original order from TypeScript's type checker (preserves inherited order)
   const originalOrder: string[] = [];

@@ -505,14 +505,6 @@
       },
       "description": "Whether the button is in a pending state. This disables press and hover events\nwhile retaining focusability, and announces the pending state to screen readers."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the button is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -870,6 +862,14 @@
         ]
       },
       "description": "Indicates the current \"pressed\" state of toggle buttons."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button is disabled."
     },
     "type": {
       "type": "\"button\" | \"submit\" | \"reset\"",

@@ -412,14 +412,6 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the button is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -929,6 +921,14 @@
         ]
       },
       "description": "Indicates the current \"pressed\" state of toggle buttons."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button is disabled."
     },
     "type": {
       "type": "\"button\" | \"submit\" | \"reset\"",

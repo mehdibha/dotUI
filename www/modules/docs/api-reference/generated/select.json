@@ -176,14 +176,6 @@
       "description": "Temporary text that occupies the select when it is empty.",
       "default": "'Select an item' (localized)"
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -304,38 +296,13 @@
       },
       "description": "Handler that is called when the value changes."
     },
-    "disabledKeys": {
-      "type": "Iterable<Key>",
-      "detailedType": "Iterable<Key> | undefined",
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-              "name": "Iterable"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
-              }
-            ]
-          }
-        ]
+        "type": "boolean"
       },
-      "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
+      "description": "Whether the input is disabled."
     },
     "name": {
       "type": "string",
@@ -374,6 +341,39 @@
         "type": "boolean"
       },
       "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
+    },
+    "disabledKeys": {
+      "type": "Iterable<Key>",
+      "detailedType": "Iterable<Key> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "name": "Iterable"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Key"
+              },
+              {
+                "type": "any"
+              },
+              {
+                "type": "any"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
     },
     "isRequired": {
       "type": "boolean",
@@ -979,9 +979,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@111": {
+        "__@iterator@72": {
           "type": "method",
-          "name": "__@iterator@111",
+          "name": "__@iterator@72",
           "value": {
             "type": "function",
             "parameters": [],

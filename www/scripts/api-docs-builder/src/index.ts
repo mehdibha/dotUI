@@ -95,7 +95,6 @@ async function run(options: RunOptions) {
       const componentRef = await formatComponentData(
         exportNode,
         parserContext,
-        absoluteConfigPath,
       );
       const json = `${JSON.stringify(componentRef, null, 2)}\n`;
 

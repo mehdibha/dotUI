@@ -54,31 +54,6 @@
       "description": "Whether pressing the escape key to close the modal should be disabled.",
       "default": "false"
     },
-    "shouldCloseOnInteractOutside": {
-      "type": "((element: Element) => boolean)",
-      "detailedType": "((element: Element) => boolean) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "element",
-            "value": {
-              "type": "link",
-              "id": "Element",
-              "name": "Element"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "boolean"
-        },
-        "typeParameters": []
-      },
-      "description": "When user interacts with the argument element outside of the overlay ref,\nreturn true if onClose should be called.  This gives you a chance to filter\nout interaction with elements that should not dismiss the overlay.\nBy default, onClose will always be called on interaction outside the overlay ref."
-    },
     "isOpen": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -305,6 +280,31 @@
         ]
       },
       "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "shouldCloseOnInteractOutside": {
+      "type": "((element: Element) => boolean)",
+      "detailedType": "((element: Element) => boolean) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "element",
+            "value": {
+              "type": "link",
+              "id": "Element",
+              "name": "Element"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "boolean"
+        },
+        "typeParameters": []
+      },
+      "description": "When user interacts with the argument element outside of the overlay ref,\nreturn true if onClose should be called.  This gives you a chance to filter\nout interaction with elements that should not dismiss the overlay.\nBy default, onClose will always be called on interaction outside the overlay ref."
     }
   },
   "renderProps": {

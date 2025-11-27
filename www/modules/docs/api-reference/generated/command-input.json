@@ -10,6 +10,163 @@
       },
       "description": "Placeholder text for the search input."
     },
+    "onSubmit": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the SearchField is submitted."
+    },
+    "onClear": {
+      "type": "(() => void)",
+      "detailedType": "(() => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the clear button is pressed."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input can be selected but not changed by the user."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether user input is required on the input before form submission."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input value is invalid."
+    },
+    "validationBehavior": {
+      "type": "\"native\" | \"aria\"",
+      "detailedType": "\"native\" | \"aria\" | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "native"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "aria"
+          }
+        ]
+      },
+      "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
+      "default": "'native'"
+    },
+    "validate": {
+      "type": "((value: string) => true | ValidationError | null | undefined)",
+      "detailedType": "((value: string) => true | ValidationError | null | undefined) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "string"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "booleanLiteral",
+                  "value": true
+                },
+                {
+                  "type": "array",
+                  "elementType": {
+                    "type": "string"
+                  }
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
     "onFocus": {
       "type": "((e: FocusEvent<HTMLInputElement, Element>) => void)",
       "detailedType": "((e: FocusEvent<HTMLInputElement, Element>) => void) | undefined",
@@ -177,13 +334,46 @@
       },
       "description": "Handler that is called when a key is released."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "value": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "string"
       },
-      "description": "Whether the input is disabled."
+      "description": "The current value (controlled)."
+    },
+    "defaultValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The default value (uncontrolled)."
+    },
+    "onChange": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the value changes."
     },
     "form": {
       "type": "string",
@@ -200,22 +390,6 @@
         "type": "string"
       },
       "description": "Regex pattern that the value of the input must match to be valid. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefpattern)."
-    },
-    "defaultValue": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The default value (uncontrolled)."
-    },
-    "autoFocus": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the element should receive focus on render."
     },
     "enterKeyHint": {
       "type": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\"",
@@ -742,31 +916,6 @@
       },
       "description": "Handler that is called when a new character is received in the current text composition session. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionupdate_event)."
     },
-    "onChange": {
-      "type": "((value: string) => void)",
-      "detailedType": "((value: string) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "value",
-            "value": {
-              "type": "link",
-              "id": "string",
-              "name": "string"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the value changes."
-    },
     "onBeforeInput": {
       "type": "FormEventHandler<HTMLInputElement>",
       "detailedType": "FormEventHandler<HTMLInputElement> | undefined",
@@ -851,31 +1000,6 @@
       },
       "description": "Handler that is called when the input value is modified. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)."
     },
-    "onSubmit": {
-      "type": "((value: string) => void)",
-      "detailedType": "((value: string) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "value",
-            "value": {
-              "type": "link",
-              "id": "string",
-              "name": "string"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the SearchField is submitted."
-    },
     "onSelect": {
       "type": "ReactEventHandler<HTMLInputElement>",
       "detailedType": "ReactEventHandler<HTMLInputElement> | undefined",
@@ -924,8 +1048,8 @@
       "description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
     },
     "type": {
-      "type": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\"",
-      "detailedType": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\" | undefined",
+      "type": "\"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | (string & {}) | \"password\"",
+      "detailedType": "\"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | (string & {}) | \"password\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -947,18 +1071,6 @@
               {
                 "type": "stringLiteral",
                 "value": "text"
-              }
-            ]
-          },
-          {
-            "type": "intersection",
-            "types": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "identifier",
-                "name": "{}"
               }
             ]
           },
@@ -990,6 +1102,18 @@
             ]
           },
           {
+            "type": "intersection",
+            "types": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "identifier",
+                "name": "{}"
+              }
+            ]
+          },
+          {
             "type": "union",
             "elements": [
               {
@@ -1011,14 +1135,6 @@
       },
       "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
-    "value": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The current value (controlled)."
-    },
     "excludeFromTabOrder": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -1026,82 +1142,6 @@
         "type": "boolean"
       },
       "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-    },
-    "isReadOnly": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input can be selected but not changed by the user."
-    },
-    "isRequired": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether user input is required on the input before form submission."
-    },
-    "isInvalid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input value is invalid."
-    },
-    "validate": {
-      "type": "((value: string) => true | ValidationError | null | undefined)",
-      "detailedType": "((value: string) => true | ValidationError | null | undefined) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "string"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "booleanLiteral",
-                  "value": true
-                },
-                {
-                  "type": "array",
-                  "elementType": {
-                    "type": "string"
-                  }
-                }
-              ]
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
     },
     "minLength": {
       "type": "number",
@@ -1126,46 +1166,6 @@
         "type": "string"
       },
       "description": "Describes the type of autocomplete functionality the input should provide if any. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete)."
-    },
-    "onClear": {
-      "type": "(() => void)",
-      "detailedType": "(() => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the clear button is pressed."
-    },
-    "validationBehavior": {
-      "type": "\"native\" | \"aria\"",
-      "detailedType": "\"native\" | \"aria\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "native"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "aria"
-          }
-        ]
-      },
-      "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
-      "default": "'native'"
     },
     "children": {
       "type": "ReactNode | (values: SearchFieldRenderProps) => ReactNode",

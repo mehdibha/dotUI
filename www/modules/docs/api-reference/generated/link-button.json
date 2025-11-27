@@ -496,14 +496,6 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the link is disabled."
-    },
     "referrerPolicy": {
       "type": "HTMLAttributeReferrerPolicy",
       "detailedType": "HTMLAttributeReferrerPolicy | undefined",
@@ -646,6 +638,14 @@
       },
       "description": "Identifies the element (or elements) that labels the current element."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the link is disabled."
+    },
     "href": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -653,14 +653,6 @@
         "type": "string"
       },
       "description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
-    },
-    "hrefLang": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
     },
     "target": {
       "type": "HTMLAttributeAnchorTarget",
@@ -722,6 +714,14 @@
         ]
       },
       "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
+    },
+    "hrefLang": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
     },
     "download": {
       "type": "string | boolean",

@@ -38,6 +38,68 @@
       "description": "The length of the stroke as a percentage (0-1).",
       "default": "0.25"
     },
+    "isIndeterminate": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether presentation is indeterminate when progress isn't known."
+    },
+    "formatOptions": {
+      "type": "NumberFormatOptions",
+      "detailedType": "NumberFormatOptions | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+            "name": "NumberFormatOptions"
+          }
+        ]
+      },
+      "description": "The display format of the value label.",
+      "default": "{style: 'percent'}"
+    },
+    "valueLabel": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "The content to display as the value's label (e.g. 1 of 4)."
+    },
+    "value": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The current value (controlled).",
+      "default": "0"
+    },
+    "minValue": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The smallest value allowed for the input.",
+      "default": "0"
+    },
+    "maxValue": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The largest value allowed for the input.",
+      "default": "100"
+    },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -77,68 +139,6 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "value": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The current value (controlled).",
-      "default": "0"
-    },
-    "isIndeterminate": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether presentation is indeterminate when progress isn't known."
-    },
-    "minValue": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The smallest value allowed for the input.",
-      "default": "0"
-    },
-    "maxValue": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The largest value allowed for the input.",
-      "default": "100"
-    },
-    "formatOptions": {
-      "type": "NumberFormatOptions",
-      "detailedType": "NumberFormatOptions | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-            "name": "NumberFormatOptions"
-          }
-        ]
-      },
-      "description": "The display format of the value label.",
-      "default": "{style: 'percent'}"
-    },
-    "valueLabel": {
-      "type": "ReactNode",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ReactNode"
-      },
-      "description": "The content to display as the value's label (e.g. 1 of 4)."
     },
     "children": {
       "type": "ReactNode | (values: ProgressBarRenderProps) => ReactNode",

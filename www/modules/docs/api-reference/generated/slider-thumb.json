@@ -277,14 +277,6 @@
       },
       "description": "A ref for the HTML input element."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the Thumb is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -348,6 +340,14 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the Thumb is disabled."
     },
     "name": {
       "type": "string",

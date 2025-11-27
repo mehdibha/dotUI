@@ -2,6 +2,15 @@
   "name": "SkeletonProps",
   "description": "Missing description.",
   "props": {
+    "show": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to show the skeleton. When false, renders children directly.",
+      "default": "true"
+    },
     "inputMode": {
       "type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
       "detailedType": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\" | undefined",
@@ -1225,15 +1234,6 @@
         "type": "string"
       },
       "description": "Defines the human readable text alternative of aria-valuenow for a range widget."
-    },
-    "show": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to show the skeleton. When false, renders children directly.",
-      "default": "true"
     }
   }
 }
