@@ -8,6 +8,11 @@ import type {
   TType,
 } from "../../../modules/docs/api-reference/types/type-ast";
 import {
+  REACT_ARIA_EVENT_ORDER,
+  RESOLVABLE_TYPE_PATTERNS,
+  SKIP_RESOLVE_TYPES,
+} from "./config";
+import {
   buildTypeAstFromString,
   type ConversionContext,
   createConversionContext,
@@ -242,32 +247,6 @@ function getPropertyDeclarationOrderInternal(
 }
 
 /**
- * Standard order for React Aria event props.
- * This ensures consistent ordering regardless of TypeScript's internal caching.
- * Order matches the declaration order in React Aria's type definitions.
- */
-const REACT_ARIA_EVENT_ORDER = [
-  // Press events (from PressEvents)
-  "onPress",
-  "onPressStart",
-  "onPressEnd",
-  "onPressChange",
-  "onPressUp",
-  "onClick",
-  // Focus events (from FocusableProps -> FocusEvents)
-  "onFocus",
-  "onBlur",
-  "onFocusChange",
-  // Keyboard events (from KeyboardEvents)
-  "onKeyDown",
-  "onKeyUp",
-  // Hover events (from HoverEvents)
-  "onHoverStart",
-  "onHoverEnd",
-  "onHoverChange",
-];
-
-/**
  * Sort an object's keys based on a reference order array.
  * Props in the order array come first (in that order),
  * then remaining props follow in their original order (from TypeScript's type checker).
@@ -361,57 +340,6 @@ function collectLinksFromAst(ast: TType | null | undefined): TLink[] {
   traverse(ast);
   return links;
 }
-
-/**
- * Types that should be resolved and included in typeLinks
- * These are typically RenderProps types that users want to explore
- */
-const RESOLVABLE_TYPE_PATTERNS = [
-  /RenderProps$/,
-  /Props$/,
-  /State$/,
-  /Context$/,
-  /Event$/, // But not DOM events
-];
-
-/**
- * Types that should NEVER be resolved (built-in types)
- */
-const SKIP_RESOLVE_TYPES = new Set([
-  // DOM types
-  "Window",
-  "Document",
-  "Element",
-  "HTMLElement",
-  "SVGElement",
-  "Node",
-  "EventTarget",
-  "Navigator",
-  // DOM Events (native)
-  "Event",
-  "MouseEvent",
-  "KeyboardEvent",
-  "FocusEvent",
-  "PointerEvent",
-  "TouchEvent",
-  "DragEvent",
-  // React types
-  "ReactNode",
-  "ReactElement",
-  "CSSProperties",
-  "RefObject",
-  "Ref",
-  // Primitives
-  "string",
-  "number",
-  "boolean",
-  "null",
-  "undefined",
-  "void",
-  "any",
-  "unknown",
-  "never",
-]);
 
 /**
  * Check if a type name should be resolved

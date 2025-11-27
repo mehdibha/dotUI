@@ -33,6 +33,7 @@ import type {
   TUnion,
   TypeLinksRegistry,
 } from "@/modules/docs/api-reference/types/type-ast";
+import { NEVER_EXPAND_TYPES } from "./config";
 
 export interface ConversionContext {
   checker: ts.TypeChecker;
@@ -41,82 +42,6 @@ export interface ConversionContext {
   maxDepth: number;
   currentDepth: number;
 }
-
-/**
- * Types that should NEVER be expanded - show as simple identifiers
- * These are complex recursive types that would explode if expanded
- */
-const NEVER_EXPAND_TYPES = new Set([
-  // React node types (recursive, complex)
-  "ReactNode",
-  "ReactElement",
-  "ReactChild",
-  "ReactFragment",
-  "ReactPortal",
-  "AwaitedReactNode",
-  "JSXElementConstructor",
-  // React component types
-  "Component",
-  "ComponentClass",
-  "FunctionComponent",
-  "FC",
-  "ForwardRefExoticComponent",
-  "MemoExoticComponent",
-  "LazyExoticComponent",
-  // React utility types
-  "PropsWithChildren",
-  "PropsWithRef",
-  "ComponentProps",
-  "ComponentPropsWithRef",
-  "ComponentPropsWithoutRef",
-  // CSS/Style types
-  "CSSProperties",
-  // DOM types
-  "Element",
-  "HTMLElement",
-  "SVGElement",
-  "Node",
-  "Document",
-  "Window",
-  // Event types
-  "Event",
-  "SyntheticEvent",
-  "UIEvent",
-  "FocusEvent",
-  "KeyboardEvent",
-  "MouseEvent",
-  "PointerEvent",
-  "TouchEvent",
-  "DragEvent",
-  "ClipboardEvent",
-  "WheelEvent",
-  "AnimationEvent",
-  "TransitionEvent",
-  "FormEvent",
-  "ChangeEvent",
-  // React Aria specific
-  "FocusableElement",
-  "DOMAttributes",
-  "AriaAttributes",
-  "HTMLAttributes",
-  "DOMProps",
-  // Utility types
-  "Key",
-  "Ref",
-  "RefObject",
-  "MutableRefObject",
-  "RefCallback",
-  "LegacyRef",
-  "ForwardedRef",
-  // Collection types
-  "Iterable",
-  "Iterator",
-  "AsyncIterable",
-  "AsyncIterator",
-  // Promise types
-  "Promise",
-  "PromiseLike",
-]);
 
 /**
  * Parse a simple type name into an AST node

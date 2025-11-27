@@ -6,6 +6,7 @@
  */
 
 import * as React from "react";
+import { getDoc } from "globals-docs";
 
 import { cn } from "@dotui/registry/lib/utils";
 
@@ -223,23 +224,56 @@ function BooleanLiteral({ value }: { value: boolean }) {
  * Identifier
  * ---------------------------------------------------------------------------------------------*/
 
+/**
+ * Documentation links for types not covered by globals-docs
+ * Matches s2-docs DOC_LINKS exactly
+ * @see https://github.com/adobe/react-spectrum/blob/main/packages/dev/s2-docs/src/types.tsx
+ */
 const DOC_LINKS: Record<string, string> = {
-  ReactNode: "https://react.dev/reference/react/ReactNode",
-  ReactElement: "https://react.dev/reference/react/ReactElement",
-  CSSProperties: "https://react.dev/docs/dom-elements#style",
-  Key: "https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key",
+  // React types (using legacy URLs that still work and redirect)
+  "React.Component": "https://reactjs.org/docs/react-component.html",
+  ReactElement: "https://reactjs.org/docs/rendering-elements.html",
+  ReactNode: "https://reactjs.org/docs/rendering-elements.html",
+  CSSProperties: "https://reactjs.org/docs/dom-elements.html#style",
+  DOMAttributes: "https://reactjs.org/docs/dom-elements.html#all-supported-html-attributes",
+  Key: "https://reactjs.org/docs/lists-and-keys.html",
   Ref: "https://react.dev/reference/react/useRef",
   RefObject: "https://react.dev/reference/react/useRef",
-  Element: "https://developer.mozilla.org/en-US/docs/Web/API/Element",
-  FocusEvent: "https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent",
-  KeyboardEvent:
-    "https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent",
-  MouseEvent: "https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent",
-  PointerEvent: "https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent",
+  // DOM/Browser types (not in globals-docs or better links)
+  FocusableElement: "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+  DataTransfer: "https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer",
+  AbortSignal: "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal",
+  // HTML attribute types
+  HTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+  InputHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes",
+  TextareaHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#attributes",
+  LabelHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#attributes",
+  OutputHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/output#attributes",
+  // Intl types
+  "Intl.NumberFormat": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat",
+  "Intl.NumberFormatOptions": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat",
+  "Intl.ListFormatOptions": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/ListFormat",
+  "Intl.DateTimeFormat": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat",
+  "Intl.DateTimeFormatOptions": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat",
+  "Intl.Collator": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator",
+  "Intl.CollatorOptions": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator",
 };
 
+/**
+ * Get documentation link for a type name
+ * Uses our curated DOC_LINKS first, then falls back to globals-docs for MDN links
+ */
+function getDocLink(name: string): string | undefined {
+  // Check our curated links first (React types, Intl types, etc.)
+  if (name in DOC_LINKS) {
+    return DOC_LINKS[name];
+  }
+  // Fall back to globals-docs for browser/node globals (Element, Event, Array, etc.)
+  return getDoc(name);
+}
+
 function Identifier({ name }: { name: string }) {
-  const link = DOC_LINKS[name];
+  const link = getDocLink(name);
 
   if (link) {
     return (

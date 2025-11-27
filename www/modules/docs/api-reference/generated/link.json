@@ -3,18 +3,18 @@
   "description": "A link allows a user to navigate to another page or resource within a web page or application.",
   "props": {
     "variant": {
-      "type": "\"quiet\" | \"accent\" | \"unstyled\"",
-      "detailedType": "\"quiet\" | \"accent\" | \"unstyled\" | undefined",
+      "type": "\"accent\" | \"quiet\" | \"unstyled\"",
+      "detailedType": "\"accent\" | \"quiet\" | \"unstyled\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "quiet"
+            "value": "accent"
           },
           {
             "type": "stringLiteral",
-            "value": "accent"
+            "value": "quiet"
           },
           {
             "type": "stringLiteral",
