@@ -44,41 +44,7 @@ import {
 
     ## API Reference
 
-    | Prop             | Type                                      | Default     | Description                                                |
-    | ---------------- | ----------------------------------------- | ----------- | ---------------------------------------------------------- |
-    | `variant`        | `'default' \| 'quiet' \| 'outline'`       | `'default'` | The visual style of the toggle button.                     |
-    | `size`           | `'sm' \| 'md' \| 'lg'`                    | `'md'`      | The size of the toggle button.                             |
-    | `isSelected`     | `boolean`                                 | -           | Whether the element is selected (controlled).              |
-    | `defaultSelected`| `boolean`                                 | -           | Whether the element is selected by default (uncontrolled). |
-    | `isDisabled`     | `boolean`                                 | -           | Whether the toggle button is disabled.                     |
-    | `autoFocus`      | `boolean`                                 | -           | Whether the element should receive focus on render.        |
-    | `children`       | `ReactNode`                               | -           | The content of the toggle button.                          |
-
-    | Event           | Type                              | Description                                                     |
-    | --------------- | --------------------------------- | --------------------------------------------------------------- |
-    | `onChange`      | `(isSelected: boolean) => void`   | Handler that is called when the element's selection state changes. |
-    | `onPress`       | `(e: PressEvent) => void`         | Handler that is called when the press is released.              |
-    | `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.         |
-    | `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.            |
-    | `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
-
-    | Data attribute         | Description                                                         |
-    | ---------------------- | ------------------------------------------------------------------- |
-    | `[data-selected]`      | Whether the toggle button is currently selected.                    |
-    | `[data-hovered]`       | Whether the toggle button is currently hovered with a mouse.        |
-    | `[data-pressed]`       | Whether the toggle button is currently in a pressed state.          |
-    | `[data-focused]`       | Whether the toggle button is focused, either via a mouse or keyboard. |
-    | `[data-focus-visible]` | Whether the toggle button is keyboard focused.                      |
-    | `[data-disabled]`      | Whether the toggle button is disabled.                              |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key     | Description                          |
-    | ------- | ------------------------------------ |
-    | `Space` | Toggles the selection state.         |
-    | `Enter` | Toggles the selection state.         |
+    <Reference name="toggle-button" />
 
   </PageTabPanel>
 

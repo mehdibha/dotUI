@@ -53,68 +53,11 @@ import {
 
     ### RadioGroup
 
-    | Prop                 | Type                                                                                                    | Default      | Description                                                                                                                                                                                                                           |
-    | -------------------- | ------------------------------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | `variant`            | `"default" \| "card"`                                                                                   | `"default"`  | The visual style of the radio group.                                                                                                                                                                                                  |
-    | `orientation`        | `'horizontal' \| 'vertical'`                                                                            | `'vertical'` | The axis the Radio Button(s) should align with.                                                                                                                                                                                       |
-    | `value`              | `string \| null`                                                                                        | -            | The current value (controlled).                                                                                                                                                                                                       |
-    | `defaultValue`       | `string \| null`                                                                                        | -            | The default value (uncontrolled).                                                                                                                                                                                                     |
-    | `isDisabled`         | `boolean`                                                                                               | -            | Whether the input is disabled.                                                                                                                                                                                                        |
-    | `isReadOnly`         | `boolean`                                                                                               | -            | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
-    | `name`               | `string`                                                                                                | -            | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
-    | `isRequired`         | `boolean`                                                                                               | -            | Whether user input is required on the input before form submission.                                                                                                                                                                   |
-    | `isInvalid`          | `boolean`                                                                                               | -            | Whether the input value is invalid.                                                                                                                                                                                                   |
-
-    | Event           | Type                              | Description                                                        |
-    | --------------- | --------------------------------- | ------------------------------------------------------------------ |
-    | `onChange`      | `(isSelected: boolean) => void`   | Handler that is called when the element's selection state changes. |
-    | `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.            |
-    | `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.               |
-    | `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes.    |
-
-    | Data attribute                                | Description                           |
-    | --------------------------------------------- | ------------------------------------- |
-    | `[data-orientation="horizontal \| vertical"]` | The orientation of the radio group.   |
-    | `[data-disabled]`                             | Whether the radio group is disabled.  |
-    | `[data-readonly]`                             | Whether the radio group is read only. |
-    | `[data-invalid]`                              | Whether the radio group invalid.      |
-    | `[data-required]`                             | Whether the radio group is required.  |
+    <Reference name="radio-group" />
 
     ### Radio
 
-    | Prop         | Type                                                                                               | Default     | Description                                                                                                            |
-    | ------------ | -------------------------------------------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------- |
-    | `variant`    | `"default" \| "card"`                                                                              | `"default"` | The visual style of the radio.                                                                                         |
-    | `value*`     | `string`                                                                                           | -           | The value of the radio button, used when submitting an HTML form.                                                      |
-    | `inputRef`   | `MutableRefObject<HTMLInputElement>`                                                               | -           | A ref for the HTML input element.                                                                                      |
-    | `isDisabled` | `boolean`                                                                                          | -           | Whether the radio button is disabled or not. Shows that a selection exists, but is not available in that circumstance. |
-    | `autoFocus`  | `boolean`                                                                                          | -           | Whether the element should receive focus on render.                                                                    |
-    | `children`   | `ReactNode \| (values: RadioRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -           | The children of the component. A function may be provided to alter the children based on component state.              |
-
-    | Data attribute         | Description                                                   |
-    | ---------------------- | ------------------------------------------------------------- |
-    | `[data-selected]`      | Whether the radio is selected.                                |
-    | `[data-hovered]`       | Whether the radio is currently hovered with a mouse.          |
-    | `[data-pressed]`       | Whether the radio is currently in a pressed state.            |
-    | `[data-focused]`       | Whether the radio is focused, either via a mouse or keyboard. |
-    | `[data-focus-visible]` | Whether the radio is keyboard focused.                        |
-    | `[data-disabled]`      | Whether the radio is disabled.                                |
-    | `[data-readonly]`      | Whether the radio is read only.                               |
-    | `[data-invalid]`       | Whether the radio invalid.                                    |
-    | `[data-required]`      | Whether the radio is required.                                |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key          | Description                                                                        |
-    | ------------ | ---------------------------------------------------------------------------------- |
-    | `Tab`        | Moves focus to either the checked radio item or the first radio item in the group. |
-    | `Space`      | When focus is on an unchecked radio item, checks it.                               |
-    | `ArrowDown`  | Moves focus and checks the next radio item in the group.                           |
-    | `ArrowUp`    | Moves focus to the previous radio item in the group.                               |
-    | `ArrowRight` | Moves focus and checks the next radio item in the group.                           |
-    | `ArrowLeft`  | Moves focus to the previous radio item in the group.                               |
+    <Reference name="radio" />
 
   </PageTabPanel>
 

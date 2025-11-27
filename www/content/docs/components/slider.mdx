@@ -44,44 +44,13 @@ import {
 
     ## API Reference
 
-    | Prop            | Type                                                                                                | Default        | Description                                                                                                  |
-    | --------------- | --------------------------------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------ |
-    | `size`          | `"sm" \| "md" \| "lg"`                                                                              | `"md"`         | The size of the slider.                                                                                      |
-    | `valueLabel`    | `boolean \| ((value: number[]) => string)`                                                          | `false`        | Weather to display the value label. A function may be provided to customize the value label.                 |
-    | `label`         | `ReactNode`                                                                                         |                | The content to display as the label.                                                                         |
-    | `description`   | `ReactNode`                                                                                         |                | A description for the field. Provides a hint such as specific requirements for what to choose.               |
-    | `formatOptions` | `Intl.NumberFormatOptions`                                                                          | -              | The display format of the value label.                                                                       |
-    | `orientation`   | `'horizontal' \| 'vertical'`                                                                        | `'horizontal'` | The orientation of the Slider.                                                                               |
-    | `isDisabled`    | `boolean`                                                                                           | -              | Whether the whole Slider is disabled.                                                                        |
-    | `minValue`      | `number`                                                                                            | `0`            | The slider's minimum value.                                                                                  |
-    | `maxValue`      | `number`                                                                                            | `100`          | The slider's maximum value.                                                                                  |
-    | `step`          | `number`                                                                                            | `1`            | The slider's step value.                                                                                     |
-    | `value`         | `T`                                                                                                 | -              | The current value (controlled).                                                                              |
-    | `defaultValue`  | `T`                                                                                                 | -              | The default value (uncontrolled).                                                                            |
-    | `name`          | `string`                                                                                            | -              | The name of the input element, used when submitting an HTML form.                                            |
-    | `children`      | `ReactNode \| (values: SliderRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -              | The children of the component. A function may be provided to alter the children based on component state.    |
-    | `className`     | `string \| (values: SliderRenderProps & {defaultClassName: string \| undefined}) => string`         | -              | The CSS className for the element. A function may be provided to compute the class based on component state. |
-    | `style`         | `CSSProperties \| (values: SliderRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -              | The inline style for the element. A function may be provided to compute the style based on component state.  |
+    ### Slider
 
-    | Event         | Type                 | Description                                              |
-    | ------------- | -------------------- | -------------------------------------------------------- |
-    | `onChange`    | `(value: T) => void` | Handler that is called when the value changes.           |
-    | `onChangeEnd` | `(value: T) => void` | Fired when the slider stops moving, due to being let go. |
+    <Reference name="slider" />
 
-    | Data attribute                                | Description                     |
-    | --------------------------------------------- | ------------------------------- |
-    | `[data-orientation="horizontal \| vertical"]` | The orientation of the slider.  |
-    | `[data-disabled]`                             | Whether the slider is disabled. |
+    ### SliderControl
 
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key                                            | Description                                                                                                                             |
-    | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-    | `Tab`                                          | Places focus on the handle. If the handle is already in focus, moves focus to the next handle or next element in the page tab sequence. |
-    | `Shift+Tab`                                    | Places focus on the previous handle or previous element in the page tab sequence.                                                       |
-    | `ArrowUp` `ArrowDown` `ArrowLeft` `ArrowRight` | Moves the handle up/down/left/right.                                                                                                    |
+    <Reference name="slider-control" />
 
   </PageTabPanel>
 

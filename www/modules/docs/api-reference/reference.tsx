@@ -1,8 +1,6 @@
 import { highlight } from "fumadocs-core/highlight";
 import Markdown from "markdown-to-jsx";
 
-import { cn } from "@dotui/registry/lib/utils";
-
 import { DEFAULT_EXPANDED, groupProps } from "./groups";
 import {
   type GroupedPropsData,

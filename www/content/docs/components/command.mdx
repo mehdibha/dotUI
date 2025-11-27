@@ -55,40 +55,15 @@ import {
 
     ### Command
 
-    | Prop         | Type        | Default | Description                              |
-    | ------------ | ----------- | ------- | ---------------------------------------- |
-    | `children`   | `ReactNode` | -       | The command input and content.           |
-    | `className`  | `string`    | -       | Additional CSS classes for the command.  |
+    <Reference name="command" />
 
     ### CommandInput
 
-    | Prop          | Type        | Default | Description                              |
-    | ------------- | ----------- | ------- | ---------------------------------------- |
-    | `placeholder` | `string`    | -       | Placeholder text for the input.          |
-    | `value`       | `string`    | -       | The current value (controlled).          |
-    | `onChange`    | `(value: string) => void` | - | Handler that is called when value changes. |
+    <Reference name="command-input" />
 
-    ### CommandItem
+    ### CommandContent
 
-    | Prop         | Type              | Default | Description                              |
-    | ------------ | ----------------- | ------- | ---------------------------------------- |
-    | `textValue`  | `string`          | -       | The text value for filtering.            |
-    | `isDisabled` | `boolean`         | -       | Whether the item is disabled.            |
-    | `children`   | `ReactNode`       | -       | The content of the command item.         |
-
-    | Event      | Type         | Description                              |
-    | ---------- | ------------ | ---------------------------------------- |
-    | `onSelect` | `() => void` | Handler that is called when the item is selected. |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key                   | Description                                      |
-    | --------------------- | ------------------------------------------------ |
-    | `ArrowUp` `ArrowDown` | Moves focus between command items.               |
-    | `Enter`               | Selects the focused command item.                |
-    | `Escape`              | Closes the command menu (when in a dialog).      |
+    <Reference name="command-content" />
 
   </PageTabPanel>
 

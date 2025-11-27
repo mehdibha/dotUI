@@ -68,31 +68,31 @@ import {
 
     ### Dialog
 
-    | Prop           | Type                        | Default | Description                                      |
-    | -------------- | --------------------------- | ------- | ------------------------------------------------ |
-    | `isOpen`       | `boolean`                   | -       | Whether the dialog is open (controlled).         |
-    | `defaultOpen`  | `boolean`                   | -       | Whether the dialog is open by default.           |
-    | `children`     | `ReactNode`                 | -       | The content of the dialog.                       |
-
-    | Event          | Type                        | Description                                      |
-    | -------------- | --------------------------- | ------------------------------------------------ |
-    | `onOpenChange` | `(isOpen: boolean) => void` | Handler that is called when the open state changes. |
+    <Reference name="dialog" />
 
     ### DialogContent
 
-    | Prop      | Type        | Default | Description                        |
-    | --------- | ----------- | ------- | ---------------------------------- |
-    | `role`    | `'dialog' \| 'alertdialog'` | `'dialog'` | The ARIA role for the dialog. |
-    | `children`| `ReactNode` | -       | The content of the dialog.         |
+    <Reference name="dialog-content" />
 
-    ## Accessibility
+    ### DialogHeader
 
-    ### Keyboard interactions
+    <Reference name="dialog-header" />
 
-    | Key      | Description                      |
-    | -------- | -------------------------------- |
-    | `Tab`    | Moves focus within the dialog.   |
-    | `Escape` | Closes the dialog.               |
+    ### DialogHeading
+
+    <Reference name="dialog-heading" />
+
+    ### DialogDescription
+
+    <Reference name="dialog-description" />
+
+    ### DialogBody
+
+    <Reference name="dialog-body" />
+
+    ### DialogFooter
+
+    <Reference name="dialog-footer" />
 
   </PageTabPanel>
 

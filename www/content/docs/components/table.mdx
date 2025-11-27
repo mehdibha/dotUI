@@ -64,33 +64,27 @@ import {
 
     ### Table
 
-    | Prop            | Type                               | Default  | Description                              |
-    | --------------- | ---------------------------------- | -------- | ---------------------------------------- |
-    | `selectionMode` | `'none' \| 'single' \| 'multiple'` | `'none'` | The type of selection that is allowed.   |
-    | `selectionBehavior` | `'toggle' \| 'replace'`        | -        | How multiple selection should behave.    |
-    | `selectedKeys`  | `Iterable<Key>`                    | -        | The currently selected keys (controlled). |
-    | `defaultSelectedKeys` | `Iterable<Key>`              | -        | The initially selected keys (uncontrolled). |
-    | `disabledKeys`  | `Iterable<Key>`                    | -        | The keys that are disabled.              |
-    | `sortDescriptor`| `SortDescriptor`                   | -        | The current sort descriptor (controlled). |
-    | `children`      | `ReactNode`                        | -        | The table header and body.               |
+    <Reference name="table" />
 
-    | Event               | Type                                      | Description                              |
-    | ------------------- | ----------------------------------------- | ---------------------------------------- |
-    | `onSelectionChange` | `(keys: Selection) => void`               | Handler that is called when selection changes. |
-    | `onSortChange`      | `(descriptor: SortDescriptor) => void`    | Handler that is called when sort changes. |
-    | `onRowAction`       | `(key: Key) => void`                      | Handler that is called when a row action is triggered. |
+    ### TableHeader
 
-    ## Accessibility
+    <Reference name="table-header" />
 
-    ### Keyboard interactions
+    ### TableColumn
 
-    | Key                   | Description                                      |
-    | --------------------- | ------------------------------------------------ |
-    | `ArrowUp` `ArrowDown` | Moves focus between rows.                        |
-    | `ArrowLeft` `ArrowRight` | Moves focus between cells.                    |
-    | `Space`               | Toggles row selection.                           |
-    | `Enter`               | Triggers the row action.                         |
-    | `Ctrl/Cmd + A`        | Selects all rows (when multiple selection is enabled). |
+    <Reference name="table-column" />
+
+    ### TableBody
+
+    <Reference name="table-body" />
+
+    ### TableRow
+
+    <Reference name="table-row" />
+
+    ### TableCell
+
+    <Reference name="table-cell" />
 
   </PageTabPanel>
 

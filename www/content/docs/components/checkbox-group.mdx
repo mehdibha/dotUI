@@ -53,43 +53,7 @@ import {
 
     ## API Reference
 
-    | Prop                 | Type                                                                                                       | Default     | Description                                                                                                                                                                                                                           |
-    | -------------------- | ---------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | `variant`            | `"default" \| "card"`                                                                                      | `"default"` | The visual style of the checkbox group.                                                                                                                                                                                               |
-    | `value`              | `string[]`                                                                                                 | -           | The current value (controlled).                                                                                                                                                                                                       |
-    | `defaultValue`       | `string[]`                                                                                                 | -           | The default value (uncontrolled).                                                                                                                                                                                                     |
-    | `isDisabled`         | `boolean`                                                                                                  | -           | Whether the input is disabled.                                                                                                                                                                                                        |
-    | `isReadOnly`         | `boolean`                                                                                                  | -           | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
-    | `name`               | `string`                                                                                                   | -           | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
-    | `isRequired`         | `boolean`                                                                                                  | -           | Whether user input is required on the input before form submission.                                                                                                                                                                   |
-    | `isInvalid`          | `boolean`                                                                                                  | -           | Whether the input value is invalid.                                                                                                                                                                                                   |
-    | `children`           | `ReactNode \| (values: CheckboxGroupRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -           | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
-    | `className`          | `string`                                                                                                   | -           | The CSS className for the element.                                                                                                                                                                                                    |
-    | `style`              | `CSSProperties \| (values: CheckboxGroupRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -           | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
-
-    | Event           | Type                              | Description                                                     |
-    | --------------- | --------------------------------- | --------------------------------------------------------------- |
-    | `onChange`      | `(value: T) => void`              | Handler that is called when the value changes.                  |
-    | `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.         |
-    | `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.            |
-    | `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
-
-    | Data attribute    | Description                              |
-    | ----------------- | ---------------------------------------- |
-    | `[data-disabled]` | Whether the checkbox group is disabled.  |
-    | `[data-readonly]` | Whether the checkbox group is read only. |
-    | `[data-required]` | Whether the checkbox group is required.  |
-    | `[data-invalid]`  | Whether the checkbox group invalid.      |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key         | Description                                        |
-    | ----------- | -------------------------------------------------- |
-    | `Tab`       | Moves focus to the next checkbox in the group.     |
-    | `Shift+Tab` | Moves focus to the previous checkbox in the group. |
-    | `Space`     | Checks/unchecks the focused checkbox.              |
+    <Reference name="checkbox-group" />
 
   </PageTabPanel>
 

@@ -42,39 +42,17 @@ import {
 
     ## API Reference
 
-    | Prop              | Type                        | Default | Description                                          |
-    | ----------------- | --------------------------- | ------- | ---------------------------------------------------- |
-    | `value`           | `DateValue`                 | -       | The current value (controlled).                      |
-    | `defaultValue`    | `DateValue`                 | -       | The default value (uncontrolled).                    |
-    | `minValue`        | `DateValue`                 | -       | The minimum allowed date.                            |
-    | `maxValue`        | `DateValue`                 | -       | The maximum allowed date.                            |
-    | `isDisabled`      | `boolean`                   | -       | Whether the calendar is disabled.                    |
-    | `isReadOnly`      | `boolean`                   | -       | Whether the calendar is read only.                   |
-    | `isInvalid`       | `boolean`                   | -       | Whether the current value is invalid.                |
-    | `focusedValue`    | `DateValue`                 | -       | The currently focused date (controlled).             |
-    | `defaultFocusedValue` | `DateValue`             | -       | The default focused date (uncontrolled).             |
-    | `visibleDuration` | `DateDuration`              | `{months: 1}` | The duration of the visible date range.        |
+    ### Calendar
 
-    | Event               | Type                          | Description                              |
-    | ------------------- | ----------------------------- | ---------------------------------------- |
-    | `onChange`          | `(value: DateValue) => void`  | Handler that is called when the value changes. |
-    | `onFocusChange`     | `(date: CalendarDate) => void`| Handler that is called when the focused date changes. |
+    <Reference name="calendar-header" />
 
-    ## Accessibility
+    ### CalendarGrid
 
-    ### Keyboard interactions
+    <Reference name="calendar-grid" />
 
-    | Key                   | Description                                      |
-    | --------------------- | ------------------------------------------------ |
-    | `ArrowLeft`           | Moves focus to the previous day.                 |
-    | `ArrowRight`          | Moves focus to the next day.                     |
-    | `ArrowUp`             | Moves focus to the same day of the previous week. |
-    | `ArrowDown`           | Moves focus to the same day of the next week.    |
-    | `Page Up`             | Moves focus to the same day of the previous month. |
-    | `Page Down`           | Moves focus to the same day of the next month.   |
-    | `Home`                | Moves focus to the first day of the month.       |
-    | `End`                 | Moves focus to the last day of the month.        |
-    | `Enter` `Space`       | Selects the focused date.                        |
+    ### CalendarCell
+
+    <Reference name="calendar-cell" />
 
   </PageTabPanel>
 

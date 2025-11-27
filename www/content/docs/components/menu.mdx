@@ -55,38 +55,15 @@ import {
 
     ### Menu
 
-    | Prop           | Type                        | Default | Description                                      |
-    | -------------- | --------------------------- | ------- | ------------------------------------------------ |
-    | `isOpen`       | `boolean`                   | -       | Whether the menu is open (controlled).           |
-    | `defaultOpen`  | `boolean`                   | -       | Whether the menu is open by default.             |
-    | `children`     | `ReactNode`                 | -       | The trigger and menu content.                    |
+    <Reference name="menu" />
 
-    | Event          | Type                        | Description                                      |
-    | -------------- | --------------------------- | ------------------------------------------------ |
-    | `onOpenChange` | `(isOpen: boolean) => void` | Handler that is called when the open state changes. |
+    ### MenuContent
+
+    <Reference name="menu-content" />
 
     ### MenuItem
 
-    | Prop         | Type                          | Default     | Description                                    |
-    | ------------ | ----------------------------- | ----------- | ---------------------------------------------- |
-    | `variant`    | `'default' \| 'danger'`       | `'default'` | The visual style of the menu item.             |
-    | `isDisabled` | `boolean`                     | -           | Whether the menu item is disabled.             |
-    | `href`       | `string`                      | -           | A URL to link to.                              |
-    | `children`   | `ReactNode`                   | -           | The content of the menu item.                  |
-
-    | Event        | Type                | Description                                    |
-    | ------------ | ------------------- | ---------------------------------------------- |
-    | `onAction`   | `() => void`        | Handler that is called when the item is selected. |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key                   | Description                                        |
-    | --------------------- | -------------------------------------------------- |
-    | `Enter` `Space`       | Selects the focused menu item.                     |
-    | `ArrowDown` `ArrowUp` | Moves focus to the next/previous menu item.        |
-    | `Escape`              | Closes the menu.                                   |
+    <Reference name="menu-item" />
 
   </PageTabPanel>
 

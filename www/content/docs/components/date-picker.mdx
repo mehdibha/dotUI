@@ -50,37 +50,13 @@ import {
 
     ## API Reference
 
-    | Prop              | Type                                     | Default     | Description                                          |
-    | ----------------- | ---------------------------------------- | ----------- | ---------------------------------------------------- |
-    | `value`           | `DateValue`                              | -           | The current value (controlled).                      |
-    | `defaultValue`    | `DateValue`                              | -           | The default value (uncontrolled).                    |
-    | `minValue`        | `DateValue`                              | -           | The minimum allowed date.                            |
-    | `maxValue`        | `DateValue`                              | -           | The maximum allowed date.                            |
-    | `granularity`     | `'day' \| 'hour' \| 'minute' \| 'second'`| `'day'`     | The smallest unit that is displayed.                 |
-    | `hourCycle`       | `12 \| 24`                               | -           | Whether to use 12 or 24 hour format.                 |
-    | `hideTimeZone`    | `boolean`                                | -           | Whether to hide the time zone.                       |
-    | `placeholderValue`| `DateValue`                              | -           | A placeholder date that influences the format.       |
-    | `isDisabled`      | `boolean`                                | -           | Whether the date picker is disabled.                 |
-    | `isReadOnly`      | `boolean`                                | -           | Whether the date picker is read only.                |
-    | `isInvalid`       | `boolean`                                | -           | Whether the current value is invalid.                |
-    | `isRequired`      | `boolean`                                | -           | Whether the field is required.                       |
+    ### DatePicker
 
-    | Event           | Type                          | Description                              |
-    | --------------- | ----------------------------- | ---------------------------------------- |
-    | `onChange`      | `(value: DateValue) => void`  | Handler that is called when the value changes. |
-    | `onOpenChange`  | `(isOpen: boolean) => void`   | Handler that is called when the popover opens or closes. |
+    <Reference name="date-picker-input" />
 
-    ## Accessibility
+    ### DatePickerContent
 
-    ### Keyboard interactions
-
-    | Key              | Description                                          |
-    | ---------------- | ---------------------------------------------------- |
-    | `Tab`            | Moves focus between date segments and the calendar button. |
-    | `ArrowUp`        | Increments the focused segment value.                |
-    | `ArrowDown`      | Decrements the focused segment value.                |
-    | `Space` `Enter`  | Opens the calendar popover when the button is focused. |
-    | `Escape`         | Closes the calendar popover.                         |
+    <Reference name="date-picker-content" />
 
   </PageTabPanel>
 

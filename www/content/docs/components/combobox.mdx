@@ -48,55 +48,17 @@ import {
 
     ## API Reference
 
-    | Prop                 | Type                                                                                             | Default    | Description                                                                                                                                                                                                                           |
-    | -------------------- | ------------------------------------------------------------------------------------------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | `menuTrigger`        | `'focus' \| 'input' \| 'manual'`                                                                 | `'input'`  | The interaction required to display the ComboBox menu.                                                                                                                                                                                |
-    | `shouldFocusWrap`    | `boolean`                                                                                        | -          | Whether keyboard navigation is circular.                                                                                                                                                                                              |
-    | `defaultFilter`      | `(textValue: string, inputValue: string) => boolean`                                             | -          | The filter function used to determine if a option should be included in the combo box list.                                                                                                                                           |
-    | `allowsCustomValue`  | `boolean`                                                                                        | -          | Whether the ComboBox allows a non-item matching input value to be set.                                                                                                                                                                |
-    | `formValue`          | `'text' \| 'key'`                                                                                | `'key'`    | Whether the text or key of the selected item is submitted as part of an HTML form.                                                                                                                                                    |
-    | `allowsEmptyCollection` | `boolean`                                                                                     | -          | Whether the combo box allows the menu to be open when the collection is empty.                                                                                                                                                        |
-    | `inputValue`         | `string`                                                                                         | -          | The value of the ComboBox input (controlled).                                                                                                                                                                                         |
-    | `defaultInputValue`  | `string`                                                                                         | -          | The default value of the ComboBox input (uncontrolled).                                                                                                                                                                               |
-    | `selectedKey`        | `Key \| null`                                                                                    | -          | The currently selected key in the collection (controlled).                                                                                                                                                                            |
-    | `defaultSelectedKey` | `Key`                                                                                            | -          | The initial selected key in the collection (uncontrolled).                                                                                                                                                                            |
-    | `disabledKeys`       | `Iterable<Key>`                                                                                  | -          | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.                                                                                                                               |
-    | `isDisabled`         | `boolean`                                                                                        | -          | Whether the input is disabled.                                                                                                                                                                                                        |
-    | `isReadOnly`         | `boolean`                                                                                        | -          | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
-    | `isRequired`         | `boolean`                                                                                        | -          | Whether user input is required on the input before form submission.                                                                                                                                                                   |
-    | `isInvalid`          | `boolean`                                                                                        | -          | Whether the input value is invalid.                                                                                                                                                                                                   |
-    | `name`               | `string`                                                                                         | -          | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
+    ### Combobox
 
-    | Event               | Type                              | Description                                                     |
-    | ------------------- | --------------------------------- | --------------------------------------------------------------- |
-    | `onOpenChange`      | `(isOpen: boolean, trigger?: MenuTriggerAction) => void` | Method that is called when the open state of the menu changes. |
-    | `onSelectionChange` | `(key: Key \| null) => void`      | Handler that is called when the selection changes.              |
-    | `onInputChange`     | `(value: string) => void`         | Handler that is called when the ComboBox input value changes.   |
-    | `onFocus`           | `(e: FocusEvent<HTMLInputElement>) => void` | Handler that is called when the element receives focus.         |
-    | `onBlur`            | `(e: FocusEvent<HTMLInputElement>) => void` | Handler that is called when the element loses focus.            |
-    | `onFocusChange`     | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
-    | `onKeyDown`         | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                   |
-    | `onKeyUp`           | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                  |
+    <Reference name="combobox" />
 
-    | Data attribute         | Description                                                      |
-    | ---------------------- | ---------------------------------------------------------------- |
-    | `[data-focused]`       | Whether the combobox is focused, either via a mouse or keyboard. |
-    | `[data-focus-visible]` | Whether the combobox is keyboard focused.                        |
-    | `[data-disabled]`      | Whether the combobox is disabled.                                |
-    | `[data-open]`          | Whether the combobox is currently open.                          |
-    | `[data-invalid]`       | Whether the combobox is invalid.                                 |
-    | `[data-required]`      | Whether the combobox is required.                                |
+    ### ComboboxInput
 
-    ## Accessibility
+    <Reference name="combobox-input" />
 
-    ### Keyboard interactions
+    ### ComboboxContent
 
-    | Key                   | Description                                                                                   |
-    | --------------------- | --------------------------------------------------------------------------------------------- |
-    | `ArrowDown` `ArrowUp` | Moves focus to the next/previous item in the list. Opens the list if focus is on the input.   |
-    | `Enter`               | Selects the focused item and closes the list.                                                 |
-    | `Escape`              | Closes the list and reverts the input value to the selected item.                             |
-    | `Tab`                 | Closes the list and moves focus to the next element.                                          |
+    <Reference name="combobox-content" />
 
   </PageTabPanel>
 

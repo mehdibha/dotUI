@@ -46,29 +46,13 @@ import {
 
     ## API Reference
 
-    | Prop           | Type                             | Default        | Description                              |
-    | -------------- | -------------------------------- | -------------- | ---------------------------------------- |
-    | `value`        | `Color`                          | -              | The current value (controlled).          |
-    | `defaultValue` | `Color`                          | -              | The default value (uncontrolled).        |
-    | `channel`      | `ColorChannel`                   | -              | The color channel that the slider edits. |
-    | `orientation`  | `'horizontal' \| 'vertical'`     | `'horizontal'` | The orientation of the slider.           |
-    | `isDisabled`   | `boolean`                        | -              | Whether the color slider is disabled.    |
-    | `children`     | `ReactNode`                      | -              | The label and control.                   |
+    ### ColorSlider
 
-    | Event      | Type                     | Description                              |
-    | ---------- | ------------------------ | ---------------------------------------- |
-    | `onChange` | `(value: Color) => void` | Handler that is called when the value changes. |
+    <Reference name="color-slider" />
 
-    ## Accessibility
+    ### ColorSliderControl
 
-    ### Keyboard interactions
-
-    | Key                   | Description                              |
-    | --------------------- | ---------------------------------------- |
-    | `ArrowLeft` `ArrowDown` | Decreases the value by the step amount. |
-    | `ArrowRight` `ArrowUp`| Increases the value by the step amount.  |
-    | `Page Up` `Page Down` | Moves the thumb by a larger step.        |
-    | `Home` `End`          | Moves the thumb to the minimum/maximum.  |
+    <Reference name="color-slider-control" />
 
   </PageTabPanel>
 

@@ -50,60 +50,11 @@ import {
 
     ### Select
 
-    | Prop                 | Type                                                                                            | Default    | Description                                                                                                                                                                                                                           |
-    | -------------------- | ----------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | `autoComplete`       | `string`                                                                                        | -          | Describes the type of autocomplete functionality the input should provide if any.                                                                                                                                                     |
-    | `name`               | `string`                                                                                        | -          | The name of the input, used when submitting an HTML form.                                                                                                                                                                             |
-    | `isOpen`             | `boolean`                                                                                       | -          | Sets the open state of the menu.                                                                                                                                                                                                      |
-    | `defaultOpen`        | `boolean`                                                                                       | -          | Sets the default open state of the menu.                                                                                                                                                                                              |
-    | `disabledKeys`       | `Iterable<Key>`                                                                                 | -          | The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with.                                                                                                                               |
-    | `isDisabled`         | `boolean`                                                                                       | -          | Whether the input is disabled.                                                                                                                                                                                                        |
-    | `isRequired`         | `boolean`                                                                                       | -          | Whether user input is required on the input before form submission.                                                                                                                                                                   |
-    | `isInvalid`          | `boolean`                                                                                       | -          | Whether the input value is invalid.                                                                                                                                                                                                   |
-    | `placeholder`        | `string`                                                                                        | -          | Temporary text that occupies the text input when it is empty.                                                                                                                                                                         |
-    | `selectedKey`        | `Key \| null`                                                                                   | -          | The currently selected key in the collection (controlled).                                                                                                                                                                            |
-    | `defaultSelectedKey` | `Key`                                                                                           | -          | The initial selected key in the collection (uncontrolled).                                                                                                                                                                            |
-    | `autoFocus`          | `boolean`                                                                                       | -          | Whether the element should receive focus on render.                                                                                                                                                                                   |
-    | `children`           | `ReactNode \| (item: object) => ReactNode`                                                      | -          | The contents of the collection.                                                                                                                                                                                                       |
-    | `className`          | `string \| (values: SelectRenderProps & {defaultClassName: string \| undefined}) => string`     | -          | The CSS className for the element. A function may be provided to compute the class based on component state.                                                                                                                          |
-    | `style`              | `CSSProperties \| (values: SelectRenderProps & {defaultStyle: CSSProperties}) => CSSProperties` | -          | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
+    <Reference name="select" />
 
-    | Event               | Type                              | Description                                                     |
-    | ------------------- | --------------------------------- | --------------------------------------------------------------- |
-    | `onOpenChange`      | `(isOpen: boolean) => void`       | Method that is called when the open state of the menu changes.  |
-    | `onSelectionChange` | `(key: Key) => void`              | Handler that is called when the selection changes.              |
-    | `onFocus`           | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.         |
-    | `onBlur`            | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.            |
-    | `onFocusChange`     | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
-    | `onKeyDown`         | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                   |
-    | `onKeyUp`           | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                  |
+    ### SelectContent
 
-    | Data attribute         | Description                                                    |
-    | ---------------------- | -------------------------------------------------------------- |
-    | `[data-focused]`       | Whether the select is focused, either via a mouse or keyboard. |
-    | `[data-focus-visible]` | Whether the select is keyboard focused.                        |
-    | `[data-disabled]`      | Whether the select is disabled.                                |
-    | `[data-open]`          | Whether the select is currently open.                          |
-    | `[data-invalid]`       | Whether the select is invalid.                                 |
-    | `[data-required]`      | Whether the select is required.                                |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    When the popover is closed:
-
-    | Key                 | Description                                                         |
-    | ------------------- | ------------------------------------------------------------------- |
-    | `Space` `ArrowDown` | Opens the popover menu. The focus is set on the menu item selected. |
-
-    When the popover menu is open:
-
-    | Key                   | Description                                                                                                          |
-    | --------------------- | -------------------------------------------------------------------------------------------------------------------- |
-    | `Space`               | Selects the menu item in focus, closes the popover menu and moves focus to the field button.                         |
-    | `ArrowDown` `ArrowUp` | Moves focus to previous or next menu item in the popover. Does not loop when the last or first menu item is reached. |
-    | `Esc`                 | Closes the popover menu and moves focus to the field button.                                                         |
+    <Reference name="select-content" />
 
   </PageTabPanel>
 

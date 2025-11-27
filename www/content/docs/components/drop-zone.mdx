@@ -44,22 +44,13 @@ import {
 
     ## API Reference
 
-    | Prop              | Type                          | Default | Description                                      |
-    | ----------------- | ----------------------------- | ------- | ------------------------------------------------ |
-    | `getDropOperation`| `(types: DragTypes, allowedOperations: DropOperation[]) => DropOperation` | - | Handler that returns the drop operation for a drag. |
-    | `isDisabled`      | `boolean`                     | -       | Whether the drop zone is disabled.               |
-    | `children`        | `ReactNode`                   | -       | The content of the drop zone.                    |
+    ### DropZone
 
-    | Event        | Type                               | Description                                      |
-    | ------------ | ---------------------------------- | ------------------------------------------------ |
-    | `onDrop`     | `(e: DropEvent) => void`           | Handler that is called when a drop occurs.       |
-    | `onDropEnter`| `(e: DropEnterEvent) => void`      | Handler that is called when a drag enters.       |
-    | `onDropExit` | `(e: DropExitEvent) => void`       | Handler that is called when a drag exits.        |
+    <Reference name="drop-zone" />
 
-    | Data attribute      | Description                                      |
-    | ------------------- | ------------------------------------------------ |
-    | `[data-drop-target]`| Whether the drop zone is a valid drop target.    |
-    | `[data-disabled]`   | Whether the drop zone is disabled.               |
+    ### DropZoneLabel
+
+    <Reference name="drop-zone-label" />
 
   </PageTabPanel>
 

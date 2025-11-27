@@ -53,34 +53,19 @@ import {
 
     ### Tabs
 
-    | Prop           | Type                             | Default        | Description                           |
-    | -------------- | -------------------------------- | -------------- | ------------------------------------- |
-    | `orientation`  | `'horizontal' \| 'vertical'`     | `'horizontal'` | The orientation of the tabs.          |
-    | `isDisabled`   | `boolean`                        | -              | Whether the tabs are disabled.        |
-    | `selectedKey`  | `Key`                            | -              | The currently selected tab (controlled). |
-    | `defaultSelectedKey` | `Key`                      | -              | The default selected tab (uncontrolled). |
-    | `children`     | `ReactNode`                      | -              | The tab list and panels.              |
+    <Reference name="tabs" />
 
-    | Event               | Type                  | Description                              |
-    | ------------------- | --------------------- | ---------------------------------------- |
-    | `onSelectionChange` | `(key: Key) => void`  | Handler that is called when the selected tab changes. |
+    ### TabList
 
-    | Data attribute                                | Description                 |
-    | --------------------------------------------- | --------------------------- |
-    | `[data-orientation="horizontal \| vertical"]` | The orientation of the tabs. |
+    <Reference name="tab-list" />
 
-    ## Accessibility
+    ### Tab
 
-    ### Keyboard interactions
+    <Reference name="tab" />
 
-    | Key                   | Description                                      |
-    | --------------------- | ------------------------------------------------ |
-    | `Tab`                 | Moves focus to the tab list.                     |
-    | `ArrowLeft` `ArrowRight` | Moves focus to adjacent tabs (horizontal).    |
-    | `ArrowUp` `ArrowDown` | Moves focus to adjacent tabs (vertical).         |
-    | `Enter` `Space`       | Activates the focused tab.                       |
-    | `Home`                | Moves focus to the first tab.                    |
-    | `End`                 | Moves focus to the last tab.                     |
+    ### TabPanel
+
+    <Reference name="tab-panel" />
 
   </PageTabPanel>
 

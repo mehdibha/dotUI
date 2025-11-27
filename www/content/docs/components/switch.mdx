@@ -43,48 +43,9 @@ import {
 
     ## API Reference
 
-    | Prop              | Type                                                                                                  | Default | Description                                                                                               |
-    | ----------------- | ----------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-    | `size`            | `"sm" \| "md" \| "lg"`                                                                                | `"md"`  | The size of the switch.                                                                                   |
-    | `inputRef`        | `MutableRefObject<HTMLInputElement>`                                                                  | -       | A ref for the HTML input element.                                                                         |
-    | `defaultSelected` | `boolean`                                                                                             | -       | Whether the element should be selected (uncontrolled).                                                    |
-    | `isSelected`      | `boolean`                                                                                             | -       | Whether the element should be selected (controlled).                                                      |
-    | `value`           | `string`                                                                                              | -       | The value of the input element, used when submitting an HTML form.                                        |
-    | `isDisabled`      | `boolean`                                                                                             | -       | Whether the input is disabled.                                                                            |
-    | `isReadOnly`      | `boolean`                                                                                             | -       | Whether the input can be selected but not changed by the user.                                            |
-    | `autoFocus`       | `boolean`                                                                                             | -       | Whether the element should receive focus on render.                                                       |
-    | `name`            | `string`                                                                                              | -       | The name of the input element, used when submitting an HTML                                               |
-    | `children`        | `ReactNode \| (values: CheckboxRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state. |
+    ### Switch
 
-    | Event           | Type                              | Description                                                       |
-    | --------------- | --------------------------------- | ----------------------------------------------------------------- |
-    | `onChange`      | `(isSelected: boolean) => void`   | Handler that is called when the Switch's selection state changes. |
-    | `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the Switch receives focus.            |
-    | `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the Switch loses focus.               |
-    | `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the Switch's focus status changes.    |
-    | `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                     |
-    | `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                    |
-    | `onHoverStart`  | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction starts.           |
-    | `onHoverEnd`    | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction ends.             |
-    | `onHoverChange` | `(isHovering: boolean) => void`   | Handler that is called when the hover state changes.              |
-
-    | Data attribute         | Description                                                    |
-    | ---------------------- | -------------------------------------------------------------- |
-    | `[data-selected]`      | Whether the switch is selected.                                |
-    | `[data-hovered]`       | Whether the switch is currently hovered with a mouse.          |
-    | `[data-pressed]`       | Whether the switch is currently in a pressed state.            |
-    | `[data-focused]`       | Whether the switch is focused, either via a mouse or keyboard. |
-    | `[data-focus-visible]` | Whether the switch is keyboard focused.                        |
-    | `[data-disabled]`      | Whether the switch is disabled.                                |
-    | `[data-readonly]`      | Whether the switch is read only.                               |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key             | Description                    |
-    | --------------- | ------------------------------ |
-    | `Space` `Enter` | Toggles the component's state. |
+    <Reference name="switch" />
 
   </PageTabPanel>
 

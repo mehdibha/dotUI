@@ -47,51 +47,13 @@ import {
 
     ## API Reference
 
-    | Prop              | Type                                                                                                  | Default     | Description                                                                                               |
-    | ----------------- | ----------------------------------------------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------- |
-    | `value`           | `DateValue \| null`                                                                                   | -           | The current value (controlled).                                                                           |
-    | `defaultValue`    | `DateValue \| null`                                                                                   | -           | The default value (uncontrolled).                                                                         |
-    | `minValue`        | `DateValue`                                                                                           | -           | The minimum allowed date that a user may select.                                                          |
-    | `maxValue`        | `DateValue`                                                                                           | -           | The maximum allowed date that a user may select.                                                          |
-    | `granularity`     | `'day' \| 'hour' \| 'minute' \| 'second'`                                                             | `'day'`     | Determines the smallest unit that is displayed in the date picker.                                        |
-    | `hourCycle`       | `12 \| 24`                                                                                            | -           | Whether to display the time in 12 or 24 hour format.                                                      |
-    | `hideTimeZone`    | `boolean`                                                                                             | -           | Whether to hide the time zone abbreviation.                                                               |
-    | `placeholderValue`| `DateValue`                                                                                           | -           | A placeholder date that influences the format of the placeholder shown when no value is selected.         |
-    | `isDisabled`      | `boolean`                                                                                             | -           | Whether the input is disabled.                                                                            |
-    | `isReadOnly`      | `boolean`                                                                                             | -           | Whether the input can be selected but not changed by the user.                                            |
-    | `isRequired`      | `boolean`                                                                                             | -           | Whether user input is required on the input before form submission.                                       |
-    | `isInvalid`       | `boolean`                                                                                             | -           | Whether the input value is invalid.                                                                       |
-    | `name`            | `string`                                                                                              | -           | The name of the input element, used when submitting an HTML form.                                         |
-    | `autoFocus`       | `boolean`                                                                                             | -           | Whether the element should receive focus on render.                                                       |
+    ### DateField
 
-    | Event           | Type                              | Description                                                     |
-    | --------------- | --------------------------------- | --------------------------------------------------------------- |
-    | `onChange`      | `(value: DateValue) => void`      | Handler that is called when the value changes.                  |
-    | `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.         |
-    | `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.            |
-    | `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
-    | `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                   |
-    | `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                  |
+    <Reference name="date-field" />
 
-    | Data attribute         | Description                                                      |
-    | ---------------------- | ---------------------------------------------------------------- |
-    | `[data-focused]`       | Whether the date field is focused, either via a mouse or keyboard. |
-    | `[data-focus-visible]` | Whether the date field is keyboard focused.                      |
-    | `[data-disabled]`      | Whether the date field is disabled.                              |
-    | `[data-invalid]`       | Whether the date field is invalid.                               |
-    | `[data-readonly]`      | Whether the date field is read only.                             |
+    ### DateInput
 
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key              | Description                                                    |
-    | ---------------- | -------------------------------------------------------------- |
-    | `Tab`            | Moves focus between date segments.                             |
-    | `ArrowUp`        | Increments the focused segment value.                          |
-    | `ArrowDown`      | Decrements the focused segment value.                          |
-    | `ArrowLeft`      | Moves focus to the previous segment.                           |
-    | `ArrowRight`     | Moves focus to the next segment.                               |
+    <Reference name="date-input" />
 
   </PageTabPanel>
 

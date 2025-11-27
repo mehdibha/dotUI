@@ -48,39 +48,11 @@ import {
 
     ### ListBox
 
-    | Prop            | Type                               | Default    | Description                              |
-    | --------------- | ---------------------------------- | ---------- | ---------------------------------------- |
-    | `selectionMode` | `'none' \| 'single' \| 'multiple'` | `'none'`   | The type of selection that is allowed.   |
-    | `selectionBehavior` | `'toggle' \| 'replace'`        | -          | How multiple selection should behave.    |
-    | `orientation`   | `'horizontal' \| 'vertical'`       | `'vertical'` | The orientation of the list box.       |
-    | `selectedKeys`  | `Iterable<Key>`                    | -          | The currently selected keys (controlled). |
-    | `defaultSelectedKeys` | `Iterable<Key>`              | -          | The initially selected keys (uncontrolled). |
-    | `disabledKeys`  | `Iterable<Key>`                    | -          | The keys that are disabled.              |
-    | `children`      | `ReactNode`                        | -          | The list box items.                      |
+    <Reference name="list-box" />
 
-    | Event               | Type                        | Description                              |
-    | ------------------- | --------------------------- | ---------------------------------------- |
-    | `onSelectionChange` | `(keys: Selection) => void` | Handler that is called when selection changes. |
-    | `onAction`          | `(key: Key) => void`        | Handler that is called when an item is activated. |
+    ### ListBoxItem
 
-    | Data attribute                                | Description                    |
-    | --------------------------------------------- | ------------------------------ |
-    | `[data-orientation="horizontal \| vertical"]` | The orientation of the list box. |
-    | `[data-empty]`                                | Whether the list box is empty. |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key                   | Description                                      |
-    | --------------------- | ------------------------------------------------ |
-    | `ArrowUp` `ArrowDown` | Moves focus between items (vertical).            |
-    | `ArrowLeft` `ArrowRight` | Moves focus between items (horizontal).       |
-    | `Space`               | Toggles item selection.                          |
-    | `Enter`               | Activates the focused item.                      |
-    | `Home`                | Moves focus to the first item.                   |
-    | `End`                 | Moves focus to the last item.                    |
-    | `Ctrl/Cmd + A`        | Selects all items (when multiple selection is enabled). |
+    <Reference name="list-box-item" />
 
   </PageTabPanel>
 

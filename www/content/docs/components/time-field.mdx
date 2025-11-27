@@ -47,51 +47,7 @@ import {
 
     ## API Reference
 
-    | Prop              | Type                                                                                                  | Default  | Description                                                                                               |
-    | ----------------- | ----------------------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------- |
-    | `value`           | `TimeValue \| null`                                                                                   | -        | The current value (controlled).                                                                           |
-    | `defaultValue`    | `TimeValue \| null`                                                                                   | -        | The default value (uncontrolled).                                                                         |
-    | `minValue`        | `TimeValue`                                                                                           | -        | The minimum allowed time that a user may select.                                                          |
-    | `maxValue`        | `TimeValue`                                                                                           | -        | The maximum allowed time that a user may select.                                                          |
-    | `granularity`     | `'hour' \| 'minute' \| 'second'`                                                                      | `'minute'` | Determines the smallest unit that is displayed in the time picker.                                       |
-    | `hourCycle`       | `12 \| 24`                                                                                            | -        | Whether to display the time in 12 or 24 hour format.                                                      |
-    | `hideTimeZone`    | `boolean`                                                                                             | -        | Whether to hide the time zone abbreviation.                                                               |
-    | `placeholderValue`| `TimeValue`                                                                                           | -        | A placeholder time that influences the format of the placeholder shown when no value is selected.         |
-    | `isDisabled`      | `boolean`                                                                                             | -        | Whether the input is disabled.                                                                            |
-    | `isReadOnly`      | `boolean`                                                                                             | -        | Whether the input can be selected but not changed by the user.                                            |
-    | `isRequired`      | `boolean`                                                                                             | -        | Whether user input is required on the input before form submission.                                       |
-    | `isInvalid`       | `boolean`                                                                                             | -        | Whether the input value is invalid.                                                                       |
-    | `name`            | `string`                                                                                              | -        | The name of the input element, used when submitting an HTML form.                                         |
-    | `autoFocus`       | `boolean`                                                                                             | -        | Whether the element should receive focus on render.                                                       |
-
-    | Event           | Type                              | Description                                                     |
-    | --------------- | --------------------------------- | --------------------------------------------------------------- |
-    | `onChange`      | `(value: TimeValue) => void`      | Handler that is called when the value changes.                  |
-    | `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.         |
-    | `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.            |
-    | `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
-    | `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                   |
-    | `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                  |
-
-    | Data attribute         | Description                                                      |
-    | ---------------------- | ---------------------------------------------------------------- |
-    | `[data-focused]`       | Whether the time field is focused, either via a mouse or keyboard. |
-    | `[data-focus-visible]` | Whether the time field is keyboard focused.                      |
-    | `[data-disabled]`      | Whether the time field is disabled.                              |
-    | `[data-invalid]`       | Whether the time field is invalid.                               |
-    | `[data-readonly]`      | Whether the time field is read only.                             |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key              | Description                                                    |
-    | ---------------- | -------------------------------------------------------------- |
-    | `Tab`            | Moves focus between time segments.                             |
-    | `ArrowUp`        | Increments the focused segment value.                          |
-    | `ArrowDown`      | Decrements the focused segment value.                          |
-    | `ArrowLeft`      | Moves focus to the previous segment.                           |
-    | `ArrowRight`     | Moves focus to the next segment.                               |
+    <Reference name="time-field" />
 
   </PageTabPanel>
 

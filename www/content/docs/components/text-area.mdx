@@ -47,43 +47,7 @@ import {
 
     ## API Reference
 
-    | Prop         | Type                                                                                                    | Default | Description                                                                                               |
-    | ------------ | ------------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-    | `value`      | `string`                                                                                                | -       | The current value (controlled).                                                                           |
-    | `defaultValue` | `string`                                                                                              | -       | The default value (uncontrolled).                                                                         |
-    | `isDisabled` | `boolean`                                                                                               | -       | Whether the input is disabled.                                                                            |
-    | `isReadOnly` | `boolean`                                                                                               | -       | Whether the input can be selected but not changed by the user.                                            |
-    | `isRequired` | `boolean`                                                                                               | -       | Whether user input is required on the input before form submission.                                       |
-    | `isInvalid`  | `boolean`                                                                                               | -       | Whether the input value is invalid.                                                                       |
-    | `name`       | `string`                                                                                                | -       | The name of the input element, used when submitting an HTML form.                                         |
-    | `autoFocus`  | `boolean`                                                                                               | -       | Whether the element should receive focus on render.                                                       |
-    | `maxLength`  | `number`                                                                                                | -       | The maximum number of characters supported by the input.                                                  |
-    | `minLength`  | `number`                                                                                                | -       | The minimum number of characters required by the input.                                                   |
-
-    | Event           | Type                              | Description                                                     |
-    | --------------- | --------------------------------- | --------------------------------------------------------------- |
-    | `onChange`      | `(value: string) => void`         | Handler that is called when the value changes.                  |
-    | `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.         |
-    | `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.            |
-    | `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes. |
-    | `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                   |
-    | `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                  |
-
-    | Data attribute         | Description                                                      |
-    | ---------------------- | ---------------------------------------------------------------- |
-    | `[data-focused]`       | Whether the text area is focused, either via a mouse or keyboard. |
-    | `[data-focus-visible]` | Whether the text area is keyboard focused.                       |
-    | `[data-disabled]`      | Whether the text area is disabled.                               |
-    | `[data-invalid]`       | Whether the text area is invalid.                                |
-    | `[data-readonly]`      | Whether the text area is read only.                              |
-
-    ## Accessibility
-
-    ### Keyboard interactions
-
-    | Key   | Description                                |
-    | ----- | ------------------------------------------ |
-    | `Tab` | Moves focus in or out of the text area.    |
+    <Reference name="text-area" />
 
   </PageTabPanel>
 
