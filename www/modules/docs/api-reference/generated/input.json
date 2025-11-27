@@ -135,6 +135,38 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element that provides a detailed, extended description for the object."
+    },
     "className": {
       "type": "string | (values: InputRenderProps) => string",
       "detailedType": "string | (values: InputRenderProps) => string | undefined",
@@ -457,14 +489,6 @@
       },
       "description": "Indicates the element that represents the current item within a container or set of related elements."
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
     "aria-description": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -472,14 +496,6 @@
         "type": "string"
       },
       "description": "Defines a string value that describes or annotates the current element."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element that provides a detailed, extended description for the object."
     },
     "aria-disabled": {
       "type": "Booleanish",
@@ -715,22 +731,6 @@
         "type": "string"
       },
       "description": "Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-level": {
       "type": "number",

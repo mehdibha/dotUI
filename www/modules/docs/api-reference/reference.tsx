@@ -1,6 +1,8 @@
 import { highlight } from "fumadocs-core/highlight";
 import Markdown from "markdown-to-jsx";
 
+import { cn } from "@dotui/registry/lib/utils";
+
 import { DEFAULT_EXPANDED, groupProps } from "./groups";
 import {
   type GroupedPropsData,
@@ -157,11 +159,7 @@ export async function Reference({ name, className }: ReferenceProps) {
   const data = await loadApiReference(name);
 
   if (!data) {
-    return (
-      <div className="my-4 rounded-md border border-danger bg-danger/10 p-4 text-danger text-sm">
-        API reference not found for "{name}"
-      </div>
-    );
+    throw new Error(`API reference not found for "${name}"`);
   }
 
   // Group the props
@@ -181,10 +179,22 @@ export async function Reference({ name, className }: ReferenceProps) {
   };
 
   return (
-    <div className={className}>
+    <div className={cn("flex flex-col gap-4", className)}>
       {data.description && (
+        <p className="text-fg-muted">{renderDescription(data.description)}</p>
+      )}
+      {data.extendsElement && (
         <p className="mb-4 text-fg-muted">
-          {renderDescription(data.description)}
+          Supports all{" "}
+          <a
+            href={getHtmlElementLink(data.extendsElement)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-fg-accent hover:underline"
+          >
+            {data.extendsElement === "html" ? "HTML" : data.extendsElement}
+          </a>{" "}
+          attributes.
         </p>
       )}
       <PropsTable
@@ -196,3 +206,10 @@ export async function Reference({ name, className }: ReferenceProps) {
     </div>
   );
 }
+
+const getHtmlElementLink = (element: string) => {
+  if (element === "html") {
+    return "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes";
+  }
+  return `https://developer.mozilla.org/en-US/docs/Web/HTML/Element/${element}#attributes`;
+};

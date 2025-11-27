@@ -41,6 +41,8 @@ export interface ComponentApiReference {
   name: string;
   /** Description of the component extracted from JSDoc */
   description?: string;
+  /** HTML element this component extends (e.g., "div", "button") */
+  extendsElement?: string;
   /** Map of prop name to prop definition */
   props: Record<string, PropDefinition>;
   /** Map of render prop name to render prop definition (CSS selectors) */

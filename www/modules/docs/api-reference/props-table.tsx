@@ -62,11 +62,7 @@ export function PropsTable({
     Object.values(data.groups).some((g) => g.length > 0);
 
   if (!hasAnyProps) {
-    return (
-      <p className="text-fg-muted text-sm">
-        No props available for this component.
-      </p>
-    );
+    return null;
   }
 
   return (

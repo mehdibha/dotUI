@@ -22,6 +22,157 @@ import {
 } from "./type-to-ast";
 
 /**
+ * HTML element names that can be extended via React.ComponentProps<"element">
+ */
+const HTML_ELEMENTS = new Set([
+  "div",
+  "span",
+  "p",
+  "a",
+  "button",
+  "input",
+  "textarea",
+  "select",
+  "form",
+  "img",
+  "video",
+  "audio",
+  "canvas",
+  "svg",
+  "table",
+  "tr",
+  "td",
+  "th",
+  "ul",
+  "ol",
+  "li",
+  "nav",
+  "header",
+  "footer",
+  "main",
+  "section",
+  "article",
+  "aside",
+  "figure",
+  "figcaption",
+  "label",
+  "fieldset",
+  "legend",
+  "dialog",
+  "details",
+  "summary",
+  "menu",
+  "menuitem",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+]);
+
+/**
+ * Detect if a type extends an HTML element via React.ComponentProps<"element">
+ * Returns the element name (e.g., "div", "button") or null
+ */
+function detectHTMLElementExtension(
+  typeName: string,
+  context: ParserContext,
+): string | null {
+  const { program } = context;
+
+  for (const sourceFile of program.getSourceFiles()) {
+    if (
+      sourceFile.isDeclarationFile &&
+      !sourceFile.fileName.includes("@dotui")
+    ) {
+      continue;
+    }
+
+    let foundElement: string | null = null;
+
+    sourceFile.forEachChild((node) => {
+      if (foundElement) return;
+
+      if (ts.isInterfaceDeclaration(node) && node.name.text === typeName) {
+        if (!hasExportModifier(node)) return;
+
+        if (node.heritageClauses) {
+          for (const clause of node.heritageClauses) {
+            if (clause.token !== ts.SyntaxKind.ExtendsKeyword) continue;
+
+            for (const typeExpr of clause.types) {
+              const typeText = typeExpr.getText(sourceFile);
+
+              // Match React.ComponentProps<"div"> or ComponentProps<"div">
+              const componentPropsMatch = typeText.match(
+                /(?:React\.)?ComponentProps(?:WithoutRef|WithRef)?<["'](\w+)["']>/,
+              );
+              if (componentPropsMatch) {
+                const element = componentPropsMatch[1]?.toLowerCase();
+                if (element && HTML_ELEMENTS.has(element)) {
+                  foundElement = element;
+                  return;
+                }
+              }
+
+              // Match React.HTMLAttributes<HTMLDivElement> or HTMLAttributes<HTMLElement>
+              const htmlAttrsMatch = typeText.match(
+                /(?:React\.)?HTMLAttributes<HTML(\w*)Element>/,
+              );
+              if (htmlAttrsMatch) {
+                const elementPart = htmlAttrsMatch[1] || "";
+                if (elementPart === "") {
+                  // Generic HTMLElement -> use "html" as marker
+                  foundElement = "html";
+                  return;
+                }
+                const element = elementPart.toLowerCase();
+                if (HTML_ELEMENTS.has(element)) {
+                  foundElement = element;
+                  return;
+                }
+              }
+
+              // Match HTMLProps<HTMLDivElement>
+              const htmlPropsMatch = typeText.match(
+                /HTMLProps<HTML(\w+)Element>/,
+              );
+              if (htmlPropsMatch) {
+                const element = htmlPropsMatch[1]?.toLowerCase();
+                if (element && HTML_ELEMENTS.has(element)) {
+                  foundElement = element;
+                  return;
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (foundElement) return foundElement;
+  }
+
+  return null;
+}
+
+/**
+ * Check if a property is defined in the user's source files (not inherited from HTML)
+ */
+function isPropFromUserCode(prop: ts.Symbol): boolean {
+  const declarations = prop.getDeclarations();
+  if (!declarations || declarations.length === 0) return false;
+
+  // Check if any declaration is from user's source files
+  return declarations.some((decl) => {
+    const fileName = decl.getSourceFile().fileName;
+    // User's code is NOT in node_modules
+    return !fileName.includes("node_modules");
+  });
+}
+
+/**
  * Check if a node has the export modifier
  */
 function hasExportModifier(node: ts.Node): boolean {
@@ -512,14 +663,19 @@ export async function formatComponentData(
     "",
   );
 
+  // Detect if this type extends an HTML element
+  const extendsElement = detectHTMLElementExtension(exportNode.name, context);
+
   // Create AST conversion context for type links
   const astContext = createConversionContext(context.checker, 4);
 
   // Get all properties using TypeScript's type checker (includes inherited props)
+  // If extending HTML element, filter out inherited HTML props
   const props = await getPropsWithTypeChecker(
     exportNode.name,
     context,
     astContext,
+    extendsElement,
   );
 
   // Extract render props (CSS state selectors)
@@ -532,6 +688,8 @@ export async function formatComponentData(
   const raw = {
     name: exportNode.name,
     description,
+    // Add extendsElement field if component extends an HTML element
+    ...(extendsElement && { extendsElement }),
     props, // Keep natural TypeScript declaration order (like react-aria)
     // Add renderProps field (only if not empty)
     ...(Object.keys(renderProps).length > 0 && { renderProps }),
@@ -549,11 +707,13 @@ export async function formatComponentData(
 
 /**
  * Use TypeScript's type checker to get ALL properties including inherited ones
+ * If extendsElement is provided, filters out props inherited from HTML elements
  */
 async function getPropsWithTypeChecker(
   typeName: string,
   context: ParserContext,
   astContext: ConversionContext,
+  extendsElement: string | null = null,
 ): Promise<Record<string, FormattedProp>> {
   const { program, checker } = context;
   const result: Record<string, FormattedProp> = {};
@@ -601,6 +761,11 @@ async function getPropsWithTypeChecker(
         for (const prop of properties) {
           // Skip ref
           if (prop.name === "ref") continue;
+
+          // If extending HTML element, skip props inherited from HTML (not defined in user code)
+          if (extendsElement && !isPropFromUserCode(prop)) {
+            continue;
+          }
 
           // Get JSDoc documentation
           const docs = ts.displayPartsToString(
