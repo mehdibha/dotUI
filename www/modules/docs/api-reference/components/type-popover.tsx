@@ -103,7 +103,7 @@ function TypePopover({ name, type }: TypePopoverProps) {
       <Button className="focus-reset focus-visible:focus-ring cursor-pointer rounded-sm font-mono text-primary underline underline-offset-2">
         {name}
       </Button>
-      <Popover placement="top" showArrow>
+      <Popover placement="bottom" showArrow>
         <DialogContent className="outline-none">
           {/* Breadcrumbs */}
           {breadcrumbs.length > 1 && (
