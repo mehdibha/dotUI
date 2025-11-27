@@ -139,7 +139,7 @@
                       "name": "ColorThumbRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultStyle": {
                           "type": "property",

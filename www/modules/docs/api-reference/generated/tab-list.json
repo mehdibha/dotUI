@@ -296,7 +296,7 @@
                       "name": "TabListRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultClassName": {
                           "type": "property",
@@ -363,7 +363,7 @@
                       "name": "TabListRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultStyle": {
                           "type": "property",

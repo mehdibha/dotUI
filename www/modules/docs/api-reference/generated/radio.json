@@ -591,7 +591,7 @@
                       "name": "RadioRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultClassName": {
                           "type": "property",
@@ -658,7 +658,7 @@
                       "name": "RadioRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultStyle": {
                           "type": "property",

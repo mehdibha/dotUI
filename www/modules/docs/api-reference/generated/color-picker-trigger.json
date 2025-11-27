@@ -1012,7 +1012,7 @@
                       "name": "ButtonRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultClassName": {
                           "type": "property",
@@ -1079,7 +1079,7 @@
                       "name": "ButtonRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultStyle": {
                           "type": "property",

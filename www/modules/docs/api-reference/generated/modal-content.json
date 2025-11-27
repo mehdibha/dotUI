@@ -200,7 +200,7 @@
                       "name": "ModalRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultClassName": {
                           "type": "property",
@@ -267,7 +267,7 @@
                       "name": "ModalRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultStyle": {
                           "type": "property",

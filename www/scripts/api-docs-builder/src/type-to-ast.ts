@@ -17,6 +17,7 @@ import type {
   TIdentifier,
   TIndexedAccess,
   TInterface,
+  TIntersection,
   TKeyof,
   TKeyword,
   TLink,
@@ -270,8 +271,15 @@ export function buildTypeAstFromString(
   const functionMatch = typeString.match(
     /^\(\((\w+):\s*(\w+)\)\s*=>\s*(\w+)\)$/,
   );
-  if (functionMatch) {
-    const [, paramName, paramType, returnType] = functionMatch;
+  if (
+    functionMatch &&
+    functionMatch[1] &&
+    functionMatch[2] &&
+    functionMatch[3]
+  ) {
+    const paramName = functionMatch[1];
+    const paramType = functionMatch[2];
+    const returnType = functionMatch[3];
     return {
       type: "function",
       parameters: [
@@ -340,8 +348,8 @@ function getTypeId(type: ts.Type, checker: ts.TypeChecker): string {
   const symbol = type.getSymbol() || type.aliasSymbol;
   if (symbol) {
     const declarations = symbol.getDeclarations();
-    if (declarations && declarations.length > 0) {
-      const decl = declarations[0];
+    const decl = declarations?.[0];
+    if (decl) {
       const sourceFile = decl.getSourceFile();
       return `${sourceFile.fileName}:${symbol.getName()}`;
     }
@@ -436,10 +444,11 @@ export function typeToAst(
 
   if (flags & ts.TypeFlags.BooleanLiteral) {
     // TypeScript represents true/false as intrinsic types
-    const intrinsicName = (type as ts.IntrinsicType).intrinsicName;
+    // Use type checker to get the string representation
+    const typeStr = checker.typeToString(type);
     return {
       type: "booleanLiteral",
-      value: intrinsicName === "true",
+      value: typeStr === "true",
     } as TBooleanLiteral;
   }
 
@@ -452,13 +461,12 @@ export function typeToAst(
   // Union types
   if (type.isUnion()) {
     const elements = type.types
-      .map((t) =>
-        typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
-      )
+      .map((t) => typeToAst(t, { ...context, currentDepth: currentDepth + 1 }))
       .filter((t): t is TType => t !== null);
 
     // Simplify single-element unions
-    if (elements.length === 1) return elements[0];
+    const firstElement = elements[0];
+    if (elements.length === 1 && firstElement) return firstElement;
 
     return { type: "union", elements } as TUnion;
   }
@@ -466,27 +474,28 @@ export function typeToAst(
   // Intersection types
   if (type.isIntersection()) {
     const types = type.types
-      .map((t) =>
-        typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
-      )
+      .map((t) => typeToAst(t, { ...context, currentDepth: currentDepth + 1 }))
       .filter((t): t is TType => t !== null);
 
-    if (types.length === 1) return types[0];
+    const firstType = types[0];
+    if (types.length === 1 && firstType) return firstType;
 
-    return { type: "intersection", types } as TUnion;
+    return { type: "intersection", types } as TIntersection;
   }
 
   // Function/callable types
   const callSignatures = type.getCallSignatures();
-  if (callSignatures.length > 0) {
-    return functionSignatureToAst(callSignatures[0], context);
+  const firstCallSig = callSignatures[0];
+  if (firstCallSig) {
+    return functionSignatureToAst(firstCallSig, context);
   }
 
   // Array types
   if (checker.isArrayType(type)) {
     const typeArgs = (type as ts.TypeReference).typeArguments;
-    if (typeArgs && typeArgs.length > 0) {
-      const elementType = typeToAst(typeArgs[0], {
+    const firstTypeArg = typeArgs?.[0];
+    if (firstTypeArg) {
+      const elementType = typeToAst(firstTypeArg, {
         ...context,
         currentDepth: currentDepth + 1,
       });
@@ -500,9 +509,7 @@ export function typeToAst(
   if (checker.isTupleType(type)) {
     const typeArgs = (type as ts.TypeReference).typeArguments || [];
     const elements = typeArgs
-      .map((t) =>
-        typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
-      )
+      .map((t) => typeToAst(t, { ...context, currentDepth: currentDepth + 1 }))
       .filter((t): t is TType => t !== null);
     return { type: "tuple", elements } as TTuple;
   }
@@ -626,30 +633,11 @@ export function typeToAst(
 
   // Conditional types
   if (flags & ts.TypeFlags.Conditional) {
-    const conditional = type as ts.ConditionalType;
+    // For conditional types, just show as identifier since they're complex
     return {
-      type: "conditional",
-      checkType:
-        typeToAst(conditional.checkType, {
-          ...context,
-          currentDepth: currentDepth + 1,
-        }) || ({ type: "unknown" } as TKeyword),
-      extendsType:
-        typeToAst(conditional.extendsType, {
-          ...context,
-          currentDepth: currentDepth + 1,
-        }) || ({ type: "unknown" } as TKeyword),
-      trueType:
-        typeToAst(conditional.resolvedTrueType || conditional.root.trueType, {
-          ...context,
-          currentDepth: currentDepth + 1,
-        }) || ({ type: "unknown" } as TKeyword),
-      falseType:
-        typeToAst(
-          conditional.resolvedFalseType || conditional.root.falseType,
-          { ...context, currentDepth: currentDepth + 1 },
-        ) || ({ type: "unknown" } as TKeyword),
-    } as TConditional;
+      type: "identifier",
+      name: checker.typeToString(type),
+    } as TIdentifier;
   }
 
   // Index type (keyof T)
@@ -692,8 +680,9 @@ export function typeToAst(
       if (text) {
         elements.push({ type: "stringLiteral", value: text } as TStringLiteral);
       }
-      if (i < template.types.length) {
-        const t = typeToAst(template.types[i], {
+      const templateType = template.types[i];
+      if (i < template.types.length && templateType) {
+        const t = typeToAst(templateType, {
           ...context,
           currentDepth: currentDepth + 1,
         });
@@ -791,7 +780,7 @@ function functionSignatureToAst(
  * Convert an object type to AST
  */
 function objectTypeToAst(
-  type: ts.Type,
+  _type: ts.Type,
   properties: ts.Symbol[],
   context: ConversionContext,
 ): TObject {
@@ -805,11 +794,12 @@ function objectTypeToAst(
 
     // Check if it's a method
     const callSignatures = propType.getCallSignatures();
-    if (callSignatures.length > 0 && !propType.getProperties().length) {
+    const firstSig = callSignatures[0];
+    if (firstSig && !propType.getProperties().length) {
       propsRecord[prop.getName()] = {
         type: "method",
         name: prop.getName(),
-        value: functionSignatureToAst(callSignatures[0], context),
+        value: functionSignatureToAst(firstSig, context),
         optional: (prop.flags & ts.SymbolFlags.Optional) !== 0,
         description: ts.displayPartsToString(
           prop.getDocumentationComment(checker),
@@ -838,7 +828,7 @@ function objectTypeToAst(
     }
   }
 
-  return { type: "object", properties: propsRecord };
+  return { type: "objectLiteral", properties: propsRecord };
 }
 
 /**
@@ -851,9 +841,9 @@ function resolveNamedType(
 ): TType | null {
   const { checker, currentDepth } = context;
   const declarations = symbol.getDeclarations();
-  if (!declarations || declarations.length === 0) return null;
+  const decl = declarations?.[0];
+  if (!decl) return null;
 
-  const decl = declarations[0];
   const name = symbol.getName();
   const description = ts.displayPartsToString(
     symbol.getDocumentationComment(checker),
@@ -867,12 +857,13 @@ function resolveNamedType(
     for (const prop of properties) {
       const propType = checker.getTypeOfSymbol(prop);
       const callSignatures = propType.getCallSignatures();
+      const firstCallSig = callSignatures[0];
 
-      if (callSignatures.length > 0 && !propType.getProperties().length) {
+      if (firstCallSig && !propType.getProperties().length) {
         propsRecord[prop.getName()] = {
           type: "method",
           name: prop.getName(),
-          value: functionSignatureToAst(callSignatures[0], context),
+          value: functionSignatureToAst(firstCallSig, context),
           optional: (prop.flags & ts.SymbolFlags.Optional) !== 0,
           description: ts.displayPartsToString(
             prop.getDocumentationComment(checker),
@@ -969,4 +960,3 @@ export function createConversionContext(
     currentDepth: 0,
   };
 }
-

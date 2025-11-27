@@ -195,7 +195,7 @@
                       "name": "DisclosureGroupRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultClassName": {
                           "type": "property",
@@ -262,7 +262,7 @@
                       "name": "DisclosureGroupRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultStyle": {
                           "type": "property",

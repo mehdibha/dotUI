@@ -1657,7 +1657,7 @@
                 "type": "parameter",
                 "name": "xyChannels",
                 "value": {
-                  "type": "object",
+                  "type": "objectLiteral",
                   "properties": {
                     "xChannel": {
                       "type": "property",
@@ -1840,7 +1840,7 @@
               }
             ],
             "return": {
-              "type": "object",
+              "type": "objectLiteral",
               "properties": {
                 "xChannel": {
                   "type": "property",

@@ -9,9 +9,11 @@ import {
 } from "./props-table";
 import type { ComponentApiReference, PropDefinition } from "./types";
 
-interface ReferenceProps {
+export interface ReferenceProps {
   /** The name of the component (maps to generated/{name}.json) */
   name: string;
+  /** Optional className for styling */
+  className?: string;
 }
 
 async function loadApiReference(
@@ -151,7 +153,7 @@ async function transformProps(
   );
 }
 
-export async function Reference({ name }: ReferenceProps) {
+export async function Reference({ name, className }: ReferenceProps) {
   const data = await loadApiReference(name);
 
   if (!data) {
@@ -179,7 +181,7 @@ export async function Reference({ name }: ReferenceProps) {
   };
 
   return (
-    <>
+    <div className={className}>
       {data.description && (
         <p className="mb-4 text-fg-muted">
           {renderDescription(data.description)}
@@ -191,6 +193,6 @@ export async function Reference({ name }: ReferenceProps) {
         defaultExpandedGroups={DEFAULT_EXPANDED}
         typeLinks={data.typeLinks}
       />
-    </>
+    </div>
   );
 }

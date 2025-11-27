@@ -50,7 +50,7 @@ export function TypeLink({ id, name, type }: TypeLinkProps) {
       <button
         type="button"
         onClick={() => navigationCtx.push(name, type)}
-        className="text-primary underline decoration-dotted underline-offset-2 hover:decoration-solid cursor-pointer font-mono"
+        className="cursor-pointer font-mono text-primary underline decoration-dotted underline-offset-2 hover:decoration-solid"
       >
         {name}
       </button>
@@ -104,17 +104,17 @@ function TypePopover({ name, type }: TypePopoverProps) {
 
   return (
     <DialogTrigger onOpenChange={handleOpenChange}>
-      <Button className="text-primary underline decoration-dotted underline-offset-2 hover:decoration-solid cursor-pointer font-mono outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm">
+      <Button className="cursor-pointer rounded-sm font-mono text-primary underline decoration-dotted underline-offset-2 outline-none hover:decoration-solid focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
         {name}
       </Button>
       <Popover
         placement="top"
         offset={8}
         className={cn(
-          "w-fit max-w-lg min-w-64",
+          "w-fit min-w-64 max-w-lg",
           "rounded-lg border bg-bg shadow-xl",
-          "entering:animate-in entering:fade-in entering:zoom-in-95",
-          "exiting:animate-out exiting:fade-out exiting:zoom-out-95",
+          "entering:fade-in entering:zoom-in-95 entering:animate-in",
+          "exiting:fade-out exiting:zoom-out-95 exiting:animate-out",
         )}
       >
         <OverlayArrow>
@@ -131,7 +131,7 @@ function TypePopover({ name, type }: TypePopoverProps) {
           <div className="p-3">
             {/* Breadcrumbs */}
             {breadcrumbs.length > 1 && (
-              <nav className="mb-3 flex items-center gap-1 text-xs border-b pb-2">
+              <nav className="mb-3 flex items-center gap-1 border-b pb-2 text-xs">
                 {breadcrumbs.map((item, index) => (
                   <React.Fragment key={item.id}>
                     {index > 0 && (
@@ -141,9 +141,9 @@ function TypePopover({ name, type }: TypePopoverProps) {
                       type="button"
                       onClick={() => navigateTo(index)}
                       className={cn(
-                        "hover:text-primary transition-colors font-mono",
+                        "font-mono transition-colors hover:text-primary",
                         index === breadcrumbs.length - 1
-                          ? "text-fg font-medium"
+                          ? "font-medium text-fg"
                           : "text-fg-muted",
                       )}
                     >
@@ -208,10 +208,10 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
             <table className="w-full text-xs">
               <thead className="sticky top-0 bg-bg">
                 <tr className="border-b">
-                  <th className="text-left py-1 pr-3 text-fg-muted font-medium">
+                  <th className="py-1 pr-3 text-left font-medium text-fg-muted">
                     Property
                   </th>
-                  <th className="text-left py-1 text-fg-muted font-medium">
+                  <th className="py-1 text-left font-medium text-fg-muted">
                     Type
                   </th>
                 </tr>
@@ -229,9 +229,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
                     </td>
                     <td className="py-1.5">
                       <Type
-                        type={
-                          prop.type === "method" ? prop.value : prop.value
-                        }
+                        type={prop.type === "method" ? prop.value : prop.value}
                       />
                     </td>
                   </tr>
@@ -270,4 +268,3 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
     </div>
   );
 }
-

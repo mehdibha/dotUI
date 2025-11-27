@@ -142,7 +142,7 @@ export interface TAlias {
 
 // Object literal type
 export interface TObject {
-  type: "object";
+  type: "objectLiteral";
   properties: Record<string, TProperty | TMethod> | null;
 }
 
@@ -241,4 +241,3 @@ export type TType =
  * This allows TypeLink components to look up and display type details
  */
 export type TypeLinksRegistry = Record<string, TType>;
-

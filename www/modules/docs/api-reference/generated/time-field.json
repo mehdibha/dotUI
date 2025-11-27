@@ -416,45 +416,8 @@
                       "type": "null"
                     },
                     {
-                      "type": "conditional",
-                      "checkType": {
-                        "type": "typeParameter",
-                        "name": "T",
-                        "constraint": {
-                          "type": "identifier",
-                          "name": "TimeValue"
-                        },
-                        "default": null
-                      },
-                      "extendsType": {
-                        "type": "link",
-                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
-                        "name": "ZonedDateTime"
-                      },
-                      "trueType": {
-                        "type": "link",
-                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
-                        "name": "ZonedDateTime"
-                      },
-                      "falseType": {
-                        "type": "conditional",
-                        "checkType": {
-                          "type": "identifier",
-                          "name": "T"
-                        },
-                        "extendsType": {
-                          "type": "identifier",
-                          "name": "CalendarDateTime"
-                        },
-                        "trueType": {
-                          "type": "identifier",
-                          "name": "CalendarDateTime"
-                        },
-                        "falseType": {
-                          "type": "identifier",
-                          "name": "T extends Time ? Time : never"
-                        }
-                      }
+                      "type": "identifier",
+                      "name": "MappedTimeValue<T>"
                     }
                   ]
                 },
@@ -577,80 +540,8 @@
                 "type": "parameter",
                 "name": "value",
                 "value": {
-                  "type": "conditional",
-                  "checkType": {
-                    "type": "typeParameter",
-                    "name": "T",
-                    "constraint": {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "CalendarDateTime"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "ZonedDateTime"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "Time"
-                        }
-                      ]
-                    },
-                    "default": null
-                  },
-                  "extendsType": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
-                    "name": "ZonedDateTime"
-                  },
-                  "trueType": {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
-                    "name": "ZonedDateTime"
-                  },
-                  "falseType": {
-                    "type": "conditional",
-                    "checkType": {
-                      "type": "typeParameter",
-                      "name": "T",
-                      "constraint": {
-                        "type": "identifier",
-                        "name": "TimeValue"
-                      },
-                      "default": null
-                    },
-                    "extendsType": {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
-                      "name": "CalendarDateTime"
-                    },
-                    "trueType": {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
-                      "name": "CalendarDateTime"
-                    },
-                    "falseType": {
-                      "type": "conditional",
-                      "checkType": {
-                        "type": "identifier",
-                        "name": "T"
-                      },
-                      "extendsType": {
-                        "type": "identifier",
-                        "name": "Time"
-                      },
-                      "trueType": {
-                        "type": "identifier",
-                        "name": "Time"
-                      },
-                      "falseType": {
-                        "type": "identifier",
-                        "name": "never"
-                      }
-                    }
-                  }
+                  "type": "identifier",
+                  "name": "MappedTimeValue<T>"
                 },
                 "optional": false,
                 "rest": false
@@ -806,7 +697,7 @@
                       "name": "DateFieldRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultClassName": {
                           "type": "property",
@@ -873,7 +764,7 @@
                       "name": "DateFieldRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultStyle": {
                           "type": "property",

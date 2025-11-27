@@ -102,7 +102,7 @@ export function Type({ type, className }: TypeProps) {
   return (
     <code
       className={cn(
-        "font-mono text-[0.8125rem] leading-relaxed whitespace-pre-wrap",
+        "whitespace-pre-wrap font-mono text-[0.8125rem] leading-relaxed",
         className,
       )}
     >
@@ -172,7 +172,7 @@ function renderType(type: TType): React.ReactNode {
       return <InterfaceTypeView iface={type} />;
     case "alias":
       return <AliasType alias={type} />;
-    case "object":
+    case "objectLiteral":
       return <ObjectType properties={type.properties} />;
     case "property":
       return <PropertyType prop={type} />;
@@ -248,14 +248,11 @@ const DOC_LINKS: Record<string, string> = {
   Ref: "https://react.dev/reference/react/useRef",
   RefObject: "https://react.dev/reference/react/useRef",
   Element: "https://developer.mozilla.org/en-US/docs/Web/API/Element",
-  FocusEvent:
-    "https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent",
+  FocusEvent: "https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent",
   KeyboardEvent:
     "https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent",
-  MouseEvent:
-    "https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent",
-  PointerEvent:
-    "https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent",
+  MouseEvent: "https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent",
+  PointerEvent: "https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent",
 };
 
 function Identifier({ name }: { name: string }) {
@@ -267,7 +264,10 @@ function Identifier({ name }: { name: string }) {
         href={link}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(styles.variable, "underline decoration-dotted hover:decoration-solid")}
+        className={cn(
+          styles.variable,
+          "underline decoration-dotted hover:decoration-solid",
+        )}
       >
         {name}
       </a>
@@ -360,8 +360,7 @@ function TypeOperatorType({
 }) {
   return (
     <>
-      <span className={styles.keyword}>{operator}</span>{" "}
-      {renderType(value)}
+      <span className={styles.keyword}>{operator}</span> {renderType(value)}
     </>
   );
 }
@@ -472,7 +471,9 @@ function InterfaceTypeView({ iface }: { iface: TInterface }) {
             <PropertyType prop={prop} />
           )}
           {prop.description && (
-            <div className="text-fg-muted text-xs mt-0.5">{prop.description}</div>
+            <div className="mt-0.5 text-fg-muted text-xs">
+              {prop.description}
+            </div>
           )}
         </div>
       ))}
@@ -525,13 +526,7 @@ function ObjectType({
  * Property type
  * ---------------------------------------------------------------------------------------------*/
 
-function PropertyType({
-  prop,
-  inline,
-}: {
-  prop: TProperty;
-  inline?: boolean;
-}) {
+function PropertyType({ prop, inline }: { prop: TProperty; inline?: boolean }) {
   return (
     <>
       {prop.readonly && (
@@ -552,13 +547,7 @@ function PropertyType({
  * Method type
  * ---------------------------------------------------------------------------------------------*/
 
-function MethodType({
-  method,
-  inline,
-}: {
-  method: TMethod;
-  inline?: boolean;
-}) {
+function MethodType({ method, inline }: { method: TMethod; inline?: boolean }) {
   return (
     <>
       <span className={styles.function}>{method.name}</span>
@@ -755,4 +744,3 @@ function ParenthesizedType({ value }: { value: TType }) {
     </>
   );
 }
-

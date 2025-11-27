@@ -155,7 +155,7 @@
                       "name": "ColorSwatchPickerRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultClassName": {
                           "type": "property",
@@ -222,7 +222,7 @@
                       "name": "ColorSwatchPickerRenderProps"
                     },
                     {
-                      "type": "object",
+                      "type": "objectLiteral",
                       "properties": {
                         "defaultStyle": {
                           "type": "property",
@@ -1773,7 +1773,7 @@
                 "type": "parameter",
                 "name": "xyChannels",
                 "value": {
-                  "type": "object",
+                  "type": "objectLiteral",
                   "properties": {
                     "xChannel": {
                       "type": "property",
@@ -1956,7 +1956,7 @@
               }
             ],
             "return": {
-              "type": "object",
+              "type": "objectLiteral",
               "properties": {
                 "xChannel": {
                   "type": "property",
