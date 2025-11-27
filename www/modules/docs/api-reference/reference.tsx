@@ -149,6 +149,18 @@ async function transformProps(
 }
 
 /**
+ * Sort props: required first, then preserve original order
+ * This mirrors React Aria's approach of showing required props at the top
+ */
+function sortPropsRequiredFirst(props: PropData[]): PropData[] {
+  return [...props].sort((a, b) => {
+    if (a.required && !b.required) return -1;
+    if (!a.required && b.required) return 1;
+    return 0;
+  });
+}
+
+/**
  * Transform a RenderPropDefinition to RenderPropData with highlighting
  */
 async function transformRenderProp(
@@ -186,14 +198,14 @@ export async function Reference({ name, className }: ReferenceProps) {
   // Group the props
   const { ungrouped, groups } = groupProps(data.props);
 
-  // Transform all props with highlighting
+  // Transform all props with highlighting and sort required first
   const groupedData: GroupedPropsData = {
-    ungrouped: await transformProps(ungrouped),
+    ungrouped: sortPropsRequiredFirst(await transformProps(ungrouped)),
     groups: Object.fromEntries(
       await Promise.all(
         Object.entries(groups).map(async ([groupName, groupProps]) => [
           groupName,
-          await transformProps(groupProps),
+          sortPropsRequiredFirst(await transformProps(groupProps)),
         ]),
       ),
     ),
