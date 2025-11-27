@@ -31,4 +31,3 @@ declare module "globals-docs" {
     env?: Array<"builtin" | "nonstandard" | "browser" | "worker" | "node">,
   ): string | undefined;
 }
-

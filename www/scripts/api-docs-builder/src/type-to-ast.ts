@@ -411,9 +411,7 @@ export function typeToAst(
     const declarations = aliasSymbol.getDeclarations();
     const isExternalType = declarations?.some((decl) => {
       const fileName = decl.getSourceFile().fileName;
-      return (
-        fileName.includes("node_modules") || fileName.includes(".d.ts")
-      );
+      return fileName.includes("node_modules") || fileName.includes(".d.ts");
     });
 
     if (isExternalType) {

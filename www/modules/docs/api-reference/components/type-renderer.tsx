@@ -235,7 +235,8 @@ const DOC_LINKS: Record<string, string> = {
   ReactElement: "https://reactjs.org/docs/rendering-elements.html",
   ReactNode: "https://reactjs.org/docs/rendering-elements.html",
   CSSProperties: "https://reactjs.org/docs/dom-elements.html#style",
-  DOMAttributes: "https://reactjs.org/docs/dom-elements.html#all-supported-html-attributes",
+  DOMAttributes:
+    "https://reactjs.org/docs/dom-elements.html#all-supported-html-attributes",
   Key: "https://reactjs.org/docs/lists-and-keys.html",
   Ref: "https://react.dev/reference/react/useRef",
   RefObject: "https://react.dev/reference/react/useRef",
@@ -244,19 +245,31 @@ const DOC_LINKS: Record<string, string> = {
   DataTransfer: "https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer",
   AbortSignal: "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal",
   // HTML attribute types
-  HTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
-  InputHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes",
-  TextareaHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#attributes",
-  LabelHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#attributes",
-  OutputHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/output#attributes",
+  HTMLAttributes:
+    "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+  InputHTMLAttributes:
+    "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes",
+  TextareaHTMLAttributes:
+    "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#attributes",
+  LabelHTMLAttributes:
+    "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#attributes",
+  OutputHTMLAttributes:
+    "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/output#attributes",
   // Intl types
-  "Intl.NumberFormat": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat",
-  "Intl.NumberFormatOptions": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat",
-  "Intl.ListFormatOptions": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/ListFormat",
-  "Intl.DateTimeFormat": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat",
-  "Intl.DateTimeFormatOptions": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat",
-  "Intl.Collator": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator",
-  "Intl.CollatorOptions": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator",
+  "Intl.NumberFormat":
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat",
+  "Intl.NumberFormatOptions":
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat",
+  "Intl.ListFormatOptions":
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/ListFormat",
+  "Intl.DateTimeFormat":
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat",
+  "Intl.DateTimeFormatOptions":
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat",
+  "Intl.Collator":
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator",
+  "Intl.CollatorOptions":
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator",
 };
 
 /**
