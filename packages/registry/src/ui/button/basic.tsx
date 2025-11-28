@@ -42,7 +42,7 @@ const buttonStyles = tv({
     },
     size: {
       sm: "h-8 px-3 data-icon-only:w-8 [&_svg]:size-4",
-      md: "h-9 px-4 data-icon-only:w-9 [&_svg]:size-4",
+      md: "h-9 px-4 data-icon-only:aspect-square [&_svg]:size-4 classed-[size]",
       lg: "h-10 px-5 data-icon-only:w-10 [&_svg]:size-5",
     },
   },
