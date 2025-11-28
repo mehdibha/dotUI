@@ -8,6 +8,7 @@
 
 @plugin "tailwindcss-react-aria-components";
 @plugin "tailwindcss-autocontrast";
+@plugin "tailwindcss-with";
 @plugin "@tailwindcss/typography";
 
 @source "../../packages/registry/src//**/*.{ts,tsx}";
