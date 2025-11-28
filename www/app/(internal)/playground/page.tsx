@@ -21,6 +21,7 @@ import {
 } from "@dotui/registry/ui/switch";
 
 import { TOCItems, TOCProvider, TOCScrollArea } from "@/modules/docs/toc";
+
 import * as demos from "./demos";
 
 interface ContentItem {

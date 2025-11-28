@@ -1,6 +1,6 @@
-import type React from "react";
 import { ArrowUpRightIcon } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
+import type React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Alert, type AlertProps } from "@dotui/registry/ui/alert";
@@ -16,11 +16,11 @@ import {
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
 } from "./code-block/code-block-tabs";
-import type { DemoProps } from "./demo";
 import { Demo } from "./demo";
 import { Example } from "./example";
 import { InteractiveDemo, type InteractiveDemoProps } from "./interactive-demo";
 import { PageTabPanel, PageTabs } from "./page-tabs";
+import type { DemoProps } from "./demo";
 
 export const mdxComponents: MDXComponents = {
   h1: (props: HeadingProps) => (

@@ -1,7 +1,7 @@
 "use client";
 
-import type React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 import { Button } from "@dotui/registry/ui/button";
 
@@ -11,7 +11,7 @@ import { ActiveStyleSelector } from "@/modules/styles/active-style-selector";
 import { useActiveStyle } from "@/modules/styles/use-active-style";
 
 interface DemoFrameProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const DemoFrame = ({ children }: DemoFrameProps) => {

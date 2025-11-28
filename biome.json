@@ -88,18 +88,32 @@
           "level": "on",
           "options": {
             "groups": [
-              ["react", "react/**", "react-native", "react-native/**"],
-              ["next", "next/**"],
+              {
+                "type": false,
+                "source": [
+                  "react",
+                  "react/**",
+                  "react-dom",
+                  "react-dom/**",
+                  "react-native",
+                  "react-native/**"
+                ]
+              },
+
+              { "type": false, "source": ["next", "next/**"] },
+              ":NODE:",
               { "type": false, "source": [":PACKAGE:", "!@dotui/**"] },
               { "type": true, "source": [":PACKAGE:", "!@dotui/**"] },
               ":BLANK_LINE:",
               { "type": false, "source": ["@dotui/**"] },
               { "type": true, "source": ["@dotui/**"] },
               ":BLANK_LINE:",
-              ["@/**"],
-              ["../"],
-              ["./"],
-              { "type": true, "source": ["../", "./"] }
+              { "type": false, "source": [":ALIAS:"] },
+              { "type": true, "source": [":ALIAS:"] },
+              ":BLANK_LINE:",
+              ":ALIAS:",
+              { "type": false, "source": ":PATH:" },
+              { "type": true, "source": ":PATH:" }
             ]
           }
         }

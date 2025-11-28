@@ -13,8 +13,8 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Popover } from "@dotui/registry/ui/popover";
 
-import type { TType } from "../types/type-ast";
 import { Type, useTypeLinks } from "./type-renderer";
+import type { TType } from "../types/type-ast";
 
 /* -----------------------------------------------------------------------------------------------
  * Context for nested type navigation within a popover

@@ -2,11 +2,11 @@ import type { Registry } from "shadcn/schema";
 
 import { registryUi } from "@dotui/registry/ui/registry";
 
-import type { Style, Variants } from "../../types";
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
 import { generateRegistryAll } from "./all";
 import { generateRegistryBase } from "./base";
 import { generateRegistryTheme } from "./theme";
+import type { Style, Variants } from "../../types";
 
 export function generateRegistry(options: {
   styleName: string;

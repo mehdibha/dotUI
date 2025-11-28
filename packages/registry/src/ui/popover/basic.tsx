@@ -1,12 +1,12 @@
 "use client";
 
-import type React from "react";
 import {
   OverlayArrow as AriaOverlayArrow,
   Popover as AriaPopover,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type React from "react";
 
 const popoverStyles = tv({
   slots: {

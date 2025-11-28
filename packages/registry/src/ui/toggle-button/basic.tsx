@@ -1,12 +1,12 @@
 "use client";
 
-import type * as React from "react";
 import {
   ToggleButton as AriaToggleButton,
   ToggleButtonContext as AriaToggleButtonContext,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 import { useButtonAspect } from "@dotui/registry/hooks/use-button-aspect";

@@ -1,8 +1,8 @@
 "use client";
 
-import type React from "react";
 import { createContext, useContext, useRef } from "react";
 import { CheckIcon, CopyIcon, FileIcon } from "lucide-react";
+import type React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";

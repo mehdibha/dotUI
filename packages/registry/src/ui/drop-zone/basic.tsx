@@ -1,12 +1,12 @@
 "use client";
 
-import type * as React from "react";
 import {
   DropZone as AriaDropZone,
   Text as AriaText,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 
 const dropZoneStyles = tv({
   slots: {

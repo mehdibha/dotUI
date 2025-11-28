@@ -1,11 +1,11 @@
 "use client";
 
-import type * as React from "react";
 import {
   ColorField as AriaColorField,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 
 import { fieldStyles } from "@dotui/registry/ui/field/basic";
 

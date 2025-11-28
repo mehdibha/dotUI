@@ -1,12 +1,12 @@
 "use client";
 
-import type React from "react";
 import {
   Modal as AriaModal,
   ModalOverlay as AriaModalOverlay,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type React from "react";
 
 const modalStyles = tv({
   slots: {

@@ -1,11 +1,11 @@
-import type { RegistryItem } from "shadcn/schema";
-
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import type { Style } from "../../types";
+import type { RegistryItem } from "shadcn/schema";
+
 import { transform } from "../transformers";
 import { transformIcons } from "../transformers/transform-icons";
 import { transformImport } from "../transformers/transform-imports";
+import type { Style } from "../../types";
 
 export const updateFiles = async (
   registryItem: RegistryItem,

@@ -10,6 +10,7 @@ import {
   ModeConfig,
   ModeSwitch,
 } from "@/modules/style-editor/colors-editor/mode-config";
+
 import { AccentEmphasisEditor } from "./accent-emphasis-editor";
 import { TokensTable } from "./tokens-table";
 

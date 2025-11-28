@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
   Header as AriaHeader,
@@ -12,6 +11,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type {
   MenuItemProps as AriaMenuItemProps,
   MenuProps as AriaMenuProps,

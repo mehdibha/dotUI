@@ -14,6 +14,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import type { AppRouter } from "@dotui/api";
 
 import { env } from "@/env";
+
 import { createQueryClient } from "./query-client";
 
 let clientQueryClientSingleton: QueryClient | undefined;

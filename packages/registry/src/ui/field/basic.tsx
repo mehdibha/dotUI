@@ -1,6 +1,5 @@
 "use client";
 
-import type React from "react";
 import { useSlotId } from "@react-aria/utils";
 import {
   FieldError as AriaFieldError,
@@ -12,6 +11,7 @@ import {
   TextContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 import { useSkeletonText } from "@dotui/registry/ui/skeleton";

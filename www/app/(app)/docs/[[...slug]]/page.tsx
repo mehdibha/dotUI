@@ -1,7 +1,7 @@
-import type { Metadata, Route } from "next";
 import { notFound } from "next/navigation";
 import { findNeighbour } from "fumadocs-core/page-tree";
 import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
+import type { Metadata, Route } from "next";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";

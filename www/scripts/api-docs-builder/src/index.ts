@@ -8,6 +8,8 @@
  *   pnpm generate:api
  */
 
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { kebabCase } from "es-toolkit/string";
 import { globby } from "globby";
 import ts from "typescript";
@@ -15,8 +17,6 @@ import * as tae from "typescript-api-extractor";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import * as fs from "node:fs";
-import * as path from "node:path";
 import {
   formatComponentData,
   isPublicPropsType,

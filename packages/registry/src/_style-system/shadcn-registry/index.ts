@@ -1,11 +1,11 @@
 import type { Registry, RegistryItem } from "shadcn/schema";
 
-import type { ColorFormat, Style } from "../types";
 import { generateRegistryAll } from "./generators/all";
 import { generateRegistryBase } from "./generators/base";
 import { generateGenericRegistryItem } from "./generators/generic";
 import { generateRegistry } from "./generators/registry";
 import { generateRegistryTheme } from "./generators/theme";
+import type { ColorFormat, Style } from "../types";
 
 export async function buildRegistryItem(
   registryItemName: string,

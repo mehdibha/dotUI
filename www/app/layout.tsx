@@ -1,6 +1,6 @@
-import type React from "react";
-import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata, Viewport } from "next";
+import type React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 
@@ -25,6 +25,7 @@ import { Toaster } from "@dotui/registry/ui/toast";
 
 import { siteConfig } from "@/config/site";
 import { env } from "@/env";
+
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {

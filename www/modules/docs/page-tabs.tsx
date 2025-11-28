@@ -1,8 +1,8 @@
 "use client";
 
-import type React from "react";
 import { AlignLeftIcon } from "lucide-react";
 import type { TableOfContents as TocType } from "fumadocs-core/toc";
+import type React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";

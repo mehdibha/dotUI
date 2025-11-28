@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import {
   OverlayArrow as AriaOverlayArrow,
   Tooltip as AriaTooltip,
@@ -8,6 +7,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 const tooltipStyles = tv({

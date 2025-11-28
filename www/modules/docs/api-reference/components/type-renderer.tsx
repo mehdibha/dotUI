@@ -10,6 +10,7 @@ import { getDoc } from "globals-docs";
 
 import { cn } from "@dotui/registry/lib/utils";
 
+import { TypeLink } from "./type-popover";
 import type {
   TAlias,
   TConditional,
@@ -21,7 +22,6 @@ import type {
   TTypeParameter,
   TypeLinksRegistry,
 } from "../types/type-ast";
-import { TypeLink } from "./type-popover";
 
 /* -----------------------------------------------------------------------------------------------
  * Styles

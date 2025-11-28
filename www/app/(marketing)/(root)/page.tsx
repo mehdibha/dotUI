@@ -1,5 +1,5 @@
-import type { Route } from "next";
 import Link from "next/link";
+import type { Route } from "next";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";

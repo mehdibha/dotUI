@@ -1,10 +1,9 @@
+import { existsSync, promises as fs } from "node:fs";
+import path from "node:path";
 import { rimraf } from "rimraf";
 
 import { registryBlocks } from "@dotui/registry/blocks/registry";
 import { iconLibraries, registryIcons } from "@dotui/registry/icons/registry";
-
-import { existsSync, promises as fs } from "node:fs";
-import path from "node:path";
 
 async function buildBlocks() {
   const TARGET_PATH = path.join(process.cwd(), "src/blocks/__blocks__.tsx");

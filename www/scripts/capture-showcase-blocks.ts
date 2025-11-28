@@ -1,8 +1,8 @@
-import puppeteer from "puppeteer";
-
 import { existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import puppeteer from "puppeteer";
+
 import { buildTimeCaller } from "../lib/trpc/build";
 
 const __filename = fileURLToPath(import.meta.url);

@@ -1,7 +1,7 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { PinIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 import type { Control } from "@dotui/registry/playground";
 

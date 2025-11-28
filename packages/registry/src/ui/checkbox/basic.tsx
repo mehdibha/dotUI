@@ -1,12 +1,12 @@
 "use client";
 
-import type * as React from "react";
 import { CheckIcon, MinusIcon } from "lucide-react";
 import {
   Checkbox as AriaCheckbox,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { CheckboxRenderProps } from "react-aria-components";
 
 import { createContext } from "@dotui/registry/lib/context";

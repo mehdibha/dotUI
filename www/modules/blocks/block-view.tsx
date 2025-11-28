@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import type { Route } from "next";
 import { CheckIcon, ExternalLinkIcon, TerminalIcon } from "lucide-react";
+import type { Route } from "next";
 import type { RegistryItem } from "shadcn/schema";
 
 import { cn } from "@dotui/registry/lib/utils";

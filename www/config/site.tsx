@@ -1,6 +1,6 @@
-import type { Route } from "next";
 import { IconBlocks, IconIcons } from "@tabler/icons-react";
 import { BookIcon, BoxIcon } from "lucide-react";
+import type { Route } from "next";
 
 export const siteConfig = {
   url: "https://dotui.org",

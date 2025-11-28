@@ -1,5 +1,6 @@
-import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import path from "node:path";
+import type { NextRequest } from "next/server";
 
 import { createStyle } from "@dotui/registry/style-system/core";
 import { buildRegistryItem } from "@dotui/registry/style-system/shadcn-registry";
@@ -8,7 +9,6 @@ import type { ColorFormat } from "@dotui/registry/style-system/types";
 
 import { env } from "@/env";
 import { caller } from "@/lib/trpc/server";
-import path from "node:path";
 
 const registryBasePath = path.resolve(
   process.cwd(),

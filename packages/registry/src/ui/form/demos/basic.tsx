@@ -1,7 +1,7 @@
 "use client";
 
-import type React from "react";
 import { Form } from "react-aria-components";
+import type React from "react";
 
 import { Button } from "@dotui/registry/ui/button";
 import { Description, Label } from "@dotui/registry/ui/field";

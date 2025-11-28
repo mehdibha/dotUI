@@ -1,6 +1,6 @@
-import type { ColorFormat, Style, StyleDefinition } from "../types";
 import { createTheme } from "./theme";
 import { createVariants } from "./variants";
+import type { ColorFormat, Style, StyleDefinition } from "../types";
 
 export const createStyle = <T extends StyleDefinition>(
   styleDefinition: T,

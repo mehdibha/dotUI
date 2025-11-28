@@ -1,5 +1,5 @@
-import type * as React from "react";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 const alertVariants = tv({

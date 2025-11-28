@@ -1,12 +1,12 @@
 "use client";
 
-import type React from "react";
 import {
   Separator as AriaSeparator,
   SeparatorContext as AriaSeparatorContext,
   useSlottedContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type React from "react";
 
 const separatorStyles = tv({
   base: "separator shrink-0 border-0 bg-border",

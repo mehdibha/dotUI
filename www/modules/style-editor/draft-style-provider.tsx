@@ -4,6 +4,7 @@ import { StyleProvider } from "@dotui/registry";
 import type { StyleProviderProps } from "@dotui/registry";
 
 import { usePreferences } from "@/modules/preferences/preferences-atom";
+
 import { useStyleEditorForm } from "./style-editor-provider";
 
 export function DraftStyleProvider(

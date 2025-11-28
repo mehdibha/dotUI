@@ -1,11 +1,11 @@
 "use client";
 
-import type * as React from "react";
 import {
   Switch as AriaSwitch,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { SwitchRenderProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 

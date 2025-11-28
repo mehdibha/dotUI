@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import {
   SelectionIndicator as AriaSelectionIndicator,
   Tab as AriaTab,
@@ -10,6 +9,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 
 import { createContext } from "@dotui/registry/lib/context";
 

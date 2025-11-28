@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import {
   ButtonContext as AriaButtonContext,
@@ -9,6 +8,7 @@ import {
   Provider,
   useSlottedContext,
 } from "react-aria-components";
+import type * as React from "react";
 
 import { fieldStyles } from "@dotui/registry/ui/field";
 

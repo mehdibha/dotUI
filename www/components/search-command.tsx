@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import type { Route } from "next";
 import {
   ArrowRightIcon,
   ChevronsUpDownIcon,
@@ -12,6 +11,7 @@ import {
 } from "lucide-react";
 import { composeRenderProps } from "react-aria-components";
 import type * as PageTree from "fumadocs-core/page-tree";
+import type { Route } from "next";
 
 import { Button } from "@dotui/registry/ui/button";
 import { Command } from "@dotui/registry/ui/command";

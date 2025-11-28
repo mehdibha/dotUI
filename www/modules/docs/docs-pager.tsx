@@ -1,8 +1,8 @@
 "use client";
 
-import type { Route } from "next";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { findNeighbour } from "fumadocs-core/page-tree";
+import type { Route } from "next";
 
 import { buttonStyles } from "@dotui/registry/ui/button";
 import { Group } from "@dotui/registry/ui/group";

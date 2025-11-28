@@ -1,5 +1,5 @@
-import type * as React from "react";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 
 const cardStyles = tv({
   slots: {

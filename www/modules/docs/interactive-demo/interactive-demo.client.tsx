@@ -22,6 +22,7 @@ import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 import type { Control, ControlValues } from "@dotui/registry/playground";
 
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
+
 import { CodeBlock, DynamicPre } from "../code-block";
 import { DemoFrame } from "../demo/demo-frame";
 import { availableIcons, Controls } from "./controls";

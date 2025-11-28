@@ -1,12 +1,12 @@
 "use client";
 
-import type React from "react";
 import {
   ColorSwatchPicker as AriaColorSwatchPicker,
   ColorSwatchPickerItem as AriaColorSwatchPickerItem,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type React from "react";
 
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 

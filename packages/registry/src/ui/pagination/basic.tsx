@@ -1,4 +1,3 @@
-import type * as React from "react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -6,6 +5,7 @@ import {
 } from "lucide-react";
 import { Link as AriaLink, composeRenderProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { LinkProps as AriaLinkProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 

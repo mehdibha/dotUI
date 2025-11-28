@@ -1,6 +1,5 @@
 "use client";
 
-import type { Route } from "next";
 import { usePathname } from "next/navigation";
 import { SearchIcon, UserIcon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
@@ -11,6 +10,7 @@ import {
   Link,
 } from "react-aria-components";
 import type * as PageTree from "fumadocs-core/page-tree";
+import type { Route } from "next";
 
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { Button, LinkButton } from "@dotui/registry/ui/button";
@@ -35,6 +35,7 @@ import { navItems } from "@/config/site";
 import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/client";
 import { UserProfileMenu } from "@/modules/auth/user-profile-menu";
+
 import { SiteThemeToggle } from "../site-theme-toggle";
 
 export function DocsSidebar({ items }: { items: PageTree.Node[] }) {

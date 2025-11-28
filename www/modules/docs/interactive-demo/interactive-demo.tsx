@@ -1,9 +1,10 @@
-import type { ComponentType } from "react";
 import { highlight } from "fumadocs-core/highlight";
+import type { ComponentType } from "react";
 
 import type { Control } from "@dotui/registry/playground";
 
 import { Pre } from "@/modules/docs/code-block";
+
 import { InteractiveDemoClient } from "./interactive-demo.client";
 
 export interface InteractiveDemoProps {

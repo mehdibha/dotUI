@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import {
   Button as AriaButton,
   ButtonContext as AriaButtonContext,
@@ -8,6 +7,7 @@ import {
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 import { useButtonAspect } from "@dotui/registry/hooks/use-button-aspect";

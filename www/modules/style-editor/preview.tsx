@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import type { Route } from "next";
 import {
   ChevronsRightIcon,
   ExternalLinkIcon,
@@ -13,6 +12,7 @@ import {
   TabletIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
+import type { Route } from "next";
 
 import { registryBlocks } from "@dotui/registry/blocks/registry";
 import { createScopedContext } from "@dotui/registry/lib/context";

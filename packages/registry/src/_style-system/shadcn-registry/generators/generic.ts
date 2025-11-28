@@ -3,9 +3,9 @@ import type { RegistryItem } from "shadcn/schema";
 
 import { registry } from "@dotui/registry/registry";
 
-import type { Style } from "../../types";
 import { updateFiles } from "../helpers/update-files";
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
+import type { Style } from "../../types";
 
 export const generateGenericRegistryItem = async (
   registryItemName: string,

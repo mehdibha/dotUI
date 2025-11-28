@@ -1,5 +1,5 @@
-import type { Route } from "next";
 import { AlignLeftIcon } from "lucide-react";
+import type { Route } from "next";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { LinkButton } from "@dotui/registry/ui/button";

@@ -1,8 +1,8 @@
 "use client";
 
-import type React from "react";
-import type { Route } from "next";
 import { usePathname } from "next/navigation";
+import type { Route } from "next";
+import type React from "react";
 
 import { blocksCategories } from "@dotui/registry/blocks/registry";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";

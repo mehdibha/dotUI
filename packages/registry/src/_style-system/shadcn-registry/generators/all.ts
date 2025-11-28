@@ -2,8 +2,8 @@ import type { RegistryItem } from "shadcn/schema";
 
 import { registryUi } from "@dotui/registry/ui/registry";
 
-import type { Style } from "../../types";
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";
+import type { Style } from "../../types";
 
 export function generateRegistryAll(options: {
   styleName: string;

@@ -1,6 +1,5 @@
 "use client";
 
-import type React from "react";
 import { useMemo } from "react";
 import {
   BackgroundColor as LeonardoBgColor,
@@ -9,6 +8,7 @@ import {
 } from "@adobe/leonardo-contrast-colors";
 import { useStore } from "@tanstack/react-form";
 import { PlusIcon, Trash2Icon } from "lucide-react";
+import type React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
@@ -47,6 +47,7 @@ import {
   useSyncTheme,
 } from "@/modules/style-editor/style-editor-provider";
 import { useResolvedModeState } from "@/modules/style-editor/use-resolved-mode";
+
 import { useDraftStyle } from "../draft-style-atom";
 
 export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {

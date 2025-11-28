@@ -1,12 +1,13 @@
 "use client";
 
-import type React from "react";
 import { ViewTransition } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import type React from "react";
 
 import { Button } from "@dotui/registry/ui/button";
 
 import { CodeBlock } from "@/modules/docs/code-block";
+
 import { useDemoContext } from "./demo.client";
 
 interface DemoCodeBlockProps {

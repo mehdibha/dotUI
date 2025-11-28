@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import {
   Group as AriaGroup,
   SeparatorContext as AriaSeparatorContext,
@@ -9,6 +8,7 @@ import {
   Provider,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 const groupStyles = tv({

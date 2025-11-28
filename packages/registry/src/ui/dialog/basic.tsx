@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import {
   Dialog as AriaDialog,
   DialogTrigger as AriaDialogTrigger,
@@ -8,6 +7,7 @@ import {
   Text as AriaText,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 
 const dialogStyles = tv({
   slots: {

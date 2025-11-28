@@ -1,10 +1,10 @@
+import fs from "node:fs/promises";
+import path from "node:path";
 import { highlight } from "fumadocs-core/highlight";
 
 import { Index } from "@dotui/registry/ui/demos";
 
 import { Pre } from "@/modules/docs/code-block";
-import fs from "node:fs/promises";
-import path from "node:path";
 
 export const loadDemo = async (name: string) => {
   const demo = Index[name];

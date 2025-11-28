@@ -4,6 +4,7 @@ import { registryBlocks } from "@dotui/registry/blocks/registry";
 
 import { buildTimeCaller, getQueryClient, trpc } from "@/lib/trpc/server";
 import { BlockViewer } from "@/modules/blocks/block-viewer";
+
 import { BlockViewLayout } from "./_layout";
 
 export const generateStaticParams = async () => {

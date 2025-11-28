@@ -31,6 +31,7 @@ import type { StyleDefinition } from "@dotui/registry/style-system/types";
 
 import { authClient } from "@/modules/auth/client";
 import { LoginModal } from "@/modules/auth/login-modal";
+
 import { useCreateStyle } from "./use-create-style";
 
 const createStyleSchema = z.object({

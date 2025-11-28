@@ -1,12 +1,12 @@
-import { Project, ScriptKind } from "ts-morph";
-import type { SourceFile } from "ts-morph";
-
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import type { Style } from "../../types";
+import { Project, ScriptKind } from "ts-morph";
+import type { SourceFile } from "ts-morph";
+
 import { transformIcons } from "./transform-icons";
 import { transformImport } from "./transform-imports";
+import type { Style } from "../../types";
 
 export interface TransformOpts {
   filename: string;

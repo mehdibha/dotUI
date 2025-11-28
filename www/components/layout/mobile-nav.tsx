@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import type { Route } from "next";
-import type { LinkProps } from "next/link";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type * as PageTree from "fumadocs-core/page-tree";
+import type { Route } from "next";
+import type { LinkProps } from "next/link";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";

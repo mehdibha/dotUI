@@ -1,11 +1,11 @@
 "use client";
 
-import type * as React from "react";
 import {
   ProgressBar as AriaProgress,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 import { createScopedContext } from "@dotui/registry/lib/context";

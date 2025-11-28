@@ -1,12 +1,8 @@
+import fs from "node:fs";
+import path from "node:path";
 import ts from "typescript";
 import * as tae from "typescript-api-extractor";
 
-import fs from "node:fs";
-import path from "node:path";
-import type {
-  TLink,
-  TType,
-} from "../../../modules/docs/api-reference/types/type-ast";
 import {
   ALWAYS_EXPAND_TYPES,
   REACT_ARIA_EVENT_ORDER,
@@ -20,6 +16,10 @@ import {
   parseSimpleType,
   typeToAst,
 } from "./type-to-ast";
+import type {
+  TLink,
+  TType,
+} from "../../../modules/docs/api-reference/types/type-ast";
 
 /**
  * HTML element names that can be extended via React.ComponentProps<"element">
