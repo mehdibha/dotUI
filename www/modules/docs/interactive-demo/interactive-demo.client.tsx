@@ -204,7 +204,7 @@ export function InteractiveDemoClient({
                   }
                   variant="quiet"
                   size="sm"
-                  className="size-7!"
+                  className="size-7"
                 >
                   {layout === "horizontal" ? <Columns2Icon /> : <Rows2Icon />}
                 </Button>

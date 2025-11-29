@@ -137,7 +137,7 @@ const CopyButton = () => {
       variant="quiet"
       size="sm"
       onPress={handleCopy}
-      className="size-7!"
+      className="size-7"
       aria-label={isCopied ? "Copied!" : "Copy code"}
     >
       {isCopied ? <CheckIcon /> : <CopyIcon />}

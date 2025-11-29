@@ -37,7 +37,7 @@ export const DemoFrame = ({ children }: DemoFrameProps) => {
         <Button
           size="sm"
           variant="quiet"
-          className="absolute top-1.5 right-1.5 size-7! border-0"
+          className="absolute top-1.5 right-1.5 size-7 border-0"
           onPress={() =>
             setActiveMode(activeMode === "dark" ? "light" : "dark")
           }

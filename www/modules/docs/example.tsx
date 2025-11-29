@@ -18,7 +18,7 @@ export const Example = async ({ name }: ExampleProps) => {
     <div className="relative flex flex-col">
       <ActiveStyleProvider
         unstyled
-        className="flex flex-1 items-center justify-center rounded-t-md border bg-bg py-14"
+        className="flex flex-1 items-center justify-center rounded-t-md border bg-bg p-10"
       >
         <Component />
       </ActiveStyleProvider>
