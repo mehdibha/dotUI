@@ -35,6 +35,7 @@ import { navItems } from "@/config/site";
 import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/client";
 import { UserProfileMenu } from "@/modules/auth/user-profile-menu";
+import type { DocsPageItem } from "@/modules/docs/source";
 
 import { SiteThemeToggle } from "../site-theme-toggle";
 
@@ -111,15 +112,21 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
                   {item.type === "folder" && (
                     <SidebarList className="gap-0 pl-2">
                       {item.children.map((item) => {
+                        const pageItem = item as DocsPageItem;
                         return (
                           item.type === "page" && (
                             <SidebarItem key={item.url}>
                               <Link
                                 href={item.url as Route}
                                 data-active={item.url === pathname || undefined}
-                                className="flex w-full border-l py-1 pl-3 text-[0.8rem] text-fg-muted transition-colors hover:text-fg data-active:border-fg data-active:text-fg"
+                                className="flex w-full items-center gap-1.5 border-l py-1 pl-3 text-[0.8rem] text-fg-muted transition-colors hover:text-fg data-active:border-fg data-active:text-fg"
                               >
                                 {item.name}
+                                <span
+                                  className={`size-1.5 shrink-0 rounded-full ${
+                                    pageItem.wip ? "bg-warning" : "bg-accent"
+                                  }`}
+                                />
                               </Link>
                             </SidebarItem>
                           )

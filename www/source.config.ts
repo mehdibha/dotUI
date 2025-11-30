@@ -21,11 +21,12 @@ export const docs = defineDocs({
           }),
         )
         .optional(),
-      }),
-    },
-    meta: {
-      schema: metaSchema.extend({
-        description: z.string().optional(),
+      wip: z.boolean().optional().default(false),
+    }),
+  },
+  meta: {
+    schema: metaSchema.extend({
+      description: z.string().optional(),
     }),
   },
 });
