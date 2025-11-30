@@ -1,13 +1,6 @@
 import { Button } from "@dotui/registry/ui/button";
 
-const variants = [
-  "default",
-  "primary",
-  "quiet",
-  "success",
-  "warning",
-  "danger",
-] as const;
+const variants = ["default", "primary", "quiet", "warning", "danger"] as const;
 
 export default function Demo() {
   return (

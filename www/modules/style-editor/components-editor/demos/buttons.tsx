@@ -39,7 +39,6 @@ export function Buttons() {
       </div>
       <div className="flex items-center gap-2">
         <Button variant="danger">Danger</Button>
-        <Button variant="success">Success</Button>
         <Button variant="warning">Warning</Button>
       </div>
       <div className="flex items-center gap-2">

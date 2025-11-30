@@ -13,14 +13,7 @@ import { Button } from "../index";
 
 interface ButtonPlaygroundProps {
   children?: string;
-  variant?:
-    | "default"
-    | "primary"
-    | "quiet"
-    | "link"
-    | "success"
-    | "warning"
-    | "danger";
+  variant?: "default" | "primary" | "quiet" | "link" | "warning" | "danger";
   size?: "sm" | "md" | "lg";
   isDisabled?: boolean;
   isPending?: boolean;

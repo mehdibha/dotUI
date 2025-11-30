@@ -12,14 +12,7 @@ export interface ButtonProps extends React.ComponentProps<typeof AriaButton> {
    * The visual style of the button (Vanilla CSS implementation specific).
    * @default 'default'
    */
-  variant?:
-    | "default"
-    | "primary"
-    | "quiet"
-    | "link"
-    | "success"
-    | "warning"
-    | "danger";
+  variant?: "default" | "primary" | "quiet" | "link" | "warning" | "danger";
 
   /**
    * The size of the button.
@@ -42,14 +35,7 @@ export interface LinkButtonProps extends React.ComponentProps<typeof AriaLink> {
    * The visual style of the button.
    * @default "default"
    */
-  variant?:
-    | "default"
-    | "primary"
-    | "quiet"
-    | "link"
-    | "success"
-    | "warning"
-    | "danger";
+  variant?: "default" | "primary" | "quiet" | "link" | "warning" | "danger";
 
   /**
    * The size of the button.

@@ -17,7 +17,6 @@ export const ButtonDemo = () => {
                 "primary",
                 "quiet",
                 "link",
-                "success",
                 "warning",
                 "danger",
               ] as const

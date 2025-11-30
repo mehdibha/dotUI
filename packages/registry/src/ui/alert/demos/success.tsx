@@ -1,5 +1,5 @@
-import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
 import { CheckCircle2Icon } from "@dotui/registry/icons";
+import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
 
 export default function Demo() {
   return (
@@ -12,4 +12,3 @@ export default function Demo() {
     </Alert>
   );
 }
-

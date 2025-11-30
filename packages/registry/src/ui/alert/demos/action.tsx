@@ -1,4 +1,9 @@
-import { Alert, AlertAction, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from "@dotui/registry/ui/alert";
 import { Button } from "@dotui/registry/ui/button";
 
 export default function Demo() {
@@ -16,4 +21,3 @@ export default function Demo() {
     </Alert>
   );
 }
-
