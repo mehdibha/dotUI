@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { cn } from "@dotui/registry/lib/utils";
+
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
 
 import { DemoCodeBlock } from "./demo-code-block";
@@ -11,6 +13,7 @@ interface DemoClientProps extends React.ComponentProps<"div"> {
   component: React.ReactNode;
   highlightedPreview: React.ReactNode;
   highlightedSource: React.ReactNode;
+  previewClassName?: string;
 }
 
 const DemoContext = React.createContext<{
@@ -22,6 +25,7 @@ export const DemoClient = ({
   component,
   highlightedPreview,
   highlightedSource,
+  previewClassName,
   ...props
 }: DemoClientProps) => {
   const [isExpanded, setExpanded] = React.useState(false);
@@ -36,10 +40,10 @@ export const DemoClient = ({
       <div {...props}>
         <ActiveStyleProvider
           unstyled
-          className="flex min-h-56 items-stretch text-fg"
-          skeletonClassName="border rounded-t-md"
+          className="flex items-stretch text-fg"
+          skeletonClassName="rounded-t-md border"
         >
-          <DemoFrame>{component}</DemoFrame>
+          <DemoFrame className={previewClassName}>{component}</DemoFrame>
         </ActiveStyleProvider>
         <DemoCodeBlock
           highlightedPreview={highlightedPreview}

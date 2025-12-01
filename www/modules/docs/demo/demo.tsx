@@ -5,6 +5,7 @@ import { loadDemo } from "./load-demo";
 
 export interface DemoProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
+  previewClassName?: string;
 }
 
 export async function Demo({ name, className, ...props }: DemoProps) {

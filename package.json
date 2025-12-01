@@ -23,6 +23,7 @@
     "start:www": "pnpm --filter=www start",
     "build:www": "pnpm --filter=www build",
     "build:registry": "pnpm --filter=@dotui/registry build",
+    "build:references": "pnpm --filter=@dotui/registry build:references",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "lint": "biome check",
