@@ -2,9 +2,7 @@ import React from "react";
 
 /**
  * Returns true if the button should be square, otherwise false.
- *
  */
-
 export const useButtonAspect = <T extends Record<string, any> = any>(
   children:
     | React.ReactNode
@@ -15,31 +13,46 @@ export const useButtonAspect = <T extends Record<string, any> = any>(
     return aspect === "square";
   }
 
-  const getTextContent = (children: React.ReactNode): string => {
-    return React.Children.toArray(children).reduce(
-      (text: string, child: React.ReactNode): string => {
-        if (typeof child === "string" || typeof child === "number") {
-          return text + child;
-        }
-        if (React.isValidElement(child)) {
-          if ((child.props as any).children) {
-            return text + getTextContent((child.props as any).children);
-          }
-          return text;
-        }
-        return text;
-      },
-      "",
-    );
-  };
-
-  // If children is a function, evaluate it with an empty object to get the rendered content
   const actualChildren =
     typeof children === "function"
       ? children({} as T & { defaultChildren: React.ReactNode })
       : children;
 
-  const textContent = getTextContent(actualChildren);
+  const traverseChildren = (
+    children: React.ReactNode,
+  ): { hasSelectValue: boolean; textContent: string } => {
+    let hasSelectValue = false;
+    let textContent = "";
+
+    React.Children.toArray(children).forEach((child) => {
+      if (typeof child === "string" || typeof child === "number") {
+        textContent += String(child);
+        return;
+      }
+
+      if (React.isValidElement(child)) {
+        const componentType = child.type as any;
+        if (componentType?.name === "SelectValue") {
+          hasSelectValue = true;
+        }
+
+        const props = child.props as { children?: React.ReactNode };
+        if (props.children) {
+          const result = traverseChildren(props.children);
+          hasSelectValue ||= result.hasSelectValue;
+          textContent += result.textContent;
+        }
+      }
+    });
+
+    return { hasSelectValue, textContent };
+  };
+
+  const { hasSelectValue, textContent } = traverseChildren(actualChildren);
+
+  if (hasSelectValue) {
+    return false;
+  }
 
   return textContent.trim() === "";
 };
