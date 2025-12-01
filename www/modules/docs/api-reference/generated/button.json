@@ -3,8 +3,8 @@
   "description": "A clickable element that triggers an action. Buttons communicate actions users can take\nand allow users to interact with the page.",
   "props": {
     "variant": {
-      "type": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\"",
-      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"success\" | \"default\" | \"primary\" | \"quiet\" | undefined",
+      "type": "\"link\" | \"danger\" | \"warning\" | \"default\" | \"primary\" | \"quiet\"",
+      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"default\" | \"primary\" | \"quiet\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -19,10 +19,6 @@
           {
             "type": "stringLiteral",
             "value": "warning"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "success"
           },
           {
             "type": "stringLiteral",
@@ -505,14 +501,6 @@
       },
       "description": "Whether the button is in a pending state. This disables press and hover events\nwhile retaining focusability, and announces the pending state to screen readers."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the button is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -521,6 +509,14 @@
       },
       "description": "The `<form>` element to associate the button with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#form)."
     },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button is disabled."
+    },
     "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -528,6 +524,38 @@
         "type": "boolean"
       },
       "description": "Whether the element should receive focus on render."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "id": {
       "type": "string",
@@ -623,22 +651,6 @@
         ]
       },
       "description": "Indicates whether this element represents the current item within a container or set of related elements."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "aria-disabled": {
       "type": "boolean | \"true\" | \"false\"",
@@ -786,22 +798,6 @@
         ]
       },
       "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-pressed": {
       "type": "boolean | \"true\" | \"false\" | \"mixed\"",

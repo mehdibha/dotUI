@@ -277,14 +277,6 @@
       },
       "description": "A ref for the HTML input element."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the Thumb is disabled."
-    },
     "form": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -292,6 +284,14 @@
         "type": "string"
       },
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the Thumb is disabled."
     },
     "autoFocus": {
       "type": "boolean",
@@ -301,13 +301,21 @@
       },
       "description": "Whether the element should receive focus on render."
     },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
@@ -325,6 +333,14 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
     "aria-errormessage": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -332,22 +348,6 @@
         "type": "string"
       },
       "description": "Identifies the element that provides an error message for the object."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
     },
     "name": {
       "type": "string",

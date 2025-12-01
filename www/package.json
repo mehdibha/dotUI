@@ -12,7 +12,7 @@
     "start": "pnpm with-env next start --port 4444",
     "typecheck": "pnpm with-env next typegen && tsc --noEmit",
     "capture-blocks": "pnpm with-env jiti ./scripts/capture-showcase-blocks.ts",
-    "build:references": "cd .. && tsx www/scripts/api-docs-builder/src/index.ts -c packages/registry/tsconfig.build.json -o www/modules/docs/api-reference/generated",
+    "build:references": "jiti ./scripts/api-docs-builder/src/index.ts",
     "postinstall": "fumadocs-mdx",
     "with-env": "dotenv -e ../.env --"
   },

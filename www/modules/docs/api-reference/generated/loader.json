@@ -91,13 +91,21 @@
       "description": "The largest value allowed for the input.",
       "default": "100"
     },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "aria-describedby": {
       "type": "string",
@@ -115,21 +123,13 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "children": {
       "type": "ReactNode | (values: ProgressBarRenderProps) => ReactNode",

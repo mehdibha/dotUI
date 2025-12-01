@@ -1,14 +1,10 @@
 import { existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
 
 import { buildTimeCaller } from "../lib/trpc/build";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const WWW_DIR = path.join(__dirname, "..");
-const TARGET_PATH = path.join(WWW_DIR, "public/images/showcase");
+const OUTPUT_DIR = path.join(process.cwd(), "public/images/showcase");
 
 // ----------------------------------------------------------------------------
 // Capture screenshots.
@@ -18,8 +14,8 @@ async function captureScreenshots() {
     featured: true,
   });
 
-  if (!existsSync(TARGET_PATH)) {
-    mkdirSync(TARGET_PATH, { recursive: true });
+  if (!existsSync(OUTPUT_DIR)) {
+    mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
   const browser = await puppeteer.launch({
@@ -72,7 +68,7 @@ async function captureScreenshots() {
         await new Promise((resolve) => setTimeout(resolve, 500));
 
         const screenshotPath = path.join(
-          TARGET_PATH,
+          OUTPUT_DIR,
           `${style.name}-${theme}${suffix}.png`,
         );
 

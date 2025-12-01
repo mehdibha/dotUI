@@ -391,6 +391,38 @@
       },
       "description": "Regex pattern that the value of the input must match to be valid. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefpattern)."
     },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
     "enterKeyHint": {
       "type": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\"",
       "detailedType": "\"search\" | \"enter\" | \"done\" | \"go\" | \"next\" | \"previous\" | \"send\" | undefined",
@@ -537,22 +569,6 @@
       },
       "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
     },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
     "aria-errormessage": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -639,22 +655,6 @@
         ]
       },
       "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onCopy": {
       "type": "ClipboardEventHandler<HTMLInputElement>",
@@ -900,8 +900,8 @@
       "description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
     },
     "type": {
-      "type": "\"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | (string & {}) | \"password\"",
-      "detailedType": "\"search\" | \"text\" | \"tel\" | \"url\" | \"email\" | (string & {}) | \"password\" | undefined",
+      "type": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\"",
+      "detailedType": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -923,6 +923,18 @@
               {
                 "type": "stringLiteral",
                 "value": "text"
+              }
+            ]
+          },
+          {
+            "type": "intersection",
+            "types": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "identifier",
+                "name": "{}"
               }
             ]
           },
@@ -950,18 +962,6 @@
               {
                 "type": "stringLiteral",
                 "value": "email"
-              }
-            ]
-          },
-          {
-            "type": "intersection",
-            "types": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "identifier",
-                "name": "{}"
               }
             ]
           },
@@ -5720,10 +5720,6 @@
                       },
                       {
                         "type": "identifier",
-                        "name": "\"map\""
-                      },
-                      {
-                        "type": "identifier",
                         "name": "\"div\""
                       },
                       {
@@ -5961,6 +5957,10 @@
                       {
                         "type": "identifier",
                         "name": "\"main\""
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "\"map\""
                       },
                       {
                         "type": "identifier",
@@ -6202,15 +6202,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "object"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "map"
                         }
                       ]
                     },
@@ -6751,6 +6742,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "main"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "map"
                         }
                       ]
                     },
@@ -7500,10 +7500,6 @@
                       },
                       {
                         "type": "identifier",
-                        "name": "\"map\""
-                      },
-                      {
-                        "type": "identifier",
                         "name": "\"div\""
                       },
                       {
@@ -7741,6 +7737,10 @@
                       {
                         "type": "identifier",
                         "name": "\"main\""
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "\"map\""
                       },
                       {
                         "type": "identifier",
@@ -7984,15 +7984,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "object"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "map"
                         }
                       ]
                     },
@@ -8533,6 +8524,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "main"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "map"
                         }
                       ]
                     },
@@ -12315,10 +12315,6 @@
                       },
                       {
                         "type": "identifier",
-                        "name": "\"map\""
-                      },
-                      {
-                        "type": "identifier",
                         "name": "\"div\""
                       },
                       {
@@ -12556,6 +12552,10 @@
                       {
                         "type": "identifier",
                         "name": "\"main\""
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "\"map\""
                       },
                       {
                         "type": "identifier",
@@ -12797,15 +12797,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "object"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "map"
                         }
                       ]
                     },
@@ -13346,6 +13337,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "main"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "map"
                         }
                       ]
                     },
@@ -13829,10 +13829,6 @@
                       },
                       {
                         "type": "identifier",
-                        "name": "\"map\""
-                      },
-                      {
-                        "type": "identifier",
                         "name": "\"div\""
                       },
                       {
@@ -14070,6 +14066,10 @@
                       {
                         "type": "identifier",
                         "name": "\"main\""
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "\"map\""
                       },
                       {
                         "type": "identifier",
@@ -14313,15 +14313,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "object"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "map"
                         }
                       ]
                     },
@@ -14862,6 +14853,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "main"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "map"
                         }
                       ]
                     },

@@ -5,7 +5,7 @@
  * using typescript-api-extractor and TypeScript's type checker for inherited props.
  *
  * Usage:
- *   pnpm generate:api
+ *   pnpm build:references
  */
 
 import * as fs from "node:fs";
@@ -23,29 +23,35 @@ import {
   type ParserContext,
 } from "./componentHandler";
 
+const CONFIG_PATH = path.join(
+  process.cwd(),
+  "../packages/registry/tsconfig.build.json",
+);
+const OUTPUT_DIR = path.join(
+  process.cwd(),
+  "modules/docs/api-reference/generated",
+);
+
 interface RunOptions {
   files?: string[];
-  configPath: string;
-  out: string;
 }
 
 async function run(options: RunOptions) {
   console.log("🔧 API Docs Builder\n");
 
   // Ensure output directory exists
-  if (!fs.existsSync(options.out)) {
-    fs.mkdirSync(options.out, { recursive: true });
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
   // Resolve absolute path to tsconfig
-  const absoluteConfigPath = path.resolve(options.configPath);
-  const configDir = path.dirname(absoluteConfigPath);
+  const configDir = path.dirname(CONFIG_PATH);
 
-  console.log(`Using tsconfig: ${absoluteConfigPath}`);
+  console.log(`Using tsconfig: ${CONFIG_PATH}`);
   console.log(`Config directory: ${configDir}\n`);
 
   // Load config and create TypeScript program
-  const config = tae.loadConfig(absoluteConfigPath);
+  const config = tae.loadConfig(CONFIG_PATH);
   const program = ts.createProgram(config.fileNames, config.options);
   const checker = program.getTypeChecker();
 
@@ -97,7 +103,7 @@ async function run(options: RunOptions) {
 
       // Remove "Props" suffix for filename
       const baseName = exportNode.name.replace(/Props$/, "");
-      const outputPath = path.join(options.out, `${kebabCase(baseName)}.json`);
+      const outputPath = path.join(OUTPUT_DIR, `${kebabCase(baseName)}.json`);
 
       fs.writeFileSync(outputPath, json);
       console.log(`  Written: ${kebabCase(baseName)}.json`);
@@ -151,26 +157,13 @@ yargs(hideBin(process.argv))
     "$0",
     "Extracts API documentation from TypeScript source files",
     (command) => {
-      return command
-        .option("configPath", {
-          alias: "c",
-          type: "string",
-          demandOption: true,
-          description: "The path to the tsconfig.json file",
-        })
-        .option("out", {
-          alias: "o",
-          demandOption: true,
-          type: "string",
-          description: "The output directory.",
-        })
-        .option("files", {
-          alias: "f",
-          type: "array",
-          demandOption: false,
-          description:
-            "Glob patterns for files to process. If not provided, all types.ts files are used.",
-        });
+      return command.option("files", {
+        alias: "f",
+        type: "array",
+        demandOption: false,
+        description:
+          "Glob patterns for files to process. If not provided, all types.ts files are used.",
+      });
     },
     run,
   )
