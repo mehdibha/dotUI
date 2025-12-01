@@ -121,17 +121,21 @@ const SelectContent = <T extends object>({
         defaultOpen={defaultOpen}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        className="w-auto overflow-hidden p-0"
       >
         <ListBoxVirtualizer>
-          <ListBox {...props} className="h-80 w-48 overflow-y-auto p-0" />
+          <ListBox {...props} />
         </ListBoxVirtualizer>
       </Popover>
     );
   }
 
   return (
-    <Popover placement={placement}>
+    <Popover
+      placement={placement}
+      defaultOpen={defaultOpen}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+    >
       <ListBox {...props} />
     </Popover>
   );

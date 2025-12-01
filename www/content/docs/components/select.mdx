@@ -4,7 +4,6 @@ description: Select displays a collapsible list of options and allows a user to 
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Select.html
-wip: true
 ---
 
 import {
@@ -40,6 +39,47 @@ import {
       </SelectContent>
     </Select>
     ```
+
+    ## Composition
+
+    Select is built on top of primitive components that you can use directly for full customization:
+
+    - `SelectTrigger` → wraps `Button`
+    - `SelectContent` → wraps `Popover` + `ListBox`
+    - `SelectItem` → re-exports `ListBoxItem`
+
+    When you need more control, you can compose the primitives directly:
+
+    ```tsx
+    import { Select, SelectValue } from "@/components/ui/select";
+    import { Button } from "@/components/ui/button";
+    import { Popover } from "@/components/ui/popover";
+    import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/components/ui/list-box";
+    ```
+
+    ```tsx
+    <Select>
+      <Button variant="outline">
+        <SelectValue placeholder="Select provider" />
+        <ChevronDownIcon />
+      </Button>
+      <Popover placement="bottom-start">
+        <ListBox>
+          <ListBoxSection>
+            <ListBoxSectionHeader>AI Providers</ListBoxSectionHeader>
+            <ListBoxItem id="openai">OpenAI</ListBoxItem>
+            <ListBoxItem id="anthropic">Anthropic</ListBoxItem>
+          </ListBoxSection>
+        </ListBox>
+      </Popover>
+    </Select>
+    ```
+
+    This approach lets you:
+    - Use any `Button` variant or custom trigger
+    - Control `Popover` placement and behavior
+    - Add sections, headers, and custom `ListBoxItem` content
+    - Reuse the same primitives across `Select`, `Combobox`, `Menu`, etc.
 
     ## Playground
 
