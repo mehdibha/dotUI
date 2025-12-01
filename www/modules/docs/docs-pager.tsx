@@ -4,9 +4,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import type { findNeighbour } from "fumadocs-core/page-tree";
 import type { Route } from "next";
 
-import { buttonStyles } from "@dotui/registry/ui/button";
+import { LinkButton } from "@dotui/registry/ui/button";
 import { Group } from "@dotui/registry/ui/group";
-import { Link } from "@dotui/registry/ui/link";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 export const DocsPager = ({
@@ -19,29 +18,27 @@ export const DocsPager = ({
   return (
     <Group>
       <Tooltip>
-        <Link
-          data-slot="button"
-          data-icon-only=""
+        <LinkButton
           aria-label="Go to previous page"
-          className={buttonStyles({ size: "sm" })}
+          variant="quiet"
+          size="sm"
           isDisabled={!previous}
           href={previous?.url as Route}
         >
           <ChevronLeftIcon />
-        </Link>
+        </LinkButton>
         <TooltipContent>{previous?.name}</TooltipContent>
       </Tooltip>
       <Tooltip>
-        <Link
-          data-slot="button"
+        <LinkButton
           aria-label="Go to next page"
-          data-icon-only=""
-          className={buttonStyles({ size: "sm" })}
+          variant="quiet"
+          size="sm"
           isDisabled={!next}
           href={next?.url as Route}
         >
           <ChevronRightIcon />
-        </Link>
+        </LinkButton>
         <TooltipContent>{next?.name}</TooltipContent>
       </Tooltip>
     </Group>

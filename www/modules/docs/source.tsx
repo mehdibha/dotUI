@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import { loader } from "fumadocs-core/source";
-import type * as PageTree from "fumadocs-core/page-tree";
 import { icons } from "lucide-react";
+import type * as PageTree from "fumadocs-core/page-tree";
 
 import { docs, marketing } from "@/.source/server";
 
@@ -24,13 +24,12 @@ export const docsSource = loader({
       {
         file(node, filePath) {
           if (!filePath) return node;
-          const page = this.storage.read(filePath, "page");
-          if (!page) return node;
+          const file = this.storage.read(filePath);
+          if (!file || file.format !== "page") return node;
 
-          // Attach wip status to the node
           return {
             ...node,
-            wip: page.data.wip ?? false,
+            wip: file.data.wip,
           } as DocsPageItem;
         },
       },

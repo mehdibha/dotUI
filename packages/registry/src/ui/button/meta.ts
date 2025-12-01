@@ -14,6 +14,15 @@ const buttonMeta = {
       ],
       registryDependencies: ["loader", "focus-styles"],
     },
+    ripple: {
+      files: [
+        {
+          type: "registry:ui",
+          path: "ui/button/ripple.tsx",
+          target: "ui/button.tsx",
+        },
+      ],
+    },
   },
 } satisfies RegistryItem;
 

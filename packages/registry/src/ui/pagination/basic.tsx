@@ -3,27 +3,25 @@ import {
   ChevronRightIcon,
   MoreHorizontalIcon,
 } from "lucide-react";
-import { Link as AriaLink, composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
 import type * as React from "react";
-import type { LinkProps as AriaLinkProps } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 
-import { buttonStyles } from "@dotui/registry/ui/button";
+import { LinkButton } from "@dotui/registry/ui/button";
+import type { LinkButtonProps } from "@dotui/registry/ui/button";
 
 const paginationStyles = tv({
   slots: {
     root: "mx-auto flex w-full justify-center",
     list: "flex flex-row items-center gap-1",
     item: "",
-    link: "",
     previous: "gap-1 px-2.5 sm:pl-2.5",
     next: "gap-1 px-2.5 sm:pr-2.5",
     ellipsis: "flex size-9 items-center justify-center",
   },
 });
 
-const { root, list, item, link, previous, next, ellipsis } = paginationStyles();
+const { root, list, item, previous, next, ellipsis } = paginationStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
@@ -70,30 +68,19 @@ function PaginationItem({ className, ...props }: PaginationItemProps) {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface PaginationLinkProps
-  extends AriaLinkProps,
-    Omit<VariantProps<typeof buttonStyles>, "variant"> {
+interface PaginationLinkProps extends LinkButtonProps {
   isActive?: boolean;
 }
 
 function PaginationLink({
   className,
   isActive,
-  size = "md",
   ...props
 }: PaginationLinkProps) {
   return (
-    <AriaLink
+    <LinkButton
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
-      data-icon-only
-      className={composeRenderProps(className, (cn) =>
-        buttonStyles({
-          variant: isActive ? "default" : "quiet",
-          size,
-          className: link({ className: cn }),
-        }),
-      )}
       {...props}
     />
   );
