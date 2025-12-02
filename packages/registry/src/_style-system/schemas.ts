@@ -62,6 +62,7 @@ import { toastVariants } from "@dotui/registry/ui/toast/meta";
 import { toggleButtonVariants } from "@dotui/registry/ui/toggle-button/meta";
 import { toggleButtonGroupVariants } from "@dotui/registry/ui/toggle-button-group/meta";
 import { tooltipVariants } from "@dotui/registry/ui/tooltip/meta";
+import { disclosureVariants } from "@dotui/registry/ui/disclosure/meta";
 
 // ---------------------------------  Definitions  ----------------------------------- //
 
@@ -307,6 +308,7 @@ export const variantsSchema = z.object({
   "date-field": z.enum(dateFieldVariants),
   "date-picker": z.enum(datePickerVariants),
   dialog: z.enum(dialogVariants),
+  disclosure: z.enum(disclosureVariants),
   drawer: z.enum(drawerVariants),
   "drop-zone": z.enum(dropZoneVariants),
   empty: z.enum(emptyVariants),

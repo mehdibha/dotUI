@@ -2,7 +2,7 @@
 
 import type { Control } from "@dotui/registry/playground";
 
-import { Disclosure, DisclosureHeading, DisclosurePanel } from "../index";
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from "../index";
 
 interface DisclosurePlaygroundProps {
   heading?: string;
@@ -19,7 +19,7 @@ export function DisclosurePlayground({
 }: DisclosurePlaygroundProps) {
   return (
     <Disclosure isDisabled={isDisabled} defaultExpanded={defaultExpanded}>
-      <DisclosureHeading>{heading}</DisclosureHeading>
+      <DisclosureTrigger>{heading}</DisclosureTrigger>
       <DisclosurePanel>
         <p className="pb-3">{content}</p>
       </DisclosurePanel>
@@ -54,4 +54,3 @@ export const disclosureControls: Control[] = [
     defaultValue: false,
   },
 ];
-

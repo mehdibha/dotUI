@@ -102,7 +102,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 
         <AriaDisclosure isExpanded={isOpen} className="group/disclosure">
           <AriaHeading className="sr-only">Documentation</AriaHeading>
-          <AriaDisclosurePanel className="h-(--disclosure-panel-height) overflow-clip opacity-0 transition-[opacity,height] duration-250 ease-drawer group-expanded/disclosure:opacity-100">
+          <AriaDisclosurePanel className="h-(--disclosure-panel-height) overflow-clip opacity-0 transition-[opacity,height] duration-250 ease-fluid-out group-expanded/disclosure:opacity-100">
             {items.map((item) => {
               return (
                 <SidebarSection key={item.$id}>

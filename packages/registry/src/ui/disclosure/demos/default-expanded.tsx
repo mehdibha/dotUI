@@ -1,13 +1,13 @@
 import {
   Disclosure,
-  DisclosureHeading,
   DisclosurePanel,
+  DisclosureTrigger,
 } from "@dotui/registry/ui/disclosure";
 
 export default function Demo() {
   return (
     <Disclosure defaultExpanded>
-      <DisclosureHeading>Expanded by default</DisclosureHeading>
+      <DisclosureTrigger>Expanded by default</DisclosureTrigger>
       <DisclosurePanel>
         <p className="pb-3">
           This disclosure is expanded by default when the page loads. Users can
@@ -17,4 +17,3 @@ export default function Demo() {
     </Disclosure>
   );
 }
-

@@ -10,9 +10,33 @@ export const Index: Record<
   }
 > = {
 
+  "accordion/demos/allows-multiple": {
+    files: ["ui/accordion/demos/allows-multiple.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/accordion/demos/allows-multiple")),
+  },
   "accordion/demos/basic": {
     files: ["ui/accordion/demos/basic.tsx"],
     component: React.lazy(() => import("@dotui/registry/ui/accordion/demos/basic")),
+  },
+  "accordion/demos/controlled": {
+    files: ["ui/accordion/demos/controlled.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/accordion/demos/controlled")),
+  },
+  "accordion/demos/default-expanded": {
+    files: ["ui/accordion/demos/default-expanded.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/accordion/demos/default-expanded")),
+  },
+  "accordion/demos/disabled": {
+    files: ["ui/accordion/demos/disabled.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/accordion/demos/disabled")),
+  },
+  "accordion/demos/nested": {
+    files: ["ui/accordion/demos/nested.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/accordion/demos/nested")),
+  },
+  "accordion/demos/with-icon": {
+    files: ["ui/accordion/demos/with-icon.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/accordion/demos/with-icon")),
   },
   "alert/demos/action": {
     files: ["ui/alert/demos/action.tsx"],
@@ -721,6 +745,26 @@ export const Index: Record<
   "dialog/demos/types": {
     files: ["ui/dialog/demos/types.tsx"],
     component: React.lazy(() => import("@dotui/registry/ui/dialog/demos/types")),
+  },
+  "disclosure/demos/advanced-composition": {
+    files: ["ui/disclosure/demos/advanced-composition.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/disclosure/demos/advanced-composition")),
+  },
+  "disclosure/demos/basic": {
+    files: ["ui/disclosure/demos/basic.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/disclosure/demos/basic")),
+  },
+  "disclosure/demos/controlled": {
+    files: ["ui/disclosure/demos/controlled.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/disclosure/demos/controlled")),
+  },
+  "disclosure/demos/default-expanded": {
+    files: ["ui/disclosure/demos/default-expanded.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/disclosure/demos/default-expanded")),
+  },
+  "disclosure/demos/disabled": {
+    files: ["ui/disclosure/demos/disabled.tsx"],
+    component: React.lazy(() => import("@dotui/registry/ui/disclosure/demos/disabled")),
   },
   "drawer/demos/basic": {
     files: ["ui/drawer/demos/basic.tsx"],

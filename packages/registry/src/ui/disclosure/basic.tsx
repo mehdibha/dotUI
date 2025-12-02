@@ -12,14 +12,14 @@ import { tv } from "tailwind-variants";
 
 const disclosureStyles = tv({
   slots: {
-    root: "group/disclosure w-full",
+    root: "group/disclosure",
     heading: "flex",
     button: [
       "focus-reset focus-visible:focus-ring",
-      "flex w-full flex-1 items-center justify-between gap-4 rounded-md py-3 text-left font-medium text-sm outline-none transition-all focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-expanded]>svg]:rotate-180",
+      "flex flex-1 cursor-interactive items-start justify-between gap-4 rounded-md py-2 text-left font-medium text-sm transition-shadow disabled:pointer-events-none",
     ],
     panel:
-      "h-(--disclosure-panel-height) overflow-clip text-fg-muted text-sm duration-200 ease-out motion-safe:transition-[height]",
+      "h-(--disclosure-panel-height) overflow-clip text-fg-muted text-sm opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
   },
 });
 
@@ -32,7 +32,7 @@ interface DisclosureProps extends React.ComponentProps<typeof AriaDisclosure> {}
 function Disclosure({ className, ...props }: DisclosureProps) {
   return (
     <AriaDisclosure
-      data-slot="disclosure"
+      data-disclosure=""
       className={composeRenderProps(className, (c) => root({ className: c }))}
       {...props}
     />
@@ -47,7 +47,7 @@ interface DisclosurePanelProps
 function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
   return (
     <AriaDisclosurePanel
-      data-slot="disclosure-panel"
+      data-disclosure-panel=""
       className={composeRenderProps(className, (c) => panel({ className: c }))}
       {...props}
     />
@@ -56,23 +56,19 @@ function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
 
 /* ---------------------------------------------------------------------------------*/
 
-interface DisclosureHeadingProps
-  extends React.ComponentProps<typeof AriaHeading> {}
+interface DisclosureTriggerProps
+  extends React.ComponentProps<typeof AriaButton> {}
 
-function DisclosureHeading({
-  children,
-  className,
-  ...props
-}: DisclosureHeadingProps) {
+function DisclosureTrigger(props: DisclosureTriggerProps) {
   return (
-    <AriaHeading
-      data-slot="disclosure-heading"
-      className={heading({ className })}
-      {...props}
-    >
-      <AriaButton slot="trigger" className={button()}>
-        {children}
-        <ChevronDownIcon className="pointer-events-none size-4 shrink-0 text-fg-muted transition-transform duration-200" />
+    <AriaHeading className={heading()}>
+      <AriaButton slot="trigger" className={button()} {...props}>
+        {composeRenderProps(props.children, (children) => (
+          <>
+            {children}
+            <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-fg-muted transition-transform duration-200" />
+          </>
+        ))}
       </AriaButton>
     </AriaHeading>
   );
@@ -80,6 +76,6 @@ function DisclosureHeading({
 
 /* ---------------------------------------------------------------------------------*/
 
-export { Disclosure, DisclosurePanel, DisclosureHeading };
+export { Disclosure, DisclosurePanel, DisclosureTrigger };
 
-export type { DisclosureProps, DisclosurePanelProps, DisclosureHeadingProps };
+export type { DisclosureProps, DisclosurePanelProps, DisclosureTriggerProps };

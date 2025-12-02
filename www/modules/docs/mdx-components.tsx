@@ -92,11 +92,11 @@ export const mdxComponents: MDXComponents = {
     <CodeBlockTab id={value} {...props} />
   ),
   Demo: ({ className, ...props }: DemoProps) => (
-    <Demo className={cn("not-first:mt-6", className)} {...props} />
+    <Demo className={cn("not-first:mt-4", className)} {...props} />
   ),
   Example,
   InteractiveDemo: ({ className, ...props }: InteractiveDemoProps) => (
-    <InteractiveDemo className={cn("not-first:mt-6", className)} {...props} />
+    <InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />
   ),
   p: ({ className, ...props }) => (
     <p

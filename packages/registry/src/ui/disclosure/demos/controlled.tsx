@@ -5,8 +5,8 @@ import React from "react";
 import { Button } from "@dotui/registry/ui/button";
 import {
   Disclosure,
-  DisclosureHeading,
   DisclosurePanel,
+  DisclosureTrigger,
 } from "@dotui/registry/ui/disclosure";
 
 export default function Demo() {
@@ -14,19 +14,16 @@ export default function Demo() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Button variant="outline" onPress={() => setExpanded(!isExpanded)}>
+      <Button onPress={() => setExpanded(!isExpanded)}>
         {isExpanded ? "Collapse" : "Expand"}
       </Button>
       <Disclosure isExpanded={isExpanded} onExpandedChange={setExpanded}>
-        <DisclosureHeading>Controlled disclosure</DisclosureHeading>
+        <DisclosureTrigger>Controlled disclosure</DisclosureTrigger>
         <DisclosurePanel>
-          <p className="pb-3">
-            This disclosure is controlled externally. You can toggle it using
-            the button above or by clicking the disclosure heading.
-          </p>
+          This disclosure is controlled externally. You can toggle it using the
+          button above or by clicking the disclosure heading.
         </DisclosurePanel>
       </Disclosure>
     </div>
   );
 }
-

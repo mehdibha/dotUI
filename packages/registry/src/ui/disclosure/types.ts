@@ -1,7 +1,7 @@
 import type {
+  Button as AriaButton,
   Disclosure as AriaDisclosure,
   DisclosurePanel as AriaDisclosurePanel,
-  Heading as AriaHeading,
 } from "react-aria-components";
 
 /**
@@ -17,8 +17,10 @@ export interface DisclosureProps
 export interface DisclosurePanelProps
   extends React.ComponentProps<typeof AriaDisclosurePanel> {}
 
-/**
- * A DisclosureHeading provides the heading and trigger for a disclosure.
+  /**
+ * A DisclosureTrigger provides the trigger for a disclosure.
  */
-export interface DisclosureHeadingProps
-  extends React.ComponentProps<typeof AriaHeading> {}
+export interface DisclosureTriggerProps
+  extends React.ComponentProps<typeof AriaButton> {}
+
+

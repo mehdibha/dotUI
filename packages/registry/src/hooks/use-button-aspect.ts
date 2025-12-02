@@ -2,6 +2,7 @@ import React from "react";
 
 /**
  * Returns true if the button should be square, otherwise false.
+ * 
  */
 export const useButtonAspect = <T extends Record<string, any> = any>(
   children:

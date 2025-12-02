@@ -11,9 +11,9 @@ import type React from "react";
 const drawerVariants = tv({
   slots: {
     underlay:
-      "group/overlay fixed inset-0 z-50 before:fixed before:inset-0 before:bg-bg/40 before:opacity-100 entering:before:opacity-0 exiting:before:opacity-0 before:transition-opacity before:duration-500 before:ease-drawer before:content-['']",
+      "group/overlay fixed inset-0 z-50 before:fixed before:inset-0 before:bg-bg/40 before:opacity-100 entering:before:opacity-0 exiting:before:opacity-0 before:transition-opacity before:duration-500 before:ease-fluid-out before:content-['']",
     overlay:
-      "fixed z-50 flex flex-col border bg-bg transition-[translate] duration-500 ease-drawer will-change-[translate]",
+      "fixed z-50 flex flex-col border bg-bg transition-[translate] duration-500 ease-fluid-out will-change-[translate]",
   },
   variants: {
     placement: {

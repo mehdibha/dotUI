@@ -8,7 +8,7 @@ export interface DemoProps extends React.HTMLAttributes<HTMLDivElement> {
   previewClassName?: string;
 }
 
-export async function Demo({ name, className, ...props }: DemoProps) {
+export async function Demo({ name, ...props }: DemoProps) {
   const {
     component: Component,
     highlightedPreview,

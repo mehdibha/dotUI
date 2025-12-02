@@ -79,29 +79,26 @@ export function PageTabPanel({ id, children }: PageTabPanelProps) {
   const hasToc = tocItems && tocItems.length > 0;
 
   return (
-    <TabPanel id={id} data-page-tab-panel>
-      {id === "overview" && (
-        <div
-          className={cn(
-            hasToc && "grid grid-cols-1 gap-10 xl:grid-cols-[1fr_180px]",
-          )}
-        >
-          <div>{children}</div>
-          {hasToc && (
-            <div className="sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden">
-              <h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
-                <AlignLeftIcon className="size-4 text-fg-muted" />
-                On this page
-              </h3>
-              <TOCScrollArea>
-                <TOCItems />
-              </TOCScrollArea>
-            </div>
-          )}
-        </div>
+    <TabPanel
+      id={id}
+      data-page-tab-panel
+      className={cn(
+        id === "overview" &&
+          hasToc &&
+          "grid grid-cols-1 gap-10 xl:grid-cols-[1fr_180px]",
       )}
-      {id === "examples" && (
-        <div className="grid grid-cols-2 gap-8">{children}</div>
+    >
+      <div className="min-w-0">{children}</div>
+      {id === "overview" && hasToc && (
+        <div className="sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden">
+          <h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
+            <AlignLeftIcon className="size-4 text-fg-muted" />
+            On this page
+          </h3>
+          <TOCScrollArea>
+            <TOCItems />
+          </TOCScrollArea>
+        </div>
       )}
     </TabPanel>
   );

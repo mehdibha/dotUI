@@ -93,18 +93,18 @@ const sidebarStyles = tv({
   slots: {
     root: "group peer hidden md:block",
     gap: [
-      "relative bg-transparent transition-[width] duration-250 ease-drawer",
+      "relative bg-transparent transition-[width] duration-250 ease-fluid-out",
       "w-(--sidebar-width-icon) group-data-expanded:w-(--sidebar-width)",
       "group-placement-right:rotate-180",
     ],
     container: [
-      "fixed inset-y-0 z-10 hidden h-svh transition-[left,right,width] duration-250 ease-drawer md:flex",
+      "fixed inset-y-0 z-10 hidden h-svh transition-[left,right,width] duration-250 ease-fluid-out md:flex",
       "w-(--sidebar-width-icon) group-data-expanded:w-(--sidebar-width)",
       "group-placement-left:left-0 group-placement-left:border-r",
       "group-placement-right:right-0 group-placement-right:border-l",
     ],
     inner:
-      "flex h-full w-full flex-col bg-sidebar transition-colors duration-250 ease-drawer",
+      "flex h-full w-full flex-col bg-sidebar transition-colors duration-250 ease-fluid-out",
     header: "flex flex-col gap-2 p-2",
     footer: "flex flex-col gap-2 p-2",
     separator: "mx-2 w-auto",

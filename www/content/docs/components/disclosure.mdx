@@ -14,7 +14,7 @@ import {
 <PageTabs>
   <PageTabPanel id="overview">
 
-    <Demo name="disclosure/demos/default" />
+    <Demo name="disclosure/demos/basic" />
 
     ## Installation
 
@@ -43,31 +43,15 @@ import {
     </Disclosure>
     ```
 
+    ## Advanced composition
+
+    <Demo name="disclosure/demos/advanced-composition" />
+
     ## Playground
 
     Use the controls below to experiment with different disclosure props and see the live preview and code update.
 
     <InteractiveDemo component={DisclosurePlayground} controls={disclosureControls} />
-
-    ## Options
-
-    ### Default Expanded
-
-    Use `defaultExpanded` to make the disclosure expanded by default.
-
-    <Demo name="disclosure/demos/default-expanded" />
-
-    ### Disabled
-
-    Use `isDisabled` to prevent the disclosure from being toggled.
-
-    <Demo name="disclosure/demos/disabled" />
-
-    ### Controlled
-
-    Use `isExpanded` and `onExpandedChange` to control the disclosure state externally.
-
-    <Demo name="disclosure/demos/controlled" />
 
     ## API Reference
 
@@ -92,4 +76,3 @@ import {
     <Example name="disclosure/demos/controlled" />
   </PageTabPanel>
 </PageTabs>
-

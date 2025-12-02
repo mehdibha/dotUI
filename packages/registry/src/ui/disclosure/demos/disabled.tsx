@@ -1,6 +1,6 @@
 import {
   Disclosure,
-  DisclosureHeading,
+  DisclosureTrigger,
   DisclosurePanel,
 } from "@dotui/registry/ui/disclosure";
 
@@ -8,13 +8,13 @@ export default function Demo() {
   return (
     <div className="flex flex-col gap-4">
       <Disclosure isDisabled>
-        <DisclosureHeading>Disabled disclosure</DisclosureHeading>
+        <DisclosureTrigger>Disabled disclosure</DisclosureTrigger>
         <DisclosurePanel>
           <p className="pb-3">This content cannot be revealed.</p>
         </DisclosurePanel>
       </Disclosure>
       <Disclosure isDisabled defaultExpanded>
-        <DisclosureHeading>Disabled (expanded)</DisclosureHeading>
+        <DisclosureTrigger>Disabled (expanded)</DisclosureTrigger>
         <DisclosurePanel>
           <p className="pb-3">
             This content is visible but the disclosure cannot be collapsed.
