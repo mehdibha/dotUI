@@ -35,21 +35,18 @@ export const toggleButtonControls: Control[] = [
   {
     type: "enum",
     name: "variant",
-    label: "Variant",
     options: ["default", "quiet"],
     defaultValue: "default",
   },
   {
     type: "enum",
     name: "size",
-    label: "Size",
     options: ["sm", "md", "lg"],
     defaultValue: "md",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
 ];

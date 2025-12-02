@@ -31,14 +31,12 @@ export const tabsControls: Control[] = [
   {
     type: "enum",
     name: "orientation",
-    label: "Orientation",
     options: ["horizontal", "vertical"],
     defaultValue: "horizontal",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
 ];

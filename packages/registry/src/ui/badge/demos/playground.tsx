@@ -20,13 +20,11 @@ export const badgeControls: Control[] = [
   {
     type: "string",
     name: "children",
-    label: "Text",
     defaultValue: "Badge",
   },
   {
     type: "enum",
     name: "variant",
-    label: "Variant",
     options: ["default", "success", "warning", "danger", "info"],
     defaultValue: "default",
   },

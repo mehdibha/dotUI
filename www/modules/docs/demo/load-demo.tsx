@@ -21,17 +21,37 @@ export const loadDemo = async (name: string) => {
     .replace("export default function", "export function")
     .trim();
 
-  const previewRaw = rawContent
-    .replaceAll("@dotui/registry/ui/", "@/components/ui/")
-    .replaceAll("@dotui/registry/", "@/")
+  // Find the export function to separate constants from component code
+  const exportFunctionMatch = rawContent.match(
+    /export\s+(default\s+)?function\s+\w+/,
+  );
+  const exportFunctionIndex = exportFunctionMatch?.index ?? rawContent.length;
+
+  // Process constants before the export function
+  const beforeExport = rawContent.slice(0, exportFunctionIndex);
+  const afterExport = rawContent.slice(exportFunctionIndex);
+
+  const processedBeforeExport = beforeExport
     .replace(DIRECTIVE_REGEX, "")
     .replace(IMPORT_REGEX, "")
+    .replace(CONST_REGEX, (_match, name) => `const ${name} = /** ... **/;`);
+
+  // Process the component JSX separately
+  let componentJsx = afterExport
+    .replaceAll("@dotui/registry/ui/", "@/components/ui/")
+    .replaceAll("@dotui/registry/", "@/")
     .replace(EXPORT_FN_REGEX, "")
-    .replace(FUNCTION_END_REGEX, "")
+    .replace(/\s*\)\s*;\s*\n?\s*\}\s*$/, "") // Remove function closing
     .replace(/^\n+/, "") // Remove leading empty lines
     .replace(/\n+$/, ""); // Remove trailing empty lines
 
-  const preview = dedent(previewRaw);
+  // Dedent only the JSX part (constants should stay at root level)
+  componentJsx = dedent(componentJsx);
+
+  // Combine constants and dedented JSX
+  const preview = processedBeforeExport
+    ? `${processedBeforeExport.trim()}\n\n${componentJsx}`
+    : componentJsx;
 
   const [highlightedSource, highlightedPreview] = await Promise.all([
     highlightSource(source),
@@ -67,9 +87,9 @@ const getFileSource = async (filePath: string) => {
 
 const DIRECTIVE_REGEX = /^\s*["']use client["'];\s*\n?/gm;
 const IMPORT_REGEX = /^\s*import[\s\S]*?;\s*$/gm;
+const CONST_REGEX = /const\s+(\w+)\s*=\s*[\s\S]*?;/gm;
 const EXPORT_FN_REGEX =
   /export\s+(default\s+)?function\s+\w+\s*\([^)]*\)\s*\{[\s\S]*?return\s*\(?\n?/m;
-const FUNCTION_END_REGEX = /\s*\)?\s*;?\s*\}\s*$/m;
 
 /**
  * Remove common leading whitespace from all lines.

@@ -36,7 +36,6 @@ export const popoverControls: Control[] = [
   {
     type: "enum",
     name: "placement",
-    label: "Placement",
     options: ["bottom", "top", "left", "right"],
     defaultValue: "bottom",
   },

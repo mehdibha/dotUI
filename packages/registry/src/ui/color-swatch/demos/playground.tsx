@@ -18,7 +18,6 @@ export const colorSwatchControls: Control[] = [
   {
     type: "string",
     name: "color",
-    label: "Color",
     defaultValue: "#ff0000",
   },
 ];

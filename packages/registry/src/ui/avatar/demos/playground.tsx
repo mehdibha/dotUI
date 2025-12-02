@@ -24,25 +24,21 @@ export const avatarControls: Control[] = [
   {
     type: "string",
     name: "src",
-    label: "Image URL",
     defaultValue: "https://github.com/mehdibha.png",
   },
   {
     type: "string",
     name: "alt",
-    label: "Alt Text",
     defaultValue: "@mehdibha",
   },
   {
     type: "string",
     name: "fallback",
-    label: "Fallback",
     defaultValue: "MB",
   },
   {
     type: "enum",
     name: "size",
-    label: "Size",
     options: ["sm", "md", "lg"],
     defaultValue: "md",
   },

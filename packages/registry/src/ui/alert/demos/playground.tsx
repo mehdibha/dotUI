@@ -31,27 +31,23 @@ export const alertControls: Control[] = [
   {
     type: "string",
     name: "title",
-    label: "Title",
     defaultValue: "Alert Title",
     alwaysShow: true,
   },
   {
     type: "string",
     name: "description",
-    label: "Description",
     defaultValue: "This is an alert description.",
     alwaysShow: true,
   },
   {
     type: "enum",
     name: "variant",
-    label: "Variant",
     options: ["neutral", "success", "warning", "danger", "info"],
     defaultValue: "neutral",
   },
   {
     type: "icon",
     name: "icon",
-    label: "Icon",
   },
 ];

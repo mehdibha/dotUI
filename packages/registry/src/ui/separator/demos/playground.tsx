@@ -26,7 +26,6 @@ export const separatorControls: Control[] = [
   {
     type: "enum",
     name: "orientation",
-    label: "Orientation",
     options: ["horizontal", "vertical"],
     defaultValue: "horizontal",
   },

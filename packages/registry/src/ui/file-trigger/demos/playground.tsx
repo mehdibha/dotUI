@@ -23,7 +23,6 @@ export const fileTriggerControls: Control[] = [
   {
     type: "boolean",
     name: "allowsMultiple",
-    label: "Allow Multiple",
     defaultValue: false,
   },
 ];

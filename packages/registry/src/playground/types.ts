@@ -5,7 +5,6 @@
 
 export interface BaseControl {
   name: string;
-  label?: string;
   /** Always show this prop in code output, even if it equals the default value */
   alwaysShow?: boolean;
 }

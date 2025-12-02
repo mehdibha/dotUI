@@ -24,7 +24,6 @@ export const breadcrumbsControls: Control[] = [
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
 ];

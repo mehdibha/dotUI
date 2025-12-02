@@ -41,25 +41,21 @@ export const comboboxControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Country",
   },
   {
     type: "string",
     name: "placeholder",
-    label: "Placeholder",
     defaultValue: "Search countries...",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isInvalid",
-    label: "Invalid",
     defaultValue: false,
   },
 ];

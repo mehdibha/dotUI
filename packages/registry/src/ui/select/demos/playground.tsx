@@ -36,25 +36,21 @@ export const selectControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Country",
   },
   {
     type: "string",
     name: "placeholder",
-    label: "Placeholder",
     defaultValue: "Select a country",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isInvalid",
-    label: "Invalid",
     defaultValue: false,
   },
 ];

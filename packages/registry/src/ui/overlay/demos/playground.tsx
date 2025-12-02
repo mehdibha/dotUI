@@ -50,14 +50,12 @@ export const overlayControls: Control[] = [
   {
     type: "enum",
     name: "type",
-    label: "Type",
     options: ["modal", "popover", "drawer"],
     defaultValue: "modal",
   },
   {
     type: "enum",
     name: "mobileType",
-    label: "Mobile Type",
     options: ["modal", "drawer"],
     defaultValue: "drawer",
   },

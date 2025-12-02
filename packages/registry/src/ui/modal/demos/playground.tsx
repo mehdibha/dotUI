@@ -49,7 +49,6 @@ export const modalControls: Control[] = [
   {
     type: "boolean",
     name: "isDismissable",
-    label: "Dismissable",
     defaultValue: true,
   },
 ];

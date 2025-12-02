@@ -59,49 +59,41 @@ export const textFieldControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Email",
   },
   {
     type: "string",
     name: "description",
-    label: "Description",
     defaultValue: "",
     placeholder: "Helper text",
   },
   {
     type: "string",
     name: "errorMessage",
-    label: "Error Message",
     defaultValue: "",
     placeholder: "Error text",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isReadOnly",
-    label: "Read Only",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isInvalid",
-    label: "Invalid",
     defaultValue: false,
   },
   {
     type: "icon",
     name: "startIcon",
-    label: "Start Icon",
   },
   {
     type: "icon",
     name: "endIcon",
-    label: "End Icon",
   },
 ];

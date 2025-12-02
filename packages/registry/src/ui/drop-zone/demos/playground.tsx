@@ -24,13 +24,11 @@ export const dropZoneControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Drop files here",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
 ];

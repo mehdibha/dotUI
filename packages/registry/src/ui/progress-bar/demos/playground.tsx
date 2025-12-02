@@ -31,13 +31,11 @@ export const progressBarControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Loading...",
   },
   {
     type: "number",
     name: "value",
-    label: "Value",
     defaultValue: 60,
     min: 0,
     max: 100,
@@ -45,7 +43,6 @@ export const progressBarControls: Control[] = [
   {
     type: "boolean",
     name: "isIndeterminate",
-    label: "Indeterminate",
     defaultValue: false,
   },
 ];

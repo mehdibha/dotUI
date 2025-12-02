@@ -50,7 +50,6 @@ export const tableControls: Control[] = [
   {
     type: "enum",
     name: "selectionMode",
-    label: "Selection Mode",
     options: ["none", "single", "multiple"],
     defaultValue: "none",
   },

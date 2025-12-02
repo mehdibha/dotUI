@@ -43,13 +43,11 @@ export const buttonControls: Control[] = [
   {
     type: "string",
     name: "children",
-    label: "Text",
     defaultValue: "Button",
   },
   {
     type: "enum",
     name: "variant",
-    label: "Variant",
     options: [
       "default",
       "primary",
@@ -64,30 +62,25 @@ export const buttonControls: Control[] = [
   {
     type: "enum",
     name: "size",
-    label: "Size",
     options: ["sm", "md", "lg"],
     defaultValue: "md",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isPending",
-    label: "Pending",
     defaultValue: false,
   },
   {
     type: "icon",
     name: "prefix",
-    label: "Prefix Icon",
   },
   {
     type: "icon",
     name: "suffix",
-    label: "Suffix Icon",
   },
 ];

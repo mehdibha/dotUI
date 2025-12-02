@@ -18,7 +18,6 @@ export const colorAreaControls: Control[] = [
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
 ];

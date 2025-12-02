@@ -160,7 +160,7 @@ export function InteractiveDemoClient({
 
         <div
           className={cn(
-            "relative flex flex-col gap-2.5 bg-card p-4 **:data-field:gap-1 **:data-label:text-fg-muted **:data-label:text-xs",
+            "relative flex flex-col gap-2.5 bg-card p-4 **:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
             layout === "horizontal" &&
               "-ml-4 w-48 rounded-tr-md border-y border-r pl-8",
             layout === "vertical" && "border-x border-b",

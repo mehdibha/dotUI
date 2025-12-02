@@ -32,7 +32,6 @@ export const formControls: Control[] = [
   {
     type: "enum",
     name: "validationBehavior",
-    label: "Validation Behavior",
     options: ["native", "aria"],
     defaultValue: "native",
   },

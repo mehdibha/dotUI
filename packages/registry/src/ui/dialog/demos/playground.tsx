@@ -55,19 +55,16 @@ export const dialogControls: Control[] = [
   {
     type: "string",
     name: "title",
-    label: "Title",
     defaultValue: "Dialog Title",
   },
   {
     type: "string",
     name: "description",
-    label: "Description",
     defaultValue: "This is a dialog description.",
   },
   {
     type: "boolean",
     name: "isDismissable",
-    label: "Dismissable",
     defaultValue: true,
   },
 ];

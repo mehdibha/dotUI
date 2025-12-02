@@ -30,20 +30,17 @@ export const tooltipControls: Control[] = [
   {
     type: "string",
     name: "content",
-    label: "Content",
     defaultValue: "Tooltip content",
   },
   {
     type: "enum",
     name: "placement",
-    label: "Placement",
     options: ["top", "bottom", "left", "right"],
     defaultValue: "top",
   },
   {
     type: "boolean",
     name: "hideArrow",
-    label: "Hide Arrow",
     defaultValue: false,
   },
 ];

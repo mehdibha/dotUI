@@ -32,19 +32,16 @@ export const datePickerControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Date",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isReadOnly",
-    label: "Read Only",
     defaultValue: false,
   },
 ];

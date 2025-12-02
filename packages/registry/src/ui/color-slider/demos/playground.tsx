@@ -33,21 +33,18 @@ export const colorSliderControls: Control[] = [
   {
     type: "enum",
     name: "channel",
-    label: "Channel",
     options: ["hue", "saturation", "lightness", "alpha"],
     defaultValue: "hue",
   },
   {
     type: "enum",
     name: "orientation",
-    label: "Orientation",
     options: ["horizontal", "vertical"],
     defaultValue: "horizontal",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
 ];

@@ -30,25 +30,21 @@ export const searchFieldControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Search",
   },
   {
     type: "string",
     name: "placeholder",
-    label: "Placeholder",
     defaultValue: "Search...",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isReadOnly",
-    label: "Read Only",
     defaultValue: false,
   },
 ];

@@ -39,7 +39,6 @@ export const commandControls: Control[] = [
   {
     type: "string",
     name: "placeholder",
-    label: "Placeholder",
     defaultValue: "Type a command...",
   },
 ];

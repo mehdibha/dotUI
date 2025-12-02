@@ -29,25 +29,21 @@ export const dateFieldControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Date",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isReadOnly",
-    label: "Read Only",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isInvalid",
-    label: "Invalid",
     defaultValue: false,
   },
 ];

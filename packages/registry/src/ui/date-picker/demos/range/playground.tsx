@@ -32,19 +32,16 @@ export const dateRangePickerControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Date range",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isReadOnly",
-    label: "Read Only",
     defaultValue: false,
   },
 ];

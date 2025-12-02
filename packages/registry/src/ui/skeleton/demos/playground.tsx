@@ -28,7 +28,6 @@ export const skeletonControls: Control[] = [
   {
     type: "boolean",
     name: "isLoading",
-    label: "Loading",
     defaultValue: true,
   },
 ];

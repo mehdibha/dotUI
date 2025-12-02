@@ -29,31 +29,26 @@ export const checkboxControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Accept terms",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isReadOnly",
-    label: "Read Only",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isInvalid",
-    label: "Invalid",
     defaultValue: false,
   },
   {
     type: "boolean",
     name: "isIndeterminate",
-    label: "Indeterminate",
     defaultValue: false,
   },
 ];

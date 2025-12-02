@@ -30,7 +30,6 @@ export const menuControls: Control[] = [
   {
     type: "enum",
     name: "placement",
-    label: "Placement",
     options: ["bottom", "top", "left", "right"],
     defaultValue: "bottom",
   },

@@ -23,7 +23,8 @@ import {
   XIcon,
 } from "lucide-react";
 
-import { Label } from "@dotui/registry/ui/field";
+import { Button } from "@dotui/registry/ui/button";
+import { Field, Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
 import {
   Select,
@@ -31,11 +32,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@dotui/registry/ui/select";
-import {
-  Switch,
-  SwitchIndicator,
-  SwitchThumb,
-} from "@dotui/registry/ui/switch";
+import { Switch } from "@dotui/registry/ui/switch";
 import { TextField } from "@dotui/registry/ui/text-field";
 import type {
   BooleanControl,
@@ -146,16 +143,19 @@ function BooleanControlRenderer({
   onChange,
 }: BooleanControlRendererProps) {
   return (
-    <Switch
-      isSelected={value}
-      onChange={(selected) => onChange(control.name, selected)}
-      className="flex-row-reverse justify-between"
-    >
-      <SwitchIndicator>
-        <SwitchThumb />
-      </SwitchIndicator>
-      <Label>{control.label || control.name}</Label>
-    </Switch>
+    <Field>
+      <div className="flex items-center gap-2">
+        <Label>{control.name}</Label>
+        <Button variant="quiet" className="size-6 *:[svg]:size-3">
+          <InfoIcon />
+        </Button>
+      </div>
+      <Switch
+        isSelected={value}
+        onChange={(selected) => onChange(control.name, selected)}
+        size="sm"
+      />
+    </Field>
   );
 }
 
@@ -176,7 +176,7 @@ function StringControlRenderer({
       onChange={(val) => onChange(control.name, val)}
       className="w-full"
     >
-      <Label>{control.label || control.name}</Label>
+      <Label>{control.name}</Label>
       <Input placeholder={control.placeholder} size="sm" />
     </TextField>
   );
@@ -199,7 +199,7 @@ function NumberControlRenderer({
       onChange={(val) => onChange(control.name, Number(val) || 0)}
       className="w-full"
     >
-      <Label>{control.label || control.name}</Label>
+      <Label>{control.name}</Label>
       <Input
         type="number"
         min={control.min}
@@ -224,7 +224,7 @@ function EnumControlRenderer({
 }: EnumControlRendererProps) {
   return (
     <Select value={value} onChange={(key) => onChange(control.name, key)}>
-      <Label>{control.label || control.name}</Label>
+      <Label>{control.name}</Label>
       <SelectTrigger size="sm" />
       <SelectContent>
         {control.options.map((option) => (
@@ -258,7 +258,7 @@ function IconControlRenderer({
       }
       className="w-full"
     >
-      <Label>{control.label || control.name}</Label>
+      <Label>{control.name}</Label>
       <SelectTrigger />
       <SelectContent>
         <SelectItem id="__none__" textValue="None">

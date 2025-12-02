@@ -31,14 +31,12 @@ export const listBoxControls: Control[] = [
   {
     type: "enum",
     name: "selectionMode",
-    label: "Selection Mode",
     options: ["none", "single", "multiple"],
     defaultValue: "single",
   },
   {
     type: "enum",
     name: "orientation",
-    label: "Orientation",
     options: ["horizontal", "vertical"],
     defaultValue: "vertical",
   },

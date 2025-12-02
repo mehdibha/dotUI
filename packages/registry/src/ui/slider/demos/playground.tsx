@@ -27,20 +27,17 @@ export const sliderControls: Control[] = [
   {
     type: "string",
     name: "label",
-    label: "Label",
     defaultValue: "Volume",
   },
   {
     type: "enum",
     name: "orientation",
-    label: "Orientation",
     options: ["horizontal", "vertical"],
     defaultValue: "horizontal",
   },
   {
     type: "boolean",
     name: "isDisabled",
-    label: "Disabled",
     defaultValue: false,
   },
 ];
