@@ -40,7 +40,46 @@ wip: true
 
     Use the controls below to experiment with different text area props and see the live preview and code update.
 
-    <InteractiveDemo name="text-area" />
+    <InteractiveDemo 
+      name="text-area" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Description",
+        },
+        {
+          type: "string",
+          name: "placeholder",
+          defaultValue: "Enter description...",
+        },
+        {
+          type: "string",
+          name: "description",
+          defaultValue: "",
+        },
+        {
+          type: "string",
+          name: "errorMessage",
+          defaultValue: "",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isReadOnly",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+      ]}
+    />
 
     ## API Reference
 

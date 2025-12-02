@@ -1,14 +1,13 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-import type { Control } from "@dotui/registry/playground";
 
 import {
   Combobox,
   ComboboxContent,
   ComboboxInput,
   ComboboxItem,
-} from "../index";
+} from "@dotui/registry/ui/combobox";
 
 interface ComboboxPlaygroundProps {
   label?: string;
@@ -36,26 +35,3 @@ export function ComboboxPlayground({
     </Combobox>
   );
 }
-
-export const comboboxControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Country",
-  },
-  {
-    type: "string",
-    name: "placeholder",
-    defaultValue: "Search countries...",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isInvalid",
-    defaultValue: false,
-  },
-];

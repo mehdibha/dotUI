@@ -46,7 +46,16 @@ wip: true
 
     Use the controls below to experiment with different command props and see the live preview and code update.
 
-    <InteractiveDemo name="command" />
+    <InteractiveDemo 
+      name="command" 
+      controls={[
+        {
+          type: "string",
+          name: "placeholder",
+          defaultValue: "Type a command...",
+        },
+      ]}
+    />
 
     ## API Reference
 

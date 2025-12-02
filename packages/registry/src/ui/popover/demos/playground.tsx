@@ -6,9 +6,7 @@ import {
   DialogContent,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
-import type { Control } from "@dotui/registry/playground";
-
-import { Popover } from "../index";
+import { Popover } from "@dotui/registry/ui/popover";
 
 interface PopoverPlaygroundProps {
   placement?: "bottom" | "top" | "left" | "right";
@@ -31,12 +29,3 @@ export function PopoverPlayground({
     </Dialog>
   );
 }
-
-export const popoverControls: Control[] = [
-  {
-    type: "enum",
-    name: "placement",
-    options: ["bottom", "top", "left", "right"],
-    defaultValue: "bottom",
-  },
-];

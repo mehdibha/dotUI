@@ -39,7 +39,16 @@ wip: true
 
     Use the controls below to experiment with different breadcrumbs props and see the live preview and code update.
 
-    <InteractiveDemo name="breadcrumbs" />
+    <InteractiveDemo 
+      name="breadcrumbs" 
+      controls={[
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+      ]}
+    />
 
     ## API Reference
 

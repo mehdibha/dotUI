@@ -1,9 +1,12 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-import type { Control } from "@dotui/registry/playground";
 
-import { Switch, SwitchIndicator, SwitchThumb } from "../index";
+import {
+  Switch,
+  SwitchIndicator,
+  SwitchThumb,
+} from "@dotui/registry/ui/switch";
 
 interface SwitchPlaygroundProps {
   label?: string;
@@ -25,27 +28,3 @@ export function SwitchPlayground({
     </Switch>
   );
 }
-
-export const switchControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Airplane mode",
-  },
-  {
-    type: "enum",
-    name: "size",
-    options: ["sm", "md", "lg"],
-    defaultValue: "md",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-];

@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { ColorSwatch } from "../index";
+import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 
 interface ColorSwatchPlaygroundProps {
   color?: string;
@@ -13,11 +11,3 @@ export function ColorSwatchPlayground({
 }: ColorSwatchPlaygroundProps) {
   return <ColorSwatch color={color} />;
 }
-
-export const colorSwatchControls: Control[] = [
-  {
-    type: "string",
-    name: "color",
-    defaultValue: "#ff0000",
-  },
-];

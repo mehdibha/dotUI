@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { Tab, TabList, TabPanel, Tabs } from "../index";
+import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 interface TabsPlaygroundProps {
   orientation?: "horizontal" | "vertical";
@@ -26,17 +24,3 @@ export function TabsPlayground({
     </Tabs>
   );
 }
-
-export const tabsControls: Control[] = [
-  {
-    type: "enum",
-    name: "orientation",
-    options: ["horizontal", "vertical"],
-    defaultValue: "horizontal",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-];

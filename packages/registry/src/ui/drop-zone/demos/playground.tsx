@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { DropZone, DropZoneLabel } from "../index";
+import { DropZone, DropZoneLabel } from "@dotui/registry/ui/drop-zone";
 
 interface DropZonePlaygroundProps {
   label?: string;
@@ -19,16 +17,3 @@ export function DropZonePlayground({
     </DropZone>
   );
 }
-
-export const dropZoneControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Drop files here",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-];

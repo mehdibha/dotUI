@@ -37,7 +37,28 @@ wip: true
 
     Use the controls below to experiment with different toggle button props and see the live preview and code update.
 
-    <InteractiveDemo name="toggle-button" />
+    <InteractiveDemo 
+      name="toggle-button" 
+      controls={[
+        {
+          type: "enum",
+          name: "variant",
+          options: ["default", "quiet"],
+          defaultValue: "default",
+        },
+        {
+          type: "enum",
+          name: "size",
+          options: ["sm", "md", "lg"],
+          defaultValue: "md",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+      ]}
+    />
 
     ## API Reference
 

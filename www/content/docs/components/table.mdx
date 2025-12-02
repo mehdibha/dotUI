@@ -55,7 +55,17 @@ wip: true
 
     Use the controls below to experiment with different table props and see the live preview and code update.
 
-    <InteractiveDemo name="table" />
+    <InteractiveDemo 
+      name="table" 
+      controls={[
+        {
+          type: "enum",
+          name: "selectionMode",
+          options: ["none", "single", "multiple"],
+          defaultValue: "none",
+        },
+      ]}
+    />
 
     ## API Reference
 

@@ -1,7 +1,5 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
 import {
   Command,
   CommandContent,
@@ -9,7 +7,7 @@ import {
   CommandItem,
   CommandSection,
   CommandSectionHeader,
-} from "../index";
+} from "@dotui/registry/ui/command";
 
 interface CommandPlaygroundProps {
   placeholder?: string;
@@ -34,11 +32,3 @@ export function CommandPlayground({
     </Command>
   );
 }
-
-export const commandControls: Control[] = [
-  {
-    type: "string",
-    name: "placeholder",
-    defaultValue: "Type a command...",
-  },
-];

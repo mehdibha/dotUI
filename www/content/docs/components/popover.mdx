@@ -45,7 +45,17 @@ wip: true
 
     Use the controls below to experiment with different popover props and see the live preview and code update.
 
-    <InteractiveDemo name="popover" />
+    <InteractiveDemo 
+      name="popover" 
+      controls={[
+        {
+          type: "enum",
+          name: "placement",
+          options: ["bottom", "top", "left", "right"],
+          defaultValue: "bottom",
+        },
+      ]}
+    />
 
     ## API Reference
 

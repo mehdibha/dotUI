@@ -37,7 +37,16 @@ wip: true
 
     Use the controls below to experiment with different skeleton props and see the live preview and code update.
 
-    <InteractiveDemo name="skeleton" />
+    <InteractiveDemo 
+      name="skeleton" 
+      controls={[
+        {
+          type: "boolean",
+          name: "isLoading",
+          defaultValue: true,
+        },
+      ]}
+    />
 
     ## API Reference
 

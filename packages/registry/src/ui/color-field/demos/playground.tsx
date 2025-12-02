@@ -2,9 +2,7 @@
 
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
-import type { Control } from "@dotui/registry/playground";
-
-import { ColorField } from "../index";
+import { ColorField } from "@dotui/registry/ui/color-field";
 
 interface ColorFieldPlaygroundProps {
   label?: string;
@@ -28,21 +26,3 @@ export function ColorFieldPlayground({
     </ColorField>
   );
 }
-
-export const colorFieldControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Color",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-];

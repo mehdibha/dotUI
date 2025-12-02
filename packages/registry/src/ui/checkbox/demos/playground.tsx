@@ -1,9 +1,8 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-import type { Control } from "@dotui/registry/playground";
 
-import { Checkbox, CheckboxIndicator } from "../index";
+import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
 
 interface CheckboxPlaygroundProps {
   label?: string;
@@ -24,31 +23,3 @@ export function CheckboxPlayground({
     </Checkbox>
   );
 }
-
-export const checkboxControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Accept terms",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isInvalid",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isIndeterminate",
-    defaultValue: false,
-  },
-];

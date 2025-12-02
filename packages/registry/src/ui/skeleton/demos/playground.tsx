@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { Skeleton, SkeletonProvider } from "../index";
+import { Skeleton, SkeletonProvider } from "@dotui/registry/ui/skeleton";
 
 interface SkeletonPlaygroundProps {
   isLoading?: boolean;
@@ -23,11 +21,3 @@ export function SkeletonPlayground({
     </SkeletonProvider>
   );
 }
-
-export const skeletonControls: Control[] = [
-  {
-    type: "boolean",
-    name: "isLoading",
-    defaultValue: true,
-  },
-];

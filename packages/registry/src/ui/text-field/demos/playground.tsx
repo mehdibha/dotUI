@@ -4,9 +4,8 @@ import type { ReactNode } from "react";
 
 import { Description, FieldError, Label } from "@dotui/registry/ui/field";
 import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
-import type { Control } from "@dotui/registry/playground";
 
-import { TextField } from "../index";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 /**
  * TextField playground component.
@@ -51,49 +50,3 @@ export function TextFieldPlayground({
     </TextField>
   );
 }
-
-/**
- * Controls for the TextField playground.
- */
-export const textFieldControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Email",
-  },
-  {
-    type: "string",
-    name: "description",
-    defaultValue: "",
-    placeholder: "Helper text",
-  },
-  {
-    type: "string",
-    name: "errorMessage",
-    defaultValue: "",
-    placeholder: "Error text",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isInvalid",
-    defaultValue: false,
-  },
-  {
-    type: "icon",
-    name: "startIcon",
-  },
-  {
-    type: "icon",
-    name: "endIcon",
-  },
-];

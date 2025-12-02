@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { Separator } from "../index";
+import { Separator } from "@dotui/registry/ui/separator";
 
 interface SeparatorPlaygroundProps {
   orientation?: "horizontal" | "vertical";
@@ -21,12 +19,3 @@ export function SeparatorPlayground({
     </div>
   );
 }
-
-export const separatorControls: Control[] = [
-  {
-    type: "enum",
-    name: "orientation",
-    options: ["horizontal", "vertical"],
-    defaultValue: "horizontal",
-  },
-];

@@ -44,7 +44,22 @@ wip: true
 
     Use the controls below to experiment with different tabs props and see the live preview and code update.
 
-    <InteractiveDemo name="tabs" />
+    <InteractiveDemo 
+      name="tabs" 
+      controls={[
+        {
+          type: "enum",
+          name: "orientation",
+          options: ["horizontal", "vertical"],
+          defaultValue: "horizontal",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+      ]}
+    />
 
     ## API Reference
 

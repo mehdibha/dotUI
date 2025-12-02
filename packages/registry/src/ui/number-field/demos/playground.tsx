@@ -2,9 +2,8 @@
 
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
-import type { Control } from "@dotui/registry/playground";
 
-import { NumberField } from "../index";
+import { NumberField } from "@dotui/registry/ui/number-field";
 
 interface NumberFieldPlaygroundProps {
   label?: string;
@@ -24,26 +23,3 @@ export function NumberFieldPlayground({
     </NumberField>
   );
 }
-
-export const numberFieldControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Quantity",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isInvalid",
-    defaultValue: false,
-  },
-];

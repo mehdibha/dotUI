@@ -47,7 +47,21 @@ links:
 
     Use the controls below to experiment with different disclosure props and see the live preview and code update.
 
-    <InteractiveDemo name="disclosure" />
+    <InteractiveDemo 
+      name="disclosure" 
+      controls={[
+        {
+          type: "boolean",
+          name: "defaultExpanded",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+      ]} 
+    />
 
     ## API Reference
 

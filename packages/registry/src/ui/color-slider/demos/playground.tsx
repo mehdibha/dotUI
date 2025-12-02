@@ -1,9 +1,10 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-import type { Control } from "@dotui/registry/playground";
-
-import { ColorSlider, ColorSliderControl } from "../index";
+import {
+  ColorSlider,
+  ColorSliderControl,
+} from "@dotui/registry/ui/color-slider";
 
 interface ColorSliderPlaygroundProps {
   channel?: "hue" | "saturation" | "lightness" | "alpha";
@@ -28,23 +29,3 @@ export function ColorSliderPlayground({
     </ColorSlider>
   );
 }
-
-export const colorSliderControls: Control[] = [
-  {
-    type: "enum",
-    name: "channel",
-    options: ["hue", "saturation", "lightness", "alpha"],
-    defaultValue: "hue",
-  },
-  {
-    type: "enum",
-    name: "orientation",
-    options: ["horizontal", "vertical"],
-    defaultValue: "horizontal",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-];

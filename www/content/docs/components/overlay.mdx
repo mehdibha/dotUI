@@ -42,7 +42,23 @@ wip: true
 
     Use the controls below to experiment with different overlay props and see the live preview and code update.
 
-    <InteractiveDemo name="overlay" />
+    <InteractiveDemo 
+      name="overlay" 
+      controls={[
+        {
+          type: "enum",
+          name: "type",
+          options: ["modal", "popover", "drawer"],
+          defaultValue: "modal",
+        },
+        {
+          type: "enum",
+          name: "mobileType",
+          options: ["modal", "drawer"],
+          defaultValue: "drawer",
+        },
+      ]}
+    />
 
     ## API Reference
 

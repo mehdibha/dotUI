@@ -2,9 +2,7 @@
 
 import { Label } from "@dotui/registry/ui/field";
 import { DateInput } from "@dotui/registry/ui/input";
-import type { Control } from "@dotui/registry/playground";
-
-import { DateField } from "../index";
+import { DateField } from "@dotui/registry/ui/date-field";
 
 interface DateFieldPlaygroundProps {
   label?: string;
@@ -24,26 +22,3 @@ export function DateFieldPlayground({
     </DateField>
   );
 }
-
-export const dateFieldControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Date",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isInvalid",
-    defaultValue: false,
-  },
-];

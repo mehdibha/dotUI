@@ -1,9 +1,7 @@
 "use client";
 
 import { Button } from "@dotui/registry/ui/button";
-import type { Control } from "@dotui/registry/playground";
-
-import { Tooltip, TooltipContent } from "../index";
+import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 interface TooltipPlaygroundProps {
   content?: string;
@@ -25,22 +23,3 @@ export function TooltipPlayground({
     </Tooltip>
   );
 }
-
-export const tooltipControls: Control[] = [
-  {
-    type: "string",
-    name: "content",
-    defaultValue: "Tooltip content",
-  },
-  {
-    type: "enum",
-    name: "placement",
-    options: ["top", "bottom", "left", "right"],
-    defaultValue: "top",
-  },
-  {
-    type: "boolean",
-    name: "hideArrow",
-    defaultValue: false,
-  },
-];

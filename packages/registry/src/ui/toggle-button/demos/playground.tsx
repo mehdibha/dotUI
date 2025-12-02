@@ -3,9 +3,7 @@
 import { PinIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { ToggleButton } from "../index";
+import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 
 interface ToggleButtonPlaygroundProps {
   variant?: "default" | "quiet";
@@ -30,23 +28,3 @@ export function ToggleButtonPlayground({
     </ToggleButton>
   );
 }
-
-export const toggleButtonControls: Control[] = [
-  {
-    type: "enum",
-    name: "variant",
-    options: ["default", "quiet"],
-    defaultValue: "default",
-  },
-  {
-    type: "enum",
-    name: "size",
-    options: ["sm", "md", "lg"],
-    defaultValue: "md",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-];

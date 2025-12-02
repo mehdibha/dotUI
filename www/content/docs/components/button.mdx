@@ -35,7 +35,19 @@ wip: true
 
     Use the controls below to experiment with different button props and see the live preview and code update.
 
-    <InteractiveDemo name="button" fallback={`<Button>Button</Button>`}/>
+    <InteractiveDemo
+      name="button"
+      fallback={`<Button>Button</Button>`}
+      controls={[
+        { name: "children", type: "string", defaultValue: "Button" },
+        "variant",
+        "size",
+        "isDisabled",
+        "isPending",
+        { name: "prefix", type: "icon" },
+        { name: "suffix", type: "icon" },
+      ]}
+    />
 
 
     ## API Reference

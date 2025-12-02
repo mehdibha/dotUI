@@ -1,9 +1,11 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-import type { Control } from "@dotui/registry/playground";
 
-import { ProgressBar, ProgressBarControl } from "../index";
+import {
+  ProgressBar,
+  ProgressBarControl,
+} from "@dotui/registry/ui/progress-bar";
 
 interface ProgressBarPlaygroundProps {
   label?: string;
@@ -26,23 +28,3 @@ export function ProgressBarPlayground({
     </ProgressBar>
   );
 }
-
-export const progressBarControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Loading...",
-  },
-  {
-    type: "number",
-    name: "value",
-    defaultValue: 60,
-    min: 0,
-    max: 100,
-  },
-  {
-    type: "boolean",
-    name: "isIndeterminate",
-    defaultValue: false,
-  },
-];

@@ -39,7 +39,27 @@ wip: true
 
     Use the controls below to experiment with different tooltip props and see the live preview and code update.
 
-    <InteractiveDemo name="tooltip" />
+    <InteractiveDemo 
+      name="tooltip" 
+      controls={[
+        {
+          type: "string",
+          name: "content",
+          defaultValue: "Tooltip content",
+        },
+        {
+          type: "enum",
+          name: "placement",
+          options: ["top", "bottom", "left", "right"],
+          defaultValue: "top",
+        },
+        {
+          type: "boolean",
+          name: "hideArrow",
+          defaultValue: false,
+        },
+      ]}
+    />
 
     ## API Reference
 

@@ -1,9 +1,13 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-import type { Control } from "@dotui/registry/playground";
 
-import { Select, SelectContent, SelectItem, SelectTrigger } from "../index";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 
 interface SelectPlaygroundProps {
   label?: string;
@@ -31,26 +35,3 @@ export function SelectPlayground({
     </Select>
   );
 }
-
-export const selectControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Country",
-  },
-  {
-    type: "string",
-    name: "placeholder",
-    defaultValue: "Select a country",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isInvalid",
-    defaultValue: false,
-  },
-];

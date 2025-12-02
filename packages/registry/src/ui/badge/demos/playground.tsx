@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { Badge } from "../index";
+import { Badge } from "@dotui/registry/ui/badge";
 
 interface BadgePlaygroundProps {
   children?: string;
@@ -15,17 +13,3 @@ export function BadgePlayground({
 }: BadgePlaygroundProps) {
   return <Badge variant={variant}>{children}</Badge>;
 }
-
-export const badgeControls: Control[] = [
-  {
-    type: "string",
-    name: "children",
-    defaultValue: "Badge",
-  },
-  {
-    type: "enum",
-    name: "variant",
-    options: ["default", "success", "warning", "danger", "info"],
-    defaultValue: "default",
-  },
-];

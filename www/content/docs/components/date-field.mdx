@@ -40,7 +40,31 @@ wip: true
 
     Use the controls below to experiment with different date field props and see the live preview and code update.
 
-    <InteractiveDemo name="date-field" />
+    <InteractiveDemo 
+      name="date-field" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Date",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isReadOnly",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+      ]}
+    />
 
     ## API Reference
 

@@ -39,7 +39,23 @@ wip: true
 
     Use the controls below to experiment with different list box props and see the live preview and code update.
 
-    <InteractiveDemo name="list-box" />
+    <InteractiveDemo 
+      name="list-box" 
+      controls={[
+        {
+          type: "enum",
+          name: "selectionMode",
+          options: ["none", "single", "multiple"],
+          defaultValue: "single",
+        },
+        {
+          type: "enum",
+          name: "orientation",
+          options: ["horizontal", "vertical"],
+          defaultValue: "vertical",
+        },
+      ]}
+    />
 
     ## API Reference
 

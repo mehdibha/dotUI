@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { ListBox, ListBoxItem } from "../index";
+import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 
 interface ListBoxPlaygroundProps {
   selectionMode?: "none" | "single" | "multiple";
@@ -26,18 +24,3 @@ export function ListBoxPlayground({
     </ListBox>
   );
 }
-
-export const listBoxControls: Control[] = [
-  {
-    type: "enum",
-    name: "selectionMode",
-    options: ["none", "single", "multiple"],
-    defaultValue: "single",
-  },
-  {
-    type: "enum",
-    name: "orientation",
-    options: ["horizontal", "vertical"],
-    defaultValue: "vertical",
-  },
-];

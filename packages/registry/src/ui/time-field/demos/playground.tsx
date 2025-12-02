@@ -2,9 +2,7 @@
 
 import { Label } from "@dotui/registry/ui/field";
 import { DateInput } from "@dotui/registry/ui/input";
-import type { Control } from "@dotui/registry/playground";
-
-import { TimeField } from "../index";
+import { TimeField } from "@dotui/registry/ui/time-field";
 
 interface TimeFieldPlaygroundProps {
   label?: string;
@@ -24,26 +22,3 @@ export function TimeFieldPlayground({
     </TimeField>
   );
 }
-
-export const timeFieldControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Time",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isInvalid",
-    defaultValue: false,
-  },
-];

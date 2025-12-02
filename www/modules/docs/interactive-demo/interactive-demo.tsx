@@ -1,60 +1,42 @@
 import { highlight } from "fumadocs-core/highlight";
-import type { ComponentType } from "react";
 
-import type { Control } from "@dotui/registry/playground";
+import type { ControlInput } from "@dotui/registry/playground";
 
-import { toCamelCase, toPascalCase } from "@/lib/utils";
 import { Pre } from "@/modules/docs/code-block";
 
 import { InteractiveDemoClient } from "./interactive-demo.client";
+import {
+  buildControlsFromReference,
+  enrichControlsWithReference,
+  loadComponent,
+} from "./loader";
 
 export interface InteractiveDemoProps {
   name: string;
+  /**
+   * Simplified control inputs. Can be:
+   * - A prop name string (e.g., "variant") - type, options, and defaults are inferred from API reference
+   * - An object with name and optional overrides (e.g., { name: "children", defaultValue: "Button" })
+   * - An object with name and type for custom controls (e.g., { name: "prefix", type: "icon" })
+   */
+  controls: ControlInput[];
   className?: string;
   fallback?: string;
 }
 
-/**
- * Loads a component and its controls from the playground file.
- * @param componentName - The name of the component (e.g., "alert", "button", "text-field")
- * @returns An object with the component and controls
- */
-async function loadPlaygroundComponent(componentName: string) {
-  const componentExportName = `${toPascalCase(componentName)}Playground`;
-  const controlsExportName = `${toCamelCase(componentName)}Controls`;
-
-  try {
-    const module = await import(
-      `@dotui/registry/ui/${componentName}/demos/playground`
-    );
-
-    const Component = module[componentExportName] as
-      | ComponentType<Record<string, unknown>>
-      | undefined;
-
-    if (!Component) {
-      throw new Error(
-        `Component ${componentExportName} not found in ${componentName}/demos/playground`,
-      );
-    }
-
-    const controls =
-      (module[controlsExportName] as Control[] | undefined) || [];
-
-    return { component: Component, controls };
-  } catch (error) {
-    throw new Error(
-      `Failed to load playground for component "${componentName}": ${error instanceof Error ? error.message : String(error)}`,
-    );
-  }
-}
-
 export async function InteractiveDemo({
   name,
+  controls: controlInputs,
   className,
   fallback = "",
 }: InteractiveDemoProps) {
-  const { component, controls } = await loadPlaygroundComponent(name);
+  const component = await loadComponent(name);
+
+  // Build controls from simplified inputs + API reference
+  const controls = await buildControlsFromReference(name, controlInputs);
+
+  // Enrich controls with descriptions, highlighted types, etc.
+  const enrichedControls = await enrichControlsWithReference(name, controls);
 
   const highlightedFallback = await highlight(fallback, {
     lang: "tsx",
@@ -66,7 +48,7 @@ export async function InteractiveDemo({
   return (
     <InteractiveDemoClient
       component={component}
-      controls={controls}
+      controls={enrichedControls}
       className={className}
       fallback={highlightedFallback}
     />

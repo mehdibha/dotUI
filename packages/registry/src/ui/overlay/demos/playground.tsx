@@ -10,9 +10,7 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
-import type { Control } from "@dotui/registry/playground";
-
-import { Overlay } from "../index";
+import { Overlay } from "@dotui/registry/ui/overlay";
 
 interface OverlayPlaygroundProps {
   type?: "modal" | "popover" | "drawer";
@@ -45,18 +43,3 @@ export function OverlayPlayground({
     </Dialog>
   );
 }
-
-export const overlayControls: Control[] = [
-  {
-    type: "enum",
-    name: "type",
-    options: ["modal", "popover", "drawer"],
-    defaultValue: "modal",
-  },
-  {
-    type: "enum",
-    name: "mobileType",
-    options: ["modal", "drawer"],
-    defaultValue: "drawer",
-  },
-];

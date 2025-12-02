@@ -37,7 +37,28 @@ wip: true
 
     Use the controls below to experiment with different progress bar props and see the live preview and code update.
 
-    <InteractiveDemo name="progress-bar" />
+    <InteractiveDemo 
+      name="progress-bar" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Loading...",
+        },
+        {
+          type: "number",
+          name: "value",
+          defaultValue: 60,
+          min: 0,
+          max: 100,
+        },
+        {
+          type: "boolean",
+          name: "isIndeterminate",
+          defaultValue: false,
+        },
+      ]}
+    />
 
     ## API Reference
 

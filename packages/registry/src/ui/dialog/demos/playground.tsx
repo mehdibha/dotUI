@@ -2,7 +2,6 @@
 
 import { Button } from "@dotui/registry/ui/button";
 import { Overlay } from "@dotui/registry/ui/overlay";
-import type { Control } from "@dotui/registry/playground";
 
 import {
   Dialog,
@@ -12,7 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogHeading,
-} from "../index";
+} from "@dotui/registry/ui/dialog";
 
 interface DialogPlaygroundProps {
   title?: string;
@@ -50,21 +49,3 @@ export function DialogPlayground({
     </Dialog>
   );
 }
-
-export const dialogControls: Control[] = [
-  {
-    type: "string",
-    name: "title",
-    defaultValue: "Dialog Title",
-  },
-  {
-    type: "string",
-    name: "description",
-    defaultValue: "This is a dialog description.",
-  },
-  {
-    type: "boolean",
-    name: "isDismissable",
-    defaultValue: true,
-  },
-];

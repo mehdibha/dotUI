@@ -39,7 +39,51 @@ wip: true
 
     Use the controls below to experiment with different TextField props and see the live preview and code update.
 
-    <InteractiveDemo name="text-field" />
+    <InteractiveDemo 
+      name="text-field" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Email",
+        },
+        {
+          type: "string",
+          name: "description",
+          defaultValue: "",
+          placeholder: "Helper text",
+        },
+        {
+          type: "string",
+          name: "errorMessage",
+          defaultValue: "",
+          placeholder: "Error text",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isReadOnly",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+        {
+          type: "icon",
+          name: "startIcon",
+        },
+        {
+          type: "icon",
+          name: "endIcon",
+        },
+      ]}
+    />
 
     ## API Reference
 

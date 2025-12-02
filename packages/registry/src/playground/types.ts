@@ -3,10 +3,21 @@
  * Controls define what props the user can modify in the playground.
  */
 
+export interface PropReference {
+  description?: string;
+  type: React.ReactNode;
+  /** Highlighted default value (ReactNode) */
+  default?: React.ReactNode;
+  /** Raw default value string (for display purposes) */
+  defaultRaw?: string;
+  required?: boolean;
+}
+
 export interface BaseControl {
   name: string;
   /** Always show this prop in code output, even if it equals the default value */
   alwaysShow?: boolean;
+  reference?: PropReference;
 }
 
 export interface BooleanControl extends BaseControl {
@@ -46,3 +57,12 @@ export type Control =
   | IconControl;
 
 export type ControlValues = Record<string, unknown>;
+
+/**
+ * Simplified control input for InteractiveDemo.
+ * Can be just a prop name (string) or a partial control definition with overrides.
+ * The system will infer type, options, and defaults from the API reference.
+ */
+export type ControlInput =
+  | string
+  | (Partial<Omit<Control, "name">> & { name: string });

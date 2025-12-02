@@ -1,6 +1,9 @@
 "use client";
 
-import { ColorSwatchPicker, ColorSwatchPickerItem } from "../index";
+import {
+  ColorSwatchPicker,
+  ColorSwatchPickerItem,
+} from "@dotui/registry/ui/color-swatch-picker";
 
 export function ColorSwatchPickerPlayground() {
   return (
@@ -14,5 +17,3 @@ export function ColorSwatchPickerPlayground() {
     </ColorSwatchPicker>
   );
 }
-
-export const colorSwatchPickerControls = [];

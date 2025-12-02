@@ -40,7 +40,31 @@ wip: true
 
     Use the controls below to experiment with different search field props and see the live preview and code update.
 
-    <InteractiveDemo name="search-field" />
+    <InteractiveDemo 
+      name="search-field" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Search",
+        },
+        {
+          type: "string",
+          name: "placeholder",
+          defaultValue: "Search...",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isReadOnly",
+          defaultValue: false,
+        },
+      ]}
+    />
 
     ## API Reference
 

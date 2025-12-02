@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { Breadcrumb, Breadcrumbs } from "../index";
+import { Breadcrumb, Breadcrumbs } from "@dotui/registry/ui/breadcrumbs";
 
 interface BreadcrumbsPlaygroundProps {
   isDisabled?: boolean;
@@ -19,11 +17,3 @@ export function BreadcrumbsPlayground({
     </Breadcrumbs>
   );
 }
-
-export const breadcrumbsControls: Control[] = [
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-];

@@ -59,7 +59,26 @@ wip: true
 
     Use the controls below to experiment with different dialog props and see the live preview and code update.
 
-    <InteractiveDemo name="dialog" />
+    <InteractiveDemo 
+      name="dialog" 
+      controls={[
+        {
+          type: "string",
+          name: "title",
+          defaultValue: "Dialog Title",
+        },
+        {
+          type: "string",
+          name: "description",
+          defaultValue: "This is a dialog description.",
+        },
+        {
+          type: "boolean",
+          name: "isDismissable",
+          defaultValue: true,
+        },
+      ]}
+    />
 
     ## API Reference
 

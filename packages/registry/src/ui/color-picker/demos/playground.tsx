@@ -1,8 +1,11 @@
 "use client";
 
 import { ColorEditor } from "@dotui/registry/ui/color-editor";
-
-import { ColorPicker, ColorPickerContent, ColorPickerTrigger } from "../index";
+import {
+  ColorPicker,
+  ColorPickerContent,
+  ColorPickerTrigger,
+} from "@dotui/registry/ui/color-picker";
 
 export function ColorPickerPlayground() {
   return (
@@ -14,5 +17,3 @@ export function ColorPickerPlayground() {
     </ColorPicker>
   );
 }
-
-export const colorPickerControls = [];

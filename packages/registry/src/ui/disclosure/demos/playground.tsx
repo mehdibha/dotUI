@@ -1,8 +1,10 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "../index";
+import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger,
+} from "@dotui/registry/ui/disclosure";
 
 interface DisclosurePlaygroundProps {
   isDisabled?: boolean;
@@ -23,16 +25,3 @@ export function DisclosurePlayground({
     </Disclosure>
   );
 }
-
-export const disclosureControls: Control[] = [
-  {
-    type: "boolean",
-    name: "defaultExpanded",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-];

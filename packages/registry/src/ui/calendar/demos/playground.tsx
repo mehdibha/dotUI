@@ -1,8 +1,6 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
-import { Calendar } from "../index";
+import { Calendar } from "@dotui/registry/ui/calendar";
 
 interface CalendarPlaygroundProps {
   isDisabled?: boolean;
@@ -22,19 +20,6 @@ export function CalendarPlayground({
   );
 }
 
-export const calendarControls: Control[] = [
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-];
-
 interface RangeCalendarPlaygroundProps {
   isDisabled?: boolean;
   isReadOnly?: boolean;
@@ -53,16 +38,3 @@ export function RangeCalendarPlayground({
     />
   );
 }
-
-export const rangeCalendarControls: Control[] = [
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-];

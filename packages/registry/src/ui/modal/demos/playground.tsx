@@ -10,9 +10,7 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
-import type { Control } from "@dotui/registry/playground";
-
-import { Modal } from "../index";
+import { Modal } from "@dotui/registry/ui/modal";
 
 interface ModalPlaygroundProps {
   isDismissable?: boolean;
@@ -44,11 +42,3 @@ export function ModalPlayground({
     </Dialog>
   );
 }
-
-export const modalControls: Control[] = [
-  {
-    type: "boolean",
-    name: "isDismissable",
-    defaultValue: true,
-  },
-];

@@ -1,7 +1,5 @@
 "use client";
 
-import type { Control } from "@dotui/registry/playground";
-
 import {
   Table,
   TableBody,
@@ -9,7 +7,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from "../index";
+} from "@dotui/registry/ui/table";
 
 interface TablePlaygroundProps {
   selectionMode?: "none" | "single" | "multiple";
@@ -45,12 +43,3 @@ export function TablePlayground({
     </Table>
   );
 }
-
-export const tableControls: Control[] = [
-  {
-    type: "enum",
-    name: "selectionMode",
-    options: ["none", "single", "multiple"],
-    defaultValue: "none",
-  },
-];

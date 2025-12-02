@@ -1,9 +1,8 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-import type { Control } from "@dotui/registry/playground";
 
-import { Slider, SliderControl } from "../index";
+import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
 interface SliderPlaygroundProps {
   label?: string;
@@ -22,22 +21,3 @@ export function SliderPlayground({
     </Slider>
   );
 }
-
-export const sliderControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Volume",
-  },
-  {
-    type: "enum",
-    name: "orientation",
-    options: ["horizontal", "vertical"],
-    defaultValue: "horizontal",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-];

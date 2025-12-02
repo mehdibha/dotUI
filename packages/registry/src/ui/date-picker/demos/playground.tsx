@@ -2,9 +2,11 @@
 
 import { Calendar } from "@dotui/registry/ui/calendar";
 import { Label } from "@dotui/registry/ui/field";
-import type { Control } from "@dotui/registry/playground";
-
-import { DatePicker, DatePickerContent, DatePickerInput } from "../index";
+import {
+  DatePicker,
+  DatePickerContent,
+  DatePickerInput,
+} from "@dotui/registry/ui/date-picker";
 
 interface DatePickerPlaygroundProps {
   label?: string;
@@ -27,21 +29,3 @@ export function DatePickerPlayground({
     </DatePicker>
   );
 }
-
-export const datePickerControls: Control[] = [
-  {
-    type: "string",
-    name: "label",
-    defaultValue: "Date",
-  },
-  {
-    type: "boolean",
-    name: "isDisabled",
-    defaultValue: false,
-  },
-  {
-    type: "boolean",
-    name: "isReadOnly",
-    defaultValue: false,
-  },
-];

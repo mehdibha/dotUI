@@ -10,9 +10,7 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
-import type { Control } from "@dotui/registry/playground";
-
-import { Drawer } from "../index";
+import { Drawer } from "@dotui/registry/ui/drawer";
 
 interface DrawerPlaygroundProps {
   placement?: "bottom" | "top" | "left" | "right";
@@ -41,12 +39,3 @@ export function DrawerPlayground({
     </Dialog>
   );
 }
-
-export const drawerControls: Control[] = [
-  {
-    type: "enum",
-    name: "placement",
-    options: ["bottom", "top", "left", "right"],
-    defaultValue: "bottom",
-  },
-];
