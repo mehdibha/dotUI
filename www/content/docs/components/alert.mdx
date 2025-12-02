@@ -7,11 +7,6 @@ links:
 wip: true
 ---
 
-import {
-  AlertPlayground,
-  alertControls,
-} from "@dotui/registry/ui/alert/playground";
-
 <PageTabs>
   <PageTabPanel id="overview">
 
@@ -43,11 +38,11 @@ import {
     Use the controls below to experiment with different alert props and see the live preview and code update.
 
     <InteractiveDemo
-    component={AlertPlayground} 
-    controls={alertControls} 
+    name="alert"
     fallback={`<Alert>
     <AlertTitle>Alert Title</AlertTitle>
     <AlertDescription>This is an alert description.</AlertDescription>
+
 </Alert>`} />
 
     ## API Reference
