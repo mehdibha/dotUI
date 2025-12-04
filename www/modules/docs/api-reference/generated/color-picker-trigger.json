@@ -474,14 +474,6 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the button is disabled."
-    },
     "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -489,38 +481,6 @@
         "type": "boolean"
       },
       "description": "Whether the element should receive focus on render."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "className": {
       "type": "string | (values: ButtonRenderProps) => string",
@@ -649,6 +609,22 @@
         ]
       },
       "description": "Indicates whether this element represents the current item within a container or set of related elements."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "aria-disabled": {
       "type": "boolean | \"true\" | \"false\"",
@@ -797,6 +773,22 @@
       },
       "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
     },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
     "aria-pressed": {
       "type": "boolean | \"true\" | \"false\" | \"mixed\"",
       "detailedType": "boolean | \"true\" | \"false\" | \"mixed\" | undefined",
@@ -839,6 +831,14 @@
         ]
       },
       "description": "Indicates the current \"pressed\" state of toggle buttons."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button is disabled."
     },
     "type": {
       "type": "\"button\" | \"submit\" | \"reset\"",
@@ -936,8 +936,8 @@
       "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
     },
     "variant": {
-      "type": "\"link\" | \"danger\" | \"warning\" | \"default\" | \"primary\" | \"quiet\"",
-      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"default\" | \"primary\" | \"quiet\" | undefined",
+      "type": "\"link\" | \"default\" | \"danger\" | \"warning\" | \"primary\" | \"quiet\"",
+      "detailedType": "\"link\" | \"default\" | \"danger\" | \"warning\" | \"primary\" | \"quiet\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -947,15 +947,15 @@
           },
           {
             "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
             "value": "danger"
           },
           {
             "type": "stringLiteral",
             "value": "warning"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "default"
           },
           {
             "type": "stringLiteral",

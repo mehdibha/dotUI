@@ -1,88 +1,7 @@
 {
-  "name": "ButtonProps",
-  "description": "A clickable element that triggers an action. Buttons communicate actions users can take\nand allow users to interact with the page.",
+  "name": "DisclosureTriggerProps",
+  "description": "A DisclosureTrigger provides the trigger for a disclosure.",
   "props": {
-    "variant": {
-      "type": "\"link\" | \"default\" | \"danger\" | \"warning\" | \"primary\" | \"quiet\"",
-      "detailedType": "\"link\" | \"default\" | \"danger\" | \"warning\" | \"primary\" | \"quiet\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "link"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "default"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "warning"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "primary"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "quiet"
-          }
-        ]
-      },
-      "description": "The visual style of the button (Vanilla CSS implementation specific).",
-      "default": "'default'"
-    },
-    "size": {
-      "type": "\"sm\" | \"md\" | \"lg\"",
-      "detailedType": "\"sm\" | \"md\" | \"lg\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "sm"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "md"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "lg"
-          }
-        ]
-      },
-      "description": "The size of the button.",
-      "default": "\"md\""
-    },
-    "aspect": {
-      "type": "\"default\" | \"square\" | \"auto\"",
-      "detailedType": "\"default\" | \"square\" | \"auto\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "default"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "square"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "auto"
-          }
-        ]
-      },
-      "description": "Controls the button's aspect ratio behavior.\n- `\"auto\"`: Automatically detects if the button contains only an icon and applies square aspect.\n- `\"square\"`: Forces square aspect ratio.\n- `\"default\"`: Standard button sizing with padding.",
-      "default": "\"auto\""
-    },
     "onPress": {
       "type": "((e: PressEvent) => void)",
       "detailedType": "((e: PressEvent) => void) | undefined",
@@ -1057,32 +976,6 @@
         ]
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-    }
-  },
-  "renderProps": {
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the button is currently hovered with a mouse."
-    },
-    "isPressed": {
-      "selector": "[data-pressed]",
-      "description": "Whether the button is currently in a pressed state."
-    },
-    "isFocused": {
-      "selector": "[data-focused]",
-      "description": "Whether the button is focused, either via a mouse or keyboard."
-    },
-    "isFocusVisible": {
-      "selector": "[data-focus-visible]",
-      "description": "Whether the button is keyboard focused."
-    },
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the button is disabled."
-    },
-    "isPending": {
-      "selector": "[data-pending]",
-      "description": "Whether the button is currently in a pending state."
     }
   },
   "typeLinks": {

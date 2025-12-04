@@ -22,6 +22,7 @@ import {
   UserIcon,
   XIcon,
 } from "lucide-react";
+import { ButtonContext } from "react-aria-components";
 
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
@@ -73,92 +74,41 @@ export const availableIcons: Record<string, LucideIcon> = {
   InfoIcon,
 };
 
-/**
- * Contextual help component for control labels.
- * Shows prop name, description, type, and default value.
- */
-interface ControlContextualHelpProps {
+function ContextualHelp({
+  name,
+  reference,
+}: {
   name: string;
   reference?: PropReference;
-}
-
-function ControlContextualHelp({ name, reference }: ControlContextualHelpProps) {
+}) {
   if (!reference) {
     return null;
   }
 
   return (
-    <Dialog>
-      <Button
-        size="sm"
-        variant="quiet"
-        className="size-6 [&_svg]:size-3"
-        aria-label={`Info about ${name}`}
-      >
-        <InfoIcon />
-      </Button>
-      <Popover placement="top">
-        <DialogContent className="max-w-72 space-y-3 text-sm">
-          {/* Prop name */}
-          <div className="font-mono text-xs font-medium text-fg">{name}</div>
+    <ButtonContext value={null}>
+      <Dialog>
+        <Button
+          size="sm"
+          variant="quiet"
+          className="size-6 [&_svg]:size-3"
+          aria-label={`Info about ${name}`}
+        >
+          <InfoIcon />
+        </Button>
+        <Popover placement="top" className="max-w-xs">
+          <DialogContent className="gap-2">
+            <h3 className="font-medium font-mono text-base">{name}</h3>
 
-          {/* Description */}
-          {reference.description && (
-            <p className="text-fg-muted leading-relaxed">
-              {reference.description}
-            </p>
-          )}
-
-          {/* Type and Default */}
-          <div className="space-y-1.5 border-t border-border pt-3">
-            {/* Type */}
-            <div className="flex items-start gap-2">
-              <span className="text-fg-muted text-xs shrink-0 w-12">Type</span>
-              <span className="font-mono text-xs break-all">
-                {reference.type}
-              </span>
-            </div>
-
-            {/* Default value */}
-            {reference.default && (
-              <div className="flex items-start gap-2">
-                <span className="text-fg-muted text-xs shrink-0 w-12">
-                  Default
-                </span>
-                <span className="font-mono text-xs">{reference.default}</span>
-              </div>
+            {reference.description && (
+              <p className="text-fg-muted text-sm">{reference.description}</p>
             )}
 
-            {/* Required indicator */}
-            {reference.required && (
-              <div className="flex items-center gap-2">
-                <span className="text-fg-muted text-xs shrink-0 w-12">
-                  Required
-                </span>
-                <span className="text-xs text-danger">Yes</span>
-              </div>
-            )}
-          </div>
-        </DialogContent>
-      </Popover>
-    </Dialog>
-  );
-}
-
-/**
- * Label with contextual help for controls.
- */
-interface ControlLabelProps {
-  name: string;
-  reference?: PropReference;
-}
-
-function ControlLabel({ name, reference }: ControlLabelProps) {
-  return (
-    <div className="flex items-center gap-1">
-      <Label>{name}</Label>
-      <ControlContextualHelp name={name} reference={reference} />
-    </div>
+            <div className="font-mono text-[0.8125rem]">{reference.type}</div>
+          </DialogContent>
+        </Popover>
+      </Dialog>
+    </ButtonContext>
   );
 }
 
@@ -223,6 +173,25 @@ export function ControlRenderer({
   }
 }
 
+// interface StringWithIconsControlRendererProps {
+//   control: StringWithIconsControl;
+//   value: string;
+//   onChange: (name: string, value: unknown) => void;
+// }
+
+// function StringWithIconsControlRenderer({
+//   control,
+//   value,
+//   onChange,
+// }: StringWithIconsControlRendererProps) {
+//   return (
+//     <TextField value={value} onChange={(val) => onChange(control.name, val)} className="w-full">
+//       <ControlLabel name={control.name} reference={control.reference} />
+//       <Input placeholder={control.placeholder} size="sm" />
+//     </TextField>
+//   );
+// }
+
 interface BooleanControlRendererProps {
   control: BooleanControl;
   value: boolean;
@@ -236,7 +205,10 @@ function BooleanControlRenderer({
 }: BooleanControlRendererProps) {
   return (
     <Field>
-      <ControlLabel name={control.name} reference={control.reference} />
+      <div className="flex items-center gap-1">
+        <Label>{control.name}</Label>
+        <ContextualHelp name={control.name} reference={control.reference} />
+      </div>
       <Switch
         isSelected={value}
         onChange={(selected) => onChange(control.name, selected)}
@@ -263,7 +235,10 @@ function StringControlRenderer({
       onChange={(val) => onChange(control.name, val)}
       className="w-full"
     >
-      <ControlLabel name={control.name} reference={control.reference} />
+      <div className="flex items-center gap-1">
+        <Label>{control.name}</Label>
+        <ContextualHelp name={control.name} reference={control.reference} />
+      </div>
       <Input placeholder={control.placeholder} size="sm" />
     </TextField>
   );
@@ -286,7 +261,10 @@ function NumberControlRenderer({
       onChange={(val) => onChange(control.name, Number(val) || 0)}
       className="w-full"
     >
-      <ControlLabel name={control.name} reference={control.reference} />
+      <div className="flex items-center gap-1">
+        <Label>{control.name}</Label>
+        <ContextualHelp name={control.name} reference={control.reference} />
+      </div>
       <Input
         type="number"
         min={control.min}
@@ -311,7 +289,10 @@ function EnumControlRenderer({
 }: EnumControlRendererProps) {
   return (
     <Select value={value} onChange={(key) => onChange(control.name, key)}>
-      <ControlLabel name={control.name} reference={control.reference} />
+      <div className="flex items-center gap-1">
+        <Label>{control.name}</Label>
+        <ContextualHelp name={control.name} reference={control.reference} />
+      </div>
       <SelectTrigger size="sm" />
       <SelectContent>
         {control.options.map((option) => (
@@ -345,7 +326,10 @@ function IconControlRenderer({
       }
       className="w-full"
     >
-      <ControlLabel name={control.name} reference={control.reference} />
+      <div className="flex items-center gap-1">
+        <Label>{control.name}</Label>
+        <ContextualHelp name={control.name} reference={control.reference} />
+      </div>
       <SelectTrigger />
       <SelectContent>
         <SelectItem id="__none__" textValue="None">

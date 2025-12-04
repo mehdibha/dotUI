@@ -259,6 +259,14 @@
       },
       "description": "Values that should invalidate the item cache when using dynamic collections."
     },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An accessibility label for the section."
+    },
     "items": {
       "type": "Iterable<T>",
       "detailedType": "Iterable<T> | undefined",
@@ -293,14 +301,6 @@
         ]
       },
       "description": "Item objects in the section."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "An accessibility label for the section."
     },
     "className": {
       "type": "string",
@@ -1038,9 +1038,9 @@
           "optional": false,
           "description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
         },
-        "__@toStringTag@656": {
+        "__@toStringTag@633": {
           "type": "property",
-          "name": "__@toStringTag@656",
+          "name": "__@toStringTag@633",
           "value": {
             "type": "string"
           },

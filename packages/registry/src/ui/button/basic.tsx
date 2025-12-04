@@ -18,6 +18,8 @@ const buttonStyles = tv({
   base: [
     "relative box-border inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm leading-normal transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
     "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
+    // svg
+    "[&_svg]:pointer-events-none [&_svg]:not-with-[size]:size-4 [&_svg]:shrink-0",
     // focus state
     "focus-reset focus-visible:focus-ring",
     // disabled state
@@ -39,9 +41,9 @@ const buttonStyles = tv({
         "bg-danger pressed:bg-danger-active text-fg-on-danger hover:bg-danger-hover",
     },
     size: {
-      sm: "h-8 px-3 data-icon-only:not-with-[size]:not-with-[w]:w-8 [&_svg]:size-4",
-      md: "h-9 px-4 data-icon-only:not-with-[size]:not-with-[w]:w-9 [&_svg]:size-4",
-      lg: "h-10 px-5 data-icon-only:not-with-[size]:not-with-[w]:w-10 [&_svg]:size-5",
+      sm: "h-8 px-3 has-[>svg]:px-2.5 data-icon-only:not-with-[size]:not-with-[w]:w-8",
+      md: "h-9 px-4 has-[>svg]:px-3 data-icon-only:not-with-[size]:not-with-[w]:w-9",
+      lg: "h-10 px-5 has-[>svg]:px-4 data-icon-only:not-with-[size]:not-with-[w]:w-10",
     },
   },
   defaultVariants: {
@@ -81,7 +83,6 @@ const Button = (localProps: ButtonProps) => {
 
   return (
     <AriaButton
-      data-slot="button"
       data-button=""
       data-icon-only={isIconOnly || undefined}
       className={composeRenderProps(className, (cn) =>

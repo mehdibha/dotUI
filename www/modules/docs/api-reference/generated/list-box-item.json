@@ -3,18 +3,18 @@
   "description": "A ListBoxItem represents an individual option in a ListBox.",
   "props": {
     "variant": {
-      "type": "\"danger\" | \"warning\" | \"success\" | \"default\"",
-      "detailedType": "\"danger\" | \"warning\" | \"success\" | \"default\" | undefined",
+      "type": "\"default\" | \"danger\" | \"success\" | \"warning\"",
+      "detailedType": "\"default\" | \"danger\" | \"success\" | \"warning\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "danger"
+            "value": "default"
           },
           {
             "type": "stringLiteral",
-            "value": "warning"
+            "value": "danger"
           },
           {
             "type": "stringLiteral",
@@ -22,7 +22,7 @@
           },
           {
             "type": "stringLiteral",
-            "value": "default"
+            "value": "warning"
           }
         ]
       },

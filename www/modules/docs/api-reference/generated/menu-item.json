@@ -3,18 +3,18 @@
   "description": "A MenuItem represents an individual action in a Menu.",
   "props": {
     "variant": {
-      "type": "\"danger\" | \"warning\" | \"success\" | \"default\" | \"accent\"",
-      "detailedType": "\"danger\" | \"warning\" | \"success\" | \"default\" | \"accent\" | undefined",
+      "type": "\"default\" | \"danger\" | \"success\" | \"warning\" | \"accent\"",
+      "detailedType": "\"default\" | \"danger\" | \"success\" | \"warning\" | \"accent\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "danger"
+            "value": "default"
           },
           {
             "type": "stringLiteral",
-            "value": "warning"
+            "value": "danger"
           },
           {
             "type": "stringLiteral",
@@ -22,7 +22,7 @@
           },
           {
             "type": "stringLiteral",
-            "value": "default"
+            "value": "warning"
           },
           {
             "type": "stringLiteral",

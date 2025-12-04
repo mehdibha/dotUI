@@ -17,7 +17,11 @@ export default function Demo() {
       <Button onPress={() => setExpanded(!isExpanded)}>
         {isExpanded ? "Collapse" : "Expand"}
       </Button>
-      <Disclosure isExpanded={isExpanded} onExpandedChange={setExpanded}>
+      <Disclosure
+        isExpanded={isExpanded}
+        onExpandedChange={setExpanded}
+        className="max-w-xs"
+      >
         <DisclosureTrigger>Controlled disclosure</DisclosureTrigger>
         <DisclosurePanel>
           This disclosure is controlled externally. You can toggle it using the

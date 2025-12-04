@@ -715,9 +715,9 @@
           "optional": false,
           "description": "Iterates over values in the set."
         },
-        "__@toStringTag@656": {
+        "__@toStringTag@633": {
           "type": "property",
-          "name": "__@toStringTag@656",
+          "name": "__@toStringTag@633",
           "value": {
             "type": "string"
           },

@@ -412,13 +412,14 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "referrerPolicy": {
+      "type": "HTMLAttributeReferrerPolicy",
+      "detailedType": "HTMLAttributeReferrerPolicy | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "identifier",
+        "name": "HTMLAttributeReferrerPolicy"
       },
-      "description": "Whether the link is disabled."
+      "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
     },
     "autoFocus": {
       "type": "boolean",
@@ -427,6 +428,54 @@
         "type": "boolean"
       },
       "description": "Whether the element should receive focus on render."
+    },
+    "rel": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the link is disabled."
     },
     "href": {
       "type": "string",
@@ -452,14 +501,6 @@
         "name": "HTMLAttributeAnchorTarget"
       },
       "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
-    },
-    "rel": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
     },
     "download": {
       "type": "string | boolean",
@@ -488,53 +529,12 @@
       },
       "description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
     },
-    "referrerPolicy": {
-      "type": "HTMLAttributeReferrerPolicy",
-      "detailedType": "HTMLAttributeReferrerPolicy | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "HTMLAttributeReferrerPolicy"
-      },
-      "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
-    },
     "routerOptions": {
       "type": "undefined",
       "typeAst": {
         "type": "undefined"
       },
       "description": "Options for the configured client side router."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
     "children": {
       "type": "ReactNode | (values: LinkRenderProps) => ReactNode",

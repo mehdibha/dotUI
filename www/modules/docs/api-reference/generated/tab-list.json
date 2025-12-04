@@ -1083,9 +1083,9 @@
           "optional": false,
           "description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
         },
-        "__@toStringTag@656": {
+        "__@toStringTag@633": {
           "type": "property",
-          "name": "__@toStringTag@656",
+          "name": "__@toStringTag@633",
           "value": {
             "type": "string"
           },

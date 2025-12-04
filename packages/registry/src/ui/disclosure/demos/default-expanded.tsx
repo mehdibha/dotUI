@@ -6,7 +6,7 @@ import {
 
 export default function Demo() {
   return (
-    <Disclosure defaultExpanded>
+    <Disclosure defaultExpanded className="max-w-xs">
       <DisclosureTrigger>Expanded by default</DisclosureTrigger>
       <DisclosurePanel>
         <p className="pb-3">

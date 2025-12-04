@@ -167,13 +167,13 @@
       },
       "description": "Handler that is called when a key is released."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "defaultValue": {
+      "type": "number",
+      "detailedType": "number | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "number"
       },
-      "description": "Whether the input is disabled."
+      "description": "The default value (uncontrolled)."
     },
     "autoFocus": {
       "type": "boolean",
@@ -183,21 +183,13 @@
       },
       "description": "Whether the element should receive focus on render."
     },
-    "aria-label": {
+    "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "aria-describedby": {
       "type": "string",
@@ -215,21 +207,21 @@
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
     },
-    "defaultValue": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The default value (uncontrolled)."
-    },
-    "id": {
+    "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
     },
     "onCopy": {
       "type": "ClipboardEventHandler<HTMLInputElement>",
@@ -498,6 +490,14 @@
         ]
       },
       "description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the input is disabled."
     },
     "value": {
       "type": "number",
