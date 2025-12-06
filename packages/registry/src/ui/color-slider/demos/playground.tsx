@@ -1,10 +1,10 @@
 "use client";
 
-import { Label } from "@dotui/registry/ui/field";
 import {
   ColorSlider,
   ColorSliderControl,
 } from "@dotui/registry/ui/color-slider";
+import { Label } from "@dotui/registry/ui/field";
 
 interface ColorSliderPlaygroundProps {
   channel?: "hue" | "saturation" | "lightness" | "alpha";

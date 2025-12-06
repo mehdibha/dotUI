@@ -1,9 +1,8 @@
 "use client";
 
 import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
-import { FieldGroup, Label } from "@dotui/registry/ui/field";
-
 import { CheckboxGroup } from "@dotui/registry/ui/checkbox-group";
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
 
 interface CheckboxGroupPlaygroundProps {
   label?: string;

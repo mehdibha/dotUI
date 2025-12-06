@@ -1,7 +1,6 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-
 import {
   ProgressBar,
   ProgressBarControl,

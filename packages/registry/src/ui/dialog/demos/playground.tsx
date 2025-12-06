@@ -1,8 +1,6 @@
 "use client";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Overlay } from "@dotui/registry/ui/overlay";
-
 import {
   Dialog,
   DialogBody,
@@ -12,6 +10,7 @@ import {
   DialogHeader,
   DialogHeading,
 } from "@dotui/registry/ui/dialog";
+import { Overlay } from "@dotui/registry/ui/overlay";
 
 interface DialogPlaygroundProps {
   title?: string;

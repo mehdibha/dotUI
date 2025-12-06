@@ -2,7 +2,6 @@
 
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
-
 import { SearchField } from "@dotui/registry/ui/search-field";
 
 interface SearchFieldPlaygroundProps {

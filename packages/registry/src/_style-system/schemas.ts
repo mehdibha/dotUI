@@ -27,6 +27,7 @@ import { commandVariants } from "@dotui/registry/ui/command/meta";
 import { dateFieldVariants } from "@dotui/registry/ui/date-field/meta";
 import { datePickerVariants } from "@dotui/registry/ui/date-picker/meta";
 import { dialogVariants } from "@dotui/registry/ui/dialog/meta";
+import { disclosureVariants } from "@dotui/registry/ui/disclosure/meta";
 import { drawerVariants } from "@dotui/registry/ui/drawer/meta";
 import { dropZoneVariants } from "@dotui/registry/ui/drop-zone/meta";
 import { emptyVariants } from "@dotui/registry/ui/empty/meta";
@@ -62,7 +63,6 @@ import { toastVariants } from "@dotui/registry/ui/toast/meta";
 import { toggleButtonVariants } from "@dotui/registry/ui/toggle-button/meta";
 import { toggleButtonGroupVariants } from "@dotui/registry/ui/toggle-button-group/meta";
 import { tooltipVariants } from "@dotui/registry/ui/tooltip/meta";
-import { disclosureVariants } from "@dotui/registry/ui/disclosure/meta";
 
 // ---------------------------------  Definitions  ----------------------------------- //
 

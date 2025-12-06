@@ -1,8 +1,7 @@
 "use client";
 
-import { Label } from "@dotui/registry/ui/field";
-
 import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
+import { Label } from "@dotui/registry/ui/field";
 
 interface CheckboxPlaygroundProps {
   label?: string;

@@ -1,8 +1,8 @@
 "use client";
 
+import { ColorField } from "@dotui/registry/ui/color-field";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
-import { ColorField } from "@dotui/registry/ui/color-field";
 
 interface ColorFieldPlaygroundProps {
   label?: string;

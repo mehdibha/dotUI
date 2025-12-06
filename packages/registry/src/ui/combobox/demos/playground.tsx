@@ -1,13 +1,12 @@
 "use client";
 
-import { Label } from "@dotui/registry/ui/field";
-
 import {
   Combobox,
   ComboboxContent,
   ComboboxInput,
   ComboboxItem,
 } from "@dotui/registry/ui/combobox";
+import { Label } from "@dotui/registry/ui/field";
 
 interface ComboboxPlaygroundProps {
   label?: string;

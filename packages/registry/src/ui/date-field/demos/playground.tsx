@@ -1,8 +1,8 @@
 "use client";
 
+import { DateField } from "@dotui/registry/ui/date-field";
 import { Label } from "@dotui/registry/ui/field";
 import { DateInput } from "@dotui/registry/ui/input";
-import { DateField } from "@dotui/registry/ui/date-field";
 
 interface DateFieldPlaygroundProps {
   label?: string;

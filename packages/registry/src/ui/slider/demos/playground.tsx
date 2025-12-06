@@ -1,7 +1,6 @@
 "use client";
 
 import { Label } from "@dotui/registry/ui/field";
-
 import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
 interface SliderPlaygroundProps {

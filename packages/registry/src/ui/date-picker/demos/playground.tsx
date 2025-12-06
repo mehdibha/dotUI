@@ -1,12 +1,12 @@
 "use client";
 
 import { Calendar } from "@dotui/registry/ui/calendar";
-import { Label } from "@dotui/registry/ui/field";
 import {
   DatePicker,
   DatePickerContent,
   DatePickerInput,
 } from "@dotui/registry/ui/date-picker";
+import { Label } from "@dotui/registry/ui/field";
 
 interface DatePickerPlaygroundProps {
   label?: string;

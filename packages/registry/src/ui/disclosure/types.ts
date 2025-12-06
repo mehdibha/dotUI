@@ -17,10 +17,8 @@ export interface DisclosureProps
 export interface DisclosurePanelProps
   extends React.ComponentProps<typeof AriaDisclosurePanel> {}
 
-  /**
+/**
  * A DisclosureTrigger provides the trigger for a disclosure.
  */
 export interface DisclosureTriggerProps
   extends React.ComponentProps<typeof AriaButton> {}
-
-
