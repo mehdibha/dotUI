@@ -14,9 +14,16 @@ const baseUrl =
       ? `https://${env.VERCEL_URL}`
       : "http://localhost:4444";
 
+const productionUrl =
+  env.VERCEL_GIT_COMMIT_REF === "update-components"
+    ? "https://beta.dotui.org"
+    : env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "https://dotui.org";
+
 export const auth = initAuth({
   baseUrl,
-  productionUrl: `https://${env.VERCEL_PROJECT_PRODUCTION_URL ?? "dotui.org"}`,
+  productionUrl,
   secret: env.AUTH_SECRET,
   githubClientId: env.GITHUB_CLIENT_ID,
   githubClientSecret: env.GITHUB_CLIENT_SECRET,
