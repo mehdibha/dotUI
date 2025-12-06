@@ -4,7 +4,6 @@ import {
   DisclosureTrigger,
 } from "@dotui/registry/ui/disclosure";
 
-
 export default function Demo() {
   return (
     <Disclosure className="max-w-xs">
