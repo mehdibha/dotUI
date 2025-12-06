@@ -57,6 +57,7 @@ export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
 
 export const DEFAULT_VARIANTS: Variants = {
   accordion: "basic",
+  disclosure: "basic",
   alert: "basic",
 
   avatar: "basic",

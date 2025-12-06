@@ -1,25 +1,25 @@
+import { Accordion } from "@dotui/registry/ui/accordion";
 import {
-  Accordion,
-  AccordionHeading,
-  AccordionItem,
-  AccordionPanel,
-} from "@dotui/registry/ui/accordion";
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger,
+} from "@dotui/registry/ui/disclosure";
 
 export default function Page() {
   return (
     <Accordion className="w-72" defaultExpandedKeys={["react"]}>
-      <AccordionItem id="react">
-        <AccordionHeading>What is React?</AccordionHeading>
-        <AccordionPanel>
+      <Disclosure id="react">
+        <DisclosureTrigger>What is React?</DisclosureTrigger>
+        <DisclosurePanel>
           React is a JavaScript library for building user interfaces.
-        </AccordionPanel>
-      </AccordionItem>
-      <AccordionItem id="nextjs">
-        <AccordionHeading>What is Next.js?</AccordionHeading>
-        <AccordionPanel>
+        </DisclosurePanel>
+      </Disclosure>
+      <Disclosure id="nextjs">
+        <DisclosureTrigger>What is Next.js?</DisclosureTrigger>
+        <DisclosurePanel>
           Next.js is a React framework for production applications.
-        </AccordionPanel>
-      </AccordionItem>
+        </DisclosurePanel>
+      </Disclosure>
     </Accordion>
   );
 }
