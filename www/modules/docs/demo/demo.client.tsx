@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import { cn } from "@dotui/registry/lib/utils";
-
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
 
 import { DemoCodeBlock } from "./demo-code-block";
