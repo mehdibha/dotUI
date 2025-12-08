@@ -16,7 +16,7 @@ const disclosureStyles = tv({
     heading: "flex",
     button: [
       "focus-reset focus-visible:focus-ring",
-      "flex flex-1 cursor-interactive items-start justify-between gap-4 rounded-md py-2 text-left font-medium text-sm transition-shadow disabled:pointer-events-none",
+      "flex flex-1 cursor-interactive items-start justify-between gap-4 rounded-md py-3 text-left font-medium text-sm transition-shadow disabled:pointer-events-none",
     ],
     panel:
       "h-(--disclosure-panel-height) overflow-clip text-fg-muted text-sm opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
@@ -50,7 +50,9 @@ function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
       data-disclosure-panel=""
       className={composeRenderProps(className, (c) => panel({ className: c }))}
       {...props}
-    />
+    >
+      <div className="pb-3">{props.children}</div>
+    </AriaDisclosurePanel>
   );
 }
 

@@ -7,7 +7,7 @@ import {
 import { tv } from "tailwind-variants";
 
 const accordionStyles = tv({
-  base: "**:data-disclosure-trigger:not-last:border-b",
+  base: "**:data-disclosure:not-last:border-b",
 });
 
 interface AccordionProps
@@ -15,7 +15,7 @@ interface AccordionProps
 function Accordion({ className, ...props }: AccordionProps) {
   return (
     <AriaDisclosureGroup
-      data-slot="disclosure-group"
+      data-accordion=""
       className={composeRenderProps(className, (c) =>
         accordionStyles({ className: c }),
       )}
