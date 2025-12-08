@@ -62,12 +62,6 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
               }
             ]
           }
@@ -154,22 +148,13 @@
       "description": "The type of selection that is allowed in the collection."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -182,12 +167,15 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
               {
-                "type": "any"
-              },
-              {
-                "type": "any"
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -196,22 +184,13 @@
       "description": "The currently selected keys in the collection (controlled)."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -224,12 +203,15 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
               {
-                "type": "any"
-              },
-              {
-                "type": "any"
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -372,9 +354,6 @@
                 {
                   "type": "identifier",
                   "name": "Key"
-                },
-                {
-                  "type": "any"
                 }
               ]
             },
@@ -463,9 +442,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -480,12 +459,6 @@
                 {
                   "type": "identifier",
                   "name": "Key"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
                 }
               ]
             },
@@ -777,9 +750,9 @@
           "optional": false,
           "description": "Returns an iterable of values in the set."
         },
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -802,9 +775,9 @@
           "optional": false,
           "description": "Iterates over values in the set."
         },
-        "__@toStringTag@633": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@633",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },

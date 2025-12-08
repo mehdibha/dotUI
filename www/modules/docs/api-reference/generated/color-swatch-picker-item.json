@@ -152,10 +152,6 @@
                     {
                       "type": "identifier",
                       "name": "FocusableElement"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "MouseEvent"
                     }
                   ]
                 },

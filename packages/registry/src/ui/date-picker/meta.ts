@@ -12,13 +12,7 @@ const datePickerMeta = {
           target: "ui/date-picker.tsx",
         },
       ],
-      registryDependencies: [
-        "button",
-        "calendar",
-        "field",
-        "input",
-        "dialog",
-      ],
+      registryDependencies: ["button", "calendar", "field", "input", "dialog"],
     },
   },
 } satisfies RegistryItem;

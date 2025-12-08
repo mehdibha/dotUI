@@ -63,6 +63,7 @@ const ModalOverlay = ({
 interface ModalContentProps extends React.ComponentProps<typeof AriaModal> {}
 const ModalContent = ({ children, className, ...props }: ModalContentProps) => (
   <AriaModal
+    data-modal=""
     className={composeRenderProps(className, (className) =>
       modal({ className }),
     )}

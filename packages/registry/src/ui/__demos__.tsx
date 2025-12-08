@@ -39,18 +39,6 @@ export const Index: Record<
       () => import("@dotui/registry/ui/accordion/demos/disabled"),
     ),
   },
-  "accordion/demos/nested": {
-    files: ["ui/accordion/demos/nested.tsx"],
-    component: React.lazy(
-      () => import("@dotui/registry/ui/accordion/demos/nested"),
-    ),
-  },
-  "accordion/demos/with-icon": {
-    files: ["ui/accordion/demos/with-icon.tsx"],
-    component: React.lazy(
-      () => import("@dotui/registry/ui/accordion/demos/with-icon"),
-    ),
-  },
   "alert/demos/action": {
     files: ["ui/alert/demos/action.tsx"],
     component: React.lazy(

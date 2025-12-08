@@ -152,10 +152,6 @@
                     {
                       "type": "identifier",
                       "name": "FocusableElement"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "MouseEvent"
                     }
                   ]
                 },
@@ -188,21 +184,8 @@
                 "type": "parameter",
                 "name": "e",
                 "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "FocusEvent"
                 },
                 "optional": false,
                 "rest": false
@@ -233,21 +216,8 @@
                 "type": "parameter",
                 "name": "e",
                 "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "FocusEvent"
                 },
                 "optional": false,
                 "rest": false
@@ -936,18 +906,14 @@
       "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
     },
     "variant": {
-      "type": "\"link\" | \"default\" | \"danger\" | \"warning\" | \"primary\" | \"quiet\"",
-      "detailedType": "\"link\" | \"default\" | \"danger\" | \"warning\" | \"primary\" | \"quiet\" | undefined",
+      "type": "\"link\" | \"danger\" | \"warning\" | \"primary\" | \"default\" | \"quiet\"",
+      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"primary\" | \"default\" | \"quiet\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
             "value": "link"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "default"
           },
           {
             "type": "stringLiteral",
@@ -960,6 +926,10 @@
           {
             "type": "stringLiteral",
             "value": "primary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
           },
           {
             "type": "stringLiteral",

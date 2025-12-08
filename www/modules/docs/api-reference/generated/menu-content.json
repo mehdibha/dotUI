@@ -114,96 +114,8 @@
             "type": "bigint"
           },
           {
-            "type": "application",
-            "base": {
-              "type": "identifier",
-              "name": "ReactElement"
-            },
-            "typeParameters": [
-              {
-                "type": "unknown"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "function",
-                    "parameters": [
-                      {
-                        "type": "parameter",
-                        "name": "props",
-                        "value": {
-                          "type": "any"
-                        },
-                        "optional": false,
-                        "rest": false
-                      }
-                    ],
-                    "return": {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "undefined"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "null"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "string"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "number"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "bigint"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "false"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "true"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "Iterable<ReactNode>"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "ReactPortal"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "Promise<AwaitedReactNode>"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "Promise<ReactNode>"
-                        }
-                      ]
-                    },
-                    "typeParameters": []
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "new (props: any, context: any) => Component<any, any, any>"
-                  }
-                ]
-              }
-            ]
+            "type": "identifier",
+            "name": "ReactElement"
           },
           {
             "type": "application",
@@ -216,12 +128,6 @@
               {
                 "type": "identifier",
                 "name": "ReactNode"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
               }
             ]
           },
@@ -292,12 +198,6 @@
                 "name": "T",
                 "constraint": null,
                 "default": null
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
               }
             ]
           }
@@ -325,12 +225,6 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
               }
             ]
           }
@@ -356,22 +250,13 @@
       "description": "Whether the collection allows empty selection."
     },
     "selectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -384,12 +269,15 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
               {
-                "type": "any"
-              },
-              {
-                "type": "any"
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -398,22 +286,13 @@
       "description": "The currently selected keys in the collection (controlled)."
     },
     "defaultSelectedKeys": {
-      "type": "\"all\" | Iterable<Key>",
-      "detailedType": "\"all\" | Iterable<Key> | undefined",
+      "type": "Iterable<Key> | \"all\"",
+      "detailedType": "Iterable<Key> | \"all\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "all"
-              }
-            ]
           },
           {
             "type": "application",
@@ -426,12 +305,15 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
+              }
+            ]
+          },
+          {
+            "type": "union",
+            "elements": [
               {
-                "type": "any"
-              },
-              {
-                "type": "any"
+                "type": "stringLiteral",
+                "value": "all"
               }
             ]
           }
@@ -700,9 +582,6 @@
                 {
                   "type": "identifier",
                   "name": "Key"
-                },
-                {
-                  "type": "any"
                 }
               ]
             },
@@ -791,9 +670,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -808,12 +687,6 @@
                 {
                   "type": "identifier",
                   "name": "Key"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
                 }
               ]
             },
@@ -832,48 +705,8 @@
       "name": "ReactPortal",
       "extends": [
         {
-          "type": "application",
-          "base": {
-            "type": "identifier",
-            "name": "ReactElement"
-          },
-          "typeParameters": [
-            {
-              "type": "unknown"
-            },
-            {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "function",
-                  "parameters": [
-                    {
-                      "type": "parameter",
-                      "name": "props",
-                      "value": {
-                        "type": "identifier",
-                        "name": "any"
-                      },
-                      "optional": false,
-                      "rest": false
-                    }
-                  ],
-                  "return": {
-                    "type": "identifier",
-                    "name": "ReactNode | Promise<ReactNode>"
-                  },
-                  "typeParameters": []
-                },
-                {
-                  "type": "identifier",
-                  "name": "new (props: any, context: any) => Component<any, any, any>"
-                }
-              ]
-            }
-          ]
+          "type": "identifier",
+          "name": "ReactElement"
         }
       ],
       "properties": {
@@ -1254,21 +1087,8 @@
                       "name": "ReactPortal"
                     },
                     {
-                      "type": "application",
-                      "base": {
-                        "type": "identifier",
-                        "name": "ReactElement"
-                      },
-                      "typeParameters": [
-                        {
-                          "type": "identifier",
-                          "name": "unknown"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "string | JSXElementConstructor<any>"
-                        }
-                      ]
+                      "type": "identifier",
+                      "name": "ReactElement"
                     },
                     {
                       "type": "application",
@@ -1281,14 +1101,6 @@
                         {
                           "type": "identifier",
                           "name": "ReactNode"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "any"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "any"
                         }
                       ]
                     },
@@ -1370,9 +1182,9 @@
           "optional": false,
           "description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
         },
-        "__@toStringTag@633": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@633",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },

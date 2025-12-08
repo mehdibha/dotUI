@@ -3,18 +3,14 @@
   "description": "A clickable element that triggers an action. Buttons communicate actions users can take\nand allow users to interact with the page.",
   "props": {
     "variant": {
-      "type": "\"link\" | \"default\" | \"danger\" | \"warning\" | \"primary\" | \"quiet\"",
-      "detailedType": "\"link\" | \"default\" | \"danger\" | \"warning\" | \"primary\" | \"quiet\" | undefined",
+      "type": "\"link\" | \"danger\" | \"warning\" | \"primary\" | \"default\" | \"quiet\"",
+      "detailedType": "\"link\" | \"danger\" | \"warning\" | \"primary\" | \"default\" | \"quiet\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
             "value": "link"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "default"
           },
           {
             "type": "stringLiteral",
@@ -27,6 +23,10 @@
           {
             "type": "stringLiteral",
             "value": "primary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
           },
           {
             "type": "stringLiteral",
@@ -233,10 +233,6 @@
                     {
                       "type": "identifier",
                       "name": "FocusableElement"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "MouseEvent"
                     }
                   ]
                 },
@@ -269,21 +265,8 @@
                 "type": "parameter",
                 "name": "e",
                 "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "FocusEvent"
                 },
                 "optional": false,
                 "rest": false
@@ -314,21 +297,8 @@
                 "type": "parameter",
                 "name": "e",
                 "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "FocusEvent"
                 },
                 "optional": false,
                 "rest": false

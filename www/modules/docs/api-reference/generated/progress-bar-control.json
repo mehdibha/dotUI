@@ -4,8 +4,8 @@
   "extendsElement": "div",
   "props": {
     "variant": {
-      "type": "\"danger\" | \"success\" | \"warning\" | \"primary\" | \"accent\"",
-      "detailedType": "\"danger\" | \"success\" | \"warning\" | \"primary\" | \"accent\" | undefined",
+      "type": "\"danger\" | \"warning\" | \"success\" | \"primary\" | \"accent\"",
+      "detailedType": "\"danger\" | \"warning\" | \"success\" | \"primary\" | \"accent\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -15,11 +15,11 @@
           },
           {
             "type": "stringLiteral",
-            "value": "success"
+            "value": "warning"
           },
           {
             "type": "stringLiteral",
-            "value": "warning"
+            "value": "success"
           },
           {
             "type": "stringLiteral",

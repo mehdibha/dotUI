@@ -4,18 +4,18 @@
   "extendsElement": "div",
   "props": {
     "variant": {
-      "type": "\"danger\" | \"success\" | \"warning\" | \"info\" | \"neutral\"",
-      "detailedType": "\"danger\" | \"success\" | \"warning\" | \"info\" | \"neutral\" | undefined",
+      "type": "\"neutral\" | \"danger\" | \"warning\" | \"info\" | \"success\"",
+      "detailedType": "\"neutral\" | \"danger\" | \"warning\" | \"info\" | \"success\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "danger"
+            "value": "neutral"
           },
           {
             "type": "stringLiteral",
-            "value": "success"
+            "value": "danger"
           },
           {
             "type": "stringLiteral",
@@ -27,7 +27,7 @@
           },
           {
             "type": "stringLiteral",
-            "value": "neutral"
+            "value": "success"
           }
         ]
       },

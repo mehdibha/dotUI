@@ -18,21 +18,8 @@
                 "type": "parameter",
                 "name": "e",
                 "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "FocusEvent"
                 },
                 "optional": false,
                 "rest": false
@@ -63,21 +50,8 @@
                 "type": "parameter",
                 "name": "e",
                 "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "FocusEvent"
                 },
                 "optional": false,
                 "rest": false
@@ -5390,6 +5364,10 @@
                       },
                       {
                         "type": "identifier",
+                        "name": "\"map\""
+                      },
+                      {
+                        "type": "identifier",
                         "name": "\"div\""
                       },
                       {
@@ -5627,10 +5605,6 @@
                       {
                         "type": "identifier",
                         "name": "\"main\""
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "\"map\""
                       },
                       {
                         "type": "identifier",
@@ -5872,6 +5846,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "object"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "map"
                         }
                       ]
                     },
@@ -6412,15 +6395,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "main"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "map"
                         }
                       ]
                     },
@@ -7170,6 +7144,10 @@
                       },
                       {
                         "type": "identifier",
+                        "name": "\"map\""
+                      },
+                      {
+                        "type": "identifier",
                         "name": "\"div\""
                       },
                       {
@@ -7407,10 +7385,6 @@
                       {
                         "type": "identifier",
                         "name": "\"main\""
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "\"map\""
                       },
                       {
                         "type": "identifier",
@@ -7654,6 +7628,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "object"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "map"
                         }
                       ]
                     },
@@ -8194,15 +8177,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "main"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "map"
                         }
                       ]
                     },
@@ -11985,6 +11959,10 @@
                       },
                       {
                         "type": "identifier",
+                        "name": "\"map\""
+                      },
+                      {
+                        "type": "identifier",
                         "name": "\"div\""
                       },
                       {
@@ -12222,10 +12200,6 @@
                       {
                         "type": "identifier",
                         "name": "\"main\""
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "\"map\""
                       },
                       {
                         "type": "identifier",
@@ -12467,6 +12441,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "object"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "map"
                         }
                       ]
                     },
@@ -13007,15 +12990,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "main"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "map"
                         }
                       ]
                     },
@@ -13499,6 +13473,10 @@
                       },
                       {
                         "type": "identifier",
+                        "name": "\"map\""
+                      },
+                      {
+                        "type": "identifier",
                         "name": "\"div\""
                       },
                       {
@@ -13736,10 +13714,6 @@
                       {
                         "type": "identifier",
                         "name": "\"main\""
-                      },
-                      {
-                        "type": "identifier",
-                        "name": "\"map\""
                       },
                       {
                         "type": "identifier",
@@ -13983,6 +13957,15 @@
                         {
                           "type": "stringLiteral",
                           "value": "object"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "union",
+                      "elements": [
+                        {
+                          "type": "stringLiteral",
+                          "value": "map"
                         }
                       ]
                     },
@@ -14523,15 +14506,6 @@
                         {
                           "type": "stringLiteral",
                           "value": "main"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "map"
                         }
                       ]
                     },

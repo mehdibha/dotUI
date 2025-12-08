@@ -56,21 +56,8 @@
                 "type": "parameter",
                 "name": "e",
                 "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "FocusEvent"
                 },
                 "optional": false,
                 "rest": false
@@ -101,21 +88,8 @@
                 "type": "parameter",
                 "name": "e",
                 "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "FocusEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "Element"
-                    }
-                  ]
+                  "type": "identifier",
+                  "name": "FocusEvent"
                 },
                 "optional": false,
                 "rest": false

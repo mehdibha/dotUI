@@ -43,6 +43,89 @@ export interface ConversionContext {
 }
 
 /**
+ * Types that should preserve ALL their type arguments (not filter defaults).
+ * These are typically render prop types where the type parameter is meaningful.
+ */
+const PRESERVE_ALL_TYPE_ARGS = new Set([
+  "ChildrenOrFunction",
+  "StyleOrFunction",
+  "ClassNameOrFunction",
+]);
+
+/**
+ * Filter out trailing type arguments that equal their default values.
+ * This produces cleaner output like `Iterable<Key>` instead of `Iterable<Key, any, any>`.
+ *
+ * @param typeArgs - The resolved type arguments from TypeScript
+ * @param typeName - The name of the type (to check whitelist)
+ * @param symbol - The type's symbol (to get type parameter declarations)
+ * @param checker - The TypeScript type checker
+ */
+function filterDefaultTypeArgs(
+  typeArgs: readonly ts.Type[],
+  typeName: string,
+  symbol: ts.Symbol | undefined,
+  checker: ts.TypeChecker,
+): ts.Type[] {
+  // Preserve all args for whitelisted types
+  if (PRESERVE_ALL_TYPE_ARGS.has(typeName)) {
+    return [...typeArgs];
+  }
+
+  // Get the type parameter declarations to check defaults
+  const declarations = symbol?.getDeclarations();
+  const decl = declarations?.[0];
+
+  let typeParamDecls: readonly ts.TypeParameterDeclaration[] | undefined;
+
+  if (decl) {
+    if (ts.isInterfaceDeclaration(decl) || ts.isClassDeclaration(decl)) {
+      typeParamDecls = decl.typeParameters;
+    } else if (ts.isTypeAliasDeclaration(decl)) {
+      typeParamDecls = decl.typeParameters;
+    }
+  }
+
+  // If we can't find type parameter declarations, return all args
+  if (!typeParamDecls || typeParamDecls.length === 0) {
+    return [...typeArgs];
+  }
+
+  // Filter out trailing arguments that match their defaults
+  const result = [...typeArgs];
+
+  // Work backwards, removing args that equal their defaults
+  while (result.length > 0) {
+    const lastIndex = result.length - 1;
+    const lastArg = result[lastIndex];
+    const paramDecl = typeParamDecls[lastIndex];
+
+    // If there's no corresponding param declaration, keep the arg
+    if (!paramDecl) break;
+
+    // If the param has no default, we must keep this arg
+    if (!paramDecl.default) break;
+
+    // Get the default type
+    const defaultType = checker.getTypeAtLocation(paramDecl.default);
+
+    // Check if the argument equals the default by comparing type strings
+    // This is a simple heuristic that works well for common cases like `any`, `undefined`
+    const argString = checker.typeToString(lastArg!);
+    const defaultString = checker.typeToString(defaultType);
+
+    if (argString !== defaultString) {
+      break; // Arg differs from default, stop filtering
+    }
+
+    // This arg equals its default, remove it
+    result.pop();
+  }
+
+  return result;
+}
+
+/**
  * Parse a simple type name into an AST node
  * Handles primitives (string, number, boolean, etc.) and returns identifier for others
  */
@@ -397,17 +480,27 @@ export function typeToAst(
     if (isExternalType) {
       const typeArgs = type.aliasTypeArguments;
       if (typeArgs && typeArgs.length > 0) {
-        const typeParams = typeArgs
-          .map((t) =>
-            typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
-          )
-          .filter((t): t is TType => t !== null);
+        // Filter out trailing default type arguments for cleaner output
+        const filteredArgs = filterDefaultTypeArgs(
+          typeArgs,
+          aliasName,
+          aliasSymbol,
+          checker,
+        );
 
-        return {
-          type: "application",
-          base: { type: "identifier", name: aliasName } as TIdentifier,
-          typeParameters: typeParams,
-        } as TApplication;
+        if (filteredArgs.length > 0) {
+          const typeParams = filteredArgs
+            .map((t) =>
+              typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
+            )
+            .filter((t): t is TType => t !== null);
+
+          return {
+            type: "application",
+            base: { type: "identifier", name: aliasName } as TIdentifier,
+            typeParameters: typeParams,
+          } as TApplication;
+        }
       }
       return { type: "identifier", name: aliasName } as TIdentifier;
     }
@@ -574,17 +667,27 @@ export function typeToAst(
 
       if (builtInTypes.includes(typeName)) {
         if (typeArgs && typeArgs.length > 0) {
-          const typeParams = typeArgs
-            .map((t) =>
-              typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
-            )
-            .filter((t): t is TType => t !== null);
+          // Filter out trailing default type arguments for cleaner output
+          const filteredArgs = filterDefaultTypeArgs(
+            typeArgs,
+            typeName,
+            symbol,
+            checker,
+          );
 
-          return {
-            type: "application",
-            base: { type: "identifier", name: typeName } as TIdentifier,
-            typeParameters: typeParams,
-          } as TApplication;
+          if (filteredArgs.length > 0) {
+            const typeParams = filteredArgs
+              .map((t) =>
+                typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
+              )
+              .filter((t): t is TType => t !== null);
+
+            return {
+              type: "application",
+              base: { type: "identifier", name: typeName } as TIdentifier,
+              typeParameters: typeParams,
+            } as TApplication;
+          }
         }
         return { type: "identifier", name: typeName } as TIdentifier;
       }
@@ -610,17 +713,27 @@ export function typeToAst(
 
       // If it has type arguments, wrap in application
       if (typeArgs && typeArgs.length > 0) {
-        const typeParams = typeArgs
-          .map((t) =>
-            typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
-          )
-          .filter((t): t is TType => t !== null);
+        // Filter out trailing default type arguments for cleaner output
+        const filteredArgs = filterDefaultTypeArgs(
+          typeArgs,
+          typeName,
+          symbol,
+          checker,
+        );
 
-        return {
-          type: "application",
-          base: link,
-          typeParameters: typeParams,
-        } as TApplication;
+        if (filteredArgs.length > 0) {
+          const typeParams = filteredArgs
+            .map((t) =>
+              typeToAst(t, { ...context, currentDepth: currentDepth + 1 }),
+            )
+            .filter((t): t is TType => t !== null);
+
+          return {
+            type: "application",
+            base: link,
+            typeParameters: typeParams,
+          } as TApplication;
+        }
       }
 
       return link;

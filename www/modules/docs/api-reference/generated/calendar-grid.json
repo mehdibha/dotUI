@@ -12,142 +12,14 @@
             "type": "undefined"
           },
           {
-            "type": "application",
-            "base": {
-              "type": "identifier",
-              "name": "ReactElement"
-            },
-            "typeParameters": [
-              {
-                "type": "unknown"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "function",
-                    "parameters": [
-                      {
-                        "type": "parameter",
-                        "name": "props",
-                        "value": {
-                          "type": "any"
-                        },
-                        "optional": false,
-                        "rest": false
-                      }
-                    ],
-                    "return": {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "undefined"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "null"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "string"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "number"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "bigint"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "false"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "true"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "Iterable<ReactNode>"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "ReactPortal"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "Promise<AwaitedReactNode>"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "Promise<ReactNode>"
-                        }
-                      ]
-                    },
-                    "typeParameters": []
-                  },
-                  {
-                    "type": "identifier",
-                    "name": "new (props: any, context: any) => Component<any, any, any>"
-                  }
-                ]
-              }
-            ]
+            "type": "identifier",
+            "name": "ReactElement"
           },
           {
             "type": "array",
             "elementType": {
-              "type": "application",
-              "base": {
-                "type": "identifier",
-                "name": "ReactElement"
-              },
-              "typeParameters": [
-                {
-                  "type": "unknown"
-                },
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "function",
-                      "parameters": [
-                        {
-                          "type": "parameter",
-                          "name": "props",
-                          "value": {
-                            "type": "identifier",
-                            "name": "any"
-                          },
-                          "optional": false,
-                          "rest": false
-                        }
-                      ],
-                      "return": {
-                        "type": "identifier",
-                        "name": "ReactNode | Promise<ReactNode>"
-                      },
-                      "typeParameters": []
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "new (props: any, context: any) => Component<any, any, any>"
-                    }
-                  ]
-                }
-              ]
+              "type": "identifier",
+              "name": "ReactElement"
             }
           },
           {
@@ -166,48 +38,8 @@
               }
             ],
             "return": {
-              "type": "application",
-              "base": {
-                "type": "identifier",
-                "name": "ReactElement"
-              },
-              "typeParameters": [
-                {
-                  "type": "unknown"
-                },
-                {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "function",
-                      "parameters": [
-                        {
-                          "type": "parameter",
-                          "name": "props",
-                          "value": {
-                            "type": "identifier",
-                            "name": "any"
-                          },
-                          "optional": false,
-                          "rest": false
-                        }
-                      ],
-                      "return": {
-                        "type": "identifier",
-                        "name": "ReactNode | Promise<ReactNode>"
-                      },
-                      "typeParameters": []
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "new (props: any, context: any) => Component<any, any, any>"
-                    }
-                  ]
-                }
-              ]
+              "type": "identifier",
+              "name": "ReactElement"
             },
             "typeParameters": []
           }

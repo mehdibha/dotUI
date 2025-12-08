@@ -62,12 +62,6 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
               }
             ]
           }
@@ -344,9 +338,6 @@
                 {
                   "type": "identifier",
                   "name": "Key"
-                },
-                {
-                  "type": "any"
                 }
               ]
             },
@@ -435,9 +426,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -452,12 +443,6 @@
                 {
                   "type": "identifier",
                   "name": "Key"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
                 }
               ]
             },

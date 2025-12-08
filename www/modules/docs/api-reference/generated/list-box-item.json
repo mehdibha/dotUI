@@ -3,18 +3,18 @@
   "description": "A ListBoxItem represents an individual option in a ListBox.",
   "props": {
     "variant": {
-      "type": "\"default\" | \"danger\" | \"success\" | \"warning\"",
-      "detailedType": "\"default\" | \"danger\" | \"success\" | \"warning\" | undefined",
+      "type": "\"danger\" | \"warning\" | \"success\" | \"default\"",
+      "detailedType": "\"danger\" | \"warning\" | \"success\" | \"default\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "default"
+            "value": "danger"
           },
           {
             "type": "stringLiteral",
-            "value": "danger"
+            "value": "warning"
           },
           {
             "type": "stringLiteral",
@@ -22,7 +22,7 @@
           },
           {
             "type": "stringLiteral",
-            "value": "warning"
+            "value": "default"
           }
         ]
       },
@@ -179,10 +179,6 @@
                     {
                       "type": "identifier",
                       "name": "FocusableElement"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "MouseEvent"
                     }
                   ]
                 },

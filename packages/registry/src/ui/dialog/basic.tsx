@@ -11,7 +11,8 @@ import type * as React from "react";
 
 const dialogStyles = tv({
   slots: {
-    content: "relative flex flex-col gap-4 in-popover:p-4 p-6 outline-none",
+    content:
+      "relative flex flex-col gap-4 in-data-popover:p-4 p-6 outline-none",
     header: "flex flex-col gap-2 text-left",
     heading:
       "font-semibold in-popover:font-medium in-popover:text-base text-lg leading-none",

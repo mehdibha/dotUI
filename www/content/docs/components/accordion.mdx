@@ -1,16 +1,15 @@
 ---
 title: Accordion
-description: A vertically stacked set of interactive headings that each reveal a section of content.
+description: A grouping of related disclosures that supports both single and multiple expanded items.
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Disclosure.html
-wip: true
 ---
 
 <PageTabs>
   <PageTabPanel id="overview">
 
-    <Demo name="accordion/demos/basic" previewClassName="min-h-96 items-start" />
+    <Demo name="accordion/demos/basic" />
 
     ## Installation
 
@@ -18,31 +17,38 @@ wip: true
     npx shadcn@latest add @dotui/accordion
     ```
 
-    ## Usage
-
-    Accordions organize content into collapsible sections, allowing users to expand and collapse content as needed. They are useful for reducing visual clutter and letting users focus on relevant information.
+    ## Anatomy
 
     ```tsx
+    import { Accordion } from "@/components/ui/accordion";
     import {
-      Accordion,
-      AccordionHeading,
-      AccordionItem,
-      AccordionPanel,
-    } from "@/components/ui/accordion";
+      Disclosure,
+      DisclosurePanel,
+      DisclosureTrigger
+    } from "@/components/ui/disclosure";
     ```
 
     ```tsx
     <Accordion>
-      <AccordionItem>
-        <AccordionHeading>Accordion Heading</AccordionHeading>
-        <AccordionPanel>Accordion Panel</AccordionPanel>
-      </AccordionItem>
-      <AccordionItem>
-        <AccordionHeading>Accordion Heading</AccordionHeading>
-        <AccordionPanel>Accordion Panel</AccordionPanel>
-      </AccordionItem>
+      <Disclosure>
+        <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
+        <DisclosurePanel>Disclosure Panel</DisclosurePanel>
+      </Disclosure>
+      <Disclosure>
+        <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
+        <DisclosurePanel>Disclosure Panel</DisclosurePanel>
+      </Disclosure>
     </Accordion>
     ```
+
+    ## Playground
+
+    Use the controls below to experiment with different accordion props and see the live preview and code update.
+
+    <InteractiveDemo
+      name="accordion"
+      controls={["allowsMultipleExpanded", "isDisabled"]}
+    />
 
     ## API Reference
 
@@ -50,21 +56,15 @@ wip: true
 
     <Reference name="accordion" />
 
-    ### AccordionItem
-
-    <Reference name="accordion-item" />
-
-    ### AccordionHeading
-
-    <Reference name="accordion-heading" />
-
-    ### AccordionPanel
-
-    <Reference name="accordion-panel" />
-
   </PageTabPanel>
 
   <PageTabPanel id="examples">
-    <Example name="accordion/demos/basic" />
+    <Examples>
+      <Example name="accordion/demos/basic" description="Basic accordion" />
+      <Example name="accordion/demos/allows-multiple" description="Multiple expanded items" />
+      <Example name="accordion/demos/default-expanded" description="Default expanded item" />
+      <Example name="accordion/demos/disabled" description="Disabled accordion" />
+      <Example name="accordion/demos/controlled" description="Controlled accordion" />
+    </Examples>
   </PageTabPanel>
 </PageTabs>

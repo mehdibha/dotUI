@@ -295,7 +295,7 @@
                 "elements": [
                   {
                     "type": "stringLiteral",
-                    "value": "danger"
+                    "value": "neutral"
                   }
                 ]
               },
@@ -304,7 +304,7 @@
                 "elements": [
                   {
                     "type": "stringLiteral",
-                    "value": "success"
+                    "value": "danger"
                   }
                 ]
               },
@@ -331,7 +331,7 @@
                 "elements": [
                   {
                     "type": "stringLiteral",
-                    "value": "neutral"
+                    "value": "success"
                   }
                 ]
               },

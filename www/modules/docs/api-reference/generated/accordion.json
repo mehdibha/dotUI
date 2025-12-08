@@ -38,12 +38,6 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
               }
             ]
           }
@@ -71,12 +65,6 @@
               {
                 "type": "identifier",
                 "name": "Key"
-              },
-              {
-                "type": "any"
-              },
-              {
-                "type": "any"
               }
             ]
           }
@@ -285,9 +273,6 @@
                 {
                   "type": "identifier",
                   "name": "Key"
-                },
-                {
-                  "type": "any"
                 }
               ]
             },
@@ -376,9 +361,9 @@
       "name": "Iterable",
       "extends": [],
       "properties": {
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -393,12 +378,6 @@
                 {
                   "type": "identifier",
                   "name": "Key"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
                 }
               ]
             },
@@ -690,9 +669,9 @@
           "optional": false,
           "description": "Returns an iterable of values in the set."
         },
-        "__@iterator@72": {
+        "__@iterator@111": {
           "type": "method",
-          "name": "__@iterator@72",
+          "name": "__@iterator@111",
           "value": {
             "type": "function",
             "parameters": [],
@@ -715,9 +694,9 @@
           "optional": false,
           "description": "Iterates over values in the set."
         },
-        "__@toStringTag@633": {
+        "__@toStringTag@114": {
           "type": "property",
-          "name": "__@toStringTag@633",
+          "name": "__@toStringTag@114",
           "value": {
             "type": "string"
           },

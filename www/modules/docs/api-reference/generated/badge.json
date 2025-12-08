@@ -4,22 +4,14 @@
   "extendsElement": "span",
   "props": {
     "variant": {
-      "type": "\"default\" | \"danger\" | \"success\" | \"warning\" | \"info\"",
-      "detailedType": "\"default\" | \"danger\" | \"success\" | \"warning\" | \"info\" | undefined",
+      "type": "\"danger\" | \"warning\" | \"info\" | \"success\" | \"default\"",
+      "detailedType": "\"danger\" | \"warning\" | \"info\" | \"success\" | \"default\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "default"
-          },
-          {
-            "type": "stringLiteral",
             "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "success"
           },
           {
             "type": "stringLiteral",
@@ -28,6 +20,14 @@
           {
             "type": "stringLiteral",
             "value": "info"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "success"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
           }
         ]
       },

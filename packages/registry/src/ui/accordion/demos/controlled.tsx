@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import { Accordion } from "@dotui/registry/ui/accordion";
 import {
   Disclosure,
@@ -5,38 +9,49 @@ import {
   DisclosureTrigger,
 } from "@dotui/registry/ui/disclosure";
 
-const faq = [
-  {
-    question: "How do I get started with DotUI?",
-    answer:
-      "Getting started is simple! Install the package using your preferred package manager, then import the components you need. All components are built on React Aria Components and follow accessibility best practices out of the box.",
-  },
-  {
-    question: "Is DotUI free to use?",
-    answer:
-      "Yes, DotUI is completely free and open source. You can use it in any project, whether personal or commercial, without any restrictions or licensing fees.",
-  },
-  {
-    question: "Can I customize the components?",
-    answer:
-      "Absolutely! All components use Tailwind Variants for styling, making it easy to customize colors, sizes, and other visual properties. You can pass custom className props or extend the default variants to match your design system.",
-  },
-  {
-    question: "Does DotUI support TypeScript?",
-    answer:
-      "Yes, DotUI is built with TypeScript and provides full type definitions for all components. This ensures type safety and excellent developer experience with autocomplete and IntelliSense support in your IDE.",
-  },
-];
-
 export default function Demo() {
+  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(
+    new Set(["getting-started"]),
+  );
+
   return (
-    <Accordion className="w-full max-w-2xl">
-      {faq.map((item) => (
-        <Disclosure key={item.question}>
-          <DisclosureTrigger>{item.question}</DisclosureTrigger>
-          <DisclosurePanel>{item.answer}</DisclosurePanel>
+    <div className="w-full max-w-2xl space-y-4">
+      <p className="text-fg-muted text-sm">
+        Expanded: {[...expandedKeys].join(", ") || "none"}
+      </p>
+      <Accordion
+        expandedKeys={expandedKeys}
+        onExpandedChange={(keys) => setExpandedKeys(keys as Set<string>)}
+      >
+        <Disclosure id="getting-started">
+          <DisclosureTrigger>
+            How do I get started with DotUI?
+          </DisclosureTrigger>
+          <DisclosurePanel>
+            Getting started is simple! Install the package using your preferred
+            package manager, then import the components you need. All components
+            are built on React Aria Components and follow accessibility best
+            practices out of the box.
+          </DisclosurePanel>
         </Disclosure>
-      ))}
-    </Accordion>
+        <Disclosure id="free-to-use">
+          <DisclosureTrigger>Is DotUI free to use?</DisclosureTrigger>
+          <DisclosurePanel>
+            Yes, DotUI is completely free and open source. You can use it in any
+            project, whether personal or commercial, without any restrictions or
+            licensing fees.
+          </DisclosurePanel>
+        </Disclosure>
+        <Disclosure id="customization">
+          <DisclosureTrigger>Can I customize the components?</DisclosureTrigger>
+          <DisclosurePanel>
+            Absolutely! All components use Tailwind Variants for styling, making
+            it easy to customize colors, sizes, and other visual properties. You
+            can pass custom className props or extend the default variants to
+            match your design system.
+          </DisclosurePanel>
+        </Disclosure>
+      </Accordion>
+    </div>
   );
 }

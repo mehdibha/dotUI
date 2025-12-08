@@ -3,22 +3,14 @@
   "description": "A MenuItem represents an individual action in a Menu.",
   "props": {
     "variant": {
-      "type": "\"default\" | \"danger\" | \"success\" | \"warning\" | \"accent\"",
-      "detailedType": "\"default\" | \"danger\" | \"success\" | \"warning\" | \"accent\" | undefined",
+      "type": "\"danger\" | \"warning\" | \"success\" | \"accent\" | \"default\"",
+      "detailedType": "\"danger\" | \"warning\" | \"success\" | \"accent\" | \"default\" | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "default"
-          },
-          {
-            "type": "stringLiteral",
             "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "success"
           },
           {
             "type": "stringLiteral",
@@ -26,7 +18,15 @@
           },
           {
             "type": "stringLiteral",
+            "value": "success"
+          },
+          {
+            "type": "stringLiteral",
             "value": "accent"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
           }
         ]
       },
@@ -183,10 +183,6 @@
                     {
                       "type": "identifier",
                       "name": "FocusableElement"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "MouseEvent"
                     }
                   ]
                 },
