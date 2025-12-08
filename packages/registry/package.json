@@ -10,6 +10,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./types": "./src/types.ts",
+    "./providers": "./src/providers.tsx",
     "./background-patterns/registry": "./src/background-patterns/registry.ts",
     "./base/registry": "./src/base/registry.ts",
     "./blocks": "./src/blocks/index.ts",
@@ -32,12 +33,11 @@
     "./ui/*/playground": "./src/ui/*/demos/playground.tsx",
     "./lib/*/meta": "./src/lib/*/meta.ts",
     "./playground": "./src/playground/index.ts",
-    "./style-system/core": "./src/_style-system/core/index.ts",
-    "./style-system/shadcn-registry": "./src/_style-system/shadcn-registry/index.ts",
-    "./style-system/constants": "./src/_style-system/constants.ts",
-    "./style-system/schemas": "./src/_style-system/schemas.ts",
-    "./style-system/types": "./src/_style-system/types.ts",
-    "./style-system/utils": "./src/_style-system/utils/index.ts"
+    "./schemas": "./src/schemas.ts",
+    "./constants": "./src/constants.ts",
+    "./shadcn-registry": "./src/shadcn-registry/index.ts",
+    "./_helpers/create-dynamic-component": "./src/_helpers/create-dynamic-component.tsx",
+    "./_helpers/create-icon": "./src/_helpers/create-icon.tsx"
   },
   "scripts": {
     "build": "tsx scripts/build-registry.ts",
@@ -75,11 +75,9 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@adobe/leonardo-contrast-colors": "^1.0.0",
+    "@dotui/style-system": "workspace:*",
     "@react-aria/utils": "^3.31.0",
     "@react-types/shared": "^3.26.0",
-    "culori": "^4.0.2",
-    "deepmerge": "^4.3.1",
     "react-error-boundary": "^6.0.0",
     "ts-morph": "^25.0.1",
     "zod": "^4.0.5"

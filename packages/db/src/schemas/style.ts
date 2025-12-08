@@ -16,12 +16,12 @@ import {
   iconsDefinitionSchema,
   themeDefinitionSchema,
   variantsDefinitionSchema,
-} from "@dotui/registry/style-system/schemas";
+} from "@dotui/registry/schemas";
 import type {
   IconsDefinition,
   ThemeDefinition,
   VariantsDefinition,
-} from "@dotui/registry/style-system/types";
+} from "@dotui/style-system";
 
 import { user } from "./auth";
 

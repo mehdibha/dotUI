@@ -1,9 +1,8 @@
 import * as React from "react";
 
 import { Skeleton } from "@dotui/registry/ui/skeleton";
+import { useCurrentStyle } from "@dotui/style-system";
 import type { iconLibraries } from "@dotui/registry/icons/registry";
-
-import { useCurrentStyle } from "./style-provider";
 
 interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
   className?: string;
@@ -58,7 +57,7 @@ export function createIcon(iconMapping: IconMapping): IconComponent {
       );
     }
 
-    const Icon = iconMapping[iconLibrary];
+    const Icon = iconMapping[iconLibrary as keyof IconMapping];
     return (
       <React.Suspense
         fallback={

@@ -59,7 +59,7 @@ export const useUpdateStyleMutation = (
         return { ...old, ...updated };
       });
       if (updated) {
-        callbacks?.onSuccess?.(updated);
+        callbacks?.onSuccess?.(updated as unknown as StyleFormData);
       }
     },
     onSettled: () => {

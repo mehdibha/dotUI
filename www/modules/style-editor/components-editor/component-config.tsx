@@ -7,7 +7,7 @@ import {
   SelectTrigger,
 } from "@dotui/registry/ui/select";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
-import type { VariantsDefinition } from "@dotui/registry/style-system/types";
+import type { VariantsDefinition } from "@dotui/style-system";
 
 import { TokensTable } from "@/modules/style-editor/colors-editor/tokens-table";
 import { DraftStyleProvider } from "@/modules/style-editor/draft-style-provider";

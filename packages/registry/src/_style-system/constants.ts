@@ -1,5 +1,3 @@
-import { registry } from "../registry";
-import { COLOR_TOKENS } from "../tokens/registry";
 import type {
   ColorTokens,
   Fonts,
@@ -9,7 +7,10 @@ import type {
   ThemeDefinition,
   Variants,
   VariantsDefinition,
-} from "./types";
+} from "@dotui/style-system";
+
+import { registry } from "../registry";
+import { COLOR_TOKENS } from "../tokens/registry";
 
 export const DEFAULT_RADIUS_FACTOR = 1;
 

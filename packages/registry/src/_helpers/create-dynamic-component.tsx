@@ -2,11 +2,14 @@ import React from "react";
 import { AlertCircleIcon } from "lucide-react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/registry/_style-system/constants";
-import { cn } from "@dotui/registry/lib/utils";
-import type { Variants } from "@dotui/registry/_style-system/types";
+import {
+  DEFAULT_VARIANTS_DEFINITION,
+  useVariant,
+  VariantsProvider,
+} from "@dotui/style-system";
+import type { Variants } from "@dotui/style-system";
 
-import { useVariant, VariantsProvider } from "./variants-provider";
+import { cn } from "../lib/utils";
 
 // Type helper to exclude the default variant from the variants map keys
 type OmitDefault<T extends string, Default extends string> = T extends Default

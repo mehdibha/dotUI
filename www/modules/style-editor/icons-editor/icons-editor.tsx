@@ -9,7 +9,7 @@ import {
   SelectTrigger,
 } from "@dotui/registry/ui/select";
 import { SliderControl } from "@dotui/registry/ui/slider";
-import type { IconLibrary } from "@dotui/registry/style-system/types";
+import type { IconLibrary } from "@dotui/style-system";
 
 import { useDraftStyle } from "@/modules/style-editor/draft-style-atom";
 import { DraftStyleProvider } from "@/modules/style-editor/draft-style-provider";

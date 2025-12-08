@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { withImmer } from "jotai-immer";
 
-import type { StyleDefinition } from "@dotui/registry/style-system/types";
+import type { StyleDefinition } from "@dotui/style-system";
 
 import { useStyleEditorForm } from "@/modules/style-editor/style-editor-provider";
 import { convertThemeColorObjects } from "@/modules/style-editor/theme-utils";

@@ -1,14 +1,14 @@
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { DEFAULT_THEME } from "@dotui/registry/constants";
+import { toast } from "@dotui/registry/ui/toast";
 import {
   DEFAULT_ICON_LIBRARY,
   DEFAULT_ICON_STROKE_WIDTH,
-  DEFAULT_THEME,
   DEFAULT_VARIANTS_DEFINITION,
-} from "@dotui/registry/style-system/constants";
-import { toast } from "@dotui/registry/ui/toast";
-import type { StyleDefinition } from "@dotui/registry/style-system/types";
+} from "@dotui/style-system";
+import type { StyleDefinition } from "@dotui/style-system";
 
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/client";

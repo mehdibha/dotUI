@@ -11,8 +11,6 @@ import { PlusIcon, Trash2Icon } from "lucide-react";
 import type React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
-import { toColorString } from "@dotui/registry/style-system/core";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { ColorEditor } from "@dotui/registry/ui/color-editor";
@@ -39,7 +37,8 @@ import {
   TableRow,
 } from "@dotui/registry/ui/table";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
-import type { ScaleId } from "@dotui/registry/style-system/types";
+import { SCALE_STEPS, toColorString } from "@dotui/style-system";
+import type { ScaleId } from "@dotui/style-system";
 
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import {

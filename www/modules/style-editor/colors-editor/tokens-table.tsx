@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { SCALE_STEPS } from "@dotui/registry/style-system/constants";
 import { COLOR_TOKENS } from "@dotui/registry/tokens/registry";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import {
@@ -18,8 +17,9 @@ import {
   TableHeader,
   TableRow,
 } from "@dotui/registry/ui/table";
-import type { ScaleId } from "@dotui/registry/style-system/types";
+import { SCALE_STEPS } from "@dotui/style-system";
 import type { TableProps } from "@dotui/registry/ui/table";
+import type { ScaleId } from "@dotui/style-system";
 
 import { ContextualHelp } from "@/components/ui/contextual-help";
 import {

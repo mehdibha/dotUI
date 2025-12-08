@@ -105,6 +105,9 @@ importers:
       '@dotui/registry':
         specifier: workspace:*
         version: link:../registry
+      '@dotui/style-system':
+        specifier: workspace:*
+        version: link:../style-system
       '@vercel/postgres':
         specifier: ^0.10.0
         version: 0.10.0
@@ -145,9 +148,9 @@ importers:
 
   packages/registry:
     dependencies:
-      '@adobe/leonardo-contrast-colors':
-        specifier: ^1.0.0
-        version: 1.0.0
+      '@dotui/style-system':
+        specifier: workspace:*
+        version: link:../style-system
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.63.0(react@19.2.0))
@@ -172,12 +175,6 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.1
-      culori:
-        specifier: ^4.0.2
-        version: 4.0.2
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
       lucide-react:
         specifier: ^0.546.0
         version: 0.546.0(react@19.2.0)
@@ -246,6 +243,40 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
+  packages/style-system:
+    dependencies:
+      '@adobe/leonardo-contrast-colors':
+        specifier: ^1.0.0
+        version: 1.0.0
+      culori:
+        specifier: ^4.0.2
+        version: 4.0.2
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.0(react@19.2.0)
+    devDependencies:
+      '@dotui/ts-config':
+        specifier: workspace:*
+        version: link:../../config/ts-config
+      '@types/culori':
+        specifier: ^4.0.1
+        version: 4.0.1
+      '@types/react':
+        specifier: ^19.2.2
+        version: 19.2.2
+      '@types/react-dom':
+        specifier: ^19.2.1
+        version: 19.2.1(@types/react@19.2.2)
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
+
   packages/tailwindcss-autocontrast:
     dependencies:
       '@tailwindcss/postcss':
@@ -287,6 +318,9 @@ importers:
       '@dotui/registry':
         specifier: workspace:*
         version: link:../packages/registry
+      '@dotui/style-system':
+        specifier: workspace:*
+        version: link:../packages/style-system
       '@fumadocs/mdx-remote':
         specifier: ^1.4.0
         version: 1.4.3(@types/react@19.2.2)(fumadocs-core@16.0.12(@types/react@19.2.2)(lucide-react@0.546.0(react@19.2.0))(next@16.0.5(@babel/core@7.28.4)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)

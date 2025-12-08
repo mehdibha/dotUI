@@ -5,13 +5,10 @@ import type { ContrastColor } from "@adobe/leonardo-contrast-colors";
 import type z from "zod/v4";
 
 import { createStyleSchema } from "@dotui/db/schemas";
-import {
-  DEFAULT_LIGHT_MODE,
-  DEFAULT_STYLE,
-} from "@dotui/registry/style-system/constants";
-import { createColorScales } from "@dotui/registry/style-system/core";
+import { DEFAULT_STYLE } from "@dotui/registry/constants";
 import { useAppForm } from "@dotui/registry/ui/tanstack-form";
 import { toast } from "@dotui/registry/ui/toast";
+import { createColorScales, DEFAULT_LIGHT_MODE } from "@dotui/style-system";
 
 import { NavigationBlocker } from "@/modules/style-editor/navigation-blocker";
 import { useEditorStyle } from "@/modules/style-editor/use-editor-style";
@@ -25,10 +22,10 @@ const styleEditorFormSchema = createStyleSchema.extend({});
 
 export type StyleFormData = z.infer<typeof styleEditorFormSchema>;
 
-const defaultValues: StyleFormData = {
+const defaultValues = {
   name: "random-fake",
   ...DEFAULT_STYLE,
-};
+} as StyleFormData;
 
 const useForm = () => {
   const { data: style, refetch } = useEditorStyle();
@@ -50,7 +47,7 @@ const useForm = () => {
   );
 
   return useAppForm({
-    defaultValues: style ?? defaultValues,
+    defaultValues: (style as StyleFormData | undefined) ?? defaultValues,
     validators: {
       onSubmit: styleEditorFormSchema,
     },
@@ -58,7 +55,7 @@ const useForm = () => {
     onSubmit: async ({ formApi, value }) => {
       await updateStyleMutation.mutateAsync({
         ...value,
-        theme: convertThemeColorObjects(value.theme),
+        theme: convertThemeColorObjects(value.theme) as StyleFormData["theme"],
       });
       await refetch();
       formApi.reset();

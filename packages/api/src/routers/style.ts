@@ -4,7 +4,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 
 import { and, eq } from "@dotui/db";
 import { createStyleSchema, style, user } from "@dotui/db/schemas";
-import { styleDefinitionSchema } from "@dotui/registry/style-system/schemas";
+import { styleDefinitionSchema } from "@dotui/registry/schemas";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 

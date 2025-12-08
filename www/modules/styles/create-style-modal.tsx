@@ -27,7 +27,7 @@ import {
   SelectValue,
 } from "@dotui/registry/ui/select";
 import { useAppForm } from "@dotui/registry/ui/tanstack-form";
-import type { StyleDefinition } from "@dotui/registry/style-system/types";
+import type { StyleDefinition } from "@dotui/style-system";
 
 import { authClient } from "@/modules/auth/client";
 import { LoginModal } from "@/modules/auth/login-modal";

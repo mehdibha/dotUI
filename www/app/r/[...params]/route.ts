@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 import path from "node:path";
 import type { NextRequest } from "next/server";
 
-import { createStyle } from "@dotui/registry/style-system/core";
-import { buildRegistryItem } from "@dotui/registry/style-system/shadcn-registry";
+import { buildRegistryItem } from "@dotui/registry/shadcn-registry";
+import { createStyle } from "@dotui/style-system";
 import type { RouterOutputs } from "@dotui/api";
-import type { ColorFormat } from "@dotui/registry/style-system/types";
+import type { ColorFormat } from "@dotui/style-system";
 
 import { env } from "@/env";
 import { caller } from "@/lib/trpc/server";

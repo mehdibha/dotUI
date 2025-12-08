@@ -7,7 +7,7 @@ import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/registry";
 import { cn } from "@dotui/registry/lib/utils";
-import type { StyleDefinition } from "@dotui/registry/style-system/types";
+import type { StyleDefinition } from "@dotui/style-system";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/preferences/preferences-atom";

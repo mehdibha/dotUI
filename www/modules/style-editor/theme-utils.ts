@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import type { Color } from "react-aria-components";
 
-import type { ThemeDefinition } from "@dotui/registry/style-system/types";
+import type { ThemeDefinition } from "@dotui/style-system";
 
 export const convertThemeColorObjects = (
   theme: ThemeDefinition,

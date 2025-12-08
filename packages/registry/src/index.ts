@@ -1,6 +1,14 @@
-export { FontLoader } from "./_helpers/font-loader";
-export { StyleProvider, useCurrentStyle } from "./_helpers/style-provider";
-export { VariantsProvider } from "./_helpers/variants-provider";
+// Providers (wrapped with registry deps)
+export {
+  FontLoader,
+  StyleProvider,
+  ThemeProvider,
+  useCurrentStyle,
+  useVariant,
+  VariantsProvider,
+} from "./providers";
+// Registry
 export { registry } from "./registry";
+// Re-export common types from style-system
 export type { CommonIconProps } from "./_helpers/create-icon";
-export type { StyleProviderProps } from "./_helpers/style-provider";
+export type { StyleProviderProps, ThemeProviderProps } from "./providers";
