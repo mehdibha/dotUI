@@ -19,7 +19,7 @@ import {
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
-import type { Control, ControlValues } from "@dotui/registry/playground";
+import type { Control, ControlValues } from "@dotui/types/playground";
 
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
 

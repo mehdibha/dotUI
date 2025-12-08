@@ -7,7 +7,7 @@ import type {
   EnumControl,
   NumberControl,
   StringControl,
-} from "@dotui/registry/playground";
+} from "@dotui/types/playground";
 
 import { toPascalCase } from "@/lib/utils";
 import type {

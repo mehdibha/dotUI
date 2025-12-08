@@ -46,7 +46,7 @@ import type {
   NumberControl,
   PropReference,
   StringControl,
-} from "@dotui/registry/playground";
+} from "@dotui/types/playground";
 
 /**
  * Available icons for the icon picker.

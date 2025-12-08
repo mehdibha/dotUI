@@ -1,6 +1,6 @@
 import { highlight } from "fumadocs-core/highlight";
 
-import type { ControlInput } from "@dotui/registry/playground";
+import type { ControlInput } from "@dotui/types/playground";
 
 import { Pre } from "@/modules/docs/code-block";
 
