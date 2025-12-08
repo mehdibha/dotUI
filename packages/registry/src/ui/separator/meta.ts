@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const separatorMeta = {
   name: "separator",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default separatorMeta;
 export const separatorVariants = Object.keys(
   separatorMeta.variants,
 ) as (keyof typeof separatorMeta.variants)[];
+
+export type SeparatorVariant = keyof typeof separatorMeta.variants;
+
+export const defaultSeparatorVariant = separatorMeta.defaultVariant;

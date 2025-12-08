@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const calendarMeta = {
   name: "calendar",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default calendarMeta;
 export const calendarVariants = Object.keys(
   calendarMeta.variants,
 ) as (keyof typeof calendarMeta.variants)[];
+
+export type CalendarVariant = keyof typeof calendarMeta.variants;
+
+export const defaultCalendarVariant = calendarMeta.defaultVariant;

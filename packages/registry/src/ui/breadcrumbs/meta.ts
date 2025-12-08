@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const breadcrumbsMeta = {
   name: "breadcrumbs",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default breadcrumbsMeta;
 export const breadcrumbsVariants = Object.keys(
   breadcrumbsMeta.variants,
 ) as (keyof typeof breadcrumbsMeta.variants)[];
+
+export type BreadcrumbsVariant = keyof typeof breadcrumbsMeta.variants;
+
+export const defaultBreadcrumbsVariant = breadcrumbsMeta.defaultVariant;

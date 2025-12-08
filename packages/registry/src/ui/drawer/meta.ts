@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const drawerMeta = {
   name: "drawer",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default drawerMeta;
 export const drawerVariants = Object.keys(
   drawerMeta.variants,
 ) as (keyof typeof drawerMeta.variants)[];
+
+export type DrawerVariant = keyof typeof drawerMeta.variants;
+
+export const defaultDrawerVariant = drawerMeta.defaultVariant;

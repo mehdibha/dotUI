@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const disclosureMeta = {
   name: "disclosure",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -23,3 +24,5 @@ export const disclosureVariants = Object.keys(
 ) as (keyof typeof disclosureMeta.variants)[];
 
 export type DisclosureVariant = keyof typeof disclosureMeta.variants;
+
+export const defaultDisclosureVariant = disclosureMeta.defaultVariant;

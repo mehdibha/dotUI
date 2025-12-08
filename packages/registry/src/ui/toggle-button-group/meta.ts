@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const toggleButtonGroupMeta = {
   name: "toggle-button-group",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,9 @@ export default toggleButtonGroupMeta;
 export const toggleButtonGroupVariants = Object.keys(
   toggleButtonGroupMeta.variants,
 ) as (keyof typeof toggleButtonGroupMeta.variants)[];
+
+export type ToggleButtonGroupVariant =
+  keyof typeof toggleButtonGroupMeta.variants;
+
+export const defaultToggleButtonGroupVariant =
+  toggleButtonGroupMeta.defaultVariant;

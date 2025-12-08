@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const kbdMeta = {
   name: "kbd",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default kbdMeta;
 export const kbdVariants = Object.keys(
   kbdMeta.variants,
 ) as (keyof typeof kbdMeta.variants)[];
+
+export type KbdVariant = keyof typeof kbdMeta.variants;
+
+export const defaultKbdVariant = kbdMeta.defaultVariant;

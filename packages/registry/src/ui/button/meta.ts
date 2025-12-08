@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const buttonMeta = {
   name: "button",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -31,3 +32,7 @@ export default buttonMeta;
 export const buttonVariants = Object.keys(
   buttonMeta.variants,
 ) as (keyof typeof buttonMeta.variants)[];
+
+export type ButtonVariant = keyof typeof buttonMeta.variants;
+
+export const defaultButtonVariant = buttonMeta.defaultVariant;

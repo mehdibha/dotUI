@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const groupMeta = {
   name: "group",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -22,3 +23,7 @@ export default groupMeta;
 export const groupVariants = Object.keys(
   groupMeta.variants,
 ) as (keyof typeof groupMeta.variants)[];
+
+export type GroupVariant = keyof typeof groupMeta.variants;
+
+export const defaultGroupVariant = groupMeta.defaultVariant;

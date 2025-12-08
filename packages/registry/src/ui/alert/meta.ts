@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const alertMeta = {
   name: "alert",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       description: "Minimal with a subtle border and muted background.",
@@ -24,3 +25,5 @@ export const alertVariants = Object.keys(
 ) as (keyof typeof alertMeta.variants)[];
 
 export type AlertVariant = keyof typeof alertMeta.variants;
+
+export const defaultAlertVariant = alertMeta.defaultVariant;

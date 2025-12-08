@@ -31,7 +31,7 @@ export const SelectTrigger = createDynamicComponent<ButtonProps>(
   "SelectTrigger",
   Default.SelectTrigger,
   {},
-  true,
+  { disableSkeleton: true },
 );
 
 export const SelectValue = <T extends object = object>(

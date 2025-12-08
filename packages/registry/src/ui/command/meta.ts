@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const commandMeta = {
   name: "command",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default commandMeta;
 export const commandVariants = Object.keys(
   commandMeta.variants,
 ) as (keyof typeof commandMeta.variants)[];
+
+export type CommandVariant = keyof typeof commandMeta.variants;
+
+export const defaultCommandVariant = commandMeta.defaultVariant;

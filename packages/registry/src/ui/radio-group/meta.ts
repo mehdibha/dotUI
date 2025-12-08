@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const radioGroupMeta = {
   name: "radio-group",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default radioGroupMeta;
 export const radioGroupVariants = Object.keys(
   radioGroupMeta.variants,
 ) as (keyof typeof radioGroupMeta.variants)[];
+
+export type RadioGroupVariant = keyof typeof radioGroupMeta.variants;
+
+export const defaultRadioGroupVariant = radioGroupMeta.defaultVariant;

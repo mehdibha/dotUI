@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const linkMeta = {
   name: "link",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default linkMeta;
 export const linkVariants = Object.keys(
   linkMeta.variants,
 ) as (keyof typeof linkMeta.variants)[];
+
+export type LinkVariant = keyof typeof linkMeta.variants;
+
+export const defaultLinkVariant = linkMeta.defaultVariant;

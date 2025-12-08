@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const formMeta = {
   name: "form",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -30,3 +31,7 @@ export default formMeta;
 export const formVariants = Object.keys(
   formMeta.variants,
 ) as (keyof typeof formMeta.variants)[];
+
+export type ReactHookFormVariant = keyof typeof formMeta.variants;
+
+export const defaultReactHookFormVariant = formMeta.defaultVariant;

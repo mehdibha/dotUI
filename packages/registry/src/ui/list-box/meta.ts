@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const listBoxMeta = {
   name: "list-box",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default listBoxMeta;
 export const listBoxVariants = Object.keys(
   listBoxMeta.variants,
 ) as (keyof typeof listBoxMeta.variants)[];
+
+export type ListBoxVariant = keyof typeof listBoxMeta.variants;
+
+export const defaultListBoxVariant = listBoxMeta.defaultVariant;

@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const tabsMeta = {
   name: "tabs",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -32,3 +33,7 @@ export default tabsMeta;
 export const tabsVariants = Object.keys(
   tabsMeta.variants,
 ) as (keyof typeof tabsMeta.variants)[];
+
+export type TabsVariant = keyof typeof tabsMeta.variants;
+
+export const defaultTabsVariant = tabsMeta.defaultVariant;

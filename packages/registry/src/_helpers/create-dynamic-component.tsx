@@ -8,12 +8,18 @@ import type { Variants } from "@dotui/registry/_style-system/types";
 
 import { useVariant, VariantsProvider } from "./variants-provider";
 
-// Type helper to ensure all non-"basic" variants are included
-type OmitBasic<T extends string> = T extends "basic" ? never : T;
+// Type helper to exclude the default variant from the variants map keys
+type OmitDefault<T extends string, Default extends string> = T extends Default
+  ? never
+  : T;
 
 // Utility to create a properly typed variants object
-export type VariantsMap<Props, VariantKey extends string> = Record<
-  OmitBasic<VariantKey>,
+export type VariantsMap<
+  Props,
+  VariantKey extends string,
+  DefaultVariant extends string = "basic",
+> = Record<
+  OmitDefault<VariantKey, DefaultVariant>,
   React.LazyExoticComponent<React.ComponentType<Props>>
 >;
 
@@ -28,16 +34,23 @@ function getClassName(props: Record<string, unknown>): string | undefined {
   return undefined;
 }
 
+export interface CreateDynamicComponentOptions {
+  defaultVariant?: string;
+  disableSkeleton?: boolean;
+}
+
 export const createDynamicComponent = <
   Props extends Record<string, any> = Record<string, unknown>,
   VariantKey extends string = string,
+  DefaultVariant extends string = "basic",
 >(
   componentName: keyof Variants,
   slotName: string,
   DefaultComponent: React.FC<Props>,
-  variants: VariantsMap<Props, VariantKey>,
-  disableSkeleton?: boolean,
+  variants: VariantsMap<Props, VariantKey, DefaultVariant>,
+  options?: CreateDynamicComponentOptions,
 ): React.FC<Props> => {
+  const { defaultVariant = "basic", disableSkeleton } = options ?? {};
   const Component = (props: Props) => {
     const rawVariantName = useVariant(componentName);
     const disableSuspense = useDisableSuspense();
@@ -55,13 +68,14 @@ export const createDynamicComponent = <
     // Extract className safely without type assertions
     const className = getClassName(props);
 
-    // Type-safe variant lookup - we need to cast to OmitBasic<VariantKey>
-    // since the variants map excludes "basic"
-    const variantKey = variantName as OmitBasic<VariantKey>;
+    // Type-safe variant lookup - we need to cast to OmitDefault<VariantKey, DefaultVariant>
+    // since the variants map excludes the default variant
+    const variantKey = variantName as OmitDefault<VariantKey, DefaultVariant>;
     const LazyComponent = variants[variantKey];
 
-    // If LazyComponent is not defined, its because it is the default variant
-    if (!LazyComponent) {
+    // If LazyComponent is not defined, it's because the requested variant is the default variant
+    // or the variant doesn't exist in the map (fallback to default)
+    if (!LazyComponent || variantName === defaultVariant) {
       if (disableSuspense) {
         return <DefaultComponent {...props} />;
       }

@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const textFieldMeta = {
   name: "text-field",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default textFieldMeta;
 export const textFieldVariants = Object.keys(
   textFieldMeta.variants,
 ) as (keyof typeof textFieldMeta.variants)[];
+
+export type TextFieldVariant = keyof typeof textFieldMeta.variants;
+
+export const defaultTextFieldVariant = textFieldMeta.defaultVariant;

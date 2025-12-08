@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const dateFieldMeta = {
   name: "date-field",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default dateFieldMeta;
 export const dateFieldVariants = Object.keys(
   dateFieldMeta.variants,
 ) as (keyof typeof dateFieldMeta.variants)[];
+
+export type DateFieldVariant = keyof typeof dateFieldMeta.variants;
+
+export const defaultDateFieldVariant = dateFieldMeta.defaultVariant;

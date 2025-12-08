@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const switchMeta = {
   name: "switch",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default switchMeta;
 export const switchVariants = Object.keys(
   switchMeta.variants,
 ) as (keyof typeof switchMeta.variants)[];
+
+export type SwitchVariant = keyof typeof switchMeta.variants;
+
+export const defaultSwitchVariant = switchMeta.defaultVariant;
