@@ -23,6 +23,7 @@ import Command from "./command/meta";
 import DateField from "./date-field/meta";
 import DatePicker from "./date-picker/meta";
 import Dialog from "./dialog/meta";
+import Disclosure from "./disclosure/meta";
 import Drawer from "./drawer/meta";
 import DropZone from "./drop-zone/meta";
 import Empty from "./empty/meta";
@@ -83,6 +84,7 @@ export const registryUi: RegistryItem[] = [
   DateField,
   DatePicker,
   Dialog,
+  Disclosure,
   Drawer,
   DropZone,
   Empty,
