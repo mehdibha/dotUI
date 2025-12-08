@@ -1,3 +1,4 @@
+import { registry } from "../registry";
 import { COLOR_TOKENS } from "../tokens/registry";
 import type {
   ColorTokens,
@@ -55,84 +56,11 @@ export const DEFAULT_VARIANTS_DEFINITION: VariantsDefinition = {
   "focus-style": "basic",
 };
 
-export const DEFAULT_VARIANTS: Variants = {
-  accordion: "basic",
-  disclosure: "basic",
-  alert: "basic",
-
-  avatar: "basic",
-
-  badge: "basic",
-
-  breadcrumbs: "basic",
-  menu: "basic",
-  tabs: "basic",
-  link: "basic",
-
-  button: "basic",
-  "toggle-button": "basic",
-  "toggle-button-group": "basic",
-  group: "basic",
-
-  input: "basic",
-  "text-field": "basic",
-  "number-field": "basic",
-  "search-field": "basic",
-  checkbox: "basic",
-  "checkbox-group": "basic",
-  "radio-group": "basic",
-  select: "basic",
-  combobox: "basic",
-  switch: "basic",
-  slider: "basic",
-
-  calendar: "basic",
-  "date-field": "basic",
-  "date-picker": "basic",
-  "time-field": "basic",
-
-  "color-area": "basic",
-  "color-field": "basic",
-  "color-picker": "basic",
-  "color-slider": "basic",
-  "color-editor": "basic",
-  "color-swatch": "basic",
-  "color-swatch-picker": "basic",
-  "color-thumb": "basic",
-
-  dialog: "basic",
-  drawer: "basic",
-  modal: "basic",
-  overlay: "basic",
-  popover: "basic",
-  separator: "basic",
-
-  table: "basic",
-  "list-box": "basic",
-
-  "drop-zone": "basic",
-  "file-trigger": "basic",
-
-  loader: "dots",
-  "progress-bar": "basic",
-  skeleton: "basic",
-  tooltip: "basic",
-
-  form: "basic",
-  field: "basic",
-
-  command: "basic",
-
-  text: "basic",
-  "tag-group": "basic",
-  kbd: "basic",
-  toast: "basic",
-  empty: "basic",
-
-  card: "basic",
-
-  "focus-styles": "basic",
-};
+export const DEFAULT_VARIANTS: Variants = Object.fromEntries(
+  registry
+    .filter((item) => item.defaultVariant !== undefined)
+    .map((item) => [item.name, item.defaultVariant]),
+) as Variants;
 
 export const DEFAULT_CSS = {
   "@layer base": {
