@@ -374,6 +374,9 @@ importers:
       '@dotui/style-system':
         specifier: workspace:*
         version: link:../packages/style-system
+      '@dotui/transformers':
+        specifier: workspace:*
+        version: link:../packages/transformers
       '@dotui/types':
         specifier: workspace:*
         version: link:../packages/types

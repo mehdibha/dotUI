@@ -1,19 +1,22 @@
 import { NextResponse } from "next/server";
-import path from "node:path";
 import type { NextRequest } from "next/server";
 
-import { buildRegistryItem } from "@dotui/registry-generator/shadcn";
 import { createStyle } from "@dotui/style-system";
-import type { RouterOutputs } from "@dotui/api";
 import type { ColorFormat } from "@dotui/style-system";
 
 import { env } from "@/env";
+import {
+  cached,
+  generateThemeJson,
+  getCacheKey,
+  loadComponentFromAnyCategory,
+  loadSpecialItem,
+  transformComponentJson,
+} from "@/lib/registry";
 import { caller } from "@/lib/trpc/server";
 
-const registryBasePath = path.resolve(
-  process.cwd(),
-  "../packages/registry/src",
-);
+// Feature flag for rollback capability
+const USE_PREBUILT_JSON = true;
 
 export async function GET(
   request: NextRequest,
@@ -47,9 +50,9 @@ export async function GET(
       );
     }
 
-    let style: RouterOutputs["style"]["getBySlug"];
-    let styleSlug: string | undefined;
-    let registryItemName: string | undefined;
+    // Parse route params
+    let styleSlug: string;
+    let registryItemName: string;
 
     if (routeParams.length === 3) {
       const [username, styleName, name] = routeParams as [
@@ -59,30 +62,103 @@ export async function GET(
       ];
       registryItemName = name;
       styleSlug = `${username}/${styleName}`;
-      style = await caller.style.getBySlug({
-        slug: styleSlug,
-      });
     } else {
       const [styleName, name] = routeParams as [string, string];
       registryItemName = name;
       styleSlug = styleName;
-      style = await caller.style.getBySlug({
-        slug: styleName,
-      });
     }
+
+    // Fetch style from database
+    const style = await caller.style.getBySlug({ slug: styleSlug });
 
     if (!style) {
       return NextResponse.json({ error: "Style not found" }, { status: 404 });
     }
 
+    // Generate style object
+    const styleObj = createStyle(style, false, colorFormat);
+
+    const baseUrl =
+      env.NODE_ENV === "development"
+        ? "http://localhost:4444/r"
+        : "https://dotui.org/r";
+
+    // Handle special items
+    if (registryItemName === "registry") {
+      const registry = await loadSpecialItem("registry");
+      return NextResponse.json(registry);
+    }
+
+    if (registryItemName === "theme") {
+      const themeJson = generateThemeJson(styleObj, styleSlug, colorFormat);
+      return NextResponse.json(themeJson);
+    }
+
+    if (registryItemName === "base") {
+      const base = await loadSpecialItem("base");
+      return NextResponse.json(base);
+    }
+
+    if (registryItemName === "all") {
+      const all = await loadSpecialItem("all");
+      return NextResponse.json(all);
+    }
+
+    // Use feature flag for pre-built JSON vs runtime generation
+    if (USE_PREBUILT_JSON) {
+      // Load pre-built component JSON with caching
+      const cacheKey = getCacheKey(styleSlug, registryItemName, colorFormat);
+
+      const result = await cached(cacheKey, async () => {
+        // Load pre-built JSON from any category
+        const component = await loadComponentFromAnyCategory(registryItemName);
+
+        if (!component) {
+          return null;
+        }
+
+        // Apply style-specific transforms
+        return transformComponentJson(component, {
+          style: styleObj,
+          styleName: styleSlug,
+          baseUrl,
+          colorFormat,
+        });
+      });
+
+      if (!result) {
+        return NextResponse.json(
+          { error: "Registry item not found" },
+          { status: 404 },
+        );
+      }
+
+      // Return with cache headers
+      const response = NextResponse.json(result);
+      response.headers.set(
+        "Cache-Control",
+        "public, s-maxage=60, stale-while-revalidate=300",
+      );
+
+      return response;
+    }
+
+    // Fallback to runtime generation (old path)
+    const { buildRegistryItem } = await import(
+      "@dotui/registry-generator/shadcn"
+    );
+    const path = await import("node:path");
+
+    const registryBasePath = path.resolve(
+      process.cwd(),
+      "../packages/registry/src",
+    );
+
     const registryItem = await buildRegistryItem(registryItemName, {
       styleName: styleSlug,
-      style: createStyle(style, false, colorFormat),
+      style: styleObj,
       registryBasePath,
-      baseUrl:
-        env.NODE_ENV === "development"
-          ? "http://localhost:4444/r"
-          : "https://dotui.org/r",
+      baseUrl,
       colorFormat,
     });
 
@@ -93,11 +169,9 @@ export async function GET(
       );
     }
 
-    const response = NextResponse.json(registryItem);
-
-    return response;
-  } catch (error) {
-    console.error("Registry API error:", error);
+    return NextResponse.json(registryItem);
+  } catch (_error) {
+    console.error("Registry API error:", _error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

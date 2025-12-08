@@ -9,7 +9,8 @@
   "license": "MIT",
   "exports": {
     ".": "./src/index.ts",
-    "./shadcn": "./src/shadcn/index.ts"
+    "./shadcn": "./src/shadcn/index.ts",
+    "./dist/*": "./dist/*"
   },
   "scripts": {
     "build": "tsx src/build.ts --src ../registry/src --out ./dist",
