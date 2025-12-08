@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import path from "node:path";
 import type { NextRequest } from "next/server";
 
-import { buildRegistryItem } from "@dotui/registry/shadcn-registry";
+import { buildRegistryItem } from "@dotui/registry-generator/shadcn";
 import { createStyle } from "@dotui/style-system";
 import type { RouterOutputs } from "@dotui/api";
 import type { ColorFormat } from "@dotui/style-system";

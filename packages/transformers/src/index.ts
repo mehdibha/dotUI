@@ -1,13 +1,12 @@
 // Types
-export type { Transform, TransformContext, TransformResult } from "./types";
 
 // Pipeline
 export { applyTransforms, applyTransformsWithTracking } from "./pipeline";
-
 // Transforms
 export {
-  transformImports,
+  createIconTransform,
   createImportTransform,
   transformIcons,
-  createIconTransform,
+  transformImports,
 } from "./transforms";
+export type { Transform, TransformContext, TransformResult } from "./types";

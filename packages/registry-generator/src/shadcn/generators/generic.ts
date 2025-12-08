@@ -1,7 +1,7 @@
 import { registryItemSchema } from "shadcn/schema";
 import type { RegistryItem } from "shadcn/schema";
 
-import { registry } from "@dotui/registry/registry";
+import { registry } from "@dotui/registry";
 import type { Style } from "@dotui/style-system";
 
 import { updateFiles } from "../helpers/update-files";

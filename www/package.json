@@ -22,6 +22,7 @@
     "@dotui/auth": "workspace:*",
     "@dotui/db": "workspace:*",
     "@dotui/registry": "workspace:*",
+    "@dotui/registry-generator": "workspace:*",
     "@dotui/style-system": "workspace:*",
     "@dotui/types": "workspace:*",
     "@fumadocs/mdx-remote": "^1.4.0",

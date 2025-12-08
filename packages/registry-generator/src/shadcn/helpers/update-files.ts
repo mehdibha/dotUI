@@ -2,15 +2,14 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { RegistryItem } from "shadcn/schema";
 
-import type { Style } from "@dotui/style-system";
+import { registryIcons } from "@dotui/registry/icons/registry";
 import {
   applyTransforms,
-  transformImports,
-  transformIcons,
   type TransformContext,
+  transformIcons,
+  transformImports,
 } from "@dotui/transformers";
-
-import { iconLibraries, registryIcons } from "../../icons/registry";
+import type { Style } from "@dotui/style-system";
 
 export const updateFiles = async (
   registryItem: RegistryItem,
@@ -65,7 +64,7 @@ export const updateFiles = async (
     const transformedContent = applyTransforms(
       file.content,
       [transformImports, transformIcons],
-      context
+      context,
     );
 
     file.content = transformedContent;

@@ -151,9 +151,6 @@ importers:
       '@dotui/style-system':
         specifier: workspace:*
         version: link:../style-system
-      '@dotui/transformers':
-        specifier: workspace:*
-        version: link:../transformers
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.63.0(react@19.2.0))
@@ -239,6 +236,31 @@ importers:
       tsx:
         specifier: ^4.19.2
         version: 4.20.6
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
+
+  packages/registry-generator:
+    dependencies:
+      '@dotui/registry':
+        specifier: workspace:*
+        version: link:../registry
+      '@dotui/style-system':
+        specifier: workspace:*
+        version: link:../style-system
+      '@dotui/transformers':
+        specifier: workspace:*
+        version: link:../transformers
+      shadcn:
+        specifier: ^3.2.1
+        version: 3.3.1(@types/node@22.18.12)(babel-plugin-macros@3.1.0)(typescript@5.9.3)
+    devDependencies:
+      '@dotui/ts-config':
+        specifier: workspace:*
+        version: link:../../config/ts-config
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.18.12
       typescript:
         specifier: ^5.8.3
         version: 5.9.3
@@ -343,6 +365,9 @@ importers:
       '@dotui/registry':
         specifier: workspace:*
         version: link:../packages/registry
+      '@dotui/registry-generator':
+        specifier: workspace:*
+        version: link:../packages/registry-generator
       '@dotui/style-system':
         specifier: workspace:*
         version: link:../packages/style-system

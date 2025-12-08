@@ -23,13 +23,13 @@ export const transformIcons: Transform = (content, context) => {
   // Replace lucide-react imports
   result = result.replace(
     /from\s+["']lucide-react["']/g,
-    `from "${targetPackage}"`
+    `from "${targetPackage}"`,
   );
 
   // Replace @/icons imports (alias used in registry)
   result = result.replace(
     /from\s+["']@\/icons["']/g,
-    `from "${targetPackage}"`
+    `from "${targetPackage}"`,
   );
 
   // Replace icon names based on mapping
@@ -59,7 +59,7 @@ function getIconLibraryPackage(library: string): string {
  */
 export function createIconTransform(
   targetLibrary: string,
-  iconMap: Record<string, Record<string, string>>
+  iconMap: Record<string, Record<string, string>>,
 ): Transform {
   return (content) =>
     transformIcons(content, { iconLibrary: targetLibrary, iconMap });

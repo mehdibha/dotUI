@@ -6,7 +6,7 @@ import type { Transform, TransformContext, TransformResult } from "./types";
 export function applyTransforms(
   content: string,
   transforms: Transform[],
-  context: TransformContext = {}
+  context: TransformContext = {},
 ): string {
   return transforms.reduce((c, transform) => transform(c, context), content);
 }
@@ -17,7 +17,7 @@ export function applyTransforms(
 export function applyTransformsWithTracking(
   content: string,
   transforms: Array<{ name: string; transform: Transform }>,
-  context: TransformContext = {}
+  context: TransformContext = {},
 ): TransformResult {
   const applied: string[] = [];
   let result = content;
