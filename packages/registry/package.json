@@ -34,9 +34,7 @@
     "./lib/*/meta": "./src/lib/*/meta.ts",
     "./schemas": "./src/schemas.ts",
     "./constants": "./src/constants.ts",
-    "./shadcn-registry": "./src/shadcn-registry/index.ts",
-    "./_helpers/create-dynamic-component": "./src/_helpers/create-dynamic-component.tsx",
-    "./_helpers/create-icon": "./src/_helpers/create-icon.tsx"
+    "./shadcn-registry": "./src/shadcn-registry/index.ts"
   },
   "scripts": {
     "build": "tsx scripts/build-registry.ts",
@@ -75,10 +73,10 @@
   },
   "dependencies": {
     "@dotui/style-system": "workspace:*",
+    "@dotui/transformers": "workspace:*",
     "@react-aria/utils": "^3.31.0",
     "@react-types/shared": "^3.26.0",
     "react-error-boundary": "^6.0.0",
-    "ts-morph": "^25.0.1",
     "zod": "^4.0.5"
   }
 }

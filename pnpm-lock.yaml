@@ -151,6 +151,9 @@ importers:
       '@dotui/style-system':
         specifier: workspace:*
         version: link:../style-system
+      '@dotui/transformers':
+        specifier: workspace:*
+        version: link:../transformers
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.63.0(react@19.2.0))
@@ -208,9 +211,6 @@ importers:
       tailwind-variants:
         specifier: ^3.1.1
         version: 3.1.1(tailwind-merge@3.3.1)(tailwindcss@4.1.15)
-      ts-morph:
-        specifier: ^25.0.1
-        version: 25.0.1
       zod:
         specifier: ^4.0.5
         version: 4.1.12
@@ -300,6 +300,15 @@ importers:
       tailwindcss:
         specifier: ^4.0.0
         version: 4.1.15
+
+  packages/transformers:
+    devDependencies:
+      '@dotui/ts-config':
+        specifier: workspace:*
+        version: link:../../config/ts-config
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
 
   packages/types:
     dependencies:

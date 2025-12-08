@@ -3,10 +3,14 @@ import path from "node:path";
 import type { RegistryItem } from "shadcn/schema";
 
 import type { Style } from "@dotui/style-system";
+import {
+  applyTransforms,
+  transformImports,
+  transformIcons,
+  type TransformContext,
+} from "@dotui/transformers";
 
-import { transform } from "../transformers";
-import { transformIcons } from "../transformers/transform-icons";
-import { transformImport } from "../transformers/transform-imports";
+import { iconLibraries, registryIcons } from "../../icons/registry";
 
 export const updateFiles = async (
   registryItem: RegistryItem,
@@ -19,6 +23,15 @@ export const updateFiles = async (
   if (!registryItem.files) {
     return registryItem;
   }
+
+  // Build transform context from style
+  const targetIconLibrary =
+    options.style.icons.library === "remix" ? "remix" : "lucide";
+
+  const context: TransformContext = {
+    iconLibrary: targetIconLibrary,
+    iconMap: registryIcons as Record<string, Record<string, string>>,
+  };
 
   for (const file of registryItem.files) {
     // Load file content from filesystem if not already present
@@ -48,13 +61,11 @@ export const updateFiles = async (
       continue;
     }
 
-    const transformedContent = await transform(
-      {
-        filename: `${options.registryBasePath}/${file.path}`,
-        raw: file.content,
-        style: options.style,
-      },
-      [transformImport, transformIcons],
+    // Apply transforms using the new lightweight string-based transformers
+    const transformedContent = applyTransforms(
+      file.content,
+      [transformImports, transformIcons],
+      context
     );
 
     file.content = transformedContent;
