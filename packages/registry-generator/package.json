@@ -12,6 +12,7 @@
     "./shadcn": "./src/shadcn/index.ts"
   },
   "scripts": {
+    "build": "tsx src/build.ts --src ../registry/src --out ./dist",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",
     "@types/node": "^22.15.3",
+    "tsx": "^4.19.2",
     "typescript": "^5.8.3"
   }
 }

@@ -2,13 +2,13 @@ import type { RegistryItem } from "@dotui/registry/types";
 
 export const registryHooks: RegistryItem[] = [
   {
-    name: "use-is-mobile",
+    name: "use-mobile",
     type: "registry:hook",
     files: [
       {
         type: "registry:hook",
-        path: "hooks/use-is-mobile.ts",
-        target: "hooks/use-is-mobile.ts",
+        path: "hooks/use-mobile.ts",
+        target: "hooks/use-mobile.ts",
       },
     ],
   },

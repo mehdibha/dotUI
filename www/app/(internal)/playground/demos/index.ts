@@ -22,7 +22,6 @@ export * from "./drawer-demo";
 export * from "./empty-demo";
 export * from "./field-demo";
 export * from "./file-trigger-demo";
-export * from "./form-demo";
 export * from "./group-demo";
 export * from "./input-demo";
 export * from "./input-group-demo";

@@ -96,7 +96,8 @@ export async function GET(
     const response = NextResponse.json(registryItem);
 
     return response;
-  } catch (_error) {
+  } catch (error) {
+    console.error("Registry API error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

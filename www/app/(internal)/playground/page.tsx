@@ -139,11 +139,6 @@ const content: ContentSection[] = [
         title: "Field",
         preview: demos.FieldDemo,
       },
-      {
-        id: "form",
-        title: "Form",
-        preview: demos.FormDemo,
-      },
     ],
   },
 

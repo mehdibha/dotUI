@@ -15,17 +15,6 @@ const tabsMeta = {
       ],
       registryDependencies: ["focus-styles"],
     },
-    motion: {
-      files: [
-        {
-          type: "registry:ui",
-          path: "ui/tabs/motion.tsx",
-          target: "ui/tabs.tsx",
-        },
-      ],
-      registryDependencies: ["focus-styles"],
-      dependencies: ["motion"],
-    },
   },
 } satisfies RegistryItem;
 

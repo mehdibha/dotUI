@@ -33,7 +33,6 @@ import { dropZoneVariants } from "@dotui/registry/ui/drop-zone/meta";
 import { emptyVariants } from "@dotui/registry/ui/empty/meta";
 import { fieldVariants } from "@dotui/registry/ui/field/meta";
 import { fileTriggerVariants } from "@dotui/registry/ui/file-trigger/meta";
-import { formVariants } from "@dotui/registry/ui/form/meta";
 import { groupVariants } from "@dotui/registry/ui/group/meta";
 import { inputVariants } from "@dotui/registry/ui/input/meta";
 import { kbdVariants } from "@dotui/registry/ui/kbd/meta";
@@ -315,7 +314,6 @@ export const variantsSchema = z.object({
   field: z.enum(fieldVariants),
   "file-trigger": z.enum(fileTriggerVariants),
   "focus-styles": z.enum(focusStylesVariants),
-  form: z.enum(formVariants),
   group: z.enum(groupVariants),
   input: z.enum(inputVariants),
   kbd: z.enum(kbdVariants),

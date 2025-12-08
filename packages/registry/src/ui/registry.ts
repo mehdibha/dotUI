@@ -29,7 +29,6 @@ import DropZone from "./drop-zone/meta";
 import Empty from "./empty/meta";
 import Field from "./field/meta";
 import FileTrigger from "./file-trigger/meta";
-import Form from "./form/meta";
 import Group from "./group/meta";
 import Input from "./input/meta";
 import Kbd from "./kbd/meta";
@@ -90,7 +89,6 @@ export const registryUi: RegistryItem[] = [
   Empty,
   Field,
   FileTrigger,
-  Form,
   Group,
   Input,
   Kbd,
