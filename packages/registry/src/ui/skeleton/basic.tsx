@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from "react";
 
-import { cn } from "@dotui/registry/lib/utils";
+import { cn } from "../../lib/utils";
 
 const SkeletonContext = createContext<boolean>(false);
 
