@@ -10,5 +10,5 @@ export {
 // Registry
 export { registry } from "./registry";
 // Re-export common types from style-system
-export type { CommonIconProps } from "./_helpers/create-icon";
+export type { CommonIconProps } from "./icons/create-icon";
 export type { StyleProviderProps, ThemeProviderProps } from "./providers";

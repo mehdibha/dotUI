@@ -1,6 +1,6 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type {
   ListBoxItemProps,

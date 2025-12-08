@@ -2,7 +2,7 @@
 
 import type { DateValue } from "react-aria";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
 import * as Default from "./basic";
 import type {

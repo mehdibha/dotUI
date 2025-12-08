@@ -175,7 +175,7 @@ ${libraryMappings}
 
 import * as React from "react";
 import * as Lucide from "lucide-react";
-import { createIcon } from "../_helpers/create-icon";
+import { createIcon } from "./create-icon";
 
 ${iconExports}
 `;

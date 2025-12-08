@@ -1,6 +1,6 @@
 "use client";
 
-import { createDynamicComponent } from "../../_helpers/create-dynamic-component";
+import { createDynamicComponent } from "../create-dynamic-component";
 import * as Default from "./basic";
 import type { AlertVariant } from "./meta";
 import type {
