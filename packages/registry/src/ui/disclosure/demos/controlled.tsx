@@ -13,21 +13,20 @@ export default function Demo() {
   const [isExpanded, setExpanded] = React.useState(false);
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <Button onPress={() => setExpanded(!isExpanded)}>
-        {isExpanded ? "Collapse" : "Expand"}
-      </Button>
-      <Disclosure
-        isExpanded={isExpanded}
-        onExpandedChange={setExpanded}
-        className="max-w-xs"
-      >
-        <DisclosureTrigger>Controlled disclosure</DisclosureTrigger>
+    <div className="w-full space-y-3">
+      <Disclosure isExpanded={isExpanded} onExpandedChange={setExpanded}>
+        <DisclosureTrigger>System requirements</DisclosureTrigger>
         <DisclosurePanel>
-          This disclosure is controlled externally. You can toggle it using the
-          button above or by clicking the disclosure heading.
+          Details about system requirements go here. Describes the minimum and
+          recommended hardware and software needed.
         </DisclosurePanel>
       </Disclosure>
+      <Button size="sm" onPress={() => setExpanded(!isExpanded)}>
+        {isExpanded ? "Collapse" : "Expand"}
+      </Button>
+      <p className="text-fg-muted text-sm">
+        Expanded: {isExpanded ? "true" : "false"}{" "}
+      </p>
     </div>
   );
 }

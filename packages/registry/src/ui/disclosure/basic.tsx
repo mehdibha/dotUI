@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 
 const disclosureStyles = tv({
   slots: {
-    root: "group/disclosure w-full disabled:text-fg-disabled **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left",
+    root: "group/disclosure w-full disabled:text-fg-disabled **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left disabled:**:[svg]:text-fg-disabled",
     heading: "flex",
     button: [
       "focus-reset focus-visible:focus-ring",

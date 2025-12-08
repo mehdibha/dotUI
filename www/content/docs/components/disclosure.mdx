@@ -17,9 +17,7 @@ links:
     npx shadcn@latest add @dotui/disclosure
     ```
 
-    ## Usage
-
-    A disclosure is a collapsible section of content. It consists of a heading with a trigger button and a panel that contains the content. Users can expand or collapse the content by clicking on the heading.
+    ## Anatomy
 
     ```tsx
     import {
@@ -31,16 +29,35 @@ links:
 
     ```tsx
     <Disclosure>
-      <DisclosureHeading>Click to expand</DisclosureHeading>
+      <DisclosureHeading>What is dotUI?</DisclosureHeading>
       <DisclosurePanel>
-        Hidden content that is revealed when expanded.
+        dotUI is a design system platform.
       </DisclosurePanel>
     </Disclosure>
     ```
 
-    ## Advanced composition
+    for more advanced composition, you can use this structure
 
-    <Demo name="disclosure/demos/advanced-composition"  className="**:data-disclosure:max-w-xs"/>
+    ```tsx
+    import { Disclosure, DisclosurePanel } from "@/components/ui/disclosure";
+    import { Button } from "@/components/ui/button";
+    import { Heading } from "@/components/ui/heading";
+    import { ChevronDownIcon } from "your-icon-library";
+    ```
+
+    ```tsx
+    <Disclosure>
+      <Heading>
+        <Button>
+          What is dotUI?
+          <ChevronDownIcon />
+        </Button>
+      </Heading>
+      <DisclosurePanel>
+        dotUI is a design system platform.
+      </DisclosurePanel>
+    </Disclosure>
+    ```
 
     ## Playground
 
@@ -69,9 +86,12 @@ links:
   </PageTabPanel>
 
   <PageTabPanel id="examples">
-    <Example name="disclosure/demos/default" />
-    <Example name="disclosure/demos/default-expanded" />
-    <Example name="disclosure/demos/disabled" />
-    <Example name="disclosure/demos/controlled" />
+    <Examples>
+      <Example name="disclosure/demos/basic" description="Basic disclosure" />
+      <Example name="disclosure/demos/default-expanded" description="Default expanded disclosure" />
+      <Example name="disclosure/demos/disabled" description="Disabled disclosure" />
+      <Example name="disclosure/demos/controlled" description="Controlled disclosure" />
+      <Example name="disclosure/demos/advanced-composition" description="Advanced composition" />
+    </Examples>
   </PageTabPanel>
 </PageTabs>

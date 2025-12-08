@@ -6,9 +6,12 @@ import {
 
 export default function Demo() {
   return (
-    <Disclosure isDisabled className="max-w-xs">
-      <DisclosureTrigger>Disabled disclosure</DisclosureTrigger>
-      <DisclosurePanel>This content cannot be revealed</DisclosurePanel>
+    <Disclosure isDisabled>
+      <DisclosureTrigger>System requirements</DisclosureTrigger>
+      <DisclosurePanel>
+        Details about system requirements go here. Describes the minimum and
+        recommended hardware and software needed.
+      </DisclosurePanel>
     </Disclosure>
   );
 }

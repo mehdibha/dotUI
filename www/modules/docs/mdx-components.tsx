@@ -18,6 +18,7 @@ import {
 } from "./code-block/code-block-tabs";
 import { Demo } from "./demo";
 import { Example } from "./example";
+import { Examples } from "./examples";
 import { InteractiveDemo, type InteractiveDemoProps } from "./interactive-demo";
 import { PageTabPanel, PageTabs } from "./page-tabs";
 import type { DemoProps } from "./demo";
@@ -98,6 +99,7 @@ export const mdxComponents: MDXComponents = {
   InteractiveDemo: ({ className, ...props }: InteractiveDemoProps) => (
     <InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />
   ),
+  Examples,
   p: ({ className, ...props }) => (
     <p
       className={cn("not-first:mt-4 text-base leading-7", className)}
