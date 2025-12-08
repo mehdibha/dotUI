@@ -12,7 +12,7 @@ const timeFieldMeta = {
           target: "ui/time-field.tsx",
         },
       ],
-      registryDependencies: ["field", "input", "date-input"],
+      registryDependencies: ["field", "input"],
     },
   },
 } satisfies RegistryItem;

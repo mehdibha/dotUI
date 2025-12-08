@@ -6,7 +6,7 @@ import {
 
 export default function Demo() {
   return (
-    <Disclosure className="max-w-xs">
+    <Disclosure>
       <DisclosureTrigger>System requirements</DisclosureTrigger>
       <DisclosurePanel>
         Details about system requirements go here. Describes the minimum and

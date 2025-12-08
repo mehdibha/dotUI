@@ -5,7 +5,7 @@ import { Heading } from "@dotui/registry/ui/heading";
 
 export default function Demo() {
   return (
-    <Disclosure className="max-w-xs">
+    <Disclosure>
       <Heading>
         <Button variant="quiet" slot="trigger">
           System requirements

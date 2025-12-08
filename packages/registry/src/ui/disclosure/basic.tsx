@@ -12,7 +12,7 @@ import { tv } from "tailwind-variants";
 
 const disclosureStyles = tv({
   slots: {
-    root: "group/disclosure w-full **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left",
+    root: "group/disclosure w-full disabled:text-fg-disabled **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left",
     heading: "flex",
     button: [
       "focus-reset focus-visible:focus-ring",
@@ -62,7 +62,12 @@ interface DisclosureTriggerProps
 function DisclosureTrigger(props: DisclosureTriggerProps) {
   return (
     <AriaHeading className={heading()}>
-      <AriaButton slot="trigger" className={button()} {...props}>
+      <AriaButton
+        slot="trigger"
+        data-disclosure-trigger=""
+        className={button()}
+        {...props}
+      >
         {composeRenderProps(props.children, (children) => (
           <>
             {children}

@@ -20,7 +20,6 @@ export const DocsPager = ({
       <Tooltip>
         <LinkButton
           aria-label="Go to previous page"
-          variant="quiet"
           size="sm"
           isDisabled={!previous}
           href={previous?.url as Route}
@@ -32,7 +31,6 @@ export const DocsPager = ({
       <Tooltip>
         <LinkButton
           aria-label="Go to next page"
-          variant="quiet"
           size="sm"
           isDisabled={!next}
           href={next?.url as Route}

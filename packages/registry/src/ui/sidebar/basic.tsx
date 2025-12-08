@@ -115,7 +115,7 @@ const sidebarStyles = tv({
       "flex h-8 shrink-0 items-center whitespace-nowrap rounded-md px-2 font-medium text-fg-muted text-xs outline-hidden [&>svg]:size-4 [&>svg]:shrink-0",
     ],
     list: "flex w-full min-w-0 flex-col gap-1",
-    item: "whitespace-nowrap *:data-[slot=button]:w-full *:data-[slot=button]:justify-start *:data-[slot=button]:overflow-hidden *:data-[slot=button]:p-1.75 *:data-[slot=button]:text-left *:data-[slot=button]:[&>svg]:shrink-0",
+    item: "whitespace-nowrap *:data-button:w-full *:data-button:justify-start *:data-button:overflow-hidden *:data-button:p-1.75 *:data-button:text-left *:data-button:[&>svg]:shrink-0",
   },
 });
 
@@ -263,12 +263,7 @@ function SidebarItem({
   const { isOpen } = useSidebarContext("SidebarItem");
 
   const comp = (
-    <li
-      data-slot="sidebar-menu-item"
-      data-sidebar="menu-item"
-      className={item({ className })}
-      {...props}
-    />
+    <li data-sidebar-menu-item="" className={item({ className })} {...props} />
   );
 
   if (tooltip) {

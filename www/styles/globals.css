@@ -11,8 +11,7 @@
 @plugin "tailwindcss-with";
 @plugin "@tailwindcss/typography";
 
-@source "../../packages/registry/src//**/*.{ts,tsx}";
-@source "../../packages/registry-v2/src//**/*.{ts,tsx}";
+@source "../../packages/registry/src/**/*.{ts,tsx}";
 @source "../**/*.{ts,tsx}";
 
 /* Radius */

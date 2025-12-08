@@ -17,7 +17,6 @@ const datePickerMeta = {
         "calendar",
         "field",
         "input",
-        "date-input",
         "dialog",
       ],
     },
