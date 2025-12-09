@@ -74,15 +74,15 @@ export function SearchCommand({ items, keyboardShortcut, children, onAction }: S
 							</MenuItem>
 						))}
 					</MenuSection>
-					{items.map((group, index) => {
+					{items.map((group) => {
 						if (group.type === "folder") {
 							return (
-								<MenuSection key={index}>
+								<MenuSection key={group.name}>
 									<MenuSectionHeader>{group.name}</MenuSectionHeader>
-									{group.children.map((item, itemIndex) => {
+									{group.children.map((item) => {
 										if (item.type === "page") {
 											return (
-												<MenuItem key={itemIndex} href={item.url as Route} textValue={item.name as string}>
+												<MenuItem key={item.url} href={item.url as Route} textValue={item.name as string}>
 													{group.name === "Components" ? (
 														<CircleDashedIcon className="text-fg-muted!" />
 													) : (

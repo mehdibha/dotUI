@@ -96,8 +96,8 @@ export default async function HomePage() {
 								icon: <TailwindWordmark className="h-5 sm:h-7" />,
 								href: "https://tailwindcss.com",
 							},
-						].map(({ icon, label, href }, index) => (
-							<Tooltip key={index}>
+						].map(({ icon, label, href }) => (
+							<Tooltip key={href}>
 								<Link
 									target="_blank"
 									aria-label={label}

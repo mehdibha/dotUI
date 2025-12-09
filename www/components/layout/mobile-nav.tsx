@@ -48,16 +48,16 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
 									))}
 								</div>
 							</div>
-							{items?.map((group, index) => {
+							{items?.map((group) => {
 								if (group.type === "folder") {
 									return (
-										<div key={index} className="flex flex-col gap-3">
+										<div key={group.name} className="flex flex-col gap-3">
 											<div className="font-medium text-fg-muted text-lg">{group.name}</div>
 											<div className="flex flex-col gap-3">
-												{group.children.map((item, itemIndex) => {
+												{group.children.map((item) => {
 													if (item.type === "page") {
 														return (
-															<MobileLink key={itemIndex} href={item.url as Route} onOpenChange={close}>
+															<MobileLink key={item.url} href={item.url as Route} onOpenChange={close}>
 																{item.name}
 															</MobileLink>
 														);

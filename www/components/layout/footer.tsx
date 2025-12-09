@@ -64,12 +64,12 @@ export const Footer = () => {
 						<p className="text-base text-fg-muted">Bringing singularity to the web.</p>
 					</div>
 					<div className="flex flex-wrap @2xl:gap-10 gap-6 text-sm">
-						{links.map((group, index) => (
-							<div key={index}>
+						{links.map((group) => (
+							<div key={group.label}>
 								<h2 className="font-bold">{group.label}</h2>
 								<ul className="mt-2 space-y-2">
-									{group.links.map((link, index) => (
-										<li key={index}>
+									{group.links.map((link) => (
+										<li key={link.href}>
 											<NavLink
 												href={link.href}
 												className="text-fg-muted transition-colors duration-200 hover:text-fg"

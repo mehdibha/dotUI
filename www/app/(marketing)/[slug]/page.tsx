@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
 import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
+import { notFound } from "next/navigation";
 import type { Metadata, Route } from "next";
 
 import { cn } from "@dotui/registry/lib/utils";
@@ -34,9 +34,9 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
 				<p className="mt-2 text-fg-muted">{page.data.description}</p>
 				{page.data.links && page.data.links.length > 0 && (
 					<div className="mt-4 flex flex-wrap gap-2">
-						{page.data.links.map((link, index) => (
+						{page.data.links.map((link) => (
 							<LinkButton
-								key={index}
+								key={link.href}
 								href={link.href as Route}
 								target="_blank"
 								rel="noopener noreferrer"
