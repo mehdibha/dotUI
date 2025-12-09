@@ -6,7 +6,7 @@ import {
   transformImports,
 } from "@dotui/transformers";
 import type { ComponentJson, FileEntry } from "@dotui/registry-generator";
-import type { ColorFormat, Style, Variants } from "@dotui/style-system";
+import type { ColorFormat, Style, Variants } from "@dotui/style-system/types";
 
 export interface TransformOptions {
   style: Style;

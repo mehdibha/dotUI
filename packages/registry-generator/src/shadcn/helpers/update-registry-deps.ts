@@ -1,6 +1,6 @@
 import type { RegistryItem } from "shadcn/schema";
 
-import type { Style } from "@dotui/style-system";
+import type { Style } from "@dotui/style-system/types";
 
 export const updateRegistryDependencies = (
   registryItem: RegistryItem,

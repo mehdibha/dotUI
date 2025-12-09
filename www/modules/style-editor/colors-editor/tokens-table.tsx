@@ -17,9 +17,9 @@ import {
   TableHeader,
   TableRow,
 } from "@dotui/registry/ui/table";
-import { SCALE_STEPS } from "@dotui/style-system";
+import { SCALE_STEPS } from "@dotui/style-system/core";
 import type { TableProps } from "@dotui/registry/ui/table";
-import type { ScaleId } from "@dotui/style-system";
+import type { ScaleId } from "@dotui/style-system/types";
 
 import { ContextualHelp } from "@/components/ui/contextual-help";
 import {

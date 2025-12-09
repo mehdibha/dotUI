@@ -37,8 +37,8 @@ import {
   TableRow,
 } from "@dotui/registry/ui/table";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
-import { SCALE_STEPS, toColorString } from "@dotui/style-system";
-import type { ScaleId } from "@dotui/style-system";
+import { SCALE_STEPS, toColorString } from "@dotui/style-system/core";
+import type { ScaleId } from "@dotui/style-system/types";
 
 import { ON_CHANGE_DEBOUNCE_MS } from "@/modules/style-editor/constants";
 import {

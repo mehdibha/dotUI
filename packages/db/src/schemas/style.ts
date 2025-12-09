@@ -21,7 +21,7 @@ import type {
   IconsDefinition,
   ThemeDefinition,
   VariantsDefinition,
-} from "@dotui/style-system";
+} from "@dotui/style-system/types";
 
 import { user } from "./auth";
 

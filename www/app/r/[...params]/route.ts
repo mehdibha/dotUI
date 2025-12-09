@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { createStyle } from "@dotui/style-system";
-import type { ColorFormat } from "@dotui/style-system";
+import { createStyle } from "@dotui/style-system/core";
+import type { ColorFormat } from "@dotui/style-system/types";
 
 import { env } from "@/env";
 import {

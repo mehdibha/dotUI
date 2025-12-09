@@ -3,11 +3,11 @@
 import {
   StyleProvider as BaseStyleProvider,
   ThemeProvider as BaseThemeProvider,
-} from "@dotui/style-system";
+} from "@dotui/style-system/providers";
 import type {
   StyleProviderProps as BaseStyleProviderProps,
   ThemeProviderProps as BaseThemeProviderProps,
-} from "@dotui/style-system";
+} from "@dotui/style-system/providers";
 
 import { registryBackgroundPatterns } from "./background-patterns/registry";
 import { cn } from "./lib/utils";
@@ -57,4 +57,4 @@ export {
   useCurrentStyle,
   useVariant,
   VariantsProvider,
-} from "@dotui/style-system";
+} from "@dotui/style-system/providers";

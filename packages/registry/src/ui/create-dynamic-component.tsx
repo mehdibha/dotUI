@@ -2,12 +2,9 @@ import React from "react";
 import { AlertCircleIcon } from "lucide-react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import {
-  DEFAULT_VARIANTS_DEFINITION,
-  useVariant,
-  VariantsProvider,
-} from "@dotui/style-system";
-import type { Variants } from "@dotui/style-system";
+import { useVariant, VariantsProvider } from "@dotui/style-system/providers";
+import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/style-system/utils";
+import type { Variants } from "@dotui/style-system/types";
 
 import { cn } from "../lib/utils";
 

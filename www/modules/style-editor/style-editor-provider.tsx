@@ -8,7 +8,8 @@ import { createStyleSchema } from "@dotui/db/schemas";
 import { DEFAULT_STYLE } from "@dotui/registry/constants";
 import { useAppForm } from "@dotui/registry/ui/tanstack-form";
 import { toast } from "@dotui/registry/ui/toast";
-import { createColorScales, DEFAULT_LIGHT_MODE } from "@dotui/style-system";
+import { createColorScales } from "@dotui/style-system/core";
+import { DEFAULT_LIGHT_MODE } from "@dotui/style-system/utils";
 
 import { NavigationBlocker } from "@/modules/style-editor/navigation-blocker";
 import { useEditorStyle } from "@/modules/style-editor/use-editor-style";

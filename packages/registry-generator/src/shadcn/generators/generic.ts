@@ -2,7 +2,7 @@ import { registryItemSchema } from "shadcn/schema";
 import type { RegistryItem } from "shadcn/schema";
 
 import { registry } from "@dotui/registry";
-import type { Style } from "@dotui/style-system";
+import type { Style } from "@dotui/style-system/types";
 
 import { updateFiles } from "../helpers/update-files";
 import { updateRegistryDependencies } from "../helpers/update-registry-deps";

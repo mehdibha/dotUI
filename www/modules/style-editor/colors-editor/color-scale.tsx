@@ -11,7 +11,7 @@ import {
 } from "@dotui/registry/ui/dialog";
 import { Overlay } from "@dotui/registry/ui/overlay";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
-import type { ScaleId } from "@dotui/style-system";
+import type { ScaleId } from "@dotui/style-system/types";
 
 import {
   useGeneratedTheme,

@@ -7,8 +7,8 @@ import {
   DEFAULT_ICON_LIBRARY,
   DEFAULT_ICON_STROKE_WIDTH,
   DEFAULT_VARIANTS_DEFINITION,
-} from "@dotui/style-system";
-import type { StyleDefinition } from "@dotui/style-system";
+} from "@dotui/style-system/utils";
+import type { StyleDefinition } from "@dotui/style-system/types";
 
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/client";

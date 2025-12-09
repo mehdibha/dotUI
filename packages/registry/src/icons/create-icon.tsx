@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Skeleton } from "@dotui/registry/ui/skeleton";
-import { useCurrentStyle } from "@dotui/style-system";
+import { useCurrentStyle } from "@dotui/style-system/providers";
 import type { iconLibraries } from "@dotui/registry/icons/registry";
 
 interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {

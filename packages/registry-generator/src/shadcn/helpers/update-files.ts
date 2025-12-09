@@ -9,7 +9,7 @@ import {
   transformIcons,
   transformImports,
 } from "@dotui/transformers";
-import type { Style } from "@dotui/style-system";
+import type { Style } from "@dotui/style-system/types";
 
 export const updateFiles = async (
   registryItem: RegistryItem,

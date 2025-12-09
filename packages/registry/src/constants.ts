@@ -7,7 +7,7 @@ import type {
   ThemeDefinition,
   Variants,
   VariantsDefinition,
-} from "@dotui/style-system";
+} from "@dotui/style-system/types";
 
 import { registry } from "./registry";
 import { COLOR_TOKENS } from "./tokens/registry";
