@@ -123,6 +123,7 @@ export default async function HomePage() {
 				<div className="mt-6 flex items-end justify-between gap-6 px-8 sm:items-end sm:justify-between sm:gap-10 lg:gap-20">
 					<div className="flex flex-col items-center gap-6">
 						<svg
+							aria-hidden="true"
 							width="40"
 							viewBox="0 0 236 66"
 							fill="none"

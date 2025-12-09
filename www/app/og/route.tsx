@@ -50,7 +50,7 @@ export async function GET(request: Request) {
 					tw="h-full w-8 border-r border-l border-[#3f3838]"
 				/>
 				<div tw="flex-1 flex flex-col justify-center p-12">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
+					<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
 						<rect x="0" y="0" width="100" height="100" rx="12" ry="12" fill="white" />
 						<circle cx="75" cy="75" r="11" fill="#381e1e" />
 					</svg>

@@ -16,7 +16,7 @@ export const Logo = ({
 }) => {
 	const content = (
 		<>
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="size-5">
+			<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="size-5">
 				<rect x="0" y="0" width="100" height="100" rx="12" ry="12" className="fill-[#381e1e] dark:fill-white" />
 				<circle cx="75" cy="75" r="11" className="fill-white dark:fill-[#381e1e]" />
 			</svg>
