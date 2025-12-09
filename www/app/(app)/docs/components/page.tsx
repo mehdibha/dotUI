@@ -82,6 +82,7 @@ function ComponentCard({ name, href, preview, scale = 0.8, className, previewCla
 				<iframe
 					src={preview}
 					className="origin-top-left"
+					title={`${name} preview`}
 					sandbox="allow-scripts allow-same-origin"
 					style={{
 						transform: `scale(${scale})`,

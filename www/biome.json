@@ -1,5 +1,12 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
 	"root": false,
-	"extends": ["@dotui/biome-config/base", "@dotui/biome-config/next-js"]
+	"extends": ["@dotui/biome-config/base", "@dotui/biome-config/next-js"],
+	"linter": {
+		"rules": {
+			"a11y": {
+				"useValidAnchor": "off"
+			}
+		}
+	}
 }
