@@ -4,10 +4,9 @@ import type { RegistryItem } from "shadcn/schema";
 import { registry } from "@dotui/registry";
 import type { Style } from "@dotui/style-system/types";
 
-import { updateFiles } from "../helpers/update-files";
-import { updateRegistryDependencies } from "../helpers/update-registry-deps";
+import { updateFiles, updateRegistryDependencies } from "../transform";
 
-export const generateGenericRegistryItem = async (
+export async function generateShadcnItem(
   registryItemName: string,
   options: {
     styleName: string;
@@ -15,7 +14,7 @@ export const generateGenericRegistryItem = async (
     baseUrl: string;
     style: Style;
   },
-): Promise<RegistryItem | null> => {
+): Promise<RegistryItem | null> {
   const { registryBasePath, baseUrl, style } = options;
 
   const variant =
@@ -62,4 +61,4 @@ export const generateGenericRegistryItem = async (
   }
 
   return registryItem;
-};
+}

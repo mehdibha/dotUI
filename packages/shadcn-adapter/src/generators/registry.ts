@@ -3,7 +3,7 @@ import type { Registry } from "shadcn/schema";
 import { registryUi } from "@dotui/registry/ui/registry";
 import type { Style, Variants } from "@dotui/style-system/types";
 
-import { updateRegistryDependencies } from "../helpers/update-registry-deps";
+import { updateRegistryDependencies } from "../transform";
 import { generateRegistryAll } from "./all";
 import { generateRegistryBase } from "./base";
 import { generateRegistryTheme } from "./theme";

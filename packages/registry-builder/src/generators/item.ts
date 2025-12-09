@@ -2,8 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 import { transformImports } from "@dotui/transformers";
-
-import type { ComponentJson, FileEntry } from "../types";
+import type { FileEntry, ItemJson } from "@dotui/types/registry";
 
 interface RegistryItem {
   name: string;
@@ -22,15 +21,15 @@ interface RegistryItem {
 }
 
 /**
- * Generate a component JSON file from a registry item
+ * Generate an item JSON file from a registry item
  */
-export async function generateComponentJson(
+export async function generateItemJson(
   item: RegistryItem,
   srcDir: string,
-): Promise<ComponentJson> {
+): Promise<ItemJson> {
   const baseFiles = await readFiles(item.files || [], srcDir);
 
-  const json: ComponentJson = {
+  const json: ItemJson = {
     name: item.name,
     type: item.type,
     title: item.title,

@@ -7,7 +7,7 @@ export interface BuildOptions {
   pretty?: boolean;
 }
 
-export interface ComponentJson {
+export interface ItemJson {
   name: string;
   type: string;
   title?: string;

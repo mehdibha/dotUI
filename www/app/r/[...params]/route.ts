@@ -9,9 +9,9 @@ import {
   cached,
   generateThemeJson,
   getCacheKey,
-  loadComponentFromAnyCategory,
+  loadItemFromAnyCategory,
   loadSpecialItem,
-  transformComponentJson,
+  transformItemJson,
 } from "@/lib/registry";
 import { caller } from "@/lib/trpc/server";
 
@@ -106,19 +106,19 @@ export async function GET(
 
     // Use feature flag for pre-built JSON vs runtime generation
     if (USE_PREBUILT_JSON) {
-      // Load pre-built component JSON with caching
+      // Load pre-built item JSON with caching
       const cacheKey = getCacheKey(styleSlug, registryItemName, colorFormat);
 
       const result = await cached(cacheKey, async () => {
         // Load pre-built JSON from any category
-        const component = await loadComponentFromAnyCategory(registryItemName);
+        const item = await loadItemFromAnyCategory(registryItemName);
 
-        if (!component) {
+        if (!item) {
           return null;
         }
 
         // Apply style-specific transforms
-        return transformComponentJson(component, {
+        return transformItemJson(item, {
           style: styleObj,
           styleName: styleSlug,
           baseUrl,
@@ -144,9 +144,7 @@ export async function GET(
     }
 
     // Fallback to runtime generation (old path)
-    const { buildRegistryItem } = await import(
-      "@dotui/registry-generator/shadcn"
-    );
+    const { buildShadcnItem } = await import("@dotui/shadcn-adapter");
     const path = await import("node:path");
 
     const registryBasePath = path.resolve(
@@ -154,7 +152,7 @@ export async function GET(
       "../packages/registry/src",
     );
 
-    const registryItem = await buildRegistryItem(registryItemName, {
+    const registryItem = await buildShadcnItem(registryItemName, {
       styleName: styleSlug,
       style: styleObj,
       registryBasePath,

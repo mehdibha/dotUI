@@ -1,9 +1,26 @@
-import type { Manifest, ManifestItem } from "../types";
+import type { Manifest, ManifestItem } from "@dotui/types/registry";
 
 interface RegistryItem {
   name: string;
   type: string;
   variants?: Record<string, unknown>;
+}
+
+/**
+ * Get category from registry type
+ */
+export function getCategoryFromType(type: string): string {
+  const typeMap: Record<string, string> = {
+    "registry:ui": "ui",
+    "registry:component": "ui",
+    "registry:hook": "hooks",
+    "registry:lib": "lib",
+    "registry:block": "blocks",
+    "registry:style": "base",
+    "registry:theme": "themes",
+  };
+
+  return typeMap[type] || "other";
 }
 
 /**
@@ -60,21 +77,4 @@ export function generateCategoryManifest(
   );
 
   return { items: uniqueItems };
-}
-
-/**
- * Get category from registry type
- */
-function getCategoryFromType(type: string): string {
-  const typeMap: Record<string, string> = {
-    "registry:ui": "ui",
-    "registry:component": "ui",
-    "registry:hook": "hooks",
-    "registry:lib": "lib",
-    "registry:block": "blocks",
-    "registry:style": "base",
-    "registry:theme": "themes",
-  };
-
-  return typeMap[type] || "other";
 }

@@ -1,12 +1,12 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
-import type { ComponentJson, Manifest } from "@dotui/registry-generator";
+import type { ItemJson, Manifest } from "@dotui/types/registry";
 
 // Path to pre-built registry files (relative to project root)
 const REGISTRY_DIST_PATH = path.resolve(
   process.cwd(),
-  "../packages/registry-generator/dist",
+  "../packages/registry-builder/dist",
 );
 
 /**
@@ -23,37 +23,33 @@ export async function loadManifest(): Promise<Manifest | null> {
 }
 
 /**
- * Load a specific component's pre-built JSON
+ * Load a specific item's pre-built JSON
  */
-export async function loadComponentJson(
+export async function loadItemJson(
   name: string,
   category: string = "ui",
-): Promise<ComponentJson | null> {
+): Promise<ItemJson | null> {
   try {
-    const componentPath = path.join(
-      REGISTRY_DIST_PATH,
-      category,
-      `${name}.json`,
-    );
-    const content = await fs.readFile(componentPath, "utf-8");
-    return JSON.parse(content) as ComponentJson;
+    const itemPath = path.join(REGISTRY_DIST_PATH, category, `${name}.json`);
+    const content = await fs.readFile(itemPath, "utf-8");
+    return JSON.parse(content) as ItemJson;
   } catch {
     return null;
   }
 }
 
 /**
- * Try to load a component from any category
+ * Try to load an item from any category
  */
-export async function loadComponentFromAnyCategory(
+export async function loadItemFromAnyCategory(
   name: string,
-): Promise<ComponentJson | null> {
+): Promise<ItemJson | null> {
   const categories = ["ui", "hooks", "lib", "blocks", "base"];
 
   for (const category of categories) {
-    const component = await loadComponentJson(name, category);
-    if (component) {
-      return component;
+    const item = await loadItemJson(name, category);
+    if (item) {
+      return item;
     }
   }
 

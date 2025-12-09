@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@dotui/registry-generator/*": ["./src/*"]
+      "@dotui/shadcn-adapter/*": ["./src/*"]
     }
   },
   "include": ["src"],

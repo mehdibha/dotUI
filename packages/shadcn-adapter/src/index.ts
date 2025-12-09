@@ -4,11 +4,29 @@ import type { ColorFormat, Style } from "@dotui/style-system/types";
 
 import { generateRegistryAll } from "./generators/all";
 import { generateRegistryBase } from "./generators/base";
-import { generateGenericRegistryItem } from "./generators/generic";
+import { generateShadcnItem } from "./generators/item";
 import { generateRegistry } from "./generators/registry";
 import { generateRegistryTheme } from "./generators/theme";
 
-export async function buildRegistryItem(
+export {
+  generateRegistry,
+  generateRegistryAll,
+  generateRegistryBase,
+  generateRegistryTheme,
+  generateShadcnItem,
+} from "./generators";
+export {
+  generateThemeJson,
+  transformItemJson,
+  updateFiles,
+  updateRegistryDependencies,
+} from "./transform";
+export type { TransformOptions } from "./transform";
+
+/**
+ * Build a shadcn-compatible registry item
+ */
+export async function buildShadcnItem(
   registryItemName: string,
   options: {
     styleName: string;
@@ -34,5 +52,5 @@ export async function buildRegistryItem(
     return generateRegistryAll(options);
   }
 
-  return generateGenericRegistryItem(registryItemName, options);
+  return generateShadcnItem(registryItemName, options);
 }
