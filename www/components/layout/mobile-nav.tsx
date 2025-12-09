@@ -48,10 +48,11 @@ export const MobileNav = ({ items }: { items: PageTree.Node[] }) => {
 									))}
 								</div>
 							</div>
-							{items?.map((group) => {
+							{items?.map((group, index) => {
 								if (group.type === "folder") {
 									return (
-										<div key={group.name} className="flex flex-col gap-3">
+										// biome-ignore lint/suspicious/noArrayIndexKey: items is static navigation data that never changes
+										<div key={index} className="flex flex-col gap-3">
 											<div className="font-medium text-fg-muted text-lg">{group.name}</div>
 											<div className="flex flex-col gap-3">
 												{group.children.map((item) => {

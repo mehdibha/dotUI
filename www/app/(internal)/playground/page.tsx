@@ -25,6 +25,7 @@ interface ContentItem {
 	title: string;
 	description?: string;
 	preview: React.ComponentType | null;
+	// biome-ignore lint/suspicious/noExplicitAny: React Aria contexts have various generic types that can't be unified
 	controls?: [React.Context<any>, string[]][];
 }
 
@@ -450,6 +451,7 @@ const Section = ({
 	description?: string;
 	children: React.ReactNode;
 	className?: string;
+	// biome-ignore lint/suspicious/noExplicitAny: React Aria contexts have various generic types that can't be unified
 	controls?: [React.Context<any>, string[]][];
 }) => {
 	const [isLoading, setIsLoading] = React.useState(false);
@@ -478,13 +480,13 @@ const Section = ({
 		return controls.map(([context, props]) => {
 			const contextValues = props.reduce(
 				(acc, prop) => {
-					acc[prop] = controlStates[prop]!;
+					acc[prop] = controlStates[prop] ?? false;
 					return acc;
 				},
 				{} as Record<string, boolean>,
 			);
 			return [context, contextValues];
-		}) as any;
+		});
 	}, [controls, controlStates]);
 
 	const handlePropertyToggle = (prop: string, value: boolean) => {
@@ -523,7 +525,7 @@ const Section = ({
 					</Switch>
 				</div>
 				{controls ? (
-					<Provider values={providerValues}>
+					<Provider values={providerValues as Parameters<typeof Provider>[0]["values"]}>
 						<SkeletonProvider isLoading={isLoading}>{children}</SkeletonProvider>
 					</Provider>
 				) : (

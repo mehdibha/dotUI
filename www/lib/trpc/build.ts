@@ -1,10 +1,12 @@
 import { appRouter, createTRPCContext } from "@dotui/api";
+import type { Auth } from "@dotui/auth";
 
+// Create a minimal auth stub for build time that matches the expected Auth API signature
 const authStub = {
 	api: {
-		getSession: async () => null,
+		getSession: async (_context: { headers: Headers }) => null,
 	},
-} as const;
+} as unknown as Auth;
 
 const createBuildTimeContext = async () => {
 	const headers = new Headers();
@@ -12,7 +14,7 @@ const createBuildTimeContext = async () => {
 
 	return createTRPCContext({
 		headers,
-		auth: authStub as any,
+		auth: authStub,
 	});
 };
 

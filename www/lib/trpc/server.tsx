@@ -1,8 +1,7 @@
 import { cache } from "react";
-import { headers } from "next/headers";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import type { TRPCQueryOptions } from "@trpc/tanstack-react-query";
+import { headers } from "next/headers";
 
 import { appRouter, createTRPCContext } from "@dotui/api";
 import type { AppRouter } from "@dotui/api";
@@ -48,10 +47,12 @@ export function HydrateClient(props: { children: React.ReactNode }) {
 	return <HydrationBoundary state={dehydrate(queryClient)}>{props.children}</HydrationBoundary>;
 }
 
-export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(queryOptions: T) {
+// biome-ignore lint/suspicious/noExplicitAny: TRPC query options types are complex and don't satisfy generic constraints
+export function prefetch(queryOptions: any) {
 	const queryClient = getQueryClient();
-	if (queryOptions.queryKey[1]?.type === "infinite") {
-		void queryClient.prefetchInfiniteQuery(queryOptions as any);
+	const keyInfo = queryOptions.queryKey[1] as { type?: string } | undefined;
+	if (keyInfo?.type === "infinite") {
+		void queryClient.prefetchInfiniteQuery(queryOptions);
 	} else {
 		void queryClient.prefetchQuery(queryOptions);
 	}

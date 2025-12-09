@@ -2,6 +2,7 @@
 
 import { RiCheckboxCircleFill, RiProgress4Line, RiProgress6Line } from "@remixicon/react";
 import { AlertTriangle, Circle, CircleDashedIcon, MoreHorizontal, Zap } from "lucide-react";
+import NextImage from "next/image";
 
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
@@ -264,7 +265,7 @@ export default function Page() {
 								if (!user) return null;
 								return (
 									<div className="flex items-center space-x-2">
-										<Image
+										<NextImage
 											src={user.avatar}
 											alt={user.name}
 											width={24}

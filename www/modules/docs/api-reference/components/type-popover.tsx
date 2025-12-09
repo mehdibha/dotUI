@@ -75,7 +75,8 @@ function TypePopover({ name, type }: TypePopoverProps) {
 	const [breadcrumbs, setBreadcrumbs] = React.useState<BreadcrumbItem[]>([{ id: 0, name, type }]);
 	const { links } = useTypeLinks();
 
-	const currentItem = breadcrumbs.at(-1)!;
+	// breadcrumbs always has at least one item (initialized above)
+	const currentItem = breadcrumbs[breadcrumbs.length - 1] ?? { id: 0, name, type };
 
 	const push = React.useCallback((name: string, type: TType) => {
 		setBreadcrumbs((prev) => [...prev, { id: prev.length, name, type }]);

@@ -74,10 +74,11 @@ export function SearchCommand({ items, keyboardShortcut, children, onAction }: S
 							</MenuItem>
 						))}
 					</MenuSection>
-					{items.map((group) => {
+					{items.map((group, index) => {
 						if (group.type === "folder") {
 							return (
-								<MenuSection key={group.name}>
+								// biome-ignore lint/suspicious/noArrayIndexKey: items is static navigation data that never changes
+								<MenuSection key={index}>
 									<MenuSectionHeader>{group.name}</MenuSectionHeader>
 									{group.children.map((item) => {
 										if (item.type === "page") {

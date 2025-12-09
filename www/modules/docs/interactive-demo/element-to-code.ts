@@ -448,7 +448,7 @@ function trackImport(name: string, ctx: SerializeContext) {
 	if (!ctx.imports.has(importPath)) {
 		ctx.imports.set(importPath, new Set());
 	}
-	ctx.imports.get(importPath)!.add(name);
+	ctx.imports.get(importPath)?.add(name);
 }
 
 function getImportPath(name: string): string | null {

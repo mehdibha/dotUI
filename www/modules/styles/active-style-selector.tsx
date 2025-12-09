@@ -13,7 +13,7 @@ import { useUserStyles } from "@/modules/styles/use-user-styles";
 export function ActiveStyleSelector({
 	buttonProps,
 	...props
-}: SelectProps<any> & {
+}: SelectProps<object> & {
 	buttonProps?: ButtonProps;
 }) {
 	const activeStyleQuery = useActiveStyle();

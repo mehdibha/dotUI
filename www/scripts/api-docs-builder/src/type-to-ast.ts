@@ -107,7 +107,8 @@ function filterDefaultTypeArgs(
 
 		// Check if the argument equals the default by comparing type strings
 		// This is a simple heuristic that works well for common cases like `any`, `undefined`
-		const argString = checker.typeToString(lastArg!);
+		// lastArg is guaranteed to exist since we check result.length > 0
+		const argString = lastArg ? checker.typeToString(lastArg) : "";
 		const defaultString = checker.typeToString(defaultType);
 
 		if (argString !== defaultString) {
@@ -773,17 +774,19 @@ export function typeToAst(type: ts.Type, context: ConversionContext): TType | nu
 	if (flags & ts.TypeFlags.TypeParameter) {
 		const typeParam = type as ts.TypeParameter;
 		const symbol = typeParam.getSymbol();
+		const constraint = typeParam.getConstraint();
+		const defaultType = typeParam.getDefault();
 		return {
 			type: "typeParameter",
 			name: symbol?.getName() || "T",
-			constraint: typeParam.getConstraint()
-				? typeToAst(typeParam.getConstraint()!, {
+			constraint: constraint
+				? typeToAst(constraint, {
 						...context,
 						currentDepth: currentDepth + 1,
 					})
 				: null,
-			default: typeParam.getDefault()
-				? typeToAst(typeParam.getDefault()!, {
+			default: defaultType
+				? typeToAst(defaultType, {
 						...context,
 						currentDepth: currentDepth + 1,
 					})
@@ -820,22 +823,26 @@ function functionSignatureToAst(signature: ts.Signature, context: ConversionCont
 	const returnType = checker.getReturnTypeOfSignature(signature);
 
 	const typeParams = signature.typeParameters || [];
-	const typeParameters: TTypeParameter[] = typeParams.map((tp) => ({
-		type: "typeParameter",
-		name: tp.getSymbol()?.getName() || "T",
-		constraint: tp.getConstraint()
-			? typeToAst(tp.getConstraint()!, {
-					...context,
-					currentDepth: currentDepth + 1,
-				})
-			: null,
-		default: tp.getDefault()
-			? typeToAst(tp.getDefault()!, {
-					...context,
-					currentDepth: currentDepth + 1,
-				})
-			: null,
-	}));
+	const typeParameters: TTypeParameter[] = typeParams.map((tp) => {
+		const constraint = tp.getConstraint();
+		const defaultType = tp.getDefault();
+		return {
+			type: "typeParameter",
+			name: tp.getSymbol()?.getName() || "T",
+			constraint: constraint
+				? typeToAst(constraint, {
+						...context,
+						currentDepth: currentDepth + 1,
+					})
+				: null,
+			default: defaultType
+				? typeToAst(defaultType, {
+						...context,
+						currentDepth: currentDepth + 1,
+					})
+				: null,
+		};
+	});
 
 	return {
 		type: "function",

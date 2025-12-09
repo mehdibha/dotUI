@@ -284,8 +284,10 @@ function pushToEnd(members: readonly tae.AnyType[], name: string): readonly tae.
 	});
 
 	if (index !== -1) {
-		const member = members[index]!;
-		return [...members.slice(0, index), ...members.slice(index + 1), member];
+		const member = members[index];
+		if (member) {
+			return [...members.slice(0, index), ...members.slice(index + 1), member];
+		}
 	}
 
 	return members;

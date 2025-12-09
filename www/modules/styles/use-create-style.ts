@@ -1,5 +1,5 @@
-import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 import { DEFAULT_THEME } from "@dotui/registry/constants";
 import { toast } from "@dotui/registry/ui/toast";
@@ -38,12 +38,16 @@ export function useCreateStyle() {
 				variants: data.styleOverrides?.variants ?? DEFAULT_VARIANTS_DEFINITION,
 			};
 
+			// Cast to expected schema types - StyleDefinition uses generic strings while
+			// the database schema expects specific literal union types from zod
 			const created = await trpcClient.style.create.mutate({
-				...styleData,
+				theme: styleData.theme as Parameters<typeof trpcClient.style.create.mutate>[0]["theme"],
+				icons: styleData.icons as Parameters<typeof trpcClient.style.create.mutate>[0]["icons"],
+				variants: styleData.variants as Parameters<typeof trpcClient.style.create.mutate>[0]["variants"],
 				name: data.name,
 				description: data.description ?? "",
 				visibility: data.visibility ?? "unlisted",
-			} as any);
+			});
 
 			return created;
 		},

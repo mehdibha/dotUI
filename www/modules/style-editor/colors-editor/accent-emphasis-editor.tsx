@@ -48,8 +48,13 @@ export const AccentEmphasisEditor = () => {
 		if (!overrides) return;
 
 		for (const token in overrides) {
-			if (!overrides[token]) return;
-			form.setFieldValue(`theme.colors.tokens.${token}.value`, overrides[token] as any);
+			const value = overrides[token];
+			if (!value) return;
+			// Use type assertion for dynamic field path - TanStack Form can't infer types for dynamic paths
+			(form.setFieldValue as unknown as (path: string, value: string) => void)(
+				`theme.colors.tokens.${token}.value`,
+				value,
+			);
 		}
 	};
 

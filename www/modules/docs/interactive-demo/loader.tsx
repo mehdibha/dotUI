@@ -224,7 +224,8 @@ function buildControlWithOverrides(
 	prop: PropDefinition,
 	overrides: Partial<Omit<Control, "name">>,
 ): Control {
-	const type = overrides.type!;
+	// This function is only called when overrides.type is defined
+	const type = overrides.type as NonNullable<typeof overrides.type>;
 
 	switch (type) {
 		case "boolean":

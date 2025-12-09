@@ -11,7 +11,7 @@
 		"preview": "next build && next start",
 		"start": "pnpm with-env next start --port 4444",
 		"format": "biome format --write",
-		"lint": "biome lint --write --diagnostic-level=error",
+		"lint": "biome lint --write",
 		"check": "biome check",
 		"typecheck": "pnpm with-env next typegen && tsc --noEmit",
 		"capture-blocks": "pnpm with-env jiti ./scripts/capture-showcase-blocks.ts",

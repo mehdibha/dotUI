@@ -26,13 +26,14 @@ export const useUpdateStyleMutation = (
 			});
 		},
 		onMutate: async (variables: StyleFormData) => {
-			const queryKey = trpc.style.getBySlug.queryKey({ slug: slug! });
+			// slug is validated in mutationFn, so it's safe to use here
+			const queryKey = trpc.style.getBySlug.queryKey({ slug: slug ?? "" });
 
 			await queryClient.cancelQueries({ queryKey });
 
 			const previousStyle = queryClient.getQueryData(queryKey);
 
-			queryClient.setQueryData(queryKey, (old: any) => {
+			queryClient.setQueryData(queryKey, (old: typeof previousStyle) => {
 				if (!old) return old;
 				return {
 					...old,
@@ -54,8 +55,9 @@ export const useUpdateStyleMutation = (
 		onSuccess: (updated) => {
 			const queryKey = trpc.style.getBySlug.queryKey({ slug: slug });
 			// Merge with existing data to preserve user info
-			queryClient.setQueryData(queryKey, (old: any) => {
-				if (!old) return updated;
+			queryClient.setQueryData(queryKey, (old) => {
+				if (!old) return old;
+				if (!updated) return old;
 				return { ...old, ...updated };
 			});
 			if (updated) {
@@ -63,8 +65,9 @@ export const useUpdateStyleMutation = (
 			}
 		},
 		onSettled: () => {
+			if (!slug) return;
 			queryClient.invalidateQueries({
-				queryKey: trpc.style.getBySlug.queryKey({ slug: slug! }),
+				queryKey: trpc.style.getBySlug.queryKey({ slug }),
 			});
 		},
 	});

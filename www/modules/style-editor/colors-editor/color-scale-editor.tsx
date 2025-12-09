@@ -302,7 +302,8 @@ const useDynamicGradient = (scaleId: ScaleId) => {
 			output: "HEX",
 		});
 
-		const palette = theme.contrastColors[1]!;
+		const palette = theme.contrastColors[1];
+		if (!palette) return "";
 
 		return `linear-gradient(0deg, ${palette.values.map((value) => value.value).join(", ")})`;
 	}, [scaleId, neutralColorKeys, ratios, colorKeys, lightness, saturation, contrast]);
