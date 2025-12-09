@@ -1,123 +1,15 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
-  "vcs": {
-    "enabled": false,
-    "clientKind": "git",
-    "useIgnoreFile": false
-  },
-  "files": {
-    "ignoreUnknown": false,
-    "includes": [
-      "**",
-      "!**/node_modules",
-      "!**/.next",
-      "!**/.cache",
-      "!**/dist",
-      "!**/build",
-      "!**/.turbo",
-      "!**/.source",
-      "!**/*.mdx"
-    ]
-  },
-  "css": {
-    "parser": {
-      "tailwindDirectives": true
-    }
-  },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "space",
-    "indentWidth": 2
-  },
+  "root": true,
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
-      "nursery": {
-        "useSortedClasses": {
-          "fix": "safe",
-          "level": "warn",
-          "options": {
-            "attributes": ["classList"],
-            "functions": ["cn", "clsx", "cva", "tw", "tv"]
-          }
-        }
-      },
-      "suspicious": {
-        "noUnknownAtRules": "off",
-        "noExplicitAny": "off",
-        "noArrayIndexKey": "off",
-        "noShadowRestrictedNames": "off",
-        "useIterableCallbackReturn": "off",
-        "noDocumentCookie": "off"
-      },
-      "correctness": {
-        "useExhaustiveDependencies": "warn"
-      },
-      "complexity": {
-        "noBannedTypes": "off",
-        "noImportantStyles": "off"
-      },
-      "style": {
-        "noNonNullAssertion": "off"
-      },
-      "a11y": {
-        "noSvgWithoutTitle": "off",
-        "useValidAnchor": "off",
-        "useIframeTitle": "off",
-        "useSemanticElements": "off",
-        "noStaticElementInteractions": "off"
-      },
-      "performance": {
-        "noImgElement": "off"
-      },
-      "security": {
-        "noDangerouslySetInnerHtml": "warn"
-      }
-    },
-    "domains": {
-      "next": "recommended",
-      "react": "recommended"
+      "recommended": true
     }
   },
-  "assist": {
-    "enabled": true,
-    "actions": {
-      "source": {
-        "organizeImports": {
-          "level": "on",
-          "options": {
-            "groups": [
-              {
-                "type": false,
-                "source": [
-                  "react",
-                  "react/**",
-                  "react-dom",
-                  "react-dom/**",
-                  "react-native",
-                  "react-native/**"
-                ]
-              },
-
-              { "type": false, "source": ["next", "next/**"] },
-              ":NODE:",
-              { "type": false, "source": [":PACKAGE:", "!@dotui/**"] },
-              { "type": true, "source": [":PACKAGE:", "!@dotui/**"] },
-              ":BLANK_LINE:",
-              { "type": false, "source": ["@dotui/**"] },
-              { "type": true, "source": ["@dotui/**"] },
-              ":BLANK_LINE:",
-              { "type": false, "source": [":ALIAS:"] },
-              { "type": true, "source": [":ALIAS:"] },
-              ":BLANK_LINE:",
-              ":ALIAS:",
-              { "type": false, "source": ":PATH:" },
-              { "type": true, "source": ":PATH:" }
-            ]
-          }
-        }
-      }
-    }
+  "formatter": {
+    "lineWidth": 120,
+    "indentStyle": "tab",
+    "indentWidth": 2
   }
 }

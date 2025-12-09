@@ -1,6 +1,6 @@
 {
-  "name": "SwitchIndicatorProps",
-  "description": "Missing description.",
-  "extendsElement": "span",
-  "props": {}
+	"name": "SwitchIndicatorProps",
+	"description": "Missing description.",
+	"extendsElement": "span",
+	"props": {}
 }

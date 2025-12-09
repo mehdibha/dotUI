@@ -1,22 +1,22 @@
 import React from "react";
 
 export function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = React.useState(value);
+	const [debouncedValue, setDebouncedValue] = React.useState(value);
 
-  React.useEffect(() => {
-    if (delay <= 0) {
-      setDebouncedValue(value);
-      return;
-    }
+	React.useEffect(() => {
+		if (delay <= 0) {
+			setDebouncedValue(value);
+			return;
+		}
 
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+		const handler = setTimeout(() => {
+			setDebouncedValue(value);
+		}, delay);
 
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [delay, value]);
+		return () => {
+			clearTimeout(handler);
+		};
+	}, [delay, value]);
 
-  return debouncedValue;
+	return debouncedValue;
 }

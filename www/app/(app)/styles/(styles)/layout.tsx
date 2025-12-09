@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Button, LinkButton } from "@dotui/registry/ui/button";
 
 import {
-  PageActions,
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-  PageLayout,
+	PageActions,
+	PageHeader,
+	PageHeaderDescription,
+	PageHeaderHeading,
+	PageLayout,
 } from "@/components/layout/page-layout";
 import { CreateStyleModal } from "@/modules/styles/create-style-modal";
 import { StylesPageNav } from "@/modules/styles/styles-page-nav";
@@ -16,42 +16,38 @@ const title = "Find your style or make your own.";
 const description = "Try our hand-picked styles or create yours from scratch.";
 
 export const metadata: Metadata = {
-  title,
-  description,
-  openGraph: {
-    images: [
-      {
-        url: `/og?title=${encodeURIComponent(
-          title,
-        )}&description=${encodeURIComponent(description)}`,
-      },
-    ],
-  },
-  twitter: {
-    images: [
-      {
-        url: `/og?title=${encodeURIComponent(
-          title,
-        )}&description=${encodeURIComponent(description)}`,
-      },
-    ],
-  },
+	title,
+	description,
+	openGraph: {
+		images: [
+			{
+				url: `/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,
+			},
+		],
+	},
+	twitter: {
+		images: [
+			{
+				url: `/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,
+			},
+		],
+	},
 };
 
 export default function StylesLayout({ children }: LayoutProps<"/styles">) {
-  return (
-    <PageLayout>
-      <PageHeader>
-        <PageHeaderHeading>{title}</PageHeaderHeading>
-        <PageHeaderDescription>{description}</PageHeaderDescription>
-        <PageActions>
-          <CreateStyleModal>
-            <Button variant="primary">Create your style</Button>
-          </CreateStyleModal>
-          <LinkButton href="/docs">Documentation</LinkButton>
-        </PageActions>
-      </PageHeader>
-      <StylesPageNav>{children}</StylesPageNav>
-    </PageLayout>
-  );
+	return (
+		<PageLayout>
+			<PageHeader>
+				<PageHeaderHeading>{title}</PageHeaderHeading>
+				<PageHeaderDescription>{description}</PageHeaderDescription>
+				<PageActions>
+					<CreateStyleModal>
+						<Button variant="primary">Create your style</Button>
+					</CreateStyleModal>
+					<LinkButton href="/docs">Documentation</LinkButton>
+				</PageActions>
+			</PageHeader>
+			<StylesPageNav>{children}</StylesPageNav>
+		</PageLayout>
+	);
 }

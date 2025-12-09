@@ -1,6 +1,6 @@
 {
-  "name": "SwitchThumbProps",
-  "description": "Missing description.",
-  "extendsElement": "span",
-  "props": {}
+	"name": "SwitchThumbProps",
+	"description": "Missing description.",
+	"extendsElement": "span",
+	"props": {}
 }

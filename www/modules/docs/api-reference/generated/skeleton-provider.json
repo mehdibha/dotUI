@@ -1,14 +1,14 @@
 {
-  "name": "SkeletonProviderProps",
-  "description": "Missing description.",
-  "props": {
-    "isLoading": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the skeleton loading state is active."
-    }
-  }
+	"name": "SkeletonProviderProps",
+	"description": "Missing description.",
+	"props": {
+		"isLoading": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the skeleton loading state is active."
+		}
+	}
 }

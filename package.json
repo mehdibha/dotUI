@@ -15,7 +15,10 @@
     "tailwind",
     "typescript"
   ],
-  "packageManager": "pnpm@10.9.0",
+  "engines": {
+    "node": "^24.11.1",
+    "pnpm": "^10.24.0"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
@@ -26,8 +29,9 @@
     "build:references": "pnpm --filter=www build:references",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
-    "lint": "biome check",
-    "lint:fix": "biome check --write",
+    "format": "turbo run format",
+    "lint": "turbo run lint",
+    "check": "turbo run check",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
@@ -46,5 +50,6 @@
     "typescript": "^5.8.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.1"
-  }
+  },
+  "packageManager": "pnpm@10.24.0"
 }

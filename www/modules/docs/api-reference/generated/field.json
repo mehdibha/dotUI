@@ -1,26 +1,26 @@
 {
-  "name": "FieldProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {
-    "orientation": {
-      "type": "\"horizontal\" | \"vertical\"",
-      "detailedType": "\"horizontal\" | \"vertical\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "horizontal"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "vertical"
-          }
-        ]
-      },
-      "description": "The orientation of the field layout.",
-      "default": "'vertical'"
-    }
-  }
+	"name": "FieldProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {
+		"orientation": {
+			"type": "\"horizontal\" | \"vertical\"",
+			"detailedType": "\"horizontal\" | \"vertical\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "horizontal"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "vertical"
+					}
+				]
+			},
+			"description": "The orientation of the field layout.",
+			"default": "'vertical'"
+		}
+	}
 }

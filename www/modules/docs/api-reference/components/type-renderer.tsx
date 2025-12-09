@@ -12,15 +12,15 @@ import { cn } from "@dotui/registry/lib/utils";
 
 import { TypeLink } from "./type-popover";
 import type {
-  TAlias,
-  TConditional,
-  TInterface,
-  TMethod,
-  TParameter,
-  TProperty,
-  TType,
-  TTypeParameter,
-  TypeLinksRegistry,
+	TAlias,
+	TConditional,
+	TInterface,
+	TMethod,
+	TParameter,
+	TProperty,
+	TType,
+	TTypeParameter,
+	TypeLinksRegistry,
 } from "../types/type-ast";
 
 /* -----------------------------------------------------------------------------------------------
@@ -28,13 +28,13 @@ import type {
  * ---------------------------------------------------------------------------------------------*/
 
 const styles = {
-  keyword: "text-[#0000ff] dark:text-[#569cd6]",
-  string: "text-[#a31515] dark:text-[#ce9178]",
-  number: "text-[#098658] dark:text-[#b5cea8]",
-  function: "text-[#795e26] dark:text-[#dcdcaa]",
-  variable: "text-[#001080] dark:text-[#9cdcfe]",
-  attribute: "text-[#e50000] dark:text-[#9cdcfe]",
-  punctuation: "text-fg-muted",
+	keyword: "text-[#0000ff] dark:text-[#569cd6]",
+	string: "text-[#a31515] dark:text-[#ce9178]",
+	number: "text-[#098658] dark:text-[#b5cea8]",
+	function: "text-[#795e26] dark:text-[#dcdcaa]",
+	variable: "text-[#001080] dark:text-[#9cdcfe]",
+	attribute: "text-[#e50000] dark:text-[#9cdcfe]",
+	punctuation: "text-fg-muted",
 };
 
 /* -----------------------------------------------------------------------------------------------
@@ -42,30 +42,20 @@ const styles = {
  * ---------------------------------------------------------------------------------------------*/
 
 interface TypeRendererContextValue {
-  links: TypeLinksRegistry;
+	links: TypeLinksRegistry;
 }
 
 const TypeRendererContext = React.createContext<TypeRendererContextValue>({
-  links: {},
+	links: {},
 });
 
-export function TypeRendererProvider({
-  links,
-  children,
-}: {
-  links: TypeLinksRegistry;
-  children: React.ReactNode;
-}) {
-  const value = React.useMemo(() => ({ links }), [links]);
-  return (
-    <TypeRendererContext.Provider value={value}>
-      {children}
-    </TypeRendererContext.Provider>
-  );
+export function TypeRendererProvider({ links, children }: { links: TypeLinksRegistry; children: React.ReactNode }) {
+	const value = React.useMemo(() => ({ links }), [links]);
+	return <TypeRendererContext.Provider value={value}>{children}</TypeRendererContext.Provider>;
 }
 
 export function useTypeLinks() {
-  return React.useContext(TypeRendererContext);
+	return React.useContext(TypeRendererContext);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -73,126 +63,104 @@ export function useTypeLinks() {
  * ---------------------------------------------------------------------------------------------*/
 
 interface TypeProps {
-  type: TType | null | undefined;
-  className?: string;
+	type: TType | null | undefined;
+	className?: string;
 }
 
 export function Type({ type, className }: TypeProps) {
-  if (!type) return null;
+	if (!type) return null;
 
-  const content = renderType(type);
-  if (!content) return null;
+	const content = renderType(type);
+	if (!content) return null;
 
-  return (
-    <code
-      className={cn(
-        "whitespace-pre-wrap font-mono text-[0.8125rem] leading-relaxed",
-        className,
-      )}
-    >
-      {content}
-    </code>
-  );
+	return (
+		<code className={cn("whitespace-pre-wrap font-mono text-[0.8125rem] leading-relaxed", className)}>{content}</code>
+	);
 }
 
 function renderType(type: TType): React.ReactNode {
-  switch (type.type) {
-    // Keywords
-    case "any":
-    case "null":
-    case "undefined":
-    case "void":
-    case "unknown":
-    case "never":
-    case "this":
-    case "symbol":
-    case "string":
-    case "number":
-    case "boolean":
-    case "object":
-    case "bigint":
-      return <Keyword type={type.type} />;
+	switch (type.type) {
+		// Keywords
+		case "any":
+		case "null":
+		case "undefined":
+		case "void":
+		case "unknown":
+		case "never":
+		case "this":
+		case "symbol":
+		case "string":
+		case "number":
+		case "boolean":
+		case "object":
+		case "bigint":
+			return <Keyword type={type.type} />;
 
-    // Literals
-    case "stringLiteral":
-      return <StringLiteral value={type.value} />;
-    case "numberLiteral":
-      return <NumberLiteral value={type.value} />;
-    case "booleanLiteral":
-      return <BooleanLiteral value={type.value} />;
+		// Literals
+		case "stringLiteral":
+			return <StringLiteral value={type.value} />;
+		case "numberLiteral":
+			return <NumberLiteral value={type.value} />;
+		case "booleanLiteral":
+			return <BooleanLiteral value={type.value} />;
 
-    // Identifier
-    case "identifier":
-      return <Identifier name={type.name} />;
+		// Identifier
+		case "identifier":
+			return <Identifier name={type.name} />;
 
-    // Complex types
-    case "union":
-      return <UnionType elements={type.elements} />;
-    case "intersection":
-      return <IntersectionType types={type.types} />;
-    case "application":
-      return (
-        <ApplicationType
-          base={type.base}
-          typeParameters={type.typeParameters}
-        />
-      );
-    case "typeOperator":
-      return <TypeOperatorType operator={type.operator} value={type.value} />;
-    case "function":
-      return (
-        <FunctionType
-          parameters={type.parameters}
-          returnType={type.return}
-          typeParameters={type.typeParameters}
-          name={type.name}
-        />
-      );
-    case "parameter":
-      return <ParameterType param={type} />;
-    case "link":
-      return <LinkType id={type.id} name={type.name} />;
-    case "interface":
-      return <InterfaceTypeView iface={type} />;
-    case "alias":
-      return <AliasType alias={type} />;
-    case "objectLiteral":
-      return <ObjectType properties={type.properties} />;
-    case "property":
-      return <PropertyType prop={type} />;
-    case "method":
-      return <MethodType method={type} />;
-    case "array":
-      return <ArrayType elementType={type.elementType} />;
-    case "tuple":
-      return <TupleType elements={type.elements} />;
-    case "typeParameter":
-      return <TypeParameterType param={type} />;
-    case "conditional":
-      return <ConditionalType conditional={type} />;
-    case "indexedAccess":
-      return (
-        <IndexedAccessType
-          objectType={type.objectType}
-          indexType={type.indexType}
-        />
-      );
-    case "keyof":
-      return <KeyofType keyof={type.keyof} />;
-    case "template":
-      return <TemplateType elements={type.elements} />;
-    case "mapped":
-      return (
-        <MappedType
-          typeParameter={type.typeParameter}
-          typeAnnotation={type.typeAnnotation}
-        />
-      );
-    case "parenthesized":
-      return <ParenthesizedType value={type.value} />;
-    default:
-      return null;
-  }
+		// Complex types
+		case "union":
+			return <UnionType elements={type.elements} />;
+		case "intersection":
+			return <IntersectionType types={type.types} />;
+		case "application":
+			return <ApplicationType base={type.base} typeParameters={type.typeParameters} />;
+		case "typeOperator":
+			return <TypeOperatorType operator={type.operator} value={type.value} />;
+		case "function":
+			return (
+				<FunctionType
+					parameters={type.parameters}
+					returnType={type.return}
+					typeParameters={type.typeParameters}
+					name={type.name}
+				/>
+			);
+		case "parameter":
+			return <ParameterType param={type} />;
+		case "link":
+			return <LinkType id={type.id} name={type.name} />;
+		case "interface":
+			return <InterfaceTypeView iface={type} />;
+		case "alias":
+			return <AliasType alias={type} />;
+		case "objectLiteral":
+			return <ObjectType properties={type.properties} />;
+		case "property":
+			return <PropertyType prop={type} />;
+		case "method":
+			return <MethodType method={type} />;
+		case "array":
+			return <ArrayType elementType={type.elementType} />;
+		case "tuple":
+			return <TupleType elements={type.elements} />;
+		case "typeParameter":
+			return <TypeParameterType param={type} />;
+		case "conditional":
+			return <ConditionalType conditional={type} />;
+		case "indexedAccess":
+			return <IndexedAccessType objectType={type.objectType} indexType={type.indexType} />;
+		case "keyof":
+			return <KeyofType keyof={type.keyof} />;
+		case "template":
+			return <TemplateType elements={type.elements} />;
+		case "mapped":
+			return <MappedType typeParameter={type.typeParameter} typeAnnotation={type.typeAnnotation} />;
+		case "parenthesized":
+			return <ParenthesizedType value={type.value} />;
+		default:
+			return null;
+	}
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -200,7 +168,7 @@ function renderType(type: TType): React.ReactNode {
  * ---------------------------------------------------------------------------------------------*/
 
 function Keyword({ type }: { type: string }) {
-  return <span className={styles.keyword}>{type}</span>;
+	return <span className={styles.keyword}>{type}</span>;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -208,16 +176,16 @@ function Keyword({ type }: { type: string }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function StringLiteral({ value }: { value: string }) {
-  const escaped = value.replace(/'/g, "\\'");
-  return <span className={styles.string}>'{escaped}'</span>;
+	const escaped = value.replace(/'/g, "\\'");
+	return <span className={styles.string}>'{escaped}'</span>;
 }
 
 function NumberLiteral({ value }: { value: number }) {
-  return <span className={styles.number}>{value}</span>;
+	return <span className={styles.number}>{value}</span>;
 }
 
 function BooleanLiteral({ value }: { value: boolean }) {
-  return <span className={styles.keyword}>{String(value)}</span>;
+	return <span className={styles.keyword}>{String(value)}</span>;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -230,46 +198,39 @@ function BooleanLiteral({ value }: { value: boolean }) {
  * @see https://github.com/adobe/react-spectrum/blob/main/packages/dev/s2-docs/src/types.tsx
  */
 const DOC_LINKS: Record<string, string> = {
-  // React types (using legacy URLs that still work and redirect)
-  "React.Component": "https://reactjs.org/docs/react-component.html",
-  ReactElement: "https://reactjs.org/docs/rendering-elements.html",
-  ReactNode: "https://reactjs.org/docs/rendering-elements.html",
-  CSSProperties: "https://reactjs.org/docs/dom-elements.html#style",
-  DOMAttributes:
-    "https://reactjs.org/docs/dom-elements.html#all-supported-html-attributes",
-  Key: "https://reactjs.org/docs/lists-and-keys.html",
-  Ref: "https://react.dev/reference/react/useRef",
-  RefObject: "https://react.dev/reference/react/useRef",
-  // DOM/Browser types (not in globals-docs or better links)
-  FocusableElement: "https://developer.mozilla.org/en-US/docs/Web/API/Element",
-  DataTransfer: "https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer",
-  AbortSignal: "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal",
-  // HTML attribute types
-  HTMLAttributes:
-    "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
-  InputHTMLAttributes:
-    "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes",
-  TextareaHTMLAttributes:
-    "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#attributes",
-  LabelHTMLAttributes:
-    "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#attributes",
-  OutputHTMLAttributes:
-    "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/output#attributes",
-  // Intl types
-  "Intl.NumberFormat":
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat",
-  "Intl.NumberFormatOptions":
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat",
-  "Intl.ListFormatOptions":
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/ListFormat",
-  "Intl.DateTimeFormat":
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat",
-  "Intl.DateTimeFormatOptions":
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat",
-  "Intl.Collator":
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator",
-  "Intl.CollatorOptions":
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator",
+	// React types (using legacy URLs that still work and redirect)
+	"React.Component": "https://reactjs.org/docs/react-component.html",
+	ReactElement: "https://reactjs.org/docs/rendering-elements.html",
+	ReactNode: "https://reactjs.org/docs/rendering-elements.html",
+	CSSProperties: "https://reactjs.org/docs/dom-elements.html#style",
+	DOMAttributes: "https://reactjs.org/docs/dom-elements.html#all-supported-html-attributes",
+	Key: "https://reactjs.org/docs/lists-and-keys.html",
+	Ref: "https://react.dev/reference/react/useRef",
+	RefObject: "https://react.dev/reference/react/useRef",
+	// DOM/Browser types (not in globals-docs or better links)
+	FocusableElement: "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+	DataTransfer: "https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer",
+	AbortSignal: "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal",
+	// HTML attribute types
+	HTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+	InputHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes",
+	TextareaHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#attributes",
+	LabelHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label#attributes",
+	OutputHTMLAttributes: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/output#attributes",
+	// Intl types
+	"Intl.NumberFormat":
+		"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat",
+	"Intl.NumberFormatOptions":
+		"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat",
+	"Intl.ListFormatOptions":
+		"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat/ListFormat",
+	"Intl.DateTimeFormat":
+		"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat",
+	"Intl.DateTimeFormatOptions":
+		"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat",
+	"Intl.Collator": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator",
+	"Intl.CollatorOptions":
+		"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator",
 };
 
 /**
@@ -277,31 +238,31 @@ const DOC_LINKS: Record<string, string> = {
  * Uses our curated DOC_LINKS first, then falls back to globals-docs for MDN links
  */
 function getDocLink(name: string): string | undefined {
-  // Check our curated links first (React types, Intl types, etc.)
-  if (name in DOC_LINKS) {
-    return DOC_LINKS[name];
-  }
-  // Fall back to globals-docs for browser/node globals (Element, Event, Array, etc.)
-  return getDoc(name);
+	// Check our curated links first (React types, Intl types, etc.)
+	if (name in DOC_LINKS) {
+		return DOC_LINKS[name];
+	}
+	// Fall back to globals-docs for browser/node globals (Element, Event, Array, etc.)
+	return getDoc(name);
 }
 
 function Identifier({ name }: { name: string }) {
-  const link = getDocLink(name);
+	const link = getDocLink(name);
 
-  if (link) {
-    return (
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(styles.variable, "underline underline-offset-2")}
-      >
-        {name}
-      </a>
-    );
-  }
+	if (link) {
+		return (
+			<a
+				href={link}
+				target="_blank"
+				rel="noopener noreferrer"
+				className={cn(styles.variable, "underline underline-offset-2")}
+			>
+				{name}
+			</a>
+		);
+	}
 
-  return <span className={styles.variable}>{name}</span>;
+	return <span className={styles.variable}>{name}</span>;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -312,39 +273,35 @@ function Identifier({ name }: { name: string }) {
  * Sort union elements so undefined and null come last
  */
 function sortUnionElements(elements: TType[]): TType[] {
-  return [...elements].sort((a, b) => {
-    const aIsNullish = a.type === "undefined" || a.type === "null";
-    const bIsNullish = b.type === "undefined" || b.type === "null";
+	return [...elements].sort((a, b) => {
+		const aIsNullish = a.type === "undefined" || a.type === "null";
+		const bIsNullish = b.type === "undefined" || b.type === "null";
 
-    if (aIsNullish && !bIsNullish) return 1; // a goes after b
-    if (!aIsNullish && bIsNullish) return -1; // a goes before b
+		if (aIsNullish && !bIsNullish) return 1; // a goes after b
+		if (!aIsNullish && bIsNullish) return -1; // a goes before b
 
-    // Both nullish: undefined before null
-    if (a.type === "null" && b.type === "undefined") return 1;
-    if (a.type === "undefined" && b.type === "null") return -1;
+		// Both nullish: undefined before null
+		if (a.type === "null" && b.type === "undefined") return 1;
+		if (a.type === "undefined" && b.type === "null") return -1;
 
-    return 0; // Keep original order for non-nullish types
-  });
+		return 0; // Keep original order for non-nullish types
+	});
 }
 
 function UnionType({ elements }: { elements: TType[] }) {
-  const sortedElements = sortUnionElements(elements);
-  const shouldWrap = sortedElements.length > 3;
+	const sortedElements = sortUnionElements(elements);
+	const shouldWrap = sortedElements.length > 3;
 
-  return (
-    <>
-      {sortedElements.map((el, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && (
-            <span className={styles.punctuation}>
-              {shouldWrap ? "\n  | " : " | "}
-            </span>
-          )}
-          {renderType(el)}
-        </React.Fragment>
-      ))}
-    </>
-  );
+	return (
+		<>
+			{sortedElements.map((el, i) => (
+				<React.Fragment key={i}>
+					{i > 0 && <span className={styles.punctuation}>{shouldWrap ? "\n  | " : " | "}</span>}
+					{renderType(el)}
+				</React.Fragment>
+			))}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -352,64 +309,52 @@ function UnionType({ elements }: { elements: TType[] }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function IntersectionType({ types }: { types: TType[] }) {
-  return (
-    <>
-      {types.map((t, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && <span className={styles.punctuation}> & </span>}
-          {renderType(t)}
-        </React.Fragment>
-      ))}
-    </>
-  );
+	return (
+		<>
+			{types.map((t, i) => (
+				<React.Fragment key={i}>
+					{i > 0 && <span className={styles.punctuation}> & </span>}
+					{renderType(t)}
+				</React.Fragment>
+			))}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
  * Application type (generics)
  * ---------------------------------------------------------------------------------------------*/
 
-function ApplicationType({
-  base,
-  typeParameters,
-}: {
-  base: TType;
-  typeParameters: TType[];
-}) {
-  return (
-    <>
-      {renderType(base)}
-      {typeParameters.length > 0 && (
-        <>
-          <span className={styles.punctuation}>&lt;</span>
-          {typeParameters.map((tp, i) => (
-            <React.Fragment key={i}>
-              {i > 0 && <span className={styles.punctuation}>, </span>}
-              {renderType(tp)}
-            </React.Fragment>
-          ))}
-          <span className={styles.punctuation}>&gt;</span>
-        </>
-      )}
-    </>
-  );
+function ApplicationType({ base, typeParameters }: { base: TType; typeParameters: TType[] }) {
+	return (
+		<>
+			{renderType(base)}
+			{typeParameters.length > 0 && (
+				<>
+					<span className={styles.punctuation}>&lt;</span>
+					{typeParameters.map((tp, i) => (
+						<React.Fragment key={i}>
+							{i > 0 && <span className={styles.punctuation}>, </span>}
+							{renderType(tp)}
+						</React.Fragment>
+					))}
+					<span className={styles.punctuation}>&gt;</span>
+				</>
+			)}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
  * Type operator
  * ---------------------------------------------------------------------------------------------*/
 
-function TypeOperatorType({
-  operator,
-  value,
-}: {
-  operator: string;
-  value: TType;
-}) {
-  return (
-    <>
-      <span className={styles.keyword}>{operator}</span> {renderType(value)}
-    </>
-  );
+function TypeOperatorType({ operator, value }: { operator: string; value: TType }) {
+	return (
+		<>
+			<span className={styles.keyword}>{operator}</span> {renderType(value)}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -417,43 +362,43 @@ function TypeOperatorType({
  * ---------------------------------------------------------------------------------------------*/
 
 function FunctionType({
-  parameters,
-  returnType,
-  typeParameters,
-  name,
+	parameters,
+	returnType,
+	typeParameters,
+	name,
 }: {
-  parameters: TParameter[];
-  returnType: TType;
-  typeParameters: TTypeParameter[];
-  name?: string;
+	parameters: TParameter[];
+	returnType: TType;
+	typeParameters: TTypeParameter[];
+	name?: string;
 }) {
-  return (
-    <>
-      {name && <span className={styles.function}>{name}</span>}
-      {typeParameters.length > 0 && (
-        <>
-          <span className={styles.punctuation}>&lt;</span>
-          {typeParameters.map((tp, i) => (
-            <React.Fragment key={i}>
-              {i > 0 && <span className={styles.punctuation}>, </span>}
-              <TypeParameterType param={tp} />
-            </React.Fragment>
-          ))}
-          <span className={styles.punctuation}>&gt;</span>
-        </>
-      )}
-      <span className={styles.punctuation}>(</span>
-      {parameters.map((param, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && <span className={styles.punctuation}>, </span>}
-          <ParameterType param={param} />
-        </React.Fragment>
-      ))}
-      <span className={styles.punctuation}>)</span>
-      <span className={styles.punctuation}>{name ? ": " : " => "}</span>
-      {renderType(returnType)}
-    </>
-  );
+	return (
+		<>
+			{name && <span className={styles.function}>{name}</span>}
+			{typeParameters.length > 0 && (
+				<>
+					<span className={styles.punctuation}>&lt;</span>
+					{typeParameters.map((tp, i) => (
+						<React.Fragment key={i}>
+							{i > 0 && <span className={styles.punctuation}>, </span>}
+							<TypeParameterType param={tp} />
+						</React.Fragment>
+					))}
+					<span className={styles.punctuation}>&gt;</span>
+				</>
+			)}
+			<span className={styles.punctuation}>(</span>
+			{parameters.map((param, i) => (
+				<React.Fragment key={i}>
+					{i > 0 && <span className={styles.punctuation}>, </span>}
+					<ParameterType param={param} />
+				</React.Fragment>
+			))}
+			<span className={styles.punctuation}>)</span>
+			<span className={styles.punctuation}>{name ? ": " : " => "}</span>
+			{renderType(returnType)}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -461,19 +406,19 @@ function FunctionType({
  * ---------------------------------------------------------------------------------------------*/
 
 function ParameterType({ param }: { param: TParameter }) {
-  return (
-    <>
-      {param.rest && <span className={styles.punctuation}>...</span>}
-      <span>{param.name}</span>
-      {param.optional && <span className={styles.punctuation}>?</span>}
-      {param.value && (
-        <>
-          <span className={styles.punctuation}>: </span>
-          {renderType(param.value)}
-        </>
-      )}
-    </>
-  );
+	return (
+		<>
+			{param.rest && <span className={styles.punctuation}>...</span>}
+			<span>{param.name}</span>
+			{param.optional && <span className={styles.punctuation}>?</span>}
+			{param.value && (
+				<>
+					<span className={styles.punctuation}>: </span>
+					{renderType(param.value)}
+				</>
+			)}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -481,14 +426,14 @@ function ParameterType({ param }: { param: TParameter }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function LinkType({ id, name }: { id: string; name: string }) {
-  const { links } = useTypeLinks();
-  const linkedType = links[id];
+	const { links } = useTypeLinks();
+	const linkedType = links[id];
 
-  if (!linkedType) {
-    return <span className={styles.variable}>{name}</span>;
-  }
+	if (!linkedType) {
+		return <span className={styles.variable}>{name}</span>;
+	}
 
-  return <TypeLink id={id} name={name} type={linkedType} />;
+	return <TypeLink id={id} name={name} type={linkedType} />;
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -496,36 +441,27 @@ function LinkType({ id, name }: { id: string; name: string }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function InterfaceTypeView({ iface }: { iface: TInterface }) {
-  const properties = Object.values(iface.properties || {});
+	const properties = Object.values(iface.properties || {});
 
-  if (properties.length === 0) {
-    return (
-      <>
-        <span className={styles.keyword}>interface</span>{" "}
-        <span className={styles.variable}>{iface.name}</span>{" "}
-        <span className={styles.punctuation}>{"{}"}</span>
-      </>
-    );
-  }
+	if (properties.length === 0) {
+		return (
+			<>
+				<span className={styles.keyword}>interface</span> <span className={styles.variable}>{iface.name}</span>{" "}
+				<span className={styles.punctuation}>{"{}"}</span>
+			</>
+		);
+	}
 
-  return (
-    <div className="space-y-1">
-      {properties.map((prop, i) => (
-        <div key={i} className="pl-4">
-          {prop.type === "method" ? (
-            <MethodType method={prop} />
-          ) : (
-            <PropertyType prop={prop} />
-          )}
-          {prop.description && (
-            <div className="mt-0.5 text-fg-muted text-xs">
-              {prop.description}
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
+	return (
+		<div className="space-y-1">
+			{properties.map((prop, i) => (
+				<div key={i} className="pl-4">
+					{prop.type === "method" ? <MethodType method={prop} /> : <PropertyType prop={prop} />}
+					{prop.description && <div className="mt-0.5 text-fg-muted text-xs">{prop.description}</div>}
+				</div>
+			))}
+		</div>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -533,40 +469,32 @@ function InterfaceTypeView({ iface }: { iface: TInterface }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function AliasType({ alias }: { alias: TAlias }) {
-  return renderType(alias.value);
+	return renderType(alias.value);
 }
 
 /* -----------------------------------------------------------------------------------------------
  * Object type
  * ---------------------------------------------------------------------------------------------*/
 
-function ObjectType({
-  properties,
-}: {
-  properties: Record<string, TProperty | TMethod> | null;
-}) {
-  if (!properties || Object.keys(properties).length === 0) {
-    return <span className={styles.punctuation}>{"{}"}</span>;
-  }
+function ObjectType({ properties }: { properties: Record<string, TProperty | TMethod> | null }) {
+	if (!properties || Object.keys(properties).length === 0) {
+		return <span className={styles.punctuation}>{"{}"}</span>;
+	}
 
-  const props = Object.values(properties);
+	const props = Object.values(properties);
 
-  return (
-    <>
-      <span className={styles.punctuation}>{"{ "}</span>
-      {props.map((prop, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && <span className={styles.punctuation}>; </span>}
-          {prop.type === "method" ? (
-            <MethodType method={prop} inline />
-          ) : (
-            <PropertyType prop={prop} inline />
-          )}
-        </React.Fragment>
-      ))}
-      <span className={styles.punctuation}>{" }"}</span>
-    </>
-  );
+	return (
+		<>
+			<span className={styles.punctuation}>{"{ "}</span>
+			{props.map((prop, i) => (
+				<React.Fragment key={i}>
+					{i > 0 && <span className={styles.punctuation}>; </span>}
+					{prop.type === "method" ? <MethodType method={prop} inline /> : <PropertyType prop={prop} inline />}
+				</React.Fragment>
+			))}
+			<span className={styles.punctuation}>{" }"}</span>
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -574,20 +502,20 @@ function ObjectType({
  * ---------------------------------------------------------------------------------------------*/
 
 function PropertyType({ prop, inline }: { prop: TProperty; inline?: boolean }) {
-  return (
-    <>
-      {prop.readonly && (
-        <>
-          <span className={styles.keyword}>readonly</span>{" "}
-        </>
-      )}
-      <span className={styles.attribute}>{prop.name}</span>
-      {prop.optional && <span className={styles.punctuation}>?</span>}
-      <span className={styles.punctuation}>: </span>
-      {renderType(prop.value)}
-      {!inline && <span className={styles.punctuation}>;</span>}
-    </>
-  );
+	return (
+		<>
+			{prop.readonly && (
+				<>
+					<span className={styles.keyword}>readonly</span>{" "}
+				</>
+			)}
+			<span className={styles.attribute}>{prop.name}</span>
+			{prop.optional && <span className={styles.punctuation}>?</span>}
+			<span className={styles.punctuation}>: </span>
+			{renderType(prop.value)}
+			{!inline && <span className={styles.punctuation}>;</span>}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -595,22 +523,22 @@ function PropertyType({ prop, inline }: { prop: TProperty; inline?: boolean }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function MethodType({ method, inline }: { method: TMethod; inline?: boolean }) {
-  return (
-    <>
-      <span className={styles.function}>{method.name}</span>
-      {method.optional && <span className={styles.punctuation}>?</span>}
-      <span className={styles.punctuation}>(</span>
-      {method.value.parameters.map((param, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && <span className={styles.punctuation}>, </span>}
-          <ParameterType param={param} />
-        </React.Fragment>
-      ))}
-      <span className={styles.punctuation}>): </span>
-      {renderType(method.value.return)}
-      {!inline && <span className={styles.punctuation}>;</span>}
-    </>
-  );
+	return (
+		<>
+			<span className={styles.function}>{method.name}</span>
+			{method.optional && <span className={styles.punctuation}>?</span>}
+			<span className={styles.punctuation}>(</span>
+			{method.value.parameters.map((param, i) => (
+				<React.Fragment key={i}>
+					{i > 0 && <span className={styles.punctuation}>, </span>}
+					<ParameterType param={param} />
+				</React.Fragment>
+			))}
+			<span className={styles.punctuation}>): </span>
+			{renderType(method.value.return)}
+			{!inline && <span className={styles.punctuation}>;</span>}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -618,18 +546,17 @@ function MethodType({ method, inline }: { method: TMethod; inline?: boolean }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function ArrayType({ elementType }: { elementType: TType }) {
-  // Check if we need parentheses (for union/intersection types)
-  const needsParens =
-    elementType.type === "union" || elementType.type === "intersection";
+	// Check if we need parentheses (for union/intersection types)
+	const needsParens = elementType.type === "union" || elementType.type === "intersection";
 
-  return (
-    <>
-      {needsParens && <span className={styles.punctuation}>(</span>}
-      {renderType(elementType)}
-      {needsParens && <span className={styles.punctuation}>)</span>}
-      <span className={styles.punctuation}>[]</span>
-    </>
-  );
+	return (
+		<>
+			{needsParens && <span className={styles.punctuation}>(</span>}
+			{renderType(elementType)}
+			{needsParens && <span className={styles.punctuation}>)</span>}
+			<span className={styles.punctuation}>[]</span>
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -637,18 +564,18 @@ function ArrayType({ elementType }: { elementType: TType }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function TupleType({ elements }: { elements: TType[] }) {
-  return (
-    <>
-      <span className={styles.punctuation}>[</span>
-      {elements.map((el, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && <span className={styles.punctuation}>, </span>}
-          {renderType(el)}
-        </React.Fragment>
-      ))}
-      <span className={styles.punctuation}>]</span>
-    </>
-  );
+	return (
+		<>
+			<span className={styles.punctuation}>[</span>
+			{elements.map((el, i) => (
+				<React.Fragment key={i}>
+					{i > 0 && <span className={styles.punctuation}>, </span>}
+					{renderType(el)}
+				</React.Fragment>
+			))}
+			<span className={styles.punctuation}>]</span>
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -656,23 +583,23 @@ function TupleType({ elements }: { elements: TType[] }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function TypeParameterType({ param }: { param: TTypeParameter }) {
-  return (
-    <>
-      <span className={styles.variable}>{param.name}</span>
-      {param.constraint && (
-        <>
-          <span className={styles.keyword}> extends </span>
-          {renderType(param.constraint)}
-        </>
-      )}
-      {param.default && (
-        <>
-          <span className={styles.punctuation}> = </span>
-          {renderType(param.default)}
-        </>
-      )}
-    </>
-  );
+	return (
+		<>
+			<span className={styles.variable}>{param.name}</span>
+			{param.constraint && (
+				<>
+					<span className={styles.keyword}> extends </span>
+					{renderType(param.constraint)}
+				</>
+			)}
+			{param.default && (
+				<>
+					<span className={styles.punctuation}> = </span>
+					{renderType(param.default)}
+				</>
+			)}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -680,38 +607,32 @@ function TypeParameterType({ param }: { param: TTypeParameter }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function ConditionalType({ conditional }: { conditional: TConditional }) {
-  return (
-    <>
-      {renderType(conditional.checkType)}
-      <span className={styles.keyword}> extends </span>
-      {renderType(conditional.extendsType)}
-      <span className={styles.punctuation}> ? </span>
-      {renderType(conditional.trueType)}
-      <span className={styles.punctuation}> : </span>
-      {renderType(conditional.falseType)}
-    </>
-  );
+	return (
+		<>
+			{renderType(conditional.checkType)}
+			<span className={styles.keyword}> extends </span>
+			{renderType(conditional.extendsType)}
+			<span className={styles.punctuation}> ? </span>
+			{renderType(conditional.trueType)}
+			<span className={styles.punctuation}> : </span>
+			{renderType(conditional.falseType)}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
  * Indexed access type
  * ---------------------------------------------------------------------------------------------*/
 
-function IndexedAccessType({
-  objectType,
-  indexType,
-}: {
-  objectType: TType;
-  indexType: TType;
-}) {
-  return (
-    <>
-      {renderType(objectType)}
-      <span className={styles.punctuation}>[</span>
-      {renderType(indexType)}
-      <span className={styles.punctuation}>]</span>
-    </>
-  );
+function IndexedAccessType({ objectType, indexType }: { objectType: TType; indexType: TType }) {
+	return (
+		<>
+			{renderType(objectType)}
+			<span className={styles.punctuation}>[</span>
+			{renderType(indexType)}
+			<span className={styles.punctuation}>]</span>
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -719,12 +640,12 @@ function IndexedAccessType({
  * ---------------------------------------------------------------------------------------------*/
 
 function KeyofType({ keyof }: { keyof: TType }) {
-  return (
-    <>
-      <span className={styles.keyword}>keyof </span>
-      {renderType(keyof)}
-    </>
-  );
+	return (
+		<>
+			<span className={styles.keyword}>keyof </span>
+			{renderType(keyof)}
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -732,50 +653,44 @@ function KeyofType({ keyof }: { keyof: TType }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function TemplateType({ elements }: { elements: TType[] }) {
-  return (
-    <>
-      <span className={styles.string}>`</span>
-      {elements.map((el, i) => {
-        if (el.type === "stringLiteral") {
-          return (
-            <span key={i} className={styles.string}>
-              {el.value}
-            </span>
-          );
-        }
-        return (
-          <React.Fragment key={i}>
-            <span className={styles.punctuation}>{"${"}</span>
-            {renderType(el)}
-            <span className={styles.punctuation}>{"}"}</span>
-          </React.Fragment>
-        );
-      })}
-      <span className={styles.string}>`</span>
-    </>
-  );
+	return (
+		<>
+			<span className={styles.string}>`</span>
+			{elements.map((el, i) => {
+				if (el.type === "stringLiteral") {
+					return (
+						<span key={i} className={styles.string}>
+							{el.value}
+						</span>
+					);
+				}
+				return (
+					<React.Fragment key={i}>
+						<span className={styles.punctuation}>{"${"}</span>
+						{renderType(el)}
+						<span className={styles.punctuation}>{"}"}</span>
+					</React.Fragment>
+				);
+			})}
+			<span className={styles.string}>`</span>
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
  * Mapped type
  * ---------------------------------------------------------------------------------------------*/
 
-function MappedType({
-  typeParameter,
-  typeAnnotation,
-}: {
-  typeParameter: TTypeParameter;
-  typeAnnotation: TType;
-}) {
-  return (
-    <>
-      <span className={styles.punctuation}>{"{ ["}</span>
-      <TypeParameterType param={typeParameter} />
-      <span className={styles.punctuation}>{"]"}: </span>
-      {renderType(typeAnnotation)}
-      <span className={styles.punctuation}>{" }"}</span>
-    </>
-  );
+function MappedType({ typeParameter, typeAnnotation }: { typeParameter: TTypeParameter; typeAnnotation: TType }) {
+	return (
+		<>
+			<span className={styles.punctuation}>{"{ ["}</span>
+			<TypeParameterType param={typeParameter} />
+			<span className={styles.punctuation}>{"]"}: </span>
+			{renderType(typeAnnotation)}
+			<span className={styles.punctuation}>{" }"}</span>
+		</>
+	);
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -783,11 +698,11 @@ function MappedType({
  * ---------------------------------------------------------------------------------------------*/
 
 function ParenthesizedType({ value }: { value: TType }) {
-  return (
-    <>
-      <span className={styles.punctuation}>(</span>
-      {renderType(value)}
-      <span className={styles.punctuation}>)</span>
-    </>
-  );
+	return (
+		<>
+			<span className={styles.punctuation}>(</span>
+			{renderType(value)}
+			<span className={styles.punctuation}>)</span>
+		</>
+	);
 }

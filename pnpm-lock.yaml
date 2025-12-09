@@ -36,6 +36,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.15(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.4(@types/node@22.19.2)(typescript@5.9.3))(tsx@4.21.0)
 
+  config/biome-config: {}
+
   config/ts-config: {}
 
   packages/api:
@@ -535,6 +537,9 @@ importers:
         specifier: ^4.0.5
         version: 4.1.13
     devDependencies:
+      '@dotui/biome-config':
+        specifier: workspace:*
+        version: link:../config/biome-config
       '@dotui/ts-config':
         specifier: workspace:*
         version: link:../config/ts-config

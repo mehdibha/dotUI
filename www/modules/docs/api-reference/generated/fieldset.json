@@ -1,6 +1,6 @@
 {
-  "name": "FieldsetProps",
-  "description": "Missing description.",
-  "extendsElement": "fieldset",
-  "props": {}
+	"name": "FieldsetProps",
+	"description": "Missing description.",
+	"extendsElement": "fieldset",
+	"props": {}
 }

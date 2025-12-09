@@ -1,9 +1,9 @@
 import { MyStyles } from "@/modules/styles/my-styles";
 
 export const metadata = {
-  title: "My styles",
+	title: "My styles",
 };
 
 export default function MyStylesPage() {
-  return <MyStyles />;
+	return <MyStyles />;
 }

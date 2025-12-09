@@ -5,12 +5,12 @@ import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Drawer } from "@dotui/registry/ui/drawer";
 
 export default function Page() {
-  return (
-    <Dialog defaultOpen>
-      <Button>Open Drawer</Button>
-      <Drawer placement="bottom">
-        <DialogContent>drawer content</DialogContent>
-      </Drawer>
-    </Dialog>
-  );
+	return (
+		<Dialog defaultOpen>
+			<Button>Open Drawer</Button>
+			<Drawer placement="bottom">
+				<DialogContent>drawer content</DialogContent>
+			</Drawer>
+		</Dialog>
+	);
 }

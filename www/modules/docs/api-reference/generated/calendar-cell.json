@@ -1,463 +1,463 @@
 {
-  "name": "CalendarCellProps",
-  "description": "A calendar cell displays a date cell within a calendar grid which can be selected by the user.",
-  "props": {
-    "variant": {
-      "type": "\"primary\" | \"accent\"",
-      "detailedType": "\"primary\" | \"accent\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "primary"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "accent"
-          }
-        ]
-      },
-      "description": "The color variant of the selected cell.",
-      "default": "'accent'"
-    },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction starts."
-    },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction ends."
-    },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the hover state changes."
-    },
-    "date": {
-      "type": "CalendarDate",
-      "typeAst": {
-        "type": "identifier",
-        "name": "CalendarDate"
-      },
-      "description": "The date to render in the cell.",
-      "required": true
-    },
-    "children": {
-      "type": "ReactNode | (values: CalendarCellRenderProps) => ReactNode",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "CalendarCellRenderProps",
-                  "name": "CalendarCellRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
-    },
-    "className": {
-      "type": "string | (values: CalendarCellRenderProps) => string",
-      "detailedType": "string | (values: CalendarCellRenderProps) => string | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "CalendarCellRenderProps",
-                  "name": "CalendarCellRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-    },
-    "style": {
-      "type": "CSSProperties | (values: CalendarCellRenderProps) => CSSProperties",
-      "detailedType": "CSSProperties | (values: CalendarCellRenderProps) => CSSProperties | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "CalendarCellRenderProps",
-                  "name": "CalendarCellRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-    }
-  },
-  "renderProps": {
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the cell is currently hovered with a mouse."
-    },
-    "isPressed": {
-      "selector": "[data-pressed]",
-      "description": "Whether the cell is currently being pressed."
-    },
-    "isSelected": {
-      "selector": "[data-selected]",
-      "description": "Whether the cell is selected."
-    },
-    "isSelectionStart": {
-      "selector": "[data-selection-start]",
-      "description": "Whether the cell is the first date in a range selection."
-    },
-    "isSelectionEnd": {
-      "selector": "[data-selection-end]",
-      "description": "Whether the cell is the last date in a range selection."
-    },
-    "isFocused": {
-      "selector": "[data-focused]",
-      "description": "Whether the cell is focused."
-    },
-    "isFocusVisible": {
-      "selector": "[data-focus-visible]",
-      "description": "Whether the cell is keyboard focused."
-    },
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the cell is disabled, according to the calendar's `minValue`, `maxValue`, and `isDisabled` props.\nDisabled dates are not focusable, and cannot be selected by the user. They are typically\ndisplayed with a dimmed appearance."
-    },
-    "isOutsideVisibleRange": {
-      "selector": "[data-outside-visible-range]",
-      "description": "Whether the cell is outside the visible range of the calendar.\nFor example, dates before the first day of a month in the same week."
-    },
-    "isOutsideMonth": {
-      "selector": "[data-outside-month]",
-      "description": "Whether the cell is outside the current month."
-    },
-    "isUnavailable": {
-      "selector": "[data-unavailable]",
-      "description": "Whether the cell is unavailable, according to the calendar's `isDateUnavailable` prop. Unavailable dates remain\nfocusable, but cannot be selected by the user. They should be displayed with a visual affordance to indicate they\nare unavailable, such as a different color or a strikethrough.\n\nNote that because they are focusable, unavailable dates must meet a 4.5:1 color contrast ratio,\n[as defined by WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)."
-    },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the cell is part of an invalid selection."
-    },
-    "isToday": {
-      "selector": "[data-today]",
-      "description": "Whether the cell is today."
-    }
-  },
-  "typeLinks": {
-    "CalendarCellRenderProps": {
-      "type": "interface",
-      "name": "CalendarCellRenderProps",
-      "properties": {
-        "date": {
-          "type": "property",
-          "name": "date",
-          "value": {
-            "type": "identifier",
-            "name": "CalendarDate"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The date that the cell represents."
-        },
-        "formattedDate": {
-          "type": "property",
-          "name": "formattedDate",
-          "value": {
-            "type": "string"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The day number formatted according to the current locale."
-        },
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is currently hovered with a mouse."
-        },
-        "isPressed": {
-          "type": "property",
-          "name": "isPressed",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is currently being pressed."
-        },
-        "isSelected": {
-          "type": "property",
-          "name": "isSelected",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is selected."
-        },
-        "isSelectionStart": {
-          "type": "property",
-          "name": "isSelectionStart",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is the first date in a range selection."
-        },
-        "isSelectionEnd": {
-          "type": "property",
-          "name": "isSelectionEnd",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is the last date in a range selection."
-        },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is focused."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is keyboard focused."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is disabled, according to the calendar's `minValue`, `maxValue`, and `isDisabled` props.\nDisabled dates are not focusable, and cannot be selected by the user. They are typically\ndisplayed with a dimmed appearance."
-        },
-        "isOutsideVisibleRange": {
-          "type": "property",
-          "name": "isOutsideVisibleRange",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is outside the visible range of the calendar.\nFor example, dates before the first day of a month in the same week."
-        },
-        "isOutsideMonth": {
-          "type": "property",
-          "name": "isOutsideMonth",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is outside the current month."
-        },
-        "isUnavailable": {
-          "type": "property",
-          "name": "isUnavailable",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is unavailable, according to the calendar's `isDateUnavailable` prop. Unavailable dates remain\nfocusable, but cannot be selected by the user. They should be displayed with a visual affordance to indicate they\nare unavailable, such as a different color or a strikethrough.\n\nNote that because they are focusable, unavailable dates must meet a 4.5:1 color contrast ratio,\n[as defined by WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)."
-        },
-        "isInvalid": {
-          "type": "property",
-          "name": "isInvalid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is part of an invalid selection."
-        },
-        "isToday": {
-          "type": "property",
-          "name": "isToday",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the cell is today."
-        }
-      }
-    },
-    "HoverEvent": {
-      "type": "interface",
-      "name": "HoverEvent",
-      "properties": {
-        "type": {
-          "type": "property",
-          "name": "type",
-          "value": {
-            "type": "identifier",
-            "name": "\"hoverstart\" | \"hoverend\""
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The type of hover event being fired."
-        },
-        "pointerType": {
-          "type": "property",
-          "name": "pointerType",
-          "value": {
-            "type": "identifier",
-            "name": "\"mouse\" | \"pen\""
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The pointer type that triggered the hover event."
-        },
-        "target": {
-          "type": "property",
-          "name": "target",
-          "value": {
-            "type": "identifier",
-            "name": "HTMLElement"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The target element of the hover event."
-        }
-      }
-    }
-  }
+	"name": "CalendarCellProps",
+	"description": "A calendar cell displays a date cell within a calendar grid which can be selected by the user.",
+	"props": {
+		"variant": {
+			"type": "\"primary\" | \"accent\"",
+			"detailedType": "\"primary\" | \"accent\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "primary"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "accent"
+					}
+				]
+			},
+			"description": "The color variant of the selected cell.",
+			"default": "'accent'"
+		},
+		"onHoverStart": {
+			"type": "((e: HoverEvent) => void)",
+			"detailedType": "((e: HoverEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "HoverEvent",
+							"name": "HoverEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a hover interaction starts."
+		},
+		"onHoverEnd": {
+			"type": "((e: HoverEvent) => void)",
+			"detailedType": "((e: HoverEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "HoverEvent",
+							"name": "HoverEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a hover interaction ends."
+		},
+		"onHoverChange": {
+			"type": "((isHovering: boolean) => void)",
+			"detailedType": "((isHovering: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isHovering",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the hover state changes."
+		},
+		"date": {
+			"type": "CalendarDate",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CalendarDate"
+			},
+			"description": "The date to render in the cell.",
+			"required": true
+		},
+		"children": {
+			"type": "ReactNode | (values: CalendarCellRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "CalendarCellRenderProps",
+									"name": "CalendarCellRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"className": {
+			"type": "string | (values: CalendarCellRenderProps) => string",
+			"detailedType": "string | (values: CalendarCellRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "CalendarCellRenderProps",
+									"name": "CalendarCellRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+		},
+		"style": {
+			"type": "CSSProperties | (values: CalendarCellRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: CalendarCellRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "CalendarCellRenderProps",
+									"name": "CalendarCellRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		}
+	},
+	"renderProps": {
+		"isHovered": {
+			"selector": "[data-hovered]",
+			"description": "Whether the cell is currently hovered with a mouse."
+		},
+		"isPressed": {
+			"selector": "[data-pressed]",
+			"description": "Whether the cell is currently being pressed."
+		},
+		"isSelected": {
+			"selector": "[data-selected]",
+			"description": "Whether the cell is selected."
+		},
+		"isSelectionStart": {
+			"selector": "[data-selection-start]",
+			"description": "Whether the cell is the first date in a range selection."
+		},
+		"isSelectionEnd": {
+			"selector": "[data-selection-end]",
+			"description": "Whether the cell is the last date in a range selection."
+		},
+		"isFocused": {
+			"selector": "[data-focused]",
+			"description": "Whether the cell is focused."
+		},
+		"isFocusVisible": {
+			"selector": "[data-focus-visible]",
+			"description": "Whether the cell is keyboard focused."
+		},
+		"isDisabled": {
+			"selector": "[data-disabled]",
+			"description": "Whether the cell is disabled, according to the calendar's `minValue`, `maxValue`, and `isDisabled` props.\nDisabled dates are not focusable, and cannot be selected by the user. They are typically\ndisplayed with a dimmed appearance."
+		},
+		"isOutsideVisibleRange": {
+			"selector": "[data-outside-visible-range]",
+			"description": "Whether the cell is outside the visible range of the calendar.\nFor example, dates before the first day of a month in the same week."
+		},
+		"isOutsideMonth": {
+			"selector": "[data-outside-month]",
+			"description": "Whether the cell is outside the current month."
+		},
+		"isUnavailable": {
+			"selector": "[data-unavailable]",
+			"description": "Whether the cell is unavailable, according to the calendar's `isDateUnavailable` prop. Unavailable dates remain\nfocusable, but cannot be selected by the user. They should be displayed with a visual affordance to indicate they\nare unavailable, such as a different color or a strikethrough.\n\nNote that because they are focusable, unavailable dates must meet a 4.5:1 color contrast ratio,\n[as defined by WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)."
+		},
+		"isInvalid": {
+			"selector": "[data-invalid]",
+			"description": "Whether the cell is part of an invalid selection."
+		},
+		"isToday": {
+			"selector": "[data-today]",
+			"description": "Whether the cell is today."
+		}
+	},
+	"typeLinks": {
+		"CalendarCellRenderProps": {
+			"type": "interface",
+			"name": "CalendarCellRenderProps",
+			"properties": {
+				"date": {
+					"type": "property",
+					"name": "date",
+					"value": {
+						"type": "identifier",
+						"name": "CalendarDate"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The date that the cell represents."
+				},
+				"formattedDate": {
+					"type": "property",
+					"name": "formattedDate",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The day number formatted according to the current locale."
+				},
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is currently hovered with a mouse."
+				},
+				"isPressed": {
+					"type": "property",
+					"name": "isPressed",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is currently being pressed."
+				},
+				"isSelected": {
+					"type": "property",
+					"name": "isSelected",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is selected."
+				},
+				"isSelectionStart": {
+					"type": "property",
+					"name": "isSelectionStart",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is the first date in a range selection."
+				},
+				"isSelectionEnd": {
+					"type": "property",
+					"name": "isSelectionEnd",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is the last date in a range selection."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is keyboard focused."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is disabled, according to the calendar's `minValue`, `maxValue`, and `isDisabled` props.\nDisabled dates are not focusable, and cannot be selected by the user. They are typically\ndisplayed with a dimmed appearance."
+				},
+				"isOutsideVisibleRange": {
+					"type": "property",
+					"name": "isOutsideVisibleRange",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is outside the visible range of the calendar.\nFor example, dates before the first day of a month in the same week."
+				},
+				"isOutsideMonth": {
+					"type": "property",
+					"name": "isOutsideMonth",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is outside the current month."
+				},
+				"isUnavailable": {
+					"type": "property",
+					"name": "isUnavailable",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is unavailable, according to the calendar's `isDateUnavailable` prop. Unavailable dates remain\nfocusable, but cannot be selected by the user. They should be displayed with a visual affordance to indicate they\nare unavailable, such as a different color or a strikethrough.\n\nNote that because they are focusable, unavailable dates must meet a 4.5:1 color contrast ratio,\n[as defined by WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is part of an invalid selection."
+				},
+				"isToday": {
+					"type": "property",
+					"name": "isToday",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the cell is today."
+				}
+			}
+		},
+		"HoverEvent": {
+			"type": "interface",
+			"name": "HoverEvent",
+			"properties": {
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"hoverstart\" | \"hoverend\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of hover event being fired."
+				},
+				"pointerType": {
+					"type": "property",
+					"name": "pointerType",
+					"value": {
+						"type": "identifier",
+						"name": "\"mouse\" | \"pen\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The pointer type that triggered the hover event."
+				},
+				"target": {
+					"type": "property",
+					"name": "target",
+					"value": {
+						"type": "identifier",
+						"name": "HTMLElement"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The target element of the hover event."
+				}
+			}
+		}
+	}
 }

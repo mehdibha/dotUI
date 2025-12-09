@@ -7,27 +7,27 @@ import { DateInput, InputAddon, InputGroup } from "@dotui/registry/ui/input";
 import { TimeField } from "@dotui/registry/ui/time-field";
 
 export function TimeFieldDemo() {
-  return (
-    <div className="flex flex-col gap-6">
-      <TimeField>
-        <DateInput />
-      </TimeField>
+	return (
+		<div className="flex flex-col gap-6">
+			<TimeField>
+				<DateInput />
+			</TimeField>
 
-      <TimeField>
-        <Label>Event time</Label>
-        <DateInput />
-        <Description>Please select your event time.</Description>
-      </TimeField>
+			<TimeField>
+				<Label>Event time</Label>
+				<DateInput />
+				<Description>Please select your event time.</Description>
+			</TimeField>
 
-      <TimeField>
-        <Label>Event time</Label>
-        <InputGroup>
-          <InputAddon>
-            <ClockIcon />
-          </InputAddon>
-          <DateInput />
-        </InputGroup>
-      </TimeField>
-    </div>
-  );
+			<TimeField>
+				<Label>Event time</Label>
+				<InputGroup>
+					<InputAddon>
+						<ClockIcon />
+					</InputAddon>
+					<DateInput />
+				</InputGroup>
+			</TimeField>
+		</div>
+	);
 }

@@ -1,7 +1,7 @@
 export {
-  TOCItems,
-  TOCProvider,
-  TOCScrollArea,
-  TocThumb,
-  useTOCItems,
+	TOCItems,
+	TOCProvider,
+	TOCScrollArea,
+	TocThumb,
+	useTOCItems,
 } from "./toc";

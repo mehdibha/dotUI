@@ -1,69 +1,69 @@
 {
-  "name": "TableLoadMoreProps",
-  "description": "Missing description.",
-  "props": {
-    "children": {
-      "type": "ReactNode",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ReactNode"
-      },
-      "description": "The load more spinner to render when loading additional items."
-    },
-    "isLoading": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether or not the loading spinner should be rendered or not."
-    },
-    "onLoadMore": {
-      "type": "(() => any)",
-      "detailedType": "(() => any) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "any"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when more items should be loaded, e.g. while scrolling near the bottom."
-    },
-    "scrollOffset": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "The amount of offset from the bottom of your scrollable region that should trigger load more.\nUses a percentage value relative to the scroll body's client height. Load more is then triggered\nwhen your current scroll position's distance from the bottom of the currently loaded list of items is less than\nor equal to the provided value. (e.g. 1 = 100% of the scroll region's height).",
-      "default": "1"
-    },
-    "className": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
-    },
-    "style": {
-      "type": "CSSProperties",
-      "detailedType": "CSSProperties | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "CSSProperties"
-      },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
-    }
-  }
+	"name": "TableLoadMoreProps",
+	"description": "Missing description.",
+	"props": {
+		"children": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The load more spinner to render when loading additional items."
+		},
+		"isLoading": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether or not the loading spinner should be rendered or not."
+		},
+		"onLoadMore": {
+			"type": "(() => any)",
+			"detailedType": "(() => any) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "any"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when more items should be loaded, e.g. while scrolling near the bottom."
+		},
+		"scrollOffset": {
+			"type": "number",
+			"detailedType": "number | undefined",
+			"typeAst": {
+				"type": "number"
+			},
+			"description": "The amount of offset from the bottom of your scrollable region that should trigger load more.\nUses a percentage value relative to the scroll body's client height. Load more is then triggered\nwhen your current scroll position's distance from the bottom of the currently loaded list of items is less than\nor equal to the provided value. (e.g. 1 = 100% of the scroll region's height).",
+			"default": "1"
+		},
+		"className": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+		},
+		"style": {
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CSSProperties"
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+		}
+	}
 }

@@ -1,16 +1,16 @@
 {
-  "name": "SkeletonProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {
-    "show": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to show the skeleton. When false, renders children directly.",
-      "default": "true"
-    }
-  }
+	"name": "SkeletonProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {
+		"show": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether to show the skeleton. When false, renders children directly.",
+			"default": "true"
+		}
+	}
 }

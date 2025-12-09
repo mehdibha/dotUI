@@ -1,6 +1,6 @@
 {
-  "name": "DialogInsetProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {}
+	"name": "DialogInsetProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {}
 }

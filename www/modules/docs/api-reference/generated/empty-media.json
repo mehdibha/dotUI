@@ -1,26 +1,26 @@
 {
-  "name": "EmptyMediaProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {
-    "variant": {
-      "type": "\"default\" | \"icon\"",
-      "detailedType": "\"default\" | \"icon\" | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "default"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "icon"
-          }
-        ]
-      },
-      "description": "The visual style of the media container.",
-      "default": "'default'"
-    }
-  }
+	"name": "EmptyMediaProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {
+		"variant": {
+			"type": "\"default\" | \"icon\"",
+			"detailedType": "\"default\" | \"icon\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "default"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "icon"
+					}
+				]
+			},
+			"description": "The visual style of the media container.",
+			"default": "'default'"
+		}
+	}
 }

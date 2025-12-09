@@ -7,37 +7,37 @@ import { docs, marketing } from "@/.source/server";
 
 // Extended Item type that includes wip status
 export interface DocsPageItem extends PageTree.Item {
-  wip?: boolean;
+	wip?: boolean;
 }
 
 export const docsSource = loader({
-  baseUrl: "/docs",
-  source: docs.toFumadocsSource(),
-  icon: (icon) => {
-    if (!icon) {
-      return;
-    }
-    if (icon in icons) return createElement(icons[icon as keyof typeof icons]);
-  },
-  pageTree: {
-    transformers: [
-      {
-        file(node, filePath) {
-          if (!filePath) return node;
-          const file = this.storage.read(filePath);
-          if (!file || file.format !== "page") return node;
+	baseUrl: "/docs",
+	source: docs.toFumadocsSource(),
+	icon: (icon) => {
+		if (!icon) {
+			return;
+		}
+		if (icon in icons) return createElement(icons[icon as keyof typeof icons]);
+	},
+	pageTree: {
+		transformers: [
+			{
+				file(node, filePath) {
+					if (!filePath) return node;
+					const file = this.storage.read(filePath);
+					if (!file || file.format !== "page") return node;
 
-          return {
-            ...node,
-            wip: file.data.wip,
-          } as DocsPageItem;
-        },
-      },
-    ],
-  },
+					return {
+						...node,
+						wip: file.data.wip,
+					} as DocsPageItem;
+				},
+			},
+		],
+	},
 });
 
 export const marketingSource = loader({
-  baseUrl: "/",
-  source: marketing.toFumadocsSource(),
+	baseUrl: "/",
+	source: marketing.toFumadocsSource(),
 });

@@ -6,101 +6,83 @@ import { ArrowUpIcon, PlusIcon, SendIcon } from "lucide-react";
 import { SearchIcon } from "@dotui/registry/icons";
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import {
-  Input,
-  InputAddon,
-  InputGroup,
-  TextArea,
-} from "@dotui/registry/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@dotui/registry/ui/select";
+import { Input, InputAddon, InputGroup, TextArea } from "@dotui/registry/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 export function InputGroupDemo() {
-  return (
-    <div className={cn(["grid grid-cols-2 gap-4 *:space-y-4"])}>
-      <div>
-        <InputGroup>
-          <InputAddon>$</InputAddon>
-          <Input placeholder="InputGroup + Input" className="w-auto! flex-1!" />
-          <InputAddon>USD</InputAddon>
-        </InputGroup>
+	return (
+		<div className={cn(["grid grid-cols-2 gap-4 *:space-y-4"])}>
+			<div>
+				<InputGroup>
+					<InputAddon>$</InputAddon>
+					<Input placeholder="InputGroup + Input" className="w-auto! flex-1!" />
+					<InputAddon>USD</InputAddon>
+				</InputGroup>
 
-        <InputGroup>
-          <TextArea
-            placeholder="Type your message"
-            className="transition-[height]"
-          />
-          <InputAddon>120 characters left</InputAddon>
-        </InputGroup>
+				<InputGroup>
+					<TextArea placeholder="Type your message" className="transition-[height]" />
+					<InputAddon>120 characters left</InputAddon>
+				</InputGroup>
 
-        <InputGroup>
-          <InputAddon>
-            <SearchIcon />
-          </InputAddon>
-          <Input placeholder="InputGroup + Input" />
-          <InputAddon>12 results</InputAddon>
-        </InputGroup>
+				<InputGroup>
+					<InputAddon>
+						<SearchIcon />
+					</InputAddon>
+					<Input placeholder="InputGroup + Input" />
+					<InputAddon>12 results</InputAddon>
+				</InputGroup>
 
-        <InputGroup>
-          <Input defaultValue="@mehdibha" />
-          <InputAddon>
-            <div className="flex size-4 items-center justify-center rounded-full bg-primary text-fg-on-primary">
-              <IconCheck className="size-3" />
-            </div>
-          </InputAddon>
-        </InputGroup>
-      </div>
+				<InputGroup>
+					<Input defaultValue="@mehdibha" />
+					<InputAddon>
+						<div className="flex size-4 items-center justify-center rounded-full bg-primary text-fg-on-primary">
+							<IconCheck className="size-3" />
+						</div>
+					</InputAddon>
+				</InputGroup>
+			</div>
 
-      <div>
-        {(["sm", "md", "lg"] as const).map((size) => (
-          <InputGroup key={size} size={size}>
-            <Input placeholder="example.com" />
-            <InputAddon>
-              <Tooltip>
-                <Button variant="quiet">
-                  <SendIcon />
-                </Button>
-                <TooltipContent>This is content in a tooltip.</TooltipContent>
-              </Tooltip>
-            </InputAddon>
-          </InputGroup>
-        ))}
+			<div>
+				{(["sm", "md", "lg"] as const).map((size) => (
+					<InputGroup key={size} size={size}>
+						<Input placeholder="example.com" />
+						<InputAddon>
+							<Tooltip>
+								<Button variant="quiet">
+									<SendIcon />
+								</Button>
+								<TooltipContent>This is content in a tooltip.</TooltipContent>
+							</Tooltip>
+						</InputAddon>
+					</InputGroup>
+				))}
 
-        <InputGroup>
-          <TextArea placeholder="Ask, search or chat..." />
-          <InputAddon>
-            <Button>
-              <PlusIcon />
-            </Button>
-            <Select defaultValue="auto" className="w-fit">
-              <SelectTrigger aspect="default">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem id="auto">Auto</SelectItem>
-                <SelectItem id="agent">Agent</SelectItem>
-                <SelectItem id="manual">Manual</SelectItem>
-              </SelectContent>
-            </Select>
-            <span className="ml-auto">52% used</span>
-            <Button
-              aria-label="Send"
-              variant="primary"
-              className="rounded-full"
-            >
-              <ArrowUpIcon />
-            </Button>
-          </InputAddon>
-        </InputGroup>
-      </div>
-    </div>
-  );
+				<InputGroup>
+					<TextArea placeholder="Ask, search or chat..." />
+					<InputAddon>
+						<Button>
+							<PlusIcon />
+						</Button>
+						<Select defaultValue="auto" className="w-fit">
+							<SelectTrigger aspect="default">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem id="auto">Auto</SelectItem>
+								<SelectItem id="agent">Agent</SelectItem>
+								<SelectItem id="manual">Manual</SelectItem>
+							</SelectContent>
+						</Select>
+						<span className="ml-auto">52% used</span>
+						<Button aria-label="Send" variant="primary" className="rounded-full">
+							<ArrowUpIcon />
+						</Button>
+					</InputAddon>
+				</InputGroup>
+			</div>
+		</div>
+	);
 }
 
 // export const GrokDemo = () => {

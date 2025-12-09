@@ -7,21 +7,18 @@ import { docsSource } from "@/modules/docs/source";
 import { ActiveStylePortalProvider } from "@/modules/styles/active-style-provider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="[--header-height:calc(var(--spacing)*12)]">
-      <ActiveStylePortalProvider>
-        <SidebarProvider defaultOpen={false}>
-          <DocsSidebar items={docsSource.pageTree.children} />
-          <div className="size-full">
-            <Header
-              items={docsSource.pageTree.children}
-              className="md:hidden"
-            />
-            <div>{children}</div>
-            <Footer />
-          </div>
-        </SidebarProvider>
-      </ActiveStylePortalProvider>
-    </div>
-  );
+	return (
+		<div className="[--header-height:calc(var(--spacing)*12)]">
+			<ActiveStylePortalProvider>
+				<SidebarProvider defaultOpen={false}>
+					<DocsSidebar items={docsSource.pageTree.children} />
+					<div className="size-full">
+						<Header items={docsSource.pageTree.children} className="md:hidden" />
+						<div>{children}</div>
+						<Footer />
+					</div>
+				</SidebarProvider>
+			</ActiveStylePortalProvider>
+		</div>
+	);
 }

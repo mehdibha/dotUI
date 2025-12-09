@@ -21,144 +21,122 @@ const SCALE_REDUCTION_PER_CARD = 0.01;
 const INITIAL_ANIMATION_SCALE = 0.6;
 
 const cardVariants = {
-  initial: ({
-    position,
-    visibleCards,
-  }: {
-    position: number;
-    visibleCards: number;
-  }) => ({
-    x:
-      position *
-      ((position - visibleCards * 2) / visibleCards) *
-      X_OFFSET_PER_CARD *
-      INITIAL_ANIMATION_SCALE,
-    y: position * Y_OFFSET_PER_CARD * INITIAL_ANIMATION_SCALE,
-    scale: 1 - position * SCALE_REDUCTION_PER_CARD,
-  }),
-  animate: ({
-    position,
-    visibleCards,
-  }: {
-    position: number;
-    visibleCards: number;
-  }) => ({
-    x:
-      position *
-      ((position - visibleCards * 2) / visibleCards) *
-      X_OFFSET_PER_CARD,
-    y: position * Y_OFFSET_PER_CARD,
-    scale: 1 - position * SCALE_REDUCTION_PER_CARD,
-  }),
-  exit: {
-    opacity: 0,
-    filter: "blur(8px)",
-  },
+	initial: ({ position, visibleCards }: { position: number; visibleCards: number }) => ({
+		x: position * ((position - visibleCards * 2) / visibleCards) * X_OFFSET_PER_CARD * INITIAL_ANIMATION_SCALE,
+		y: position * Y_OFFSET_PER_CARD * INITIAL_ANIMATION_SCALE,
+		scale: 1 - position * SCALE_REDUCTION_PER_CARD,
+	}),
+	animate: ({ position, visibleCards }: { position: number; visibleCards: number }) => ({
+		x: position * ((position - visibleCards * 2) / visibleCards) * X_OFFSET_PER_CARD,
+		y: position * Y_OFFSET_PER_CARD,
+		scale: 1 - position * SCALE_REDUCTION_PER_CARD,
+	}),
+	exit: {
+		opacity: 0,
+		filter: "blur(8px)",
+	},
 };
 
 export const FeaturedStylesShowcase = ({
-  styles,
-  visibleCards = 5,
+	styles,
+	visibleCards = 5,
 }: {
-  styles: RouterOutputs["style"]["getPublicStyles"];
-  visibleCards?: number;
+	styles: RouterOutputs["style"]["getPublicStyles"];
+	visibleCards?: number;
 }) => {
-  const { resolvedTheme } = useTheme();
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const delayedIndex = useDebounce(currentIndex, 700);
+	const { resolvedTheme } = useTheme();
+	const containerRef = React.useRef<HTMLDivElement>(null);
+	const [currentIndex, setCurrentIndex] = React.useState(0);
+	const delayedIndex = useDebounce(currentIndex, 700);
 
-  const currentStyle = React.useMemo(() => {
-    return styles[currentIndex % styles.length];
-  }, [currentIndex, styles]);
+	const currentStyle = React.useMemo(() => {
+		return styles[currentIndex % styles.length];
+	}, [currentIndex, styles]);
 
-  return (
-    <>
-      <StyleProvider
-        ref={containerRef}
-        unstyled
-        style={currentStyle}
-        mode={resolvedTheme as "light" | "dark" | undefined}
-      />
-      <div className="flex justify-center gap-4">
-        <Tabs
-          selectedKey={styles[currentIndex % styles.length]?.name}
-          onSelectionChange={(key) => {
-            const clickedIndex = styles.findIndex((s) => s.name === key);
-            if (clickedIndex === -1) return;
-            setCurrentIndex(clickedIndex);
-          }}
-          className="gap-4"
-        >
-          <TabList className="flex-wrap gap-1 border-b-0">
-            {styles.map((style) => {
-              return (
-                <Tab
-                  key={style.name}
-                  id={style.name}
-                  className="*:data-tab-indicator:-z-1 px-3 py-1 *:data-tab-indicator:h-full *:data-tab-indicator:rounded-xl *:data-tab-indicator:bg-selected"
-                >
-                  {style.name}
-                </Tab>
-              );
-            })}
-          </TabList>
-          <div className="relative">
-            {[...styles, ...styles].map((style, index) => {
-              const position = index - currentIndex;
-              const delayedPosition = index - delayedIndex;
-              const isVisible = position >= 0 && position < visibleCards;
-              const isFront = position === 0;
+	return (
+		<>
+			<StyleProvider
+				ref={containerRef}
+				unstyled
+				style={currentStyle}
+				mode={resolvedTheme as "light" | "dark" | undefined}
+			/>
+			<div className="flex justify-center gap-4">
+				<Tabs
+					selectedKey={styles[currentIndex % styles.length]?.name}
+					onSelectionChange={(key) => {
+						const clickedIndex = styles.findIndex((s) => s.name === key);
+						if (clickedIndex === -1) return;
+						setCurrentIndex(clickedIndex);
+					}}
+					className="gap-4"
+				>
+					<TabList className="flex-wrap gap-1 border-b-0">
+						{styles.map((style) => {
+							return (
+								<Tab
+									key={style.name}
+									id={style.name}
+									className="*:data-tab-indicator:-z-1 px-3 py-1 *:data-tab-indicator:h-full *:data-tab-indicator:rounded-xl *:data-tab-indicator:bg-selected"
+								>
+									{style.name}
+								</Tab>
+							);
+						})}
+					</TabList>
+					<div className="relative">
+						{[...styles, ...styles].map((style, index) => {
+							const position = index - currentIndex;
+							const delayedPosition = index - delayedIndex;
+							const isVisible = position >= 0 && position < visibleCards;
+							const isFront = position === 0;
 
-              return (
-                <MotionTabPanel
-                  key={`${style.name}-${index}`}
-                  id={style.name}
-                  className={cn(
-                    isFront ? "relative" : "absolute inset-0",
-                    "w-full",
-                  )}
-                  variants={cardVariants}
-                  initial="initial"
-                  animate={isVisible ? "animate" : "exit"}
-                  custom={{ position, visibleCards }}
-                  transition={{
-                    duration: 0.6,
-                    // delay: hasAnimated.current ? 0 : position * 0.05,
-                    ease: [0.4, 0, 0.2, 1],
-                  }}
-                  style={{
-                    transformOrigin: "top left",
-                    pointerEvents: isFront ? "auto" : "none",
-                    zIndex: visibleCards - position,
-                  }}
-                  shouldForceMount
-                >
-                  <StyleProvider
-                    style={style}
-                    mode={resolvedTheme as "light" | "dark" | undefined}
-                    className="h-full rounded-xl bg-bg"
-                  >
-                    <PortalProvider getContainer={() => containerRef.current}>
-                      {position > 0 && (
-                        <div
-                          className="absolute inset-0 rounded-[inherit] bg-black transition-opacity duration-600 dark:hidden"
-                          style={{
-                            opacity: Math.min(position * 0.15, 0.6),
-                          }}
-                        />
-                      )}
-                      <div className="h-full rounded-[inherit] border">
-                        {(position === 0 || delayedPosition === 0) && <Cards />}
-                      </div>
-                    </PortalProvider>
-                  </StyleProvider>
-                </MotionTabPanel>
-              );
-            })}
-          </div>
-        </Tabs>
-        {/* <div className="relative pb-24">
+							return (
+								<MotionTabPanel
+									key={`${style.name}-${index}`}
+									id={style.name}
+									className={cn(isFront ? "relative" : "absolute inset-0", "w-full")}
+									variants={cardVariants}
+									initial="initial"
+									animate={isVisible ? "animate" : "exit"}
+									custom={{ position, visibleCards }}
+									transition={{
+										duration: 0.6,
+										// delay: hasAnimated.current ? 0 : position * 0.05,
+										ease: [0.4, 0, 0.2, 1],
+									}}
+									style={{
+										transformOrigin: "top left",
+										pointerEvents: isFront ? "auto" : "none",
+										zIndex: visibleCards - position,
+									}}
+									shouldForceMount
+								>
+									<StyleProvider
+										style={style}
+										mode={resolvedTheme as "light" | "dark" | undefined}
+										className="h-full rounded-xl bg-bg"
+									>
+										<PortalProvider getContainer={() => containerRef.current}>
+											{position > 0 && (
+												<div
+													className="absolute inset-0 rounded-[inherit] bg-black transition-opacity duration-600 dark:hidden"
+													style={{
+														opacity: Math.min(position * 0.15, 0.6),
+													}}
+												/>
+											)}
+											<div className="h-full rounded-[inherit] border">
+												{(position === 0 || delayedPosition === 0) && <Cards />}
+											</div>
+										</PortalProvider>
+									</StyleProvider>
+								</MotionTabPanel>
+							);
+						})}
+					</div>
+				</Tabs>
+				{/* <div className="relative pb-24">
             <Image
               src={`/images/showcase/${styleQueue[0]!.name}-light.png`}
               alt={styleQueue[0]!.name}
@@ -189,7 +167,7 @@ export const FeaturedStylesShowcase = ({
             />
           </div>
         </div> */}
-      </div>
-    </>
-  );
+			</div>
+		</>
+	);
 };

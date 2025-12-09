@@ -19,31 +19,31 @@ import { Switches } from "./demos/switch";
 import { Tooltips } from "./demos/tooltip";
 
 export function ComponentsEditor() {
-  const [isPending, setIsPending] = React.useState(false);
+	const [isPending, setIsPending] = React.useState(false);
 
-  React.useEffect(() => {
-    if (isPending) {
-      setTimeout(() => setIsPending(false), 2000);
-    }
-  }, [isPending]);
+	React.useEffect(() => {
+		if (isPending) {
+			setTimeout(() => setIsPending(false), 2000);
+		}
+	}, [isPending]);
 
-  return (
-    <div>
-      <Loaders />
-      <Buttons />
-      <FocusStyles />
-      <Inputs />
-      <Pickers />
-      <Selection />
-      <Calendars />
-      <ListBoxAndMenu />
-      <Overlays />
-      <Checkboxes />
-      <Radios />
-      <Switches />
-      <Sliders />
-      <BadgeAndTagGroup />
-      <Tooltips />
-    </div>
-  );
+	return (
+		<div>
+			<Loaders />
+			<Buttons />
+			<FocusStyles />
+			<Inputs />
+			<Pickers />
+			<Selection />
+			<Calendars />
+			<ListBoxAndMenu />
+			<Overlays />
+			<Checkboxes />
+			<Radios />
+			<Switches />
+			<Sliders />
+			<BadgeAndTagGroup />
+			<Tooltips />
+		</div>
+	);
 }

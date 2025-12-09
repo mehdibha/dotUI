@@ -5,7 +5,7 @@ export const dynamic = "force-static";
 export const revalidate = 60;
 
 export default async function FeaturedStylesPage() {
-  const styles = await caller.style.getPublicStyles({ featured: true });
+	const styles = await caller.style.getPublicStyles({ featured: true });
 
-  return <StylesList styles={styles} search />;
+	return <StylesList styles={styles} search />;
 }

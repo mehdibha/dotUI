@@ -1,63 +1,63 @@
 {
-  "name": "MenuProps",
-  "description": "Missing description.",
-  "props": {
-    "trigger": {
-      "type": "MenuTriggerType",
-      "detailedType": "MenuTriggerType | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "MenuTriggerType"
-      },
-      "description": "How the menu is triggered.",
-      "default": "'press'"
-    },
-    "isOpen": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the overlay is open by default (controlled)."
-    },
-    "defaultOpen": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the overlay is open by default (uncontrolled)."
-    },
-    "onOpenChange": {
-      "type": "((isOpen: boolean) => void)",
-      "detailedType": "((isOpen: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isOpen",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the overlay's open state changes."
-    }
-  },
-  "renderProps": {
-    "isEmpty": {
-      "selector": "[data-empty]",
-      "description": "Whether the menu has no items and should display its empty state."
-    }
-  }
+	"name": "MenuProps",
+	"description": "Missing description.",
+	"props": {
+		"trigger": {
+			"type": "MenuTriggerType",
+			"detailedType": "MenuTriggerType | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "MenuTriggerType"
+			},
+			"description": "How the menu is triggered.",
+			"default": "'press'"
+		},
+		"isOpen": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the overlay is open by default (controlled)."
+		},
+		"defaultOpen": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the overlay is open by default (uncontrolled)."
+		},
+		"onOpenChange": {
+			"type": "((isOpen: boolean) => void)",
+			"detailedType": "((isOpen: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isOpen",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the overlay's open state changes."
+		}
+	},
+	"renderProps": {
+		"isEmpty": {
+			"selector": "[data-empty]",
+			"description": "Whether the menu has no items and should display its empty state."
+		}
+	}
 }

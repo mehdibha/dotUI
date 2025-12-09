@@ -6,20 +6,20 @@ import { Group } from "@dotui/registry/ui/group";
 import { Input } from "@dotui/registry/ui/input";
 
 export default function Page() {
-  return (
-    <div className="flex flex-col items-center gap-4">
-      <Group orientation="horizontal">
-        <Button>Button</Button>
-        <Button>
-          <EllipsisIcon />
-        </Button>
-      </Group>
-      <Group orientation="horizontal">
-        <Input className="w-32" />
-        <Button>
-          <SearchIcon />
-        </Button>
-      </Group>
-    </div>
-  );
+	return (
+		<div className="flex flex-col items-center gap-4">
+			<Group orientation="horizontal">
+				<Button>Button</Button>
+				<Button>
+					<EllipsisIcon />
+				</Button>
+			</Group>
+			<Group orientation="horizontal">
+				<Input className="w-32" />
+				<Button>
+					<SearchIcon />
+				</Button>
+			</Group>
+		</div>
+	);
 }

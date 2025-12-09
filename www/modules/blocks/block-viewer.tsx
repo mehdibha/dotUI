@@ -1,13 +1,13 @@
 import { Index } from "@dotui/registry/blocks";
 
 export function BlockViewer({ name }: { name: string }) {
-  const block = Index[name];
+	const block = Index[name];
 
-  if (!block) {
-    return <div>Block not found</div>;
-  }
+	if (!block) {
+		return <div>Block not found</div>;
+	}
 
-  const Component = block.component;
+	const Component = block.component;
 
-  return <Component />;
+	return <Component />;
 }

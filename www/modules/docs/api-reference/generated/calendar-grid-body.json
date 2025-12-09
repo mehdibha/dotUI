@@ -1,49 +1,49 @@
 {
-  "name": "CalendarGridBodyProps",
-  "description": "A calendar grid body displays a grid of calendar cells within a month.",
-  "props": {
-    "children": {
-      "type": "(date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "date",
-            "value": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
-              "name": "CalendarDate"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "identifier",
-          "name": "ReactElement"
-        },
-        "typeParameters": []
-      },
-      "description": "A function to render a `<CalendarCell>` for a given date.",
-      "required": true
-    },
-    "className": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
-    },
-    "style": {
-      "type": "CSSProperties",
-      "detailedType": "CSSProperties | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "CSSProperties"
-      },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
-    }
-  }
+	"name": "CalendarGridBodyProps",
+	"description": "A calendar grid body displays a grid of calendar cells within a month.",
+	"props": {
+		"children": {
+			"type": "(date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "date",
+						"value": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.10.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+							"name": "CalendarDate"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "identifier",
+					"name": "ReactElement"
+				},
+				"typeParameters": []
+			},
+			"description": "A function to render a `<CalendarCell>` for a given date.",
+			"required": true
+		},
+		"className": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+		},
+		"style": {
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CSSProperties"
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+		}
+	}
 }

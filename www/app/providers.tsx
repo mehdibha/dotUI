@@ -10,23 +10,18 @@ import { RouterProvider } from "react-aria-components";
 import { TRPCReactProvider } from "@/lib/trpc/react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  return (
-    <NuqsAdapter>
-      <JotaiProvider>
-        <RouterProvider navigate={router.push}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NextProvider>
-              <TRPCReactProvider>{children}</TRPCReactProvider>
-            </NextProvider>
-          </ThemeProvider>
-        </RouterProvider>
-      </JotaiProvider>
-    </NuqsAdapter>
-  );
+	const router = useRouter();
+	return (
+		<NuqsAdapter>
+			<JotaiProvider>
+				<RouterProvider navigate={router.push}>
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+						<NextProvider>
+							<TRPCReactProvider>{children}</TRPCReactProvider>
+						</NextProvider>
+					</ThemeProvider>
+				</RouterProvider>
+			</JotaiProvider>
+		</NuqsAdapter>
+	);
 }

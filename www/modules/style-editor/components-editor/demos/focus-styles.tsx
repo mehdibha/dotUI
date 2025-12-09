@@ -6,24 +6,24 @@ import { TextField } from "@dotui/registry/ui/text-field";
 import { ComponentConfig } from "@/modules/style-editor/components-editor/component-config";
 
 export function FocusStyles() {
-  return (
-    <ComponentConfig
-      name="focus-style"
-      title="Focus style"
-      variants={[
-        { name: "basic", label: "Basic" },
-        { name: "minimal", label: "Minimal" },
-      ]}
-      tokens={["color-border-focus", "color-border-focus-muted"]}
-      previewClassName="flex-col gap-4"
-    >
-      <div className="flex items-center gap-4">
-        <Button>Button</Button>
-        <TextField aria-label="Email" form="none">
-          <Input placeholder="hello@mehdibha.com" />
-        </TextField>
-        <Checkbox aria-label="Checkbox example" form="none" />
-      </div>
-    </ComponentConfig>
-  );
+	return (
+		<ComponentConfig
+			name="focus-style"
+			title="Focus style"
+			variants={[
+				{ name: "basic", label: "Basic" },
+				{ name: "minimal", label: "Minimal" },
+			]}
+			tokens={["color-border-focus", "color-border-focus-muted"]}
+			previewClassName="flex-col gap-4"
+		>
+			<div className="flex items-center gap-4">
+				<Button>Button</Button>
+				<TextField aria-label="Email" form="none">
+					<Input placeholder="hello@mehdibha.com" />
+				</TextField>
+				<Checkbox aria-label="Checkbox example" form="none" />
+			</div>
+		</ComponentConfig>
+	);
 }

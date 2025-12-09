@@ -7,16 +7,16 @@ import { Input } from "@dotui/registry/ui/input";
 import { NumberField } from "@dotui/registry/ui/number-field";
 
 export function NumberFieldDemo() {
-  return (
-    <div>
-      <NumberField>
-        <Label>Amount</Label>
-        <Group>
-          <Button slot="decrement" />
-          <Input />
-          <Button slot="increment" />
-        </Group>
-      </NumberField>
-    </div>
-  );
+	return (
+		<div>
+			<NumberField>
+				<Label>Amount</Label>
+				<Group>
+					<Button slot="decrement" />
+					<Input />
+					<Button slot="increment" />
+				</Group>
+			</NumberField>
+		</div>
+	);
 }

@@ -3,12 +3,10 @@
  * e.g., "text-field" -> "textField", "toggle-button" -> "toggleButton"
  */
 export function toCamelCase(str: string): string {
-  return str
-    .split("-")
-    .map((word, index) =>
-      index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1),
-    )
-    .join("");
+	return str
+		.split("-")
+		.map((word, index) => (index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)))
+		.join("");
 }
 
 /**
@@ -16,8 +14,8 @@ export function toCamelCase(str: string): string {
  * e.g., "alert" -> "Alert", "text-field" -> "TextField"
  */
 export function toPascalCase(str: string): string {
-  return str
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("");
+	return str
+		.split("-")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join("");
 }
