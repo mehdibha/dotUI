@@ -1,14 +1,15 @@
-// Providers (wrapped with registry deps)
-export {
-  FontLoader,
-  StyleProvider,
-  ThemeProvider,
-  useCurrentStyle,
-  useVariant,
-  VariantsProvider,
-} from "./providers";
-// Registry
-export { registry } from "./registry";
-// Re-export common types from style-system
-export type { CommonIconProps } from "./icons/create-icon";
-export type { StyleProviderProps, ThemeProviderProps } from "./providers";
+import type { RegistryItem } from "@dotui/registry/types";
+
+import { registryBase } from "./base/registry";
+import { registryBlocks } from "./blocks/registry";
+import { registryHooks } from "./hooks/registry";
+import { registryLib } from "./lib/registry";
+import { registryUi } from "./ui/registry";
+
+export const registry: RegistryItem[] = [
+  ...registryBase,
+  ...registryUi,
+  ...registryBlocks,
+  ...registryHooks,
+  ...registryLib,
+];

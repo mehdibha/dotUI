@@ -5,9 +5,9 @@ import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
-import { StyleProvider } from "@dotui/registry";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
 import { cn } from "@dotui/registry/lib/utils";
+import { StyleProvider } from "@dotui/registry/providers";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { RouterOutputs } from "@dotui/api";
 

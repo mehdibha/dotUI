@@ -10,7 +10,6 @@ import {
   Virtualizer,
 } from "react-aria-components";
 
-import { FontLoader } from "@dotui/registry";
 import {
   displayFonts,
   handwritingFonts,
@@ -18,6 +17,7 @@ import {
   sansSerifFonts,
   serifFonts,
 } from "@dotui/registry/fonts/registry";
+import { FontLoader } from "@dotui/registry/providers";
 import { Button } from "@dotui/registry/ui/button";
 import { Label } from "@dotui/registry/ui/field";
 import {

@@ -5,8 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
-import { StyleProvider } from "@dotui/registry";
 import { cn } from "@dotui/registry/lib/utils";
+import { StyleProvider } from "@dotui/registry/providers";
 import type { StyleDefinition } from "@dotui/style-system/types";
 
 import { useMounted } from "@/hooks/use-mounted";

@@ -9,7 +9,7 @@ import type {
   VariantsDefinition,
 } from "@dotui/style-system/types";
 
-import { registry } from "./registry";
+import { registry } from "./index";
 import { COLOR_TOKENS } from "./tokens/registry";
 
 export const DEFAULT_RADIUS_FACTOR = 1;
