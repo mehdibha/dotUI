@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.3.5
+        specifier: ^2.3.8
         version: 2.3.8
       '@changesets/changelog-github':
         specifier: ^0.5.1
@@ -81,10 +81,10 @@ importers:
         specifier: ^16.0.5
         version: 16.0.8(@babel/core@7.28.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1
       react-dom:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1(react@19.2.1)
       zod:
         specifier: ^4.0.5
@@ -182,7 +182,7 @@ importers:
         specifier: ^12.23.22
         version: 12.23.25(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1
       react-aria:
         specifier: ^3.44.0
@@ -191,7 +191,7 @@ importers:
         specifier: ^1.13.0
         version: 1.13.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react-dom:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1(react@19.2.1)
       react-error-boundary:
         specifier: ^6.0.0
@@ -305,10 +305,10 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       react:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1
       react-dom:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1(react@19.2.1)
     devDependencies:
       '@dotui/ts-config':
@@ -363,7 +363,7 @@ importers:
   packages/types:
     dependencies:
       react:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1
     devDependencies:
       '@dotui/ts-config':
@@ -487,7 +487,7 @@ importers:
         specifier: ^2.0.0
         version: 2.8.4(next@16.0.8(@babel/core@7.28.5)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
       react:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1
       react-aria:
         specifier: ^3.44.0
@@ -496,7 +496,7 @@ importers:
         specifier: ^1.13.0
         version: 1.13.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react-dom:
-        specifier: ^19.2.0
+        specifier: ^19.2.1
         version: 19.2.1(react@19.2.1)
       react-error-boundary:
         specifier: ^6.0.0
