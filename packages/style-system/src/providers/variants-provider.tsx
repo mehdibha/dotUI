@@ -14,9 +14,9 @@ export const VariantsProvider = ({
   children: React.ReactNode;
   variants: VariantsDefinition;
 }) => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ignore
   const variants = React.useMemo(
     () => createVariants(variantsDefinition),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [JSON.stringify(variantsDefinition)],
   );
 

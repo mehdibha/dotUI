@@ -1,7 +1,5 @@
 "use client";
 
-import * as React from "react";
-
 import {
   StyleProvider as BaseStyleProvider,
   ThemeProvider as BaseThemeProvider,
