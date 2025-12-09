@@ -3,8 +3,8 @@
 import React from "react";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
-import { StyleProvider } from "@dotui/registry/providers";
 import { cn } from "@dotui/registry/lib/utils";
+import { StyleProvider } from "@dotui/registry/providers";
 import { Alert } from "@dotui/registry/ui/alert";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 
