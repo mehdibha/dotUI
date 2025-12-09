@@ -111,8 +111,8 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
 					</Button>
 				</div>
 			</motion.div>
-			<button
-				type="button"
+			{/* biome-ignore lint/a11y/useSemanticElements: Interactive splitter, not a static separator - hr would be incorrect */}
+			<div
 				aria-label="Resize panel"
 				role="separator"
 				aria-orientation="horizontal"

@@ -31,7 +31,7 @@ export function ColorScale({ scaleId }: { scaleId: ScaleId }) {
 			</p>
 			<div className="flex flex-1 items-center gap-1">
 				{scale.values.map((color, index) => (
-					<Dialog key={index}>
+					<Dialog key={color.name ?? color.value ?? `color-${index}`}>
 						<Tooltip>
 							<Button
 								aria-label={color.name}

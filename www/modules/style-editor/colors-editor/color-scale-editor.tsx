@@ -38,7 +38,7 @@ export function ColorScaleEditor({ scaleId }: { scaleId: ScaleId }) {
 		<Dialog>
 			<Button aspect="default">
 				<form.Subscribe selector={(state) => state.values.theme.colors.modes[resolvedMode].scales[scaleId].colorKeys}>
-					{(colorKeys) => colorKeys.map((color, index) => <ColorSwatch key={index} color={color} />)}
+					{(colorKeys) => colorKeys.map((color) => <ColorSwatch key={color} color={color} />)}
 				</form.Subscribe>
 				<form.Subscribe selector={(state) => state.values.theme.colors.modes[resolvedMode].scales[scaleId].name}>
 					{(name) => name.charAt(0).toUpperCase() + name.slice(1)}
@@ -89,6 +89,7 @@ function ColorKeysEditor({ scaleId }: { scaleId: ScaleId }) {
 								{field.state.value.map((_, i) => {
 									return (
 										<form.AppField
+											// biome-ignore lint/suspicious/noArrayIndexKey: ignore
 											key={i}
 											name={`theme.colors.modes.${resolvedMode}.scales.${scaleId}.colorKeys[${i}]`}
 											listeners={{
@@ -203,6 +204,7 @@ function RatiosEditor({ scaleId }: { scaleId: ScaleId }) {
 										const step = SCALE_STEPS[i];
 										const requiredContrast = getWcagRequirement(i);
 										return (
+											// biome-ignore lint/suspicious/noArrayIndexKey: ignore
 											<TableRow key={i}>
 												<TableCell>
 													<div className="flex items-center gap-2">

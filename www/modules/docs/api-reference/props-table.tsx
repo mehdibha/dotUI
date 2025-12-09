@@ -229,7 +229,7 @@ function TypeDisplay({ type, highlighted }: TypeDisplayProps) {
 		return (
 			<code className="block overflow-x-auto whitespace-pre-wrap rounded-md border bg-card p-2 font-mono text-[0.8125rem]">
 				{parts.map((part, i) => (
-					<React.Fragment key={i}>
+					<React.Fragment key={part}>
 						{i > 0 && <span className="text-fg-muted">{"\n| "}</span>}
 						<span>{part}</span>
 					</React.Fragment>

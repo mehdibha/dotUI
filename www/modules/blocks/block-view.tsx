@@ -88,6 +88,7 @@ const BlockViewView = ({ block }: { block: RegistryItem }) => {
 				onLoad={() => setLoading(false)}
 				onError={() => setLoading(false)}
 				style={{ height: block.meta?.containerHeight }}
+				title={`Preview for ${block.name}${activeStyle ? ` by ${activeStyle.user.username}` : ""}`}
 				className="w-full"
 			/>
 		</div>

@@ -264,7 +264,13 @@ export default function Page() {
 								if (!user) return null;
 								return (
 									<div className="flex items-center space-x-2">
-										<img src={user.avatar} alt={user.name} className="h-6 w-6 rounded-full object-cover" />
+										<Image
+											src={user.avatar}
+											alt={user.name}
+											width={24}
+											height={24}
+											className="h-6 w-6 rounded-full object-cover"
+										/>
 										<span className="text-fg-muted">{user.name}</span>
 									</div>
 								);

@@ -57,8 +57,8 @@ export function StylesList({
 					<p className="text-fg-muted text-sm">No styles found</p>
 				)}
 				{isLoading &&
-					Array.from({ length: 3 }).map((_, key) => (
-						<div key={`skeleton-${key}`} className="space-y-3">
+					["skeleton-a", "skeleton-b", "skeleton-c"].map((placeholder) => (
+						<div key={placeholder} className="space-y-3">
 							<Skeleton className="h-62" />
 							<div className="flex items-center justify-between gap-2 px-[2px]">
 								<Skeleton className="h-6 w-28" />

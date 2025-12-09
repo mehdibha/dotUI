@@ -158,20 +158,23 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 					<p className="text-xs">
 						<span className="text-fg-muted">Extends: </span>
 						<span className="font-mono">
-							{type.extends.map((ext, i) => (
-								<React.Fragment key={i}>
-									{i > 0 && ", "}
-									<Type type={ext} />
-								</React.Fragment>
-							))}
+							{type.extends.map((ext, idx) => {
+								const key = typeof (ext as { name?: unknown }).name === "string" ? (ext as { name: string }).name : idx;
+								return (
+									<React.Fragment key={key}>
+										{idx > 0 && ", "}
+										<Type type={ext} />
+									</React.Fragment>
+								);
+							})}
 						</span>
 					</p>
 				)}
 
 				{properties.length > 0 && (
 					<div className="divide-y divide-border/50">
-						{properties.map((prop, i) => (
-							<div key={i} className="py-2 first:pt-0 last:pb-0">
+						{properties.map((prop) => (
+							<div key={prop.name} className="py-2 first:pt-0 last:pb-0">
 								<div className="flex items-baseline justify-between gap-3">
 									<code className="font-mono text-fg text-xs">
 										{prop.name}

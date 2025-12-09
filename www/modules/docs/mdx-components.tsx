@@ -1,4 +1,5 @@
 import { ArrowUpRightIcon } from "lucide-react";
+import Image from "next/image";
 import type { MDXComponents } from "mdx/types";
 import type React from "react";
 
@@ -75,8 +76,15 @@ export const mdxComponents: MDXComponents = {
 	blockquote: ({ className, ...props }) => (
 		<blockquote className={cn("mt-6 border-l-2 pl-6 italic *:text-fg-muted", className)} {...props} />
 	),
-	img: ({ className, alt, ...props }) => (
-		<img className={cn("mx-auto max-w-md rounded-md border", className)} alt={alt} {...props} />
+	img: ({ className, alt, src, width, height, ...props }) => (
+		<Image
+			className={cn("mx-auto max-w-md rounded-md border", className)}
+			alt={alt || ""}
+			src={src || ""}
+			width={typeof width === "number" ? width : 800}
+			height={typeof height === "number" ? height : 600}
+			{...props}
+		/>
 	),
 	hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
 	table: ({ className, ...props }) => (

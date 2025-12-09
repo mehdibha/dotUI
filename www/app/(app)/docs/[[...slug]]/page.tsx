@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
 import { findNeighbour } from "fumadocs-core/page-tree";
 import { AlignLeftIcon, ExternalLinkIcon } from "lucide-react";
+import { notFound } from "next/navigation";
 import type { Metadata, Route } from "next";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
@@ -64,11 +64,11 @@ export default async function Page({ params }: PageProps<"/docs/[[...slug]]">) {
 						<PageHeaderDescription className="text-wrap">{page.data.description}</PageHeaderDescription>
 						{page.data.links && page.data.links.length > 0 && (
 							<div className="mt-2 flex items-center gap-2">
-								{page.data.links.map((link, index) => {
+								{page.data.links.map((link) => {
 									const icon = getIcon(link.href);
 									return (
 										<LinkButton
-											key={index}
+											key={link.href}
 											href={link.href as Route}
 											target="_blank"
 											size="sm"

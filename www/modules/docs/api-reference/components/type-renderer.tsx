@@ -37,6 +37,25 @@ const styles = {
 	punctuation: "text-fg-muted",
 };
 
+// Generate stable keys for type nodes and related data
+const typeKey = (type: TType, index: number) => {
+	if ("name" in type && typeof (type as { name?: unknown }).name === "string") {
+		return `${type.type}-${(type as { name: string }).name}`;
+	}
+	if ("value" in type && typeof (type as { value?: unknown }).value === "string") {
+		return `${type.type}-${(type as { value: string }).value}`;
+	}
+	return `${type.type}-${index}`;
+};
+
+const paramKey = (param: TParameter, index: number) => {
+	return param.name ? `param-${param.name}` : `param-${index}`;
+};
+
+const propertyKey = (prop: TProperty | TMethod, index: number) => {
+	return prop.name ? `prop-${prop.name}` : `prop-${index}`;
+};
+
 /* -----------------------------------------------------------------------------------------------
  * Context for type links
  * ---------------------------------------------------------------------------------------------*/
@@ -294,12 +313,15 @@ function UnionType({ elements }: { elements: TType[] }) {
 
 	return (
 		<>
-			{sortedElements.map((el, i) => (
-				<React.Fragment key={i}>
-					{i > 0 && <span className={styles.punctuation}>{shouldWrap ? "\n  | " : " | "}</span>}
-					{renderType(el)}
-				</React.Fragment>
-			))}
+			{sortedElements.map((el, i) => {
+				const key = typeKey(el, i);
+				return (
+					<React.Fragment key={key}>
+						{i > 0 && <span className={styles.punctuation}>{shouldWrap ? "\n  | " : " | "}</span>}
+						{renderType(el)}
+					</React.Fragment>
+				);
+			})}
 		</>
 	);
 }
@@ -311,12 +333,15 @@ function UnionType({ elements }: { elements: TType[] }) {
 function IntersectionType({ types }: { types: TType[] }) {
 	return (
 		<>
-			{types.map((t, i) => (
-				<React.Fragment key={i}>
-					{i > 0 && <span className={styles.punctuation}> & </span>}
-					{renderType(t)}
-				</React.Fragment>
-			))}
+			{types.map((t, i) => {
+				const key = typeKey(t, i);
+				return (
+					<React.Fragment key={key}>
+						{i > 0 && <span className={styles.punctuation}> & </span>}
+						{renderType(t)}
+					</React.Fragment>
+				);
+			})}
 		</>
 	);
 }
@@ -332,12 +357,15 @@ function ApplicationType({ base, typeParameters }: { base: TType; typeParameters
 			{typeParameters.length > 0 && (
 				<>
 					<span className={styles.punctuation}>&lt;</span>
-					{typeParameters.map((tp, i) => (
-						<React.Fragment key={i}>
-							{i > 0 && <span className={styles.punctuation}>, </span>}
-							{renderType(tp)}
-						</React.Fragment>
-					))}
+					{typeParameters.map((tp, i) => {
+						const key = typeKey(tp, i);
+						return (
+							<React.Fragment key={key}>
+								{i > 0 && <span className={styles.punctuation}>, </span>}
+								{renderType(tp)}
+							</React.Fragment>
+						);
+					})}
 					<span className={styles.punctuation}>&gt;</span>
 				</>
 			)}
@@ -378,22 +406,28 @@ function FunctionType({
 			{typeParameters.length > 0 && (
 				<>
 					<span className={styles.punctuation}>&lt;</span>
-					{typeParameters.map((tp, i) => (
-						<React.Fragment key={i}>
-							{i > 0 && <span className={styles.punctuation}>, </span>}
-							<TypeParameterType param={tp} />
-						</React.Fragment>
-					))}
+					{typeParameters.map((tp, i) => {
+						const key = typeKey(tp, i);
+						return (
+							<React.Fragment key={key}>
+								{i > 0 && <span className={styles.punctuation}>, </span>}
+								<TypeParameterType param={tp} />
+							</React.Fragment>
+						);
+					})}
 					<span className={styles.punctuation}>&gt;</span>
 				</>
 			)}
 			<span className={styles.punctuation}>(</span>
-			{parameters.map((param, i) => (
-				<React.Fragment key={i}>
-					{i > 0 && <span className={styles.punctuation}>, </span>}
-					<ParameterType param={param} />
-				</React.Fragment>
-			))}
+			{parameters.map((param, i) => {
+				const key = paramKey(param, i);
+				return (
+					<React.Fragment key={key}>
+						{i > 0 && <span className={styles.punctuation}>, </span>}
+						<ParameterType param={param} />
+					</React.Fragment>
+				);
+			})}
 			<span className={styles.punctuation}>)</span>
 			<span className={styles.punctuation}>{name ? ": " : " => "}</span>
 			{renderType(returnType)}
@@ -454,12 +488,15 @@ function InterfaceTypeView({ iface }: { iface: TInterface }) {
 
 	return (
 		<div className="space-y-1">
-			{properties.map((prop, i) => (
-				<div key={i} className="pl-4">
-					{prop.type === "method" ? <MethodType method={prop} /> : <PropertyType prop={prop} />}
-					{prop.description && <div className="mt-0.5 text-fg-muted text-xs">{prop.description}</div>}
-				</div>
-			))}
+			{properties.map((prop, i) => {
+				const key = propertyKey(prop, i);
+				return (
+					<div key={key} className="pl-4">
+						{prop.type === "method" ? <MethodType method={prop} /> : <PropertyType prop={prop} />}
+						{prop.description && <div className="mt-0.5 text-fg-muted text-xs">{prop.description}</div>}
+					</div>
+				);
+			})}
 		</div>
 	);
 }
@@ -486,12 +523,15 @@ function ObjectType({ properties }: { properties: Record<string, TProperty | TMe
 	return (
 		<>
 			<span className={styles.punctuation}>{"{ "}</span>
-			{props.map((prop, i) => (
-				<React.Fragment key={i}>
-					{i > 0 && <span className={styles.punctuation}>; </span>}
-					{prop.type === "method" ? <MethodType method={prop} inline /> : <PropertyType prop={prop} inline />}
-				</React.Fragment>
-			))}
+			{props.map((prop, i) => {
+				const key = propertyKey(prop, i);
+				return (
+					<React.Fragment key={key}>
+						{i > 0 && <span className={styles.punctuation}>; </span>}
+						{prop.type === "method" ? <MethodType method={prop} inline /> : <PropertyType prop={prop} inline />}
+					</React.Fragment>
+				);
+			})}
 			<span className={styles.punctuation}>{" }"}</span>
 		</>
 	);
@@ -528,12 +568,15 @@ function MethodType({ method, inline }: { method: TMethod; inline?: boolean }) {
 			<span className={styles.function}>{method.name}</span>
 			{method.optional && <span className={styles.punctuation}>?</span>}
 			<span className={styles.punctuation}>(</span>
-			{method.value.parameters.map((param, i) => (
-				<React.Fragment key={i}>
-					{i > 0 && <span className={styles.punctuation}>, </span>}
-					<ParameterType param={param} />
-				</React.Fragment>
-			))}
+			{method.value.parameters.map((param, i) => {
+				const key = paramKey(param, i);
+				return (
+					<React.Fragment key={key}>
+						{i > 0 && <span className={styles.punctuation}>, </span>}
+						<ParameterType param={param} />
+					</React.Fragment>
+				);
+			})}
 			<span className={styles.punctuation}>): </span>
 			{renderType(method.value.return)}
 			{!inline && <span className={styles.punctuation}>;</span>}
@@ -567,12 +610,15 @@ function TupleType({ elements }: { elements: TType[] }) {
 	return (
 		<>
 			<span className={styles.punctuation}>[</span>
-			{elements.map((el, i) => (
-				<React.Fragment key={i}>
-					{i > 0 && <span className={styles.punctuation}>, </span>}
-					{renderType(el)}
-				</React.Fragment>
-			))}
+			{elements.map((el, i) => {
+				const key = typeKey(el, i);
+				return (
+					<React.Fragment key={key}>
+						{i > 0 && <span className={styles.punctuation}>, </span>}
+						{renderType(el)}
+					</React.Fragment>
+				);
+			})}
 			<span className={styles.punctuation}>]</span>
 		</>
 	);
@@ -659,13 +705,14 @@ function TemplateType({ elements }: { elements: TType[] }) {
 			{elements.map((el, i) => {
 				if (el.type === "stringLiteral") {
 					return (
-						<span key={i} className={styles.string}>
+						<span key={`${el.value}-${i}`} className={styles.string}>
 							{el.value}
 						</span>
 					);
 				}
+				const key = typeKey(el, i);
 				return (
-					<React.Fragment key={i}>
+					<React.Fragment key={key}>
 						<span className={styles.punctuation}>{"${"}</span>
 						{renderType(el)}
 						<span className={styles.punctuation}>{"}"}</span>
