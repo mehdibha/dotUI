@@ -13,6 +13,11 @@
     "@dotui/api",
     "@dotui/auth",
     "@dotui/db",
-    "@dotui/registry"
+    "@dotui/registry",
+    "@dotui/registry-builder",
+    "@dotui/shadcn-adapter",
+    "@dotui/style-system",
+    "@dotui/transformers",
+    "@dotui/types"
   ]
 }
