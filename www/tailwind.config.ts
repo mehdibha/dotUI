@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
-import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config = {
   darkMode: ["class"],
@@ -148,11 +147,11 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        josephin: ["var(--font-josefin)", ...fontFamily.sans],
-        sans: ["var(--font-geist-sans)", ...fontFamily.mono],
-        mono: ["var(--font-geist-mono)", ...fontFamily.mono],
-        heading: ["var(--font-heading)", ...fontFamily.sans],
-        body: ["var(--font-body)", ...fontFamily.sans],
+        josephin: ["var(--font-josefin)", ...defaultTheme.fontFamily.sans],
+        sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.mono],
+        mono: ["var(--font-geist-mono)", ...defaultTheme.fontFamily.mono],
+        heading: ["var(--font-heading)", ...defaultTheme.fontFamily.sans],
+        body: ["var(--font-body)", ...defaultTheme.fontFamily.sans],
       },
       transitionDelay: {
         "400": "400ms",
