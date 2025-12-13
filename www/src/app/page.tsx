@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <div className="container h-screen flex max-w-2xl flex-col items-center justify-center py-8 text-center gap-3">
+    <div className="container h-dvh flex max-w-2xl flex-col items-center justify-center py-8 text-center gap-3">
       <div className="flex items-center gap-2">
         <Logo />
         <span className="font-josephin text-2xl font-bold leading-normal tracking-tighter">
