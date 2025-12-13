@@ -240,31 +240,6 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
-  packages/registry-builder:
-    dependencies:
-      '@dotui/registry':
-        specifier: workspace:*
-        version: link:../registry
-      '@dotui/transformers':
-        specifier: workspace:*
-        version: link:../transformers
-    devDependencies:
-      '@dotui/ts-config':
-        specifier: workspace:*
-        version: link:../../config/ts-config
-      '@dotui/types':
-        specifier: workspace:*
-        version: link:../types
-      '@types/node':
-        specifier: ^22.15.3
-        version: 22.19.2
-      tsx:
-        specifier: ^4.19.2
-        version: 4.21.0
-      typescript:
-        specifier: ^5.8.3
-        version: 5.9.3
-
   packages/shadcn-adapter:
     dependencies:
       '@dotui/registry':
