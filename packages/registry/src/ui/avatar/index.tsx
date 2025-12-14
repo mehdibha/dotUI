@@ -1,54 +1,56 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  Avatar as _Avatar,
-  AvatarFallback as _AvatarFallback,
-  AvatarImage as _AvatarImage,
-  AvatarPlaceholder as _AvatarPlaceholder,
-  AvatarRoot as _AvatarRoot,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   AvatarFallbackProps,
+  AvatarGroupProps,
   AvatarImageProps,
   AvatarPlaceholderProps,
   AvatarProps,
   AvatarRootProps,
-} from "./basic";
+} from "./types";
+
+export const AvatarGroup = createDynamicComponent<AvatarGroupProps>(
+  "avatar",
+  "AvatarGroup",
+  Default.AvatarGroup,
+  {},
+);
 
 export const Avatar = createDynamicComponent<AvatarProps>(
   "avatar",
   "Avatar",
-  _Avatar,
+  Default.Avatar,
   {},
 );
 
 export const AvatarRoot = createDynamicComponent<AvatarRootProps>(
   "avatar",
   "AvatarRoot",
-  _AvatarRoot,
+  Default.AvatarRoot,
   {},
 );
 
 export const AvatarImage = createDynamicComponent<AvatarImageProps>(
   "avatar",
   "AvatarImage",
-  _AvatarImage,
+  Default.AvatarImage,
   {},
 );
 
 export const AvatarFallback = createDynamicComponent<AvatarFallbackProps>(
   "avatar",
   "AvatarFallback",
-  _AvatarFallback,
+  Default.AvatarFallback,
   {},
 );
 
 export const AvatarPlaceholder = createDynamicComponent<AvatarPlaceholderProps>(
   "avatar",
   "AvatarPlaceholder",
-  _AvatarPlaceholder,
+  Default.AvatarPlaceholder,
   {},
 );
 
@@ -57,5 +59,6 @@ export type {
   AvatarRootProps,
   AvatarImageProps,
   AvatarFallbackProps,
+  AvatarGroupProps,
   AvatarPlaceholderProps,
 };

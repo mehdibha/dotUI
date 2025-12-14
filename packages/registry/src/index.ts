@@ -1,7 +1,15 @@
-export { StyleProvider, useCurrentStyle } from "./_helpers/style-provider";
-export { VariantsProvider } from "./_helpers/variants-provider";
-export type { StyleProviderProps } from "./_helpers/style-provider";
+import type { RegistryItem } from "@dotui/registry/types";
 
-export { FontLoader } from "./_helpers/font-loader";
-export { type CommonIconProps } from "./_helpers/create-icon";
-export { registry } from "./registry";
+import { registryBase } from "./base/registry";
+import { registryBlocks } from "./blocks/registry";
+import { registryHooks } from "./hooks/registry";
+import { registryLib } from "./lib/registry";
+import { registryUi } from "./ui/registry";
+
+export const registry: RegistryItem[] = [
+  ...registryBase,
+  ...registryUi,
+  ...registryBlocks,
+  ...registryHooks,
+  ...registryLib,
+];

@@ -1,165 +1,73 @@
 ---
 title: Button
-description: A button allows a user to perform an action, with mouse, touch, and keyboard interactions.
+description: Displays a button or a component that looks like a button.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Button.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/buttons/button.mdx?plain=1
+wip: true
 ---
 
-<ComponentPreview
-  name="button/demos/default"
-  preview={`<Button>button</Button>`}
-/>
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Installation
+    <Demo name="button/demos/default" />
 
-```package-install
-npx shadcn@latest add @dotui/button
-```
+    ## Installation
 
-## Usage
+    ```npm
+    npx shadcn@latest add @dotui/button
+    ```
 
-Button allow users to initiate an action or command with mouse, touch or keyboard interaction.<br/>
-The button's label indicates the purpose of the action to the user. You may also include an icon for additional context.
+    ## Usage
 
-## Options
+    Button allow users to initiate an action or command with mouse, touch or keyboard interaction.<br/>
+    The button's label indicates the purpose of the action to the user. You may also include an icon for additional context.
 
-### Variant
+    ```tsx
+    import { Button } from "@dotui/registry/ui/button";
+    ```
 
-Use the `variant` prop to control the visual style of the button.<br/>
-The default variant is `"default"`.
+    ```tsx
+    <Button>Button</Button>
+    ```
 
-<ComponentPreview
-  name="button/demos/variants"
-  preview={`<Button variant="default">default</Button>
-<Button variant="primary">primary</Button>
-<Button variant="quiet">quiet</Button>
-<Button variant="success">success</Button>
-<Button variant="warning">warning</Button>
-<Button variant="danger">danger</Button>
-<Button variant="accent">accent</Button>`}
-/>
+    ## Playground
 
-### Size
+    Use the controls below to experiment with different button props and see the live preview and code update.
 
-Use the `size` prop to control the size of the button.<br/>
-The default size is `"md"`.
+    <InteractiveDemo
+      name="button"
+      fallback={`<Button>Button</Button>`}
+      controls={[
+        { name: "children", type: "string", defaultValue: "Button" },
+        "variant",
+        "size",
+        "isDisabled",
+        "isPending",
+      ]}
+    />
 
-<ComponentPreview
-  name="button/demos/sizes"
-  preview={`<Button size="sm">Button</Button>
-<Button size="md">Button</Button>
-<Button size="lg">Button</Button>`}
-/>
 
-### Shape
+    ## API Reference
 
-Use the `shape` prop to control the shape of the button. The default variant is `"rectangle"`.<br/>
-Icon-only buttons should include an `aria-label`.
+    ### Button
 
-<ComponentPreview
-  name="button/demos/shapes"
-  preview={`<Button shape="square"><UplaodIcon /></UplaodIcon>
-<Button shape="circular"><UplaodIcon /></Button>`}
-/>
+    <Reference name="button" />
 
-### Prefix and suffix
+    ### LinkButton
 
-To add additional context for a button label, such as a search icon next to the label for a search field submit, use the `prefix` and `suffix` props. Leading visuals always appear locked to the button label, even if the button is full width.
+    <Reference name="link-button" />
 
-<ComponentPreview
-  name="button/demos/prefix-and-suffix"
-  preview={`<Button prefix={<UplaodIcon />}>Upload</Button>
-<Button suffix={<UplaodIcon />}>Upload</Button>`}
-/>
+  </PageTabPanel>
 
-### Pending
-
-Use the `isPending` prop to control the loading state of the button, if you need to wait for a button's action to be completed.
-
-<ComponentPreview
-  name="button/demos/loading"
-  preview={`<Button isPending>Button</Button>`}
-/>
-
-### Disabled
-
-Use the `isDisabled` prop to disable the button.
-
-<ComponentPreview
-  name="button/demos/disabled"
-  preview={`<Button isDisabled>Button</Button>`}
-/>
-
-### Link button
-
-To use a button as a link, use the `href` prop the button will automatically render a link that visually looks like a button.
-
-<ComponentPreview
-  name="button/demos/link-button"
-  preview={`<Button href="/login">Login</Button>`}
-/>
-
-## API Reference
-
-| Prop             | Type                                                                                                | Default       | Description                                                                                                 |
-| ---------------- | --------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------- |
-| `variant`        | `"default" \| "primary" \| "quiet" \| "outline" \| "accent" \| "danger" \| "success" \| "warning"`  | `"default"`   | The visual style of the button.                                                                             |
-| `size`           | `"sm" \| "md" \| "lg"`                                                                              | `"md"`        | The size of the button.                                                                                     |
-| `shape`          | `"rectangle" \| "square" \| "circle"`                                                               | `"rectangle"` | The visual shape of the button.                                                                             |
-| `prefix`         | `React.ReactNode`                                                                                   | -             | A visual to display before the button text.                                                                 |
-| `suffix`         | `React.ReactNode`                                                                                   | -             | A visual to display after the button text.                                                                  |
-| `isLoading`      | `boolean`                                                                                           | -             | Whether the button is in a loading state.                                                                   |
-| `isDisabled`     | `boolean`                                                                                           | -             | Whether the button is disabled.                                                                             |
-| `name`           | `string`                                                                                            | -             | Submitted as a pair with the button's value as part of the form data.                                       |
-| `value`          | `string`                                                                                            | -             | The value associated with the button's name when it's submitted with the form data.                         |
-| `autoFocus`      | `boolean`                                                                                           | -             | Whether the element should receive focus on render.                                                         |
-| `type`           | `'button' \| 'submit' \| 'reset'`                                                                   | -             | The behavior of the button when used in an HTML form.                                                       |
-| `href`           | `string`                                                                                            | -             | A URL to link to.                                                                                           |
-| `rel`            | `HTMLAttributeAnchorTarget`                                                                         | -             | The relationship between the linked resource and the current page.                                          |
-| `target`         | `HTMLAttributeAnchorTarget`                                                                         | -             | The target window for the link.                                                                             |
-| `rel`            | `string`                                                                                            | -             | The relationship between the linked resource and the current page.                                          |
-| `download`       | `boolean \| string`                                                                                 | -             | Causes the browser to download the linked URL. A string may be provided to suggest a file name.             |
-| `ping`           | `string`                                                                                            | -             | A space-separated list of URLs to ping when the link is followed.                                           |
-| `referrerPolicy` | `HTMLAttributeReferrerPolicy`                                                                       | -             | How much of the referrer to send when following the link.                                                   |
-| `routerOptions`  | `RouterOptions`                                                                                     | -             | Options for the configured client side router.                                                              |
-| `children`       | `ReactNode \| (values: ButtonRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -             | The children of the component. A function may be provided to alter the children based on component state.   |
-| `className`      | `string`                                                                                            | -             | The CSS className for the element.                                                                          |
-| `style`          | `CSSProperties \| (values: ButtonRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -             | The inline style for the element. A function may be provided to compute the style based on component state. |
-
-| Event           | Type                              | Description                                                                                                             |
-| --------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `onPress`       | `(e: PressEvent) => void`         | Handler that is called when the press is released over the target.                                                      |
-| `onPressStart`  | `(e: PressEvent) => void`         | Handler that is called when a press interaction starts.                                                                 |
-| `onPressEnd`    | `(e: PressEvent) => void`         | Handler that is called when a press interaction ends, either over the target or when the pointer leaves the target.     |
-| `onPressChange` | `(isPressed: boolean) => void`    | Handler that is called when the press state changes.                                                                    |
-| `onPressUp`     | `(e: PressEvent) => void`         | Handler that is called when a press is released over the target, regardless of whether it started on the target or not. |
-| `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the element receives focus.                                                                 |
-| `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the element loses focus.                                                                    |
-| `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the element's focus status changes.                                                         |
-| `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                                                                           |
-| `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                                                                          |
-| `onHoverStart`  | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction starts.                                                                 |
-| `onHoverEnd`    | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction ends.                                                                   |
-| `onHoverChange` | `(isHovering: boolean) => void`   | Handler that is called when the hover state changes.                                                                    |
-
-| Data attribute         | Description                                                    |
-| ---------------------- | -------------------------------------------------------------- |
-| `[data-hovered]`       | Whether the button is currently hovered with a mouse.          |
-| `[data-pressed]`       | Whether the button is currently in a pressed state.            |
-| `[data-focused]`       | Whether the button is focused, either via a mouse or keyboard. |
-| `[data-focus-visible]` | Whether the button is keyboard focused.                        |
-| `[data-disabled]`      | Whether the button is disabled.                                |
-
-## Accessibility
-
-### Keyboard interactions
-
-| Key     | Description           |
-| ------- | --------------------- |
-| `Space` | Activates the button. |
-| `Enter` | Activates the button. |
+  <PageTabPanel id="examples">
+    <Example name="button/demos/default" />
+    <Example name="button/demos/variants" />
+    <Example name="button/demos/sizes" />
+    <Example name="button/demos/shapes"  />
+    <Example name="button/demos/prefix-and-suffix" />
+    <Example name="button/demos/loading" />
+    <Example name="button/demos/disabled" />
+    <Example name="button/demos/link-button" />
+  </PageTabPanel>
+</PageTabs>

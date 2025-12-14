@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const searchFieldMeta = {
   name: "search-field",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default searchFieldMeta;
 export const searchFieldVariants = Object.keys(
   searchFieldMeta.variants,
 ) as (keyof typeof searchFieldMeta.variants)[];
+
+export type SearchFieldVariant = keyof typeof searchFieldMeta.variants;
+
+export const defaultSearchFieldVariant = searchFieldMeta.defaultVariant;

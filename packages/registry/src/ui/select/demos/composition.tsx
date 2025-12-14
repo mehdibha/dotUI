@@ -1,28 +1,20 @@
-import React from "react";
-
-import { ChevronsUpDownIcon } from "@dotui/registry/icons";
-import { Button } from "@dotui/registry/ui/button";
-import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
-import { Overlay } from "@dotui/registry/ui/overlay";
-import { SelectRoot, SelectValue } from "@dotui/registry/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 
 export default function Demo() {
   return (
-    <SelectRoot aria-label="Provider">
-      <Button
-        variant="default"
-        suffix={<ChevronsUpDownIcon className="text-fg-muted" />}
-      >
-        <SelectValue />
-      </Button>
-      <Overlay type="popover">
-        <ListBox>
-          <ListBoxItem>Perplexity</ListBoxItem>
-          <ListBoxItem>Replicate</ListBoxItem>
-          <ListBoxItem>Together AI</ListBoxItem>
-          <ListBoxItem>ElevenLabs</ListBoxItem>
-        </ListBox>
-      </Overlay>
-    </SelectRoot>
+    <Select aria-label="Provider">
+      <SelectTrigger />
+      <SelectContent>
+        <SelectItem>Perplexity</SelectItem>
+        <SelectItem>Replicate</SelectItem>
+        <SelectItem>Together AI</SelectItem>
+        <SelectItem>ElevenLabs</SelectItem>
+      </SelectContent>
+    </Select>
   );
 }

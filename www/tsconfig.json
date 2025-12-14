@@ -1,23 +1,26 @@
 {
-  "extends": "@dotui/ts-config/base.json",
-  "compilerOptions": {
-    "lib": ["ES2022", "dom", "dom.iterable"],
-    "jsx": "preserve",
-    "jsxImportSource": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-      "@dotui/registry/*": ["../packages/registry/src/*"]
-    },
-    "plugins": [{ "name": "next" }],
-    "module": "esnext"
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "./scripts/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+	"extends": "@dotui/ts-config/base.json",
+	"compilerOptions": {
+		"lib": ["ES2022", "dom", "dom.iterable"],
+		"jsx": "preserve",
+		"jsxImportSource": "react",
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./*"],
+			"@dotui/registry/*": ["../packages/registry/src/*"],
+			"@dotui/registry-v2/*": ["../packages/registry-v2/src/*"]
+		},
+		"plugins": [{ "name": "next" }],
+		"module": "esnext"
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		"./scripts/**/*.ts",
+		"next.config.mjs",
+		"eslint.config.mjs"
+	],
+	"exclude": ["node_modules"]
 }

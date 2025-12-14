@@ -3,7 +3,6 @@
 import React from "react";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Skeleton } from "@dotui/registry/ui/skeleton";
 
 export default function Demo() {
   const [status, setStatus] = React.useState<
@@ -20,9 +19,9 @@ export default function Demo() {
       <Button isPending={status === "pending"} onPress={apiCall}>
         Simulate API Call
       </Button>
-      <Skeleton show={status === "pending"}>
+      {/* <Skeleton show={status === "pending"}>
         <p>Some text loaded from API.</p>
-      </Skeleton>
+      </Skeleton> */}
     </div>
   );
 }

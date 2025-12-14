@@ -1,100 +1,71 @@
 ---
 title: Form
-description: Forms allow users to enter and submit data, and provide them with feedback along the way.
+description: A form wraps a group of form elements and handles form submission.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Form.html
-  - label: React Hook Form docs
-    href: https://react-hook-form.com/
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/buttons/toggle-button-group.mdx?plain=1
+wip: true
 ---
 
-<ComponentPreview
-  name="form/demos/basic"
-  preview={`const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    /* Handle form submission */
-  };
-  
-  return (
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="form/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/form
+    ```
+
+    ## Usage
+
+    Use forms to wrap groups of form elements and handle form submission with validation.
+
+    ```tsx
+    import { Form } from "@/components/ui/form";
+    import { Button } from "@/components/ui/button";
+    import { TextField } from "@/components/ui/text-field";
+    import { Label } from "@/components/ui/field";
+    import { Input } from "@/components/ui/input";
+    ```
+
+    ```tsx
     <Form onSubmit={handleSubmit}>
-      <TextField
-        name="name"
-        label="Name"
-        description="Please enter your full name."
-        minLength={2}
-        isRequired
-      />
-      <Button variant="primary" type="submit">
+      <TextField name="email" isRequired>
+        <Label>Email</Label>
+        <Input />
+      </TextField>
+      <Button type="submit" variant="primary">
         Submit
       </Button>
     </Form>
-  );`}
-/>
+    ```
 
-## Installation
+    ## API Reference
 
-```package-install
-npx shadcn@latest add @dotui/form
-```
+    | Prop                 | Type                   | Default    | Description                                      |
+    | -------------------- | ---------------------- | ---------- | ------------------------------------------------ |
+    | `validationBehavior` | `'native' \| 'aria'`   | `'native'` | Whether to use native HTML form validation or ARIA. |
+    | `validationErrors`   | `ValidationErrors`     | -          | Validation errors to display on form fields.     |
+    | `action`             | `string \| FormHTMLAttributes<HTMLFormElement>['action']` | - | The URL to submit the form to. |
+    | `encType`            | `string`               | -          | The encoding type to use for form submission.    |
+    | `method`             | `string`               | -          | The HTTP method to use for form submission.      |
+    | `target`             | `string`               | -          | The target window for form submission.           |
+    | `autoComplete`       | `string`               | -          | Whether the browser should autocomplete the form. |
+    | `autoCapitalize`     | `string`               | -          | Whether text should be auto-capitalized.         |
+    | `children`           | `ReactNode`            | -          | The form content.                                |
 
-## React Aria
+    | Event          | Type                                      | Description                                      |
+    | -------------- | ----------------------------------------- | ------------------------------------------------ |
+    | `onSubmit`     | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is submitted. |
+    | `onReset`      | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is reset.   |
+    | `onInvalid`    | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when validation fails.    |
 
-### Label & help text
+  </PageTabPanel>
 
-Accessible forms start with clear, descriptive labels for each field. All dotUI form components support labeling using the Label component or the `label` prop, which is automatically associated with the field via the id and for attributes on your behalf.
-
-In addition, the components support help text, which associates additional context with a field such as a description or error message. The label and help text are announced by assistive technology such as screen readers when the user focuses the field.
-
-```tsx
-import { Input, Label, Text, TextField } from "react-aria-components";
-
-<TextField type="password">
-  <Label>Password</Label>
-  <Input />
-  <Text slot="description">Password must be at least 8 characters.</Text>
-</TextField>;
-```
-
-### Built-in validation
-
-All React Aria form components integrate with native HTML [constraint validation](https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation). This allows you to define constraints on each field such as required, minimum and maximum values, text formats such as email addresses, and even custom regular expression patterns. These constraints are checked by the browser when the user commits changes to the value (e.g. on blur) or submits the form.
-
-<ComponentPreview name="form/demos/react-aria" />
-
-## React Hook Form
-
-In most cases, uncontrolled forms with the builtin validation features are enough. However, if you are building a truly complex form, a separate form library such as React Hook Form may be helpful.
-
-### Anatomy
-
-```tsx
-const formSchema = z.object({
-  // Define your form schema
-});
-
-const Demo = () => {
-  const { control, handleSubmit } = useForm();
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    /* Handle form submission */
-  };
-
-  return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl
-        control={control}
-        name="..."
-        render={(props) => {
-          // Your form component
-        }}
-      />
-    </Form>
-  );
-};
-```
-
-### Example
-
-<ComponentPreview name="form/demos/react-hook-form" />
+  <PageTabPanel id="examples">
+    <Example name="form/demos/basic" />
+    <Example name="form/demos/react-aria" />
+  </PageTabPanel>
+</PageTabs>

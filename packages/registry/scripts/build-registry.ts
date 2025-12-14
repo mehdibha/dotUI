@@ -1,6 +1,5 @@
-import { promises as fs } from "fs";
-import { existsSync } from "node:fs";
-import path from "path";
+import { existsSync, promises as fs } from "node:fs";
+import path from "node:path";
 import { rimraf } from "rimraf";
 
 import { registryBlocks } from "@dotui/registry/blocks/registry";
@@ -71,6 +70,7 @@ async function processDirectory(
 
   for (const entry of entries) {
     if (entry.isFile() && entry.name.endsWith(".tsx")) {
+      if (entry.name === "playground.tsx") continue;
       const demoName = `${relativePath}/${entry.name.replace(".tsx", "")}`;
       const demoPath = `@dotui/registry/ui/${relativePath}/${entry.name.replace(".tsx", "")}`;
       const filePath = `ui/${relativePath}/${entry.name}`;
@@ -175,7 +175,7 @@ ${libraryMappings}
 
 import * as React from "react";
 import * as Lucide from "lucide-react";
-import { createIcon } from "../_helpers/create-icon";
+import { createIcon } from "./create-icon";
 
 ${iconExports}
 `;

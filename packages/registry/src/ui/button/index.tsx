@@ -2,60 +2,31 @@
 
 import React from "react";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  Button as _Button,
-  ButtonProvider as _ButtonProvider,
-  buttonStyles,
-} from "./basic";
-import type { ButtonProps } from "./basic";
+import * as Default from "./basic";
+import type { ButtonProps, LinkButtonProps } from "./types";
 
 export const Button = createDynamicComponent<ButtonProps>(
   "button",
   "Button",
-  _Button,
+  Default.Button,
   {
-    shine: React.lazy(() =>
-      import("./shine").then((mod) => ({
-        default: mod.Button,
-      })),
-    ),
-    outline: React.lazy(() =>
-      import("./outline").then((mod) => ({
-        default: mod.Button,
-      })),
-    ),
     ripple: React.lazy(() =>
-      import("./ripple").then((mod) => ({
-        default: mod.Button,
-      })),
+      import("./ripple").then((mod) => ({ default: mod.Button })),
     ),
   },
 );
 
-export const ButtonProvider = createDynamicComponent(
-  "button",
-  "ButtonProvider",
-  _ButtonProvider,
+export const LinkButton = createDynamicComponent<LinkButtonProps>(
+  "link",
+  "LinkButton",
+  Default.LinkButton,
   {
-    shine: React.lazy(() =>
-      import("./shine").then((mod) => ({
-        default: mod.ButtonProvider,
-      })),
-    ),
-    outline: React.lazy(() =>
-      import("./outline").then((mod) => ({
-        default: mod.ButtonProvider,
-      })),
-    ),
     ripple: React.lazy(() =>
-      import("./ripple").then((mod) => ({
-        default: mod.ButtonProvider,
-      })),
+      import("./ripple").then((mod) => ({ default: mod.LinkButton })),
     ),
   },
 );
 
-export { buttonStyles };
-export type { ButtonProps };
+export type { ButtonProps, LinkButtonProps };

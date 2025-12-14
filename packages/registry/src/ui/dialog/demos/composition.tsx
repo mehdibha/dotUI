@@ -1,24 +1,24 @@
-import React from "react";
-
 import { PenSquareIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
 import {
+  Dialog,
   DialogBody,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogHeading,
-  DialogRoot,
 } from "@dotui/registry/ui/dialog";
+import { Input, TextArea } from "@dotui/registry/ui/input";
 import { Overlay } from "@dotui/registry/ui/overlay";
-import { TextArea } from "@dotui/registry/ui/text-area";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
   return (
-    <DialogRoot>
-      <Button prefix={<PenSquareIcon />}>Create issue</Button>
+    <Dialog>
+      <Button>
+        <PenSquareIcon /> Create issue
+      </Button>
       <Overlay>
         <DialogContent>
           <DialogHeader>
@@ -28,12 +28,9 @@ export default function Demo() {
             </DialogDescription>
           </DialogHeader>
           <DialogBody>
-            <TextField
-              aria-label="Title"
-              placeholder="Title"
-              autoFocus
-              className="w-full"
-            />
+            <TextField aria-label="Title" autoFocus>
+              <Input placeholder="Title" className="w-full" />
+            </TextField>
             <TextArea
               aria-label="Description"
               placeholder="description"
@@ -48,6 +45,6 @@ export default function Demo() {
           </DialogFooter>
         </DialogContent>
       </Overlay>
-    </DialogRoot>
+    </Dialog>
   );
 }

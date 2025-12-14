@@ -1,35 +1,34 @@
 "use client";
 
+import { useSlotId } from "@react-aria/utils";
 import {
   ColorSlider as AriaColorSlider,
   SliderOutput as AriaSliderOutput,
   SliderTrack as AriaSliderTrack,
   composeRenderProps,
+  Provider,
+  TextContext,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
 import { ColorThumb } from "@dotui/registry/ui/color-thumb";
-import { Label } from "@dotui/registry/ui/field";
 
 const colorSliderStyles = tv({
   slots: {
-    root: "group flex flex-col gap-2",
-    output: "text-sm text-fg-muted",
+    root: "flex flex-col gap-2",
+    output: "text-fg-muted text-sm",
     track:
-      "relative rounded-md before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,_#fff_0%_50%)] before:bg-[length:16px_16px] before:bg-center before:content-[''] disabled:[background:var(--color-disabled)]!",
-    thumb: "",
+      "relative rounded-md before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit] before:bg-[repeating-conic-gradient(#e6e6e6_0%_25%,#fff_0%_50%)] before:bg-center before:bg-size-[16px_16px] before:content-[''] orientation-horizontal:**:data-[slot=color-thumb]:top-1/2 orientation-vertical:**:data-[slot=color-thumb]:left-1/2 disabled:[background:var(--color-disabled)]!",
   },
   variants: {
     orientation: {
       horizontal: {
         root: "w-48",
         track: "h-6 w-full",
-        thumb: "top-1/2",
       },
       vertical: {
         root: "h-48 items-center",
         track: "w-6 flex-1",
-        thumb: "left-1/2",
       },
     },
   },
@@ -38,66 +37,59 @@ const colorSliderStyles = tv({
   },
 });
 
-const { root, track, thumb, output } = colorSliderStyles();
+const { root, track, output } = colorSliderStyles();
 
-interface ColorSliderProps extends ColorSliderRootProps {
-  showValueLabel?: boolean;
-  label?: string;
-}
-const ColorSlider = ({
-  label,
-  channel,
-  showValueLabel = false,
-  ...props
-}: ColorSliderProps) => {
-  return (
-    <ColorSliderRoot channel={channel} {...props}>
-      {(label || showValueLabel) && (
-        <div className="grid grid-cols-[1fr_auto] [grid-template-areas:'label_value']">
-          {label && <Label className="[grid-area:label]">{label}</Label>}
-          {showValueLabel && (
-            <ColorSliderOutput className="[grid-area:value]" />
-          )}
-        </div>
-      )}
-      <ColorSliderControl />
-    </ColorSliderRoot>
-  );
-};
+/* -----------------------------------------------------------------------------------------------*/
 
-interface ColorSliderRootProps
+interface ColorSliderProps
   extends React.ComponentProps<typeof AriaColorSlider> {}
-const ColorSliderRoot = ({ className, ...props }: ColorSliderRootProps) => {
+
+const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
+  const descriptionId = useSlotId();
   return (
-    <AriaColorSlider
-      className={composeRenderProps(className, (className, { orientation }) =>
-        root({ orientation, className }),
-      )}
-      {...props}
-    />
+    <Provider
+      values={[[TextContext, { slot: "description", id: descriptionId }]]}
+    >
+      <AriaColorSlider
+        className={composeRenderProps(className, (cn, { orientation }) =>
+          root({ orientation, className: cn }),
+        )}
+        aria-describedby={descriptionId}
+        {...props}
+      >
+        {props.children ?? <ColorSliderControl />}
+      </AriaColorSlider>
+    </Provider>
   );
 };
+
+/* -----------------------------------------------------------------------------------------------*/
 
 interface ColorSliderControlProps
   extends React.ComponentProps<typeof AriaSliderTrack> {}
+
 const ColorSliderControl = ({
   className,
   ...props
 }: ColorSliderControlProps) => {
   return (
     <AriaSliderTrack
-      className={composeRenderProps(className, (className, { orientation }) =>
-        track({ orientation, className }),
+      data-slot="color-slider-control"
+      className={composeRenderProps(className, (cn, { orientation }) =>
+        track({ orientation, className: cn }),
       )}
       {...props}
     >
-      {({ orientation }) => <ColorThumb className={thumb({ orientation })} />}
+      {props.children ?? <ColorThumb />}
     </AriaSliderTrack>
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface ColorSliderOutputProps
   extends React.ComponentProps<typeof AriaSliderOutput> {}
+
 const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
   return (
     <AriaSliderOutput
@@ -109,10 +101,12 @@ const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
+export { ColorSlider, ColorSliderControl, ColorSliderOutput };
+
 export type {
   ColorSliderProps,
-  ColorSliderRootProps,
   ColorSliderControlProps,
   ColorSliderOutputProps,
 };
-export { ColorSlider, ColorSliderRoot, ColorSliderOutput, ColorSliderControl };

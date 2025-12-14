@@ -1,9 +1,14 @@
 "use client";
 
-import React from "react";
-
-import { TextArea } from "@dotui/registry/ui/text-area";
+import { Label } from "@dotui/registry/ui/field";
+import { TextArea } from "@dotui/registry/ui/input";
+import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
-  return <TextArea label="Description" placeholder="Type your message here" />;
+  return (
+    <TextField>
+      <Label>Description</Label>
+      <TextArea />
+    </TextField>
+  );
 }

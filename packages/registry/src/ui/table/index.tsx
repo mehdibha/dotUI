@@ -1,39 +1,22 @@
 "use client";
 
-import React from "react";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
-
-import {
-  TableBody as _TableBody,
-  TableCell as _TableCell,
-  TableColumn as _TableColumn,
-  TableContainer as _TableContainer,
-  TableHeader as _TableHeader,
-  TableRoot as _TableRoot,
-  TableRow as _TableRow,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   TableBodyProps,
   TableCellProps,
   TableColumnProps,
-  TableContainerProps,
   TableHeaderProps,
-  TableRootProps,
+  TableLoadMoreProps,
+  TableProps,
   TableRowProps,
-} from "./basic";
+} from "./types";
 
-export const TableContainer = createDynamicComponent<TableContainerProps>(
+export const Table = createDynamicComponent<TableProps>(
   "table",
-  "TableContainer",
-  _TableContainer,
-  {},
-);
-
-export const TableRoot = createDynamicComponent<TableRootProps>(
-  "table",
-  "TableRoot",
-  _TableRoot,
+  "Table",
+  Default.Table,
   {},
 );
 
@@ -43,20 +26,7 @@ export const TableHeader = <T extends object = object>(
   const Component = createDynamicComponent<TableHeaderProps<T>>(
     "table",
     "TableHeader",
-    _TableHeader,
-    {},
-  );
-
-  return <Component {...props} />;
-};
-
-export const TableBody = <T extends object = object>(
-  props: TableBodyProps<T>,
-) => {
-  const Component = createDynamicComponent<TableBodyProps<T>>(
-    "table",
-    "TableBody",
-    _TableBody,
+    Default.TableHeader,
     {},
   );
 
@@ -66,9 +36,22 @@ export const TableBody = <T extends object = object>(
 export const TableColumn = createDynamicComponent<TableColumnProps>(
   "table",
   "TableColumn",
-  _TableColumn,
+  Default.TableColumn,
   {},
 );
+
+export const TableBody = <T extends object = object>(
+  props: TableBodyProps<T>,
+) => {
+  const Component = createDynamicComponent<TableBodyProps<T>>(
+    "table",
+    "TableBody",
+    Default.TableBody,
+    {},
+  );
+
+  return <Component {...props} />;
+};
 
 export const TableRow = <T extends object = object>(
   props: TableRowProps<T>,
@@ -76,7 +59,7 @@ export const TableRow = <T extends object = object>(
   const Component = createDynamicComponent<TableRowProps<T>>(
     "table",
     "TableRow",
-    _TableRow,
+    Default.TableRow,
     {},
   );
 
@@ -86,16 +69,23 @@ export const TableRow = <T extends object = object>(
 export const TableCell = createDynamicComponent<TableCellProps>(
   "table",
   "TableCell",
-  _TableCell,
+  Default.TableCell,
+  {},
+);
+
+export const TableLoadMore = createDynamicComponent<TableLoadMoreProps>(
+  "table",
+  "TableLoadMore",
+  Default.TableLoadMore,
   {},
 );
 
 export type {
-  TableContainerProps,
-  TableRootProps,
+  TableProps,
   TableHeaderProps,
   TableBodyProps,
   TableColumnProps,
   TableRowProps,
   TableCellProps,
+  TableLoadMoreProps,
 };

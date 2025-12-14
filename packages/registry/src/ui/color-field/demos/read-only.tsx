@@ -1,7 +1,10 @@
-import React from "react";
-
 import { ColorField } from "@dotui/registry/ui/color-field";
+import { Input } from "@dotui/registry/ui/input";
 
 export default function Demo() {
-  return <ColorField label="Color" isReadOnly value="#121212" />;
+  return (
+    <ColorField aria-label="Color" isReadOnly value="#121212">
+      <Input />
+    </ColorField>
+  );
 }

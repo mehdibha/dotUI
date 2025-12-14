@@ -1,18 +1,17 @@
-import React from "react";
-
+import { Label } from "@dotui/registry/ui/field";
 import {
+  Switch,
   SwitchIndicator,
-  SwitchRoot,
   SwitchThumb,
 } from "@dotui/registry/ui/switch";
 
 export default function Demo() {
   return (
-    <SwitchRoot>
+    <Switch>
       <SwitchIndicator>
         <SwitchThumb />
       </SwitchIndicator>
-      <span>Focus mode</span>
-    </SwitchRoot>
+      <Label>Focus mode</Label>
+    </Switch>
   );
 }

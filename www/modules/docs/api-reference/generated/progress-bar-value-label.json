@@ -1,0 +1,6 @@
+{
+	"name": "ProgressBarValueLabelProps",
+	"description": "Missing description.",
+	"extendsElement": "span",
+	"props": {}
+}

@@ -1,57 +1,55 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  Slider as _Slider,
-  SliderFiller as _SliderFiller,
-  SliderRoot as _SliderRoot,
-  SliderThumb as _SliderThumb,
-  SliderTrack as _SliderTrack,
-  SliderValueLabel as _SliderValueLabel,
-} from "./basic";
-import type { SliderProps } from "./basic";
+import * as Default from "./basic";
+import type {
+  SliderControlProps,
+  SliderFillerProps,
+  SliderOutputProps,
+  SliderProps,
+  SliderThumbProps,
+} from "./types";
 
 export const Slider = createDynamicComponent<SliderProps>(
   "slider",
   "Slider",
-  _Slider,
+  Default.Slider,
   {},
 );
 
-export const SliderRoot = createDynamicComponent(
+export const SliderControl = createDynamicComponent<SliderControlProps>(
   "slider",
-  "SliderRoot",
-  _SliderRoot,
+  "SliderControl",
+  Default.SliderControl,
   {},
 );
 
-export const SliderTrack = createDynamicComponent(
-  "slider",
-  "SliderTrack",
-  _SliderTrack,
-  {},
-);
-
-export const SliderFiller = createDynamicComponent(
+export const SliderFiller = createDynamicComponent<SliderFillerProps>(
   "slider",
   "SliderFiller",
-  _SliderFiller,
+  Default.SliderFiller,
   {},
 );
 
-export const SliderThumb = createDynamicComponent(
+export const SliderThumb = createDynamicComponent<SliderThumbProps>(
   "slider",
   "SliderThumb",
-  _SliderThumb,
+  Default.SliderThumb,
   {},
 );
 
-export const SliderValueLabel = createDynamicComponent(
+export const SliderOutput = createDynamicComponent<SliderOutputProps>(
   "slider",
-  "SliderValueLabel",
-  _SliderValueLabel,
+  "SliderOutput",
+  Default.SliderOutput,
   {},
 );
 
-export type { SliderProps };
+export type {
+  SliderProps,
+  SliderControlProps,
+  SliderFillerProps,
+  SliderThumbProps,
+  SliderOutputProps,
+};

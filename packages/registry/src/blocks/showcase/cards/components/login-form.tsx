@@ -9,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@dotui/registry/ui/card";
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
 import { Link } from "@dotui/registry/ui/link";
 import { TextField } from "@dotui/registry/ui/text-field";
 
@@ -59,11 +61,14 @@ export function LoginForm(props: React.ComponentProps<"div">) {
             <span className="bg-card px-2 text-fg-muted">Or</span>
           </div>
         </div>
-        <TextField label="Email address" type="email" className="w-full" />
+        <TextField>
+          <Label>Email address</Label>
+          <Input type="email" />
+        </TextField>
         <Button variant="primary" className="mt-4 w-full" type="submit">
           Continue with email
         </Button>
-        <p className="mt-4 text-sm text-fg-muted">
+        <p className="mt-4 text-fg-muted text-sm">
           {/* TODO */}
           Don&apos;t have an account?{" "}
           <Link href="#" variant="quiet">

@@ -1,54 +1,33 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  Switch as _Switch,
-  SwitchIndicator as _SwitchIndicator,
-  SwitchProvider as _SwitchProvider,
-  SwitchRoot as _SwitchRoot,
-  SwitchThumb as _SwitchThumb,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   SwitchIndicatorProps,
   SwitchProps,
-  SwitchRootProps,
   SwitchThumbProps,
-} from "./basic";
+} from "./types";
 
 export const Switch = createDynamicComponent<SwitchProps>(
   "switch",
   "Switch",
-  _Switch,
-  {},
-);
-
-export const SwitchRoot = createDynamicComponent<SwitchRootProps>(
-  "switch",
-  "SwitchRoot",
-  _SwitchRoot,
+  Default.Switch,
   {},
 );
 
 export const SwitchIndicator = createDynamicComponent<SwitchIndicatorProps>(
   "switch",
   "SwitchIndicator",
-  _SwitchIndicator,
+  Default.SwitchIndicator,
   {},
 );
 
 export const SwitchThumb = createDynamicComponent<SwitchThumbProps>(
   "switch",
   "SwitchThumb",
-  _SwitchThumb,
+  Default.SwitchThumb,
   {},
 );
 
-export const SwitchProvider = createDynamicComponent(
-  "switch",
-  "SwitchProvider",
-  _SwitchProvider,
-  {},
-);
-
-export type { SwitchProps, SwitchRootProps, SwitchIndicatorProps };
+export type { SwitchProps, SwitchIndicatorProps, SwitchThumbProps };

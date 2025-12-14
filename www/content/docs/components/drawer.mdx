@@ -1,63 +1,67 @@
 ---
 title: Drawer
-description: A drawer is an overlay element which blocks interaction with elements outside it.
+description: A drawer slides in from the edge of the screen to display content.
 links:
-  - label: Aria docs
-    href: https://react-spectrum.adobe.com/react-aria/Modal.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/overlays/drawer.mdx?plain=1
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Dialog.html
+wip: true
 ---
 
-{/* prettier-ignore-start */}
 
-<Alert><span className="font-bold">Note:</span> Drawer only provides the overlay itself. It should be combined with Dialog to create fully accessible drawer dialogs. <Link href="/docs/components/overlays/dialog">See dialog</Link> component instead.</Alert>
+<PageTabs>
+  <PageTabPanel id="overview">
 
-{/* prettier-ignore-end */}
+    <Demo name="drawer/demos/basic" />
 
-<ComponentPreview
-  name="drawer/demos/basic"
-  preview={`<DialogRoot>
-    <Button>Open drawer</Button>
-    <Drawer>
-      <DialogContent>Drawer content</DialogContent>
-    </Drawer>
-  </DialogRoot>`}
-/>
+    ## Installation
 
-## Installation
+    ```npm
+    npx shadcn@latest add @dotui/drawer
+    ```
 
-```package-install
-npx shadcn@latest add @dotui/drawer
-```
+    ## Usage
 
-## Placement
+    Use drawers to display content that slides in from the edge of the screen.
 
-The drawer can be placed on any edge of the screen using the `placement` prop: `'bottom'`, `'top'`, `'right'`, or `'left'`.
+    ```tsx
+    import { Button } from "@/components/ui/button";
+    import { Dialog, DialogContent } from "@/components/ui/dialog";
+    import { Drawer } from "@/components/ui/drawer";
+    ```
 
-<ComponentPreview
-  name="drawer/demos/placement"
-  preview={`<DialogRoot>
-    <Button>Open drawer</Button>
-    <Drawer placement={placement}>
-      <DialogContent>Drawer content</DialogContent>
-    </Drawer>
-  </DialogRoot>`}
-/>
+    ```tsx
+    <Dialog>
+      <Button>Open Drawer</Button>
+      <Drawer placement="bottom">
+        <DialogContent>Drawer content</DialogContent>
+      </Drawer>
+    </Dialog>
+    ```
 
-## API Reference
+    ## Playground
 
-| Prop                           | Type                                           | Default         | Description                                                                                                                                                                                                                                                                                                     |
-| ------------------------------ | ---------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `placement`                    | `'bottom'` \| `'top'` \| `'right'` \| `'left'` | -               | The drawer placement                                                                                                                                                                                                                                                                                            |
-| `isOpen`                       | `boolean`                                      | -               | Whether the overlay is open by default (controlled).                                                                                                                                                                                                                                                            |
-| `defaultOpen`                  | `boolean`                                      | -               | Whether the overlay is open by default (uncontrolled).                                                                                                                                                                                                                                                          |
-| `isDismissable`                | `boolean`                                      | `false`         | Whether to close the modal when the user interacts outside it.                                                                                                                                                                                                                                                  |
-| `UNSTABLE_portalContainer`     | `Element`                                      | `document.body` | The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.                                                                                                                                                                         |
-| `isKeyboardDismissDisabled`    | `boolean`                                      | `false`         | Whether pressing the escape key to close the dialog should be disabled.                                                                                                                                                                                                                                         |
-| `shouldCloseOnInteractOutside` | `(element: Element) => boolean`                | -               | When user interacts with the argument element outside of the overlay ref, return `true` if `onClose` should be called. This gives you a chance to filter out interaction with elements that should not dismiss the overlay. By default, `onClose` will always be called on interaction outside the overlay ref. |
+    Use the controls below to experiment with different drawer props and see the live preview and code update.
 
-| Event          | Type                        | Description                                                   |
-| -------------- | --------------------------- | ------------------------------------------------------------- |
-| `onOpenChange` | `(isOpen: boolean) => void` | Handler that is called when the overlay's open state changes. |
+    <InteractiveDemo 
+      name="drawer" 
+      controls={[
+        {
+          type: "enum",
+          name: "placement",
+          options: ["bottom", "top", "left", "right"],
+          defaultValue: "bottom",
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="drawer" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="drawer/demos/basic" />
+    <Example name="drawer/demos/placement" />
+  </PageTabPanel>
+</PageTabs>

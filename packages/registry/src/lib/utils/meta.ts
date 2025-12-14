@@ -5,9 +5,9 @@ const utilsMeta = {
   type: "registry:lib",
   files: [
     {
-      path: "lib/utils/index.tsx",
+      path: "lib/utils/index.ts",
       type: "registry:lib",
-      target: "lib/utils.tsx",
+      target: "lib/utils.ts",
     },
   ],
 } satisfies RegistryItem;

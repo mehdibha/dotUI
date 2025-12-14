@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const badgeMeta = {
   name: "badge",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default badgeMeta;
 export const badgeVariants = Object.keys(
   badgeMeta.variants,
 ) as (keyof typeof badgeMeta.variants)[];
+
+export type BadgeVariant = keyof typeof badgeMeta.variants;
+
+export const defaultBadgeVariant = badgeMeta.defaultVariant;

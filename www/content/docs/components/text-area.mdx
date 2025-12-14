@@ -1,218 +1,102 @@
 ---
-title: TextArea
-description: TextArea is a multiline text input.
+title: Text Area
+description: A text area allows users to enter multi-line text.
 links:
-  - label: Aria docs
-    href: https://react-spectrum.adobe.com/react-aria/TextArea.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/text-area.mdx?plain=1
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/TextField.html
+wip: true
 ---
 
-<ComponentPreview
-  name="text-area/demos/default"
-  preview={`<TextArea label="Description" placeholder="Type your message here" />`}
-/>
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```package-install
-npx shadcn@latest add @dotui/text-area
-```
+    <Demo name="text-area/demos/default" />
 
-## Usage
+    ## Installation
 
-Use a `TextArea` to allow users to input a long string of free-form text.
+    ```npm
+    npx shadcn@latest add @dotui/text-area
+    ```
 
-```tsx
-import { TextArea } from "@/components/core/text-area";
+    ## Usage
 
-<TextArea label="Description" description="Enter your description." />;
-```
+    Use `TextArea` to allow users to enter multi-line text content.
 
-```tsx
-import { Description, Label } from "@/components/core/field";
-import { InputRoot, TextAreaInput } from "@/components/core/input";
-import { TextAreaRoot } from "@/components/core/text-field";
+    ```tsx
+    import { TextField } from "@/components/ui/text-field";
+    import { TextArea } from "@/components/ui/input";
+    import { Label } from "@/components/ui/field";
+    ```
 
-<TextAreaRoot>
-  <Label>Email</Label>
-  <InputRoot multiline>
-    <TextAreaInput />
-  </InputRoot>
-  <Description>Enter your email.</Description>
-</TextAreaRoot>;
-```
+    ```tsx
+    <TextField>
+      <Label>Description</Label>
+      <TextArea />
+    </TextField>
+    ```
 
-## Options
+    ## Playground
 
-### Label
+    Use the controls below to experiment with different text area props and see the live preview and code update.
 
-A visual label can be provided for the `TextArea` using the label prop or a hidden label using `aria-label` prop.
-
-<ComponentPreview
-  name="text-area/demos/label"
-  preview={`<TextArea label="Description" />
-  <TextArea aria-label="Description" />`}
-/>
-
-### Description
-
-An `errorMessage` can be supplied to a TextField, which will be displayed when the `isInvalid` prop is set to `true`.
-
-<ComponentPreview
-  name="text-area/demos/description"
-  preview={`<TextArea label="Description" description="Type your description" />`}
-/>
-
-### Error message
-
-An `errorMessage` can be supplied to a TextArea, which will be displayed when the `isInvalid` prop is set to `true`.
-
-<ComponentPreview
-  name="text-area/demos/error-message"
-  preview={`<TextArea 
-    label="Comment"
-    isInvalid
-    errorMessage="You have exceeded the comment limit for one hour." 
-  />`}
-/>
-
-### Prefix and suffix
-
-To add additional context for the `TextArea`, use the `prefix` and `suffix` props.
-
-<ComponentPreview
-  name="text-area/demos/prefix-and-suffix"
-  preview={`<TextArea
-    label="Comment"
-    placeholder="type something here"
-    prefix={<Emojis />}
-    suffix={<Toolbar />}
-  />`}
-/>
-
-### Disabled
-
-Use the `isDisabled` prop to disable the TextArea.
-
-<ComponentPreview
-  name="text-area/demos/disabled"
-  preview={`<TextArea isDisabled />`}
-/>
-
-### ReadOnly
-
-The `isReadOnly` boolean prop makes the TextArea's text content immutable. Unlike `isDisabled`, the text area remains focusable and the contents can still be copied.
-
-<ComponentPreview
-  name="text-area/demos/read-only"
-  preview={`<TextArea isReadOnly />`}
-/>
-
-### Required
-
-Use the `isRequired` prop to mark the TextArea as required.
-Use the `necessityIndicator` prop to control the visual style of the required state.
-
-<ComponentPreview
-  name="text-area/demos/required"
-  preview={`<TextArea label="Description" isRequired necessityIndicator="icon" />`}
-/>
-
-## Uncontrolled
-
-Use the `defaultValue` prop to set the default input value.
-
-<ComponentPreview
-  name="text-area/demos/uncontrolled"
-  preview={`<TextArea label="Essay" defaultValue="Roses are red, violets are blue." />`}
-/>
-
-## Controlled
-
-Use the `value` and `onChange` props to control the value of the input.
-
-<ComponentPreview
-  name="text-area/demos/controlled"
-  preview={`const [inputValue, setInputValue] = React.useState("Roses are red, violets are blue.");
-  return (
-    <TextArea
-      label="Essay"
-      value={inputValue}
-      onChange={(text) => {
-        setInputValue(text);
-      }}
+    <InteractiveDemo 
+      name="text-area" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Description",
+        },
+        {
+          type: "string",
+          name: "placeholder",
+          defaultValue: "Enter description...",
+        },
+        {
+          type: "string",
+          name: "description",
+          defaultValue: "",
+        },
+        {
+          type: "string",
+          name: "errorMessage",
+          defaultValue: "",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isReadOnly",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+      ]}
     />
-  );`}
-/>
 
-## Composition
+    ## API Reference
 
-If you need to customize things further, you can drop down to the composition level.
+    <Reference name="text-area" />
 
-<ComponentPreview
-  name="text-area/demos/composition"
-  preview={`<TextAreaRoot>
-    <Label>Comment</Label>
-    <InputRoot>
-      <TextAreaInput />
-    </InputRoot>
-    <Description>Enter your comment.</Description>
-  </TextAreaRoot>`}
-/>
+  </PageTabPanel>
 
-## API Reference
-
-| Prop                 | Type                                                                                                   | Default  | Description                                                                                                                                                                                                                           |
-| -------------------- | ------------------------------------------------------------------------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `label`              | `ReactNode`                                                                                            |          | The content to display as the label.                                                                                                                                                                                                  |
-| `description`        | `ReactNode`                                                                                            |          | A description for the field. Provides a hint such as specific requirements for what to choose.                                                                                                                                        |
-| `errorMessage`       | `ReactNode \| (v: ValidationResult) => ReactNode`                                                      |          | An error message for the field.                                                                                                                                                                                                       |
-| `prefix`             | `ReactNode`                                                                                            | -        | A visual to display before the input.                                                                                                                                                                                                 |
-| `suffix`             | `ReactNode`                                                                                            | -        | A visual to display after the input.                                                                                                                                                                                                  |
-| `isInvalid`          | `boolean`                                                                                              | -        | Whether the value is invalid.                                                                                                                                                                                                         |
-| `isDisabled`         | `boolean`                                                                                              | -        | Whether the input is disabled.                                                                                                                                                                                                        |
-| `isReadOnly`         | `boolean`                                                                                              | -        | Whether the input can be selected but not changed by the user.                                                                                                                                                                        |
-| `isRequired`         | `boolean`                                                                                              | -        | Whether user input is required on the input before form submission.                                                                                                                                                                   |
-| `validate`           | `(value: string) => ValidationError \| true \| null \| undefined`                                      | -        | A function that returns an error message if a given value is invalid. Validation errors are displayed to the user when the form is submitted if validationBehavior="native". For realtime validation, use the isInvalid prop instead. |
-| `autoFocus`          | `boolean`                                                                                              | -        | Whether the element should receive focus on render.                                                                                                                                                                                   |
-| `value`              | `string`                                                                                               | -        | The current value (controlled).                                                                                                                                                                                                       |
-| `defaultValue`       | `string`                                                                                               | -        | The default value (uncontrolled).                                                                                                                                                                                                     |
-| `autoComplete`       | `string`                                                                                               | -        | Describes the type of autocomplete functionality the input should provide if any.                                                                                                                                                     |
-| `maxLength`          | `number`                                                                                               | -        | The maximum number of characters supported by the input.                                                                                                                                                                              |
-| `minLength`          | `number`                                                                                               | -        | The minimum number of characters required by the input.                                                                                                                                                                               |
-| `pattern`            | `string`                                                                                               | -        | Regex pattern that the value of the input must match to be valid.                                                                                                                                                                     |
-| `type`               | `'text' \| 'search' \| 'url' \| 'tel' \| 'email' \| 'password' \| string & {}`                         | -        | The type of input to render.                                                                                                                                                                                                          |
-| `inputMode`          | `'none' \| 'text' \| 'tel' \| 'url' \| 'email' \| 'numeric' \| 'decimal' \| 'search'`                  | -        | Hints at the type of data that might be entered by the user while editing the element or its contents.                                                                                                                                |
-| `name`               | `string`                                                                                               | -        | The name of the input element, used when submitting an HTML form.                                                                                                                                                                     |
-| `validationBehavior` | `'native' \| 'aria'`                                                                                   | 'native' | Whether to use native HTML form validation to prevent form submission when the value is missing or invalid, or mark the field as required or invalid via ARIA.                                                                        |
-| `children`           | `ReactNode \| (values: TextFieldRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -        | The children of the component. A function may be provided to alter the children based on component state.                                                                                                                             |
-| `className`          | `string`                                                                                               | -        | The CSS className for the element.                                                                                                                                                                                                    |
-| `style`              | `CSSProperties \| (values: TextFieldRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -        | The inline style for the element. A function may be provided to compute the style based on component state.                                                                                                                           |
-
-| Event                 | Type                                        | Description                                                                                                      |
-| --------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `onFocus`             | `(e: FocusEvent<Target>) => void`           | Handler that is called when the element receives focus.                                                          |
-| `onBlur`              | `(e: FocusEvent<Target>) => void`           | Handler that is called when the element loses focus.                                                             |
-| `onFocusChange`       | `(isFocused: boolean) => void`              | Handler that is called when the element's focus status changes.                                                  |
-| `onKeyDown`           | `(e: KeyboardEvent) => void`                | Handler that is called when a key is pressed.                                                                    |
-| `onKeyUp`             | `(e: KeyboardEvent) => void`                | Handler that is called when a key is released.                                                                   |
-| `onChange`            | `(value: T) => void`                        | Handler that is called when the value changes.                                                                   |
-| `onCopy`              | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user copies text.                                                                |
-| `onCut`               | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user cuts text.                                                                  |
-| `onPaste`             | `ClipboardEventHandler<HTMLInputElement>`   | Handler that is called when the user pastes text.                                                                |
-| `onCompositionStart`  | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a text composition system starts a new text composition session.                     |
-| `onCompositionEnd`    | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a text composition system completes or cancels the current text composition session. |
-| `onCompositionUpdate` | `CompositionEventHandler<HTMLInputElement>` | Handler that is called when a new character is received in the current text composition session.                 |
-| `onSelect`            | `ReactEventHandler<HTMLInputElement>`       | Handler that is called when text in the input is selected.                                                       |
-| `onBeforeInput`       | `FormEventHandler<HTMLInputElement>`        | Handler that is called when the input value is about to be modified.                                             |
-| `onInput`             | `FormEventHandler<HTMLInputElement>`        | Handler that is called when the input value is modified.                                                         |
-
-| Data attribute    | Description                          |
-| ----------------- | ------------------------------------ |
-| `[data-disabled]` | Whether the text field is disabled.  |
-| `[data-invalid]`  | Whether the text field is invalid.   |
-| `[data-readonly]` | Whether the text field is read only. |
-| `[data-required]` | Whether the text field is required.  |
+  <PageTabPanel id="examples">
+    <Example name="text-area/demos/default" />
+    <Example name="text-area/demos/label" />
+    <Example name="text-area/demos/description" />
+    <Example name="text-area/demos/error-message" />
+    <Example name="text-area/demos/prefix-and-suffix" />
+    <Example name="text-area/demos/disabled" />
+    <Example name="text-area/demos/read-only" />
+    <Example name="text-area/demos/required" />
+    <Example name="text-area/demos/uncontrolled" />
+    <Example name="text-area/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

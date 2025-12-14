@@ -1,12 +1,17 @@
-import { ColorSlider } from "@dotui/registry/ui/color-slider";
+import {
+  ColorSlider,
+  ColorSliderControl,
+} from "@dotui/registry/ui/color-slider";
 
 export default function Demo() {
   return (
     <ColorSlider
-      label="Opacity"
+      aria-label="Opacity"
       defaultValue="#f00"
       channel="alpha"
       isDisabled
-    />
+    >
+      <ColorSliderControl />
+    </ColorSlider>
   );
 }

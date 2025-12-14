@@ -6,7 +6,7 @@ import { UploadIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
 import { FileTrigger } from "@dotui/registry/ui/file-trigger";
 
-export default function FileTriggerDemo() {
+export default function Demo() {
   const [file, setFile] = React.useState<string | null>(null);
   return (
     <div className="flex flex-col items-center gap-4">
@@ -20,7 +20,9 @@ export default function FileTriggerDemo() {
         }}
         allowsMultiple
       >
-        <Button prefix={<UploadIcon />}>Upload</Button>
+        <Button>
+          <UploadIcon /> Upload
+        </Button>
       </FileTrigger>
       {file && (
         <p>

@@ -1,11 +1,21 @@
-import { Slider } from "@dotui/registry/ui/slider";
+import { Label } from "@dotui/registry/ui/field";
+import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
 export default function Demo() {
   return (
     <div className="space-y-4">
-      <Slider label="sm" defaultValue={50} size="sm" />
-      <Slider label="md" defaultValue={50} size="md" />
-      <Slider label="lg" defaultValue={50} size="lg" />
+      <Slider defaultValue={50}>
+        <Label>sm</Label>
+        <SliderControl /> {/*size="sm" */}
+      </Slider>
+      <Slider defaultValue={50}>
+        <Label>md</Label>
+        <SliderControl /> {/*size="md" */}
+      </Slider>
+      <Slider defaultValue={50}>
+        <Label>lg</Label>
+        <SliderControl /> {/*size="lg" */}
+      </Slider>
     </div>
   );
 }

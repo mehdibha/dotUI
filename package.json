@@ -6,7 +6,7 @@
   "type": "module",
   "author": {
     "name": "mehdibha",
-    "url": "https://x.com/mehdibha_"
+    "url": "https://x.com/mehdibha"
   },
   "keywords": [
     "dotui",
@@ -15,7 +15,10 @@
     "tailwind",
     "typescript"
   ],
-  "packageManager": "pnpm@10.9.0",
+  "engines": {
+    "node": "^24.11.1",
+    "pnpm": "^10.24.0"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
@@ -23,31 +26,30 @@
     "start:www": "pnpm --filter=www start",
     "build:www": "pnpm --filter=www build",
     "build:registry": "pnpm --filter=@dotui/registry build",
+    "build:references": "pnpm --filter=www build:references",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
-    "format": "turbo run format --continue -- --cache --cache-location .cache/.prettiercache",
-    "format:fix": "turbo run format --continue -- --write --cache --cache-location .cache/.prettiercache",
-    "lint": "turbo run lint --continue -- --cache --cache-location .cache/.eslintcache",
-    "lint:fix": "turbo run lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
+    "format": "turbo run format",
+    "lint": "turbo run lint",
+    "check": "turbo run check",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
-    "test": "turbo run test",
+    "test": "vitest run",
     "release": "changeset version",
     "pub:beta": "pnpm --filter=tailwindcss-autocontrast pub:beta",
     "pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.4.8",
+    "@biomejs/biome": "^2.3.8",
+    "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.27.3",
-    "@dotui/prettier-config": "workspace:*",
-    "@vitest/coverage-v8": "^2.0.5",
-    "prettier": "catalog:",
-    "puppeteer": "^24.16.0",
+    "@vitest/coverage-v8": "^4.0.1",
+    "puppeteer": "^24.26.0",
     "turbo": "^2.5.8",
-    "typescript": "catalog:",
+    "typescript": "^5.8.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.1"
   },
-  "prettier": "@dotui/prettier-config"
+  "packageManager": "pnpm@10.24.0"
 }

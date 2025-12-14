@@ -1,11 +1,11 @@
 "use client";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -25,7 +25,7 @@ const data: Item[] = [
 export default function Demo() {
   return (
     <div className="space-y-8">
-      <TableRoot aria-label="Files" selectionMode="single">
+      <Table aria-label="Files" selectionMode="single">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn isRowHeader={column.isRowHeader}>
@@ -40,8 +40,8 @@ export default function Demo() {
             </TableRow>
           )}
         </TableBody>
-      </TableRoot>
-      <TableRoot aria-label="Files" selectionMode="multiple">
+      </Table>
+      <Table aria-label="Files" selectionMode="multiple">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn isRowHeader={column.isRowHeader}>
@@ -56,7 +56,7 @@ export default function Demo() {
             </TableRow>
           )}
         </TableBody>
-      </TableRoot>
+      </Table>
     </div>
   );
 }

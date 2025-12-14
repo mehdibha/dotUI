@@ -1,37 +1,15 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  TimeField as _TimeField,
-  TimeFieldInput as _TimeFieldInput,
-  TimeFieldRoot as _TimeFieldRoot,
-} from "./basic";
-import type {
-  TimeFieldInputProps,
-  TimeFieldProps,
-  TimeFieldRootProps,
-} from "./basic";
+import * as Default from "./basic";
+import type { TimeFieldProps } from "./types";
 
 export const TimeField = createDynamicComponent<TimeFieldProps<any>>(
   "time-field",
   "TimeField",
-  _TimeField,
+  Default.TimeField,
   {},
 );
 
-export const TimeFieldRoot = createDynamicComponent<TimeFieldRootProps<any>>(
-  "time-field",
-  "TimeFieldRoot",
-  _TimeFieldRoot,
-  {},
-);
-
-export const TimeFieldInput = createDynamicComponent<TimeFieldInputProps>(
-  "time-field",
-  "TimeFieldInput",
-  _TimeFieldInput,
-  {},
-);
-
-export type { TimeFieldProps, TimeFieldRootProps, TimeFieldInputProps };
+export type { TimeFieldProps };

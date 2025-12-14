@@ -14,7 +14,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@dotui/registry/ui/card";
-import { Select, SelectItem } from "@dotui/registry/ui/select";
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 import { Separator } from "@dotui/registry/ui/separator";
 import { TextField } from "@dotui/registry/ui/text-field";
 
@@ -48,7 +55,8 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
           Collaborate with members on this project.
         </CardDescription>
         <CardAction>
-          <Button variant="default" prefix={<ExternalLinkIcon />}>
+          <Button variant="default">
+            <ExternalLinkIcon />
             Invite link
           </Button>
         </CardAction>
@@ -57,14 +65,24 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
       <CardContent>
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <TextField label="Email" className="flex-1" />
-            <Select label="Role" defaultSelectedKey="member">
-              <SelectItem id="owner">Owner</SelectItem>
-              <SelectItem id="member">Member</SelectItem>
-              <SelectItem id="admin">Billing</SelectItem>
+            <TextField className="flex-1">
+              <Label>Email</Label>
+              <Input />
+            </TextField>
+            <Select defaultValue="member">
+              <Label>Role</Label>
+              <SelectTrigger />
+              <SelectContent>
+                <SelectItem id="owner">Owner</SelectItem>
+                <SelectItem id="member">Member</SelectItem>
+                <SelectItem id="admin">Billing</SelectItem>
+              </SelectContent>
             </Select>
           </div>
-          <Button prefix={<PlusCircleIcon />}>Add more</Button>
+          <Button>
+            <PlusCircleIcon />
+            Add more
+          </Button>
           <div>
             <p>Team members</p>
             <div className="mt-2 space-y-2">
@@ -80,10 +98,13 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
                       <p className="text-fg-muted">{member.role}</p>
                     </div>
                   </div>
-                  <Select aria-label="Role" defaultSelectedKey={member.role}>
-                    <SelectItem id="owner">Owner</SelectItem>
-                    <SelectItem id="member">Member</SelectItem>
-                    <SelectItem id="admin">Billing</SelectItem>
+                  <Select aria-label="Role" defaultValue={member.role}>
+                    <SelectTrigger />
+                    <SelectContent>
+                      <SelectItem id="owner">Owner</SelectItem>
+                      <SelectItem id="member">Member</SelectItem>
+                      <SelectItem id="admin">Billing</SelectItem>
+                    </SelectContent>
                   </Select>
                 </div>
               ))}
@@ -93,7 +114,7 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
       </CardContent>
       <Separator />
       <CardFooter className="flex items-center justify-between">
-        <p className="text-sm text-fg-muted">
+        <p className="text-fg-muted text-sm">
           Learn more about{" "}
           <a href="#" className="text-fg-accent underline underline-offset-4">
             inviting members

@@ -1,4 +1,7 @@
-import { ColorSlider } from "@dotui/registry/ui/color-slider";
+import {
+  ColorSlider,
+  ColorSliderControl,
+} from "@dotui/registry/ui/color-slider";
 
 export default function Demo() {
   return (
@@ -6,6 +9,8 @@ export default function Demo() {
       orientation="vertical"
       channel="hue"
       defaultValue="hsl(0, 100%, 50%)"
-    />
+    >
+      <ColorSliderControl />
+    </ColorSlider>
   );
 }

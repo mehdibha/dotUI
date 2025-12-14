@@ -7,12 +7,18 @@ import { Button } from "@dotui/registry/ui/button";
 import {
   Dialog,
   DialogBody,
+  DialogContent,
+  DialogDescription,
   DialogFooter,
-  DialogRoot,
+  DialogHeader,
+  DialogHeading,
 } from "@dotui/registry/ui/dialog";
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+import { Overlay } from "@dotui/registry/ui/overlay";
 import { TextField } from "@dotui/registry/ui/text-field";
 
-export default function DialogDemo() {
+export default function Demo() {
   const [isPending, setIsPending] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,36 +29,43 @@ export default function DialogDemo() {
   };
 
   return (
-    <DialogRoot>
+    <Dialog>
       <Button>Edit username</Button>
-      <Dialog title="Edit username" description="Make changes to your profile.">
-        {({ close }) => (
-          <Form
-            onSubmit={(e) => {
-              handleSubmit(e);
-              close();
-            }}
-          >
-            <DialogBody>
-              <TextField
-                autoFocus
-                label="Username"
-                defaultValue="@mehdibha_"
-                isRequired
-                className="w-full"
-              />
-            </DialogBody>
-            <DialogFooter>
-              <Button variant="default" slot="close">
-                Cancel
-              </Button>
-              <Button type="submit" isPending={isPending} variant="primary">
-                Save changes
-              </Button>
-            </DialogFooter>
-          </Form>
-        )}
-      </Dialog>
-    </DialogRoot>
+      <Overlay>
+        <DialogContent>
+          {({ close }) => (
+            <>
+              <DialogHeader>
+                <DialogHeading>Edit username</DialogHeading>
+                <DialogDescription>
+                  Make changes to your profile.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogBody>
+                <Form
+                  onSubmit={(e) => {
+                    handleSubmit(e);
+                    close();
+                  }}
+                >
+                  <TextField autoFocus defaultValue="@mehdibha" isRequired>
+                    <Label>Username</Label>
+                    <Input className="w-full" />
+                  </TextField>
+                </Form>
+              </DialogBody>
+              <DialogFooter>
+                <Button variant="default" slot="close">
+                  Cancel
+                </Button>
+                <Button type="submit" isPending={isPending} variant="primary">
+                  Save changes
+                </Button>
+              </DialogFooter>
+            </>
+          )}
+        </DialogContent>
+      </Overlay>
+    </Dialog>
   );
 }

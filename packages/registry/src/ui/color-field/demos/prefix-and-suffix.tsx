@@ -1,17 +1,26 @@
 import { PaletteIcon } from "@dotui/registry/icons";
 import { ColorField } from "@dotui/registry/ui/color-field";
+import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
 
 export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
-      <ColorField
-        prefix={<PaletteIcon />}
-        aria-label="Color field with prefix"
-      />
-      <ColorField
-        suffix={<PaletteIcon />}
-        aria-label="Color field with suffix"
-      />
+      <ColorField aria-label="Color field with prefix">
+        <InputGroup>
+          <Input />
+          <InputAddon>
+            <PaletteIcon />
+          </InputAddon>
+        </InputGroup>
+      </ColorField>
+      <ColorField aria-label="Color field with suffix">
+        <InputGroup>
+          <InputAddon>
+            <PaletteIcon />
+          </InputAddon>
+          <Input />
+        </InputGroup>
+      </ColorField>
     </div>
   );
 }

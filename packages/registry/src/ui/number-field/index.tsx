@@ -1,25 +1,15 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  NumberField as _NumberField,
-  NumberFieldRoot as _NumberFieldRoot,
-} from "./basic";
-import type { NumberFieldProps, NumberFieldRootProps } from "./basic";
+import * as Default from "./basic";
+import type { NumberFieldProps } from "./types";
 
 export const NumberField = createDynamicComponent<NumberFieldProps>(
   "number-field",
   "NumberField",
-  _NumberField,
+  Default.NumberField,
   {},
 );
 
-export const NumberFieldRoot = createDynamicComponent<NumberFieldRootProps>(
-  "number-field",
-  "NumberFieldRoot",
-  _NumberFieldRoot,
-  {},
-);
-
-export type { NumberFieldProps, NumberFieldRootProps };
+export type { NumberFieldProps };

@@ -1,39 +1,26 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  ProgressBar as _ProgressBar,
-  ProgressBarIndicator as _ProgressBarIndicator,
-  ProgressBarRoot as _ProgressBarRoot,
-  ProgressBarValueLabel as _ProgressBarValueLabel,
-} from "./basic";
+import * as Default from "./basic";
 import type {
-  ProgressBarIndicatorProps,
+  ProgressBarControlProps,
   ProgressBarProps,
-  ProgressBarRootProps,
   ProgressBarValueLabelProps,
-} from "./basic";
+} from "./types";
 
 export const ProgressBar = createDynamicComponent<ProgressBarProps>(
   "progress-bar",
   "ProgressBar",
-  _ProgressBar,
+  Default.ProgressBar,
   {},
 );
 
-export const ProgressBarRoot = createDynamicComponent<ProgressBarRootProps>(
-  "progress-bar",
-  "ProgressBarRoot",
-  _ProgressBarRoot,
-  {},
-);
-
-export const ProgressBarIndicator =
-  createDynamicComponent<ProgressBarIndicatorProps>(
+export const ProgressBarControl =
+  createDynamicComponent<ProgressBarControlProps>(
     "progress-bar",
-    "ProgressBarIndicator",
-    _ProgressBarIndicator,
+    "ProgressBarControl",
+    Default.ProgressBarControl,
     {},
   );
 
@@ -41,13 +28,12 @@ export const ProgressBarValueLabel =
   createDynamicComponent<ProgressBarValueLabelProps>(
     "progress-bar",
     "ProgressBarValueLabel",
-    _ProgressBarValueLabel,
+    Default.ProgressBarValueLabel,
     {},
   );
 
 export type {
   ProgressBarProps,
-  ProgressBarRootProps,
-  ProgressBarIndicatorProps,
+  ProgressBarControlProps,
   ProgressBarValueLabelProps,
 };

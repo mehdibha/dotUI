@@ -1,193 +1,116 @@
 ---
 title: Table
-description: A table displays data in rows and columns and enables a user to navigate its contents via directional navigation keys, and optionally supports row selection and sorting.
+description: A table displays data in rows and columns and enables a user to navigate and select its contents.
 links:
-  - label: Radix docs
-    href: https://www.radix-ui.com/primitives/docs/components/aspect-ratio
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/layout/aspect-ratio.mdx?plain=1
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Table.html
+wip: true
 ---
 
-<ComponentPreview name="table/demos/basic" />
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```package-install
-npx shadcn@latest add @dotui/table
-```
+    <Demo name="table/demos/basic" />
 
-## Anatomy
+    ## Installation
 
-A table consists of a container element, with columns and rows of cells containing data inside. The cells within a table may contain focusable elements or plain text content.
+    ```npm
+    npx shadcn@latest add @dotui/table
+    ```
 
-```tsx
-import {
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRoot,
-  TableRow,
-} from "@/components/core/table";
+    ## Usage
 
-<TableRoot>
-  <TableHeader>
-    <TableColumn>#</TableColumn>
-    <TableColumn>Name</TableColumn>
-    <TableColumn>Email</TableColumn>
-  </TableHeader>
-  <TableBody>
-    <TableRow>
-      <TableCell>1</TableCell>
-      <TableCell>Mehdi BHA</TableCell>
-      <TableCell>hello@mehdibha.com</TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell>2</TableCell>
-      <TableCell>Devon Govett</TableCell>
-      <TableCell>devon@govett.com</TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell>3</TableCell>
-      <TableCell>Theo Browne</TableCell>
-      <TableCell>theo@ping.gg</TableCell>
-    </TableRow>
-  </TableBody>
-</TableRoot>;
-```
+    Use tables to display data in rows and columns with support for selection, sorting, and more.
 
-## Variants
+    ```tsx
+    import {
+      Table,
+      TableBody,
+      TableCell,
+      TableColumn,
+      TableHeader,
+      TableRow,
+    } from "@/components/ui/table";
+    ```
 
-Use the `variant` prop to change the appearance of the Table.
+    ```tsx
+    <Table aria-label="Files">
+      <TableHeader>
+        <TableColumn isRowHeader>Name</TableColumn>
+        <TableColumn>Type</TableColumn>
+        <TableColumn>Date Modified</TableColumn>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Games</TableCell>
+          <TableCell>File folder</TableCell>
+          <TableCell>6/7/2020</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+    ```
 
-<ComponentPreview name="table/demos/variants" />
+    ## Playground
 
-## Dynamic collections
+    Use the controls below to experiment with different table props and see the live preview and code update.
 
-The first example have shown static collections, where the data is hard coded. Dynamic collections, as shown below, can be used when the table data comes from an external data source such as an API, or updates over time. In the example below, both the columns and the rows are provided to the table via a render function. You can also make the columns static and only the rows dynamic.
+    <InteractiveDemo 
+      name="table" 
+      controls={[
+        {
+          type: "enum",
+          name: "selectionMode",
+          options: ["none", "single", "multiple"],
+          defaultValue: "none",
+        },
+      ]}
+    />
 
-<ComponentPreview name="table/demos/dynamic-collection" />
+    ## API Reference
 
-## Selection
+    ### Table
 
-### Selection mode
+    <Reference name="table" />
 
-By default, Table doesn't allow row selection but this can be enabled using the `selectionMode` prop.
+    ### TableHeader
 
-<ComponentPreview name="table/demos/selection-mode" />
+    <Reference name="table-header" />
 
-### Uncontrolled selection
+    ### TableColumn
 
-Use `defaultSelectedKeys` to provide a default set of selected rows. Note that the value of the selected keys must match the `id` prop of the row.
+    <Reference name="table-column" />
 
-<ComponentPreview name="table/demos/uncontrolled" />
+    ### TableBody
 
-### Controlled selection
+    <Reference name="table-body" />
 
-To programmatically control row selection, use the `selectedKeys` prop paired with the onSelectionChange callback. The `id` prop from the selected rows will be passed into the callback when the row is pressed, allowing you to update state accordingly.
+    ### TableRow
 
-<ComponentPreview name="table/demos/controlled" />
+    <Reference name="table-row" />
 
-### Selection variant
+    ### TableCell
 
-Use the `selectionVariant` prop to change the appearance of the selected rows.
+    <Reference name="table-cell" />
 
-<ComponentPreview name="table/demos/selection-variant" />
+  </PageTabPanel>
 
-### Disallow empty selection
-
-Table also supports a `disallowEmptySelection` prop which forces the user to have at least one row in the Table selected at all times. In this mode, if a single row is selected and the user presses it, it will not be deselected.
-
-<ComponentPreview name="table/demos/disallow-empty-selection" />
-
-### Selection Behavior
-
-You can control how multiple selection should behave in the collection using the `selectionBehavior` prop.
-
-<ComponentPreview name="table/demos/selection-behavior" />
-
-## Row options
-
-### Action
-
-Table supports row actions via the `onRowAction` prop
-
-<ComponentPreview name="table/demos/row-action" />
-
-Rows may also have a row action specified by directly applying `onAction` on the Row itself. This may be especially convenient in static collections.
-
-<ComponentPreview name="table/demos/static-row-action" />
-
-### Link
-
-Table rows may also be links to another page or website. This can be achieved by passing the href prop to the `<TableRow>` component.
-
-<ComponentPreview name="table/demos/links" />
-
-### Disabled
-
-A Row can be disabled with the `isDisabled` prop.
-
-```tsx
-<TableRow isDisabled>
-  <TableCell>1</TableCell>
-  <TableCell>Mehdi BHA</TableCell>
-  <TableCell>hello@mehdibha.com</TableCell>
-</TableRow>
-```
-
-In dynamic collections, it may be more convenient to use the `disabledKeys` prop at the Table level instead of `isDisabled` on individual rows.
-
-<ComponentPreview name="table/demos/disabled-rows" />
-
-## Sorting
-
-Table supports sorting its data when a column header is pressed. To designate that a Column should support sorting, provide it with the `allowsSorting` prop.
-The Table accepts a `sortDescriptor` prop that defines the current column key to sort by and the sort direction (ascending/descending). When the user presses a sortable column header, the column's key and sort direction is passed into the `onSortChange` callback, allowing you to update the `sortDescriptor` appropriately.
-
-<ComponentPreview name="table/demos/sorting" />
-
-## Empty state
-
-Use the `renderEmptyState` prop to customize what the `TableBody` will display if there are no items.
-By default the `TableBody` will display a message saying `"No results found."`.
-
-<ComponentPreview name="table/demos/empty-state" />
-
-## Column resizing
-
-<ComponentPreview name="table/demos/column-resizing" />
-
-## Drag and drop
-
-### Reordable
-
-<ComponentPreview name="table/demos/reordable" />
-
-## API Reference
-
-### TableRoot
-
-| Prop                     | Type                                                                                           | Default      | Description                                                                                                  |
-| ------------------------ | ---------------------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------ |
-| `children`               | `ReactNode`                                                                                    | -            | The elements that make up the table. Includes the TableHeader, TableBody, Columns, and Rows.                 |
-| `selectionBehavior`      | `'toggle' \| 'replace'`                                                                        | `'toggle'`   | How multiple selection should behave in the collection.                                                      |
-| `disabledBehavior`       | `'selection' \| 'all'`                                                                         | `'selection` | Whether disabledKeys applies to all interactions, or only selection.                                         |
-| `dragAndDropHooks`       | `DragAndDropHooks`                                                                             | -            | The drag and drop hooks returned by useDragAndDrop used to enable drag and drop behavior for the Table.      |
-| `disabledKeys`           | `Iterable<Key>`                                                                                | -            | A list of row keys to disable.                                                                               |
-| `selectionMode`          | `'none'\| 'single'\| 'multiple'`                                                               | -            | The type of selection that is allowed in the collection.                                                     |
-| `disallowEmptySelection` | `boolean`                                                                                      | -            | Whether the collection allows empty selection.                                                               |
-| `selectedKeys`           | `'all' \| Iterable<Key>`                                                                       | -            | The currently selected keys in the collection (controlled).                                                  |
-| `defaultSelectedKeys`    | `'all' \| Iterable<Key>`                                                                       | -            | The initial selected keys in the collection (uncontrolled).                                                  |
-| `sortDescriptor`         | `SortDescriptor`                                                                               | -            | The current sorted column and direction.                                                                     |
-| `className`              | `string \| (values: TableRenderProps & {defaultClassName: string \| undefined}) => string`     | -            | The CSS className for the element. A function may be provided to compute the class based on component state. |
-| `style`                  | `CSSProperties \| (values: TableRenderProps & {defaultStyle: CSSProperties}) => CSSProperties` | -            | The inline style for the element. A function may be provided to compute the style based on component state.  |
-
-| Event               | Type                                  | Description                                                                                                                   |
-| ------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `onRowAction`       | `(key: Key) => void`                  | Handler that is called when a user performs an action on the row.                                                             |
-| `onSelectionChange` | `(key: Selection) => void`            | Handler that is called when the selection changes.                                                                            |
-| `onSortChange`      | `(descriptor: SortDescriptor) => any` | Handler that is called when the sorted column or direction changes.                                                           |
-| `onScroll`          | `(e: UIEvent<Element>) => void`       | Handler that is called when a user scrolls. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event). |
+  <PageTabPanel id="examples">
+    <Example name="table/demos/basic" />
+    <Example name="table/demos/dynamic-collection" />
+    <Example name="table/demos/selection" />
+    <Example name="table/demos/selection-mode" />
+    <Example name="table/demos/selection-behavior" />
+    <Example name="table/demos/disallow-empty-selection" />
+    <Example name="table/demos/disabled-rows" />
+    <Example name="table/demos/links" />
+    <Example name="table/demos/sorting" />
+    <Example name="table/demos/column-resizing" />
+    <Example name="table/demos/row-action" />
+    <Example name="table/demos/static-row-action" />
+    <Example name="table/demos/reordable" />
+    <Example name="table/demos/empty-state" />
+    <Example name="table/demos/uncontrolled" />
+    <Example name="table/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

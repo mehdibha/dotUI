@@ -1,0 +1,30 @@
+{
+	"name": "AvatarGroupProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {
+		"size": {
+			"type": "\"sm\" | \"md\" | \"lg\"",
+			"detailedType": "\"sm\" | \"md\" | \"lg\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "md"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "lg"
+					}
+				]
+			},
+			"description": "The size of all avatars in the group.",
+			"default": "'md'"
+		}
+	}
+}

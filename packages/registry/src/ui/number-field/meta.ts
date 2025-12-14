@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const numberFieldMeta = {
   name: "number-field",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default numberFieldMeta;
 export const numberFieldVariants = Object.keys(
   numberFieldMeta.variants,
 ) as (keyof typeof numberFieldMeta.variants)[];
+
+export type NumberFieldVariant = keyof typeof numberFieldMeta.variants;
+
+export const defaultNumberFieldVariant = numberFieldMeta.defaultVariant;

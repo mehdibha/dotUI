@@ -2,8 +2,10 @@
   "extends": "@dotui/ts-config/internal-package.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "jsx": "preserve",
     "paths": {
-      "@dotui/registry/*": ["../registry/src/*"]
+      "@dotui/registry/*": ["../registry/src/*"],
+      "@dotui/style-system/*": ["../style-system/src/*"]
     }
   },
   "include": ["src"],

@@ -1,36 +1,58 @@
 ---
 title: Color Swatch
-description: A ColorSwatch displays a preview of a selected color.
+description: A color swatch displays a color sample.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ColorSwatch.html
+wip: true
 ---
 
-<ComponentPreview
-  name="color-swatch/demos/default"
-  preview={`<ColorSwatch color="#f00" />`}
-/>
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```package-install
-npx shadcn@latest add @dotui/color-swatch
-```
+    <Demo name="color-swatch/demos/default" />
 
-## Anatomy
+    ## Installation
 
-```tsx
-import { ColorSwatch } from "@/components/core/color-swatch";
+    ```npm
+    npx shadcn@latest add @dotui/color-swatch
+    ```
 
-<ColorSwatch color="#f00" />;
-```
+    ## Usage
 
-## Usage
+    Use color swatches to display a color sample.
 
-Use a `ColorSwatch` to display a preview of a selected color.
+    ```tsx
+    import { ColorSwatch } from "@/components/ui/color-swatch";
+    ```
 
-## API Reference
+    ```tsx
+    <ColorSwatch color="#ff0000" />
+    ```
 
-| Prop        | Type                                                                                                     | Default | Description                                                                                                 |
-| ----------- | -------------------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------- |
-| `color*`    | `string \| Color`                                                                                        | -       | The color value to display in the swatch.                                                                   |
-| `children`  | `ReactNode \| (values: ColorSwatchRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state.   |
-| `className` | `string`                                                                                                 | -       | The CSS className for the element.                                                                          |
-| `style`     | `CSSProperties \| (values: ColorSwatchRenderProps & {defaultStyle: CSSProperties}) => CSSProperties`     | -       | The inline style for the element. A function may be provided to compute the style based on component state. |
+    ## Playground
+
+    Use the controls below to experiment with different color swatch props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="color-swatch" 
+      controls={[
+        {
+          type: "string",
+          name: "color",
+          defaultValue: "#ff0000",
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="color-swatch" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="color-swatch/demos/default" />
+  </PageTabPanel>
+</PageTabs>

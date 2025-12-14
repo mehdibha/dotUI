@@ -1,25 +1,39 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import type { DateValue } from "react-aria";
 
-import {
-  DatePicker as _DatePicker,
-  DatePickerRoot as _DatePickerRoot,
-} from "./basic";
-import type { DatePickerProps, DatePickerRootProps } from "./basic";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-export const DatePicker = createDynamicComponent<DatePickerProps<any>>(
+import * as Default from "./basic";
+import type {
+  DatePickerContentProps,
+  DatePickerInputProps,
+  DatePickerProps,
+} from "./types";
+
+export const DatePicker = <T extends DateValue>(props: DatePickerProps<T>) => {
+  const Component = createDynamicComponent<DatePickerProps<T>>(
+    "date-picker",
+    "DatePicker",
+    Default.DatePicker,
+    {},
+  );
+
+  return <Component {...props} />;
+};
+
+export const DatePickerContent = createDynamicComponent<DatePickerContentProps>(
   "date-picker",
-  "DatePicker",
-  _DatePicker,
+  "DatePickerContent",
+  Default.DatePickerContent,
   {},
 );
 
-export const DatePickerRoot = createDynamicComponent<DatePickerRootProps<any>>(
+export const DatePickerInput = createDynamicComponent<DatePickerInputProps>(
   "date-picker",
-  "DatePickerRoot",
-  _DatePickerRoot,
+  "DatePickerInput",
+  Default.DatePickerInput,
   {},
 );
 
-export type { DatePickerProps, DatePickerRootProps };
+export type { DatePickerProps, DatePickerContentProps, DatePickerInputProps };

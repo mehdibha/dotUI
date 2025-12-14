@@ -1,0 +1,6 @@
+{
+	"name": "DialogFooterProps",
+	"description": "Missing description.",
+	"extendsElement": "footer",
+	"props": {}
+}

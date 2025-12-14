@@ -1,127 +1,72 @@
 ---
 title: Color Picker
-description: A ColorPicker allow users to select and edit a color in an overlay.
+description: A color picker allows users to select a color from a palette or input a custom color value.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/ColorPicker.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/text-field.mdx?plain=1
+wip: true
 ---
 
-<ComponentPreview
-  name="color-picker/demos/default"
-  preview={`<ColorPicker defaultValue="#5100FF" />`}
-/>
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```package-install
-npx shadcn@latest add @dotui/color-picker
-```
+    <Demo name="color-picker/demos/default" />
 
-## Anatomy
+    ## Installation
 
-```tsx
-import { ColorPicker } from "@/components/core/color-picker";
+    ```npm
+    npx shadcn@latest add @dotui/color-picker
+    ```
 
-<ColorPicker defaultValue="#5100FF" />;
-```
+    ## Usage
 
-```tsx
-import {
-  ColorPickerButton,
-  ColorPickerEditor,
-  ColorPickerRoot,
-} from "@/components/core/color-picker";
-import { Dialog, DialogRoot } from "@/components/core/dialog";
+    Use color pickers to allow users to select a color from a palette or input a custom color value.
 
-<ColorPickerRoot defaultValue="#5100FF">
-  <DialogRoot>
-    <ColorPickerButton />
-    <Dialog>
-      <ColorPickerEditor />
-    </Dialog>
-  </DialogRoot>
-</ColorPickerRoot>;
-```
+    ```tsx
+    import { ColorEditor } from "@/components/ui/color-editor";
+    import { ColorPicker, ColorPickerContent, ColorPickerTrigger } from "@/components/ui/color-picker";
+    ```
 
-## Unontrolled
+    ```tsx
+    <ColorPicker defaultValue="#ff0000">
+      <ColorPickerTrigger />
+      <ColorPickerContent>
+        <ColorEditor />
+      </ColorPickerContent>
+    </ColorPicker>
+    ```
 
-An initial, uncontrolled value can be provided to the `ColorPicker` using the `defaultValue` prop.
+    ## Playground
 
-<ComponentPreview
-  name="color-picker/demos/uncontrolled"
-  preview={`<ColorPicker defaultValue="#5100FF" />`}
-/>
+    Use the controls below to experiment with different color picker props and see the live preview and code update.
 
-## Controlled
+    <InteractiveDemo 
+      name="color-picker" 
+      controls={[]}
+    />
 
-Use the `value` and `onChange` props to control the color picker value.
+    ## API Reference
 
-<ComponentPreview
-  name="color-picker/demos/controlled"
-  preview={`const [value, setValue] = React.useState(parseColor("hsl(25, 100%, 50%)"));
- <ColorPicker value={value} onChange={setValue} />;`}
-/>
+    ### ColorPicker
 
-## Button options
+    <Reference name="color-picker" />
 
-`ColorPicker` accepts all [button options](/docs/components/buttons/button#options).
+    ### ColorPickerTrigger
 
-<ComponentPreview
-  name="color-picker/demos/options"
-  preview={`<ColorPicker size="sm" shape="rectangle">
-    Fill color
-  </ColorPicker>`}
-/>
+    <Reference name="color-picker-trigger" />
 
-## Composition
+    ### ColorPickerContent
 
-If you need to customize things further, you can drop down to the composition level.
+    <Reference name="color-picker-content" />
 
-<ComponentPreview
-  name="color-picker/demos/composition"
-  preview={`<ColorPickerRoot defaultValue="#5100FF">
-    <DialogRoot>
-      <ColorPickerButton />
-      <Dialog type="popover" mobileType="drawer">
-        <ColorPickerEditor />
-      </Dialog>
-    </DialogRoot>
-  </ColorPickerRoot>`}
-/>
+  </PageTabPanel>
 
-## Examples
-
-### Channel sliders
-
-This example uses [ColorSlider](/docs/components/colors/color-slider) to allow a user to adjust each channel of a color value, with a [Select](/docs/components/menus-and-selection/select) to switch between color spaces.
-
-<ComponentPreview name="color-picker/demos/channel-sliders" />
-
-### Swatches
-
-This example uses a [ColorSwatchPicker](/docs/components/colors/color-swatch-picker) to provide color presets for a color picker.
-
-<ComponentPreview name="color-picker/demos/swatches" />
-
-## API Reference
-
-### ColorPicker
-
-`ColorPicker` props extends and [Button](/components/buttons/button#api-reference)'s props and the following
-
-| Prop                 | Type                                                                                | Default | Description                                                                                               |
-| -------------------- | ----------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `value`              | `string \| Color`                                                                   | -       | The current value (controlled).                                                                           |
-| `defaultValue`       | `string \| Color`                                                                   | -       | The default value (uncontrolled).                                                                         |
-| `showAlphaChannel`   | `boolean`                                                                           | `false` | Whether to show the alpha channel slider.                                                                 |
-| `colorFormat`        | `'hex' \| 'rgb' \| 'hsl' \| 'hsb'`                                                  | `'hex'` | The color format to display.                                                                              |
-| `showFormatSelector` | `boolean`                                                                           | `false` | Whether to show the format selector.                                                                      |
-| `children`           | `ReactNode \| (values: T & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state. |
-
-| Event      | Type                     | Description                                    |
-| ---------- | ------------------------ | ---------------------------------------------- |
-| `onChange` | `(value: Color) => void` | Handler that is called when the value changes. |
+  <PageTabPanel id="examples">
+    <Example name="color-picker/demos/default" />
+    <Example name="color-picker/demos/swatches" />
+    <Example name="color-picker/demos/channel-sliders" />
+    <Example name="color-picker/demos/uncontrolled" />
+    <Example name="color-picker/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

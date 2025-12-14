@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const toastMeta = {
   name: "toast",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default toastMeta;
 export const toastVariants = Object.keys(
   toastMeta.variants,
 ) as (keyof typeof toastMeta.variants)[];
+
+export type ToastVariant = keyof typeof toastMeta.variants;
+
+export const defaultToastVariant = toastMeta.defaultVariant;

@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const fieldMeta = {
   name: "field",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default fieldMeta;
 export const fieldVariants = Object.keys(
   fieldMeta.variants,
 ) as (keyof typeof fieldMeta.variants)[];
+
+export type FieldVariant = keyof typeof fieldMeta.variants;
+
+export const defaultFieldVariant = fieldMeta.defaultVariant;

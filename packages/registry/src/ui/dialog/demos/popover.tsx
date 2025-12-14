@@ -5,10 +5,25 @@ import type { Key } from "react-aria-components";
 
 import { InfoIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
+import { Label } from "@dotui/registry/ui/field";
+import { Group } from "@dotui/registry/ui/group";
+import { Input } from "@dotui/registry/ui/input";
 import { NumberField } from "@dotui/registry/ui/number-field";
-import { Select, SelectItem } from "@dotui/registry/ui/select";
-import { Switch } from "@dotui/registry/ui/switch";
+import { Overlay } from "@dotui/registry/ui/overlay";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
+import { Switch, SwitchIndicator } from "@dotui/registry/ui/switch";
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<Key | null>("top");
@@ -19,39 +34,58 @@ export default function Demo() {
   return (
     <div className="flex w-full items-center">
       <div className="flex flex-1 items-center justify-center">
-        <DialogRoot>
-          <Button variant="default" shape="square">
+        <Dialog>
+          <Button variant="default">
             <InfoIcon />
           </Button>
-          <Dialog
-            type="popover"
-            title="Help"
-            description="For help accessing your account, please contact support."
-          />
-        </DialogRoot>
+          <Overlay type="popover">
+            <DialogContent>
+              <DialogHeader>
+                <DialogHeading>Help</DialogHeading>
+                <DialogDescription>
+                  For help accessing your account, please contact support.
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Overlay>
+        </Dialog>
       </div>
       <div className="space-y-4 rounded-md border p-4">
-        <Select
-          label="Placement"
-          selectedKey={placement}
-          onSelectionChange={setPlacement}
-        >
-          <SelectItem id="top">Top</SelectItem>
-          <SelectItem id="bottom">Bottom</SelectItem>
+        <Select value={placement} onChange={setPlacement}>
+          <Label>Placement</Label>
+          <SelectTrigger />
+          <SelectContent>
+            <SelectItem id="top">Top</SelectItem>
+            <SelectItem id="bottom">Bottom</SelectItem>
+          </SelectContent>
         </Select>
-        <NumberField label="Offset" value={offset} onChange={setOffset} />
-        <NumberField
-          label="Cross offset"
-          value={crossOffset}
-          onChange={setCrossOffset}
-        />
-        <NumberField
-          label="Container padding"
-          value={containerPadding}
-          onChange={setContainerPadding}
-        />
+        <NumberField value={offset} onChange={setOffset}>
+          <Label>Offset</Label>
+          <Group>
+            <Input />
+            <Button slot="decrement" />
+            <Button slot="increment" />
+          </Group>
+        </NumberField>
+        <NumberField value={crossOffset} onChange={setCrossOffset}>
+          <Label>Cross offset</Label>
+          <Group>
+            <Input />
+            <Button slot="decrement" />
+            <Button slot="increment" />
+          </Group>
+        </NumberField>
+        <NumberField value={containerPadding} onChange={setContainerPadding}>
+          <Label>Container padding</Label>
+          <Group>
+            <Input />
+            <Button slot="decrement" />
+            <Button slot="increment" />
+          </Group>
+        </NumberField>
         <Switch isSelected={showArrow} onChange={setShowArrow}>
-          Arrow
+          <SwitchIndicator />
+          <Label>Arrow</Label>
         </Switch>
       </div>
     </div>

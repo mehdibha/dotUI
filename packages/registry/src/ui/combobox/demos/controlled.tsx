@@ -3,7 +3,12 @@
 import React from "react";
 import type { Key } from "react-aria-components";
 
-import { Combobox, ComboboxItem } from "@dotui/registry/ui/combobox";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+} from "@dotui/registry/ui/combobox";
 
 export default function Demo() {
   const [country, setCountry] = React.useState<Key | null>("tn");
@@ -14,15 +19,18 @@ export default function Demo() {
         selectedKey={country}
         onSelectionChange={setCountry}
       >
-        <ComboboxItem id="ca">Canada</ComboboxItem>
-        <ComboboxItem id="fr">France</ComboboxItem>
-        <ComboboxItem id="de">Germany</ComboboxItem>
-        <ComboboxItem id="es">Spain</ComboboxItem>
-        <ComboboxItem id="tn">Tunisia</ComboboxItem>
-        <ComboboxItem id="us">United States</ComboboxItem>
-        <ComboboxItem id="uk">United Kingdom</ComboboxItem>
+        <ComboboxInput />
+        <ComboboxContent>
+          <ComboboxItem id="ca">Canada</ComboboxItem>
+          <ComboboxItem id="fr">France</ComboboxItem>
+          <ComboboxItem id="de">Germany</ComboboxItem>
+          <ComboboxItem id="es">Spain</ComboboxItem>
+          <ComboboxItem id="tn">Tunisia</ComboboxItem>
+          <ComboboxItem id="us">United States</ComboboxItem>
+          <ComboboxItem id="uk">United Kingdom</ComboboxItem>
+        </ComboboxContent>
       </Combobox>
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         {country ? (
           <>
             You selected: <span className="font-bold text-fg">{country}</span>

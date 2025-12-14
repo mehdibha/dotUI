@@ -1,9 +1,11 @@
 "use client";
 
-import React from "react";
 import { Form } from "react-aria-components";
+import type React from "react";
 
 import { Button } from "@dotui/registry/ui/button";
+import { Description, Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
@@ -15,14 +17,11 @@ export default function Demo() {
 
   return (
     <Form onSubmit={handleSubmit} className="w-xs space-y-4">
-      <TextField
-        name="name"
-        label="Name"
-        description="Please enter your full name."
-        minLength={2}
-        isRequired
-        className="w-full"
-      />
+      <TextField name="name" minLength={2} isRequired>
+        <Label>Name</Label>
+        <Input placeholder="Name" />
+        <Description>Please enter your full name.</Description>
+      </TextField>
       <Button variant="primary" type="submit">
         Submit
       </Button>

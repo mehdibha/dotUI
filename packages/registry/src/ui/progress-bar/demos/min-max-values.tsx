@@ -1,8 +1,9 @@
 "use client";
 
-import * as React from "react";
-
-import { ProgressBar } from "@dotui/registry/ui/progress-bar";
+import {
+  ProgressBar,
+  ProgressBarControl,
+} from "@dotui/registry/ui/progress-bar";
 
 export default function Demo() {
   return (
@@ -11,6 +12,8 @@ export default function Demo() {
       minValue={50}
       maxValue={150}
       value={100}
-    />
+    >
+      <ProgressBarControl />
+    </ProgressBar>
   );
 }

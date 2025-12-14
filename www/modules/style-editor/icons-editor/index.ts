@@ -1,0 +1,1 @@
+export { IconsEditor } from "./icons-editor";

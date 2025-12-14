@@ -1,18 +1,18 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
-
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 import {
-  Combobox as _Combobox,
-  ComboboxInput as _ComboboxInput,
-  ComboboxItem as _ComboboxItem,
-  ComboboxRoot as _ComboboxRoot,
-} from "./basic";
+  ListBoxItem,
+  ListBoxSection,
+  ListBoxSectionHeader,
+} from "@dotui/registry/ui/list-box";
+
+import * as Default from "./basic";
 import type {
-  ComboboxItemProps,
+  ComboboxContentProps,
+  ComboboxInputProps,
   ComboboxProps,
-  ComboboxRootProps,
-} from "./basic";
+} from "./types";
 
 export const Combobox = <T extends object = object>(
   props: ComboboxProps<T>,
@@ -20,43 +20,37 @@ export const Combobox = <T extends object = object>(
   const Component = createDynamicComponent<ComboboxProps<T>>(
     "combobox",
     "Combobox",
-    _Combobox,
+    Default.Combobox,
     {},
   );
 
   return <Component {...props} />;
 };
 
-export const ComboboxRoot = <T extends object = object>(
-  props: ComboboxRootProps<T>,
-) => {
-  const Component = createDynamicComponent<ComboboxRootProps<T>>(
-    "combobox",
-    "ComboboxRoot",
-    _ComboboxRoot,
-    {},
-  );
-
-  return <Component {...props} />;
-};
-
-export const ComboboxInput = createDynamicComponent(
+export const ComboboxInput = createDynamicComponent<ComboboxInputProps>(
   "combobox",
   "ComboboxInput",
-  _ComboboxInput,
+  Default.ComboboxInput,
   {},
 );
 
-export const ComboboxItem = <T extends object = object>(
-  props: ComboboxItemProps<T>,
+export const ComboboxContent = <T extends object = object>(
+  props: ComboboxContentProps<T>,
 ) => {
-  const Component = createDynamicComponent<ComboboxItemProps<T>>(
+  const Component = createDynamicComponent<ComboboxContentProps<T>>(
     "combobox",
-    "ComboboxItem",
-    _ComboboxItem,
+    "ComboboxContent",
+    Default.ComboboxContent,
     {},
   );
 
   return <Component {...props} />;
 };
-export type { ComboboxProps, ComboboxRootProps, ComboboxItemProps };
+
+export {
+  ListBoxItem as ComboboxItem,
+  ListBoxSection as ComboboxSection,
+  ListBoxSectionHeader as ComboboxSectionHeader,
+};
+
+export type { ComboboxProps, ComboboxInputProps, ComboboxContentProps };

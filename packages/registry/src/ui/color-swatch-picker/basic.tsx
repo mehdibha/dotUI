@@ -1,52 +1,85 @@
 "use client";
 
-import React from "react";
 import {
   ColorSwatchPicker as AriaColorSwatchPicker,
   ColorSwatchPickerItem as AriaColorSwatchPickerItem,
+  composeRenderProps,
 } from "react-aria-components";
+import { tv } from "tailwind-variants";
+import type React from "react";
 
-import { focusRing } from "@dotui/registry/lib/focus-styles";
-import { cn } from "@dotui/registry/lib/utils";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
+
+const colorSwatchPickerStyles = tv({
+  slots: {
+    root: "flex flex-wrap gap-1",
+    item: [
+      "relative size-8 rounded-md transition-shadow focus:z-10 *:data-[slot=color-swatch]:size-full *:data-[slot=color-swatch]:rounded-[inherit]",
+      // focus state
+      "focus-reset focus-visible:focus-ring",
+      // disabled state
+      "disabled:cursor-not-allowed disabled:*:data-[slot=color-swatch]:[background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]!",
+      // selected state
+      "before:absolute before:inset-0 before:scale-90 selected:before:scale-100 before:rounded-[inherit] before:bg-bg before:opacity-0 selected:before:opacity-100 before:outline-2 before:outline-inverse before:transition-[opacity,scale] before:duration-100 before:content-['']",
+    ],
+  },
+});
+
+const { root, item } = colorSwatchPickerStyles();
+
+/* -----------------------------------------------------------------------------------------------*/
 
 interface ColorSwatchPickerProps
   extends React.ComponentProps<typeof AriaColorSwatchPicker> {}
+
 const ColorSwatchPicker = ({ className, ...props }: ColorSwatchPickerProps) => {
   return (
-    <AriaColorSwatchPicker className={cn("flex gap-1", className)} {...props} />
+    <AriaColorSwatchPicker
+      className={composeRenderProps(className, (className) =>
+        root({ className }),
+      )}
+      {...props}
+    />
   );
 };
+
+/* -----------------------------------------------------------------------------------------------*/
 
 interface ColorSwatchPickerItemProps
   extends React.ComponentProps<typeof AriaColorSwatchPickerItem> {}
 const ColorSwatchPickerItem = ({
   className,
+  style,
   ...props
 }: ColorSwatchPickerItemProps) => {
   return (
     <AriaColorSwatchPickerItem
-      className={cn(
-        focusRing(),
-        "relative size-8 cursor-pointer rounded-md transition-shadow focus:z-10 disabled:cursor-not-allowed",
-        className,
+      className={composeRenderProps(className, (className) =>
+        item({ className }),
+      )}
+      style={composeRenderProps(
+        style,
+        (style, { color }) =>
+          ({
+            "--color": color.toString(),
+            ...style,
+          }) as React.CSSProperties,
       )}
       {...props}
     >
-      {({ isSelected, isDisabled }) => (
-        <>
-          <ColorSwatch className={cn("size-full rounded-[inherit]")} />
-          {isSelected && (
-            <div className="absolute inset-0 z-1 rounded-[inherit] border-2 border-bg outline-2 outline-inverse" />
-          )}
-          {isDisabled && (
-            <div className="absolute inset-0 z-1 rounded-[inherit] bg-bg/90" />
-          )}
-        </>
-      )}
+      <ColorSwatch className="size-full rounded-[inherit]" />
     </AriaColorSwatchPickerItem>
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
+const CompoundColorSwatchPicker = Object.assign(ColorSwatchPicker, {
+  Item: ColorSwatchPickerItem,
+});
+
 export type { ColorSwatchPickerProps, ColorSwatchPickerItemProps };
-export { ColorSwatchPicker, ColorSwatchPickerItem };
+export {
+  CompoundColorSwatchPicker as ColorSwatchPicker,
+  ColorSwatchPickerItem,
+};

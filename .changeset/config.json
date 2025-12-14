@@ -9,12 +9,15 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "www",
-    "@dotui/eslint-config",
-    "@dotui/prettier-config",
     "@dotui/ts-config",
     "@dotui/api",
     "@dotui/auth",
     "@dotui/db",
-    "@dotui/registry"
+    "@dotui/registry",
+    "@dotui/shadcn-adapter",
+    "@dotui/color-engine",
+    "@dotui/style-system",
+    "@dotui/transformers",
+    "@dotui/types"
   ]
 }

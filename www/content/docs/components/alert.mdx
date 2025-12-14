@@ -1,118 +1,80 @@
 ---
 title: Alert
-description: Displays a callout for user attention.
-links:
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/feedback/alert.mdx?plain=1
+description: Alerts display a short, important message in a way that attracts the user's attention.
+wip: true
 ---
 
-<ComponentPreview
-  name="alert/demos/default"
-  preview={`<Alert>You can add components to your app using the cli.</Alert>`}
-  fullWidth
-  resizable
-/>
+<PageTabs>
+  <PageTabPanel id="overview">
 
-## Installation
+    <Demo name="alert/demos/default" />
 
-```package-install
-npx shadcn@latest add @dotui/alert
-```
+    ## Installation
 
-## Examples
+    ```npm
+    npx shadcn@latest add @dotui/alert
+    ```
 
-### Variants
+    ## Usage
 
-Use the `variant` prop to change the visual style of the alert.
+    Use alerts to display important messages that require user attention.
 
-<ComponentPreview
-  name="alert/demos/variants"
-  preview={`<Alert variant="neutral" title="This is a neutral alert" />
-<Alert variant="info" title="This is a neutral alert" />
-<Alert variant="danger" title="This is a critical alert" />
-<Alert variant="warning" title="This is a warning alert" />
-<Alert variant="success" title="This is a success alert" />`}
-  fullWidth
-  resizable
-/>
+    ```tsx
+    import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+    ```
 
-### Title
+    ```tsx
+    <Alert>
+      <AlertTitle>Alert Title</AlertTitle>
+      <AlertDescription>Alert description</AlertDescription>
+    </Alert>
+    ```
 
-Use the `title` prop to add a title to the alert.
+    ## Playground
 
-<ComponentPreview
-  name="alert/demos/title"
-  preview={`<Alert variant="warning" fill title="Your account has been suspended." />`}
-  fullWidth
-  resizable
-/>
+    Use the controls below to experiment with different alert props and see the live preview and code update.
 
-### Content
+    <InteractiveDemo
+      name="alert"
+      fallback={`<Alert>
+    <AlertTitle>Alert Title</AlertTitle>
+    <AlertDescription>This is an alert description.</AlertDescription>
 
-Pass children to the alert to add content.
+</Alert>`}
+      controls={[
+        { name: "title", type: "string", defaultValue: "Alert Title", alwaysShow: true },
+        { name: "description", type: "string", defaultValue: "This is an alert description.", alwaysShow: true },
+        "variant",
+        { name: "icon", type: "icon" },
+      ]}
+    />
 
-<ComponentPreview
-  name="alert/demos/content"
-  preview={`<Alert title="Payment Information">
-    Enter your payment method to complete your purchase.
-  </Alert>`}
-  fullWidth
-  resizable
-/>
+    ## API Reference
 
-### Custom icon
+    ### Alert
 
-Use the `icon` prop to add a custom icon to the alert. An explicit `null` value can be used to remove the default icon.
+    <Reference name="alert" />
 
-<ComponentPreview
-  name="alert/demos/custom-icon"
-  preview={`<Alert icon={<GlobeIcon />}>Hello world!</Alert>`}
-  fullWidth
-  resizable
-/>
+    ### AlertTitle
 
-### Action
+    <Reference name="alert-title" />
 
-Use the `action` prop to add an action to the alert.
+    ### AlertDescription
 
-<ComponentPreview
-  name="alert/demos/action"
-  preview={`<Alert
-    action={<Button>Upgrade</Button>}
-  >
-    You are currently on the free plan. Upgrade to unlock more features.
-  </Alert>`}
-/>
+    <Reference name="alert-description" />
 
-## Examples
+    ### AlertAction
 
-### Composition
+    <Reference name="alert-action" />
 
-If you need to customize things further, you can drop down the composition pattern.
+  </PageTabPanel>
 
-<ComponentPreview
-  name="alert/demos/composition"
-  preview={`<AlertRoot>
-    <WalletIcon />
-    <div className="flex-1">
-      <AlertTitle>Payment Information</AlertTitle>
-      <AlertContent>
-        Enter your payment method to complete your purchase.
-      </AlertContent>
-    </div>
-    <Button variant="primary" size="sm">
-      Upgrade
-    </Button>
-  </AlertRoot>`}
-/>
-
-## API Reference
-
-Alert accepts all HTML `div` element props and the following:
-
-| Prop      | Type                                                         | Default     | Description                                |
-| --------- | ------------------------------------------------------------ | ----------- | ------------------------------------------ |
-| `variant` | `'default' \| 'success' \| 'warning' \| 'danger' \| 'info' ` | `'default'` | The visual style of the alert.             |
-| `fill`    | `boolean`                                                    | `false`     | Weather the visual style should be filled. |
+  <PageTabPanel id="examples">
+    <Example name="alert/demos/default" />
+    <Example name="alert/demos/warning" />
+    <Example name="alert/demos/danger" />
+    <Example name="alert/demos/success" />
+    <Example name="alert/demos/custom-icon" />
+    <Example name="alert/demos/action" />
+  </PageTabPanel>
+</PageTabs>

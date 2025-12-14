@@ -1,7 +1,19 @@
-import React from "react";
-
+import { Button } from "@dotui/registry/ui/button";
+import { Description, Label } from "@dotui/registry/ui/field";
+import { Group } from "@dotui/registry/ui/group";
+import { Input } from "@dotui/registry/ui/input";
 import { NumberField } from "@dotui/registry/ui/number-field";
 
 export default function Demo() {
-  return <NumberField label="Width" description="Enter the desired width." />;
+  return (
+    <NumberField defaultValue={1024}>
+      <Label>Width</Label>
+      <Group>
+        <Button slot="decrement" />
+        <Input />
+        <Button slot="increment" />
+      </Group>
+      <Description>Enter the desired width.</Description>
+    </NumberField>
+  );
 }

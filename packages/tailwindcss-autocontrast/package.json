@@ -11,7 +11,6 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "test": "vitest run",
     "release": "changeset version",
     "pub:beta": "npm publish --tag beta",
     "pub:next": "npm publish --tag next",

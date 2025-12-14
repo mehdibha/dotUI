@@ -1,23 +1,13 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { docsSource } from "@/modules/docs/lib/source";
+import { docsSource } from "@/modules/docs/source";
 
-export default function HomeLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <Header items={docsSource.pageTree.children} />
-      <div className="mx-auto min-h-screen sm:grid sm:grid-cols-[20px_1fr_20px] md:grid-cols-[30px_1fr_30px]">
-        <div className="hidden diagonal-pattern sm:block" />
-        <div>
-          <div className="min-h-[70vh]">{children}</div>
-          <Footer />
-        </div>
-        <div className="hidden diagonal-pattern sm:block" />
-      </div>
-    </div>
-  );
+export default function HomeLayout({ children }: { children: React.ReactNode }) {
+	return (
+		<div className="[--header-height:calc(var(--spacing)*14)]">
+			<Header items={docsSource.pageTree.children} searchKeyboardShortcut />
+			<div className="min-h-[calc(100vh-var(--header-height))]">{children}</div>
+			<Footer />
+		</div>
+	);
 }

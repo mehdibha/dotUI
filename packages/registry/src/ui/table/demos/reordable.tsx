@@ -4,11 +4,11 @@ import { useDragAndDrop } from "react-aria-components";
 import { useListData } from "react-stately";
 
 import {
+  Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
-  TableRoot,
   TableRow,
 } from "@dotui/registry/ui/table";
 
@@ -46,7 +46,7 @@ export default function Demo() {
   });
 
   return (
-    <TableRoot aria-label="Files" dragAndDropHooks={dragAndDropHooks}>
+    <Table aria-label="Files" dragAndDropHooks={dragAndDropHooks}>
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn isRowHeader={column.isRowHeader}>
@@ -61,7 +61,7 @@ export default function Demo() {
           </TableRow>
         )}
       </TableBody>
-    </TableRoot>
+    </Table>
   );
 }
 

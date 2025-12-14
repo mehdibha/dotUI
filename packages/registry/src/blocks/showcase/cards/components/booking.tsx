@@ -13,6 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@dotui/registry/ui/card";
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
 import { TimeField } from "@dotui/registry/ui/time-field";
 
 export function Booking({ className, ...props }: React.ComponentProps<"div">) {
@@ -28,8 +30,14 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
           defaultValue={parseDate("2025-09-23")}
         />
         <div className="grid grid-cols-2 gap-2">
-          <TimeField label="Start time" className="w-auto" />
-          <TimeField label="End time" className="w-auto" />
+          <TimeField>
+            <Label>Start time</Label>
+            <Input />
+          </TimeField>
+          <TimeField>
+            <Label>End time</Label>
+            <Input />
+          </TimeField>
         </div>
       </CardContent>
       <CardFooter className="justify-end gap-2">

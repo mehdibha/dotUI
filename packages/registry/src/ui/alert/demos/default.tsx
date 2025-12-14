@@ -1,17 +1,12 @@
-import { Alert } from "@dotui/registry/ui/alert";
-import { Button } from "@dotui/registry/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
 
-export default function AlertDemo() {
+export default function Demo() {
   return (
-    <Alert
-      title="Payment information"
-      action={
-        <Button variant="primary" size="sm">
-          Upgrade
-        </Button>
-      }
-    >
-      You are currently on the free plan. Upgrade to unlock more features.
+    <Alert>
+      <AlertTitle>Payment information</AlertTitle>
+      <AlertDescription>
+        You are currently on the free plan. Upgrade to unlock more features.
+      </AlertDescription>
     </Alert>
   );
 }

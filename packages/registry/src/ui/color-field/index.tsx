@@ -1,37 +1,15 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  ColorField as _ColorField,
-  ColorFieldInput as _ColorFieldInput,
-  ColorFieldRoot as _ColorFieldRoot,
-} from "./basic";
-import type {
-  ColorFieldInputProps,
-  ColorFieldProps,
-  ColorFieldRootProps,
-} from "./basic";
+import * as Default from "./basic";
+import type { ColorFieldProps } from "./types";
 
 export const ColorField = createDynamicComponent<ColorFieldProps>(
   "color-field",
   "ColorField",
-  _ColorField,
+  Default.ColorField,
   {},
 );
 
-export const ColorFieldRoot = createDynamicComponent<ColorFieldRootProps>(
-  "color-field",
-  "ColorFieldRoot",
-  _ColorFieldRoot,
-  {},
-);
-
-export const ColorFieldInput = createDynamicComponent<ColorFieldInputProps>(
-  "color-field",
-  "ColorFieldInput",
-  _ColorFieldInput,
-  {},
-);
-
-export type { ColorFieldProps, ColorFieldRootProps, ColorFieldInputProps };
+export type { ColorFieldProps };

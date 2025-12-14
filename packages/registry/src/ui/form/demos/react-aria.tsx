@@ -3,17 +3,33 @@
 import { Form } from "react-aria-components";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Checkbox } from "@dotui/registry/ui/checkbox";
-import { Combobox } from "@dotui/registry/ui/combobox";
+import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+} from "@dotui/registry/ui/combobox";
 import { DatePicker } from "@dotui/registry/ui/date-picker";
-import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
-import { Select, SelectItem } from "@dotui/registry/ui/select";
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
+import {
+  Radio,
+  RadioGroup,
+  RadioIndicator,
+} from "@dotui/registry/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@dotui/registry/ui/select";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
   return (
     <div className="w-sm space-y-4 rounded-lg border bg-muted p-8">
-      <h1 className="text-xl font-bold">Register</h1>
+      <h1 className="font-bold text-xl">Register</h1>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
@@ -22,60 +38,58 @@ export default function Demo() {
         }}
         className="space-y-4"
       >
-        <TextField
-          name="name"
-          label="Name"
-          minLength={2}
-          isRequired
-          className="w-full"
-        />
-        <TextField
-          name="email"
-          label="Email"
-          type="email"
-          isRequired
-          className="w-full"
-        />
-        <RadioGroup
-          name="gender"
-          label="Gender"
-          isRequired
-          orientation="horizontal"
-        >
-          <Radio value="male">Male</Radio>
-          <Radio value="female">female</Radio>
-          <Radio value="other">Other</Radio>
+        <TextField name="name" minLength={2} isRequired>
+          <Label>Name</Label>
+          <Input placeholder="Name" />
+        </TextField>
+        <TextField name="email" type="email" isRequired>
+          <Label>Email</Label>
+          <Input placeholder="Email" />
+        </TextField>
+        <RadioGroup name="gender" isRequired orientation="horizontal">
+          <Label>Gender</Label>
+          <FieldGroup>
+            <Radio value="male">
+              <RadioIndicator />
+              <Label>Male</Label>
+            </Radio>
+            <Radio value="female">
+              <RadioIndicator />
+              <Label>Female</Label>
+            </Radio>
+            <Radio value="other">
+              <RadioIndicator />
+              <Label>Other</Label>
+            </Radio>
+          </FieldGroup>
         </RadioGroup>
-        <DatePicker
-          label="Birth Date"
-          name="birth-date"
-          isRequired
-          className="w-full"
-        />
-        <Combobox
-          name="language"
-          label="Preferred language"
-          items={languages}
-          isRequired
-          className="w-full"
-        >
-          {(item) => (
-            <SelectItem key={item.value} id={item.value}>
-              {item.label}
-            </SelectItem>
-          )}
+        <DatePicker name="birth-date" isRequired className="w-full">
+          <Label>Birth Date</Label>
+          <Input placeholder="Birth Date" />
+        </DatePicker>
+        <Combobox name="language" isRequired>
+          <Label>Preferred language</Label>
+          <ComboboxInput />
+          <ComboboxContent items={languages}>
+            {(item) => (
+              <ComboboxItem key={item.value} id={item.value}>
+                {item.label}
+              </ComboboxItem>
+            )}
+          </ComboboxContent>
         </Combobox>
-        <Select
-          name="referral"
-          label="How did you hear about us?"
-          isRequired
-          variant="default"
-          className="w-full"
-        >
-          <SelectItem id="linkedin">LinkedIn</SelectItem>
-          <SelectItem id="x">X</SelectItem>
+        <Select name="referral" isRequired>
+          <Label>How did you hear about us?</Label>
+          <SelectTrigger variant="default" className="w-full" />
+          <SelectContent>
+            <SelectItem id="linkedin">LinkedIn</SelectItem>
+            <SelectItem id="x">X</SelectItem>
+          </SelectContent>
         </Select>
-        <Checkbox isRequired>I agree to the terms and conditions</Checkbox>
+        <Checkbox isRequired>
+          <CheckboxIndicator />
+          <Label>I agree to the terms and conditions</Label>
+        </Checkbox>
         <div className="flex justify-end">
           <Button type="submit">Register</Button>
         </div>

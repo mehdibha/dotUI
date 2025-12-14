@@ -1,4 +1,4 @@
-import { Slider } from "@dotui/registry/ui/slider";
+import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
 export default function Demo() {
   return (
@@ -7,6 +7,8 @@ export default function Demo() {
       aria-label="Opacity"
       orientation="vertical"
       className="w-8"
-    />
+    >
+      <SliderControl />
+    </Slider>
   );
 }

@@ -2,166 +2,66 @@
 title: Switch
 description: Switches allow users to turn an individual option on or off.
 links:
-  - label: Aria docs
+  - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Switch.html
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/inputs/switch.mdx?plain=1
+wip: true
 ---
 
-<ComponentPreview
-  name="switch/demos/default"
-  preview={`<Switch>Focus mode</Switch>`}
-/>
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```package-install
-npx shadcn@latest add @dotui/switch
-```
+    <Demo name="switch/demos/default" />
 
-## Usage
+    ## Installation
 
-Use switch for communicating activation (e.g. on/off states), while checkboxes are best used for communicating selection (e.g. multiple table rows).
-Switches, unlike checkboxes, can't have an error state.
+    ```npm
+    npx shadcn@latest add @dotui/switch
+    ```
 
-```tsx
-import { Switch } from "@/components/core/switch";
+    ## Usage
 
-<Switch>Focus mode</Switch>;
-```
+    Use switch for communicating activation (e.g. on/off states), while checkboxes are best used for communicating selection (e.g. multiple table rows).
+    Switches, unlike checkboxes, can't have an error state.
 
-```tsx
-import {
-  SwitchIndicator,
-  SwitchRoot,
-  SwitchThumb,
-} from "@/components/core/switch";
+    ```tsx
+    import { Switch } from "@/components/ui/switch";
+    ```
 
-<SwitchRoot>
-  <SwitchIndicator>
-    <SwitchThumb />
-  </SwitchIndicator>
-  <span>Focus mode</span>
-</SwitchRoot>;
-```
+    ```tsx
+    <Switch>Focus mode</Switch>
+    ```
 
-## Options
+    ## Playground
 
-### Variant
+    Use the controls below to experiment with different switch props and see the live preview and code update.
 
-Use the `variant` prop to control the visual style of the switch.
+    <InteractiveDemo 
+      name="switch" 
+      controls={[
+        { name: "label", type: "string", defaultValue: "Airplane mode" },
+        "size",
+        "isDisabled",
+        "isReadOnly",
+      ]}
+    />
 
-<ComponentPreview name="switch/demos/card" />
+    ## API Reference
 
-### Size
+    ### Switch
 
-Use the `size` prop to control the size of the switch. The default variant is `"md"`.
+    <Reference name="switch" />
 
-<ComponentPreview
-  name="switch/demos/sizes"
-  preview={`<Switch size="sm" />
-<Switch size="md" />
-<Switch size="lg" />`}
-/>
+  </PageTabPanel>
 
-### Label
-
-A visual label can be provided using the component children or a hidden label using `aria-label` prop.
-
-<ComponentPreview
-  name="switch/demos/label"
-  preview={`<Switch>Focus mode</Switch>
-<Switch aria-label="Focus mode" />`}
-/>
-
-### Disabled
-
-Use the `isDisabled` prop to disable the switch.
-
-<ComponentPreview
-  name="switch/demos/disabled"
-  preview={`<Switch isDisabled>Focus Mode</Switch>`}
-/>
-
-## Uncontrolled
-
-The `defaultSelected` prop can be used to set the default state.
-
-<ComponentPreview
-  name="switch/demos/uncontrolled"
-  preview={`<Switch defaultSelected>Airplane Mode</Switch>`}
-/>
-
-## Controlled
-
-Use the `isSelected` and `onChange` props to control the value of the input.
-
-<ComponentPreview
-  name="switch/demos/controlled"
-  preview={`const [isSelected, setSelected] = React.useState(true);
-  return (
-    <Switch isSelected={isSelected} onChange={setSelected}>
-      Airplane Mode
-    </Switch>
-  )`}
-/>
-
-## Composition
-
-If you need to customize things further, you can drop down to the composition level.
-
-<ComponentPreview
-  name="switch/demos/composition"
-  preview={`<SwitchRoot>
-    <SwitchIndicator>
-      <SwitchThumb />
-    </SwitchIndicator>
-  </SwitchRoot>`}
-/>
-
-## API Reference
-
-| Prop              | Type                                                                                                  | Default | Description                                                                                               |
-| ----------------- | ----------------------------------------------------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| `size`            | `"sm" \| "md" \| "lg"`                                                                                | `"md"`  | The size of the switch.                                                                                   |
-| `inputRef`        | `MutableRefObject<HTMLInputElement>`                                                                  | -       | A ref for the HTML input element.                                                                         |
-| `defaultSelected` | `boolean`                                                                                             | -       | Whether the element should be selected (uncontrolled).                                                    |
-| `isSelected`      | `boolean`                                                                                             | -       | Whether the element should be selected (controlled).                                                      |
-| `value`           | `string`                                                                                              | -       | The value of the input element, used when submitting an HTML form.                                        |
-| `isDisabled`      | `boolean`                                                                                             | -       | Whether the input is disabled.                                                                            |
-| `isReadOnly`      | `boolean`                                                                                             | -       | Whether the input can be selected but not changed by the user.                                            |
-| `autoFocus`       | `boolean`                                                                                             | -       | Whether the element should receive focus on render.                                                       |
-| `name`            | `string`                                                                                              | -       | The name of the input element, used when submitting an HTML                                               |
-| `children`        | `ReactNode \| (values: CheckboxRenderProps & {defaultChildren: ReactNode \| undefined}) => ReactNode` | -       | The children of the component. A function may be provided to alter the children based on component state. |
-
-| Event           | Type                              | Description                                                       |
-| --------------- | --------------------------------- | ----------------------------------------------------------------- |
-| `onChange`      | `(isSelected: boolean) => void`   | Handler that is called when the Switch's selection state changes. |
-| `onFocus`       | `(e: FocusEvent<Target>) => void` | Handler that is called when the Switch receives focus.            |
-| `onBlur`        | `(e: FocusEvent<Target>) => void` | Handler that is called when the Switch loses focus.               |
-| `onFocusChange` | `(isFocused: boolean) => void`    | Handler that is called when the Switch's focus status changes.    |
-| `onKeyDown`     | `(e: KeyboardEvent) => void`      | Handler that is called when a key is pressed.                     |
-| `onKeyUp`       | `(e: KeyboardEvent) => void`      | Handler that is called when a key is released.                    |
-| `onHoverStart`  | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction starts.           |
-| `onHoverEnd`    | `(e: HoverEvent) => void`         | Handler that is called when a hover interaction ends.             |
-| `onHoverChange` | `(isHovering: boolean) => void`   | Handler that is called when the hover state changes.              |
-
-| Data attribute         | Description                                                    |
-| ---------------------- | -------------------------------------------------------------- |
-| `[data-selected]`      | Whether the switch is selected.                                |
-| `[data-hovered]`       | Whether the switch is currently hovered with a mouse.          |
-| `[data-pressed]`       | Whether the switch is currently in a pressed state.            |
-| `[data-focused]`       | Whether the switch is focused, either via a mouse or keyboard. |
-| `[data-focus-visible]` | Whether the switch is keyboard focused.                        |
-| `[data-disabled]`      | Whether the switch is disabled.                                |
-| `[data-readonly]`      | Whether the switch is read only.                               |
-
-## Accessibility
-
-### Keyboard interactions
-
-| Key             | Description                    |
-| --------------- | ------------------------------ |
-| `Space` `Enter` | Toggles the component's state. |
+  <PageTabPanel id="examples">
+    <Example name="switch/demos/default" />
+    <Example name="switch/demos/card" />
+    <Example name="switch/demos/sizes" />
+    <Example name="switch/demos/label" />
+    <Example name="switch/demos/disabled" />
+    <Example name="switch/demos/uncontrolled" />
+    <Example name="switch/demos/controlled" />
+    <Example name="switch/demos/composition" />
+  </PageTabPanel>
+</PageTabs>

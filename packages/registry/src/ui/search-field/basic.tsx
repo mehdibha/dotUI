@@ -1,70 +1,38 @@
 "use client";
 
-import * as React from "react";
 import {
   SearchField as AriaSearchField,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 
-import { SearchIcon, XIcon } from "@dotui/registry/icons";
-import { Button } from "@dotui/registry/ui/button";
-import { HelpText, Label } from "@dotui/registry/ui/field";
-import { Input, InputRoot } from "@dotui/registry/ui/input";
-import type { FieldProps } from "@dotui/registry/ui/field";
-import type { InputRootProps } from "@dotui/registry/ui/input";
+import { fieldStyles } from "@dotui/registry/ui/field";
 
-const searchFieldtyles = tv({
-  base: "group flex w-48 flex-col items-start gap-2 empty:[&_button[slot='clear']]:hidden [&_input]:[&::-webkit-search-cancel-button]:appearance-none [&_input]:[&::-webkit-search-decoration]:appearance-none",
+const searchFieldStyles = tv({
+  base: [
+    "[&.flex-1]:*:data-[slot=input]:w-full [&.w-full]:*:data-[slot=input]:w-full",
+    fieldStyles().field(),
+  ],
 });
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface SearchFieldProps
-  extends SearchFieldRootProps,
-    Pick<InputRootProps, "size">,
-    FieldProps {}
+  extends React.ComponentProps<typeof AriaSearchField> {}
 
-const SearchField = ({
-  label,
-  description,
-  errorMessage,
-  size,
-  ...props
-}: SearchFieldProps) => {
-  return (
-    <SearchFieldRoot {...props}>
-      {label && <Label>{label}</Label>}
-      <InputRoot size={size}>
-        <SearchIcon />
-        <Input />
-        <Button
-          slot="clear"
-          variant="quiet"
-          size="sm"
-          shape="circle"
-          className="size-6"
-        >
-          <XIcon />
-        </Button>
-      </InputRoot>
-      <HelpText description={description} errorMessage={errorMessage} />
-    </SearchFieldRoot>
-  );
-};
-
-interface SearchFieldRootProps
-  extends React.ComponentProps<typeof AriaSearchField> {
-  placeholder?: string;
-}
-const SearchFieldRoot = ({ className, ...props }: SearchFieldRootProps) => {
+const SearchField = ({ className, ...props }: SearchFieldProps) => {
   return (
     <AriaSearchField
+      data-slot="search-field"
       className={composeRenderProps(className, (className) =>
-        searchFieldtyles({ className }),
+        searchFieldStyles({ className }),
       )}
       {...props}
     />
   );
 };
 
-export type { SearchFieldProps, SearchFieldRootProps };
-export { SearchField, SearchFieldRoot };
+export { SearchField };
+
+export type { SearchFieldProps };

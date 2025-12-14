@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const tagGroupMeta = {
   name: "tag-group",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default tagGroupMeta;
 export const tagGroupVariants = Object.keys(
   tagGroupMeta.variants,
 ) as (keyof typeof tagGroupMeta.variants)[];
+
+export type TagGroupVariant = keyof typeof tagGroupMeta.variants;
+
+export const defaultTagGroupVariant = tagGroupMeta.defaultVariant;

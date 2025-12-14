@@ -1,11 +1,28 @@
-import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
+import {
+  Radio,
+  RadioGroup,
+  RadioIndicator,
+} from "@dotui/registry/ui/radio-group";
 
 export default function Demo() {
   return (
-    <RadioGroup defaultValue="sm" label="Size" isReadOnly>
-      <Radio value="sm">Small</Radio>
-      <Radio value="md">Medium</Radio>
-      <Radio value="lg">Large</Radio>
+    <RadioGroup defaultValue="sm" isReadOnly>
+      <Label>Size</Label>
+      <FieldGroup>
+        <Radio value="sm">
+          <RadioIndicator />
+          <Label>Small</Label>
+        </Radio>
+        <Radio value="md">
+          <RadioIndicator />
+          <Label>Medium</Label>
+        </Radio>
+        <Radio value="lg">
+          <RadioIndicator />
+          <Label>Large</Label>
+        </Radio>
+      </FieldGroup>
     </RadioGroup>
   );
 }

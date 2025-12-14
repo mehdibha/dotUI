@@ -1,23 +1,28 @@
 "use client";
 
-import React from "react";
 import {
   OverlayArrow as AriaOverlayArrow,
   Popover as AriaPopover,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type React from "react";
 
 const popoverStyles = tv({
   slots: {
     popover: [
-      "group min-w-(--trigger-width) rounded-md border bg-popover shadow-md ease-[cubic-bezier(0.165,0.84,0.44,1)]",
-      "placement-left:origin-right placement-right:origin-left placement-top:origin-bottom placement-bottom:origin-top",
-      "opacity-100 duration-150 will-change-[transform,opacity] entering:opacity-0 exiting:opacity-0",
-      "translate-0 entering:placement-left:translate-x-2 entering:placement-right:-translate-x-2 entering:placement-top:translate-y-2 entering:placement-bottom:-translate-y-2 exiting:placement-left:translate-x-2 exiting:placement-right:-translate-x-2 exiting:placement-top:translate-y-2 exiting:placement-bottom:-translate-y-2",
+      "popover z-50 min-w-(--trigger-width) max-w-72 origin-(--trigger-anchor-point) overflow-y-auto rounded-md border bg-popover shadow-md forced-color-adjust-none",
+
+      "transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:calc(var(--spacing)*0.5)]",
+
+      "entering:transform-(--origin) entering:scale-95 entering:opacity-0",
+      "exiting:transform-(--origin) exiting:scale-95 exiting:opacity-0 exiting:duration-150",
+      "placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))] placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))]",
     ],
-    arrow:
-      "fill-bg stroke-border stroke-1 group-placement-left:-rotate-90 group-placement-right:rotate-90 group-placement-bottom:rotate-180",
+    arrow: [
+      "block [&>svg]:size-2.5 [&>svg]:fill-popover",
+      "placement-left:[&>svg]:-rotate-90 placement-bottom:[&>svg]:rotate-180 placement-right:[&>svg]:rotate-90",
+    ],
   },
 });
 
@@ -29,7 +34,7 @@ interface PopoverProps extends React.ComponentProps<typeof AriaPopover> {
 function Popover({ className, showArrow = false, ...props }: PopoverProps) {
   return (
     <AriaPopover
-      data-slot="popover"
+      data-popover=""
       className={composeRenderProps(className, (className) =>
         popover({ className }),
       )}

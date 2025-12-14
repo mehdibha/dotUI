@@ -1,31 +1,42 @@
-import React from "react";
-
-import { Combobox, ComboboxItem } from "@dotui/registry/ui/combobox";
-import { ListBoxSection } from "@dotui/registry/ui/list-box";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxSection,
+  ComboboxSectionHeader,
+} from "@dotui/registry/ui/combobox";
 
 export default function Demo() {
   return (
     <Combobox aria-label="Country">
-      <ListBoxSection title="Africa">
-        <ComboboxItem>Tunisia</ComboboxItem>
-        <ComboboxItem>Algeria</ComboboxItem>
-        <ComboboxItem>Morocco</ComboboxItem>
-      </ListBoxSection>
-      <ListBoxSection title="America">
-        <ComboboxItem>Canada</ComboboxItem>
-        <ComboboxItem>United states</ComboboxItem>
-      </ListBoxSection>
-      <ListBoxSection title="Asia">
-        <ComboboxItem>India</ComboboxItem>
-        <ComboboxItem>Japan</ComboboxItem>
-        <ComboboxItem>Korea</ComboboxItem>
-      </ListBoxSection>
-      <ListBoxSection title="Europe">
-        <ComboboxItem>France</ComboboxItem>
-        <ComboboxItem>Germany</ComboboxItem>
-        <ComboboxItem>Spain</ComboboxItem>
-        <ComboboxItem>United Kingdom</ComboboxItem>
-      </ListBoxSection>
+      <ComboboxInput />
+      <ComboboxContent>
+        <ComboboxSection>
+          <ComboboxSectionHeader>Africa</ComboboxSectionHeader>
+          <ComboboxItem>Tunisia</ComboboxItem>
+          <ComboboxItem>Algeria</ComboboxItem>
+          <ComboboxItem>Morocco</ComboboxItem>
+        </ComboboxSection>
+        <ComboboxSection>
+          <ComboboxSectionHeader>America</ComboboxSectionHeader>
+          <ComboboxItem>Canada</ComboboxItem>
+          <ComboboxItem>United states</ComboboxItem>
+        </ComboboxSection>
+        <ComboboxSection>
+          <ComboboxSectionHeader>Asia</ComboboxSectionHeader>
+          <ComboboxItem>India</ComboboxItem>
+          <ComboboxItem>Japan</ComboboxItem>
+          <ComboboxItem>Korea</ComboboxItem>
+        </ComboboxSection>
+        <ComboboxSection>
+          <ComboboxSectionHeader>Europe</ComboboxSectionHeader>
+          <ComboboxItem>France</ComboboxItem>
+          <ComboboxItem>Germany</ComboboxItem>
+          <ComboboxItem>Spain</ComboboxItem>
+          <ComboboxItem>United Kingdom</ComboboxItem>
+        </ComboboxSection>
+      </ComboboxContent>
     </Combobox>
   );
 }

@@ -1,18 +1,31 @@
 import { MenuIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
-import { Menu, MenuItem, MenuRoot } from "@dotui/registry/ui/menu";
+import { Description, Label } from "@dotui/registry/ui/field";
+import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
+import { Popover } from "@dotui/registry/ui/popover";
 
 export default function Demo() {
   return (
-    <MenuRoot>
-      <Button variant="default" shape="square">
+    <Menu>
+      <Button>
         <MenuIcon />
       </Button>
-      <Menu>
-        <MenuItem label="New file" description="Create a new file" />
-        <MenuItem label="Copy link" description="Copy the file link" />
-        <MenuItem label="Edit file" description="Allows you to edit the file" />
-      </Menu>
-    </MenuRoot>
+      <Popover>
+        <MenuContent>
+          <MenuItem>
+            <Label>New file</Label>
+            <Description>Create a new file</Description>
+          </MenuItem>
+          <MenuItem>
+            <Label>Copy link</Label>
+            <Description>Copy the file link</Description>
+          </MenuItem>
+          <MenuItem>
+            <Label>Edit file</Label>
+            <Description>Allows you to edit the file</Description>
+          </MenuItem>
+        </MenuContent>
+      </Popover>
+    </Menu>
   );
 }

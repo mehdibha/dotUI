@@ -4,7 +4,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 
 import { and, eq } from "@dotui/db";
 import { createStyleSchema, style, user } from "@dotui/db/schemas";
-import { styleDefinitionSchema } from "@dotui/registry/style-system/schemas";
+import { styleDefinitionSchema } from "@dotui/registry/schemas";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
@@ -63,10 +63,11 @@ export const styleRouter = {
     .input(
       paginationSchema.extend({
         featured: z.boolean().optional(),
+        sortBy: z.enum(["newest", "oldest"]).default("newest"),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const { featured, ...pagination } = input;
+      const { featured, sortBy, ...pagination } = input;
 
       // Build where condition
       const whereCondition =
@@ -76,7 +77,9 @@ export const styleRouter = {
 
       const styles = await ctx.db.query.style.findMany({
         where: whereCondition,
-        orderBy: (s, { desc }) => [desc(s.createdAt)],
+        orderBy: (s, { desc, asc }) => [
+          sortBy === "oldest" ? asc(s.createdAt) : desc(s.createdAt),
+        ],
         limit: pagination.limit,
         offset: pagination.offset,
         with: {
@@ -153,6 +156,7 @@ export const styleRouter = {
     .query(async ({ ctx, input }) => {
       const parts = input.slug.split("/");
 
+      // biome-ignore lint/suspicious/noImplicitAnyLet: styleRecord is conditionally assigned based on slug format
       let styleRecord;
 
       if (parts.length === 2) {

@@ -35,11 +35,11 @@ function Loader({
         "--loader-size": `${size}px`,
         "--loader-speed": `${speed}s`,
         "--loader-stroke": "2",
-        "--loader-dash": String(parseFloat(strokeLength + "") * 100),
-        "--loader-gap": String(100 - parseFloat(strokeLength + "") * 100),
+        "--loader-dash": String(parseFloat(`${strokeLength}`) * 100),
+        "--loader-gap": String(100 - parseFloat(`${strokeLength}`) * 100),
       }))}
       className={cn(
-        "inline-flex size-[var(--loader-size)] shrink-0 items-center justify-center",
+        "inline-flex size-(--loader-size) shrink-0 items-center justify-center",
         className,
       )}
       aria-label="loading..."
@@ -47,7 +47,7 @@ function Loader({
       isIndeterminate
     >
       <svg
-        className="size-[var(--loader-size)] origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
+        className="size-(--loader-size) origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
         viewBox={`${centerPoint} ${centerPoint} ${size} ${size}`}
         height={size}
         width={size}

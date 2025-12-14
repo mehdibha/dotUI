@@ -1,0 +1,145 @@
+{
+	"name": "BreadcrumbItemProps",
+	"description": "A Breadcrumb represents an individual item in a Breadcrumbs list.",
+	"props": {
+		"id": {
+			"type": "Key",
+			"detailedType": "Key | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Key"
+			},
+			"description": "A unique id for the breadcrumb, which will be passed to `onAction` when the breadcrumb is pressed."
+		},
+		"children": {
+			"type": "ReactNode | (values: BreadcrumbRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "BreadcrumbRenderProps",
+									"name": "BreadcrumbRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"className": {
+			"type": "string | (values: BreadcrumbRenderProps) => string",
+			"detailedType": "string | (values: BreadcrumbRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "BreadcrumbRenderProps",
+									"name": "BreadcrumbRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+		},
+		"style": {
+			"type": "CSSProperties | (values: BreadcrumbRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: BreadcrumbRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "BreadcrumbRenderProps",
+									"name": "BreadcrumbRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		}
+	},
+	"typeLinks": {
+		"BreadcrumbRenderProps": {
+			"type": "interface",
+			"name": "BreadcrumbRenderProps",
+			"properties": {
+				"isCurrent": {
+					"type": "property",
+					"name": "isCurrent",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the breadcrumb is for the current page."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the breadcrumb is disabled."
+				}
+			}
+		}
+	}
+}

@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const fileTriggerMeta = {
   name: "file-trigger",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default fileTriggerMeta;
 export const fileTriggerVariants = Object.keys(
   fileTriggerMeta.variants,
 ) as (keyof typeof fileTriggerMeta.variants)[];
+
+export type FileTriggerVariant = keyof typeof fileTriggerMeta.variants;
+
+export const defaultFileTriggerVariant = fileTriggerMeta.defaultVariant;

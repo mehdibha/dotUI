@@ -1,14 +1,14 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import { Text as _Text } from "./basic";
-import type { TextProps } from "./basic";
+import * as Default from "./basic";
+import type { TextProps } from "./types";
 
 export const Text = createDynamicComponent<TextProps>(
   "text",
   "Text",
-  _Text,
+  Default.Text,
   {},
 );
 

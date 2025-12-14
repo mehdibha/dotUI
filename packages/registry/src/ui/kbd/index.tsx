@@ -1,11 +1,22 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import { Kbd as _Kbd, KbdStyles } from "./basic";
-import type { KbdProps } from "./basic";
+import * as Default from "./basic";
+import type { KbdGroupProps, KbdProps } from "./types";
 
-export const Kbd = createDynamicComponent<KbdProps>("kbd", "Kbd", _Kbd, {});
+export const Kbd = createDynamicComponent<KbdProps>(
+  "kbd",
+  "Kbd",
+  Default.Kbd,
+  {},
+);
 
-export { KbdStyles };
-export type { KbdProps };
+export const KbdGroup = createDynamicComponent<KbdGroupProps>(
+  "kbd",
+  "KbdGroup",
+  Default.KbdGroup,
+  {},
+);
+
+export type { KbdProps, KbdGroupProps };

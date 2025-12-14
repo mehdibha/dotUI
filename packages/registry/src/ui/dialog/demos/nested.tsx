@@ -3,7 +3,14 @@
 import React from "react";
 
 import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogRoot } from "@dotui/registry/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogHeading,
+} from "@dotui/registry/ui/dialog";
+import { FieldGroup, Label } from "@dotui/registry/ui/field";
+import { Overlay } from "@dotui/registry/ui/overlay";
 import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
 
 type Type = "modal" | "drawer" | "popover";
@@ -12,27 +19,33 @@ export default function Demo() {
   const [type, setType] = React.useState<Type>("modal");
   return (
     <div className="flex w-full items-center gap-8">
-      <DialogRoot>
+      <Dialog>
         <Button variant="default">Dialog</Button>
-        <Dialog title="Dialog" type={type} mobileType={null}>
-          <DialogRoot>
-            <Button variant="default">Nested dialog</Button>
-            <Dialog
-              title="Nested dialog"
-              type={type}
-              mobileType={null}
-            ></Dialog>
-          </DialogRoot>
-        </Dialog>
-      </DialogRoot>
-      <RadioGroup
-        label="Type"
-        value={type}
-        onChange={(value) => setType(value as Type)}
-      >
-        <Radio value="modal">Modal</Radio>
-        <Radio value="drawer">Drawer</Radio>
-        <Radio value="popover">Popover</Radio>
+        <Overlay type={type} mobileType={null}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogHeading>Dialog</DialogHeading>
+            </DialogHeader>
+            <Dialog>
+              <Button variant="default">Nested dialog</Button>
+              <Overlay type={type} mobileType={null}>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogHeading>Nested dialog</DialogHeading>
+                  </DialogHeader>
+                </DialogContent>
+              </Overlay>
+            </Dialog>
+          </DialogContent>
+        </Overlay>
+      </Dialog>
+      <RadioGroup value={type} onChange={(value) => setType(value as Type)}>
+        <Label>Type</Label>
+        <FieldGroup>
+          <Radio value="modal">Modal</Radio>
+          <Radio value="drawer">Drawer</Radio>
+          <Radio value="popover">Popover</Radio>
+        </FieldGroup>
       </RadioGroup>
     </div>
   );

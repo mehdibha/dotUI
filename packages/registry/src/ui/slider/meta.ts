@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const sliderMeta = {
   name: "slider",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -22,3 +23,7 @@ export default sliderMeta;
 export const sliderVariants = Object.keys(
   sliderMeta.variants,
 ) as (keyof typeof sliderMeta.variants)[];
+
+export type SliderVariant = keyof typeof sliderMeta.variants;
+
+export const defaultSliderVariant = sliderMeta.defaultVariant;

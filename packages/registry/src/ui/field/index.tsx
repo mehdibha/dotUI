@@ -1,55 +1,84 @@
 "use client";
 
-import React from "react";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
-
-import {
-  Description as _Description,
-  FieldError as _FieldError,
-  HelpText as _HelpText,
-  Label as _Label,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   DescriptionProps,
+  FieldContentProps,
   FieldErrorProps,
+  FieldGroupProps,
   FieldProps,
-  HelpTextProps,
+  FieldsetProps,
   LabelProps,
-} from "./basic";
+  LegendProps,
+} from "./types";
+
+export const Fieldset = createDynamicComponent<FieldsetProps>(
+  "field",
+  "Fieldset",
+  Default.Fieldset,
+  {},
+);
+
+export const Legend = createDynamicComponent<LegendProps>(
+  "field",
+  "Legend",
+  Default.Legend,
+  {},
+);
+
+export const FieldGroup = createDynamicComponent<FieldGroupProps>(
+  "field",
+  "FieldGroup",
+  Default.FieldGroup,
+  {},
+);
+
+export const Field = createDynamicComponent<FieldProps>(
+  "field",
+  "Field",
+  Default.Field,
+  {},
+);
+
+export const FieldContent = createDynamicComponent<FieldContentProps>(
+  "field",
+  "FieldContent",
+  Default.FieldContent,
+  {},
+);
 
 export const Label = createDynamicComponent<LabelProps>(
   "field",
   "Label",
-  _Label,
+  Default.Label,
   {},
 );
 
 export const Description = createDynamicComponent<DescriptionProps>(
   "field",
   "Description",
-  _Description,
+  Default.Description,
   {},
 );
 
 export const FieldError = createDynamicComponent<FieldErrorProps>(
   "field",
   "FieldError",
-  _FieldError,
+  Default.FieldError,
   {},
 );
 
-export const HelpText = createDynamicComponent<HelpTextProps>(
-  "field",
-  "HelpText",
-  _HelpText,
-  {},
-);
+export { fieldStyles } from "./basic";
 
 export type {
   LabelProps,
   DescriptionProps,
   FieldErrorProps,
-  HelpTextProps,
+  FieldGroupProps,
+  FieldContentProps,
+  FieldsetProps,
+  LegendProps,
   FieldProps,
 };

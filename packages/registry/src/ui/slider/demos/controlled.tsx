@@ -2,18 +2,18 @@
 
 import React from "react";
 
-import { Slider } from "@dotui/registry/ui/slider";
+import { Label } from "@dotui/registry/ui/field";
+import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
 export default function Demo() {
   const [value, setValue] = React.useState(50);
   return (
     <div className="flex flex-col items-center gap-4">
-      <Slider
-        label="Opacity"
-        value={value}
-        onChange={(value) => setValue(value as number)}
-      />
-      <span className="text-sm text-fg-muted">
+      <Slider value={value} onChange={(value) => setValue(value as number)}>
+        <Label>Opacity</Label>
+        <SliderControl />
+      </Slider>
+      <span className="text-fg-muted text-sm">
         Value: <span className="font-semibold text-fg">{value}</span>
       </span>
     </div>

@@ -4,35 +4,24 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./src/index.ts"
-    }
+    ".": "./src/index.ts"
   },
   "license": "MIT",
   "scripts": {
     "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsc",
-    "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@dotui/auth": "workspace:*",
     "@dotui/db": "workspace:*",
     "@dotui/registry": "workspace:*",
-    "@trpc/server": "catalog:",
-    "superjson": "2.2.2",
-    "zod": "catalog:"
+    "@trpc/server": "^11.2.0",
+    "superjson": "2.2.3",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
-    "@dotui/eslint-config": "workspace:*",
-    "@dotui/prettier-config": "workspace:*",
     "@dotui/ts-config": "workspace:*",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "typescript": "catalog:"
-  },
-  "prettier": "@dotui/prettier-config"
+    "typescript": "^5.8.3"
+  }
 }

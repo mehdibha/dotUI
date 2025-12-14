@@ -1,0 +1,82 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+	"root": false,
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": ["**", "!**/node_modules", "!**/.cache", "!**/dist", "!**/build", "!**/.turbo"]
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"lineWidth": 120,
+		"indentStyle": "tab",
+		"indentWidth": 2
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"nursery": {
+				"useSortedClasses": {
+					"fix": "safe",
+					"level": "warn",
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["cn", "clsx", "cva", "tw", "tv"]
+					}
+				}
+			},
+			"suspicious": {
+				"noExplicitAny": "warn"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "warn"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							{
+								"type": false,
+								"source": ["react", "react/**", "react-dom", "react-dom/**", "react-native", "react-native/**"]
+							},
+							":NODE:",
+							{ "type": false, "source": [":PACKAGE:", "!@dotui/**"] },
+							{ "type": true, "source": [":PACKAGE:", "!@dotui/**"] },
+							":BLANK_LINE:",
+							{ "type": false, "source": ["@dotui/**"] },
+							{ "type": true, "source": ["@dotui/**"] },
+							":BLANK_LINE:",
+							{ "type": false, "source": [":ALIAS:"] },
+							{ "type": true, "source": [":ALIAS:"] },
+							":BLANK_LINE:",
+							":ALIAS:",
+							{ "type": false, "source": ":PATH:" },
+							{ "type": true, "source": ":PATH:" }
+						]
+					}
+				}
+			}
+		}
+	}
+}

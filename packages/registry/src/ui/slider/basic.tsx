@@ -1,270 +1,184 @@
 "use client";
 
-import * as React from "react";
-import { useId } from "react-aria";
+import { use } from "react";
+import { useSlotId } from "@react-aria/utils";
 import {
   Slider as AriaSlider,
   SliderOutput as AriaSliderOutput,
+  SliderStateContext as AriaSliderStateContext,
   SliderThumb as AriaSliderThumb,
   SliderTrack as AriaSliderTrack,
+  TextContext as AriaTextContext,
   composeRenderProps,
-  SliderStateContext,
-  TextContext,
+  Provider,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import type { VariantProps } from "tailwind-variants";
 
-import { focusRing } from "@dotui/registry/lib/focus-styles";
-import { createScopedContext } from "@dotui/registry/lib/utils";
-import { Description, Label } from "@dotui/registry/ui/field";
-
-// TODO: refactor to use grid in root
+import { fieldStyles } from "@dotui/registry/ui/field";
 
 const sliderStyles = tv({
   slots: {
-    root: "group flex flex-col gap-1",
+    root: fieldStyles().field(),
     track:
-      "relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-default disabled:bg-disabled",
+      "relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-not-allowed disabled:bg-disabled",
     filler:
-      "pointer-events-none absolute rounded-full group-disabled:bg-disabled",
+      "pointer-events-none absolute rounded-full bg-accent disabled:bg-disabled",
     thumb: [
-      focusRing(),
-      "top-[50%] left-[50%] rounded-full bg-white shadow-md transition-[width,height] disabled:border disabled:border-bg disabled:bg-disabled",
+      "size-4 rounded-full bg-white shadow-md ring-primary/30 transition-[width,height,box-shadow]",
+      "dragging:size-5 dragging:ring-0 ring-accent/30 hover:ring-4",
+      "top-[50%] left-[50%]",
+      "focus-visible:focus-ring",
+      "disabled:border disabled:border-bg disabled:bg-disabled",
     ],
-    valueLabel: "text-sm text-fg-muted",
+    output: "text-fg-muted text-sm disabled:text-fg-disabled",
   },
   variants: {
-    variant: {
-      accent: {
-        filler: "bg-accent",
-      },
-      primary: {
-        filler: "bg-primary",
-      },
-    },
     orientation: {
       horizontal: {
-        root: "w-48",
-        track: "h-2 w-full",
+        track: "h-1.5 w-48",
         filler: "top-0 h-full",
       },
       vertical: {
-        root: "h-48 items-center",
-        track: "w-2 flex-1",
+        root: "items-center",
+        track: "h-48 w-2",
         filler: "bottom-0 w-full",
       },
     },
-    size: {
-      sm: {
-        thumb: "size-3 dragging:size-4",
-      },
-      md: {
-        thumb: "size-4 dragging:size-5",
-      },
-      lg: {
-        thumb: "size-5 dragging:size-6",
-      },
-    },
   },
-  compoundVariants: [
-    {
-      size: "sm",
-      orientation: "horizontal",
-      className: {
-        track: "h-1",
-      },
-    },
-    {
-      size: "sm",
-      orientation: "vertical",
-      className: {
-        track: "w-1",
-      },
-    },
-    {
-      size: "md",
-      orientation: "horizontal",
-      className: {
-        track: "h-2",
-      },
-    },
-    {
-      size: "md",
-      orientation: "vertical",
-      className: {
-        track: "w-2",
-      },
-    },
-    {
-      size: "lg",
-      orientation: "horizontal",
-      className: {
-        track: "h-3",
-      },
-    },
-    {
-      size: "lg",
-      orientation: "vertical",
-      className: {
-        track: "w-3",
-      },
-    },
-  ],
   defaultVariants: {
-    variant: "accent",
-    size: "md",
+    orientation: "horizontal",
   },
 });
 
-const { root, track, filler, thumb, valueLabel } = sliderStyles();
+const { root, track, filler, thumb, output } = sliderStyles();
 
-const [SliderProvider, useSliderContext] =
-  createScopedContext<VariantProps<typeof sliderStyles>>("SliderRoot");
+/* -----------------------------------------------------------------------------------------------*/
 
-interface SliderProps extends Omit<SliderRootProps, "children"> {
-  label?: React.ReactNode;
-  description?: React.ReactNode;
-  showValueLabel?: boolean;
-  getValueLabel?: (value: number[]) => string;
-}
-const Slider = ({
-  label,
-  description,
-  showValueLabel = true,
-  getValueLabel,
-  ...props
-}: SliderProps) => {
-  return (
-    <SliderRoot {...props}>
-      <div className="grid grid-cols-[1fr_auto] [grid-template-areas:'label_value']">
-        {label && <Label className="[grid-area:label]">{label}</Label>}
-        {showValueLabel && (
-          <SliderValueLabel className="[grid-area:value]">
-            {({ state }) =>
-              getValueLabel ? getValueLabel(state.values) : null
-            }
-          </SliderValueLabel>
-        )}
-      </div>
-      {description && <Description>{description}</Description>}
-      <SliderTrack>
-        {({ state }) => (
-          <>
-            <SliderFiller />
-            {state.values.map((_, i) => (
-              <SliderThumb key={i} index={i} />
-            ))}
-          </>
-        )}
-      </SliderTrack>
-    </SliderRoot>
-  );
-};
+interface SliderProps extends React.ComponentProps<typeof AriaSlider> {}
 
-interface SliderRootProps
-  extends React.ComponentProps<typeof AriaSlider>,
-    VariantProps<typeof sliderStyles> {}
-const SliderRoot = ({
-  children,
-  className,
-  variant,
-  size,
-  ...props
-}: SliderRootProps) => {
-  const descriptionId = useId();
+const Slider = ({ className, children, ...props }: SliderProps) => {
+  const descriptionId = useSlotId();
   return (
     <AriaSlider
-      data-slot="slider"
-      aria-describedby={descriptionId}
-      className={composeRenderProps(className, (className, { orientation }) =>
-        root({ orientation, size, className }),
+      className={composeRenderProps(className, (cn, { orientation }) =>
+        root({ className: cn, orientation }),
       )}
+      aria-describedby={descriptionId}
       {...props}
     >
-      {composeRenderProps(children, (children, { orientation }) => (
-        <>
-          <TextContext
-            value={{ slots: { description: { id: descriptionId } } }}
-          >
-            <SliderProvider
-              variant={variant}
-              orientation={orientation}
-              size={size}
-            >
-              {children}
-            </SliderProvider>
-          </TextContext>
-        </>
+      {composeRenderProps(children, (children) => (
+        <Provider
+          values={[
+            [AriaTextContext, { slot: "description", id: descriptionId }],
+          ]}
+        >
+          {children}
+        </Provider>
       ))}
     </AriaSlider>
   );
 };
 
-interface SliderTrackProps
+/* -----------------------------------------------------------------------------------------------*/
+
+interface SliderControlProps
   extends React.ComponentProps<typeof AriaSliderTrack> {}
-const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
-  const { orientation, size } = useSliderContext("SliderTrack");
+
+const SliderControl = ({ className, ...props }: SliderControlProps) => {
   return (
     <AriaSliderTrack
       data-slot="slider-track"
-      className={composeRenderProps(className, (className) =>
-        track({ orientation, size, className }),
+      className={composeRenderProps(className, (cn, { orientation }) =>
+        track({ orientation, className: cn }),
       )}
       {...props}
-    />
+    >
+      {composeRenderProps(
+        props.children,
+        (children, { state }) =>
+          children ?? (
+            <>
+              {state.values.length < 3 && <SliderFiller />}
+              {state.values.map((_, i) => (
+                <SliderThumb key={i} index={i} />
+              ))}
+            </>
+          ),
+      )}
+    </AriaSliderTrack>
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface SliderFillerProps extends React.ComponentProps<"div"> {}
+
 const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
-  const { variant, size } = useSliderContext("SliderTrack");
-  const SliderState = React.useContext(SliderStateContext);
-  if (!SliderState)
-    throw new Error("SliderFiller must be used within SliderRoot");
-  const { orientation, getThumbPercent, values } = SliderState;
-  const dimensionStyles = getFillerDimensions(
-    values,
-    orientation,
-    getThumbPercent,
-  );
+  const { orientation, getThumbPercent, values, isDisabled } = use(
+    AriaSliderStateContext,
+  )!;
+
+  const getFillerDimensions = (): React.CSSProperties => {
+    if (values.length === 1 && orientation === "horizontal")
+      return { width: `${getThumbPercent(0) * 100}%` };
+
+    if (values.length === 1 && orientation === "vertical")
+      return { height: `${getThumbPercent(0) * 100}%` };
+
+    if (orientation === "horizontal")
+      return {
+        left: `${getThumbPercent(0) * 100}%`,
+        width: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
+      };
+
+    return {
+      bottom: `${getThumbPercent(0) * 100}%`,
+      height: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
+    };
+  };
 
   return (
     <div
       data-slot="slider-filler"
-      className={filler({ variant, orientation, size, className })}
-      style={{ ...style, ...dimensionStyles }}
+      data-rac=""
+      data-disabled={isDisabled || undefined}
+      className={filler({ orientation, className })}
+      style={{ ...style, ...getFillerDimensions() }}
       {...props}
     />
   );
 };
 
+/* -----------------------------------------------------------------------------------------------*/
+
 interface SliderThumbProps
   extends React.ComponentProps<typeof AriaSliderThumb> {}
+
 const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
-  const { orientation, size } = useSliderContext("SliderThumb");
   return (
     <AriaSliderThumb
       data-slot="slider-thumb"
-      className={composeRenderProps(className, (className) =>
-        thumb({ orientation, size, className }),
+      className={composeRenderProps(
+        className,
+        (className, { state: { orientation } }) =>
+          thumb({ orientation, className }),
       )}
       {...props}
     />
   );
 };
 
-interface SliderValueLabelProps
+/* -----------------------------------------------------------------------------------------------*/
+
+interface SliderOutputProps
   extends React.ComponentProps<typeof AriaSliderOutput> {}
-const SliderValueLabel = ({
-  children,
-  className,
-  ...props
-}: SliderValueLabelProps) => {
+
+const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
   return (
     <AriaSliderOutput
-      data-slot="slider-value-label"
+      data-slot="slider-output"
       className={composeRenderProps(className, (className) =>
-        valueLabel({ className }),
+        output({ className }),
       )}
       {...props}
     >
@@ -278,36 +192,14 @@ const SliderValueLabel = ({
   );
 };
 
-const getFillerDimensions = (
-  values: number[],
-  orientation: "horizontal" | "vertical",
-  getThumbPercent: (index: number) => number,
-): React.CSSProperties => {
-  if (values.length === 1 && orientation === "horizontal")
-    return { width: `${getThumbPercent(0) * 100}%` };
+/* -----------------------------------------------------------------------------------------------*/
 
-  if (values.length === 1 && orientation === "vertical")
-    return { height: `${getThumbPercent(0) * 100}%` };
+export { Slider, SliderControl, SliderFiller, SliderThumb, SliderOutput };
 
-  if (orientation === "horizontal")
-    return {
-      left: `${getThumbPercent(0) * 100}%`,
-      width: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
-    };
-
-  return {
-    bottom: `${getThumbPercent(0) * 100}%`,
-    height: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
-  };
-};
-
-export type { SliderProps };
-
-export {
-  Slider,
-  SliderRoot,
-  SliderTrack,
-  SliderFiller,
-  SliderThumb,
-  SliderValueLabel,
+export type {
+  SliderProps,
+  SliderControlProps,
+  SliderFillerProps,
+  SliderThumbProps,
+  SliderOutputProps,
 };

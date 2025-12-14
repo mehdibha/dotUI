@@ -1,9 +1,14 @@
 "use client";
 
-import React from "react";
-
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
-  return <TextField label="Email" isReadOnly value="hello@copyui.dev" />;
+  return (
+    <TextField isReadOnly defaultValue="hello@copyui.dev">
+      <Label>Email</Label>
+      <Input />
+    </TextField>
+  );
 }

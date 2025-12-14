@@ -1,7 +1,8 @@
 // ORIGINALLY FROM CLOUDFLARE WRANGLER:
 // https://github.com/cloudflare/wrangler2/blob/main/.github/version-script.js
-import fs from "fs";
-import { exec } from "child_process";
+
+import { exec } from "node:child_process";
+import fs from "node:fs";
 
 const pkgJsonPath = "packages/tailwindcss-autocontrast/package.json";
 try {
@@ -13,7 +14,7 @@ try {
     }
     const [major, minor, patch] = pkg.version.split(".").map(Number);
     pkg.version = `${major}.${minor}.${patch + 1}-next.${stdout.trim()}`;
-    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, "\t") + "\n");
+    fs.writeFileSync(pkgJsonPath, `${JSON.stringify(pkg, null, "\t")}\n`);
   });
 } catch (error) {
   console.error(error);

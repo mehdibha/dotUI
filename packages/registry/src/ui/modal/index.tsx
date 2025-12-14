@@ -1,10 +1,15 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import { Modal as _Modal } from "./basic";
-import type { ModalProps } from "./basic";
+import * as Default from "./basic";
+import type { ModalProps } from "./types";
 
-export const Modal = createDynamicComponent("modal", "Modal", _Modal, {});
+export const Modal = createDynamicComponent(
+  "modal",
+  "Modal",
+  Default.Modal,
+  {},
+);
 
 export type { ModalProps };

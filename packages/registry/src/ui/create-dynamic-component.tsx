@@ -1,0 +1,213 @@
+import React from "react";
+import { AlertCircleIcon } from "lucide-react";
+import { ErrorBoundary } from "react-error-boundary";
+
+import { useVariant, VariantsProvider } from "@dotui/style-system/providers";
+import { DEFAULT_VARIANTS_DEFINITION } from "@dotui/style-system/utils";
+import type { Variants } from "@dotui/style-system/types";
+
+import { cn } from "../lib/utils";
+
+// Type helper to exclude the default variant from the variants map keys
+type OmitDefault<T extends string, Default extends string> = T extends Default
+  ? never
+  : T;
+
+// Utility to create a properly typed variants object
+export type VariantsMap<
+  Props,
+  VariantKey extends string,
+  DefaultVariant extends string = "basic",
+> = Record<
+  OmitDefault<VariantKey, DefaultVariant>,
+  React.LazyExoticComponent<React.ComponentType<Props>>
+>;
+
+/**
+ * Helper to safely extract className from props
+ * Returns undefined if className doesn't exist or isn't a string
+ */
+function getClassName(props: Record<string, unknown>): string | undefined {
+  if ("className" in props && typeof props.className === "string") {
+    return props.className;
+  }
+  return undefined;
+}
+
+export interface CreateDynamicComponentOptions {
+  defaultVariant?: string;
+  disableSkeleton?: boolean;
+}
+
+export const createDynamicComponent = <
+  Props extends Record<string, any> = Record<string, unknown>,
+  VariantKey extends string = string,
+  DefaultVariant extends string = "basic",
+>(
+  componentName: keyof Variants,
+  slotName: string,
+  DefaultComponent: React.FC<Props>,
+  variants: VariantsMap<Props, VariantKey, DefaultVariant>,
+  options?: CreateDynamicComponentOptions,
+): React.FC<Props> => {
+  const { defaultVariant = "basic", disableSkeleton } = options ?? {};
+  const Component = (props: Props) => {
+    const rawVariantName = useVariant(componentName);
+    const disableSuspense = useDisableSuspense();
+
+    // If the variant is not defined, we are not in a preview
+    if (!rawVariantName) {
+      return <DefaultComponent {...props} />;
+    }
+
+    // After null check, variantName is guaranteed to be a string enum value
+    // TypeScript infers complex union types from Variants, so we need to help it understand
+    // that this is just a string value at runtime
+    const variantName = rawVariantName as string;
+
+    // Extract className safely without type assertions
+    const className = getClassName(props);
+
+    // Type-safe variant lookup - we need to cast to OmitDefault<VariantKey, DefaultVariant>
+    // since the variants map excludes the default variant
+    const variantKey = variantName as OmitDefault<VariantKey, DefaultVariant>;
+    const LazyComponent = variants[variantKey];
+
+    // If LazyComponent is not defined, it's because the requested variant is the default variant
+    // or the variant doesn't exist in the map (fallback to default)
+    if (!LazyComponent || variantName === defaultVariant) {
+      if (disableSuspense) {
+        return <DefaultComponent {...props} />;
+      }
+
+      return (
+        <ErrorBoundary
+          fallback={
+            <ErrorFallback
+              componentName={String(componentName)}
+              slotName={slotName}
+              variantName={variantName}
+            />
+          }
+        >
+          <React.Suspense
+            fallback={
+              <Skeleton show={!disableSkeleton} className={className}>
+                <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
+                  <DefaultComponent {...props} />
+                </VariantsProvider>
+              </Skeleton>
+            }
+          >
+            <DisableSuspense>
+              <DefaultComponent {...props} />
+            </DisableSuspense>
+          </React.Suspense>
+        </ErrorBoundary>
+      );
+    }
+
+    // Render the lazy component
+    // LazyExoticComponent<ComponentType<Props>> is compatible with ComponentType<Props>
+    // but TypeScript needs explicit casting to understand the relationship
+    const renderLazy = () => {
+      const Component = LazyComponent as React.ComponentType<Props>;
+      return <Component {...props} />;
+    };
+
+    if (disableSuspense) {
+      return renderLazy();
+    }
+
+    return (
+      <ErrorBoundary
+        fallback={
+          <ErrorFallback
+            componentName={String(componentName)}
+            slotName={slotName}
+            variantName={variantName}
+          />
+        }
+      >
+        <React.Suspense
+          fallback={
+            <Skeleton className={className}>
+              <VariantsProvider variants={DEFAULT_VARIANTS_DEFINITION}>
+                <DefaultComponent {...props} />
+              </VariantsProvider>
+            </Skeleton>
+          }
+        >
+          <DisableSuspense>{renderLazy()}</DisableSuspense>
+        </React.Suspense>
+      </ErrorBoundary>
+    );
+  };
+  Component.displayName = slotName;
+
+  return Component;
+};
+
+const DisableSuspenseContext = React.createContext<boolean>(false);
+
+export const DisableSuspense = ({
+  children,
+}: {
+  children?: React.ReactNode;
+}) => {
+  return <DisableSuspenseContext value>{children}</DisableSuspenseContext>;
+};
+
+const useDisableSuspense = () => {
+  return React.useContext(DisableSuspenseContext);
+};
+
+export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
+  show?: boolean;
+};
+
+function Skeleton({ className, show = true, ...props }: SkeletonProps) {
+  if (!show) return props.children;
+  return (
+    <div
+      className={cn(
+        "relative block h-6 animate-pulse rounded-md bg-muted",
+        props.children && "h-auto text-transparent *:invisible",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function ErrorFallback({
+  componentName,
+  slotName,
+  variantName,
+}: {
+  componentName: string;
+  slotName: string;
+  variantName: string;
+}) {
+  return (
+    <div className="flex items-center justify-center rounded-md border border-border-danger p-4">
+      <div className="flex items-start gap-2 rounded-md border-border-danger bg-danger-muted p-2 text-fg-danger text-sm">
+        <AlertCircleIcon />
+        <div>
+          <span className="font-bold">Error rendering dynamic component:</span>
+          <ul>
+            <li>
+              <span className="font-bold">component:</span> {componentName}
+            </li>
+            <li>
+              <span className="font-bold">slot:</span> {slotName}
+            </li>
+            <li>
+              <span className="font-bold">variant:</span> {variantName}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}

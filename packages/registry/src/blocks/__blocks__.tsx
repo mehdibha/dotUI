@@ -51,4 +51,18 @@ export const Index: Record<
       return { default: mod.default || mod[exportName] };
     }),
   },
+  animation: {
+    files: ["blocks/showcase/animation/components/animation.tsx"],
+    component: React.lazy(async () => {
+      const mod = await import(
+        "@dotui/registry/blocks/showcase/animation/components/animation"
+      );
+      const exportName =
+        Object.keys(mod).find(
+          (key) =>
+            typeof mod[key] === "function" || typeof mod[key] === "object",
+        ) || item.name;
+      return { default: mod.default || mod[exportName] };
+    }),
+  },
 };

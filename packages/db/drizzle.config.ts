@@ -1,4 +1,4 @@
-import { Config } from "drizzle-kit";
+import type { Config } from "drizzle-kit";
 
 if (!process.env.POSTGRES_URL) {
   throw new Error("Missing POSTGRES_URL");

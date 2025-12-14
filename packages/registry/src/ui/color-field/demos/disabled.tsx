@@ -3,6 +3,7 @@
 import { parseColor } from "react-aria-components";
 
 import { ColorField } from "@dotui/registry/ui/color-field";
+import { Input } from "@dotui/registry/ui/input";
 
 export default function Demo() {
   return (
@@ -10,6 +11,8 @@ export default function Demo() {
       aria-label="Disabled color"
       value={parseColor("rgb(222,70,58)")}
       isDisabled
-    />
+    >
+      <Input />
+    </ColorField>
   );
 }

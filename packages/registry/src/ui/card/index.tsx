@@ -1,59 +1,73 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  Card as _Card,
-  CardAction as _CardAction,
-  CardContent as _CardContent,
-  CardDescription as _CardDescription,
-  CardFooter as _CardFooter,
-  CardHeader as _CardHeader,
-  CardTitle as _CardTitle,
-} from "./basic";
+import * as Default from "./basic";
+import type {
+  CardActionProps,
+  CardContentProps,
+  CardDescriptionProps,
+  CardFooterProps,
+  CardHeaderProps,
+  CardProps,
+  CardTitleProps,
+} from "./types";
 
-export const Card = createDynamicComponent<React.ComponentProps<"div">>(
+export const Card = createDynamicComponent<CardProps>(
   "card",
   "Card",
-  _Card,
+  Default.Card,
   {},
 );
 
-export const CardHeader = createDynamicComponent<React.ComponentProps<"div">>(
+export const CardHeader = createDynamicComponent<CardHeaderProps>(
   "card",
   "CardHeader",
-  _CardHeader,
+  Default.CardHeader,
   {},
 );
 
-export const CardTitle = createDynamicComponent<React.ComponentProps<"div">>(
+export const CardTitle = createDynamicComponent<CardTitleProps>(
   "card",
   "CardTitle",
-  _CardTitle,
+  Default.CardTitle,
   {},
 );
 
-export const CardDescription = createDynamicComponent<
-  React.ComponentProps<"div">
->("card", "CardDescription", _CardDescription, {});
+export const CardDescription = createDynamicComponent<CardDescriptionProps>(
+  "card",
+  "CardDescription",
+  Default.CardDescription,
+  {},
+);
 
-export const CardContent = createDynamicComponent<React.ComponentProps<"div">>(
+export const CardContent = createDynamicComponent<CardContentProps>(
   "card",
   "CardContent",
-  _CardContent,
+  Default.CardContent,
   {},
 );
 
-export const CardFooter = createDynamicComponent<React.ComponentProps<"div">>(
+export const CardFooter = createDynamicComponent<CardFooterProps>(
   "card",
   "CardFooter",
-  _CardFooter,
+  Default.CardFooter,
   {},
 );
 
-export const CardAction = createDynamicComponent<React.ComponentProps<"div">>(
+export const CardAction = createDynamicComponent<CardActionProps>(
   "card",
   "CardAction",
-  _CardAction,
+  Default.CardAction,
   {},
 );
+
+export type {
+  CardProps,
+  CardHeaderProps,
+  CardTitleProps,
+  CardDescriptionProps,
+  CardActionProps,
+  CardContentProps,
+  CardFooterProps,
+};

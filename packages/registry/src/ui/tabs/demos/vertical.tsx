@@ -2,7 +2,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 export default function Demo() {
   return (
-    <Tabs orientation="vertical" className="[&_[role=tabpanel]]:w-36">
+    <Tabs orientation="vertical" className="**:[role=tabpanel]:w-36">
       <TabList>
         <Tab id="overview">Overview</Tab>
         <Tab id="usage">Usage</Tab>

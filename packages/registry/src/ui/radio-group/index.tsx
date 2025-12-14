@@ -1,61 +1,29 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  Radio as _Radio,
-  RadioGroup as _RadioGroup,
-  RadioGroupRoot as _RadioGroupRoot,
-  RadioIndicator as _RadioIndicator,
-  RadioRoot as _RadioRoot,
-} from "./basic";
-import type {
-  RadioGroupProps,
-  RadioGroupRootProps,
-  RadioIndicatorProps,
-  RadioProps,
-  RadioRootProps,
-} from "./basic";
+import * as Default from "./basic";
+import type { RadioGroupProps, RadioIndicatorProps, RadioProps } from "./types";
 
 export const Radio = createDynamicComponent<RadioProps>(
   "radio-group",
   "Radio",
-  _Radio,
-  {},
-);
-
-export const RadioRoot = createDynamicComponent<RadioRootProps>(
-  "radio-group",
-  "RadioRoot",
-  _RadioRoot,
+  Default.Radio,
   {},
 );
 
 export const RadioIndicator = createDynamicComponent<RadioIndicatorProps>(
   "radio-group",
   "RadioIndicator",
-  _RadioIndicator,
+  Default.RadioIndicator,
   {},
 );
 
 export const RadioGroup = createDynamicComponent<RadioGroupProps>(
   "radio-group",
   "RadioGroup",
-  _RadioGroup,
+  Default.RadioGroup,
   {},
 );
 
-export const RadioGroupRoot = createDynamicComponent<RadioGroupRootProps>(
-  "radio-group",
-  "RadioGroupRoot",
-  _RadioGroupRoot,
-  {},
-);
-
-export type {
-  RadioProps,
-  RadioRootProps,
-  RadioIndicatorProps,
-  RadioGroupProps,
-  RadioGroupRootProps,
-};
+export type { RadioProps, RadioIndicatorProps, RadioGroupProps };

@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const dropZoneMeta = {
   name: "drop-zone",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -20,3 +21,7 @@ export default dropZoneMeta;
 export const dropZoneVariants = Object.keys(
   dropZoneMeta.variants,
 ) as (keyof typeof dropZoneMeta.variants)[];
+
+export type DropZoneVariant = keyof typeof dropZoneMeta.variants;
+
+export const defaultDropZoneVariant = dropZoneMeta.defaultVariant;

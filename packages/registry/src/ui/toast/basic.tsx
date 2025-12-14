@@ -11,22 +11,18 @@ import {
 import { tv } from "tailwind-variants";
 import type { ToastProps as AriaToastProps } from "react-aria-components";
 
-import { XIcon } from "@dotui/registry/icons";
-import { focusRing } from "@dotui/registry/lib/focus-styles";
-import { Button } from "@dotui/registry/ui/button";
-
 const toastStyles = tv({
   slots: {
     region: [
-      focusRing(),
+      "focus-reset focus-visible:focus-ring",
       "fixed right-4 bottom-4 z-50 flex max-h-[calc(100vh-2rem)] flex-col gap-2 overflow-hidden outline-none",
     ],
     toast: "relative w-[min(380px,90vw)] rounded-lg border bg-bg p-4 shadow-lg",
     content: "flex flex-col gap-1",
     title: "text-base",
-    description: "text-sm text-fg-muted",
+    description: "text-fg-muted text-sm",
     actions: "",
-    close: "absolute top-3 right-3 size-7",
+    close: "absolute top-3.5 right-3 size-7",
   },
   variants: {
     variant: {
@@ -54,8 +50,7 @@ const toastStyles = tv({
   },
 });
 
-const { region, toast, content, actions, close, title, description } =
-  toastStyles();
+const { region, toast, content, actions, title, description } = toastStyles();
 
 interface Toast {
   title: string;
@@ -68,67 +63,46 @@ const queue = new AriaToastQueue<Toast>();
 const Toaster = () => {
   return (
     <AriaToastRegion queue={queue} className={region()}>
-      {({ toast: t }) => (
-        <AriaToast toast={t} className={toast({ variant: t.content.variant })}>
-          <AriaToastContent className={content()}>
-            <Text
-              slot="title"
-              className={title({ variant: t.content.variant })}
-            >
-              {t.content.title}
-            </Text>
-            {t.content.description && (
-              <Text slot="description" className={description()}>
-                {t.content.description}
-              </Text>
-            )}
-          </AriaToastContent>
-          <Button
-            slot="close"
-            variant="quiet"
-            shape="square"
-            size="sm"
-            aria-label="Close"
-            className={close()}
-          >
-            <XIcon />
-          </Button>
-        </AriaToast>
-      )}
+      {({ toast }) => <Toast toast={toast} />}
     </AriaToastRegion>
   );
 };
 
-interface ToastProps extends AriaToastProps<Toast>, Toast {}
-function Toast({
-  title: t,
-  description: d,
-  className,
-  variant,
-  ...props
-}: ToastProps) {
+interface ToastProps extends AriaToastProps<Toast> {}
+
+function Toast({ className, ...props }: ToastProps) {
   return (
     <AriaToast
       className={composeRenderProps(className, (className) =>
-        toast({ className, variant: variant ?? "neutral" }),
+        toast({ className, variant: props.toast.content.variant }),
       )}
       {...props}
     >
-      <AriaToastContent className={content()}>
-        <Text slot="title" className={title()}>
-          {t}
-        </Text>
-        {d ? (
-          <Text slot="description" className={description()}>
-            {d}
-          </Text>
-        ) : null}
-      </AriaToastContent>
-      <div className={actions()}>
-        <Button slot="close" className={close()} aria-label="Close">
-          ×
-        </Button>
-      </div>
+      {({ toast }) => (
+        <>
+          <AriaToastContent className={content()}>
+            <Text slot="title" className={title()}>
+              {toast.content.title}
+            </Text>
+            {toast.content.description ? (
+              <Text slot="description" className={description()}>
+                {toast.content.description}
+              </Text>
+            ) : null}
+          </AriaToastContent>
+          <div className={actions()}>
+            {/* <Button
+              variant="quiet"
+              size="sm"
+              slot="close"
+              className={close()}
+              aria-label="Close"
+            >
+              <XIcon className="size-4" />
+            </Button> */}
+          </div>
+        </>
+      )}
     </AriaToast>
   );
 }

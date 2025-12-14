@@ -1,23 +1,21 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import {
-  ListBox as _ListBox,
-  ListBoxItem as _ListBoxItem,
-  ListBoxSection as _ListBoxSection,
-} from "./basic";
+import * as Default from "./basic";
 import type {
   ListBoxItemProps,
   ListBoxProps,
+  ListBoxSectionHeaderProps,
   ListBoxSectionProps,
-} from "./basic";
+  ListBoxVirtualizerProps,
+} from "./types";
 
 export const ListBox = <T extends object = object>(props: ListBoxProps<T>) => {
   const Component = createDynamicComponent<ListBoxProps<T>>(
     "list-box",
     "ListBox",
-    _ListBox,
+    Default.ListBox,
     {},
   );
 
@@ -30,7 +28,7 @@ export const ListBoxItem = <T extends object = object>(
   const Component = createDynamicComponent<ListBoxItemProps<T>>(
     "list-box",
     "ListBoxItem",
-    _ListBoxItem,
+    Default.ListBoxItem,
     {},
   );
 
@@ -43,11 +41,38 @@ export const ListBoxSection = <T extends object = object>(
   const Component = createDynamicComponent<ListBoxSectionProps<T>>(
     "list-box",
     "ListBoxSection",
-    _ListBoxSection,
+    Default.ListBoxSection,
     {},
   );
 
   return <Component {...props} />;
 };
 
-export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps };
+export const ListBoxSectionHeader =
+  createDynamicComponent<ListBoxSectionHeaderProps>(
+    "list-box",
+    "ListBoxSectionHeader",
+    Default.ListBoxSectionHeader,
+    {},
+  );
+
+export const ListBoxVirtualizer = <T extends object = object>(
+  props: ListBoxVirtualizerProps<T>,
+) => {
+  const Component = createDynamicComponent<ListBoxVirtualizerProps<T>>(
+    "list-box",
+    "ListBoxVirtualizer",
+    Default.ListBoxVirtualizer,
+    {},
+  );
+
+  return <Component {...props} />;
+};
+
+export type {
+  ListBoxProps,
+  ListBoxItemProps,
+  ListBoxSectionProps,
+  ListBoxSectionHeaderProps,
+  ListBoxVirtualizerProps,
+};

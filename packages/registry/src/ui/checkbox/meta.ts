@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const checkboxMeta = {
   name: "checkbox",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default checkboxMeta;
 export const checkboxVariants = Object.keys(
   checkboxMeta.variants,
 ) as (keyof typeof checkboxMeta.variants)[];
+
+export type CheckboxVariant = keyof typeof checkboxMeta.variants;
+
+export const defaultCheckboxVariant = checkboxMeta.defaultVariant;

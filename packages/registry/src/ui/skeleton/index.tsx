@@ -1,15 +1,10 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import * as Default from "./basic";
+import type { SkeletonProps, SkeletonProviderProps } from "./types";
 
-import { Skeleton as _Skeleton } from "./basic";
-import type { SkeletonProps } from "./basic";
+export const Skeleton = Default.Skeleton;
+export const SkeletonProvider = Default.SkeletonProvider;
+export const useSkeletonText = Default.useSkeletonText;
 
-export const Skeleton = createDynamicComponent<SkeletonProps>(
-  "skeleton",
-  "Skeleton",
-  _Skeleton,
-  {},
-);
-
-export type { SkeletonProps };
+export type { SkeletonProps, SkeletonProviderProps };

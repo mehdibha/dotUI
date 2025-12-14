@@ -1,5 +1,5 @@
 {
-  "title": "Docs",
-  "root": true,
-  "pages": ["(root)", "components"]
+	"title": "Docs",
+	"root": true,
+	"pages": ["(root)", "components"]
 }

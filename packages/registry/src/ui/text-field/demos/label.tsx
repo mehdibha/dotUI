@@ -1,10 +1,18 @@
+import { Label } from "@dotui/registry/ui/field";
+import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
   return (
     <div className="space-y-4">
-      <TextField label="Email" placeholder="Visible label" />
-      <TextField aria-label="Email" placeholder="Hidden label" />
+      <TextField>
+        <Label>Email</Label>
+        <Input />
+      </TextField>
+      <TextField>
+        <Label>Email</Label>
+        <Input />
+      </TextField>
     </div>
   );
 }

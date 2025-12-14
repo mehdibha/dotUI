@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { Input } from "@dotui/registry/ui/input";
 import { SearchField } from "@dotui/registry/ui/search-field";
 
 export default function Demo() {
@@ -14,8 +15,10 @@ export default function Demo() {
         aria-label="Search"
         value={inputValue}
         onChange={setInputValue}
-      />
-      <p className="text-sm text-fg-muted">
+      >
+        <Input />
+      </SearchField>
+      <p className="text-fg-muted text-sm">
         mirrored search text: {inputValue}
       </p>
     </div>

@@ -4,58 +4,57 @@ import React from "react";
 
 import { BoldIcon, ItalicIcon } from "@dotui/registry/icons";
 import { Button } from "@dotui/registry/ui/button";
-import { TextArea } from "@dotui/registry/ui/text-area";
+import { Label } from "@dotui/registry/ui/field";
+import { Group } from "@dotui/registry/ui/group";
+import { InputAddon, InputGroup, TextArea } from "@dotui/registry/ui/input";
+import { TextField } from "@dotui/registry/ui/text-field";
 import { ToggleButton } from "@dotui/registry/ui/toggle-button";
+import { ToggleButtonGroup } from "@dotui/registry/ui/toggle-button-group";
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState("");
+  const insertEmoji = (emoji: string) => {
+    setInputValue(`${inputValue}${emoji}`);
+  };
   return (
-    <TextArea
-      label="Comment"
-      placeholder="type something here"
-      value={inputValue}
-      onChange={setInputValue}
-      prefix={
-        <div className="flex items-center gap-1">
-          <Button
-            variant="quiet"
-            shape="square"
-            size="sm"
-            className="size-7"
-            onPress={() => {
-              setInputValue(`${inputValue}👍`);
-            }}
-          >
-            👍
-          </Button>
-          <Button
-            variant="quiet"
-            shape="square"
-            size="sm"
-            className="size-7"
-            onPress={() => {
-              setInputValue(`${inputValue}❤️`);
-            }}
-          >
-            ❤️
-          </Button>
-        </div>
-      }
-      suffix={
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-0.5">
-            <ToggleButton size="sm" className="size-7">
-              <BoldIcon />
-            </ToggleButton>
-            <ToggleButton size="sm" className="size-7">
-              <ItalicIcon />
-            </ToggleButton>
-          </div>
-          <Button variant="primary" size="sm" className="h-7">
-            Comment
-          </Button>
-        </div>
-      }
-    />
+    <TextField value={inputValue} onChange={setInputValue}>
+      <Label>Comment</Label>
+      <InputGroup>
+        <InputAddon>
+          <Group>
+            <Button
+              variant="quiet"
+              onPress={() => {
+                insertEmoji("👍");
+              }}
+            >
+              👍
+            </Button>
+            <Button
+              variant="quiet"
+              onPress={() => {
+                insertEmoji("❤️");
+              }}
+            >
+              ❤️
+            </Button>
+          </Group>
+        </InputAddon>
+        <TextArea placeholder="type something here" />
+        <InputAddon>
+          <Group className="justify-between">
+            <ToggleButtonGroup>
+              <ToggleButton>
+                <BoldIcon />
+              </ToggleButton>
+              <ToggleButton>
+                <ItalicIcon />
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <Button variant="primary">Comment</Button>
+          </Group>
+        </InputAddon>
+      </InputGroup>
+    </TextField>
   );
 }

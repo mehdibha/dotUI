@@ -1,16 +1,16 @@
 "use client";
 
 import {
+  Table,
   TableBody,
   TableColumn,
   TableHeader,
-  TableRoot,
 } from "@dotui/registry/ui/table";
 
 export default function Demo() {
   return (
     <div className="flex gap-8">
-      <TableRoot aria-label="Files">
+      <Table aria-label="Files">
         <TableHeader>
           <TableColumn id="name" isRowHeader>
             Name
@@ -19,9 +19,9 @@ export default function Demo() {
           <TableColumn id="date">Date Modified</TableColumn>
         </TableHeader>
         <TableBody>{[]}</TableBody>
-      </TableRoot>
+      </Table>
 
-      <TableRoot aria-label="Files">
+      <Table aria-label="Files">
         <TableHeader>
           <TableColumn id="name" isRowHeader>
             Name
@@ -30,7 +30,7 @@ export default function Demo() {
           <TableColumn id="date">Date Modified</TableColumn>
         </TableHeader>
         <TableBody renderEmptyState={() => "Nothing here."}>{[]}</TableBody>
-      </TableRoot>
+      </Table>
     </div>
   );
 }

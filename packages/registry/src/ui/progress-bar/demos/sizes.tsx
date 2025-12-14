@@ -1,8 +1,10 @@
 "use client";
 
-import * as React from "react";
-
-import { ProgressBar } from "@dotui/registry/ui/progress-bar";
+import { Label } from "@dotui/registry/ui/field";
+import {
+  ProgressBar,
+  ProgressBarControl,
+} from "@dotui/registry/ui/progress-bar";
 
 const sizes = ["sm", "md", "lg"] as const;
 
@@ -14,9 +16,10 @@ export default function Demo() {
           key={size}
           aria-label={`Progress size: ${size}`}
           value={75}
-          size={size}
-          label={size}
-        />
+        >
+          <Label>{size}</Label>
+          <ProgressBarControl size={size} />
+        </ProgressBar>
       ))}
     </div>
   );

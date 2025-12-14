@@ -1,15 +1,14 @@
 "use client";
 
-import * as React from "react";
 import {
   ProgressBar as AriaProgress,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
-import { createScopedContext } from "@dotui/registry/lib/utils";
-import { Description, Label } from "@dotui/registry/ui/field";
+import { createScopedContext } from "@dotui/registry/lib/context";
 
 const progressStyles = tv({
   slots: {
@@ -17,7 +16,7 @@ const progressStyles = tv({
     indicator: "relative h-2.5 w-full overflow-hidden rounded-full",
     filler: [
       "h-full w-full min-w-14 flex-1 origin-left bg-fg transition-transform",
-      "indeterminate:animate-progress-indeterminate indeterminate:[mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[mask-size:200%] indeterminate:[-webkit-mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[-webkit-mask-size:200%]",
+      "indeterminate:mask-[linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:mask-size-[200%] indeterminate:animate-progress-indeterminate indeterminate:[-webkit-mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[-webkit-mask-size:200%]",
     ],
     valueLabel: "text-sm",
   },
@@ -67,74 +66,30 @@ const { root, indicator, filler, valueLabel } = progressStyles();
 const [ProgressBarProvider, useProgressBarContext] = createScopedContext<
   VariantProps<typeof progressStyles> & {
     isIndeterminate: boolean;
-    duration: `${number}s` | `${number}ms`;
     valueText?: string;
     percentage?: number;
   }
 >("ProgressRoot");
 
-interface ProgressBarProps extends ProgressBarRootProps {
-  label?: React.ReactNode;
-  description?: React.ReactNode;
-  showValueLabel?: boolean;
-}
-const ProgressBar = ({
-  label,
-  description,
-  showValueLabel = false,
-  ...props
-}: ProgressBarProps) => {
-  return (
-    <ProgressBarRoot {...props}>
-      <div className="grid grid-cols-[1fr_auto] [grid-template-areas:'label_value']">
-        {label && <Label className="[grid-area:label]">{label}</Label>}
-        {showValueLabel && (
-          <ProgressBarValueLabel className="[grid-area:value]" />
-        )}
-      </div>
-      <ProgressBarIndicator />
-      {description && <Description>{description}</Description>}{" "}
-      {/* TODO: check this */}
-    </ProgressBarRoot>
-  );
-};
+interface ProgressBarProps extends React.ComponentProps<typeof AriaProgress> {}
 
-interface ProgressBarRootProps
-  extends React.ComponentProps<typeof AriaProgress>,
-    VariantProps<typeof progressStyles> {
-  duration?: `${number}s` | `${number}ms`;
-}
-const ProgressBarRoot = ({
-  variant,
-  size,
-  duration = "0s",
-  isIndeterminate,
-  children,
-  className,
-  ...props
-}: ProgressBarRootProps) => {
+const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
   return (
     <AriaProgress
       className={composeRenderProps(className, (className) =>
-        root({ variant, className }),
+        root({ className }),
       )}
-      isIndeterminate={
-        isIndeterminate || (duration !== "0s" && duration !== "0ms")
-      }
       {...props}
     >
       {composeRenderProps(
         children,
         (children, { isIndeterminate, valueText, percentage }) => (
           <ProgressBarProvider
-            duration={duration}
-            variant={variant}
-            size={size}
             isIndeterminate={isIndeterminate}
             valueText={valueText}
             percentage={percentage}
           >
-            {children}
+            {children ?? <ProgressBarControl />}
           </ProgressBarProvider>
         ),
       )}
@@ -142,13 +97,22 @@ const ProgressBarRoot = ({
   );
 };
 
-interface ProgressBarIndicatorProps extends React.ComponentProps<"div"> {}
-const ProgressBarIndicator = ({
+interface ProgressBarControlProps
+  extends React.ComponentProps<"div">,
+    VariantProps<typeof progressStyles> {
+  duration?: `${number}s` | `${number}ms`;
+}
+
+const ProgressBarControl = ({
   className,
+  variant,
+  size,
+  duration,
   ...props
-}: ProgressBarIndicatorProps) => {
-  const { variant, size, isIndeterminate, percentage, duration } =
-    useProgressBarContext("ProgressBarIndicator");
+}: ProgressBarControlProps) => {
+  const { isIndeterminate, percentage } =
+    useProgressBarContext("ProgressBarControl");
+
   return (
     <div className={indicator({ variant, size, className })} {...props}>
       <div
@@ -180,16 +144,10 @@ const ProgressBarValueLabel = ({
   );
 };
 
+export { ProgressBar, ProgressBarControl, ProgressBarValueLabel };
+
 export type {
   ProgressBarProps,
-  ProgressBarRootProps,
-  ProgressBarIndicatorProps,
+  ProgressBarControlProps,
   ProgressBarValueLabelProps,
-};
-
-export {
-  ProgressBar,
-  ProgressBarRoot,
-  ProgressBarIndicator,
-  ProgressBarValueLabel,
 };

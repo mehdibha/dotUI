@@ -2,7 +2,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 export default function Demo() {
   return (
-    <Tabs variant="solid">
+    <Tabs>
       <TabList>
         <Tab id="overview">Overview</Tab>
         <Tab id="usage">Usage</Tab>

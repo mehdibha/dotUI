@@ -1,60 +1,43 @@
 "use client";
 
-import React from "react";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import * as Default from "./basic";
+import type { TabListProps, TabPanelProps, TabProps, TabsProps } from "./types";
 
-import {
-  Tab as _Tab,
-  TabList as _TabList,
-  TabPanel as _TabPanel,
-  Tabs as _Tabs,
-} from "./basic";
-import type { TabListProps, TabPanelProps, TabProps, TabsProps } from "./basic";
+export const Tabs = createDynamicComponent<TabsProps>(
+  "tabs",
+  "Tabs",
+  Default.Tabs,
+  {
+    // Future variants will be added here
+  },
+);
 
-export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", _Tabs, {
-  motion: React.lazy(() =>
-    import("./motion").then((mod) => ({
-      default: mod.Tabs,
-    })),
-  ),
-});
+export const TabList = createDynamicComponent<TabListProps>(
+  "tabs",
+  "TabList",
+  Default.TabList,
+  {
+    // Future variants will be added here
+  },
+);
 
-export const TabList = <T extends object = object>(props: TabListProps<T>) => {
-  const Component = createDynamicComponent<TabListProps<T>>(
-    "tabs",
-    "TabList",
-    _TabList,
-    {
-      motion: React.lazy(() =>
-        import("./motion").then((mod) => ({
-          default: mod.TabList,
-        })),
-      ),
-    },
-  );
-
-  return <Component {...props} />;
-};
-
-export const Tab = createDynamicComponent<TabProps>("tabs", "Tab", _Tab, {
-  motion: React.lazy(() =>
-    import("./motion").then((mod) => ({
-      default: mod.Tab,
-    })),
-  ),
-});
+export const Tab = createDynamicComponent<TabProps>(
+  "tabs",
+  "Tab",
+  Default.Tab,
+  {
+    // Future variants will be added here
+  },
+);
 
 export const TabPanel = createDynamicComponent<TabPanelProps>(
   "tabs",
   "TabPanel",
-  _TabPanel,
+  Default.TabPanel,
   {
-    motion: React.lazy(() =>
-      import("./motion").then((mod) => ({
-        default: mod.TabPanel,
-      })),
-    ),
+    // Future variants will be added here
   },
 );
 

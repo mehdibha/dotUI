@@ -1,17 +1,17 @@
 "use client";
 
-import * as React from "react";
 import {
   DropZone as AriaDropZone,
   Text as AriaText,
   composeRenderProps,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import type * as React from "react";
 
 const dropZoneStyles = tv({
   slots: {
     dropzone:
-      "flex w-60 flex-col items-center justify-center gap-2 rounded-md border-2 border-dashed p-6 text-sm focus-visible:border-border-focus disabled:border-border-disabled disabled:text-fg-disabled drop-target:border-border-focus drop-target:bg-accent-muted",
+      "flex w-60 flex-col items-center justify-center gap-2 rounded-md border-2 drop-target:border-border-focus border-dashed drop-target:bg-accent-muted p-6 text-sm focus-visible:border-border-focus disabled:border-border-disabled disabled:text-fg-disabled",
     label: "text-base",
   },
 });

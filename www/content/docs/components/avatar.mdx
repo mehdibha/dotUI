@@ -1,92 +1,87 @@
 ---
 title: Avatar
-description: An image element with a fallback for representing the user.
+description: An avatar is a visual representation of a user or entity.
 links:
-  - label: Report an issue
-    href: https://github.com/mehdibha/dotUI/issues/new/choose
-  - label: Edit this page
-    href: https://github.com/mehdibha/dotUI/tree/main/content/components/data-display/avatar.mdx?plain=1
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/
+wip: true
 ---
 
-<ComponentPreview
-  name="avatar/demos/default"
-  preview={`<Avatar src="https://github.com/mehdibha.png" alt="@mehdibha" fallback="M" />
-  <Avatar src="https://githubbb.com/mehdibha.png" alt="@mehdibha" fallback="M" /> // invalid URL`}
-/>
 
-## Installation
+<PageTabs>
+  <PageTabPanel id="overview">
 
-```package-install
-npx shadcn@latest add @dotui/avatar
-```
+    <Demo name="avatar/demos/default" />
 
-## Anatomy
+    ## Installation
 
-```tsx
-import { Avatar } from "@/components/core/avatar";
+    ```npm
+    npx shadcn@latest add @dotui/avatar
+    ```
 
-<Avatar src=".." alt=".." />;
-```
+    ## Usage
 
-```tsx
-import {
-  AvatarFallback,
-  AvatarImage,
-  AvatarPlaceholder,
-  AvatarRoot,
-} from "@/components/core/avatar";
+    Use avatars to represent users or entities with an image or initials.
 
-<AvatarRoot>
-  <AvatarImage src=".." alt=".." />
-  <AvatarFallback>..</AvatarFallback>
-  <AvatarPlaceholder />
-</AvatarRoot>;
-```
+    ```tsx
+    import { Avatar } from "@/components/ui/avatar";
+    ```
 
-## Options
+    ```tsx
+    <Avatar
+      src="https://github.com/mehdibha.png"
+      alt="@mehdibha"
+      fallback="MB"
+    />
+    ```
 
-### Shape
+    ## Playground
 
-`Avatar` can be either a circle or a square using the `shape` prop.
+    Use the controls below to experiment with different avatar props and see the live preview and code update.
 
-<ComponentPreview
-  name="avatar/demos/shape"
-  preview={`<Avatar shape="square" />
-<Avatar shape="circle" />`}
-/>
+    <InteractiveDemo 
+      name="avatar" 
+      controls={[
+        {
+          type: "string",
+          name: "src",
+          defaultValue: "https://github.com/mehdibha.png",
+        },
+        {
+          type: "string",
+          name: "alt",
+          defaultValue: "@mehdibha",
+        },
+        {
+          type: "string",
+          name: "fallback",
+          defaultValue: "MB",
+        },
+        {
+          type: "enum",
+          name: "size",
+          options: ["sm", "md", "lg"],
+          defaultValue: "md",
+        },
+      ]}
+    />
 
-### Size
+    ## API Reference
 
-Use the `size` prop to control the size of the `Avatar`. The default variant is `md`.
+    ### Avatar
 
-<ComponentPreview
-  name="avatar/demos/sizes"
-  preview={`<Avatar size="sm" />
-  <Avatar size="md" />
-  <Avatar size="lg" />`}
-/>
+    <Reference name="avatar" />
 
-## Composition
+    ### AvatarGroup
 
-If you need to customize things further, you can drop down to the composition level.
+    <Reference name="avatar-group" />
 
-<ComponentPreview
-  name="avatar/demos/composition"
-  preview={`<AvatarRoot>
-    <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
-    <AvatarFallback>M</AvatarFallback>
-    <AvatarPlaceholder>
-      <UserIcon className="size-5" />
-    </AvatarPlaceholder>
-  </AvatarRoot>`}
-/>
+  </PageTabPanel>
 
-## API Reference
-
-`Avatar` accepts all image attributes.
-
-| Prop       | Type                   | Default    | Description                                                    |
-| ---------- | ---------------------- | ---------- | -------------------------------------------------------------- |
-| `shape`    | `'circle' \| 'square'` | `'circle'` | The shape of the avatar.                                       |
-| `size`     | `'sm' \| 'md' \| 'lg'` | `'md'`     | The size of the avatar.                                        |
-| `fallback` | `ReactNode`            | -          | The fallback element to render when an image is not available. |
+  <PageTabPanel id="examples">
+    <Example name="avatar/demos/default" />
+    <Example name="avatar/demos/sizes" />
+    <Example name="avatar/demos/shape" />
+    <Example name="avatar/demos/composition" />
+  </PageTabPanel>
+</PageTabs>

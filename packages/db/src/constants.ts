@@ -1,6 +1,6 @@
 import type { z } from "zod";
 
-import { restoreStyleDefinitionDefaults } from "@dotui/registry/style-system/utils";
+import { restoreStyleDefinitionDefaults } from "@dotui/style-system/utils";
 
 import type { createStyleSchema } from "./schemas";
 
@@ -12,10 +12,10 @@ export const DEFAULT_STYLES: Omit<
     name: "minimalist",
     theme: {
       colors: {
-        activeModes: ["light", "dark"],
+        activeModes: ["light", "dark"] as ("light" | "dark")[],
       },
     },
-  }),
+  } as any) as Omit<z.infer<typeof createStyleSchema>, "userId">,
   // restoreStyleDefinitionDefaults({
   //   name: "material",
   //   theme: {

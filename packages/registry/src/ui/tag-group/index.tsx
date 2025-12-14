@@ -1,17 +1,22 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-import { Tag as _Tag, TagGroup as _TagGroup } from "./basic";
-import type { TagGroupProps, TagProps } from "./basic";
+import * as Default from "./basic";
+import type { TagGroupProps, TagListProps, TagProps } from "./types";
 
-export const TagGroup = <T extends object = object>(
-  props: TagGroupProps<T>,
-) => {
-  const Component = createDynamicComponent<TagGroupProps<T>>(
+export const TagGroup = createDynamicComponent<TagGroupProps>(
+  "tag-group",
+  "TagGroup",
+  Default.TagGroup,
+  {},
+);
+
+export const TagList = <T extends object>(props: TagListProps<T>) => {
+  const Component = createDynamicComponent<TagListProps<T>>(
     "tag-group",
-    "TagGroup",
-    _TagGroup,
+    "TagList",
+    Default.TagList,
     {},
   );
 
@@ -21,7 +26,7 @@ export const TagGroup = <T extends object = object>(
 export const Tag = createDynamicComponent<TagProps>(
   "tag-group",
   "Tag",
-  _Tag,
+  Default.Tag,
   {},
 );
 

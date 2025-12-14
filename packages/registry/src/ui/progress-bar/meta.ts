@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const progressBarMeta = {
   name: "progress-bar",
   type: "registry:ui",
+  defaultVariant: "basic",
   variants: {
     basic: {
       files: [
@@ -21,3 +22,7 @@ export default progressBarMeta;
 export const progressBarVariants = Object.keys(
   progressBarMeta.variants,
 ) as (keyof typeof progressBarMeta.variants)[];
+
+export type ProgressBarVariant = keyof typeof progressBarMeta.variants;
+
+export const defaultProgressBarVariant = progressBarMeta.defaultVariant;

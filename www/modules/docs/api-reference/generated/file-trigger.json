@@ -1,0 +1,108 @@
+{
+	"name": "FileTriggerProps",
+	"description": "A FileTrigger allows a user to access the file system with any pressable React Aria\nor React Spectrum component, or custom components built with usePress.",
+	"props": {
+		"acceptedFileTypes": {
+			"type": "readonly string[]",
+			"detailedType": "readonly string[] | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "array",
+						"elementType": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"description": "Specifies what mime type of files are allowed."
+		},
+		"allowsMultiple": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether multiple files can be selected."
+		},
+		"defaultCamera": {
+			"type": "\"user\" | \"environment\"",
+			"detailedType": "\"user\" | \"environment\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "user"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "environment"
+					}
+				]
+			},
+			"description": "Specifies the use of a media capture mechanism to capture the media on the spot."
+		},
+		"onSelect": {
+			"type": "((files: FileList | null) => void)",
+			"detailedType": "((files: FileList | null) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "files",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FileList",
+											"name": "FileList"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler when a user selects a file."
+		},
+		"children": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The children of the component."
+		},
+		"acceptDirectory": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Enables the selection of directories instead of individual files."
+		}
+	}
+}

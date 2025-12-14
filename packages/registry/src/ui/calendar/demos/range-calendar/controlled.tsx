@@ -4,7 +4,7 @@ import React from "react";
 import { parseDate } from "@internationalized/date";
 import type { DateRange } from "react-aria-components";
 
-import { RangeCalendar } from "@dotui/registry/ui/calendar";
+import { Calendar } from "@dotui/registry/ui/calendar";
 
 export default function Demo() {
   const [value, setValue] = React.useState<DateRange>({
@@ -13,12 +13,13 @@ export default function Demo() {
   });
   return (
     <div className="flex flex-col items-center gap-6">
-      <RangeCalendar
+      <Calendar
+        mode="range"
         aria-label="Trip dates"
         value={value}
         onChange={setValue}
       />
-      <p className="text-sm text-fg-muted">
+      <p className="text-fg-muted text-sm">
         Start date: {value.start.toString()}
         <br />
         End date: {value.end.toString()}

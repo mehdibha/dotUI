@@ -1,11 +1,22 @@
+import { Label } from "@dotui/registry/ui/field";
+import { DateInput } from "@dotui/registry/ui/input";
 import { TimeField } from "@dotui/registry/ui/time-field";
 
 export default function Demo() {
   return (
     <div className="flex items-center gap-4">
-      <TimeField label="small (sm)" size="sm" />
-      <TimeField label="medium (md)" size="md" />
-      <TimeField label="large (lg)" size="lg" />
+      <TimeField>
+        <Label>small (sm)</Label>
+        <DateInput size="sm" />
+      </TimeField>
+      <TimeField>
+        <Label>medium (md)</Label>
+        <DateInput size="md" />
+      </TimeField>
+      <TimeField>
+        <Label>large (lg)</Label>
+        <DateInput size="lg" />
+      </TimeField>
     </div>
   );
 }

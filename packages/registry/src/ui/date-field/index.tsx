@@ -1,37 +1,21 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/_helpers/create-dynamic-component";
+import type { DateValue } from "react-aria-components";
 
-import {
-  DateField as _DateField,
-  DateFieldInput as _DateFieldInput,
-  DateFieldRoot as _DateFieldRoot,
-} from "./basic";
-import type {
-  DateFieldInputProps,
-  DateFieldProps,
-  DateFieldRootProps,
-} from "./basic";
+import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
 
-export const DateField = createDynamicComponent<DateFieldProps<any>>(
-  "date-field",
-  "DateField",
-  _DateField,
-  {},
-);
+import * as Default from "./basic";
+import type { DateFieldProps } from "./types";
 
-export const DateFieldRoot = createDynamicComponent<DateFieldRootProps<any>>(
-  "date-field",
-  "DateFieldRoot",
-  _DateFieldRoot,
-  {},
-);
+export const DateField = <T extends DateValue>(props: DateFieldProps<T>) => {
+  const Component = createDynamicComponent<DateFieldProps<T>>(
+    "date-field",
+    "DateField",
+    Default.DateField,
+    {},
+  );
 
-export const DateFieldInput = createDynamicComponent<DateFieldInputProps>(
-  "date-field",
-  "DateFieldInput",
-  _DateFieldInput,
-  {},
-);
+  return <Component {...props} />;
+};
 
-export type { DateFieldProps, DateFieldRootProps, DateFieldInputProps };
+export type { DateFieldProps };

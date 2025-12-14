@@ -1,5 +1,5 @@
-import { RangeCalendar } from "@dotui/registry/ui/calendar";
+import { Calendar } from "@dotui/registry/ui/calendar";
 
 export default function Demo() {
-  return <RangeCalendar aria-label="Trip dates" isDisabled />;
+  return <Calendar mode="range" aria-label="Trip dates" isDisabled />;
 }
