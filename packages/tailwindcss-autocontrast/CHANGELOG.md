@@ -1,5 +1,11 @@
 # tailwindcss-autocontrast
 
+## 0.0.3
+
+### Patch Changes
+
+- [#145](https://github.com/mehdibha/dotUI/pull/145) [`8db62eb`](https://github.com/mehdibha/dotUI/commit/8db62eb06ffa11fe97c4e1d7c193429c101c526d) Thanks [@mehdibha](https://github.com/mehdibha)! - minor changes
+
 ## 0.0.2
 
 ### Patch Changes
