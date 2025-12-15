@@ -1,0 +1,22 @@
+{
+  "name": "@dotui/core",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "./utils/create-dynamic-component": "./src/utils/create-dynamic-component.tsx"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "peerDependencies": {
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
+  },
+  "devDependencies": {
+    "@dotui/ts-config": "workspace:*",
+    "typescript": "^5.8.3"
+  }
+}

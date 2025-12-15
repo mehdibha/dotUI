@@ -2,66 +2,59 @@
 
 import type { DateValue } from "react-aria-components";
 
-import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/utils/create-dynamic-component";
 
 import * as Default from "./basic";
 import type {
-  CalendarCellProps,
-  CalendarGridBodyProps,
-  CalendarGridHeaderProps,
-  CalendarGridProps,
-  CalendarHeaderCellProps,
-  CalendarHeaderProps,
-  CalendarProps,
+	CalendarCellProps,
+	CalendarGridBodyProps,
+	CalendarGridHeaderProps,
+	CalendarGridProps,
+	CalendarHeaderCellProps,
+	CalendarHeaderProps,
+	CalendarProps,
 } from "./types";
 
-export const Calendar = createDynamicComponent<CalendarProps<DateValue>>(
-  "calendar",
-  "Calendar",
-  Default.Calendar,
-  {},
-);
+export const Calendar = createDynamicComponent<CalendarProps<DateValue>>("calendar", "Calendar", Default.Calendar, {});
 
 export const CalendarHeader = createDynamicComponent<CalendarHeaderProps>(
-  "calendar",
-  "CalendarHeader",
-  Default.CalendarHeader,
-  {},
+	"calendar",
+	"CalendarHeader",
+	Default.CalendarHeader,
+	{},
 );
 
 export const CalendarGrid = createDynamicComponent<CalendarGridProps>(
-  "calendar",
-  "CalendarGrid",
-  Default.CalendarGrid,
-  {},
+	"calendar",
+	"CalendarGrid",
+	Default.CalendarGrid,
+	{},
 );
 
-export const CalendarGridHeader =
-  createDynamicComponent<CalendarGridHeaderProps>(
-    "calendar",
-    "CalendarGridHeader",
-    Default.CalendarGridHeader,
-    {},
-  );
+export const CalendarGridHeader = createDynamicComponent<CalendarGridHeaderProps>(
+	"calendar",
+	"CalendarGridHeader",
+	Default.CalendarGridHeader,
+	{},
+);
 
-export const CalendarHeaderCell =
-  createDynamicComponent<CalendarHeaderCellProps>(
-    "calendar",
-    "CalendarHeaderCell",
-    Default.CalendarHeaderCell,
-    {},
-  );
+export const CalendarHeaderCell = createDynamicComponent<CalendarHeaderCellProps>(
+	"calendar",
+	"CalendarHeaderCell",
+	Default.CalendarHeaderCell,
+	{},
+);
 
 export const CalendarGridBody = createDynamicComponent<CalendarGridBodyProps>(
-  "calendar",
-  "CalendarGridBody",
-  Default.CalendarGridBody,
-  {},
+	"calendar",
+	"CalendarGridBody",
+	Default.CalendarGridBody,
+	{},
 );
 
 export const CalendarCell = createDynamicComponent<CalendarCellProps>(
-  "calendar",
-  "CalendarCell",
-  Default.CalendarCell,
-  {},
+	"calendar",
+	"CalendarCell",
+	Default.CalendarCell,
+	{},
 );

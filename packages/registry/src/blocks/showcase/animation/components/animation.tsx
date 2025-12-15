@@ -31,3 +31,5 @@ export function Animation({
     </div>
   );
 }
+
+export default Animation;
