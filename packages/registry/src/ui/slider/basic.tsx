@@ -88,6 +88,8 @@ const SliderControl = ({ className, ...props }: SliderControlProps) => {
   return (
     <AriaSliderTrack
       data-slot="slider-track"
+      data-slider-track=""
+      data-slider-control=""
       className={composeRenderProps(className, (cn, { orientation }) =>
         track({ orientation, className: cn }),
       )}

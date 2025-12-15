@@ -98,6 +98,31 @@ describe("createTheme", () => {
 			expect(lightTheme.background).not.toBe(darkTheme.background);
 		});
 
+		it("should respect lightness option with string backgroundColor", () => {
+			const lightTheme = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: "#6b7280",
+				lightness: 97,
+			});
+
+			const darkTheme = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: "#6b7280",
+				lightness: 10,
+			});
+
+			// Light theme should have a light background
+			expect(lightTheme.background).toMatch(/hsl\(\d+, \d+%, 9[0-9]%\)/);
+			// Dark theme should have a dark background
+			expect(darkTheme.background).toMatch(/hsl\(\d+, \d+%, [0-2]?[0-9]%\)/);
+			// They should be different
+			expect(lightTheme.background).not.toBe(darkTheme.background);
+		});
+
 		it("should respect saturation option", () => {
 			const fullSat = createTheme({
 				colors: [

@@ -32,6 +32,7 @@
 import ColorJS from "colorjs.io";
 import { Theme } from "./theme";
 import type { LeonardoColorspace, ContrastFormula } from "../../types";
+import { SCALE_STEPS } from "../../types";
 
 export interface ColorInput {
 	name: string;
@@ -134,15 +135,25 @@ export function createTheme(input: CreateThemeInput): CreateThemeOutput {
 		const colorScale: Record<string, string> = {};
 		const colorItem = item as { name: string; values: Array<{ name: string; value: string }> };
 
-		for (const value of colorItem.values) {
-			// Extract step number from the name (e.g., "accent100" -> "100")
-			const stepMatch = value.name.match(/(\d+)$/);
-			if (stepMatch && stepMatch[1]) {
-				const step = stepMatch[1];
-				colorScale[step] = toHslString(value.value);
+		// Map values to SCALE_STEPS by index (Leonardo generates 100, 200... but we want 50, 100, 200...)
+		for (let i = 0; i < colorItem.values.length; i++) {
+			const value = colorItem.values[i];
+			if (!value) continue;
+
+			// Use SCALE_STEPS if we have 11 values (standard scale), otherwise use Leonardo's naming
+			if (colorItem.values.length === SCALE_STEPS.length) {
+				const step = SCALE_STEPS[i];
+				if (step) {
+					colorScale[step] = toHslString(value.value);
+				}
 			} else {
-				// For named ratios (object format), use the name as key
-				colorScale[value.name] = toHslString(value.value);
+				// For non-standard ratios, extract step from name or use index
+				const stepMatch = value.name.match(/(\d+)$/);
+				if (stepMatch && stepMatch[1]) {
+					colorScale[stepMatch[1]] = toHslString(value.value);
+				} else {
+					colorScale[value.name] = toHslString(value.value);
+				}
 			}
 		}
 

@@ -5,7 +5,10 @@
   "type": "module",
   "license": "MIT",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./algorithms/leonardo": "./src/algorithms/leonardo/index.ts",
+    "./algorithms/material": "./src/algorithms/material/index.ts",
+    "./types": "./src/types.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",

@@ -107,31 +107,13 @@ importers:
       '@material/material-color-utilities':
         specifier: ^0.3.0
         version: 0.3.0
-      '@radix-ui/colors':
-        specifier: ^3.0.0
-        version: 3.0.0
-      apca-w3:
-        specifier: ^0.1.9
-        version: 0.1.9
-      chroma-js:
-        specifier: ^2.4.2
-        version: 2.6.0
-      ciebase:
-        specifier: ^0.1.1
-        version: 0.1.1
-      ciecam02:
-        specifier: ^0.4.6
-        version: 0.4.6
-      hsluv:
-        specifier: ^0.1.0
-        version: 0.1.0
+      colorjs.io:
+        specifier: ^0.5.2
+        version: 0.5.2
     devDependencies:
       '@dotui/ts-config':
         specifier: workspace:*
         version: link:../../config/ts-config
-      '@types/chroma-js':
-        specifier: ^2.4.4
-        version: 2.4.5
       typescript:
         specifier: ^5.8.3
         version: 5.9.3
@@ -401,6 +383,9 @@ importers:
       '@dotui/auth':
         specifier: workspace:*
         version: link:../packages/auth
+      '@dotui/colors':
+        specifier: workspace:*
+        version: link:../packages/color-engine
       '@dotui/db':
         specifier: workspace:*
         version: link:../packages/db
@@ -1824,9 +1809,6 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@radix-ui/colors@3.0.0':
-    resolution: {integrity: sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==}
-
   '@react-aria/autocomplete@3.0.0-rc.3':
     resolution: {integrity: sha512-vemf7h3hvIDk3MxiiPryysfYgJDg8R72X46dRIeg0+cXKYxjPYou64/DTucSV2z5J6RC5JalINu0jIDaLhEILw==}
     peerDependencies:
@@ -2786,9 +2768,6 @@ packages:
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
 
-  '@types/chroma-js@2.4.5':
-    resolution: {integrity: sha512-6ISjhzJViaPCy2q2e6PgK+8HcHQDQ0V2LDiKmYAh+jJlLqDa6HbwDh0wOevHY0kHHUx0iZwjSRbVD47WOUx5EQ==}
-
   '@types/culori@4.0.1':
     resolution: {integrity: sha512-43M51r/22CjhbOXyGT361GZ9vncSVQ39u62x5eJdBQFviI8zWp2X5jzqg7k4M6PVgDQAClpy2bUe2dtwEgEDVQ==}
 
@@ -3266,6 +3245,9 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+
+  colorjs.io@0.5.2:
+    resolution: {integrity: sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==}
 
   colorparsley@0.1.8:
     resolution: {integrity: sha512-rObESTTTE6G5qO5WFwFxWPggpw4KfpxnLC6Ssl8bITBnNVRhDsyCeTRAUxWQNVTx2pRknKlO2nddYTxjkdNFaw==}
@@ -4720,6 +4702,7 @@ packages:
   next@16.0.8:
     resolution: {integrity: sha512-LmcZzG04JuzNXi48s5P+TnJBsTGPJunViNKV/iE4uM6kstjTQsQhvsAv+xF6MJxU2Pr26tl15eVbp0jQnsv6/g==}
     engines: {node: '>=20.9.0'}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/security-update-2025-12-11 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
@@ -7102,8 +7085,6 @@ snapshots:
       - react-native-b4a
       - supports-color
 
-  '@radix-ui/colors@3.0.0': {}
-
   '@react-aria/autocomplete@3.0.0-rc.3(react-dom@19.2.1(react@19.2.1))(react@19.2.1)':
     dependencies:
       '@react-aria/combobox': 3.14.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -8449,8 +8430,6 @@ snapshots:
       '@types/deep-eql': 4.0.2
       assertion-error: 2.0.1
 
-  '@types/chroma-js@2.4.5': {}
-
   '@types/culori@4.0.1': {}
 
   '@types/debug@4.1.12':
@@ -8890,6 +8869,8 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
+
+  colorjs.io@0.5.2: {}
 
   colorparsley@0.1.8: {}
 

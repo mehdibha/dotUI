@@ -23,6 +23,7 @@
 		"@adobe/leonardo-contrast-colors": "^1.0.0",
 		"@dotui/api": "workspace:*",
 		"@dotui/auth": "workspace:*",
+		"@dotui/colors": "workspace:*",
 		"@dotui/db": "workspace:*",
 		"@dotui/registry": "workspace:*",
 		"@dotui/shadcn-adapter": "workspace:*",

@@ -87,6 +87,9 @@ export class Theme {
 		this._lightness = lightness ?? 100;
 		this._backgroundColorValue = "";
 
+		// Track if lightness was explicitly provided
+		const lightnessWasProvided = lightness !== undefined;
+
 		// Convert color inputs to Color instances
 		this._colors = colors.map((color) => {
 			if (color instanceof Color) {
@@ -99,8 +102,8 @@ export class Theme {
 			});
 		});
 
-		// Set up background color
-		this._setBackgroundColor(backgroundColor);
+		// Set up background color (preserve lightness if explicitly provided)
+		this._setBackgroundColor(backgroundColor, lightnessWasProvided);
 		this._setBackgroundColorValue();
 
 		// Validation
@@ -291,6 +294,7 @@ export class Theme {
 
 	private _setBackgroundColor(
 		backgroundColor: string | BackgroundColor | ThemeBackgroundInput,
+		preserveLightness = false,
 	): void {
 		if (typeof backgroundColor === "string") {
 			// String input - convert to BackgroundColor
@@ -299,12 +303,16 @@ export class Theme {
 				colorKeys: [backgroundColor],
 				output: "RGB",
 			});
-			// Use Color.js HSLuv for lightness calculation
-			const hsluvColor = new ColorJS(String(backgroundColor)).to("hsluv");
-			const calcLightness = round(hsluvColor.coords[2] ?? 0);
 
 			this._backgroundColor = newBackgroundColor;
-			this._lightness = calcLightness;
+
+			// Only calculate lightness from the color if not explicitly provided
+			if (!preserveLightness) {
+				const hsluvColor = new ColorJS(String(backgroundColor)).to("hsluv");
+				const calcLightness = round(hsluvColor.coords[2] ?? 0);
+				this._lightness = calcLightness;
+			}
+
 			this._backgroundColorValue = (newBackgroundColor.backgroundColorScale[this._lightness] ?? "#ffffff");
 		} else if (backgroundColor instanceof BackgroundColor) {
 			backgroundColor.output = "RGB";
