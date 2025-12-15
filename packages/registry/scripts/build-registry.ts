@@ -2,219 +2,213 @@ import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
 import { rimraf } from "rimraf";
 
-import { registryBlocks } from "../src/blocks/registry.js";
-import { iconLibraries, registryIcons } from "../src/icons/registry.js";
+import { registryBase } from "@dotui/registry/base/registry";
+import { blocksCategories, registryBlocks } from "@dotui/registry/blocks/registry";
+import { registryHooks } from "@dotui/registry/hooks/registry";
+import { iconLibraries, registryIcons } from "@dotui/registry/icons/registry";
+import { registryLib } from "@dotui/registry/lib/registry";
+import { registryUi } from "@dotui/registry/ui/registry";
 
-const GENERATED_DIR = path.join(process.cwd(), "src/__generated__");
+const REGISTRY_DIR = path.join(process.cwd(), "src");
+const OUTPUT_DIR = path.resolve(process.cwd(), "../core/src/__registry__");
 
 async function ensureGeneratedDir() {
-	await rimraf(GENERATED_DIR);
-	await fs.mkdir(GENERATED_DIR, { recursive: true });
+	await rimraf(OUTPUT_DIR);
+	await fs.mkdir(OUTPUT_DIR, { recursive: true });
 }
 
-async function buildBlocks() {
-	const targetPath = path.join(GENERATED_DIR, "blocks.tsx");
+async function readFileContent(filePath: string): Promise<string | null> {
+	const fullPath = path.join(REGISTRY_DIR, filePath);
+	if (!existsSync(fullPath)) {
+		console.warn(`  Warning: File not found: ${filePath}`);
+		return null;
+	}
+	return fs.readFile(fullPath, "utf-8");
+}
 
-	let content = `// AUTO-GENERATED - DO NOT EDIT
-// Run "pnpm build" to regenerate
-import * as React from "react";
+function escapeForTemplate(content: string): string {
+	return content.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/\$\{/g, "\\${");
+}
 
-export const BlocksIndex: Record<
-  string,
-  {
-    files: string[];
-    component: React.LazyExoticComponent<React.ComponentType<object>>;
-  }
-> = {
-`;
+interface FileEntry {
+	type?: string;
+	path?: string;
+	target?: string;
+	content?: string;
+}
 
-	for (const block of registryBlocks) {
-		const blockFiles =
-			block.files?.map((file) =>
-				typeof file === "string" ? file : file.path,
-			) || [];
+interface RegistryItemWithVariants {
+	name: string;
+	type?: string;
+	defaultVariant?: string;
+	variants?: Record<string, { files?: FileEntry[]; registryDependencies?: string[]; dependencies?: string[] }>;
+	files?: FileEntry[];
+	registryDependencies?: string[];
+	dependencies?: string[];
+	[key: string]: unknown;
+}
 
-		let componentPath = `@dotui/registry/blocks/${block.name}`;
+async function processFiles(files: FileEntry[] | undefined): Promise<FileEntry[]> {
+	if (!files) return [];
 
-		if (block.files && block.files.length > 0) {
-			const files = block.files.map((file) =>
-				typeof file === "string" ? { type: "registry:page", path: file } : file,
-			);
-			if (files[0]) {
-				const firstFilePath = files[0].path.replace(/\.tsx?$/, "");
-				componentPath = `@dotui/registry/${firstFilePath}`;
+	const processed: FileEntry[] = [];
+	for (const file of files) {
+		if (!file.path) continue;
+
+		const content = await readFileContent(file.path);
+		if (content) {
+			processed.push({
+				type: file.type,
+				path: file.path,
+				target: file.target || file.path,
+				content,
+			});
+		}
+	}
+	return processed;
+}
+
+async function processRegistryItem(item: RegistryItemWithVariants): Promise<object> {
+	const result: Record<string, unknown> = {
+		name: item.name,
+		type: item.type,
+	};
+
+	// Copy other simple fields
+	if (item.dependencies) result.dependencies = item.dependencies;
+	if (item.registryDependencies) result.registryDependencies = item.registryDependencies;
+	if (item.defaultVariant) result.defaultVariant = item.defaultVariant;
+	if (item.description) result.description = item.description;
+	if (item.categories) result.categories = item.categories;
+	if (item.meta) result.meta = item.meta;
+	if (item.extends) result.extends = item.extends;
+	if (item.css) result.css = item.css;
+
+	// Process variants with files
+	if (item.variants) {
+		const processedVariants: Record<string, object> = {};
+		for (const [variantName, variant] of Object.entries(item.variants)) {
+			const processedVariant: Record<string, unknown> = {};
+			if (variant.files) {
+				processedVariant.files = await processFiles(variant.files);
 			}
+			if (variant.registryDependencies) {
+				processedVariant.registryDependencies = variant.registryDependencies;
+			}
+			if (variant.dependencies) {
+				processedVariant.dependencies = variant.dependencies;
+			}
+			processedVariants[variantName] = processedVariant;
 		}
-
-		content += `  "${block.name}": {
-    files: ${JSON.stringify(blockFiles)},
-    component: React.lazy(() => import("${componentPath}")),
-  },
-`;
+		result.variants = processedVariants;
 	}
 
-	content += `};
-`;
+	// Process top-level files (for items without variants)
+	if (item.files && !item.variants) {
+		result.files = await processFiles(item.files);
+	}
 
-	await fs.writeFile(targetPath, content, "utf8");
-	console.log("  ✓ blocks.tsx");
+	return result;
 }
 
-async function processDirectory(
-	dirPath: string,
-	relativePath: string,
-	entries: string[],
-): Promise<void> {
-	const dirEntries = await fs.readdir(dirPath, { withFileTypes: true });
+function generateFileContent(items: object[], exportName: string): string {
+	const itemsJson = JSON.stringify(items, null, 2);
 
-	for (const entry of dirEntries) {
-		if (entry.isFile() && entry.name.endsWith(".tsx")) {
-			if (entry.name === "playground.tsx") continue;
+	// Convert JSON to TypeScript with template literals for content
+	const tsContent = itemsJson.replace(/"content": "((?:[^"\\]|\\.)*)"/g, (_, content) => {
+		// Unescape JSON string and re-escape for template literal
+		const unescaped = JSON.parse(`"${content}"`);
+		return `"content": \`${escapeForTemplate(unescaped)}\``;
+	});
 
-			const demoName = entry.name.replace(".tsx", "");
-			const key = `${relativePath}/${demoName}`;
-			const importPath = `@dotui/registry/ui/${relativePath}/${demoName}`;
-			const filePath = `ui/${relativePath}/${entry.name}`;
+	return `// AUTO-GENERATED - DO NOT EDIT
+// Run "pnpm build:core" to regenerate
 
-			entries.push(`  "${key}": {
-    files: ["${filePath}"],
-    component: React.lazy(() => import("${importPath}")),
-  },
-`);
-		} else if (entry.isDirectory()) {
-			const subDirPath = path.join(dirPath, entry.name);
-			const subRelativePath = `${relativePath}/${entry.name}`;
-			await processDirectory(subDirPath, subRelativePath, entries);
-		}
-	}
+export const ${exportName} = ${tsContent} as const;
+`;
 }
 
-async function buildDemos() {
-	const targetPath = path.join(GENERATED_DIR, "demos.tsx");
-	const sourcePath = path.join(process.cwd(), "src/ui");
+async function buildBase() {
+	const processed = await Promise.all(
+		registryBase.map((item) => processRegistryItem(item as RegistryItemWithVariants)),
+	);
+	const content = generateFileContent(processed, "base");
+	await fs.writeFile(path.join(OUTPUT_DIR, "base.ts"), content, "utf-8");
+	console.log("  ✓ base.ts");
+}
 
-	let content = `// AUTO-GENERATED - DO NOT EDIT
-// Run "pnpm build" to regenerate
-import * as React from "react";
+async function buildHooks() {
+	const processed = await Promise.all(
+		registryHooks.map((item) => processRegistryItem(item as RegistryItemWithVariants)),
+	);
+	const content = generateFileContent(processed, "hooks");
+	await fs.writeFile(path.join(OUTPUT_DIR, "hooks.ts"), content, "utf-8");
+	console.log("  ✓ hooks.ts");
+}
 
-export const DemosIndex: Record<
-  string,
-  {
-    files: string[];
-    component: React.LazyExoticComponent<React.ComponentType<object>>;
-  }
-> = {
-`;
+async function buildLib() {
+	const processed = await Promise.all(registryLib.map((item) => processRegistryItem(item as RegistryItemWithVariants)));
+	const content = generateFileContent(processed, "lib");
+	await fs.writeFile(path.join(OUTPUT_DIR, "lib.ts"), content, "utf-8");
+	console.log("  ✓ lib.ts");
+}
 
-	const componentFolders = await fs.readdir(sourcePath);
-	const entries: string[] = [];
-
-	for (const componentFolder of componentFolders) {
-		const componentPath = path.join(sourcePath, componentFolder);
-		const stats = await fs.stat(componentPath);
-
-		if (!stats.isDirectory()) continue;
-
-		const demosPath = path.join(componentPath, "demos");
-		if (!existsSync(demosPath)) continue;
-
-		await processDirectory(demosPath, `${componentFolder}/demos`, entries);
-	}
-
-	content += entries.join("");
-	content += `};
-`;
-
-	await fs.writeFile(targetPath, content, "utf8");
-	console.log("  ✓ demos.tsx");
+async function buildUi() {
+	const processed = await Promise.all(registryUi.map((item) => processRegistryItem(item as RegistryItemWithVariants)));
+	const content = generateFileContent(processed, "ui");
+	await fs.writeFile(path.join(OUTPUT_DIR, "ui.ts"), content, "utf-8");
+	console.log("  ✓ ui.ts");
 }
 
 async function buildIcons() {
-	const targetPath = path.join(GENERATED_DIR, "icons.tsx");
-
-	const iconKeys = Object.keys(registryIcons);
-
-	const iconExports = iconKeys
-		.map((iconKey) => {
-			const iconMapping = registryIcons[iconKey];
-			if (!iconMapping) {
-				throw new Error(`Icon mapping not found for: ${iconKey}`);
-			}
-
-			const libraryMappings = iconLibraries
-				.map((library) => {
-					const iconName = iconMapping[library.name];
-					if (!iconName) {
-						throw new Error(
-							`Icon "${iconKey}" not found for library "${library.name}"`,
-						);
-					}
-
-					if (library.name === "lucide") {
-						return `    lucide: Lucide.${iconName},`;
-					}
-					return `    ${library.name}: React.lazy(() => import("${library.import}").then(mod => ({ default: mod.${iconName} }))),`;
-				})
-				.join("\n");
-
-			return `export const ${iconKey} = createIcon({
-${libraryMappings}
-});`;
-		})
-		.join("\n\n");
-
 	const content = `// AUTO-GENERATED - DO NOT EDIT
-// Run "pnpm build" to regenerate
-"use client";
+// Run "pnpm build:core" to regenerate
 
-import * as React from "react";
-import * as Lucide from "lucide-react";
-import { createIcon } from "@dotui/registry/icons/create-icon";
+export const iconLibraries = ${JSON.stringify(iconLibraries, null, 2)} as const;
 
-${iconExports}
+export type IconLibraryName = (typeof iconLibraries)[number]["name"];
+
+export const icons = ${JSON.stringify(registryIcons, null, 2)} as const;
 `;
-
-	await fs.writeFile(targetPath, content, "utf8");
-	console.log("  ✓ icons.tsx");
+	await fs.writeFile(path.join(OUTPUT_DIR, "icons.ts"), content, "utf-8");
+	console.log("  ✓ icons.ts");
 }
 
-async function cleanOldGenerated() {
-	// Clean up old generated files from previous locations
-	const oldFiles = [
-		path.join(process.cwd(), "src/icons/__icons__.tsx"),
-		path.join(process.cwd(), "src/ui/__demos__.tsx"),
-		path.join(process.cwd(), "src/blocks/__blocks__.tsx"),
-	];
+async function buildBlocks() {
+	const processed = await Promise.all(
+		registryBlocks.map((item) => processRegistryItem(item as RegistryItemWithVariants)),
+	);
 
-	for (const file of oldFiles) {
-		if (existsSync(file)) {
-			await fs.unlink(file);
-			console.log(`  🗑️  Removed old file: ${path.basename(file)}`);
-		}
-	}
+	const content = `// AUTO-GENERATED - DO NOT EDIT
+// Run "pnpm build:core" to regenerate
 
-	// Remove empty __internal__ folder if it exists
-	const internalDir = path.join(process.cwd(), "src/__internal__");
-	if (existsSync(internalDir)) {
-		await rimraf(internalDir);
-		console.log("  🗑️  Removed __internal__ folder");
-	}
+export const blocksCategories = ${JSON.stringify(blocksCategories, null, 2)} as const;
+
+export const blocks = ${JSON.stringify(processed, null, 2).replace(/"content": "((?:[^"\\]|\\.)*)"/g, (_, content) => {
+		const unescaped = JSON.parse(`"${content}"`);
+		return `"content": \`${escapeForTemplate(unescaped)}\``;
+	})} as const;
+`;
+	await fs.writeFile(path.join(OUTPUT_DIR, "blocks.ts"), content, "utf-8");
+	console.log("  ✓ blocks.ts");
 }
 
 async function main() {
-	console.log("🔨 Building registry...\n");
+	console.log("🔨 Building registry data...\n");
 
 	try {
-		await cleanOldGenerated();
 		await ensureGeneratedDir();
 
-		await buildBlocks();
-		await buildDemos();
+		await buildBase();
+		await buildHooks();
+		await buildLib();
+		await buildUi();
 		await buildIcons();
+		await buildBlocks();
 
-		console.log("\n✅ Registry built successfully!");
+		console.log("\n✅ Registry data built successfully!");
 	} catch (error) {
-		console.error("\n❌ Error building registry:", error);
+		console.error("\n❌ Error building core registry data:", error);
 		process.exit(1);
 	}
 }

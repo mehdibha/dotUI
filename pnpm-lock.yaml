@@ -123,6 +123,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@dotui/colors':
+        specifier: workspace:*
+        version: link:../colors
       react:
         specifier: ^19.2.1
         version: 19.2.1
@@ -133,6 +136,9 @@ importers:
       '@dotui/ts-config':
         specifier: workspace:*
         version: link:../../config/ts-config
+      '@types/react':
+        specifier: ^19.2.2
+        version: 19.2.7
       typescript:
         specifier: ^5.8.3
         version: 5.9.3
