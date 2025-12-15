@@ -69,7 +69,7 @@
 		"@types/react-dom": "^19.2.1",
 		"next": "^16.0.5",
 		"rimraf": "^6.0.1",
-		"shadcn": "^3.2.1",
+		"shadcn": "^3.6.1",
 		"tsx": "^4.19.2",
 		"typescript": "^5.8.3"
 	},

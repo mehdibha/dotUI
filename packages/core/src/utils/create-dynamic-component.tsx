@@ -1,10 +1,16 @@
-export const createDynamicComponent = <Props extends Record<string, unknown>>(
-	componentName: string,
-	slotName: string,
-	DefaultComponent: React.FC<Props>,
-	variants: Record<string, React.FC<Props>>,
-) => {
-	return (props: Props) => {
-		return <DefaultComponent {...props} />;
-	};
+import type React from "react";
+
+export const createDynamicComponent = <
+	Props extends object,
+	_Variant extends string = string,
+>(
+	_componentKey: string,
+	_componentName: string,
+	DefaultComponent: React.ComponentType<Props>,
+	_variants: object,
+	_options?: object,
+): React.ComponentType<Props> => {
+	// TODO: Implement dynamic component resolution based on user config
+	// For now, always return the default component
+	return DefaultComponent;
 };

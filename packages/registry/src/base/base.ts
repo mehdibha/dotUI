@@ -1,4 +1,5 @@
 import type { RegistryItem } from "@dotui/registry/types";
+import { } from "shadcn"
 
 export const registryBase = [
 	{
