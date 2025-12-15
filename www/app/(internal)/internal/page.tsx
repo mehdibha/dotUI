@@ -24,7 +24,11 @@ import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 import { ToggleButtonGroup } from "@dotui/registry/ui/toggle-button-group";
 
 // Default ratios for 11 steps (50-950)
-const DEFAULT_RATIOS = [1, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15];
+// WCAG2: contrast ratios 1:1 to 21:1 (max theoretical is 21:1)
+const WCAG2_RATIOS = [1, 1.15, 1.3, 1.5, 2, 3, 4.5, 7, 11, 16, 21];
+// WCAG3/APCA: lightness contrast values (Lc) - max is ~108 for black/white
+// Lc 15 ≈ 1.5:1, Lc 30 ≈ 2:1, Lc 45 ≈ 3:1, Lc 60 ≈ 4.5:1, Lc 75 ≈ 7:1, Lc 90 ≈ 11:1
+const WCAG3_RATIOS = [0, 7, 15, 25, 40, 55, 70, 80, 90, 100, 180];
 
 // Material tones for light/dark mode
 const LIGHT_TONES = [99, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10]; // Default: light to dark
@@ -134,11 +138,14 @@ export default function InternalPage() {
 	// Generate Adobe Leonardo theme
 	const adobeTheme = React.useMemo<ThemeOutput | null>(() => {
 		try {
+			// Use appropriate ratios based on formula
+			const ratios = formula === "wcag3" ? WCAG3_RATIOS : WCAG2_RATIOS;
+
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const neutralBg = new AdobeBackgroundColor({
 				name: "neutral",
 				colorKeys: [hexColors.neutral],
-				ratios: DEFAULT_RATIOS,
+				ratios,
 				colorspace,
 			} as any);
 
@@ -149,7 +156,7 @@ export default function InternalPage() {
 					new AdobeColor({
 						name,
 						colorKeys: [hexColors[name]],
-						ratios: DEFAULT_RATIOS,
+						ratios,
 						colorspace,
 						smooth,
 					} as any),
@@ -204,12 +211,15 @@ export default function InternalPage() {
 	// Generate Our Leonardo theme
 	const ourTheme = React.useMemo<ThemeOutput | null>(() => {
 		try {
+			// Use appropriate ratios based on formula
+			const ratios = formula === "wcag3" ? WCAG3_RATIOS : WCAG2_RATIOS;
+
 			// Include all colors including neutral
 			const theme = createTheme({
 				colors: SCALE_NAMES.map((name) => ({
 					name,
 					colorKeys: [hexColors[name]],
-					ratios: DEFAULT_RATIOS,
+					ratios,
 					colorspace,
 					smooth,
 				})),
