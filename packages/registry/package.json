@@ -39,6 +39,7 @@
 	},
 	"scripts": {
 		"build": "tsx scripts/build-registry.ts",
+		"build:core": "tsx scripts/build-core.ts",
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
 		"test": "vitest run",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false"

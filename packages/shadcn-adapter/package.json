@@ -17,7 +17,7 @@
     "@dotui/registry": "workspace:*",
     "@dotui/style-system": "workspace:*",
     "@dotui/transformers": "workspace:*",
-    "shadcn": "^3.2.1"
+    "shadcn": "^3.6.1"
   },
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",
