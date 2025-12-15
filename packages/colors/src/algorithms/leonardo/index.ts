@@ -27,10 +27,8 @@
  * // }
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import ColorJS from "colorjs.io";
-import { Theme } from "./theme";
+import { generateTheme } from "./generate";
 import type { LeonardoColorspace, ContrastFormula } from "../../types";
 import { SCALE_STEPS } from "../../types";
 
@@ -92,8 +90,8 @@ export function createTheme(input: CreateThemeInput): CreateThemeOutput {
 		formula = "wcag2",
 	} = input;
 
-	// Create the Theme instance (internal)
-	const theme = new Theme({
+	// Use the pure functional implementation
+	const generated = generateTheme({
 		colors: colors.map((c) => ({
 			name: c.name,
 			colorKeys: c.colorKeys,
@@ -112,42 +110,32 @@ export function createTheme(input: CreateThemeInput): CreateThemeOutput {
 		lightness,
 		contrast,
 		saturation,
-		output: "HEX", // Internal processing in HEX, convert to HSL at output
 		formula,
 	});
 
-	// Get contrast colors from the theme
-	const contrastColors = theme.contrastColors;
-
-	// Build the output
+	// Build the output with HSL conversion
 	const result: CreateThemeOutput = {
-		background: toHslString(theme.backgroundColorValue),
+		background: toHslString(generated.background),
 		colors: {},
 	};
 
 	// Process each color scale
-	for (const item of contrastColors) {
-		if ("background" in item) {
-			// Skip the background entry
-			continue;
-		}
-
+	for (const [colorName, values] of Object.entries(generated.colors)) {
 		const colorScale: Record<string, string> = {};
-		const colorItem = item as { name: string; values: Array<{ name: string; value: string }> };
 
 		// Map values to SCALE_STEPS by index (Leonardo generates 100, 200... but we want 50, 100, 200...)
-		for (let i = 0; i < colorItem.values.length; i++) {
-			const value = colorItem.values[i];
+		for (let i = 0; i < values.length; i++) {
+			const value = values[i];
 			if (!value) continue;
 
 			// Use SCALE_STEPS if we have 11 values (standard scale), otherwise use Leonardo's naming
-			if (colorItem.values.length === SCALE_STEPS.length) {
+			if (values.length === SCALE_STEPS.length) {
 				const step = SCALE_STEPS[i];
 				if (step) {
 					colorScale[step] = toHslString(value.value);
 				}
 			} else {
-				// For non-standard ratios, extract step from name or use index
+				// For non-standard ratios, extract step from name or use the name directly
 				const stepMatch = value.name.match(/(\d+)$/);
 				if (stepMatch && stepMatch[1]) {
 					colorScale[stepMatch[1]] = toHslString(value.value);
@@ -157,7 +145,7 @@ export function createTheme(input: CreateThemeInput): CreateThemeOutput {
 			}
 		}
 
-		result.colors[colorItem.name] = colorScale;
+		result.colors[colorName] = colorScale;
 	}
 
 	return result;

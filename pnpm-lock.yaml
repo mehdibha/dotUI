@@ -102,7 +102,7 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
-  packages/color-engine:
+  packages/colors:
     dependencies:
       '@material/material-color-utilities':
         specifier: ^0.3.0
@@ -385,7 +385,7 @@ importers:
         version: link:../packages/auth
       '@dotui/colors':
         specifier: workspace:*
-        version: link:../packages/color-engine
+        version: link:../packages/colors
       '@dotui/db':
         specifier: workspace:*
         version: link:../packages/db

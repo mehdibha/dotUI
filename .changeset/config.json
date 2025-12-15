@@ -15,7 +15,7 @@
     "@dotui/db",
     "@dotui/registry",
     "@dotui/shadcn-adapter",
-    "@dotui/color-engine",
+    "@dotui/colors",
     "@dotui/style-system",
     "@dotui/transformers",
     "@dotui/types"
