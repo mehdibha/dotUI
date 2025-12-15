@@ -1,208 +1,251 @@
 /**
- * Tests for unified API
+ * Tests for createTheme API
  */
 
 import { describe, it, expect } from "vitest";
-import {
-  generateScale,
-  generateLeonardoScale,
-  generateMaterialScale,
-  generateRadixScale,
-  SCALE_STEPS,
+import { createTheme } from "../src";
+import type {
+	CreateThemeInput,
+	CreateThemeOutput,
+	ColorInput,
+	BackgroundColorInput,
+	LeonardoColorspace,
+	ContrastFormula,
 } from "../src";
-import { hexToRgb } from "../src/core/utils";
 
-describe("Unified generateScale", () => {
-  describe("algorithm selection", () => {
-    it("should route to Leonardo algorithm", () => {
-      const unified = generateScale({
-        algorithm: "leonardo",
-        color: "#6366f1",
-        background: "#ffffff",
-      });
+describe("createTheme", () => {
+	describe("basic functionality", () => {
+		it("should create a theme with single color", () => {
+			const theme = createTheme({
+				colors: [
+					{
+						name: "accent",
+						colorKeys: ["#6366f1"],
+						ratios: [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15],
+					},
+				],
+				backgroundColor: "#ffffff",
+			});
 
-      const direct = generateLeonardoScale({
-        color: "#6366f1",
-        background: "#ffffff",
-      });
+			expect(theme.background).toBeDefined();
+			expect(theme.colors.accent).toBeDefined();
+			expect(Object.keys(theme.colors.accent).length).toBe(11);
+		});
 
-      // Should produce identical results
-      expect(unified).toEqual(direct);
-    });
+		it("should create a theme with multiple colors", () => {
+			const theme = createTheme({
+				colors: [
+					{
+						name: "accent",
+						colorKeys: ["#6366f1"],
+						ratios: [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15],
+					},
+					{
+						name: "success",
+						colorKeys: ["#22c55e"],
+						ratios: [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15],
+					},
+				],
+				backgroundColor: "#ffffff",
+			});
 
-    it("should route to Material algorithm", () => {
-      const unified = generateScale({
-        algorithm: "material",
-        color: "#6366f1",
-      });
+			expect(theme.colors.accent).toBeDefined();
+			expect(theme.colors.success).toBeDefined();
+		});
 
-      const direct = generateMaterialScale({
-        color: "#6366f1",
-      });
+		it("should output HSL format", () => {
+			const theme = createTheme({
+				colors: [
+					{
+						name: "accent",
+						colorKeys: ["#6366f1"],
+						ratios: [3],
+					},
+				],
+				backgroundColor: "#ffffff",
+			});
 
-      expect(unified).toEqual(direct);
-    });
+			expect(theme.background).toMatch(/^hsl\(\d+, \d+%, \d+%\)$/);
+			const firstStep = Object.values(theme.colors.accent)[0];
+			expect(firstStep).toMatch(/^hsl\(\d+, \d+%, \d+%\)$/);
+		});
+	});
 
-    it("should route to Radix algorithm", () => {
-      const unified = generateScale({
-        algorithm: "radix",
-        accent: "#6366f1",
-        background: "#ffffff",
-      });
+	describe("options", () => {
+		it("should respect lightness option with background object", () => {
+			const lightTheme = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: {
+					name: "neutral",
+					colorKeys: ["#6366f1"],
+				},
+				lightness: 97,
+			});
 
-      const direct = generateRadixScale({
-        accent: "#6366f1",
-        background: "#ffffff",
-      });
+			const darkTheme = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: {
+					name: "neutral",
+					colorKeys: ["#6366f1"],
+				},
+				lightness: 10,
+			});
 
-      expect(unified).toEqual(direct);
-    });
-  });
+			expect(lightTheme.background).not.toBe(darkTheme.background);
+		});
 
-  describe("all algorithms produce consistent output shape", () => {
-    const algorithms = [
-      {
-        algorithm: "leonardo" as const,
-        color: "#6366f1",
-        background: "#ffffff",
-      },
-      {
-        algorithm: "material" as const,
-        color: "#6366f1",
-      },
-      {
-        algorithm: "radix" as const,
-        accent: "#6366f1",
-        background: "#ffffff",
-      },
-    ];
+		it("should respect saturation option", () => {
+			const fullSat = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: "#ffffff",
+				saturation: 100,
+			});
 
-    algorithms.forEach((input) => {
-      it(`should produce 11 valid hex colors for ${input.algorithm}`, () => {
-        const scale = generateScale(input);
+			const lowSat = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: "#ffffff",
+				saturation: 50,
+			});
 
-        expect(Object.keys(scale)).toHaveLength(11);
-        SCALE_STEPS.forEach((step) => {
-          expect(scale[step]).toBeDefined();
-          expect(scale[step]).toMatch(/^#[0-9a-f]{6}$/);
-          expect(() => hexToRgb(scale[step])).not.toThrow();
-        });
-      });
-    });
-  });
+			expect(fullSat.colors.accent).not.toEqual(lowSat.colors.accent);
+		});
 
-  describe("algorithm options pass through", () => {
-    it("should pass Leonardo options", () => {
-      const scale = generateScale({
-        algorithm: "leonardo",
-        color: "#6366f1",
-        background: "#ffffff",
-        ratios: [1.1, 1.5, 2, 3, 4.5, 6, 8, 10, 12, 14, 16],
-        saturation: 80,
-        contrast: 1.2,
-      });
+		it("should respect contrast option", () => {
+			const normalContrast = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: "#ffffff",
+				contrast: 1,
+			});
 
-      expect(Object.keys(scale)).toHaveLength(11);
-    });
+			const highContrast = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: "#ffffff",
+				contrast: 1.5,
+			});
 
-    it("should pass Material options", () => {
-      const scale = generateScale({
-        algorithm: "material",
-        color: "#6366f1",
-        tones: [98, 92, 85, 75, 65, 55, 45, 35, 25, 15, 5],
-        hue: 250,
-        chroma: 60,
-        contrastLevel: 0.5,
-      });
+			expect(normalContrast.colors.accent).not.toEqual(
+				highContrast.colors.accent
+			);
+		});
 
-      expect(Object.keys(scale)).toHaveLength(11);
-    });
+		it("should support wcag2 and wcag3 formula", () => {
+			const wcag2 = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [4.5] },
+				],
+				backgroundColor: "#ffffff",
+				formula: "wcag2",
+			});
 
-    it("should pass Radix options", () => {
-      const scale = generateScale({
-        algorithm: "radix",
-        accent: "#6366f1",
-        background: "#121212",
-        gray: "#6b7280",
-      });
+			const wcag3 = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [60] },
+				],
+				backgroundColor: "#ffffff",
+				formula: "wcag3",
+			});
 
-      expect(Object.keys(scale)).toHaveLength(11);
-    });
-  });
+			expect(wcag2.colors.accent).toBeDefined();
+			expect(wcag3.colors.accent).toBeDefined();
+		});
+	});
+
+	describe("background color input", () => {
+		it("should accept string background", () => {
+			const theme = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: "#f5f5f5",
+			});
+
+			expect(theme.background).toBeDefined();
+		});
+
+		it("should accept object background", () => {
+			const theme = createTheme({
+				colors: [
+					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
+				],
+				backgroundColor: {
+					name: "neutral",
+					colorKeys: ["#f5f5f5"],
+				},
+				lightness: 95,
+			});
+
+			expect(theme.background).toBeDefined();
+		});
+	});
+
+	describe("named ratios", () => {
+		it("should support object ratios with named keys", () => {
+			const theme = createTheme({
+				colors: [
+					{
+						name: "accent",
+						colorKeys: ["#6366f1"],
+						ratios: {
+							light: 1.5,
+							base: 3,
+							dark: 7,
+						},
+					},
+				],
+				backgroundColor: "#ffffff",
+			});
+
+			expect(theme.colors.accent.light).toBeDefined();
+			expect(theme.colors.accent.base).toBeDefined();
+			expect(theme.colors.accent.dark).toBeDefined();
+		});
+	});
 });
 
-describe("Named exports", () => {
-  it("should export individual algorithm functions", () => {
-    expect(typeof generateLeonardoScale).toBe("function");
-    expect(typeof generateMaterialScale).toBe("function");
-    expect(typeof generateRadixScale).toBe("function");
-  });
+describe("Type exports", () => {
+	it("should export all required types", () => {
+		// These are compile-time checks - if the types don't exist, TypeScript will fail
+		const input: CreateThemeInput = {
+			colors: [],
+			backgroundColor: "#ffffff",
+		};
 
-  it("should export SCALE_STEPS constant", () => {
-    expect(SCALE_STEPS).toEqual([
-      "50",
-      "100",
-      "200",
-      "300",
-      "400",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900",
-      "950",
-    ]);
-  });
-});
+		const output: CreateThemeOutput = {
+			background: "hsl(0, 0%, 100%)",
+			colors: {},
+		};
 
-describe("Algorithm comparison", () => {
-  const testColor = "#3b82f6"; // Blue
+		const colorInput: ColorInput = {
+			name: "test",
+			colorKeys: ["#000000"],
+			ratios: [3],
+		};
 
-  it("all algorithms should produce different results (they use different methods)", () => {
-    const leonardo = generateScale({
-      algorithm: "leonardo",
-      color: testColor,
-      background: "#ffffff",
-    });
+		const bgInput: BackgroundColorInput = {
+			name: "bg",
+			colorKeys: ["#ffffff"],
+		};
 
-    const material = generateScale({
-      algorithm: "material",
-      color: testColor,
-    });
+		const colorspace: LeonardoColorspace = "RGB";
+		const formula: ContrastFormula = "wcag2";
 
-    const radix = generateScale({
-      algorithm: "radix",
-      accent: testColor,
-      background: "#ffffff",
-    });
-
-    // They should not be identical (different algorithms)
-    expect(leonardo["500"]).not.toBe(material["500"]);
-    expect(material["500"]).not.toBe(radix["500"]);
-  });
-
-  it("all algorithms should produce blue-ish results for blue input", () => {
-    const leonardo = generateScale({
-      algorithm: "leonardo",
-      color: testColor,
-      background: "#ffffff",
-    });
-
-    const material = generateScale({
-      algorithm: "material",
-      color: testColor,
-    });
-
-    const radix = generateScale({
-      algorithm: "radix",
-      accent: testColor,
-      background: "#ffffff",
-    });
-
-    // Check that mid-tones are blue-ish (more blue than red)
-    [leonardo, material, radix].forEach((scale) => {
-      const rgb = hexToRgb(scale["500"]);
-      expect(rgb[2]).toBeGreaterThan(rgb[0]); // Blue > Red
-    });
-  });
+		expect(input).toBeDefined();
+		expect(output).toBeDefined();
+		expect(colorInput).toBeDefined();
+		expect(bgInput).toBeDefined();
+		expect(colorspace).toBe("RGB");
+		expect(formula).toBe("wcag2");
+	});
 });

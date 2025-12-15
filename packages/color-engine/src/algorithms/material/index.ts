@@ -11,9 +11,10 @@ import {
   Hct,
   TonalPalette,
 } from "@material/material-color-utilities";
+import Color from "colorjs.io";
 
-import type { MaterialOptions, ScaleOutput } from "../../core/types";
-import { hexToRgb, SCALE_STEPS } from "../../core/utils";
+import type { MaterialOptions, ScaleOutput } from "../../types";
+import { SCALE_STEPS } from "../../types";
 
 // ============================================================================
 // Default Values
@@ -34,8 +35,11 @@ const DEFAULT_TONES = [99, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10];
  * Convert hex to ARGB integer (Material format)
  */
 function hexToArgb(hex: string): number {
-  const rgb = hexToRgb(hex);
-  return (255 << 24) | (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+  const color = new Color(hex).to("srgb");
+  const r = Math.round((color.coords[0] ?? 0) * 255);
+  const g = Math.round((color.coords[1] ?? 0) * 255);
+  const b = Math.round((color.coords[2] ?? 0) * 255);
+  return (255 << 24) | (r << 16) | (g << 8) | b;
 }
 
 /**

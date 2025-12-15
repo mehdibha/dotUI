@@ -3,9 +3,19 @@
  */
 
 import { describe, it, expect } from "vitest";
+import Color from "colorjs.io";
 import { generateScale, getHct, fromHct, getContrastTones } from "../src/algorithms/material";
-import { hexToRgb } from "../src/core/utils";
-import { SCALE_STEPS } from "../src/core/types";
+import { SCALE_STEPS } from "../src/types";
+
+// Helper to convert hex to RGB array using Color.js
+function hexToRgb(hex: string): [number, number, number] {
+  const color = new Color(hex).to("srgb");
+  return [
+    Math.round((color.coords[0] ?? 0) * 255),
+    Math.round((color.coords[1] ?? 0) * 255),
+    Math.round((color.coords[2] ?? 0) * 255),
+  ];
+}
 
 describe("Material generateScale", () => {
   describe("basic functionality", () => {
