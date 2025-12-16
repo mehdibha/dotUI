@@ -24,12 +24,13 @@ interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
 type IconComponent = React.ComponentType<CommonIconProps>;
 type IconLibraryName = (typeof iconLibraries)[number]["name"];
 
+// Use a more permissive type for lazy-loaded icons since different libraries have different type signatures
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LazyIconComponent = React.LazyExoticComponent<React.ComponentType<any>>;
+
 type IconMapping = {
   lucide: IconComponent;
-} & Record<
-  Exclude<IconLibraryName, "lucide">,
-  React.LazyExoticComponent<IconComponent>
->;
+} & Record<Exclude<IconLibraryName, "lucide">, LazyIconComponent>;
 
 export type { CommonIconProps };
 

@@ -24,6 +24,7 @@
 		"@dotui/api": "workspace:*",
 		"@dotui/auth": "workspace:*",
 		"@dotui/colors": "workspace:*",
+		"@dotui/core": "workspace:*",
 		"@dotui/db": "workspace:*",
 		"@dotui/registry": "workspace:*",
 		"@dotui/shadcn-adapter": "workspace:*",

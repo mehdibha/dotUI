@@ -1,32 +1,34 @@
 {
-  "name": "@dotui/core",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "license": "MIT",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": "./src/index.ts",
-    "./types": "./src/types.ts",
-    "./style": "./src/style/index.ts",
-    "./shadcn": "./src/shadcn/index.ts",
-    "./utils/create-dynamic-component": "./src/utils/create-dynamic-component.tsx"
-  },
-  "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
-  },
-  "peerDependencies": {
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1"
-  },
-  "dependencies": {
-    "@dotui/colors": "workspace:*"
-  },
-  "devDependencies": {
-    "@dotui/ts-config": "workspace:*",
-    "@types/react": "^19.2.2",
-    "typescript": "^5.8.3"
-  }
+	"name": "@dotui/core",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"license": "MIT",
+	"main": "./src/index.ts",
+	"types": "./src/index.ts",
+	"exports": {
+		".": "./src/index.ts",
+		"./types": "./src/types.ts",
+		"./style": "./src/style/index.ts",
+		"./variants": "./src/variants/index.ts",
+		"./style/client": "./src/style/client.tsx",
+		"./shadcn": "./src/shadcn/index.ts",
+		"./utils/create-dynamic-component": "./src/utils/create-dynamic-component.tsx"
+	},
+	"scripts": {
+		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
+	},
+	"peerDependencies": {
+		"react": "^19.2.1",
+		"react-dom": "^19.2.1"
+	},
+	"dependencies": {
+		"@dotui/colors": "workspace:*"
+	},
+	"devDependencies": {
+		"@dotui/ts-config": "workspace:*",
+		"@types/react": "^19.2.2",
+		"typescript": "^5.8.3"
+	}
 }
