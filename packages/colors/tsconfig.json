@@ -1,12 +1,12 @@
 {
-  "extends": "@dotui/ts-config/base.json",
-  "compilerOptions": {
-    "lib": ["ES2022"],
-    "baseUrl": ".",
-    "paths": {
-      "@dotui/colors/*": ["./src/*"]
-    }
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+	"extends": "@dotui/ts-config/base.json",
+	"compilerOptions": {
+		"lib": ["ES2022"],
+		"baseUrl": ".",
+		"paths": {
+			"@dotui/colors/*": ["./src/*"]
+		}
+	},
+	"include": ["src"],
+	"exclude": ["node_modules"]
 }

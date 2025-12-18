@@ -4,8 +4,9 @@
  */
 
 import Color from "colorjs.io";
+
 import { catmullRom2bezier, prepareCurve } from "../../utils/curve";
-import type { LeonardoColorspace, ContrastFormula } from "../../types";
+import type { Colorspace, ContrastFormula } from "../../types";
 
 // Colorspace mapping from Leonardo names to Color.js space names
 export const colorSpaces: Record<string, string> = {
@@ -88,16 +89,20 @@ function colorFromSpaceArray(coords: number[], space: string): string {
 /**
  * Smooth scale interpolation using Catmull-Rom to Bezier conversion
  */
-function smoothScale(
-	ColorsArray: number[][],
-	domains: number[],
-	space: string,
-): (d: number) => string {
+function smoothScale(ColorsArray: number[][], domains: number[], space: string): (d: number) => string {
 	const points: number[][] = [[], [], []];
 
-	ColorsArray.forEach((color, i) =>
-		points.forEach((point, j) => point.push(domains[i] ?? 0, color[j] ?? 0)),
-	);
+	for (let i = 0; i < ColorsArray.length; i++) {
+		const color = ColorsArray[i];
+		if (color) {
+			for (let j = 0; j < points.length; j++) {
+				const point = points[j];
+				if (point) {
+					point.push(domains[i] ?? 0, color[j] ?? 0);
+				}
+			}
+		}
+	}
 
 	// Handle NaN values in chroma for lch
 	if (space === "lch") {
@@ -220,11 +225,7 @@ function smoothScale(
 /**
  * Create a power scale function
  */
-function makePowScale(
-	exp = 1,
-	domains = [0, 1],
-	range = [0, 1],
-): (x: number) => number {
+function makePowScale(exp = 1, domains = [0, 1], range = [0, 1]): (x: number) => number {
 	const d0 = domains[0] ?? 0;
 	const d1 = domains[1] ?? 1;
 	const r0 = range[0] ?? 0;
@@ -237,7 +238,7 @@ function makePowScale(
 export interface CreateScaleOptions {
 	swatches: number;
 	colorKeys: string[];
-	colorspace?: LeonardoColorspace;
+	colorspace?: Colorspace;
 	shift?: number;
 	fullScale?: boolean;
 	smooth?: boolean;
@@ -289,7 +290,7 @@ export function createScale({
 
 		domains = lums
 			.map((lum) => {
-				if (lum === 0 || isNaN((lum - min) / (max - min))) return 0;
+				if (lum === 0 || Number.isNaN((lum - min) / (max - min))) return 0;
 				return swatches - ((lum - min) / (max - min)) * swatches;
 			})
 			.sort((a, b) => a - b);
@@ -302,7 +303,7 @@ export function createScale({
 
 	if (distributeLightness === "polynomial") {
 		const polynomial = (x: number): number => {
-			return Math.sqrt(Math.sqrt((Math.pow(x, 2.25) + Math.pow(x, 4)) / 2));
+			return Math.sqrt(Math.sqrt((x ** 2.25 + x ** 4) / 2));
 		};
 
 		const percDomains = domains.map((d) => d / swatches);
@@ -313,7 +314,7 @@ export function createScale({
 	const sortedColor = colorKeys
 		.map((c, i) => ({ colorKeys: cArray(c), index: i }))
 		.sort((c1, c2) => (c2.colorKeys[0] ?? 0) - (c1.colorKeys[0] ?? 0))
-		.map((data) => colorKeys[data.index]!);
+		.map((data) => colorKeys[data.index] ?? colorKeys[0] ?? "");
 
 	let ColorsArray: string[];
 
@@ -341,10 +342,14 @@ export function createScale({
 		// For CAM16, check if color is grey (low chroma) and mark hue as NaN
 		if (space === "cam16-jmh") {
 			for (let i = 0; i < ColorsArray.length; i++) {
-				const lch = colorToSpaceArray(ColorsArray[i]!, "lch");
-				if (Number.isNaN(lch[2]) || (lch[1] ?? 0) < 0.01) {
-					if (ColorsSpaceArray[i]) {
-						ColorsSpaceArray[i]![2] = NaN;
+				const colorAtI = ColorsArray[i];
+				if (colorAtI) {
+					const lch = colorToSpaceArray(colorAtI, "lch");
+					if (Number.isNaN(lch[2]) || (lch[1] ?? 0) < 0.01) {
+						const spaceArrayAtI = ColorsSpaceArray[i];
+						if (spaceArrayAtI) {
+							spaceArrayAtI[2] = NaN;
+						}
 					}
 				}
 			}
@@ -369,8 +374,10 @@ export function createScale({
 
 			const lowerDomain = domains[lowerIdx] ?? 0;
 			const upperDomain = domains[upperIdx] ?? swatches;
-			const lowerColor = ColorsArray[lowerIdx] ?? ColorsArray[0]!;
-			const upperColor = ColorsArray[upperIdx] ?? ColorsArray[ColorsArray.length - 1]!;
+			const firstColor = ColorsArray[0] ?? "";
+			const lastColor = ColorsArray[ColorsArray.length - 1] ?? "";
+			const lowerColor = ColorsArray[lowerIdx] ?? firstColor;
+			const upperColor = ColorsArray[upperIdx] ?? lastColor;
 
 			// Calculate interpolation position within this segment
 			const segmentRange = upperDomain - lowerDomain;
@@ -380,7 +387,9 @@ export function createScale({
 			const c1 = new Color(lowerColor);
 			const c2 = new Color(upperColor);
 			const range = Color.range(c1, c2, { space });
-			return range(Math.max(0, Math.min(1, t))).to("srgb").toString({ format: "hex" });
+			return range(Math.max(0, Math.min(1, t)))
+				.to("srgb")
+				.toString({ format: "hex" });
 		};
 	}
 
@@ -421,25 +430,13 @@ export function getContrast(
 	method: ContrastFormula = "wcag2",
 ): number {
 	if (baseV === undefined) {
-		const baseColor = new Color("srgb", [
-			(base[0] ?? 0) / 255,
-			(base[1] ?? 0) / 255,
-			(base[2] ?? 0) / 255,
-		]);
+		const baseColor = new Color("srgb", [(base[0] ?? 0) / 255, (base[1] ?? 0) / 255, (base[2] ?? 0) / 255]);
 		const baseLightness = baseColor.to("hsluv").coords[2] ?? 0;
 		baseV = round(baseLightness / 100, 2);
 	}
 
-	const fgColor = new Color("srgb", [
-		(color[0] ?? 0) / 255,
-		(color[1] ?? 0) / 255,
-		(color[2] ?? 0) / 255,
-	]);
-	const bgColor = new Color("srgb", [
-		(base[0] ?? 0) / 255,
-		(base[1] ?? 0) / 255,
-		(base[2] ?? 0) / 255,
-	]);
+	const fgColor = new Color("srgb", [(color[0] ?? 0) / 255, (color[1] ?? 0) / 255, (color[2] ?? 0) / 255]);
+	const bgColor = new Color("srgb", [(base[0] ?? 0) / 255, (base[1] ?? 0) / 255, (base[2] ?? 0) / 255]);
 
 	if (method === "wcag2") {
 		const colorLum = luminance(color[0] ?? 0, color[1] ?? 0, color[2] ?? 0);
@@ -469,9 +466,7 @@ export function getContrast(
 		// Apply direction based on theme
 		return baseV < 0.5 ? -apcaResult : apcaResult;
 	} else {
-		throw new Error(
-			`Contrast calculation method ${method} unsupported; use 'wcag2' or 'wcag3'`,
-		);
+		throw new Error(`Contrast calculation method ${method} unsupported; use 'wcag2' or 'wcag3'`);
 	}
 }
 
@@ -525,10 +520,7 @@ export function ratioName(r: number[], formula: ContrastFormula): number[] {
 /**
  * Remove duplicates from array by property
  */
-export function removeDuplicates<T extends Record<string, unknown>>(
-	originalArray: T[],
-	prop: string,
-): T[] {
+export function removeDuplicates<T extends Record<string, unknown>>(originalArray: T[], prop: string): T[] {
 	const newArray: T[] = [];
 	const lookupObject: Record<string, T> = {};
 
@@ -551,19 +543,14 @@ export function removeDuplicates<T extends Record<string, unknown>>(
 /**
  * Convert color value to specified output format
  */
-export function convertColorValue(
-	color: string,
-	format: LeonardoColorspace,
-	object = false,
-): string | Record<string, number> {
+export function convertColorValue(color: string, format: Colorspace, object = false): string | Record<string, number> {
 	if (!color) {
 		throw new Error(`Cannot convert color value of "${color}"`);
 	}
-	if (!colorSpaces[format]) {
+	const space = colorSpaces[format];
+	if (!space) {
 		throw new Error(`Cannot convert to colorspace "${format}"`);
 	}
-
-	const space = colorSpaces[format]!;
 	const colorObj = new Color(String(color)).to(space);
 	const coords = [...colorObj.coords];
 
@@ -605,10 +592,10 @@ export function convertColorValue(
 		if (["lab", "lch", "cam16-jmh"].includes(space)) {
 			if (!object) {
 				if (letter.toLowerCase() === "l" || letter === "J") {
-					rnd = rnd + "%";
+					rnd = `${rnd}%`;
 				}
 				if (letter.toLowerCase() === "h") {
-					rnd = rnd + "deg";
+					rnd = `${rnd}deg`;
 				}
 			}
 		} else if (space === "srgb") {
@@ -621,10 +608,10 @@ export function convertColorValue(
 				colorObject[letter] = round(ch, 2);
 				if (!object) {
 					rnd = round(ch * 100);
-					rnd = rnd + "%";
+					rnd = `${rnd}%`;
 				}
 			} else if (letter === "h" && !object) {
-				rnd = rnd + "deg";
+				rnd = `${rnd}deg`;
 			}
 		}
 		return rnd;
@@ -645,7 +632,7 @@ export function convertColorValue(
 
 export interface ColorWithModifiedKeys {
 	_modifiedKeys: string[];
-	_colorspace: LeonardoColorspace;
+	_colorspace: Colorspace;
 	_smooth: boolean;
 }
 
@@ -712,6 +699,8 @@ export function searchColors(
 	};
 
 	const outputColors: string[] = [];
-	ratioValues.forEach((ratio) => outputColors.push(colorScale(colorSearch(+ratio))));
+	for (const ratio of ratioValues) {
+		outputColors.push(colorScale(colorSearch(+ratio)));
+	}
 	return outputColors;
 }

@@ -38,13 +38,9 @@ export function bezlen(
 	const z2 = z / 2;
 	const n = 12;
 	const Tvalues = [
-		-0.1252, 0.1252, -0.3678, 0.3678, -0.5873, 0.5873, -0.7699, 0.7699,
-		-0.9041, 0.9041, -0.9816, 0.9816,
+		-0.1252, 0.1252, -0.3678, 0.3678, -0.5873, 0.5873, -0.7699, 0.7699, -0.9041, 0.9041, -0.9816, 0.9816,
 	];
-	const Cvalues = [
-		0.2491, 0.2491, 0.2335, 0.2335, 0.2032, 0.2032, 0.1601, 0.1601, 0.1069,
-		0.1069, 0.0472, 0.0472,
-	];
+	const Cvalues = [0.2491, 0.2491, 0.2335, 0.2335, 0.2032, 0.2032, 0.1601, 0.1601, 0.1069, 0.1069, 0.0472, 0.0472];
 	let sum = 0;
 	for (let i = 0; i < n; i++) {
 		const ct = z2 * (Tvalues[i] ?? 0) + z2;
@@ -105,15 +101,17 @@ export function catmullRom2bezier(crp: number[], z?: boolean): number[][] {
 				p[3] = { x: +(crp[2] ?? 0), y: +(crp[3] ?? 0) };
 			}
 		} else if (iLen - 4 === i) {
-			p[3] = p[2]!;
+			const p2Val = p[2];
+			if (p2Val) p[3] = p2Val;
 		} else if (!i) {
 			p[0] = { x: +(crp[i] ?? 0), y: +(crp[i + 1] ?? 0) };
 		}
 
-		const p0 = p[0]!;
-		const p1 = p[1]!;
-		const p2 = p[2]!;
-		const p3 = p[3]!;
+		const defaultPoint: Point = { x: 0, y: 0 };
+		const p0 = p[0] ?? defaultPoint;
+		const p1 = p[1] ?? defaultPoint;
+		const p2 = p[2] ?? defaultPoint;
+		const p3 = p[3] ?? defaultPoint;
 
 		d.push([
 			end.x,
@@ -150,17 +148,7 @@ export function bezlen2(
 	let len = 0;
 
 	for (let i = 1; i < n; i++) {
-		const { x, y } = findDotsAtSegment(
-			p1x,
-			p1y,
-			c1x,
-			c1y,
-			c2x,
-			c2y,
-			p2x,
-			p2y,
-			i / n,
-		);
+		const { x, y } = findDotsAtSegment(p1x, p1y, c1x, c1y, c2x, c2y, p2x, p2y, i / n);
 		len += Math.hypot(x - x0, y - y0);
 		x0 = x;
 		y0 = y;
@@ -184,9 +172,7 @@ export function prepareCurve(
 	p2x: number,
 	p2y: number,
 ): (x: number) => number | null {
-	const len = Math.floor(
-		bezlen2(p1x, p1y, c1x, c1y, c2x, c2y, p2x, p2y) * 0.75,
-	);
+	const len = Math.floor(bezlen2(p1x, p1y, c1x, c1y, c2x, c2y, p2x, p2y) * 0.75);
 	const fs: number[] = [];
 	let oldi = 0;
 

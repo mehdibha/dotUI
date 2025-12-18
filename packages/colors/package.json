@@ -1,28 +1,33 @@
 {
-  "name": "@dotui/colors",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
-  "license": "MIT",
-  "exports": {
-    ".": "./src/index.ts",
-    "./algorithms/leonardo": "./src/algorithms/leonardo/index.ts",
-    "./algorithms/material": "./src/algorithms/material/index.ts",
-    "./types": "./src/types.ts"
-  },
-  "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
-    "test": "vitest run",
-    "test:watch": "vitest"
-  },
-  "dependencies": {
-    "@material/material-color-utilities": "^0.3.0",
-    "colorjs.io": "^0.5.2"
-  },
-  "devDependencies": {
-    "@dotui/ts-config": "workspace:*",
-    "typescript": "^5.8.3",
-    "vitest": "^4.0.1"
-  }
+	"name": "@dotui/colors",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"license": "MIT",
+	"exports": {
+		".": "./src/index.ts",
+		"./algorithms/contrast": "./src/algorithms/contrast/index.ts",
+		"./algorithms/material": "./src/algorithms/material/index.ts",
+		"./types": "./src/types.ts"
+	},
+	"scripts": {
+		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"lint": "biome lint --write .",
+		"format": "biome format --write .",
+		"check": "biome check --write .",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
+		"test": "vitest run",
+		"test:watch": "vitest"
+	},
+	"dependencies": {
+		"@material/material-color-utilities": "^0.3.0",
+		"colorjs.io": "^0.5.2",
+		"zod": "^4.1.13"
+	},
+	"devDependencies": {
+		"@dotui/biome-config": "workspace:*",
+		"@dotui/ts-config": "workspace:*",
+		"typescript": "^5.8.3",
+		"vitest": "^4.0.1"
+	}
 }

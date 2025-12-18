@@ -6,18 +6,18 @@
  */
 
 import ColorJS from "colorjs.io";
+
 import {
-	colorSpaces,
-	createScale,
-	hsluvArray,
-	removeDuplicates,
 	convertColorValue,
+	createScale,
 	getContrast,
+	hsluvArray,
 	multiplyRatios,
 	ratioName,
+	removeDuplicates,
 	round,
 } from "./utils";
-import type { LeonardoColorspace, ContrastFormula } from "../../types";
+import type { Colorspace, ContrastFormula } from "../../types";
 
 // ============================================================================
 // Types
@@ -25,19 +25,19 @@ import type { LeonardoColorspace, ContrastFormula } from "../../types";
 
 export interface ColorScaleOptions {
 	colorKeys: string[];
-	colorspace?: LeonardoColorspace;
+	colorspace?: Colorspace;
 	smooth?: boolean;
 	saturation?: number;
 }
 
 export interface BackgroundScaleOptions {
 	colorKeys: string[];
-	colorspace?: LeonardoColorspace;
+	colorspace?: Colorspace;
 }
 
 export interface SearchContrastOptions {
 	colorKeys: string[];
-	colorspace?: LeonardoColorspace;
+	colorspace?: Colorspace;
 	smooth?: boolean;
 	ratios: number[];
 	backgroundRgb: [number, number, number];
@@ -48,7 +48,7 @@ export interface SearchContrastOptions {
 export interface GenerateThemeColorInput {
 	name: string;
 	colorKeys: string[];
-	colorspace?: LeonardoColorspace;
+	colorspace?: Colorspace;
 	ratios: number[] | Record<string, number>;
 	smooth?: boolean;
 }
@@ -56,7 +56,7 @@ export interface GenerateThemeColorInput {
 export interface GenerateThemeBackgroundInput {
 	name: string;
 	colorKeys: string[];
-	colorspace?: LeonardoColorspace;
+	colorspace?: Colorspace;
 }
 
 export interface GenerateThemeOptions {
@@ -151,9 +151,7 @@ export function generateBackgroundScale(options: BackgroundScaleOptions): string
 	const colorObjFiltered = removeDuplicates(colorObj, "value");
 
 	// Map back to colors
-	const bgColorArrayFiltered = colorObjFiltered.map(
-		(data) => backgroundColorScale[data.index],
-	);
+	const bgColorArrayFiltered = colorObjFiltered.map((data) => backgroundColorScale[data.index]);
 
 	// Cap at 100 colors, add white back if needed
 	if (bgColorArrayFiltered.length >= 101) {
@@ -162,9 +160,7 @@ export function generateBackgroundScale(options: BackgroundScaleOptions): string
 	}
 
 	// Convert to RGB format (internal processing format)
-	return bgColorArrayFiltered.map((color) =>
-		convertColorValue(color ?? "#ffffff", "RGB") as string,
-	);
+	return bgColorArrayFiltered.map((color) => convertColorValue(color ?? "#ffffff", "RGB") as string);
 }
 
 /**
@@ -233,16 +229,19 @@ export function searchContrastColors(options: SearchContrastOptions): string[] {
 	};
 
 	const outputColors: string[] = [];
-	ratios.forEach((ratio) => outputColors.push(colorScale(colorSearch(+ratio))));
+	for (const ratio of ratios) {
+		outputColors.push(colorScale(colorSearch(+ratio)));
+	}
 	return outputColors;
 }
 
 /**
  * Parse background input into normalized form
  */
-function parseBackgroundInput(
-	backgroundColor: string | GenerateThemeBackgroundInput,
-): { colorKeys: string[]; colorspace: LeonardoColorspace } {
+function parseBackgroundInput(backgroundColor: string | GenerateThemeBackgroundInput): {
+	colorKeys: string[];
+	colorspace: Colorspace;
+} {
 	if (typeof backgroundColor === "string") {
 		return {
 			colorKeys: [backgroundColor],
@@ -334,9 +333,7 @@ export function generateTheme(options: GenerateThemeOptions): GeneratedTheme {
 		}
 
 		// Modify target ratios based on contrast multiplier
-		const adjustedRatios = ratioValues.map((ratio) =>
-			multiplyRatios(+ratio, contrast),
-		);
+		const adjustedRatios = ratioValues.map((ratio) => multiplyRatios(+ratio, contrast));
 
 		// Search for contrast-matching colors
 		const contrastColors = searchContrastColors({
@@ -354,12 +351,8 @@ export function generateTheme(options: GenerateThemeOptions): GeneratedTheme {
 		for (let i = 0; i < contrastColors.length; i++) {
 			let name: string;
 			if (!swatchNames) {
-				const rVal = ratioName(
-					Array.isArray(color.ratios)
-						? color.ratios
-						: Object.values(color.ratios),
-					formula,
-				)[i] ?? 0;
+				const rVal =
+					ratioName(Array.isArray(color.ratios) ? color.ratios : Object.values(color.ratios), formula)[i] ?? 0;
 				name = color.name.concat(String(rVal)).replace(/\s+/g, "");
 			} else {
 				name = swatchNames[i] ?? "";

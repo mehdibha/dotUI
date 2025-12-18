@@ -2,239 +2,189 @@
  * Tests for createTheme API
  */
 
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
+
 import { createTheme } from "../src";
-import type {
-	CreateThemeInput,
-	CreateThemeOutput,
-	ColorInput,
-	BackgroundColorInput,
-	LeonardoColorspace,
-	ContrastFormula,
-} from "../src";
+import type { ColorScale, CreateThemeOptions, Theme } from "../src";
 
 describe("createTheme", () => {
 	describe("basic functionality", () => {
-		it("should create a theme with single color", () => {
+		it("should create a theme with minimal options", () => {
 			const theme = createTheme({
-				colors: [
-					{
-						name: "accent",
-						colorKeys: ["#6366f1"],
-						ratios: [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15],
-					},
-				],
-				backgroundColor: "#ffffff",
+				accent: "#6366f1",
+				background: "#ffffff",
 			});
 
 			expect(theme.background).toBeDefined();
-			expect(theme.colors.accent).toBeDefined();
-			expect(Object.keys(theme.colors.accent).length).toBe(11);
+			expect(theme.scales.accent).toBeDefined();
+			expect(theme.scales.neutral).toBeDefined();
+			expect(theme.scales.success).toBeDefined();
+			expect(theme.scales.warning).toBeDefined();
+			expect(theme.scales.danger).toBeDefined();
 		});
 
-		it("should create a theme with multiple colors", () => {
+		it("should generate all 11 scale steps", () => {
 			const theme = createTheme({
-				colors: [
-					{
-						name: "accent",
-						colorKeys: ["#6366f1"],
-						ratios: [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15],
-					},
-					{
-						name: "success",
-						colorKeys: ["#22c55e"],
-						ratios: [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15],
-					},
-				],
-				backgroundColor: "#ffffff",
+				accent: "#6366f1",
+				background: "#ffffff",
 			});
 
-			expect(theme.colors.accent).toBeDefined();
-			expect(theme.colors.success).toBeDefined();
+			const steps = ["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "950"];
+			for (const step of steps) {
+				expect(theme.scales.accent[step as keyof ColorScale]).toBeDefined();
+			}
 		});
 
 		it("should output HSL format", () => {
 			const theme = createTheme({
-				colors: [
-					{
-						name: "accent",
-						colorKeys: ["#6366f1"],
-						ratios: [3],
-					},
-				],
-				backgroundColor: "#ffffff",
+				accent: "#6366f1",
+				background: "#ffffff",
 			});
 
 			expect(theme.background).toMatch(/^hsl\(\d+, \d+%, \d+%\)$/);
-			const firstStep = Object.values(theme.colors.accent)[0];
-			expect(firstStep).toMatch(/^hsl\(\d+, \d+%, \d+%\)$/);
+			expect(theme.scales.accent["500"]).toMatch(/^hsl\(\d+, \d+%, \d+%\)$/);
+		});
+	});
+
+	describe("auto-generation", () => {
+		it("should auto-generate neutral from accent", () => {
+			const theme = createTheme({
+				accent: "#6366f1",
+				background: "#ffffff",
+			});
+
+			// Neutral should be defined and different from accent
+			expect(theme.scales.neutral).toBeDefined();
+			expect(theme.scales.neutral["500"]).not.toBe(theme.scales.accent["500"]);
+		});
+
+		it("should auto-generate semantic colors", () => {
+			const theme = createTheme({
+				accent: "#6366f1",
+				background: "#ffffff",
+			});
+
+			// All semantic scales should be defined
+			expect(theme.scales.success["500"]).toBeDefined();
+			expect(theme.scales.warning["500"]).toBeDefined();
+			expect(theme.scales.danger["500"]).toBeDefined();
+		});
+
+		it("should use provided colors instead of auto-generating", () => {
+			const theme = createTheme({
+				accent: "#6366f1",
+				background: "#ffffff",
+				neutral: "#64748b",
+				success: "#22c55e",
+				warning: "#f59e0b",
+				danger: "#ef4444",
+			});
+
+			expect(theme.scales.neutral).toBeDefined();
+			expect(theme.scales.success).toBeDefined();
+			expect(theme.scales.warning).toBeDefined();
+			expect(theme.scales.danger).toBeDefined();
+		});
+	});
+
+	describe("algorithm selection", () => {
+		it("should use contrast algorithm by default", () => {
+			const theme = createTheme({
+				accent: "#6366f1",
+				background: "#ffffff",
+			});
+
+			expect(theme.scales.accent).toBeDefined();
+		});
+
+		it("should support material algorithm", () => {
+			const theme = createTheme({
+				accent: "#6366f1",
+				background: "#ffffff",
+				algorithm: "material",
+			});
+
+			expect(theme.scales.accent).toBeDefined();
+			expect(theme.scales.accent["500"]).toMatch(/^hsl\(\d+, \d+%, \d+%\)$/);
+		});
+
+		it("should produce different results for different algorithms", () => {
+			const contrastTheme = createTheme({
+				accent: "#6366f1",
+				background: "#ffffff",
+				algorithm: "contrast",
+			});
+
+			const materialTheme = createTheme({
+				accent: "#6366f1",
+				background: "#ffffff",
+				algorithm: "material",
+			});
+
+			// Results should be different (though both valid)
+			expect(contrastTheme.scales.accent["500"]).not.toBe(materialTheme.scales.accent["500"]);
 		});
 	});
 
 	describe("options", () => {
-		it("should respect lightness option with background object", () => {
-			const lightTheme = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: {
-					name: "neutral",
-					colorKeys: ["#6366f1"],
-				},
-				lightness: 97,
-			});
-
-			const darkTheme = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: {
-					name: "neutral",
-					colorKeys: ["#6366f1"],
-				},
-				lightness: 10,
-			});
-
-			expect(lightTheme.background).not.toBe(darkTheme.background);
-		});
-
-		it("should respect lightness option with string backgroundColor", () => {
-			const lightTheme = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: "#6b7280",
-				lightness: 97,
-			});
-
-			const darkTheme = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: "#6b7280",
-				lightness: 10,
-			});
-
-			// Light theme should have a light background
-			expect(lightTheme.background).toMatch(/hsl\(\d+, \d+%, 9[0-9]%\)/);
-			// Dark theme should have a dark background
-			expect(darkTheme.background).toMatch(/hsl\(\d+, \d+%, [0-2]?[0-9]%\)/);
-			// They should be different
-			expect(lightTheme.background).not.toBe(darkTheme.background);
-		});
-
 		it("should respect saturation option", () => {
 			const fullSat = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: "#ffffff",
+				accent: "#6366f1",
+				background: "#ffffff",
 				saturation: 100,
 			});
 
 			const lowSat = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: "#ffffff",
+				accent: "#6366f1",
+				background: "#ffffff",
 				saturation: 50,
 			});
 
-			expect(fullSat.colors.accent).not.toEqual(lowSat.colors.accent);
+			expect(fullSat.scales.accent["500"]).not.toBe(lowSat.scales.accent["500"]);
 		});
 
 		it("should respect contrast option", () => {
 			const normalContrast = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: "#ffffff",
+				accent: "#6366f1",
+				background: "#ffffff",
 				contrast: 1,
 			});
 
 			const highContrast = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: "#ffffff",
+				accent: "#6366f1",
+				background: "#ffffff",
 				contrast: 1.5,
 			});
 
-			expect(normalContrast.colors.accent).not.toEqual(
-				highContrast.colors.accent
-			);
+			expect(normalContrast.scales.accent["500"]).not.toBe(highContrast.scales.accent["500"]);
 		});
 
-		it("should support wcag2 and wcag3 formula", () => {
-			const wcag2 = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [4.5] },
-				],
-				backgroundColor: "#ffffff",
-				formula: "wcag2",
+		it("should respect lightness option", () => {
+			const lightTheme = createTheme({
+				accent: "#6366f1",
+				background: "#6b7280",
+				lightness: 97,
 			});
 
-			const wcag3 = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [60] },
-				],
-				backgroundColor: "#ffffff",
-				formula: "wcag3",
+			const darkTheme = createTheme({
+				accent: "#6366f1",
+				background: "#6b7280",
+				lightness: 10,
 			});
 
-			expect(wcag2.colors.accent).toBeDefined();
-			expect(wcag3.colors.accent).toBeDefined();
+			expect(lightTheme.scales.accent["500"]).not.toBe(darkTheme.scales.accent["500"]);
 		});
 	});
 
-	describe("background color input", () => {
-		it("should accept string background", () => {
+	describe("dark theme support", () => {
+		it("should work with dark background", () => {
 			const theme = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: "#f5f5f5",
+				accent: "#6366f1",
+				background: "#0a0a0a",
 			});
 
-			expect(theme.background).toBeDefined();
-		});
-
-		it("should accept object background", () => {
-			const theme = createTheme({
-				colors: [
-					{ name: "accent", colorKeys: ["#6366f1"], ratios: [3] },
-				],
-				backgroundColor: {
-					name: "neutral",
-					colorKeys: ["#f5f5f5"],
-				},
-				lightness: 95,
-			});
-
-			expect(theme.background).toBeDefined();
-		});
-	});
-
-	describe("named ratios", () => {
-		it("should support object ratios with named keys", () => {
-			const theme = createTheme({
-				colors: [
-					{
-						name: "accent",
-						colorKeys: ["#6366f1"],
-						ratios: {
-							light: 1.5,
-							base: 3,
-							dark: 7,
-						},
-					},
-				],
-				backgroundColor: "#ffffff",
-			});
-
-			expect(theme.colors.accent.light).toBeDefined();
-			expect(theme.colors.accent.base).toBeDefined();
-			expect(theme.colors.accent.dark).toBeDefined();
+			expect(theme.background).toMatch(/^hsl\(\d+, \d+%, \d+%\)$/);
+			expect(theme.scales.accent).toBeDefined();
 		});
 	});
 });
@@ -242,35 +192,98 @@ describe("createTheme", () => {
 describe("Type exports", () => {
 	it("should export all required types", () => {
 		// These are compile-time checks - if the types don't exist, TypeScript will fail
-		const input: CreateThemeInput = {
-			colors: [],
-			backgroundColor: "#ffffff",
+		const options: CreateThemeOptions = {
+			accent: "#6366f1",
+			background: "#ffffff",
 		};
 
-		const output: CreateThemeOutput = {
+		const theme: Theme = {
 			background: "hsl(0, 0%, 100%)",
-			colors: {},
+			scales: {
+				neutral: {
+					"50": "",
+					"100": "",
+					"200": "",
+					"300": "",
+					"400": "",
+					"500": "",
+					"600": "",
+					"700": "",
+					"800": "",
+					"900": "",
+					"950": "",
+				},
+				accent: {
+					"50": "",
+					"100": "",
+					"200": "",
+					"300": "",
+					"400": "",
+					"500": "",
+					"600": "",
+					"700": "",
+					"800": "",
+					"900": "",
+					"950": "",
+				},
+				success: {
+					"50": "",
+					"100": "",
+					"200": "",
+					"300": "",
+					"400": "",
+					"500": "",
+					"600": "",
+					"700": "",
+					"800": "",
+					"900": "",
+					"950": "",
+				},
+				warning: {
+					"50": "",
+					"100": "",
+					"200": "",
+					"300": "",
+					"400": "",
+					"500": "",
+					"600": "",
+					"700": "",
+					"800": "",
+					"900": "",
+					"950": "",
+				},
+				danger: {
+					"50": "",
+					"100": "",
+					"200": "",
+					"300": "",
+					"400": "",
+					"500": "",
+					"600": "",
+					"700": "",
+					"800": "",
+					"900": "",
+					"950": "",
+				},
+			},
 		};
 
-		const colorInput: ColorInput = {
-			name: "test",
-			colorKeys: ["#000000"],
-			ratios: [3],
+		const scale: ColorScale = {
+			"50": "",
+			"100": "",
+			"200": "",
+			"300": "",
+			"400": "",
+			"500": "",
+			"600": "",
+			"700": "",
+			"800": "",
+			"900": "",
+			"950": "",
 		};
 
-		const bgInput: BackgroundColorInput = {
-			name: "bg",
-			colorKeys: ["#ffffff"],
-		};
-
-		const colorspace: LeonardoColorspace = "RGB";
-		const formula: ContrastFormula = "wcag2";
-
-		expect(input).toBeDefined();
-		expect(output).toBeDefined();
-		expect(colorInput).toBeDefined();
-		expect(bgInput).toBeDefined();
-		expect(colorspace).toBe("RGB");
-		expect(formula).toBe("wcag2");
+		expect(options).toBeDefined();
+		expect(theme).toBeDefined();
+		expect(scale).toBeDefined();
 	});
 });

@@ -2,18 +2,8 @@
  * Core types for @dotui/colors
  */
 
-/** RGB color as tuple [r, g, b] where values are 0-255 */
-export type RGB = [number, number, number];
-
-/** HSL color object */
-export interface HSL {
-	h: number; // Hue 0-360
-	s: number; // Saturation 0-100
-	l: number; // Lightness 0-100
-}
-
-/** Standard 11-step scale output (50-950) */
-export interface ScaleOutput {
+/** Standard 11-step color scale (50-950) */
+export interface ColorScale {
 	"50": string;
 	"100": string;
 	"200": string;
@@ -28,24 +18,12 @@ export interface ScaleOutput {
 }
 
 /** Step names for 11-step scale */
-export const SCALE_STEPS = [
-	"50",
-	"100",
-	"200",
-	"300",
-	"400",
-	"500",
-	"600",
-	"700",
-	"800",
-	"900",
-	"950",
-] as const;
+export const SCALE_STEPS = ["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "950"] as const;
 
 export type ScaleStep = (typeof SCALE_STEPS)[number];
 
-/** Colorspaces supported by Leonardo for interpolation */
-export type LeonardoColorspace =
+/** Colorspaces supported for interpolation */
+export type Colorspace =
 	| "RGB"
 	| "HEX"
 	| "HSL"
@@ -60,54 +38,6 @@ export type LeonardoColorspace =
 
 /** Contrast formula options */
 export type ContrastFormula = "wcag2" | "wcag3";
-
-/** Leonardo algorithm options */
-export interface LeonardoOptions {
-	/** Primary color (hex) */
-	color: string;
-
-	/** Background color for contrast calculations (hex) */
-	background: string;
-
-	/** Additional color keys for gradient interpolation */
-	colorKeys?: string[];
-
-	/**
-	 * Target contrast ratios for each step
-	 * @default [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15]
-	 */
-	ratios?: number[];
-
-	/**
-	 * Colorspace for interpolation
-	 * @default 'OKLCH'
-	 */
-	colorspace?: LeonardoColorspace;
-
-	/**
-	 * Saturation modifier (0-100)
-	 * @default 100
-	 */
-	saturation?: number;
-
-	/**
-	 * Contrast multiplier - scales all ratios
-	 * @default 1
-	 */
-	contrast?: number;
-
-	/**
-	 * Use smooth Bezier interpolation
-	 * @default false
-	 */
-	smooth?: boolean;
-
-	/**
-	 * Contrast calculation formula
-	 * @default 'wcag2'
-	 */
-	formula?: ContrastFormula;
-}
 
 /** Material algorithm options */
 export interface MaterialOptions {
@@ -138,4 +68,89 @@ export interface MaterialOptions {
 	 * @default 0
 	 */
 	contrastLevel?: number;
+}
+
+// ============================================================================
+// Main createTheme API Types
+// ============================================================================
+
+/** Algorithm to use for scale generation */
+export type Algorithm = "contrast" | "material";
+
+/** Options for createTheme function */
+export interface CreateThemeOptions {
+	/**
+	 * Brand/primary color (hex)
+	 * Required - used to generate accent scale
+	 */
+	accent: string;
+
+	/**
+	 * Background color (hex)
+	 * Required - determines theme lightness and contrast direction
+	 */
+	background: string;
+
+	/**
+	 * Neutral base color (hex)
+	 * Optional - defaults to desaturated version of accent
+	 */
+	neutral?: string;
+
+	/**
+	 * Success color (hex)
+	 * Optional - defaults to green (hue=142°)
+	 */
+	success?: string;
+
+	/**
+	 * Warning color (hex)
+	 * Optional - defaults to amber (hue=45°)
+	 */
+	warning?: string;
+
+	/**
+	 * Danger/error color (hex)
+	 * Optional - defaults to red (hue=25°)
+	 */
+	danger?: string;
+
+	/**
+	 * Algorithm to use for scale generation
+	 * @default 'contrast'
+	 */
+	algorithm?: Algorithm;
+
+	/**
+	 * Background lightness override (0-100)
+	 * Optional - defaults to calculated from background color
+	 */
+	lightness?: number;
+
+	/**
+	 * Global saturation modifier (0-100)
+	 * @default 100
+	 */
+	saturation?: number;
+
+	/**
+	 * Contrast multiplier
+	 * @default 1
+	 */
+	contrast?: number;
+}
+
+/** Output from createTheme function */
+export interface Theme {
+	/** Background color (HSL string) */
+	background: string;
+
+	/** Generated color scales */
+	scales: {
+		neutral: ColorScale;
+		accent: ColorScale;
+		success: ColorScale;
+		warning: ColorScale;
+		danger: ColorScale;
+	};
 }

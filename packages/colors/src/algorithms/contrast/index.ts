@@ -28,14 +28,15 @@
  */
 
 import ColorJS from "colorjs.io";
-import { generateTheme } from "./generate";
-import type { LeonardoColorspace, ContrastFormula } from "../../types";
+
 import { SCALE_STEPS } from "../../types";
+import { generateTheme } from "./generate";
+import type { Colorspace, ContrastFormula } from "../../types";
 
 export interface ColorInput {
 	name: string;
 	colorKeys: string[];
-	colorspace?: LeonardoColorspace;
+	colorspace?: Colorspace;
 	ratios: number[] | Record<string, number>;
 	smooth?: boolean;
 }
@@ -43,7 +44,7 @@ export interface ColorInput {
 export interface BackgroundColorInput {
 	name: string;
 	colorKeys: string[];
-	colorspace?: LeonardoColorspace;
+	colorspace?: Colorspace;
 }
 
 export interface CreateThemeInput {
@@ -65,14 +66,14 @@ export interface CreateThemeOutput {
  */
 function toHslString(color: string): string {
 	const hsl = new ColorJS(color).to("hsl");
-	const h = Math.round(isNaN(hsl.coords[0] ?? 0) ? 0 : (hsl.coords[0] ?? 0));
+	const h = Math.round(Number.isNaN(hsl.coords[0] ?? 0) ? 0 : (hsl.coords[0] ?? 0));
 	const s = Math.round(hsl.coords[1] ?? 0);
 	const l = Math.round(hsl.coords[2] ?? 0);
 	return `hsl(${h}, ${s}%, ${l}%)`;
 }
 
 /**
- * Create a theme with contrast-based color scales
+ * Generate a theme with contrast-based color scales
  *
  * Uses Leonardo's algorithm for 100% parity with Adobe's contrast-colors library.
  * Always outputs HSL format for human readability and ColorPicker compatibility.
@@ -80,15 +81,8 @@ function toHslString(color: string): string {
  * @param input - Theme configuration
  * @returns Theme output with background and color scales in HSL format
  */
-export function createTheme(input: CreateThemeInput): CreateThemeOutput {
-	const {
-		colors,
-		backgroundColor,
-		lightness,
-		contrast = 1,
-		saturation = 100,
-		formula = "wcag2",
-	} = input;
+export function generateContrastTheme(input: CreateThemeInput): CreateThemeOutput {
+	const { colors, backgroundColor, lightness, contrast = 1, saturation = 100, formula = "wcag2" } = input;
 
 	// Use the pure functional implementation
 	const generated = generateTheme({
@@ -137,7 +131,7 @@ export function createTheme(input: CreateThemeInput): CreateThemeOutput {
 			} else {
 				// For non-standard ratios, extract step from name or use the name directly
 				const stepMatch = value.name.match(/(\d+)$/);
-				if (stepMatch && stepMatch[1]) {
+				if (stepMatch?.[1]) {
 					colorScale[stepMatch[1]] = toHslString(value.value);
 				} else {
 					colorScale[value.name] = toHslString(value.value);
@@ -152,4 +146,4 @@ export function createTheme(input: CreateThemeInput): CreateThemeOutput {
 }
 
 // Re-export types
-export type { LeonardoColorspace, ContrastFormula } from "../../types";
+export type { Colorspace, ContrastFormula } from "../../types";
