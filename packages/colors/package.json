@@ -6,9 +6,9 @@
 	"license": "MIT",
 	"exports": {
 		".": "./src/index.ts",
-		"./algorithms/contrast": "./src/algorithms/contrast/index.ts",
-		"./algorithms/material": "./src/algorithms/material/index.ts",
-		"./types": "./src/types.ts"
+		"./material": "./src/material/index.ts",
+		"./material/schema": "./src/material/schema.ts",
+		"./contrast": "./src/contrast/index.ts"
 	},
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",

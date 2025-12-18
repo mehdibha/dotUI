@@ -17,7 +17,7 @@ import {
 	removeDuplicates,
 	round,
 } from "./utils";
-import type { Colorspace, ContrastFormula } from "../../types";
+import type { Colorspace, ContrastFormula } from "./types";
 
 // ============================================================================
 // Types

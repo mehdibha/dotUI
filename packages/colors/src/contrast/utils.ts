@@ -5,8 +5,8 @@
 
 import Color from "colorjs.io";
 
-import { catmullRom2bezier, prepareCurve } from "../../utils/curve";
-import type { Colorspace, ContrastFormula } from "../../types";
+import { catmullRom2bezier, prepareCurve } from "./curve";
+import type { Colorspace, ContrastFormula } from "./types";
 
 // Colorspace mapping from Leonardo names to Color.js space names
 export const colorSpaces: Record<string, string> = {

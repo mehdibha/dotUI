@@ -29,9 +29,9 @@
 
 import ColorJS from "colorjs.io";
 
-import { SCALE_STEPS } from "../../types";
 import { generateTheme } from "./generate";
-import type { Colorspace, ContrastFormula } from "../../types";
+import { SCALE_STEPS } from "./types";
+import type { Colorspace, ContrastFormula } from "./types";
 
 export interface ColorInput {
 	name: string;
@@ -146,4 +146,4 @@ export function generateContrastTheme(input: CreateThemeInput): CreateThemeOutpu
 }
 
 // Re-export types
-export type { Colorspace, ContrastFormula } from "../../types";
+export type { Colorspace, ContrastFormula } from "./types";
