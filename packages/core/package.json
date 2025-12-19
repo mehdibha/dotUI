@@ -14,7 +14,8 @@
 		"./style/theme-provider": "./src/style/theme-provider.tsx",
 		"./style/variants-provider": "./src/style/variants-provider.tsx",
 		"./components": "./src/components/index.ts",
-		"./components/create-dynamic-component": "./src/components/create-dynamic-component.tsx"
+		"./components/create-dynamic-component": "./src/components/create-dynamic-component.tsx",
+		"./shadcn": "./src/shadcn/index.ts"
 	},
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
@@ -26,10 +27,14 @@
 	},
 	"dependencies": {
 		"@dotui/colors": "workspace:*",
+		"@dotui/style-system": "workspace:*",
+		"@dotui/types": "workspace:*",
+		"shadcn": "^3.6.1",
 		"zod": "^4.1.13"
 	},
 	"devDependencies": {
 		"@dotui/ts-config": "workspace:*",
+		"@types/node": "^22.15.3",
 		"@types/react": "^19.2.2",
 		"typescript": "^5.8.3"
 	}

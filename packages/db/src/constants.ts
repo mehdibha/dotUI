@@ -7,7 +7,7 @@ interface DefaultStyle {
 
 export const DEFAULT_STYLES: DefaultStyle[] = [
   {
-    name: "minimalist",
+    name: "vercel",
     config: {
       theme: {
         colors: {

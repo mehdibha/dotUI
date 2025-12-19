@@ -17,6 +17,7 @@
     "migrate": "pnpm with-env drizzle-kit migrate",
     "studio": "pnpm with-env drizzle-kit studio",
     "seed": "pnpm with-env tsx src/seed.ts",
+    "migrate:data": "pnpm with-env psql $POSTGRES_URL -f scripts/migrate-to-config.sql",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },
