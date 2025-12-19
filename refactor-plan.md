@@ -156,36 +156,18 @@ export const themeConfigSchema = z.object({
 });
 ```
 
-### ColorsConfig (Simple vs Advanced)
+### ColorsConfig (Re-export from @dotui/colors)
 ```typescript
-import { modeConfigSchema, algorithmSchema } from '@dotui/colors';
+import { createThemeOptionsSchema } from '@dotui/colors';
 
-export const colorsConfigSchema = z.discriminatedUnion('level', [
-  // Simple - just neutral + brand colors
-  z.object({
-    level: z.literal('simple'),
-    modes: z.array(z.string()),          // ['light', 'dark'] or ['light'] - which modes to generate
-    algorithm: algorithmSchema,          // From @dotui/colors
-    neutral: z.string(),                 // Base neutral color
-    brand: z.string(),                   // Brand/accent color
-    // success, warning, danger, info auto-generated
-  }),
+// Direct re-export - keeps DB schema in sync with @dotui/colors API
+export const colorsConfigSchema = createThemeOptionsSchema;
 
-  // Advanced - full control per mode
-  z.object({
-    level: z.literal('advanced'),
-    algorithm: algorithmSchema,          // From @dotui/colors
-    modes: z.record(modeConfigSchema),   // From @dotui/colors, includes overrides
-    tokens: z.record(z.string()).optional(), // Only modified tokens
-  }),
-]);
-
-// Note: In simple mode, `modes` is an array (which modes to generate)
-//       In advanced mode, `modes` is a record (full config per mode)
-
-// modeConfigSchema (defined in @dotui/colors) includes:
-// - Algorithm-specific scale configs (keyColors, ratios, etc.)
-// - overrides?: Record<string, string> for base color overrides
+// The schema is a discriminated union by 'algorithm':
+// - algorithm: 'material' | 'contrast'
+// - palettes: { primary: string, neutral?: string, success?: string | true, ... }
+// - modes: Record<string, ModeConfig> (algorithm-specific)
+// - Algorithm-specific options (ratios, formula, saturation for contrast, etc.)
 ```
 
 ### TypographyConfig
@@ -328,37 +310,38 @@ export const meta = {
 
 ---
 
-## Phase 0: @dotui/colors Updates
+## Phase 0: @dotui/colors Updates ✅ COMPLETE
 
 Update `@dotui/colors` with schemas and flexible API for core to consume.
 
 ### Tasks
 
-1. [ ] **Export Zod schemas**
-   - `algorithmSchema` - Available algorithms (leonardo, material, oklch, etc.)
-   - `modeConfigSchema` - Per-mode generation config (algorithm-specific)
-   - `scaleConfigSchema` - Per-scale config (keyColors, ratios, etc.)
-   - Include `overrides?: Record<string, string>` in modeConfigSchema
+1. [x] **Export Zod schemas**
+   - `createThemeOptionsSchema` - Discriminated union by `algorithm` ("material" | "contrast")
+   - Algorithm-specific schemas: `createContrastThemeOptionsSchema`, `createMaterialThemeOptionsSchema`
+   - Mode schemas per algorithm with palette overrides support
 
-2. [ ] **Flexible createTheme API**
-   - Support generating single mode: `createTheme(modeConfig)`
-   - Support generating all modes: `createThemes(modes)`
-   - Align input params exactly with modeConfigSchema
+2. [x] **Flexible createTheme API**
+   - `createTheme(options)` - Unified API that routes to algorithm-specific implementation
+   - Mode shorthand: `modes: { light: true }` for defaults
+   - Full mode config: `modes: { light: { lightness: 97 }, dark: { lightness: 5 } }`
 
-3. [ ] **Export types**
-   - `ModeConfig` - z.infer of modeConfigSchema
-   - `Algorithm` - z.infer of algorithmSchema
-   - `ScaleConfig` - z.infer of scaleConfigSchema
+3. [x] **Export types**
+   - `CreateThemeOptions` - z.infer of createThemeOptionsSchema
+   - `CreateContrastThemeOptions`, `CreateMaterialThemeOptions` - algorithm-specific
+   - `ColorScale`, `Theme`, `ThemeMode` - shared output types
 
-4. [ ] **Handle simple mode generation**
-   - Function to generate full mode config from just neutral + brand colors
-   - Auto-generate success, warning, danger, info scales
+4. [x] **Handle simple mode generation**
+   - `palettes: { primary: "#...", success: true }` auto-generates semantic colors
+   - Supports: success, danger, warning, info with sensible defaults
 
-### Files to Modify
-- `packages/colors/src/schemas.ts` (new)
-- `packages/colors/src/index.ts` (exports)
-- `packages/colors/src/create-theme.ts` (API updates)
-- `packages/colors/package.json` (exports)
+### Files Modified
+- `packages/colors/src/schema.ts` ✅
+- `packages/colors/src/theme.ts` ✅
+- `packages/colors/src/index.ts` ✅
+- `packages/colors/src/contrast/schema.ts` ✅
+- `packages/colors/src/material/schema.ts` ✅
+- `packages/colors/package.json` ✅
 
 ---
 
@@ -419,7 +402,7 @@ Create `@dotui/core` with schemas, style system, and shadcn adapter.
 2. [ ] **Create schemas/**
    - `schemas/style.ts` - styleConfigSchema
    - `schemas/theme.ts` - themeConfigSchema
-   - `schemas/colors.ts` - colorsConfigSchema (imports from @dotui/colors)
+   - `schemas/colors.ts` - colorsConfigSchema (re-export from @dotui/colors `createThemeOptionsSchema`)
    - `schemas/typography.ts` - typographyConfigSchema
    - `schemas/effects.ts` - effectsConfigSchema
    - `schemas/variants.ts` - variantsConfigSchema (import from __registry__)
@@ -616,10 +599,10 @@ Update all imports across the project to use new packages.
 
 1. **No partial configs** - Require full StyleConfig, validation fails on missing fields
 2. **Build trigger** - Chokidar watcher during dev + CI check that fails if `__registry__/` is out of sync
-3. **Colors schemas in @dotui/colors** - modeConfigSchema, algorithmSchema defined in colors package
-4. **Colors naming** - `level: 'simple' | 'advanced'`, `modes` (not modeConfigs), `overrides` inside each mode
-5. **Simple mode has `modes` array** - To specify which color modes to generate (light, dark, both)
-6. **Only store modified tokens** - `tokens` field stores only tokens that differ from defaults
+3. **Colors schemas in @dotui/colors** - `createThemeOptionsSchema` is the source of truth
+4. **ColorsConfig = createThemeOptionsSchema** - Direct re-export, no wrapper. DB stores exactly what @dotui/colors expects
+5. **Algorithm discriminator** - Colors config uses `algorithm: 'material' | 'contrast'` as discriminator
+6. **Semantic colors shorthand** - `palettes: { success: true }` auto-generates with sensible defaults
 7. **Typography over Fonts** - Use `typographyConfig` for font settings
 8. **createDynamicComponent location** - `@dotui/core/components/` (separate from providers)
 9. **Flat variants internally** - Groups only for style-editor UI
