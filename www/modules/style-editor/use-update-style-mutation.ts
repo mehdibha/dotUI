@@ -20,9 +20,11 @@ export const useUpdateStyleMutation = (
 			if (!styleId || !slug) throw new Error("Missing style id or slug");
 			return await trpcClient.style.update.mutate({
 				id: styleId,
-				theme: data.theme,
-				icons: data.icons,
-				variants: data.variants,
+				config: {
+					theme: data.theme,
+					icons: data.icons,
+					variants: data.variants,
+				},
 			});
 		},
 		onMutate: async (variables: StyleFormData) => {
@@ -37,9 +39,11 @@ export const useUpdateStyleMutation = (
 				if (!old) return old;
 				return {
 					...old,
-					theme: variables.theme,
-					icons: variables.icons,
-					variants: variables.variants,
+					config: {
+						theme: variables.theme,
+						icons: variables.icons,
+						variants: variables.variants,
+					},
 					updatedAt: new Date(),
 				};
 			});
