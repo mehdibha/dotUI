@@ -54,9 +54,6 @@ importers:
       '@dotui/db':
         specifier: workspace:*
         version: link:../db
-      '@dotui/registry':
-        specifier: workspace:*
-        version: link:../registry
       '@trpc/server':
         specifier: ^11.2.0
         version: 11.7.2(typescript@5.9.3)
@@ -160,12 +157,9 @@ importers:
 
   packages/db:
     dependencies:
-      '@dotui/registry':
+      '@dotui/core':
         specifier: workspace:*
-        version: link:../registry
-      '@dotui/style-system':
-        specifier: workspace:*
-        version: link:../style-system
+        version: link:../core
       '@vercel/postgres':
         specifier: ^0.10.0
         version: 0.10.0

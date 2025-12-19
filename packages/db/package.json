@@ -21,8 +21,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@dotui/registry": "workspace:*",
-    "@dotui/style-system": "workspace:*",
+    "@dotui/core": "workspace:*",
     "@vercel/postgres": "^0.10.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.44.1",

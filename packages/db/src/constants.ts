@@ -1,75 +1,36 @@
-import type { z } from "zod";
+import type { StyleConfig } from "@dotui/core/schemas";
 
-import { restoreStyleDefinitionDefaults } from "@dotui/style-system/utils";
+interface DefaultStyle {
+  name: string;
+  config: StyleConfig;
+}
 
-import type { createStyleSchema } from "./schemas";
-
-export const DEFAULT_STYLES: Omit<
-  z.infer<typeof createStyleSchema>,
-  "userId"
->[] = [
-  restoreStyleDefinitionDefaults({
+export const DEFAULT_STYLES: DefaultStyle[] = [
+  {
     name: "minimalist",
-    theme: {
-      colors: {
-        activeModes: ["light", "dark"] as ("light" | "dark")[],
+    config: {
+      theme: {
+        colors: {
+          algorithm: "material",
+          palettes: {
+            primary: "#0A0A0A",
+          },
+          modes: {
+            light: true,
+            dark: true,
+          },
+        },
+        radius: 0.5,
+        spacing: 4,
+        typography: {
+          font: "Inter",
+        },
       },
+      icons: {
+        library: "lucide",
+        strokeWidth: 2,
+      },
+      variants: {},
     },
-  } as any) as Omit<z.infer<typeof createStyleSchema>, "userId">,
-  // restoreStyleDefinitionDefaults({
-  //   name: "material",
-  //   theme: {
-  //     colors: {
-  //       activeModes: ["light", "dark"],
-  //       modes: {
-  //         light: {
-  //           scales: {
-  //             neutral: {
-  //               colorKeys: ["#000000"],
-  //             },
-  //             accent: {
-  //               colorKeys: ["#0091FF"],
-  //             },
-  //           },
-  //         },
-  //         dark: {
-  //           scales: {
-  //             neutral: {
-  //               colorKeys: ["#ffffff"],
-  //             },
-  //             accent: {
-  //               colorKeys: ["#0091FF"],
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  //   variants: {
-  //     buttons: "ripple",
-  //   },
-  // }),
-  // restoreStyleDefinitionDefaults({
-  //   name: "ghibli",
-  //   theme: {
-  //     colors: {
-  //       activeModes: ["light"],
-  //       modes: {
-  //         light: {
-  //           scales: {
-  //             neutral: {
-  //               colorKeys: ["#f1dfbe"],
-  //             },
-  //             accent: {
-  //               colorKeys: ["#969A54"],
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //     fonts: {
-  //       body: "Poppins",
-  //     },
-  //   },
-  // }),
+  },
 ];

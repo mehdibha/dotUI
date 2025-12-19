@@ -38,7 +38,7 @@ style = pgTable("style", {
 ### 3. Variants Architecture
 - **Flat internally**: `{ button: 'basic', input: 'underline', ... }`
 - **Groups for UI only**: Defined in registry meta.ts, generated to `__registry__/variants.ts`
-- **Only multi-variant items**: Single-variant items excluded from schema
+- **All components included**: All components with variants in VARIANTS (for type safety)
 - **Strict schemas**: Generated from registry metadata
 
 ### 4. Presets
@@ -438,84 +438,75 @@ Create `@dotui/core` with schemas, style system, and shadcn adapter.
 
 ---
 
-## Phase 3: Connect Components to Core
+## Phase 3: Connect Components to Core ✅ COMPLETE
 
 Update registry components to use `createDynamicComponent` from core.
 
 ### Tasks
 
-1. [ ] **Update registry package.json**
-   - Add `@dotui/core` as dependency
+1. [x] **Update registry package.json**
+   - `@dotui/core` was already a dependency
 
-2. [ ] **Update component exports**
-   - Components that have variants should use `createDynamicComponent`
-   - Import from `@dotui/core/components/create-dynamic-component`
+2. [x] **Update component exports**
+   - Updated all 57 components to import from `@dotui/core/components/create-dynamic-component`
+   - Changed import path from `@dotui/core/utils/...` to `@dotui/core/components/...`
 
-3. [ ] **Update component structure**
-   ```typescript
-   // Before: registry/src/ui/button/index.tsx
-   export { Button } from './basic';
+3. [x] **Update createDynamicComponent signature**
+   - Added `Props extends object` constraint (allows React props)
+   - Added optional `V extends string` type parameter for variant keys
+   - `VariantsMap<Props, V>` ensures all variants match DefaultComponent props
+   - Type safety verified: incompatible variant props cause TypeScript errors
 
-   // After: registry/src/ui/button/index.tsx
-   import { createDynamicComponent } from '@dotui/core/components/create-dynamic-component';
-   import { BasicButton } from './basic';
-   import { RippleButton } from './ripple';
+4. [x] **Update build-registry.ts**
+   - Now includes ALL components with variants (not just 2+ variants)
+   - Generated variants.ts with 59 components
 
-   export const Button = createDynamicComponent('button', {
-     basic: BasicButton,
-     ripple: RippleButton,
-   });
-   ```
-
-4. [ ] **Test variant switching**
-   - Ensure StyleProvider variant selection works
-   - Ensure default variant fallback works
-
-### Files to Modify
-- `packages/registry/package.json`
-- `packages/registry/src/ui/*/index.tsx` (components with variants)
+### Files Modified
+- `packages/core/src/components/create-dynamic-component.tsx` - Updated type signature
+- `packages/core/src/__registry__/variants.ts` - Regenerated with 59 components
+- `packages/registry/src/ui/*/index.tsx` - All 57 component imports updated
+- `scripts/build-registry.ts` - Include all variants
 
 ---
 
-## Phase 4: Database Package Updates
+## Phase 4: Database Package Updates ✅ COMPLETE
 
 Update `@dotui/db` with new schemas.
 
 ### Tasks
 
-1. [ ] **Update style table schema**
-   ```typescript
-   // packages/db/src/schemas/style.ts
-   export const style = pgTable("style", {
-     id: uuid("id").notNull().primaryKey().defaultRandom(),
-     name: text("name").notNull(),
-     description: text("description"),
-     visibility: text("visibility", { enum: ["public", "unlisted", "private"] }),
-     isFeatured: boolean("is_featured").notNull().default(false),
-     isPreset: boolean("is_preset").notNull().default(false),  // NEW
-     config: jsonb("config").$type<StyleConfig>().notNull(),   // CHANGED: single column
-     userId: text("user_id").notNull(),
-     createdAt: timestamp("created_at").defaultNow().notNull(),
-     updatedAt: timestamp("updated_at"),
-   });
-   ```
+1. [x] **Update style table schema**
+   - Changed from 3 columns (`theme`, `icons`, `variants`) to single `config` column
+   - Added `isPreset` column
+   - Uses `StyleConfig` type from `@dotui/core/schemas`
 
-2. [ ] **Create migration script**
-   - Migrate existing `theme`, `icons`, `variants` columns to single `config` column
-   - Add `is_preset` column
+2. [x] **Update validation schemas**
+   - Created `updateStyleConfigSchema` for the update mutation
+   - Updated `createStyleSchema` to use `styleConfigSchema`
 
-3. [ ] **Update tRPC routers**
-   - Use new schema types from `@dotui/core/schemas`
-   - Update validation to use `styleConfigSchema`
+3. [x] **Update tRPC routers**
+   - Removed `@dotui/registry/schemas` import
+   - Updated `update` mutation to use `config` instead of separate columns
+   - Import `updateStyleConfigSchema` from db/schemas
 
-4. [ ] **Update db package.json**
-   - Add `@dotui/core` as dependency (for types)
+4. [x] **Update package dependencies**
+   - Replaced `@dotui/style-system` and `@dotui/registry` with `@dotui/core` in db
+   - Removed `@dotui/registry` from api package
 
-### Files to Modify
-- `packages/db/src/schemas/style.ts`
-- `packages/db/src/migrations/*.ts` (new migration)
-- `packages/api/src/routers/style.ts`
-- `packages/db/package.json`
+5. [x] **Update seed files**
+   - Updated `constants.ts` with new `StyleConfig` structure
+   - Updated `seed.ts` to use `styleConfigSchema` from `@dotui/core`
+
+### Files Modified
+- `packages/db/package.json` - Updated dependencies
+- `packages/db/src/schemas/style.ts` - New table structure
+- `packages/db/src/constants.ts` - New style config format
+- `packages/db/src/seed.ts` - Updated imports and validation
+- `packages/api/package.json` - Removed @dotui/registry
+- `packages/api/src/routers/style.ts` - Updated update mutation
+
+### Note on Migrations
+Using Drizzle ORM which is schema-driven. Run `pnpm --filter=@dotui/db push` to apply schema changes to database.
 
 ---
 

@@ -1,17 +1,14 @@
 import { eq } from "drizzle-orm";
 
-import { styleDefinitionSchema, styleSchema } from "@dotui/registry/schemas";
-import { createStyle } from "@dotui/style-system/core";
+import { styleConfigSchema } from "@dotui/core/schemas";
 
 import { db } from "./client";
 import { DEFAULT_STYLES } from "./constants";
 import { style, user } from "./schemas";
 
 async function validateDefaultStyles() {
-  for (const style of DEFAULT_STYLES) {
-    await styleDefinitionSchema.parseAsync(style);
-    const styleResult = createStyle(style);
-    await styleSchema.parseAsync(styleResult);
+  for (const defaultStyle of DEFAULT_STYLES) {
+    await styleConfigSchema.parseAsync(defaultStyle.config);
   }
 }
 
@@ -64,7 +61,7 @@ async function seedFeaturedStyles(userId: string) {
 
   const existingNames = new Set(existingStyles.map((s) => s.name));
   const missingStyles = DEFAULT_STYLES.filter(
-    (featuredStyle) => !existingNames.has(featuredStyle.name),
+    (defaultStyle) => !existingNames.has(defaultStyle.name),
   );
 
   if (missingStyles.length === 0) {
@@ -74,8 +71,9 @@ async function seedFeaturedStyles(userId: string) {
     return [];
   }
 
-  const stylesToInsert = missingStyles.map((featuredStyle) => ({
-    ...featuredStyle,
+  const stylesToInsert = missingStyles.map((defaultStyle) => ({
+    name: defaultStyle.name,
+    config: defaultStyle.config,
     userId,
     isFeatured: true,
     visibility: "public" as const,
@@ -103,8 +101,8 @@ async function seed() {
     console.log(`User: ${userRecord.name} (${userRecord.email})`);
     console.log(`Inserted styles: ${insertedStyles.length}`);
 
-    insertedStyles.forEach((style) => {
-      console.log(` - ${style.name}`);
+    insertedStyles.forEach((s) => {
+      console.log(` - ${s.name}`);
     });
   } catch (error) {
     console.error("❌ Error seeding database:", error);

@@ -12,16 +12,7 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-import {
-  iconsDefinitionSchema,
-  themeDefinitionSchema,
-  variantsDefinitionSchema,
-} from "@dotui/registry/schemas";
-import type {
-  IconsDefinition,
-  ThemeDefinition,
-  VariantsDefinition,
-} from "@dotui/style-system/types";
+import { styleConfigSchema, type StyleConfig } from "@dotui/core/schemas";
 
 import { user } from "./auth";
 
@@ -36,9 +27,8 @@ export const style = pgTable(
       .notNull()
       .default("unlisted"),
     isFeatured: boolean("is_featured").notNull().default(false),
-    theme: jsonb("theme").$type<ThemeDefinition>().notNull(),
-    icons: jsonb("icons").$type<IconsDefinition>().notNull(),
-    variants: jsonb("variants").$type<VariantsDefinition>().notNull(),
+    isPreset: boolean("is_preset").notNull().default(false),
+    config: jsonb("config").$type<StyleConfig>().notNull(),
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
@@ -68,6 +58,7 @@ export const createStyleSchema = createInsertSchema(style)
   .omit({
     id: true,
     isFeatured: true,
+    isPreset: true,
     createdAt: true,
     updatedAt: true,
     userId: true,
@@ -80,7 +71,11 @@ export const createStyleSchema = createInsertSchema(style)
         /^[a-z0-9._-]+$/,
         "Style name must be lowercase and can only contain letters, digits, '.', '_', and '-'",
       ),
-    theme: themeDefinitionSchema,
-    icons: iconsDefinitionSchema,
-    variants: variantsDefinitionSchema,
+    config: styleConfigSchema,
   });
+
+/** Schema for updating style config */
+export const updateStyleConfigSchema = z.object({
+  id: z.string().uuid(),
+  config: styleConfigSchema,
+});
