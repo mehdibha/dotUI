@@ -1,6 +1,6 @@
 import type { Registry } from "shadcn/schema";
 
-import type { Style, Variants } from "@dotui/style-system/types";
+import type { Style, Variants } from "../../types";
 
 import { ui as registryUi } from "../../__registry__/ui";
 import { updateRegistryDependencies } from "../transform";

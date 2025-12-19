@@ -121,7 +121,7 @@ export async function GET(request: NextRequest, { params }: RouteContext<"/r/[..
 		}
 
 		// Fallback to runtime generation (old path)
-		const { buildShadcnItem } = await import("@dotui/shadcn-adapter");
+		const { buildShadcnItem } = await import("@dotui/core/shadcn");
 		const path = await import("node:path");
 
 		const registryBasePath = path.resolve(process.cwd(), "../packages/registry/src");

@@ -3,7 +3,7 @@ import path from "node:path";
 import type { RegistryItem } from "shadcn/schema";
 
 import { icons as registryIcons } from "../__registry__/icons";
-import type { ColorFormat, Style, Variants } from "@dotui/style-system/types";
+import type { ColorFormat, Style, Variants } from "../types";
 import type { FileEntry, ItemJson } from "@dotui/types/registry";
 
 import {

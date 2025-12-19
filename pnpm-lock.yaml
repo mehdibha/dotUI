@@ -313,34 +313,6 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
-  packages/shadcn-adapter:
-    dependencies:
-      '@dotui/registry':
-        specifier: workspace:*
-        version: link:../registry
-      '@dotui/style-system':
-        specifier: workspace:*
-        version: link:../style-system
-      '@dotui/transformers':
-        specifier: workspace:*
-        version: link:../transformers
-      shadcn:
-        specifier: ^3.6.1
-        version: 3.6.1(@types/node@22.19.2)(babel-plugin-macros@3.1.0)(typescript@5.9.3)
-    devDependencies:
-      '@dotui/ts-config':
-        specifier: workspace:*
-        version: link:../../config/ts-config
-      '@dotui/types':
-        specifier: workspace:*
-        version: link:../types
-      '@types/node':
-        specifier: ^22.15.3
-        version: 22.19.2
-      typescript:
-        specifier: ^5.8.3
-        version: 5.9.3
-
   packages/style-system:
     dependencies:
       '@adobe/leonardo-contrast-colors':
@@ -399,15 +371,6 @@ importers:
         specifier: ^4.0.0
         version: 4.1.17
 
-  packages/transformers:
-    devDependencies:
-      '@dotui/ts-config':
-        specifier: workspace:*
-        version: link:../../config/ts-config
-      typescript:
-        specifier: ^5.8.3
-        version: 5.9.3
-
   packages/types:
     dependencies:
       react:
@@ -447,15 +410,9 @@ importers:
       '@dotui/registry':
         specifier: workspace:*
         version: link:../packages/registry
-      '@dotui/shadcn-adapter':
-        specifier: workspace:*
-        version: link:../packages/shadcn-adapter
       '@dotui/style-system':
         specifier: workspace:*
         version: link:../packages/style-system
-      '@dotui/transformers':
-        specifier: workspace:*
-        version: link:../packages/transformers
       '@dotui/types':
         specifier: workspace:*
         version: link:../packages/types

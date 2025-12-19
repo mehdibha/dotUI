@@ -1,6 +1,6 @@
 import type { RegistryItem } from "shadcn/schema";
 
-import type { Style } from "@dotui/style-system/types";
+import type { Style } from "../../types";
 
 export function generateRegistryTheme(options: {
   styleName: string;

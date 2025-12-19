@@ -1,11 +1,11 @@
 // Cache utilities
 
-// Re-export transformer functions from shadcn-adapter
+// Re-export transformer functions from core/shadcn
 export {
 	generateThemeJson,
 	type TransformOptions,
 	transformItemJson,
-} from "@dotui/shadcn-adapter";
+} from "@dotui/core/shadcn";
 
 export { cached, clearCache, getCacheKey } from "./cache";
 // Loader functions

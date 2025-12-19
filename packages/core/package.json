@@ -9,6 +9,7 @@
 	"exports": {
 		".": "./src/index.ts",
 		"./schemas": "./src/schemas/index.ts",
+		"./types": "./src/types.ts",
 		"./style": "./src/style/index.ts",
 		"./style/provider": "./src/style/provider.tsx",
 		"./style/theme-provider": "./src/style/theme-provider.tsx",
