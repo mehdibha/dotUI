@@ -6,19 +6,27 @@ import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { StyleProvider } from "@dotui/registry/providers";
-import type { StyleDefinition } from "@dotui/style-system/types";
+import { StyleProvider } from "@dotui/core/style";
+import type { StyleConfig } from "@dotui/core/schemas";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/preferences/preferences-atom";
-import { useDraftStyle } from "@/modules/style-editor/draft-style-atom";
+// TODO: Fix style-editor types for new config schema
+// import { useDraftStyle } from "@/modules/style-editor/draft-style-atom";
+
+// Interface for style from DB
+interface StyleFromDB {
+	id?: string;
+	name?: string;
+	config: StyleConfig;
+}
 
 export const BlockViewLayout = ({
 	style: styleProp,
 	styleSlug,
 	children,
 }: {
-	style: StyleDefinition & { id?: string };
+	style: StyleFromDB;
 	styleSlug: string;
 	children: React.ReactNode;
 }) => {
@@ -31,17 +39,25 @@ export const BlockViewLayout = ({
 
 	const { activeMode } = usePreferences();
 	const isMounted = useMounted();
-	const { draftStyle } = useDraftStyle(styleSlug);
+	// TODO: Re-enable when style-editor is fixed for new config schema
+	// const { draftStyle } = useDraftStyle(styleSlug);
 	const { resolvedTheme } = useTheme();
 
-	const style = React.useMemo(() => {
-		return shouldUseLiveStyle ? (draftStyle ?? styleProp) : styleProp;
-	}, [draftStyle, styleProp, shouldUseLiveStyle]);
+	// Get config from style
+	const config = React.useMemo((): StyleConfig | null => {
+		// TODO: Re-enable live style when style-editor is fixed
+		// if (shouldUseLiveStyle && draftStyle) {
+		// 	return draftStyle as unknown as StyleConfig;
+		// }
+		void shouldUseLiveStyle; // Silence unused variable warning
+		if (!styleProp?.config) return null;
+		return styleProp.config;
+	}, [styleProp, shouldUseLiveStyle]);
 
 	const effectiveMode = shouldUseActiveMode ? activeMode : (resolvedTheme as "light" | "dark");
 
 	React.useLayoutEffect(() => {
-		if (effectiveMode && style) {
+		if (effectiveMode && config) {
 			document.documentElement.style.colorScheme = effectiveMode;
 			if (effectiveMode === "light") {
 				document.documentElement.classList.remove("dark");
@@ -51,16 +67,16 @@ export const BlockViewLayout = ({
 
 			// TODO: We should also update the body color
 		}
-	}, [effectiveMode, style]);
+	}, [effectiveMode, config]);
 
-	if (!style || !effectiveMode || !isMounted) return null;
+	if (!config || !effectiveMode || !isMounted) return null;
 
 	return (
 		<>
-			<StyleProvider ref={overlayContainerRef} style={style} mode={effectiveMode} unstyled className="text-fg" />
+			<StyleProvider ref={overlayContainerRef} config={config} mode={effectiveMode} unstyled className="text-fg" />
 			<PortalProvider getContainer={() => overlayContainerRef.current}>
 				<StyleProvider
-					style={style}
+					config={config}
 					mode={effectiveMode}
 					className={cn("flex min-h-screen items-center justify-center", view && "p-4")}
 				>

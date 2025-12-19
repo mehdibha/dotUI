@@ -4,7 +4,8 @@ import React from "react";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { StyleProvider } from "@dotui/registry/providers";
+import { StyleProvider } from "@dotui/core/style";
+import type { StyleConfig } from "@dotui/core/schemas";
 import { Alert } from "@dotui/registry/ui/alert";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 
@@ -19,7 +20,9 @@ export function ActiveStyleProvider({
 	unstyled?: boolean;
 	skeletonClassName?: string;
 }) {
-	const container = useActiveStylePortalContext();
+	const portalContext = useActiveStylePortalContext();
+	const localRef = React.useRef<HTMLDivElement>(null);
+	const container = portalContext ?? localRef;
 	const { activeMode } = usePreferences();
 	const { data: activeStyle, isPending, isError } = useActiveStyle();
 
@@ -39,8 +42,10 @@ export function ActiveStyleProvider({
 		);
 	}
 
+	if (!activeStyle?.config) return null;
+
 	return (
-		<StyleProvider mode={activeMode} style={activeStyle} unstyled={unstyled} {...props}>
+		<StyleProvider mode={activeMode} config={activeStyle.config as StyleConfig} unstyled={unstyled} {...props}>
 			<PortalProvider getContainer={() => container.current}>{props.children}</PortalProvider>
 		</StyleProvider>
 	);
@@ -49,11 +54,7 @@ export function ActiveStyleProvider({
 const ActiveStyleContext = React.createContext<React.RefObject<HTMLDivElement | null> | null>(null);
 
 const useActiveStylePortalContext = () => {
-	const context = React.useContext(ActiveStyleContext);
-	if (!context) {
-		throw new Error("useCurrentStylePortalContext must be used within a CurrentStylePortalProvider");
-	}
-	return context;
+	return React.useContext(ActiveStyleContext);
 };
 
 export const ActiveStylePortalProvider = ({ children }: { children: React.ReactNode }) => {
@@ -61,9 +62,11 @@ export const ActiveStylePortalProvider = ({ children }: { children: React.ReactN
 	const { activeMode } = usePreferences();
 	const { data: activeStyle } = useActiveStyle();
 
+	if (!activeStyle?.config) return <>{children}</>;
+
 	return (
 		<ActiveStyleContext.Provider value={container}>
-			<StyleProvider ref={container} mode={activeMode} style={activeStyle} unstyled />
+			<StyleProvider ref={container} mode={activeMode} config={activeStyle.config as StyleConfig} unstyled />
 			{children}
 		</ActiveStyleContext.Provider>
 	);

@@ -1,22 +1,3 @@
-/**
- * Re-export constants from style-system
- */
-export {
-  DEFAULT_LIGHT_MODE,
-  DEFAULT_DARK_MODE,
-  DEFAULT_FONTS,
-  DEFAULT_VARIANTS_DEFINITION,
-  DEFAULT_RADIUS_FACTOR,
-  DEFAULT_SPACING,
-  DEFAULT_LETTER_SPACING,
-  DEFAULT_BACKGROUND_PATTERN,
-  DEFAULT_TEXTURE,
-  DEFAULT_SHADOWS,
-  DEFAULT_ICON_LIBRARY,
-  DEFAULT_ICON_STROKE_WIDTH,
-  DEFAULT_ACCENT_EMPHASIS_LEVEL,
-} from "@dotui/style-system/utils";
-
 import type { StyleConfig } from "@dotui/core/schemas";
 
 /**

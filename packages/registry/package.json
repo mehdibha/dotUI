@@ -10,7 +10,6 @@
 	"exports": {
 		".": "./src/index.ts",
 		"./types": "./src/types.ts",
-		"./providers": "./src/providers.tsx",
 		"./base/registry": "./src/base/registry.ts",
 		"./blocks": "./src/blocks/index.ts",
 		"./blocks/registry": "./src/blocks/registry.ts",
@@ -27,6 +26,7 @@
 		"./lib/focus-styles.css": "./src/lib/focus-styles/basic.css",
 		"./lib/utils": "./src/lib/utils/index.ts",
 		"./ui/registry": "./src/ui/registry.ts",
+		"./ui/demos": "./src/__generated__/demos.tsx",
 		"./ui/*": "./src/ui/*/index.tsx",
 		"./ui/*/meta": "./src/ui/*/meta.ts",
 		"./ui/*/playground": "./src/ui/*/demos/playground.tsx",

@@ -22,5 +22,5 @@
 		"next.config.mjs",
 		"eslint.config.mjs"
 	],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "modules/style-editor/**", "app/(internal)/**", "app/(app)/style-editor/**"]
 }

@@ -1,7 +1,8 @@
 import { z } from "zod";
 
 import { componentsConfigSchema } from "./components";
-import { iconsConfigSchema } from "./icons";
+import { iconsConfigSchema, type IconsConfig } from "./icons";
+export type { IconsConfig };
 import { themeConfigSchema } from "./theme";
 import { variantsConfigSchema } from "./variants";
 

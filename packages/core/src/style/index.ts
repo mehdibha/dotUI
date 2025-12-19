@@ -11,6 +11,7 @@ export {
 	VariantsProvider,
 	useVariants,
 	useVariant,
+	useCurrentStyle,
 } from "./provider";
 
 export type { ThemeProviderProps } from "./theme-provider";

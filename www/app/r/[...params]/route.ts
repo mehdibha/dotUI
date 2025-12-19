@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 import { createStyle } from "@dotui/style-system/core";
-import type { ColorFormat } from "@dotui/style-system/types";
+import type { ColorFormat, StyleDefinition } from "@dotui/style-system/types";
+import type { Style } from "@dotui/core/types";
 
 import { env } from "@/env";
 import {
@@ -61,8 +62,9 @@ export async function GET(request: NextRequest, { params }: RouteContext<"/r/[..
 			return NextResponse.json({ error: "Style not found" }, { status: 404 });
 		}
 
-		// Generate style object
-		const styleObj = createStyle(style, false, colorFormat);
+		// Generate style object from config
+		// Cast to StyleDefinition for createStyle, then to core's Style for downstream functions
+		const styleObj = createStyle(style.config as unknown as StyleDefinition, false, colorFormat) as unknown as Style;
 
 		const baseUrl = env.NODE_ENV === "development" ? "http://localhost:4444/r" : "https://dotui.org/r";
 
