@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const comboboxMeta = {
   name: "combobox",
   type: "registry:ui",
+  group: "selections",
   defaultVariant: "basic",
   variants: {
     basic: {

@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const colorEditorMeta = {
   name: "color-editor",
   type: "registry:ui",
+  group: "color",
   defaultVariant: "basic",
   variants: {
     basic: {

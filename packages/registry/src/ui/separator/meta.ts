@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const separatorMeta = {
   name: "separator",
   type: "registry:ui",
+  group: "layout",
   defaultVariant: "basic",
   variants: {
     basic: {

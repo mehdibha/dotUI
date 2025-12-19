@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const colorSwatchMeta = {
   name: "color-swatch",
   type: "registry:ui",
+  group: "color",
   defaultVariant: "basic",
   variants: {
     basic: {

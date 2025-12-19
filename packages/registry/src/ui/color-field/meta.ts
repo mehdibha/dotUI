@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const colorFieldMeta = {
   name: "color-field",
   type: "registry:ui",
+  group: "inputs",
   defaultVariant: "basic",
   variants: {
     basic: {

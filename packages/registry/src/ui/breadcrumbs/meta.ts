@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const breadcrumbsMeta = {
   name: "breadcrumbs",
   type: "registry:ui",
+  group: "navigation",
   defaultVariant: "basic",
   variants: {
     basic: {

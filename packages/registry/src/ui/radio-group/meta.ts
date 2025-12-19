@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const radioGroupMeta = {
   name: "radio-group",
   type: "registry:ui",
+  group: "selections",
   defaultVariant: "basic",
   variants: {
     basic: {

@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const listBoxMeta = {
   name: "list-box",
   type: "registry:ui",
+  group: "selections",
   defaultVariant: "basic",
   variants: {
     basic: {

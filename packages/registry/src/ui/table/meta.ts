@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const tableMeta = {
   name: "table",
   type: "registry:ui",
+  group: "data-display",
   defaultVariant: "basic",
   variants: {
     basic: {

@@ -345,46 +345,39 @@ Update `@dotui/colors` with schemas and flexible API for core to consume.
 
 ---
 
-## Phase 1: Registry Updates
+## Phase 1: Registry Updates ✅ COMPLETE
 
 Update `@dotui/registry` with new fields and CI automation.
 
 ### Tasks
 
-1. [ ] **Add `group` field to meta.ts files**
-   - Update all `packages/registry/src/ui/*/meta.ts`
-   - Add `group: 'buttons' | 'inputs' | 'overlays' | ...` to each component
-   - Standalone items (focus-style, texture, etc.) get `group: null`
+1. [x] **Add `group` field to meta.ts files**
+   - Updated all `packages/registry/src/ui/*/meta.ts`
+   - Added `ComponentGroup` type to `packages/registry/src/types.ts`
+   - Groups: buttons, inputs, selections, overlays, feedback, navigation, data-display, date-time, color, forms, layout
 
-2. [ ] **Update build-registry script**
-   - Location: `scripts/build-registry.ts` (ROOT of monorepo - neutral location for cross-package tooling)
-   - Generate `packages/core/src/__registry__/variants.ts`
-   - Generate `VARIANTS` constant with options, default, group
-   - Generate `VARIANT_GROUPS` constant for UI grouping
-   - Only include items with 2+ variants
+2. [x] **Update build-registry script**
+   - Created `scripts/build-registry.ts`
+   - Generates `packages/core/src/__registry__/variants.ts`
+   - Generates `VARIANTS` constant with options, default, group
+   - Generates `VARIANT_GROUPS` constant for UI grouping
+   - Only includes items with 2+ variants (currently: button, form, loader)
 
-3. [ ] **Set up chokidar watcher**
-   ```json
-   // root package.json
-   {
-     "scripts": {
-       "build:registry": "tsx scripts/build-registry.ts",
-       "dev:registry": "chokidar 'packages/registry/src/**/*' -c 'pnpm build:registry'"
-     }
-   }
-   ```
+3. [x] **Set up chokidar watcher**
+   - Added `dev:registry` script to root package.json
+   - Watches `packages/registry/src/ui/**/meta.ts` for changes
 
-4. [ ] **Add CI check for generated files**
-   - Add GitHub Action step
-   - Run `pnpm build:registry`
-   - Fail if `__registry__/` has uncommitted changes
-   - Ensures generated files are always in sync
+4. [x] **Add CI check for generated files**
+   - Added `check-registry` job to `.github/workflows/ci.yml`
+   - Runs `pnpm build:registry` and fails if files are out of sync
 
-### Files to Modify/Create
-- `packages/registry/src/ui/*/meta.ts` (all component meta files - add group field)
-- `scripts/build-registry.ts` (ROOT - create/update)
-- Root `package.json` (add build:registry, dev:registry scripts)
-- `.github/workflows/*.yml` (add CI check)
+### Files Modified/Created
+- `packages/registry/src/types.ts` - Added `ComponentGroup` type
+- `packages/registry/src/ui/*/meta.ts` - All meta files updated with `group` field
+- `scripts/build-registry.ts` - Created
+- `packages/core/src/__registry__/variants.ts` - Generated
+- Root `package.json` - Added `build:registry`, `dev:registry` scripts
+- `.github/workflows/ci.yml` - Added `check-registry` job
 
 ---
 

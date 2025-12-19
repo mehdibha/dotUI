@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const cardMeta = {
   name: "card",
   type: "registry:ui",
+  group: "data-display",
   defaultVariant: "basic",
   variants: {
     basic: {

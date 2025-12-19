@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const accordionMeta = {
   name: "accordion",
   type: "registry:ui",
+  group: "data-display",
   defaultVariant: "basic",
   variants: {
     basic: {

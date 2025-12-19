@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const buttonMeta = {
   name: "button",
   type: "registry:ui",
+  group: "buttons",
   defaultVariant: "basic",
   variants: {
     basic: {
