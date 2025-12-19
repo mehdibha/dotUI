@@ -9,14 +9,10 @@
 export const DEFAULT_RATIOS = [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15] as const;
 
 /**
- * Default hues for semantic colors (in degrees, HCT/OKLCH)
- * Used when user doesn't provide explicit colors
+ * Default lightness values for modes
  */
-export const DEFAULT_SEMANTIC_HUES = {
-	success: 142, // Green
-	warning: 45, // Amber
-	danger: 25, // Red
-} as const;
+export const DEFAULT_LIGHT_LIGHTNESS = 97;
+export const DEFAULT_DARK_LIGHTNESS = 5;
 
 /**
  * Default chroma for neutral scale

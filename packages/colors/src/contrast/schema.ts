@@ -2,9 +2,9 @@ import { z } from "zod";
 
 // === Building blocks ===
 
-export const tonesSchema = z.array(z.number().min(0).max(100)).length(11);
+const ratiosSchema = z.array(z.number().positive()).length(11);
 
-export const paletteDefinitionSchema = z.string().min(1);
+const paletteDefinitionSchema = z.string().min(1);
 
 const paletteDefinitionsSchema = z
 	.object({
@@ -17,41 +17,32 @@ const paletteDefinitionsSchema = z
 	})
 	.catchall(z.union([paletteDefinitionSchema, z.boolean()]));
 
-export const modeVariantSchema = z.enum([
-	"tonalSpot",
-	"vibrant",
-	"expressive",
-	"neutral",
-	"monochrome",
-	"fidelity",
-	"content",
-	"rainbow",
-	"fruitSalad",
-]);
-
-const paletteSchema = z.object({
+const paletteOverrideSchema = z.object({
 	color: z.string().min(1).optional(),
-	tones: tonesSchema.optional(),
+	ratios: ratiosSchema.optional(),
 });
 
 export const modeSchema = z.union([
 	z.literal(true),
 	z.object({
-		isDark: z.boolean(),
-		variant: modeVariantSchema.optional(),
-		contrast: z.number().min(-1).max(1).optional(),
-		palettes: z.record(z.string(), paletteSchema).optional(),
+		lightness: z.number().min(0).max(100).optional(),
+		palettes: z.record(z.string(), paletteOverrideSchema).optional(),
 	}),
 ]);
 
+export const contrastFormulaSchema = z.enum(["wcag2", "wcag3"]);
+
 // === Main schema ===
 
-export const baseMaterialThemeOptionsSchema = z.object({
+export const baseContrastThemeOptionsSchema = z.object({
 	palettes: paletteDefinitionsSchema,
 	modes: z.record(z.string(), modeSchema).optional(),
+	ratios: ratiosSchema.optional(),
+	formula: contrastFormulaSchema.optional(),
+	saturation: z.number().min(0).max(100).optional(),
 });
 
-export const createMaterialThemeOptionsSchema = baseMaterialThemeOptionsSchema.refine(
+export const createContrastThemeOptionsSchema = baseContrastThemeOptionsSchema.refine(
 	(data) => {
 		const globalKeys = Object.keys(data.palettes);
 		for (const modeConfig of Object.values(data.modes ?? {})) {

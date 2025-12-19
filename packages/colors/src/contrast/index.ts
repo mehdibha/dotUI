@@ -81,7 +81,7 @@ function toHslString(color: string): string {
  * @param input - Theme configuration
  * @returns Theme output with background and color scales in HSL format
  */
-export function generateContrastTheme(input: CreateThemeInput): CreateThemeOutput {
+export function createContrastTheme(input: CreateThemeInput): CreateThemeOutput {
 	const { colors, backgroundColor, lightness, contrast = 1, saturation = 100, formula = "wcag2" } = input;
 
 	// Use the pure functional implementation
@@ -147,3 +147,7 @@ export function generateContrastTheme(input: CreateThemeInput): CreateThemeOutpu
 
 // Re-export types
 export type { Colorspace, ContrastFormula } from "./types";
+
+// New modes/palettes API (matches Material)
+export { createContrastThemeOptionsSchema } from "./schema";
+export type { CreateContrastThemeOptions } from "./theme";

@@ -1,19 +1,20 @@
 import { argbFromRgb, Hct, hexFromArgb, TonalPalette } from "@material/material-color-utilities";
 import Color from "colorjs.io";
 
-import { SCALE_STEPS } from "../constants";
+import { SCALE_STEPS, SEMANTIC_COLORS } from "../shared/constants";
 import {
 	DEFAULT_CONTRAST,
 	DEFAULT_DARK_TONES,
 	DEFAULT_LIGHT_TONES,
 	DEFAULT_VARIANT,
 	NEUTRAL_CHROMA,
-	SEMANTIC_COLORS,
 } from "./constants";
-import type { ColorScale, CreateThemeOptions, Mode, ResolvedModeConfig, Theme, ThemeMode } from "./types";
+import type { ColorScale, Theme } from "../shared/types";
+import type { CreateThemeOptions, Mode, ResolvedModeConfig } from "./types";
 
-export { createThemeOptionsSchema } from "./schema";
-export type { ColorScale, CreateThemeOptions, Theme, ThemeMode } from "./types";
+export { createMaterialThemeOptionsSchema } from "./schema";
+export type { ColorScale, Theme, ThemeMode } from "../shared/types";
+export type { CreateThemeOptions } from "./types";
 
 // ============================================================================
 // Helpers
@@ -126,7 +127,7 @@ function buildBasePalettes(palettes: CreateThemeOptions["palettes"]): Map<string
  */
 export function createMaterialTheme(options: CreateThemeOptions): Theme {
 	const basePalettes = buildBasePalettes(options.palettes);
-	const modes = options.modes ?? DEFAULT_MODES;
+	const modes: Record<string, Mode> = options.modes ?? DEFAULT_MODES;
 	const theme: Theme = {};
 
 	for (const [modeName, modeConfig] of Object.entries(modes)) {
@@ -145,6 +146,3 @@ export function createMaterialTheme(options: CreateThemeOptions): Theme {
 
 	return theme;
 }
-
-// Alias for backwards compatibility
-export { createMaterialTheme as createTheme };

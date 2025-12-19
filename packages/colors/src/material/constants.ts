@@ -8,11 +8,4 @@ export const DEFAULT_VARIANT: ModeVariant = "tonalSpot";
 
 export const DEFAULT_CONTRAST = 0;
 
-export const SEMANTIC_COLORS: Record<string, string> = {
-	success: "#22c55e",
-	danger: "#ef4444",
-	warning: "#eab308",
-	info: "#3b82f6",
-};
-
 export const NEUTRAL_CHROMA = 6;
