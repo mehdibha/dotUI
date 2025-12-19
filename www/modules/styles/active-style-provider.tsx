@@ -6,9 +6,9 @@ import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 import { cn } from "@dotui/registry/lib/utils";
 import { StyleProvider } from "@dotui/core/style";
 import type { StyleConfig } from "@dotui/core/schemas";
-import { Alert } from "@dotui/registry/ui/alert";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 
+import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/preferences/preferences-atom";
 import { useActiveStyle } from "@/modules/styles/use-active-style";
 
@@ -24,25 +24,17 @@ export function ActiveStyleProvider({
 	const localRef = React.useRef<HTMLDivElement>(null);
 	const container = portalContext ?? localRef;
 	const { activeMode } = usePreferences();
-	const { data: activeStyle, isPending, isError } = useActiveStyle();
+	const { data: activeStyle, isPending } = useActiveStyle();
+	const isMounted = useMounted();
 
-	if (isPending) {
+	// Always render skeleton on server and during initial hydration to avoid mismatch
+	if (!isMounted || isPending || !activeStyle?.config) {
 		return (
 			<Skeleton {...props} className={cn("rounded-none", skeletonClassName, props.className)}>
 				{props.children}
 			</Skeleton>
 		);
 	}
-
-	if (isError) {
-		return (
-			<div className="flex items-center justify-center p-4">
-				<Alert variant="danger" title="An error occurred while loading the style." />
-			</div>
-		);
-	}
-
-	if (!activeStyle?.config) return null;
 
 	return (
 		<StyleProvider mode={activeMode} config={activeStyle.config as StyleConfig} unstyled={unstyled} {...props}>
