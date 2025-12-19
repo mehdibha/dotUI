@@ -18,7 +18,7 @@
     "@dotui/registry": "workspace:*",
     "@trpc/server": "^11.2.0",
     "superjson": "2.2.3",
-    "zod": "^4.0.5"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",

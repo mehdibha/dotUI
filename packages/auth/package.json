@@ -22,7 +22,7 @@
     "next": "^16.0.5",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
-    "zod": "^4.0.5"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",
