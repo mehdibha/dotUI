@@ -1,6 +1,6 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/core/utils/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/components/create-dynamic-component";
 
 import * as Default from "./basic";
 import type { TextFieldProps } from "./types";

@@ -4,8 +4,148 @@
  */
 
 export const VARIANTS = {
+	"accordion": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "data-display",
+	},
+	"alert": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "feedback",
+	},
+	"avatar": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "data-display",
+	},
+	"badge": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "data-display",
+	},
+	"breadcrumbs": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "navigation",
+	},
 	"button": {
 		options: ["basic", "ripple"] as const,
+		default: "basic",
+		group: "buttons",
+	},
+	"calendar": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "date-time",
+	},
+	"card": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "data-display",
+	},
+	"checkbox": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "selections",
+	},
+	"checkbox-group": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "selections",
+	},
+	"color-area": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "color",
+	},
+	"color-editor": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "color",
+	},
+	"color-field": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "inputs",
+	},
+	"color-picker": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "color",
+	},
+	"color-slider": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "color",
+	},
+	"color-swatch": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "color",
+	},
+	"color-swatch-picker": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "color",
+	},
+	"color-thumb": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "color",
+	},
+	"combobox": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "selections",
+	},
+	"command": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "overlays",
+	},
+	"date-field": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "inputs",
+	},
+	"date-picker": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "date-time",
+	},
+	"dialog": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "overlays",
+	},
+	"disclosure": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "data-display",
+	},
+	"drawer": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "overlays",
+	},
+	"drop-zone": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "forms",
+	},
+	"empty": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "feedback",
+	},
+	"field": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "forms",
+	},
+	"file-trigger": {
+		options: ["basic"] as const,
 		default: "basic",
 		group: "buttons",
 	},
@@ -14,18 +154,166 @@ export const VARIANTS = {
 		default: "basic",
 		group: "forms",
 	},
+	"group": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "forms",
+	},
+	"input": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "inputs",
+	},
+	"kbd": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "data-display",
+	},
+	"link": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "buttons",
+	},
+	"list-box": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "selections",
+	},
 	"loader": {
 		options: ["basic", "ring"] as const,
 		default: "basic",
 		group: "feedback",
 	},
+	"menu": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "overlays",
+	},
+	"modal": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "overlays",
+	},
+	"number-field": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "inputs",
+	},
+	"overlay": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "overlays",
+	},
+	"popover": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "overlays",
+	},
+	"progress-bar": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "feedback",
+	},
+	"radio-group": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "selections",
+	},
+	"search-field": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "inputs",
+	},
+	"select": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "selections",
+	},
+	"separator": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "layout",
+	},
+	"skeleton": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "feedback",
+	},
+	"slider": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "inputs",
+	},
+	"switch": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "selections",
+	},
+	"table": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "data-display",
+	},
+	"tabs": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "navigation",
+	},
+	"tag-group": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "selections",
+	},
+	"text": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "data-display",
+	},
+	"text-field": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "inputs",
+	},
+	"time-field": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "inputs",
+	},
+	"toast": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "feedback",
+	},
+	"toggle-button": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "buttons",
+	},
+	"toggle-button-group": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "buttons",
+	},
+	"tooltip": {
+		options: ["basic"] as const,
+		default: "basic",
+		group: "overlays",
+	},
 } as const;
 
 /** Component groups for style editor UI */
 export const VARIANT_GROUPS = {
-	"buttons": ["button"],
-	"feedback": ["loader"],
-	"forms": ["form"],
+	"buttons": ["button", "file-trigger", "link", "toggle-button", "toggle-button-group"],
+	"color": ["color-area", "color-editor", "color-picker", "color-slider", "color-swatch", "color-swatch-picker", "color-thumb"],
+	"data-display": ["accordion", "avatar", "badge", "card", "disclosure", "kbd", "table", "text"],
+	"date-time": ["calendar", "date-picker"],
+	"feedback": ["alert", "empty", "loader", "progress-bar", "skeleton", "toast"],
+	"forms": ["drop-zone", "field", "form", "group"],
+	"inputs": ["color-field", "date-field", "input", "number-field", "search-field", "slider", "text-field", "time-field"],
+	"layout": ["separator"],
+	"navigation": ["breadcrumbs", "tabs"],
+	"overlays": ["command", "dialog", "drawer", "menu", "modal", "overlay", "popover", "tooltip"],
+	"selections": ["checkbox", "checkbox-group", "combobox", "list-box", "radio-group", "select", "switch", "tag-group"],
 } as const;
 
 export type VariantKey = keyof typeof VARIANTS;

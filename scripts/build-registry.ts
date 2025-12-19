@@ -2,7 +2,7 @@
  * Build Registry Script
  *
  * Generates __registry__/variants.ts from registry meta files.
- * Only includes components with 2+ variants.
+ * Includes all components with variants.
  *
  * Usage: pnpm build:registry
  */
@@ -61,11 +61,6 @@ async function collectVariants(): Promise<Map<string, VariantInfo>> {
 		}
 
 		const variantKeys = Object.keys(meta.variants);
-
-		// Only include components with 2+ variants
-		if (variantKeys.length < 2) {
-			continue;
-		}
 
 		variants.set(meta.name, {
 			options: variantKeys,
@@ -153,10 +148,10 @@ async function main() {
 	}
 
 	const variants = await collectVariants();
-	console.log(`Found ${variants.size} components with 2+ variants`);
+	console.log(`Found ${variants.size} components with variants`);
 
 	if (variants.size === 0) {
-		console.log("No multi-variant components found. Writing empty file.");
+		console.log("No components with variants found. Writing empty file.");
 	}
 
 	const groups = collectGroups(variants);

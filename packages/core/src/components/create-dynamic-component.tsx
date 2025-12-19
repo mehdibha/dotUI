@@ -12,7 +12,7 @@ import { VARIANTS } from "../__registry__/variants";
 
 type VariantKey = keyof typeof VARIANTS;
 
-export type VariantsMap<Props> = Record<
+export type VariantsMap<Props, _V extends string = string> = Record<
 	string,
 	React.LazyExoticComponent<React.ComponentType<Props>>
 >;
@@ -151,6 +151,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
  * Creates a dynamic component that switches between variants based on context.
  *
  * @param componentName - The component key (must match a key in VARIANTS)
+ * @param displayName - Display name for the component (used in React DevTools)
  * @param DefaultComponent - The default component to render
  * @param variants - Map of variant names to lazy-loaded components
  * @param options - Additional options
@@ -159,6 +160,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
  * ```tsx
  * const Button = createDynamicComponent(
  *   'button',
+ *   'Button',
  *   BasicButton,
  *   {
  *     ripple: React.lazy(() => import('./ripple')),
@@ -166,10 +168,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
  * );
  * ```
  */
-export function createDynamicComponent<Props extends Record<string, unknown>>(
+export function createDynamicComponent<Props extends object, V extends string = string>(
 	componentName: VariantKey,
+	displayName: string,
 	DefaultComponent: React.ComponentType<Props>,
-	variants: VariantsMap<Props>,
+	variants: VariantsMap<Props, V>,
 	options?: CreateDynamicComponentOptions,
 ): React.FC<Props> {
 	const { disableSkeleton = false } = options ?? {};
@@ -251,7 +254,7 @@ export function createDynamicComponent<Props extends Record<string, unknown>>(
 		);
 	};
 
-	Component.displayName = `Dynamic(${componentName})`;
+	Component.displayName = `Dynamic(${displayName})`;
 
 	return Component;
 }
