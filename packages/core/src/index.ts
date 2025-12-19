@@ -4,39 +4,15 @@
  * Core utilities for dotUI component library
  */
 
-// Types
-export type {
-	IconLibrary,
-	IconsConfig,
-	ColorScaleConfig,
-	ModeConfig,
-	ScaleId,
-	ColorsConfig,
-	Radius,
-	Spacing,
-	FontsConfig,
-	ThemeConfig,
-	ThemeOutput,
-	Variants,
-	StyleConfig,
-	Style,
-} from "./types";
+// Schemas (for validation)
+export * from "./schemas";
 
-// Style module
-export { createStyle, generateTheme, themeToCss } from "./style";
+// Style providers (client-side)
+export * from "./style";
 
-// Shadcn module
-export {
-	generateItem,
-	generateAll,
-	getItemNames,
-	generateTheme as generateShadcnTheme,
-	applyTransforms,
-} from "./shadcn";
+// Dynamic component factory (client-side)
+export * from "./components";
 
-export type {
-	ShadcnItem,
-	ShadcnFile,
-	ShadcnTheme,
-	GenerateItemOptions,
-} from "./shadcn";
+// Registry data
+export { VARIANTS, VARIANT_GROUPS } from "./__registry__/variants";
+export { iconLibraries, icons } from "./__registry__/icons";
