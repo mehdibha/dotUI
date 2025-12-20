@@ -310,7 +310,23 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
-  packages/tailwindcss-autocontrast:
+  packages/types:
+    dependencies:
+      react:
+        specifier: ^19.2.1
+        version: 19.2.1
+    devDependencies:
+      '@dotui/ts-config':
+        specifier: workspace:*
+        version: link:../../config/ts-config
+      '@types/react':
+        specifier: ^19.2.2
+        version: 19.2.7
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
+
+  tw-plugins/tailwindcss-autocontrast:
     dependencies:
       '@tailwindcss/postcss':
         specifier: '^4.0.0 '
@@ -328,27 +344,11 @@ importers:
         specifier: ^4.0.0
         version: 4.1.17
 
-  packages/tailwindcss-with:
+  tw-plugins/tailwindcss-with:
     dependencies:
       tailwindcss:
         specifier: ^4.0.0
         version: 4.1.17
-
-  packages/types:
-    dependencies:
-      react:
-        specifier: ^19.2.1
-        version: 19.2.1
-    devDependencies:
-      '@dotui/ts-config':
-        specifier: workspace:*
-        version: link:../../config/ts-config
-      '@types/react':
-        specifier: ^19.2.2
-        version: 19.2.7
-      typescript:
-        specifier: ^5.8.3
-        version: 5.9.3
 
   www:
     dependencies:
@@ -568,13 +568,13 @@ importers:
         version: 4.1.17
       tailwindcss-autocontrast:
         specifier: workspace:*
-        version: link:../packages/tailwindcss-autocontrast
+        version: link:../tw-plugins/tailwindcss-autocontrast
       tailwindcss-react-aria-components:
         specifier: ^2.0.1
         version: 2.0.1(tailwindcss@4.1.17)
       tailwindcss-with:
         specifier: workspace:*
-        version: link:../packages/tailwindcss-with
+        version: link:../tw-plugins/tailwindcss-with
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
