@@ -7,8 +7,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./*"],
-			"@dotui/registry/*": ["../packages/registry/src/*"],
-			"@dotui/registry-v2/*": ["../packages/registry-v2/src/*"]
+			"@dotui/registry/*": ["../packages/registry/src/*"]
 		},
 		"plugins": [{ "name": "next" }],
 		"module": "esnext"
@@ -22,5 +21,5 @@
 		"next.config.mjs",
 		"eslint.config.mjs"
 	],
-	"exclude": ["node_modules", "modules/style-editor/**", "app/(internal)/**", "app/(app)/style-editor/**"]
+	"exclude": ["node_modules", "modules/style-editor/**", "app/(internal)/**", "app/(app)/_style-editor/**"]
 }
