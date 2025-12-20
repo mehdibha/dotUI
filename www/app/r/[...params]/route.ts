@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { createStyle } from "@dotui/style-system/core";
-import type { Style } from "@dotui/core/types";
-import type { ColorFormat, StyleDefinition } from "@dotui/style-system/types";
+import type { StyleConfig } from "@dotui/core/schemas";
+import type { ColorFormat } from "@dotui/core/types";
 
 import { env } from "@/env";
 import {
@@ -62,9 +61,8 @@ export async function GET(request: NextRequest, { params }: RouteContext<"/r/[..
 			return NextResponse.json({ error: "Style not found" }, { status: 404 });
 		}
 
-		// Generate style object from config
-		// Cast to StyleDefinition for createStyle, then to core's Style for downstream functions
-		const styleObj = createStyle(style.config as unknown as StyleDefinition, false, colorFormat) as unknown as Style;
+		// Use config directly from database (already a StyleConfig)
+		const config = style.config as StyleConfig;
 
 		const baseUrl = env.NODE_ENV === "development" ? "http://localhost:4444/r" : "https://dotui.org/r";
 
@@ -75,7 +73,7 @@ export async function GET(request: NextRequest, { params }: RouteContext<"/r/[..
 		}
 
 		if (registryItemName === "theme") {
-			const themeJson = generateThemeJson(styleObj, styleSlug, colorFormat);
+			const themeJson = generateThemeJson(config, styleSlug, colorFormat);
 			return NextResponse.json(themeJson);
 		}
 
@@ -104,7 +102,7 @@ export async function GET(request: NextRequest, { params }: RouteContext<"/r/[..
 
 				// Apply style-specific transforms
 				return transformItemJson(item, {
-					style: styleObj,
+					config,
 					styleName: styleSlug,
 					baseUrl,
 					colorFormat,
@@ -130,7 +128,7 @@ export async function GET(request: NextRequest, { params }: RouteContext<"/r/[..
 
 		const registryItem = await buildShadcnItem(registryItemName, {
 			styleName: styleSlug,
-			style: styleObj,
+			config,
 			registryBasePath,
 			baseUrl,
 			colorFormat,

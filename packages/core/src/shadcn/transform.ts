@@ -2,8 +2,10 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { RegistryItem } from "shadcn/schema";
 
+import { createTheme, type Theme as ColorTheme } from "@dotui/colors";
 import { icons as registryIcons } from "../__registry__/icons";
-import type { ColorFormat, Style, Variants } from "../types";
+import type { ColorFormat } from "../types";
+import type { StyleConfig } from "../schemas/style";
 import type { FileEntry, ItemJson } from "@dotui/types/registry";
 
 import {
@@ -14,7 +16,7 @@ import {
 } from "./transforms";
 
 export interface TransformOptions {
-  style: Style;
+  config: StyleConfig;
   styleName: string;
   baseUrl: string;
   colorFormat?: ColorFormat;
@@ -23,9 +25,9 @@ export interface TransformOptions {
 /**
  * Build transform context from style configuration
  */
-function buildTransformContext(style: Style): TransformContext {
+function buildTransformContext(config: StyleConfig): TransformContext {
   const targetIconLibrary =
-    style.icons.library === "remix" ? "remix" : "lucide";
+    config.icons.library === "remix" ? "remix" : "lucide";
 
   return {
     iconLibrary: targetIconLibrary,
@@ -41,15 +43,15 @@ export function transformItemJson(
   item: ItemJson,
   options: TransformOptions,
 ): ItemJson {
-  const { style, styleName, baseUrl } = options;
+  const { config, styleName, baseUrl } = options;
 
-  const context = buildTransformContext(style);
+  const context = buildTransformContext(config);
 
   // Determine which variant to use based on style configuration
   const itemName = item.name;
   const selectedVariant =
-    itemName in style.variants
-      ? style.variants[itemName as keyof Variants]
+    itemName in config.variants
+      ? config.variants[itemName as keyof typeof config.variants]
       : item.defaultVariant || "basic";
 
   // Get the files to transform - either from variant or base files
@@ -111,7 +113,7 @@ export function updateRegistryDependencies(
   options: {
     styleName: string;
     baseUrl: string;
-    style: Style;
+    config: StyleConfig;
   },
 ): RegistryItem {
   const { styleName, baseUrl } = options;
@@ -132,14 +134,14 @@ export async function updateFiles(
   options: {
     registryBasePath: string;
     baseUrl: string;
-    style: Style;
+    config: StyleConfig;
   },
 ): Promise<RegistryItem> {
   if (!registryItem.files) {
     return registryItem;
   }
 
-  const context = buildTransformContext(options.style);
+  const context = buildTransformContext(options.config);
 
   for (const file of registryItem.files) {
     // Load file content from filesystem if not already present
@@ -182,14 +184,74 @@ export async function updateFiles(
   return registryItem;
 }
 
+// ============================================================================
+// CSS Variables Generation
+// ============================================================================
+
 /**
- * Generate theme JSON with style-specific CSS variables
+ * Convert color scales to CSS variables
+ */
+function scalesToCssVars(
+  scales: Record<string, Record<string, string>>,
+): Record<string, string> {
+  const cssVars: Record<string, string> = {};
+
+  for (const [paletteName, scale] of Object.entries(scales)) {
+    for (const [step, value] of Object.entries(scale)) {
+      cssVars[`--${paletteName}-${step}`] = value;
+    }
+  }
+
+  return cssVars;
+}
+
+/**
+ * Generate CSS variables for a single mode from StyleConfig
+ */
+function generateModeCssVars(
+  colorTheme: ColorTheme,
+  modeName: string,
+  config: StyleConfig,
+): Record<string, string> {
+  const modeTheme = colorTheme[modeName];
+  if (!modeTheme) return {};
+
+  // Color variables from scales
+  const colorVars = scalesToCssVars(modeTheme.scales);
+
+  // Theme variables (radius, spacing, typography)
+  const themeVars: Record<string, string> = {
+    "--radius": `${config.theme.radius}rem`,
+    "--spacing": `${config.theme.spacing}rem`,
+    "--font-sans": config.theme.typography.font,
+  };
+
+  // Optional typography vars
+  if (config.theme.typography.letterSpacing !== undefined) {
+    themeVars["--letter-spacing"] = `${config.theme.typography.letterSpacing}em`;
+  }
+  if (config.theme.typography.lineHeight !== undefined) {
+    themeVars["--line-height"] = `${config.theme.typography.lineHeight}`;
+  }
+
+  return { ...colorVars, ...themeVars };
+}
+
+/**
+ * Generate theme JSON with CSS variables from StyleConfig
  */
 export function generateThemeJson(
-  style: Style,
+  config: StyleConfig,
   styleName: string,
   _colorFormat: ColorFormat,
 ): unknown {
+  // Generate color scales from config
+  const colorTheme = createTheme(config.theme.colors);
+
+  // Generate CSS vars for each mode
+  const lightVars = generateModeCssVars(colorTheme, "light", config);
+  const darkVars = generateModeCssVars(colorTheme, "dark", config);
+
   return {
     name: styleName,
     type: "registry:style",
@@ -201,8 +263,8 @@ export function generateThemeJson(
       },
     },
     cssVars: {
-      light: style.theme.cssVars?.light || {},
-      dark: style.theme.cssVars?.dark || {},
+      light: lightVars,
+      dark: darkVars,
     },
   };
 }

@@ -1,6 +1,6 @@
 import type { RegistryItem } from "shadcn/schema";
 
-import type { Style } from "../../types";
+import type { StyleConfig } from "../../schemas/style";
 
 import { ui as registryUi } from "../../__registry__/ui";
 import { updateRegistryDependencies } from "../transform";
@@ -8,9 +8,9 @@ import { updateRegistryDependencies } from "../transform";
 export function generateRegistryAll(options: {
   styleName: string;
   baseUrl: string;
-  style: Style;
+  config: StyleConfig;
 }): RegistryItem {
-  const { styleName, baseUrl, style } = options;
+  const { styleName, baseUrl, config } = options;
 
   const registryDependencies = [
     ...new Set(registryUi.map((item) => item.name.split(":")[0])),
@@ -29,7 +29,7 @@ export function generateRegistryAll(options: {
   registryItem = updateRegistryDependencies(registryItem, {
     styleName,
     baseUrl,
-    style,
+    config,
   });
 
   return registryItem;

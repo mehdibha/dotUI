@@ -1,7 +1,7 @@
 import { registryItemSchema } from "shadcn/schema";
 import type { RegistryItem } from "shadcn/schema";
 
-import type { Style } from "../../types";
+import type { StyleConfig } from "../../schemas/style";
 
 import { registry } from "../../__registry__";
 import { updateFiles, updateRegistryDependencies } from "../transform";
@@ -14,14 +14,14 @@ export async function generateShadcnItem(
     styleName: string;
     registryBasePath: string;
     baseUrl: string;
-    style: Style;
+    config: StyleConfig;
   },
 ): Promise<RegistryItem | null> {
-  const { registryBasePath, baseUrl, style } = options;
+  const { registryBasePath, baseUrl, config } = options;
 
   const variant =
-    registryItemName in style.variants
-      ? style.variants[registryItemName as keyof typeof style.variants]
+    registryItemName in config.variants
+      ? config.variants[registryItemName as keyof typeof config.variants]
       : undefined;
 
   const foundItem = registry.find((item) => item.name === registryItemName);
@@ -58,7 +58,7 @@ export async function generateShadcnItem(
   shadcnItem = await updateFiles(shadcnItem, {
     registryBasePath,
     baseUrl,
-    style,
+    config,
   });
 
   shadcnItem.name = registryItemName;

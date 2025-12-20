@@ -1,6 +1,7 @@
 import type { Registry, RegistryItem } from "shadcn/schema";
 
-import type { ColorFormat, Style } from "../types";
+import type { StyleConfig } from "../schemas/style";
+import type { ColorFormat } from "../types";
 
 import { generateRegistryAll } from "./generators/all";
 import { generateRegistryBase } from "./generators/base";
@@ -45,7 +46,7 @@ export async function buildShadcnItem(
     styleName: string;
     registryBasePath: string;
     baseUrl: string;
-    style: Style;
+    config: StyleConfig;
     colorFormat?: ColorFormat;
   },
 ): Promise<Registry | RegistryItem | null> {

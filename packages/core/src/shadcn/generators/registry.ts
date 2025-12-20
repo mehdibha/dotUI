@@ -1,6 +1,7 @@
 import type { Registry } from "shadcn/schema";
 
-import type { Style, Variants } from "../../types";
+import type { StyleConfig } from "../../schemas/style";
+import type { VariantsConfig } from "../../schemas/variants";
 
 import { ui as registryUi } from "../../__registry__/ui";
 import { updateRegistryDependencies } from "../transform";
@@ -11,12 +12,12 @@ import { generateRegistryTheme } from "./theme";
 export function generateRegistry(options: {
   styleName: string;
   baseUrl: string;
-  style: Style;
+  config: StyleConfig;
 }): Registry {
   const components = registryUi
     .filter((item) => {
       const [name, variant] = item.name.split(":") as [string, string];
-      return options.style.variants[name as keyof Variants] === variant;
+      return options.config.variants[name as keyof VariantsConfig] === variant;
     })
     .map((item) => {
       const [name] = item.name.split(":") as [string, string];

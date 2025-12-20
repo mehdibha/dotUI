@@ -25,7 +25,6 @@
 	},
 	"dependencies": {
 		"@dotui/colors": "workspace:*",
-		"@dotui/style-system": "workspace:*",
 		"@dotui/types": "workspace:*",
 		"shadcn": "^3.6.1",
 		"zod": "^4.1.13"

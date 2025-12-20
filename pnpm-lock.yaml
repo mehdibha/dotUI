@@ -135,9 +135,6 @@ importers:
       '@dotui/colors':
         specifier: workspace:*
         version: link:../colors
-      '@dotui/style-system':
-        specifier: workspace:*
-        version: link:../style-system
       '@dotui/types':
         specifier: workspace:*
         version: link:../types
