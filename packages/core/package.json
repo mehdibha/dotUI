@@ -17,6 +17,7 @@
 		"./__registry__/variants": "./src/__registry__/variants.ts"
 	},
 	"scripts": {
+		"build": "tsc",
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
 	},
