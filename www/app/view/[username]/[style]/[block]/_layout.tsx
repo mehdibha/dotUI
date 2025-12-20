@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { StyleProvider } from "@dotui/core/style";
+import { StyleProvider } from "@dotui/core/react";
 import type { StyleConfig } from "@dotui/core/schemas";
 
 import { useMounted } from "@/hooks/use-mounted";

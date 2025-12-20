@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
-import { StyleProvider } from "@dotui/core/style";
+import { StyleProvider } from "@dotui/core/react";
 import type { StyleConfig } from "@dotui/core/schemas";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
 import { cn } from "@dotui/registry/lib/utils";

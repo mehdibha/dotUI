@@ -1,6 +1,6 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/core/components/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 import { ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@dotui/registry/ui/list-box";
 
 import * as Default from "./basic";

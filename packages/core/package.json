@@ -10,12 +10,9 @@
 		".": "./src/index.ts",
 		"./schemas": "./src/schemas/index.ts",
 		"./types": "./src/types.ts",
-		"./style": "./src/style/index.ts",
-		"./style/provider": "./src/style/provider.tsx",
-		"./style/theme-provider": "./src/style/theme-provider.tsx",
-		"./style/variants-provider": "./src/style/variants-provider.tsx",
-		"./components": "./src/components/index.ts",
-		"./components/create-dynamic-component": "./src/components/create-dynamic-component.tsx",
+		"./react": "./src/react/index.ts",
+		"./react/style-provider": "./src/react/style-provider.tsx",
+		"./react/dynamic-component": "./src/react/dynamic-component.tsx",
 		"./shadcn": "./src/shadcn/index.ts"
 	},
 	"scripts": {

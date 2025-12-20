@@ -13,7 +13,7 @@ Remove `@dotui/style-system` by generating CSS vars directly where needed.
 └── createTheme(ColorsConfig) → ColorScales
 
 @dotui/core
-├── data/              → Generated registry data
+├── __registry__/      → Generated registry data (unchanged)
 │   ├── variants.ts
 │   └── icons.ts
 │
@@ -22,11 +22,11 @@ Remove `@dotui/style-system` by generating CSS vars directly where needed.
 │   ├── theme.ts
 │   └── ...
 │
-├── registry/          → Server-side (for /r API, CLI)
+├── shadcn/            → Server-side (for /r API, CLI) (unchanged)
 │   ├── generators/    → generateThemeJson() ← UPDATE THIS
 │   └── transforms/    → transformItemJson(), icons, imports
 │
-├── react/             → Client-side (React)
+├── react/             → Client-side (React) ← NEW (merged style/ + components/)
 │   ├── style-provider.tsx    ← Single provider (no sub-providers)
 │   └── dynamic-component.tsx
 │
@@ -41,14 +41,11 @@ Remove `@dotui/style-system` by generating CSS vars directly where needed.
 // @dotui/core/schemas
 export * from "./schemas";
 
-// @dotui/core/registry (server-side)
-export * from "./registry";
+// @dotui/core/shadcn (server-side)
+export * from "./shadcn";
 
 // @dotui/core/react (client-side)
 export { StyleProvider } from "./react/style-provider";
-
-// @dotui/core/data
-export * from "./data";
 ```
 
 ---
@@ -57,19 +54,18 @@ export * from "./data";
 
 ### Phase 1: Reorganize Core Package
 
-Rename and move files:
-- [ ] `__registry__/` → `data/`
-- [ ] `shadcn/` → `registry/`
-- [ ] `style/` + `components/` → `react/`
-  - Merge into single `style-provider.tsx` (delete theme-provider, variants-provider)
-  - Keep `dynamic-component.tsx`
+Merge `style/` + `components/` into `react/`:
+- [x] Create `react/` folder
+- [x] Move `style/provider.tsx` → `react/style-provider.tsx` (simplified, no sub-providers)
+- [x] Move `components/create-dynamic-component.tsx` → `react/dynamic-component.tsx`
+- [x] Delete `style/` and `components/` folders
 - [ ] Update `package.json` exports
 - [ ] Update internal imports
 - [ ] Update external imports (www, registry package)
 
 ### Phase 2: Update `generateThemeJson()`
 
-Location: `packages/core/src/registry/generators/theme.ts`
+Location: `packages/core/src/shadcn/generators/theme.ts`
 
 Currently it expects `Style.theme.cssVars` from style-system.
 Update to:
@@ -113,8 +109,8 @@ Single provider that does everything:
 
 | Function | Location | Purpose |
 |----------|----------|---------|
-| `generateThemeJson()` | core/registry/generators | Returns CSS vars JSON for `/r/[style]/theme` |
-| `transformItemJson()` | core/registry/transforms | Transforms component code (icons, variants) - NO CHANGES |
+| `generateThemeJson()` | core/shadcn/generators | Returns CSS vars JSON for `/r/[style]/theme` |
+| `transformItemJson()` | core/shadcn/transforms | Transforms component code (icons, variants) - NO CHANGES |
 | `StyleProvider` | core/react | Single provider: generates + injects CSS vars into DOM |
 
 ---

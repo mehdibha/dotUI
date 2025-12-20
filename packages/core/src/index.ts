@@ -7,11 +7,8 @@
 // Schemas (for validation)
 export * from "./schemas";
 
-// Style providers (client-side)
-export * from "./style";
-
-// Dynamic component factory (client-side)
-export * from "./components";
+// React components (client-side)
+export * from "./react";
 
 // Registry data
 export { VARIANTS, VARIANT_GROUPS } from "./__registry__/variants";

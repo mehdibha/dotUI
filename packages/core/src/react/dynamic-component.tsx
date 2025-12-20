@@ -2,9 +2,9 @@
 
 import React, { createContext, useContext, useMemo } from "react";
 
-import { useVariant } from "../style/variants-provider";
 import type { VariantsConfig } from "../schemas/variants";
 import { VARIANTS } from "../__registry__/variants";
+import { StyleContext } from "./context";
 
 // ============================================================================
 // Types
@@ -148,25 +148,13 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 // ============================================================================
 
 /**
- * Creates a dynamic component that switches between variants based on context.
+ * Creates a dynamic component that switches between variants based on StyleProvider context.
  *
  * @param componentName - The component key (must match a key in VARIANTS)
  * @param displayName - Display name for the component (used in React DevTools)
  * @param DefaultComponent - The default component to render
  * @param variants - Map of variant names to lazy-loaded components
  * @param options - Additional options
- *
- * @example
- * ```tsx
- * const Button = createDynamicComponent(
- *   'button',
- *   'Button',
- *   BasicButton,
- *   {
- *     ripple: React.lazy(() => import('./ripple')),
- *   }
- * );
- * ```
  */
 export function createDynamicComponent<Props extends object, V extends string = string>(
 	componentName: VariantKey,
@@ -182,10 +170,11 @@ export function createDynamicComponent<Props extends object, V extends string = 
 	const defaultVariant = variantConfig?.default ?? "basic";
 
 	const Component: React.FC<Props> = (props) => {
-		const selectedVariant = useVariant(componentName);
+		const styleConfig = useContext(StyleContext);
 		const disableSuspense = useDisableSuspense();
 
-		// If no variant selected via context, use default
+		// Get variant from StyleProvider context, fallback to default
+		const selectedVariant = styleConfig?.variants?.[componentName as keyof VariantsConfig];
 		const variantName = selectedVariant ?? defaultVariant;
 
 		// Get className for skeleton sizing (if props has className)
@@ -197,36 +186,12 @@ export function createDynamicComponent<Props extends object, V extends string = 
 		// Check if we should use a lazy variant
 		const LazyComponent = variantName !== defaultVariant ? variants[variantName] : null;
 
-		// Render default component (no lazy loading needed)
+		// No lazy variant needed - render default component directly
 		if (!LazyComponent) {
-			if (disableSuspense) {
-				return <DefaultComponent {...props} />;
-			}
-
-			return (
-				<ErrorBoundary
-					fallback={
-						<ErrorFallback componentName={componentName} variantName={variantName} />
-					}
-				>
-					<React.Suspense
-						fallback={
-							<Skeleton show={!disableSkeleton} className={className}>
-								<DefaultVariantsProvider>
-									<DefaultComponent {...props} />
-								</DefaultVariantsProvider>
-							</Skeleton>
-						}
-					>
-						<DisableSuspense>
-							<DefaultComponent {...props} />
-						</DisableSuspense>
-					</React.Suspense>
-				</ErrorBoundary>
-			);
+			return <DefaultComponent {...props} />;
 		}
 
-		// Render lazy variant
+		// Render lazy variant with Suspense
 		if (disableSuspense) {
 			return <LazyComponent {...props} />;
 		}

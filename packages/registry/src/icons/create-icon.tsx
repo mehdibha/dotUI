@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Skeleton } from "@dotui/registry/ui/skeleton";
-import { useCurrentStyle } from "@dotui/core/style";
+import { useStyleConfig } from "@dotui/core/react";
 import type { iconLibraries } from "@dotui/registry/icons/registry";
 
 interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
@@ -39,20 +39,21 @@ export function createIcon(iconMapping: IconMapping): IconComponent {
     SVGSVGElement,
     React.SVGProps<SVGSVGElement>
   >((props, ref) => {
-    const style = useCurrentStyle();
+    const styleConfig = useStyleConfig();
 
     const LucideIcon = iconMapping.lucide;
-    if (!style) {
+    if (!styleConfig) {
       return <LucideIcon ref={ref} {...props} />;
     }
 
-    const iconLibrary = style.icons.library;
+    const { icons } = styleConfig;
+    const iconLibrary = icons.library;
 
     if (iconLibrary === "lucide") {
       return (
         <LucideIcon
           ref={ref}
-          strokeWidth={style.icons.strokeWidth}
+          strokeWidth={icons.strokeWidth}
           {...props}
         />
       );
@@ -67,7 +68,7 @@ export function createIcon(iconMapping: IconMapping): IconComponent {
           </Skeleton>
         }
       >
-        <Icon ref={ref} strokeWidth={style.icons.strokeWidth} {...props} />
+        <Icon ref={ref} strokeWidth={icons.strokeWidth} {...props} />
       </React.Suspense>
     );
   });
