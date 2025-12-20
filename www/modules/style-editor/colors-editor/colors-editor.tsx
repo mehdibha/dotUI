@@ -1,6 +1,5 @@
 "use client";
 
-import { COLOR_TOKENS } from "@dotui/registry/tokens/registry";
 import { FieldGroup, Fieldset, Label, Legend } from "@dotui/registry/ui/field";
 
 import { ColorAdjustments } from "@/modules/style-editor/colors-editor/color-adjustments";
@@ -83,35 +82,24 @@ export function ColorsEditor() {
 			<Fieldset>
 				<Legend>Tokens</Legend>
 				<FieldGroup>
-					{(
-						[
-							{
-								name: "Backgrounds",
-								category: "background",
-							},
-							{
-								name: "Foregrounds",
-								category: "foreground",
-							},
-							{
-								name: "Borders",
-								category: "border",
-							},
-						] as const
-					).map(({ name, category }) => (
-						<div key={name}>
-							<Label id={`${name}-label`} className="font-medium text-sm">
-								{name}
-							</Label>
-							<TokensTable
-								aria-labelledby={`${name}-label`}
-								tokenIds={Object.entries(COLOR_TOKENS)
-									.filter(([, token]) => token.categories?.includes(category))
-									.filter(([tokenId]) => !tokenId.startsWith("color-fg-on"))
-									.map(([key]) => key)}
-							/>
-						</div>
-					))}
+					<div>
+						<Label id="backgrounds-label" className="font-medium text-sm">
+							Backgrounds
+						</Label>
+						<TokensTable aria-labelledby="backgrounds-label" category="background" />
+					</div>
+					<div>
+						<Label id="foregrounds-label" className="font-medium text-sm">
+							Foregrounds
+						</Label>
+						<TokensTable aria-labelledby="foregrounds-label" category="foreground" />
+					</div>
+					<div>
+						<Label id="borders-label" className="font-medium text-sm">
+							Borders
+						</Label>
+						<TokensTable aria-labelledby="borders-label" category="border" />
+					</div>
 				</FieldGroup>
 			</Fieldset>
 		</FieldGroup>

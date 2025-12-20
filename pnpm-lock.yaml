@@ -310,40 +310,6 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
-  packages/style-system:
-    dependencies:
-      '@adobe/leonardo-contrast-colors':
-        specifier: ^1.0.0
-        version: 1.0.0
-      culori:
-        specifier: ^4.0.2
-        version: 4.0.2
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
-      react:
-        specifier: ^19.2.1
-        version: 19.2.1
-      react-dom:
-        specifier: ^19.2.1
-        version: 19.2.1(react@19.2.1)
-    devDependencies:
-      '@dotui/ts-config':
-        specifier: workspace:*
-        version: link:../../config/ts-config
-      '@types/culori':
-        specifier: ^4.0.1
-        version: 4.0.1
-      '@types/react':
-        specifier: ^19.2.2
-        version: 19.2.7
-      '@types/react-dom':
-        specifier: ^19.2.1
-        version: 19.2.3(@types/react@19.2.7)
-      typescript:
-        specifier: ^5.8.3
-        version: 5.9.3
-
   packages/tailwindcss-autocontrast:
     dependencies:
       '@tailwindcss/postcss':
@@ -407,9 +373,6 @@ importers:
       '@dotui/registry':
         specifier: workspace:*
         version: link:../packages/registry
-      '@dotui/style-system':
-        specifier: workspace:*
-        version: link:../packages/style-system
       '@dotui/types':
         specifier: workspace:*
         version: link:../packages/types

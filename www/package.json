@@ -27,7 +27,6 @@
 		"@dotui/core": "workspace:*",
 		"@dotui/db": "workspace:*",
 		"@dotui/registry": "workspace:*",
-		"@dotui/style-system": "workspace:*",
 		"@dotui/types": "workspace:*",
 		"@fumadocs/mdx-remote": "^1.4.0",
 		"@hookform/resolvers": "^5.2.2",

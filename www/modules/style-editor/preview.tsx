@@ -23,16 +23,16 @@ import { Modal } from "@dotui/registry/ui/modal";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@dotui/registry/ui/select";
 import { Separator } from "@dotui/registry/ui/separator";
 import { useSidebarContext } from "@dotui/registry/ui/sidebar";
-import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { useHorizontalResize } from "@/hooks/use-horizontal-resize";
 import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/preferences/preferences-atom";
-import { useEditorStyle } from "@/modules/style-editor/use-editor-style";
 import { useResolvedModeState } from "@/modules/style-editor/use-resolved-mode";
-import { useStyleEditorParams } from "@/modules/style-editor/use-style-editor-params";
+
+// Hardcoded slug for static UI shell
+const STATIC_SLUG = "default/default";
 
 export const Preview = () => {
 	return (
@@ -155,13 +155,11 @@ export const PreviewRoot = ({ children }: { children: React.ReactNode }) => {
 };
 
 function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
-	const { isSuccess } = useEditorStyle();
 	const { activeMode, setActiveMode } = usePreferences();
 	const { supportsLightDark } = useResolvedModeState();
 
 	const { previewWidth, setPreviewWidth, setOpen, block, setBlock, setFullscreen } =
 		usePreviewContext("PreviewToolbar");
-	const { slug } = useStyleEditorParams();
 
 	const isMobile = previewWidth < 480;
 
@@ -187,20 +185,18 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
 			</div>
 			<div className="flex gap-0.5">
 				{supportsLightDark && (
-					<Skeleton show={!isSuccess}>
-						<ToggleButton
-							aria-label="Toggle theme"
-							variant="quiet"
-							isSelected={activeMode === "light"}
-							onChange={(isSelected) => {
-								setActiveMode(isSelected ? "light" : "dark");
-							}}
-							size="sm"
-							className="size-7 selected:bg-transparent selected:pressed:bg-inverse/20 selected:text-fg selected:hover:bg-inverse/10"
-						>
-							{({ isSelected }) => (isSelected ? <SunIcon /> : <MoonIcon />)}
-						</ToggleButton>
-					</Skeleton>
+					<ToggleButton
+						aria-label="Toggle theme"
+						variant="quiet"
+						isSelected={activeMode === "light"}
+						onChange={(isSelected) => {
+							setActiveMode(isSelected ? "light" : "dark");
+						}}
+						size="sm"
+						className="size-7 selected:bg-transparent selected:pressed:bg-inverse/20 selected:text-fg selected:hover:bg-inverse/10"
+					>
+						{({ isSelected }) => (isSelected ? <SunIcon /> : <MoonIcon />)}
+					</ToggleButton>
 				)}
 				<Tooltip>
 					<Button
@@ -217,7 +213,7 @@ function PreviewToolbar({ fullScreen }: { fullScreen?: boolean }) {
 				<Tooltip>
 					<LinkButton
 						target="_blank"
-						href={`/view/${slug}/${block}?mode=true&live=true&view=true` as Route}
+						href={`/view/${STATIC_SLUG}/${block}?mode=true&live=true&view=true` as Route}
 						aria-label="Open in new tab"
 						variant="quiet"
 						size="sm"
@@ -250,7 +246,6 @@ function PreviewContent({ className }: { className?: string }) {
 }
 
 export const PreviewFrame = ({ block, className }: { block: string; className?: string }) => {
-	const { slug } = useStyleEditorParams();
 	const [isLoading, setLoading] = React.useState(true);
 
 	React.useEffect(() => {
@@ -261,7 +256,7 @@ export const PreviewFrame = ({ block, className }: { block: string; className?: 
 		<div className={cn("flex-1", className, isLoading && "relative block animate-pulse rounded-md bg-muted")}>
 			<iframe
 				title="Preview"
-				src={`/view/${slug}/${block}?mode=true&live=true`}
+				src={`/view/${STATIC_SLUG}/${block}?mode=true&live=true`}
 				onLoad={() => setLoading(false)}
 				className={cn("rounded-{inherit] size-full", isLoading && "opacity-0")}
 			/>
