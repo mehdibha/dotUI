@@ -14,9 +14,6 @@ const config = {
 			fullUrl: true,
 		},
 	},
-	typescript: {
-		ignoreBuildErrors: true,
-	},
 	experimental: {
 		viewTransition: true,
 	},

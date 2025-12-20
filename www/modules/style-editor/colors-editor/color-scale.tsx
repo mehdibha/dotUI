@@ -15,42 +15,42 @@ const STATIC_SCALES: Record<ScaleId, { name: string; values: { name: string; val
 		name: "neutral",
 		values: SCALE_STEPS.map((step, i) => ({
 			name: `neutral-${step}`,
-			value: `hsl(220 ${5 + i}% ${95 - i * 8}%)`,
+			value: `hsl(220, ${5 + i}%, ${95 - i * 8}%)`,
 		})),
 	},
 	accent: {
 		name: "accent",
 		values: SCALE_STEPS.map((step, i) => ({
 			name: `accent-${step}`,
-			value: `hsl(220 90% ${95 - i * 8}%)`,
+			value: `hsl(220, 90%, ${95 - i * 8}%)`,
 		})),
 	},
 	success: {
 		name: "success",
 		values: SCALE_STEPS.map((step, i) => ({
 			name: `success-${step}`,
-			value: `hsl(142 70% ${95 - i * 8}%)`,
+			value: `hsl(142, 70%, ${95 - i * 8}%)`,
 		})),
 	},
 	warning: {
 		name: "warning",
 		values: SCALE_STEPS.map((step, i) => ({
 			name: `warning-${step}`,
-			value: `hsl(38 90% ${95 - i * 8}%)`,
+			value: `hsl(38, 90%, ${95 - i * 8}%)`,
 		})),
 	},
 	danger: {
 		name: "danger",
 		values: SCALE_STEPS.map((step, i) => ({
 			name: `danger-${step}`,
-			value: `hsl(0 70% ${95 - i * 8}%)`,
+			value: `hsl(0, 70%, ${95 - i * 8}%)`,
 		})),
 	},
 	info: {
 		name: "info",
 		values: SCALE_STEPS.map((step, i) => ({
 			name: `info-${step}`,
-			value: `hsl(190 80% ${95 - i * 8}%)`,
+			value: `hsl(190, 80%, ${95 - i * 8}%)`,
 		})),
 	},
 };

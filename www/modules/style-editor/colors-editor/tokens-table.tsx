@@ -12,12 +12,12 @@ import { SCALE_STEPS } from "@/modules/style-editor/types";
 
 // Static color values for UI shell
 const STATIC_COLORS: Record<ScaleId, string[]> = {
-	neutral: SCALE_STEPS.map((_, i) => `hsl(220 ${5 + i}% ${95 - i * 8}%)`),
-	accent: SCALE_STEPS.map((_, i) => `hsl(220 90% ${95 - i * 8}%)`),
-	success: SCALE_STEPS.map((_, i) => `hsl(142 70% ${95 - i * 8}%)`),
-	warning: SCALE_STEPS.map((_, i) => `hsl(38 90% ${95 - i * 8}%)`),
-	danger: SCALE_STEPS.map((_, i) => `hsl(0 70% ${95 - i * 8}%)`),
-	info: SCALE_STEPS.map((_, i) => `hsl(190 80% ${95 - i * 8}%)`),
+	neutral: SCALE_STEPS.map((_, i) => `hsl(220, ${5 + i}%, ${95 - i * 8}%)`),
+	accent: SCALE_STEPS.map((_, i) => `hsl(220, 90%, ${95 - i * 8}%)`),
+	success: SCALE_STEPS.map((_, i) => `hsl(142, 70%, ${95 - i * 8}%)`),
+	warning: SCALE_STEPS.map((_, i) => `hsl(38, 90%, ${95 - i * 8}%)`),
+	danger: SCALE_STEPS.map((_, i) => `hsl(0, 70%, ${95 - i * 8}%)`),
+	info: SCALE_STEPS.map((_, i) => `hsl(190, 80%, ${95 - i * 8}%)`),
 };
 
 // Static token definitions for UI shell
