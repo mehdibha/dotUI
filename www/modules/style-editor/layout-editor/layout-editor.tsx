@@ -8,7 +8,14 @@ export function LayoutEditor() {
 	return (
 		<div className="space-y-4">
 			<StyleEditorSection title="Border radius">
-				<Slider aria-label="Radius factor" defaultValue={1} minValue={0} maxValue={2} step={0.1} className="mt-2 w-full">
+				<Slider
+					aria-label="Radius factor"
+					defaultValue={1}
+					minValue={0}
+					maxValue={2}
+					step={0.1}
+					className="mt-2 w-full"
+				>
 					<SliderControl />
 				</Slider>
 			</StyleEditorSection>

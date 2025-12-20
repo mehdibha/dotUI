@@ -32,7 +32,8 @@ function resolveModeConfig(name: string, config: Mode): ResolvedModeConfig {
 		return { lightness, palettes: {} };
 	}
 
-	const lightness = config.lightness ?? (name.toLowerCase().includes("dark") ? DEFAULT_DARK_LIGHTNESS : DEFAULT_LIGHT_LIGHTNESS);
+	const lightness =
+		config.lightness ?? (name.toLowerCase().includes("dark") ? DEFAULT_DARK_LIGHTNESS : DEFAULT_LIGHT_LIGHTNESS);
 	return { lightness, palettes: config.palettes ?? {} };
 }
 

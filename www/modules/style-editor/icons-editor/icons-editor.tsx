@@ -22,14 +22,7 @@ export function IconsEditor() {
 					</SelectContent>
 				</Select>
 
-				<Slider
-					aria-label="Stroke width"
-					className="w-full"
-					defaultValue={2}
-					minValue={0.5}
-					maxValue={3}
-					step={0.1}
-				>
+				<Slider aria-label="Stroke width" className="w-full" defaultValue={2} minValue={0.5} maxValue={3} step={0.1}>
 					<SliderControl />
 				</Slider>
 
