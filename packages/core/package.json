@@ -13,7 +13,8 @@
 		"./react": "./src/react/index.ts",
 		"./react/style-provider": "./src/react/style-provider.tsx",
 		"./react/dynamic-component": "./src/react/dynamic-component.tsx",
-		"./shadcn": "./src/shadcn/index.ts"
+		"./shadcn": "./src/shadcn/index.ts",
+		"./__registry__/variants": "./src/__registry__/variants.ts"
 	},
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
