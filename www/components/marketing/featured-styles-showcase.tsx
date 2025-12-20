@@ -6,15 +6,13 @@ import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { StyleProvider } from "@dotui/core/react";
-import type { StyleConfig } from "@dotui/core/schemas";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { RouterOutputs } from "@dotui/api";
+import type { StyleConfig } from "@dotui/core/schemas";
 
 import { useDebounce } from "@/hooks/use-debounce";
-
-type StyleFromDB = RouterOutputs["style"]["getPublicStyles"][number];
 
 const MotionTabPanel = motion.create(TabPanel);
 

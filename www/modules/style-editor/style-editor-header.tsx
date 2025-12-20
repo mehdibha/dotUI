@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDownIcon, CodeIcon, EyeIcon, RocketIcon, RotateCcwIcon, SaveIcon, XIcon } from "lucide-react";
+import { ChevronsUpDownIcon, CodeIcon, EyeIcon, RocketIcon, RotateCcwIcon, XIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Avatar } from "@dotui/registry/ui/avatar";

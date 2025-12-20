@@ -5,12 +5,13 @@ import { useSearchParams } from "next/navigation";
 import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
-import { cn } from "@dotui/registry/lib/utils";
 import { StyleProvider } from "@dotui/core/react";
+import { cn } from "@dotui/registry/lib/utils";
 import type { StyleConfig } from "@dotui/core/schemas";
 
 import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/preferences/preferences-atom";
+
 // TODO: Fix style-editor types for new config schema
 // import { useDraftStyle } from "@/modules/style-editor/draft-style-atom";
 
@@ -23,7 +24,7 @@ interface StyleFromDB {
 
 export const BlockViewLayout = ({
 	style: styleProp,
-	styleSlug,
+	styleSlug: _styleSlug,
 	children,
 }: {
 	style: StyleFromDB;

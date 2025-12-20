@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 
 // Minimal provider - just a simple wrapper for the style editor UI shell
 // No form state, no color generation, no persistence

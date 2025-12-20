@@ -3,8 +3,6 @@
 import { cn } from "@dotui/registry/lib/utils";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@dotui/registry/ui/select";
 
-import { TokensTable } from "@/modules/style-editor/colors-editor/tokens-table";
-
 interface ComponentConfigProps extends React.ComponentProps<"div"> {
 	name: string;
 	title: string;

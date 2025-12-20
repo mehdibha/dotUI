@@ -1,9 +1,9 @@
 import type { z } from "zod";
 
 import { DEFAULT_MODES, SCALE_STEPS, SEMANTIC_COLORS } from "../shared/constants";
-import type { ColorScale, Theme } from "../shared/types";
-import { DEFAULT_DARK_LIGHTNESS, DEFAULT_LIGHT_LIGHTNESS, DEFAULT_NEUTRAL_CHROMA, DEFAULT_RATIOS } from "./defaults";
+import { DEFAULT_DARK_LIGHTNESS, DEFAULT_LIGHT_LIGHTNESS, DEFAULT_RATIOS } from "./defaults";
 import { generateBackgroundScale, generateTheme } from "./generate";
+import type { ColorScale, Theme } from "../shared/types";
 import type { createContrastThemeOptionsSchema, modeSchema } from "./schema";
 import type { ContrastFormula } from "./types";
 
