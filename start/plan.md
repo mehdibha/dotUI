@@ -1,5 +1,15 @@
 # Docs Module Migration Plan
 
+## Workflow
+
+**After completing each task:**
+1. Summarize what was done
+2. Discuss with user
+3. Commit if approved
+4. Move to next task
+
+---
+
 ## Step 0: Review Folder Structure
 
 Before migrating, review the current www docs module structure:
@@ -66,9 +76,7 @@ www/modules/docs/
   - [ ] code-block.tsx - Needs useCopyToClipboard hook
   - [ ] dynamic-pre.tsx - Review
 
-- [ ] **toc/** - Table of contents
-  - [ ] toc.tsx - Should work as-is (React only)
-  - [ ] toc-primitive.tsx - Should work as-is
+- [x] **toc.tsx** - Table of contents (standalone file, uses fumadocs-core/toc primitives)
 
 ### Secondary (Can be stubbed initially)
 - [ ] **page-tabs.tsx** - Overview/Examples tabs
@@ -96,9 +104,9 @@ www/modules/docs/
 
 ## Missing Dependencies
 
-### Hooks (to create in src/hooks/)
-- [ ] use-copy-to-clipboard.ts
-- [ ] use-mounted.ts
+### Hooks (created in src/hooks/)
+- [x] use-copy-to-clipboard.ts
+- [x] use-mounted.ts
 
 ### Modules (stub or implement later)
 - [ ] styles module (ActiveStyleProvider, useActiveStyle, etc.)
@@ -106,8 +114,8 @@ www/modules/docs/
 
 ## Build Issues to Fix
 1. [x] markdown-to-jsx - removed, use plain text
-2. [ ] useCopyToClipboard hook - create in src/hooks/
-3. [ ] useMounted hook - create in src/hooks/
+2. [x] useCopyToClipboard hook - created in src/hooks/
+3. [x] useMounted hook - created in src/hooks/
 4. [ ] styles module imports - stub the components that need it
 
 ## Next Steps
