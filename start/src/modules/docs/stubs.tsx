@@ -8,46 +8,6 @@ import type React from "react";
 import { cn } from "@dotui/registry/lib/utils";
 
 // =============================================================================
-// CODE BLOCK (stub)
-// =============================================================================
-
-export function CodeBlock({ children, className, ...props }: React.ComponentProps<"figure">) {
-	return (
-		<figure className={cn("overflow-auto rounded-md border bg-card", className)} {...props}>
-			{children}
-		</figure>
-	);
-}
-
-export function Pre({ children, className, ...props }: React.ComponentProps<"pre">) {
-	return (
-		<pre className={cn("overflow-auto p-4 text-sm", "**:[code]:text-[0.8125rem]", className)} {...props}>
-			{children}
-		</pre>
-	);
-}
-
-export function CodeBlockTabs({ children }: { children: React.ReactNode; defaultValue?: string }) {
-	return <div className="mt-4">{children}</div>;
-}
-
-export function CodeBlockTabsList({ children }: { children: React.ReactNode }) {
-	return <div className="flex gap-2 rounded-t-md border bg-muted p-1">{children}</div>;
-}
-
-export function CodeBlockTabsTrigger({ children }: { children: React.ReactNode; value?: string }) {
-	return (
-		<button type="button" className="px-3 py-1 text-sm">
-			{children}
-		</button>
-	);
-}
-
-export function CodeBlockTab({ children }: { children: React.ReactNode; value?: string }) {
-	return <div>{children}</div>;
-}
-
-// =============================================================================
 // DEMO (stub)
 // =============================================================================
 

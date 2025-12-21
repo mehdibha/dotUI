@@ -5,12 +5,9 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Alert, type AlertProps } from "@dotui/registry/ui/alert";
 import { Link, type LinkProps } from "@dotui/registry/ui/link";
 
+import { CodeBlock, Pre } from "./code-block";
+import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "./code-block-tabs";
 import {
-	CodeBlock,
-	CodeBlockTab,
-	CodeBlockTabs,
-	CodeBlockTabsList,
-	CodeBlockTabsTrigger,
 	Demo,
 	type DemoProps,
 	Example,
@@ -19,7 +16,6 @@ import {
 	type InteractiveDemoProps,
 	PageTabPanel,
 	PageTabs,
-	Pre,
 	Reference,
 	type ReferenceProps,
 } from "./stubs";
@@ -80,16 +76,10 @@ export const mdxComponents: MDXComponents = {
 	Steps: (props) => <div className="[&>h3]:step ml-4 border-l pl-8 [counter-reset:step]" {...props} />,
 	PageTabs,
 	PageTabPanel,
-	CodeBlockTabs: ({ defaultValue, children }: { defaultValue: string; children: React.ReactNode }) => (
-		<CodeBlockTabs defaultValue={defaultValue}>{children}</CodeBlockTabs>
-	),
+	CodeBlockTabs,
 	CodeBlockTabsList,
-	CodeBlockTabsTrigger: ({ value, children }: { value: string; children: React.ReactNode }) => (
-		<CodeBlockTabsTrigger value={value}>{children}</CodeBlockTabsTrigger>
-	),
-	CodeBlockTab: ({ value, children }: { value: string; children: React.ReactNode }) => (
-		<CodeBlockTab value={value}>{children}</CodeBlockTab>
-	),
+	CodeBlockTabsTrigger,
+	CodeBlockTab,
 	Demo: ({ className, ...props }: DemoProps) => <Demo className={cn("not-first:mt-4", className)} {...props} />,
 	Example,
 	Examples,
