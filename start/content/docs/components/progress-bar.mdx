@@ -1,0 +1,88 @@
+---
+title: Progress Bar
+description: A progress bar shows the progression of a task.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ProgressBar.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="progress-bar/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/progress-bar
+    ```
+
+    ## Usage
+
+    Use progress bars to show the progression of a system operation or task.
+
+    ```tsx
+    import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
+    ```
+
+    ```tsx
+    <ProgressBar value={60}>
+      <ProgressBarControl />
+    </ProgressBar>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different progress bar props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="progress-bar" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Loading...",
+        },
+        {
+          type: "number",
+          name: "value",
+          defaultValue: 60,
+          min: 0,
+          max: 100,
+        },
+        {
+          type: "boolean",
+          name: "isIndeterminate",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### ProgressBar
+
+    <Reference name="progress-bar" />
+
+    ### ProgressBarControl
+
+    <Reference name="progress-bar-control" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="progress-bar/demos/default" />
+    <Example name="progress-bar/demos/sizes" />
+    <Example name="progress-bar/demos/variants" />
+    <Example name="progress-bar/demos/shape" />
+    <Example name="progress-bar/demos/label" />
+    <Example name="progress-bar/demos/value-label" />
+    <Example name="progress-bar/demos/custom-value-label" />
+    <Example name="progress-bar/demos/format-options" />
+    <Example name="progress-bar/demos/min-max-values" />
+    <Example name="progress-bar/demos/indeterminate" />
+    <Example name="progress-bar/demos/duration" />
+  </PageTabPanel>
+</PageTabs>

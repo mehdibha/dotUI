@@ -1,0 +1,128 @@
+---
+title: Dialog
+description: A dialog is an overlay shown above other content in an application.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Dialog.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="dialog/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/dialog
+    ```
+
+    ## Usage
+
+    Use dialog to grab the user's attention for critical tasks, like confirming actions, providing additional details, or capturing input.
+
+    ```tsx
+    import { Button } from "@/components/ui/button";
+    import {
+      Dialog,
+      DialogBody,
+      DialogContent,
+      DialogDescription,
+      DialogFooter,
+      DialogHeader,
+      DialogHeading,
+    } from "@/components/ui/dialog";
+    import { Overlay } from "@/components/ui/overlay";
+    ```
+
+    ```tsx
+    <Dialog>
+      <Button>Open dialog</Button>
+      <Overlay>
+        <DialogContent>
+          <DialogHeader>
+            <DialogHeading>Dialog Title</DialogHeading>
+            <DialogDescription>Dialog description</DialogDescription>
+          </DialogHeader>
+          <DialogBody>Content</DialogBody>
+          <DialogFooter>
+            <Button slot="close">Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Overlay>
+    </Dialog>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different dialog props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="dialog" 
+      controls={[
+        {
+          type: "string",
+          name: "title",
+          defaultValue: "Dialog Title",
+        },
+        {
+          type: "string",
+          name: "description",
+          defaultValue: "This is a dialog description.",
+        },
+        {
+          type: "boolean",
+          name: "isDismissable",
+          defaultValue: true,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### Dialog
+
+    <Reference name="dialog" />
+
+    ### DialogContent
+
+    <Reference name="dialog-content" />
+
+    ### DialogHeader
+
+    <Reference name="dialog-header" />
+
+    ### DialogHeading
+
+    <Reference name="dialog-heading" />
+
+    ### DialogDescription
+
+    <Reference name="dialog-description" />
+
+    ### DialogBody
+
+    <Reference name="dialog-body" />
+
+    ### DialogFooter
+
+    <Reference name="dialog-footer" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="dialog/demos/basic" />
+    <Example name="dialog/demos/title" />
+    <Example name="dialog/demos/description" />
+    <Example name="dialog/demos/types" />
+    <Example name="dialog/demos/dismissable" />
+    <Example name="dialog/demos/alert-dialog" />
+    <Example name="dialog/demos/composition" />
+    <Example name="dialog/demos/controlled" />
+    <Example name="dialog/demos/nested" />
+    <Example name="dialog/demos/inset-content" />
+    <Example name="dialog/demos/async-form-submission" />
+  </PageTabPanel>
+</PageTabs>

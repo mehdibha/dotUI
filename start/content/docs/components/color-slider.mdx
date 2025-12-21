@@ -1,0 +1,86 @@
+---
+title: Color Slider
+description: A color slider allows users to adjust an individual channel of a color value.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ColorSlider.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="color-slider/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/color-slider
+    ```
+
+    ## Usage
+
+    Use color sliders to allow users to adjust an individual channel of a color value.
+
+    ```tsx
+    import { ColorSlider, ColorSliderControl } from "@/components/ui/color-slider";
+    import { Label } from "@/components/ui/field";
+    ```
+
+    ```tsx
+    <ColorSlider defaultValue="#ff0000" channel="hue">
+      <Label>Hue</Label>
+      <ColorSliderControl />
+    </ColorSlider>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different color slider props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="color-slider" 
+      controls={[
+        {
+          type: "enum",
+          name: "channel",
+          options: ["hue", "saturation", "lightness", "alpha"],
+          defaultValue: "hue",
+        },
+        {
+          type: "enum",
+          name: "orientation",
+          options: ["horizontal", "vertical"],
+          defaultValue: "horizontal",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### ColorSlider
+
+    <Reference name="color-slider" />
+
+    ### ColorSliderControl
+
+    <Reference name="color-slider-control" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="color-slider/demos/default" />
+    <Example name="color-slider/demos/label" />
+    <Example name="color-slider/demos/channel" />
+    <Example name="color-slider/demos/vertical" />
+    <Example name="color-slider/demos/disabled" />
+    <Example name="color-slider/demos/uncontrolled" />
+    <Example name="color-slider/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

@@ -1,0 +1,70 @@
+---
+title: Skeleton
+description: Skeleton is a placeholder component that displays while content is loading.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="skeleton/demos/card" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/skeleton
+    ```
+
+    ## Usage
+
+    Use skeleton components as placeholders while content is loading.
+
+    ```tsx
+    import { Skeleton, SkeletonProvider } from "@/components/ui/skeleton";
+    ```
+
+    ```tsx
+    <SkeletonProvider isLoading={true}>
+      <Skeleton className="h-4 w-32" />
+    </SkeletonProvider>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different skeleton props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="skeleton" 
+      controls={[
+        {
+          type: "boolean",
+          name: "isLoading",
+          defaultValue: true,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### SkeletonProvider
+
+    <Reference name="skeleton-provider" />
+
+    ### Skeleton
+
+    <Reference name="skeleton" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="skeleton/demos/card" />
+    <Example name="skeleton/demos/children" />
+    <Example name="skeleton/demos/fixed-size-children" />
+    <Example name="skeleton/demos/show" />
+    <Example name="skeleton/demos/api-simulation" />
+  </PageTabPanel>
+</PageTabs>

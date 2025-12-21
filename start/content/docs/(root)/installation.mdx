@@ -1,0 +1,61 @@
+---
+title: Installation
+description: Learn how to add dotUI to your project.
+---
+
+## App requirements
+
+Before you begin, make sure your project meets these requirements:
+
+- [React 19](https://react.dev)
+- [Tailwind CSS 4](https://tailwindcss.com/docs/v4-beta)
+- [TypeScript 5](https://www.typescriptlang.org/)
+
+## Automatic installation
+
+<Steps>
+
+### Initialize shadcn CLI
+
+Start by setting up the shadcn CLI in your project:
+
+```npm
+npx shadcn@latest init --no-base-style
+```
+
+### Configure your registry
+
+Choose or create a style, [see styles](/styles) to get started, then update your `components.json` file to use the selected style.
+
+```json title="components.json"
+{
+  "style": "minimalist", // or "mehdibha/minimalist"
+  "registries": {
+    "@dotui": "https://dotui.org/r/{style}/{name}"
+  }
+}
+```
+
+### Init your style
+
+```npm
+npx shadcn@latest add @dotui/base
+```
+
+### Add components
+
+You can now add components to your project.
+
+```npm
+npx shadcn@latest add @dotui/button
+```
+
+To add all the components at once, you can use the `@dotui/all`.
+
+```npm
+npx shadcn@latest add @dotui/all
+```
+
+### You're done!
+
+</Steps>

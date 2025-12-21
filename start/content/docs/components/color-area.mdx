@@ -1,0 +1,44 @@
+---
+title: Color Area
+description: A color area allows users to select a color from a two-dimensional gradient.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ColorArea.html
+wip: true
+---
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="color-area/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/color-area
+    ```
+
+    ## Usage
+
+    Use color areas to allow users to select a color from a two-dimensional gradient.
+
+    ```tsx
+    import { ColorArea, ColorAreaThumb } from "@/components/ui/color-area";
+    ```
+
+    ```tsx
+    <ColorArea defaultValue="#ff0000">
+      <ColorAreaThumb />
+    </ColorArea>
+    ```
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="color-area/demos/default" />
+    <Example name="color-area/demos/channels" />
+    <Example name="color-area/demos/disabled" />
+    <Example name="color-area/demos/uncontrolled" />
+    <Example name="color-area/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

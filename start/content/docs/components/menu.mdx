@@ -1,0 +1,95 @@
+---
+title: Menu
+description: A menu displays a list of actions or options that a user can choose.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Menu.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="menu/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/menu
+    ```
+
+    ## Usage
+
+    Use menus to display a list of actions or options that a user can choose from.
+
+    ```tsx
+    import { Button } from "@/components/ui/button";
+    import { Menu, MenuContent, MenuItem } from "@/components/ui/menu";
+    import { Popover } from "@/components/ui/popover";
+    ```
+
+    ```tsx
+    <Menu>
+      <Button>Open Menu</Button>
+      <Popover>
+        <MenuContent>
+          <MenuItem>Edit</MenuItem>
+          <MenuItem>Duplicate</MenuItem>
+          <MenuItem>Delete</MenuItem>
+        </MenuContent>
+      </Popover>
+    </Menu>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different menu props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="menu" 
+      controls={[
+        {
+          type: "enum",
+          name: "placement",
+          options: ["bottom", "top", "left", "right"],
+          defaultValue: "bottom",
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### Menu
+
+    <Reference name="menu" />
+
+    ### MenuContent
+
+    <Reference name="menu-content" />
+
+    ### MenuItem
+
+    <Reference name="menu-item" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="menu/demos/basic" />
+    <Example name="menu/demos/label-and-description" />
+    <Example name="menu/demos/prefix-and-suffix" />
+    <Example name="menu/demos/shortcut" />
+    <Example name="menu/demos/item-variant" />
+    <Example name="menu/demos/section" />
+    <Example name="menu/demos/separator" />
+    <Example name="menu/demos/submenus" />
+    <Example name="menu/demos/link-items" />
+    <Example name="menu/demos/disabled-items" />
+    <Example name="menu/demos/single-selection" />
+    <Example name="menu/demos/multiple-selection" />
+    <Example name="menu/demos/placement" />
+    <Example name="menu/demos/overlay-type" />
+    <Example name="menu/demos/long-press" />
+    <Example name="menu/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

@@ -1,0 +1,65 @@
+---
+title: File Trigger
+description: A file trigger allows a user to access the file system with any pressable element.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/FileTrigger.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="file-trigger/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/file-trigger
+    ```
+
+    ## Usage
+
+    Use file triggers to allow users to upload files using any pressable element.
+
+    ```tsx
+    import { Button } from "@/components/ui/button";
+    import { FileTrigger } from "@/components/ui/file-trigger";
+    ```
+
+    ```tsx
+    <FileTrigger onSelect={(e) => console.log(e)}>
+      <Button>Upload File</Button>
+    </FileTrigger>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different file trigger props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="file-trigger" 
+      controls={[
+        {
+          type: "boolean",
+          name: "allowsMultiple",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="file-trigger" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="file-trigger/demos/default" />
+    <Example name="file-trigger/demos/multiple-files" />
+    <Example name="file-trigger/demos/file-types" />
+    <Example name="file-trigger/demos/directory-selection" />
+    <Example name="file-trigger/demos/media-capture" />
+  </PageTabPanel>
+</PageTabs>

@@ -1,0 +1,92 @@
+---
+title: List Box
+description: A listbox displays a list of options and allows a user to select one or more of them.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ListBox.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="list-box/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/list-box
+    ```
+
+    ## Usage
+
+    Use list boxes to display a list of options and allow users to select one or more of them.
+
+    ```tsx
+    import { ListBox, ListBoxItem } from "@/components/ui/list-box";
+    ```
+
+    ```tsx
+    <ListBox aria-label="Options" selectionMode="single">
+      <ListBoxItem>Option 1</ListBoxItem>
+      <ListBoxItem>Option 2</ListBoxItem>
+      <ListBoxItem>Option 3</ListBoxItem>
+    </ListBox>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different list box props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="list-box" 
+      controls={[
+        {
+          type: "enum",
+          name: "selectionMode",
+          options: ["none", "single", "multiple"],
+          defaultValue: "single",
+        },
+        {
+          type: "enum",
+          name: "orientation",
+          options: ["horizontal", "vertical"],
+          defaultValue: "vertical",
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### ListBox
+
+    <Reference name="list-box" />
+
+    ### ListBoxItem
+
+    <Reference name="list-box-item" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="list-box/demos/basic" />
+    <Example name="list-box/demos/selection-mode" />
+    <Example name="list-box/demos/selection-behavior" />
+    <Example name="list-box/demos/label-and-description" />
+    <Example name="list-box/demos/prefix-and-suffix" />
+    <Example name="list-box/demos/item-variant" />
+    <Example name="list-box/demos/sections" />
+    <Example name="list-box/demos/separator" />
+    <Example name="list-box/demos/links" />
+    <Example name="list-box/demos/disabled-items" />
+    <Example name="list-box/demos/horizontal" />
+    <Example name="list-box/demos/grid" />
+    <Example name="list-box/demos/loading" />
+    <Example name="list-box/demos/async-loading" />
+    <Example name="list-box/demos/empty-state" />
+    <Example name="list-box/demos/composition" />
+    <Example name="list-box/demos/uncontrolled" />
+    <Example name="list-box/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

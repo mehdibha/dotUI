@@ -1,0 +1,78 @@
+---
+title: Toggle Button
+description: A toggle button allows a user to toggle a selection on or off.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ToggleButton.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="toggle-button/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/toggle-button
+    ```
+
+    ## Usage
+
+    Use toggle buttons to allow users to toggle a selection on or off, like pinning or starring an item.
+
+    ```tsx
+    import { ToggleButton } from "@/components/ui/toggle-button";
+    ```
+
+    ```tsx
+    <ToggleButton aria-label="Toggle pin">
+      <PinIcon />
+    </ToggleButton>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different toggle button props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="toggle-button" 
+      controls={[
+        {
+          type: "enum",
+          name: "variant",
+          options: ["default", "quiet"],
+          defaultValue: "default",
+        },
+        {
+          type: "enum",
+          name: "size",
+          options: ["sm", "md", "lg"],
+          defaultValue: "md",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="toggle-button" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="toggle-button/demos/default" />
+    <Example name="toggle-button/demos/variants" />
+    <Example name="toggle-button/demos/sizes" />
+    <Example name="toggle-button/demos/shapes" />
+    <Example name="toggle-button/demos/disabled" />
+    <Example name="toggle-button/demos/uncontrolled" />
+    <Example name="toggle-button/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

@@ -1,0 +1,93 @@
+---
+title: Time Field
+description: A time field allows users to enter and edit time values using a keyboard.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/TimeField.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="time-field/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/time-field
+    ```
+
+    ## Usage
+
+    Use `TimeField` to allow users to enter and edit time values using a keyboard.
+
+    ```tsx
+    import { TimeField } from "@/components/ui/time-field";
+    import { DateInput } from "@/components/ui/input";
+    import { Label } from "@/components/ui/field";
+    ```
+
+    ```tsx
+    <TimeField>
+      <Label>Time</Label>
+      <DateInput />
+    </TimeField>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different time field props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="time-field" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Time",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isReadOnly",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="time-field" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="time-field/demos/default" />
+    <Example name="time-field/demos/sizes" />
+    <Example name="time-field/demos/label" />
+    <Example name="time-field/demos/description" />
+    <Example name="time-field/demos/error-message" />
+    <Example name="time-field/demos/placeholder" />
+    <Example name="time-field/demos/granularity" />
+    <Example name="time-field/demos/hour-cycle" />
+    <Example name="time-field/demos/time-zones" />
+    <Example name="time-field/demos/hide-time-zone" />
+    <Example name="time-field/demos/prefix-and-suffix" />
+    <Example name="time-field/demos/disabled" />
+    <Example name="time-field/demos/read-only" />
+    <Example name="time-field/demos/required" />
+    <Example name="time-field/demos/uncontrolled" />
+    <Example name="time-field/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

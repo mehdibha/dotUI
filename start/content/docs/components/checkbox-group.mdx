@@ -1,0 +1,99 @@
+---
+title: Checkbox Group
+description: A checkbox group allows a user to select multiple items from a list of options.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/CheckboxGroup.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="checkbox-group/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/checkbox-group
+    ```
+
+    ## Usage
+
+    Use `CheckboxGroup` to allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
+
+    ```tsx
+    import { Checkbox, CheckboxIndicator } from "@/components/ui/checkbox";
+    import { CheckboxGroup } from "@/components/ui/checkbox-group";
+    ```
+
+    ```tsx
+    <CheckboxGroup defaultValue={["react"]}>
+      <Label>Frameworks</Label>
+      <Checkbox value="react">
+        <CheckboxIndicator />
+        <Label>React</Label>
+      </Checkbox>
+      <Checkbox value="vue">
+        <CheckboxIndicator />
+        <Label>Vue</Label>
+      </Checkbox>
+    </CheckboxGroup>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different checkbox group props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="checkbox-group" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Select frameworks",
+        },
+        {
+          type: "enum",
+          name: "orientation",
+          options: ["horizontal", "vertical"],
+          defaultValue: "vertical",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isReadOnly",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="checkbox-group" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="checkbox-group/demos/default" />
+    <Example name="checkbox-group/demos/cards" />
+    <Example name="checkbox-group/demos/label" />
+    <Example name="checkbox-group/demos/description" />
+    <Example name="checkbox-group/demos/error-message" />
+    <Example name="checkbox-group/demos/disabled" />
+    <Example name="checkbox-group/demos/read-only" />
+    <Example name="checkbox-group/demos/required" />
+    <Example name="checkbox-group/demos/uncontrolled" />
+    <Example name="checkbox-group/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

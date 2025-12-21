@@ -1,0 +1,138 @@
+---
+title: Select
+description: Select displays a collapsible list of options and allows a user to select one of them.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Select.html
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="select/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/select
+    ```
+
+    ## Usage
+
+    Use `Select` to allow users to choose a single option from a collapsible list of options when space is limited.
+
+    ```tsx
+    import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
+    ```
+
+    ```tsx
+    <Select>
+      <SelectTrigger />
+      <SelectContent>
+        <SelectItem>Option 1</SelectItem>
+        <SelectItem>Option 2</SelectItem>
+      </SelectContent>
+    </Select>
+    ```
+
+    ## Composition
+
+    Select is built on top of primitive components that you can use directly for full customization:
+
+    - `SelectTrigger` → wraps `Button`
+    - `SelectContent` → wraps `Popover` + `ListBox`
+    - `SelectItem` → re-exports `ListBoxItem`
+
+    When you need more control, you can compose the primitives directly:
+
+    ```tsx
+    import { Select, SelectValue } from "@/components/ui/select";
+    import { Button } from "@/components/ui/button";
+    import { Popover } from "@/components/ui/popover";
+    import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/components/ui/list-box";
+    ```
+
+    ```tsx
+    <Select>
+      <Button variant="outline">
+        <SelectValue placeholder="Select provider" />
+        <ChevronDownIcon />
+      </Button>
+      <Popover placement="bottom-start">
+        <ListBox>
+          <ListBoxSection>
+            <ListBoxSectionHeader>AI Providers</ListBoxSectionHeader>
+            <ListBoxItem id="openai">OpenAI</ListBoxItem>
+            <ListBoxItem id="anthropic">Anthropic</ListBoxItem>
+          </ListBoxSection>
+        </ListBox>
+      </Popover>
+    </Select>
+    ```
+
+    This approach lets you:
+    - Use any `Button` variant or custom trigger
+    - Control `Popover` placement and behavior
+    - Add sections, headers, and custom `ListBoxItem` content
+    - Reuse the same primitives across `Select`, `Combobox`, `Menu`, etc.
+
+    ## Playground
+
+    Use the controls below to experiment with different select props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="select" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Country",
+        },
+        {
+          type: "string",
+          name: "placeholder",
+          defaultValue: "Select a country",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### Select
+
+    <Reference name="select" />
+
+    ### SelectContent
+
+    <Reference name="select-content" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="select/demos/basic" />
+    <Example name="select/demos/placeholder" />
+    <Example name="select/demos/label" />
+    <Example name="select/demos/description" />
+    <Example name="select/demos/validation" />
+    <Example name="select/demos/sections" />
+    <Example name="select/demos/links" />
+    <Example name="select/demos/disabled" />
+    <Example name="select/demos/loading" />
+    <Example name="select/demos/required" />
+    <Example name="select/demos/uncontrolled" />
+    <Example name="select/demos/controlled" />
+    <Example name="select/demos/composition" />
+    <Example name="select/demos/async-loading" />
+  </PageTabPanel>
+</PageTabs>

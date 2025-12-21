@@ -1,0 +1,87 @@
+---
+title: Checkbox
+description: Checkboxes allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Checkbox.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="checkbox/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/checkbox
+    ```
+
+    ## Usage
+
+    Use `Checkbox` to allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
+
+    ```tsx
+    import { Checkbox } from "@/components/ui/checkbox";
+    ```
+
+    ```tsx
+    <Checkbox>I accept the terms and conditions</Checkbox>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different checkbox props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="checkbox" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Accept terms",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isReadOnly",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isIndeterminate",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### Checkbox
+
+    <Reference name="checkbox" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="checkbox/demos/default" />
+    <Example name="checkbox/demos/card" />
+    <Example name="checkbox/demos/indeterminate" />
+    <Example name="checkbox/demos/disabled" />
+    <Example name="checkbox/demos/read-only" />
+    <Example name="checkbox/demos/composition" />
+    <Example name="checkbox/demos/uncontrolled" />
+    <Example name="checkbox/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

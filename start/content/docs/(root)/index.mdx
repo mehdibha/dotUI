@@ -1,0 +1,91 @@
+---
+title: Introduction
+description: A design system platform and component registry. Built for humans and AI.
+---
+
+**dotUI** is a design system platform and component registry that lets you generate a UI library that looks like your product, not a preset.
+
+You know how traditional UI libraries force a default aesthetic? Even the "Open Code" approach still requires hours (or weeks) of refactoring tokens, tweaking styles, and rewriting components. dotUI removes that friction.
+
+You build your design system with our editor in a few clicks, then install it via the shadcn CLI or export it to your favorite AI tool such as [v0](https://v0.dev).
+
+## The foundational layer
+
+I evaluated all major options for the foundational layer. Radix is effectively unmaintained, so the choice came down to [Base UI](https://base-ui.com) and [React Aria](https://react-spectrum.adobe.com/react-aria/index.html). While Base UI is very promising, it's still quite new and missing critical features that dotUI relies on.
+
+**React Aria** was the clear winner: battle-tested, comprehensive, and **incredibly flexible**. I've taken its powerful, unstyled primitives and given them a design system that looks like your product.
+
+## API philosophy
+
+### Composition
+
+The API is designed around composition, where each component generally has a 1:1 relationship with a single DOM element. This makes it easy to style every element, and control the layout and DOM order as needed to implement any pattern.
+
+```tsx
+<Select defaultValue="light">
+  <Button>
+    <SelectValue />
+    <ArrowDownIcon />
+  </Button>
+  <Popover>
+    <ListBox>
+      <Item id="light">Light</Item>
+      <Item id="dark">Dark</Item>
+      <Item id="system">System</Item>
+    </ListBox>
+  </Popover>
+</Select>
+```
+
+### With default children
+
+I've been using shadcn/ui and radix in several projects now, and yes, composition gives you much more flexibility, but it also adds too much boilerplate code.
+
+### Reusable components
+
+Most UI libraries claim to be "composable" but end up creating duplicate components for
+every use case. You end up memorizing parallel APIs for the exact same pattern:
+
+You'll find MenuPopover, ComboboxPopover, DialogPopover, SelectPopover, when really they're just a **Popover** component.
+
+You'll also find "MenuTrigger", "ComboboxTrigger", "DialogTrigger", "ModalTrigger", "AlertDialogTrigger", "PopoverTrigger", when a "Button" should work everywhere.
+
+**dotUI gives you true reusable primitives across the entire library.** One `Popover`
+component that works with menus, dialogs, selects, and comboboxes. One `Button` component
+that works as any trigger. One `Input` component that works in text fields, search fields,
+and number fields. One `Label` component that works everywhere you need a label.
+
+This isn't just about a few components—it's a fundamental architectural principle. Every
+component is a true primitive that composes naturally with others, eliminating duplication
+and giving you real reusability.
+
+## Documentation
+
+### Showing rather than telling
+
+Each component in dotUI comes with an interactive playground where you can play with the props and see the changes in code/preview in real time.
+
+<Demo name="button/demos/default" />
+
+### Real-world examples
+
+Each component page includes multiple real-world examples showing how to use the component in actual application scenarios. From simple use cases to complex compositions, you'll see exactly how components work together.
+
+<div className='grid grid-cols-2 gap-4 mt-6'>
+
+<Example name="button/demos/default" />
+<Example name="button/demos/variants" />
+<Example name="button/demos/sizes" />
+<Example name="button/demos/shapes" />
+
+</div>
+
+## Built for AI
+
+dotUI is built for humans and AI. All components were written with a clear, consistent, and predictable API.
+
+## Get involved
+
+If you have any feedback, a bug report, or a feature request, you can open an issue on our [GitHub](https://github.com/mehdibha/dotUI/issues) or just DM me on X at [@mehdibha](https://x.com/mehdibha).
+
+Contributions are also welcome! I would be happy to see more people contributing to the project and making it better.

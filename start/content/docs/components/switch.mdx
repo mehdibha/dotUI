@@ -1,0 +1,67 @@
+---
+title: Switch
+description: Switches allow users to turn an individual option on or off.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Switch.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="switch/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/switch
+    ```
+
+    ## Usage
+
+    Use switch for communicating activation (e.g. on/off states), while checkboxes are best used for communicating selection (e.g. multiple table rows).
+    Switches, unlike checkboxes, can't have an error state.
+
+    ```tsx
+    import { Switch } from "@/components/ui/switch";
+    ```
+
+    ```tsx
+    <Switch>Focus mode</Switch>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different switch props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="switch" 
+      controls={[
+        { name: "label", type: "string", defaultValue: "Airplane mode" },
+        "size",
+        "isDisabled",
+        "isReadOnly",
+      ]}
+    />
+
+    ## API Reference
+
+    ### Switch
+
+    <Reference name="switch" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="switch/demos/default" />
+    <Example name="switch/demos/card" />
+    <Example name="switch/demos/sizes" />
+    <Example name="switch/demos/label" />
+    <Example name="switch/demos/disabled" />
+    <Example name="switch/demos/uncontrolled" />
+    <Example name="switch/demos/controlled" />
+    <Example name="switch/demos/composition" />
+  </PageTabPanel>
+</PageTabs>

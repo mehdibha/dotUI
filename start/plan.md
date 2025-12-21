@@ -1,75 +1,118 @@
-# Migration Plan: Next.js → TanStack Start
+# Docs Module Migration Plan
 
-## Phase 1: Setup & Tooling
+## Step 0: Review Folder Structure
 
-### 1. Biome Config
-- [ ] Sync with root `biome.json` settings (line width 120, tabs, rules)
+Before migrating, review the current www docs module structure:
 
-### 2. TypeScript
-- [ ] Extend from `@dotui/ts-config/base.json`
+```
+www/modules/docs/
+├── api-reference/       # Props documentation tables
+├── code-block/          # Syntax highlighting components
+├── demo/                # Component demo rendering
+├── interactive-demo/    # Playground with live editing
+├── toc/                 # Table of contents
+├── docs-copy-page.tsx   # Copy page content feature
+├── docs-pager.tsx       # Prev/next navigation
+├── example.tsx          # Single example display
+├── examples.tsx         # Examples grid
+├── last-update.tsx      # Last modified date
+├── mdx-components.tsx   # MDX component mappings
+├── page-tabs.tsx        # Overview/Examples tabs
+└── source.tsx           # Re-exports sources
+```
 
-### 3. Path Aliases
-- [ ] Configure `@/` → `src/`
-- [ ] Add workspace package paths
+### Questions to answer:
+- [ ] Does this belong in `modules/`? Or should it be in `components/docs/`?
+- [ ] Is the nesting appropriate? (e.g., code-block as subfolder vs flat)
+- [ ] What's the relationship between these components?
+- [ ] Which are truly "docs-specific" vs reusable?
+- [ ] Should api-reference be its own module?
+- [ ] Should demo/interactive-demo be part of a "playground" or "styles" module instead?
 
-### 4. Tailwind CSS v4
-- [ ] Set up CSS variables (colors, spacing)
-- [ ] Configure dark mode
-- [ ] Import custom plugins (`tailwindcss-autocontrast`, `tailwindcss-with`)
-
-### 5. Workspace Packages
-- [ ] Add `@dotui/registry`
-- [ ] Add `@dotui/core`
-
-### 6. Vitest
-- [ ] Configure with jsdom
-- [ ] Add testing-library setup
-
-### 7. Environment Variables
-- [ ] Set up env loading pattern
+### Proposed structure considerations:
+- `mdx-components.tsx` - Core, needed for any MDX rendering
+- `code-block/` - Could be reusable outside docs
+- `toc/` - Docs-specific, keep here
+- `api-reference/` - Docs-specific, but complex - own module?
+- `demo/`, `interactive-demo/` - Tied to styles feature, maybe move to styles module?
 
 ---
 
-## Phase 2: Fumadocs Integration
+> **Important:** When migrating files, always review them. Look for:
+> - Unnecessary dependencies (e.g., markdown-to-jsx for simple text)
+> - Next.js-specific code to replace (next/image, next/navigation)
+> - Code that can be simplified or enhanced
+> - Better naming conventions
+> - Folder structure improvements
+> - Dead code or unused imports
+> - Opportunities to use TanStack-specific patterns (createIsomorphicFn, etc.)
 
-> Using latest fumadocs (core: 16.3.2, mdx: 14.2.2) - independent from www versions
-> No fumadocs-ui - using custom layout from www
+## Current Status
 
-### 1. source.config.ts
-- [ ] Create at root of start/
-- [ ] Define `docs` collection → `content/docs`
-- [ ] Define `legal` collection → `content/legal` (renamed from "marketing")
-- [ ] Configure MDX options (rehype code, themes: github-light/dark)
+- [x] Fumadocs core setup (source.config.ts, vite plugin, lib/source.ts)
+- [x] Docs route (/docs/$.tsx) with clientLoader pattern
+- [x] Content copied from www
+- [ ] Docs module migration (in progress)
 
-### 2. Vite Config
-- [ ] Add `fumadocs-mdx/vite` plugin (must be before other plugins)
-- [ ] Import source.config dynamically: `mdx(await import('./source.config'))`
+## Docs Module Components
 
-### 3. Source Loader (src/lib/source.ts)
-- [ ] Create loader with `fumadocs-core/source`
-- [ ] Export `docsSource` (baseUrl: /docs)
-- [ ] Export `legalSource` (baseUrl: /)
-- [ ] Add lucide icons plugin
+### Core (Required)
+- [ ] **mdx-components.tsx** - MDX component mappings
+  - [x] Remove next/image → use native `<img>`
+  - [ ] Review all component mappings
 
-### 4. Docs Route (src/routes/docs/$.tsx)
-- [ ] Create catch-all route for /docs/*
-- [ ] Use serverFn for page tree + page path
-- [ ] Use clientLoader pattern from fumadocs-mdx:collections/browser
-- [ ] Use custom layout from www (not fumadocs-ui)
+- [ ] **code-block/** - Syntax highlighting
+  - [x] code-block-tabs.tsx - Use createIsomorphicFn for localStorage (not jotai)
+  - [ ] code-block.tsx - Needs useCopyToClipboard hook
+  - [ ] dynamic-pre.tsx - Review
 
-### 5. Docs Module (src/modules/docs/)
-- [ ] Port source.tsx from www/modules/docs/
-- [ ] Port mdx-components.tsx from www
-- [ ] Port TOC components
-- [ ] Port DocsPager
-- [ ] Port PageTabs (if needed)
-- [ ] Port code-block components
+- [ ] **toc/** - Table of contents
+  - [ ] toc.tsx - Should work as-is (React only)
+  - [ ] toc-primitive.tsx - Should work as-is
 
-### 6. Content Setup
-- [ ] Symlink content/docs → ../www/content/docs
-- [ ] Symlink content/legal → ../www/content/(root)/(legal)
-- [ ] Or copy content if symlinks cause issues
+### Secondary (Can be stubbed initially)
+- [ ] **page-tabs.tsx** - Overview/Examples tabs
+  - [x] Simplified to not use URL routing (all tabs same page)
 
-### 7. Legal Route (src/routes/$slug.tsx)
-- [ ] Create catch-all for legal pages (/privacy-policy, /terms-of-service)
-- [ ] Simpler layout than docs (no sidebar)
+- [ ] **api-reference/** - Props documentation
+  - [x] Remove markdown-to-jsx → use plain text
+  - [ ] Review types and rendering
+
+- [ ] **demo/** - Component demos
+  - Depends on styles module (ActiveStyleProvider, useActiveStyle)
+  - Can stub for now, implement when styles module is ready
+
+- [ ] **interactive-demo/** - Playground demos
+  - Same as demo - depends on styles module
+  - Can stub for now
+
+### Helpers
+- [ ] **docs-pager.tsx** - Prev/Next navigation
+- [ ] **docs-copy-page.tsx** - Copy page content
+- [ ] **example.tsx** - Single example display (stubbed)
+- [ ] **examples.tsx** - Examples grid
+- [ ] **last-update.tsx** - Last modified date
+- [ ] **source.tsx** - Re-exports sources (may not be needed)
+
+## Missing Dependencies
+
+### Hooks (to create in src/hooks/)
+- [ ] use-copy-to-clipboard.ts
+- [ ] use-mounted.ts
+
+### Modules (stub or implement later)
+- [ ] styles module (ActiveStyleProvider, useActiveStyle, etc.)
+  - Complex feature, defer to later phase
+
+## Build Issues to Fix
+1. [x] markdown-to-jsx - removed, use plain text
+2. [ ] useCopyToClipboard hook - create in src/hooks/
+3. [ ] useMounted hook - create in src/hooks/
+4. [ ] styles module imports - stub the components that need it
+
+## Next Steps
+1. Create missing hooks (use-copy-to-clipboard, use-mounted)
+2. Stub demo/interactive-demo components
+3. Get build passing
+4. Test docs pages render correctly
+5. Iterate on styling and functionality

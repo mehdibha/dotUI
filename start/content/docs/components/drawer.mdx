@@ -1,0 +1,67 @@
+---
+title: Drawer
+description: A drawer slides in from the edge of the screen to display content.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Dialog.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="drawer/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/drawer
+    ```
+
+    ## Usage
+
+    Use drawers to display content that slides in from the edge of the screen.
+
+    ```tsx
+    import { Button } from "@/components/ui/button";
+    import { Dialog, DialogContent } from "@/components/ui/dialog";
+    import { Drawer } from "@/components/ui/drawer";
+    ```
+
+    ```tsx
+    <Dialog>
+      <Button>Open Drawer</Button>
+      <Drawer placement="bottom">
+        <DialogContent>Drawer content</DialogContent>
+      </Drawer>
+    </Dialog>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different drawer props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="drawer" 
+      controls={[
+        {
+          type: "enum",
+          name: "placement",
+          options: ["bottom", "top", "left", "right"],
+          defaultValue: "bottom",
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="drawer" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="drawer/demos/basic" />
+    <Example name="drawer/demos/placement" />
+  </PageTabPanel>
+</PageTabs>

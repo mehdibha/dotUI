@@ -1,0 +1,70 @@
+---
+title: Date Picker
+description: A date picker combines a date field and a calendar popover to allow users to select a date.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/DatePicker.html
+wip: true
+---
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="date-picker/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/date-picker
+    ```
+
+    ## Usage
+
+    Use date pickers to allow users to select a date using a field and a calendar popover.
+
+    ```tsx
+    import { Calendar } from "@/components/ui/calendar";
+    import { DatePicker, DatePickerContent, DatePickerInput } from "@/components/ui/date-picker";
+    import { Label } from "@/components/ui/field";
+    ```
+
+    ```tsx
+    <DatePicker>
+      <Label>Date</Label>
+      <DatePickerInput />
+      <DatePickerContent>
+        <Calendar />
+      </DatePickerContent>
+    </DatePicker>
+    ```
+
+    ## API Reference
+
+    ### DatePicker
+
+    <Reference name="date-picker-input" />
+
+    ### DatePickerContent
+
+    <Reference name="date-picker-content" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="date-picker/demos/default" />
+    <Example name="date-picker/demos/label" />
+    <Example name="date-picker/demos/description" />
+    <Example name="date-picker/demos/error-message" />
+    <Example name="date-picker/demos/placeholder" />
+    <Example name="date-picker/demos/granularity" />
+    <Example name="date-picker/demos/hour-cycle" />
+    <Example name="date-picker/demos/time-zones" />
+    <Example name="date-picker/demos/hide-time-zone" />
+    <Example name="date-picker/demos/disabled" />
+    <Example name="date-picker/demos/read-only" />
+    <Example name="date-picker/demos/required" />
+    <Example name="date-picker/demos/composition" />
+    <Example name="date-picker/demos/uncontrolled" />
+    <Example name="date-picker/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

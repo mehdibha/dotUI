@@ -1,0 +1,58 @@
+---
+title: Color Swatch
+description: A color swatch displays a color sample.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ColorSwatch.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="color-swatch/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/color-swatch
+    ```
+
+    ## Usage
+
+    Use color swatches to display a color sample.
+
+    ```tsx
+    import { ColorSwatch } from "@/components/ui/color-swatch";
+    ```
+
+    ```tsx
+    <ColorSwatch color="#ff0000" />
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different color swatch props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="color-swatch" 
+      controls={[
+        {
+          type: "string",
+          name: "color",
+          defaultValue: "#ff0000",
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="color-swatch" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="color-swatch/demos/default" />
+  </PageTabPanel>
+</PageTabs>

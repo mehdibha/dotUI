@@ -1,0 +1,90 @@
+---
+title: Slider
+description: An input where the user selects a value from within a given range.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Slider.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="slider/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/slider
+    ```
+
+    ## Usage
+
+    Use slider to allow users to select a value from within a given range.
+
+    ```tsx
+    import { Slider, SliderControl } from "@/components/ui/slider";
+    ```
+
+    ```tsx
+    <Slider defaultValue={50}>
+      <SliderControl />
+    </Slider>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different slider props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="slider" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Volume",
+        },
+        {
+          type: "enum",
+          name: "orientation",
+          options: ["horizontal", "vertical"],
+          defaultValue: "horizontal",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### Slider
+
+    <Reference name="slider" />
+
+    ### SliderControl
+
+    <Reference name="slider-control" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="slider/demos/default" />
+    <Example name="slider/demos/sizes" />
+    <Example name="slider/demos/vertical" />
+    <Example name="slider/demos/label" />
+    <Example name="slider/demos/description" />
+    <Example name="slider/demos/value-label" />
+    <Example name="slider/demos/value-scale" />
+    <Example name="slider/demos/step" />
+    <Example name="slider/demos/format-options" />
+    <Example name="slider/demos/range" />
+    <Example name="slider/demos/disabled" />
+    <Example name="slider/demos/composition" />
+    <Example name="slider/demos/uncontrolled" />
+    <Example name="slider/demos/controlled" />
+  </PageTabPanel>
+</PageTabs>

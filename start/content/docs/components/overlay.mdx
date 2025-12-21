@@ -1,0 +1,73 @@
+---
+title: Overlay
+description: A responsive overlay component that adapts between modal, popover, and drawer based on screen size.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Modal.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="overlay/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/overlay
+    ```
+
+    ## Usage
+
+    Use Overlay as a responsive wrapper that automatically switches between Modal, Popover, and Drawer based on screen size and configuration.
+
+    ```tsx
+    import { Button } from "@/components/ui/button";
+    import { Dialog, DialogContent } from "@/components/ui/dialog";
+    import { Overlay } from "@/components/ui/overlay";
+    ```
+
+    ```tsx
+    <Dialog>
+      <Button>Open Overlay</Button>
+      <Overlay type="modal" mobileType="drawer">
+        <DialogContent>Overlay content</DialogContent>
+      </Overlay>
+    </Dialog>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different overlay props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="overlay" 
+      controls={[
+        {
+          type: "enum",
+          name: "type",
+          options: ["modal", "popover", "drawer"],
+          defaultValue: "modal",
+        },
+        {
+          type: "enum",
+          name: "mobileType",
+          options: ["modal", "drawer"],
+          defaultValue: "drawer",
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    <Reference name="overlay" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="overlay/demos/basic" />
+    <Example name="overlay/demos/type" />
+  </PageTabPanel>
+</PageTabs>

@@ -1,0 +1,100 @@
+---
+title: Combobox
+description: Combobox combines a text input with a listbox, allowing users to filter a list of options to items matching a query.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Combobox.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="combobox/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/combobox
+    ```
+
+    ## Usage
+
+    Use `Combobox` to allow users to filter a list of options to items matching a query and select an item from the list.
+
+    ```tsx
+    import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/components/ui/combobox";
+    ```
+
+    ```tsx
+    <Combobox>
+      <ComboboxInput />
+      <ComboboxContent>
+        <ComboboxItem>Option 1</ComboboxItem>
+        <ComboboxItem>Option 2</ComboboxItem>
+      </ComboboxContent>
+    </Combobox>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different combobox props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="combobox" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Country",
+        },
+        {
+          type: "string",
+          name: "placeholder",
+          defaultValue: "Search countries...",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+        {
+          type: "boolean",
+          name: "isInvalid",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### Combobox
+
+    <Reference name="combobox" />
+
+    ### ComboboxInput
+
+    <Reference name="combobox-input" />
+
+    ### ComboboxContent
+
+    <Reference name="combobox-content" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="combobox/demos/basic" />
+    <Example name="combobox/demos/label" />
+    <Example name="combobox/demos/description" />
+    <Example name="combobox/demos/validation" />
+    <Example name="combobox/demos/custom-value" />
+    <Example name="combobox/demos/disabled" />
+    <Example name="combobox/demos/loading" />
+    <Example name="combobox/demos/sections" />
+    <Example name="combobox/demos/required" />
+    <Example name="combobox/demos/uncontrolled" />
+    <Example name="combobox/demos/controlled" />
+    <Example name="combobox/demos/async-loading" />
+  </PageTabPanel>
+</PageTabs>

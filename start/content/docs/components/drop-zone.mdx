@@ -1,0 +1,76 @@
+---
+title: Drop Zone
+description: A drop zone is an area into which one or more objects can be dragged and dropped.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/DropZone.html
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="drop-zone/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/drop-zone
+    ```
+
+    ## Usage
+
+    Use drop zones to allow users to drag and drop files or content into a designated area.
+
+    ```tsx
+    import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
+    ```
+
+    ```tsx
+    <DropZone>
+      <DropZoneLabel>Drop files here</DropZoneLabel>
+    </DropZone>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different drop zone props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="drop-zone" 
+      controls={[
+        {
+          type: "string",
+          name: "label",
+          defaultValue: "Drop files here",
+        },
+        {
+          type: "boolean",
+          name: "isDisabled",
+          defaultValue: false,
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### DropZone
+
+    <Reference name="drop-zone" />
+
+    ### DropZoneLabel
+
+    <Reference name="drop-zone-label" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="drop-zone/demos/basic" />
+    <Example name="drop-zone/demos/label" />
+    <Example name="drop-zone/demos/visual-feedback" />
+    <Example name="drop-zone/demos/file-trigger" />
+    <Example name="drop-zone/demos/events" />
+    <Example name="drop-zone/demos/disabled" />
+  </PageTabPanel>
+</PageTabs>

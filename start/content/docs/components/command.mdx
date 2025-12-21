@@ -1,0 +1,80 @@
+---
+title: Command
+description: A command menu allows users to search and execute commands.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/
+wip: true
+---
+
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="command/demos/basic" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/command
+    ```
+
+    ## Usage
+
+    Use command menus to provide users with a searchable list of commands or actions.
+
+    ```tsx
+    import {
+      Command,
+      CommandContent,
+      CommandInput,
+      CommandItem,
+    } from "@/components/ui/command";
+    ```
+
+    ```tsx
+    <Command>
+      <CommandInput placeholder="Type a command..." />
+      <CommandContent>
+        <CommandItem textValue="Create file">Create new file</CommandItem>
+        <CommandItem textValue="Open file">Open file</CommandItem>
+      </CommandContent>
+    </Command>
+    ```
+
+    ## Playground
+
+    Use the controls below to experiment with different command props and see the live preview and code update.
+
+    <InteractiveDemo 
+      name="command" 
+      controls={[
+        {
+          type: "string",
+          name: "placeholder",
+          defaultValue: "Type a command...",
+        },
+      ]}
+    />
+
+    ## API Reference
+
+    ### Command
+
+    <Reference name="command" />
+
+    ### CommandInput
+
+    <Reference name="command-input" />
+
+    ### CommandContent
+
+    <Reference name="command-content" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Example name="command/demos/basic" />
+    <Example name="command/demos/dialog" />
+  </PageTabPanel>
+</PageTabs>
