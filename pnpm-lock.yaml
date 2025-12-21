@@ -391,12 +391,21 @@ importers:
       lucide-react:
         specifier: ^0.546.0
         version: 0.546.0(react@19.2.1)
+      motion:
+        specifier: ^12.23.22
+        version: 12.23.25(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       nitro:
         specifier: latest
         version: 3.0.1-alpha.1(drizzle-orm@0.44.7(@types/pg@8.15.6)(@vercel/postgres@0.10.0)(kysely@0.28.8)(pg@8.16.3))(lru-cache@11.2.4)(rollup@4.53.3)(vite@7.2.7(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       react:
         specifier: ^19.2.1
         version: 19.2.1
+      react-aria:
+        specifier: ^3.44.0
+        version: 3.44.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      react-aria-components:
+        specifier: ^1.13.0
+        version: 1.13.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react-dom:
         specifier: ^19.2.1
         version: 19.2.1(react@19.2.1)

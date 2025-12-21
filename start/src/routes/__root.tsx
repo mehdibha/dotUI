@@ -6,6 +6,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import type { AppRouter } from "@dotui/api";
 
+import { ThemeProvider } from "@/modules/theme/provider";
 import appCss from "@/styles.css?url";
 
 export const Route = createRootRouteWithContext<{
@@ -25,9 +26,11 @@ export const Route = createRootRouteWithContext<{
 
 function RootComponent() {
 	return (
-		<RootDocument>
-			<Outlet />
-		</RootDocument>
+		<ThemeProvider>
+			<RootDocument>
+				<Outlet />
+			</RootDocument>
+		</ThemeProvider>
 	);
 }
 
