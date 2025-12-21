@@ -1,4 +1,5 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
-	"extends": ["@dotui/biome-config/start"]
+	"root": false,
+	"extends": ["@dotui/biome-config/base", "@dotui/biome-config/start"]
 }

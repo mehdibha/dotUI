@@ -1,4 +1,5 @@
 import type { RegistryItem } from "@dotui/registry/types";
+import "@dotui/registry/base/base.css";
 
 export const registryBase = [
 	{

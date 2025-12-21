@@ -9,6 +9,7 @@
 	"license": "MIT",
 	"exports": {
 		".": "./src/index.ts",
+		"./styles.css": "./src/styles.css",
 		"./types": "./src/types.ts",
 		"./base/registry": "./src/base/registry.ts",
 		"./blocks": "./src/blocks/index.ts",
@@ -80,6 +81,10 @@
 		"@react-types/shared": "^3.26.0",
 		"@tabler/icons-react": "^3.35.0",
 		"react-error-boundary": "^6.0.0",
+		"tailwindcss-autocontrast": "workspace:*",
+		"tailwindcss-react-aria-components": "^2.0.1",
+		"tailwindcss-with": "workspace:*",
+		"tw-animate-css": "^1.3.5",
 		"zod": "^4.2.1"
 	}
 }

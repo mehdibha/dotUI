@@ -1,1 +1,4 @@
 @import "tailwindcss";
+@import "@dotui/registry/styles.css";
+
+@source "../../packages/registry/src/**/*.{ts,tsx}";

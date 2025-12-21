@@ -1,4 +1,4 @@
-@import "@dotui/registry/base.css";
-@import "@dotui/registry/colors.css";
-@import "@dotui/registry/theme.css";
-@import "@dotui/registry/fonts.css";
+@import "./base/base.css";
+@import "./base/colors.css";
+@import "./base/theme.css";
+@import "./base/fonts.css";
