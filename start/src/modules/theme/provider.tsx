@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/noChildrenProp: ignore */
 import { createContext, useContext, useEffect, useState } from "react";
 import { ScriptOnce } from "@tanstack/react-router";
 import { createClientOnlyFn, createIsomorphicFn } from "@tanstack/react-start";
@@ -88,7 +89,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
 	return (
 		<ThemeContext.Provider value={{ themeMode, resolvedTheme, setTheme, toggleTheme }}>
-<ScriptOnce children={themeDetectorScript} />
+			<ScriptOnce children={themeDetectorScript} />
 			{children}
 		</ThemeContext.Provider>
 	);

@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
@@ -18,22 +17,24 @@ import { Announcement } from "@/components/marketing/announcement";
 import { FeaturedStylesShowcase } from "@/components/marketing/featured-styles-showcase";
 import { siteConfig } from "@/config/site";
 import { getGitHubContributors } from "@/lib/github";
-import { makeTRPCClient } from "@/lib/trpc";
-
-const getHomeData = createServerFn({ method: "GET" }).handler(async () => {
-	const [contributors, trpcClient] = await Promise.all([getGitHubContributors(), Promise.resolve(makeTRPCClient())]);
-
-	const featuredStyles = await trpcClient.style.getPublicStyles.query({
-		featured: true,
-		limit: 6,
-		sortBy: "oldest",
-	});
-
-	return { contributors, featuredStyles };
-});
 
 export const Route = createFileRoute("/")({
-	loader: () => getHomeData(),
+	loader: async ({ context }) => {
+		const { trpc, queryClient } = context;
+
+		const [contributors, featuredStyles] = await Promise.all([
+			getGitHubContributors(),
+			queryClient.ensureQueryData(
+				trpc.style.getPublicStyles.queryOptions({
+					featured: true,
+					limit: 6,
+					sortBy: "oldest",
+				}),
+			),
+		]);
+
+		return { contributors, featuredStyles };
+	},
 	component: HomePage,
 });
 
