@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import { findNeighbour } from "fumadocs-core/page-tree";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
@@ -11,6 +12,7 @@ import { LinkButton } from "@dotui/registry/ui/button";
 import browserCollections from "@/.source/browser";
 import { docsSource } from "@/lib/source";
 import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
+import { DocsPager } from "@/modules/docs/docs-pager";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/layout";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
@@ -32,19 +34,33 @@ const serverLoader = createServerFn({ method: "GET" })
 		if (!page) throw notFound();
 
 		const rawContent = await page.data.getText("raw");
+		const pageTree = docsSource.getPageTree();
+		const { previous, next } = findNeighbour(pageTree, page.url);
 
 		return {
 			path: page.path,
 			url: page.url,
 			title: page.data.title,
 			description: page.data.description,
-			pageTree: await docsSource.serializePageTree(docsSource.getPageTree()),
+			pageTree: await docsSource.serializePageTree(pageTree),
 			rawContent,
+			neighbours: {
+				previous: previous ? { name: String(previous.name), url: previous.url } : undefined,
+				next: next ? { name: String(next.name), url: next.url } : undefined,
+			},
 		};
 	});
 
+type SerializedNeighbours = {
+	previous?: { name: string; url: string };
+	next?: { name: string; url: string };
+};
+
 const clientLoader = browserCollections.docs.createClientLoader({
-	component({ toc, frontmatter, default: MDX }, { url, rawContent }: { url: string; rawContent: string }) {
+	component(
+		{ toc, frontmatter, default: MDX },
+		{ url, rawContent, neighbours }: { url: string; rawContent: string; neighbours: SerializedNeighbours },
+	) {
 		const hasToc = toc?.length;
 
 		return (
@@ -54,6 +70,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 						<div className="flex items-center justify-between">
 							<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
 							<div className="flex items-center gap-2">
+								<DocsPager neighbours={neighbours} />
 								<DocsCopyPage content={rawContent} url={url} />
 							</div>
 						</div>
@@ -101,7 +118,7 @@ function DocsPage() {
 	const data = Route.useLoaderData();
 	const Content = clientLoader.getComponent(data.path);
 
-	return <Content url={data.url} rawContent={data.rawContent} />;
+	return <Content url={data.url} rawContent={data.rawContent} neighbours={data.neighbours} />;
 }
 
 const getIcon = (url: string) => {

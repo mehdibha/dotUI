@@ -80,12 +80,16 @@ export const mdxComponents: MDXComponents = {
 	Steps: (props) => <div className="[&>h3]:step ml-4 border-l pl-8 [counter-reset:step]" {...props} />,
 	PageTabs,
 	PageTabPanel,
-	CodeBlockTabs: ({ defaultValue, ...props }: { defaultValue: string }) => (
-		<CodeBlockTabs defaultValue={defaultValue} {...props} />
+	CodeBlockTabs: ({ defaultValue, children }: { defaultValue: string; children: React.ReactNode }) => (
+		<CodeBlockTabs defaultValue={defaultValue}>{children}</CodeBlockTabs>
 	),
 	CodeBlockTabsList,
-	CodeBlockTabsTrigger: ({ value, ...props }: { value: string }) => <CodeBlockTabsTrigger value={value} {...props} />,
-	CodeBlockTab: ({ value, ...props }: { value: string }) => <CodeBlockTab value={value} {...props} />,
+	CodeBlockTabsTrigger: ({ value, children }: { value: string; children: React.ReactNode }) => (
+		<CodeBlockTabsTrigger value={value}>{children}</CodeBlockTabsTrigger>
+	),
+	CodeBlockTab: ({ value, children }: { value: string; children: React.ReactNode }) => (
+		<CodeBlockTab value={value}>{children}</CodeBlockTab>
+	),
 	Demo: ({ className, ...props }: DemoProps) => <Demo className={cn("not-first:mt-4", className)} {...props} />,
 	Example,
 	Examples,
