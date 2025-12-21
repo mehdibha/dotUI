@@ -80,6 +80,6 @@
 		"@tabler/icons-react": "^3.35.0",
 		"hugeicons-react": "^0.3.0",
 		"react-error-boundary": "^6.0.0",
-		"zod": "^4.1.13"
+		"zod": "^4.2.1"
 	}
 }

@@ -22,7 +22,7 @@
 	"dependencies": {
 		"@material/material-color-utilities": "^0.3.0",
 		"colorjs.io": "^0.5.2",
-		"zod": "^4.1.13"
+		"zod": "^4.2.1"
 	},
 	"devDependencies": {
 		"@dotui/biome-config": "workspace:*",
