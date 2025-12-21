@@ -14,7 +14,9 @@
 		"noUncheckedSideEffectImports": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@dotui/core/*": ["../packages/core/src/*"],
+			"@dotui/registry/*": ["../packages/registry/src/*"]
 		}
 	},
 	"exclude": ["node_modules", ".vinxi", ".output"]

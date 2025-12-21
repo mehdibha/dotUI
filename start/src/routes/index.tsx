@@ -1,11 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({ component: App });
+import { Button } from "@dotui/registry/ui/button";
 
-function App() {
+export const Route = createFileRoute("/")({ component: Home });
+
+function Home() {
 	return (
-		<div>
-			<h1>Hello World</h1>
+		<div className="flex min-h-screen items-center justify-center gap-4">
+			<Button>Default</Button>
+			<Button variant="primary">Primary</Button>
+			<Button variant="quiet">Quiet</Button>
 		</div>
 	);
 }

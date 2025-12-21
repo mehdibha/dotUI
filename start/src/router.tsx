@@ -1,15 +1,39 @@
+import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
+import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
+import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import SuperJSON from "superjson";
 
-// Import the generated route tree
+import type { AppRouter } from "@dotui/api";
+
+import { makeTRPCClient, TRPCProvider } from "@/lib/trpc";
 import { routeTree } from "./routeTree.gen";
 
-// Create a new router instance
-export const getRouter = () => {
+export function getRouter() {
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			dehydrate: { serializeData: SuperJSON.serialize },
+			hydrate: { deserializeData: SuperJSON.deserialize },
+		},
+	});
+	const trpcClient = makeTRPCClient();
+	const trpc = createTRPCOptionsProxy<AppRouter>({
+		client: trpcClient,
+		queryClient,
+	});
+
 	const router = createRouter({
 		routeTree,
+		context: { queryClient, trpc },
 		scrollRestoration: true,
-		defaultPreloadStaleTime: 0,
+		defaultPreload: "intent",
+		Wrap: (props) => <TRPCProvider trpcClient={trpcClient} queryClient={queryClient} {...props} />,
+	});
+
+	setupRouterSsrQueryIntegration({
+		router,
+		queryClient,
 	});
 
 	return router;
-};
+}

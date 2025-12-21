@@ -1,7 +1,10 @@
 @import "tw-animate-css";
 
 @plugin "tailwindcss-react-aria-components";
-@plugin "tailwindcss-autocontrast";
+@plugin "tailwindcss-autocontrast" {
+	/* biome-ignore lint/correctness/noUnknownProperty: ignore */
+	cssFile: "../packages/registry/src/base/colors.css";
+}
 @plugin "tailwindcss-with";
 
 @custom-variant dark {

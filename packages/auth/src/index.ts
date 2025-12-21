@@ -1,16 +1,17 @@
+import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { oAuthProxy } from "better-auth/plugins";
-import type { BetterAuthOptions } from "better-auth";
 
 import { db } from "@dotui/db/client";
 
-export function initAuth(options: {
+export function initAuth<TExtraPlugins extends BetterAuthPlugin[] = []>(options: {
   baseUrl: string;
   productionUrl: string;
   secret: string | undefined;
   githubClientId: string;
   githubClientSecret: string;
+  extraPlugins?: TExtraPlugins;
 }) {
   const config = {
     database: drizzleAdapter(db, {
@@ -57,6 +58,7 @@ export function initAuth(options: {
         currentURL: options.baseUrl,
         productionURL: options.productionUrl,
       }),
+      ...(options.extraPlugins ?? []),
     ],
     socialProviders: {
       github: {
