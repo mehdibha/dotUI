@@ -371,6 +371,9 @@ importers:
       '@dotui/biome-config':
         specifier: workspace:*
         version: link:../config/biome-config
+      '@dotui/ts-config':
+        specifier: workspace:*
+        version: link:../config/ts-config
       '@tanstack/devtools-vite':
         specifier: ^0.3.11
         version: 0.3.12(bufferutil@4.0.9)(vite@7.2.7(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
