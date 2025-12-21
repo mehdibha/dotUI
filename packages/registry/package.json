@@ -38,7 +38,7 @@
 		"./__generated__/icons": "./src/__generated__/icons.tsx"
 	},
 	"scripts": {
-		"build": "tsx scripts/build-internal-registry.ts && tsx scripts/build-registry",
+		"build": "tsx scripts/build.ts",
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
 		"test": "vitest run",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
