@@ -23,8 +23,8 @@ export const iconLibraries = [
   {
     "name": "hugeicons",
     "label": "Huge icons",
-    "package": "hugeicons-react",
-    "import": "hugeicons-react"
+    "package": "@hugeicons/react",
+    "import": "@hugeicons/react"
   }
 ] as const;
 
@@ -551,7 +551,7 @@ export const icons = {
     "lucide": "CaptionsIcon",
     "remix": "RiClosedCaptioningLine",
     "tabler": "IconTextCaption",
-    "hugeicons": "TextCheckIcon"
+    "hugeicons": "ClosedCaptionIcon"
   },
   "TrendingUpIcon": {
     "lucide": "TrendingUpIcon",
@@ -659,7 +659,7 @@ export const icons = {
     "lucide": "ShieldIcon",
     "remix": "RiShieldLine",
     "tabler": "IconShield",
-    "hugeicons": "Shield01Icon"
+    "hugeicons": "SecurityIcon"
   },
   "PencilIcon": {
     "lucide": "PencilIcon",
@@ -671,7 +671,7 @@ export const icons = {
     "lucide": "ActivityIcon",
     "remix": "RiPulseLine",
     "tabler": "IconActivity",
-    "hugeicons": "Activity01Icon"
+    "hugeicons": "Cardiogram01Icon"
   },
   "PanelLeftIcon": {
     "lucide": "PanelLeftIcon",
@@ -773,7 +773,7 @@ export const icons = {
     "lucide": "TableIcon",
     "remix": "RiTable2",
     "tabler": "IconTable",
-    "hugeicons": "TableIcon"
+    "hugeicons": "Table01Icon"
   },
   "ChartLineIcon": {
     "lucide": "ChartLineIcon",

@@ -60,7 +60,7 @@
 		"react-aria-components": "^1.13.0",
 		"react-dom": "^19.2.1",
 		"react-error-boundary": "^6.0.0",
-		"react-hook-form": "^7.54.2",
+		"react-hook-form": "^7.69.0",
 		"react-stately": "^3.42.0",
 		"scroll-into-view-if-needed": "^3.1.0",
 		"shadcn": "^3.6.1",

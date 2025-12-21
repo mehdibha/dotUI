@@ -75,10 +75,10 @@
 	},
 	"dependencies": {
 		"@dotui/core": "workspace:*",
+		"@hugeicons/react": "^0.4.1",
 		"@react-aria/utils": "^3.31.0",
 		"@react-types/shared": "^3.26.0",
 		"@tabler/icons-react": "^3.35.0",
-		"hugeicons-react": "^0.3.0",
 		"react-error-boundary": "^6.0.0",
 		"zod": "^4.2.1"
 	}
