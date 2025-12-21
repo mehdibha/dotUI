@@ -86,12 +86,3 @@ export function Reference({ name, className }: ReferenceProps) {
 		</div>
 	);
 }
-
-// PageTabs - Overview/Examples tabs (simplified to just render children)
-export function PageTabs({ children }: { children: React.ReactNode }) {
-	return <>{children}</>;
-}
-
-export function PageTabPanel({ children }: { children: React.ReactNode; value: string }) {
-	return <>{children}</>;
-}

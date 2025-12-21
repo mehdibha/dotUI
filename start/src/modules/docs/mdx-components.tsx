@@ -7,6 +7,7 @@ import { Link, type LinkProps } from "@dotui/registry/ui/link";
 
 import { CodeBlock, Pre } from "./code-block";
 import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "./code-block-tabs";
+import { PageTabPanel, PageTabs } from "./page-tabs";
 import {
 	Demo,
 	type DemoProps,
@@ -14,8 +15,6 @@ import {
 	Examples,
 	InteractiveDemo,
 	type InteractiveDemoProps,
-	PageTabPanel,
-	PageTabs,
 	Reference,
 	type ReferenceProps,
 } from "./stubs";
