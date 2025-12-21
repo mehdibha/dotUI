@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Run "pnpm build:core" to regenerate
+// Run "pnpm build" to regenerate
 
 export const ui = [
   {

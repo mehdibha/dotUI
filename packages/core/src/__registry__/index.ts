@@ -1,4 +1,6 @@
-// Combined registry exports
+// AUTO-GENERATED - DO NOT EDIT
+// Run "pnpm build" to regenerate
+
 import { base } from "./base";
 import { hooks } from "./hooks";
 import { lib } from "./lib";
