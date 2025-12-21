@@ -34,7 +34,7 @@
     "format": "turbo run format",
     "lint": "turbo run lint",
     "check": "turbo run check",
-    "lint:ws": "pnpm dlx sherif@latest",
+    "lint:ws": "pnpm dlx sherif@latest -i fumadocs-core -i fumadocs-mdx",
     "postinstall": "pnpm lint:ws",
     "typecheck": "turbo run typecheck",
     "test": "vitest run",
