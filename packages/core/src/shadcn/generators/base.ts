@@ -1,10 +1,10 @@
 import type { RegistryItem } from "shadcn/schema";
 
-import type { StyleConfig } from "../../schemas/style";
+import type { StyleConfig } from "@dotui/core/schemas/style";
 
-import { base as registryBase } from "../../__registry__/base";
-import { iconLibraries } from "../../__registry__/icons";
-import { updateRegistryDependencies } from "../transform";
+import { base as registryBase } from "@dotui/core/__registry__/base";
+import { iconLibraries } from "@dotui/core/__registry__/icons";
+import { updateRegistryDependencies } from "@dotui/core/shadcn/transform";
 
 export function generateRegistryBase(options: {
   styleName: string;

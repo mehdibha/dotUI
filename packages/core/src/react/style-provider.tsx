@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import type { StyleConfig } from "../schemas/style";
+import type { StyleConfig } from "@dotui/core/schemas/style";
 import { StyleContext } from "./context";
 
 export interface StyleProviderProps extends Omit<React.ComponentProps<"div">, "style"> {

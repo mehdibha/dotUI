@@ -1,7 +1,7 @@
 import type { RegistryItem } from "shadcn/schema";
 
 import { createTheme, type Theme as ColorTheme } from "@dotui/colors";
-import type { StyleConfig } from "../../schemas/style";
+import type { StyleConfig } from "@dotui/core/schemas/style";
 
 /**
  * Convert color scales to CSS variables

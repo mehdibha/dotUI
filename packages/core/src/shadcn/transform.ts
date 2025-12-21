@@ -3,9 +3,9 @@ import path from "node:path";
 import type { RegistryItem } from "shadcn/schema";
 
 import { createTheme, type Theme as ColorTheme } from "@dotui/colors";
-import { icons as registryIcons } from "../__registry__/icons";
-import type { ColorFormat } from "../types";
-import type { StyleConfig } from "../schemas/style";
+import { icons as registryIcons } from "@dotui/core/__registry__/icons";
+import type { ColorFormat } from "@dotui/core/types";
+import type { StyleConfig } from "@dotui/core/schemas/style";
 import type { FileEntry, ItemJson } from "@dotui/types/registry";
 
 import {

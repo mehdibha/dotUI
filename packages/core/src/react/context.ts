@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { StyleConfig } from "../schemas/style";
+import type { StyleConfig } from "@dotui/core/schemas/style";
 
 /**
  * Internal context for StyleProvider

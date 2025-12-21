@@ -1,7 +1,7 @@
 import type { Registry, RegistryItem } from "shadcn/schema";
 
-import type { StyleConfig } from "../schemas/style";
-import type { ColorFormat } from "../types";
+import type { StyleConfig } from "@dotui/core/schemas/style";
+import type { ColorFormat } from "@dotui/core/types";
 
 import { generateRegistryAll } from "./generators/all";
 import { generateRegistryBase } from "./generators/base";

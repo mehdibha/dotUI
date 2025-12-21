@@ -2,8 +2,8 @@
 
 import React, { createContext, useContext, useMemo } from "react";
 
-import type { VariantsConfig } from "../schemas/variants";
-import { VARIANTS } from "../__registry__/variants";
+import type { VariantsConfig } from "@dotui/core/schemas/variants";
+import { VARIANTS } from "@dotui/core/__registry__/variants";
 import { StyleContext } from "./context";
 
 // ============================================================================

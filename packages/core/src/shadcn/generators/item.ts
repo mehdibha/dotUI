@@ -1,10 +1,10 @@
 import { registryItemSchema } from "shadcn/schema";
 import type { RegistryItem } from "shadcn/schema";
 
-import type { StyleConfig } from "../../schemas/style";
+import type { StyleConfig } from "@dotui/core/schemas/style";
 
-import { registry } from "../../__registry__";
-import { updateFiles, updateRegistryDependencies } from "../transform";
+import { registry } from "@dotui/core/__registry__";
+import { updateFiles, updateRegistryDependencies } from "@dotui/core/shadcn/transform";
 
 type InternalRegistryItem = (typeof registry)[number];
 

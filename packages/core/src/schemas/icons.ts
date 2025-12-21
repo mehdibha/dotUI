@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { iconLibraries } from "../__registry__/icons";
+import { iconLibraries } from "@dotui/core/__registry__/icons";
 
 // Extract library names from registry (single source of truth)
 const ICON_LIBRARY_NAMES = iconLibraries.map((lib) => lib.name) as [string, ...string[]];
@@ -18,4 +18,4 @@ export type IconLibrary = (typeof iconLibraries)[number]["name"];
 export type IconsConfig = z.infer<typeof iconsConfigSchema>;
 
 // Re-export registry icons for convenience
-export { iconLibraries, icons } from "../__registry__/icons";
+export { iconLibraries, icons } from "@dotui/core/__registry__/icons";

@@ -1,10 +1,10 @@
 import type { Registry } from "shadcn/schema";
 
-import type { StyleConfig } from "../../schemas/style";
-import type { VariantsConfig } from "../../schemas/variants";
+import type { StyleConfig } from "@dotui/core/schemas/style";
+import type { VariantsConfig } from "@dotui/core/schemas/variants";
 
-import { ui as registryUi } from "../../__registry__/ui";
-import { updateRegistryDependencies } from "../transform";
+import { ui as registryUi } from "@dotui/core/__registry__/ui";
+import { updateRegistryDependencies } from "@dotui/core/shadcn/transform";
 import { generateRegistryAll } from "./all";
 import { generateRegistryBase } from "./base";
 import { generateRegistryTheme } from "./theme";

@@ -11,5 +11,5 @@ export * from "./schemas";
 export * from "./react";
 
 // Registry data
-export { VARIANTS, VARIANT_GROUPS } from "./__registry__/variants";
-export { iconLibraries, icons } from "./__registry__/icons";
+export { VARIANTS, VARIANT_GROUPS } from "@dotui/core/__registry__/variants";
+export { iconLibraries, icons } from "@dotui/core/__registry__/icons";

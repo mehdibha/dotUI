@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { VARIANTS } from "../__registry__/variants";
+import { VARIANTS } from "@dotui/core/__registry__/variants";
 
 /**
  * Generate variants schema from registry metadata
@@ -22,6 +22,6 @@ export const variantsConfigSchema = createVariantsSchema();
 
 export type VariantsConfig = z.infer<typeof variantsConfigSchema>;
 
-export type { VariantGroupKey, VariantKey } from "../__registry__/variants";
+export type { VariantGroupKey, VariantKey } from "@dotui/core/__registry__/variants";
 // Re-export registry constants for convenience
-export { VARIANT_GROUPS, VARIANTS } from "../__registry__/variants";
+export { VARIANT_GROUPS, VARIANTS } from "@dotui/core/__registry__/variants";
