@@ -60,6 +60,10 @@
 								"type": false,
 								"source": ["react", "react/**", "react-dom", "react-dom/**", "react-native", "react-native/**"]
 							},
+							{
+								"type": false,
+								"source": ["@tanstack/**"]
+							},
 							":NODE:",
 							{ "type": false, "source": [":PACKAGE:", "!@dotui/**"] },
 							{ "type": true, "source": [":PACKAGE:", "!@dotui/**"] },
