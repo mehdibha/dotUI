@@ -1,5 +1,6 @@
 packages:
   - www
+  - start
   - packages/*
   - config/*
   - tw-plugins/*

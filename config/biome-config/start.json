@@ -1,0 +1,12 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+	"extends": ["./base.json"],
+	"files": {
+		"includes": ["**", "!**/routeTree.gen.ts", "!**/.vinxi", "!**/.output"]
+	},
+	"linter": {
+		"domains": {
+			"react": "recommended"
+		}
+	}
+}
