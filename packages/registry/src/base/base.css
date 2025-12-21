@@ -30,7 +30,10 @@
 		@apply border-border;
 	}
 	body {
-		@apply bg-bg text-fg;
+		@apply font-sans bg-bg text-fg;
+	}
+	html {
+		@apply font-sans;
 	}
 }
 
