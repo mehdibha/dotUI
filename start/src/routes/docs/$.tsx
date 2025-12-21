@@ -10,6 +10,7 @@ import { LinkButton } from "@dotui/registry/ui/button";
 
 import browserCollections from "@/.source/browser";
 import { docsSource } from "@/lib/source";
+import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/layout";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
@@ -30,17 +31,22 @@ const serverLoader = createServerFn({ method: "GET" })
 		const page = docsSource.getPage(slugs);
 		if (!page) throw notFound();
 
+		const rawContent = await page.data.getText("raw");
+
 		return {
 			path: page.path,
+			url: page.url,
 			title: page.data.title,
 			description: page.data.description,
 			pageTree: await docsSource.serializePageTree(docsSource.getPageTree()),
+			rawContent,
 		};
 	});
 
 const clientLoader = browserCollections.docs.createClientLoader({
-	component({ toc, frontmatter, default: MDX }) {
+	component({ toc, frontmatter, default: MDX }, { url, rawContent }: { url: string; rawContent: string }) {
 		const hasToc = toc?.length;
+
 		return (
 			<TOCProvider toc={toc}>
 				<PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-20 xl:max-w-5xl">
@@ -48,8 +54,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 						<div className="flex items-center justify-between">
 							<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
 							<div className="flex items-center gap-2">
-								{/* <DocsCopyPage page={rawContent} url={page.url} />
-							<DocsPager neighbours={neighbours} /> */}
+								<DocsCopyPage content={rawContent} url={url} />
 							</div>
 						</div>
 						<PageHeaderDescription className="text-wrap">{frontmatter.description}</PageHeaderDescription>
@@ -86,7 +91,6 @@ const clientLoader = browserCollections.docs.createClientLoader({
 						</div>
 						{hasToc && <TOC data-outer-toc="" />}
 					</div>
-					{/* {lastModified && <PageLastUpdate date={lastModified} className="mt-12" />} */}
 				</PageLayout>
 			</TOCProvider>
 		);
@@ -97,11 +101,7 @@ function DocsPage() {
 	const data = Route.useLoaderData();
 	const Content = clientLoader.getComponent(data.path);
 
-	return (
-		<div>
-			<Content />
-		</div>
-	);
+	return <Content url={data.url} rawContent={data.rawContent} />;
 }
 
 const getIcon = (url: string) => {
