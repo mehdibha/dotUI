@@ -103,7 +103,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 								"not-has-data-page-tabs:xl:grid not-has-data-page-tabs:xl:grid-cols-[1fr_180px] not-has-data-page-tabs:xl:gap-10",
 						)}
 					>
-						<div>
+						<div className="min-w-0">
 							<MDX components={mdxComponents} />
 						</div>
 						{hasToc && <TOC data-outer-toc="" />}
