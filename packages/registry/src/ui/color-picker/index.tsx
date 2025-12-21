@@ -1,35 +1,29 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
 import * as Default from "./basic";
-import type {
-  ColorPickerContentProps,
-  ColorPickerProps,
-  ColorPickerTriggerProps,
-} from "./types";
+import type { ColorPickerContentProps, ColorPickerProps, ColorPickerTriggerProps } from "./types";
 
 export const ColorPicker = createDynamicComponent<ColorPickerProps>(
-  "color-picker",
-  "ColorPicker",
-  Default.ColorPicker,
-  {},
+	"color-picker",
+	"ColorPicker",
+	Default.ColorPicker,
+	{},
 );
 
-export const ColorPickerTrigger =
-  createDynamicComponent<ColorPickerTriggerProps>(
-    "color-picker",
-    "ColorPickerTrigger",
-    Default.ColorPickerTrigger,
-    {},
-  );
+export const ColorPickerTrigger = createDynamicComponent<ColorPickerTriggerProps>(
+	"color-picker",
+	"ColorPickerTrigger",
+	Default.ColorPickerTrigger,
+	{},
+);
 
-export const ColorPickerContent =
-  createDynamicComponent<ColorPickerContentProps>(
-    "color-picker",
-    "ColorPickerContent",
-    Default.ColorPickerContent,
-    {},
-  );
+export const ColorPickerContent = createDynamicComponent<ColorPickerContentProps>(
+	"color-picker",
+	"ColorPickerContent",
+	Default.ColorPickerContent,
+	{},
+);
 
 export type { ColorPickerProps };

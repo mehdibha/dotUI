@@ -1,15 +1,15 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
 import * as Default from "./basic";
 import type { ToggleButtonGroupProps } from "./types";
 
 export const ToggleButtonGroup = createDynamicComponent<ToggleButtonGroupProps>(
-  "toggle-button-group",
-  "ToggleButtonGroup",
-  Default.ToggleButtonGroup,
-  {},
+	"toggle-button-group",
+	"ToggleButtonGroup",
+	Default.ToggleButtonGroup,
+	{},
 );
 
 export type { ToggleButtonGroupProps };

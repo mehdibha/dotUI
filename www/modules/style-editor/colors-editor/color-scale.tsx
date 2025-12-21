@@ -5,30 +5,62 @@ import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@dotui/registry/ui/dialog";
 import { Overlay } from "@dotui/registry/ui/overlay";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
-import type { ScaleId } from "@dotui/style-system/types";
 
-import { useGeneratedTheme, useStyleEditorForm } from "@/modules/style-editor/style-editor-provider";
-import { useResolvedModeState } from "@/modules/style-editor/use-resolved-mode";
+import type { ScaleId } from "@/modules/style-editor/types";
+import { SCALE_STEPS } from "@/modules/style-editor/types";
+
+// Static generated colors for UI shell
+const STATIC_SCALES: Record<ScaleId, { name: string; values: { name: string; value: string }[] }> = {
+	neutral: {
+		name: "neutral",
+		values: SCALE_STEPS.map((step, i) => ({
+			name: `neutral-${step}`,
+			value: `hsl(220, ${5 + i}%, ${95 - i * 8}%)`,
+		})),
+	},
+	accent: {
+		name: "accent",
+		values: SCALE_STEPS.map((step, i) => ({
+			name: `accent-${step}`,
+			value: `hsl(220, 90%, ${95 - i * 8}%)`,
+		})),
+	},
+	success: {
+		name: "success",
+		values: SCALE_STEPS.map((step, i) => ({
+			name: `success-${step}`,
+			value: `hsl(142, 70%, ${95 - i * 8}%)`,
+		})),
+	},
+	warning: {
+		name: "warning",
+		values: SCALE_STEPS.map((step, i) => ({
+			name: `warning-${step}`,
+			value: `hsl(38, 90%, ${95 - i * 8}%)`,
+		})),
+	},
+	danger: {
+		name: "danger",
+		values: SCALE_STEPS.map((step, i) => ({
+			name: `danger-${step}`,
+			value: `hsl(0, 70%, ${95 - i * 8}%)`,
+		})),
+	},
+	info: {
+		name: "info",
+		values: SCALE_STEPS.map((step, i) => ({
+			name: `info-${step}`,
+			value: `hsl(190, 80%, ${95 - i * 8}%)`,
+		})),
+	},
+};
 
 export function ColorScale({ scaleId }: { scaleId: ScaleId }) {
-	const form = useStyleEditorForm();
-	const { resolvedMode } = useResolvedModeState();
-
-	const generatedTheme = useGeneratedTheme();
-
-	const scale = generatedTheme.find((scale) => scale.name === scaleId);
-
-	if (!scale) {
-		return null;
-	}
+	const scale = STATIC_SCALES[scaleId];
 
 	return (
 		<div className="flex @lg:flex-row flex-col @lg:items-center @lg:gap-2 gap-0.5">
-			<p className="w-16 text-fg-muted text-sm">
-				<form.Subscribe selector={(state) => state.values.theme.colors.modes[resolvedMode].scales[scaleId].name}>
-					{(scaleName) => `${scaleName.charAt(0).toUpperCase() + scaleName.slice(1)}`}
-				</form.Subscribe>
-			</p>
+			<p className="w-16 text-fg-muted text-sm">{scale.name.charAt(0).toUpperCase() + scale.name.slice(1)}</p>
 			<div className="flex flex-1 items-center gap-1">
 				{scale.values.map((color, index) => (
 					<Dialog key={color.name ?? color.value ?? `color-${index}`}>

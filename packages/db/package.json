@@ -10,24 +10,23 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "push": "pnpm with-env drizzle-kit push",
     "generate": "pnpm with-env drizzle-kit generate",
     "migrate": "pnpm with-env drizzle-kit migrate",
     "studio": "pnpm with-env drizzle-kit studio",
     "seed": "pnpm with-env tsx src/seed.ts",
+    "migrate:data": "pnpm with-env psql $POSTGRES_URL -f scripts/migrate-to-config.sql",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@dotui/registry": "workspace:*",
-    "@dotui/style-system": "workspace:*",
+    "@dotui/core": "workspace:*",
     "@vercel/postgres": "^0.10.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.44.1",
     "drizzle-zod": "^0.8.3",
-    "zod": "^4.0.5"
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",
@@ -35,7 +34,7 @@
     "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.31.1",
     "pg": "^8.16.0",
-    "tsx": "^4.19.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.8.3"
   }
 }

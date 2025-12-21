@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const modalMeta = {
   name: "modal",
   type: "registry:ui",
+  group: "overlays",
   defaultVariant: "basic",
   variants: {
     basic: {

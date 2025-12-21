@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const disclosureMeta = {
   name: "disclosure",
   type: "registry:ui",
+  group: "data-display",
   defaultVariant: "basic",
   variants: {
     basic: {

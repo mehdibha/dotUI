@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const colorSliderMeta = {
   name: "color-slider",
   type: "registry:ui",
+  group: "color",
   defaultVariant: "basic",
   variants: {
     basic: {

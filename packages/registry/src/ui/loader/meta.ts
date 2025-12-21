@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const loaderMeta = {
   name: "loader",
   type: "registry:ui",
+  group: "feedback",
   defaultVariant: "basic",
   variants: {
     basic: {

@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const tabsMeta = {
   name: "tabs",
   type: "registry:ui",
+  group: "navigation",
   defaultVariant: "basic",
   variants: {
     basic: {

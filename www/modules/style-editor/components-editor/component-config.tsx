@@ -1,17 +1,10 @@
 "use client";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { SelectContent, SelectItem, SelectTrigger } from "@dotui/registry/ui/select";
-import { Skeleton } from "@dotui/registry/ui/skeleton";
-import type { VariantsDefinition } from "@dotui/style-system/types";
-
-import { TokensTable } from "@/modules/style-editor/colors-editor/tokens-table";
-import { DraftStyleProvider } from "@/modules/style-editor/draft-style-provider";
-import { useStyleEditorForm } from "@/modules/style-editor/style-editor-provider";
-import { useEditorStyle } from "@/modules/style-editor/use-editor-style";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@dotui/registry/ui/select";
 
 interface ComponentConfigProps extends React.ComponentProps<"div"> {
-	name: keyof VariantsDefinition;
+	name: string;
 	title: string;
 	variants: { name: string; label: string }[];
 	previewClassName?: string;
@@ -28,39 +21,37 @@ export const ComponentConfig = ({
 	className,
 	...props
 }: ComponentConfigProps) => {
-	const form = useStyleEditorForm();
-	const { isPending } = useEditorStyle();
-
 	return (
 		<div className={cn(className)} {...props}>
 			<p className={cn("font-semibold text-base", title !== "Loader" && "mt-6")}>{title}</p>
 
-			<form.AppField name={`variants.${name}`}>
-				{(field) => (
-					<Skeleton show={isPending} className="mt-2">
-						<field.Select aria-label="Select component variant" className="mt-2 w-full">
-							<SelectTrigger />
-							<SelectContent>
-								{variants.map((variant) => (
-									<SelectItem key={variant.name} id={variant.name}>
-										{variant.label}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</field.Select>
-					</Skeleton>
-				)}
-			</form.AppField>
+			<Select aria-label="Select component variant" defaultSelectedKey={variants[0]?.name} className="mt-2 w-full">
+				<SelectTrigger />
+				<SelectContent>
+					{variants.map((variant) => (
+						<SelectItem key={variant.name} id={variant.name}>
+							{variant.label}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
 
-			{tokens && <TokensTable hideHeader tokenIds={tokens} className="mt-2" />}
+			{tokens && tokens.length > 0 && (
+				<div className="mt-2">
+					{/* Simplified tokens display - just show the token names */}
+					<div className="flex flex-wrap gap-1">
+						{tokens.map((token) => (
+							<span key={token} className="rounded bg-muted px-2 py-1 text-xs">
+								{token}
+							</span>
+						))}
+					</div>
+				</div>
+			)}
 
-			<Skeleton show={isPending}>
-				<DraftStyleProvider
-					className={cn("mt-2 flex items-center justify-center gap-2 rounded-md border px-4 py-8", previewClassName)}
-				>
-					{children}
-				</DraftStyleProvider>
-			</Skeleton>
+			<div className={cn("mt-2 flex items-center justify-center gap-2 rounded-md border px-4 py-8", previewClassName)}>
+				{children}
+			</div>
 		</div>
 	);
 };

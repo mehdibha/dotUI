@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const groupMeta = {
   name: "group",
   type: "registry:ui",
+  group: "forms",
   defaultVariant: "basic",
   variants: {
     basic: {

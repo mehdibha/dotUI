@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const toggleButtonGroupMeta = {
   name: "toggle-button-group",
   type: "registry:ui",
+  group: "buttons",
   defaultVariant: "basic",
   variants: {
     basic: {

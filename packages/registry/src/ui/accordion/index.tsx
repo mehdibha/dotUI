@@ -1,13 +1,16 @@
 "use client";
 
-import { createDynamicComponent } from "../create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
+
 import * as Default from "./basic";
 import type { AccordionVariant } from "./meta";
 import type { AccordionProps } from "./types";
 
-export const Accordion = createDynamicComponent<
-  AccordionProps,
-  AccordionVariant
->("accordion", "Accordion", Default.Accordion, {});
+export const Accordion = createDynamicComponent<AccordionProps, AccordionVariant>(
+	"accordion",
+	"Accordion",
+	Default.Accordion,
+	{},
+);
 
 export type { AccordionProps };

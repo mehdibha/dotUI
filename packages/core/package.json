@@ -1,0 +1,39 @@
+{
+	"name": "@dotui/core",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"license": "MIT",
+	"main": "./src/index.ts",
+	"types": "./src/index.ts",
+	"exports": {
+		".": "./src/index.ts",
+		"./schemas": "./src/schemas/index.ts",
+		"./types": "./src/types.ts",
+		"./react": "./src/react/index.ts",
+		"./react/style-provider": "./src/react/style-provider.tsx",
+		"./react/dynamic-component": "./src/react/dynamic-component.tsx",
+		"./shadcn": "./src/shadcn/index.ts",
+		"./__registry__/variants": "./src/__registry__/variants.ts"
+	},
+	"scripts": {
+		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
+	},
+	"peerDependencies": {
+		"react": "^19.2.1",
+		"react-dom": "^19.2.1"
+	},
+	"dependencies": {
+		"@dotui/colors": "workspace:*",
+		"@dotui/types": "workspace:*",
+		"shadcn": "^3.6.1",
+		"zod": "^4.2.1"
+	},
+	"devDependencies": {
+		"@dotui/ts-config": "workspace:*",
+		"@types/node": "^22.15.3",
+		"@types/react": "^19.2.2",
+		"typescript": "^5.8.3"
+	}
+}

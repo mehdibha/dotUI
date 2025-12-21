@@ -22,7 +22,7 @@ import { Modal } from "@dotui/registry/ui/modal";
 import { Popover } from "@dotui/registry/ui/popover";
 import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
 import { useAppForm } from "@dotui/registry/ui/tanstack-form";
-import type { StyleDefinition } from "@dotui/style-system/types";
+import type { StyleConfig } from "@dotui/core/schemas";
 
 import { authClient } from "@/modules/auth/client";
 import { LoginModal } from "@/modules/auth/login-modal";
@@ -57,7 +57,7 @@ export function CreateStyleModal({
 	initialStyle,
 }: {
 	children: React.ReactNode;
-	initialStyle?: Partial<StyleDefinition>;
+	initialStyle?: Partial<StyleConfig>;
 }) {
 	const { data: session, isPending } = authClient.useSession();
 
@@ -77,7 +77,7 @@ export function CreateStyleModalContent({
 	initialStyle,
 }: {
 	children: React.ReactNode;
-	initialStyle?: Partial<StyleDefinition>;
+	initialStyle?: Partial<StyleConfig>;
 }) {
 	const createStyleMutation = useCreateStyle();
 	const [isOpen, setOpen] = React.useState(false);
@@ -98,7 +98,7 @@ export function CreateStyleModalContent({
 			await createStyleMutation.mutateAsync({
 				...value,
 				name: finalName,
-				styleOverrides: initialStyle,
+				configOverrides: initialStyle,
 			});
 			setOpen(false);
 		},

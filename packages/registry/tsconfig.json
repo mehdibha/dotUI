@@ -7,8 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "@dotui/registry/*": ["./src/*"],
-      "@dotui/style-system": ["../style-system/src/index.ts"],
-      "@dotui/style-system/*": ["../style-system/src/*"]
+      "@dotui/core/*": ["../core/src/*"]
     }
   },
   "include": ["src", "scripts"],

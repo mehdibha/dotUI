@@ -1,0 +1,25 @@
+@theme inline {
+	/* progress-bar */
+	--animate-progress-indeterminate:
+		progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease var(--progress-duration) infinite
+		normal none running;
+}
+
+@keyframes progress-grow {
+	0% {
+		transform: scaleX(0.01);
+	}
+	20% {
+		transform: scaleX(0.1);
+	}
+	30% {
+		transform: scaleX(0.6);
+	}
+	40%,
+	50% {
+		transform: scaleX(0.9);
+	}
+	100% {
+		transform: scaleX(1);
+	}
+}

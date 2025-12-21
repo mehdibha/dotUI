@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const datePickerMeta = {
   name: "date-picker",
   type: "registry:ui",
+  group: "date-time",
   defaultVariant: "basic",
   variants: {
     basic: {

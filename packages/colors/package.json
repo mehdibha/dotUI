@@ -1,0 +1,33 @@
+{
+	"name": "@dotui/colors",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"license": "MIT",
+	"exports": {
+		".": "./src/index.ts",
+		"./material": "./src/material/index.ts",
+		"./material/schema": "./src/material/schema.ts",
+		"./contrast": "./src/contrast/index.ts"
+	},
+	"scripts": {
+		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"lint": "biome lint --write .",
+		"format": "biome format --write .",
+		"check": "biome check --write .",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
+		"test": "vitest run",
+		"test:watch": "vitest"
+	},
+	"dependencies": {
+		"@material/material-color-utilities": "^0.3.0",
+		"colorjs.io": "^0.5.2",
+		"zod": "^4.2.1"
+	},
+	"devDependencies": {
+		"@dotui/biome-config": "workspace:*",
+		"@dotui/ts-config": "workspace:*",
+		"typescript": "^5.8.3",
+		"vitest": "^4.0.1"
+	}
+}

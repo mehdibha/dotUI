@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const menuMeta = {
   name: "menu",
   type: "registry:ui",
+  group: "overlays",
   defaultVariant: "basic",
   variants: {
     basic: {

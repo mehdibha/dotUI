@@ -1,26 +1,22 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
 import * as Default from "./basic";
-import type {
-  ColorSwatchPickerItemProps,
-  ColorSwatchPickerProps,
-} from "./types";
+import type { ColorSwatchPickerItemProps, ColorSwatchPickerProps } from "./types";
 
 export const ColorSwatchPicker = createDynamicComponent<ColorSwatchPickerProps>(
-  "color-swatch-picker",
-  "ColorSwatchPicker",
-  Default.ColorSwatchPicker,
-  {},
+	"color-swatch-picker",
+	"ColorSwatchPicker",
+	Default.ColorSwatchPicker,
+	{},
 );
 
-export const ColorSwatchPickerItem =
-  createDynamicComponent<ColorSwatchPickerItemProps>(
-    "color-swatch-picker",
-    "ColorSwatchPickerItem",
-    Default.ColorSwatchPickerItem,
-    {},
-  );
+export const ColorSwatchPickerItem = createDynamicComponent<ColorSwatchPickerItemProps>(
+	"color-swatch-picker",
+	"ColorSwatchPickerItem",
+	Default.ColorSwatchPickerItem,
+	{},
+);
 
 export type { ColorSwatchPickerProps, ColorSwatchPickerItemProps };

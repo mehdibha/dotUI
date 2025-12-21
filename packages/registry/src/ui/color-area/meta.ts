@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const colorAreaMeta = {
   name: "color-area",
   type: "registry:ui",
+  group: "color",
   defaultVariant: "basic",
   variants: {
     basic: {

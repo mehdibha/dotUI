@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const colorThumbMeta = {
   name: "color-thumb",
   type: "registry:ui",
+  group: "color",
   defaultVariant: "basic",
   variants: {
     basic: {

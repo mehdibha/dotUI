@@ -1,81 +1,66 @@
 "use client";
 
-import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
 import * as Default from "./basic";
 import type {
-  DialogBodyProps,
-  DialogContentProps,
-  DialogDescriptionProps,
-  DialogFooterProps,
-  DialogHeaderProps,
-  DialogHeadingProps,
-  DialogInsetProps,
-  DialogProps,
+	DialogBodyProps,
+	DialogContentProps,
+	DialogDescriptionProps,
+	DialogFooterProps,
+	DialogHeaderProps,
+	DialogHeadingProps,
+	DialogInsetProps,
+	DialogProps,
 } from "./types";
 
-export const Dialog = createDynamicComponent<DialogProps>(
-  "dialog",
-  "Dialog",
-  Default.Dialog,
-  {},
-);
+export const Dialog = createDynamicComponent<DialogProps>("dialog", "Dialog", Default.Dialog, {});
 
 export const DialogHeader = createDynamicComponent<DialogHeaderProps>(
-  "dialog",
-  "DialogHeader",
-  Default.DialogHeader,
-  {},
+	"dialog",
+	"DialogHeader",
+	Default.DialogHeader,
+	{},
 );
 
 export const DialogHeading = createDynamicComponent<DialogHeadingProps>(
-  "dialog",
-  "DialogHeading",
-  Default.DialogHeading,
-  {},
+	"dialog",
+	"DialogHeading",
+	Default.DialogHeading,
+	{},
 );
 
 export const DialogDescription = createDynamicComponent<DialogDescriptionProps>(
-  "dialog",
-  "DialogDescription",
-  Default.DialogDescription,
-  {},
+	"dialog",
+	"DialogDescription",
+	Default.DialogDescription,
+	{},
 );
 
 export const DialogContent = createDynamicComponent<DialogContentProps>(
-  "dialog",
-  "DialogContent",
-  Default.DialogContent,
-  {},
+	"dialog",
+	"DialogContent",
+	Default.DialogContent,
+	{},
 );
 
-export const DialogBody = createDynamicComponent<DialogBodyProps>(
-  "dialog",
-  "DialogBody",
-  Default.DialogBody,
-  {},
-);
+export const DialogBody = createDynamicComponent<DialogBodyProps>("dialog", "DialogBody", Default.DialogBody, {});
 
 export const DialogFooter = createDynamicComponent<DialogFooterProps>(
-  "dialog",
-  "DialogFooter",
-  Default.DialogFooter,
-  {},
+	"dialog",
+	"DialogFooter",
+	Default.DialogFooter,
+	{},
 );
 
-export const DialogInset = createDynamicComponent<DialogInsetProps>(
-  "dialog",
-  "DialogInset",
-  Default.DialogInset,
-  {},
-);
+export const DialogInset = createDynamicComponent<DialogInsetProps>("dialog", "DialogInset", Default.DialogInset, {});
 
 export type {
-  DialogProps,
-  DialogHeaderProps,
-  DialogHeadingProps,
-  DialogDescriptionProps,
-  DialogContentProps,
-  DialogFooterProps,
-  DialogInsetProps,
+	DialogProps,
+	DialogHeaderProps,
+	DialogHeadingProps,
+	DialogDescriptionProps,
+	DialogContentProps,
+	DialogFooterProps,
+	DialogInsetProps,
 };

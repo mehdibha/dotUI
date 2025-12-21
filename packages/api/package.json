@@ -8,17 +8,15 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@dotui/auth": "workspace:*",
     "@dotui/db": "workspace:*",
-    "@dotui/registry": "workspace:*",
     "@trpc/server": "^11.2.0",
     "superjson": "2.2.3",
-    "zod": "^4.0.5"
+    "zod": "^4.2.1"
   },
   "devDependencies": {
     "@dotui/ts-config": "workspace:*",

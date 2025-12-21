@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const calendarMeta = {
   name: "calendar",
   type: "registry:ui",
+  group: "date-time",
   defaultVariant: "basic",
   variants: {
     basic: {

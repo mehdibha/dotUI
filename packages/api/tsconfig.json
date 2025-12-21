@@ -4,8 +4,8 @@
     "baseUrl": ".",
     "jsx": "preserve",
     "paths": {
-      "@dotui/registry/*": ["../registry/src/*"],
-      "@dotui/style-system/*": ["../style-system/src/*"]
+      "@dotui/api/*": ["./src/*"],
+      "@dotui/core/*": ["../core/src/*"]
     }
   },
   "include": ["src"],

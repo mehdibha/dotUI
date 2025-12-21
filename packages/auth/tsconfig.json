@@ -1,5 +1,11 @@
 {
   "extends": "@dotui/ts-config/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@dotui/core/*": ["../core/src/*"]
+    }
+  },
   "include": ["src", "*.ts", "eslint.config.js"],
   "exclude": ["node_modules"]
 }

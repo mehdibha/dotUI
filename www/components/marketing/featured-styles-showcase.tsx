@@ -5,11 +5,12 @@ import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
+import { StyleProvider } from "@dotui/core/react";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
 import { cn } from "@dotui/registry/lib/utils";
-import { StyleProvider } from "@dotui/registry/providers";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 import type { RouterOutputs } from "@dotui/api";
+import type { StyleConfig } from "@dotui/core/schemas";
 
 import { useDebounce } from "@/hooks/use-debounce";
 
@@ -55,12 +56,14 @@ export const FeaturedStylesShowcase = ({
 
 	return (
 		<>
-			<StyleProvider
-				ref={containerRef}
-				unstyled
-				style={currentStyle}
-				mode={resolvedTheme as "light" | "dark" | undefined}
-			/>
+			{currentStyle?.config && (
+				<StyleProvider
+					ref={containerRef}
+					unstyled
+					config={currentStyle.config as StyleConfig}
+					mode={resolvedTheme as "light" | "dark" | undefined}
+				/>
+			)}
 			<div className="flex justify-center gap-4">
 				<Tabs
 					selectedKey={styles[currentIndex % styles.length]?.name}
@@ -113,7 +116,7 @@ export const FeaturedStylesShowcase = ({
 									shouldForceMount
 								>
 									<StyleProvider
-										style={style}
+										config={style.config as StyleConfig}
 										mode={resolvedTheme as "light" | "dark" | undefined}
 										className="h-full rounded-xl bg-bg"
 									>

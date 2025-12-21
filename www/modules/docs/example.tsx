@@ -1,6 +1,6 @@
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
-import { Index } from "@dotui/registry/ui/demos";
+import { DemosIndex as Index } from "@dotui/registry/ui/demos";
 
 import { ActiveStyleProvider } from "@/modules/styles/active-style-provider";
 

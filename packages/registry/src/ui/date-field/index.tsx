@@ -2,20 +2,15 @@
 
 import type { DateValue } from "react-aria-components";
 
-import { createDynamicComponent } from "@dotui/registry/ui/create-dynamic-component";
+import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
 import * as Default from "./basic";
 import type { DateFieldProps } from "./types";
 
 export const DateField = <T extends DateValue>(props: DateFieldProps<T>) => {
-  const Component = createDynamicComponent<DateFieldProps<T>>(
-    "date-field",
-    "DateField",
-    Default.DateField,
-    {},
-  );
+	const Component = createDynamicComponent<DateFieldProps<T>>("date-field", "DateField", Default.DateField, {});
 
-  return <Component {...props} />;
+	return <Component {...props} />;
 };
 
 export type { DateFieldProps };

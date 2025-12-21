@@ -3,6 +3,7 @@ import type { RegistryItem } from "@dotui/registry/types";
 const fileTriggerMeta = {
   name: "file-trigger",
   type: "registry:ui",
+  group: "buttons",
   defaultVariant: "basic",
   variants: {
     basic: {

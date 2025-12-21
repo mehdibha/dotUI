@@ -1,1 +1,1 @@
-export * from "./__icons__";
+export * from "../__generated__/icons";

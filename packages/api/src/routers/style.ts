@@ -3,8 +3,7 @@ import { z } from "zod";
 import type { TRPCRouterRecord } from "@trpc/server";
 
 import { and, eq } from "@dotui/db";
-import { createStyleSchema, style, user } from "@dotui/db/schemas";
-import { styleDefinitionSchema } from "@dotui/registry/schemas";
+import { createStyleSchema, updateStyleConfigSchema, style, user } from "@dotui/db/schemas";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
@@ -289,7 +288,7 @@ export const styleRouter = {
       return created;
     }),
   update: protectedProcedure
-    .input(styleDefinitionSchema.extend({ id: uuidSchema }))
+    .input(updateStyleConfigSchema)
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.transaction(async (tx) => {
         const existingStyle = await tx.query.style.findFirst({
@@ -310,17 +309,13 @@ export const styleRouter = {
           });
         }
 
-        const { id, theme, icons, variants } = input;
-
         const [updatedStyle] = await tx
           .update(style)
           .set({
-            theme,
-            icons,
-            variants,
+            config: input.config,
             updatedAt: new Date(),
           })
-          .where(eq(style.id, id))
+          .where(eq(style.id, input.id))
           .returning();
 
         return updatedStyle;

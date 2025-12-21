@@ -1,0 +1,25 @@
+@import "tw-animate-css";
+
+@plugin "tailwindcss-react-aria-components";
+@plugin "tailwindcss-autocontrast";
+@plugin "tailwindcss-with";
+
+@custom-variant dark {
+	&:where(.dark, .dark *) {
+		@slot;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-bg text-fg;
+	}
+}
+
+::selection {
+	background-color: var(--accent-800);
+	color: var(--on-accent-800);
+}

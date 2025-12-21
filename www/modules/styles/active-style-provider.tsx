@@ -4,10 +4,11 @@ import React from "react";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { StyleProvider } from "@dotui/registry/providers";
-import { Alert } from "@dotui/registry/ui/alert";
+import { StyleProvider } from "@dotui/core/react";
+import type { StyleConfig } from "@dotui/core/schemas";
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 
+import { useMounted } from "@/hooks/use-mounted";
 import { usePreferences } from "@/modules/preferences/preferences-atom";
 import { useActiveStyle } from "@/modules/styles/use-active-style";
 
@@ -19,11 +20,15 @@ export function ActiveStyleProvider({
 	unstyled?: boolean;
 	skeletonClassName?: string;
 }) {
-	const container = useActiveStylePortalContext();
+	const portalContext = useActiveStylePortalContext();
+	const localRef = React.useRef<HTMLDivElement>(null);
+	const container = portalContext ?? localRef;
 	const { activeMode } = usePreferences();
-	const { data: activeStyle, isPending, isError } = useActiveStyle();
+	const { data: activeStyle, isPending } = useActiveStyle();
+	const isMounted = useMounted();
 
-	if (isPending) {
+	// Always render skeleton on server and during initial hydration to avoid mismatch
+	if (!isMounted || isPending || !activeStyle?.config) {
 		return (
 			<Skeleton {...props} className={cn("rounded-none", skeletonClassName, props.className)}>
 				{props.children}
@@ -31,16 +36,8 @@ export function ActiveStyleProvider({
 		);
 	}
 
-	if (isError) {
-		return (
-			<div className="flex items-center justify-center p-4">
-				<Alert variant="danger" title="An error occurred while loading the style." />
-			</div>
-		);
-	}
-
 	return (
-		<StyleProvider mode={activeMode} style={activeStyle} unstyled={unstyled} {...props}>
+		<StyleProvider mode={activeMode} config={activeStyle.config as StyleConfig} unstyled={unstyled} {...props}>
 			<PortalProvider getContainer={() => container.current}>{props.children}</PortalProvider>
 		</StyleProvider>
 	);
@@ -49,11 +46,7 @@ export function ActiveStyleProvider({
 const ActiveStyleContext = React.createContext<React.RefObject<HTMLDivElement | null> | null>(null);
 
 const useActiveStylePortalContext = () => {
-	const context = React.useContext(ActiveStyleContext);
-	if (!context) {
-		throw new Error("useCurrentStylePortalContext must be used within a CurrentStylePortalProvider");
-	}
-	return context;
+	return React.useContext(ActiveStyleContext);
 };
 
 export const ActiveStylePortalProvider = ({ children }: { children: React.ReactNode }) => {
@@ -61,9 +54,11 @@ export const ActiveStylePortalProvider = ({ children }: { children: React.ReactN
 	const { activeMode } = usePreferences();
 	const { data: activeStyle } = useActiveStyle();
 
+	if (!activeStyle?.config) return <>{children}</>;
+
 	return (
 		<ActiveStyleContext.Provider value={container}>
-			<StyleProvider ref={container} mode={activeMode} style={activeStyle} unstyled />
+			<StyleProvider ref={container} mode={activeMode} config={activeStyle.config as StyleConfig} unstyled />
 			{children}
 		</ActiveStyleContext.Provider>
 	);

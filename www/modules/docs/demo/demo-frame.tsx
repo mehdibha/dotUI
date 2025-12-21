@@ -21,10 +21,9 @@ export const DemoFrame = ({ className, children }: DemoFrameProps) => {
 	const { data: style } = useActiveStyle();
 	const isMounted = useMounted();
 
-	const canToggleTheme =
-		Boolean(style) &&
-		Boolean(style?.theme.colors.activeModes.length && isMounted) &&
-		(style?.theme.colors.activeModes.length ?? 0) > 1;
+	// Check if both light and dark modes are enabled
+	const modes = style?.config?.theme?.colors?.modes;
+	const canToggleTheme = Boolean(style) && isMounted && Boolean(modes?.light && modes?.dark);
 
 	return (
 		<div

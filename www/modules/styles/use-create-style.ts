@@ -1,14 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-import { DEFAULT_THEME } from "@dotui/registry/constants";
+import { DEFAULT_STYLE } from "@dotui/registry/constants";
 import { toast } from "@dotui/registry/ui/toast";
-import {
-	DEFAULT_ICON_LIBRARY,
-	DEFAULT_ICON_STROKE_WIDTH,
-	DEFAULT_VARIANTS_DEFINITION,
-} from "@dotui/style-system/utils";
-import type { StyleDefinition } from "@dotui/style-system/types";
+import type { StyleConfig } from "@dotui/core/schemas";
 
 import { useTRPC, useTRPCClient } from "@/lib/trpc/react";
 import { authClient } from "@/modules/auth/client";
@@ -17,7 +12,7 @@ interface CreateStyleInput {
 	name: string;
 	description?: string;
 	visibility?: "public" | "unlisted" | "private";
-	styleOverrides?: Partial<StyleDefinition>;
+	configOverrides?: Partial<StyleConfig>;
 }
 
 export function useCreateStyle() {
@@ -29,21 +24,14 @@ export function useCreateStyle() {
 
 	return useMutation({
 		mutationFn: async (data: CreateStyleInput) => {
-			const styleData: StyleDefinition = {
-				theme: data.styleOverrides?.theme ?? DEFAULT_THEME,
-				icons: {
-					library: data.styleOverrides?.icons?.library ?? DEFAULT_ICON_LIBRARY,
-					strokeWidth: data.styleOverrides?.icons?.strokeWidth ?? DEFAULT_ICON_STROKE_WIDTH,
-				},
-				variants: data.styleOverrides?.variants ?? DEFAULT_VARIANTS_DEFINITION,
+			const config: StyleConfig = {
+				theme: data.configOverrides?.theme ?? DEFAULT_STYLE.theme,
+				icons: data.configOverrides?.icons ?? DEFAULT_STYLE.icons,
+				variants: data.configOverrides?.variants ?? DEFAULT_STYLE.variants,
 			};
 
-			// Cast to expected schema types - StyleDefinition uses generic strings while
-			// the database schema expects specific literal union types from zod
 			const created = await trpcClient.style.create.mutate({
-				theme: styleData.theme as Parameters<typeof trpcClient.style.create.mutate>[0]["theme"],
-				icons: styleData.icons as Parameters<typeof trpcClient.style.create.mutate>[0]["icons"],
-				variants: styleData.variants as Parameters<typeof trpcClient.style.create.mutate>[0]["variants"],
+				config,
 				name: data.name,
 				description: data.description ?? "",
 				visibility: data.visibility ?? "unlisted",

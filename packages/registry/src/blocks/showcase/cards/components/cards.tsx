@@ -35,3 +35,5 @@ export function Cards(props: React.ComponentProps<"div">) {
     </div>
   );
 }
+
+export default Cards;

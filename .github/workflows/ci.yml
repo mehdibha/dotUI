@@ -67,3 +67,49 @@ jobs:
       - uses: ./.github/actions/setup
 
       - run: pnpm test
+
+  check-registry:
+    runs-on: ubuntu-latest
+    name: Check registry generated files
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - name: Build registry
+        run: pnpm build:registry
+
+      - name: Check for uncommitted changes
+        run: |
+          if [[ -n $(git status --porcelain packages/core/src/__registry__/) ]]; then
+            echo "Error: Generated registry files are out of sync!"
+            echo "Please run 'pnpm build:registry' and commit the changes."
+            git diff packages/core/src/__registry__/
+            exit 1
+          fi
+          echo "Registry files are in sync."
+
+  check-migrations:
+    runs-on: ubuntu-latest
+    name: Check database migrations
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - name: Generate migrations
+        run: pnpm --filter=@dotui/db generate
+        env:
+          POSTGRES_URL: "postgresql://fake:fake@localhost:5432/fake"
+
+      - name: Check for uncommitted migrations
+        run: |
+          if [[ -n $(git status --porcelain packages/db/drizzle/) ]]; then
+            echo "Error: Database migrations are out of sync!"
+            echo "Please run 'pnpm --filter=@dotui/db generate' and commit the changes."
+            git status packages/db/drizzle/
+            exit 1
+          fi
+          echo "Database migrations are in sync."
