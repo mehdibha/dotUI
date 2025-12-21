@@ -10,7 +10,6 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "push": "pnpm with-env drizzle-kit push",
     "generate": "pnpm with-env drizzle-kit generate",
