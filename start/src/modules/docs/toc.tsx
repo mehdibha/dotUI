@@ -2,15 +2,16 @@ import React from "react";
 import { mergeRefs } from "@react-aria/utils";
 import {
 	AnchorProvider,
-	ScrollProvider,
 	TOCItem as PrimitiveTOCItem,
+	ScrollProvider,
 	type TOCItemType,
 	useActiveAnchors,
 } from "fumadocs-core/toc";
+import { AlignLeftIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 
-export type { TOCItemType, TableOfContents } from "fumadocs-core/toc";
+export type { TableOfContents, TOCItemType } from "fumadocs-core/toc";
 
 const TOCContext = React.createContext<TOCItemType[]>([]);
 
@@ -25,6 +26,26 @@ export function TOCProvider({ toc, children, ...props }: React.ComponentProps<ty
 				{children}
 			</AnchorProvider>
 		</TOCContext>
+	);
+}
+
+export function TOC({ className, ...props }: React.ComponentProps<"div">) {
+	const tocItems = useTOCItems();
+	if (tocItems.length === 0) return null;
+
+	return (
+		<div
+			className={cn("sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden", className)}
+			{...props}
+		>
+			<h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
+				<AlignLeftIcon className="size-4 text-fg-muted" />
+				On this page
+			</h3>
+			<TOCScrollArea>
+				<TOCItems />
+			</TOCScrollArea>
+		</div>
 	);
 }
 

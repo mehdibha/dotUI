@@ -1,8 +1,18 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import browserCollections from "@/.source/browser";
 
+import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
+import { GitHubIcon } from "@dotui/registry/components/icons/github";
+import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
+import { ExternalLinkIcon } from "@dotui/registry/icons";
+import { cn } from "@dotui/registry/lib/utils";
+import { LinkButton } from "@dotui/registry/ui/button";
+
+import browserCollections from "@/.source/browser";
 import { docsSource } from "@/lib/source";
+import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/layout";
+import { mdxComponents } from "@/modules/docs/mdx-components";
+import { TOC, TOCProvider } from "@/modules/docs/toc";
 
 export const Route = createFileRoute("/docs/$")({
 	component: DocsPage,
@@ -30,12 +40,55 @@ const serverLoader = createServerFn({ method: "GET" })
 
 const clientLoader = browserCollections.docs.createClientLoader({
 	component({ toc, frontmatter, default: MDX }) {
+		const hasToc = toc?.length;
 		return (
-			<article className="prose dark:prose-invert max-w-none">
-				<h1>{frontmatter.title}</h1>
-				{frontmatter.description && <p className="lead">{frontmatter.description}</p>}
-				<MDX />
-			</article>
+			<TOCProvider toc={toc}>
+				<PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-20 xl:max-w-5xl">
+					<div data-page-header="" className="space-y-3 border-b pb-8">
+						<div className="flex items-center justify-between">
+							<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
+							<div className="flex items-center gap-2">
+								{/* <DocsCopyPage page={rawContent} url={page.url} />
+							<DocsPager neighbours={neighbours} /> */}
+							</div>
+						</div>
+						<PageHeaderDescription className="text-wrap">{frontmatter.description}</PageHeaderDescription>
+						{frontmatter.links?.length && (
+							<div className="mt-2 flex items-center gap-2">
+								{frontmatter.links.map((link) => {
+									const icon = getIcon(link.href);
+									return (
+										<LinkButton
+											key={link.href}
+											href={link.href}
+											target="_blank"
+											size="sm"
+											className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
+										>
+											{icon}
+											{link.label}
+											<ExternalLinkIcon />
+										</LinkButton>
+									);
+								})}
+							</div>
+						)}
+					</div>
+					<div
+						className={cn(
+							"not-has-data-page-tabs:mt-12 has-data-page-tabs:**:data-outer-toc:hidden",
+							hasToc &&
+								"not-has-data-page-tabs:xl:grid not-has-data-page-tabs:xl:grid-cols-[1fr_180px] not-has-data-page-tabs:xl:gap-10",
+						)}
+					>
+						<div>
+							<MDX components={mdxComponents} />
+						</div>
+						{hasToc && <TOC data-outer-toc="" />}
+					</div>
+					{/* {lastModified && <PageLastUpdate date={lastModified} className="mt-12" />} */}
+				</PageLayout>
+			</TOCProvider>
 		);
 	},
 });
@@ -45,8 +98,15 @@ function DocsPage() {
 	const Content = clientLoader.getComponent(data.path);
 
 	return (
-		<div className="container py-10">
+		<div>
 			<Content />
 		</div>
 	);
 }
+
+const getIcon = (url: string) => {
+	if (url.includes("adobe")) return <AdobeIcon />;
+	if (url.includes("github")) return <GitHubIcon />;
+	if (url.includes("shadcn")) return <ShadcnIcon />;
+	return null;
+};
