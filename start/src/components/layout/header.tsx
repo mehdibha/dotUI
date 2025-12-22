@@ -1,7 +1,8 @@
+import { Link } from "@tanstack/react-router";
+
 import { GitHubIcon } from "@dotui/registry/components/icons/github";
 import { cn } from "@dotui/registry/lib/utils";
 import { LinkButton } from "@dotui/registry/ui/button";
-import { Link } from "@tanstack/react-router";
 
 import { Logo } from "@/components/layout/logo";
 import { navItems, siteConfig } from "@/config/site";
@@ -15,7 +16,7 @@ export function Header({ className }: { className?: string }) {
 					<Logo />
 					<nav className="flex items-center gap-3 text-sm max-md:hidden">
 						{navItems.map((item) => (
-							<Link key={item.url} to={item.url} className="px-0.5 text-fg-muted transition-colors hover:text-fg">
+							<Link key={item.name} {...item.href} className="px-0.5 text-fg-muted transition-colors hover:text-fg">
 								{item.name}
 							</Link>
 						))}

@@ -7,8 +7,10 @@ import {
 	Outlet,
 	Scripts,
 	type ToOptions,
+	useRouter,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { RouterProvider } from "react-aria-components";
 import type { QueryClient } from "@tanstack/react-query";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
@@ -32,13 +34,32 @@ export const Route = createRootRouteWithContext<{
 	component: RootComponent,
 });
 
+declare module "react-aria-components" {
+	interface RouterConfig {
+		href: ToOptions;
+		routerOptions: Omit<NavigateOptions, keyof ToOptions>;
+	}
+}
+
 function RootComponent() {
+	const router = useRouter();
 	return (
-		<ThemeProvider>
-			<RootDocument>
-				<Outlet />
-			</RootDocument>
-		</ThemeProvider>
+		<RouterProvider
+			navigate={(href, opts) => {
+				if (typeof href === "string") return;
+				router.navigate({ ...href, ...opts });
+			}}
+			useHref={(href) => {
+				if (typeof href === "string") return href;
+				return router.buildLocation(href).href;
+			}}
+		>
+			<ThemeProvider>
+				<RootDocument>
+					<Outlet />
+				</RootDocument>
+			</ThemeProvider>
+		</RouterProvider>
 	);
 }
 

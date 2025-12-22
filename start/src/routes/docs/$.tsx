@@ -45,15 +45,15 @@ const serverLoader = createServerFn({ method: "GET" })
 			pageTree: await docsSource.serializePageTree(pageTree),
 			rawContent,
 			neighbours: {
-				previous: previous ? { name: String(previous.name), url: previous.url } : undefined,
-				next: next ? { name: String(next.name), url: next.url } : undefined,
+				previous: previous ? { name: String(previous.name), path: previous.url.replace(/^\/docs\//, "") } : undefined,
+				next: next ? { name: String(next.name), path: next.url.replace(/^\/docs\//, "") } : undefined,
 			},
 		};
 	});
 
 type SerializedNeighbours = {
-	previous?: { name: string; url: string };
-	next?: { name: string; url: string };
+	previous?: { name: string; path: string };
+	next?: { name: string; path: string };
 };
 
 const clientLoader = browserCollections.docs.createClientLoader({

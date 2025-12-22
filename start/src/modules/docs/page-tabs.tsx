@@ -1,14 +1,12 @@
 "use client";
 
-import { createLink, Link, useSearch } from "@tanstack/react-router";
+import { useSearch } from "@tanstack/react-router";
 import { AlignLeftIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 import { TOCItems, TOCScrollArea, useTOCItems } from "./toc";
-
-const TabLink = createLink(Tab);
 
 type TabValue = "overview" | "examples";
 
@@ -17,24 +15,21 @@ export function PageTabs({ children }: { children: React.ReactNode }) {
 	const tab: TabValue = search.tab === "examples" ? "examples" : "overview";
 
 	return (
-		<>
-			<Link to="." search={{ tab: "examples" }} >Test link</Link>
-			<Tabs
-				data-page-tabs
-				selectedKey={tab}
-				className="**:data-page-tab-panel:mt-2 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:md:mt-6"
-			>
-				<TabList className="*:px-4 *:pb-3">
-					<TabLink id="overview" to="." search={{ tab: undefined }}>
-						Overview
-					</TabLink>
-					<TabLink id="examples" to="." search={{ tab: "examples" }}>
-						Examples
-					</TabLink>
-				</TabList>
-				{children}
-			</Tabs>
-		</>
+		<Tabs
+			data-page-tabs
+			selectedKey={tab}
+			className="**:data-page-tab-panel:mt-2 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:md:mt-6"
+		>
+			<TabList className="*:px-4 *:pb-3">
+				<Tab id="overview" href={{ to: ".", search: { tab: undefined } }}>
+					Overview
+				</Tab>
+				<Tab id="examples" href={{ to: ".", search: { tab: "examples" } }}>
+					Examples
+				</Tab>
+			</TabList>
+			{children}
+		</Tabs>
 	);
 }
 

@@ -5,8 +5,8 @@ import { Group } from "@dotui/registry/ui/group";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 type Neighbours = {
-	previous?: { name: string; url: string };
-	next?: { name: string; url: string };
+	previous?: { name: string; path: string };
+	next?: { name: string; path: string };
 };
 
 export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
@@ -15,13 +15,23 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 	return (
 		<Group>
 			<Tooltip>
-				<LinkButton aria-label="Go to previous page" size="sm" isDisabled={!previous} to={previous?.url}>
+				<LinkButton
+					aria-label="Go to previous page"
+					size="sm"
+					isDisabled={!previous}
+					href={previous ? { to: "/docs/$", params: { _splat: previous.path } } : undefined}
+				>
 					<ChevronLeftIcon />
 				</LinkButton>
 				<TooltipContent>{previous?.name}</TooltipContent>
 			</Tooltip>
 			<Tooltip>
-				<LinkButton aria-label="Go to next page" size="sm" isDisabled={!next} to={next?.url}>
+				<LinkButton
+					aria-label="Go to next page"
+					size="sm"
+					isDisabled={!next}
+					href={next ? { to: "/docs/$", params: { _splat: next.path } } : undefined}
+				>
 					<ChevronRightIcon />
 				</LinkButton>
 				<TooltipContent>{next?.name}</TooltipContent>
