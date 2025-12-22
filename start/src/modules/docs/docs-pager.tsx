@@ -15,13 +15,13 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 	return (
 		<Group>
 			<Tooltip>
-				<LinkButton aria-label="Go to previous page" size="sm" isDisabled={!previous} href={previous?.url}>
+				<LinkButton aria-label="Go to previous page" size="sm" isDisabled={!previous} to={previous?.url}>
 					<ChevronLeftIcon />
 				</LinkButton>
 				<TooltipContent>{previous?.name}</TooltipContent>
 			</Tooltip>
 			<Tooltip>
-				<LinkButton aria-label="Go to next page" size="sm" isDisabled={!next} href={next?.url}>
+				<LinkButton aria-label="Go to next page" size="sm" isDisabled={!next} to={next?.url}>
 					<ChevronRightIcon />
 				</LinkButton>
 				<TooltipContent>{next?.name}</TooltipContent>
