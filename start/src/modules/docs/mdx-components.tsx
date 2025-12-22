@@ -3,7 +3,7 @@ import type { MDXComponents } from "mdx/types";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Alert, type AlertProps } from "@dotui/registry/ui/alert";
-import { Link, type LinkProps } from "@dotui/registry/ui/link";
+import { Link } from "@dotui/registry/ui/link";
 
 import { CodeBlock, Pre } from "./code-block";
 import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "./code-block-tabs";
@@ -40,16 +40,19 @@ export const mdxComponents: MDXComponents = {
 		<h6 className={cn("mt-8 scroll-m-20 font-semibold text-base tracking-tight", className)} {...props} />
 	),
 	p: ({ className, ...props }) => <p className={cn("not-first:mt-4 text-base leading-7", className)} {...props} />,
-	a: ({ className, children, ...props }: LinkProps & { children?: React.ReactNode }) => (
-		<Link target={props.href?.startsWith("/") ? "_self" : "_blank"} className={cn("inline", className)} {...props}>
-			{children}
-			{!props.href?.startsWith("/") && (
-				<span className="inline-flex">
-					<ArrowUpRightIcon className="size-4" />
-				</span>
-			)}
-		</Link>
-	),
+	a: ({ className, children, href, ...props }): React.ComponentProps<"a"> => {
+		const isInternal = href.startsWith("/");
+		return (
+			<Link href={href} target={isInternal ? "_self" : "_blank"} className={cn("inline", className)} {...props}>
+				{children}
+				{!isInternal && (
+					<span className="inline-flex">
+						<ArrowUpRightIcon className="size-4" />
+					</span>
+				)}
+			</Link>
+		);
+	},
 	ul: ({ className, ...props }) => <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />,
 	ol: ({ className, ...props }) => <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />,
 	li: ({ className, ...props }) => <li className={cn("mt-2", className)} {...props} />,

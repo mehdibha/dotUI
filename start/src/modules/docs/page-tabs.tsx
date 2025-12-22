@@ -1,6 +1,6 @@
 "use client";
 
-import { useNavigate, useSearch } from "@tanstack/react-router";
+import { createLink, useSearch } from "@tanstack/react-router";
 import { AlignLeftIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
@@ -8,39 +8,27 @@ import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
 
 import { TOCItems, TOCScrollArea, useTOCItems } from "./toc";
 
+const TabLink = createLink(Tab);
+
 type TabValue = "overview" | "examples";
 
-function useTabParam() {
-	const search = useSearch({ strict: false }) as { tab?: string };
-	const navigate = useNavigate();
-
-	const tab: TabValue = search.tab === "examples" ? "examples" : "overview";
-
-	const setTab = (value: TabValue) => {
-		const newSearch = value === "overview" ? {} : { tab: value };
-		void navigate({
-			// @ts-expect-error - strict search typing
-			search: newSearch,
-			replace: true,
-		});
-	};
-
-	return [tab, setTab] as const;
-}
-
 export function PageTabs({ children }: { children: React.ReactNode }) {
-	const [tab, setTab] = useTabParam();
+	const search = useSearch({ strict: false }) as { tab?: string };
+	const tab: TabValue = search.tab === "examples" ? "examples" : "overview";
 
 	return (
 		<Tabs
 			data-page-tabs
 			selectedKey={tab}
-			onSelectionChange={(key) => setTab(key as TabValue)}
 			className="**:data-page-tab-panel:mt-2 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:md:mt-6"
 		>
 			<TabList className="*:px-4 *:pb-3">
-				<Tab id="overview">Overview</Tab>
-				<Tab id="examples">Examples</Tab>
+				<TabLink id="overview" to="." search={{ tab: undefined }}>
+					Overview
+				</TabLink>
+				<TabLink id="examples" to="." search={{ tab: "examples" }}>
+					Examples
+				</TabLink>
 			</TabList>
 			{children}
 		</Tabs>
