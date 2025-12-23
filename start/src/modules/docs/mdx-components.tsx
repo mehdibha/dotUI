@@ -7,17 +7,10 @@ import { Link } from "@dotui/registry/ui/link";
 
 import { CodeBlock, Pre } from "./code-block";
 import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "./code-block-tabs";
+import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "./demo";
+import { Example, type ExampleProps } from "./example";
 import { PageTabPanel, PageTabs } from "./page-tabs";
-import {
-	Demo,
-	type DemoProps,
-	Example,
-	Examples,
-	InteractiveDemo,
-	type InteractiveDemoProps,
-	Reference,
-	type ReferenceProps,
-} from "./stubs";
+import { Examples, InteractiveDemo, type InteractiveDemoProps, Reference, type ReferenceProps } from "./stubs";
 
 export const mdxComponents: MDXComponents = {
 	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 font-bold text-4xl", className)} {...props} />,
@@ -63,11 +56,16 @@ export const mdxComponents: MDXComponents = {
 		<img className={cn("mx-auto max-w-md rounded-md border", className)} alt={alt} src={src} {...props} />
 	),
 	hr: (props) => <hr className="my-4 md:my-8" {...props} />,
-	pre: ({ className, ...props }) => (
-		<CodeBlock className={cn("-mx-px mt-6", className)} {...props}>
-			<Pre>{props.children}</Pre>
-		</CodeBlock>
-	),
+	pre: ({ className, "data-raw": dataRaw, ...props }) => {
+		if (dataRaw) {
+			return props.children;
+		}
+		return (
+			<CodeBlock className={cn("-mx-px mt-6", className)} {...props}>
+				<Pre>{props.children}</Pre>
+			</CodeBlock>
+		);
+	},
 	code: (props) => (
 		<code
 			className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-card not-in-[pre]:px-1.25 not-in-[pre]:py-0.75 not-in-[pre]:font-normal not-in-[pre]:text-[0.9375rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
@@ -83,7 +81,11 @@ export const mdxComponents: MDXComponents = {
 	CodeBlockTabsTrigger,
 	CodeBlockTab,
 	Demo: ({ className, ...props }: DemoProps) => <Demo className={cn("not-first:mt-4", className)} {...props} />,
-	Example,
+	DemoCode,
+	DemoCodePreview,
+	Example: ({ className, ...props }: ExampleProps) => (
+		<Example className={cn("not-first:mt-4", className)} {...props} />
+	),
 	Examples,
 	InteractiveDemo: ({ className, ...props }: InteractiveDemoProps) => (
 		<InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />

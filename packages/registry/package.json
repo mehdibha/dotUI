@@ -80,7 +80,6 @@
 		"@react-aria/utils": "^3.31.0",
 		"@react-types/shared": "^3.26.0",
 		"@tabler/icons-react": "^3.35.0",
-		"@tanstack/react-router": "^1.141.8",
 		"react-error-boundary": "^6.0.0",
 		"tailwindcss-autocontrast": "workspace:*",
 		"tailwindcss-react-aria-components": "^2.0.1",

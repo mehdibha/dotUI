@@ -2,6 +2,8 @@ import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins";
 import { defineConfig, defineDocs, frontmatterSchema, metaSchema } from "fumadocs-mdx/config";
 import { z } from "zod";
 
+import rehypeTransform from "./src/modules/docs/mdx-plugins/rehype-transform";
+
 export const docs = defineDocs({
 	dir: "content/docs",
 	docs: {
@@ -58,5 +60,6 @@ export default defineConfig({
 			},
 			tab: true,
 		},
+		rehypePlugins: [rehypeTransform],
 	},
 });

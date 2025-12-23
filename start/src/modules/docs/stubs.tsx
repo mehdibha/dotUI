@@ -1,6 +1,6 @@
 /**
  * Stub components for docs module.
- * TODO: Implement properly when styles module is ready.
+ * TODO: Implement properly when dependencies are ready.
  */
 
 import type React from "react";
@@ -8,28 +8,9 @@ import type React from "react";
 import { cn } from "@dotui/registry/lib/utils";
 
 // =============================================================================
-// DEMO (stub)
+// InteractiveDemo (stub) - depends on References migration
 // =============================================================================
 
-// Demo - depends on styles module
-export interface DemoProps extends React.ComponentProps<"div"> {
-	component: string;
-	variant?: string;
-}
-
-export function Demo({ className, component, variant, ...props }: DemoProps) {
-	return (
-		<div className={cn("rounded-lg border bg-muted/50 p-8 text-center text-fg-muted", className)} {...props}>
-			<p className="text-sm">
-				Demo: {component}
-				{variant ? ` (${variant})` : ""}
-			</p>
-			<p className="mt-1 text-xs">Coming soon</p>
-		</div>
-	);
-}
-
-// InteractiveDemo - depends on styles module
 export interface InteractiveDemoProps extends React.ComponentProps<"div"> {
 	component: string;
 }
@@ -43,23 +24,10 @@ export function InteractiveDemo({ className, component, ...props }: InteractiveD
 	);
 }
 
-// Example - single example display
-export interface ExampleProps extends React.ComponentProps<"div"> {
-	component: string;
-	name: string;
-}
+// =============================================================================
+// Examples (stub) - grid of examples
+// =============================================================================
 
-export function Example({ className, component, name, ...props }: ExampleProps) {
-	return (
-		<div className={cn("rounded-lg border bg-muted/50 p-4 text-center text-fg-muted", className)} {...props}>
-			<p className="text-sm">
-				Example: {component}/{name}
-			</p>
-		</div>
-	);
-}
-
-// Examples - grid of examples
 export interface ExamplesProps extends React.ComponentProps<"div"> {
 	component: string;
 }
@@ -72,7 +40,10 @@ export function Examples({ className, component, ...props }: ExamplesProps) {
 	);
 }
 
-// Reference - API props table
+// =============================================================================
+// Reference (stub) - API props table
+// =============================================================================
+
 export interface ReferenceProps {
 	name: string;
 	className?: string;

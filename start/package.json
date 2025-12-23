@@ -42,8 +42,11 @@
 		"react-aria": "^3.44.0",
 		"react-aria-components": "^1.13.0",
 		"react-dom": "^19.2.1",
+		"shiki": "^3.15.0",
 		"superjson": "2.2.3",
 		"tailwindcss": "^4.1.14",
+		"ts-morph": "^25.0.1",
+		"unist-util-visit": "^5.0.0",
 		"vite-tsconfig-paths": "^5.1.4",
 		"zod": "^4.2.1"
 	},
@@ -51,13 +54,17 @@
 		"@dotui/biome-config": "workspace:*",
 		"@dotui/ts-config": "workspace:*",
 		"@tanstack/devtools-vite": "^0.3.11",
+		"@types/hast": "^3.0.4",
+		"@types/mdast": "^4.0.4",
 		"@types/mdx": "^2.0.13",
 		"@types/node": "^22.15.3",
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.1",
 		"@vitejs/plugin-react": "^5.0.4",
 		"dotenv-cli": "^8.0.0",
+		"mdast-util-mdx-jsx": "^3.2.0",
 		"typescript": "^5.8.3",
+		"unified": "^11.0.5",
 		"vite": "^7.1.7"
 	}
 }
