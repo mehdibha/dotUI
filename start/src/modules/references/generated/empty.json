@@ -1,0 +1,6 @@
+{
+	"name": "EmptyProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {}
+}

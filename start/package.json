@@ -9,7 +9,8 @@
 		"preview": "pnpm with-env vite preview",
 		"format": "biome format --write",
 		"lint": "biome lint --write",
-		"check": "biome check"
+		"check": "biome check",
+		"build:references": "tsx scripts/api-docs-builder/src/index.ts"
 	},
 	"dependencies": {
 		"@dotui/api": "workspace:*",
@@ -54,6 +55,11 @@
 		"@dotui/biome-config": "workspace:*",
 		"@dotui/ts-config": "workspace:*",
 		"@tanstack/devtools-vite": "^0.3.11",
+		"es-toolkit": "^1.32.0",
+		"globby": "^14.0.2",
+		"tsx": "^4.19.4",
+		"typescript-api-extractor": "^0.2.0",
+		"yargs": "^17.7.2",
 		"@types/hast": "^3.0.4",
 		"@types/mdast": "^4.0.4",
 		"@types/mdx": "^2.0.13",

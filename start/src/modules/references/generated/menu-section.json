@@ -1,0 +1,987 @@
+{
+	"name": "MenuSectionProps",
+	"description": "A MenuSection represents a section within a Menu.",
+	"props": {
+		"id": {
+			"type": "Key",
+			"detailedType": "Key | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Key"
+			},
+			"description": "The unique id of the section."
+		},
+		"value": {
+			"type": "T",
+			"detailedType": "T | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "T"
+			},
+			"description": "The object value that this section represents. When using dynamic collections, this is set automatically."
+		},
+		"children": {
+			"type": "ReactNode | ((item: T) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "number"
+					},
+					{
+						"type": "bigint"
+					},
+					{
+						"type": "identifier",
+						"name": "ReactElement"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "ReactNode"
+							}
+						]
+					},
+					{
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+						"name": "ReactPortal"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+							"name": "Promise"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "AwaitedReactNode"
+							}
+						]
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "item",
+								"value": {
+									"type": "typeParameter",
+									"name": "T",
+									"constraint": null,
+									"default": null
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactElement"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Static child items or a function to render children."
+		},
+		"dependencies": {
+			"type": "readonly any[]",
+			"detailedType": "readonly any[] | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "array",
+						"elementType": {
+							"type": "any"
+						}
+					}
+				]
+			},
+			"description": "Values that should invalidate the item cache when using dynamic collections."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "An accessibility label for the section."
+		},
+		"items": {
+			"type": "Iterable<T>",
+			"detailedType": "Iterable<T> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": null,
+								"default": null
+							}
+						]
+					}
+				]
+			},
+			"description": "Item objects in the section."
+		},
+		"className": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+		},
+		"style": {
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CSSProperties"
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+		},
+		"selectionMode": {
+			"type": "SelectionMode",
+			"detailedType": "SelectionMode | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "SelectionMode"
+			},
+			"description": "The type of selection that is allowed in the collection."
+		},
+		"disallowEmptySelection": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the collection allows empty selection."
+		},
+		"selectedKeys": {
+			"type": "Iterable<Key> | \"all\"",
+			"detailedType": "Iterable<Key> | \"all\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "all"
+							}
+						]
+					}
+				]
+			},
+			"description": "The currently selected keys in the collection (controlled)."
+		},
+		"defaultSelectedKeys": {
+			"type": "Iterable<Key> | \"all\"",
+			"detailedType": "Iterable<Key> | \"all\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "all"
+							}
+						]
+					}
+				]
+			},
+			"description": "The initial selected keys in the collection (uncontrolled)."
+		},
+		"onSelectionChange": {
+			"type": "((keys: Selection) => void)",
+			"detailedType": "((keys: Selection) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "keys",
+						"value": {
+							"type": "link",
+							"id": "Selection",
+							"name": "Selection"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the selection changes."
+		},
+		"disabledKeys": {
+			"type": "Iterable<Key>",
+			"detailedType": "Iterable<Key> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					}
+				]
+			},
+			"description": "The currently disabled keys in the collection (controlled)."
+		}
+	},
+	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+			"name": "Iterator",
+			"extends": [],
+			"properties": {
+				"next": {
+					"type": "method",
+					"name": "next",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "__0",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "tuple",
+											"elements": []
+										},
+										{
+											"type": "tuple",
+											"elements": [
+												{
+													"type": "identifier",
+													"name": "any"
+												}
+											]
+										}
+									]
+								},
+								"optional": false,
+								"rest": true
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "identifier",
+								"name": "IteratorResult"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "ReactNode"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"return": {
+					"type": "property",
+					"name": "return",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "value",
+										"value": {
+											"type": "identifier",
+											"name": "any"
+										},
+										"optional": true,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "IteratorResult<ReactNode, any>"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"throw": {
+					"type": "property",
+					"name": "throw",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "e",
+										"value": {
+											"type": "identifier",
+											"name": "any"
+										},
+										"optional": true,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "IteratorResult<ReactNode, any>"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+			"name": "Iterable",
+			"extends": [],
+			"properties": {
+				"__@iterator@111": {
+					"type": "method",
+					"name": "__@iterator@111",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+								"name": "Iterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "ReactNode"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+			"name": "ReactPortal",
+			"extends": [
+				{
+					"type": "identifier",
+					"name": "ReactElement"
+				}
+			],
+			"properties": {
+				"children": {
+					"type": "property",
+					"name": "children",
+					"value": {
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "props",
+										"value": {
+											"type": "any"
+										},
+										"optional": false,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "undefined"
+										},
+										{
+											"type": "identifier",
+											"name": "null"
+										},
+										{
+											"type": "identifier",
+											"name": "string"
+										},
+										{
+											"type": "identifier",
+											"name": "number"
+										},
+										{
+											"type": "identifier",
+											"name": "bigint"
+										},
+										{
+											"type": "identifier",
+											"name": "false"
+										},
+										{
+											"type": "identifier",
+											"name": "true"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
+										},
+										{
+											"type": "identifier",
+											"name": "Iterable<ReactNode>"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactPortal"
+										},
+										{
+											"type": "identifier",
+											"name": "Promise<AwaitedReactNode>"
+										},
+										{
+											"type": "identifier",
+											"name": "Promise<ReactNode>"
+										}
+									]
+								},
+								"typeParameters": []
+							},
+							{
+								"type": "identifier",
+								"name": "new (props: any, context: any) => Component<any, any, any>"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"props": {
+					"type": "property",
+					"name": "props",
+					"value": {
+						"type": "unknown"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+			"name": "Promise",
+			"extends": [],
+			"properties": {
+				"then": {
+					"type": "method",
+					"name": "then",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "onfulfilled",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "function",
+											"parameters": [
+												{
+													"type": "parameter",
+													"name": "value",
+													"value": {
+														"type": "identifier",
+														"name": "AwaitedReactNode"
+													},
+													"optional": false,
+													"rest": false
+												}
+											],
+											"return": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "identifier",
+														"name": "TResult1"
+													},
+													{
+														"type": "identifier",
+														"name": "PromiseLike<TResult1>"
+													}
+												]
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "onrejected",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "function",
+											"parameters": [
+												{
+													"type": "parameter",
+													"name": "reason",
+													"value": {
+														"type": "any"
+													},
+													"optional": false,
+													"rest": false
+												}
+											],
+											"return": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "identifier",
+														"name": "TResult2"
+													},
+													{
+														"type": "identifier",
+														"name": "PromiseLike<TResult2>"
+													}
+												]
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"name": "Promise"
+							},
+							"typeParameters": [
+								{
+									"type": "union",
+									"elements": [
+										{
+											"type": "typeParameter",
+											"name": "TResult1",
+											"constraint": null,
+											"default": {
+												"type": "identifier",
+												"name": "AwaitedReactNode"
+											}
+										},
+										{
+											"type": "typeParameter",
+											"name": "TResult2",
+											"constraint": null,
+											"default": {
+												"type": "identifier",
+												"name": "never"
+											}
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "TResult1",
+								"constraint": null,
+								"default": {
+									"type": "identifier",
+									"name": "AwaitedReactNode"
+								}
+							},
+							{
+								"type": "typeParameter",
+								"name": "TResult2",
+								"constraint": null,
+								"default": {
+									"type": "never"
+								}
+							}
+						]
+					},
+					"optional": false,
+					"description": "Attaches callbacks for the resolution and/or rejection of the Promise."
+				},
+				"catch": {
+					"type": "method",
+					"name": "catch",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "onrejected",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "function",
+											"parameters": [
+												{
+													"type": "parameter",
+													"name": "reason",
+													"value": {
+														"type": "any"
+													},
+													"optional": false,
+													"rest": false
+												}
+											],
+											"return": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "identifier",
+														"name": "TResult"
+													},
+													{
+														"type": "identifier",
+														"name": "PromiseLike<TResult>"
+													}
+												]
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"name": "Promise"
+							},
+							"typeParameters": [
+								{
+									"type": "union",
+									"elements": [
+										{
+											"type": "boolean"
+										},
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "string"
+										},
+										{
+											"type": "number"
+										},
+										{
+											"type": "bigint"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+											"name": "ReactPortal"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactElement"
+										},
+										{
+											"type": "application",
+											"base": {
+												"type": "link",
+												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+												"name": "Iterable"
+											},
+											"typeParameters": [
+												{
+													"type": "identifier",
+													"name": "ReactNode"
+												}
+											]
+										},
+										{
+											"type": "typeParameter",
+											"name": "TResult",
+											"constraint": null,
+											"default": {
+												"type": "identifier",
+												"name": "never"
+											}
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "TResult",
+								"constraint": null,
+								"default": {
+									"type": "never"
+								}
+							}
+						]
+					},
+					"optional": false,
+					"description": "Attaches a callback for only the rejection of the Promise."
+				},
+				"finally": {
+					"type": "method",
+					"name": "finally",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "onfinally",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "function",
+											"parameters": [],
+											"return": {
+												"type": "void"
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"name": "Promise"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "AwaitedReactNode"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
+				},
+				"__@toStringTag@114": {
+					"type": "property",
+					"name": "__@toStringTag@114",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": "Represents the completion of an asynchronous operation"
+		}
+	}
+}

@@ -1,0 +1,600 @@
+{
+	"name": "TableContainerProps",
+	"description": "Missing description.",
+	"props": {
+		"resizable": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the table columns are resizable."
+		},
+		"onResizeStart": {
+			"type": "((widths: Map<Key, ColumnSize>) => void)",
+			"detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "widths",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "link",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+										"name": "Map"
+									},
+									"typeParameters": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "ColumnSize"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when a user starts a column resize."
+		},
+		"onResize": {
+			"type": "((widths: Map<Key, ColumnSize>) => void)",
+			"detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "widths",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "link",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+										"name": "Map"
+									},
+									"typeParameters": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "ColumnSize"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when a user performs a column resize.\nCan be used with the width property on columns to put the column widths into\na controlled state."
+		},
+		"onResizeEnd": {
+			"type": "((widths: Map<Key, ColumnSize>) => void)",
+			"detailedType": "((widths: Map<Key, ColumnSize>) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "widths",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "link",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+										"name": "Map"
+									},
+									"typeParameters": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "ColumnSize"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called after a user performs a column resize.\nCan be used to store the widths of columns for another future session."
+		},
+		"children": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The children of the component."
+		},
+		"className": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+		},
+		"style": {
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CSSProperties"
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		}
+	},
+	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+			"name": "Map",
+			"extends": [],
+			"properties": {
+				"clear": {
+					"type": "method",
+					"name": "clear",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"delete": {
+					"type": "method",
+					"name": "delete",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "key",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "boolean"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"forEach": {
+					"type": "method",
+					"name": "forEach",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "callbackfn",
+								"value": {
+									"type": "function",
+									"parameters": [
+										{
+											"type": "parameter",
+											"name": "value",
+											"value": {
+												"type": "identifier",
+												"name": "ColumnSize"
+											},
+											"optional": false,
+											"rest": false
+										},
+										{
+											"type": "parameter",
+											"name": "key",
+											"value": {
+												"type": "identifier",
+												"name": "Key"
+											},
+											"optional": false,
+											"rest": false
+										},
+										{
+											"type": "parameter",
+											"name": "map",
+											"value": {
+												"type": "application",
+												"base": {
+													"type": "link",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+													"name": "Map"
+												},
+												"typeParameters": [
+													{
+														"type": "identifier",
+														"name": "Key"
+													},
+													{
+														"type": "identifier",
+														"name": "ColumnSize"
+													}
+												]
+											},
+											"optional": false,
+											"rest": false
+										}
+									],
+									"return": {
+										"type": "void"
+									},
+									"typeParameters": []
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "thisArg",
+								"value": {
+									"type": "any"
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Executes a provided function once per each key/value pair in the Map, in insertion order."
+				},
+				"get": {
+					"type": "method",
+					"name": "get",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "key",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "undefined"
+								},
+								{
+									"type": "number"
+								},
+								{
+									"type": "template",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "number"
+										}
+									]
+								},
+								{
+									"type": "template",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "number"
+										},
+										{
+											"type": "stringLiteral",
+											"value": "%"
+										}
+									]
+								},
+								{
+									"type": "template",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "number"
+										},
+										{
+											"type": "stringLiteral",
+											"value": "fr"
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns a specified element from the Map object. If the value that is associated to the provided key is an object, then you will get a reference to that object and any change made to that object will effectively modify it inside the Map."
+				},
+				"has": {
+					"type": "method",
+					"name": "has",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "key",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "boolean"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"set": {
+					"type": "method",
+					"name": "set",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "key",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "identifier",
+									"name": "ColumnSize"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+								"name": "Map"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								},
+								{
+									"type": "identifier",
+									"name": "ColumnSize"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Adds a new element with a specified key and value to the Map. If an element with the same key already exists, the element will be updated."
+				},
+				"size": {
+					"type": "property",
+					"name": "size",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"entries": {
+					"type": "method",
+					"name": "entries",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"name": "MapIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "tuple",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "ColumnSize"
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of key, value pairs for every entry in the map."
+				},
+				"keys": {
+					"type": "method",
+					"name": "keys",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"name": "MapIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of keys in the map"
+				},
+				"values": {
+					"type": "method",
+					"name": "values",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"name": "MapIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "ColumnSize"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of values in the map"
+				},
+				"__@iterator@111": {
+					"type": "method",
+					"name": "__@iterator@111",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"name": "MapIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "tuple",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "ColumnSize"
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of entries in the map."
+				},
+				"__@toStringTag@114": {
+					"type": "property",
+					"name": "__@toStringTag@114",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		}
+	}
+}

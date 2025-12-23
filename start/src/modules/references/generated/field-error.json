@@ -1,0 +1,156 @@
+{
+	"name": "FieldErrorProps",
+	"description": "A FieldError displays validation errors for a form field.",
+	"props": {
+		"children": {
+			"type": "ReactNode | (values: FieldErrorRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "FieldErrorRenderProps",
+									"name": "FieldErrorRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"className": {
+			"type": "string | (values: FieldErrorRenderProps) => string",
+			"detailedType": "string | (values: FieldErrorRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "FieldErrorRenderProps",
+									"name": "FieldErrorRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+		},
+		"style": {
+			"type": "CSSProperties | (values: FieldErrorRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: FieldErrorRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "FieldErrorRenderProps",
+									"name": "FieldErrorRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		}
+	},
+	"typeLinks": {
+		"FieldErrorRenderProps": {
+			"type": "interface",
+			"name": "FieldErrorRenderProps",
+			"properties": {
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the input value is invalid."
+				},
+				"validationErrors": {
+					"type": "property",
+					"name": "validationErrors",
+					"value": {
+						"type": "identifier",
+						"name": "string[]"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The current error messages for the input if it is invalid, otherwise an empty array."
+				},
+				"validationDetails": {
+					"type": "property",
+					"name": "validationDetails",
+					"value": {
+						"type": "identifier",
+						"name": "ValidityState"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The native validation details for the input."
+				}
+			}
+		}
+	}
+}

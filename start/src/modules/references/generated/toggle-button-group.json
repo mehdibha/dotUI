@@ -1,0 +1,859 @@
+{
+	"name": "ToggleButtonGroupProps",
+	"description": "A toggle button group allows a user to toggle multiple options, with single or multiple selection.",
+	"props": {
+		"variant": {
+			"type": "\"default\" | \"quiet\"",
+			"detailedType": "\"default\" | \"quiet\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "default"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "quiet"
+					}
+				]
+			},
+			"description": "The visual style of the toggle buttons.",
+			"default": "'default'"
+		},
+		"size": {
+			"type": "\"sm\" | \"md\" | \"lg\"",
+			"detailedType": "\"sm\" | \"md\" | \"lg\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "md"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "lg"
+					}
+				]
+			},
+			"description": "The size of the toggle buttons.",
+			"default": "'md'"
+		},
+		"orientation": {
+			"type": "Orientation",
+			"detailedType": "Orientation | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Orientation"
+			},
+			"description": "The orientation of the the toggle button group.",
+			"default": "'horizontal'"
+		},
+		"selectionMode": {
+			"type": "\"multiple\" | \"single\"",
+			"detailedType": "\"multiple\" | \"single\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "multiple"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "single"
+					}
+				]
+			},
+			"description": "Whether single or multiple selection is enabled.",
+			"default": "'single'"
+		},
+		"disallowEmptySelection": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the collection allows empty selection."
+		},
+		"selectedKeys": {
+			"type": "Iterable<Key>",
+			"detailedType": "Iterable<Key> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					}
+				]
+			},
+			"description": "The currently selected keys in the collection (controlled)."
+		},
+		"defaultSelectedKeys": {
+			"type": "Iterable<Key>",
+			"detailedType": "Iterable<Key> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					}
+				]
+			},
+			"description": "The initial selected keys in the collection (uncontrolled)."
+		},
+		"onSelectionChange": {
+			"type": "((keys: Set<Key>) => void)",
+			"detailedType": "((keys: Set<Key>) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "keys",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "link",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+										"name": "Set"
+									},
+									"typeParameters": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the selection changes."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether all items are disabled."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"children": {
+			"type": "ReactNode | (values: ToggleButtonGroupRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ToggleButtonGroupRenderProps",
+									"name": "ToggleButtonGroupRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"className": {
+			"type": "string | (values: ToggleButtonGroupRenderProps) => string",
+			"detailedType": "string | (values: ToggleButtonGroupRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ToggleButtonGroupRenderProps",
+									"name": "ToggleButtonGroupRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+		},
+		"style": {
+			"type": "CSSProperties | (values: ToggleButtonGroupRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: ToggleButtonGroupRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ToggleButtonGroupRenderProps",
+									"name": "ToggleButtonGroupRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"slot": {
+			"type": "string | null",
+			"detailedType": "string | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		}
+	},
+	"renderProps": {
+		"isDisabled": {
+			"selector": "[data-disabled]",
+			"description": "Whether the toggle button group is disabled."
+		}
+	},
+	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+			"name": "Iterator",
+			"extends": [],
+			"properties": {
+				"next": {
+					"type": "method",
+					"name": "next",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "__0",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "tuple",
+											"elements": []
+										},
+										{
+											"type": "tuple",
+											"elements": [
+												{
+													"type": "identifier",
+													"name": "any"
+												}
+											]
+										}
+									]
+								},
+								"optional": false,
+								"rest": true
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "identifier",
+								"name": "IteratorResult"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"return": {
+					"type": "property",
+					"name": "return",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "value",
+										"value": {
+											"type": "identifier",
+											"name": "any"
+										},
+										"optional": true,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "IteratorResult<Key, any>"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"throw": {
+					"type": "property",
+					"name": "throw",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "e",
+										"value": {
+											"type": "identifier",
+											"name": "any"
+										},
+										"optional": true,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "IteratorResult<Key, any>"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+			"name": "Iterable",
+			"extends": [],
+			"properties": {
+				"__@iterator@111": {
+					"type": "method",
+					"name": "__@iterator@111",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+								"name": "Iterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+			"name": "Set",
+			"extends": [],
+			"properties": {
+				"add": {
+					"type": "method",
+					"name": "add",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+								"name": "Set"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Appends a new element with a specified value to the end of the Set."
+				},
+				"clear": {
+					"type": "method",
+					"name": "clear",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"delete": {
+					"type": "method",
+					"name": "delete",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "boolean"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Removes a specified value from the Set."
+				},
+				"forEach": {
+					"type": "method",
+					"name": "forEach",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "callbackfn",
+								"value": {
+									"type": "function",
+									"parameters": [
+										{
+											"type": "parameter",
+											"name": "value",
+											"value": {
+												"type": "identifier",
+												"name": "Key"
+											},
+											"optional": false,
+											"rest": false
+										},
+										{
+											"type": "parameter",
+											"name": "value2",
+											"value": {
+												"type": "identifier",
+												"name": "Key"
+											},
+											"optional": false,
+											"rest": false
+										},
+										{
+											"type": "parameter",
+											"name": "set",
+											"value": {
+												"type": "application",
+												"base": {
+													"type": "link",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+													"name": "Set"
+												},
+												"typeParameters": [
+													{
+														"type": "identifier",
+														"name": "Key"
+													}
+												]
+											},
+											"optional": false,
+											"rest": false
+										}
+									],
+									"return": {
+										"type": "void"
+									},
+									"typeParameters": []
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "thisArg",
+								"value": {
+									"type": "any"
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Executes a provided function once per each value in the Set object, in insertion order."
+				},
+				"has": {
+					"type": "method",
+					"name": "has",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "boolean"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"size": {
+					"type": "property",
+					"name": "size",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"entries": {
+					"type": "method",
+					"name": "entries",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:SetIterator",
+								"name": "SetIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "tuple",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "Key"
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of [v,v] pairs for every value `v` in the set."
+				},
+				"keys": {
+					"type": "method",
+					"name": "keys",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:SetIterator",
+								"name": "SetIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Despite its name, returns an iterable of the values in the set."
+				},
+				"values": {
+					"type": "method",
+					"name": "values",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:SetIterator",
+								"name": "SetIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of values in the set."
+				},
+				"__@iterator@111": {
+					"type": "method",
+					"name": "__@iterator@111",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:SetIterator",
+								"name": "SetIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Iterates over values in the set."
+				},
+				"__@toStringTag@114": {
+					"type": "property",
+					"name": "__@toStringTag@114",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"ToggleButtonGroupRenderProps": {
+			"type": "interface",
+			"name": "ToggleButtonGroupRenderProps",
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the toggle button group is disabled."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "identifier",
+						"name": "ToggleGroupState"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the toggle button group."
+				}
+			}
+		}
+	}
+}
