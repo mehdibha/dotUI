@@ -10,6 +10,7 @@
 		"format": "biome format --write",
 		"lint": "biome lint --write",
 		"check": "biome check",
+		"typecheck": "tsc --noEmit",
 		"build:references": "tsx scripts/api-docs-builder/src/index.ts"
 	},
 	"dependencies": {

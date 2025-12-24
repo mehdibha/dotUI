@@ -24,28 +24,3 @@ export async function loadApiReference(name: string): Promise<ComponentApiRefere
 		return null;
 	}
 }
-
-/**
- * Check if an API reference exists for a component
- */
-export async function hasApiReference(name: string): Promise<boolean> {
-	try {
-		const filePath = path.join(GENERATED_DIR, `${name}.json`);
-		await fs.access(filePath);
-		return true;
-	} catch {
-		return false;
-	}
-}
-
-/**
- * List all available API references
- */
-export async function listApiReferences(): Promise<string[]> {
-	try {
-		const files = await fs.readdir(GENERATED_DIR);
-		return files.filter((f) => f.endsWith(".json")).map((f) => f.replace(".json", ""));
-	} catch {
-		return [];
-	}
-}

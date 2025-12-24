@@ -12,7 +12,7 @@ import {
 	parseSimpleType,
 	typeToAst,
 } from "./type-to-ast";
-import type { TLink, TType } from "../../../src/modules/references/types/type-ast";
+import type { TLink, TType } from "@/modules/references/types/type-ast";
 
 /**
  * HTML element names that can be extended via React.ComponentProps<"element">

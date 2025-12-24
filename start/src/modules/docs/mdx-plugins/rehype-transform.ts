@@ -6,8 +6,9 @@ import type { Element, ElementContent, Root, RootContent } from "hast";
 import type { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import type { Plugin } from "unified";
 
-import { loadApiReference, transformReference, type TransformedReference } from "../../references";
 import { transformDemo } from "./transformer";
+import { loadApiReference } from "../../references/loader";
+import { transformReference, type TransformedReference } from "../../references/transform";
 
 // ============================================================================
 // Cached Highlighter (singleton)
