@@ -1,39 +1,39 @@
 {
-	"name": "CalendarHeaderCellProps",
-	"description": "A calendar header cell displays a week day name at the top of a column within a calendar.",
-	"props": {
-		"children": {
-			"type": "ReactNode",
-			"typeAst": {
-				"type": "identifier",
-				"name": "ReactNode"
-			},
-			"description": "The children of the component."
-		},
-		"className": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
-		},
-		"style": {
-			"type": "CSSProperties",
-			"detailedType": "CSSProperties | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "CSSProperties"
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		}
-	}
+  "name": "CalendarHeaderCellProps",
+  "description": "A calendar header cell displays a week day name at the top of a column within a calendar.",
+  "props": {
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "The children of the component."
+    },
+    "className": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
+    "style": {
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CSSProperties"
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    }
+  }
 }

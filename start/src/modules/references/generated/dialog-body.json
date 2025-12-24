@@ -1,6 +1,6 @@
 {
-	"name": "DialogBodyProps",
-	"description": "Missing description.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "DialogBodyProps",
+  "description": "Missing description.",
+  "extendsElement": "div",
+  "props": {}
 }

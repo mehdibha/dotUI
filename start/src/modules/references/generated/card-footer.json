@@ -1,6 +1,6 @@
 {
-	"name": "CardFooterProps",
-	"description": "Missing description.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "CardFooterProps",
+  "description": "Missing description.",
+  "extendsElement": "div",
+  "props": {}
 }

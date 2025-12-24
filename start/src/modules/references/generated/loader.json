@@ -1,296 +1,296 @@
 {
-	"name": "LoaderProps",
-	"description": "Missing description.",
-	"props": {
-		"size": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The size of the loader in pixels.",
-			"default": "20"
-		},
-		"stroke": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The stroke width of the loader circle.",
-			"default": "2"
-		},
-		"speed": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The animation speed in seconds.",
-			"default": "0.8"
-		},
-		"strokeLength": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The length of the stroke as a percentage (0-1).",
-			"default": "0.25"
-		},
-		"isIndeterminate": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether presentation is indeterminate when progress isn't known."
-		},
-		"formatOptions": {
-			"type": "NumberFormatOptions",
-			"detailedType": "NumberFormatOptions | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "NumberFormatOptions"
-			},
-			"description": "The display format of the value label.",
-			"default": "{style: 'percent'}"
-		},
-		"valueLabel": {
-			"type": "ReactNode",
-			"typeAst": {
-				"type": "identifier",
-				"name": "ReactNode"
-			},
-			"description": "The content to display as the value's label (e.g. 1 of 4)."
-		},
-		"value": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The current value (controlled).",
-			"default": "0"
-		},
-		"minValue": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The smallest value allowed for the input.",
-			"default": "0"
-		},
-		"maxValue": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The largest value allowed for the input.",
-			"default": "100"
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"children": {
-			"type": "ReactNode | (values: ProgressBarRenderProps) => ReactNode",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "ProgressBarRenderProps",
-									"name": "ProgressBarRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
-		"className": {
-			"type": "string | (values: ProgressBarRenderProps) => string",
-			"detailedType": "string | (values: ProgressBarRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "ProgressBarRenderProps",
-									"name": "ProgressBarRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-		},
-		"style": {
-			"type": "CSSProperties | (values: ProgressBarRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: ProgressBarRenderProps) => CSSProperties | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "ProgressBarRenderProps",
-									"name": "ProgressBarRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-		},
-		"slot": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-		}
-	},
-	"typeLinks": {
-		"ProgressBarRenderProps": {
-			"type": "interface",
-			"name": "ProgressBarRenderProps",
-			"properties": {
-				"percentage": {
-					"type": "property",
-					"name": "percentage",
-					"value": {
-						"type": "identifier",
-						"name": "number | undefined"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The value as a percentage between the minimum and maximum."
-				},
-				"valueText": {
-					"type": "property",
-					"name": "valueText",
-					"value": {
-						"type": "identifier",
-						"name": "string | undefined"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "A formatted version of the value."
-				},
-				"isIndeterminate": {
-					"type": "property",
-					"name": "isIndeterminate",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the progress bar is indeterminate."
-				}
-			}
-		}
-	}
+  "name": "LoaderProps",
+  "description": "Missing description.",
+  "props": {
+    "size": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The size of the loader in pixels.",
+      "default": "20"
+    },
+    "stroke": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The stroke width of the loader circle.",
+      "default": "2"
+    },
+    "speed": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The animation speed in seconds.",
+      "default": "0.8"
+    },
+    "strokeLength": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The length of the stroke as a percentage (0-1).",
+      "default": "0.25"
+    },
+    "isIndeterminate": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether presentation is indeterminate when progress isn't known."
+    },
+    "formatOptions": {
+      "type": "NumberFormatOptions",
+      "detailedType": "NumberFormatOptions | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "NumberFormatOptions"
+      },
+      "description": "The display format of the value label.",
+      "default": "{style: 'percent'}"
+    },
+    "valueLabel": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "The content to display as the value's label (e.g. 1 of 4)."
+    },
+    "value": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The current value (controlled).",
+      "default": "0"
+    },
+    "minValue": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The smallest value allowed for the input.",
+      "default": "0"
+    },
+    "maxValue": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The largest value allowed for the input.",
+      "default": "100"
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "children": {
+      "type": "ReactNode | (values: ProgressBarRenderProps) => ReactNode",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ProgressBarRenderProps",
+                  "name": "ProgressBarRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "string | (values: ProgressBarRenderProps) => string",
+      "detailedType": "string | (values: ProgressBarRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ProgressBarRenderProps",
+                  "name": "ProgressBarRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "CSSProperties | (values: ProgressBarRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: ProgressBarRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "ProgressBarRenderProps",
+                  "name": "ProgressBarRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "slot": {
+      "type": "string | null",
+      "detailedType": "string | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    }
+  },
+  "typeLinks": {
+    "ProgressBarRenderProps": {
+      "type": "interface",
+      "name": "ProgressBarRenderProps",
+      "properties": {
+        "percentage": {
+          "type": "property",
+          "name": "percentage",
+          "value": {
+            "type": "identifier",
+            "name": "number | undefined"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The value as a percentage between the minimum and maximum."
+        },
+        "valueText": {
+          "type": "property",
+          "name": "valueText",
+          "value": {
+            "type": "identifier",
+            "name": "string | undefined"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "A formatted version of the value."
+        },
+        "isIndeterminate": {
+          "type": "property",
+          "name": "isIndeterminate",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the progress bar is indeterminate."
+        }
+      }
+    }
+  }
 }

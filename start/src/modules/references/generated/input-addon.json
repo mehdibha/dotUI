@@ -1,6 +1,6 @@
 {
-	"name": "InputAddonProps",
-	"description": "Missing description.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "InputAddonProps",
+  "description": "Missing description.",
+  "extendsElement": "div",
+  "props": {}
 }

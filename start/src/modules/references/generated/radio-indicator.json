@@ -1,6 +1,6 @@
 {
-	"name": "RadioIndicatorProps",
-	"description": "Missing description.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "RadioIndicatorProps",
+  "description": "Missing description.",
+  "extendsElement": "div",
+  "props": {}
 }

@@ -1,47 +1,47 @@
 {
-	"name": "DialogProps",
-	"description": "A DialogTrigger opens a dialog when a trigger element is pressed.",
-	"props": {
-		"isOpen": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the overlay is open by default (controlled)."
-		},
-		"defaultOpen": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the overlay is open by default (uncontrolled)."
-		},
-		"onOpenChange": {
-			"type": "((isOpen: boolean) => void)",
-			"detailedType": "((isOpen: boolean) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "isOpen",
-						"value": {
-							"type": "link",
-							"id": "boolean",
-							"name": "boolean"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the overlay's open state changes."
-		}
-	}
+  "name": "DialogProps",
+  "description": "A DialogTrigger opens a dialog when a trigger element is pressed.",
+  "props": {
+    "isOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the overlay is open by default (controlled)."
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the overlay is open by default (uncontrolled)."
+    },
+    "onOpenChange": {
+      "type": "((isOpen: boolean) => void)",
+      "detailedType": "((isOpen: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isOpen",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the overlay's open state changes."
+    }
+  }
 }

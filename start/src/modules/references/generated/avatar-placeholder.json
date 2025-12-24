@@ -1,6 +1,6 @@
 {
-	"name": "AvatarPlaceholderProps",
-	"description": "Missing description.",
-	"extendsElement": "span",
-	"props": {}
+  "name": "AvatarPlaceholderProps",
+  "description": "Missing description.",
+  "extendsElement": "span",
+  "props": {}
 }

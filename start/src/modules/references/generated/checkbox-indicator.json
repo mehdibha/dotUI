@@ -1,6 +1,6 @@
 {
-	"name": "CheckboxIndicatorProps",
-	"description": "Missing description.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "CheckboxIndicatorProps",
+  "description": "Missing description.",
+  "extendsElement": "div",
+  "props": {}
 }

@@ -1,221 +1,221 @@
 {
-	"name": "TabPanelProps",
-	"description": "A TabPanel provides the content for a tab.",
-	"props": {
-		"shouldForceMount": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether to mount the tab panel in the DOM even when it is not currently selected.\nInactive tab panels are inert and cannot be interacted with. They must be styled appropriately so this is clear to the user visually.",
-			"default": "false"
-		},
-		"id": {
-			"type": "Key",
-			"detailedType": "Key | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Key"
-			},
-			"description": "The unique id of the tab."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"children": {
-			"type": "ReactNode | (values: TabPanelRenderProps) => ReactNode",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TabPanelRenderProps",
-									"name": "TabPanelRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
-		"className": {
-			"type": "string | (values: TabPanelRenderProps) => string",
-			"detailedType": "string | (values: TabPanelRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TabPanelRenderProps",
-									"name": "TabPanelRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-		},
-		"style": {
-			"type": "CSSProperties | (values: TabPanelRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: TabPanelRenderProps) => CSSProperties | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TabPanelRenderProps",
-									"name": "TabPanelRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-		}
-	},
-	"renderProps": {
-		"isFocused": {
-			"selector": "[data-focused]",
-			"description": "Whether the tab panel is currently focused."
-		},
-		"isFocusVisible": {
-			"selector": "[data-focus-visible]",
-			"description": "Whether the tab panel is currently keyboard focused."
-		},
-		"isInert": {
-			"selector": "[data-inert]",
-			"description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
-		}
-	},
-	"typeLinks": {
-		"TabPanelRenderProps": {
-			"type": "interface",
-			"name": "TabPanelRenderProps",
-			"properties": {
-				"isFocused": {
-					"type": "property",
-					"name": "isFocused",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the tab panel is currently focused."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the tab panel is currently keyboard focused."
-				},
-				"isInert": {
-					"type": "property",
-					"name": "isInert",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "identifier",
-						"name": "TabListState<unknown>"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the tab list."
-				}
-			}
-		}
-	}
+  "name": "TabPanelProps",
+  "description": "A TabPanel provides the content for a tab.",
+  "props": {
+    "shouldForceMount": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to mount the tab panel in the DOM even when it is not currently selected.\nInactive tab panels are inert and cannot be interacted with. They must be styled appropriately so this is clear to the user visually.",
+      "default": "false"
+    },
+    "id": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Key"
+      },
+      "description": "The unique id of the tab."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "children": {
+      "type": "ReactNode | (values: TabPanelRenderProps) => ReactNode",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TabPanelRenderProps",
+                  "name": "TabPanelRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "string | (values: TabPanelRenderProps) => string",
+      "detailedType": "string | (values: TabPanelRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TabPanelRenderProps",
+                  "name": "TabPanelRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "CSSProperties | (values: TabPanelRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: TabPanelRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TabPanelRenderProps",
+                  "name": "TabPanelRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  },
+  "renderProps": {
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the tab panel is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the tab panel is currently keyboard focused."
+    },
+    "isInert": {
+      "selector": "[data-inert]",
+      "description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
+    }
+  },
+  "typeLinks": {
+    "TabPanelRenderProps": {
+      "type": "interface",
+      "name": "TabPanelRenderProps",
+      "properties": {
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently keyboard focused."
+        },
+        "isInert": {
+          "type": "property",
+          "name": "isInert",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "TabListState<unknown>"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the tab list."
+        }
+      }
+    }
+  }
 }

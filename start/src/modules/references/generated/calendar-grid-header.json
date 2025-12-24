@@ -1,47 +1,47 @@
 {
-	"name": "CalendarGridHeaderProps",
-	"description": "A calendar grid header displays a row of week day names at the top of a month.",
-	"props": {
-		"children": {
-			"type": "(day: string) => ReactElement<unknown, string | JSXElementConstructor<any>>",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "day",
-						"value": {
-							"type": "string"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "identifier",
-					"name": "ReactElement"
-				},
-				"typeParameters": []
-			},
-			"description": "A function to render a `<CalendarHeaderCell>` for a weekday name.",
-			"required": true
-		},
-		"className": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
-		},
-		"style": {
-			"type": "CSSProperties",
-			"detailedType": "CSSProperties | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "CSSProperties"
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
-		}
-	}
+  "name": "CalendarGridHeaderProps",
+  "description": "A calendar grid header displays a row of week day names at the top of a month.",
+  "props": {
+    "children": {
+      "type": "(day: string) => ReactElement<unknown, string | JSXElementConstructor<any>>",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "day",
+            "value": {
+              "type": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "identifier",
+          "name": "ReactElement"
+        },
+        "typeParameters": []
+      },
+      "description": "A function to render a `<CalendarHeaderCell>` for a weekday name.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
+    "style": {
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CSSProperties"
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    }
+  }
 }
