@@ -10,7 +10,8 @@ import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } 
 import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "./demo";
 import { Example, type ExampleProps } from "./example";
 import { PageTabPanel, PageTabs } from "./page-tabs";
-import { Examples, InteractiveDemo, type InteractiveDemoProps, Reference, type ReferenceProps } from "./stubs";
+import { Reference, type ReferenceProps } from "./reference";
+import { Examples, InteractiveDemo, type InteractiveDemoProps } from "./stubs";
 
 export const mdxComponents: MDXComponents = {
 	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 font-bold text-4xl", className)} {...props} />,
@@ -90,5 +91,7 @@ export const mdxComponents: MDXComponents = {
 	InteractiveDemo: ({ className, ...props }: InteractiveDemoProps) => (
 		<InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />
 	),
-	Reference: ({ name }: ReferenceProps) => <Reference name={name} className="mt-4" />,
+	Reference: ({ className, ...props }: ReferenceProps) => (
+		<Reference className={cn("mt-4", className)} {...props} />
+	),
 };

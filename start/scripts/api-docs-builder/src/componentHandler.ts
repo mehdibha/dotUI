@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import * as prettier from "prettier";
 import ts from "typescript";
 import * as tae from "typescript-api-extractor";
 
@@ -806,6 +807,14 @@ async function getPropsWithTypeChecker(
 		});
 	}
 
+	// Format detailedTypes with Prettier for better readability
+	for (const propName of Object.keys(result)) {
+		const prop = result[propName];
+		if (prop?.detailedType) {
+			prop.detailedType = await formatTypeWithPrettier(prop.detailedType);
+		}
+	}
+
 	// Sort props by declaration order (matches react-aria/s2-docs behavior)
 	// Local props come first (in ts-morph declaration order), then React Aria events
 	// in their standard order, then remaining props
@@ -906,6 +915,39 @@ export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
 
 	const type = exportNode.type;
 	return type instanceof tae.ObjectNode || type instanceof tae.IntersectionNode || type instanceof tae.ComponentNode;
+}
+
+/**
+ * Format a type string with Prettier for better readability.
+ * Long union types will be split across multiple lines.
+ */
+async function formatTypeWithPrettier(type: string): Promise<string> {
+	try {
+		const formatted = await prettier.format(`type _ = ${type}`, {
+			parser: "typescript",
+			singleQuote: true,
+			semi: false,
+			printWidth: 60,
+		});
+
+		const lines = formatted.trimEnd().split("\n");
+		if (lines.length === 1) {
+			return lines[0].replace(/^type _ = /, "");
+		}
+
+		// Multi-line: skip first line (`type _ =`) and de-indent
+		const codeLines = lines.slice(1);
+		const nonEmptyLines = codeLines.filter((l) => l.trim() !== "");
+		if (nonEmptyLines.length > 0) {
+			const minIndent = Math.min(...nonEmptyLines.map((l) => l.match(/^\s*/)?.[0].length ?? 0));
+			if (Number.isFinite(minIndent) && minIndent > 0) {
+				return codeLines.map((l) => l.substring(minIndent)).join("\n");
+			}
+		}
+		return codeLines.join("\n");
+	} catch {
+		return type;
+	}
 }
 
 function extractComponentGroup(componentExportName: string): string {

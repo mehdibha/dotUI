@@ -1,4 +1,5 @@
 import { uniq } from "es-toolkit/array";
+import * as prettier from "prettier";
 import * as tae from "typescript-api-extractor";
 
 /**
@@ -55,6 +56,9 @@ export async function formatProperties(
 			detailedType = formatDetailedType(prop.type, allExports);
 		}
 
+		// Format with Prettier to get nice line breaks for long types
+		detailedType = await formatTypeWithPrettier(detailedType);
+
 		const formattedType = formatType(prop.type, prop.optional, prop.documentation?.tags);
 
 		const resultObject: Record<string, unknown> = {
@@ -82,6 +86,43 @@ export async function formatProperties(
 	}
 
 	return result;
+}
+
+/**
+ * Format a type string with Prettier for better readability.
+ * Long union types will be split across multiple lines.
+ */
+async function formatTypeWithPrettier(type: string): Promise<string> {
+	try {
+		const formatted = await prettier.format(`type _ = ${type}`, {
+			parser: "typescript",
+			singleQuote: true,
+			semi: false,
+			printWidth: 60,
+		});
+
+		// Prettier either formats on a single line or multiple lines.
+		// If single line, remove the `type _ = ` prefix.
+		// If multiple lines, remove the first line and de-indent the rest.
+		const lines = formatted.trimEnd().split("\n");
+		if (lines.length === 1) {
+			return lines[0].replace(/^type _ = /, "");
+		}
+
+		// Multi-line: skip first line (`type _ =`) and de-indent
+		const codeLines = lines.slice(1);
+		const nonEmptyLines = codeLines.filter((l) => l.trim() !== "");
+		if (nonEmptyLines.length > 0) {
+			const minIndent = Math.min(...nonEmptyLines.map((l) => l.match(/^\s*/)?.[0].length ?? 0));
+			if (Number.isFinite(minIndent) && minIndent > 0) {
+				return codeLines.map((l) => l.substring(minIndent)).join("\n");
+			}
+		}
+		return codeLines.join("\n");
+	} catch {
+		// If Prettier fails, return the original type
+		return type;
+	}
 }
 
 export function formatDetailedType(

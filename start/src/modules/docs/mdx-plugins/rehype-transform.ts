@@ -6,6 +6,7 @@ import type { Element, ElementContent, Root, RootContent } from "hast";
 import type { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import type { Plugin } from "unified";
 
+import { loadApiReference, transformReference, type TransformedReference } from "../../references";
 import { transformDemo } from "./transformer";
 
 // ============================================================================
@@ -19,7 +20,7 @@ async function getHighlighter() {
 	if (!highlighterPromise) {
 		highlighterPromise = createHighlighter({
 			themes: ["github-light", "github-dark"],
-			langs: ["tsx"],
+			langs: ["tsx", "ts"],
 		});
 	}
 	return highlighterPromise;
@@ -48,6 +49,16 @@ interface ProcessedDemo {
 	previewHast: Root;
 }
 
+interface ReferenceNodeInfo {
+	node: MdxJsxFlowElementHast;
+	name: string;
+}
+
+interface ProcessedReference {
+	nodeInfo: ReferenceNodeInfo;
+	data: TransformedReference;
+}
+
 // ============================================================================
 // Main Plugin
 // ============================================================================
@@ -57,11 +68,12 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (options = {}) 
 
 	return async (tree) => {
 		const demoNodes: DemoNodeInfo[] = [];
+		const referenceNodes: ReferenceNodeInfo[] = [];
 
-		// Step 1: Collect all Demo/Example nodes
+		// Step 1: Collect all Demo/Example/Reference nodes
 		visit(tree, "mdxJsxFlowElement", (node: MdxJsxFlowElementHast) => {
 			if (node.name === "Demo" || node.name === "Example") {
-				const name = extractDemoName(node);
+				const name = extractNameAttribute(node);
 				if (name) {
 					demoNodes.push({
 						node,
@@ -69,31 +81,49 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (options = {}) 
 						type: node.name as "Demo" | "Example",
 					});
 				}
+			} else if (node.name === "Reference") {
+				const name = extractNameAttribute(node);
+				if (name) {
+					referenceNodes.push({ node, name });
+				}
 			}
 		});
 
-		if (demoNodes.length === 0) return;
+		const hasDemos = demoNodes.length > 0;
+		const hasReferences = referenceNodes.length > 0;
+
+		if (!hasDemos && !hasReferences) return;
 
 		// Get the shared highlighter
 		const highlighter = await getHighlighter();
 
-		// Step 2: Process all demos in parallel
-		const processedDemos = await Promise.all(
-			demoNodes.map((info) => processDemoNode(info, registryBasePath, highlighter)),
-		);
+		// Step 2: Process all nodes in parallel
+		const [processedDemos, processedReferences] = await Promise.all([
+			hasDemos
+				? Promise.all(demoNodes.map((info) => processDemoNode(info, registryBasePath, highlighter)))
+				: Promise.resolve([]),
+			hasReferences
+				? Promise.all(referenceNodes.map((info) => processReferenceNode(info, highlighter)))
+				: Promise.resolve([]),
+		]);
 
 		// Filter out any failed ones
 		const successfulDemos = processedDemos.filter((d): d is ProcessedDemo => d !== null);
+		const successfulReferences = processedReferences.filter((r): r is ProcessedReference => r !== null);
 
-		if (successfulDemos.length === 0) return;
-
-		// Step 3: Generate and inject imports (deduplicated)
-		const importNode = generateImportNode(successfulDemos);
-		tree.children.unshift(importNode as RootContent);
+		// Step 3: Generate and inject imports for demos (deduplicated)
+		if (successfulDemos.length > 0) {
+			const importNode = generateImportNode(successfulDemos);
+			tree.children.unshift(importNode as RootContent);
+		}
 
 		// Step 4: Transform each node
 		for (const processed of successfulDemos) {
 			transformDemoNode(processed);
+		}
+
+		for (const processed of successfulReferences) {
+			transformReferenceNode(processed);
 		}
 	};
 };
@@ -190,8 +220,7 @@ function generateImportName(demoName: string): string {
 // Attribute Extraction
 // ============================================================================
 
-function extractDemoName(node: MdxJsxFlowElementHast): string | null {
-	// Look for name="..." attribute
+function extractNameAttribute(node: MdxJsxFlowElementHast): string | null {
 	const nameAttr = node.attributes.find(
 		(attr): attr is MdxJsxAttribute => attr.type === "mdxJsxAttribute" && attr.name === "name",
 	);
@@ -292,4 +321,83 @@ function transformDemoNode(processed: ProcessedDemo): void {
 
 	// Set children to the code elements
 	node.children = [demoCodeElement, demoCodePreviewElement] as ElementContent[];
+}
+
+// ============================================================================
+// Reference Processing
+// ============================================================================
+
+async function processReferenceNode(
+	info: ReferenceNodeInfo,
+	// biome-ignore lint/suspicious/noExplicitAny: shiki generic types are complex
+	highlighter: HighlighterGeneric<any, any>,
+): Promise<ProcessedReference | null> {
+	try {
+		// Load the reference data
+		const rawData = await loadApiReference(info.name);
+		if (!rawData) {
+			console.error(`[rehype-transform] API reference not found for "${info.name}"`);
+			return null;
+		}
+
+		// Transform with highlighting
+		const data = transformReference(rawData, highlighter);
+
+		return {
+			nodeInfo: info,
+			data,
+		};
+	} catch (error) {
+		console.error(`[rehype-transform] Failed to process reference "${info.name}":`, error);
+		return null;
+	}
+}
+
+function transformReferenceNode(processed: ProcessedReference): void {
+	const { node } = processed.nodeInfo;
+
+	// Remove the name attribute
+	node.attributes = node.attributes.filter((attr) => !(attr.type === "mdxJsxAttribute" && attr.name === "name"));
+
+	// Add data attribute with the transformed reference data as JSON
+	// We use JSON.parse() in the JSX expression to convert the string back to an object
+	const jsonString = JSON.stringify(processed.data);
+	const dataAttr: MdxJsxAttribute = {
+		type: "mdxJsxAttribute",
+		name: "data",
+		value: {
+			type: "mdxJsxAttributeValueExpression",
+			value: `JSON.parse(${JSON.stringify(jsonString)})`,
+			data: {
+				estree: {
+					type: "Program",
+					sourceType: "module",
+					body: [
+						{
+							type: "ExpressionStatement",
+							expression: {
+								type: "CallExpression",
+								callee: {
+									type: "MemberExpression",
+									object: { type: "Identifier", name: "JSON" },
+									property: { type: "Identifier", name: "parse" },
+									computed: false,
+									optional: false,
+								},
+								arguments: [
+									{
+										type: "Literal",
+										value: jsonString,
+										raw: JSON.stringify(jsonString),
+									},
+								],
+								optional: false,
+							},
+						},
+					],
+				},
+			},
+		} as MdxJsxAttributeValueExpression,
+	};
+	node.attributes.push(dataAttr);
 }

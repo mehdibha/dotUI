@@ -39,21 +39,3 @@ export function Examples({ className, component, ...props }: ExamplesProps) {
 		</div>
 	);
 }
-
-// =============================================================================
-// Reference (stub) - API props table
-// =============================================================================
-
-export interface ReferenceProps {
-	name: string;
-	className?: string;
-}
-
-export function Reference({ name, className }: ReferenceProps) {
-	return (
-		<div className={cn("rounded-lg border bg-muted/50 p-4 text-center text-fg-muted", className)}>
-			<p className="text-sm">API Reference: {name}</p>
-			<p className="mt-1 text-xs">Coming soon</p>
-		</div>
-	);
-}

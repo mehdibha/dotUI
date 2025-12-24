@@ -55,11 +55,6 @@
 		"@dotui/biome-config": "workspace:*",
 		"@dotui/ts-config": "workspace:*",
 		"@tanstack/devtools-vite": "^0.3.11",
-		"es-toolkit": "^1.32.0",
-		"globby": "^14.0.2",
-		"tsx": "^4.19.4",
-		"typescript-api-extractor": "^0.2.0",
-		"yargs": "^17.7.2",
 		"@types/hast": "^3.0.4",
 		"@types/mdast": "^4.0.4",
 		"@types/mdx": "^2.0.13",
@@ -68,9 +63,15 @@
 		"@types/react-dom": "^19.2.1",
 		"@vitejs/plugin-react": "^5.0.4",
 		"dotenv-cli": "^8.0.0",
+		"es-toolkit": "^1.32.0",
+		"globby": "^14.0.2",
 		"mdast-util-mdx-jsx": "^3.2.0",
+		"prettier": "^3.7.4",
+		"tsx": "^4.19.4",
 		"typescript": "^5.8.3",
+		"typescript-api-extractor": "1.0.0-alpha.10",
 		"unified": "^11.0.5",
-		"vite": "^7.1.7"
+		"vite": "^7.1.7",
+		"yargs": "^17.7.2"
 	}
 }

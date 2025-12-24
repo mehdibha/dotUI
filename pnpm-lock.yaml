@@ -485,18 +485,36 @@ importers:
       dotenv-cli:
         specifier: ^8.0.0
         version: 8.0.0
+      es-toolkit:
+        specifier: ^1.32.0
+        version: 1.42.0
+      globby:
+        specifier: ^14.0.2
+        version: 14.1.0
       mdast-util-mdx-jsx:
         specifier: ^3.2.0
         version: 3.2.0
+      prettier:
+        specifier: ^3.7.4
+        version: 3.7.4
+      tsx:
+        specifier: ^4.19.4
+        version: 4.21.0
       typescript:
         specifier: ^5.8.3
         version: 5.9.3
+      typescript-api-extractor:
+        specifier: 1.0.0-alpha.10
+        version: 1.0.0-alpha.10(typescript@5.9.3)
       unified:
         specifier: ^11.0.5
         version: 11.0.5
       vite:
         specifier: ^7.1.7
         version: 7.2.7(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)
+      yargs:
+        specifier: ^17.7.2
+        version: 17.7.2
 
   tw-plugins/tailwindcss-autocontrast:
     dependencies:
@@ -7197,6 +7215,12 @@ packages:
 
   typed-query-selector@2.12.0:
     resolution: {integrity: sha512-SbklCd1F0EiZOyPiW192rrHZzZ5sBijB6xM+cpmrwDqObvdtunOHHIk9fCGsoK5JVIYXoyEp4iEdE3upFH3PAg==}
+
+  typescript-api-extractor@1.0.0-alpha.10:
+    resolution: {integrity: sha512-LFrav8FOszQpCOorxIMtOldvg6ZJqWheI1qNhjeEggpOMJEEPxLYIjJg/mtxUGkPoAuQm2L6ucme8V1T/SspEA==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      typescript: ^5.8
 
   typescript-api-extractor@1.0.0-alpha.9:
     resolution: {integrity: sha512-ZGnWrJakEV7J3g9ylJv8AXNq+mKkUXcKM/1jJNWcsVWcjD+g+eHCqmrSA7XJmNp76rSyMEq+qPpVYYttnDIF7Q==}
@@ -15011,7 +15035,7 @@ snapshots:
 
   tsx@4.21.0:
     dependencies:
-      esbuild: 0.27.1
+      esbuild: 0.27.2
       get-tsconfig: 4.13.0
     optionalDependencies:
       fsevents: 2.3.3
@@ -15056,6 +15080,11 @@ snapshots:
       mime-types: 3.0.2
 
   typed-query-selector@2.12.0: {}
+
+  typescript-api-extractor@1.0.0-alpha.10(typescript@5.9.3):
+    dependencies:
+      es-toolkit: 1.42.0
+      typescript: 5.9.3
 
   typescript-api-extractor@1.0.0-alpha.9(typescript@5.9.3):
     dependencies:
