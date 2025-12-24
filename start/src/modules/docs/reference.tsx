@@ -2,6 +2,7 @@ import * as React from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 
 import type { TransformedProp, TransformedPropsData, TransformedReference } from "@/modules/references";
+import { Type, TypeRendererProvider } from "@/modules/references/components/type-renderer";
 
 const GRID_LAYOUT = "grid grid-cols-[minmax(120px,1fr)_1fr_2.5rem] md:grid-cols-[5fr_7fr_4.5fr_2.5rem]";
 
@@ -14,24 +15,26 @@ export interface ReferenceProps extends React.ComponentProps<"div"> {
 
 export function Reference({ data, ...props }: ReferenceProps) {
 	return (
-		<div {...props}>
-			{data.description && <p className="mb-4 text-fg-muted">{data.description}</p>}
-			{data.extendsElement && (
-				<p className="mb-4 text-fg-muted">
-					Supports all{" "}
-					<a
-						href={getHtmlElementLink(data.extendsElement)}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="text-fg-accent hover:underline"
-					>
-						{data.extendsElement === "html" ? "HTML" : data.extendsElement}
-					</a>{" "}
-					attributes.
-				</p>
-			)}
-			<PropsTable data={data.data} componentName={data.name} defaultExpandedGroups={data.defaultExpandedGroups} />
-		</div>
+		<TypeRendererProvider links={data.typeLinks ?? {}}>
+			<div {...props}>
+				{data.description && <p className="mb-4 text-fg-muted">{data.description}</p>}
+				{data.extendsElement && (
+					<p className="mb-4 text-fg-muted">
+						Supports all{" "}
+						<a
+							href={getHtmlElementLink(data.extendsElement)}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-fg-accent hover:underline"
+						>
+							{data.extendsElement === "html" ? "HTML" : data.extendsElement}
+						</a>{" "}
+						attributes.
+					</p>
+				)}
+				<PropsTable data={data.data} componentName={data.name} defaultExpandedGroups={data.defaultExpandedGroups} />
+			</div>
+		</TypeRendererProvider>
 	);
 }
 
@@ -161,7 +164,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 							)}
 
 							<DescriptionItem label="Type" hasSeparator>
-								<TypeDisplay highlighted={prop.typeHighlighted} />
+								<Type type={prop.typeAst} />
 							</DescriptionItem>
 
 							{prop.default !== undefined && (
@@ -199,18 +202,6 @@ function DescriptionItem({ label, children, hasSeparator }: DescriptionItemProps
 	);
 }
 
-interface TypeDisplayProps {
-	highlighted: string;
-}
-
-function TypeDisplay({ highlighted }: TypeDisplayProps) {
-	return (
-		<code
-			className="font-mono text-[0.8125rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
-			dangerouslySetInnerHTML={{ __html: highlighted }}
-		/>
-	);
-}
 
 interface DisclosureGroupProps {
 	title: string;

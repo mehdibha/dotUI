@@ -176,23 +176,45 @@ function getMemberName(member: ts.TypeElement): string | undefined {
 /**
  * Get the order of properties as they appear in the source declaration
  * Uses TypeScript's built-in AST (no ts-morph dependency)
+ *
+ * @param typeName - The name of the type to get property order for
+ * @param program - The TypeScript program
+ * @param checker - The TypeScript type checker
+ * @param options - Optional settings
+ * @param options.requireExport - If true, only matches exported types (default: true for root calls)
+ * @param options.visited - Set of visited type names to prevent infinite recursion
  */
-function getPropertyDeclarationOrder(typeName: string, program: ts.Program, checker: ts.TypeChecker): string[] {
-	const order: string[] = [];
-	const visited = new Set<string>();
+function getPropertyDeclarationOrder(
+	typeName: string,
+	program: ts.Program,
+	checker: ts.TypeChecker,
+	options: { requireExport?: boolean; visited?: Set<string> } = {},
+): string[] {
+	const { requireExport = true, visited = new Set<string>() } = options;
+
+	// Prevent circular references
+	if (visited.has(typeName)) {
+		return [];
+	}
 	visited.add(typeName);
 
-	// Search all source files for the explicitly EXPORTED type
+	const order: string[] = [];
+
 	for (const sourceFile of program.getSourceFiles()) {
-		// Skip declaration files (except our own)
-		if (sourceFile.isDeclarationFile && !sourceFile.fileName.includes("@dotui")) {
+		// Skip declaration files (except our own) when requiring export
+		if (requireExport && sourceFile.isDeclarationFile && !sourceFile.fileName.includes("@dotui")) {
 			continue;
 		}
 
+		let found = false;
+
 		ts.forEachChild(sourceFile, (node) => {
+			if (found) return;
+
 			// Handle interface declarations
 			if (ts.isInterfaceDeclaration(node) && node.name.text === typeName) {
-				if (!hasExportModifier(node)) return;
+				if (requireExport && !hasExportModifier(node)) return;
+				found = true;
 
 				// Get properties in declaration order
 				for (const member of node.members) {
@@ -208,12 +230,10 @@ function getPropertyDeclarationOrder(typeName: string, program: ts.Program, chec
 								const exprType = checker.getTypeAtLocation(typeExpr);
 								const symbol = exprType.getSymbol();
 								if (symbol) {
-									const inheritedOrder = getPropertyDeclarationOrderInternal(
-										symbol.getName(),
-										program,
-										checker,
+									const inheritedOrder = getPropertyDeclarationOrder(symbol.getName(), program, checker, {
+										requireExport: false,
 										visited,
-									);
+									});
 									for (const prop of inheritedOrder) {
 										if (!order.includes(prop)) {
 											order.push(prop);
@@ -224,12 +244,12 @@ function getPropertyDeclarationOrder(typeName: string, program: ts.Program, chec
 						}
 					}
 				}
-				return;
 			}
 
 			// Handle type alias declarations
 			if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
-				if (!hasExportModifier(node)) return;
+				if (requireExport && !hasExportModifier(node)) return;
+				found = true;
 
 				const typeNode = node.type;
 
@@ -239,108 +259,16 @@ function getPropertyDeclarationOrder(typeName: string, program: ts.Program, chec
 						const name = getMemberName(member);
 						if (name) order.push(name);
 					}
-					return;
-				}
-
-				// Handle intersection types: type Foo = A & B
-				if (ts.isIntersectionTypeNode(typeNode)) {
-					for (const typeRef of typeNode.types) {
-						const refType = checker.getTypeAtLocation(typeRef);
-						const symbol = refType.getSymbol();
-						if (symbol) {
-							const refOrder = getPropertyDeclarationOrderInternal(symbol.getName(), program, checker, visited);
-							for (const prop of refOrder) {
-								if (!order.includes(prop)) {
-									order.push(prop);
-								}
-							}
-						}
-					}
-				}
-			}
-		});
-
-		// If we found the type, return early
-		if (order.length > 0) return order;
-	}
-
-	return order;
-}
-
-/**
- * Internal helper to get property order - doesn't require export
- * Uses a visited set to prevent infinite recursion from circular type references
- */
-function getPropertyDeclarationOrderInternal(
-	typeName: string,
-	program: ts.Program,
-	checker: ts.TypeChecker,
-	visited: Set<string>,
-): string[] {
-	// Prevent circular references
-	if (visited.has(typeName)) {
-		return [];
-	}
-	visited.add(typeName);
-
-	const order: string[] = [];
-
-	for (const sourceFile of program.getSourceFiles()) {
-		let found = false;
-
-		ts.forEachChild(sourceFile, (node) => {
-			if (found) return;
-
-			// Handle interface declarations
-			if (ts.isInterfaceDeclaration(node) && node.name.text === typeName) {
-				found = true;
-
-				for (const member of node.members) {
-					const name = getMemberName(member);
-					if (name) order.push(name);
-				}
-
-				if (node.heritageClauses) {
-					for (const clause of node.heritageClauses) {
-						if (clause.token === ts.SyntaxKind.ExtendsKeyword) {
-							for (const typeExpr of clause.types) {
-								const exprType = checker.getTypeAtLocation(typeExpr);
-								const symbol = exprType.getSymbol();
-								if (symbol) {
-									const inheritedOrder = getPropertyDeclarationOrderInternal(
-										symbol.getName(),
-										program,
-										checker,
-										visited,
-									);
-									for (const prop of inheritedOrder) {
-										if (!order.includes(prop)) {
-											order.push(prop);
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-
-			// Handle type alias declarations
-			if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
-				found = true;
-				const typeNode = node.type;
-
-				if (ts.isTypeLiteralNode(typeNode)) {
-					for (const member of typeNode.members) {
-						const name = getMemberName(member);
-						if (name) order.push(name);
-					}
 				} else if (ts.isIntersectionTypeNode(typeNode)) {
+					// Handle intersection types: type Foo = A & B
 					for (const typeRef of typeNode.types) {
 						const refType = checker.getTypeAtLocation(typeRef);
 						const symbol = refType.getSymbol();
 						if (symbol) {
-							const refOrder = getPropertyDeclarationOrderInternal(symbol.getName(), program, checker, visited);
+							const refOrder = getPropertyDeclarationOrder(symbol.getName(), program, checker, {
+								requireExport: false,
+								visited,
+							});
 							for (const prop of refOrder) {
 								if (!order.includes(prop)) {
 									order.push(prop);

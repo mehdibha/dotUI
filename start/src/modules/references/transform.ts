@@ -7,6 +7,7 @@ import type { HighlighterGeneric } from "shiki";
 
 import { groupProps, DEFAULT_EXPANDED } from "./groups";
 import type { ComponentApiReference, PropDefinition, TypeLinksRegistry } from "./types";
+import type { TType } from "./types/type-ast";
 
 /**
  * Transformed prop data ready for rendering
@@ -17,7 +18,7 @@ export interface TransformedProp {
 	typeHighlighted: string;
 	shortType: string;
 	shortTypeHighlighted: string;
-	typeAst?: unknown;
+	typeAst?: TType;
 	default?: string;
 	defaultHighlighted?: string;
 	description?: string;

@@ -23,3 +23,7 @@ export { DEFAULT_EXPANDED, getGroupOrder, groupProps, GROUPS, isGroupExpandedByD
 
 // Transform
 export { transformReference } from "./transform";
+
+// Type rendering components
+export { Type, TypeRendererProvider, useTypeLinks } from "./components/type-renderer";
+export { TypeLink } from "./components/type-popover";
