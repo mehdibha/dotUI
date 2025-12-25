@@ -219,7 +219,7 @@ export function createDynamicComponent<Props extends object, V extends string = 
 		);
 	};
 
-	Component.displayName = `Dynamic(${displayName})`;
+	Component.displayName = displayName;
 
 	return Component;
 }

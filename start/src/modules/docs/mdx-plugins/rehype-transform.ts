@@ -108,9 +108,8 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (options = {}) 
 			} else if (node.name === "InteractiveDemo") {
 				const name = extractNameAttribute(node);
 				const controls = extractControlsAttribute(node);
-				const fallback = extractFallbackAttribute(node);
 				if (name && controls) {
-					interactiveDemoNodes.push({ node, name, controls, fallback });
+					interactiveDemoNodes.push({ node, name, controls });
 				}
 			}
 		});
@@ -288,54 +287,6 @@ function extractNameAttribute(node: MdxJsxFlowElementHast): string | null {
 	}
 
 	return null;
-}
-
-function extractFallbackAttribute(node: MdxJsxFlowElementHast): string | undefined {
-	const fallbackAttr = node.attributes.find(
-		(attr): attr is MdxJsxAttribute => attr.type === "mdxJsxAttribute" && attr.name === "fallback",
-	);
-
-	if (!fallbackAttr) return undefined;
-
-	// Simple string value: fallback="<Button>Button</Button>"
-	if (typeof fallbackAttr.value === "string") {
-		return fallbackAttr.value;
-	}
-
-	// Expression value: fallback={`<Button>Button</Button>`}
-	const exprValue = fallbackAttr.value as MdxJsxAttributeValueExpression | undefined;
-	if (exprValue?.data?.estree) {
-		try {
-			const estree = exprValue.data.estree as {
-				type: string;
-				body: Array<{
-					type: string;
-					expression?: {
-						type: string;
-						value?: string;
-						quasis?: Array<{ value: { raw: string; cooked: string } }>;
-					};
-				}>;
-			};
-
-			const body = estree.body[0];
-			if (body?.type !== "ExpressionStatement") return undefined;
-
-			const expr = body.expression;
-			// Template literal: `<Button>Button</Button>`
-			if (expr?.type === "TemplateLiteral" && expr.quasis?.length === 1) {
-				return expr.quasis[0]?.value.cooked;
-			}
-			// String literal: "<Button>Button</Button>"
-			if (expr?.type === "Literal" && typeof expr.value === "string") {
-				return expr.value;
-			}
-		} catch {
-			return undefined;
-		}
-	}
-
-	return undefined;
 }
 
 function extractControlsAttribute(node: MdxJsxFlowElementHast): ControlInput[] | null {
@@ -661,23 +612,11 @@ async function processInteractiveDemoNode(
 		const importName = `${toPascalCase(info.name)}Playground`;
 		const importPath = `@dotui/registry/ui/${info.name}/demos/playground`;
 
-		// 4. Highlight fallback code if provided
-		let fallbackHast: import("hast").Root | undefined;
-		if (info.fallback) {
-			fallbackHast = highlighter.codeToHast(info.fallback, {
-				lang: "tsx",
-				themes: { light: "github-light", dark: "github-dark" },
-				defaultColor: false,
-			});
-			markPreAsRaw(fallbackHast);
-		}
-
 		return {
 			nodeInfo: info,
 			importName,
 			importPath,
 			controls: enrichedControls,
-			fallbackHast,
 		};
 	} catch (error) {
 		console.error(`[rehype-transform] Failed to process interactive demo "${info.name}":`, error);
@@ -688,10 +627,9 @@ async function processInteractiveDemoNode(
 function transformInteractiveDemoNode(processed: ProcessedInteractiveDemo): void {
 	const { node } = processed.nodeInfo;
 
-	// Remove name, controls, and fallback attributes
+	// Remove name and controls attributes (replaced with component and controls props)
 	node.attributes = node.attributes.filter(
-		(attr) =>
-			!(attr.type === "mdxJsxAttribute" && (attr.name === "name" || attr.name === "controls" || attr.name === "fallback")),
+		(attr) => !(attr.type === "mdxJsxAttribute" && (attr.name === "name" || attr.name === "controls")),
 	);
 
 	// Add component attribute: component={ButtonPlayground}
@@ -757,9 +695,4 @@ function transformInteractiveDemoNode(processed: ProcessedInteractiveDemo): void
 		} as MdxJsxAttributeValueExpression,
 	};
 	node.attributes.push(controlsAttr);
-
-	// Add fallback HAST as children if provided
-	if (processed.fallbackHast) {
-		node.children = processed.fallbackHast.children as ElementContent[];
-	}
 }

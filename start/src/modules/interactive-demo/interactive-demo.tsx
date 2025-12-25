@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type ComponentType, createElement, Suspense, useCallback, useMemo, useState } from "react";
+import React, { type ComponentType, createElement, useCallback, useMemo, useState } from "react";
 import { flushSync } from "react-dom";
 import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-react";
 
@@ -8,7 +8,8 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
-import { CodeBlock, DynamicPre, Pre } from "@/modules/docs/code-block";
+import { CodeBlock } from "@/modules/docs/code-block";
+import { DynamicPre } from "@/modules/docs/dynamic-pre";
 
 import { availableIcons, Controls } from "./controls";
 import { elementToCode, elementToPreviewCode } from "./element-to-code";
@@ -24,8 +25,6 @@ interface InteractiveDemoProps {
 	controls: SerializableControl[];
 	className?: string;
 	layout?: "horizontal" | "vertical";
-	/** Pre-highlighted fallback code (from build-time highlighting) */
-	children?: React.ReactNode;
 }
 
 export function InteractiveDemo({
@@ -33,7 +32,6 @@ export function InteractiveDemo({
 	controls,
 	className,
 	layout: layoutProp = "horizontal",
-	children: fallback,
 }: InteractiveDemoProps) {
 	const [layout, setLayout] = useState<"horizontal" | "vertical">(layoutProp);
 	const [isExpanded, setIsExpanded] = useState(false);
@@ -199,9 +197,7 @@ export function InteractiveDemo({
 					</>
 				}
 			>
-				<Suspense fallback={<Pre>{fallback}</Pre>}>
-					<DynamicPre code={displayedCode} lang="tsx" />
-				</Suspense>
+				<DynamicPre code={displayedCode} lang="tsx" />
 			</CodeBlock>
 		</div>
 	);

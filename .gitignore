@@ -42,8 +42,3 @@ dist/
 
 # fumadocs
 .source
-
-fumadocs-start
-base-ui
-
-react-spectrum

@@ -133,7 +133,6 @@ export interface InteractiveDemoNodeInfo {
 	node: MdxJsxFlowElementHast;
 	name: string;
 	controls: ControlInput[];
-	fallback?: string;
 }
 
 /**
@@ -147,6 +146,4 @@ export interface ProcessedInteractiveDemo {
 	importPath: string;
 	/** Enriched controls with serializable reference data */
 	controls: SerializableControl[];
-	/** Pre-highlighted fallback code as HAST (for Suspense fallback) */
-	fallbackHast?: import("hast").Root;
 }
