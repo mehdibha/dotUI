@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useDeferredValue, useMemo, useRef, use } from "react";
 import { CheckIcon, CopyIcon, FileIcon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
@@ -170,4 +170,71 @@ export function getIconForLanguageExtension(language: string) {
 		default:
 			return <FileIcon />;
 	}
+}
+
+// ============================================================================
+// Shiki Highlighting (fumadocs-style lazy loading)
+// ============================================================================
+
+export interface HighlightOptions {
+	lang: string;
+	components?: Record<string, React.ComponentType<React.ComponentProps<"pre">>>;
+}
+
+// Module-level cache for promises (fumadocs pattern)
+const promises: Record<string, Promise<React.ReactNode>> = {};
+
+/**
+ * Highlight code with shiki - lazy loads shiki and hast-util-to-jsx-runtime
+ */
+async function highlight(code: string, options: HighlightOptions): Promise<React.ReactNode> {
+	const [{ codeToHast }, { toJsxRuntime }, { jsx, jsxs, Fragment }] = await Promise.all([
+		import("shiki"),
+		import("hast-util-to-jsx-runtime"),
+		import("react/jsx-runtime"),
+	]);
+
+	const hast = await codeToHast(code, {
+		lang: options.lang,
+		themes: { light: "github-light", dark: "github-dark" },
+		defaultColor: false,
+	});
+
+	return toJsxRuntime(hast, {
+		jsx,
+		jsxs,
+		Fragment,
+		components: options.components ?? { pre: Pre },
+	});
+}
+
+/**
+ * Get highlighted results, should be used with React Suspense API.
+ * Results are cached using (lang, code) as key unless deps provided.
+ */
+export function useShiki(
+	code: string,
+	options: HighlightOptions,
+	deps?: React.DependencyList,
+): React.ReactNode {
+	const key = useMemo(() => {
+		return deps ? JSON.stringify(deps) : `${options.lang}:${code}`;
+	}, [code, deps, options.lang]);
+
+	return use((promises[key] ??= highlight(code, options)));
+}
+
+// ============================================================================
+// Dynamic Pre Component
+// ============================================================================
+
+export interface DynamicPreProps {
+	lang: string;
+	code: string;
+}
+
+export function DynamicPre({ lang, code }: DynamicPreProps) {
+	const deferredCode = useDeferredValue(code);
+
+	return useShiki(deferredCode, { lang, components: { pre: Pre } }, [lang, deferredCode]);
 }

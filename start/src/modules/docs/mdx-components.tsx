@@ -11,7 +11,8 @@ import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "./demo";
 import { Example, type ExampleProps } from "./example";
 import { PageTabPanel, PageTabs } from "./page-tabs";
 import { Reference, type ReferenceProps } from "./reference";
-import { Examples, InteractiveDemo, type InteractiveDemoProps } from "./stubs";
+import { Examples } from "./stubs";
+import { InteractiveDemo } from "@/modules/interactive-demo/interactive-demo";
 
 export const mdxComponents: MDXComponents = {
 	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 font-bold text-4xl", className)} {...props} />,
@@ -88,7 +89,7 @@ export const mdxComponents: MDXComponents = {
 		<Example className={cn("not-first:mt-4", className)} {...props} />
 	),
 	Examples,
-	InteractiveDemo: ({ className, ...props }: InteractiveDemoProps) => (
+	InteractiveDemo: ({ className, ...props }: React.ComponentProps<typeof InteractiveDemo>) => (
 		<InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />
 	),
 	Reference: ({ className, ...props }: ReferenceProps) => (
