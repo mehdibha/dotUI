@@ -1,5 +1,6 @@
 import type React from "react";
 
+import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@dotui/registry/ui/dialog";
 import { Overlay } from "@dotui/registry/ui/overlay";
@@ -13,12 +14,12 @@ export interface ExampleProps extends React.ComponentProps<"div"> {
 	children: React.ReactNode;
 }
 
-export function Example({ component: Component, description, children, ...props }: ExampleProps) {
+export function Example({ component: Component, description, children, className, ...props }: ExampleProps) {
 	const codeContent = getSlotContent(children, DemoCode);
 	const previewContent = getSlotContent(children, DemoCodePreview);
 
 	return (
-		<div className="relative flex flex-col" {...props}>
+		<div data-example="" className={cn("relative flex flex-col", className)} {...props}>
 			{/* Preview */}
 			<div className="flex flex-1 items-center justify-center rounded-t-md border bg-bg p-10">
 				<Component />

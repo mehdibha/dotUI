@@ -1,6 +1,6 @@
 {
-  "name": "CalendarHeaderProps",
-  "description": "Missing description.",
-  "extendsElement": "header",
-  "props": {}
+	"name": "CalendarHeaderProps",
+	"description": "Missing description.",
+	"extendsElement": "header",
+	"props": {}
 }

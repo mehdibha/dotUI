@@ -25,10 +25,7 @@ import type {
  * Build controls from simplified inputs + API reference.
  * Infers type, options, and defaults from the API reference.
  */
-export async function buildControlsFromReference(
-	name: string,
-	controlInputs: ControlInput[],
-): Promise<Control[]> {
+export async function buildControlsFromReference(name: string, controlInputs: ControlInput[]): Promise<Control[]> {
 	const reference = await loadApiReference(name);
 
 	if (!reference) {
@@ -61,11 +58,7 @@ export async function buildControlsFromReference(
 /**
  * Infer a control definition from a prop definition.
  */
-function inferControlFromProp(
-	name: string,
-	prop: PropDefinition,
-	overrides: Partial<Omit<Control, "name">>,
-): Control {
+function inferControlFromProp(name: string, prop: PropDefinition, overrides: Partial<Omit<Control, "name">>): Control {
 	// If type is explicitly provided in overrides, use it
 	if (overrides.type) {
 		return buildControlWithOverrides(name, prop, overrides);

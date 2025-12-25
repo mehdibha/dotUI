@@ -14,11 +14,7 @@ import {
 	enrichControlsForSerialization,
 	toPascalCase,
 } from "../../interactive-demo/process-controls";
-import type {
-	ControlInput,
-	InteractiveDemoNodeInfo,
-	ProcessedInteractiveDemo,
-} from "../../interactive-demo/types";
+import type { ControlInput, InteractiveDemoNodeInfo, ProcessedInteractiveDemo } from "../../interactive-demo/types";
 
 // ============================================================================
 // Cached Highlighter (singleton)

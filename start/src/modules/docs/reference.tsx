@@ -204,7 +204,6 @@ function DescriptionItem({ label, children, hasSeparator }: DescriptionItemProps
 	);
 }
 
-
 interface DisclosureGroupProps {
 	title: string;
 	defaultExpanded?: boolean;

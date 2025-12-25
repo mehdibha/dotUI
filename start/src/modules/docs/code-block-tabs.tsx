@@ -81,6 +81,10 @@ export function CodeBlockTabsTrigger({ value, ...props }: Omit<TabProps, "id"> &
 
 export function CodeBlockTab({ value, ...props }: Omit<TabPanelProps, "id"> & { value?: string }) {
 	return (
-		<TabPanel id={value} className="*:[figure]:mx-0 *:[figure]:mt-0 *:[figure]:rounded-t-none *:[figure]:border-t-0" {...props} />
+		<TabPanel
+			id={value}
+			className="*:[figure]:mx-0 *:[figure]:mt-0 *:[figure]:rounded-t-none *:[figure]:border-t-0"
+			{...props}
+		/>
 	);
 }

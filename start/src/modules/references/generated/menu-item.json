@@ -1,861 +1,861 @@
 {
-  "name": "MenuItemProps",
-  "description": "A MenuItem represents an individual action in a Menu.",
-  "props": {
-    "variant": {
-      "type": "\"danger\" | \"warning\" | \"success\" | \"default\" | \"accent\"",
-      "detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'default'\n| 'accent'\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "warning"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "success"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "default"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "accent"
-          }
-        ]
-      },
-      "description": "The color variant of the menu item.",
-      "default": "'default'"
-    },
-    "onPress": {
-      "type": "((e: PressEvent) => void)",
-      "detailedType": "((e: PressEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "PressEvent",
-              "name": "PressEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the press is released over the target."
-    },
-    "onPressStart": {
-      "type": "((e: PressEvent) => void)",
-      "detailedType": "((e: PressEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "PressEvent",
-              "name": "PressEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a press interaction starts."
-    },
-    "onPressEnd": {
-      "type": "((e: PressEvent) => void)",
-      "detailedType": "((e: PressEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "PressEvent",
-              "name": "PressEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
-    },
-    "onPressChange": {
-      "type": "((isPressed: boolean) => void)",
-      "detailedType": "((isPressed: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isPressed",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the press state changes."
-    },
-    "onPressUp": {
-      "type": "((e: PressEvent) => void)",
-      "detailedType": "((e: PressEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "PressEvent",
-              "name": "PressEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
-    },
-    "onClick": {
-      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
-      "detailedType": "| ((e: MouseEvent<FocusableElement, MouseEvent>) => void)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "e",
-                "value": {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "MouseEvent"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "FocusableElement"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
-    },
-    "onHoverStart": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction starts."
-    },
-    "onHoverEnd": {
-      "type": "((e: HoverEvent) => void)",
-      "detailedType": "((e: HoverEvent) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "HoverEvent",
-              "name": "HoverEvent"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when a hover interaction ends."
-    },
-    "onHoverChange": {
-      "type": "((isHovering: boolean) => void)",
-      "detailedType": "((isHovering: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isHovering",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the hover state changes."
-    },
-    "id": {
-      "type": "Key",
-      "detailedType": "Key | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "Key"
-      },
-      "description": "The unique id of the item."
-    },
-    "value": {
-      "type": "T",
-      "detailedType": "T | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "T"
-      },
-      "description": "The object value that this item represents. When using dynamic collections, this is set automatically."
-    },
-    "textValue": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "A string representation of the item's contents, used for features like typeahead."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "An accessibility label for this item."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the item is disabled."
-    },
-    "onAction": {
-      "type": "(() => void)",
-      "detailedType": "(() => void) | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the item is selected."
-    },
-    "children": {
-      "type": "ReactNode | (values: MenuItemRenderProps) => ReactNode",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "MenuItemRenderProps",
-                  "name": "MenuItemRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
-    },
-    "className": {
-      "type": "string | (values: MenuItemRenderProps) => string",
-      "detailedType": "string | (values: MenuItemRenderProps) => string | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "MenuItemRenderProps",
-                  "name": "MenuItemRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-    },
-    "style": {
-      "type": "CSSProperties | (values: MenuItemRenderProps) => CSSProperties",
-      "detailedType": "CSSProperties | (values: MenuItemRenderProps) => CSSProperties | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "MenuItemRenderProps",
-                  "name": "MenuItemRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-    },
-    "href": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
-    },
-    "hrefLang": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
-    },
-    "target": {
-      "type": "HTMLAttributeAnchorTarget",
-      "detailedType": "HTMLAttributeAnchorTarget | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "HTMLAttributeAnchorTarget"
-      },
-      "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
-    },
-    "rel": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
-    },
-    "download": {
-      "type": "string | boolean",
-      "detailedType": "string | boolean | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "boolean"
-          },
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
-    },
-    "ping": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
-    },
-    "referrerPolicy": {
-      "type": "HTMLAttributeReferrerPolicy",
-      "detailedType": "HTMLAttributeReferrerPolicy | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "HTMLAttributeReferrerPolicy"
-      },
-      "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
-    },
-    "routerOptions": {
-      "type": "undefined",
-      "typeAst": {
-        "type": "undefined"
-      },
-      "description": "Options for the configured client side router."
-    }
-  },
-  "renderProps": {
-    "hasSubmenu": {
-      "selector": "[data-has-submenu]",
-      "description": "Whether the item has a submenu."
-    },
-    "isOpen": {
-      "selector": "[data-open]",
-      "description": "Whether the item's submenu is open."
-    },
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the item is currently hovered with a mouse."
-    },
-    "isPressed": {
-      "selector": "[data-pressed]",
-      "description": "Whether the item is currently in a pressed state."
-    },
-    "isSelected": {
-      "selector": "[data-selected]",
-      "description": "Whether the item is currently selected."
-    },
-    "isFocused": {
-      "selector": "[data-focused]",
-      "description": "Whether the item is currently focused."
-    },
-    "isFocusVisible": {
-      "selector": "[data-focus-visible]",
-      "description": "Whether the item is currently keyboard focused."
-    },
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
-    },
-    "selectionMode": {
-      "selector": "[data-selection-mode=\"single | multiple\"]",
-      "description": "The type of selection that is allowed in the collection."
-    },
-    "allowsDragging": {
-      "selector": "[data-allows-dragging]",
-      "description": "Whether the item allows dragging."
-    },
-    "isDragging": {
-      "selector": "[data-dragging]",
-      "description": "Whether the item is currently being dragged."
-    },
-    "isDropTarget": {
-      "selector": "[data-drop-target]",
-      "description": "Whether the item is currently an active drop target."
-    }
-  },
-  "typeLinks": {
-    "MenuItemRenderProps": {
-      "type": "interface",
-      "name": "MenuItemRenderProps",
-      "properties": {
-        "hasSubmenu": {
-          "type": "property",
-          "name": "hasSubmenu",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item has a submenu."
-        },
-        "isOpen": {
-          "type": "property",
-          "name": "isOpen",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item's submenu is open."
-        },
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently hovered with a mouse."
-        },
-        "isPressed": {
-          "type": "property",
-          "name": "isPressed",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently in a pressed state."
-        },
-        "isSelected": {
-          "type": "property",
-          "name": "isSelected",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently selected."
-        },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently focused."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently keyboard focused."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
-        },
-        "selectionMode": {
-          "type": "property",
-          "name": "selectionMode",
-          "value": {
-            "type": "identifier",
-            "name": "SelectionMode"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The type of selection that is allowed in the collection."
-        },
-        "selectionBehavior": {
-          "type": "property",
-          "name": "selectionBehavior",
-          "value": {
-            "type": "identifier",
-            "name": "SelectionBehavior"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The selection behavior for the collection."
-        },
-        "allowsDragging": {
-          "type": "property",
-          "name": "allowsDragging",
-          "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "Whether the item allows dragging."
-        },
-        "isDragging": {
-          "type": "property",
-          "name": "isDragging",
-          "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "Whether the item is currently being dragged."
-        },
-        "isDropTarget": {
-          "type": "property",
-          "name": "isDropTarget",
-          "value": {
-            "type": "identifier",
-            "name": "boolean | undefined"
-          },
-          "optional": true,
-          "readonly": false,
-          "description": "Whether the item is currently an active drop target."
-        }
-      }
-    },
-    "HoverEvent": {
-      "type": "interface",
-      "name": "HoverEvent",
-      "properties": {
-        "type": {
-          "type": "property",
-          "name": "type",
-          "value": {
-            "type": "identifier",
-            "name": "\"hoverstart\" | \"hoverend\""
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The type of hover event being fired."
-        },
-        "pointerType": {
-          "type": "property",
-          "name": "pointerType",
-          "value": {
-            "type": "identifier",
-            "name": "\"mouse\" | \"pen\""
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The pointer type that triggered the hover event."
-        },
-        "target": {
-          "type": "property",
-          "name": "target",
-          "value": {
-            "type": "identifier",
-            "name": "HTMLElement"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The target element of the hover event."
-        }
-      }
-    },
-    "PressEvent": {
-      "type": "interface",
-      "name": "PressEvent",
-      "properties": {
-        "type": {
-          "type": "property",
-          "name": "type",
-          "value": {
-            "type": "identifier",
-            "name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The type of press event being fired."
-        },
-        "pointerType": {
-          "type": "property",
-          "name": "pointerType",
-          "value": {
-            "type": "identifier",
-            "name": "PointerType"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The pointer type that triggered the press event."
-        },
-        "target": {
-          "type": "property",
-          "name": "target",
-          "value": {
-            "type": "identifier",
-            "name": "Element"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The target element of the press event."
-        },
-        "shiftKey": {
-          "type": "property",
-          "name": "shiftKey",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the shift keyboard modifier was held during the press event."
-        },
-        "ctrlKey": {
-          "type": "property",
-          "name": "ctrlKey",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the ctrl keyboard modifier was held during the press event."
-        },
-        "metaKey": {
-          "type": "property",
-          "name": "metaKey",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the meta keyboard modifier was held during the press event."
-        },
-        "altKey": {
-          "type": "property",
-          "name": "altKey",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the alt keyboard modifier was held during the press event."
-        },
-        "x": {
-          "type": "property",
-          "name": "x",
-          "value": {
-            "type": "number"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "X position relative to the target."
-        },
-        "y": {
-          "type": "property",
-          "name": "y",
-          "value": {
-            "type": "number"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Y position relative to the target."
-        },
-        "continuePropagation": {
-          "type": "property",
-          "name": "continuePropagation",
-          "value": {
-            "type": "identifier",
-            "name": "() => void"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
-        }
-      }
-    }
-  }
+	"name": "MenuItemProps",
+	"description": "A MenuItem represents an individual action in a Menu.",
+	"props": {
+		"variant": {
+			"type": "\"danger\" | \"warning\" | \"success\" | \"default\" | \"accent\"",
+			"detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'default'\n| 'accent'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "danger"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "warning"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "success"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "default"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "accent"
+					}
+				]
+			},
+			"description": "The color variant of the menu item.",
+			"default": "'default'"
+		},
+		"onPress": {
+			"type": "((e: PressEvent) => void)",
+			"detailedType": "((e: PressEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "PressEvent",
+							"name": "PressEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the press is released over the target."
+		},
+		"onPressStart": {
+			"type": "((e: PressEvent) => void)",
+			"detailedType": "((e: PressEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "PressEvent",
+							"name": "PressEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a press interaction starts."
+		},
+		"onPressEnd": {
+			"type": "((e: PressEvent) => void)",
+			"detailedType": "((e: PressEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "PressEvent",
+							"name": "PressEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
+		},
+		"onPressChange": {
+			"type": "((isPressed: boolean) => void)",
+			"detailedType": "((isPressed: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isPressed",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the press state changes."
+		},
+		"onPressUp": {
+			"type": "((e: PressEvent) => void)",
+			"detailedType": "((e: PressEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "PressEvent",
+							"name": "PressEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
+		},
+		"onClick": {
+			"type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
+			"detailedType": "| ((e: MouseEvent<FocusableElement, MouseEvent>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "identifier",
+										"name": "MouseEvent"
+									},
+									"typeParameters": [
+										{
+											"type": "identifier",
+											"name": "FocusableElement"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
+		},
+		"onHoverStart": {
+			"type": "((e: HoverEvent) => void)",
+			"detailedType": "((e: HoverEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "HoverEvent",
+							"name": "HoverEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a hover interaction starts."
+		},
+		"onHoverEnd": {
+			"type": "((e: HoverEvent) => void)",
+			"detailedType": "((e: HoverEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "HoverEvent",
+							"name": "HoverEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a hover interaction ends."
+		},
+		"onHoverChange": {
+			"type": "((isHovering: boolean) => void)",
+			"detailedType": "((isHovering: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isHovering",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the hover state changes."
+		},
+		"id": {
+			"type": "Key",
+			"detailedType": "Key | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Key"
+			},
+			"description": "The unique id of the item."
+		},
+		"value": {
+			"type": "T",
+			"detailedType": "T | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "T"
+			},
+			"description": "The object value that this item represents. When using dynamic collections, this is set automatically."
+		},
+		"textValue": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "A string representation of the item's contents, used for features like typeahead."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "An accessibility label for this item."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the item is disabled."
+		},
+		"onAction": {
+			"type": "(() => void)",
+			"detailedType": "(() => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the item is selected."
+		},
+		"children": {
+			"type": "ReactNode | (values: MenuItemRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "MenuItemRenderProps",
+									"name": "MenuItemRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"className": {
+			"type": "string | (values: MenuItemRenderProps) => string",
+			"detailedType": "string | (values: MenuItemRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "MenuItemRenderProps",
+									"name": "MenuItemRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+		},
+		"style": {
+			"type": "CSSProperties | (values: MenuItemRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: MenuItemRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "MenuItemRenderProps",
+									"name": "MenuItemRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"href": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
+		},
+		"hrefLang": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
+		},
+		"target": {
+			"type": "HTMLAttributeAnchorTarget",
+			"detailedType": "HTMLAttributeAnchorTarget | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "HTMLAttributeAnchorTarget"
+			},
+			"description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
+		},
+		"rel": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
+		},
+		"download": {
+			"type": "string | boolean",
+			"detailedType": "string | boolean | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
+		},
+		"ping": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
+		},
+		"referrerPolicy": {
+			"type": "HTMLAttributeReferrerPolicy",
+			"detailedType": "HTMLAttributeReferrerPolicy | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "HTMLAttributeReferrerPolicy"
+			},
+			"description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
+		},
+		"routerOptions": {
+			"type": "undefined",
+			"typeAst": {
+				"type": "undefined"
+			},
+			"description": "Options for the configured client side router."
+		}
+	},
+	"renderProps": {
+		"hasSubmenu": {
+			"selector": "[data-has-submenu]",
+			"description": "Whether the item has a submenu."
+		},
+		"isOpen": {
+			"selector": "[data-open]",
+			"description": "Whether the item's submenu is open."
+		},
+		"isHovered": {
+			"selector": "[data-hovered]",
+			"description": "Whether the item is currently hovered with a mouse."
+		},
+		"isPressed": {
+			"selector": "[data-pressed]",
+			"description": "Whether the item is currently in a pressed state."
+		},
+		"isSelected": {
+			"selector": "[data-selected]",
+			"description": "Whether the item is currently selected."
+		},
+		"isFocused": {
+			"selector": "[data-focused]",
+			"description": "Whether the item is currently focused."
+		},
+		"isFocusVisible": {
+			"selector": "[data-focus-visible]",
+			"description": "Whether the item is currently keyboard focused."
+		},
+		"isDisabled": {
+			"selector": "[data-disabled]",
+			"description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+		},
+		"selectionMode": {
+			"selector": "[data-selection-mode=\"single | multiple\"]",
+			"description": "The type of selection that is allowed in the collection."
+		},
+		"allowsDragging": {
+			"selector": "[data-allows-dragging]",
+			"description": "Whether the item allows dragging."
+		},
+		"isDragging": {
+			"selector": "[data-dragging]",
+			"description": "Whether the item is currently being dragged."
+		},
+		"isDropTarget": {
+			"selector": "[data-drop-target]",
+			"description": "Whether the item is currently an active drop target."
+		}
+	},
+	"typeLinks": {
+		"MenuItemRenderProps": {
+			"type": "interface",
+			"name": "MenuItemRenderProps",
+			"properties": {
+				"hasSubmenu": {
+					"type": "property",
+					"name": "hasSubmenu",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item has a submenu."
+				},
+				"isOpen": {
+					"type": "property",
+					"name": "isOpen",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item's submenu is open."
+				},
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently hovered with a mouse."
+				},
+				"isPressed": {
+					"type": "property",
+					"name": "isPressed",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently in a pressed state."
+				},
+				"isSelected": {
+					"type": "property",
+					"name": "isSelected",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently selected."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently keyboard focused."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+				},
+				"selectionMode": {
+					"type": "property",
+					"name": "selectionMode",
+					"value": {
+						"type": "identifier",
+						"name": "SelectionMode"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of selection that is allowed in the collection."
+				},
+				"selectionBehavior": {
+					"type": "property",
+					"name": "selectionBehavior",
+					"value": {
+						"type": "identifier",
+						"name": "SelectionBehavior"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The selection behavior for the collection."
+				},
+				"allowsDragging": {
+					"type": "property",
+					"name": "allowsDragging",
+					"value": {
+						"type": "identifier",
+						"name": "boolean | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item allows dragging."
+				},
+				"isDragging": {
+					"type": "property",
+					"name": "isDragging",
+					"value": {
+						"type": "identifier",
+						"name": "boolean | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item is currently being dragged."
+				},
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
+					"value": {
+						"type": "identifier",
+						"name": "boolean | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item is currently an active drop target."
+				}
+			}
+		},
+		"HoverEvent": {
+			"type": "interface",
+			"name": "HoverEvent",
+			"properties": {
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"hoverstart\" | \"hoverend\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of hover event being fired."
+				},
+				"pointerType": {
+					"type": "property",
+					"name": "pointerType",
+					"value": {
+						"type": "identifier",
+						"name": "\"mouse\" | \"pen\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The pointer type that triggered the hover event."
+				},
+				"target": {
+					"type": "property",
+					"name": "target",
+					"value": {
+						"type": "identifier",
+						"name": "HTMLElement"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The target element of the hover event."
+				}
+			}
+		},
+		"PressEvent": {
+			"type": "interface",
+			"name": "PressEvent",
+			"properties": {
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of press event being fired."
+				},
+				"pointerType": {
+					"type": "property",
+					"name": "pointerType",
+					"value": {
+						"type": "identifier",
+						"name": "PointerType"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The pointer type that triggered the press event."
+				},
+				"target": {
+					"type": "property",
+					"name": "target",
+					"value": {
+						"type": "identifier",
+						"name": "Element"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The target element of the press event."
+				},
+				"shiftKey": {
+					"type": "property",
+					"name": "shiftKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the shift keyboard modifier was held during the press event."
+				},
+				"ctrlKey": {
+					"type": "property",
+					"name": "ctrlKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the ctrl keyboard modifier was held during the press event."
+				},
+				"metaKey": {
+					"type": "property",
+					"name": "metaKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the meta keyboard modifier was held during the press event."
+				},
+				"altKey": {
+					"type": "property",
+					"name": "altKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the alt keyboard modifier was held during the press event."
+				},
+				"x": {
+					"type": "property",
+					"name": "x",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "X position relative to the target."
+				},
+				"y": {
+					"type": "property",
+					"name": "y",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Y position relative to the target."
+				},
+				"continuePropagation": {
+					"type": "property",
+					"name": "continuePropagation",
+					"value": {
+						"type": "identifier",
+						"name": "() => void"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
+				}
+			}
+		}
+	}
 }

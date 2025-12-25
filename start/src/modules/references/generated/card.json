@@ -1,6 +1,6 @@
 {
-  "name": "CardProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {}
+	"name": "CardProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {}
 }

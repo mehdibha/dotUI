@@ -1,38 +1,38 @@
 {
-  "name": "AlertProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {
-    "variant": {
-      "type": "\"neutral\" | \"danger\" | \"warning\" | \"info\" | \"success\"",
-      "detailedType": "| 'neutral'\n| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "neutral"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "warning"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "info"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "success"
-          }
-        ]
-      },
-      "description": "The visual style of the alert.",
-      "default": "'neutral'"
-    }
-  }
+	"name": "AlertProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {
+		"variant": {
+			"type": "\"neutral\" | \"danger\" | \"warning\" | \"info\" | \"success\"",
+			"detailedType": "| 'neutral'\n| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "neutral"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "danger"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "warning"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "info"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "success"
+					}
+				]
+			},
+			"description": "The visual style of the alert.",
+			"default": "'neutral'"
+		}
+	}
 }

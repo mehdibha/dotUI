@@ -1,556 +1,556 @@
 {
-  "name": "RadioGroupProps",
-  "description": "A radio group allows a user to select a single item from a list of mutually exclusive options.",
-  "props": {
-    "onFocus": {
-      "type": "((e: FocusEvent<Element, Element>) => void)",
-      "detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "e",
-                "value": {
-                  "type": "identifier",
-                  "name": "FocusEvent"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the element receives focus."
-    },
-    "onBlur": {
-      "type": "((e: FocusEvent<Element, Element>) => void)",
-      "detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "e",
-                "value": {
-                  "type": "identifier",
-                  "name": "FocusEvent"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "void"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Handler that is called when the element loses focus."
-    },
-    "onFocusChange": {
-      "type": "((isFocused: boolean) => void)",
-      "detailedType": "((isFocused: boolean) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "isFocused",
-            "value": {
-              "type": "link",
-              "id": "boolean",
-              "name": "boolean"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the element's focus status changes."
-    },
-    "form": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
-    },
-    "defaultValue": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "The default value (uncontrolled)."
-    },
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-    },
-    "aria-describedby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that describes the object."
-    },
-    "aria-details": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-    },
-    "aria-errormessage": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element that provides an error message for the object."
-    },
-    "aria-label": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Defines a string value that labels the current element."
-    },
-    "aria-labelledby": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) that labels the current element."
-    },
-    "onChange": {
-      "type": "((value: string) => void)",
-      "detailedType": "((value: string) => void) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "value",
-            "value": {
-              "type": "link",
-              "id": "string",
-              "name": "string"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
-      },
-      "description": "Handler that is called when the value changes."
-    },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input is disabled."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-    },
-    "value": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "The current value (controlled)."
-    },
-    "isReadOnly": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input can be selected but not changed by the user."
-    },
-    "isRequired": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether user input is required on the input before form submission."
-    },
-    "isInvalid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the input value is invalid."
-    },
-    "validate": {
-      "type": "((value: string | null) => true | ValidationError | null | undefined)",
-      "detailedType": "| ((\n    value: string | null,\n  ) => true | ValidationError | null | undefined)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "value",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "null"
-                    },
-                    {
-                      "type": "string"
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "booleanLiteral",
-                  "value": true
-                },
-                {
-                  "type": "array",
-                  "elementType": {
-                    "type": "string"
-                  }
-                }
-              ]
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
-    },
-    "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "Orientation"
-      },
-      "description": "The axis the Radio Button(s) should align with.",
-      "default": "'vertical'"
-    },
-    "validationBehavior": {
-      "type": "\"native\" | \"aria\"",
-      "detailedType": "'native' | 'aria' | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "native"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "aria"
-          }
-        ]
-      },
-      "description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
-      "default": "'native'"
-    },
-    "children": {
-      "type": "ReactNode | (values: RadioGroupRenderProps) => ReactNode",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "identifier",
-            "name": "ReactNode"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "RadioGroupRenderProps",
-                  "name": "RadioGroupRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactNode"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
-    },
-    "className": {
-      "type": "string | (values: RadioGroupRenderProps) => string",
-      "detailedType": "string | (values: RadioGroupRenderProps) => string | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "RadioGroupRenderProps",
-                  "name": "RadioGroupRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "string"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-    },
-    "style": {
-      "type": "CSSProperties | (values: RadioGroupRenderProps) => CSSProperties",
-      "detailedType": "CSSProperties | (values: RadioGroupRenderProps) => CSSProperties | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "values",
-                "value": {
-                  "type": "link",
-                  "id": "RadioGroupRenderProps",
-                  "name": "RadioGroupRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "CSSProperties"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-    },
-    "slot": {
-      "type": "string | null",
-      "detailedType": "string | null | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "string"
-          }
-        ]
-      },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-    }
-  },
-  "renderProps": {
-    "orientation": {
-      "selector": "[data-orientation=\"horizontal | vertical\"]",
-      "description": "The orientation of the radio group."
-    },
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the radio group is disabled."
-    },
-    "isReadOnly": {
-      "selector": "[data-readonly]",
-      "description": "Whether the radio group is read only."
-    },
-    "isRequired": {
-      "selector": "[data-required]",
-      "description": "Whether the radio group is required."
-    },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the radio group is invalid."
-    }
-  },
-  "typeLinks": {
-    "RadioGroupRenderProps": {
-      "type": "interface",
-      "name": "RadioGroupRenderProps",
-      "properties": {
-        "orientation": {
-          "type": "property",
-          "name": "orientation",
-          "value": {
-            "type": "identifier",
-            "name": "Orientation"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The orientation of the radio group."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio group is disabled."
-        },
-        "isReadOnly": {
-          "type": "property",
-          "name": "isReadOnly",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio group is read only."
-        },
-        "isRequired": {
-          "type": "property",
-          "name": "isRequired",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio group is required."
-        },
-        "isInvalid": {
-          "type": "property",
-          "name": "isInvalid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the radio group is invalid."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "identifier",
-            "name": "RadioGroup.State"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the radio group."
-        }
-      }
-    }
-  }
+	"name": "RadioGroupProps",
+	"description": "A radio group allows a user to select a single item from a list of mutually exclusive options.",
+	"props": {
+		"onFocus": {
+			"type": "((e: FocusEvent<Element, Element>) => void)",
+			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "identifier",
+									"name": "FocusEvent"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the element receives focus."
+		},
+		"onBlur": {
+			"type": "((e: FocusEvent<Element, Element>) => void)",
+			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "identifier",
+									"name": "FocusEvent"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the element loses focus."
+		},
+		"onFocusChange": {
+			"type": "((isFocused: boolean) => void)",
+			"detailedType": "((isFocused: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isFocused",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the element's focus status changes."
+		},
+		"form": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+		},
+		"defaultValue": {
+			"type": "string | null",
+			"detailedType": "string | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "The default value (uncontrolled)."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"onChange": {
+			"type": "((value: string) => void)",
+			"detailedType": "((value: string) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "value",
+						"value": {
+							"type": "link",
+							"id": "string",
+							"name": "string"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the value changes."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input is disabled."
+		},
+		"name": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+		},
+		"value": {
+			"type": "string | null",
+			"detailedType": "string | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "The current value (controlled)."
+		},
+		"isReadOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input can be selected but not changed by the user."
+		},
+		"isRequired": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether user input is required on the input before form submission."
+		},
+		"isInvalid": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input value is invalid."
+		},
+		"validate": {
+			"type": "((value: string | null) => true | ValidationError | null | undefined)",
+			"detailedType": "| ((\n    value: string | null,\n  ) => true | ValidationError | null | undefined)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "string"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "undefined"
+								},
+								{
+									"type": "null"
+								},
+								{
+									"type": "string"
+								},
+								{
+									"type": "booleanLiteral",
+									"value": true
+								},
+								{
+									"type": "array",
+									"elementType": {
+										"type": "string"
+									}
+								}
+							]
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+		},
+		"orientation": {
+			"type": "Orientation",
+			"detailedType": "Orientation | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Orientation"
+			},
+			"description": "The axis the Radio Button(s) should align with.",
+			"default": "'vertical'"
+		},
+		"validationBehavior": {
+			"type": "\"native\" | \"aria\"",
+			"detailedType": "'native' | 'aria' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "native"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "aria"
+					}
+				]
+			},
+			"description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
+			"default": "'native'"
+		},
+		"children": {
+			"type": "ReactNode | (values: RadioGroupRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "RadioGroupRenderProps",
+									"name": "RadioGroupRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"className": {
+			"type": "string | (values: RadioGroupRenderProps) => string",
+			"detailedType": "string | (values: RadioGroupRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "RadioGroupRenderProps",
+									"name": "RadioGroupRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+		},
+		"style": {
+			"type": "CSSProperties | (values: RadioGroupRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: RadioGroupRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "RadioGroupRenderProps",
+									"name": "RadioGroupRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"slot": {
+			"type": "string | null",
+			"detailedType": "string | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		}
+	},
+	"renderProps": {
+		"orientation": {
+			"selector": "[data-orientation=\"horizontal | vertical\"]",
+			"description": "The orientation of the radio group."
+		},
+		"isDisabled": {
+			"selector": "[data-disabled]",
+			"description": "Whether the radio group is disabled."
+		},
+		"isReadOnly": {
+			"selector": "[data-readonly]",
+			"description": "Whether the radio group is read only."
+		},
+		"isRequired": {
+			"selector": "[data-required]",
+			"description": "Whether the radio group is required."
+		},
+		"isInvalid": {
+			"selector": "[data-invalid]",
+			"description": "Whether the radio group is invalid."
+		}
+	},
+	"typeLinks": {
+		"RadioGroupRenderProps": {
+			"type": "interface",
+			"name": "RadioGroupRenderProps",
+			"properties": {
+				"orientation": {
+					"type": "property",
+					"name": "orientation",
+					"value": {
+						"type": "identifier",
+						"name": "Orientation"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The orientation of the radio group."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the radio group is disabled."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the radio group is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the radio group is required."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the radio group is invalid."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "identifier",
+						"name": "RadioGroup.State"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the radio group."
+				}
+			}
+		}
+	}
 }

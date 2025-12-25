@@ -1,6 +1,6 @@
 {
-  "name": "ModalBackdropProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {}
+	"name": "ModalBackdropProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {}
 }

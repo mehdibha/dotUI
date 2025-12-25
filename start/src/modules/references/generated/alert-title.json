@@ -1,6 +1,6 @@
 {
-  "name": "AlertTitleProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {}
+	"name": "AlertTitleProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {}
 }

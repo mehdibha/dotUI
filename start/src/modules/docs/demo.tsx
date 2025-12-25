@@ -86,9 +86,7 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
 				}
 				className="rounded-t-none border-t-0"
 			>
-				<Pre className="[view-transition-name:code-fade]">
-					{isExpanded ? codeContent : previewContent}
-				</Pre>
+				<Pre className="[view-transition-name:code-fade]">{isExpanded ? codeContent : previewContent}</Pre>
 			</CodeBlock>
 		</div>
 	);

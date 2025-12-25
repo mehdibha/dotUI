@@ -1,15 +1,15 @@
 {
-  "name": "AvatarImageProps",
-  "description": "Missing description.",
-  "extendsElement": "img",
-  "props": {
-    "src": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The URL of the avatar image."
-    }
-  }
+	"name": "AvatarImageProps",
+	"description": "Missing description.",
+	"extendsElement": "img",
+	"props": {
+		"src": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The URL of the avatar image."
+		}
+	}
 }

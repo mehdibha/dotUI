@@ -1,98 +1,98 @@
 {
-  "name": "ProgressBarControlProps",
-  "description": "Missing description.",
-  "extendsElement": "div",
-  "props": {
-    "variant": {
-      "type": "\"danger\" | \"warning\" | \"success\" | \"primary\" | \"accent\"",
-      "detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'primary'\n| 'accent'\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "warning"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "success"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "primary"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "accent"
-          }
-        ]
-      },
-      "description": "The color variant of the progress bar.",
-      "default": "'accent'"
-    },
-    "size": {
-      "type": "\"sm\" | \"md\" | \"lg\"",
-      "detailedType": "'sm' | 'md' | 'lg' | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "sm"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "md"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "lg"
-          }
-        ]
-      },
-      "description": "The size of the progress bar.",
-      "default": "'md'"
-    },
-    "duration": {
-      "type": "`${number}s` | `${number}ms`",
-      "detailedType": "`${number}s` | `${number}ms` | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "stringLiteral",
-                "value": "s"
-              }
-            ]
-          },
-          {
-            "type": "template",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "stringLiteral",
-                "value": "ms"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Duration of the progress animation."
-    }
-  }
+	"name": "ProgressBarControlProps",
+	"description": "Missing description.",
+	"extendsElement": "div",
+	"props": {
+		"variant": {
+			"type": "\"danger\" | \"warning\" | \"success\" | \"primary\" | \"accent\"",
+			"detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'primary'\n| 'accent'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "danger"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "warning"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "success"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "primary"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "accent"
+					}
+				]
+			},
+			"description": "The color variant of the progress bar.",
+			"default": "'accent'"
+		},
+		"size": {
+			"type": "\"sm\" | \"md\" | \"lg\"",
+			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "md"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "lg"
+					}
+				]
+			},
+			"description": "The size of the progress bar.",
+			"default": "'md'"
+		},
+		"duration": {
+			"type": "`${number}s` | `${number}ms`",
+			"detailedType": "`${number}s` | `${number}ms` | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "template",
+						"elements": [
+							{
+								"type": "number"
+							},
+							{
+								"type": "stringLiteral",
+								"value": "s"
+							}
+						]
+					},
+					{
+						"type": "template",
+						"elements": [
+							{
+								"type": "number"
+							},
+							{
+								"type": "stringLiteral",
+								"value": "ms"
+							}
+						]
+					}
+				]
+			},
+			"description": "Duration of the progress animation."
+		}
+	}
 }

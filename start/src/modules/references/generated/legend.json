@@ -1,6 +1,6 @@
 {
-  "name": "LegendProps",
-  "description": "Missing description.",
-  "extendsElement": "legend",
-  "props": {}
+	"name": "LegendProps",
+	"description": "Missing description.",
+	"extendsElement": "legend",
+	"props": {}
 }

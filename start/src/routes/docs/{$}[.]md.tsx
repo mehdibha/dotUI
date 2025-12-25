@@ -9,7 +9,6 @@ export const Route = createFileRoute("/docs/{$}.md")({
 				const slugs = params._splat?.split("/") ?? [];
 				const page = docsSource.getPage(slugs);
 
-
 				if (!page) {
 					return new Response("Not found", { status: 404 });
 				}

@@ -491,9 +491,6 @@ importers:
       globby:
         specifier: ^14.0.2
         version: 14.1.0
-      jiti:
-        specifier: ^2.6.1
-        version: 2.6.1
       mdast-util-mdx-jsx:
         specifier: ^3.2.0
         version: 3.2.0

@@ -60,7 +60,12 @@ export function Footer() {
 				</div>
 				<p className="text-fg-muted text-sm">
 					Built with passion by{" "}
-					<a href="https://x.com/mehdibha" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
+					<a
+						href="https://x.com/mehdibha"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="underline underline-offset-4"
+					>
 						@mehdibha
 					</a>
 					.
