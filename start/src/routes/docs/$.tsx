@@ -13,7 +13,7 @@ import browserCollections from "@/.source/browser";
 import { docsSource } from "@/lib/source";
 import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
 import { DocsPager } from "@/modules/docs/docs-pager";
-import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/layout";
+import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
 
