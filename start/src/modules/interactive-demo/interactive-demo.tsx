@@ -197,7 +197,7 @@ export function InteractiveDemo({
 					</>
 				}
 			>
-				<DynamicPre code={displayedCode} lang="tsx" />
+				<DynamicPre lang="tsx">{displayedCode}</DynamicPre>
 			</CodeBlock>
 		</div>
 	);

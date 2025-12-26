@@ -1,30 +1,63 @@
-"use client";
-
-import { useDeferredValue, useId } from "react";
+import { Suspense, useDeferredValue, useId } from "react";
 import { useShiki } from "fumadocs-core/highlight/client";
-import type { HighlightOptions } from "fumadocs-core/highlight";
+import type { HighlightOptions, HighlightOptionsCommon, HighlightOptionsThemes } from "fumadocs-core/highlight";
 
 import { Pre } from "./code-block";
 
 export interface DynamicPreProps {
 	lang: string;
-	code: string;
+	children: string;
+	options?: Omit<HighlightOptionsCommon, "lang"> & HighlightOptionsThemes;
 }
 
-export function DynamicPre({ lang, code }: DynamicPreProps) {
+export function DynamicPre({ lang, children: code, options }: DynamicPreProps) {
 	const id = useId();
-	const deferredCode = useDeferredValue(code);
-
-	return <ShikiHighlighter id={id} lang={lang} code={deferredCode} />;
-}
-
-function ShikiHighlighter({ id, lang, code }: { id: string; lang: string; code: string }) {
-	const options: HighlightOptions = {
+	const shikiOptions = {
 		lang,
+		...options,
 		components: {
 			pre: Pre,
+			...options?.components,
 		},
-	};
+	} satisfies HighlightOptions;
 
-	return useShiki(code, options, [id, lang, code]);
+	return (
+		<Suspense fallback={<Placeholder code={code} components={shikiOptions.components} />}>
+			<ShikiHighlighter id={id} {...useDeferredValue({ code, options: shikiOptions })} />
+		</Suspense>
+	);
+}
+
+function Placeholder({
+	code,
+	components = {},
+}: {
+	code: string;
+	components: HighlightOptions["components"];
+}) {
+	const { pre: PreComponent = "pre", code: Code = "code" } = components as Record<string, React.FC>;
+
+	return (
+		<PreComponent>
+			<Code>
+				{code.split("\n").map((line, i) => (
+					<span key={i} className="line">
+						{line}
+					</span>
+				))}
+			</Code>
+		</PreComponent>
+	);
+}
+
+function ShikiHighlighter({
+	id,
+	code,
+	options,
+}: {
+	id: string;
+	code: string;
+	options: HighlightOptions;
+}) {
+	return useShiki(code, options, [id, options.lang, code]);
 }
