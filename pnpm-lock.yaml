@@ -486,7 +486,7 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0
       es-toolkit:
-        specifier: ^1.32.0
+        specifier: ^1.41.0
         version: 1.42.0
       globby:
         specifier: ^14.0.2
@@ -498,7 +498,7 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4
       tsx:
-        specifier: ^4.19.4
+        specifier: ^4.21.0
         version: 4.21.0
       typescript:
         specifier: ^5.8.3
@@ -513,8 +513,8 @@ importers:
         specifier: ^7.1.7
         version: 7.2.7(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)
       yargs:
-        specifier: ^17.7.2
-        version: 17.7.2
+        specifier: ^18.0.0
+        version: 18.0.0
 
   tw-plugins/tailwindcss-autocontrast:
     dependencies:
@@ -745,7 +745,7 @@ importers:
         specifier: ^2.4.1
         version: 2.4.1
       globby:
-        specifier: ^14.0.0
+        specifier: ^14.0.2
         version: 14.1.0
       jiti:
         specifier: ^2.4.2
@@ -775,8 +775,8 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
       typescript-api-extractor:
-        specifier: 1.0.0-alpha.9
-        version: 1.0.0-alpha.9(typescript@5.9.3)
+        specifier: 1.0.0-alpha.10
+        version: 1.0.0-alpha.10(typescript@5.9.3)
       yargs:
         specifier: ^18.0.0
         version: 18.0.0
@@ -7218,12 +7218,6 @@ packages:
 
   typescript-api-extractor@1.0.0-alpha.10:
     resolution: {integrity: sha512-LFrav8FOszQpCOorxIMtOldvg6ZJqWheI1qNhjeEggpOMJEEPxLYIjJg/mtxUGkPoAuQm2L6ucme8V1T/SspEA==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      typescript: ^5.8
-
-  typescript-api-extractor@1.0.0-alpha.9:
-    resolution: {integrity: sha512-ZGnWrJakEV7J3g9ylJv8AXNq+mKkUXcKM/1jJNWcsVWcjD+g+eHCqmrSA7XJmNp76rSyMEq+qPpVYYttnDIF7Q==}
     engines: {node: '>=22'}
     peerDependencies:
       typescript: ^5.8
@@ -15082,11 +15076,6 @@ snapshots:
   typed-query-selector@2.12.0: {}
 
   typescript-api-extractor@1.0.0-alpha.10(typescript@5.9.3):
-    dependencies:
-      es-toolkit: 1.42.0
-      typescript: 5.9.3
-
-  typescript-api-extractor@1.0.0-alpha.9(typescript@5.9.3):
     dependencies:
       es-toolkit: 1.42.0
       typescript: 5.9.3
