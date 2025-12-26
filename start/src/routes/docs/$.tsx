@@ -13,6 +13,7 @@ import browserCollections from "@/.source/browser";
 import { docsSource } from "@/lib/source";
 import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
 import { DocsPager } from "@/modules/docs/docs-pager";
+import { PageLastUpdate } from "@/modules/docs/last-update";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
@@ -58,7 +59,7 @@ type SerializedNeighbours = {
 
 const clientLoader = browserCollections.docs.createClientLoader({
 	component(
-		{ toc, frontmatter, default: MDX },
+		{ toc, frontmatter, lastModified, default: MDX },
 		{ url, rawContent, neighbours }: { url: string; rawContent: string; neighbours: SerializedNeighbours },
 	) {
 		const hasToc = toc?.length;
@@ -105,6 +106,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 					>
 						<div className="min-w-0">
 							<MDX components={mdxComponents} />
+							{lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}
 						</div>
 						{hasToc && <TOC data-outer-toc="" />}
 					</div>
