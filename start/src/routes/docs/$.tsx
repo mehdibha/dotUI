@@ -44,10 +44,10 @@ const serverLoader = createServerFn({ method: "GET" })
 			description: page.data.description,
 			pageTree: await docsSource.serializePageTree(pageTree),
 			rawContent,
-			neighbours: {
-				previous: previous ? { name: String(previous.name), path: previous.url.replace(/^\/docs\//, "") } : undefined,
-				next: next ? { name: String(next.name), path: next.url.replace(/^\/docs\//, "") } : undefined,
-			},
+		neighbours: {
+			previous: previous ? { name: String(previous.name), path: previous.url.replace(/^\/docs\/?/, "") } : undefined,
+			next: next ? { name: String(next.name), path: next.url.replace(/^\/docs\/?/, "") } : undefined,
+		},
 		};
 	});
 
