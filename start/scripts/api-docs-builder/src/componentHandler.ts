@@ -860,7 +860,8 @@ async function formatTypeWithPrettier(type: string): Promise<string> {
 
 		const lines = formatted.trimEnd().split("\n");
 		if (lines.length === 1) {
-			return lines[0].replace(/^type _ = /, "");
+			// biome-ignore lint/style/noNonNullAssertion: length check guarantees existence
+			return lines[0]!.replace(/^type _ = /, "");
 		}
 
 		// Multi-line: skip first line (`type _ =`) and de-indent

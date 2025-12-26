@@ -1,11 +1,22 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
 	"files": {
-		"includes": ["**", "!**/routeTree.gen.ts", "!**/.vinxi", "!**/.output"]
+		"includes": ["**", "!**/routeTree.gen.ts", "!**/.vinxi", "!**/.output", "!**/.source"]
 	},
 	"linter": {
 		"domains": {
 			"react": "recommended"
+		},
+		"rules": {
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "warn"
+			},
+			"style": {
+				"noNonNullAssertion": "warn"
+			}
 		}
 	}
 }

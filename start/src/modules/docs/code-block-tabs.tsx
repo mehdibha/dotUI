@@ -37,7 +37,9 @@ function subscribe(callback: () => void) {
 
 function setPackageManager(value: PackageManager) {
 	localStorage.setItem(STORAGE_KEY, value);
-	listeners.forEach((listener) => listener());
+	listeners.forEach((listener) => {
+		listener();
+	});
 }
 
 function usePackageManager() {

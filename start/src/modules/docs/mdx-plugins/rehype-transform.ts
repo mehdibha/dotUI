@@ -410,7 +410,8 @@ function generateImportsNode(imports: ImportInfo[]): object {
 		if (!byPath.has(info.importPath)) {
 			byPath.set(info.importPath, new Map());
 		}
-		const pathImports = byPath.get(info.importPath)!;
+		const pathImports = byPath.get(info.importPath);
+		if (!pathImports) continue;
 		// Only add if this import name hasn't been seen for this path
 		if (!pathImports.has(info.importName)) {
 			pathImports.set(info.importName, info);

@@ -14,7 +14,7 @@ import { kebabCase } from "es-toolkit/string";
 import { globby } from "globby";
 import ts from "typescript";
 import * as tae from "typescript-api-extractor";
-import yargs from "yargs";
+import yargs, { type Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import { formatComponentData, isPublicPropsType, type ParserContext } from "./componentHandler";
@@ -139,7 +139,7 @@ yargs(hideBin(process.argv))
 	.command<RunOptions>(
 		"$0",
 		"Extracts API documentation from TypeScript source files",
-		(command) => {
+		(command: Argv) => {
 			return command.option("files", {
 				alias: "f",
 				type: "array",

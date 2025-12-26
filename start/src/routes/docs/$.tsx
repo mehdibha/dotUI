@@ -10,7 +10,9 @@ import { cn } from "@dotui/registry/lib/utils";
 import { LinkButton } from "@dotui/registry/ui/button";
 
 import browserCollections from "@/.source/browser";
+import { siteConfig } from "@/config/site";
 import { docsSource } from "@/lib/source";
+import { truncateOnWord } from "@/lib/text";
 import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
 import { DocsPager } from "@/modules/docs/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/last-update";
@@ -25,6 +27,27 @@ export const Route = createFileRoute("/docs/$")({
 		const data = await serverLoader({ data: slugs });
 		await clientLoader.preload(data.path);
 		return data;
+	},
+	head: ({ loaderData }) => {
+		const title = loaderData?.title ?? "Docs";
+		const description = loaderData?.description;
+		const truncatedDescription = description ? truncateOnWord(description, 148, true) : undefined;
+		const url = loaderData?.url ?? "/docs";
+
+		return {
+			meta: [
+				{ title: `${title} - ${siteConfig.name}` },
+				...(description ? [{ name: "description", content: description }] : []),
+				{ property: "og:title", content: title },
+				...(truncatedDescription ? [{ property: "og:description", content: truncatedDescription }] : []),
+				{ property: "og:type", content: "article" },
+				{ property: "og:url", content: `${siteConfig.url}${url}` },
+				{ name: "twitter:card", content: "summary_large_image" },
+				{ name: "twitter:title", content: title },
+				...(truncatedDescription ? [{ name: "twitter:description", content: truncatedDescription }] : []),
+				{ name: "twitter:creator", content: siteConfig.twitter.creator },
+			],
+		};
 	},
 });
 
