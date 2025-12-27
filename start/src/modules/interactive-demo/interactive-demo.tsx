@@ -1,4 +1,3 @@
-"use client";
 
 import React, { type ComponentType, createElement, useCallback, useMemo, useState } from "react";
 import { flushSync } from "react-dom";

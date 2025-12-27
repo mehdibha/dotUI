@@ -1,4 +1,3 @@
-"use client";
 
 import { createContext, useContext, useRef } from "react";
 import { CheckIcon, CopyIcon, FileIcon } from "lucide-react";

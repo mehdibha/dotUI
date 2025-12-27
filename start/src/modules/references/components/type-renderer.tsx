@@ -1,4 +1,3 @@
-"use client";
 
 /**
  * Type Renderer - Recursively renders TypeScript type AST nodes
