@@ -5,7 +5,6 @@ import type { Route } from "next";
 export const siteConfig = {
 	url: "https://dotui.org",
 	name: "dotUI",
-	logo: "https://dotui.org/images/logo.png",
 	title: "dotUI",
 	description: "Build your design system in seconds, so your app look like your brand, not a preset.",
 	keywords: ["dotUI", "Next.js", "React", "Tailwind CSS", "React components", "React Aria", "Accessible components"],

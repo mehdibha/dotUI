@@ -33,6 +33,7 @@ export const Route = createFileRoute("/docs/$")({
 		const description = loaderData?.description;
 		const truncatedDescription = description ? truncateOnWord(description, 148, true) : undefined;
 		const url = loaderData?.url ?? "/docs";
+		const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(title)}${truncatedDescription ? `&description=${encodeURIComponent(truncatedDescription)}` : ""}`;
 
 		return {
 			meta: [
@@ -42,9 +43,11 @@ export const Route = createFileRoute("/docs/$")({
 				...(truncatedDescription ? [{ property: "og:description", content: truncatedDescription }] : []),
 				{ property: "og:type", content: "article" },
 				{ property: "og:url", content: `${siteConfig.url}${url}` },
+				{ property: "og:image", content: ogImageUrl },
 				{ name: "twitter:card", content: "summary_large_image" },
 				{ name: "twitter:title", content: title },
 				...(truncatedDescription ? [{ name: "twitter:description", content: truncatedDescription }] : []),
+				{ name: "twitter:image", content: ogImageUrl },
 				{ name: "twitter:creator", content: siteConfig.twitter.creator },
 			],
 		};
