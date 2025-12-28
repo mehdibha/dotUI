@@ -1,4 +1,6 @@
+import type React from "react";
 import type { ToOptions } from "@tanstack/react-router";
+import { BookIcon, BoxIcon } from "lucide-react";
 
 export const siteConfig = {
 	url: "https://dotui.org",
@@ -29,9 +31,7 @@ export const siteConfig = {
 	},
 } as const;
 
-export const navItems: { name: string; href: ToOptions }[] = [
-	{ name: "Docs", href: { to: "/docs/$", params: { _splat: "" } } },
-	// { name: "Components", url: "/docs/components" },
-	// { name: "Blocks", url: "/blocks" },
-	// { name: "Styles", url: "/styles" },
-] as const;
+export const navItems: { icon: React.ReactNode; name: string; href: ToOptions }[] = [
+	{ icon: <BookIcon />, name: "Docs", href: { to: "/docs/$", params: { _splat: "" } } },
+	{ icon: <BoxIcon />, name: "Components", href: { to: "/docs/$", params: { _splat: "components/button" } } },
+];
