@@ -8,6 +8,7 @@ import { Button, LinkButton } from "@dotui/registry/ui/button";
 import { Kbd } from "@dotui/registry/ui/kbd";
 
 import { Logo } from "@/components/layout/logo";
+import { MobileNav } from "@/components/layout/mobile-nav";
 import { SearchCommand } from "@/components/search-command";
 import { navItems, siteConfig } from "@/config/site";
 import { ThemeToggle } from "@/modules/theme/toggle";
@@ -21,8 +22,9 @@ export function Header({ className, items = [] }: HeaderProps) {
 	return (
 		<header className={cn("sticky top-0 z-30 h-(--header-height) w-full border-b bg-bg", className)}>
 			<div className="container relative flex h-full items-center justify-between">
-				<div className="flex items-center gap-6">
-					<Logo />
+				<div className="flex items-center gap-3 md:gap-6">
+					<MobileNav items={items} />
+					<Logo className="max-md:hidden" />
 					<nav className="flex items-center gap-3 text-sm max-md:hidden">
 						{navItems.map((item) => (
 							<Link key={item.name} {...item.href} className="px-0.5 text-fg-muted transition-colors hover:text-fg">
