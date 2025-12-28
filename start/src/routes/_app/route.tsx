@@ -38,15 +38,15 @@ const getPageTree = createServerFn({ method: "GET" }).handler(async () => {
 	return docsSource.serializePageTree(pageTree) as unknown as SerializedPageTree;
 });
 
-export const Route = createFileRoute("/docs")({
-	component: DocsLayout,
+export const Route = createFileRoute("/_app")({
+	component: AppLayout,
 	loader: async () => {
 		const pageTree = await getPageTree();
 		return { pageTree };
 	},
 });
 
-function DocsLayout() {
+function AppLayout() {
 	const { pageTree } = Route.useLoaderData();
 	const items = pageTree.children as PageTree.Node[];
 

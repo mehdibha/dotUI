@@ -20,7 +20,7 @@ import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
 
-export const Route = createFileRoute("/docs/$")({
+export const Route = createFileRoute("/_app/docs/$")({
 	component: DocsPage,
 	loader: async ({ params }) => {
 		const slugs = params._splat?.split("/") ?? [];
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/docs/$")({
 				{ name: "twitter:image", content: ogImageUrl },
 				{ name: "twitter:creator", content: siteConfig.twitter.creator },
 			],
-		};
+		}
 	},
 });
 
@@ -75,8 +75,8 @@ const serverLoader = createServerFn({ method: "GET" })
 			previous: previous ? { name: String(previous.name), path: previous.url.replace(/^\/docs\/?/, "") } : undefined,
 			next: next ? { name: String(next.name), path: next.url.replace(/^\/docs\/?/, "") } : undefined,
 		},
-		};
-	});
+		}
+	})
 
 type SerializedNeighbours = {
 	previous?: { name: string; path: string };
@@ -118,7 +118,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 											{link.label}
 											<ExternalLinkIcon />
 										</LinkButton>
-									);
+									)
 								})}
 							</div>
 						)}
@@ -138,7 +138,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 					</div>
 				</PageLayout>
 			</TOCProvider>
-		);
+		)
 	},
 });
 

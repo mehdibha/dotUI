@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { docsSource } from "@/lib/source";
 
-export const Route = createFileRoute("/docs/{$}.md")({
+export const Route = createFileRoute("/_app/docs/{$}.md")({
 	server: {
 		handlers: {
 			GET: async ({ params }) => {
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/docs/{$}.md")({
 						"Content-Type": "text/markdown; charset=utf-8",
 						"Content-Disposition": `inline; filename="${filename}.md"`,
 					},
-				});
+				})
 			},
 		},
 	},

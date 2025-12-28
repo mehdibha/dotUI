@@ -10,37 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OgRouteImport } from './routes/og'
-import { Route as DocsRouteImport } from './routes/docs'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DocsChar123Char125DotmdRouteImport } from './routes/docs/{$}[.]md'
-import { Route as DocsSplatRouteImport } from './routes/docs/$'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
+import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
+import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
 
 const OgRoute = OgRouteImport.update({
   id: '/og',
   path: '/og',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DocsRoute = DocsRouteImport.update({
-  id: '/docs',
-  path: '/docs',
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const DocsChar123Char125DotmdRoute = DocsChar123Char125DotmdRouteImport.update({
-  id: '/{$}.md',
-  path: '/{$}.md',
-  getParentRoute: () => DocsRoute,
-} as any)
-const DocsSplatRoute = DocsSplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => DocsRoute,
 } as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
@@ -52,32 +41,41 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppDocsChar123Char125DotmdRoute =
+  AppDocsChar123Char125DotmdRouteImport.update({
+    id: '/docs/{$}.md',
+    path: '/docs/{$}.md',
+    getParentRoute: () => AppRouteRoute,
+  } as any)
+const AppDocsSplatRoute = AppDocsSplatRouteImport.update({
+  id: '/docs/$',
+  path: '/docs/$',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/docs': typeof DocsRouteWithChildren
   '/og': typeof OgRoute
-  '/docs/$': typeof DocsSplatRoute
-  '/docs/{$}.md': typeof DocsChar123Char125DotmdRoute
+  '/docs/$': typeof AppDocsSplatRoute
+  '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/docs': typeof DocsRouteWithChildren
   '/og': typeof OgRoute
-  '/docs/$': typeof DocsSplatRoute
-  '/docs/{$}.md': typeof DocsChar123Char125DotmdRoute
+  '/docs/$': typeof AppDocsSplatRoute
+  '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/docs': typeof DocsRouteWithChildren
+  '/_app': typeof AppRouteRouteWithChildren
   '/og': typeof OgRoute
-  '/docs/$': typeof DocsSplatRoute
-  '/docs/{$}.md': typeof DocsChar123Char125DotmdRoute
+  '/_app/docs/$': typeof AppDocsSplatRoute
+  '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
@@ -85,35 +83,27 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/docs'
     | '/og'
     | '/docs/$'
     | '/docs/{$}.md'
     | '/api/auth/$'
     | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/docs'
-    | '/og'
-    | '/docs/$'
-    | '/docs/{$}.md'
-    | '/api/auth/$'
-    | '/api/trpc/$'
+  to: '/' | '/og' | '/docs/$' | '/docs/{$}.md' | '/api/auth/$' | '/api/trpc/$'
   id:
     | '__root__'
     | '/'
-    | '/docs'
+    | '/_app'
     | '/og'
-    | '/docs/$'
-    | '/docs/{$}.md'
+    | '/_app/docs/$'
+    | '/_app/docs/{$}.md'
     | '/api/auth/$'
     | '/api/trpc/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DocsRoute: typeof DocsRouteWithChildren
+  AppRouteRoute: typeof AppRouteRouteWithChildren
   OgRoute: typeof OgRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
@@ -128,11 +118,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OgRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/docs': {
-      id: '/docs'
-      path: '/docs'
-      fullPath: '/docs'
-      preLoaderRoute: typeof DocsRouteImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -141,20 +131,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/docs/{$}.md': {
-      id: '/docs/{$}.md'
-      path: '/{$}.md'
-      fullPath: '/docs/{$}.md'
-      preLoaderRoute: typeof DocsChar123Char125DotmdRouteImport
-      parentRoute: typeof DocsRoute
-    }
-    '/docs/$': {
-      id: '/docs/$'
-      path: '/$'
-      fullPath: '/docs/$'
-      preLoaderRoute: typeof DocsSplatRouteImport
-      parentRoute: typeof DocsRoute
     }
     '/api/trpc/$': {
       id: '/api/trpc/$'
@@ -170,24 +146,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/docs/{$}.md': {
+      id: '/_app/docs/{$}.md'
+      path: '/docs/{$}.md'
+      fullPath: '/docs/{$}.md'
+      preLoaderRoute: typeof AppDocsChar123Char125DotmdRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/docs/$': {
+      id: '/_app/docs/$'
+      path: '/docs/$'
+      fullPath: '/docs/$'
+      preLoaderRoute: typeof AppDocsSplatRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
   }
 }
 
-interface DocsRouteChildren {
-  DocsSplatRoute: typeof DocsSplatRoute
-  DocsChar123Char125DotmdRoute: typeof DocsChar123Char125DotmdRoute
+interface AppRouteRouteChildren {
+  AppDocsSplatRoute: typeof AppDocsSplatRoute
+  AppDocsChar123Char125DotmdRoute: typeof AppDocsChar123Char125DotmdRoute
 }
 
-const DocsRouteChildren: DocsRouteChildren = {
-  DocsSplatRoute: DocsSplatRoute,
-  DocsChar123Char125DotmdRoute: DocsChar123Char125DotmdRoute,
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppDocsSplatRoute: AppDocsSplatRoute,
+  AppDocsChar123Char125DotmdRoute: AppDocsChar123Char125DotmdRoute,
 }
 
-const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DocsRoute: DocsRouteWithChildren,
+  AppRouteRoute: AppRouteRouteWithChildren,
   OgRoute: OgRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
