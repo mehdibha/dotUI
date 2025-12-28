@@ -2,6 +2,9 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import type * as PageTree from "fumadocs-core/page-tree";
 
+import { SidebarProvider } from "@dotui/registry/ui/sidebar";
+
+import { DocsSidebar } from "@/components/layout/docs-sidebar";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { docsSource } from "@/lib/source";
@@ -45,12 +48,18 @@ export const Route = createFileRoute("/docs")({
 
 function DocsLayout() {
 	const { pageTree } = Route.useLoaderData();
+	const items = pageTree.children as PageTree.Node[];
 
 	return (
 		<div className="[--header-height:calc(var(--spacing)*12)]">
-			<Header items={pageTree.children as PageTree.Node[]} />
-			<Outlet />
-			<Footer />
+			<SidebarProvider defaultOpen={false}>
+				<DocsSidebar items={items} />
+				<div className="size-full">
+					<Header items={items} className="md:hidden" />
+					<Outlet />
+					<Footer />
+				</div>
+			</SidebarProvider>
 		</div>
 	);
 }
