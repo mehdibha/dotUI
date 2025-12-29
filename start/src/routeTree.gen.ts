@@ -13,9 +13,11 @@ import { Route as OgRouteImport } from './routes/og'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
+import { Route as AppDocsComponentsRouteImport } from './routes/_app/docs/components'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
 
 const OgRoute = OgRouteImport.update({
@@ -37,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemosSlugRoute = DemosSlugRouteImport.update({
+  id: '/demos/$slug',
+  path: '/demos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
   path: '/api/trpc/$',
@@ -53,6 +60,11 @@ const AppDocsChar123Char125DotmdRoute =
     path: '/docs/{$}.md',
     getParentRoute: () => AppRouteRoute,
   } as any)
+const AppDocsComponentsRoute = AppDocsComponentsRouteImport.update({
+  id: '/docs/components',
+  path: '/docs/components',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppDocsSplatRoute = AppDocsSplatRouteImport.update({
   id: '/docs/$',
   path: '/docs/$',
@@ -63,7 +75,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/demos/$slug': typeof DemosSlugRoute
   '/docs/$': typeof AppDocsSplatRoute
+  '/docs/components': typeof AppDocsComponentsRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
@@ -72,7 +86,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/demos/$slug': typeof DemosSlugRoute
   '/docs/$': typeof AppDocsSplatRoute
+  '/docs/components': typeof AppDocsComponentsRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
@@ -83,7 +99,9 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/demos/$slug': typeof DemosSlugRoute
   '/_app/docs/$': typeof AppDocsSplatRoute
+  '/_app/docs/components': typeof AppDocsComponentsRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
@@ -94,7 +112,9 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/og'
+    | '/demos/$slug'
     | '/docs/$'
+    | '/docs/components'
     | '/docs/{$}.md'
     | '/api/auth/$'
     | '/api/trpc/$'
@@ -103,7 +123,9 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/og'
+    | '/demos/$slug'
     | '/docs/$'
+    | '/docs/components'
     | '/docs/{$}.md'
     | '/api/auth/$'
     | '/api/trpc/$'
@@ -113,7 +135,9 @@ export interface FileRouteTypes {
     | '/_app'
     | '/login'
     | '/og'
+    | '/demos/$slug'
     | '/_app/docs/$'
+    | '/_app/docs/components'
     | '/_app/docs/{$}.md'
     | '/api/auth/$'
     | '/api/trpc/$'
@@ -124,6 +148,7 @@ export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   OgRoute: typeof OgRoute
+  DemosSlugRoute: typeof DemosSlugRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
@@ -158,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demos/$slug': {
+      id: '/demos/$slug'
+      path: '/demos/$slug'
+      fullPath: '/demos/$slug'
+      preLoaderRoute: typeof DemosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/trpc/$': {
       id: '/api/trpc/$'
       path: '/api/trpc/$'
@@ -179,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocsChar123Char125DotmdRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/docs/components': {
+      id: '/_app/docs/components'
+      path: '/docs/components'
+      fullPath: '/docs/components'
+      preLoaderRoute: typeof AppDocsComponentsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/docs/$': {
       id: '/_app/docs/$'
       path: '/docs/$'
@@ -191,11 +230,13 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteRouteChildren {
   AppDocsSplatRoute: typeof AppDocsSplatRoute
+  AppDocsComponentsRoute: typeof AppDocsComponentsRoute
   AppDocsChar123Char125DotmdRoute: typeof AppDocsChar123Char125DotmdRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDocsSplatRoute: AppDocsSplatRoute,
+  AppDocsComponentsRoute: AppDocsComponentsRoute,
   AppDocsChar123Char125DotmdRoute: AppDocsChar123Char125DotmdRoute,
 }
 
@@ -208,6 +249,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   OgRoute: OgRoute,
+  DemosSlugRoute: DemosSlugRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
