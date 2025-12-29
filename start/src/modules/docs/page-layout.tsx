@@ -16,7 +16,7 @@ export function PageHeaderHeading({ className, ...props }: React.ComponentProps<
 	return (
 		<h1
 			className={cn(
-				"max-w-2xl text-balance font-semibold text-2xl leading-tighter tracking-tight lg:text-3xl lg:leading-[1.1] xl:text-4xl xl:tracking-tighter",
+				"max-w-2xl text-balance font-semibold text-2xl leading-tighter lg:text-3xl lg:leading-[1.1] xl:text-4xl",
 				className,
 			)}
 			{...props}
