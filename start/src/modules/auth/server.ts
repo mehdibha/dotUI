@@ -1,6 +1,6 @@
-import { tanstackStartCookies } from "better-auth/tanstack-start";
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start/server";
+import { getRequestHeaders } from "@tanstack/react-start/server";
+import { tanstackStartCookies } from "better-auth/tanstack-start";
 
 import { initAuth } from "@dotui/auth";
 
@@ -17,7 +17,6 @@ export const auth = initAuth({
 });
 
 export const getSession = createServerFn({ method: "GET" }).handler(async () => {
-	const request = getRequest();
-	if (!request) return null;
-	return auth.api.getSession({ headers: request.headers });
+	const headers = getRequestHeaders();
+	return auth.api.getSession({ headers });
 });
