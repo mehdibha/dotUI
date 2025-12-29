@@ -1,12 +1,12 @@
 import { relations, sql } from "drizzle-orm";
 import {
   boolean,
-  index,
   jsonb,
   pgTable,
   text,
   timestamp,
   unique,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
@@ -40,9 +40,9 @@ export const style = pgTable(
   },
   (table) => [
     unique("unique_name_per_user").on(table.userId, table.name),
-    index("unique_public_name")
+    uniqueIndex("unique_public_name")
       .on(table.name)
-      .where(sql.raw(`visibility = 'public'`)),
+      .where(sql`visibility = 'public'`),
   ],
 );
 
