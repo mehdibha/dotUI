@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import * as prettier from "prettier";
 import ts from "typescript";
 import * as tae from "typescript-api-extractor";
 
@@ -11,7 +12,7 @@ import {
 	parseSimpleType,
 	typeToAst,
 } from "./type-to-ast";
-import type { TLink, TType } from "../../../modules/docs/api-reference/types/type-ast";
+import type { TLink, TType } from "@/modules/references/types/type-ast";
 
 /**
  * HTML element names that can be extended via React.ComponentProps<"element">
@@ -175,23 +176,45 @@ function getMemberName(member: ts.TypeElement): string | undefined {
 /**
  * Get the order of properties as they appear in the source declaration
  * Uses TypeScript's built-in AST (no ts-morph dependency)
+ *
+ * @param typeName - The name of the type to get property order for
+ * @param program - The TypeScript program
+ * @param checker - The TypeScript type checker
+ * @param options - Optional settings
+ * @param options.requireExport - If true, only matches exported types (default: true for root calls)
+ * @param options.visited - Set of visited type names to prevent infinite recursion
  */
-function getPropertyDeclarationOrder(typeName: string, program: ts.Program, checker: ts.TypeChecker): string[] {
-	const order: string[] = [];
-	const visited = new Set<string>();
+function getPropertyDeclarationOrder(
+	typeName: string,
+	program: ts.Program,
+	checker: ts.TypeChecker,
+	options: { requireExport?: boolean; visited?: Set<string> } = {},
+): string[] {
+	const { requireExport = true, visited = new Set<string>() } = options;
+
+	// Prevent circular references
+	if (visited.has(typeName)) {
+		return [];
+	}
 	visited.add(typeName);
 
-	// Search all source files for the explicitly EXPORTED type
+	const order: string[] = [];
+
 	for (const sourceFile of program.getSourceFiles()) {
-		// Skip declaration files (except our own)
-		if (sourceFile.isDeclarationFile && !sourceFile.fileName.includes("@dotui")) {
+		// Skip declaration files (except our own) when requiring export
+		if (requireExport && sourceFile.isDeclarationFile && !sourceFile.fileName.includes("@dotui")) {
 			continue;
 		}
 
+		let found = false;
+
 		ts.forEachChild(sourceFile, (node) => {
+			if (found) return;
+
 			// Handle interface declarations
 			if (ts.isInterfaceDeclaration(node) && node.name.text === typeName) {
-				if (!hasExportModifier(node)) return;
+				if (requireExport && !hasExportModifier(node)) return;
+				found = true;
 
 				// Get properties in declaration order
 				for (const member of node.members) {
@@ -207,12 +230,10 @@ function getPropertyDeclarationOrder(typeName: string, program: ts.Program, chec
 								const exprType = checker.getTypeAtLocation(typeExpr);
 								const symbol = exprType.getSymbol();
 								if (symbol) {
-									const inheritedOrder = getPropertyDeclarationOrderInternal(
-										symbol.getName(),
-										program,
-										checker,
+									const inheritedOrder = getPropertyDeclarationOrder(symbol.getName(), program, checker, {
+										requireExport: false,
 										visited,
-									);
+									});
 									for (const prop of inheritedOrder) {
 										if (!order.includes(prop)) {
 											order.push(prop);
@@ -223,12 +244,12 @@ function getPropertyDeclarationOrder(typeName: string, program: ts.Program, chec
 						}
 					}
 				}
-				return;
 			}
 
 			// Handle type alias declarations
 			if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
-				if (!hasExportModifier(node)) return;
+				if (requireExport && !hasExportModifier(node)) return;
+				found = true;
 
 				const typeNode = node.type;
 
@@ -238,108 +259,16 @@ function getPropertyDeclarationOrder(typeName: string, program: ts.Program, chec
 						const name = getMemberName(member);
 						if (name) order.push(name);
 					}
-					return;
-				}
-
-				// Handle intersection types: type Foo = A & B
-				if (ts.isIntersectionTypeNode(typeNode)) {
-					for (const typeRef of typeNode.types) {
-						const refType = checker.getTypeAtLocation(typeRef);
-						const symbol = refType.getSymbol();
-						if (symbol) {
-							const refOrder = getPropertyDeclarationOrderInternal(symbol.getName(), program, checker, visited);
-							for (const prop of refOrder) {
-								if (!order.includes(prop)) {
-									order.push(prop);
-								}
-							}
-						}
-					}
-				}
-			}
-		});
-
-		// If we found the type, return early
-		if (order.length > 0) return order;
-	}
-
-	return order;
-}
-
-/**
- * Internal helper to get property order - doesn't require export
- * Uses a visited set to prevent infinite recursion from circular type references
- */
-function getPropertyDeclarationOrderInternal(
-	typeName: string,
-	program: ts.Program,
-	checker: ts.TypeChecker,
-	visited: Set<string>,
-): string[] {
-	// Prevent circular references
-	if (visited.has(typeName)) {
-		return [];
-	}
-	visited.add(typeName);
-
-	const order: string[] = [];
-
-	for (const sourceFile of program.getSourceFiles()) {
-		let found = false;
-
-		ts.forEachChild(sourceFile, (node) => {
-			if (found) return;
-
-			// Handle interface declarations
-			if (ts.isInterfaceDeclaration(node) && node.name.text === typeName) {
-				found = true;
-
-				for (const member of node.members) {
-					const name = getMemberName(member);
-					if (name) order.push(name);
-				}
-
-				if (node.heritageClauses) {
-					for (const clause of node.heritageClauses) {
-						if (clause.token === ts.SyntaxKind.ExtendsKeyword) {
-							for (const typeExpr of clause.types) {
-								const exprType = checker.getTypeAtLocation(typeExpr);
-								const symbol = exprType.getSymbol();
-								if (symbol) {
-									const inheritedOrder = getPropertyDeclarationOrderInternal(
-										symbol.getName(),
-										program,
-										checker,
-										visited,
-									);
-									for (const prop of inheritedOrder) {
-										if (!order.includes(prop)) {
-											order.push(prop);
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-
-			// Handle type alias declarations
-			if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
-				found = true;
-				const typeNode = node.type;
-
-				if (ts.isTypeLiteralNode(typeNode)) {
-					for (const member of typeNode.members) {
-						const name = getMemberName(member);
-						if (name) order.push(name);
-					}
 				} else if (ts.isIntersectionTypeNode(typeNode)) {
+					// Handle intersection types: type Foo = A & B
 					for (const typeRef of typeNode.types) {
 						const refType = checker.getTypeAtLocation(typeRef);
 						const symbol = refType.getSymbol();
 						if (symbol) {
-							const refOrder = getPropertyDeclarationOrderInternal(symbol.getName(), program, checker, visited);
+							const refOrder = getPropertyDeclarationOrder(symbol.getName(), program, checker, {
+								requireExport: false,
+								visited,
+							});
 							for (const prop of refOrder) {
 								if (!order.includes(prop)) {
 									order.push(prop);
@@ -806,6 +735,14 @@ async function getPropsWithTypeChecker(
 		});
 	}
 
+	// Format detailedTypes with Prettier for better readability
+	for (const propName of Object.keys(result)) {
+		const prop = result[propName];
+		if (prop?.detailedType) {
+			prop.detailedType = await formatTypeWithPrettier(prop.detailedType);
+		}
+	}
+
 	// Sort props by declaration order (matches react-aria/s2-docs behavior)
 	// Local props come first (in ts-morph declaration order), then React Aria events
 	// in their standard order, then remaining props
@@ -906,6 +843,40 @@ export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
 
 	const type = exportNode.type;
 	return type instanceof tae.ObjectNode || type instanceof tae.IntersectionNode || type instanceof tae.ComponentNode;
+}
+
+/**
+ * Format a type string with Prettier for better readability.
+ * Long union types will be split across multiple lines.
+ */
+async function formatTypeWithPrettier(type: string): Promise<string> {
+	try {
+		const formatted = await prettier.format(`type _ = ${type}`, {
+			parser: "typescript",
+			singleQuote: true,
+			semi: false,
+			printWidth: 60,
+		});
+
+		const lines = formatted.trimEnd().split("\n");
+		if (lines.length === 1) {
+			// biome-ignore lint/style/noNonNullAssertion: length check guarantees existence
+			return lines[0]!.replace(/^type _ = /, "");
+		}
+
+		// Multi-line: skip first line (`type _ =`) and de-indent
+		const codeLines = lines.slice(1);
+		const nonEmptyLines = codeLines.filter((l) => l.trim() !== "");
+		if (nonEmptyLines.length > 0) {
+			const minIndent = Math.min(...nonEmptyLines.map((l) => l.match(/^\s*/)?.[0].length ?? 0));
+			if (Number.isFinite(minIndent) && minIndent > 0) {
+				return codeLines.map((l) => l.substring(minIndent)).join("\n");
+			}
+		}
+		return codeLines.join("\n");
+	} catch {
+		return type;
+	}
 }
 
 function extractComponentGroup(componentExportName: string): string {

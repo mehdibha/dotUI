@@ -3,10 +3,11 @@ import { defineConfig, defineDocs, frontmatterSchema, metaSchema } from "fumadoc
 import lastModified from "fumadocs-mdx/plugins/last-modified";
 import { z } from "zod";
 
+import rehypeTransform from "./src/modules/docs/mdx-plugins/rehype-transform";
+
 export const docs = defineDocs({
 	dir: "content/docs",
 	docs: {
-		async: true,
 		schema: frontmatterSchema.extend({
 			links: z
 				.array(
@@ -26,10 +27,9 @@ export const docs = defineDocs({
 	},
 });
 
-export const marketing = defineDocs({
-	dir: "content/(root)",
+export const legal = defineDocs({
+	dir: "content/legal",
 	docs: {
-		async: true,
 		schema: frontmatterSchema.extend({
 			links: z
 				.array(
@@ -53,7 +53,7 @@ export default defineConfig({
 	mdxOptions: {
 		rehypeCodeOptions: {
 			...rehypeCodeDefaultOptions,
-			langs: ["ts", "js", "html", "tsx", "mdx"],
+			langs: ["ts", "js", "html", "tsx", "mdx", "css", "json", "bash"],
 			defaultLanguage: "plaintext",
 			inline: "tailing-curly-colon",
 			themes: {
@@ -62,10 +62,6 @@ export default defineConfig({
 			},
 			tab: true,
 		},
-		remarkNpmOptions: {
-			persist: {
-				id: "package-manager",
-			},
-		},
+		rehypePlugins: [rehypeTransform],
 	},
 });
