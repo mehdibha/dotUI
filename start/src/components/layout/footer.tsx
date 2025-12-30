@@ -25,6 +25,13 @@ const links = [
 			{ label: "Request an element", href: `${siteConfig.links.github}/discussions/new?category=requests` },
 		],
 	},
+	{
+		label: "Legal",
+		links: [
+			{ label: "Privacy Policy", href: "/privacy-policy" },
+			{ label: "Terms of Service", href: "/terms-of-service" },
+		],
+	},
 ] as const;
 
 export function Footer() {

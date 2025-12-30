@@ -32,8 +32,8 @@ import { navItems } from "@/config/site";
 import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/client";
 import { UserProfileMenu } from "@/modules/auth/user-profile-menu";
-import type { DocsPageItem } from "@/lib/source";
 import { ThemeToggle } from "@/modules/theme/toggle";
+import type { DocsPageItem } from "@/lib/source";
 
 export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 	const { data: session, isPending } = authClient.useSession();
@@ -98,7 +98,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 													child.type === "page" && (
 														<SidebarItem key={child.url}>
 															<AriaLink
-																href={child.url}
+																href={{ to: child.url as "/" }}
 																data-active={child.url === pathname || undefined}
 																className="flex w-full items-center gap-1.5 border-l py-1 pl-3 text-[0.8rem] text-fg-muted transition-colors hover:text-fg data-active:border-fg data-active:text-fg"
 															>

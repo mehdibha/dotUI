@@ -15,6 +15,7 @@ import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ViewBlockRouteImport } from './routes/view/$block'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
+import { Route as legalSplatRouteImport } from './routes/(legal)/$'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
@@ -50,6 +51,11 @@ const DemosSlugRoute = DemosSlugRouteImport.update({
   path: '/demos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const legalSplatRoute = legalSplatRouteImport.update({
+  id: '/(legal)/$',
+  path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
   path: '/api/trpc/$',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/$': typeof legalSplatRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/view/$block': typeof ViewBlockRoute
   '/docs/$': typeof AppDocsSplatRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/$': typeof legalSplatRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/view/$block': typeof ViewBlockRoute
   '/docs/$': typeof AppDocsSplatRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/(legal)/$': typeof legalSplatRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/view/$block': typeof ViewBlockRoute
   '/_app/docs/$': typeof AppDocsSplatRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/og'
+    | '/$'
     | '/demos/$slug'
     | '/view/$block'
     | '/docs/$'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/og'
+    | '/$'
     | '/demos/$slug'
     | '/view/$block'
     | '/docs/$'
@@ -146,6 +157,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/login'
     | '/og'
+    | '/(legal)/$'
     | '/demos/$slug'
     | '/view/$block'
     | '/_app/docs/$'
@@ -160,6 +172,7 @@ export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   OgRoute: typeof OgRoute
+  legalSplatRoute: typeof legalSplatRoute
   DemosSlugRoute: typeof DemosSlugRoute
   ViewBlockRoute: typeof ViewBlockRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/demos/$slug'
       fullPath: '/demos/$slug'
       preLoaderRoute: typeof DemosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(legal)/$': {
+      id: '/(legal)/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof legalSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/trpc/$': {
@@ -269,6 +289,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   OgRoute: OgRoute,
+  legalSplatRoute: legalSplatRoute,
   DemosSlugRoute: DemosSlugRoute,
   ViewBlockRoute: ViewBlockRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

@@ -20,10 +20,10 @@ export function PageTabs({ children }: { children: React.ReactNode }) {
 			className="**:data-page-tab-panel:mt-2 **:data-page-tab-panel:sm:mt-4 **:data-page-tab-panel:md:mt-6"
 		>
 			<TabList className="*:px-4 *:pb-3">
-				<Tab id="overview" href={{ to: ".", search: { tab: undefined } }}>
+				<Tab id="overview" href={{ to: ".", search: { tab: undefined } as never }}>
 					Overview
 				</Tab>
-				<Tab id="examples" href={{ to: ".", search: { tab: "examples" } }}>
+				<Tab id="examples" href={{ to: ".", search: { tab: "examples" } as never }}>
 					Examples
 				</Tab>
 			</TabList>
