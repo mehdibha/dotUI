@@ -17,8 +17,4 @@ export const BlocksIndex: Record<
     files: ["blocks/showcase/cards/components/cards.tsx","blocks/showcase/cards/components/account-menu.tsx","blocks/showcase/cards/components/backlog.tsx","blocks/showcase/cards/components/booking.tsx","blocks/showcase/cards/components/color-editor.tsx","blocks/showcase/cards/components/filters.tsx","blocks/showcase/cards/components/invite-members.tsx","blocks/showcase/cards/components/login-form.tsx","blocks/showcase/cards/components/notifications.tsx","blocks/showcase/cards/components/team-name.tsx"],
     component: React.lazy(() => import("@dotui/registry/blocks/showcase/cards/components/cards")),
   },
-  "animation": {
-    files: ["blocks/showcase/animation/components/animation.tsx"],
-    component: React.lazy(() => import("@dotui/registry/blocks/showcase/animation/components/animation")),
-  },
 };

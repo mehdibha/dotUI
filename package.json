@@ -27,6 +27,7 @@
     "build:www": "pnpm --filter=www build",
     "build:start": "pnpm --filter=start build",
     "build:registry": "pnpm --filter=@dotui/registry build",
+    "preview:start": "pnpm --filter=start preview",
     "dev:registry": "chokidar 'packages/registry/src/ui/**/meta.ts' -c 'pnpm build:registry'",
     "build:references": "pnpm --filter=www build:references",
     "clean": "git clean -xdf node_modules",

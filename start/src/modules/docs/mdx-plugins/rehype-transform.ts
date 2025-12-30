@@ -13,8 +13,8 @@ import {
 	buildControlsFromReference,
 	enrichControlsForSerialization,
 	toPascalCase,
-} from "../../interactive-demo/process-controls";
-import type { ControlInput, InteractiveDemoNodeInfo, ProcessedInteractiveDemo } from "../../interactive-demo/types";
+} from "../interactive-demo/process-controls";
+import type { ControlInput, InteractiveDemoNodeInfo, ProcessedInteractiveDemo } from "../interactive-demo/types";
 
 // ============================================================================
 // Cached Highlighter (singleton)

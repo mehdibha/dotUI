@@ -11,3 +11,5 @@ We're migrating feature by feature. everytime we migrate a feature, always revie
 - always propose clean code (don't too much comments, only when they are useful and needed)
 
 Always propose enhancement before porting anything.
+
+For every feature migration, we will ignore the style related features for now 

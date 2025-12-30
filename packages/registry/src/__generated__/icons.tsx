@@ -2,1105 +2,1104 @@
 // Run "pnpm build" to regenerate
 "use client";
 
-import * as React from "react";
 import * as Lucide from "lucide-react";
 import { createIcon } from "@dotui/registry/icons/create-icon";
 
-export const PlusIcon = createIcon({
-    lucide: Lucide.PlusIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiAddLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPlus }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.PlusSignIcon }))),
+export const PlusIcon = createIcon(Lucide.PlusIcon, {
+  lucide: "PlusIcon",
+  remix: "RiAddLine",
+  tabler: "IconPlus",
+  hugeicons: "PlusSignIcon",
 });
 
-export const PaperclipIcon = createIcon({
-    lucide: Lucide.PaperclipIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiAttachmentLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPaperclip }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.AttachmentIcon }))),
+export const PaperclipIcon = createIcon(Lucide.PaperclipIcon, {
+  lucide: "PaperclipIcon",
+  remix: "RiAttachmentLine",
+  tabler: "IconPaperclip",
+  hugeicons: "AttachmentIcon",
 });
 
-export const SparklesIcon = createIcon({
-    lucide: Lucide.SparklesIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSparklingLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSparkles }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.SparklesIcon }))),
+export const SparklesIcon = createIcon(Lucide.SparklesIcon, {
+  lucide: "SparklesIcon",
+  remix: "RiSparklingLine",
+  tabler: "IconSparkles",
+  hugeicons: "SparklesIcon",
 });
 
-export const ShoppingBagIcon = createIcon({
-    lucide: Lucide.ShoppingBagIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiShoppingBagLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconShoppingBag }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ShoppingBag01Icon }))),
+export const ShoppingBagIcon = createIcon(Lucide.ShoppingBagIcon, {
+  lucide: "ShoppingBagIcon",
+  remix: "RiShoppingBagLine",
+  tabler: "IconShoppingBag",
+  hugeicons: "ShoppingBag01Icon",
 });
 
-export const WandIcon = createIcon({
-    lucide: Lucide.WandIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMagicLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconWand }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MagicWand01Icon }))),
+export const WandIcon = createIcon(Lucide.WandIcon, {
+  lucide: "WandIcon",
+  remix: "RiMagicLine",
+  tabler: "IconWand",
+  hugeicons: "MagicWand01Icon",
 });
 
-export const MousePointerIcon = createIcon({
-    lucide: Lucide.MousePointerIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCursorLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPointer }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Cursor01Icon }))),
+export const MousePointerIcon = createIcon(Lucide.MousePointerIcon, {
+  lucide: "MousePointerIcon",
+  remix: "RiCursorLine",
+  tabler: "IconPointer",
+  hugeicons: "Cursor01Icon",
 });
 
-export const MoreHorizontalIcon = createIcon({
-    lucide: Lucide.MoreHorizontalIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMoreLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconDots }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MoreHorizontalCircle01Icon }))),
+export const MoreHorizontalIcon = createIcon(Lucide.MoreHorizontalIcon, {
+  lucide: "MoreHorizontalIcon",
+  remix: "RiMoreLine",
+  tabler: "IconDots",
+  hugeicons: "MoreHorizontalCircle01Icon",
 });
 
-export const ShareIcon = createIcon({
-    lucide: Lucide.ShareIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiShareLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconShare }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Share03Icon }))),
+export const ShareIcon = createIcon(Lucide.ShareIcon, {
+  lucide: "ShareIcon",
+  remix: "RiShareLine",
+  tabler: "IconShare",
+  hugeicons: "Share03Icon",
 });
 
-export const BookOpenIcon = createIcon({
-    lucide: Lucide.BookOpenIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBookOpenLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBook }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.BookOpen01Icon }))),
+export const BookOpenIcon = createIcon(Lucide.BookOpenIcon, {
+  lucide: "BookOpenIcon",
+  remix: "RiBookOpenLine",
+  tabler: "IconBook",
+  hugeicons: "BookOpen01Icon",
 });
 
-export const GlobeIcon = createIcon({
-    lucide: Lucide.GlobeIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiGlobalLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconWorld }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.GlobalIcon }))),
+export const GlobeIcon = createIcon(Lucide.GlobeIcon, {
+  lucide: "GlobeIcon",
+  remix: "RiGlobalLine",
+  tabler: "IconWorld",
+  hugeicons: "GlobalIcon",
 });
 
-export const PenToolIcon = createIcon({
-    lucide: Lucide.PenToolIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiPenNibLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPencil }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.QuillWrite01Icon }))),
+export const PenToolIcon = createIcon(Lucide.PenToolIcon, {
+  lucide: "PenToolIcon",
+  remix: "RiPenNibLine",
+  tabler: "IconPencil",
+  hugeicons: "QuillWrite01Icon",
 });
 
-export const AudioLinesIcon = createIcon({
-    lucide: Lucide.AudioLinesIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSoundModuleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMicrophone }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Mic01Icon }))),
+export const AudioLinesIcon = createIcon(Lucide.AudioLinesIcon, {
+  lucide: "AudioLinesIcon",
+  remix: "RiSoundModuleLine",
+  tabler: "IconMicrophone",
+  hugeicons: "Mic01Icon",
 });
 
-export const ArrowUpIcon = createIcon({
-    lucide: Lucide.ArrowUpIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowUpLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconArrowUp }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowUp01Icon }))),
+export const ArrowUpIcon = createIcon(Lucide.ArrowUpIcon, {
+  lucide: "ArrowUpIcon",
+  remix: "RiArrowUpLine",
+  tabler: "IconArrowUp",
+  hugeicons: "ArrowUp01Icon",
 });
 
-export const ChevronDownIcon = createIcon({
-    lucide: Lucide.ChevronDownIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowDownSLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconChevronDown }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowDown01Icon }))),
+export const ChevronDownIcon = createIcon(Lucide.ChevronDownIcon, {
+  lucide: "ChevronDownIcon",
+  remix: "RiArrowDownSLine",
+  tabler: "IconChevronDown",
+  hugeicons: "ArrowDown01Icon",
 });
 
-export const SettingsIcon = createIcon({
-    lucide: Lucide.SettingsIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSettings3Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSettings }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Settings01Icon }))),
+export const SettingsIcon = createIcon(Lucide.SettingsIcon, {
+  lucide: "SettingsIcon",
+  remix: "RiSettings3Line",
+  tabler: "IconSettings",
+  hugeicons: "Settings01Icon",
 });
 
-export const FolderIcon = createIcon({
-    lucide: Lucide.FolderIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFolderLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFolder }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Folder01Icon }))),
+export const FolderIcon = createIcon(Lucide.FolderIcon, {
+  lucide: "FolderIcon",
+  remix: "RiFolderLine",
+  tabler: "IconFolder",
+  hugeicons: "Folder01Icon",
 });
 
-export const CircleCheckIcon = createIcon({
-    lucide: Lucide.CircleCheckIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCheckboxCircleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCircleCheck }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CheckmarkCircle02Icon }))),
+export const CircleCheckIcon = createIcon(Lucide.CircleCheckIcon, {
+  lucide: "CircleCheckIcon",
+  remix: "RiCheckboxCircleLine",
+  tabler: "IconCircleCheck",
+  hugeicons: "CheckmarkCircle02Icon",
 });
 
-export const LightbulbIcon = createIcon({
-    lucide: Lucide.LightbulbIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLightbulbLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBulb }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.BulbIcon }))),
+export const LightbulbIcon = createIcon(Lucide.LightbulbIcon, {
+  lucide: "LightbulbIcon",
+  remix: "RiLightbulbLine",
+  tabler: "IconBulb",
+  hugeicons: "BulbIcon",
 });
 
-export const ContainerIcon = createIcon({
-    lucide: Lucide.ContainerIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBox3Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBox }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CubeIcon }))),
+export const ContainerIcon = createIcon(Lucide.ContainerIcon, {
+  lucide: "ContainerIcon",
+  remix: "RiBox3Line",
+  tabler: "IconBox",
+  hugeicons: "CubeIcon",
 });
 
-export const ZapIcon = createIcon({
-    lucide: Lucide.ZapIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFlashlightLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBolt }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ZapIcon }))),
+export const ZapIcon = createIcon(Lucide.ZapIcon, {
+  lucide: "ZapIcon",
+  remix: "RiFlashlightLine",
+  tabler: "IconBolt",
+  hugeicons: "ZapIcon",
 });
 
-export const ServerIcon = createIcon({
-    lucide: Lucide.ServerIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiServerLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconServer }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.DatabaseIcon }))),
+export const ServerIcon = createIcon(Lucide.ServerIcon, {
+  lucide: "ServerIcon",
+  remix: "RiServerLine",
+  tabler: "IconServer",
+  hugeicons: "DatabaseIcon",
 });
 
-export const InfoIcon = createIcon({
-    lucide: Lucide.InfoIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiInformationLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconInfoCircle }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.InformationCircleIcon }))),
+export const InfoIcon = createIcon(Lucide.InfoIcon, {
+  lucide: "InfoIcon",
+  remix: "RiInformationLine",
+  tabler: "IconInfoCircle",
+  hugeicons: "InformationCircleIcon",
 });
 
-export const TerminalIcon = createIcon({
-    lucide: Lucide.TerminalIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiTerminalBoxLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconTerminal }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.SourceCodeIcon }))),
+export const TerminalIcon = createIcon(Lucide.TerminalIcon, {
+  lucide: "TerminalIcon",
+  remix: "RiTerminalBoxLine",
+  tabler: "IconTerminal",
+  hugeicons: "SourceCodeIcon",
 });
 
-export const CopyIcon = createIcon({
-    lucide: Lucide.CopyIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFileCopyLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCopy }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Copy01Icon }))),
+export const CopyIcon = createIcon(Lucide.CopyIcon, {
+  lucide: "CopyIcon",
+  remix: "RiFileCopyLine",
+  tabler: "IconCopy",
+  hugeicons: "Copy01Icon",
 });
 
-export const MonitorIcon = createIcon({
-    lucide: Lucide.MonitorIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiComputerLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconDeviceDesktop }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ComputerIcon }))),
+export const MonitorIcon = createIcon(Lucide.MonitorIcon, {
+  lucide: "MonitorIcon",
+  remix: "RiComputerLine",
+  tabler: "IconDeviceDesktop",
+  hugeicons: "ComputerIcon",
 });
 
-export const DownloadIcon = createIcon({
-    lucide: Lucide.DownloadIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiDownloadLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconDownload }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Download01Icon }))),
+export const DownloadIcon = createIcon(Lucide.DownloadIcon, {
+  lucide: "DownloadIcon",
+  remix: "RiDownloadLine",
+  tabler: "IconDownload",
+  hugeicons: "Download01Icon",
 });
 
-export const SearchIcon = createIcon({
-    lucide: Lucide.SearchIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSearchLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSearch }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Search01Icon }))),
+export const SearchIcon = createIcon(Lucide.SearchIcon, {
+  lucide: "SearchIcon",
+  remix: "RiSearchLine",
+  tabler: "IconSearch",
+  hugeicons: "Search01Icon",
 });
 
-export const UploadIcon = createIcon({
-    lucide: Lucide.UploadIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiUpload2Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconUpload }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Upload01Icon }))),
+export const UploadIcon = createIcon(Lucide.UploadIcon, {
+  lucide: "UploadIcon",
+  remix: "RiUpload2Line",
+  tabler: "IconUpload",
+  hugeicons: "Upload01Icon",
 });
 
-export const CloudCogIcon = createIcon({
-    lucide: Lucide.CloudCogIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCloudLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCloudCog }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.AiCloud01Icon }))),
+export const CloudCogIcon = createIcon(Lucide.CloudCogIcon, {
+  lucide: "CloudCogIcon",
+  remix: "RiCloudLine",
+  tabler: "IconCloudCog",
+  hugeicons: "AiCloud01Icon",
 });
 
-export const GitBranchIcon = createIcon({
-    lucide: Lucide.GitBranchIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiGitBranchLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconGitBranch }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.GitBranchIcon }))),
+export const GitBranchIcon = createIcon(Lucide.GitBranchIcon, {
+  lucide: "GitBranchIcon",
+  remix: "RiGitBranchLine",
+  tabler: "IconGitBranch",
+  hugeicons: "GitBranchIcon",
 });
 
-export const BotIcon = createIcon({
-    lucide: Lucide.BotIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiRobotLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconRobot }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.RoboticIcon }))),
+export const BotIcon = createIcon(Lucide.BotIcon, {
+  lucide: "BotIcon",
+  remix: "RiRobotLine",
+  tabler: "IconRobot",
+  hugeicons: "RoboticIcon",
 });
 
-export const SendIcon = createIcon({
-    lucide: Lucide.SendIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSendPlaneLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSend }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.SentIcon }))),
+export const SendIcon = createIcon(Lucide.SendIcon, {
+  lucide: "SendIcon",
+  remix: "RiSendPlaneLine",
+  tabler: "IconSend",
+  hugeicons: "SentIcon",
 });
 
-export const MenuIcon = createIcon({
-    lucide: Lucide.MenuIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMenuLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMenu }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Menu09Icon }))),
+export const MenuIcon = createIcon(Lucide.MenuIcon, {
+  lucide: "MenuIcon",
+  remix: "RiMenuLine",
+  tabler: "IconMenu",
+  hugeicons: "Menu09Icon",
 });
 
-export const XIcon = createIcon({
-    lucide: Lucide.XIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCloseLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconX }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Cancel01Icon }))),
+export const XIcon = createIcon(Lucide.XIcon, {
+  lucide: "XIcon",
+  remix: "RiCloseLine",
+  tabler: "IconX",
+  hugeicons: "Cancel01Icon",
 });
 
-export const HomeIcon = createIcon({
-    lucide: Lucide.HomeIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiHomeLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconHome }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Home01Icon }))),
+export const HomeIcon = createIcon(Lucide.HomeIcon, {
+  lucide: "HomeIcon",
+  remix: "RiHomeLine",
+  tabler: "IconHome",
+  hugeicons: "Home01Icon",
 });
 
-export const CircleIcon = createIcon({
-    lucide: Lucide.CircleIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCircleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCircle }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CircleIcon }))),
+export const CircleIcon = createIcon(Lucide.CircleIcon, {
+  lucide: "CircleIcon",
+  remix: "RiCircleLine",
+  tabler: "IconCircle",
+  hugeicons: "CircleIcon",
 });
 
-export const LayoutGridIcon = createIcon({
-    lucide: Lucide.LayoutGridIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLayoutGridLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLayoutGrid }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.GridIcon }))),
+export const LayoutGridIcon = createIcon(Lucide.LayoutGridIcon, {
+  lucide: "LayoutGridIcon",
+  remix: "RiLayoutGridLine",
+  tabler: "IconLayoutGrid",
+  hugeicons: "GridIcon",
 });
 
-export const MailIcon = createIcon({
-    lucide: Lucide.MailIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMailLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMail }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Mail01Icon }))),
+export const MailIcon = createIcon(Lucide.MailIcon, {
+  lucide: "MailIcon",
+  remix: "RiMailLine",
+  tabler: "IconMail",
+  hugeicons: "Mail01Icon",
 });
 
-export const LinkIcon = createIcon({
-    lucide: Lucide.LinkIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLinkM }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLink }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Link01Icon }))),
+export const LinkIcon = createIcon(Lucide.LinkIcon, {
+  lucide: "LinkIcon",
+  remix: "RiLinkM",
+  tabler: "IconLink",
+  hugeicons: "Link01Icon",
 });
 
-export const SmileIcon = createIcon({
-    lucide: Lucide.SmileIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiEmotionLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMoodSmile }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.SmileIcon }))),
+export const SmileIcon = createIcon(Lucide.SmileIcon, {
+  lucide: "SmileIcon",
+  remix: "RiEmotionLine",
+  tabler: "IconMoodSmile",
+  hugeicons: "SmileIcon",
 });
 
-export const CircleAlertIcon = createIcon({
-    lucide: Lucide.CircleAlertIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiErrorWarningLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconExclamationCircle }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Alert01Icon }))),
+export const CircleAlertIcon = createIcon(Lucide.CircleAlertIcon, {
+  lucide: "CircleAlertIcon",
+  remix: "RiErrorWarningLine",
+  tabler: "IconExclamationCircle",
+  hugeicons: "Alert01Icon",
 });
 
-export const UserIcon = createIcon({
-    lucide: Lucide.UserIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiUserLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconUser }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.UserIcon }))),
+export const UserIcon = createIcon(Lucide.UserIcon, {
+  lucide: "UserIcon",
+  remix: "RiUserLine",
+  tabler: "IconUser",
+  hugeicons: "UserIcon",
 });
 
-export const StarIcon = createIcon({
-    lucide: Lucide.StarIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiStarLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconStar }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.StarIcon }))),
+export const StarIcon = createIcon(Lucide.StarIcon, {
+  lucide: "StarIcon",
+  remix: "RiStarLine",
+  tabler: "IconStar",
+  hugeicons: "StarIcon",
 });
 
-export const CodeIcon = createIcon({
-    lucide: Lucide.CodeIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCodeLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCode }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CodeIcon }))),
+export const CodeIcon = createIcon(Lucide.CodeIcon, {
+  lucide: "CodeIcon",
+  remix: "RiCodeLine",
+  tabler: "IconCode",
+  hugeicons: "CodeIcon",
 });
 
-export const HeartIcon = createIcon({
-    lucide: Lucide.HeartIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiHeartLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconHeart }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.FavouriteIcon }))),
+export const HeartIcon = createIcon(Lucide.HeartIcon, {
+  lucide: "HeartIcon",
+  remix: "RiHeartLine",
+  tabler: "IconHeart",
+  hugeicons: "FavouriteIcon",
 });
 
-export const LogOutIcon = createIcon({
-    lucide: Lucide.LogOutIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLogoutBoxLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLogout }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Logout01Icon }))),
+export const LogOutIcon = createIcon(Lucide.LogOutIcon, {
+  lucide: "LogOutIcon",
+  remix: "RiLogoutBoxLine",
+  tabler: "IconLogout",
+  hugeicons: "Logout01Icon",
 });
 
-export const MinusIcon = createIcon({
-    lucide: Lucide.MinusIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSubtractLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMinus }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MinusSignIcon }))),
+export const MinusIcon = createIcon(Lucide.MinusIcon, {
+  lucide: "MinusIcon",
+  remix: "RiSubtractLine",
+  tabler: "IconMinus",
+  hugeicons: "MinusSignIcon",
 });
 
-export const ArrowLeftIcon = createIcon({
-    lucide: Lucide.ArrowLeftIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowLeftLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconArrowLeft }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowLeft01Icon }))),
+export const ArrowLeftIcon = createIcon(Lucide.ArrowLeftIcon, {
+  lucide: "ArrowLeftIcon",
+  remix: "RiArrowLeftLine",
+  tabler: "IconArrowLeft",
+  hugeicons: "ArrowLeft01Icon",
 });
 
-export const MailCheckIcon = createIcon({
-    lucide: Lucide.MailCheckIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMailCheckLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMailCheck }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MailValidation01Icon }))),
+export const MailCheckIcon = createIcon(Lucide.MailCheckIcon, {
+  lucide: "MailCheckIcon",
+  remix: "RiMailCheckLine",
+  tabler: "IconMailCheck",
+  hugeicons: "MailValidation01Icon",
 });
 
-export const ArchiveIcon = createIcon({
-    lucide: Lucide.ArchiveIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArchiveLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconArchive }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Archive02Icon }))),
+export const ArchiveIcon = createIcon(Lucide.ArchiveIcon, {
+  lucide: "ArchiveIcon",
+  remix: "RiArchiveLine",
+  tabler: "IconArchive",
+  hugeicons: "Archive02Icon",
 });
 
-export const ClockIcon = createIcon({
-    lucide: Lucide.ClockIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiTimeLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconClock }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Clock01Icon }))),
+export const ClockIcon = createIcon(Lucide.ClockIcon, {
+  lucide: "ClockIcon",
+  remix: "RiTimeLine",
+  tabler: "IconClock",
+  hugeicons: "Clock01Icon",
 });
 
-export const CalendarPlusIcon = createIcon({
-    lucide: Lucide.CalendarPlusIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCalendarEventLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCalendarPlus }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CalendarAdd01Icon }))),
+export const CalendarPlusIcon = createIcon(Lucide.CalendarPlusIcon, {
+  lucide: "CalendarPlusIcon",
+  remix: "RiCalendarEventLine",
+  tabler: "IconCalendarPlus",
+  hugeicons: "CalendarAdd01Icon",
 });
 
-export const ListFilterIcon = createIcon({
-    lucide: Lucide.ListFilterIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFilterLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFilterPlus }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.FilterIcon }))),
+export const ListFilterIcon = createIcon(Lucide.ListFilterIcon, {
+  lucide: "ListFilterIcon",
+  remix: "RiFilterLine",
+  tabler: "IconFilterPlus",
+  hugeicons: "FilterIcon",
 });
 
-export const TagIcon = createIcon({
-    lucide: Lucide.TagIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiPriceTag3Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconTag }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Tag01Icon }))),
+export const TagIcon = createIcon(Lucide.TagIcon, {
+  lucide: "TagIcon",
+  remix: "RiPriceTag3Line",
+  tabler: "IconTag",
+  hugeicons: "Tag01Icon",
 });
 
-export const Trash2Icon = createIcon({
-    lucide: Lucide.Trash2Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiDeleteBin6Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconTrash }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Delete02Icon }))),
+export const Trash2Icon = createIcon(Lucide.Trash2Icon, {
+  lucide: "Trash2Icon",
+  remix: "RiDeleteBin6Line",
+  tabler: "IconTrash",
+  hugeicons: "Delete02Icon",
 });
 
-export const ArrowRightIcon = createIcon({
-    lucide: Lucide.ArrowRightIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowRightLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconArrowRight }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowRight02Icon }))),
+export const ArrowRightIcon = createIcon(Lucide.ArrowRightIcon, {
+  lucide: "ArrowRightIcon",
+  remix: "RiArrowRightLine",
+  tabler: "IconArrowRight",
+  hugeicons: "ArrowRight02Icon",
 });
 
-export const VolumeX = createIcon({
-    lucide: Lucide.VolumeX,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiVolumeMuteLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconVolume }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.VolumeOffIcon }))),
+export const VolumeX = createIcon(Lucide.VolumeX, {
+  lucide: "VolumeX",
+  remix: "RiVolumeMuteLine",
+  tabler: "IconVolume",
+  hugeicons: "VolumeOffIcon",
 });
 
-export const CheckIcon = createIcon({
-    lucide: Lucide.CheckIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCheckLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCheck }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Tick02Icon }))),
+export const CheckIcon = createIcon(Lucide.CheckIcon, {
+  lucide: "CheckIcon",
+  remix: "RiCheckLine",
+  tabler: "IconCheck",
+  hugeicons: "Tick02Icon",
 });
 
-export const UserRoundXIcon = createIcon({
-    lucide: Lucide.UserRoundXIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiUserUnfollowLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconUserX }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.UserRemove01Icon }))),
+export const UserRoundXIcon = createIcon(Lucide.UserRoundXIcon, {
+  lucide: "UserRoundXIcon",
+  remix: "RiUserUnfollowLine",
+  tabler: "IconUserX",
+  hugeicons: "UserRemove01Icon",
 });
 
-export const AlertTriangleIcon = createIcon({
-    lucide: Lucide.AlertTriangleIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiAlertLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconAlertTriangle }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Alert02Icon }))),
+export const AlertTriangleIcon = createIcon(Lucide.AlertTriangleIcon, {
+  lucide: "AlertTriangleIcon",
+  remix: "RiAlertLine",
+  tabler: "IconAlertTriangle",
+  hugeicons: "Alert02Icon",
 });
 
-export const TrashIcon = createIcon({
-    lucide: Lucide.TrashIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiDeleteBinLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconTrash }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Delete01Icon }))),
+export const TrashIcon = createIcon(Lucide.TrashIcon, {
+  lucide: "TrashIcon",
+  remix: "RiDeleteBinLine",
+  tabler: "IconTrash",
+  hugeicons: "Delete01Icon",
 });
 
-export const BluetoothIcon = createIcon({
-    lucide: Lucide.BluetoothIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBluetoothLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBluetooth }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.BluetoothIcon }))),
+export const BluetoothIcon = createIcon(Lucide.BluetoothIcon, {
+  lucide: "BluetoothIcon",
+  remix: "RiBluetoothLine",
+  tabler: "IconBluetooth",
+  hugeicons: "BluetoothIcon",
 });
 
-export const MoreVerticalIcon = createIcon({
-    lucide: Lucide.MoreVerticalIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMore2Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconDotsVertical }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MoreVerticalCircle01Icon }))),
+export const MoreVerticalIcon = createIcon(Lucide.MoreVerticalIcon, {
+  lucide: "MoreVerticalIcon",
+  remix: "RiMore2Line",
+  tabler: "IconDotsVertical",
+  hugeicons: "MoreVerticalCircle01Icon",
 });
 
-export const FileIcon = createIcon({
-    lucide: Lucide.FileIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFileLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFile }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.File01Icon }))),
+export const FileIcon = createIcon(Lucide.FileIcon, {
+  lucide: "FileIcon",
+  remix: "RiFileLine",
+  tabler: "IconFile",
+  hugeicons: "File01Icon",
 });
 
-export const FolderOpenIcon = createIcon({
-    lucide: Lucide.FolderOpenIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFolderOpenLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFolderOpen }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.FolderOpenIcon }))),
+export const FolderOpenIcon = createIcon(Lucide.FolderOpenIcon, {
+  lucide: "FolderOpenIcon",
+  remix: "RiFolderOpenLine",
+  tabler: "IconFolderOpen",
+  hugeicons: "FolderOpenIcon",
 });
 
-export const FileCodeIcon = createIcon({
-    lucide: Lucide.FileCodeIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFileCodeLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFileCode }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CodeIcon }))),
+export const FileCodeIcon = createIcon(Lucide.FileCodeIcon, {
+  lucide: "FileCodeIcon",
+  remix: "RiFileCodeLine",
+  tabler: "IconFileCode",
+  hugeicons: "CodeIcon",
 });
 
-export const FolderSearchIcon = createIcon({
-    lucide: Lucide.FolderSearchIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFileSearchLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFolderSearch }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Search01Icon }))),
+export const FolderSearchIcon = createIcon(Lucide.FolderSearchIcon, {
+  lucide: "FolderSearchIcon",
+  remix: "RiFileSearchLine",
+  tabler: "IconFolderSearch",
+  hugeicons: "Search01Icon",
 });
 
-export const SaveIcon = createIcon({
-    lucide: Lucide.SaveIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSaveLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconDeviceFloppy }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.FloppyDiskIcon }))),
+export const SaveIcon = createIcon(Lucide.SaveIcon, {
+  lucide: "SaveIcon",
+  remix: "RiSaveLine",
+  tabler: "IconDeviceFloppy",
+  hugeicons: "FloppyDiskIcon",
 });
 
-export const EyeIcon = createIcon({
-    lucide: Lucide.EyeIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiEyeLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconEye }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.EyeIcon }))),
+export const EyeIcon = createIcon(Lucide.EyeIcon, {
+  lucide: "EyeIcon",
+  remix: "RiEyeLine",
+  tabler: "IconEye",
+  hugeicons: "EyeIcon",
 });
 
-export const LayoutIcon = createIcon({
-    lucide: Lucide.LayoutIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLayoutLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLayout }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Layout01Icon }))),
+export const LayoutIcon = createIcon(Lucide.LayoutIcon, {
+  lucide: "LayoutIcon",
+  remix: "RiLayoutLine",
+  tabler: "IconLayout",
+  hugeicons: "Layout01Icon",
 });
 
-export const PaletteIcon = createIcon({
-    lucide: Lucide.PaletteIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiPaletteLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPalette }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.PaintBoardIcon }))),
+export const PaletteIcon = createIcon(Lucide.PaletteIcon, {
+  lucide: "PaletteIcon",
+  remix: "RiPaletteLine",
+  tabler: "IconPalette",
+  hugeicons: "PaintBoardIcon",
 });
 
-export const SunIcon = createIcon({
-    lucide: Lucide.SunIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSunLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSun }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Sun01Icon }))),
+export const SunIcon = createIcon(Lucide.SunIcon, {
+  lucide: "SunIcon",
+  remix: "RiSunLine",
+  tabler: "IconSun",
+  hugeicons: "Sun01Icon",
 });
 
-export const MoonIcon = createIcon({
-    lucide: Lucide.MoonIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMoonLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMoon }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MoonIcon }))),
+export const MoonIcon = createIcon(Lucide.MoonIcon, {
+  lucide: "MoonIcon",
+  remix: "RiMoonLine",
+  tabler: "IconMoon",
+  hugeicons: "MoonIcon",
 });
 
-export const HelpCircleIcon = createIcon({
-    lucide: Lucide.HelpCircleIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiQuestionLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconHelpCircle }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.HelpCircleIcon }))),
+export const HelpCircleIcon = createIcon(Lucide.HelpCircleIcon, {
+  lucide: "HelpCircleIcon",
+  remix: "RiQuestionLine",
+  tabler: "IconHelpCircle",
+  hugeicons: "HelpCircleIcon",
 });
 
-export const FileTextIcon = createIcon({
-    lucide: Lucide.FileTextIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFileTextLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFileText }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.File01Icon }))),
+export const FileTextIcon = createIcon(Lucide.FileTextIcon, {
+  lucide: "FileTextIcon",
+  remix: "RiFileTextLine",
+  tabler: "IconFileText",
+  hugeicons: "File01Icon",
 });
 
-export const CalendarIcon = createIcon({
-    lucide: Lucide.CalendarIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCalendarLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCalendar }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Calendar01Icon }))),
+export const CalendarIcon = createIcon(Lucide.CalendarIcon, {
+  lucide: "CalendarIcon",
+  remix: "RiCalendarLine",
+  tabler: "IconCalendar",
+  hugeicons: "Calendar01Icon",
 });
 
-export const Search = createIcon({
-    lucide: Lucide.Search,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSearchLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSearch }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Search01Icon }))),
+export const Search = createIcon(Lucide.Search, {
+  lucide: "Search",
+  remix: "RiSearchLine",
+  tabler: "IconSearch",
+  hugeicons: "Search01Icon",
 });
 
-export const CheckCircle2Icon = createIcon({
-    lucide: Lucide.CheckCircle2Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCheckboxCircleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCircleCheckFilled }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CheckmarkCircle02Icon }))),
+export const CheckCircle2Icon = createIcon(Lucide.CheckCircle2Icon, {
+  lucide: "CheckCircle2Icon",
+  remix: "RiCheckboxCircleLine",
+  tabler: "IconCircleCheckFilled",
+  hugeicons: "CheckmarkCircle02Icon",
 });
 
-export const CircleDollarSignIcon = createIcon({
-    lucide: Lucide.CircleDollarSignIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMoneyDollarCircleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCoin }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.DollarCircleIcon }))),
+export const CircleDollarSignIcon = createIcon(Lucide.CircleDollarSignIcon, {
+  lucide: "CircleDollarSignIcon",
+  remix: "RiMoneyDollarCircleLine",
+  tabler: "IconCoin",
+  hugeicons: "DollarCircleIcon",
 });
 
-export const ArrowUpRightIcon = createIcon({
-    lucide: Lucide.ArrowUpRightIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowRightUpLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconArrowUpRight }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowUpRight01Icon }))),
+export const ArrowUpRightIcon = createIcon(Lucide.ArrowUpRightIcon, {
+  lucide: "ArrowUpRightIcon",
+  remix: "RiArrowRightUpLine",
+  tabler: "IconArrowUpRight",
+  hugeicons: "ArrowUpRight01Icon",
 });
 
-export const BadgeCheck = createIcon({
-    lucide: Lucide.BadgeCheck,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiVerifiedBadgeLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconRosetteDiscountCheck }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CheckmarkBadge02Icon }))),
+export const BadgeCheck = createIcon(Lucide.BadgeCheck, {
+  lucide: "BadgeCheck",
+  remix: "RiVerifiedBadgeLine",
+  tabler: "IconRosetteDiscountCheck",
+  hugeicons: "CheckmarkBadge02Icon",
 });
 
-export const ArrowLeftCircleIcon = createIcon({
-    lucide: Lucide.ArrowLeftCircleIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowLeftCircleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCircleArrowLeft }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CircleArrowLeft02Icon }))),
+export const ArrowLeftCircleIcon = createIcon(Lucide.ArrowLeftCircleIcon, {
+  lucide: "ArrowLeftCircleIcon",
+  remix: "RiArrowLeftCircleLine",
+  tabler: "IconCircleArrowLeft",
+  hugeicons: "CircleArrowLeft02Icon",
 });
 
-export const FlipHorizontalIcon = createIcon({
-    lucide: Lucide.FlipHorizontalIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFlipHorizontalLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFlipHorizontal }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.FlipHorizontalIcon }))),
+export const FlipHorizontalIcon = createIcon(Lucide.FlipHorizontalIcon, {
+  lucide: "FlipHorizontalIcon",
+  remix: "RiFlipHorizontalLine",
+  tabler: "IconFlipHorizontal",
+  hugeicons: "FlipHorizontalIcon",
 });
 
-export const FlipVerticalIcon = createIcon({
-    lucide: Lucide.FlipVerticalIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFlipVerticalLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFlipVertical }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.FlipVerticalIcon }))),
+export const FlipVerticalIcon = createIcon(Lucide.FlipVerticalIcon, {
+  lucide: "FlipVerticalIcon",
+  remix: "RiFlipVerticalLine",
+  tabler: "IconFlipVertical",
+  hugeicons: "FlipVerticalIcon",
 });
 
-export const RotateCwIcon = createIcon({
-    lucide: Lucide.RotateCwIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiRestartLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconRotateClockwise2 }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Rotate01Icon }))),
+export const RotateCwIcon = createIcon(Lucide.RotateCwIcon, {
+  lucide: "RotateCwIcon",
+  remix: "RiRestartLine",
+  tabler: "IconRotateClockwise2",
+  hugeicons: "Rotate01Icon",
 });
 
-export const Clock2Icon = createIcon({
-    lucide: Lucide.Clock2Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiTimeLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconClockHour2 }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Clock03Icon }))),
+export const Clock2Icon = createIcon(Lucide.Clock2Icon, {
+  lucide: "Clock2Icon",
+  remix: "RiTimeLine",
+  tabler: "IconClockHour2",
+  hugeicons: "Clock03Icon",
 });
 
-export const CaptionsIcon = createIcon({
-    lucide: Lucide.CaptionsIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiClosedCaptioningLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconTextCaption }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ClosedCaptionIcon }))),
+export const CaptionsIcon = createIcon(Lucide.CaptionsIcon, {
+  lucide: "CaptionsIcon",
+  remix: "RiClosedCaptioningLine",
+  tabler: "IconTextCaption",
+  hugeicons: "ClosedCaptionIcon",
 });
 
-export const TrendingUpIcon = createIcon({
-    lucide: Lucide.TrendingUpIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowRightUpLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconTrendingUp }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Analytics01Icon }))),
+export const TrendingUpIcon = createIcon(Lucide.TrendingUpIcon, {
+  lucide: "TrendingUpIcon",
+  remix: "RiArrowRightUpLine",
+  tabler: "IconTrendingUp",
+  hugeicons: "Analytics01Icon",
 });
 
-export const ChevronRightIcon = createIcon({
-    lucide: Lucide.ChevronRightIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowRightSLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconChevronRight }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowRight01Icon }))),
+export const ChevronRightIcon = createIcon(Lucide.ChevronRightIcon, {
+  lucide: "ChevronRightIcon",
+  remix: "RiArrowRightSLine",
+  tabler: "IconChevronRight",
+  hugeicons: "ArrowRight01Icon",
 });
 
-export const MinimizeIcon = createIcon({
-    lucide: Lucide.MinimizeIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiContractLeftRightLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMinimize }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MinusSignIcon }))),
+export const MinimizeIcon = createIcon(Lucide.MinimizeIcon, {
+  lucide: "MinimizeIcon",
+  remix: "RiContractLeftRightLine",
+  tabler: "IconMinimize",
+  hugeicons: "MinusSignIcon",
 });
 
-export const MaximizeIcon = createIcon({
-    lucide: Lucide.MaximizeIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiExpandLeftRightLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMaximize }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.PlusSignIcon }))),
+export const MaximizeIcon = createIcon(Lucide.MaximizeIcon, {
+  lucide: "MaximizeIcon",
+  remix: "RiExpandLeftRightLine",
+  tabler: "IconMaximize",
+  hugeicons: "PlusSignIcon",
 });
 
-export const CreditCardIcon = createIcon({
-    lucide: Lucide.CreditCardIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBankCardLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCreditCard }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CreditCardIcon }))),
+export const CreditCardIcon = createIcon(Lucide.CreditCardIcon, {
+  lucide: "CreditCardIcon",
+  remix: "RiBankCardLine",
+  tabler: "IconCreditCard",
+  hugeicons: "CreditCardIcon",
 });
 
-export const CalculatorIcon = createIcon({
-    lucide: Lucide.CalculatorIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCalculatorLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCalculator }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CalculatorIcon }))),
+export const CalculatorIcon = createIcon(Lucide.CalculatorIcon, {
+  lucide: "CalculatorIcon",
+  remix: "RiCalculatorLine",
+  tabler: "IconCalculator",
+  hugeicons: "CalculatorIcon",
 });
 
-export const InboxIcon = createIcon({
-    lucide: Lucide.InboxIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiInboxLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconArchive }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Archive02Icon }))),
+export const InboxIcon = createIcon(Lucide.InboxIcon, {
+  lucide: "InboxIcon",
+  remix: "RiInboxLine",
+  tabler: "IconArchive",
+  hugeicons: "Archive02Icon",
 });
 
-export const FolderPlusIcon = createIcon({
-    lucide: Lucide.FolderPlusIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiFolderAddLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFolderPlus }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.FolderAddIcon }))),
+export const FolderPlusIcon = createIcon(Lucide.FolderPlusIcon, {
+  lucide: "FolderPlusIcon",
+  remix: "RiFolderAddLine",
+  tabler: "IconFolderPlus",
+  hugeicons: "FolderAddIcon",
 });
 
-export const ScissorsIcon = createIcon({
-    lucide: Lucide.ScissorsIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiScissorsLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCut }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ScissorIcon }))),
+export const ScissorsIcon = createIcon(Lucide.ScissorsIcon, {
+  lucide: "ScissorsIcon",
+  remix: "RiScissorsLine",
+  tabler: "IconCut",
+  hugeicons: "ScissorIcon",
 });
 
-export const ClipboardPasteIcon = createIcon({
-    lucide: Lucide.ClipboardPasteIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiClipboardLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconClipboard }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ClipboardIcon }))),
+export const ClipboardPasteIcon = createIcon(Lucide.ClipboardPasteIcon, {
+  lucide: "ClipboardPasteIcon",
+  remix: "RiClipboardLine",
+  tabler: "IconClipboard",
+  hugeicons: "ClipboardIcon",
 });
 
-export const ListIcon = createIcon({
-    lucide: Lucide.ListIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiListUnordered }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconList }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Menu05Icon }))),
+export const ListIcon = createIcon(Lucide.ListIcon, {
+  lucide: "ListIcon",
+  remix: "RiListUnordered",
+  tabler: "IconList",
+  hugeicons: "Menu05Icon",
 });
 
-export const ZoomInIcon = createIcon({
-    lucide: Lucide.ZoomInIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiZoomInLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconZoomIn }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ZoomInAreaIcon }))),
+export const ZoomInIcon = createIcon(Lucide.ZoomInIcon, {
+  lucide: "ZoomInIcon",
+  remix: "RiZoomInLine",
+  tabler: "IconZoomIn",
+  hugeicons: "ZoomInAreaIcon",
 });
 
-export const ZoomOutIcon = createIcon({
-    lucide: Lucide.ZoomOutIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiZoomOutLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconZoomOut }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ZoomOutAreaIcon }))),
+export const ZoomOutIcon = createIcon(Lucide.ZoomOutIcon, {
+  lucide: "ZoomOutIcon",
+  remix: "RiZoomOutLine",
+  tabler: "IconZoomOut",
+  hugeicons: "ZoomOutAreaIcon",
 });
 
-export const BellIcon = createIcon({
-    lucide: Lucide.BellIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiNotification3Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBell }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Notification01Icon }))),
+export const BellIcon = createIcon(Lucide.BellIcon, {
+  lucide: "BellIcon",
+  remix: "RiNotification3Line",
+  tabler: "IconBell",
+  hugeicons: "Notification01Icon",
 });
 
-export const ImageIcon = createIcon({
-    lucide: Lucide.ImageIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiImageLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPhoto }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Image01Icon }))),
+export const ImageIcon = createIcon(Lucide.ImageIcon, {
+  lucide: "ImageIcon",
+  remix: "RiImageLine",
+  tabler: "IconPhoto",
+  hugeicons: "Image01Icon",
 });
 
-export const KeyboardIcon = createIcon({
-    lucide: Lucide.KeyboardIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiKeyboardLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconKeyboard }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.KeyboardIcon }))),
+export const KeyboardIcon = createIcon(Lucide.KeyboardIcon, {
+  lucide: "KeyboardIcon",
+  remix: "RiKeyboardLine",
+  tabler: "IconKeyboard",
+  hugeicons: "KeyboardIcon",
 });
 
-export const LanguagesIcon = createIcon({
-    lucide: Lucide.LanguagesIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiTranslate }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLanguage }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.LanguageCircleIcon }))),
+export const LanguagesIcon = createIcon(Lucide.LanguagesIcon, {
+  lucide: "LanguagesIcon",
+  remix: "RiTranslate",
+  tabler: "IconLanguage",
+  hugeicons: "LanguageCircleIcon",
 });
 
-export const ShieldIcon = createIcon({
-    lucide: Lucide.ShieldIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiShieldLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconShield }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.SecurityIcon }))),
+export const ShieldIcon = createIcon(Lucide.ShieldIcon, {
+  lucide: "ShieldIcon",
+  remix: "RiShieldLine",
+  tabler: "IconShield",
+  hugeicons: "SecurityIcon",
 });
 
-export const PencilIcon = createIcon({
-    lucide: Lucide.PencilIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiPencilLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPencil }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Edit01Icon }))),
+export const PencilIcon = createIcon(Lucide.PencilIcon, {
+  lucide: "PencilIcon",
+  remix: "RiPencilLine",
+  tabler: "IconPencil",
+  hugeicons: "Edit01Icon",
 });
 
-export const ActivityIcon = createIcon({
-    lucide: Lucide.ActivityIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiPulseLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconActivity }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Cardiogram01Icon }))),
+export const ActivityIcon = createIcon(Lucide.ActivityIcon, {
+  lucide: "ActivityIcon",
+  remix: "RiPulseLine",
+  tabler: "IconActivity",
+  hugeicons: "Cardiogram01Icon",
 });
 
-export const PanelLeftIcon = createIcon({
-    lucide: Lucide.PanelLeftIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLayoutLeftLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLayoutSidebar }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.LayoutLeftIcon }))),
+export const PanelLeftIcon = createIcon(Lucide.PanelLeftIcon, {
+  lucide: "PanelLeftIcon",
+  remix: "RiLayoutLeftLine",
+  tabler: "IconLayoutSidebar",
+  hugeicons: "LayoutLeftIcon",
 });
 
-export const ArrowDownIcon = createIcon({
-    lucide: Lucide.ArrowDownIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowDownLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconArrowDown }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowDown01Icon }))),
+export const ArrowDownIcon = createIcon(Lucide.ArrowDownIcon, {
+  lucide: "ArrowDownIcon",
+  remix: "RiArrowDownLine",
+  tabler: "IconArrowDown",
+  hugeicons: "ArrowDown01Icon",
 });
 
-export const MessageSquareIcon = createIcon({
-    lucide: Lucide.MessageSquareIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiChat1Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMessage }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Message01Icon }))),
+export const MessageSquareIcon = createIcon(Lucide.MessageSquareIcon, {
+  lucide: "MessageSquareIcon",
+  remix: "RiChat1Line",
+  tabler: "IconMessage",
+  hugeicons: "Message01Icon",
 });
 
-export const WalletIcon = createIcon({
-    lucide: Lucide.WalletIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiWalletLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconWallet }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Wallet01Icon }))),
+export const WalletIcon = createIcon(Lucide.WalletIcon, {
+  lucide: "WalletIcon",
+  remix: "RiWalletLine",
+  tabler: "IconWallet",
+  hugeicons: "Wallet01Icon",
 });
 
-export const Building2Icon = createIcon({
-    lucide: Lucide.Building2Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBankLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBuildingBank }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.BankIcon }))),
+export const Building2Icon = createIcon(Lucide.Building2Icon, {
+  lucide: "Building2Icon",
+  remix: "RiBankLine",
+  tabler: "IconBuildingBank",
+  hugeicons: "BankIcon",
 });
 
-export const BadgeCheckIcon = createIcon({
-    lucide: Lucide.BadgeCheckIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiVerifiedBadgeLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconRosetteDiscountCheck }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CheckmarkBadge01Icon }))),
+export const BadgeCheckIcon = createIcon(Lucide.BadgeCheckIcon, {
+  lucide: "BadgeCheckIcon",
+  remix: "RiVerifiedBadgeLine",
+  tabler: "IconRosetteDiscountCheck",
+  hugeicons: "CheckmarkBadge01Icon",
 });
 
-export const ChevronsUpDownIcon = createIcon({
-    lucide: Lucide.ChevronsUpDownIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiExpandUpDownLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSelector }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.UnfoldMoreIcon }))),
+export const ChevronsUpDownIcon = createIcon(Lucide.ChevronsUpDownIcon, {
+  lucide: "ChevronsUpDownIcon",
+  remix: "RiExpandUpDownLine",
+  tabler: "IconSelector",
+  hugeicons: "UnfoldMoreIcon",
 });
 
-export const CircleDashedIcon = createIcon({
-    lucide: Lucide.CircleDashedIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLoader3Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCircleDashed }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Loading01Icon }))),
+export const CircleDashedIcon = createIcon(Lucide.CircleDashedIcon, {
+  lucide: "CircleDashedIcon",
+  remix: "RiLoader3Line",
+  tabler: "IconCircleDashed",
+  hugeicons: "Loading01Icon",
 });
 
-export const EyeOffIcon = createIcon({
-    lucide: Lucide.EyeOffIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiEyeOffLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconEyeClosed }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ViewOffIcon }))),
+export const EyeOffIcon = createIcon(Lucide.EyeOffIcon, {
+  lucide: "EyeOffIcon",
+  remix: "RiEyeOffLine",
+  tabler: "IconEyeClosed",
+  hugeicons: "ViewOffIcon",
 });
 
-export const MicIcon = createIcon({
-    lucide: Lucide.MicIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMicLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMicrophone }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.VoiceIcon }))),
+export const MicIcon = createIcon(Lucide.MicIcon, {
+  lucide: "MicIcon",
+  remix: "RiMicLine",
+  tabler: "IconMicrophone",
+  hugeicons: "VoiceIcon",
 });
 
-export const RadioIcon = createIcon({
-    lucide: Lucide.RadioIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiRadioButtonLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPlayerRecordFilled }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.RecordIcon }))),
+export const RadioIcon = createIcon(Lucide.RadioIcon, {
+  lucide: "RadioIcon",
+  remix: "RiRadioButtonLine",
+  tabler: "IconPlayerRecordFilled",
+  hugeicons: "RecordIcon",
 });
 
-export const ExternalLinkIcon = createIcon({
-    lucide: Lucide.ExternalLinkIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiExternalLinkLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconExternalLink }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.LinkSquare02Icon }))),
+export const ExternalLinkIcon = createIcon(Lucide.ExternalLinkIcon, {
+  lucide: "ExternalLinkIcon",
+  remix: "RiExternalLinkLine",
+  tabler: "IconExternalLink",
+  hugeicons: "LinkSquare02Icon",
 });
 
-export const RefreshCwIcon = createIcon({
-    lucide: Lucide.RefreshCwIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiRefreshLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconRefresh }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.RefreshIcon }))),
+export const RefreshCwIcon = createIcon(Lucide.RefreshCwIcon, {
+  lucide: "RefreshCwIcon",
+  remix: "RiRefreshLine",
+  tabler: "IconRefresh",
+  hugeicons: "RefreshIcon",
 });
 
-export const BoldIcon = createIcon({
-    lucide: Lucide.BoldIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBold }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBold }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.TextBoldIcon }))),
+export const BoldIcon = createIcon(Lucide.BoldIcon, {
+  lucide: "BoldIcon",
+  remix: "RiBold",
+  tabler: "IconBold",
+  hugeicons: "TextBoldIcon",
 });
 
-export const ItalicIcon = createIcon({
-    lucide: Lucide.ItalicIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiItalic }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconItalic }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.TextItalicIcon }))),
+export const ItalicIcon = createIcon(Lucide.ItalicIcon, {
+  lucide: "ItalicIcon",
+  remix: "RiItalic",
+  tabler: "IconItalic",
+  hugeicons: "TextItalicIcon",
 });
 
-export const UnderlineIcon = createIcon({
-    lucide: Lucide.UnderlineIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiUnderline }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconUnderline }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.TextUnderlineIcon }))),
+export const UnderlineIcon = createIcon(Lucide.UnderlineIcon, {
+  lucide: "UnderlineIcon",
+  remix: "RiUnderline",
+  tabler: "IconUnderline",
+  hugeicons: "TextUnderlineIcon",
 });
 
-export const TableIcon = createIcon({
-    lucide: Lucide.TableIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiTable2 }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconTable }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Table01Icon }))),
+export const TableIcon = createIcon(Lucide.TableIcon, {
+  lucide: "TableIcon",
+  remix: "RiTable2",
+  tabler: "IconTable",
+  hugeicons: "Table01Icon",
 });
 
-export const ChartLineIcon = createIcon({
-    lucide: Lucide.ChartLineIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLineChartLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconChartLine }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ChartLineData01Icon }))),
+export const ChartLineIcon = createIcon(Lucide.ChartLineIcon, {
+  lucide: "ChartLineIcon",
+  remix: "RiLineChartLine",
+  tabler: "IconChartLine",
+  hugeicons: "ChartLineData01Icon",
 });
 
-export const ChartBarIcon = createIcon({
-    lucide: Lucide.ChartBarIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBarChartLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconChartBar }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ChartColumnIcon }))),
+export const ChartBarIcon = createIcon(Lucide.ChartBarIcon, {
+  lucide: "ChartBarIcon",
+  remix: "RiBarChartLine",
+  tabler: "IconChartBar",
+  hugeicons: "ChartColumnIcon",
 });
 
-export const ChartPieIcon = createIcon({
-    lucide: Lucide.ChartPieIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiPieChartLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconChartPie }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.PieChartIcon }))),
+export const ChartPieIcon = createIcon(Lucide.ChartPieIcon, {
+  lucide: "ChartPieIcon",
+  remix: "RiPieChartLine",
+  tabler: "IconChartPie",
+  hugeicons: "PieChartIcon",
 });
 
-export const TerminalSquareIcon = createIcon({
-    lucide: Lucide.TerminalSquareIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiTerminalLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconTerminal2 }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.SourceCodeSquareIcon }))),
+export const TerminalSquareIcon = createIcon(Lucide.TerminalSquareIcon, {
+  lucide: "TerminalSquareIcon",
+  remix: "RiTerminalLine",
+  tabler: "IconTerminal2",
+  hugeicons: "SourceCodeSquareIcon",
 });
 
-export const BookOpen = createIcon({
-    lucide: Lucide.BookOpen,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBookOpenLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBook }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.BookOpen02Icon }))),
+export const BookOpen = createIcon(Lucide.BookOpen, {
+  lucide: "BookOpen",
+  remix: "RiBookOpenLine",
+  tabler: "IconBook",
+  hugeicons: "BookOpen02Icon",
 });
 
-export const Settings2Icon = createIcon({
-    lucide: Lucide.Settings2Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSettings4Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSettings }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Settings05Icon }))),
+export const Settings2Icon = createIcon(Lucide.Settings2Icon, {
+  lucide: "Settings2Icon",
+  remix: "RiSettings4Line",
+  tabler: "IconSettings",
+  hugeicons: "Settings05Icon",
 });
 
-export const FrameIcon = createIcon({
-    lucide: Lucide.FrameIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCropLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconFrame }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CropIcon }))),
+export const FrameIcon = createIcon(Lucide.FrameIcon, {
+  lucide: "FrameIcon",
+  remix: "RiCropLine",
+  tabler: "IconFrame",
+  hugeicons: "CropIcon",
 });
 
-export const PieChartIcon = createIcon({
-    lucide: Lucide.PieChartIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiPieChartLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconChartPie }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.PieChartIcon }))),
+export const PieChartIcon = createIcon(Lucide.PieChartIcon, {
+  lucide: "PieChartIcon",
+  remix: "RiPieChartLine",
+  tabler: "IconChartPie",
+  hugeicons: "PieChartIcon",
 });
 
-export const MapIcon = createIcon({
-    lucide: Lucide.MapIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiMapLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconMap }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MapsIcon }))),
+export const MapIcon = createIcon(Lucide.MapIcon, {
+  lucide: "MapIcon",
+  remix: "RiMapLine",
+  tabler: "IconMap",
+  hugeicons: "MapsIcon",
 });
 
-export const ShoppingCartIcon = createIcon({
-    lucide: Lucide.ShoppingCartIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiShoppingCartLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconShoppingCart }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ShoppingCart01Icon }))),
+export const ShoppingCartIcon = createIcon(Lucide.ShoppingCartIcon, {
+  lucide: "ShoppingCartIcon",
+  remix: "RiShoppingCartLine",
+  tabler: "IconShoppingCart",
+  hugeicons: "ShoppingCart01Icon",
 });
 
-export const LifeBuoy = createIcon({
-    lucide: Lucide.LifeBuoy,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLifebuoyLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLifebuoy }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ChartRingIcon }))),
+export const LifeBuoy = createIcon(Lucide.LifeBuoy, {
+  lucide: "LifeBuoy",
+  remix: "RiLifebuoyLine",
+  tabler: "IconLifebuoy",
+  hugeicons: "ChartRingIcon",
 });
 
-export const Send = createIcon({
-    lucide: Lucide.Send,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiSendPlaneLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSend }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.SentIcon }))),
+export const Send = createIcon(Lucide.Send, {
+  lucide: "Send",
+  remix: "RiSendPlaneLine",
+  tabler: "IconSend",
+  hugeicons: "SentIcon",
 });
 
-export const AppWindowIcon = createIcon({
-    lucide: Lucide.AppWindowIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiWindowLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconAppWindow }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CursorInWindowIcon }))),
+export const AppWindowIcon = createIcon(Lucide.AppWindowIcon, {
+  lucide: "AppWindowIcon",
+  remix: "RiWindowLine",
+  tabler: "IconAppWindow",
+  hugeicons: "CursorInWindowIcon",
 });
 
-export const BookmarkIcon = createIcon({
-    lucide: Lucide.BookmarkIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiBookmarkLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconBookmark }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Bookmark01Icon }))),
+export const BookmarkIcon = createIcon(Lucide.BookmarkIcon, {
+  lucide: "BookmarkIcon",
+  remix: "RiBookmarkLine",
+  tabler: "IconBookmark",
+  hugeicons: "Bookmark01Icon",
 });
 
-export const ChevronUpIcon = createIcon({
-    lucide: Lucide.ChevronUpIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowUpSLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconChevronUp }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowUp01Icon }))),
+export const ChevronUpIcon = createIcon(Lucide.ChevronUpIcon, {
+  lucide: "ChevronUpIcon",
+  remix: "RiArrowUpSLine",
+  tabler: "IconChevronUp",
+  hugeicons: "ArrowUp01Icon",
 });
 
-export const ChevronLeftIcon = createIcon({
-    lucide: Lucide.ChevronLeftIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowLeftSLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconChevronLeft }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.ArrowLeft01Icon }))),
+export const ChevronLeftIcon = createIcon(Lucide.ChevronLeftIcon, {
+  lucide: "ChevronLeftIcon",
+  remix: "RiArrowLeftSLine",
+  tabler: "IconChevronLeft",
+  hugeicons: "ArrowLeft01Icon",
 });
 
-export const TriangleAlertIcon = createIcon({
-    lucide: Lucide.TriangleAlertIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiAlertLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconAlertTriangle }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Alert02Icon }))),
+export const TriangleAlertIcon = createIcon(Lucide.TriangleAlertIcon, {
+  lucide: "TriangleAlertIcon",
+  remix: "RiAlertLine",
+  tabler: "IconAlertTriangle",
+  hugeicons: "Alert02Icon",
 });
 
-export const OctagonXIcon = createIcon({
-    lucide: Lucide.OctagonXIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCloseCircleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconAlertOctagon }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.MultiplicationSignCircleIcon }))),
+export const OctagonXIcon = createIcon(Lucide.OctagonXIcon, {
+  lucide: "OctagonXIcon",
+  remix: "RiCloseCircleLine",
+  tabler: "IconAlertOctagon",
+  hugeicons: "MultiplicationSignCircleIcon",
 });
 
-export const Loader2Icon = createIcon({
-    lucide: Lucide.Loader2Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLoader4Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLoader }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Loading03Icon }))),
+export const Loader2Icon = createIcon(Lucide.Loader2Icon, {
+  lucide: "Loader2Icon",
+  remix: "RiLoader4Line",
+  tabler: "IconLoader",
+  hugeicons: "Loading03Icon",
 });
 
-export const VolumeOffIcon = createIcon({
-    lucide: Lucide.VolumeOffIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiVolumeMuteLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconVolume }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.VolumeOffIcon }))),
+export const VolumeOffIcon = createIcon(Lucide.VolumeOffIcon, {
+  lucide: "VolumeOffIcon",
+  remix: "RiVolumeMuteLine",
+  tabler: "IconVolume",
+  hugeicons: "VolumeOffIcon",
 });
 
-export const AlertCircleIcon = createIcon({
-    lucide: Lucide.AlertCircleIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiAlertLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconAlertCircle }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Alert01Icon }))),
+export const AlertCircleIcon = createIcon(Lucide.AlertCircleIcon, {
+  lucide: "AlertCircleIcon",
+  remix: "RiAlertLine",
+  tabler: "IconAlertCircle",
+  hugeicons: "Alert01Icon",
 });
 
-export const User2Icon = createIcon({
-    lucide: Lucide.User2Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiUserLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconUser }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.UserIcon }))),
+export const User2Icon = createIcon(Lucide.User2Icon, {
+  lucide: "User2Icon",
+  remix: "RiUserLine",
+  tabler: "IconUser",
+  hugeicons: "UserIcon",
 });
 
-export const ArrowRightCircleIcon = createIcon({
-    lucide: Lucide.ArrowRightCircleIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiArrowRightCircleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCircleArrowRight }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.CircleArrowRight02Icon }))),
+export const ArrowRightCircleIcon = createIcon(Lucide.ArrowRightCircleIcon, {
+  lucide: "ArrowRightCircleIcon",
+  remix: "RiArrowRightCircleLine",
+  tabler: "IconCircleArrowRight",
+  hugeicons: "CircleArrowRight02Icon",
 });
 
-export const LogInIcon = createIcon({
-    lucide: Lucide.LogInIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiLoginBoxLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconLogin }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Login01Icon }))),
+export const LogInIcon = createIcon(Lucide.LogInIcon, {
+  lucide: "LogInIcon",
+  remix: "RiLoginBoxLine",
+  tabler: "IconLogin",
+  hugeicons: "Login01Icon",
 });
 
-export const PenSquareIcon = createIcon({
-    lucide: Lucide.PenSquareIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiEditLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconEdit }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Edit02Icon }))),
+export const PenSquareIcon = createIcon(Lucide.PenSquareIcon, {
+  lucide: "PenSquareIcon",
+  remix: "RiEditLine",
+  tabler: "IconEdit",
+  hugeicons: "Edit02Icon",
 });
 
-export const CameraIcon = createIcon({
-    lucide: Lucide.CameraIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCameraLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCamera }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Camera01Icon }))),
+export const CameraIcon = createIcon(Lucide.CameraIcon, {
+  lucide: "CameraIcon",
+  remix: "RiCameraLine",
+  tabler: "IconCamera",
+  hugeicons: "Camera01Icon",
 });
 
-export const PlusSquareIcon = createIcon({
-    lucide: Lucide.PlusSquareIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiAddBoxLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconSquarePlus }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.PlusSignSquareIcon }))),
+export const PlusSquareIcon = createIcon(Lucide.PlusSquareIcon, {
+  lucide: "PlusSquareIcon",
+  remix: "RiAddBoxLine",
+  tabler: "IconSquarePlus",
+  hugeicons: "PlusSignSquareIcon",
 });
 
-export const SquarePenIcon = createIcon({
-    lucide: Lucide.SquarePenIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiEdit2Line }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconEdit }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Edit02Icon }))),
+export const SquarePenIcon = createIcon(Lucide.SquarePenIcon, {
+  lucide: "SquarePenIcon",
+  remix: "RiEdit2Line",
+  tabler: "IconEdit",
+  hugeicons: "Edit02Icon",
 });
 
-export const Volume1Icon = createIcon({
-    lucide: Lucide.Volume1Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiVolumeDownLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconVolume2 }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.VolumeLowIcon }))),
+export const Volume1Icon = createIcon(Lucide.Volume1Icon, {
+  lucide: "Volume1Icon",
+  remix: "RiVolumeDownLine",
+  tabler: "IconVolume2",
+  hugeicons: "VolumeLowIcon",
 });
 
-export const Volume2Icon = createIcon({
-    lucide: Lucide.Volume2Icon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiVolumeUpLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconVolume }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.VolumeHighIcon }))),
+export const Volume2Icon = createIcon(Lucide.Volume2Icon, {
+  lucide: "Volume2Icon",
+  remix: "RiVolumeUpLine",
+  tabler: "IconVolume",
+  hugeicons: "VolumeHighIcon",
 });
 
-export const XCircleIcon = createIcon({
-    lucide: Lucide.XCircleIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiCloseCircleLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconCircleX }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Cancel01Icon }))),
+export const XCircleIcon = createIcon(Lucide.XCircleIcon, {
+  lucide: "XCircleIcon",
+  remix: "RiCloseCircleLine",
+  tabler: "IconCircleX",
+  hugeicons: "Cancel01Icon",
 });
 
-export const TimerIcon = createIcon({
-    lucide: Lucide.TimerIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiTimerLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconAlarm }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.Time01Icon }))),
+export const TimerIcon = createIcon(Lucide.TimerIcon, {
+  lucide: "TimerIcon",
+  remix: "RiTimerLine",
+  tabler: "IconAlarm",
+  hugeicons: "Time01Icon",
 });
 
-export const PinIcon = createIcon({
-    lucide: Lucide.PinIcon,
-    remix: React.lazy(() => import("@remixicon/react").then(mod => ({ default: mod.RiPushpinLine }))),
-    tabler: React.lazy(() => import("@tabler/icons-react").then(mod => ({ default: mod.IconPinned }))),
-    hugeicons: React.lazy(() => import("@hugeicons/react").then(mod => ({ default: mod.PinIcon }))),
+export const PinIcon = createIcon(Lucide.PinIcon, {
+  lucide: "PinIcon",
+  remix: "RiPushpinLine",
+  tabler: "IconPinned",
+  hugeicons: "PinIcon",
 });

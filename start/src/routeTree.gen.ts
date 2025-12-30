@@ -16,11 +16,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ViewBlockRouteImport } from './routes/view/$block'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as legalSplatRouteImport } from './routes/(legal)/$'
+import { Route as AppBlocksRouteRouteImport } from './routes/_app/blocks/route'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
 import { Route as AppDocsComponentsRouteImport } from './routes/_app/docs/components'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
+import { Route as AppBlocksChar123CategoryChar125RouteImport } from './routes/_app/blocks/{-$category}'
 
 const OgRoute = OgRouteImport.update({
   id: '/og',
@@ -56,6 +58,11 @@ const legalSplatRoute = legalSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppBlocksRouteRoute = AppBlocksRouteRouteImport.update({
+  id: '/blocks',
+  path: '/blocks',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
   path: '/api/trpc/$',
@@ -82,14 +89,22 @@ const AppDocsSplatRoute = AppDocsSplatRouteImport.update({
   path: '/docs/$',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppBlocksChar123CategoryChar125Route =
+  AppBlocksChar123CategoryChar125RouteImport.update({
+    id: '/{-$category}',
+    path: '/{-$category}',
+    getParentRoute: () => AppBlocksRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/$': typeof legalSplatRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/view/$block': typeof ViewBlockRoute
+  '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/components': typeof AppDocsComponentsRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
@@ -100,9 +115,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/$': typeof legalSplatRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/view/$block': typeof ViewBlockRoute
+  '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/components': typeof AppDocsComponentsRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
@@ -115,9 +132,11 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
+  '/_app/blocks': typeof AppBlocksRouteRouteWithChildren
   '/(legal)/$': typeof legalSplatRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/view/$block': typeof ViewBlockRoute
+  '/_app/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/components': typeof AppDocsComponentsRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
@@ -130,9 +149,11 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/og'
+    | '/blocks'
     | '/$'
     | '/demos/$slug'
     | '/view/$block'
+    | '/blocks/{-$category}'
     | '/docs/$'
     | '/docs/components'
     | '/docs/{$}.md'
@@ -143,9 +164,11 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/og'
+    | '/blocks'
     | '/$'
     | '/demos/$slug'
     | '/view/$block'
+    | '/blocks/{-$category}'
     | '/docs/$'
     | '/docs/components'
     | '/docs/{$}.md'
@@ -157,9 +180,11 @@ export interface FileRouteTypes {
     | '/_app'
     | '/login'
     | '/og'
+    | '/_app/blocks'
     | '/(legal)/$'
     | '/demos/$slug'
     | '/view/$block'
+    | '/_app/blocks/{-$category}'
     | '/_app/docs/$'
     | '/_app/docs/components'
     | '/_app/docs/{$}.md'
@@ -230,6 +255,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof legalSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/blocks': {
+      id: '/_app/blocks'
+      path: '/blocks'
+      fullPath: '/blocks'
+      preLoaderRoute: typeof AppBlocksRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/api/trpc/$': {
       id: '/api/trpc/$'
       path: '/api/trpc/$'
@@ -265,16 +297,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocsSplatRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/blocks/{-$category}': {
+      id: '/_app/blocks/{-$category}'
+      path: '/{-$category}'
+      fullPath: '/blocks/{-$category}'
+      preLoaderRoute: typeof AppBlocksChar123CategoryChar125RouteImport
+      parentRoute: typeof AppBlocksRouteRoute
+    }
   }
 }
 
+interface AppBlocksRouteRouteChildren {
+  AppBlocksChar123CategoryChar125Route: typeof AppBlocksChar123CategoryChar125Route
+}
+
+const AppBlocksRouteRouteChildren: AppBlocksRouteRouteChildren = {
+  AppBlocksChar123CategoryChar125Route: AppBlocksChar123CategoryChar125Route,
+}
+
+const AppBlocksRouteRouteWithChildren = AppBlocksRouteRoute._addFileChildren(
+  AppBlocksRouteRouteChildren,
+)
+
 interface AppRouteRouteChildren {
+  AppBlocksRouteRoute: typeof AppBlocksRouteRouteWithChildren
   AppDocsSplatRoute: typeof AppDocsSplatRoute
   AppDocsComponentsRoute: typeof AppDocsComponentsRoute
   AppDocsChar123Char125DotmdRoute: typeof AppDocsChar123Char125DotmdRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppBlocksRouteRoute: AppBlocksRouteRouteWithChildren,
   AppDocsSplatRoute: AppDocsSplatRoute,
   AppDocsComponentsRoute: AppDocsComponentsRoute,
   AppDocsChar123Char125DotmdRoute: AppDocsChar123Char125DotmdRoute,

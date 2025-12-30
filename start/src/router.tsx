@@ -6,7 +6,9 @@ import SuperJSON from "superjson";
 
 import type { AppRouter } from "@dotui/api";
 
+import { NotFound } from "@/components/not-found";
 import { makeTRPCClient, TRPCProvider } from "@/lib/trpc";
+
 import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
@@ -27,6 +29,7 @@ export function getRouter() {
 		context: { queryClient, trpc },
 		scrollRestoration: true,
 		defaultPreload: "intent",
+		defaultNotFoundComponent: NotFound,
 		Wrap: (props) => <TRPCProvider trpcClient={trpcClient} queryClient={queryClient} {...props} />,
 	});
 

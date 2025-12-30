@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Index } from "@dotui/registry/blocks";
 
 interface BlockViewerProps {
@@ -18,15 +17,5 @@ export function BlockViewer({ name }: BlockViewerProps) {
 
 	const Component = block.component;
 
-	return (
-		<Suspense
-			fallback={
-				<div className="flex h-screen items-center justify-center">
-					<span className="text-fg-muted">Loading block...</span>
-				</div>
-			}
-		>
-			<Component />
-		</Suspense>
-	);
+	return <Component />;
 }

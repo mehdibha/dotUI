@@ -5,8 +5,8 @@
 
 import type { HighlighterGeneric } from "shiki";
 
-import type { PropDefinition, TType } from "../references/types";
-import { loadApiReference } from "../references/loader";
+import type { PropDefinition, TType } from "../../references/types";
+import { loadApiReference } from "../../references/loader";
 import type {
 	Control,
 	ControlInput,

@@ -76,7 +76,8 @@
 	},
 	"dependencies": {
 		"@dotui/core": "workspace:*",
-		"@hugeicons/react": "^0.4.1",
+		"@hugeicons/core-free-icons": "^3.1.1",
+		"@hugeicons/react": "^1.1.4",
 		"@react-aria/utils": "^3.31.0",
 		"@react-types/shared": "^3.26.0",
 		"@tabler/icons-react": "^3.35.0",

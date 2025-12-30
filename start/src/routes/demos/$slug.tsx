@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+
 import { componentDemos } from "@/modules/docs/components-list/demos";
 
 export const Route = createFileRoute("/demos/$slug")({

@@ -4,7 +4,7 @@ import type * as PageTree from "fumadocs-core/page-tree";
 
 import { SidebarProvider } from "@dotui/registry/ui/sidebar";
 
-import { DocsSidebar } from "@/components/layout/docs-sidebar";
+import { AppSidebar } from "@/components/layout/app-sidebar";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { docsSource } from "@/lib/source";
@@ -53,7 +53,7 @@ function AppLayout() {
 	return (
 		<div className="[--header-height:calc(var(--spacing)*12)]">
 			<SidebarProvider defaultOpen={false}>
-				<DocsSidebar items={items} />
+				<AppSidebar items={items} />
 				<div className="size-full">
 					<Header items={items} className="md:hidden" />
 					<Outlet />

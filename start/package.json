@@ -5,7 +5,7 @@
 	"scripts": {
 		"with-env": "dotenv -e ../.env --",
 		"dev": "pnpm with-env vite dev --port 4000",
-		"build": "pnpm with-env vite build",
+		"build": "NODE_OPTIONS='--max-old-space-size=8192' pnpm with-env vite build",
 		"preview": "pnpm with-env vite preview",
 		"format": "biome format --write",
 		"lint": "biome lint --write",

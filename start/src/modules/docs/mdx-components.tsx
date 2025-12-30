@@ -5,14 +5,14 @@ import { cn } from "@dotui/registry/lib/utils";
 import { Alert, type AlertProps } from "@dotui/registry/ui/alert";
 import { Link } from "@dotui/registry/ui/link";
 
-import { CodeBlock, Pre } from "./code-block";
-import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "./code-block-tabs";
-import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "./demo";
-import { Example, type ExampleProps } from "./example";
-import { PageTabPanel, PageTabs } from "./page-tabs";
-import { Reference, type ReferenceProps } from "./reference";
-import { Examples } from "./examples";
-import { InteractiveDemo } from "@/modules/interactive-demo/interactive-demo";
+import { CodeBlock, Pre } from "@/modules/docs/code-block";
+import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "@/modules/docs/code-block-tabs";
+import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "@/modules/docs/demo";
+import { Example, type ExampleProps } from "@/modules/docs/example";
+import { Examples } from "@/modules/docs/examples";
+import { InteractiveDemo } from "@/modules/docs/interactive-demo";
+import { PageTabPanel, PageTabs } from "@/modules/docs/page-tabs";
+import { Reference, type ReferenceProps } from "@/modules/docs/reference";
 
 export const mdxComponents: MDXComponents = {
 	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 font-bold text-4xl", className)} {...props} />,

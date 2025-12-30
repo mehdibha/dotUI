@@ -1,8 +1,10 @@
+"use client";
+
 import * as React from "react";
 
 import { Skeleton } from "@dotui/registry/ui/skeleton";
 import { useStyleConfig } from "@dotui/core/react";
-import type { iconLibraries } from "@dotui/registry/icons/registry";
+import { createIconLoader } from "./create-icon-loader";
 
 interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
   className?: string;
@@ -22,44 +24,41 @@ interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
 }
 
 type IconComponent = React.ComponentType<CommonIconProps>;
-type IconLibraryName = (typeof iconLibraries)[number]["name"];
 
-// Use a more permissive type for lazy-loaded icons since different libraries have different type signatures
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LazyIconComponent = React.LazyExoticComponent<React.ComponentType<any>>;
+// Create loaders for each library (cached, created once)
+const loaders = {
+  hugeicons: createIconLoader("hugeicons"),
+  tabler: createIconLoader("tabler"),
+  remix: createIconLoader("remix"),
+};
 
-type IconMapping = {
-  lucide: IconComponent;
-} & Record<Exclude<IconLibraryName, "lucide">, LazyIconComponent>;
+type IconNames = {
+  lucide: string;
+  hugeicons: string;
+  tabler: string;
+  remix: string;
+};
 
 export type { CommonIconProps };
 
-export function createIcon(iconMapping: IconMapping): IconComponent {
+export function createIcon(
+  LucideIcon: IconComponent,
+  names: IconNames
+): IconComponent {
   const IconComponent: IconComponent = React.forwardRef<
     SVGSVGElement,
     React.SVGProps<SVGSVGElement>
   >((props, ref) => {
     const styleConfig = useStyleConfig();
 
-    const LucideIcon = iconMapping.lucide;
-    if (!styleConfig) {
+    if (!styleConfig || styleConfig.icons.library === "lucide") {
       return <LucideIcon ref={ref} {...props} />;
     }
 
     const { icons } = styleConfig;
-    const iconLibrary = icons.library;
+    const Loader = loaders[icons.library as keyof typeof loaders];
+    const iconName = names[icons.library as keyof typeof names];
 
-    if (iconLibrary === "lucide") {
-      return (
-        <LucideIcon
-          ref={ref}
-          strokeWidth={icons.strokeWidth}
-          {...props}
-        />
-      );
-    }
-
-    const Icon = iconMapping[iconLibrary as keyof IconMapping];
     return (
       <React.Suspense
         fallback={
@@ -68,7 +67,7 @@ export function createIcon(iconMapping: IconMapping): IconComponent {
           </Skeleton>
         }
       >
-        <Icon ref={ref} strokeWidth={icons.strokeWidth} {...props} />
+        <Loader name={iconName} {...props} />
       </React.Suspense>
     );
   });

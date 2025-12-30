@@ -1,4 +1,4 @@
-import { useLocation } from "@tanstack/react-router";
+import { type ToOptions, useLocation } from "@tanstack/react-router";
 import { SearchIcon, UserIcon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import {
@@ -35,7 +35,7 @@ import { UserProfileMenu } from "@/modules/auth/user-profile-menu";
 import { ThemeToggle } from "@/modules/theme/toggle";
 import type { DocsPageItem } from "@/lib/source";
 
-export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
+export function AppSidebar({ items }: { items: PageTree.Node[] }) {
 	const { data: session, isPending } = authClient.useSession();
 	const { isOpen } = useSidebarContext("Sidebar");
 	const isMounted = useMounted();
@@ -73,7 +73,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 						{navItems.map((item) => (
 							<SidebarItem key={item.name}>
 								<SidebarTooltip content={item.name}>
-									<LinkButton href={item.href.to ?? "/"} size="sm" variant="quiet" className="font-normal">
+									<LinkButton href={item.href} size="sm" variant="quiet" className="font-normal">
 										{item.icon}
 										<span>{item.name}</span>
 									</LinkButton>
@@ -98,7 +98,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 													child.type === "page" && (
 														<SidebarItem key={child.url}>
 															<AriaLink
-																href={{ to: child.url as "/" }}
+																href={{ to: child.url } as ToOptions}
 																data-active={child.url === pathname || undefined}
 																className="flex w-full items-center gap-1.5 border-l py-1 pl-3 text-[0.8rem] text-fg-muted transition-colors hover:text-fg data-active:border-fg data-active:text-fg"
 															>
