@@ -12,6 +12,9 @@ export default defineConfig({
 		mdx(await import("./source.config")),
 		nitro({
 			preset: "node",
+			rollupConfig: {
+				external: ["@vercel/og"],
+			},
 		}),
 		tailwindcss(),
 		viteTsConfigPaths({
