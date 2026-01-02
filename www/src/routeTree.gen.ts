@@ -16,9 +16,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ViewBlockRouteImport } from './routes/view/$block'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as legalSplatRouteImport } from './routes/(legal)/$'
+import { Route as AppStylesRouteRouteImport } from './routes/_app/styles/route'
 import { Route as AppBlocksRouteRouteImport } from './routes/_app/blocks/route'
+import { Route as AppStylesIndexRouteImport } from './routes/_app/styles/index'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
+import { Route as AppStylesMyStylesRouteImport } from './routes/_app/styles/my-styles'
+import { Route as AppStylesCommunityRouteImport } from './routes/_app/styles/community'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
 import { Route as AppDocsComponentsRouteImport } from './routes/_app/docs/components'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
@@ -58,10 +62,20 @@ const legalSplatRoute = legalSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppStylesRouteRoute = AppStylesRouteRouteImport.update({
+  id: '/styles',
+  path: '/styles',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppBlocksRouteRoute = AppBlocksRouteRouteImport.update({
   id: '/blocks',
   path: '/blocks',
   getParentRoute: () => AppRouteRoute,
+} as any)
+const AppStylesIndexRoute = AppStylesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppStylesRouteRoute,
 } as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
@@ -72,6 +86,16 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppStylesMyStylesRoute = AppStylesMyStylesRouteImport.update({
+  id: '/my-styles',
+  path: '/my-styles',
+  getParentRoute: () => AppStylesRouteRoute,
+} as any)
+const AppStylesCommunityRoute = AppStylesCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AppStylesRouteRoute,
 } as any)
 const AppDocsChar123Char125DotmdRoute =
   AppDocsChar123Char125DotmdRouteImport.update({
@@ -101,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
   '/blocks': typeof AppBlocksRouteRouteWithChildren
+  '/styles': typeof AppStylesRouteRouteWithChildren
   '/$': typeof legalSplatRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/view/$block': typeof ViewBlockRoute
@@ -108,8 +133,11 @@ export interface FileRoutesByFullPath {
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/components': typeof AppDocsComponentsRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/styles/community': typeof AppStylesCommunityRoute
+  '/styles/my-styles': typeof AppStylesMyStylesRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/styles/': typeof AppStylesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -123,8 +151,11 @@ export interface FileRoutesByTo {
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/components': typeof AppDocsComponentsRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/styles/community': typeof AppStylesCommunityRoute
+  '/styles/my-styles': typeof AppStylesMyStylesRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/styles': typeof AppStylesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -133,6 +164,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
   '/_app/blocks': typeof AppBlocksRouteRouteWithChildren
+  '/_app/styles': typeof AppStylesRouteRouteWithChildren
   '/(legal)/$': typeof legalSplatRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/view/$block': typeof ViewBlockRoute
@@ -140,8 +172,11 @@ export interface FileRoutesById {
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/components': typeof AppDocsComponentsRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/_app/styles/community': typeof AppStylesCommunityRoute
+  '/_app/styles/my-styles': typeof AppStylesMyStylesRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/_app/styles/': typeof AppStylesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -150,6 +185,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/og'
     | '/blocks'
+    | '/styles'
     | '/$'
     | '/demos/$slug'
     | '/view/$block'
@@ -157,8 +193,11 @@ export interface FileRouteTypes {
     | '/docs/$'
     | '/docs/components'
     | '/docs/{$}.md'
+    | '/styles/community'
+    | '/styles/my-styles'
     | '/api/auth/$'
     | '/api/trpc/$'
+    | '/styles/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -172,8 +211,11 @@ export interface FileRouteTypes {
     | '/docs/$'
     | '/docs/components'
     | '/docs/{$}.md'
+    | '/styles/community'
+    | '/styles/my-styles'
     | '/api/auth/$'
     | '/api/trpc/$'
+    | '/styles'
   id:
     | '__root__'
     | '/'
@@ -181,6 +223,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/og'
     | '/_app/blocks'
+    | '/_app/styles'
     | '/(legal)/$'
     | '/demos/$slug'
     | '/view/$block'
@@ -188,8 +231,11 @@ export interface FileRouteTypes {
     | '/_app/docs/$'
     | '/_app/docs/components'
     | '/_app/docs/{$}.md'
+    | '/_app/styles/community'
+    | '/_app/styles/my-styles'
     | '/api/auth/$'
     | '/api/trpc/$'
+    | '/_app/styles/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -255,12 +301,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof legalSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/styles': {
+      id: '/_app/styles'
+      path: '/styles'
+      fullPath: '/styles'
+      preLoaderRoute: typeof AppStylesRouteRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/blocks': {
       id: '/_app/blocks'
       path: '/blocks'
       fullPath: '/blocks'
       preLoaderRoute: typeof AppBlocksRouteRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/_app/styles/': {
+      id: '/_app/styles/'
+      path: '/'
+      fullPath: '/styles/'
+      preLoaderRoute: typeof AppStylesIndexRouteImport
+      parentRoute: typeof AppStylesRouteRoute
     }
     '/api/trpc/$': {
       id: '/api/trpc/$'
@@ -275,6 +335,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/styles/my-styles': {
+      id: '/_app/styles/my-styles'
+      path: '/my-styles'
+      fullPath: '/styles/my-styles'
+      preLoaderRoute: typeof AppStylesMyStylesRouteImport
+      parentRoute: typeof AppStylesRouteRoute
+    }
+    '/_app/styles/community': {
+      id: '/_app/styles/community'
+      path: '/community'
+      fullPath: '/styles/community'
+      preLoaderRoute: typeof AppStylesCommunityRouteImport
+      parentRoute: typeof AppStylesRouteRoute
     }
     '/_app/docs/{$}.md': {
       id: '/_app/docs/{$}.md'
@@ -319,8 +393,25 @@ const AppBlocksRouteRouteWithChildren = AppBlocksRouteRoute._addFileChildren(
   AppBlocksRouteRouteChildren,
 )
 
+interface AppStylesRouteRouteChildren {
+  AppStylesCommunityRoute: typeof AppStylesCommunityRoute
+  AppStylesMyStylesRoute: typeof AppStylesMyStylesRoute
+  AppStylesIndexRoute: typeof AppStylesIndexRoute
+}
+
+const AppStylesRouteRouteChildren: AppStylesRouteRouteChildren = {
+  AppStylesCommunityRoute: AppStylesCommunityRoute,
+  AppStylesMyStylesRoute: AppStylesMyStylesRoute,
+  AppStylesIndexRoute: AppStylesIndexRoute,
+}
+
+const AppStylesRouteRouteWithChildren = AppStylesRouteRoute._addFileChildren(
+  AppStylesRouteRouteChildren,
+)
+
 interface AppRouteRouteChildren {
   AppBlocksRouteRoute: typeof AppBlocksRouteRouteWithChildren
+  AppStylesRouteRoute: typeof AppStylesRouteRouteWithChildren
   AppDocsSplatRoute: typeof AppDocsSplatRoute
   AppDocsComponentsRoute: typeof AppDocsComponentsRoute
   AppDocsChar123Char125DotmdRoute: typeof AppDocsChar123Char125DotmdRoute
@@ -328,6 +419,7 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppBlocksRouteRoute: AppBlocksRouteRouteWithChildren,
+  AppStylesRouteRoute: AppStylesRouteRouteWithChildren,
   AppDocsSplatRoute: AppDocsSplatRoute,
   AppDocsComponentsRoute: AppDocsComponentsRoute,
   AppDocsChar123Char125DotmdRoute: AppDocsChar123Char125DotmdRoute,

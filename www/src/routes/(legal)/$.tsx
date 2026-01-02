@@ -41,14 +41,11 @@ const serverLoader = createServerFn({ method: "GET" })
 		const page = legalSource.getPage(slugs);
 		if (!page) throw notFound();
 
-		const rawContent = await page.data.getText("raw");
-
 		return {
 			path: page.path,
 			url: page.url,
 			title: page.data.title,
 			description: page.data.description,
-			rawContent,
 		};
 	});
 

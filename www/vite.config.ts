@@ -10,7 +10,6 @@ import viteTsConfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
 	plugins: [
 		mdx(await import("./source.config")),
-		// nitro must come before tanstackStart for prerendering to work
 		nitro({
 			preset: "node",
 		}),
@@ -22,9 +21,8 @@ export default defineConfig({
 		tanstackStart({
 			prerender: {
 				enabled: true,
-				filter: ({ path }) => !path.startsWith("/og"),
 			},
 		}),
 		viteReact(),
-	]
+	],
 });

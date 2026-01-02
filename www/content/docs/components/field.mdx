@@ -1,0 +1,41 @@
+---
+title: Field
+description: A field wraps form inputs with labels, descriptions, and error messages.
+wip: true
+---
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/field
+    ```
+
+    ## Usage
+
+    ```tsx
+    import { Field, Label, Description, FieldError } from "@/components/ui/field";
+    ```
+
+    ```tsx
+    <Field>
+      <Label>Email</Label>
+      <Input type="email" />
+      <Description>We'll never share your email.</Description>
+    </Field>
+    ```
+
+    ## API Reference
+
+    <Reference name="field" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Examples>
+      <p className="text-fg-muted col-span-full">No examples yet.</p>
+    </Examples>
+  </PageTabPanel>
+</PageTabs>

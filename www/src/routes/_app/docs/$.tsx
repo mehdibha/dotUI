@@ -13,7 +13,7 @@ import browserCollections from "@/.source/browser";
 import { siteConfig } from "@/config/site";
 import { docsSource } from "@/lib/source";
 import { truncateOnWord } from "@/lib/text";
-import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
+// import { DocsCopyPage } from "@/modules/docs/docs-copy-page"; // Disabled: getText("raw") doesn't work in production build
 import { DocsPager } from "@/modules/docs/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/last-update";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
@@ -57,10 +57,13 @@ export const Route = createFileRoute("/_app/docs/$")({
 const serverLoader = createServerFn({ method: "GET" })
 	.inputValidator((slugs: string[]) => slugs)
 	.handler(async ({ data: slugs }) => {
-		const page = docsSource.getPage(slugs);
+		// Try to get the page, fallback to index for empty slugs
+		let page = docsSource.getPage(slugs);
+		if (!page && slugs.length === 0) {
+			page = docsSource.getPage(["index"]);
+		}
 		if (!page) throw notFound();
 
-		const rawContent = await page.data.getText("raw");
 		const pageTree = docsSource.getPageTree();
 		const { previous, next } = findNeighbour(pageTree, page.url);
 
@@ -70,12 +73,11 @@ const serverLoader = createServerFn({ method: "GET" })
 			title: page.data.title,
 			description: page.data.description,
 			pageTree: await docsSource.serializePageTree(pageTree),
-			rawContent,
-		neighbours: {
-			previous: previous ? { name: String(previous.name), path: previous.url.replace(/^\/docs\/?/, "") } : undefined,
-			next: next ? { name: String(next.name), path: next.url.replace(/^\/docs\/?/, "") } : undefined,
-		},
-		}
+			neighbours: {
+				previous: previous ? { name: String(previous.name), path: previous.url.replace(/^\/docs\/?/, "") } : undefined,
+				next: next ? { name: String(next.name), path: next.url.replace(/^\/docs\/?/, "") } : undefined,
+			},
+		};
 	})
 
 type SerializedNeighbours = {
@@ -86,7 +88,7 @@ type SerializedNeighbours = {
 const clientLoader = browserCollections.docs.createClientLoader({
 	component(
 		{ toc, frontmatter, lastModified, default: MDX },
-		{ url, rawContent, neighbours }: { url: string; rawContent: string; neighbours: SerializedNeighbours },
+		{ url, neighbours }: { url: string; neighbours: SerializedNeighbours },
 	) {
 		const hasToc = toc?.length;
 
@@ -98,7 +100,6 @@ const clientLoader = browserCollections.docs.createClientLoader({
 							<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
 							<div className="flex items-center gap-2">
 								<DocsPager neighbours={neighbours} />
-								<DocsCopyPage content={rawContent} url={url} />
 							</div>
 						</div>
 						<PageHeaderDescription className="text-wrap">{frontmatter.description}</PageHeaderDescription>
@@ -146,7 +147,7 @@ function DocsPage() {
 	const data = Route.useLoaderData();
 	const Content = clientLoader.getComponent(data.path);
 
-	return <Content url={data.url} rawContent={data.rawContent} neighbours={data.neighbours} />;
+	return <Content url={data.url} neighbours={data.neighbours} />;
 }
 
 const getIcon = (url: string) => {

@@ -1,0 +1,47 @@
+---
+title: Tag Group
+description: A tag group displays a collection of tags.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/TagGroup.html
+wip: true
+---
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="tag-group/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/tag-group
+    ```
+
+    ## Usage
+
+    ```tsx
+    import { TagGroup, TagList, Tag } from "@/components/ui/tag-group";
+    ```
+
+    ```tsx
+    <TagGroup>
+      <TagList>
+        <Tag>React</Tag>
+        <Tag>TypeScript</Tag>
+      </TagList>
+    </TagGroup>
+    ```
+
+    ## API Reference
+
+    <Reference name="tag-group" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Examples>
+      <Example name="tag-group/demos/default" />
+    </Examples>
+  </PageTabPanel>
+</PageTabs>

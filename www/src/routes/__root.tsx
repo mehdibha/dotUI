@@ -16,8 +16,8 @@ import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
 import type { AppRouter } from "@dotui/api";
 
-import { siteConfig } from "@/config/site";
 import { NotFound } from "@/components/not-found";
+import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
 import { ThemeProvider } from "@/modules/theme/provider";
 import appCss from "@/styles.css?url";
@@ -63,7 +63,6 @@ export const Route = createRootRouteWithContext<{
 		};
 	},
 	component: RootComponent,
-	notFoundComponent: NotFound,
 });
 
 declare module "react-aria-components" {

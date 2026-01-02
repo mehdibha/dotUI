@@ -6,7 +6,7 @@ const links = [
 		label: "Product",
 		links: [
 			{ label: "Docs", href: "/docs/installation" },
-			{ label: "Components", href: "/docs/components/buttons/button" },
+			{ label: "Components", href: "/docs/components" },
 			{ label: "Styles", href: "/styles" },
 		],
 	},

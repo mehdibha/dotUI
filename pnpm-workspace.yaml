@@ -2,6 +2,7 @@ packages:
   - www
   - packages/*
   - config/*
+  - apps/*
 
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
