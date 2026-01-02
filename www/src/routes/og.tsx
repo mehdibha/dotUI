@@ -58,21 +58,24 @@ export const Route = createFileRoute("/og")({
 								</svg>
 								<div tw="flex flex-col justify-center flex-1">
 									<div
-										tw="tracking-tight leading-[1.1] text-center"
+										tw="text-center"
 										style={{
 											textWrap: "balance",
 											fontWeight: 600,
 											fontSize: title && title.length > 20 ? 64 : 80,
 											letterSpacing: "-0.04em",
+											lineHeight: 1.1,
 										}}
 									>
 										{title}
 									</div>
 									<div
-										tw="text-[40px] leading-[1.5] text-stone-400 mt-4"
+										tw="text-stone-400 mt-4"
 										style={{
 											fontWeight: 500,
 											textWrap: "balance",
+											fontSize: 40,
+											lineHeight: 1.5,
 										}}
 									>
 										{description}
