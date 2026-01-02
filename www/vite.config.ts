@@ -24,6 +24,7 @@ export default defineConfig({
 		tanstackStart({
 			prerender: {
 				enabled: true,
+				filter: ({ path }) => !path.includes("?"),
 			},
 		}),
 		viteReact(),
