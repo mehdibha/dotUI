@@ -14,6 +14,17 @@ export default defineConfig({
 			preset: "node",
 			rollupConfig: {
 				external: ["@vercel/og"],
+				onwarn(warning, warn) {
+					// Suppress "use client" warnings from node_modules
+					if (warning.code === "MODULE_LEVEL_DIRECTIVE" && warning.message.includes('"use client"')) {
+						return;
+					}
+					// Suppress empty chunk warnings from tree-shaking
+					if (warning.code === "EMPTY_BUNDLE") {
+						return;
+					}
+					warn(warning);
+				},
 			},
 		}),
 		tailwindcss(),
