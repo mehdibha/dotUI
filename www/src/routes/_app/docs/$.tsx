@@ -13,7 +13,7 @@ import browserCollections from "@/.source/browser";
 import { siteConfig } from "@/config/site";
 import { docsSource } from "@/lib/source";
 import { truncateOnWord } from "@/lib/text";
-// import { DocsCopyPage } from "@/modules/docs/docs-copy-page"; // Disabled: getText("raw") doesn't work in production build
+import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
 import { DocsPager } from "@/modules/docs/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/last-update";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
@@ -66,6 +66,7 @@ const serverLoader = createServerFn({ method: "GET" })
 
 		const pageTree = docsSource.getPageTree();
 		const { previous, next } = findNeighbour(pageTree, page.url);
+		const rawContent = await page.data.getText("processed");
 
 		return {
 			path: page.path,
@@ -73,6 +74,7 @@ const serverLoader = createServerFn({ method: "GET" })
 			title: page.data.title,
 			description: page.data.description,
 			pageTree: await docsSource.serializePageTree(pageTree),
+			rawContent,
 			neighbours: {
 				previous: previous ? { name: String(previous.name), path: previous.url.replace(/^\/docs\/?/, "") } : undefined,
 				next: next ? { name: String(next.name), path: next.url.replace(/^\/docs\/?/, "") } : undefined,
@@ -88,7 +90,7 @@ type SerializedNeighbours = {
 const clientLoader = browserCollections.docs.createClientLoader({
 	component(
 		{ toc, frontmatter, lastModified, default: MDX },
-		{ url, neighbours }: { url: string; neighbours: SerializedNeighbours },
+		{ url, rawContent, neighbours }: { url: string; rawContent: string; neighbours: SerializedNeighbours },
 	) {
 		const hasToc = toc?.length;
 
@@ -100,6 +102,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 							<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
 							<div className="flex items-center gap-2">
 								<DocsPager neighbours={neighbours} />
+								<DocsCopyPage content={rawContent} url={url} />
 							</div>
 						</div>
 						<PageHeaderDescription className="text-wrap">{frontmatter.description}</PageHeaderDescription>
@@ -147,7 +150,7 @@ function DocsPage() {
 	const data = Route.useLoaderData();
 	const Content = clientLoader.getComponent(data.path);
 
-	return <Content url={data.url} neighbours={data.neighbours} />;
+	return <Content url={data.url} rawContent={data.rawContent} neighbours={data.neighbours} />;
 }
 
 const getIcon = (url: string) => {

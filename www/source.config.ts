@@ -19,6 +19,9 @@ export const docs = defineDocs({
 				.optional(),
 			wip: z.boolean().optional().default(false),
 		}),
+		postprocess: {
+			includeProcessedMarkdown: true,
+		},
 	},
 	meta: {
 		schema: metaSchema.extend({
@@ -40,6 +43,9 @@ export const legal = defineDocs({
 				)
 				.optional(),
 		}),
+		postprocess: {
+			includeProcessedMarkdown: true,
+		},
 	},
 	meta: {
 		schema: metaSchema.extend({
