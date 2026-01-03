@@ -13,7 +13,6 @@ build
 # Frameworks & tools
 .tanstack
 .nitro
-.vinxi
 .wrangler
 .turbo
 .source
