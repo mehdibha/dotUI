@@ -15,7 +15,7 @@
     "@dotui/db",
     "@dotui/registry",
     "@dotui/colors",
-    "@dotui/style-system",
-    "@dotui/types"
+    "@dotui/types",
+    "@dotui/core"
   ]
 }

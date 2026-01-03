@@ -3,9 +3,10 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"postinstall": "fumadocs-mdx",
 		"with-env": "dotenv -e ../.env --",
 		"dev": "pnpm with-env vite dev --port 4444",
-		"build": "SKIP_ENV_VALIDATION=1 NODE_OPTIONS='--max-old-space-size=8192' pnpm with-env vite build",
+		"build": "NODE_OPTIONS='--max-old-space-size=8192' pnpm with-env vite build",
 		"preview": "pnpm with-env vite preview",
 		"format": "biome format --write",
 		"lint": "biome lint --write",
