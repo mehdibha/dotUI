@@ -1,7 +1,7 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
 	"files": {
-		"includes": ["**", "!**/routeTree.gen.ts", "!**/.vinxi", "!**/.output", "!**/.source"]
+		"includes": ["**", "!**/routeTree.gen.ts", "!**/.nitro", "!**/.output", "!**/.source"]
 	},
 	"linter": {
 		"domains": {
