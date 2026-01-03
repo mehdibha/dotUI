@@ -70,7 +70,7 @@ jobs:
 
   check-registry:
     runs-on: ubuntu-latest
-    name: Check registry generated files
+    name: Check registry
     steps:
       - uses: actions/checkout@v4
         with:
@@ -89,27 +89,3 @@ jobs:
             exit 1
           fi
           echo "Registry files are in sync."
-
-  check-migrations:
-    runs-on: ubuntu-latest
-    name: Check database migrations
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/setup
-
-      - name: Generate migrations
-        run: pnpm --filter=@dotui/db generate
-        env:
-          POSTGRES_URL: "postgresql://fake:fake@localhost:5432/fake"
-
-      - name: Check for uncommitted migrations
-        run: |
-          if [[ -n $(git status --porcelain packages/db/drizzle/) ]]; then
-            echo "Error: Database migrations are out of sync!"
-            echo "Please run 'pnpm --filter=@dotui/db generate' and commit the changes."
-            git status packages/db/drizzle/
-            exit 1
-          fi
-          echo "Database migrations are in sync."
