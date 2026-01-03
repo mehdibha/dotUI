@@ -21,14 +21,6 @@ export function DynamicPre({ lang, children: code, options }: DynamicPreProps) {
 		},
 	} satisfies HighlightOptions;
 
-	// Handle null/undefined code
-	if (!code) {
-		return (
-			<Pre>
-				<code />
-			</Pre>
-		);
-	}
 
 	return (
 		<Suspense fallback={<Placeholder code={code} components={shikiOptions.components} />}>

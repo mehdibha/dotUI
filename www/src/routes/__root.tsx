@@ -16,7 +16,6 @@ import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
 import type { AppRouter } from "@dotui/api";
 
-import { NotFound } from "@/components/not-found";
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
 import { ThemeProvider } from "@/modules/theme/provider";

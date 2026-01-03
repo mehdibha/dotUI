@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_app/styles/community")({
 function CommunityStylesPage() {
 	return (
 		<div className="container py-20">
-			<h1 className="text-2xl font-bold">Community Styles</h1>
+			<h1 className="font-bold text-2xl">Community Styles</h1>
 			<p className="text-fg-muted">Work in progress.</p>
 		</div>
 	);

@@ -89,7 +89,7 @@ export function ComponentCard({
 					</div>
 				</ComponentPreview>
 			)}
-			<Link to="/docs/$" params={{ _splat: href.replace("/docs/", "") }} className="text-fg font-medium hover:underline">
+			<Link to="/docs/$" params={{ _splat: href.replace("/docs/", "") }} className="font-medium text-fg hover:underline">
 				{name}
 			</Link>
 		</div>
