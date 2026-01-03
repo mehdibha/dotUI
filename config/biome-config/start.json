@@ -9,10 +9,7 @@
 		},
 		"rules": {
 			"security": {
-				"noDangerouslySetInnerHtml": "off"
-			},
-			"suspicious": {
-				"noArrayIndexKey": "warn"
+				"noDangerouslySetInnerHtml": "warn"
 			},
 			"style": {
 				"noNonNullAssertion": "warn"
