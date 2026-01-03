@@ -9,16 +9,16 @@ on:
   merge_group:
 
 jobs:
-  lint:
+  check:
     runs-on: ubuntu-latest
-    name: Run lint
+    name: Run checks
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
 
-      - run: pnpm lint
+      - run: pnpm check
 
   tsc:
     runs-on: ubuntu-latest
