@@ -8,6 +8,9 @@ import { defineConfig } from "vite";
 import viteTsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+	server: {
+		port: 4444,
+	},
 	plugins: [
 		mdx(await import("./source.config")),
 		nitro({

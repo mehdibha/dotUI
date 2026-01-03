@@ -5,7 +5,7 @@
 	"scripts": {
 		"postinstall": "fumadocs-mdx",
 		"with-env": "dotenv -e ../.env --",
-		"dev": "pnpm with-env vite dev --port 4444",
+		"dev": "pnpm with-env vite dev",
 		"build": "NODE_OPTIONS='--max-old-space-size=8192' pnpm with-env vite build",
 		"preview": "pnpm with-env vite preview",
 		"format": "biome format --write",
