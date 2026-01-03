@@ -11,6 +11,7 @@
   ],
   "sideEffects": false,
   "scripts": {
+    "clean": "git clean -xdf .cache .turbo node_modules",
     "release": "changeset version",
     "pub:beta": "npm publish --tag beta",
     "pub:next": "npm publish --tag next",

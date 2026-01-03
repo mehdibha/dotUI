@@ -11,6 +11,7 @@
 		"lint": "biome lint --write",
 		"check": "biome check",
 		"typecheck": "tsc --noEmit",
+		"clean": "git clean -xdf .output .vinxi .cache .turbo node_modules",
 		"build:references": "tsx scripts/api-docs-builder/src/index.ts"
 	},
 	"dependencies": {
