@@ -1,12 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { siteConfig } from "@/config/site";
-import {
-	PageHeader,
-	PageHeaderDescription,
-	PageHeaderHeading,
-	PageLayout,
-} from "@/modules/docs/page-layout";
+import { PageHeader, PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
 import { ComponentsList } from "@/modules/docs/components-list/components-list";
 import { componentsData, tocData } from "@/modules/docs/components-list/components-data";

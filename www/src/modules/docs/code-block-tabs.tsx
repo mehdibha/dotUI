@@ -1,4 +1,3 @@
-
 import { useCallback, useSyncExternalStore } from "react";
 
 import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";

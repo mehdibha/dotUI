@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_app/docs/{$}.md")({
 						"Content-Type": "text/markdown; charset=utf-8",
 						"Content-Disposition": `inline; filename="${filename}.md"`,
 					},
-				})
+				});
 			},
 		},
 	},

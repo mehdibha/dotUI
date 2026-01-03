@@ -21,7 +21,6 @@ export function DynamicPre({ lang, children: code, options }: DynamicPreProps) {
 		},
 	} satisfies HighlightOptions;
 
-
 	return (
 		<Suspense fallback={<Placeholder code={code} components={shikiOptions.components} />}>
 			<ShikiHighlighter id={id} {...useDeferredValue({ code, options: shikiOptions })} />
@@ -29,13 +28,7 @@ export function DynamicPre({ lang, children: code, options }: DynamicPreProps) {
 	);
 }
 
-function Placeholder({
-	code,
-	components = {},
-}: {
-	code: string;
-	components: HighlightOptions["components"];
-}) {
+function Placeholder({ code, components = {} }: { code: string; components: HighlightOptions["components"] }) {
 	const { pre: PreComponent = "pre", code: Code = "code" } = components as Record<string, React.FC>;
 
 	if (!code) {
@@ -59,14 +52,6 @@ function Placeholder({
 	);
 }
 
-function ShikiHighlighter({
-	id,
-	code,
-	options,
-}: {
-	id: string;
-	code: string;
-	options: HighlightOptions;
-}) {
+function ShikiHighlighter({ id, code, options }: { id: string; code: string; options: HighlightOptions }) {
 	return useShiki(code, options, [id, options.lang, code]);
 }

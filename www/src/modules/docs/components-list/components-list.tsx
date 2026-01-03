@@ -14,11 +14,7 @@ export function ComponentsList({ data }: ComponentsListProps) {
 			{data.map((category) => (
 				<section key={category.slug} id={category.slug}>
 					<h2 className="font-medium text-2xl">{category.title}</h2>
-					<div
-						className={cn(
-							"mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
-						)}
-					>
+					<div className={cn("mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5")}>
 						{category.components.map((component) => (
 							<ComponentCard
 								key={component.slug}

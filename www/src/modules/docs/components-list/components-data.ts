@@ -19,7 +19,12 @@ export const componentsData: ComponentCategory[] = [
 		components: [
 			{ name: "Button", slug: "button", href: "/docs/components/button", scale: 1 },
 			{ name: "ToggleButton", slug: "toggle-button", href: "/docs/components/toggle-button", scale: 1 },
-			{ name: "ToggleButtonGroup", slug: "toggle-button-group", href: "/docs/components/toggle-button-group", scale: 1 },
+			{
+				name: "ToggleButtonGroup",
+				slug: "toggle-button-group",
+				href: "/docs/components/toggle-button-group",
+				scale: 1,
+			},
 			{ name: "FileTrigger", slug: "file-trigger", href: "/docs/components/file-trigger", scale: 1 },
 			{ name: "Group", slug: "group", href: "/docs/components/group", scale: 0.9 },
 		],

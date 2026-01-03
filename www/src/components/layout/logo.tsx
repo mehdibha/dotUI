@@ -5,13 +5,7 @@ import { Heading } from "@dotui/registry/ui/heading";
 
 import { siteConfig } from "@/config/site";
 
-export function Logo({
-	className,
-	type = "link",
-}: {
-	className?: string;
-	type?: "link" | "span";
-}) {
+export function Logo({ className, type = "link" }: { className?: string; type?: "link" | "span" }) {
 	const content = (
 		<>
 			<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="size-5">

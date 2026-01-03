@@ -89,11 +89,7 @@ function MobileLink({
 	className?: string;
 }) {
 	return (
-		<Link
-			to={to}
-			onClick={() => onOpenChange?.(false)}
-			className={cn("font-medium text-2xl", className)}
-		>
+		<Link to={to} onClick={() => onOpenChange?.(false)} className={cn("font-medium text-2xl", className)}>
 			{children}
 		</Link>
 	);

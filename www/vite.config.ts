@@ -36,7 +36,7 @@ export default defineConfig({
 			prerender: {
 				enabled: true,
 				filter: ({ path }) => !path.includes("?"),
-				concurrency:1
+				concurrency: 1,
 			},
 		}),
 		viteReact(),

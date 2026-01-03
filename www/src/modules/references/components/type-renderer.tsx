@@ -1,4 +1,3 @@
-
 /**
  * Type Renderer - Recursively renders TypeScript type AST nodes
  * Inspired by s2-docs implementation

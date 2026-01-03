@@ -35,11 +35,7 @@ export function Header({ className, items = [] }: HeaderProps) {
 				</div>
 				<div className="flex items-center gap-2">
 					<SearchCommand keyboardShortcut items={items}>
-						<Button
-							variant="default"
-							size="sm"
-							className="gap-2 pr-1 pl-3 max-md:size-8 max-md:px-0 md:text-fg-muted"
-						>
+						<Button variant="default" size="sm" className="gap-2 pr-1 pl-3 max-md:size-8 max-md:px-0 md:text-fg-muted">
 							<SearchIcon className="md:hidden" />
 							<span className="mr-6 flex-1 max-md:hidden">Search docs...</span>
 							<Kbd className="max-md:hidden">⌘ K</Kbd>

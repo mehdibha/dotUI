@@ -50,7 +50,7 @@ export const Route = createFileRoute("/_app/docs/$")({
 				{ name: "twitter:image", content: ogImageUrl },
 				{ name: "twitter:creator", content: siteConfig.twitter.creator },
 			],
-		}
+		};
 	},
 });
 
@@ -80,7 +80,7 @@ const serverLoader = createServerFn({ method: "GET" })
 				next: next ? { name: String(next.name), path: next.url.replace(/^\/docs\/?/, "") } : undefined,
 			},
 		};
-	})
+	});
 
 type SerializedNeighbours = {
 	previous?: { name: string; path: string };
@@ -122,7 +122,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 											{link.label}
 											<ExternalLinkIcon />
 										</LinkButton>
-									)
+									);
 								})}
 							</div>
 						)}
@@ -142,7 +142,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 					</div>
 				</PageLayout>
 			</TOCProvider>
-		)
+		);
 	},
 });
 

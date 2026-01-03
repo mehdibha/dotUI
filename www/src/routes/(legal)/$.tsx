@@ -57,9 +57,7 @@ const clientLoader = browserCollections.legal.createClientLoader({
 				<PageLayout className="container max-w-3xl py-10 md:py-16 lg:py-20">
 					<div className="space-y-3 border-b pb-8">
 						<PageHeaderHeading>{frontmatter.title}</PageHeaderHeading>
-						{frontmatter.description && (
-							<PageHeaderDescription>{frontmatter.description}</PageHeaderDescription>
-						)}
+						{frontmatter.description && <PageHeaderDescription>{frontmatter.description}</PageHeaderDescription>}
 					</div>
 					<div className="mt-8">
 						<MDX components={mdxComponents} />

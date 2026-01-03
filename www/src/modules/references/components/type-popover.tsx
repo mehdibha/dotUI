@@ -1,4 +1,3 @@
-
 /**
  * TypePopover - A clickable type link with a popover to browse type definitions
  * Supports nested navigation with breadcrumbs (like s2-docs)
