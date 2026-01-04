@@ -1,146 +1,148 @@
 // AUTO-GENERATED - DO NOT EDIT
 // Only exports the 144 icons we actually use (not the entire library)
-export { RiAddBoxLine } from "@remixicon/react";
-export { RiAddLine } from "@remixicon/react";
-export { RiAlertLine } from "@remixicon/react";
-export { RiArchiveLine } from "@remixicon/react";
-export { RiArrowDownLine } from "@remixicon/react";
-export { RiArrowDownSLine } from "@remixicon/react";
-export { RiArrowLeftCircleLine } from "@remixicon/react";
-export { RiArrowLeftLine } from "@remixicon/react";
-export { RiArrowLeftSLine } from "@remixicon/react";
-export { RiArrowRightCircleLine } from "@remixicon/react";
-export { RiArrowRightLine } from "@remixicon/react";
-export { RiArrowRightSLine } from "@remixicon/react";
-export { RiArrowRightUpLine } from "@remixicon/react";
-export { RiArrowUpLine } from "@remixicon/react";
-export { RiArrowUpSLine } from "@remixicon/react";
-export { RiAttachmentLine } from "@remixicon/react";
-export { RiBankCardLine } from "@remixicon/react";
-export { RiBankLine } from "@remixicon/react";
-export { RiBarChartLine } from "@remixicon/react";
-export { RiBluetoothLine } from "@remixicon/react";
-export { RiBold } from "@remixicon/react";
-export { RiBookOpenLine } from "@remixicon/react";
-export { RiBookmarkLine } from "@remixicon/react";
-export { RiBox3Line } from "@remixicon/react";
-export { RiCalculatorLine } from "@remixicon/react";
-export { RiCalendarEventLine } from "@remixicon/react";
-export { RiCalendarLine } from "@remixicon/react";
-export { RiCameraLine } from "@remixicon/react";
-export { RiChat1Line } from "@remixicon/react";
-export { RiCheckLine } from "@remixicon/react";
-export { RiCheckboxCircleLine } from "@remixicon/react";
-export { RiCircleLine } from "@remixicon/react";
-export { RiClipboardLine } from "@remixicon/react";
-export { RiCloseCircleLine } from "@remixicon/react";
-export { RiCloseLine } from "@remixicon/react";
-export { RiClosedCaptioningLine } from "@remixicon/react";
-export { RiCloudLine } from "@remixicon/react";
-export { RiCodeLine } from "@remixicon/react";
-export { RiComputerLine } from "@remixicon/react";
-export { RiContractLeftRightLine } from "@remixicon/react";
-export { RiCropLine } from "@remixicon/react";
-export { RiCursorLine } from "@remixicon/react";
-export { RiDeleteBin6Line } from "@remixicon/react";
-export { RiDeleteBinLine } from "@remixicon/react";
-export { RiDownloadLine } from "@remixicon/react";
-export { RiEdit2Line } from "@remixicon/react";
-export { RiEditLine } from "@remixicon/react";
-export { RiEmotionLine } from "@remixicon/react";
-export { RiErrorWarningLine } from "@remixicon/react";
-export { RiExpandLeftRightLine } from "@remixicon/react";
-export { RiExpandUpDownLine } from "@remixicon/react";
-export { RiExternalLinkLine } from "@remixicon/react";
-export { RiEyeLine } from "@remixicon/react";
-export { RiEyeOffLine } from "@remixicon/react";
-export { RiFileCodeLine } from "@remixicon/react";
-export { RiFileCopyLine } from "@remixicon/react";
-export { RiFileLine } from "@remixicon/react";
-export { RiFileSearchLine } from "@remixicon/react";
-export { RiFileTextLine } from "@remixicon/react";
-export { RiFilterLine } from "@remixicon/react";
-export { RiFlashlightLine } from "@remixicon/react";
-export { RiFlipHorizontalLine } from "@remixicon/react";
-export { RiFlipVerticalLine } from "@remixicon/react";
-export { RiFolderAddLine } from "@remixicon/react";
-export { RiFolderLine } from "@remixicon/react";
-export { RiFolderOpenLine } from "@remixicon/react";
-export { RiGitBranchLine } from "@remixicon/react";
-export { RiGlobalLine } from "@remixicon/react";
-export { RiHeartLine } from "@remixicon/react";
-export { RiHomeLine } from "@remixicon/react";
-export { RiImageLine } from "@remixicon/react";
-export { RiInboxLine } from "@remixicon/react";
-export { RiInformationLine } from "@remixicon/react";
-export { RiItalic } from "@remixicon/react";
-export { RiKeyboardLine } from "@remixicon/react";
-export { RiLayoutGridLine } from "@remixicon/react";
-export { RiLayoutLeftLine } from "@remixicon/react";
-export { RiLayoutLine } from "@remixicon/react";
-export { RiLifebuoyLine } from "@remixicon/react";
-export { RiLightbulbLine } from "@remixicon/react";
-export { RiLineChartLine } from "@remixicon/react";
-export { RiLinkM } from "@remixicon/react";
-export { RiListUnordered } from "@remixicon/react";
-export { RiLoader3Line } from "@remixicon/react";
-export { RiLoader4Line } from "@remixicon/react";
-export { RiLoginBoxLine } from "@remixicon/react";
-export { RiLogoutBoxLine } from "@remixicon/react";
-export { RiMagicLine } from "@remixicon/react";
-export { RiMailCheckLine } from "@remixicon/react";
-export { RiMailLine } from "@remixicon/react";
-export { RiMapLine } from "@remixicon/react";
-export { RiMenuLine } from "@remixicon/react";
-export { RiMicLine } from "@remixicon/react";
-export { RiMoneyDollarCircleLine } from "@remixicon/react";
-export { RiMoonLine } from "@remixicon/react";
-export { RiMore2Line } from "@remixicon/react";
-export { RiMoreLine } from "@remixicon/react";
-export { RiNotification3Line } from "@remixicon/react";
-export { RiPaletteLine } from "@remixicon/react";
-export { RiPenNibLine } from "@remixicon/react";
-export { RiPencilLine } from "@remixicon/react";
-export { RiPieChartLine } from "@remixicon/react";
-export { RiPriceTag3Line } from "@remixicon/react";
-export { RiPulseLine } from "@remixicon/react";
-export { RiPushpinLine } from "@remixicon/react";
-export { RiQuestionLine } from "@remixicon/react";
-export { RiRadioButtonLine } from "@remixicon/react";
-export { RiRefreshLine } from "@remixicon/react";
-export { RiRestartLine } from "@remixicon/react";
-export { RiRobotLine } from "@remixicon/react";
-export { RiSaveLine } from "@remixicon/react";
-export { RiScissorsLine } from "@remixicon/react";
-export { RiSearchLine } from "@remixicon/react";
-export { RiSendPlaneLine } from "@remixicon/react";
-export { RiServerLine } from "@remixicon/react";
-export { RiSettings3Line } from "@remixicon/react";
-export { RiSettings4Line } from "@remixicon/react";
-export { RiShareLine } from "@remixicon/react";
-export { RiShieldLine } from "@remixicon/react";
-export { RiShoppingBagLine } from "@remixicon/react";
-export { RiShoppingCartLine } from "@remixicon/react";
-export { RiSoundModuleLine } from "@remixicon/react";
-export { RiSparklingLine } from "@remixicon/react";
-export { RiStarLine } from "@remixicon/react";
-export { RiSubtractLine } from "@remixicon/react";
-export { RiSunLine } from "@remixicon/react";
-export { RiTable2 } from "@remixicon/react";
-export { RiTerminalBoxLine } from "@remixicon/react";
-export { RiTerminalLine } from "@remixicon/react";
-export { RiTimeLine } from "@remixicon/react";
-export { RiTimerLine } from "@remixicon/react";
-export { RiTranslate } from "@remixicon/react";
-export { RiUnderline } from "@remixicon/react";
-export { RiUpload2Line } from "@remixicon/react";
-export { RiUserLine } from "@remixicon/react";
-export { RiUserUnfollowLine } from "@remixicon/react";
-export { RiVerifiedBadgeLine } from "@remixicon/react";
-export { RiVolumeDownLine } from "@remixicon/react";
-export { RiVolumeMuteLine } from "@remixicon/react";
-export { RiVolumeUpLine } from "@remixicon/react";
-export { RiWalletLine } from "@remixicon/react";
-export { RiWindowLine } from "@remixicon/react";
-export { RiZoomInLine } from "@remixicon/react";
-export { RiZoomOutLine } from "@remixicon/react";
+export {
+	RiAddBoxLine,
+	RiAddLine,
+	RiAlertLine,
+	RiArchiveLine,
+	RiArrowDownLine,
+	RiArrowDownSLine,
+	RiArrowLeftCircleLine,
+	RiArrowLeftLine,
+	RiArrowLeftSLine,
+	RiArrowRightCircleLine,
+	RiArrowRightLine,
+	RiArrowRightSLine,
+	RiArrowRightUpLine,
+	RiArrowUpLine,
+	RiArrowUpSLine,
+	RiAttachmentLine,
+	RiBankCardLine,
+	RiBankLine,
+	RiBarChartLine,
+	RiBluetoothLine,
+	RiBold,
+	RiBookmarkLine,
+	RiBookOpenLine,
+	RiBox3Line,
+	RiCalculatorLine,
+	RiCalendarEventLine,
+	RiCalendarLine,
+	RiCameraLine,
+	RiChat1Line,
+	RiCheckboxCircleLine,
+	RiCheckLine,
+	RiCircleLine,
+	RiClipboardLine,
+	RiCloseCircleLine,
+	RiClosedCaptioningLine,
+	RiCloseLine,
+	RiCloudLine,
+	RiCodeLine,
+	RiComputerLine,
+	RiContractLeftRightLine,
+	RiCropLine,
+	RiCursorLine,
+	RiDeleteBin6Line,
+	RiDeleteBinLine,
+	RiDownloadLine,
+	RiEdit2Line,
+	RiEditLine,
+	RiEmotionLine,
+	RiErrorWarningLine,
+	RiExpandLeftRightLine,
+	RiExpandUpDownLine,
+	RiExternalLinkLine,
+	RiEyeLine,
+	RiEyeOffLine,
+	RiFileCodeLine,
+	RiFileCopyLine,
+	RiFileLine,
+	RiFileSearchLine,
+	RiFileTextLine,
+	RiFilterLine,
+	RiFlashlightLine,
+	RiFlipHorizontalLine,
+	RiFlipVerticalLine,
+	RiFolderAddLine,
+	RiFolderLine,
+	RiFolderOpenLine,
+	RiGitBranchLine,
+	RiGlobalLine,
+	RiHeartLine,
+	RiHomeLine,
+	RiImageLine,
+	RiInboxLine,
+	RiInformationLine,
+	RiItalic,
+	RiKeyboardLine,
+	RiLayoutGridLine,
+	RiLayoutLeftLine,
+	RiLayoutLine,
+	RiLifebuoyLine,
+	RiLightbulbLine,
+	RiLineChartLine,
+	RiLinkM,
+	RiListUnordered,
+	RiLoader3Line,
+	RiLoader4Line,
+	RiLoginBoxLine,
+	RiLogoutBoxLine,
+	RiMagicLine,
+	RiMailCheckLine,
+	RiMailLine,
+	RiMapLine,
+	RiMenuLine,
+	RiMicLine,
+	RiMoneyDollarCircleLine,
+	RiMoonLine,
+	RiMore2Line,
+	RiMoreLine,
+	RiNotification3Line,
+	RiPaletteLine,
+	RiPencilLine,
+	RiPenNibLine,
+	RiPieChartLine,
+	RiPriceTag3Line,
+	RiPulseLine,
+	RiPushpinLine,
+	RiQuestionLine,
+	RiRadioButtonLine,
+	RiRefreshLine,
+	RiRestartLine,
+	RiRobotLine,
+	RiSaveLine,
+	RiScissorsLine,
+	RiSearchLine,
+	RiSendPlaneLine,
+	RiServerLine,
+	RiSettings3Line,
+	RiSettings4Line,
+	RiShareLine,
+	RiShieldLine,
+	RiShoppingBagLine,
+	RiShoppingCartLine,
+	RiSoundModuleLine,
+	RiSparklingLine,
+	RiStarLine,
+	RiSubtractLine,
+	RiSunLine,
+	RiTable2,
+	RiTerminalBoxLine,
+	RiTerminalLine,
+	RiTimeLine,
+	RiTimerLine,
+	RiTranslate,
+	RiUnderline,
+	RiUpload2Line,
+	RiUserLine,
+	RiUserUnfollowLine,
+	RiVerifiedBadgeLine,
+	RiVolumeDownLine,
+	RiVolumeMuteLine,
+	RiVolumeUpLine,
+	RiWalletLine,
+	RiWindowLine,
+	RiZoomInLine,
+	RiZoomOutLine,
+} from "@remixicon/react";

@@ -3,6 +3,7 @@
 "use client";
 
 import * as Lucide from "lucide-react";
+
 import { createIcon } from "@dotui/registry/icons/create-icon";
 
 export const PlusIcon = createIcon(Lucide.PlusIcon, {
