@@ -10,18 +10,18 @@ Please take a moment to review this document before starting your contribution.
 
 In order to not waste your time implementing a change that has already been declined, or is generally not needed, start by [opening an issue](https://github.com/mehdibha/dotUI/issues/new/choose) describing the problem you would like to solve.
 
-This project uses [pnpm](https://pnpm.io) as its package manager. Install it if you haven't already:
+This project requires:
+
+- [Node.js](https://nodejs.org) v24.11.1 or higher
+- [pnpm](https://pnpm.io) v10.24.0 or higher
 
 ```bash
-npm install -g pnpm
+npm install -g pnpm@10.24.0
 ```
 
 ### Setup your environment locally
 
-In order to contribute to this project, you will need to:
-
-1. Fork the repository
-   You can do it by clicking the fork button in the top right corner of this page.
+1. Fork the repository by clicking the fork button in the top right corner of this page.
 
 2. Clone the repository on your local machine
 
@@ -29,7 +29,7 @@ In order to contribute to this project, you will need to:
 git clone https://github.com/your-username/dotui.git
 ```
 
-3. Create a new Branch
+3. Create a new branch
 
 ```bash
 git checkout -b my-new-branch
@@ -41,38 +41,54 @@ git checkout -b my-new-branch
 pnpm install
 ```
 
-### Implement your changes
+### Project structure
 
-This project is a [Turborepo](https://turborepo.org/) monorepo. The code for the CLI is in the `packages/cli` directory, and the docs is in the `www` directory. Now you're all setup and can start implementing your changes.
+This project is a [Turborepo](https://turborepo.org/) monorepo:
 
-Here are some useful scripts for when you are developing:
+- `www/` - Documentation website
+- `packages/` - Shared packages
+  - `api` - API utilities
+  - `auth` - Authentication
+  - `colors` - Color utilities
+  - `core` - Core functionality
+  - `db` - Database utilities
+  - `registry` - Component registry
+  - `tailwindcss-autocontrast` - Tailwind CSS plugin for auto contrast
+  - `tailwindcss-with` - Tailwind CSS plugin utilities
+  - `types` - Shared TypeScript types
 
-| Command          | Description                                             |
-| ---------------- | ------------------------------------------------------- |
-| `pnpm dev:www`   | Starts the development server for the docs website     |
-| `pnpm dev:cli`   | Builds and starts the CLI in watch-mode                 |
-| `pnpm build:cli` | Builds the CLI                                          |
-| `pnpm build:www` | Builds the docs                                         |
-| `pnpm build`     | Builds CLI and docs                                     |
-| `pnpm format`    | Formats the code                                        |
-| `pnpm lint`      | Lints the code                                          |
-| `pnpm lint:fix`  | Lints the code and fixes any errors                     |
-| `pnpm check`     | Checks your code for typeerrors, formatting and linting |
+### Useful scripts
 
-When making commits, make sure to follow the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) guidelines, i.e. prepending the message with `feat:`, `fix:`, `chore:`, `docs:`, etc... You can use `git status` to double check which files have not yet been staged for commit:
+| Command              | Description                                |
+| -------------------- | ------------------------------------------ |
+| `pnpm dev`           | Starts all packages in development mode    |
+| `pnpm dev:www`       | Starts the documentation website           |
+| `pnpm build`         | Builds all packages                        |
+| `pnpm build:www`     | Builds the documentation website           |
+| `pnpm build:registry`| Builds the component registry              |
+| `pnpm check`         | Checks code for formatting and linting     |
+| `pnpm check:fix`     | Fixes formatting and linting issues        |
+| `pnpm typecheck`     | Runs TypeScript type checking              |
+| `pnpm test`          | Runs tests                                 |
+
+### Making commits
+
+When making commits, follow the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) guidelines, i.e. prepending the message with `feat:`, `fix:`, `chore:`, `docs:`, etc.
 
 ```bash
 git add <file> && git commit -m "feat/fix/chore/docs: commit message"
 ```
 
-### When you're done
+### Before submitting
 
-Check that your code follows the project's style guidelines by running:
+Check that your code passes all checks:
 
 ```bash
 pnpm check
+pnpm typecheck
+pnpm test
 ```
 
 ## Credits
 
-This documented was inspired by the contributing guidelines for [t3-oss/create-t3-app](https://github.com/t3-oss/create-t3-app/blob/main/CONTRIBUTING.md).
+This document was inspired by the contributing guidelines for [t3-oss/create-t3-app](https://github.com/t3-oss/create-t3-app/blob/main/CONTRIBUTING.md).
