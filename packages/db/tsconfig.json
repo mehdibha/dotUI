@@ -1,13 +1,13 @@
 {
-  "extends": "@dotui/ts-config/internal-package.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "jsx": "preserve",
-    "paths": {
-      "@dotui/db/*": ["./src/*"],
-      "@dotui/core/*": ["../core/src/*"]
-    }
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+	"extends": "@dotui/ts-config/internal-package.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"jsx": "preserve",
+		"paths": {
+			"@dotui/db/*": ["./src/*"],
+			"@dotui/core/*": ["../core/src/*"]
+		}
+	},
+	"include": ["src"],
+	"exclude": ["node_modules"]
 }

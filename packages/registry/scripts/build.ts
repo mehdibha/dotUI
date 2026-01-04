@@ -68,10 +68,7 @@ export const BlocksIndex: Record<
 `;
 
 	for (const block of registryBlocks) {
-		const blockFiles =
-			block.files?.map((file) =>
-				typeof file === "string" ? file : file.path,
-			) || [];
+		const blockFiles = block.files?.map((file) => (typeof file === "string" ? file : file.path)) || [];
 
 		let componentPath = `@dotui/registry/blocks/${block.name}`;
 
@@ -99,11 +96,7 @@ export const BlocksIndex: Record<
 	console.log("  ✓ __generated__/blocks.tsx");
 }
 
-async function processDirectory(
-	dirPath: string,
-	relativePath: string,
-	entries: string[],
-): Promise<void> {
+async function processDirectory(dirPath: string, relativePath: string, entries: string[]): Promise<void> {
 	const dirEntries = await fs.readdir(dirPath, { withFileTypes: true });
 
 	for (const entry of dirEntries) {
@@ -168,20 +161,6 @@ export const DemosIndex: Record<
 	console.log("  ✓ __generated__/demos.tsx");
 }
 
-// Get the import path for generated icon library files
-function getIconImportPath(library: string): string | null {
-	switch (library) {
-		case "tabler":
-			return "@dotui/registry/icons/__tabler__";
-		case "hugeicons":
-			return "@dotui/registry/icons/__hugeicons__";
-		case "remix":
-			return "@dotui/registry/icons/__remix__";
-		default:
-			return null;
-	}
-}
-
 // Get the package import for each library
 function getLibraryPackage(library: string): string {
 	switch (library) {
@@ -208,9 +187,9 @@ async function buildIconLibraryExports() {
 	};
 
 	for (const iconMapping of Object.values(registryIcons)) {
-		if (iconMapping.tabler) libraryIcons.tabler!.add(iconMapping.tabler);
-		if (iconMapping.hugeicons) libraryIcons.hugeicons!.add(iconMapping.hugeicons);
-		if (iconMapping.remix) libraryIcons.remix!.add(iconMapping.remix);
+		if (iconMapping.tabler) libraryIcons.tabler?.add(iconMapping.tabler);
+		if (iconMapping.hugeicons) libraryIcons.hugeicons?.add(iconMapping.hugeicons);
+		if (iconMapping.remix) libraryIcons.remix?.add(iconMapping.remix);
 	}
 
 	// Generate a file for each library
@@ -218,9 +197,7 @@ async function buildIconLibraryExports() {
 		const packageName = getLibraryPackage(library);
 		const sortedIcons = [...icons].sort();
 
-		const exports = sortedIcons
-			.map((icon) => `export { ${icon} } from "${packageName}";`)
-			.join("\n");
+		const exports = sortedIcons.map((icon) => `export { ${icon} } from "${packageName}";`).join("\n");
 
 		const content = `// AUTO-GENERATED - DO NOT EDIT
 // Only exports the ${sortedIcons.length} icons we actually use (not the entire library)
@@ -249,9 +226,7 @@ async function buildInternalIcons() {
 				.map((library) => {
 					const iconName = iconMapping[library.name];
 					if (!iconName) {
-						throw new Error(
-							`Icon "${iconKey}" not found for library "${library.name}"`,
-						);
+						throw new Error(`Icon "${iconKey}" not found for library "${library.name}"`);
 					}
 					return `  ${library.name}: "${iconName}",`;
 				})

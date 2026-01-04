@@ -1,6 +1,4 @@
-export type ParsedStyleSlug =
-	| { type: "public"; name: string }
-	| { type: "user"; username: string; name: string };
+export type ParsedStyleSlug = { type: "public"; name: string } | { type: "user"; username: string; name: string };
 
 export function parseStyleSlug(slug: string): ParsedStyleSlug {
 	const parts = slug.split("/");
@@ -12,9 +10,6 @@ export function parseStyleSlug(slug: string): ParsedStyleSlug {
 	return { type: "user", username, name };
 }
 
-export function buildStyleSlug(
-	username: string | null,
-	name: string,
-): string {
+export function buildStyleSlug(username: string | null, name: string): string {
 	return username ? `${username}/${name}` : name;
 }

@@ -1,4 +1,4 @@
-export type { Transform, TransformContext, TransformResult } from "./types";
+export { createIconTransform, transformIcons } from "./icons";
+export { createImportTransform, transformImports } from "./imports";
 export { applyTransforms, applyTransformsWithTracking } from "./pipeline";
-export { transformIcons, createIconTransform } from "./icons";
-export { transformImports, createImportTransform } from "./imports";
+export type { Transform, TransformContext, TransformResult } from "./types";

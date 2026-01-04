@@ -2,15 +2,15 @@
 // Run "pnpm build" to regenerate
 
 export const hooks = [
-  {
-    "name": "use-mobile",
-    "type": "registry:hook",
-    "files": [
-      {
-        "type": "registry:hook",
-        "path": "hooks/use-mobile.ts",
-        "target": "hooks/use-mobile.ts",
-        "content": `import * as React from "react";
+	{
+		name: "use-mobile",
+		type: "registry:hook",
+		files: [
+			{
+				type: "registry:hook",
+				path: "hooks/use-mobile.ts",
+				target: "hooks/use-mobile.ts",
+				content: `import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -31,8 +31,8 @@ export function useIsMobile() {
 
   return !!isMobile;
 }
-`
-      }
-    ]
-  }
+`,
+			},
+		],
+	},
 ] as const;

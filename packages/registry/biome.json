@@ -1,5 +1,19 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
 	"root": false,
-	"extends": ["@dotui/biome-config/base", "@dotui/biome-config/react-internal"]
+	"extends": ["@dotui/biome-config/base"],
+	"linter": {
+		"rules": {
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useSemanticElements": "off"
+			},
+			"performance": {
+				"noImgElement": "off"
+			},
+			"style": {
+				"noNonNullAssertion": "off"
+			}
+		}
+	}
 }

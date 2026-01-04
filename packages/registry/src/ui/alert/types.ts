@@ -2,11 +2,11 @@
  * Missing description.
  */
 export interface AlertProps extends React.ComponentProps<"div"> {
-  /**
-   * The visual style of the alert.
-   * @default 'neutral'
-   */
-  variant?: "neutral" | "danger" | "warning" | "info" | "success";
+	/**
+	 * The visual style of the alert.
+	 * @default 'neutral'
+	 */
+	variant?: "neutral" | "danger" | "warning" | "info" | "success";
 }
 
 /**

@@ -2,39 +2,29 @@
 // Run "pnpm build" to regenerate
 
 export const blocksCategories = [
-  {
-    "name": "Featured",
-    "slug": "featured"
-  }
+	{
+		name: "Featured",
+		slug: "featured",
+	},
 ] as const;
 
 export const blocks = [
-  {
-    "name": "login",
-    "type": "registry:block",
-    "dependencies": [
-      "@internationalized/date"
-    ],
-    "registryDependencies": [
-      "button",
-      "text-field",
-      "card",
-      "link"
-    ],
-    "description": "A simple login form.",
-    "categories": [
-      "featured",
-      "authentication"
-    ],
-    "meta": {
-      "containerHeight": 600
-    },
-    "files": [
-      {
-        "type": "registry:page",
-        "path": "blocks/auth/login/page.tsx",
-        "target": "app/login/page.tsx",
-        "content": `import { LoginForm } from "@dotui/registry/blocks/auth/login/components/login-form";
+	{
+		name: "login",
+		type: "registry:block",
+		dependencies: ["@internationalized/date"],
+		registryDependencies: ["button", "text-field", "card", "link"],
+		description: "A simple login form.",
+		categories: ["featured", "authentication"],
+		meta: {
+			containerHeight: 600,
+		},
+		files: [
+			{
+				type: "registry:page",
+				path: "blocks/auth/login/page.tsx",
+				target: "app/login/page.tsx",
+				content: `import { LoginForm } from "@dotui/registry/blocks/auth/login/components/login-form";
 
 export default function Page() {
   return (
@@ -43,13 +33,13 @@ export default function Page() {
     </div>
   );
 }
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/auth/login/components/login-form.tsx",
-        "target": "blocks/auth/login/components/login-form.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/auth/login/components/login-form.tsx",
+				target: "blocks/auth/login/components/login-form.tsx",
+				content: `"use client";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
@@ -129,30 +119,25 @@ export function LoginForm(props: React.ComponentProps<"div">) {
     </Card>
   );
 }
-`
-      }
-    ]
-  },
-  {
-    "name": "cards",
-    "type": "registry:block",
-    "registryDependencies": [
-      "all"
-    ],
-    "description": "A set of cards.",
-    "categories": [
-      "featured",
-      "showcase"
-    ],
-    "meta": {
-      "containerHeight": 600
-    },
-    "files": [
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/cards.tsx",
-        "target": "blocks/showcase/cards/components/cards.tsx",
-        "content": `import { AccountMenu } from "@dotui/registry/blocks/showcase/cards/components/account-menu";
+`,
+			},
+		],
+	},
+	{
+		name: "cards",
+		type: "registry:block",
+		registryDependencies: ["all"],
+		description: "A set of cards.",
+		categories: ["featured", "showcase"],
+		meta: {
+			containerHeight: 600,
+		},
+		files: [
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/cards.tsx",
+				target: "blocks/showcase/cards/components/cards.tsx",
+				content: `import { AccountMenu } from "@dotui/registry/blocks/showcase/cards/components/account-menu";
 import { Backlog } from "@dotui/registry/blocks/showcase/cards/components/backlog";
 import { Booking } from "@dotui/registry/blocks/showcase/cards/components/booking";
 import { ColorEditorCard } from "@dotui/registry/blocks/showcase/cards/components/color-editor";
@@ -191,13 +176,13 @@ export function Cards(props: React.ComponentProps<"div">) {
 }
 
 export default Cards;
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/account-menu.tsx",
-        "target": "blocks/showcase/cards/components/account-menu.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/account-menu.tsx",
+				target: "blocks/showcase/cards/components/account-menu.tsx",
+				content: `"use client";
 
 import {
   BookIcon,
@@ -278,13 +263,13 @@ export function AccountMenu({
     </Card>
   );
 }
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/backlog.tsx",
-        "target": "blocks/showcase/cards/components/backlog.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/backlog.tsx",
+				target: "blocks/showcase/cards/components/backlog.tsx",
+				content: `"use client";
 
 import {
   RiCheckboxCircleFill,
@@ -657,13 +642,13 @@ export function Backlog(props: React.ComponentProps<"div">) {
     </Card>
   );
 }
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/booking.tsx",
-        "target": "blocks/showcase/cards/components/booking.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/booking.tsx",
+				target: "blocks/showcase/cards/components/booking.tsx",
+				content: `"use client";
 
 import { parseDate } from "@internationalized/date";
 
@@ -712,13 +697,13 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
     </Card>
   );
 }
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/color-editor.tsx",
-        "target": "blocks/showcase/cards/components/color-editor.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/color-editor.tsx",
+				target: "blocks/showcase/cards/components/color-editor.tsx",
+				content: `"use client";
 
 import { cn } from "@dotui/registry/lib/utils";
 import {
@@ -746,13 +731,13 @@ export function ColorEditorCard({
     </Card>
   );
 }
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/filters.tsx",
-        "target": "blocks/showcase/cards/components/filters.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/filters.tsx",
+				target: "blocks/showcase/cards/components/filters.tsx",
+				content: `"use client";
 
 // import { ZapIcon } from "lucide-react";
 import { cn } from "@dotui/registry/lib/utils";
@@ -839,13 +824,13 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
     </Card>
   );
 }
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/invite-members.tsx",
-        "target": "blocks/showcase/cards/components/invite-members.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/invite-members.tsx",
+				target: "blocks/showcase/cards/components/invite-members.tsx",
+				content: `"use client";
 
 import { PlusCircleIcon } from "lucide-react";
 
@@ -973,13 +958,13 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
     </Card>
   );
 }
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/login-form.tsx",
-        "target": "blocks/showcase/cards/components/login-form.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/login-form.tsx",
+				target: "blocks/showcase/cards/components/login-form.tsx",
+				content: `"use client";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
@@ -1060,13 +1045,13 @@ export function LoginForm(props: React.ComponentProps<"div">) {
     </Card>
   );
 }
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/notifications.tsx",
-        "target": "blocks/showcase/cards/components/notifications.tsx",
-        "content": `import React from "react";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/notifications.tsx",
+				target: "blocks/showcase/cards/components/notifications.tsx",
+				content: `import React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Avatar } from "@dotui/registry/ui/avatar";
@@ -1269,13 +1254,13 @@ const notifications = [
     timestamp: "3 days ago",
   },
 ];
-`
-      },
-      {
-        "type": "registry:component",
-        "path": "blocks/showcase/cards/components/team-name.tsx",
-        "target": "blocks/showcase/cards/components/team-name.tsx",
-        "content": `"use client";
+`,
+			},
+			{
+				type: "registry:component",
+				path: "blocks/showcase/cards/components/team-name.tsx",
+				target: "blocks/showcase/cards/components/team-name.tsx",
+				content: `"use client";
 
 import { cn } from "@dotui/registry/lib/utils";
 import { Button } from "@dotui/registry/ui/button";
@@ -1314,8 +1299,8 @@ export function TeamName({ className, ...props }: React.ComponentProps<"div">) {
     </Card>
   );
 }
-`
-      }
-    ]
-  }
+`,
+			},
+		],
+	},
 ] as const;

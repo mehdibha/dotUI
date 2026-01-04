@@ -1,7 +1,7 @@
 import type {
-  TagGroupProps as AriaTagGroupProps,
-  TagListProps as AriaTagListProps,
-  TagProps as AriaTagProps,
+	TagGroupProps as AriaTagGroupProps,
+	TagListProps as AriaTagListProps,
+	TagProps as AriaTagProps,
 } from "react-aria-components";
 
 /**

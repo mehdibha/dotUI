@@ -1,16 +1,16 @@
 declare function plugin(
-  options?: Partial<{
-    cssFile: string;
-    source: string | string[];
-    cwd: string;
-    logLevel: "silent" | "warn" | "error";
-  }>,
+	options?: Partial<{
+		cssFile: string;
+		source: string | string[];
+		cwd: string;
+		logLevel: "silent" | "warn" | "error";
+	}>,
 ): {
-  handler: () => void;
+	handler: () => void;
 };
 
 declare namespace plugin {
-  const __isOptionsFunction: true;
+	const __isOptionsFunction: true;
 }
 
 export = plugin;

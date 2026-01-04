@@ -2,18 +2,18 @@
 // Run "pnpm build" to regenerate
 
 export const ui = [
-  {
-    "name": "accordion",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/accordion/basic.tsx",
-            "target": "ui/accordion.tsx",
-            "content": `"use client";
+	{
+		name: "accordion",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/accordion/basic.tsx",
+						target: "ui/accordion.tsx",
+						content: `"use client";
 
 import {
   DisclosureGroup as AriaDisclosureGroup,
@@ -42,24 +42,24 @@ function Accordion({ className, ...props }: AccordionProps) {
 export { Accordion };
 
 export type { AccordionProps };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "alert",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/alert/basic.tsx",
-            "target": "ui/alert.tsx",
-            "content": `import { tv } from "tailwind-variants";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "alert",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/alert/basic.tsx",
+						target: "ui/alert.tsx",
+						content: `import { tv } from "tailwind-variants";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -155,24 +155,24 @@ export type {
   AlertDescriptionProps,
   AlertActionProps,
 };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "avatar",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/avatar/basic.tsx",
-            "target": "ui/avatar.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "avatar",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/avatar/basic.tsx",
+						target: "ui/avatar.tsx",
+						content: `"use client";
 
 import * as React from "react";
 import { tv } from "tailwind-variants";
@@ -358,24 +358,24 @@ export type {
   AvatarFallbackProps,
   AvatarPlaceholderProps,
 };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "badge",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/badge/basic.tsx",
-            "target": "ui/badge.tsx",
-            "content": `import { tv } from "tailwind-variants";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "badge",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/badge/basic.tsx",
+						target: "ui/badge.tsx",
+						content: `import { tv } from "tailwind-variants";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -410,24 +410,24 @@ const Badge = ({ className, variant, ...props }: BadgeProps) => {
 
 export type { BadgeProps };
 export { Badge };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "breadcrumbs",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/breadcrumbs/basic.tsx",
-            "target": "ui/breadcrumbs.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "breadcrumbs",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/breadcrumbs/basic.tsx",
+						target: "ui/breadcrumbs.tsx",
+						content: `"use client";
 
 import { ChevronRightIcon } from "lucide-react";
 import {
@@ -506,27 +506,25 @@ export type {
   BreadcrumbItemProps,
   BreadcrumbLinkProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "button",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/button/basic.tsx",
-            "target": "ui/button.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles"],
+			},
+		},
+	},
+	{
+		name: "button",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/button/basic.tsx",
+						target: "ui/button.tsx",
+						content: `"use client";
 
 import {
   Button as AriaButton,
@@ -693,21 +691,18 @@ const LinkButton = (localProps: LinkButtonProps) => {
 export type { ButtonProps, LinkButtonProps };
 
 export { Button, LinkButton, ButtonProvider, buttonStyles };
-`
-          }
-        ],
-        "registryDependencies": [
-          "loader",
-          "focus-styles"
-        ]
-      },
-      "ripple": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/button/ripple.tsx",
-            "target": "ui/button.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["loader", "focus-styles"],
+			},
+			ripple: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/button/ripple.tsx",
+						target: "ui/button.tsx",
+						content: `"use client";
 
 import {
   Button as AriaButton,
@@ -873,24 +868,24 @@ const LinkButton = (localProps: LinkButtonProps) => {
 export type { ButtonProps, LinkButtonProps };
 
 export { Button, LinkButton, ButtonProvider, buttonStyles };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "calendar",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/calendar/basic.tsx",
-            "target": "ui/calendar.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "calendar",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/calendar/basic.tsx",
+						target: "ui/calendar.tsx",
+						content: `"use client";
 
 import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
@@ -1243,29 +1238,25 @@ export type {
   CalendarGridBodyProps,
   CalendarCellProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "button",
-          "text",
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "card",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/card/basic.tsx",
-            "target": "ui/card.tsx",
-            "content": `import { tv } from "tailwind-variants";
+`,
+					},
+				],
+				registryDependencies: ["button", "text", "focus-styles"],
+			},
+		},
+	},
+	{
+		name: "card",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/card/basic.tsx",
+						target: "ui/card.tsx",
+						content: `import { tv } from "tailwind-variants";
 import type * as React from "react";
 
 const cardStyles = tv({
@@ -1381,29 +1372,25 @@ export type {
   CardContentProps,
   CardFooterProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "button",
-          "text",
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "checkbox-group",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/checkbox-group/basic.tsx",
-            "target": "ui/checkbox-group.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["button", "text", "focus-styles"],
+			},
+		},
+	},
+	{
+		name: "checkbox-group",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/checkbox-group/basic.tsx",
+						target: "ui/checkbox-group.tsx",
+						content: `"use client";
 
 import {
   CheckboxGroup as AriaCheckboxGroup,
@@ -1428,28 +1415,25 @@ const CheckboxGroup = ({ className, ...props }: CheckboxGroupProps) => {
 
 export type { CheckboxGroupProps };
 export { CheckboxGroup };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "checkbox"
-        ]
-      }
-    }
-  },
-  {
-    "name": "checkbox",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/checkbox/basic.tsx",
-            "target": "ui/checkbox.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "checkbox"],
+			},
+		},
+	},
+	{
+		name: "checkbox",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/checkbox/basic.tsx",
+						target: "ui/checkbox.tsx",
+						content: `"use client";
 
 import { CheckIcon, MinusIcon } from "lucide-react";
 import {
@@ -1562,27 +1546,25 @@ const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
 export { Checkbox, CheckboxIndicator };
 
 export type { CheckboxProps, CheckboxIndicatorProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "color-area",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/color-area/basic.tsx",
-            "target": "ui/color-area.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles"],
+			},
+		},
+	},
+	{
+		name: "color-area",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/color-area/basic.tsx",
+						target: "ui/color-area.tsx",
+						content: `"use client";
 
 import {
   ColorArea as AriaColorArea,
@@ -1618,27 +1600,25 @@ const ColorArea = ({ className, ...props }: ColorAreaProps) => {
 export { ColorArea };
 
 export type { ColorAreaProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "color-thumb"
-        ]
-      }
-    }
-  },
-  {
-    "name": "color-editor",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/color-editor/basic.tsx",
-            "target": "ui/color-editor.tsx",
-            "content": `import React from "react";
+`,
+					},
+				],
+				registryDependencies: ["color-thumb"],
+			},
+		},
+	},
+	{
+		name: "color-editor",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/color-editor/basic.tsx",
+						target: "ui/color-editor.tsx",
+						content: `import React from "react";
 import { getColorChannels } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
@@ -1741,29 +1721,25 @@ const ColorEditor = ({
 
 export { ColorEditor };
 export type { ColorEditorProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "color-area",
-          "color-slider",
-          "select"
-        ]
-      }
-    }
-  },
-  {
-    "name": "color-field",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/color-field/basic.tsx",
-            "target": "ui/color-field.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["color-area", "color-slider", "select"],
+			},
+		},
+	},
+	{
+		name: "color-field",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/color-field/basic.tsx",
+						target: "ui/color-field.tsx",
+						content: `"use client";
 
 import {
   ColorField as AriaColorField,
@@ -1793,28 +1769,25 @@ const ColorField = ({ className, ...props }: ColorFieldProps) => {
 
 export { ColorField };
 export type { ColorFieldProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "input"
-        ]
-      }
-    }
-  },
-  {
-    "name": "color-picker",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/color-picker/basic.tsx",
-            "target": "ui/color-picker.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "input"],
+			},
+		},
+	},
+	{
+		name: "color-picker",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/color-picker/basic.tsx",
+						target: "ui/color-picker.tsx",
+						content: `"use client";
 
 import { useContext } from "react";
 import {
@@ -1913,33 +1886,33 @@ export type {
   ColorPickerTriggerProps,
   ColorPickerContentProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "button",
-          "color-area",
-          "color-field",
-          "color-slider",
-          "color-swatch",
-          "dialog",
-          "select"
-        ]
-      }
-    }
-  },
-  {
-    "name": "color-slider",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/color-slider/basic.tsx",
-            "target": "ui/color-slider.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: [
+					"button",
+					"color-area",
+					"color-field",
+					"color-slider",
+					"color-swatch",
+					"dialog",
+					"select",
+				],
+			},
+		},
+	},
+	{
+		name: "color-slider",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/color-slider/basic.tsx",
+						target: "ui/color-slider.tsx",
+						content: `"use client";
 
 import { useSlotId } from "@react-aria/utils";
 import {
@@ -2051,28 +2024,25 @@ export type {
   ColorSliderControlProps,
   ColorSliderOutputProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "color-thumb"
-        ]
-      }
-    }
-  },
-  {
-    "name": "color-swatch-picker",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/color-swatch-picker/basic.tsx",
-            "target": "ui/color-swatch-picker.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "color-thumb"],
+			},
+		},
+	},
+	{
+		name: "color-swatch-picker",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/color-swatch-picker/basic.tsx",
+						target: "ui/color-swatch-picker.tsx",
+						content: `"use client";
 
 import {
   ColorSwatchPicker as AriaColorSwatchPicker,
@@ -2157,28 +2127,25 @@ export {
   CompoundColorSwatchPicker as ColorSwatchPicker,
   ColorSwatchPickerItem,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles",
-          "color-swatch"
-        ]
-      }
-    }
-  },
-  {
-    "name": "color-swatch",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/color-swatch/basic.tsx",
-            "target": "ui/color-swatch.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles", "color-swatch"],
+			},
+		},
+	},
+	{
+		name: "color-swatch",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/color-swatch/basic.tsx",
+						target: "ui/color-swatch.tsx",
+						content: `"use client";
 
 import {
   ColorSwatch as AriaColorSwatch,
@@ -2211,24 +2178,24 @@ const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
 
 export type { ColorSwatchProps };
 export { ColorSwatch };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "color-thumb",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/color-thumb/basic.tsx",
-            "target": "ui/color-thumb.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "color-thumb",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/color-thumb/basic.tsx",
+						target: "ui/color-thumb.tsx",
+						content: `"use client";
 
 import { ColorThumb as AriaColorThumb } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -2257,27 +2224,25 @@ const ColorThumb = ({ className, ...props }: ColorThumbProps) => {
 
 export type { ColorThumbProps };
 export { ColorThumb };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "combobox",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/combobox/basic.tsx",
-            "target": "ui/combobox.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles"],
+			},
+		},
+	},
+	{
+		name: "combobox",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/combobox/basic.tsx",
+						target: "ui/combobox.tsx",
+						content: `"use client";
 
 import React from "react";
 import { useResizeObserver } from "@react-aria/utils";
@@ -2459,31 +2424,25 @@ export {
 };
 
 export type { ComboboxProps, ComboboxInputProps, ComboboxContentProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "button",
-          "input",
-          "list-box",
-          "overlay"
-        ]
-      }
-    }
-  },
-  {
-    "name": "command",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/command/basic.tsx",
-            "target": "ui/command.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "button", "input", "list-box", "overlay"],
+			},
+		},
+	},
+	{
+		name: "command",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/command/basic.tsx",
+						target: "ui/command.tsx",
+						content: `"use client";
 
 import { SearchIcon } from "lucide-react";
 import {
@@ -2590,24 +2549,24 @@ export {
 };
 
 export type { CommandProps, CommandContentProps, CommandInputProps };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "date-field",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/date-field/basic.tsx",
-            "target": "ui/date-field.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "date-field",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/date-field/basic.tsx",
+						target: "ui/date-field.tsx",
+						content: `"use client";
 
 import {
   DateField as AriaDateField,
@@ -2645,28 +2604,25 @@ const DateField = <T extends DateValue>({
 
 export type { DateFieldProps };
 export { DateField };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "input"
-        ]
-      }
-    }
-  },
-  {
-    "name": "date-picker",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/date-picker/basic.tsx",
-            "target": "ui/date-picker.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "input"],
+			},
+		},
+	},
+	{
+		name: "date-picker",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/date-picker/basic.tsx",
+						target: "ui/date-picker.tsx",
+						content: `"use client";
 
 import { useContext } from "react";
 import { CalendarIcon } from "lucide-react";
@@ -2782,31 +2738,25 @@ const DatePickerContent = ({
 
 export type { DatePickerProps, DatePickerContentProps, DatePickerInputProps };
 export { DatePicker, DatePickerContent, DatePickerInput };
-`
-          }
-        ],
-        "registryDependencies": [
-          "button",
-          "calendar",
-          "field",
-          "input",
-          "dialog"
-        ]
-      }
-    }
-  },
-  {
-    "name": "dialog",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/dialog/basic.tsx",
-            "target": "ui/dialog.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["button", "calendar", "field", "input", "dialog"],
+			},
+		},
+	},
+	{
+		name: "dialog",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/dialog/basic.tsx",
+						target: "ui/dialog.tsx",
+						content: `"use client";
 
 import {
   Dialog as AriaDialog,
@@ -2934,27 +2884,25 @@ export type {
   DialogFooterProps,
   DialogInsetProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "overlay"
-        ]
-      }
-    }
-  },
-  {
-    "name": "disclosure",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/disclosure/basic.tsx",
-            "target": "ui/disclosure.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["overlay"],
+			},
+		},
+	},
+	{
+		name: "disclosure",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/disclosure/basic.tsx",
+						target: "ui/disclosure.tsx",
+						content: `"use client";
 
 import { ChevronDownIcon } from "lucide-react";
 import {
@@ -3042,24 +2990,24 @@ function DisclosureTrigger(props: DisclosureTriggerProps) {
 export { Disclosure, DisclosurePanel, DisclosureTrigger };
 
 export type { DisclosureProps, DisclosurePanelProps, DisclosureTriggerProps };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "drawer",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/drawer/basic.tsx",
-            "target": "ui/drawer.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "drawer",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/drawer/basic.tsx",
+						target: "ui/drawer.tsx",
+						content: `"use client";
 
 import {
   Modal as AriaModal,
@@ -3137,24 +3085,24 @@ function Drawer({
 
 export type { DrawerProps };
 export { Drawer };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "drop-zone",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/drop-zone/basic.tsx",
-            "target": "ui/drop-zone.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "drop-zone",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/drop-zone/basic.tsx",
+						target: "ui/drop-zone.tsx",
+						content: `"use client";
 
 import {
   DropZone as AriaDropZone,
@@ -3194,24 +3142,24 @@ const DropZoneLabel = ({ className, ...props }: DropZoneLabelProps) => {
 
 export type { DropZoneProps, DropZoneLabelProps };
 export { DropZone, DropZoneLabel };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "empty",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/empty/basic.tsx",
-            "target": "ui/empty.tsx",
-            "content": `import { tv } from "tailwind-variants";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "empty",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/empty/basic.tsx",
+						target: "ui/empty.tsx",
+						content: `import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
 
 const emptyVariants = tv({
@@ -3338,24 +3286,24 @@ export type {
   EmptyContentProps,
   EmptyMediaProps,
 };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "field",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/field/basic.tsx",
-            "target": "ui/field.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "field",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/field/basic.tsx",
+						target: "ui/field.tsx",
+						content: `"use client";
 
 import { useSlotId } from "@react-aria/utils";
 import {
@@ -3585,48 +3533,48 @@ export type {
   FieldGroupProps,
   FieldProps,
 };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "file-trigger",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/file-trigger/basic.tsx",
-            "target": "ui/file-trigger.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "file-trigger",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/file-trigger/basic.tsx",
+						target: "ui/file-trigger.tsx",
+						content: `"use client";
 
 import { FileTrigger } from "react-aria-components";
 import type { FileTriggerProps } from "react-aria-components";
 
 export type { FileTriggerProps };
 export { FileTrigger };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "group",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/group/basic.tsx",
-            "target": "ui/group.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "group",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/group/basic.tsx",
+						target: "ui/group.tsx",
+						content: `"use client";
 
 import {
   Group as AriaGroup,
@@ -3717,27 +3665,25 @@ const Group = ({
 export { Group };
 
 export type { GroupProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "button"
-        ]
-      }
-    }
-  },
-  {
-    "name": "input",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/input/basic.tsx",
-            "target": "ui/input.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["button"],
+			},
+		},
+	},
+	{
+		name: "input",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/input/basic.tsx",
+						target: "ui/input.tsx",
+						content: `"use client";
 
 import React, { useCallback } from "react";
 import { mergeProps, mergeRefs, useLayoutEffect } from "@react-aria/utils";
@@ -4100,31 +4046,26 @@ export type {
   DateInputProps,
   DateSegmentProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles"
-        ],
-        "dependencies": [
-          "@react-stately/utils",
-          "react-aria"
-        ]
-      }
-    }
-  },
-  {
-    "name": "kbd",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/kbd/basic.tsx",
-            "target": "ui/kbd.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles"],
+				dependencies: ["@react-stately/utils", "react-aria"],
+			},
+		},
+	},
+	{
+		name: "kbd",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/kbd/basic.tsx",
+						target: "ui/kbd.tsx",
+						content: `"use client";
 
 import { Keyboard as AriaKeyboard } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -4161,24 +4102,24 @@ const Kbd = ({ className, ...props }: KbdProps) => {
 
 export { KbdGroup, Kbd };
 export type { KbdProps, KbdGroupProps };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "link",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/link/basic.tsx",
-            "target": "ui/link.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "link",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/link/basic.tsx",
+						target: "ui/link.tsx",
+						content: `"use client";
 
 import { Link as AriaLink, composeRenderProps } from "react-aria-components";
 import { tv } from "tailwind-variants";
@@ -4217,27 +4158,25 @@ const Link = ({ variant, ...props }: LinkProps) => {
 
 export type { LinkProps };
 export { Link, linkVariants };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "list-box",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/list-box/basic.tsx",
-            "target": "ui/list-box.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles"],
+			},
+		},
+	},
+	{
+		name: "list-box",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/list-box/basic.tsx",
+						target: "ui/list-box.tsx",
+						content: `"use client";
 
 import React from "react";
 import { CheckIcon } from "lucide-react";
@@ -4444,28 +4383,25 @@ export type {
   ListBoxSectionHeaderProps,
   ListBoxVirtualizerProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "text",
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "loader",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/loader/basic.tsx",
-            "target": "ui/loader.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["text", "focus-styles"],
+			},
+		},
+	},
+	{
+		name: "loader",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/loader/basic.tsx",
+						target: "ui/loader.tsx",
+						content: `"use client";
 
 import {
   ProgressBar as AriaProgressBar,
@@ -4544,17 +4480,17 @@ function Loader({
 
 export type { LoaderProps };
 export { Loader };
-`
-          }
-        ]
-      },
-      "ring": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/loader/ring.tsx",
-            "target": "ui/loader.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+			ring: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/loader/ring.tsx",
+						target: "ui/loader.tsx",
+						content: `"use client";
 
 import {
   ProgressBar as AriaProgressBar,
@@ -4633,24 +4569,24 @@ function Loader({
 
 export type { LoaderProps };
 export { Loader };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "menu",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/menu/basic.tsx",
-            "target": "ui/menu.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "menu",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/menu/basic.tsx",
+						target: "ui/menu.tsx",
+						content: `"use client";
 
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import {
@@ -4823,29 +4759,25 @@ export type {
   MenuSectionHeaderProps,
   MenuSubProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "kbd",
-          "overlay",
-          "text"
-        ]
-      }
-    }
-  },
-  {
-    "name": "modal",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/modal/basic.tsx",
-            "target": "ui/modal.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["kbd", "overlay", "text"],
+			},
+		},
+	},
+	{
+		name: "modal",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/modal/basic.tsx",
+						target: "ui/modal.tsx",
+						content: `"use client";
 
 import {
   Modal as AriaModal,
@@ -4933,24 +4865,24 @@ export type {
   ModalContentProps,
   ModalBackdropProps,
 };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "number-field",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/number-field/basic.tsx",
-            "target": "ui/number-field.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "number-field",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/number-field/basic.tsx",
+						target: "ui/number-field.tsx",
+						content: `"use client";
 
 import { MinusIcon, PlusIcon } from "lucide-react";
 import {
@@ -5006,29 +4938,25 @@ const NumberFieldInner = ({ children }: { children: React.ReactNode }) => {
 
 export type { NumberFieldProps };
 export { NumberField };
-`
-          }
-        ],
-        "registryDependencies": [
-          "input",
-          "field",
-          "use-is-mobile"
-        ]
-      }
-    }
-  },
-  {
-    "name": "overlay",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/overlay/basic.tsx",
-            "target": "ui/overlay.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["input", "field", "use-is-mobile"],
+			},
+		},
+	},
+	{
+		name: "overlay",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/overlay/basic.tsx",
+						target: "ui/overlay.tsx",
+						content: `"use client";
 
 import { useIsMobile } from "@dotui/registry/hooks/use-mobile";
 import { Drawer } from "@dotui/registry/ui/drawer";
@@ -5081,30 +5009,25 @@ function Overlay({
 
 export type { OverlayProps };
 export { Overlay };
-`
-          }
-        ],
-        "registryDependencies": [
-          "modal",
-          "popover",
-          "drawer",
-          "use-is-mobile"
-        ]
-      }
-    }
-  },
-  {
-    "name": "popover",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/popover/basic.tsx",
-            "target": "ui/popover.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["modal", "popover", "drawer", "use-is-mobile"],
+			},
+		},
+	},
+	{
+		name: "popover",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/popover/basic.tsx",
+						target: "ui/popover.tsx",
+						content: `"use client";
 
 import {
   OverlayArrow as AriaOverlayArrow,
@@ -5175,24 +5098,24 @@ function PopoverArrow({ className, ...props }: PopoverArrowProps) {
 
 export type { PopoverProps };
 export { Popover };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "progress-bar",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/progress-bar/basic.tsx",
-            "target": "ui/progress-bar.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "progress-bar",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/progress-bar/basic.tsx",
+						target: "ui/progress-bar.tsx",
+						content: `"use client";
 
 import {
   ProgressBar as AriaProgress,
@@ -5345,27 +5268,25 @@ export type {
   ProgressBarControlProps,
   ProgressBarValueLabelProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field"
-        ]
-      }
-    }
-  },
-  {
-    "name": "radio-group",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/radio-group/basic.tsx",
-            "target": "ui/radio-group.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field"],
+			},
+		},
+	},
+	{
+		name: "radio-group",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/radio-group/basic.tsx",
+						target: "ui/radio-group.tsx",
+						content: `"use client";
 
 import {
   Radio as AriaRadio,
@@ -5478,28 +5399,25 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 export { RadioGroup, Radio, RadioIndicator };
 
 export type { RadioGroupProps, RadioProps, RadioIndicatorProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles",
-          "field"
-        ]
-      }
-    }
-  },
-  {
-    "name": "search-field",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/search-field/basic.tsx",
-            "target": "ui/search-field.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles", "field"],
+			},
+		},
+	},
+	{
+		name: "search-field",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/search-field/basic.tsx",
+						target: "ui/search-field.tsx",
+						content: `"use client";
 
 import {
   SearchField as AriaSearchField,
@@ -5537,28 +5455,25 @@ const SearchField = ({ className, ...props }: SearchFieldProps) => {
 export { SearchField };
 
 export type { SearchFieldProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "button"
-        ]
-      }
-    }
-  },
-  {
-    "name": "select",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/select/basic.tsx",
-            "target": "ui/select.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "button"],
+			},
+		},
+	},
+	{
+		name: "select",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/select/basic.tsx",
+						target: "ui/select.tsx",
+						content: `"use client";
 
 import { ChevronDownIcon } from "lucide-react";
 import {
@@ -5712,30 +5627,25 @@ export {
 };
 
 export type { SelectProps, SelectValueProps, SelectContentProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "button",
-          "field",
-          "list-box",
-          "popover"
-        ]
-      }
-    }
-  },
-  {
-    "name": "separator",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/separator/basic.tsx",
-            "target": "ui/separator.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["button", "field", "list-box", "popover"],
+			},
+		},
+	},
+	{
+		name: "separator",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/separator/basic.tsx",
+						target: "ui/separator.tsx",
+						content: `"use client";
 
 import {
   Separator as AriaSeparator,
@@ -5777,24 +5687,24 @@ const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
 
 export { Separator };
 export type { SeparatorProps };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "skeleton",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/skeleton/basic.tsx",
-            "target": "ui/skeleton.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "skeleton",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/skeleton/basic.tsx",
+						target: "ui/skeleton.tsx",
+						content: `"use client";
 
 import { createContext, useContext } from "react";
 
@@ -5847,24 +5757,24 @@ export function Skeleton({ className, show = true, ...props }: SkeletonProps) {
     />
   );
 }
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "slider",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/slider/basic.tsx",
-            "target": "ui/slider.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "slider",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/slider/basic.tsx",
+						target: "ui/slider.tsx",
+						content: `"use client";
 
 import { use } from "react";
 import { useSlotId } from "@react-aria/utils";
@@ -6071,31 +5981,26 @@ export type {
   SliderThumbProps,
   SliderOutputProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "focus-styles"
-        ],
-        "dependencies": [
-          "react-aria"
-        ]
-      }
-    }
-  },
-  {
-    "name": "switch",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/switch/basic.tsx",
-            "target": "ui/switch.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "focus-styles"],
+				dependencies: ["react-aria"],
+			},
+		},
+	},
+	{
+		name: "switch",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/switch/basic.tsx",
+						target: "ui/switch.tsx",
+						content: `"use client";
 
 import {
   Switch as AriaSwitch,
@@ -6237,27 +6142,25 @@ const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
 
 export type { SwitchProps, SwitchIndicatorProps, SwitchThumbProps };
 export { Switch, SwitchIndicator, SwitchThumb };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "table",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/table/basic.tsx",
-            "target": "ui/table.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles"],
+			},
+		},
+	},
+	{
+		name: "table",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/table/basic.tsx",
+						target: "ui/table.tsx",
+						content: `"use client";
 
 import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
 import {
@@ -6538,28 +6441,25 @@ export type {
   TableCellProps,
   TableLoadMoreProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "checkbox",
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "tabs",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/tabs/basic.tsx",
-            "target": "ui/tabs.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["checkbox", "focus-styles"],
+			},
+		},
+	},
+	{
+		name: "tabs",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/tabs/basic.tsx",
+						target: "ui/tabs.tsx",
+						content: `"use client";
 
 import {
   SelectionIndicator as AriaSelectionIndicator,
@@ -6706,27 +6606,25 @@ export type {
   TabPanelProps,
   TabIndicatorProps,
 };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "tag-group",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/tag-group/basic.tsx",
-            "target": "ui/tag-group.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles"],
+			},
+		},
+	},
+	{
+		name: "tag-group",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/tag-group/basic.tsx",
+						target: "ui/tag-group.tsx",
+						content: `"use client";
 
 import { XIcon } from "lucide-react";
 import {
@@ -6815,29 +6713,25 @@ function Tag({ className, ...props }: TagProps) {
 export { TagGroup, TagList, Tag };
 
 export type { TagProps, TagGroupProps, TagListProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "button",
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "text-field",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/text-field/basic.tsx",
-            "target": "ui/text-field.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "button", "focus-styles"],
+			},
+		},
+	},
+	{
+		name: "text-field",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/text-field/basic.tsx",
+						target: "ui/text-field.tsx",
+						content: `"use client";
 
 import {
   TextField as AriaTextField,
@@ -6878,28 +6772,25 @@ const TextField = ({ className, ...props }: TextFieldProps) => {
 export { TextField };
 
 export type { TextFieldProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "input"
-        ]
-      }
-    }
-  },
-  {
-    "name": "text",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/text/basic.tsx",
-            "target": "ui/text.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "input"],
+			},
+		},
+	},
+	{
+		name: "text",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/text/basic.tsx",
+						target: "ui/text.tsx",
+						content: `"use client";
 
 import { Text as AriaText } from "react-aria-components";
 import type { TextProps as AriaTextProps } from "react-aria-components";
@@ -6916,24 +6807,24 @@ const Text = ({ children, ...props }: TextProps) => {
 
 export type { TextProps };
 export { Text };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "time-field",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/time-field/basic.tsx",
-            "target": "ui/time-field.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "time-field",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/time-field/basic.tsx",
+						target: "ui/time-field.tsx",
+						content: `"use client";
 
 import {
   TimeField as AriaTimeField,
@@ -6974,28 +6865,25 @@ const TimeField = <T extends TimeValue>({
 
 export type { TimeFieldProps };
 export { TimeField };
-`
-          }
-        ],
-        "registryDependencies": [
-          "field",
-          "input"
-        ]
-      }
-    }
-  },
-  {
-    "name": "toast",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/toast/basic.tsx",
-            "target": "ui/toast.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["field", "input"],
+			},
+		},
+	},
+	{
+		name: "toast",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/toast/basic.tsx",
+						target: "ui/toast.tsx",
+						content: `"use client";
 
 import {
   UNSTABLE_Toast as AriaToast,
@@ -7105,24 +6993,24 @@ function Toast({ className, ...props }: ToastProps) {
 }
 
 export { Toaster, queue as toast };
-`
-          }
-        ]
-      }
-    }
-  },
-  {
-    "name": "toggle-button-group",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/toggle-button-group/basic.tsx",
-            "target": "ui/toggle-button-group.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+			},
+		},
+	},
+	{
+		name: "toggle-button-group",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/toggle-button-group/basic.tsx",
+						target: "ui/toggle-button-group.tsx",
+						content: `"use client";
 
 import {
   ToggleButtonGroup as AriaToggleButtonGroup,
@@ -7192,27 +7080,25 @@ const ToggleButtonGroup = ({
 
 export type { ToggleButtonGroupProps };
 export { ToggleButtonGroup };
-`
-          }
-        ],
-        "registryDependencies": [
-          "toggle-button"
-        ]
-      }
-    }
-  },
-  {
-    "name": "toggle-button",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/toggle-button/basic.tsx",
-            "target": "ui/toggle-button.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["toggle-button"],
+			},
+		},
+	},
+	{
+		name: "toggle-button",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/toggle-button/basic.tsx",
+						target: "ui/toggle-button.tsx",
+						content: `"use client";
 
 import {
   ToggleButton as AriaToggleButton,
@@ -7315,27 +7201,25 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 export { ToggleButton, ToggleButtonProvider, toggleButtonStyles };
 
 export type { ToggleButtonProps };
-`
-          }
-        ],
-        "registryDependencies": [
-          "focus-styles"
-        ]
-      }
-    }
-  },
-  {
-    "name": "tooltip",
-    "type": "registry:ui",
-    "defaultVariant": "basic",
-    "variants": {
-      "basic": {
-        "files": [
-          {
-            "type": "registry:ui",
-            "path": "ui/tooltip/basic.tsx",
-            "target": "ui/tooltip.tsx",
-            "content": `"use client";
+`,
+					},
+				],
+				registryDependencies: ["focus-styles"],
+			},
+		},
+	},
+	{
+		name: "tooltip",
+		type: "registry:ui",
+		defaultVariant: "basic",
+		variants: {
+			basic: {
+				files: [
+					{
+						type: "registry:ui",
+						path: "ui/tooltip/basic.tsx",
+						target: "ui/tooltip.tsx",
+						content: `"use client";
 
 import {
   OverlayArrow as AriaOverlayArrow,
@@ -7426,10 +7310,10 @@ function TooltipArrow({ className }: TooltipArrowProps) {
 export { Tooltip, TooltipContent };
 
 export type { TooltipProps, TooltipContentProps };
-`
-          }
-        ]
-      }
-    }
-  }
+`,
+					},
+				],
+			},
+		},
+	},
 ] as const;

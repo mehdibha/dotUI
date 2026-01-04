@@ -44,6 +44,9 @@
 	"scripts": {
 		"build": "tsx scripts/build.ts",
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"format": "biome format --write",
+		"lint": "biome lint --write",
+		"check": "biome check",
 		"test": "vitest run",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
 	},

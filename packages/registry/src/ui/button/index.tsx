@@ -15,5 +15,4 @@ export const LinkButton = createDynamicComponent<LinkButtonProps>("link", "LinkB
 	ripple: React.lazy(() => import("./ripple").then((mod) => ({ default: mod.LinkButton }))),
 });
 
-
 export type { ButtonProps, LinkButtonProps };

@@ -4,21 +4,21 @@ import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
 import { Popover } from "@dotui/registry/ui/popover";
 
 export default function Demo() {
-  return (
-    <Menu>
-      <Button>
-        <MenuIcon />
-      </Button>
-      <Popover>
-        <MenuContent>
-          <MenuItem>Account settings</MenuItem>
-          <MenuItem isDisabled>
-            <PlusSquareIcon />
-            Create team
-          </MenuItem>
-          <MenuItem>Log out</MenuItem>
-        </MenuContent>
-      </Popover>
-    </Menu>
-  );
+	return (
+		<Menu>
+			<Button>
+				<MenuIcon />
+			</Button>
+			<Popover>
+				<MenuContent>
+					<MenuItem>Account settings</MenuItem>
+					<MenuItem isDisabled>
+						<PlusSquareIcon />
+						Create team
+					</MenuItem>
+					<MenuItem>Log out</MenuItem>
+				</MenuContent>
+			</Popover>
+		</Menu>
+	);
 }

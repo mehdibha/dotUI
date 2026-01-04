@@ -1,7 +1,4 @@
-import type {
-  Radio as AriaRadio,
-  RadioGroupProps as AriaRadioGroupProps,
-} from "react-aria-components";
+import type { Radio as AriaRadio, RadioGroupProps as AriaRadioGroupProps } from "react-aria-components";
 
 /**
  * A radio group allows a user to select a single item from a list of mutually exclusive options.

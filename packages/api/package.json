@@ -1,25 +1,29 @@
 {
-  "name": "@dotui/api",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts"
-  },
-  "license": "MIT",
-  "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
-  },
-  "dependencies": {
-    "@dotui/auth": "workspace:*",
-    "@dotui/db": "workspace:*",
-    "@trpc/server": "^11.2.0",
-    "superjson": "2.2.3",
-    "zod": "^4.2.1"
-  },
-  "devDependencies": {
-    "@dotui/ts-config": "workspace:*",
-    "typescript": "^5.8.3"
-  }
+	"name": "@dotui/api",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"license": "MIT",
+	"scripts": {
+		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"format": "biome format --write",
+		"lint": "biome lint --write",
+		"check": "biome check",
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
+	},
+	"dependencies": {
+		"@dotui/auth": "workspace:*",
+		"@dotui/db": "workspace:*",
+		"@trpc/server": "^11.2.0",
+		"superjson": "2.2.3",
+		"zod": "^4.2.1"
+	},
+	"devDependencies": {
+		"@dotui/biome-config": "workspace:*",
+		"@dotui/ts-config": "workspace:*",
+		"typescript": "^5.8.3"
+	}
 }

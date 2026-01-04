@@ -5,11 +5,11 @@ import { useResizeObserver } from "@react-aria/utils";
 import { ChevronDownIcon } from "lucide-react";
 import { mergeProps } from "react-aria";
 import {
-  ComboBox as AriaCombobox,
-  GroupContext as AriaGroupContext,
-  PopoverContext as AriaPopoverContext,
-  composeRenderProps,
-  Provider,
+	ComboBox as AriaCombobox,
+	GroupContext as AriaGroupContext,
+	PopoverContext as AriaPopoverContext,
+	composeRenderProps,
+	Provider,
 } from "react-aria-components";
 import type { ComboBoxProps as AriaComboboxProps } from "react-aria-components";
 
@@ -18,11 +18,11 @@ import { Button } from "@dotui/registry/ui/button";
 import { fieldStyles } from "@dotui/registry/ui/field";
 import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
 import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-  ListBoxSectionHeader,
-  ListBoxVirtualizer,
+	ListBox,
+	ListBoxItem,
+	ListBoxSection,
+	ListBoxSectionHeader,
+	ListBoxVirtualizer,
 } from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
 import type { InputGroupProps } from "@dotui/registry/ui/input";
@@ -31,28 +31,23 @@ import type { PopoverProps } from "@dotui/registry/ui/popover";
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface ComboboxProps<T extends object>
-  extends Omit<AriaComboboxProps<T>, "className"> {
-  className?: string;
+interface ComboboxProps<T extends object> extends Omit<AriaComboboxProps<T>, "className"> {
+	className?: string;
 }
-const Combobox = <T extends object>({
-  menuTrigger = "focus",
-  className,
-  ...props
-}: ComboboxProps<T>) => {
-  return (
-    <AriaCombobox
-      menuTrigger={menuTrigger}
-      className={fieldStyles().field({
-        className: cn(className),
-      })}
-      {...props}
-    >
-      {composeRenderProps(props.children, (children) => (
-        <ComboboxInner>{children}</ComboboxInner>
-      ))}
-    </AriaCombobox>
-  );
+const Combobox = <T extends object>({ menuTrigger = "focus", className, ...props }: ComboboxProps<T>) => {
+	return (
+		<AriaCombobox
+			menuTrigger={menuTrigger}
+			className={fieldStyles().field({
+				className: cn(className),
+			})}
+			{...props}
+		>
+			{composeRenderProps(props.children, (children) => (
+				<ComboboxInner>{children}</ComboboxInner>
+			))}
+		</AriaCombobox>
+	);
 };
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -63,120 +58,115 @@ const Combobox = <T extends object>({
  */
 
 const ComboboxInner = ({ children }: { children: React.ReactNode }) => {
-  const [menuWidth, setMenuWidth] = React.useState<string | undefined>(
-    undefined,
-  );
+	const [menuWidth, setMenuWidth] = React.useState<string | undefined>(undefined);
 
-  const groupProps = React.use(AriaGroupContext);
-  const popoverProps = React.use(AriaPopoverContext);
-  const triggerRef = React.useRef<HTMLDivElement>(null);
+	const groupProps = React.use(AriaGroupContext);
+	const popoverProps = React.use(AriaPopoverContext);
+	const triggerRef = React.useRef<HTMLDivElement>(null);
 
-  const onResize = React.useCallback(() => {
-    if (triggerRef.current) {
-      const triggerWidth = triggerRef.current.getBoundingClientRect().width;
-      setMenuWidth(`${triggerWidth}px`);
-    }
-  }, []);
+	const onResize = React.useCallback(() => {
+		if (triggerRef.current) {
+			const triggerWidth = triggerRef.current.getBoundingClientRect().width;
+			setMenuWidth(`${triggerWidth}px`);
+		}
+	}, []);
 
-  useResizeObserver({
-    ref: triggerRef,
-    onResize: onResize,
-  });
+	useResizeObserver({
+		ref: triggerRef,
+		onResize: onResize,
+	});
 
-  return (
-    <Provider
-      values={[
-        [AriaGroupContext, mergeProps(groupProps, { ref: triggerRef })],
-        [
-          AriaPopoverContext,
-          triggerRef.current
-            ? {
-                ...mergeProps(popoverProps, {
-                  style: {
-                    "--trigger-width": menuWidth,
-                  } as React.CSSProperties,
-                }),
-                triggerRef,
-              }
-            : popoverProps,
-        ],
-      ]}
-    >
-      {children}
-    </Provider>
-  );
+	return (
+		<Provider
+			values={[
+				[AriaGroupContext, mergeProps(groupProps, { ref: triggerRef })],
+				[
+					AriaPopoverContext,
+					triggerRef.current
+						? {
+								...mergeProps(popoverProps, {
+									style: {
+										"--trigger-width": menuWidth,
+									} as React.CSSProperties,
+								}),
+								triggerRef,
+							}
+						: popoverProps,
+				],
+			]}
+		>
+			{children}
+		</Provider>
+	);
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
 interface ComboboxInputProps extends InputGroupProps {
-  placeholder?: string;
+	placeholder?: string;
 }
 
 const ComboboxInput = ({ placeholder, ...props }: ComboboxInputProps) => {
-  return (
-    <InputGroup {...props}>
-      <Input placeholder={placeholder} />
-      <InputAddon>
-        <Button variant="quiet">
-          <ChevronDownIcon />
-        </Button>
-      </InputAddon>
-    </InputGroup>
-  );
+	return (
+		<InputGroup {...props}>
+			<Input placeholder={placeholder} />
+			<InputAddon>
+				<Button variant="quiet">
+					<ChevronDownIcon />
+				</Button>
+			</InputAddon>
+		</InputGroup>
+	);
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
 interface ComboboxContentProps<T extends object>
-  extends ListBoxProps<T>,
-    Pick<
-      PopoverProps,
-      "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
-    > {
-  virtulized?: boolean;
+	extends ListBoxProps<T>,
+		Pick<PopoverProps, "placement" | "defaultOpen" | "isOpen" | "onOpenChange"> {
+	virtulized?: boolean;
 }
 
 const ComboboxContent = <T extends object>({
-  virtulized,
-  placement,
-  defaultOpen,
-  isOpen,
-  onOpenChange,
-  ...props
+	virtulized,
+	placement,
+	defaultOpen,
+	isOpen,
+	onOpenChange,
+	...props
 }: ComboboxContentProps<T>) => {
-  if (virtulized) {
-    return (
-      <Popover
-        placement={placement}
-        defaultOpen={defaultOpen}
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        className="w-auto overflow-hidden p-0"
-      >
-        <ListBoxVirtualizer>
-          <ListBox {...props} className="h-80 w-48 overflow-y-auto p-0" />
-        </ListBoxVirtualizer>
-      </Popover>
-    );
-  }
+	if (virtulized) {
+		return (
+			<Popover
+				placement={placement}
+				defaultOpen={defaultOpen}
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
+				className="w-auto overflow-hidden p-0"
+			>
+				<ListBoxVirtualizer>
+					<ListBox {...props} className="h-80 w-48 overflow-y-auto p-0" />
+				</ListBoxVirtualizer>
+			</Popover>
+		);
+	}
 
-  return (
-    <Popover placement={placement}>
-      <ListBox {...props} />
-    </Popover>
-  );
+	return (
+		<Popover placement={placement}>
+			<ListBox {...props} />
+		</Popover>
+	);
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
 export {
-  Combobox,
-  ComboboxInput,
-  ComboboxContent,
-  ListBoxItem as ComboboxItem,
-  ListBoxSection as ComboboxSection,
-  ListBoxSectionHeader as ComboboxSectionHeader,
+	Combobox,
+	ComboboxInput,
+	ComboboxContent,
+	ListBoxItem as ComboboxItem,
+	ListBoxSection as ComboboxSection,
+	ListBoxSectionHeader as ComboboxSectionHeader,
 };
 
 export type { ComboboxProps, ComboboxInputProps, ComboboxContentProps };

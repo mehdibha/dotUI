@@ -3,10 +3,10 @@ import { Input } from "@dotui/registry/ui/input";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 export default function Demo() {
-  return (
-    <TextField>
-      <Label>Email</Label>
-      <Input placeholder="hello@mehdibha.com" />
-    </TextField>
-  );
+	return (
+		<TextField>
+			<Label>Email</Label>
+			<Input placeholder="hello@mehdibha.com" />
+		</TextField>
+	);
 }

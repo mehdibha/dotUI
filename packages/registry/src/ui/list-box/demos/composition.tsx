@@ -2,26 +2,20 @@ import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 import { Text } from "@dotui/registry/ui/text";
 
 export default function Demo() {
-  return (
-    <ListBox aria-label="Framework" selectionMode="multiple" className="w-60">
-      <ListBoxItem textValue="Next.js">
-        <Text slot="label">Next.js</Text>
-        <Text slot="description">
-          React-based SSR and static site framework.
-        </Text>
-      </ListBoxItem>
-      <ListBoxItem textValue="Remix">
-        <Text slot="label">Remix</Text>
-        <Text slot="description">
-          Full-stack framework with efficient data loading.
-        </Text>
-      </ListBoxItem>
-      <ListBoxItem textValue="Astro">
-        <Text slot="label">Astro</Text>
-        <Text slot="description">
-          Lightweight static site builder for performance.
-        </Text>
-      </ListBoxItem>
-    </ListBox>
-  );
+	return (
+		<ListBox aria-label="Framework" selectionMode="multiple" className="w-60">
+			<ListBoxItem textValue="Next.js">
+				<Text slot="label">Next.js</Text>
+				<Text slot="description">React-based SSR and static site framework.</Text>
+			</ListBoxItem>
+			<ListBoxItem textValue="Remix">
+				<Text slot="label">Remix</Text>
+				<Text slot="description">Full-stack framework with efficient data loading.</Text>
+			</ListBoxItem>
+			<ListBoxItem textValue="Astro">
+				<Text slot="label">Astro</Text>
+				<Text slot="description">Lightweight static site builder for performance.</Text>
+			</ListBoxItem>
+		</ListBox>
+	);
 }

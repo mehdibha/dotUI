@@ -10,26 +10,26 @@ import { DateInput, InputAddon, InputGroup } from "@dotui/registry/ui/input";
 import { Overlay } from "@dotui/registry/ui/overlay";
 
 export default function Demo() {
-  return (
-    <DatePicker mode="range">
-      <Label>Meeting date</Label>
-      <InputGroup>
-        <DateInput slot="start" />
-        <span>–</span>
-        <DateInput slot="end" />
-        <InputAddon>
-          <Button variant="default" size="sm">
-            <CalendarIcon />
-          </Button>
-        </InputAddon>
-      </InputGroup>
-      <Description>Please select a date.</Description>
-      <FieldError />
-      <Overlay type="popover" mobileType="drawer">
-        <DialogContent>
-          <Calendar />
-        </DialogContent>
-      </Overlay>
-    </DatePicker>
-  );
+	return (
+		<DatePicker mode="range">
+			<Label>Meeting date</Label>
+			<InputGroup>
+				<DateInput slot="start" />
+				<span>–</span>
+				<DateInput slot="end" />
+				<InputAddon>
+					<Button variant="default" size="sm">
+						<CalendarIcon />
+					</Button>
+				</InputAddon>
+			</InputGroup>
+			<Description>Please select a date.</Description>
+			<FieldError />
+			<Overlay type="popover" mobileType="drawer">
+				<DialogContent>
+					<Calendar />
+				</DialogContent>
+			</Overlay>
+		</DatePicker>
+	);
 }

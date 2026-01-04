@@ -4,13 +4,13 @@ import { Input } from "@dotui/registry/ui/input";
 import { NumberField } from "@dotui/registry/ui/number-field";
 
 export default function Demo() {
-  return (
-    <NumberField aria-label="Width" defaultValue={80}>
-      <Group>
-        <Button slot="decrement" />
-        <Input />
-        <Button slot="increment" />
-      </Group>
-    </NumberField>
-  );
+	return (
+		<NumberField aria-label="Width" defaultValue={80}>
+			<Group>
+				<Button slot="decrement" />
+				<Input />
+				<Button slot="increment" />
+			</Group>
+		</NumberField>
+	);
 }

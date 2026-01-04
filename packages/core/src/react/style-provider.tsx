@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 
 import type { StyleConfig } from "@dotui/core/schemas/style";
+
 import { StyleContext } from "./context";
 
 export interface StyleProviderProps extends Omit<React.ComponentProps<"div">, "style"> {
@@ -22,13 +23,7 @@ export interface StyleProviderProps extends Omit<React.ComponentProps<"div">, "s
  * - Handle mode prop (light/dark)
  * - Handle unstyled prop
  */
-export function StyleProvider({
-	config,
-	mode: _mode,
-	unstyled: _unstyled,
-	children,
-	...props
-}: StyleProviderProps) {
+export function StyleProvider({ config, mode: _mode, unstyled: _unstyled, children, ...props }: StyleProviderProps) {
 	// TODO: Implement CSS vars generation and injection
 	void _mode;
 	void _unstyled;

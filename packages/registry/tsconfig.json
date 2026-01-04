@@ -1,15 +1,15 @@
 {
-  "extends": "@dotui/ts-config/base.json",
-  "compilerOptions": {
-    "lib": ["ES2022", "dom", "dom.iterable"],
-    "jsx": "preserve",
-    "jsxImportSource": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@dotui/registry/*": ["./src/*"],
-      "@dotui/core/*": ["../core/src/*"]
-    }
-  },
-  "include": ["src", "scripts"],
-  "exclude": ["node_modules"]
+	"extends": "@dotui/ts-config/base.json",
+	"compilerOptions": {
+		"lib": ["ES2022", "dom", "dom.iterable"],
+		"jsx": "preserve",
+		"jsxImportSource": "react",
+		"baseUrl": ".",
+		"paths": {
+			"@dotui/registry/*": ["./src/*"],
+			"@dotui/core/*": ["../core/src/*"]
+		}
+	},
+	"include": ["src", "scripts"],
+	"exclude": ["node_modules"]
 }

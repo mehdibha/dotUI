@@ -12,49 +12,49 @@ import { ToggleButton } from "@dotui/registry/ui/toggle-button";
 import { ToggleButtonGroup } from "@dotui/registry/ui/toggle-button-group";
 
 export default function Demo() {
-  const [inputValue, setInputValue] = React.useState("");
-  const insertEmoji = (emoji: string) => {
-    setInputValue(`${inputValue}${emoji}`);
-  };
-  return (
-    <TextField value={inputValue} onChange={setInputValue}>
-      <Label>Comment</Label>
-      <InputGroup>
-        <InputAddon>
-          <Group>
-            <Button
-              variant="quiet"
-              onPress={() => {
-                insertEmoji("👍");
-              }}
-            >
-              👍
-            </Button>
-            <Button
-              variant="quiet"
-              onPress={() => {
-                insertEmoji("❤️");
-              }}
-            >
-              ❤️
-            </Button>
-          </Group>
-        </InputAddon>
-        <TextArea placeholder="type something here" />
-        <InputAddon>
-          <Group className="justify-between">
-            <ToggleButtonGroup>
-              <ToggleButton>
-                <BoldIcon />
-              </ToggleButton>
-              <ToggleButton>
-                <ItalicIcon />
-              </ToggleButton>
-            </ToggleButtonGroup>
-            <Button variant="primary">Comment</Button>
-          </Group>
-        </InputAddon>
-      </InputGroup>
-    </TextField>
-  );
+	const [inputValue, setInputValue] = React.useState("");
+	const insertEmoji = (emoji: string) => {
+		setInputValue(`${inputValue}${emoji}`);
+	};
+	return (
+		<TextField value={inputValue} onChange={setInputValue}>
+			<Label>Comment</Label>
+			<InputGroup>
+				<InputAddon>
+					<Group>
+						<Button
+							variant="quiet"
+							onPress={() => {
+								insertEmoji("👍");
+							}}
+						>
+							👍
+						</Button>
+						<Button
+							variant="quiet"
+							onPress={() => {
+								insertEmoji("❤️");
+							}}
+						>
+							❤️
+						</Button>
+					</Group>
+				</InputAddon>
+				<TextArea placeholder="type something here" />
+				<InputAddon>
+					<Group className="justify-between">
+						<ToggleButtonGroup>
+							<ToggleButton>
+								<BoldIcon />
+							</ToggleButton>
+							<ToggleButton>
+								<ItalicIcon />
+							</ToggleButton>
+						</ToggleButtonGroup>
+						<Button variant="primary">Comment</Button>
+					</Group>
+				</InputAddon>
+			</InputGroup>
+		</TextField>
+	);
 }

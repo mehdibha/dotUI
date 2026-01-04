@@ -10,61 +10,61 @@ import { generateRegistry } from "./generators/registry";
 import { generateRegistryTheme } from "./generators/theme";
 
 export {
-  generateRegistry,
-  generateRegistryAll,
-  generateRegistryBase,
-  generateRegistryTheme,
-  generateShadcnItem,
+	generateRegistry,
+	generateRegistryAll,
+	generateRegistryBase,
+	generateRegistryTheme,
+	generateShadcnItem,
 } from "./generators";
 export {
-  generateThemeJson,
-  transformItemJson,
-  updateFiles,
-  updateRegistryDependencies,
+	generateThemeJson,
+	transformItemJson,
+	updateFiles,
+	updateRegistryDependencies,
 } from "./transform";
-export type { TransformOptions } from "./transform";
 export {
-  applyTransforms,
-  applyTransformsWithTracking,
-  createIconTransform,
-  createImportTransform,
-  transformIcons,
-  transformImports,
+	applyTransforms,
+	applyTransformsWithTracking,
+	createIconTransform,
+	createImportTransform,
+	transformIcons,
+	transformImports,
 } from "./transforms";
+export type { TransformOptions } from "./transform";
 export type {
-  Transform,
-  TransformContext,
-  TransformResult,
+	Transform,
+	TransformContext,
+	TransformResult,
 } from "./transforms";
 
 /**
  * Build a shadcn-compatible registry item
  */
 export async function buildShadcnItem(
-  registryItemName: string,
-  options: {
-    styleName: string;
-    registryBasePath: string;
-    baseUrl: string;
-    config: StyleConfig;
-    colorFormat?: ColorFormat;
-  },
+	registryItemName: string,
+	options: {
+		styleName: string;
+		registryBasePath: string;
+		baseUrl: string;
+		config: StyleConfig;
+		colorFormat?: ColorFormat;
+	},
 ): Promise<Registry | RegistryItem | null> {
-  if (registryItemName === "registry") {
-    return generateRegistry(options);
-  }
+	if (registryItemName === "registry") {
+		return generateRegistry(options);
+	}
 
-  if (registryItemName === "base") {
-    return generateRegistryBase(options);
-  }
+	if (registryItemName === "base") {
+		return generateRegistryBase(options);
+	}
 
-  if (registryItemName === "theme") {
-    return generateRegistryTheme(options);
-  }
+	if (registryItemName === "theme") {
+		return generateRegistryTheme(options);
+	}
 
-  if (registryItemName === "all") {
-    return generateRegistryAll(options);
-  }
+	if (registryItemName === "all") {
+		return generateRegistryAll(options);
+	}
 
-  return generateShadcnItem(registryItemName, options);
+	return generateShadcnItem(registryItemName, options);
 }

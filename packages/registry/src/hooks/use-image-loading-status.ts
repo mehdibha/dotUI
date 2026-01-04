@@ -8,47 +8,46 @@ import * as React from "react";
 export type ImageLoadingStatus = "idle" | "loading" | "loaded" | "error";
 
 interface UseImageLoadingStatusOptions {
-  referrerPolicy?: React.HTMLAttributeReferrerPolicy;
-  crossOrigin?: React.ImgHTMLAttributes<HTMLImageElement>["crossOrigin"];
+	referrerPolicy?: React.HTMLAttributeReferrerPolicy;
+	crossOrigin?: React.ImgHTMLAttributes<HTMLImageElement>["crossOrigin"];
 }
 
 export function useImageLoadingStatus(
-  src: string | undefined,
-  { referrerPolicy, crossOrigin }: UseImageLoadingStatusOptions,
+	src: string | undefined,
+	{ referrerPolicy, crossOrigin }: UseImageLoadingStatusOptions,
 ): ImageLoadingStatus {
-  const [loadingStatus, setLoadingStatus] =
-    React.useState<ImageLoadingStatus>("idle");
+	const [loadingStatus, setLoadingStatus] = React.useState<ImageLoadingStatus>("idle");
 
-  React.useLayoutEffect(() => {
-    if (!src) {
-      setLoadingStatus("error");
-      return;
-    }
+	React.useLayoutEffect(() => {
+		if (!src) {
+			setLoadingStatus("error");
+			return;
+		}
 
-    let isMounted = true;
-    const image = new window.Image();
+		let isMounted = true;
+		const image = new window.Image();
 
-    const updateStatus = (status: ImageLoadingStatus) => () => {
-      if (!isMounted) {
-        return;
-      }
+		const updateStatus = (status: ImageLoadingStatus) => () => {
+			if (!isMounted) {
+				return;
+			}
 
-      setLoadingStatus(status);
-    };
+			setLoadingStatus(status);
+		};
 
-    setLoadingStatus("loading");
-    image.onload = updateStatus("loaded");
-    image.onerror = updateStatus("error");
-    if (referrerPolicy) {
-      image.referrerPolicy = referrerPolicy;
-    }
-    image.crossOrigin = crossOrigin ?? null;
-    image.src = src;
+		setLoadingStatus("loading");
+		image.onload = updateStatus("loaded");
+		image.onerror = updateStatus("error");
+		if (referrerPolicy) {
+			image.referrerPolicy = referrerPolicy;
+		}
+		image.crossOrigin = crossOrigin ?? null;
+		image.src = src;
 
-    return () => {
-      isMounted = false;
-    };
-  }, [src, crossOrigin, referrerPolicy]);
+		return () => {
+			isMounted = false;
+		};
+	}, [src, crossOrigin, referrerPolicy]);
 
-  return loadingStatus;
+	return loadingStatus;
 }
