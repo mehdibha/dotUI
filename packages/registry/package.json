@@ -42,7 +42,7 @@
 		"./__generated__/icons": "./src/__generated__/icons.tsx"
 	},
 	"scripts": {
-		"build": "tsx scripts/build.ts && biome format --write src/__generated__ src/icons ../core/src/__registry__",
+		"build": "tsx scripts/build.ts && biome check --write src/__generated__ src/icons ../core/src/__registry__",
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
 		"test": "vitest run",
 		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
