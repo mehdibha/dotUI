@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@dotui/registry/lib/utils";
+
 import { ComponentCard } from "./component-card";
 import type { ComponentCategory } from "./components-data";
 

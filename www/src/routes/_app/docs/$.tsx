@@ -16,8 +16,8 @@ import { truncateOnWord } from "@/lib/text";
 import { DocsCopyPage } from "@/modules/docs/docs-copy-page";
 import { DocsPager } from "@/modules/docs/docs-pager";
 import { PageLastUpdate } from "@/modules/docs/last-update";
-import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { mdxComponents } from "@/modules/docs/mdx-components";
+import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
 
 export const Route = createFileRoute("/_app/docs/$")({

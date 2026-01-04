@@ -1,8 +1,8 @@
 import * as React from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 
-import type { TransformedProp, TransformedPropsData, TransformedReference } from "@/modules/references/transform";
 import { Type, TypeRendererProvider } from "@/modules/references/components/type-renderer";
+import type { TransformedProp, TransformedPropsData, TransformedReference } from "@/modules/references/transform";
 
 const GRID_LAYOUT = "grid grid-cols-[minmax(120px,1fr)_1fr_2.5rem] md:grid-cols-[5fr_7fr_4.5fr_2.5rem]";
 

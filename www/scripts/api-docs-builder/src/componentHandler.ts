@@ -4,6 +4,8 @@ import * as prettier from "prettier";
 import ts from "typescript";
 import * as tae from "typescript-api-extractor";
 
+import type { TLink, TType } from "@/modules/references/types/type-ast";
+
 import { ALWAYS_EXPAND_TYPES, REACT_ARIA_EVENT_ORDER, RESOLVABLE_TYPE_PATTERNS, SKIP_RESOLVE_TYPES } from "./config";
 import {
 	buildTypeAstFromString,
@@ -12,7 +14,6 @@ import {
 	parseSimpleType,
 	typeToAst,
 } from "./type-to-ast";
-import type { TLink, TType } from "@/modules/references/types/type-ast";
 
 /**
  * HTML element names that can be extended via React.ComponentProps<"element">

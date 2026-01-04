@@ -2,9 +2,9 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import browserCollections from "@/.source/browser";
-import { siteConfig } from "@/config/site";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { siteConfig } from "@/config/site";
 import { legalSource } from "@/lib/source";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";

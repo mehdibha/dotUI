@@ -5,16 +5,16 @@
 
 import type { HighlighterGeneric } from "shiki";
 
-import type { PropDefinition, TType } from "../../references/types";
 import { loadApiReference } from "../../references/loader";
+import type { PropDefinition, TType } from "../../references/types";
 import type {
+	BooleanControl,
 	Control,
 	ControlInput,
-	BooleanControl,
-	StringControl,
-	NumberControl,
 	EnumControl,
+	NumberControl,
 	SerializableControl,
+	StringControl,
 } from "./types";
 
 // ============================================================================

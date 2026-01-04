@@ -1,7 +1,9 @@
 "use client";
 
 import { Link } from "@tanstack/react-router";
+
 import { cn } from "@dotui/registry/lib/utils";
+
 import { componentDemos } from "./demos";
 
 function ComponentPreview({ children, className }: { children: React.ReactNode; className?: string }) {

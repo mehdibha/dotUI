@@ -145,9 +145,8 @@ export function createContrastTheme(input: CreateThemeInput): CreateThemeOutput 
 	return result;
 }
 
-// Re-export types
-export type { Colorspace, ContrastFormula } from "./types";
-
 // New modes/palettes API (matches Material)
 export { createContrastThemeOptionsSchema } from "./schema";
 export type { CreateContrastThemeOptions } from "./theme";
+// Re-export types
+export type { Colorspace, ContrastFormula } from "./types";

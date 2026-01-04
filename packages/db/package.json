@@ -11,9 +11,6 @@
 	"license": "MIT",
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
-		"format": "biome format --write",
-		"lint": "biome lint --write",
-		"check": "biome check",
 		"push": "pnpm with-env drizzle-kit push",
 		"generate": "pnpm with-env drizzle-kit generate",
 		"migrate": "pnpm with-env drizzle-kit migrate",

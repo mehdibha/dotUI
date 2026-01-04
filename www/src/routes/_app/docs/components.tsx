@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { siteConfig } from "@/config/site";
+import { componentsData, tocData } from "@/modules/docs/components-list/components-data";
+import { ComponentsList } from "@/modules/docs/components-list/components-list";
 import { PageHeader, PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
-import { ComponentsList } from "@/modules/docs/components-list/components-list";
-import { componentsData, tocData } from "@/modules/docs/components-list/components-data";
 
 const title = "Components";
 const description = "Browse all available components in the library.";

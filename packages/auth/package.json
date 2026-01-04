@@ -12,9 +12,6 @@
 	"license": "MIT",
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
-		"format": "biome format --write",
-		"lint": "biome lint --write",
-		"check": "biome check",
 		"generate": "dotenv -e ../../.env -- pnpx @better-auth/cli generate --config ./src/index.ts --output ../db/src/auth-schema.ts",
 		"typecheck": "tsc --noEmit"
 	},

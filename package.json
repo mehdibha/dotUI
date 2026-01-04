@@ -1,58 +1,58 @@
 {
-  "name": "dotui-monorepo",
-  "version": "0.0.0",
-  "private": true,
-  "license": "MIT",
-  "type": "module",
-  "author": {
-    "name": "mehdibha",
-    "url": "https://x.com/mehdibha"
-  },
-  "keywords": [
-    "dotui",
-    "next.js",
-    "react-aria",
-    "tailwind",
-    "typescript"
-  ],
-  "engines": {
-    "node": "^24.11.1",
-    "pnpm": "^10.24.0"
-  },
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "dev:www": "pnpm --filter=www dev",
-    "build:www": "pnpm --filter=www build",
-    "build:registry": "pnpm --filter=@dotui/registry build",
-    "preview:www": "pnpm --filter=www preview",
-    "dev:registry": "chokidar 'packages/registry/src/ui/**/meta.ts' -c 'pnpm build:registry'",
-    "build:references": "pnpm --filter=www build:references",
-    "clean": "git clean -xdf node_modules",
-    "clean:workspaces": "turbo run clean",
-    "format": "turbo run format",
-    "lint": "turbo run lint",
-    "check": "turbo run check",
-    "lint:ws": "pnpm dlx sherif@latest",
-    "postinstall": "pnpm lint:ws",
-    "typecheck": "turbo run typecheck",
-    "test": "vitest run",
-    "release": "changeset version",
-    "pub:beta": "pnpm --filter=tailwindcss-autocontrast pub:beta",
-    "pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
-    "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.27.3",
-    "@vitest/coverage-v8": "^4.0.16",
-    "chokidar-cli": "^3.0.0",
-    "puppeteer": "^24.26.0",
-    "tsx": "^4.21.0",
-    "turbo": "^2.5.8",
-    "typescript": "^5.8.3",
-    "vite-tsconfig-paths": "^6.0.3",
-    "vitest": "^4.0.16"
-  },
-  "packageManager": "pnpm@10.24.0"
+	"name": "dotui-monorepo",
+	"version": "0.0.0",
+	"private": true,
+	"license": "MIT",
+	"type": "module",
+	"author": {
+		"name": "mehdibha",
+		"url": "https://x.com/mehdibha"
+	},
+	"keywords": [
+		"dotui",
+		"next.js",
+		"react-aria",
+		"tailwind",
+		"typescript"
+	],
+	"engines": {
+		"node": "^24.11.1",
+		"pnpm": "^10.24.0"
+	},
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev --parallel",
+		"dev:www": "pnpm --filter=www dev",
+		"build:www": "pnpm --filter=www build",
+		"build:registry": "pnpm --filter=@dotui/registry build",
+		"preview:www": "pnpm --filter=www preview",
+		"dev:registry": "chokidar 'packages/registry/src/ui/**/meta.ts' -c 'pnpm build:registry'",
+		"build:references": "pnpm --filter=www build:references",
+		"clean": "git clean -xdf node_modules",
+		"clean:workspaces": "turbo run clean",
+		"check": "biome check",
+		"check:fix": "biome check --write",
+		"check:ci": "biome ci",
+		"lint:ws": "pnpm dlx sherif@latest",
+		"postinstall": "pnpm lint:ws",
+		"typecheck": "turbo run typecheck",
+		"test": "vitest run",
+		"release": "changeset version",
+		"pub:beta": "pnpm --filter=tailwindcss-autocontrast pub:beta",
+		"pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.8",
+		"@changesets/changelog-github": "^0.5.1",
+		"@changesets/cli": "^2.27.3",
+		"@vitest/coverage-v8": "^4.0.16",
+		"chokidar-cli": "^3.0.0",
+		"puppeteer": "^24.26.0",
+		"tsx": "^4.21.0",
+		"turbo": "^2.5.8",
+		"typescript": "^5.8.3",
+		"vite-tsconfig-paths": "^6.0.3",
+		"vitest": "^4.0.16"
+	},
+	"packageManager": "pnpm@10.24.0"
 }

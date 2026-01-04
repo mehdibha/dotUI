@@ -6,14 +6,14 @@ import type { Element, ElementContent, Root, RootContent } from "hast";
 import type { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import type { Plugin } from "unified";
 
-import { transformDemo } from "./transformer";
 import { loadApiReference } from "../../references/loader";
-import { transformReference, type TransformedReference } from "../../references/transform";
+import { type TransformedReference, transformReference } from "../../references/transform";
 import {
 	buildControlsFromReference,
 	enrichControlsForSerialization,
 	toPascalCase,
 } from "../interactive-demo/process-controls";
+import { transformDemo } from "./transformer";
 import type { ControlInput, InteractiveDemoNodeInfo, ProcessedInteractiveDemo } from "../interactive-demo/types";
 
 // ============================================================================

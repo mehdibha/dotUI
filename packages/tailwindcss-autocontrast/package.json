@@ -12,9 +12,6 @@
 	"sideEffects": false,
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo node_modules",
-		"format": "biome format --write",
-		"lint": "biome lint --write",
-		"check": "biome check",
 		"release": "changeset version",
 		"pub:beta": "npm publish --tag beta",
 		"pub:next": "npm publish --tag next",

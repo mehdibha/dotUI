@@ -32,14 +32,14 @@ import { Switch } from "@dotui/registry/ui/switch";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 import type {
-	SerializableControl,
+	ControlValues,
 	SerializableBooleanControl,
-	SerializableStringControl,
-	SerializableNumberControl,
+	SerializableControl,
 	SerializableEnumControl,
 	SerializableIconControl,
+	SerializableNumberControl,
 	SerializablePropReference,
-	ControlValues,
+	SerializableStringControl,
 } from "./types";
 
 /**

@@ -5,7 +5,7 @@
 
 import type { HighlighterGeneric } from "shiki";
 
-import { groupProps, DEFAULT_EXPANDED } from "./groups";
+import { DEFAULT_EXPANDED, groupProps } from "./groups";
 import type { ComponentApiReference, PropDefinition, TypeLinksRegistry } from "./types";
 import type { TType } from "./types/type-ast";
 
