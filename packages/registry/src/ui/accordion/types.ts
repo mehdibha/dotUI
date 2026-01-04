@@ -4,5 +4,4 @@ import type { DisclosureGroup as AriaDisclosureGroup } from "react-aria-componen
  * A DisclosureGroup is a grouping of related disclosures, sometimes called an accordion.
  * It supports both single and multiple expanded items.
  */
-export interface AccordionProps
-  extends React.ComponentProps<typeof AriaDisclosureGroup> {}
+export interface AccordionProps extends React.ComponentProps<typeof AriaDisclosureGroup> {}

@@ -1,26 +1,24 @@
 {
 	"extends": "@dotui/ts-config/base.json",
+	"include": ["**/*.ts", "**/*.tsx"],
 	"compilerOptions": {
-		"lib": ["ES2022", "dom", "dom.iterable"],
-		"jsx": "preserve",
-		"jsxImportSource": "react",
+		"lib": ["ES2022", "DOM", "DOM.Iterable"],
+		"jsx": "react-jsx",
+		"module": "ESNext",
+		"types": ["vite/client"],
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": false,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedSideEffectImports": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./*"],
+			"@/*": ["./src/*"],
+			"@/.source/*": ["./.source/*"],
 			"@dotui/core/*": ["../packages/core/src/*"],
 			"@dotui/registry/*": ["../packages/registry/src/*"]
-		},
-		"plugins": [{ "name": "next" }],
-		"module": "esnext"
+		}
 	},
-	"include": [
-		"next-env.d.ts",
-		"**/*.ts",
-		"**/*.tsx",
-		".next/types/**/*.ts",
-		"./scripts/**/*.ts",
-		"next.config.mjs",
-		"eslint.config.mjs"
-	],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", ".vinxi", ".output"]
 }

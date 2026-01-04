@@ -1,29 +1,25 @@
 import { FieldError, FieldGroup, Label } from "@dotui/registry/ui/field";
-import {
-  Radio,
-  RadioGroup,
-  RadioIndicator,
-} from "@dotui/registry/ui/radio-group";
+import { Radio, RadioGroup, RadioIndicator } from "@dotui/registry/ui/radio-group";
 
 export default function Demo() {
-  return (
-    <RadioGroup defaultValue={null} isInvalid>
-      <Label>Size</Label>
-      <FieldGroup>
-        <Radio value="sm">
-          <RadioIndicator />
-          <Label>Small</Label>
-        </Radio>
-        <Radio value="md">
-          <RadioIndicator />
-          <Label>Medium</Label>
-        </Radio>
-        <Radio value="lg">
-          <RadioIndicator />
-          <Label>Large</Label>
-        </Radio>
-      </FieldGroup>
-      <FieldError>Please select a product size.</FieldError>
-    </RadioGroup>
-  );
+	return (
+		<RadioGroup defaultValue={null} isInvalid>
+			<Label>Size</Label>
+			<FieldGroup>
+				<Radio value="sm">
+					<RadioIndicator />
+					<Label>Small</Label>
+				</Radio>
+				<Radio value="md">
+					<RadioIndicator />
+					<Label>Medium</Label>
+				</Radio>
+				<Radio value="lg">
+					<RadioIndicator />
+					<Label>Large</Label>
+				</Radio>
+			</FieldGroup>
+			<FieldError>Please select a product size.</FieldError>
+		</RadioGroup>
+	);
 }

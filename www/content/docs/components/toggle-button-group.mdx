@@ -1,0 +1,48 @@
+---
+title: Toggle Button Group
+description: A toggle button group allows users to select one or more options from a set.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ToggleButtonGroup.html
+wip: true
+---
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="toggle-button-group/demos/default" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/toggle-button-group
+    ```
+
+    ## Usage
+
+    Use toggle button groups to let users toggle between multiple options.
+
+    ```tsx
+    import { ToggleButtonGroup, ToggleButton } from "@/components/ui/toggle-button-group";
+    ```
+
+    ```tsx
+    <ToggleButtonGroup>
+      <ToggleButton id="left">Left</ToggleButton>
+      <ToggleButton id="center">Center</ToggleButton>
+      <ToggleButton id="right">Right</ToggleButton>
+    </ToggleButtonGroup>
+    ```
+
+    ## API Reference
+
+    <Reference name="toggle-button-group" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Examples>
+      <Example name="toggle-button-group/demos/default" />
+    </Examples>
+  </PageTabPanel>
+</PageTabs>

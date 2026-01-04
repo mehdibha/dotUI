@@ -2,7 +2,6 @@ packages:
   - www
   - packages/*
   - config/*
-  - tw-plugins/*
 
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"

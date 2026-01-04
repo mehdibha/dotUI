@@ -11,42 +11,42 @@ import type { PopoverProps } from "@dotui/registry/ui/popover";
 type Type = "modal" | "popover" | "drawer";
 
 type CommonProps =
-  | "isDismissable"
-  | "isOpen"
-  | "defaultOpen"
-  | "onOpenChange"
-  | "isKeyboardDismissDisabled"
-  | "shouldCloseOnInteractOutside";
+	| "isDismissable"
+	| "isOpen"
+	| "defaultOpen"
+	| "onOpenChange"
+	| "isKeyboardDismissDisabled"
+	| "shouldCloseOnInteractOutside";
 
 interface OverlayProps extends Pick<ModalProps, CommonProps> {
-  children?: React.ReactNode;
-  type?: Type;
-  mobileType?: Type | null;
-  popoverProps?: Omit<PopoverProps, "children" | CommonProps>;
-  modalProps?: Omit<ModalProps, "children" | CommonProps>;
-  drawerProps?: Omit<DrawerProps, "children" | CommonProps>;
+	children?: React.ReactNode;
+	type?: Type;
+	mobileType?: Type | null;
+	popoverProps?: Omit<PopoverProps, "children" | CommonProps>;
+	modalProps?: Omit<ModalProps, "children" | CommonProps>;
+	drawerProps?: Omit<DrawerProps, "children" | CommonProps>;
 }
 
 function Overlay({
-  type = "modal",
-  mobileType = "drawer",
-  modalProps,
-  popoverProps,
-  drawerProps,
-  ...props
+	type = "modal",
+	mobileType = "drawer",
+	modalProps,
+	popoverProps,
+	drawerProps,
+	...props
 }: OverlayProps) {
-  const isMobile = useIsMobile();
-  const resolvedType = mobileType ? (isMobile ? mobileType : type) : type;
+	const isMobile = useIsMobile();
+	const resolvedType = mobileType ? (isMobile ? mobileType : type) : type;
 
-  if (resolvedType === "popover") {
-    return <Popover {...popoverProps} {...props} />;
-  }
+	if (resolvedType === "popover") {
+		return <Popover {...popoverProps} {...props} />;
+	}
 
-  if (resolvedType === "drawer") {
-    return <Drawer {...drawerProps} {...props} />;
-  }
+	if (resolvedType === "drawer") {
+		return <Drawer {...drawerProps} {...props} />;
+	}
 
-  return <Modal {...modalProps} {...props} />;
+	return <Modal {...modalProps} {...props} />;
 }
 
 export type { OverlayProps };

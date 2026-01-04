@@ -31,6 +31,7 @@
 		"zod": "^4.2.1"
 	},
 	"devDependencies": {
+		"@dotui/biome-config": "workspace:*",
 		"@dotui/ts-config": "workspace:*",
 		"@types/node": "^22.15.3",
 		"@types/react": "^19.2.2",

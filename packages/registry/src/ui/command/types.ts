@@ -11,20 +11,20 @@ export interface CommandProps extends React.ComponentProps<"div"> {}
  * Missing description.
  */
 export interface CommandInputProps extends SearchFieldProps {
-  /**
-   * Placeholder text for the search input.
-   */
-  placeholder?: string;
+	/**
+	 * Placeholder text for the search input.
+	 */
+	placeholder?: string;
 }
 
 /**
  * Missing description.
  */
 export interface CommandContentProps<T extends object> extends ListBoxProps<T> {
-  placement?: PopoverProps["placement"];
+	placement?: PopoverProps["placement"];
 
-  /**
-   * Whether to use virtualization for large lists.
-   */
-  virtulized?: boolean;
+	/**
+	 * Whether to use virtualization for large lists.
+	 */
+	virtulized?: boolean;
 }

@@ -12,12 +12,7 @@
 	},
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
-		"lint": "biome lint --write .",
-		"format": "biome format --write .",
-		"check": "biome check --write .",
-		"typecheck": "tsc --noEmit --emitDeclarationOnly false",
-		"test": "vitest run",
-		"test:watch": "vitest"
+		"typecheck": "tsc --noEmit --emitDeclarationOnly false"
 	},
 	"dependencies": {
 		"@material/material-color-utilities": "^0.3.0",
@@ -27,7 +22,6 @@
 	"devDependencies": {
 		"@dotui/biome-config": "workspace:*",
 		"@dotui/ts-config": "workspace:*",
-		"typescript": "^5.8.3",
-		"vitest": "^4.0.1"
+		"typescript": "^5.8.3"
 	}
 }

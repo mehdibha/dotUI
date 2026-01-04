@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+
 import type { StyleConfig } from "@dotui/core/schemas/style";
 
 /**

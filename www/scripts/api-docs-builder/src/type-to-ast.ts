@@ -32,7 +32,7 @@ import type {
 	TTypeParameter,
 	TUnion,
 	TypeLinksRegistry,
-} from "@/modules/docs/api-reference/types/type-ast";
+} from "@/modules/references/types/type-ast";
 
 export interface ConversionContext {
 	checker: ts.TypeChecker;

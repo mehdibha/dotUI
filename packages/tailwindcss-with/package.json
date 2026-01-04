@@ -1,0 +1,33 @@
+{
+	"name": "tailwindcss-with",
+	"version": "0.0.0",
+	"description": "Tailwind CSS plugin for class-based conditional variants",
+	"type": "commonjs",
+	"main": "src/index.js",
+	"types": "src/index.d.ts",
+	"source": "src/index.js",
+	"files": [
+		"src"
+	],
+	"sideEffects": false,
+	"scripts": {
+		"clean": "git clean -xdf .cache .turbo node_modules",
+		"release": "changeset version",
+		"pub:beta": "npm publish --tag beta",
+		"pub:next": "npm publish --tag next",
+		"pub:release": "npm publish"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mehdibha/dotui"
+	},
+	"peerDependencies": {
+		"tailwindcss": "^4.0.0"
+	},
+	"devDependencies": {
+		"@dotui/biome-config": "workspace:*"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

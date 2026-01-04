@@ -1,36 +1,33 @@
 import type { RegistryItem } from "shadcn/schema";
 
-import type { StyleConfig } from "@dotui/core/schemas/style";
-
 import { ui as registryUi } from "@dotui/core/__registry__/ui";
 import { updateRegistryDependencies } from "@dotui/core/shadcn/transform";
+import type { StyleConfig } from "@dotui/core/schemas/style";
 
 export function generateRegistryAll(options: {
-  styleName: string;
-  baseUrl: string;
-  config: StyleConfig;
+	styleName: string;
+	baseUrl: string;
+	config: StyleConfig;
 }): RegistryItem {
-  const { styleName, baseUrl, config } = options;
+	const { styleName, baseUrl, config } = options;
 
-  const registryDependencies = [
-    ...new Set(registryUi.map((item) => item.name.split(":")[0])),
-  ] as string[];
+	const registryDependencies = [...new Set(registryUi.map((item) => item.name.split(":")[0]))] as string[];
 
-  let registryItem: RegistryItem = {
-    $schema: "https://ui.shadcn.com/schema/registry-item.json",
-    extends: "none",
-    name: "all",
-    type: "registry:ui",
-    title: `All ${styleName} components`,
-    description: `All components for ${styleName} style`,
-    registryDependencies,
-  };
+	let registryItem: RegistryItem = {
+		$schema: "https://ui.shadcn.com/schema/registry-item.json",
+		extends: "none",
+		name: "all",
+		type: "registry:ui",
+		title: `All ${styleName} components`,
+		description: `All components for ${styleName} style`,
+		registryDependencies,
+	};
 
-  registryItem = updateRegistryDependencies(registryItem, {
-    styleName,
-    baseUrl,
-    config,
-  });
+	registryItem = updateRegistryDependencies(registryItem, {
+		styleName,
+		baseUrl,
+		config,
+	});
 
-  return registryItem;
+	return registryItem;
 }

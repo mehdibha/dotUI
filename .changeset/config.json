@@ -1,21 +1,21 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "mehdibha/dotui" }],
-  "commit": false,
-  "fixed": [],
-  "linked": [],
-  "access": "public",
-  "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": [
-    "www",
-    "@dotui/ts-config",
-    "@dotui/api",
-    "@dotui/auth",
-    "@dotui/db",
-    "@dotui/registry",
-    "@dotui/colors",
-    "@dotui/style-system",
-    "@dotui/types"
-  ]
+	"$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+	"changelog": ["@changesets/changelog-github", { "repo": "mehdibha/dotui" }],
+	"commit": false,
+	"fixed": [],
+	"linked": [],
+	"access": "public",
+	"baseBranch": "main",
+	"updateInternalDependencies": "patch",
+	"ignore": [
+		"www",
+		"@dotui/ts-config",
+		"@dotui/api",
+		"@dotui/auth",
+		"@dotui/db",
+		"@dotui/registry",
+		"@dotui/colors",
+		"@dotui/types",
+		"@dotui/core"
+	]
 }

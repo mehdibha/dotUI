@@ -13,6 +13,6 @@ export const registry = [...base, ...ui, ...lib, ...hooks];
 
 export { base } from "./base";
 export { hooks } from "./hooks";
+export { iconLibraries, icons } from "./icons";
 export { lib } from "./lib";
 export { ui } from "./ui";
-export { icons, iconLibraries } from "./icons";

@@ -5,30 +5,30 @@
  */
 
 // Individual schemas
-export { colorsConfigSchema, type ColorsConfig } from "./colors";
-export { typographyConfigSchema, type TypographyConfig } from "./typography";
-export { effectsConfigSchema, type EffectsConfig } from "./effects";
+export { type ColorsConfig, colorsConfigSchema } from "./colors";
 export {
-	iconLibrarySchema,
-	iconsConfigSchema,
-	iconLibraries,
-	icons,
-	type IconLibrary,
-	type IconsConfig,
-} from "./icons";
-export {
-	variantsConfigSchema,
-	VARIANTS,
-	VARIANT_GROUPS,
-	type VariantsConfig,
-	type VariantKey,
-	type VariantGroupKey,
-} from "./variants";
-export {
-	componentConfigSchema,
-	componentsConfigSchema,
 	type ComponentConfig,
 	type ComponentsConfig,
+	componentConfigSchema,
+	componentsConfigSchema,
 } from "./components";
-export { themeConfigSchema, type ThemeConfig } from "./theme";
-export { styleConfigSchema, type StyleConfig } from "./style";
+export { type EffectsConfig, effectsConfigSchema } from "./effects";
+export {
+	type IconLibrary,
+	type IconsConfig,
+	iconLibraries,
+	iconLibrarySchema,
+	icons,
+	iconsConfigSchema,
+} from "./icons";
+export { type StyleConfig, styleConfigSchema } from "./style";
+export { type ThemeConfig, themeConfigSchema } from "./theme";
+export { type TypographyConfig, typographyConfigSchema } from "./typography";
+export {
+	VARIANT_GROUPS,
+	VARIANTS,
+	type VariantGroupKey,
+	type VariantKey,
+	type VariantsConfig,
+	variantsConfigSchema,
+} from "./variants";

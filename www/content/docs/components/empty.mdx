@@ -1,0 +1,45 @@
+---
+title: Empty
+description: An empty state placeholder for when there's no content to display.
+wip: true
+---
+
+<PageTabs>
+  <PageTabPanel id="overview">
+
+    <Demo name="empty/demos/empty-projects" />
+
+    ## Installation
+
+    ```npm
+    npx shadcn@latest add @dotui/empty
+    ```
+
+    ## Usage
+
+    ```tsx
+    import { Empty } from "@/components/ui/empty";
+    ```
+
+    ```tsx
+    <Empty>
+      <EmptyIcon>
+        <FolderIcon />
+      </EmptyIcon>
+      <EmptyTitle>No projects</EmptyTitle>
+      <EmptyDescription>Get started by creating a new project.</EmptyDescription>
+    </Empty>
+    ```
+
+    ## API Reference
+
+    <Reference name="empty" />
+
+  </PageTabPanel>
+
+  <PageTabPanel id="examples">
+    <Examples>
+      <Example name="empty/demos/empty-projects" />
+    </Examples>
+  </PageTabPanel>
+</PageTabs>

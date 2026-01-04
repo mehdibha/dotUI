@@ -2,8 +2,9 @@
 
 import React, { createContext, useContext, useMemo } from "react";
 
-import type { VariantsConfig } from "@dotui/core/schemas/variants";
 import { VARIANTS } from "@dotui/core/__registry__/variants";
+import type { VariantsConfig } from "@dotui/core/schemas/variants";
+
 import { StyleContext } from "./context";
 
 // ============================================================================
@@ -48,18 +49,10 @@ function useDisableSuspense(): boolean {
 
 const DefaultVariantsContext = createContext<VariantsConfig | null>(null);
 
-function DefaultVariantsProvider({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+function DefaultVariantsProvider({ children }: { children: React.ReactNode }) {
 	// Provide empty variants during skeleton to prevent variant resolution
 	const defaultVariants = useMemo(() => ({}), []);
-	return (
-		<DefaultVariantsContext value={defaultVariants}>
-			{children}
-		</DefaultVariantsContext>
-	);
+	return <DefaultVariantsContext value={defaultVariants}>{children}</DefaultVariantsContext>;
 }
 
 // ============================================================================
@@ -178,10 +171,7 @@ export function createDynamicComponent<Props extends object, V extends string = 
 		const variantName = selectedVariant ?? defaultVariant;
 
 		// Get className for skeleton sizing (if props has className)
-		const className =
-			"className" in props && typeof props.className === "string"
-				? props.className
-				: undefined;
+		const className = "className" in props && typeof props.className === "string" ? props.className : undefined;
 
 		// Check if we should use a lazy variant
 		const LazyComponent = variantName !== defaultVariant ? variants[variantName] : null;
@@ -197,11 +187,7 @@ export function createDynamicComponent<Props extends object, V extends string = 
 		}
 
 		return (
-			<ErrorBoundary
-				fallback={
-					<ErrorFallback componentName={componentName} variantName={variantName} />
-				}
-			>
+			<ErrorBoundary fallback={<ErrorFallback componentName={componentName} variantName={variantName} />}>
 				<React.Suspense
 					fallback={
 						<Skeleton show={!disableSkeleton} className={className}>
@@ -219,7 +205,7 @@ export function createDynamicComponent<Props extends object, V extends string = 
 		);
 	};
 
-	Component.displayName = `Dynamic(${displayName})`;
+	Component.displayName = displayName;
 
 	return Component;
 }

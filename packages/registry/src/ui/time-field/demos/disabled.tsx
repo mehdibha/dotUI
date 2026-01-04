@@ -3,10 +3,10 @@ import { DateInput } from "@dotui/registry/ui/input";
 import { TimeField } from "@dotui/registry/ui/time-field";
 
 export default function Demo() {
-  return (
-    <TimeField isDisabled>
-      <Label>Event time</Label>
-      <DateInput />
-    </TimeField>
-  );
+	return (
+		<TimeField isDisabled>
+			<Label>Event time</Label>
+			<DateInput />
+		</TimeField>
+	);
 }

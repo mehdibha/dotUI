@@ -1,23 +1,22 @@
 import type {
-  Cell as AriaCell,
-  Column as AriaColumn,
-  ResizableTableContainer as AriaResizableTableContainer,
-  RowProps as AriaRowProps,
-  Table as AriaTable,
-  TableBodyProps as AriaTableBodyProps,
-  TableHeaderProps as AriaTableHeaderProps,
-  TableLoadMoreItem as AriaTableLoadMoreItem,
+	Cell as AriaCell,
+	Column as AriaColumn,
+	ResizableTableContainer as AriaResizableTableContainer,
+	RowProps as AriaRowProps,
+	Table as AriaTable,
+	TableBodyProps as AriaTableBodyProps,
+	TableHeaderProps as AriaTableHeaderProps,
+	TableLoadMoreItem as AriaTableLoadMoreItem,
 } from "react-aria-components";
 
 /**
  * Missing description.
  */
-export interface TableContainerProps
-  extends React.ComponentProps<typeof AriaResizableTableContainer> {
-  /**
-   * Whether the table columns are resizable.
-   */
-  resizable?: boolean;
+export interface TableContainerProps extends React.ComponentProps<typeof AriaResizableTableContainer> {
+	/**
+	 * Whether the table columns are resizable.
+	 */
+	resizable?: boolean;
 }
 
 /**
@@ -25,43 +24,40 @@ export interface TableContainerProps
  * via directional navigation keys, and optionally supports row selection and sorting.
  */
 export interface TableProps extends React.ComponentProps<typeof AriaTable> {
-  /**
-   * Whether the table columns are resizable.
-   */
-  resizable?: boolean;
+	/**
+	 * Whether the table columns are resizable.
+	 */
+	resizable?: boolean;
 }
 
 /**
  * A header within a Table, containing the table columns.
  */
-export interface TableHeaderProps<T extends object>
-  extends AriaTableHeaderProps<T> {}
+export interface TableHeaderProps<T extends object> extends AriaTableHeaderProps<T> {}
 
 /**
  * A column within a Table.
  */
-export interface TableColumnProps
-  extends React.ComponentProps<typeof AriaColumn> {
-  /**
-   * Whether the column is resizable.
-   */
-  allowsResizing?: boolean;
+export interface TableColumnProps extends React.ComponentProps<typeof AriaColumn> {
+	/**
+	 * Whether the column is resizable.
+	 */
+	allowsResizing?: boolean;
 }
 
 /**
  * The body of a Table, containing the table rows.
  */
-export interface TableBodyProps<T extends object>
-  extends AriaTableBodyProps<T> {
-  /**
-   * Whether the table body is in a loading state.
-   */
-  isLoading?: boolean;
+export interface TableBodyProps<T extends object> extends AriaTableBodyProps<T> {
+	/**
+	 * Whether the table body is in a loading state.
+	 */
+	isLoading?: boolean;
 
-  /**
-   * Callback fired when more data needs to be loaded.
-   */
-  onLoadMore?: () => void;
+	/**
+	 * Callback fired when more data needs to be loaded.
+	 */
+	onLoadMore?: () => void;
 }
 
 /**
@@ -77,5 +73,4 @@ export interface TableCellProps extends React.ComponentProps<typeof AriaCell> {}
 /**
  * Missing description.
  */
-export interface TableLoadMoreProps
-  extends React.ComponentProps<typeof AriaTableLoadMoreItem> {}
+export interface TableLoadMoreProps extends React.ComponentProps<typeof AriaTableLoadMoreItem> {}

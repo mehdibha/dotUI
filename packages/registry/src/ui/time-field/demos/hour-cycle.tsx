@@ -5,10 +5,10 @@ import { DateInput } from "@dotui/registry/ui/input";
 import { TimeField } from "@dotui/registry/ui/time-field";
 
 export default function Demo() {
-  return (
-    <TimeField>
-      <Label>Appointment time</Label>
-      <DateInput />
-    </TimeField>
-  );
+	return (
+		<TimeField>
+			<Label>Appointment time</Label>
+			<DateInput />
+		</TimeField>
+	);
 }

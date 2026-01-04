@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@import "@fontsource-variable/josefin-sans";
+@import "@fontsource/geist-sans";
+@import "@fontsource/geist-mono";
+@import "@dotui/registry/styles.css";
+
+@source "../../packages/registry/src/**/*.{ts,tsx}";
+
+@theme {
+	--font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "Geist Mono", ui-monospace, monospace;
+	--font-josefin: "Josefin Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+	--breakpoint-xs: 30rem;
+	--breakpoint-3xl: 120rem;
+}
+
+@utility container {
+	@apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 3xl:max-w-screen-2xl;
+}
+
+/* View Transition for code preview */
+::view-transition-old(.code-fade),
+::view-transition-new(.code-fade) {
+	animation-duration: 100ms;
+	animation-timing-function: ease-in-out;
+}
+
+@utility step {
+	counter-increment: step;
+
+	&:before {
+		@apply absolute inline-flex size-9 items-center justify-center rounded-xl border-4 border-bg bg-muted text-center -indent-px font-mono text-sm font-medium text-fg-muted;
+		@apply mt-[-4px] ml-[-50px];
+		content: counter(step);
+	}
+}

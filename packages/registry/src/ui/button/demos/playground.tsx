@@ -10,26 +10,21 @@ import { Button } from "@dotui/registry/ui/button";
  */
 
 interface ButtonPlaygroundProps {
-  children?: string;
-  variant?: "default" | "primary" | "quiet" | "link" | "warning" | "danger";
-  size?: "sm" | "md" | "lg";
-  isDisabled?: boolean;
-  isPending?: boolean;
-  prefix?: ReactNode;
-  suffix?: ReactNode;
+	children?: string;
+	variant?: "default" | "primary" | "quiet" | "link" | "warning" | "danger";
+	size?: "sm" | "md" | "lg";
+	isDisabled?: boolean;
+	isPending?: boolean;
+	prefix?: ReactNode;
+	suffix?: ReactNode;
 }
 
-export function ButtonPlayground({
-  children = "Button",
-  prefix,
-  suffix,
-  ...props
-}: ButtonPlaygroundProps) {
-  return (
-    <Button {...props}>
-      {prefix}
-      {children}
-      {suffix}
-    </Button>
-  );
+export function ButtonPlayground({ children = "Button", prefix, suffix, ...props }: ButtonPlaygroundProps) {
+	return (
+		<Button {...props}>
+			{prefix}
+			{children}
+			{suffix}
+		</Button>
+	);
 }

@@ -6,29 +6,26 @@ import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
 import { Popover } from "@dotui/registry/ui/popover";
 
 export default function Demo() {
-  return (
-    <Menu>
-      <Button variant="default" size="sm">
-        Social
-      </Button>
-      <Popover>
-        <MenuContent>
-          <MenuItem>
-            <GitHubIcon />
-            Github
-          </MenuItem>
-          <MenuItem href="https://twitter.com/mehdibha" target="_blank">
-            <TwitterIcon />X
-          </MenuItem>
-          <MenuItem
-            href="https://discord.com/invite/DXpj5V2fU8"
-            target="_blank"
-          >
-            <DiscordIcon />
-            Discord
-          </MenuItem>
-        </MenuContent>
-      </Popover>
-    </Menu>
-  );
+	return (
+		<Menu>
+			<Button variant="default" size="sm">
+				Social
+			</Button>
+			<Popover>
+				<MenuContent>
+					<MenuItem>
+						<GitHubIcon />
+						Github
+					</MenuItem>
+					<MenuItem href="https://twitter.com/mehdibha" target="_blank">
+						<TwitterIcon />X
+					</MenuItem>
+					<MenuItem href="https://discord.com/invite/DXpj5V2fU8" target="_blank">
+						<DiscordIcon />
+						Discord
+					</MenuItem>
+				</MenuContent>
+			</Popover>
+		</Menu>
+	);
 }

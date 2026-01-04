@@ -1,7 +1,7 @@
 import type {
-  DatePickerProps as AriaDatePickerProps,
-  DateRangePickerProps as AriaDateRangePickerProps,
-  DateValue,
+	DatePickerProps as AriaDatePickerProps,
+	DateRangePickerProps as AriaDateRangePickerProps,
+	DateValue,
 } from "react-aria-components";
 
 import type { DialogContentProps } from "@dotui/registry/ui/dialog";
@@ -13,19 +13,19 @@ import type { OverlayProps } from "@dotui/registry/ui/overlay";
  * When mode is "range", it combines two DateFields and a RangeCalendar popover to allow users to enter or select a date and time range.
  */
 export type DatePickerProps<T extends DateValue> =
-  | ({
-      /**
-       * The selection mode of the date picker.
-       * @default 'single'
-       */
-      mode?: "single";
-    } & AriaDatePickerProps<T>)
-  | ({
-      /**
-       * The selection mode of the date picker.
-       */
-      mode: "range";
-    } & AriaDateRangePickerProps<T>);
+	| ({
+			/**
+			 * The selection mode of the date picker.
+			 * @default 'single'
+			 */
+			mode?: "single";
+	  } & AriaDatePickerProps<T>)
+	| ({
+			/**
+			 * The selection mode of the date picker.
+			 */
+			mode: "range";
+	  } & AriaDateRangePickerProps<T>);
 
 /**
  * Missing description.
@@ -36,5 +36,5 @@ export interface DatePickerInputProps extends InputGroupProps {}
  * Missing description.
  */
 export interface DatePickerContentProps
-  extends DialogContentProps,
-    Pick<OverlayProps, "type" | "mobileType" | "popoverProps"> {}
+	extends DialogContentProps,
+		Pick<OverlayProps, "type" | "mobileType" | "popoverProps"> {}

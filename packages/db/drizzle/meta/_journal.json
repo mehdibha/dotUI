@@ -1,13 +1,13 @@
 {
-  "version": "7",
-  "dialect": "postgresql",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "7",
-      "when": 1766111563051,
-      "tag": "0000_romantic_franklin_storm",
-      "breakpoints": true
-    }
-  ]
+	"version": "7",
+	"dialect": "postgresql",
+	"entries": [
+		{
+			"idx": 0,
+			"version": "7",
+			"when": 1766111563051,
+			"tag": "0000_romantic_franklin_storm",
+			"breakpoints": true
+		}
+	]
 }

@@ -68,10 +68,7 @@ export const BlocksIndex: Record<
 `;
 
 	for (const block of registryBlocks) {
-		const blockFiles =
-			block.files?.map((file) =>
-				typeof file === "string" ? file : file.path,
-			) || [];
+		const blockFiles = block.files?.map((file) => (typeof file === "string" ? file : file.path)) || [];
 
 		let componentPath = `@dotui/registry/blocks/${block.name}`;
 
@@ -99,11 +96,7 @@ export const BlocksIndex: Record<
 	console.log("  ✓ __generated__/blocks.tsx");
 }
 
-async function processDirectory(
-	dirPath: string,
-	relativePath: string,
-	entries: string[],
-): Promise<void> {
+async function processDirectory(dirPath: string, relativePath: string, entries: string[]): Promise<void> {
 	const dirEntries = await fs.readdir(dirPath, { withFileTypes: true });
 
 	for (const entry of dirEntries) {
@@ -168,6 +161,55 @@ export const DemosIndex: Record<
 	console.log("  ✓ __generated__/demos.tsx");
 }
 
+// Get the package import for each library
+function getLibraryPackage(library: string): string {
+	switch (library) {
+		case "tabler":
+			return "@tabler/icons-react";
+		case "hugeicons":
+			return "@hugeicons/core-free-icons"; // Data only, use HugeiconsIcon wrapper
+		case "remix":
+			return "@remixicon/react";
+		default:
+			return "";
+	}
+}
+
+// Generate __libraryName__.ts files with only the icons we use
+async function buildIconLibraryExports() {
+	const iconsDir = path.join(REGISTRY_DIR, "icons");
+
+	// Collect unique icon names per library
+	const libraryIcons: Record<string, Set<string>> = {
+		tabler: new Set(),
+		hugeicons: new Set(),
+		remix: new Set(),
+	};
+
+	for (const iconMapping of Object.values(registryIcons)) {
+		if (iconMapping.tabler) libraryIcons.tabler?.add(iconMapping.tabler);
+		if (iconMapping.hugeicons) libraryIcons.hugeicons?.add(iconMapping.hugeicons);
+		if (iconMapping.remix) libraryIcons.remix?.add(iconMapping.remix);
+	}
+
+	// Generate a file for each library
+	for (const [library, icons] of Object.entries(libraryIcons)) {
+		const packageName = getLibraryPackage(library);
+		const sortedIcons = [...icons].sort();
+
+		const exports = sortedIcons.map((icon) => `export { ${icon} } from "${packageName}";`).join("\n");
+
+		const content = `// AUTO-GENERATED - DO NOT EDIT
+// Only exports the ${sortedIcons.length} icons we actually use (not the entire library)
+${exports}
+`;
+
+		const targetPath = path.join(iconsDir, `__${library}__.ts`);
+		await fs.writeFile(targetPath, content, "utf8");
+		console.log(`  ✓ icons/__${library}__.ts (${sortedIcons.length} icons)`);
+	}
+}
+
 async function buildInternalIcons() {
 	const targetPath = path.join(GENERATED_DIR, "icons.tsx");
 
@@ -180,24 +222,18 @@ async function buildInternalIcons() {
 				throw new Error(`Icon mapping not found for: ${iconKey}`);
 			}
 
-			const libraryMappings = iconLibraries
+			const names = iconLibraries
 				.map((library) => {
 					const iconName = iconMapping[library.name];
 					if (!iconName) {
-						throw new Error(
-							`Icon "${iconKey}" not found for library "${library.name}"`,
-						);
+						throw new Error(`Icon "${iconKey}" not found for library "${library.name}"`);
 					}
-
-					if (library.name === "lucide") {
-						return `    lucide: Lucide.${iconName},`;
-					}
-					return `    ${library.name}: React.lazy(() => import("${library.import}").then(mod => ({ default: mod.${iconName} }))),`;
+					return `  ${library.name}: "${iconName}",`;
 				})
 				.join("\n");
 
-			return `export const ${iconKey} = createIcon({
-${libraryMappings}
+			return `export const ${iconKey} = createIcon(Lucide.${iconMapping.lucide}, {
+${names}
 });`;
 		})
 		.join("\n\n");
@@ -206,7 +242,6 @@ ${libraryMappings}
 // Run "pnpm build" to regenerate
 "use client";
 
-import * as React from "react";
 import * as Lucide from "lucide-react";
 import { createIcon } from "@dotui/registry/icons/create-icon";
 
@@ -549,9 +584,10 @@ async function main() {
 	console.log("🔨 Building registry...\n");
 
 	try {
-		// Phase 1: Internal (registry/__generated__)
+		// Phase 1: Internal (registry/__generated__ and icons/)
 		console.log("Phase 1: Internal generated files");
 		await ensureDir(GENERATED_DIR);
+		await buildIconLibraryExports();
 		await buildInternalBlocks();
 		await buildInternalDemos();
 		await buildInternalIcons();

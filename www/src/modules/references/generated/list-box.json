@@ -1,0 +1,1451 @@
+{
+	"name": "ListBoxProps",
+	"description": "A listbox displays a list of options and allows a user to select one or more of them.",
+	"props": {
+		"isLoading": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the list box is in a loading state."
+		},
+		"onFocus": {
+			"type": "((e: FocusEvent<Element, Element>) => void)",
+			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "identifier",
+									"name": "FocusEvent"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the element receives focus."
+		},
+		"onBlur": {
+			"type": "((e: FocusEvent<Element, Element>) => void)",
+			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "identifier",
+									"name": "FocusEvent"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the element loses focus."
+		},
+		"onFocusChange": {
+			"type": "((isFocused: boolean) => void)",
+			"detailedType": "((isFocused: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isFocused",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the element's focus status changes."
+		},
+		"selectionBehavior": {
+			"type": "SelectionBehavior",
+			"detailedType": "SelectionBehavior | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "SelectionBehavior"
+			},
+			"description": "How multiple selection should behave in the collection.",
+			"default": "\"toggle\""
+		},
+		"dragAndDropHooks": {
+			"type": "DragAndDropHooks<NoInfer<T>>",
+			"detailedType": "DragAndDropHooks<NoInfer<T>> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DragAndDropHooks"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "NoInfer<T>"
+							}
+						]
+					}
+				]
+			},
+			"description": "The drag and drop hooks returned by `useDragAndDrop` used to enable drag and drop behavior for the ListBox."
+		},
+		"renderEmptyState": {
+			"type": "((props: ListBoxRenderProps) => ReactNode)",
+			"detailedType": "| ((props: ListBoxRenderProps) => ReactNode)\n| undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "props",
+						"value": {
+							"type": "link",
+							"id": "ListBoxRenderProps",
+							"name": "ListBoxRenderProps"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "identifier",
+					"name": "ReactNode"
+				},
+				"typeParameters": []
+			},
+			"description": "Provides content to display when there are no items in the list."
+		},
+		"layout": {
+			"type": "\"grid\" | \"stack\"",
+			"detailedType": "'grid' | 'stack' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "grid"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "stack"
+					}
+				]
+			},
+			"description": "Whether the items are arranged in a stack or grid.",
+			"default": "'stack'"
+		},
+		"orientation": {
+			"type": "Orientation",
+			"detailedType": "Orientation | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Orientation"
+			},
+			"description": "The primary orientation of the items. Usually this is the\ndirection that the collection scrolls.",
+			"default": "'vertical'"
+		},
+		"autoFocus": {
+			"type": "boolean | FocusStrategy",
+			"detailedType": "boolean | FocusStrategy | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "first"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "last"
+							}
+						]
+					}
+				]
+			},
+			"description": "Whether to auto focus the listbox or an option."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"disabledKeys": {
+			"type": "Iterable<Key>",
+			"detailedType": "Iterable<Key> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					}
+				]
+			},
+			"description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
+		},
+		"items": {
+			"type": "Iterable<T>",
+			"detailedType": "Iterable<T> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": null,
+								"default": null
+							}
+						]
+					}
+				]
+			},
+			"description": "Item objects in the collection."
+		},
+		"disallowEmptySelection": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the collection allows empty selection."
+		},
+		"onSelectionChange": {
+			"type": "((keys: Selection) => void)",
+			"detailedType": "((keys: Selection) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "keys",
+						"value": {
+							"type": "link",
+							"id": "Selection",
+							"name": "Selection"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the selection changes."
+		},
+		"shouldFocusWrap": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether focus should wrap around when the end/start is reached."
+		},
+		"shouldSelectOnPressUp": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether selection should occur on press up instead of press down."
+		},
+		"shouldFocusOnHover": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether options should be focused when the user hovers over them."
+		},
+		"onAction": {
+			"type": "((key: Key) => void)",
+			"detailedType": "((key: Key) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "key",
+						"value": {
+							"type": "link",
+							"id": "Key",
+							"name": "Key"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a user performs an action on an item. The exact user event depends on\nthe collection's `selectionBehavior` prop and the interaction modality."
+		},
+		"escapeKeyBehavior": {
+			"type": "\"none\" | \"clearSelection\"",
+			"detailedType": "'none' | 'clearSelection' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "none"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "clearSelection"
+					}
+				]
+			},
+			"description": "Whether pressing the escape key should clear selection in the listbox or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
+			"default": "'clearSelection'"
+		},
+		"selectionMode": {
+			"type": "SelectionMode",
+			"detailedType": "SelectionMode | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "SelectionMode"
+			},
+			"description": "The type of selection that is allowed in the collection."
+		},
+		"selectedKeys": {
+			"type": "Iterable<Key> | \"all\"",
+			"detailedType": "Iterable<Key> | 'all' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "all"
+							}
+						]
+					}
+				]
+			},
+			"description": "The currently selected keys in the collection (controlled)."
+		},
+		"defaultSelectedKeys": {
+			"type": "Iterable<Key> | \"all\"",
+			"detailedType": "Iterable<Key> | 'all' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "all"
+							}
+						]
+					}
+				]
+			},
+			"description": "The initial selected keys in the collection (uncontrolled)."
+		},
+		"children": {
+			"type": "ReactNode | ((item: T) => ReactNode)",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "number"
+					},
+					{
+						"type": "bigint"
+					},
+					{
+						"type": "identifier",
+						"name": "ReactElement"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "ReactNode"
+							}
+						]
+					},
+					{
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.7/node_modules/@types/react/index.d.ts:ReactPortal",
+						"name": "ReactPortal"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+							"name": "Promise"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "AwaitedReactNode"
+							}
+						]
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "item",
+								"value": {
+									"type": "typeParameter",
+									"name": "T",
+									"constraint": null,
+									"default": null
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The contents of the collection."
+		},
+		"dependencies": {
+			"type": "readonly any[]",
+			"detailedType": "readonly any[] | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "array",
+						"elementType": {
+							"type": "any"
+						}
+					}
+				]
+			},
+			"description": "Values that should invalidate the item cache when using dynamic collections."
+		},
+		"className": {
+			"type": "string | (values: ListBoxRenderProps) => string",
+			"detailedType": "string | (values: ListBoxRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ListBoxRenderProps",
+									"name": "ListBoxRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+		},
+		"style": {
+			"type": "CSSProperties | (values: ListBoxRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: ListBoxRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ListBoxRenderProps",
+									"name": "ListBoxRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"slot": {
+			"type": "string | null",
+			"detailedType": "string | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		}
+	},
+	"renderProps": {
+		"isEmpty": {
+			"selector": "[data-empty]",
+			"description": "Whether the listbox has no items and should display its empty state."
+		},
+		"isFocused": {
+			"selector": "[data-focused]",
+			"description": "Whether the listbox is currently focused."
+		},
+		"isFocusVisible": {
+			"selector": "[data-focus-visible]",
+			"description": "Whether the listbox is currently keyboard focused."
+		},
+		"isDropTarget": {
+			"selector": "[data-drop-target]",
+			"description": "Whether the listbox is currently the active drop target."
+		},
+		"layout": {
+			"selector": "[data-layout=\"stack | grid\"]",
+			"description": "Whether the items are arranged in a stack or grid."
+		}
+	},
+	"typeLinks": {
+		"ListBoxRenderProps": {
+			"type": "interface",
+			"name": "ListBoxRenderProps",
+			"properties": {
+				"isEmpty": {
+					"type": "property",
+					"name": "isEmpty",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the listbox has no items and should display its empty state."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the listbox is currently focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the listbox is currently keyboard focused."
+				},
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the listbox is currently the active drop target."
+				},
+				"layout": {
+					"type": "property",
+					"name": "layout",
+					"value": {
+						"type": "identifier",
+						"name": "\"grid\" | \"stack\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the items are arranged in a stack or grid."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "identifier",
+						"name": "ListState<unknown>"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the listbox."
+				}
+			}
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+			"name": "Iterator",
+			"extends": [],
+			"properties": {
+				"next": {
+					"type": "method",
+					"name": "next",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "__0",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "tuple",
+											"elements": []
+										},
+										{
+											"type": "tuple",
+											"elements": [
+												{
+													"type": "identifier",
+													"name": "any"
+												}
+											]
+										}
+									]
+								},
+								"optional": false,
+								"rest": true
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "identifier",
+								"name": "IteratorResult"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"return": {
+					"type": "property",
+					"name": "return",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "value",
+										"value": {
+											"type": "identifier",
+											"name": "any"
+										},
+										"optional": true,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "IteratorResult<Key, any>"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"throw": {
+					"type": "property",
+					"name": "throw",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "e",
+										"value": {
+											"type": "identifier",
+											"name": "any"
+										},
+										"optional": true,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "IteratorResult<Key, any>"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+			"name": "Iterable",
+			"extends": [],
+			"properties": {
+				"__@iterator@67": {
+					"type": "method",
+					"name": "__@iterator@67",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+								"name": "Iterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.7/node_modules/@types/react/index.d.ts:ReactPortal": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.7/node_modules/@types/react/index.d.ts:ReactPortal",
+			"name": "ReactPortal",
+			"extends": [
+				{
+					"type": "identifier",
+					"name": "ReactElement"
+				}
+			],
+			"properties": {
+				"children": {
+					"type": "property",
+					"name": "children",
+					"value": {
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "props",
+										"value": {
+											"type": "any"
+										},
+										"optional": false,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "undefined"
+										},
+										{
+											"type": "identifier",
+											"name": "null"
+										},
+										{
+											"type": "identifier",
+											"name": "string"
+										},
+										{
+											"type": "identifier",
+											"name": "number"
+										},
+										{
+											"type": "identifier",
+											"name": "bigint"
+										},
+										{
+											"type": "identifier",
+											"name": "false"
+										},
+										{
+											"type": "identifier",
+											"name": "true"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
+										},
+										{
+											"type": "identifier",
+											"name": "Iterable<ReactNode>"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactPortal"
+										},
+										{
+											"type": "identifier",
+											"name": "Promise<AwaitedReactNode>"
+										},
+										{
+											"type": "identifier",
+											"name": "Promise<ReactNode>"
+										}
+									]
+								},
+								"typeParameters": []
+							},
+							{
+								"type": "identifier",
+								"name": "new (props: any, context: any) => Component<any, any, any>"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"props": {
+					"type": "property",
+					"name": "props",
+					"value": {
+						"type": "unknown"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+			"name": "Promise",
+			"extends": [],
+			"properties": {
+				"then": {
+					"type": "method",
+					"name": "then",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "onfulfilled",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "function",
+											"parameters": [
+												{
+													"type": "parameter",
+													"name": "value",
+													"value": {
+														"type": "identifier",
+														"name": "AwaitedReactNode"
+													},
+													"optional": false,
+													"rest": false
+												}
+											],
+											"return": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "identifier",
+														"name": "TResult1"
+													},
+													{
+														"type": "identifier",
+														"name": "PromiseLike<TResult1>"
+													}
+												]
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "onrejected",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "function",
+											"parameters": [
+												{
+													"type": "parameter",
+													"name": "reason",
+													"value": {
+														"type": "any"
+													},
+													"optional": false,
+													"rest": false
+												}
+											],
+											"return": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "identifier",
+														"name": "TResult2"
+													},
+													{
+														"type": "identifier",
+														"name": "PromiseLike<TResult2>"
+													}
+												]
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"name": "Promise"
+							},
+							"typeParameters": [
+								{
+									"type": "union",
+									"elements": [
+										{
+											"type": "typeParameter",
+											"name": "TResult1",
+											"constraint": null,
+											"default": {
+												"type": "identifier",
+												"name": "AwaitedReactNode"
+											}
+										},
+										{
+											"type": "typeParameter",
+											"name": "TResult2",
+											"constraint": null,
+											"default": {
+												"type": "identifier",
+												"name": "never"
+											}
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "TResult1",
+								"constraint": null,
+								"default": {
+									"type": "identifier",
+									"name": "AwaitedReactNode"
+								}
+							},
+							{
+								"type": "typeParameter",
+								"name": "TResult2",
+								"constraint": null,
+								"default": {
+									"type": "never"
+								}
+							}
+						]
+					},
+					"optional": false,
+					"description": "Attaches callbacks for the resolution and/or rejection of the Promise."
+				},
+				"catch": {
+					"type": "method",
+					"name": "catch",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "onrejected",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "function",
+											"parameters": [
+												{
+													"type": "parameter",
+													"name": "reason",
+													"value": {
+														"type": "any"
+													},
+													"optional": false,
+													"rest": false
+												}
+											],
+											"return": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "identifier",
+														"name": "TResult"
+													},
+													{
+														"type": "identifier",
+														"name": "PromiseLike<TResult>"
+													}
+												]
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"name": "Promise"
+							},
+							"typeParameters": [
+								{
+									"type": "union",
+									"elements": [
+										{
+											"type": "boolean"
+										},
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "string"
+										},
+										{
+											"type": "number"
+										},
+										{
+											"type": "bigint"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.7/node_modules/@types/react/index.d.ts:ReactPortal",
+											"name": "ReactPortal"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactElement"
+										},
+										{
+											"type": "application",
+											"base": {
+												"type": "link",
+												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+												"name": "Iterable"
+											},
+											"typeParameters": [
+												{
+													"type": "identifier",
+													"name": "ReactNode"
+												}
+											]
+										},
+										{
+											"type": "typeParameter",
+											"name": "TResult",
+											"constraint": null,
+											"default": {
+												"type": "identifier",
+												"name": "never"
+											}
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "TResult",
+								"constraint": null,
+								"default": {
+									"type": "never"
+								}
+							}
+						]
+					},
+					"optional": false,
+					"description": "Attaches a callback for only the rejection of the Promise."
+				},
+				"finally": {
+					"type": "method",
+					"name": "finally",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "onfinally",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "null"
+										},
+										{
+											"type": "function",
+											"parameters": [],
+											"return": {
+												"type": "void"
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"name": "Promise"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "AwaitedReactNode"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
+				},
+				"__@toStringTag@70": {
+					"type": "property",
+					"name": "__@toStringTag@70",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": "Represents the completion of an asynchronous operation"
+		}
+	}
+}

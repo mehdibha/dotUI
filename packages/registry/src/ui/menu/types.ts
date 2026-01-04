@@ -1,10 +1,10 @@
 import type {
-  Header as AriaHeader,
-  MenuItemProps as AriaMenuItemProps,
-  MenuProps as AriaMenuProps,
-  MenuSectionProps as AriaMenuSectionProps,
-  MenuTriggerProps as AriaMenuTriggerProps,
-  SubmenuTriggerProps as AriaSubmenuTriggerProps,
+	Header as AriaHeader,
+	MenuItemProps as AriaMenuItemProps,
+	MenuProps as AriaMenuProps,
+	MenuSectionProps as AriaMenuSectionProps,
+	MenuTriggerProps as AriaMenuTriggerProps,
+	SubmenuTriggerProps as AriaSubmenuTriggerProps,
 } from "react-aria-components";
 
 /**
@@ -26,11 +26,11 @@ export interface MenuSubProps extends AriaSubmenuTriggerProps {}
  * A MenuItem represents an individual action in a Menu.
  */
 export interface MenuItemProps<T> extends AriaMenuItemProps<T> {
-  /**
-   * The color variant of the menu item.
-   * @default 'default'
-   */
-  variant?: "default" | "success" | "warning" | "accent" | "danger";
+	/**
+	 * The color variant of the menu item.
+	 * @default 'default'
+	 */
+	variant?: "default" | "success" | "warning" | "accent" | "danger";
 }
 
 /**
@@ -41,5 +41,4 @@ export interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {}
 /**
  * Missing description.
  */
-export interface MenuSectionHeaderProps
-  extends React.ComponentProps<typeof AriaHeader> {}
+export interface MenuSectionHeaderProps extends React.ComponentProps<typeof AriaHeader> {}

@@ -8,9 +8,9 @@ import { useSkeletonText } from "@dotui/registry/ui/skeleton";
 interface TextProps extends AriaTextProps {}
 
 const Text = ({ children, ...props }: TextProps) => {
-  children = useSkeletonText(children);
+	children = useSkeletonText(children);
 
-  return <AriaText {...props}>{children}</AriaText>;
+	return <AriaText {...props}>{children}</AriaText>;
 };
 
 export type { TextProps };

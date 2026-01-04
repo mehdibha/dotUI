@@ -6,16 +6,16 @@ import { Label } from "@dotui/registry/ui/field";
 import { Slider, SliderControl } from "@dotui/registry/ui/slider";
 
 export default function Demo() {
-  const [value, setValue] = React.useState(50);
-  return (
-    <div className="flex flex-col items-center gap-4">
-      <Slider value={value} onChange={(value) => setValue(value as number)}>
-        <Label>Opacity</Label>
-        <SliderControl />
-      </Slider>
-      <span className="text-fg-muted text-sm">
-        Value: <span className="font-semibold text-fg">{value}</span>
-      </span>
-    </div>
-  );
+	const [value, setValue] = React.useState(50);
+	return (
+		<div className="flex flex-col items-center gap-4">
+			<Slider value={value} onChange={(value) => setValue(value as number)}>
+				<Label>Opacity</Label>
+				<SliderControl />
+			</Slider>
+			<span className="text-fg-muted text-sm">
+				Value: <span className="font-semibold text-fg">{value}</span>
+			</span>
+		</div>
+	);
 }

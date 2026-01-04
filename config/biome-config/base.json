@@ -36,7 +36,8 @@
 				}
 			},
 			"suspicious": {
-				"noExplicitAny": "warn"
+				"noExplicitAny": "warn",
+				"noArrayIndexKey": "warn"
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "warn"
@@ -59,6 +60,10 @@
 							{
 								"type": false,
 								"source": ["react", "react/**", "react-dom", "react-dom/**", "react-native", "react-native/**"]
+							},
+							{
+								"type": false,
+								"source": ["@tanstack/**"]
 							},
 							":NODE:",
 							{ "type": false, "source": [":PACKAGE:", "!@dotui/**"] },

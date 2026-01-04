@@ -1,32 +1,33 @@
 {
-  "name": "@dotui/auth",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts",
-    "./middleware": "./src/middleware.ts",
-    "./client": "./src/client.ts",
-    "./env": "./env.ts"
-  },
-  "license": "MIT",
-  "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "generate": "dotenv -e ../../.env -- pnpx @better-auth/cli generate --config ./src/index.ts --output ../db/src/auth-schema.ts",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@dotui/db": "workspace:*",
-    "@t3-oss/env-nextjs": "^0.13.6",
-    "better-auth": "^1.3.29",
-    "next": "^16.0.5",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
-    "zod": "^4.2.1"
-  },
-  "devDependencies": {
-    "@dotui/ts-config": "workspace:*",
-    "@types/react": "^19.2.2",
-    "typescript": "^5.8.3"
-  }
+	"name": "@dotui/auth",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./middleware": "./src/middleware.ts",
+		"./client": "./src/client.ts",
+		"./env": "./env.ts"
+	},
+	"license": "MIT",
+	"scripts": {
+		"clean": "git clean -xdf .cache .turbo dist node_modules",
+		"generate": "dotenv -e ../../.env -- pnpx @better-auth/cli generate --config ./src/index.ts --output ../db/src/auth-schema.ts",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@dotui/db": "workspace:*",
+		"@t3-oss/env-nextjs": "^0.13.6",
+		"better-auth": "^1.3.29",
+		"next": "^16.0.5",
+		"react": "^19.2.1",
+		"react-dom": "^19.2.1",
+		"zod": "^4.2.1"
+	},
+	"devDependencies": {
+		"@dotui/biome-config": "workspace:*",
+		"@dotui/ts-config": "workspace:*",
+		"@types/react": "^19.2.2",
+		"typescript": "^5.8.3"
+	}
 }

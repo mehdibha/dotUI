@@ -1,4 +1,6 @@
 :root {
+	--radius-factor: 1;
+
 	--neutral-50: hsl(0, 0%, 98%);
 	--neutral-100: hsl(0, 0%, 96%);
 	--neutral-200: hsl(0, 0%, 94%);

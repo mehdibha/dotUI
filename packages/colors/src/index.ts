@@ -1,18 +1,17 @@
 // Unified API
-export { createTheme } from "./theme";
-export { createThemeOptionsSchema, type CreateThemeOptions } from "./schema";
 
 // Algorithm-specific exports
 export {
+	type CreateContrastThemeOptions,
 	createContrastTheme,
 	createContrastThemeOptionsSchema,
-	type CreateContrastThemeOptions,
 } from "./contrast";
 export {
+	type CreateThemeOptions as CreateMaterialThemeOptions,
 	createMaterialTheme,
 	createMaterialThemeOptionsSchema,
-	type CreateThemeOptions as CreateMaterialThemeOptions,
 } from "./material";
-
+export { type CreateThemeOptions, createThemeOptionsSchema } from "./schema";
+export { createTheme } from "./theme";
 // Shared types
 export type { ColorScale, Theme, ThemeMode } from "./shared/types";

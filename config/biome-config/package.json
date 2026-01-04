@@ -5,6 +5,7 @@
 	"exports": {
 		"./base": "./base.json",
 		"./next-js": "./next-js.json",
-		"./react-internal": "./react-internal.json"
+		"./react-internal": "./react-internal.json",
+		"./start": "./start.json"
 	}
 }
