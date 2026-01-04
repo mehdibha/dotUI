@@ -71,14 +71,6 @@ This project is a [Turborepo](https://turborepo.org/) monorepo:
 | `pnpm typecheck`     | Runs TypeScript type checking              |
 | `pnpm test`          | Runs tests                                 |
 
-### Making commits
-
-When making commits, follow the [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) guidelines, i.e. prepending the message with `feat:`, `fix:`, `chore:`, `docs:`, etc.
-
-```bash
-git add <file> && git commit -m "feat/fix/chore/docs: commit message"
-```
-
 ### Before submitting
 
 Check that your code passes all checks:
