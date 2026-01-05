@@ -1,6 +1,4 @@
-import { createElement } from "react";
 import { loader } from "fumadocs-core/source";
-import { icons } from "lucide-react";
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { docs, legal } from "@/.source/server";
@@ -12,12 +10,6 @@ export interface DocsPageItem extends PageTree.Item {
 export const docsSource = loader({
 	baseUrl: "/docs",
 	source: docs.toFumadocsSource(),
-	icon: (icon) => {
-		if (!icon) {
-			return;
-		}
-		if (icon in icons) return createElement(icons[icon as keyof typeof icons]);
-	},
 	pageTree: {
 		transformers: [
 			{

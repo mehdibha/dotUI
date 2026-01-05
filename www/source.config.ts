@@ -8,6 +8,7 @@ import rehypeTransform from "./src/modules/docs/mdx-plugins/rehype-transform";
 export const docs = defineDocs({
 	dir: "content/docs",
 	docs: {
+		async: true, // Load files asynchronously to avoid bundling all at once
 		schema: frontmatterSchema.extend({
 			links: z
 				.array(
@@ -33,6 +34,7 @@ export const docs = defineDocs({
 export const legal = defineDocs({
 	dir: "content/legal",
 	docs: {
+		async: true,
 		schema: frontmatterSchema.extend({
 			links: z
 				.array(
