@@ -14,9 +14,7 @@ export default defineConfig({
 	plugins: [
 		mdx(await import("./source.config")),
 		nitro({
-			preset: "node",
 			rollupConfig: {
-				external: ["@vercel/og"],
 				onwarn(warning, warn) {
 					// Suppress "use client" warnings from node_modules
 					if (warning.code === "MODULE_LEVEL_DIRECTIVE" && warning.message.includes('"use client"')) {
@@ -37,7 +35,9 @@ export default defineConfig({
 		devtools(),
 		tanstackStart({
 			prerender: {
-				enabled: true,
+				// Prerendering doesn't work with Vercel preset (expects dist/server/server.js)
+				// Vercel handles caching/ISR via Cache-Control headers instead
+				enabled: !process.env.VERCEL,
 				filter: ({ path }) => !path.includes("?"),
 				concurrency: 1,
 			},
