@@ -215,6 +215,21 @@ async function buildInternalIcons() {
 
 	const iconKeys = Object.keys(registryIcons);
 
+	// Collect all unique lucide icon names for individual imports
+	const lucideIconNames = new Set<string>();
+	for (const iconKey of iconKeys) {
+		const iconMapping = registryIcons[iconKey];
+		if (iconMapping?.lucide) {
+			lucideIconNames.add(iconMapping.lucide);
+		}
+	}
+
+	// Generate individual imports with aliases to avoid naming collisions (tree-shakeable)
+	const lucideImports = Array.from(lucideIconNames)
+		.sort()
+		.map((name) => `  ${name} as Lucide${name},`)
+		.join("\n");
+
 	const iconExports = iconKeys
 		.map((iconKey) => {
 			const iconMapping = registryIcons[iconKey];
@@ -232,7 +247,7 @@ async function buildInternalIcons() {
 				})
 				.join("\n");
 
-			return `export const ${iconKey} = createIcon(Lucide.${iconMapping.lucide}, {
+			return `export const ${iconKey} = createIcon(Lucide${iconMapping.lucide}, {
 ${names}
 });`;
 		})
@@ -242,14 +257,16 @@ ${names}
 // Run "pnpm build" to regenerate
 "use client";
 
-import * as Lucide from "lucide-react";
+import {
+${lucideImports}
+} from "lucide-react";
 import { createIcon } from "@dotui/registry/icons/create-icon";
 
 ${iconExports}
 `;
 
 	await fs.writeFile(targetPath, content, "utf8");
-	console.log("  ✓ __generated__/icons.tsx");
+	console.log(`  ✓ __generated__/icons.tsx (${lucideIconNames.size} lucide icons)`);
 }
 
 // ============================================================================
