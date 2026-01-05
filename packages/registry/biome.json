@@ -6,7 +6,8 @@
 		"rules": {
 			"a11y": {
 				"noSvgWithoutTitle": "off",
-				"useSemanticElements": "off"
+				"useSemanticElements": "off",
+				"useValidAnchor": "off"
 			},
 			"performance": {
 				"noImgElement": "off"
