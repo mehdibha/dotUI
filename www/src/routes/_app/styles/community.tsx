@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_app/styles/community")({
 	component: CommunityStylesPage,
+	headers: () => ({
+		"Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+	}),
 });
 
 function CommunityStylesPage() {

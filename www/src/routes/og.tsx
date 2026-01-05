@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ImageResponse } from "@vercel/og";
 
 async function loadFonts(): Promise<{ name: string; data: Buffer; weight: 400 | 600; style: "normal" }[]> {
 	const [{ base64Font: normal }, { base64Font: mono }, { base64Font: semibold }] = await Promise.all([
@@ -34,6 +33,7 @@ export const Route = createFileRoute("/og")({
 	server: {
 		handlers: {
 			GET: async ({ request }) => {
+				const { ImageResponse } = await import("@vercel/og");
 				const { searchParams } = new URL(request.url);
 				const title = searchParams.get("title");
 				const description = searchParams.get("description");
@@ -97,6 +97,9 @@ export const Route = createFileRoute("/og")({
 						width: 1200,
 						height: 628,
 						fonts,
+						headers: {
+							"Cache-Control": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000",
+						},
 					},
 				);
 			},

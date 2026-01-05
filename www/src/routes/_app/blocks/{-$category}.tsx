@@ -7,6 +7,9 @@ import { BlockCard } from "@/modules/blocks/block-card";
 
 export const Route = createFileRoute("/_app/blocks/{-$category}")({
 	component: BlocksPage,
+	headers: () => ({
+		"Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+	}),
 	loader: ({ params }) => {
 		const { category: categoryPath } = params;
 

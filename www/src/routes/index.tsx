@@ -19,6 +19,9 @@ import { siteConfig } from "@/config/site";
 import { getGitHubContributors } from "@/lib/github";
 
 export const Route = createFileRoute("/")({
+	headers: () => ({
+		"Cache-Control": "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
+	}),
 	loader: async ({ context }) => {
 		const { trpc, queryClient } = context;
 
