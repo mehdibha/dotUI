@@ -12,7 +12,7 @@ const modalStyles = tv({
 			"transition-opacity group-entering/modal:opacity-0 group-exiting/modal:opacity-0",
 		],
 		modal: [
-			"-translate-x-1/2 -translate-y-1/2 fixed top-[calc(var(--visual-viewport-height)/2)] left-1/2 max-h-(--visual-viewport-height) w-full max-w-[calc(100%-2rem)] rounded-lg border bg-bg shadow-lg sm:max-w-lg",
+			"fixed top-[calc(var(--visual-viewport-height)/2)] left-1/2 max-h-(--visual-viewport-height) w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg border bg-bg shadow-lg sm:max-w-lg",
 			"transition-[opacity,scale] ease-[cubic-bezier(0.165,0.84,0.44,1)]",
 			"entering:scale-95 entering:opacity-0 duration-200",
 			"exiting:scale-95 exiting:opacity-0 exiting:duration-150",

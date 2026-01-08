@@ -15,15 +15,15 @@ const drawerVariants = tv({
 		placement: {
 			top: {
 				overlay:
-					"entering:-translate-y-full exiting:-translate-y-full top-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen translate-y-0 rounded-b-xl border-t-0",
+					"top-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen entering:-translate-y-full exiting:-translate-y-full translate-y-0 rounded-b-xl border-t-0",
 			},
 			bottom: {
 				overlay:
-					"-translate-y-full top-(--visual-viewport-height) max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen entering:translate-y-0 exiting:translate-y-0 rounded-t-xl border-b-0",
+					"top-(--visual-viewport-height) max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen -translate-y-full entering:translate-y-0 exiting:translate-y-0 rounded-t-xl border-b-0",
 			},
 			left: {
 				overlay:
-					"entering:-translate-x-full exiting:-translate-x-full top-0 left-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] translate-x-0 rounded-r-xl border-l-0",
+					"top-0 left-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] entering:-translate-x-full exiting:-translate-x-full translate-x-0 rounded-r-xl border-l-0",
 			},
 			right: {
 				overlay:

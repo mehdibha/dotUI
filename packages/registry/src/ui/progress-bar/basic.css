@@ -1,8 +1,8 @@
 @theme inline {
 	/* progress-bar */
 	--animate-progress-indeterminate:
-		progress-grow var(--progress-duration) 1 both normal, progress-pulse 1s ease var(--progress-duration) infinite
-		normal none running;
+		progress-grow var(--progress-duration) 1 both normal,
+		progress-pulse 1s ease var(--progress-duration) infinite normal none running;
 }
 
 @keyframes progress-grow {

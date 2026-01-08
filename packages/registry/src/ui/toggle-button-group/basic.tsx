@@ -17,11 +17,11 @@ const toggleGroupStyles = tv({
 	variants: {
 		orientation: {
 			horizontal: {
-				root: "has-data-[variant=default]:-space-x-px flex-row",
+				root: "flex-row has-data-[variant=default]:-space-x-px",
 				item: "first:rounded-l-md last:rounded-r-md",
 			},
 			vertical: {
-				root: "has-data-[variant=default]:-space-y-px flex-col",
+				root: "flex-col has-data-[variant=default]:-space-y-px",
 				item: "first:rounded-t-md last:rounded-b-md",
 			},
 		},

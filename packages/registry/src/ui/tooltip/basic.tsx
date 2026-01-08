@@ -21,7 +21,7 @@ const tooltipStyles = tv({
 		],
 		arrow: [
 			"block [&>svg]:size-2.5 [&>svg]:fill-tooltip",
-			"placement-left:[&>svg]:-rotate-90 placement-bottom:[&>svg]:rotate-180 placement-right:[&>svg]:rotate-90",
+			"placement-bottom:[&>svg]:rotate-180 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90",
 		],
 		trigger: "focus-reset focus-visible:focus-ring",
 	},

@@ -17,7 +17,7 @@ const popoverStyles = tv({
 		],
 		arrow: [
 			"block [&>svg]:size-2.5 [&>svg]:fill-popover",
-			"placement-left:[&>svg]:-rotate-90 placement-bottom:[&>svg]:rotate-180 placement-right:[&>svg]:rotate-90",
+			"placement-bottom:[&>svg]:rotate-180 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90",
 		],
 	},
 });
