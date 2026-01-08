@@ -1,0 +1,63 @@
+{
+	"name": "starter-themes",
+	"version": "0.0.1",
+	"description": "Theme management for TanStack Start apps. System preference, no flash, cross-tab sync.",
+	"type": "module",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch",
+		"clean": "git clean -xdf .cache .turbo node_modules dist",
+		"pub:beta": "npm publish --tag beta",
+		"pub:release": "npm publish"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mehdibha/dotui"
+	},
+	"keywords": [
+		"react",
+		"theme",
+		"dark-mode",
+		"light-mode",
+		"system-theme",
+		"color-scheme",
+		"tanstack",
+		"tanstack-start",
+		"vite"
+	],
+	"author": {
+		"name": "mehdibha",
+		"url": "https://x.com/mehdibha"
+	},
+	"license": "MIT",
+	"peerDependencies": {
+		"@tanstack/react-router": ">=1.0.0",
+		"@tanstack/react-start": ">=1.0.0",
+		"react": "^18 || ^19"
+	},
+	"devDependencies": {
+		"@dotui/biome-config": "workspace:*",
+		"@tanstack/react-router": "^1.144.0",
+		"@tanstack/react-start": "^1.145.3",
+		"@types/react": "^19.2.2",
+		"react": "^19.2.1",
+		"tsup": "^8.5.0",
+		"typescript": "^5.8.3"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}
