@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { RouterProvider } from "react-aria-components";
+import { ThemeProvider } from "starter-themes";
 import type { QueryClient } from "@tanstack/react-query";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
@@ -18,7 +19,6 @@ import type { AppRouter } from "@dotui/api";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
-import { ThemeProvider } from "@/modules/theme/provider";
 import appCss from "@/styles.css?url";
 
 export const Route = createRootRouteWithContext<{

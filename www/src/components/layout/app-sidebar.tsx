@@ -28,11 +28,11 @@ import {
 
 import { Logo } from "@/components/layout/logo";
 import { SearchCommand } from "@/components/search-command";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { navItems } from "@/config/site";
 import { useMounted } from "@/hooks/use-mounted";
 import { authClient } from "@/modules/auth/client";
 import { UserProfileMenu } from "@/modules/auth/user-profile-menu";
-import { ThemeToggle } from "@/modules/theme/toggle";
 import type { DocsPageItem } from "@/lib/source";
 
 export function AppSidebar({ items }: { items: PageTree.Node[] }) {

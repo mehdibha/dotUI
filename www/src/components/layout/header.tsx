@@ -10,8 +10,8 @@ import { Kbd } from "@dotui/registry/ui/kbd";
 import { Logo } from "@/components/layout/logo";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { SearchCommand } from "@/components/search-command";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { navItems, siteConfig } from "@/config/site";
-import { ThemeToggle } from "@/modules/theme/toggle";
 
 interface HeaderProps {
 	className?: string;

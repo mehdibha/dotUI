@@ -47,6 +47,7 @@
 		"react-dom": "^19.2.1",
 		"react-stately": "^3.42.0",
 		"shiki": "^3.15.0",
+		"starter-themes": "workspace:*",
 		"superjson": "2.2.3",
 		"tailwindcss": "^4.1.14",
 		"ts-morph": "^25.0.1",

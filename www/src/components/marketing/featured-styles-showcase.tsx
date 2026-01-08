@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { UNSAFE_PortalProvider as PortalProvider } from "react-aria";
+import { useTheme } from "starter-themes";
 
 import { StyleProvider } from "@dotui/core/react";
 import { Cards } from "@dotui/registry/blocks/showcase/cards/components/cards";
@@ -10,7 +11,6 @@ import type { RouterOutputs } from "@dotui/api";
 import type { StyleConfig } from "@dotui/core/schemas";
 
 import { useDebounce } from "@/hooks/use-debounce";
-import { useTheme } from "@/modules/theme/provider";
 
 const MotionTabPanel = motion.create(TabPanel);
 
@@ -73,7 +73,7 @@ export function FeaturedStylesShowcase({
 								<Tab
 									key={style.name}
 									id={style.name}
-									className="*:data-tab-indicator:-z-1 px-3 py-1 *:data-tab-indicator:h-full *:data-tab-indicator:rounded-xl *:data-tab-indicator:bg-selected"
+									className="px-3 py-1 *:data-tab-indicator:-z-1 *:data-tab-indicator:h-full *:data-tab-indicator:rounded-xl *:data-tab-indicator:bg-selected"
 								>
 									{style.name}
 								</Tab>

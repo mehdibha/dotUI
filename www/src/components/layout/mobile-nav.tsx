@@ -20,7 +20,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 				aria-label="Toggle Menu"
 			>
 				<div className="relative h-3.5 w-4 [&>span]:absolute [&>span]:left-0 [&>span]:block [&>span]:h-0.5 [&>span]:w-4 [&>span]:rounded-full [&>span]:bg-fg [&>span]:transition-all [&>span]:duration-150 [&>span]:ease-out">
-					<span className={cn("top-0.25", isOpen && "-rotate-45 translate-y-[0.31rem]")} />
+					<span className={cn("top-0.25", isOpen && "translate-y-[0.31rem] -rotate-45")} />
 					<span className={cn("top-1.5", isOpen && "-rotate-45 opacity-0")} />
 					<span className={cn("top-2.75", isOpen && "translate-y-[-0.31rem] rotate-45")} />
 				</div>
