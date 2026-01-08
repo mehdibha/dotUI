@@ -77,7 +77,7 @@ function RootComponent() {
 		<RouterProvider
 			navigate={(href, opts) => {
 				if (typeof href === "string") return;
-				router.navigate({ ...href, ...opts });
+				return router.navigate({ ...href, ...opts });
 			}}
 			useHref={(href) => {
 				if (typeof href === "string") return href;
