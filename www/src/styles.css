@@ -1,13 +1,13 @@
 @import "tailwindcss";
 @import "@fontsource-variable/josefin-sans";
-@import "@fontsource/geist-sans";
+@import "@fontsource-variable/geist";
 @import "@fontsource/geist-mono";
 @import "@dotui/registry/styles.css";
 
 @source "../../packages/registry/src/**/*.{ts,tsx}";
 
 @theme {
-	--font-sans: "Geist Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
 	--font-mono: "Geist Mono", ui-monospace, monospace;
 	--font-josefin: "Josefin Sans Variable", ui-sans-serif, system-ui, sans-serif;
 

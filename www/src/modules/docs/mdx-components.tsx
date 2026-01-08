@@ -18,21 +18,21 @@ export const mdxComponents: MDXComponents = {
 	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 font-bold text-4xl", className)} {...props} />,
 	h2: ({ className, ...props }) => (
 		<h2
-			className={cn("mt-12 scroll-m-20 border-b pb-2 font-semibold text-2xl tracking-tight first:mt-0", className)}
+			className={cn("mt-12 scroll-m-20 font-semibold text-xl tracking-tight first:mt-0", className)}
 			{...props}
 		/>
 	),
 	h3: ({ className, ...props }) => (
-		<h3 className={cn("mt-8 scroll-m-20 font-semibold text-xl tracking-tight", className)} {...props} />
+		<h3 className={cn("mt-8 scroll-m-20 font-semibold text-lg tracking-tight", className)} {...props} />
 	),
 	h4: ({ className, ...props }) => (
-		<h4 className={cn("mt-8 scroll-m-20 font-semibold text-lg tracking-tight", className)} {...props} />
+		<h4 className={cn("mt-8 scroll-m-20 font-medium text-base tracking-tight", className)} {...props} />
 	),
 	h5: ({ className, ...props }) => (
-		<h5 className={cn("mt-8 scroll-m-20 font-semibold text-lg tracking-tight", className)} {...props} />
+		<h5 className={cn("mt-8 scroll-m-20 font-medium text-base tracking-tight", className)} {...props} />
 	),
 	h6: ({ className, ...props }) => (
-		<h6 className={cn("mt-8 scroll-m-20 font-semibold text-base tracking-tight", className)} {...props} />
+		<h6 className={cn("mt-8 scroll-m-20 font-medium text-base tracking-tight", className)} {...props} />
 	),
 	p: ({ className, ...props }) => <p className={cn("not-first:mt-4 text-base leading-7", className)} {...props} />,
 	a: ({ className, children, href, ...props }): React.ComponentProps<"a"> => {
