@@ -40,11 +40,11 @@ function createSourceFile(source: string): SourceFile {
 export function transformDemo(rawContent: string): TransformResult {
 	const sourceFile = createSourceFile(rawContent);
 
-	// Build full source (just path replacements)
-	const source = transformPaths(rawContent).replace("export default function", "export function").trim();
+	// Build full source (just path replacements + tabs to spaces)
+	const source = tabsToSpaces(transformPaths(rawContent).replace("export default function", "export function").trim());
 
-	// Build preview
-	const preview = buildPreview(sourceFile);
+	// Build preview (tabs to spaces applied in buildPreview via dedent)
+	const preview = tabsToSpaces(buildPreview(sourceFile));
 
 	// Cleanup
 	project.removeSourceFile(sourceFile);
@@ -150,6 +150,13 @@ function findExportFunction(sourceFile: SourceFile): FunctionDeclaration | undef
  */
 function transformPaths(code: string): string {
 	return code.replace(/@dotui\/registry\/ui\//g, "@/components/ui/").replace(/@dotui\/registry\//g, "@/");
+}
+
+/**
+ * Convert tabs to spaces (2 spaces per tab) for consistent code display
+ */
+function tabsToSpaces(code: string): string {
+	return code.replace(/\t/g, "  ");
 }
 
 /**
