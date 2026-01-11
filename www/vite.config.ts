@@ -16,11 +16,9 @@ export default defineConfig({
 		nitro({
 			rollupConfig: {
 				onwarn(warning, warn) {
-					// Suppress "use client" warnings from node_modules
 					if (warning.code === "MODULE_LEVEL_DIRECTIVE" && warning.message.includes('"use client"')) {
 						return;
 					}
-					// Suppress empty chunk warnings from tree-shaking
 					if (warning.code === "EMPTY_BUNDLE") {
 						return;
 					}
@@ -35,9 +33,7 @@ export default defineConfig({
 		devtools(),
 		tanstackStart({
 			prerender: {
-				// Prerendering doesn't work with Vercel preset (expects dist/server/server.js)
-				// Vercel handles caching/ISR via Cache-Control headers instead
-				enabled: !process.env.VERCEL,
+				enabled: true,
 				filter: ({ path }) => !path.includes("?"),
 				concurrency: 1,
 			},
