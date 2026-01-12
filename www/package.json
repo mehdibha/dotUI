@@ -73,6 +73,7 @@
 		"mdast-util-mdx-jsx": "^3.2.0",
 		"nitro": "npm:nitro-nightly@latest",
 		"prettier": "^3.7.4",
+		"srvx": "^0.10.0",
 		"tsx": "^4.21.0",
 		"typescript": "^5.8.3",
 		"typescript-api-extractor": "1.0.0-alpha.10",
