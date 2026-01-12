@@ -36,4 +36,6 @@ Thumbs.db
 # Security
 *.pem
 
-next-themes
+.vercel
+
+shadcn-ui
