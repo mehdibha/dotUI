@@ -14,6 +14,7 @@ export default defineConfig({
 	plugins: [
 		mdx(await import("./source.config")),
 		nitro({
+			preset: "vercel",
 			rollupConfig: {
 				onwarn(warning, warn) {
 					if (warning.code === "MODULE_LEVEL_DIRECTIVE" && warning.message.includes('"use client"')) {
@@ -35,7 +36,6 @@ export default defineConfig({
 			prerender: {
 				enabled: true,
 				filter: ({ path }) => !path.includes("?"),
-				concurrency: 1,
 			},
 		}),
 		viteReact(),
