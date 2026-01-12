@@ -11,9 +11,6 @@ import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/
 
 export const Route = createFileRoute("/(legal)/$")({
 	component: LegalPage,
-	headers: () => ({
-		"Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
-	}),
 	loader: async ({ params }) => {
 		const slugs = params._splat?.split("/") ?? [];
 		const data = await serverLoader({ data: slugs });

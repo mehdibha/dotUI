@@ -22,9 +22,6 @@ import { TOC, TOCProvider } from "@/modules/docs/toc";
 
 export const Route = createFileRoute("/_app/docs/$")({
 	component: DocsPage,
-	headers: () => ({
-		"Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
-	}),
 	loader: async ({ params }) => {
 		const slugs = params._splat?.split("/") ?? [];
 		const data = await serverLoader({ data: slugs });

@@ -11,9 +11,6 @@ const description = "Browse all available components in the library.";
 
 export const Route = createFileRoute("/_app/docs/components")({
 	component: ComponentsPage,
-	headers: () => ({
-		"Cache-Control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
-	}),
 	head: () => {
 		const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
