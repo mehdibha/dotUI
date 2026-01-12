@@ -55,5 +55,10 @@
 		"vite-tsconfig-paths": "^6.0.3",
 		"vitest": "^4.0.16"
 	},
-	"packageManager": "pnpm@10.24.0"
+	"packageManager": "pnpm@10.24.0",
+	"pnpm": {
+		"patchedDependencies": {
+			"nitro-nightly@3.0.1-20260109-100347-99691fcb": "patches/nitro-nightly@3.0.1-20260109-100347-99691fcb.patch"
+		}
+	}
 }

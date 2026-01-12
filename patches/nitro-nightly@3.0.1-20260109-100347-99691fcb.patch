@@ -1,0 +1,15 @@
+diff --git a/dist/vite.mjs b/dist/vite.mjs
+index 9756446aecad3dfa17cc8ab06f3e8545ab4ef419..18cfa8ef89c170eedd5894f25aa450efe6608d70 100644
+--- a/dist/vite.mjs
++++ b/dist/vite.mjs
+@@ -425,7 +425,9 @@ function nitroPreviewPlugin(ctx) {
+ 				killChild("SIGTERM");
+ 			});
+ 			child.once("exit", (code) => {
+-				if (code && code !== 0) consola$1.error(`[nitro] Preview server exited with code ${code}`);
++				// Exit codes 128+signal are expected when process is killed by signals (SIGTERM=143, SIGINT=130, SIGHUP=129)
++				const expectedSignalCodes = [143, 130, 129];
++				if (code && code !== 0 && !expectedSignalCodes.includes(code)) consola$1.error(`[nitro] Preview server exited with code ${code}`);
+ 			});
+ 			const { createProxyServer } = await import("./_libs/httpxy.mjs").then((n) => n.r);
+ 			const proxy = createProxyServer({ target: `http://localhost:${randomPort}` });

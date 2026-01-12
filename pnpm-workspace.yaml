@@ -4,10 +4,13 @@ packages:
   - config/*
 
 onlyBuiltDependencies:
-  - "@tailwindcss/oxide"
+  - '@tailwindcss/oxide'
   - bufferutil
   - core-js-pure
   - esbuild
   - msw
   - puppeteer
   - sharp
+
+patchedDependencies:
+  nitro-nightly@3.0.1-20260109-100347-99691fcb: patches/nitro-nightly@3.0.1-20260109-100347-99691fcb.patch
