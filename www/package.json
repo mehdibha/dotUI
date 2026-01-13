@@ -7,7 +7,7 @@
 		"with-env": "dotenv -e ../.env --",
 		"dev": "pnpm with-env vite dev",
 		"build": "NODE_OPTIONS='--max-old-space-size=8192' pnpm with-env vite build && pnpm build:postprocess",
-		"build:postprocess": "[ -n \"$VERCEL\" ] && cp -r .vercel/output/public/__tsr .vercel/output/static/__tsr 2>/dev/null || true",
+		"build:postprocess": "[ -n \"$VERCEL\" ] && cp -r .vercel/output/dist/client/__tsr .vercel/output/static/__tsr 2>/dev/null || true",
 		"preview": "pnpm with-env vite preview",
 		"typecheck": "tsc --noEmit",
 		"clean": "git clean -xdf .output .nitro .cache .turbo node_modules",
