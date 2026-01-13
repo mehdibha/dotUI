@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
 import { findNeighbour } from "fumadocs-core/page-tree";
 
 import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
@@ -55,6 +56,7 @@ export const Route = createFileRoute("/_app/docs/$")({
 });
 
 const serverLoader = createServerFn({ method: "GET" })
+	.middleware(process.env.VERCEL ? [staticFunctionMiddleware] : [])
 	.inputValidator((slugs: string[]) => slugs)
 	.handler(async ({ data: slugs }) => {
 		// Try to get the page, fallback to index for empty slugs

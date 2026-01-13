@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
 
 import browserCollections from "@/.source/browser";
 import { Footer } from "@/components/layout/footer";
@@ -36,6 +37,7 @@ export const Route = createFileRoute("/(legal)/$")({
 });
 
 const serverLoader = createServerFn({ method: "GET" })
+	.middleware(process.env.VERCEL ? [staticFunctionMiddleware] : [])
 	.inputValidator((slugs: string[]) => slugs)
 	.handler(async ({ data: slugs }) => {
 		const page = legalSource.getPage(slugs);

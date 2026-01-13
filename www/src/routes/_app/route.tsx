@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { SidebarProvider } from "@dotui/registry/ui/sidebar";
@@ -33,7 +34,9 @@ interface SerializedPageTree {
 	children: SerializedNode[];
 }
 
-const getPageTree = createServerFn({ method: "GET" }).handler(async () => {
+const getPageTree = createServerFn({ method: "GET" })
+	.middleware(process.env.VERCEL ? [staticFunctionMiddleware] : [])
+	.handler(async () => {
 	const pageTree = docsSource.getPageTree();
 	return docsSource.serializePageTree(pageTree) as unknown as SerializedPageTree;
 });
