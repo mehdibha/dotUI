@@ -14,7 +14,7 @@ export default defineConfig({
 	plugins: [
 		mdx(await import("./source.config")),
 		nitro({
-			preset: "vercel",
+			preset: process.env.VERCEL ? "vercel" : "node",
 			rollupConfig: {
 				onwarn(warning, warn) {
 					if (warning.code === "MODULE_LEVEL_DIRECTIVE" && warning.message.includes('"use client"')) {
