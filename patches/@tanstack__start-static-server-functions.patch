@@ -1,0 +1,13 @@
+diff --git a/dist/esm/staticFunctionMiddleware.js b/dist/esm/staticFunctionMiddleware.js
+index 5f3853087059a6cde9923e66bc2fec7abef02587..3c34578392c6cb7b36a4638076b9cb3f7e2949a5 100644
+--- a/dist/esm/staticFunctionMiddleware.js
++++ b/dist/esm/staticFunctionMiddleware.js
+@@ -74,7 +74,7 @@ const staticFunctionMiddleware = createMiddleware({ type: "function" }).client(a
+   return ctx.next();
+ }).server(async (ctx) => {
+   const response = await ctx.next();
+-  if (process.env.NODE_ENV === "production") {
++  if (process.env.TSS_PRERENDERING === "true") {
+     await addItemToCache({
+       functionId: ctx.serverFnMeta.id,
+       response: { result: response.result, context: ctx },

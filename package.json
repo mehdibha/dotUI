@@ -58,7 +58,8 @@
 	"packageManager": "pnpm@10.24.0",
 	"pnpm": {
 		"patchedDependencies": {
-			"nitro-nightly@3.0.1-20260109-100347-99691fcb": "patches/nitro-nightly@3.0.1-20260109-100347-99691fcb.patch"
+			"nitro-nightly@3.0.1-20260109-100347-99691fcb": "patches/nitro-nightly@3.0.1-20260109-100347-99691fcb.patch",
+			"@tanstack/start-static-server-functions": "patches/@tanstack__start-static-server-functions.patch"
 		}
 	}
 }

@@ -39,3 +39,6 @@ Thumbs.db
 .vercel
 
 shadcn-ui
+
+nitro-main
+router-main
