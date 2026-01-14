@@ -7,6 +7,30 @@ export interface DocsPageItem extends PageTree.Item {
 	wip?: boolean;
 }
 
+// Serialized page tree types (ReactNode replaced with string for JSON serialization)
+export interface SerializedItem {
+	type: "page";
+	name: string;
+	url: string;
+}
+
+export interface SerializedFolder {
+	type: "folder";
+	name: string;
+	children: SerializedNode[];
+}
+
+export interface SerializedSeparator {
+	type: "separator";
+	name: string;
+}
+
+export type SerializedNode = SerializedItem | SerializedFolder | SerializedSeparator;
+
+export interface SerializedPageTree {
+	children: SerializedNode[];
+}
+
 export const docsSource = loader({
 	baseUrl: "/docs",
 	source: docs.toFumadocsSource(),
@@ -32,3 +56,10 @@ export const legalSource = loader({
 	baseUrl: "/",
 	source: legal.toFumadocsSource(),
 });
+
+/** Get serialized page tree with proper types (fumadocs returns generic `object`) */
+export async function getSerializedPageTree(): Promise<SerializedPageTree> {
+	const pageTree = docsSource.getPageTree();
+	const serialized = await docsSource.serializePageTree(pageTree);
+	return serialized as SerializedPageTree;
+}
