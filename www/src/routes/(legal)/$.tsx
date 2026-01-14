@@ -37,7 +37,7 @@ export const Route = createFileRoute("/(legal)/$")({
 });
 
 const serverLoader = createServerFn({ method: "GET" })
-	.middleware(process.env.VERCEL ? [staticFunctionMiddleware] : [])
+	.middleware([staticFunctionMiddleware])
 	.inputValidator((slugs: string[]) => slugs)
 	.handler(async ({ data: slugs }) => {
 		const page = legalSource.getPage(slugs);

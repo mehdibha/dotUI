@@ -56,7 +56,7 @@ export const Route = createFileRoute("/_app/docs/$")({
 });
 
 const serverLoader = createServerFn({ method: "GET" })
-	.middleware(process.env.VERCEL ? [staticFunctionMiddleware] : [])
+	.middleware([staticFunctionMiddleware])
 	.inputValidator((slugs: string[]) => slugs)
 	.handler(async ({ data: slugs }) => {
 		// Try to get the page, fallback to index for empty slugs

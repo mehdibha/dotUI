@@ -35,7 +35,7 @@ interface SerializedPageTree {
 }
 
 const getPageTree = createServerFn({ method: "GET" })
-	.middleware(process.env.VERCEL ? [staticFunctionMiddleware] : [])
+	.middleware([staticFunctionMiddleware])
 	.handler(async () => {
 	const pageTree = docsSource.getPageTree();
 	return docsSource.serializePageTree(pageTree) as unknown as SerializedPageTree;
