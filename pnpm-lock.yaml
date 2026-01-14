@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  '@tanstack/start-static-server-functions':
+    hash: 3ed8317702579b73056ca6a5df63d06722bc061d99b97ec649174defe68dd1e5
+    path: patches/@tanstack__start-static-server-functions.patch
   nitro-nightly@3.0.1-20260109-100347-99691fcb:
     hash: 2a14587c2ca079d4d5830f04efbd208970801afa55285e6c8df9fa81b0519876
     path: patches/nitro-nightly@3.0.1-20260109-100347-99691fcb.patch
@@ -475,7 +478,7 @@ importers:
         version: 1.149.0(@tanstack/react-router@1.147.3(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(vite@7.3.0(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       '@tanstack/start-static-server-functions':
         specifier: ^1.149.2
-        version: 1.149.3(@tanstack/react-start@1.149.0(crossws@0.4.1(srvx@0.10.0))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@7.3.0(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))
+        version: 1.149.3(patch_hash=3ed8317702579b73056ca6a5df63d06722bc061d99b97ec649174defe68dd1e5)(@tanstack/react-start@1.149.0(crossws@0.4.1(srvx@0.10.0))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@7.3.0(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))
       '@trpc/client':
         specifier: ^11.2.0
         version: 11.7.2(@trpc/server@11.7.2(typescript@5.9.3))(typescript@5.9.3)
@@ -10285,7 +10288,7 @@ snapshots:
     transitivePeerDependencies:
       - crossws
 
-  '@tanstack/start-static-server-functions@1.149.3(@tanstack/react-start@1.149.0(crossws@0.4.1(srvx@0.10.0))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@7.3.0(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))':
+  '@tanstack/start-static-server-functions@1.149.3(patch_hash=3ed8317702579b73056ca6a5df63d06722bc061d99b97ec649174defe68dd1e5)(@tanstack/react-start@1.149.0(crossws@0.4.1(srvx@0.10.0))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@7.3.0(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)))':
     dependencies:
       '@tanstack/start-client-core': 1.149.3
       seroval: 1.4.2
