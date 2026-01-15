@@ -68,6 +68,7 @@
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.1",
 		"@types/yargs": "^17.0.35",
+		"@vercel/config": "^0.0.25",
 		"@vitejs/plugin-react": "^5.0.4",
 		"dotenv-cli": "^8.0.0",
 		"es-toolkit": "^1.41.0",
