@@ -11,6 +11,9 @@ export default defineConfig({
 	server: {
 		port: 4444,
 	},
+	ssr: {
+		noExternal: ["@tabler/icons-react"],
+	},
 	plugins: [
 		mdx(await import("./source.config")),
 		nitro({

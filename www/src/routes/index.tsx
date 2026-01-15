@@ -17,20 +17,13 @@ import { Announcement } from "@/components/marketing/announcement";
 import { FeaturedStylesShowcase } from "@/components/marketing/featured-styles-showcase";
 import { siteConfig } from "@/config/site";
 import { getGitHubContributors } from "@/lib/github";
+import { getFeaturedStyles } from "@/modules/styles/server";
 
 export const Route = createFileRoute("/")({
-	loader: async ({ context }) => {
-		const { trpc, queryClient } = context;
-
+	loader: async () => {
 		const [contributors, featuredStyles] = await Promise.all([
 			getGitHubContributors(),
-			queryClient.ensureQueryData(
-				trpc.style.getPublicStyles.queryOptions({
-					featured: true,
-					limit: 6,
-					sortBy: "oldest",
-				}),
-			),
+			getFeaturedStyles(),
 		]);
 
 		return { contributors, featuredStyles };

@@ -35,7 +35,8 @@ const FormSchema = z.object({
 
 export default function Demo() {
 	const { handleSubmit, control } = useForm<z.infer<typeof FormSchema>>({
-		resolver: zodResolver(FormSchema),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		resolver: zodResolver(FormSchema as any),
 	});
 
 	return (

@@ -155,7 +155,7 @@ import type { ImageLoadingStatus } from "@dotui/registry/hooks/use-image-loading
 
 const avatarStyles = tv({
 	slots: {
-		group: "-space-x-2 flex flex-wrap *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-bg",
+		group: "flex flex-wrap -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-bg",
 		root: "relative inline-flex shrink-0 overflow-hidden rounded-full bg-bg align-middle",
 		image: "aspect-square size-full",
 		fallback: "flex size-full select-none items-center justify-center bg-muted",
@@ -504,7 +504,7 @@ const Button = (localProps: ButtonProps) => {
 						<Loader
 							data-slot="spinner"
 							aria-label="loading"
-							className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2"
+							className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
 							size={16}
 						/>
 					)}
@@ -643,7 +643,7 @@ const Button = (localProps: ButtonProps) => {
 						<Loader
 							data-slot="spinner"
 							aria-label="loading"
-							className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2"
+							className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
 							size={16}
 						/>
 					)}
@@ -2572,15 +2572,15 @@ const drawerVariants = tv({
 		placement: {
 			top: {
 				overlay:
-					"entering:-translate-y-full exiting:-translate-y-full top-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen translate-y-0 rounded-b-xl border-t-0",
+					"top-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen entering:-translate-y-full exiting:-translate-y-full translate-y-0 rounded-b-xl border-t-0",
 			},
 			bottom: {
 				overlay:
-					"-translate-y-full top-(--visual-viewport-height) max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen entering:translate-y-0 exiting:translate-y-0 rounded-t-xl border-b-0",
+					"top-(--visual-viewport-height) max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen -translate-y-full entering:translate-y-0 exiting:translate-y-0 rounded-t-xl border-b-0",
 			},
 			left: {
 				overlay:
-					"entering:-translate-x-full exiting:-translate-x-full top-0 left-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] translate-x-0 rounded-r-xl border-l-0",
+					"top-0 left-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] entering:-translate-x-full exiting:-translate-x-full translate-x-0 rounded-r-xl border-l-0",
 			},
 			right: {
 				overlay:
@@ -3141,9 +3141,9 @@ const inputStyles = tv({
 
 			"[&>kbd]:rounded-xs [&>svg:not([class*='size-'])]:size-4",
 
-			"first:group-has-[>input]/input-group:has-[>_[data-slot=button]]:-ml-1.75 last:group-has-[>input]/input-group:has-[>_[data-slot=button]]:-mr-1.75",
-			"first:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:-ml-2.25 last:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:-mr-2.25",
-			"first:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:-ml-1.75 last:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:-mr-1.75",
+			"last:group-has-[>input]/input-group:has-[>_[data-slot=button]]:-mr-1.75 first:group-has-[>input]/input-group:has-[>_[data-slot=button]]:-ml-1.75",
+			"last:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:-mr-2.25 first:group-has-[>input]/input-group:group-data-[size=sm]/input-group:has-[>_[data-slot=button]]:-ml-2.25",
+			"last:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:-mr-1.75 first:group-has-[>input]/input-group:group-data-[size=lg]/input-group:has-[>_[data-slot=button]]:-ml-1.75",
 
 			"[&_[data-slot=button]>svg:not([class*='size-'])]:size-3.5",
 
@@ -4031,7 +4031,7 @@ const modalStyles = tv({
 			"transition-opacity group-entering/modal:opacity-0 group-exiting/modal:opacity-0",
 		],
 		modal: [
-			"-translate-x-1/2 -translate-y-1/2 fixed top-[calc(var(--visual-viewport-height)/2)] left-1/2 max-h-(--visual-viewport-height) w-full max-w-[calc(100%-2rem)] rounded-lg border bg-bg shadow-lg sm:max-w-lg",
+			"fixed top-[calc(var(--visual-viewport-height)/2)] left-1/2 max-h-(--visual-viewport-height) w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg border bg-bg shadow-lg sm:max-w-lg",
 			"transition-[opacity,scale] ease-[cubic-bezier(0.165,0.84,0.44,1)]",
 			"entering:scale-95 entering:opacity-0 duration-200",
 			"exiting:scale-95 exiting:opacity-0 exiting:duration-150",
@@ -4260,7 +4260,7 @@ const popoverStyles = tv({
 		],
 		arrow: [
 			"block [&>svg]:size-2.5 [&>svg]:fill-popover",
-			"placement-left:[&>svg]:-rotate-90 placement-bottom:[&>svg]:rotate-180 placement-right:[&>svg]:rotate-90",
+			"placement-bottom:[&>svg]:rotate-180 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90",
 		],
 	},
 });
@@ -5258,7 +5258,7 @@ const tableStyles = tv({
 		row: "",
 		cell: "whitespace-nowrap p-2 align-middle",
 		loadMore: [
-			"**:data-[slot=loader]:-translate-x-1/2 relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2",
+			"relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2",
 			"[&_[data-slot=loader]_svg]:size-4",
 		],
 	},
@@ -5986,11 +5986,11 @@ const toggleGroupStyles = tv({
 	variants: {
 		orientation: {
 			horizontal: {
-				root: "has-data-[variant=default]:-space-x-px flex-row",
+				root: "flex-row has-data-[variant=default]:-space-x-px",
 				item: "first:rounded-l-md last:rounded-r-md",
 			},
 			vertical: {
-				root: "has-data-[variant=default]:-space-y-px flex-col",
+				root: "flex-col has-data-[variant=default]:-space-y-px",
 				item: "first:rounded-t-md last:rounded-b-md",
 			},
 		},
@@ -6184,7 +6184,7 @@ const tooltipStyles = tv({
 		],
 		arrow: [
 			"block [&>svg]:size-2.5 [&>svg]:fill-tooltip",
-			"placement-left:[&>svg]:-rotate-90 placement-bottom:[&>svg]:rotate-180 placement-right:[&>svg]:rotate-90",
+			"placement-bottom:[&>svg]:rotate-180 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90",
 		],
 		trigger: "focus-reset focus-visible:focus-ring",
 	},
