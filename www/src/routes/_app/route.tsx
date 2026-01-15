@@ -8,11 +8,14 @@ import { SidebarProvider } from "@dotui/registry/ui/sidebar";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { getSerializedPageTree } from "@/lib/source";
+import type { SerializedPageTree } from "@/lib/source";
 
 const getPageTree = createServerFn({ method: "GET" })
 	.middleware([staticFunctionMiddleware])
-	.handler(getSerializedPageTree);
+	.handler(async (): Promise<SerializedPageTree> => {
+		const { getSerializedPageTree } = await import("@/lib/source");
+		return getSerializedPageTree();
+	});
 
 export const Route = createFileRoute("/_app")({
 	component: AppLayout,
