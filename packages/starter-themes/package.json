@@ -50,8 +50,8 @@
 	},
 	"devDependencies": {
 		"@dotui/biome-config": "workspace:*",
-		"@tanstack/react-router": "^1.147.3",
-		"@tanstack/react-start": "^1.149.0",
+		"@tanstack/react-router": "^1.150.0",
+		"@tanstack/react-start": "^1.150.0",
 		"@types/react": "^19.2.2",
 		"react": "^19.2.1",
 		"tsup": "^8.5.0",
