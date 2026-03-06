@@ -4,26 +4,28 @@ import type { VariantProps } from "tailwind-variants";
 
 const alertVariants = tv({
 	slots: {
-		base: "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border bg-card px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
-		title: "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight",
-		description: "col-start-2 grid justify-items-start gap-1 text-muted-foreground text-sm [&_p]:leading-relaxed",
+		root: "relative grid w-full items-start gap-y-0.5 rounded-lg border bg-card px-4 py-3 text-sm has-[>svg]:has-data-alert-action:grid-cols-[calc(var(--spacing)*4)_1fr_auto] has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-data-alert-action:grid-cols-[1fr_auto] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+		title: "line-clamp-1 min-h-4 font-medium tracking-tight [svg~&]:col-start-2",
+		description: "grid justify-items-start gap-1 text-fg-muted [&_p]:leading-relaxed [svg~&]:col-start-2",
+		action:
+			"flex gap-1 sm:row-start-1 sm:row-end-3 sm:self-center sm:[[data-alert-title]~&]:col-start-2 sm:[svg~&]:col-start-2 sm:[svg~[data-alert-description]~&]:col-start-3 sm:[svg~[data-alert-title]~&]:col-start-3",
 	},
 	variants: {
 		variant: {
 			neutral: {
-				base: "text-fg",
+				root: "text-fg",
 			},
 			danger: {
-				base: "bg-danger-muted text-fg-danger *:data-[slot=alert-description]:text-fg-danger/90 [&>svg]:text-current",
+				root: "text-fg-danger *:data-alert-description:text-fg-danger/90",
 			},
 			warning: {
-				base: "text-fg-warning *:data-[slot=alert-description]:text-fg-warning/90 [&>svg]:text-current",
+				root: "text-fg-warning *:data-alert-description:text-fg-warning/90",
 			},
 			info: {
-				base: "text-fg-info *:data-[slot=alert-description]:text-fg-info/90 [&>svg]:text-current",
+				root: "text-fg-info *:data-alert-description:text-fg-info/90",
 			},
 			success: {
-				base: "text-fg-success *:data-[slot=alert-description]:text-fg-success/90 [&>svg]:text-current",
+				root: "text-fg-success *:data-alert-description:text-fg-success/90",
 			},
 		},
 	},
@@ -32,14 +34,14 @@ const alertVariants = tv({
 	},
 });
 
-const { base, title, description } = alertVariants();
+const { root, title, description, action } = alertVariants();
 
 /* -----------------------------------------------------------------------------------------------*/
 
 interface AlertProps extends React.ComponentProps<"div">, VariantProps<typeof alertVariants> {}
 
 function Alert({ className, variant, ...props }: AlertProps) {
-	return <div data-slot="alert" role="alert" className={base({ variant, className })} {...props} />;
+	return <div data-alert="" role="alert" className={root({ variant, className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -47,7 +49,7 @@ function Alert({ className, variant, ...props }: AlertProps) {
 interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
 function AlertTitle({ className, ...props }: AlertTitleProps) {
-	return <div data-slot="alert-title" className={title({ className })} {...props} />;
+	return <div data-alert-title="" className={title({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -55,7 +57,7 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
 interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
 function AlertDescription({ className, ...props }: AlertDescriptionProps) {
-	return <div data-slot="alert-description" className={description({ className })} {...props} />;
+	return <div data-alert-description="" className={description({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -63,7 +65,7 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
 interface AlertActionProps extends React.ComponentProps<"div"> {}
 
 function AlertAction({ className, ...props }: AlertActionProps) {
-	return <div data-slot="alert-action" {...props} />;
+	return <div data-alert-action="" className={action({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/

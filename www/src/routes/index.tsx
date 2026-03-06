@@ -21,10 +21,7 @@ import { getFeaturedStyles } from "@/modules/styles/server";
 
 export const Route = createFileRoute("/")({
 	loader: async () => {
-		const [contributors, featuredStyles] = await Promise.all([
-			getGitHubContributors(),
-			getFeaturedStyles(),
-		]);
+		const [contributors, featuredStyles] = await Promise.all([getGitHubContributors(), getFeaturedStyles()]);
 
 		return { contributors, featuredStyles };
 	},

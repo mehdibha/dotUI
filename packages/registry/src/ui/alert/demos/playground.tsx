@@ -1,5 +1,3 @@
-"use client";
-
 import type { ReactNode } from "react";
 
 import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
