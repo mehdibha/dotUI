@@ -16,6 +16,9 @@
 		"typecheck": {
 			"dependsOn": ["^build"]
 		},
+		"@dotui/registry#typecheck": {
+			"dependsOn": ["^build", "build"]
+		},
 		"test": {
 			"cache": false,
 			"outputs": []
