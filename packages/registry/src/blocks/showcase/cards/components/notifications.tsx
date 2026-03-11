@@ -56,7 +56,6 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 																.map((n) => n[0])
 																.join("")}
 														</AvatarFallback>
-
 													</Avatar>
 													<div className="flex-1">
 														<p className="text-sm">

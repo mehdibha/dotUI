@@ -85,7 +85,6 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
 										<Avatar size="sm">
 											<AvatarImage src={member.avatar} alt={member.name} />
 											<AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-
 										</Avatar>
 										<div className="text-sm">
 											<p>{member.name}</p>

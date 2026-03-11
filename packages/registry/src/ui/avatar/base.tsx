@@ -95,8 +95,7 @@ interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
 const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
 	const { status } = useAvatarContext("AvatarFallback");
-	if (status !== "loaded")
-		return <span data-avatar-fallback="" className={fallback({ className })} {...props} />;
+	if (status !== "loaded") return <span data-avatar-fallback="" className={fallback({ className })} {...props} />;
 	return null;
 };
 
