@@ -1,5 +1,5 @@
 /**
- * Missing description.
+ * A group container that displays multiple avatars together with overlapping layout.
  */
 export interface AvatarGroupProps extends React.ComponentProps<"div"> {
 	/**
@@ -10,25 +10,9 @@ export interface AvatarGroupProps extends React.ComponentProps<"div"> {
 }
 
 /**
- * Missing description.
+ * A visual representation of a user or entity, displayed as an image, initials, or placeholder.
  */
-export interface AvatarProps extends AvatarImageProps {
-	/**
-	 * The size of the avatar.
-	 * @default 'md'
-	 */
-	size?: "sm" | "md" | "lg";
-
-	/**
-	 * Content to display when the image fails to load.
-	 */
-	fallback?: React.ReactNode;
-}
-
-/**
- * Missing description.
- */
-export interface AvatarRootProps extends React.ComponentProps<"span"> {
+export interface AvatarProps extends React.ComponentProps<"span"> {
 	/**
 	 * The size of the avatar.
 	 * @default 'md'
@@ -37,7 +21,7 @@ export interface AvatarRootProps extends React.ComponentProps<"span"> {
 }
 
 /**
- * Missing description.
+ * The image element displayed within the avatar. Automatically hidden when the image fails to load.
  */
 export interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
 	/**
@@ -47,11 +31,21 @@ export interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src
 }
 
 /**
- * Missing description.
+ * Content displayed when the avatar image fails to load. Typically shows initials or an icon.
  */
 export interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
 /**
- * Missing description.
+ * A loading placeholder displayed while the avatar image is being loaded.
  */
 export interface AvatarPlaceholderProps extends React.ComponentProps<"span"> {}
+
+/**
+ * A small indicator displayed on the avatar, typically used to show online status.
+ */
+export interface AvatarBadgeProps extends React.ComponentProps<"span"> {}
+
+/**
+ * A count indicator displayed at the end of an avatar group to show remaining items.
+ */
+export interface AvatarGroupCountProps extends React.ComponentProps<"span"> {}

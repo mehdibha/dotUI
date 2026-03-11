@@ -4,13 +4,13 @@ const avatarMeta = {
 	name: "avatar",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/avatar/basic.tsx",
+					path: "ui/avatar/base.tsx",
 					target: "ui/avatar.tsx",
 				},
 			],

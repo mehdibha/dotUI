@@ -1,6 +1,6 @@
 {
-	"name": "AvatarFallbackProps",
-	"description": "Missing description.",
-	"extendsElement": "span",
-	"props": {}
+  "name": "AvatarFallbackProps",
+  "description": "Content displayed when the avatar image fails to load. Typically shows initials or an icon.",
+  "extendsElement": "span",
+  "props": {}
 }

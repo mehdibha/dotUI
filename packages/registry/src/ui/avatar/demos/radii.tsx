@@ -3,15 +3,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 export default function Demo() {
 	return (
 		<div className="flex items-center gap-2">
-			<Avatar size="sm">
+			<Avatar className="rounded-full">
 				<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
 				<AvatarFallback>M</AvatarFallback>
 			</Avatar>
-			<Avatar size="md">
+			<Avatar className="rounded-lg">
 				<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
 				<AvatarFallback>M</AvatarFallback>
 			</Avatar>
-			<Avatar size="lg">
+			<Avatar className="rounded-md">
 				<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
 				<AvatarFallback>M</AvatarFallback>
 			</Avatar>

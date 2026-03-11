@@ -3,7 +3,7 @@ import { Button } from "react-aria-components";
 
 import { focusRing } from "@dotui/registry/lib/focus-styles";
 import { cn } from "@dotui/registry/lib/utils";
-import { Avatar } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage, AvatarPlaceholder } from "@dotui/registry/ui/avatar";
 import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
 import { Overlay } from "@dotui/registry/ui/overlay";
 import type { ButtonProps } from "@dotui/registry/ui/button";
@@ -30,12 +30,11 @@ export function UserProfileMenu({
 					props.className,
 				)}
 			>
-				<Avatar
-					src={session?.user?.image ?? undefined}
-					fallback={session?.user?.name?.charAt(0)}
-					alt={session?.user?.name ?? undefined}
-					className="size-full rounded-full"
-				/>
+				<Avatar className="size-full rounded-full">
+					<AvatarImage src={session?.user?.image ?? undefined} alt={session?.user?.name ?? undefined} />
+					<AvatarFallback>{session?.user?.name?.charAt(0)}</AvatarFallback>
+					<AvatarPlaceholder />
+				</Avatar>
 			</Button>
 			<Overlay
 				type="popover"
