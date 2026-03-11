@@ -164,7 +164,7 @@ export default Cards;
 import { BookIcon, ContrastIcon, LanguagesIcon, LogOutIcon, SettingsIcon, User2Icon, Users2Icon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Avatar, AvatarImage, AvatarPlaceholder } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarImage } from "@dotui/registry/ui/avatar";
 import { Card, CardContent, CardHeader } from "@dotui/registry/ui/card";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@dotui/registry/ui/list-box";
 import { Separator } from "@dotui/registry/ui/separator";
@@ -175,7 +175,6 @@ export function AccountMenu({ className, ...props }: React.ComponentProps<"div">
 			<CardHeader className="flex w-full items-center border-b px-4 py-3">
 				<Avatar size="sm">
 					<AvatarImage src="https://github.com/mehdibha.png" alt="mehdibha" />
-					<AvatarPlaceholder />
 				</Avatar>
 				<div className="w-full text-sm">
 					<p className="font-semibold">mehdibha</p>
@@ -719,7 +718,7 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
 import { PlusCircleIcon } from "lucide-react";
 
 import { ExternalLinkIcon } from "@dotui/registry/icons";
-import { Avatar, AvatarImage, AvatarPlaceholder } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarImage } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import {
 	Card,
@@ -800,7 +799,6 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
 									<div className="flex items-center gap-2">
 										<Avatar size="sm">
 										<AvatarImage src={member.avatar} alt={member.name} />
-										<AvatarPlaceholder />
 									</Avatar>
 										<div className="text-sm">
 											<p>{member.name}</p>
@@ -911,7 +909,7 @@ export function LoginForm(props: React.ComponentProps<"div">) {
 				content: `import React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage, AvatarPlaceholder } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@dotui/registry/ui/card";
@@ -966,7 +964,6 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 																.map((n) => n[0])
 																.join("")}
 														</AvatarFallback>
-														<AvatarPlaceholder />
 													</Avatar>
 													<div className="flex-1">
 														<p className="text-sm">

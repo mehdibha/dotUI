@@ -1,6 +1,0 @@
-{
-	"name": "AvatarPlaceholderProps",
-	"description": "A loading placeholder displayed while the avatar image is being loaded.",
-	"extendsElement": "span",
-	"props": {}
-}

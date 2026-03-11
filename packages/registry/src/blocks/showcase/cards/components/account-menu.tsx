@@ -3,7 +3,7 @@
 import { BookIcon, ContrastIcon, LanguagesIcon, LogOutIcon, SettingsIcon, User2Icon, Users2Icon } from "lucide-react";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage, AvatarPlaceholder } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 import { Card, CardContent, CardHeader } from "@dotui/registry/ui/card";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@dotui/registry/ui/list-box";
 import { Separator } from "@dotui/registry/ui/separator";
@@ -15,7 +15,6 @@ export function AccountMenu({ className, ...props }: React.ComponentProps<"div">
 				<Avatar size="sm">
 					<AvatarImage src="https://github.com/mehdibha.png" alt="mehdibha" />
 					<AvatarFallback>M</AvatarFallback>
-					<AvatarPlaceholder />
 				</Avatar>
 				<div className="w-full text-sm">
 					<p className="font-semibold">mehdibha</p>

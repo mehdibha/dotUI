@@ -7,7 +7,7 @@ import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
 import { TailwindWordmark } from "@dotui/registry/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@dotui/registry/components/icons/typescript";
 import { Alert, AlertTitle } from "@dotui/registry/ui/alert";
-import { Avatar, AvatarFallback, AvatarImage, AvatarPlaceholder } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 import { LinkButton } from "@dotui/registry/ui/button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
@@ -155,7 +155,6 @@ function HomePage() {
 												<Avatar>
 													<AvatarImage src={contributor.avatar_url} alt={contributor.login} />
 													<AvatarFallback>{contributor.login?.charAt(0).toUpperCase()}</AvatarFallback>
-													<AvatarPlaceholder />
 												</Avatar>
 											</a>
 											<TooltipContent>{contributor.login}</TooltipContent>

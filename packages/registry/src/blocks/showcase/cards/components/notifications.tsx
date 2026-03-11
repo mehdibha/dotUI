@@ -1,7 +1,7 @@
 import React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage, AvatarPlaceholder } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@dotui/registry/ui/card";
@@ -56,7 +56,7 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 																.map((n) => n[0])
 																.join("")}
 														</AvatarFallback>
-														<AvatarPlaceholder />
+
 													</Avatar>
 													<div className="flex-1">
 														<p className="text-sm">

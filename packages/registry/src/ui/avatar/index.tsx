@@ -9,7 +9,6 @@ import type {
 	AvatarGroupCountProps,
 	AvatarGroupProps,
 	AvatarImageProps,
-	AvatarPlaceholderProps,
 	AvatarProps,
 } from "./types";
 
@@ -21,13 +20,6 @@ export const AvatarFallback = createDynamicComponent<AvatarFallbackProps>(
 	"avatar",
 	"AvatarFallback",
 	Default.AvatarFallback,
-	{},
-);
-
-export const AvatarPlaceholder = createDynamicComponent<AvatarPlaceholderProps>(
-	"avatar",
-	"AvatarPlaceholder",
-	Default.AvatarPlaceholder,
 	{},
 );
 
@@ -46,7 +38,6 @@ export type {
 	AvatarProps,
 	AvatarImageProps,
 	AvatarFallbackProps,
-	AvatarPlaceholderProps,
 	AvatarBadgeProps,
 	AvatarGroupProps,
 	AvatarGroupCountProps,

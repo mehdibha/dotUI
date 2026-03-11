@@ -17,7 +17,6 @@ const avatarStyles = tv({
 		image: "aspect-square size-full rounded-[inherit] object-cover",
 		fallback:
 			"flex size-full select-none items-center justify-center rounded-[inherit] bg-muted text-sm group-data-[size=sm]/avatar:text-xs",
-		placeholder: "flex size-full h-full animate-pulse items-center justify-center rounded-[inherit] bg-muted",
 		badge: [
 			"absolute right-0 with-[left]:right-auto bottom-0 with-[top]:bottom-auto z-10 inline-flex select-none items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg",
 			"not-with-[size]:group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden",
@@ -40,13 +39,11 @@ const avatarStyles = tv({
 	},
 });
 
-const { group, root, image, fallback, placeholder, badge, groupCount } = avatarStyles();
+const { group, root, image, fallback, badge, groupCount } = avatarStyles();
 
 const [AvatarContext, useAvatarContext] = createContext<{
 	status: ImageLoadingStatus;
 	setStatus: (status: ImageLoadingStatus) => void;
-	hasImage: boolean;
-	setHasImage: (hasImage: boolean) => void;
 }>({
 	name: "Avatar",
 	strict: true,
@@ -60,10 +57,9 @@ interface AvatarProps extends React.ComponentProps<"span">, VariantProps<typeof 
 
 function Avatar({ className, size = "md", ...props }: AvatarProps) {
 	const [status, setStatus] = React.useState<ImageLoadingStatus>("idle");
-	const [hasImage, setHasImage] = React.useState(false);
 
 	return (
-		<AvatarContext value={{ status, setStatus, hasImage, setHasImage }}>
+		<AvatarContext value={{ status, setStatus }}>
 			<span data-avatar="" data-size={size} className={root({ className, size })} {...props} />
 		</AvatarContext>
 	);
@@ -79,17 +75,10 @@ interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
 
 function AvatarImage({ src, alt, className, referrerPolicy, crossOrigin, ...props }: AvatarImageProps) {
 	const status = useImageLoadingStatus(src, { referrerPolicy, crossOrigin });
-	const { setStatus, setHasImage } = useAvatarContext("AvatarImage");
+	const { setStatus } = useAvatarContext("AvatarImage");
 
 	React.useLayoutEffect(() => {
-		setHasImage(true);
-		return () => setHasImage(false);
-	}, [setHasImage]);
-
-	React.useLayoutEffect(() => {
-		if (status !== "idle") {
-			setStatus(status);
-		}
+		setStatus(status);
 	}, [status, setStatus]);
 
 	if (status === "loaded")
@@ -105,22 +94,9 @@ function AvatarImage({ src, alt, className, referrerPolicy, crossOrigin, ...prop
 interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
 const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
-	const { status, hasImage } = useAvatarContext("AvatarFallback");
-	if (!hasImage || status === "error")
+	const { status } = useAvatarContext("AvatarFallback");
+	if (status !== "loaded")
 		return <span data-avatar-fallback="" className={fallback({ className })} {...props} />;
-	return null;
-};
-
-/* -------------------------------------------------------------------------------------------------
- * Avatar Placeholder
- * -----------------------------------------------------------------------------------------------*/
-
-interface AvatarPlaceholderProps extends React.ComponentProps<"span"> {}
-
-const AvatarPlaceholder = ({ className, ...props }: AvatarPlaceholderProps) => {
-	const { status, hasImage } = useAvatarContext("AvatarPlaceholder");
-	if (hasImage && ["idle", "loading"].includes(status))
-		return <span data-avatar-placeholder="" className={placeholder({ className })} {...props} />;
 	return null;
 };
 
@@ -156,14 +132,13 @@ const AvatarGroupCount = ({ className, ...props }: AvatarGroupCountProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export { AvatarGroup, Avatar, AvatarImage, AvatarFallback, AvatarPlaceholder, AvatarBadge, AvatarGroupCount };
+export { AvatarGroup, Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroupCount };
 
 export type {
 	AvatarGroupProps,
 	AvatarProps,
 	AvatarImageProps,
 	AvatarFallbackProps,
-	AvatarPlaceholderProps,
 	AvatarBadgeProps,
 	AvatarGroupCountProps,
 };

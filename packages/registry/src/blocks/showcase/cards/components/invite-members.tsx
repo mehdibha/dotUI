@@ -3,7 +3,7 @@
 import { PlusCircleIcon } from "lucide-react";
 
 import { ExternalLinkIcon } from "@dotui/registry/icons";
-import { Avatar, AvatarFallback, AvatarImage, AvatarPlaceholder } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import {
 	Card,
@@ -85,7 +85,7 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
 										<Avatar size="sm">
 											<AvatarImage src={member.avatar} alt={member.name} />
 											<AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-											<AvatarPlaceholder />
+
 										</Avatar>
 										<div className="text-sm">
 											<p>{member.name}</p>

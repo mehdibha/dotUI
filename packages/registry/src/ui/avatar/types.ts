@@ -36,11 +36,6 @@ export interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src
 export interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
 /**
- * A loading placeholder displayed while the avatar image is being loaded.
- */
-export interface AvatarPlaceholderProps extends React.ComponentProps<"span"> {}
-
-/**
  * A small indicator displayed on the avatar, typically used to show online status.
  */
 export interface AvatarBadgeProps extends React.ComponentProps<"span"> {}
