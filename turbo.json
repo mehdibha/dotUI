@@ -13,7 +13,9 @@
 			"cache": false
 		},
 		"//#check:ci": {},
-		"typecheck": {},
+		"typecheck": {
+			"dependsOn": ["^build"]
+		},
 		"test": {
 			"cache": false,
 			"outputs": []
