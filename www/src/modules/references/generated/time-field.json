@@ -272,31 +272,6 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"defaultValue": {
-			"type": "T | null",
-			"detailedType": "T | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "typeParameter",
-						"name": "T",
-						"constraint": {
-							"type": "identifier",
-							"name": "TimeValue"
-						},
-						"default": null
-					}
-				]
-			},
-			"description": "The default value (uncontrolled)."
-		},
 		"onChange": {
 			"type": "((value: MappedTimeValue<T> | null) => void)",
 			"detailedType": "| ((value: MappedTimeValue<T> | null) => void)\n| undefined",
@@ -442,6 +417,31 @@
 			},
 			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
 		},
+		"defaultValue": {
+			"type": "T | null",
+			"detailedType": "T | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "typeParameter",
+						"name": "T",
+						"constraint": {
+							"type": "identifier",
+							"name": "TimeValue"
+						},
+						"default": null
+					}
+				]
+			},
+			"description": "The default value (uncontrolled)."
+		},
 		"minValue": {
 			"type": "TimeValue | null",
 			"detailedType": "TimeValue | null | undefined",
@@ -456,17 +456,17 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.11.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
 						"name": "CalendarDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.11.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
 						"name": "ZonedDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.11.0/node_modules/@internationalized/date/dist/types.d.ts:Time",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:Time",
 						"name": "Time"
 					}
 				]
@@ -487,17 +487,17 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.11.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
 						"name": "CalendarDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.11.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
 						"name": "ZonedDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.11.0/node_modules/@internationalized/date/dist/types.d.ts:Time",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:Time",
 						"name": "Time"
 					}
 				]
@@ -688,7 +688,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps",
 								"name": "DateFieldRenderProps"
 							}
 						]
@@ -762,12 +762,22 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the date field is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date field is required."
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateFieldRenderProps",
 			"name": "DateFieldRenderProps",
 			"extends": [],
 			"properties": {
@@ -776,7 +786,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.16.0_react@19.2.1/node_modules/@react-stately/datepicker/dist/types.d.ts:DateFieldState",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.16.1_react@19.2.1/node_modules/@react-stately/datepicker/dist/types.d.ts:DateFieldState",
 						"name": "DateFieldState"
 					},
 					"optional": false,
@@ -812,6 +822,16 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the date field is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date field is required."
 				}
 			},
 			"typeParameters": [],

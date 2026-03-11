@@ -419,6 +419,22 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
+		"defaultSelected": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the Switch should be selected (uncontrolled)."
+		},
+		"isSelected": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the Switch should be selected (controlled)."
+		},
 		"onChange": {
 			"type": "((isSelected: boolean) => void)",
 			"detailedType": "((isSelected: boolean) => void) | undefined",
@@ -443,22 +459,6 @@
 				"typeParameters": []
 			},
 			"description": "Handler that is called when the Switch's selection state changes."
-		},
-		"defaultSelected": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the Switch should be selected (uncontrolled)."
-		},
-		"isSelected": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the Switch should be selected (controlled)."
 		},
 		"isReadOnly": {
 			"type": "boolean",
@@ -564,7 +564,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps",
 								"name": "SwitchRenderProps"
 							}
 						]
@@ -750,9 +750,9 @@
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps",
 			"name": "SwitchRenderProps",
 			"extends": [],
 			"properties": {
@@ -831,7 +831,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.4_react@19.2.1/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.5_react@19.2.1/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState",
 						"name": "ToggleState"
 					},
 					"optional": false,

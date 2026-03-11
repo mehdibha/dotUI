@@ -440,6 +440,14 @@
 			},
 			"description": "Indicates the element that represents the current item within a container or set of related elements."
 		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
 		"inputMode": {
 			"type": "\"search\" | \"text\" | \"decimal\" | \"email\" | \"tel\" | \"none\" | \"url\" | \"numeric\"",
 			"detailedType": "| 'search'\n| 'text'\n| 'decimal'\n| 'email'\n| 'tel'\n| 'none'\n| 'url'\n| 'numeric'\n| undefined",
@@ -666,14 +674,6 @@
 			},
 			"description": "Indicates what functions can be performed when a dragged object is released on the drop target."
 		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
-		},
 		"aria-flowto": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -869,14 +869,18 @@
 			"description": "Indicates that the element is not editable, but is otherwise operable."
 		},
 		"aria-relevant": {
-			"type": "\"text\" | \"additions\" | \"additions removals\" | \"additions text\" | \"all\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
-			"detailedType": "| 'text'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'all'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
+			"type": "\"text\" | \"all\" | \"additions\" | \"additions removals\" | \"additions text\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
+			"detailedType": "| 'text'\n| 'all'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
 						"value": "text"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -889,10 +893,6 @@
 					{
 						"type": "stringLiteral",
 						"value": "additions text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -1138,7 +1138,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps",
 								"name": "GroupRenderProps"
 							}
 						]
@@ -1263,9 +1263,9 @@
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps",
 			"name": "GroupRenderProps",
 			"extends": [],
 			"properties": {

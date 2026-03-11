@@ -115,28 +115,6 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"defaultValue": {
-			"type": "number | number[]",
-			"detailedType": "number | number[] | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "array",
-						"elementType": {
-							"type": "number"
-						}
-					}
-				]
-			},
-			"description": "The default value (uncontrolled)."
-		},
 		"onChange": {
 			"type": "((value: number | number[]) => void)",
 			"detailedType": "((value: number | number[]) => void) | undefined",
@@ -178,6 +156,28 @@
 				]
 			},
 			"description": "Handler that is called when the value changes."
+		},
+		"defaultValue": {
+			"type": "number | number[]",
+			"detailedType": "number | number[] | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "number"
+					},
+					{
+						"type": "array",
+						"elementType": {
+							"type": "number"
+						}
+					}
+				]
+			},
+			"description": "The default value (uncontrolled)."
 		},
 		"minValue": {
 			"type": "number",
@@ -354,7 +354,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
 								"name": "SliderRenderProps"
 							}
 						]
@@ -432,9 +432,9 @@
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
 			"name": "SliderRenderProps",
 			"extends": [],
 			"properties": {
@@ -464,7 +464,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.4_react@19.2.1/node_modules/@react-stately/slider/dist/types.d.ts:Slider.State",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.5_react@19.2.1/node_modules/@react-stately/slider/dist/types.d.ts:Slider.State",
 						"name": "Slider.State"
 					},
 					"optional": false,

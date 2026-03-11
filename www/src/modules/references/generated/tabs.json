@@ -147,24 +147,11 @@
 			"description": "Handler that is called when the selection changes."
 		},
 		"selectedKey": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
+			"type": "Key",
+			"detailedType": "Key | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"type": "number"
-					}
-				]
+				"type": "identifier",
+				"name": "Key"
 			},
 			"description": "The currently selected key in the collection (controlled)."
 		},
@@ -175,7 +162,7 @@
 				"type": "identifier",
 				"name": "Key"
 			},
-			"description": "The initial selected key in the collection (uncontrolled)."
+			"description": "The initial selected keys in the collection (uncontrolled)."
 		},
 		"keyboardActivation": {
 			"type": "\"manual\" | \"automatic\"",
@@ -292,7 +279,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps",
 								"name": "TabsRenderProps"
 							}
 						]
@@ -509,9 +496,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps",
 			"name": "TabsRenderProps",
 			"extends": [],
 			"properties": {

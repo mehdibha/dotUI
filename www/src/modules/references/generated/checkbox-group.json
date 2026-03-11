@@ -208,33 +208,6 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"defaultValue": {
-			"type": "string[]",
-			"detailedType": "string[] | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "array",
-						"elementType": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"description": "The default value (uncontrolled)."
-		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
-		},
 		"onChange": {
 			"type": "((value: string[]) => void)",
 			"detailedType": "((value: string[]) => void) | undefined",
@@ -347,6 +320,33 @@
 				]
 			},
 			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
+		"defaultValue": {
+			"type": "string[]",
+			"detailedType": "string[] | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "array",
+						"elementType": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"description": "The default value (uncontrolled)."
 		},
 		"validationBehavior": {
 			"type": "\"native\" | \"aria\"",
@@ -463,7 +463,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxGroupRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxGroupRenderProps",
 								"name": "CheckboxGroupRenderProps"
 							}
 						]
@@ -568,9 +568,9 @@
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxGroupRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxGroupRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxGroupRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxGroupRenderProps",
 			"name": "CheckboxGroupRenderProps",
 			"extends": [],
 			"properties": {
@@ -619,7 +619,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+checkbox@3.7.4_react@19.2.1/node_modules/@react-stately/checkbox/dist/types.d.ts:CheckboxGroup.State",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+checkbox@3.7.5_react@19.2.1/node_modules/@react-stately/checkbox/dist/types.d.ts:CheckboxGroup.State",
 						"name": "CheckboxGroup.State"
 					},
 					"optional": false,

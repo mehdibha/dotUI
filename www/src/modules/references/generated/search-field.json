@@ -458,6 +458,115 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
+		"onChange": {
+			"type": "((value: string) => void)",
+			"detailedType": "((value: string) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "value",
+						"value": {
+							"type": "link",
+							"id": "string",
+							"name": "string"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the value changes."
+		},
+		"isReadOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input can be selected but not changed by the user."
+		},
+		"isRequired": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether user input is required on the input before form submission."
+		},
+		"isInvalid": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input value is invalid."
+		},
+		"validate": {
+			"type": "((value: string) => true | ValidationError | null | undefined)",
+			"detailedType": "| ((\n    value: string,\n  ) => true | ValidationError | null | undefined)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "string"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "undefined"
+								},
+								{
+									"type": "null"
+								},
+								{
+									"type": "string"
+								},
+								{
+									"type": "booleanLiteral",
+									"value": true
+								},
+								{
+									"type": "array",
+									"elementType": {
+										"type": "string"
+									}
+								}
+							]
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
 		"defaultValue": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -595,14 +704,6 @@
 				]
 			},
 			"description": "Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be\npresented if they are made."
-		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
 		},
 		"onCopy": {
 			"type": "ClipboardEventHandler<HTMLInputElement>",
@@ -766,31 +867,6 @@
 			},
 			"description": "Handler that is called when a new character is received in the current text composition session. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionupdate_event)."
 		},
-		"onChange": {
-			"type": "((value: string) => void)",
-			"detailedType": "((value: string) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "value",
-						"value": {
-							"type": "link",
-							"id": "string",
-							"name": "string"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the value changes."
-		},
 		"onBeforeInput": {
 			"type": "FormEventHandler<HTMLInputElement>",
 			"detailedType": "FormEventHandler<HTMLInputElement> | undefined",
@@ -896,82 +972,6 @@
 				]
 			},
 			"description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
-		},
-		"isReadOnly": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input can be selected but not changed by the user."
-		},
-		"isRequired": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether user input is required on the input before form submission."
-		},
-		"isInvalid": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input value is invalid."
-		},
-		"validate": {
-			"type": "((value: string) => true | ValidationError | null | undefined)",
-			"detailedType": "| ((\n    value: string,\n  ) => true | ValidationError | null | undefined)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "value",
-								"value": {
-									"type": "string"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "union",
-							"elements": [
-								{
-									"type": "undefined"
-								},
-								{
-									"type": "null"
-								},
-								{
-									"type": "string"
-								},
-								{
-									"type": "booleanLiteral",
-									"value": true
-								},
-								{
-									"type": "array",
-									"elementType": {
-										"type": "string"
-									}
-								}
-							]
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
 		},
 		"minLength": {
 			"type": "number",
@@ -1133,7 +1133,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
 								"name": "SearchFieldRenderProps"
 							}
 						]
@@ -19174,9 +19174,9 @@
 			"typeParameters": [],
 			"description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
 			"name": "SearchFieldRenderProps",
 			"extends": [],
 			"properties": {
@@ -19235,7 +19235,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+searchfield@3.5.18_react@19.2.1/node_modules/@react-stately/searchfield/dist/types.d.ts:SearchField.State",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+searchfield@3.5.19_react@19.2.1/node_modules/@react-stately/searchfield/dist/types.d.ts:SearchField.State",
 						"name": "SearchField.State"
 					},
 					"optional": false,

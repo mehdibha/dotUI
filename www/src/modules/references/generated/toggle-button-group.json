@@ -89,18 +89,18 @@
 			"default": "'horizontal'"
 		},
 		"selectionMode": {
-			"type": "\"multiple\" | \"single\"",
-			"detailedType": "'multiple' | 'single' | undefined",
+			"type": "\"single\" | \"multiple\"",
+			"detailedType": "'single' | 'multiple' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "multiple"
+						"value": "single"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "single"
+						"value": "multiple"
 					}
 				]
 			},
@@ -347,7 +347,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps",
 								"name": "ToggleButtonGroupRenderProps"
 							}
 						]
@@ -907,9 +907,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonGroupRenderProps",
 			"name": "ToggleButtonGroupRenderProps",
 			"extends": [],
 			"properties": {
@@ -939,7 +939,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.4_react@19.2.1/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleGroupState",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.5_react@19.2.1/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleGroupState",
 						"name": "ToggleGroupState"
 					},
 					"optional": false,

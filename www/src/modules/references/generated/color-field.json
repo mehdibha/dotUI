@@ -274,7 +274,7 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 						"name": "Color"
 					}
 				]
@@ -297,6 +297,141 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
+		"onChange": {
+			"type": "((color: Color | null) => void)",
+			"detailedType": "((color: Color | null) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "color",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+											"name": "Color"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the value changes."
+		},
+		"isReadOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input can be selected but not changed by the user."
+		},
+		"isRequired": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether user input is required on the input before form submission."
+		},
+		"isInvalid": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input value is invalid."
+		},
+		"validate": {
+			"type": "((value: Color | null) => true | ValidationError | null | undefined)",
+			"detailedType": "| ((\n    value: Color | null,\n  ) => true | ValidationError | null | undefined)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+											"name": "Color"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "undefined"
+								},
+								{
+									"type": "null"
+								},
+								{
+									"type": "string"
+								},
+								{
+									"type": "booleanLiteral",
+									"value": true
+								},
+								{
+									"type": "array",
+									"elementType": {
+										"type": "string"
+									}
+								}
+							]
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
 		"defaultValue": {
 			"type": "string | Color | null",
 			"detailedType": "string | Color | null | undefined",
@@ -314,20 +449,12 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 						"name": "Color"
 					}
 				]
 			},
 			"description": "The default value (uncontrolled)."
-		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
 		},
 		"onCopy": {
 			"type": "ClipboardEventHandler<HTMLInputElement>",
@@ -491,47 +618,6 @@
 			},
 			"description": "Handler that is called when a new character is received in the current text composition session. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionupdate_event)."
 		},
-		"onChange": {
-			"type": "((color: Color | null) => void)",
-			"detailedType": "((color: Color | null) => void) | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "color",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "null"
-										},
-										{
-											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-											"name": "Color"
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "Handler that is called when the value changes."
-		},
 		"onBeforeInput": {
 			"type": "FormEventHandler<HTMLInputElement>",
 			"detailedType": "FormEventHandler<HTMLInputElement> | undefined",
@@ -612,92 +698,6 @@
 				]
 			},
 			"description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
-		},
-		"isReadOnly": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input can be selected but not changed by the user."
-		},
-		"isRequired": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether user input is required on the input before form submission."
-		},
-		"isInvalid": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input value is invalid."
-		},
-		"validate": {
-			"type": "((value: Color | null) => true | ValidationError | null | undefined)",
-			"detailedType": "| ((\n    value: Color | null,\n  ) => true | ValidationError | null | undefined)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "value",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "null"
-										},
-										{
-											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-											"name": "Color"
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "union",
-							"elements": [
-								{
-									"type": "undefined"
-								},
-								{
-									"type": "null"
-								},
-								{
-									"type": "string"
-								},
-								{
-									"type": "booleanLiteral",
-									"value": true
-								},
-								{
-									"type": "array",
-									"elementType": {
-										"type": "string"
-									}
-								}
-							]
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
 		},
 		"isWheelDisabled": {
 			"type": "boolean",
@@ -822,7 +822,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
 								"name": "ColorFieldRenderProps"
 							}
 						]
@@ -942,9 +942,9 @@
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
 			"name": "ColorChannelRange",
 			"extends": [],
 			"properties": {
@@ -1509,9 +1509,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 			"name": "Color",
 			"extends": [],
 			"properties": {
@@ -1534,7 +1534,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -1660,7 +1660,7 @@
 						"parameters": [],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -1735,7 +1735,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -1762,7 +1762,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.3_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
 							"name": "ColorChannelRange"
 						},
 						"typeParameters": []
@@ -20083,9 +20083,9 @@
 			"typeParameters": [],
 			"description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
 			"name": "ColorFieldRenderProps",
 			"extends": [],
 			"properties": {
@@ -20227,7 +20227,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+color@3.9.4_react@19.2.1/node_modules/@react-stately/color/dist/types.d.ts:ColorField.State",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+color@3.9.5_react@19.2.1/node_modules/@react-stately/color/dist/types.d.ts:ColorField.State",
 						"name": "ColorField.State"
 					},
 					"optional": false,

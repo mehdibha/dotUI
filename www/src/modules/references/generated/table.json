@@ -141,39 +141,6 @@
 			},
 			"description": "A list of row keys to disable."
 		},
-		"disallowEmptySelection": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the collection allows empty selection."
-		},
-		"onSelectionChange": {
-			"type": "((keys: Selection) => void)",
-			"detailedType": "((keys: Selection) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "keys",
-						"value": {
-							"type": "link",
-							"id": "Selection",
-							"name": "Selection"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the selection changes."
-		},
 		"shouldSelectOnPressUp": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
@@ -209,6 +176,14 @@
 				"name": "SelectionMode"
 			},
 			"description": "The type of selection that is allowed in the collection."
+		},
+		"disallowEmptySelection": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the collection allows empty selection."
 		},
 		"selectedKeys": {
 			"type": "Iterable<Key> | \"all\"",
@@ -281,6 +256,31 @@
 				]
 			},
 			"description": "The initial selected keys in the collection (uncontrolled)."
+		},
+		"onSelectionChange": {
+			"type": "((keys: Selection) => void)",
+			"detailedType": "((keys: Selection) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "keys",
+						"value": {
+							"type": "link",
+							"id": "Selection",
+							"name": "Selection"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the selection changes."
 		},
 		"sortDescriptor": {
 			"type": "SortDescriptor",
@@ -382,7 +382,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
 								"name": "TableRenderProps"
 							}
 						]
@@ -669,9 +669,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
 			"name": "TableRenderProps",
 			"extends": [],
 			"properties": {
@@ -712,7 +712,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+table@3.15.3_react@19.2.1/node_modules/@react-stately/table/dist/types.d.ts:Table.State",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+table@3.15.4_react@19.2.1/node_modules/@react-stately/table/dist/types.d.ts:Table.State",
 							"name": "Table.State"
 						},
 						"typeParameters": [

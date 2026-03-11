@@ -313,28 +313,6 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"defaultValue": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"type": "number"
-					}
-				]
-			},
-			"description": "The default value (uncontrolled)."
-		},
 		"onChange": {
 			"type": "((value: Key | null) => void)",
 			"detailedType": "((value: Key | null) => void) | undefined",
@@ -446,6 +424,28 @@
 			},
 			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
 		},
+		"defaultValue": {
+			"type": "Key | null",
+			"detailedType": "Key | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "number"
+					}
+				]
+			},
+			"description": "The default value (uncontrolled)."
+		},
 		"autoComplete": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -494,6 +494,21 @@
 				"typeParameters": []
 			},
 			"description": "Method that is called when the open state of the menu changes."
+		},
+		"selectionMode": {
+			"type": "\"single\"",
+			"detailedType": "'single' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "single"
+					}
+				]
+			},
+			"description": "Whether single or multiple selection is enabled.",
+			"default": "'single'"
 		},
 		"onSelectionChange": {
 			"type": "((key: Key | null) => void)",
@@ -560,11 +575,24 @@
 			"description": "The currently selected key in the collection (controlled)."
 		},
 		"defaultSelectedKey": {
-			"type": "Key",
-			"detailedType": "Key | undefined",
+			"type": "Key | null",
+			"detailedType": "Key | null | undefined",
 			"typeAst": {
-				"type": "identifier",
-				"name": "Key"
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "number"
+					}
+				]
 			},
 			"description": "The initial selected key in the collection (uncontrolled)."
 		},
@@ -575,21 +603,6 @@
 				"type": "boolean"
 			},
 			"description": "Whether the select should be allowed to be open when the collection is empty."
-		},
-		"selectionMode": {
-			"type": "\"single\"",
-			"detailedType": "'single' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "single"
-					}
-				]
-			},
-			"description": "Whether single or multiple selection is enabled.",
-			"default": "'single'"
 		},
 		"validationBehavior": {
 			"type": "\"native\" | \"aria\"",
@@ -706,7 +719,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectRenderProps",
 								"name": "SelectRenderProps"
 							}
 						]
@@ -992,9 +1005,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectRenderProps",
 			"name": "SelectRenderProps",
 			"extends": [],
 			"properties": {

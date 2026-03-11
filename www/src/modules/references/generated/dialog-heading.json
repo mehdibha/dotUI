@@ -690,14 +690,18 @@
 			"description": "Indicates that the element is not editable, but is otherwise operable."
 		},
 		"aria-relevant": {
-			"type": "\"text\" | \"additions\" | \"additions removals\" | \"additions text\" | \"all\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
-			"detailedType": "| 'text'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'all'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
+			"type": "\"text\" | \"all\" | \"additions\" | \"additions removals\" | \"additions text\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
+			"detailedType": "| 'text'\n| 'all'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
 						"value": "text"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -710,10 +714,6 @@
 					{
 						"type": "stringLiteral",
 						"value": "additions text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "all"
 					},
 					{
 						"type": "stringLiteral",

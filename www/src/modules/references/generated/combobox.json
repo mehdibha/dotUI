@@ -390,7 +390,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps",
 								"name": "ComboBoxRenderProps"
 							}
 						]
@@ -406,6 +406,28 @@
 				"type": "string"
 			},
 			"description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+		},
+		"value": {
+			"type": "Key | null",
+			"detailedType": "Key | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "number"
+					}
+				]
+			},
+			"description": "The current value (controlled)."
 		},
 		"id": {
 			"type": "string",
@@ -434,6 +456,48 @@
 			"description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
 			"default": "'native'"
 		},
+		"onChange": {
+			"type": "((value: Key | null) => void)",
+			"detailedType": "((value: Key | null) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "string"
+										},
+										{
+											"type": "number"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the value changes."
+		},
 		"isReadOnly": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
@@ -459,8 +523,8 @@
 			"description": "Whether the input value is invalid."
 		},
 		"validate": {
-			"type": "((value: ComboBoxValidationValue) => true | ValidationError | null | undefined)",
-			"detailedType": "| ((\n    value: ComboBoxValidationValue,\n  ) => true | ValidationError | null | undefined)\n| undefined",
+			"type": "((value: ComboBoxValidationValue<\"single\">) => true | ValidationError | null | undefined)",
+			"detailedType": "| ((\n    value: ComboBoxValidationValue<'single'>,\n  ) => true | ValidationError | null | undefined)\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -475,7 +539,7 @@
 								"name": "value",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.13.11_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.14.0_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue",
 									"name": "ComboBoxValidationValue"
 								},
 								"optional": false,
@@ -511,6 +575,28 @@
 				]
 			},
 			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+		},
+		"defaultValue": {
+			"type": "Key | null",
+			"detailedType": "Key | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "number"
+					}
+				]
+			},
+			"description": "The default value (uncontrolled)."
 		},
 		"onOpenChange": {
 			"type": "((isOpen: boolean, menuTrigger?: MenuTriggerAction | undefined) => void)",
@@ -584,6 +670,29 @@
 			},
 			"description": "Method that is called when the open state of the menu changes. Returns the new open state and the action that caused the opening of the menu."
 		},
+		"shouldFocusWrap": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether keyboard navigation is circular."
+		},
+		"selectionMode": {
+			"type": "\"single\"",
+			"detailedType": "'single' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "single"
+					}
+				]
+			},
+			"description": "Whether single or multiple selection is enabled.",
+			"default": "'single'"
+		},
 		"onSelectionChange": {
 			"type": "((key: Key | null) => void)",
 			"detailedType": "((key: Key | null) => void) | undefined",
@@ -626,45 +735,6 @@
 			},
 			"description": "Handler that is called when the selection changes."
 		},
-		"selectedKey": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"type": "number"
-					}
-				]
-			},
-			"description": "The currently selected key in the collection (controlled)."
-		},
-		"defaultSelectedKey": {
-			"type": "Key",
-			"detailedType": "Key | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Key"
-			},
-			"description": "The initial selected key in the collection (uncontrolled)."
-		},
-		"shouldFocusWrap": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether keyboard navigation is circular."
-		},
 		"defaultItems": {
 			"type": "Iterable<T>",
 			"detailedType": "Iterable<T> | undefined",
@@ -695,6 +765,50 @@
 				]
 			},
 			"description": "The list of ComboBox items (uncontrolled)."
+		},
+		"selectedKey": {
+			"type": "Key | null",
+			"detailedType": "Key | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "number"
+					}
+				]
+			},
+			"description": "The currently selected key in the collection (controlled)."
+		},
+		"defaultSelectedKey": {
+			"type": "Key | null",
+			"detailedType": "Key | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "number"
+					}
+				]
+			},
+			"description": "The initial selected key in the collection (uncontrolled)."
 		},
 		"inputValue": {
 			"type": "string",
@@ -1034,9 +1148,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps",
 			"name": "ComboBoxRenderProps",
 			"extends": [],
 			"properties": {
@@ -1084,9 +1198,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.13.11_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.14.0_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.13.11_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.14.0_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue",
 			"name": "ComboBoxValidationValue",
 			"extends": [],
 			"properties": {
@@ -1110,6 +1224,17 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The selected key in the ComboBox."
+				},
+				"value": {
+					"type": "property",
+					"name": "value",
+					"value": {
+						"type": "identifier",
+						"name": "Key"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The keys of the currently selected items."
 				},
 				"inputValue": {
 					"type": "property",

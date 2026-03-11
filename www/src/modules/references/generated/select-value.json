@@ -27,7 +27,7 @@
 											"type": "application",
 											"base": {
 												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
 												"name": "SelectValueRenderProps"
 											},
 											"typeParameters": [
@@ -342,6 +342,14 @@
 			},
 			"description": "Indicates the element that represents the current item within a container or set of related elements."
 		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
 		"inputMode": {
 			"type": "\"search\" | \"text\" | \"decimal\" | \"email\" | \"tel\" | \"none\" | \"url\" | \"numeric\"",
 			"detailedType": "| 'search'\n| 'text'\n| 'decimal'\n| 'email'\n| 'tel'\n| 'none'\n| 'url'\n| 'numeric'\n| undefined",
@@ -568,14 +576,6 @@
 			},
 			"description": "Indicates what functions can be performed when a dragged object is released on the drop target."
 		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
-		},
 		"aria-flowto": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -771,14 +771,18 @@
 			"description": "Indicates that the element is not editable, but is otherwise operable."
 		},
 		"aria-relevant": {
-			"type": "\"text\" | \"additions\" | \"additions removals\" | \"additions text\" | \"all\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
-			"detailedType": "| 'text'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'all'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
+			"type": "\"text\" | \"all\" | \"additions\" | \"additions removals\" | \"additions text\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
+			"detailedType": "| 'text'\n| 'all'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
 						"value": "text"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -791,10 +795,6 @@
 					{
 						"type": "stringLiteral",
 						"value": "additions text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -957,7 +957,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
 							"name": "SelectValueRenderProps"
 						},
 						"typeParameters": [
@@ -1001,7 +1001,7 @@
 											"type": "application",
 											"base": {
 												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
 												"name": "SelectValueRenderProps"
 											},
 											"typeParameters": [
@@ -1085,7 +1085,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
 									"name": "SelectValueRenderProps"
 								},
 								"typeParameters": [
@@ -1113,9 +1113,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
 			"name": "SelectValueRenderProps",
 			"extends": [],
 			"properties": {
@@ -1196,7 +1196,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.1_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
 							"name": "Select.State"
 						},
 						"typeParameters": [
@@ -1213,11 +1213,11 @@
 								"elements": [
 									{
 										"type": "stringLiteral",
-										"value": "multiple"
+										"value": "single"
 									},
 									{
 										"type": "stringLiteral",
-										"value": "single"
+										"value": "multiple"
 									}
 								]
 							}
@@ -1231,16 +1231,16 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.1_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:SelectState": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:SelectState": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.1_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
 			"name": "Select.State",
 			"extends": [
 				{
 					"type": "application",
 					"base": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+list@3.13.3_react@19.2.1/node_modules/@react-stately/list/dist/types.d.ts:ListState",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+list@3.13.4_react@19.2.1/node_modules/@react-stately/list/dist/types.d.ts:ListState",
 						"name": "ListState"
 					},
 					"typeParameters": [
@@ -1254,12 +1254,12 @@
 				},
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.22_react@19.2.1/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.23_react@19.2.1/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState",
 					"name": "OverlayTriggerState"
 				},
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.3_react@19.2.1/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.4_react@19.2.1/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
 					"name": "FormValidationState"
 				}
 			],
@@ -1452,7 +1452,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
 									"name": "Node"
 								},
 								"typeParameters": [
@@ -1477,7 +1477,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
 								"name": "Node"
 							},
 							"typeParameters": [
@@ -1666,7 +1666,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Collection",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Collection",
 							"name": "Collection"
 						},
 						"typeParameters": [
@@ -1674,7 +1674,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
 									"name": "Node"
 								},
 								"typeParameters": [
@@ -1716,7 +1716,7 @@
 					"name": "selectionManager",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+selection@3.20.8_react@19.2.1/node_modules/@react-stately/selection/dist/types.d.ts:SelectionManager",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+selection@3.20.9_react@19.2.1/node_modules/@react-stately/selection/dist/types.d.ts:SelectionManager",
 						"name": "SelectionManager"
 					},
 					"optional": false,
@@ -1776,7 +1776,7 @@
 					"name": "realtimeValidation",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
 						"name": "ValidationResult"
 					},
 					"optional": false,
@@ -1788,7 +1788,7 @@
 					"name": "displayValidation",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
 						"name": "ValidationResult"
 					},
 					"optional": false,
@@ -1806,7 +1806,7 @@
 								"name": "result",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
 									"name": "ValidationResult"
 								},
 								"optional": false,

@@ -78,39 +78,6 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"disallowEmptySelection": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the collection allows empty selection."
-		},
-		"onSelectionChange": {
-			"type": "((keys: Selection) => void)",
-			"detailedType": "((keys: Selection) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "keys",
-						"value": {
-							"type": "link",
-							"id": "Selection",
-							"name": "Selection"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the selection changes."
-		},
 		"selectionBehavior": {
 			"type": "SelectionBehavior",
 			"detailedType": "SelectionBehavior | undefined",
@@ -155,6 +122,14 @@
 				"name": "SelectionMode"
 			},
 			"description": "The type of selection that is allowed in the collection."
+		},
+		"disallowEmptySelection": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the collection allows empty selection."
 		},
 		"selectedKeys": {
 			"type": "Iterable<Key> | \"all\"",
@@ -227,6 +202,31 @@
 				]
 			},
 			"description": "The initial selected keys in the collection (uncontrolled)."
+		},
+		"onSelectionChange": {
+			"type": "((keys: Selection) => void)",
+			"detailedType": "((keys: Selection) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "keys",
+						"value": {
+							"type": "link",
+							"id": "Selection",
+							"name": "Selection"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the selection changes."
 		},
 		"onRemove": {
 			"type": "((keys: Set<Key>) => void)",
