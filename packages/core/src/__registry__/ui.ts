@@ -157,14 +157,18 @@ import type { ImageLoadingStatus } from "@dotui/registry/hooks/use-image-loading
 
 const avatarStyles = tv({
 	slots: {
-		root: "group/avatar relative inline-flex shrink-0 rounded-full bg-bg align-middle",
+		root: [
+			"group/avatar relative inline-flex shrink-0 rounded-full bg-muted align-middle",
+			"*:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0",
+		],
 		image: "aspect-square size-full rounded-[inherit] object-cover",
-		fallback: "flex size-full select-none items-center justify-center bg-muted",
+		fallback:
+			"flex size-full select-none items-center justify-center rounded-[inherit] bg-muted text-sm group-data-[size=sm]/avatar:text-xs",
 		badge: [
-			"absolute right-0 bottom-0 z-10 inline-flex select-none items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg",
-			"group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden",
-			"group-data-[size=md]/avatar:size-2.5 group-data-[size=md]/avatar:[&>svg]:size-2",
-			"group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2",
+			"absolute right-0 with-[left]:right-auto bottom-0 with-[top]:bottom-auto z-10 inline-flex select-none items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg",
+			"not-with-[size]:group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden",
+			"not-with-[size]:group-data-[size=md]/avatar:size-2.5 group-data-[size=md]/avatar:[&>svg]:size-2",
+			"not-with-[size]:group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2",
 		],
 		group: "group/avatar-group flex -space-x-2 *:data-avatar:ring-2 *:data-avatar:ring-bg",
 		groupCount:
@@ -172,9 +176,9 @@ const avatarStyles = tv({
 	},
 	variants: {
 		size: {
-			sm: { group: "*:data-avatar:size-6", root: "size-8" },
-			md: { group: "*:data-avatar:size-8", root: "size-10" },
-			lg: { group: "*:data-avatar:size-10", root: "size-12" },
+			sm: { group: "*:data-avatar:size-6", root: "size-6" },
+			md: { group: "*:data-avatar:size-8", root: "size-8" },
+			lg: { group: "*:data-avatar:size-10", root: "size-10" },
 		},
 	},
 	defaultVariants: {
@@ -221,9 +225,7 @@ function AvatarImage({ src, alt, className, referrerPolicy, crossOrigin, ...prop
 	const { setStatus } = useAvatarContext("AvatarImage");
 
 	React.useLayoutEffect(() => {
-		if (status !== "idle") {
-			setStatus(status);
-		}
+		setStatus(status);
 	}, [status, setStatus]);
 
 	if (status === "loaded")
@@ -236,7 +238,7 @@ function AvatarImage({ src, alt, className, referrerPolicy, crossOrigin, ...prop
  * Avatar Fallback
  * -----------------------------------------------------------------------------------------------*/
 
-type AvatarFallbackProps = React.HTMLAttributes<HTMLSpanElement>;
+interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
 const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
 	const { status } = useAvatarContext("AvatarFallback");
@@ -270,7 +272,7 @@ const AvatarGroup = ({ className, size, ...props }: AvatarGroupProps) => {
 
 interface AvatarGroupCountProps extends React.ComponentProps<"span"> {}
 
-const AvatarGroupCount = ({ className, ...props }: React.ComponentProps<"span">) => {
+const AvatarGroupCount = ({ className, ...props }: AvatarGroupCountProps) => {
 	return <span data-avatar-group-count="" className={groupCount({ className })} {...props} />;
 };
 
@@ -308,24 +310,31 @@ import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 const badgeStyles = tv({
-	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md px-2 py-0.5 font-medium text-xs [&>svg]:pointer-events-none [&>svg]:size-3",
+	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md px-2 py-0.5 font-medium text-xs [&>svg]:pointer-events-none",
 	variants: {
 		variant: {
 			default: "bg-neutral text-fg-on-neutral",
+			primary: "bg-primary text-fg-on-primary",
 			danger: "bg-danger text-fg-on-danger",
 			success: "bg-success text-fg-on-success",
 			warning: "bg-warning text-fg-on-warning",
 			info: "bg-info text-fg-on-info",
 		},
+		size: {
+			sm: "px-1.5 py-0.25 [&>svg]:size-3",
+			md: "px-2 py-0.5 [&>svg]:size-3",
+			lg: "px-2.5 py-0.75 [&>svg]:size-3",
+		},
 	},
 	defaultVariants: {
 		variant: "default",
+		size: "md",
 	},
 });
 
 interface BadgeProps extends React.ComponentProps<"span">, VariantProps<typeof badgeStyles> {}
-const Badge = ({ className, variant, ...props }: BadgeProps) => {
-	return <span role="presentation" className={badgeStyles({ variant, className })} {...props} />;
+const Badge = ({ className, variant, size, ...props }: BadgeProps) => {
+	return <span role="presentation" data-badge="" className={badgeStyles({ variant, size, className })} {...props} />;
 };
 
 export type { BadgeProps };
