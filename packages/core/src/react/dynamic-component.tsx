@@ -13,10 +13,7 @@ import { StyleContext } from "./context";
 
 type VariantKey = keyof typeof VARIANTS;
 
-export type VariantsMap<Props> = Record<
-	string,
-	React.LazyExoticComponent<React.ComponentType<Props>>
->;
+export type VariantsMap<Props> = Record<string, React.LazyExoticComponent<React.ComponentType<Props>>>;
 
 export interface CreateDynamicComponentOptions {
 	/** Disable skeleton fallback during loading */

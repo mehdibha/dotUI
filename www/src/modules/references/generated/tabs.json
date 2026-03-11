@@ -2,45 +2,39 @@
 	"name": "TabsProps",
 	"description": "Tabs organize content into multiple sections and allow users to navigate between them.",
 	"props": {
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"className": {
+			"type": "string | (values: TabsRenderProps) => string",
+			"detailedType": "string | (values: TabsRenderProps) => string | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "TabsRenderProps",
+									"name": "TabsRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
 			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-Tabs'"
 		},
 		"disabledKeys": {
 			"type": "Iterable<Key>",
@@ -76,6 +70,46 @@
 				"type": "boolean"
 			},
 			"description": "Whether the TabList is disabled.\nShows that a selection exists, but is not available in that circumstance."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
 		"orientation": {
 			"type": "Orientation",
@@ -196,39 +230,6 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"className": {
-			"type": "string | (values: TabsRenderProps) => string",
-			"detailedType": "string | (values: TabsRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TabsRenderProps",
-									"name": "TabsRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-		},
 		"style": {
 			"type": "CSSProperties | (values: TabsRenderProps) => CSSProperties",
 			"detailedType": "CSSProperties | (values: TabsRenderProps) => CSSProperties | undefined",
@@ -264,6 +265,42 @@
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", TabsRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', TabsRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps",
+								"name": "TabsRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
 		"slot": {
 			"type": "string | null",
 			"detailedType": "string | null | undefined",
@@ -291,6 +328,23 @@
 		}
 	},
 	"typeLinks": {
+		"TabsRenderProps": {
+			"type": "interface",
+			"name": "TabsRenderProps",
+			"properties": {
+				"orientation": {
+					"type": "property",
+					"name": "orientation",
+					"value": {
+						"type": "identifier",
+						"name": "Orientation"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The orientation of the tabs."
+				}
+			}
+		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
@@ -426,9 +480,9 @@
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@67": {
+				"__@iterator@68": {
 					"type": "method",
-					"name": "__@iterator@67",
+					"name": "__@iterator@68",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -455,9 +509,11 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"TabsRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabsRenderProps",
 			"name": "TabsRenderProps",
+			"extends": [],
 			"properties": {
 				"orientation": {
 					"type": "property",
@@ -470,7 +526,9 @@
 					"readonly": false,
 					"description": "The orientation of the tabs."
 				}
-			}
+			},
+			"typeParameters": [],
+			"description": ""
 		}
 	}
 }

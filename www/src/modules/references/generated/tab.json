@@ -168,6 +168,95 @@
 			},
 			"description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
 		},
+		"onFocus": {
+			"type": "((e: FocusEvent<Element, Element>) => void)",
+			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "identifier",
+									"name": "FocusEvent"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the element receives focus."
+		},
+		"onBlur": {
+			"type": "((e: FocusEvent<Element, Element>) => void)",
+			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "identifier",
+									"name": "FocusEvent"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the element loses focus."
+		},
+		"onFocusChange": {
+			"type": "((isFocused: boolean) => void)",
+			"detailedType": "((isFocused: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isFocused",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the element's focus status changes."
+		},
 		"onHoverStart": {
 			"type": "((e: HoverEvent) => void)",
 			"detailedType": "((e: HoverEvent) => void) | undefined",
@@ -243,57 +332,6 @@
 			},
 			"description": "Handler that is called when the hover state changes."
 		},
-		"id": {
-			"type": "Key",
-			"detailedType": "Key | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Key"
-			},
-			"description": "The unique id of the tab."
-		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the tab is disabled."
-		},
-		"children": {
-			"type": "ReactNode | (values: TabRenderProps) => ReactNode",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TabRenderProps",
-									"name": "TabRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
 		"className": {
 			"type": "string | (values: TabRenderProps) => string",
 			"detailedType": "string | (values: TabRenderProps) => string | undefined",
@@ -325,7 +363,25 @@
 					}
 				]
 			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-Tab'"
+		},
+		"id": {
+			"type": "Key",
+			"detailedType": "Key | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Key"
+			},
+			"description": "The unique id of the tab."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the tab is disabled."
 		},
 		"style": {
 			"type": "CSSProperties | (values: TabRenderProps) => CSSProperties",
@@ -361,6 +417,130 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"children": {
+			"type": "ReactNode | (values: TabRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "TabRenderProps",
+									"name": "TabRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"render": {
+			"type": "((props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> | DetailedHTMLProps<LinkWithRequiredHref, HTMLAnchorElement>, renderProps: TabRenderProps) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
+			"detailedType": "| ((\n    props:\n      | DetailedHTMLProps<\n          HTMLAttributes<HTMLDivElement>,\n          HTMLDivElement\n        >\n      | DetailedHTMLProps<\n          LinkWithRequiredHref,\n          HTMLAnchorElement\n        >,\n    renderProps: TabRenderProps,\n  ) => ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "props",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "application",
+											"base": {
+												"type": "identifier",
+												"name": "DetailedHTMLProps"
+											},
+											"typeParameters": [
+												{
+													"type": "application",
+													"base": {
+														"type": "identifier",
+														"name": "HTMLAttributes"
+													},
+													"typeParameters": [
+														{
+															"type": "identifier",
+															"name": "HTMLDivElement"
+														}
+													]
+												},
+												{
+													"type": "link",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLDivElement",
+													"name": "HTMLDivElement"
+												}
+											]
+										},
+										{
+											"type": "application",
+											"base": {
+												"type": "identifier",
+												"name": "DetailedHTMLProps"
+											},
+											"typeParameters": [
+												{
+													"type": "identifier",
+													"name": "LinkWithRequiredHref"
+												},
+												{
+													"type": "link",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLAnchorElement",
+													"name": "HTMLAnchorElement"
+												}
+											]
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "renderProps",
+								"value": {
+									"type": "link",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabRenderProps",
+									"name": "TabRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactElement"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nNote: You can check if `'href' in props` in order to tell whether to render an `<a>` element.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<a>` is expected, you cannot render a `<button>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
 		"aria-label": {
 			"type": "string",
@@ -564,6 +744,76 @@
 				}
 			}
 		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TabRenderProps",
+			"name": "TabRenderProps",
+			"extends": [],
+			"properties": {
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the tab is currently hovered with a mouse."
+				},
+				"isPressed": {
+					"type": "property",
+					"name": "isPressed",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the tab is currently in a pressed state."
+				},
+				"isSelected": {
+					"type": "property",
+					"name": "isSelected",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the tab is currently selected."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the tab is currently focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the tab is currently keyboard focused."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the tab is disabled."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"HoverEvent": {
 			"type": "interface",
 			"name": "HoverEvent",
@@ -699,6 +949,17 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Y position relative to the target."
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "identifier",
+						"name": "string | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
 				},
 				"continuePropagation": {
 					"type": "property",

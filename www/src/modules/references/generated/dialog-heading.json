@@ -3,8 +3,8 @@
 	"description": "Missing description.",
 	"props": {
 		"inputMode": {
-			"type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
-			"detailedType": "| 'search'\n| 'text'\n| 'none'\n| 'tel'\n| 'url'\n| 'email'\n| 'numeric'\n| 'decimal'\n| undefined",
+			"type": "\"search\" | \"text\" | \"decimal\" | \"email\" | \"tel\" | \"none\" | \"url\" | \"numeric\"",
+			"detailedType": "| 'search'\n| 'text'\n| 'decimal'\n| 'email'\n| 'tel'\n| 'none'\n| 'url'\n| 'numeric'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -18,15 +18,7 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "none"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "tel"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "url"
+						"value": "decimal"
 					},
 					{
 						"type": "stringLiteral",
@@ -34,11 +26,19 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "numeric"
+						"value": "tel"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "decimal"
+						"value": "none"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "url"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "numeric"
 					}
 				]
 			},
@@ -51,14 +51,6 @@
 				"type": "string"
 			},
 			"description": "Specify that a standard HTML element should behave like a defined custom built-in element"
-		},
-		"tw": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Specify styles using Tailwind CSS classes. This feature is currently experimental.\nIf `style` prop is also specified, styles generated with `tw` prop will be overridden.\n\nExample:\n- `tw='w-full h-full bg-blue-200'`\n- `tw='text-9xl'`\n- `tw='text-[80px]'`"
 		},
 		"aria-activedescendant": {
 			"type": "string",
@@ -870,6 +862,40 @@
 				"type": "string"
 			},
 			"description": "Defines the human readable text alternative of aria-valuenow for a range widget."
+		},
+		"render": {
+			"type": "DOMRenderFunction<\"h1\", undefined>",
+			"detailedType": "DOMRenderFunction<'h1', undefined> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "h1"
+									}
+								]
+							},
+							{
+								"type": "undefined"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		}
 	}
 }

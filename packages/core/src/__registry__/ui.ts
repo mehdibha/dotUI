@@ -59,10 +59,9 @@ import type { VariantProps } from "tailwind-variants";
 
 const alertVariants = tv({
 	slots: {
-		root: "relative grid w-full items-start gap-y-0.5 rounded-lg border bg-card has-[>svg]:has-data-alert-action:grid-cols-[calc(var(--spacing)*4)_1fr_auto] has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-data-alert-action:grid-cols-[1fr_auto] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+		root: "relative grid w-full items-start gap-y-0.5 rounded-lg border bg-card px-4 py-3 text-sm has-[>svg]:has-data-alert-action:grid-cols-[calc(var(--spacing)*4)_1fr_auto] has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-data-alert-action:grid-cols-[1fr_auto] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
 		title: "line-clamp-1 min-h-4 font-medium tracking-tight [svg~&]:col-start-2",
-		description:
-			"grid justify-items-start gap-1 text-fg-muted [&_p]:leading-relaxed [svg~&]:col-start-2",
+		description: "grid justify-items-start gap-1 text-fg-muted [&_p]:leading-relaxed [svg~&]:col-start-2",
 		action:
 			"flex gap-1 sm:row-start-1 sm:row-end-3 sm:self-center sm:[[data-alert-title]~&]:col-start-2 sm:[svg~&]:col-start-2 sm:[svg~[data-alert-description]~&]:col-start-3 sm:[svg~[data-alert-title]~&]:col-start-3",
 	},
@@ -138,13 +137,13 @@ export type { AlertProps, AlertTitleProps, AlertDescriptionProps, AlertActionPro
 	{
 		name: "avatar",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/avatar/basic.tsx",
+						path: "ui/avatar/base.tsx",
 						target: "ui/avatar.tsx",
 						content: `"use client";
 
@@ -158,17 +157,25 @@ import type { ImageLoadingStatus } from "@dotui/registry/hooks/use-image-loading
 
 const avatarStyles = tv({
 	slots: {
-		group: "flex flex-wrap -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-bg",
-		root: "relative inline-flex shrink-0 overflow-hidden rounded-full bg-bg align-middle",
-		image: "aspect-square size-full",
+		root: "group/avatar relative inline-flex shrink-0 rounded-full bg-bg align-middle",
+		image: "aspect-square size-full rounded-[inherit] object-cover",
 		fallback: "flex size-full select-none items-center justify-center bg-muted",
-		placeholder: "flex size-full h-full animate-pulse items-center justify-center bg-muted",
+		placeholder: "flex size-full h-full animate-pulse items-center justify-center rounded-[inherit] bg-muted",
+		badge: [
+			"absolute right-0 bottom-0 z-10 inline-flex select-none items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg",
+			"group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden",
+			"group-data-[size=md]/avatar:size-2.5 group-data-[size=md]/avatar:[&>svg]:size-2",
+			"group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2",
+		],
+		group: "group/avatar-group flex -space-x-2 *:data-avatar:ring-2 *:data-avatar:ring-bg",
+		groupCount:
+			"relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-fg-muted text-sm ring-2 ring-bg group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=sm]/avatar-group:size-6 [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3",
 	},
 	variants: {
 		size: {
-			sm: { group: "*:data-[slot=avatar]:size-8", root: "size-8" },
-			md: { group: "*:data-[slot=avatar]:size-10", root: "size-10" },
-			lg: { group: "*:data-[slot=avatar]:size-12", root: "size-12" },
+			sm: { group: "*:data-avatar:size-6", root: "size-8" },
+			md: { group: "*:data-avatar:size-8", root: "size-10" },
+			lg: { group: "*:data-avatar:size-10", root: "size-12" },
 		},
 	},
 	defaultVariants: {
@@ -176,53 +183,35 @@ const avatarStyles = tv({
 	},
 });
 
-const { group, root, image, fallback, placeholder } = avatarStyles();
+const { group, root, image, fallback, placeholder, badge, groupCount } = avatarStyles();
 
-/* -----------------------------------------------------------------------------------------------*/
-
-interface AvatarGroupProps extends React.ComponentProps<"div">, VariantProps<typeof avatarStyles> {}
-
-const AvatarGroup = ({ className, size, ...props }: AvatarGroupProps) => {
-	return <div className={group({ className, size })} {...props} />;
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-
-interface AvatarProps extends AvatarImageProps, VariantProps<typeof avatarStyles> {
-	fallback?: React.ReactNode;
-}
-const Avatar = ({ className, style, fallback, size, ...props }: AvatarProps) => {
-	return (
-		<AvatarRoot className={className} style={style} size={size}>
-			<AvatarImage {...props} />
-			<AvatarFallback>{fallback}</AvatarFallback>
-			<AvatarPlaceholder />
-		</AvatarRoot>
-	);
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-
-const [AvatarInternalContext, useAvatarInternalContext] = createContext<{
+const [AvatarContext, useAvatarContext] = createContext<{
 	status: ImageLoadingStatus;
 	setStatus: (status: ImageLoadingStatus) => void;
 }>({
-	name: "AvatarRoot",
+	name: "Avatar",
 	strict: true,
 });
 
-interface AvatarRootProps extends React.ComponentProps<"span">, VariantProps<typeof avatarStyles> {}
-function AvatarRoot({ className, size, ...props }: AvatarRootProps) {
+/* -------------------------------------------------------------------------------------------------
+ * Avatar
+ * -----------------------------------------------------------------------------------------------*/
+
+interface AvatarProps extends React.ComponentProps<"span">, VariantProps<typeof avatarStyles> {}
+
+function Avatar({ className, size = "md", ...props }: AvatarProps) {
 	const [status, setStatus] = React.useState<ImageLoadingStatus>("idle");
 
 	return (
-		<AvatarInternalContext value={{ status, setStatus }}>
-			<span data-slot="avatar" className={root({ className, size })} {...props} />
-		</AvatarInternalContext>
+		<AvatarContext value={{ status, setStatus }}>
+			<span data-avatar="" data-size={size} className={root({ className, size })} {...props} />
+		</AvatarContext>
 	);
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------------------------------
+ * Avatar Image
+ * -----------------------------------------------------------------------------------------------*/
 
 interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
 	src?: string;
@@ -230,7 +219,7 @@ interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
 
 function AvatarImage({ src, alt, className, referrerPolicy, crossOrigin, ...props }: AvatarImageProps) {
 	const status = useImageLoadingStatus(src, { referrerPolicy, crossOrigin });
-	const { setStatus } = useAvatarInternalContext("AvatarImage");
+	const { setStatus } = useAvatarContext("AvatarImage");
 
 	React.useLayoutEffect(() => {
 		if (status !== "idle") {
@@ -239,50 +228,78 @@ function AvatarImage({ src, alt, className, referrerPolicy, crossOrigin, ...prop
 	}, [status, setStatus]);
 
 	if (status === "loaded")
-		return <img slot="avatar-image" className={image({ className })} src={src} alt={alt} {...props} />;
+		return <img data-avatar-image="" className={image({ className })} src={src} alt={alt} {...props} />;
 
 	return null;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------------------------------
+ * Avatar Fallback
+ * -----------------------------------------------------------------------------------------------*/
 
 type AvatarFallbackProps = React.HTMLAttributes<HTMLSpanElement>;
 
 const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
-	const { status } = useAvatarInternalContext("AvatarFallback");
-	if (status === "error") return <span slot="avatar-fallback" className={fallback({ className })} {...props} />;
+	const { status } = useAvatarContext("AvatarFallback");
+	if (status === "error") return <span data-avatar-fallback="" className={fallback({ className })} {...props} />;
 	return null;
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------------------------------
+ * Avatar Placeholder
+ * -----------------------------------------------------------------------------------------------*/
 
 interface AvatarPlaceholderProps extends React.ComponentProps<"span"> {}
 
 const AvatarPlaceholder = ({ className, ...props }: AvatarPlaceholderProps) => {
-	const { status } = useAvatarInternalContext("AvatarPlaceholder");
-	if (["idle", "loading"].includes(status)) return <span className={placeholder({ className })} {...props} />;
+	const { status } = useAvatarContext("AvatarPlaceholder");
+	if (["idle", "loading"].includes(status))
+		return <span data-avatar-placeholder="" className={placeholder({ className })} {...props} />;
 	return null;
+};
+
+/* -------------------------------------------------------------------------------------------------
+ * Avatar Badge
+ * -----------------------------------------------------------------------------------------------*/
+
+interface AvatarBadgeProps extends React.ComponentProps<"span"> {}
+
+const AvatarBadge = ({ className, ...props }: AvatarBadgeProps) => {
+	return <span data-avatar-badge="" className={badge({ className })} {...props} />;
+};
+
+/* -------------------------------------------------------------------------------------------------
+ * Avatar Group
+ * -----------------------------------------------------------------------------------------------*/
+
+interface AvatarGroupProps extends React.ComponentProps<"div">, VariantProps<typeof avatarStyles> {}
+
+const AvatarGroup = ({ className, size, ...props }: AvatarGroupProps) => {
+	return <div data-avatar-group="" className={group({ className, size })} {...props} />;
+};
+
+/* -------------------------------------------------------------------------------------------------
+ * Avatar Group Count
+ * -----------------------------------------------------------------------------------------------*/
+
+interface AvatarGroupCountProps extends React.ComponentProps<"span"> {}
+
+const AvatarGroupCount = ({ className, ...props }: React.ComponentProps<"span">) => {
+	return <span data-avatar-group-count="" className={groupCount({ className })} {...props} />;
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
-const CompoundAvatar = Object.assign(Avatar, {
-	Group: AvatarGroup,
-	Root: AvatarRoot,
-	Image: AvatarImage,
-	Fallback: AvatarFallback,
-	Placeholder: AvatarPlaceholder,
-});
-
-export { CompoundAvatar as Avatar, AvatarGroup, AvatarRoot, AvatarImage, AvatarFallback, AvatarPlaceholder };
+export { AvatarGroup, Avatar, AvatarImage, AvatarFallback, AvatarPlaceholder, AvatarBadge, AvatarGroupCount };
 
 export type {
 	AvatarGroupProps,
 	AvatarProps,
-	AvatarRootProps,
 	AvatarImageProps,
 	AvatarFallbackProps,
 	AvatarPlaceholderProps,
+	AvatarBadgeProps,
+	AvatarGroupCountProps,
 };
 `,
 					},

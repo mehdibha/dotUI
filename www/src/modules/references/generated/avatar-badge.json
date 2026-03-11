@@ -1,6 +1,6 @@
 {
-  "name": "AvatarBadgeProps",
-  "description": "A small indicator displayed on the avatar, typically used to show online status.",
-  "extendsElement": "span",
-  "props": {}
+	"name": "AvatarBadgeProps",
+	"description": "A small indicator displayed on the avatar, typically used to show online status.",
+	"extendsElement": "span",
+	"props": {}
 }

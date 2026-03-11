@@ -1,15 +1,15 @@
 {
-  "name": "AvatarImageProps",
-  "description": "The image element displayed within the avatar. Automatically hidden when the image fails to load.",
-  "extendsElement": "img",
-  "props": {
-    "src": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The URL of the avatar image."
-    }
-  }
+	"name": "AvatarImageProps",
+	"description": "The image element displayed within the avatar. Automatically hidden when the image fails to load.",
+	"extendsElement": "img",
+	"props": {
+		"src": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The URL of the avatar image."
+		}
+	}
 }

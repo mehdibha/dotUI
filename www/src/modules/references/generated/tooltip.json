@@ -47,6 +47,15 @@
 			"description": "By default, opens for both focus and hover. Can be made to open only for focus.",
 			"default": "'hover'"
 		},
+		"shouldCloseOnPress": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the tooltip should close when the trigger is pressed.",
+			"default": "true"
+		},
 		"isOpen": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",

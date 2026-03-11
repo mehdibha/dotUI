@@ -83,10 +83,10 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
 								<div key={member.name} className="flex items-center justify-between gap-2">
 									<div className="flex items-center gap-2">
 										<Avatar size="sm">
-										<AvatarImage src={member.avatar} alt={member.name} />
-										<AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-										<AvatarPlaceholder />
-									</Avatar>
+											<AvatarImage src={member.avatar} alt={member.name} />
+											<AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+											<AvatarPlaceholder />
+										</Avatar>
 										<div className="text-sm">
 											<p>{member.name}</p>
 											<p className="text-fg-muted">{member.role}</p>

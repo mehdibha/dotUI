@@ -77,6 +77,48 @@
 			},
 			"description": "Handler that is called when the hover state changes."
 		},
+		"className": {
+			"type": "string | (values: DropZoneRenderProps) => string",
+			"detailedType": "string | (values: DropZoneRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "DropZoneRenderProps",
+									"name": "DropZoneRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-DropZone'"
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
+		},
 		"onDrop": {
 			"type": "((e: DropEvent) => void)",
 			"detailedType": "((e: DropEvent) => void) | undefined",
@@ -102,14 +144,6 @@
 			},
 			"description": "Handler that is called when a valid drag is dropped on the drop target."
 		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
-		},
 		"getDropOperation": {
 			"type": "((types: DragTypes, allowedOperations: DropOperation[]) => DropOperation)",
 			"detailedType": "| ((\n    types: DragTypes,\n    allowedOperations: DropOperation[],\n  ) => DropOperation)\n| undefined",
@@ -127,7 +161,7 @@
 								"name": "types",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes",
 									"name": "DragTypes"
 								},
 								"optional": false,
@@ -291,39 +325,6 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"className": {
-			"type": "string | (values: DropZoneRenderProps) => string",
-			"detailedType": "string | (values: DropZoneRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "DropZoneRenderProps",
-									"name": "DropZoneRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-		},
 		"style": {
 			"type": "CSSProperties | (values: DropZoneRenderProps) => CSSProperties",
 			"detailedType": "CSSProperties | (values: DropZoneRenderProps) => CSSProperties | undefined",
@@ -358,6 +359,42 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", DropZoneRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', DropZoneRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DropZoneRenderProps",
+								"name": "DropZoneRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
 		"slot": {
 			"type": "string | null",
@@ -434,6 +471,62 @@
 		}
 	},
 	"typeLinks": {
+		"DropZoneRenderProps": {
+			"type": "interface",
+			"name": "DropZoneRenderProps",
+			"properties": {
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the dropzone is currently hovered with a mouse."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the dropzone is focused, either via a mouse or keyboard."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the dropzone is keyboard focused."
+				},
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the dropzone is the drop target."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the dropzone is disabled."
+				}
+			}
+		},
 		"DropEvent": {
 			"type": "interface",
 			"name": "DropEvent",
@@ -493,9 +586,9 @@
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.0_react@19.2.1/node_modules/@react-types/shared/src/dnd.d.ts:DragTypes",
 			"name": "DragTypes",
 			"extends": [],
 			"properties": {
@@ -722,9 +815,11 @@
 				}
 			}
 		},
-		"DropZoneRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DropZoneRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DropZoneRenderProps",
 			"name": "DropZoneRenderProps",
+			"extends": [],
 			"properties": {
 				"isHovered": {
 					"type": "property",
@@ -776,7 +871,9 @@
 					"readonly": false,
 					"description": "Whether the dropzone is disabled."
 				}
-			}
+			},
+			"typeParameters": [],
+			"description": ""
 		}
 	}
 }

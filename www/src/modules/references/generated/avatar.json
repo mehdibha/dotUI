@@ -1,30 +1,30 @@
 {
-  "name": "AvatarProps",
-  "description": "A visual representation of a user or entity, displayed as an image, initials, or placeholder.",
-  "extendsElement": "span",
-  "props": {
-    "size": {
-      "type": "\"sm\" | \"md\" | \"lg\"",
-      "detailedType": "'sm' | 'md' | 'lg' | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "sm"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "md"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "lg"
-          }
-        ]
-      },
-      "description": "The size of the avatar.",
-      "default": "'md'"
-    }
-  }
+	"name": "AvatarProps",
+	"description": "A visual representation of a user or entity, displayed as an image, initials, or placeholder.",
+	"extendsElement": "span",
+	"props": {
+		"size": {
+			"type": "\"sm\" | \"md\" | \"lg\"",
+			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "md"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "lg"
+					}
+				]
+			},
+			"description": "The size of the avatar.",
+			"default": "'md'"
+		}
+	}
 }

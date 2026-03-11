@@ -18,9 +18,11 @@ const plugin = require("tailwindcss/plugin");
  * // This avoids the self-referencing selector problem!
  */
 const withVariant = plugin(({ matchVariant }) => {
-	matchVariant("with", (value) => {
-		return `&:is([class^='${value}-'],[class*=' ${value}-'])`;
-	});
+	const selector = (value) =>
+		`:is([class^='${value}-'], [class*=' ${value}-'], [class^='-${value}-'], [class*=' -${value}-'])`;
+
+	matchVariant("with", (value) => `&${selector(value)}`);
+	matchVariant("not-with", (value) => `&:not(${selector(value)})`);
 });
 
 module.exports = withVariant;

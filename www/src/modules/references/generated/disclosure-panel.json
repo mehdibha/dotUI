@@ -2,34 +2,6 @@
 	"name": "DisclosurePanelProps",
 	"description": "A DisclosurePanel provides the content for a disclosure.",
 	"props": {
-		"role": {
-			"type": "\"group\" | \"region\"",
-			"detailedType": "'group' | 'region' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "group"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "region"
-					}
-				]
-			},
-			"description": "The accessibility role for the disclosure's panel.",
-			"default": "'group'"
-		},
-		"children": {
-			"type": "ReactNode",
-			"typeAst": {
-				"type": "identifier",
-				"name": "ReactNode"
-			},
-			"description": "The children of the component.",
-			"required": true
-		},
 		"className": {
 			"type": "string | (values: DisclosurePanelRenderProps) => string",
 			"detailedType": "string | (values: DisclosurePanelRenderProps) => string | undefined",
@@ -61,7 +33,36 @@
 					}
 				]
 			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-DisclosurePanel'"
+		},
+		"role": {
+			"type": "\"group\" | \"region\"",
+			"detailedType": "'group' | 'region' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "group"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "region"
+					}
+				]
+			},
+			"description": "The accessibility role for the disclosure's panel.",
+			"default": "'group'"
+		},
+		"children": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The children of the component.",
+			"required": true
 		},
 		"style": {
 			"type": "CSSProperties | (values: DisclosurePanelRenderProps) => CSSProperties",
@@ -98,6 +99,42 @@
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", DisclosurePanelRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', DisclosurePanelRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DisclosurePanelRenderProps",
+								"name": "DisclosurePanelRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
 		"id": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -105,6 +142,56 @@
 				"type": "string"
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"labelElementType": {
+			"type": "ElementType",
+			"detailedType": "ElementType | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ElementType"
+			},
+			"description": "The HTML element used to render the label, e.g. 'label', or 'span'.",
+			"default": "'label'"
+		},
+		"label": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The content to display as the label."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		}
 	},
 	"renderProps": {
@@ -129,6 +216,26 @@
 					"description": "Whether keyboard focus is within the disclosure panel."
 				}
 			}
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DisclosurePanelRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.15.1_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DisclosurePanelRenderProps",
+			"name": "DisclosurePanelRenderProps",
+			"extends": [],
+			"properties": {
+				"isFocusVisibleWithin": {
+					"type": "property",
+					"name": "isFocusVisibleWithin",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether keyboard focus is within the disclosure panel."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
 		}
 	}
 }

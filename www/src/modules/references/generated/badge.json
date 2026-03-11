@@ -4,8 +4,8 @@
 	"extendsElement": "span",
 	"props": {
 		"variant": {
-			"type": "\"danger\" | \"warning\" | \"info\" | \"success\" | \"default\"",
-			"detailedType": "| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| 'default'\n| undefined",
+			"type": "\"danger\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"default\"",
+			"detailedType": "| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| 'primary'\n| 'default'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -27,11 +27,38 @@
 					},
 					{
 						"type": "stringLiteral",
+						"value": "primary"
+					},
+					{
+						"type": "stringLiteral",
 						"value": "default"
 					}
 				]
 			},
 			"description": "The visual style of the badge.",
+			"default": "'default'"
+		},
+		"size": {
+			"type": "\"sm\" | \"md\" | \"lg\"",
+			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "md"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "lg"
+					}
+				]
+			},
+			"description": "The size of the badge.",
 			"default": "'default'"
 		}
 	}
