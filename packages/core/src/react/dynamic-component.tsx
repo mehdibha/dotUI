@@ -13,7 +13,7 @@ import { StyleContext } from "./context";
 
 type VariantKey = keyof typeof VARIANTS;
 
-export type VariantsMap<Props, _V extends string = string> = Record<
+export type VariantsMap<Props> = Record<
 	string,
 	React.LazyExoticComponent<React.ComponentType<Props>>
 >;
@@ -149,11 +149,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
  * @param variants - Map of variant names to lazy-loaded components
  * @param options - Additional options
  */
-export function createDynamicComponent<Props extends object, V extends string = string>(
+export function createDynamicComponent<Props extends object>(
 	componentName: VariantKey,
 	displayName: string,
 	DefaultComponent: React.ComponentType<Props>,
-	variants: VariantsMap<Props, V>,
+	variants: VariantsMap<Props>,
 	options?: CreateDynamicComponentOptions,
 ): React.FC<Props> {
 	const { disableSkeleton = false } = options ?? {};
