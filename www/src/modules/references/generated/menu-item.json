@@ -3,8 +3,8 @@
 	"description": "A MenuItem represents an individual action in a Menu.",
 	"props": {
 		"variant": {
-			"type": "\"danger\" | \"warning\" | \"success\" | \"default\" | \"accent\"",
-			"detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'default'\n| 'accent'\n| undefined",
+			"type": "\"danger\" | \"warning\" | \"success\" | \"accent\" | \"default\"",
+			"detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'accent'\n| 'default'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -22,11 +22,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "default"
+						"value": "accent"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "accent"
+						"value": "default"
 					}
 				]
 			},
@@ -199,6 +199,95 @@
 			},
 			"description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
 		},
+		"onFocus": {
+			"type": "((e: FocusEvent<Element, Element>) => void)",
+			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "identifier",
+									"name": "FocusEvent"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the element receives focus."
+		},
+		"onBlur": {
+			"type": "((e: FocusEvent<Element, Element>) => void)",
+			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "identifier",
+									"name": "FocusEvent"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the element loses focus."
+		},
+		"onFocusChange": {
+			"type": "((isFocused: boolean) => void)",
+			"detailedType": "((isFocused: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isFocused",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the element's focus status changes."
+		},
 		"onHoverStart": {
 			"type": "((e: HoverEvent) => void)",
 			"detailedType": "((e: HoverEvent) => void) | undefined",
@@ -274,6 +363,40 @@
 			},
 			"description": "Handler that is called when the hover state changes."
 		},
+		"className": {
+			"type": "string | (values: MenuItemRenderProps) => string",
+			"detailedType": "string | (values: MenuItemRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "MenuItemRenderProps",
+									"name": "MenuItemRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-MenuItem'"
+		},
 		"id": {
 			"type": "Key",
 			"detailedType": "Key | undefined",
@@ -337,72 +460,13 @@
 			},
 			"description": "Handler that is called when the item is selected."
 		},
-		"children": {
-			"type": "ReactNode | (values: MenuItemRenderProps) => ReactNode",
+		"shouldCloseOnSelect": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "MenuItemRenderProps",
-									"name": "MenuItemRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
-						},
-						"typeParameters": []
-					}
-				]
+				"type": "boolean"
 			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
-		"className": {
-			"type": "string | (values: MenuItemRenderProps) => string",
-			"detailedType": "string | (values: MenuItemRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "MenuItemRenderProps",
-									"name": "MenuItemRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+			"description": "Whether the menu should close when the menu item is selected."
 		},
 		"style": {
 			"type": "CSSProperties | (values: MenuItemRenderProps) => CSSProperties",
@@ -438,6 +502,130 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"children": {
+			"type": "ReactNode | (values: MenuItemRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "MenuItemRenderProps",
+									"name": "MenuItemRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"render": {
+			"type": "((props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> | DetailedHTMLProps<LinkWithRequiredHref, HTMLAnchorElement>, renderProps: MenuItemRenderProps) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
+			"detailedType": "| ((\n    props:\n      | DetailedHTMLProps<\n          HTMLAttributes<HTMLDivElement>,\n          HTMLDivElement\n        >\n      | DetailedHTMLProps<\n          LinkWithRequiredHref,\n          HTMLAnchorElement\n        >,\n    renderProps: MenuItemRenderProps,\n  ) => ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "props",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "application",
+											"base": {
+												"type": "identifier",
+												"name": "DetailedHTMLProps"
+											},
+											"typeParameters": [
+												{
+													"type": "application",
+													"base": {
+														"type": "identifier",
+														"name": "HTMLAttributes"
+													},
+													"typeParameters": [
+														{
+															"type": "identifier",
+															"name": "HTMLDivElement"
+														}
+													]
+												},
+												{
+													"type": "link",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLDivElement",
+													"name": "HTMLDivElement"
+												}
+											]
+										},
+										{
+											"type": "application",
+											"base": {
+												"type": "identifier",
+												"name": "DetailedHTMLProps"
+											},
+											"typeParameters": [
+												{
+													"type": "identifier",
+													"name": "LinkWithRequiredHref"
+												},
+												{
+													"type": "link",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLAnchorElement",
+													"name": "HTMLAnchorElement"
+												}
+											]
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "renderProps",
+								"value": {
+									"type": "link",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:MenuItemRenderProps",
+									"name": "MenuItemRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactElement"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nNote: You can check if `'href' in props` in order to tell whether to render an `<a>` element.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<a>` is expected, you cannot render a `<button>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
 		"href": {
 			"type": "string",
@@ -708,6 +896,178 @@
 				}
 			}
 		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:MenuItemRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:MenuItemRenderProps",
+			"name": "MenuItemRenderProps",
+			"extends": [
+				{
+					"type": "link",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ItemRenderProps",
+					"name": "ItemRenderProps"
+				}
+			],
+			"properties": {
+				"hasSubmenu": {
+					"type": "property",
+					"name": "hasSubmenu",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item has a submenu."
+				},
+				"isOpen": {
+					"type": "property",
+					"name": "isOpen",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item's submenu is open."
+				},
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently hovered with a mouse."
+				},
+				"isPressed": {
+					"type": "property",
+					"name": "isPressed",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently in a pressed state."
+				},
+				"isSelected": {
+					"type": "property",
+					"name": "isSelected",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently selected."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently keyboard focused."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+				},
+				"selectionMode": {
+					"type": "property",
+					"name": "selectionMode",
+					"value": {
+						"type": "identifier",
+						"name": "SelectionMode"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of selection that is allowed in the collection."
+				},
+				"selectionBehavior": {
+					"type": "property",
+					"name": "selectionBehavior",
+					"value": {
+						"type": "identifier",
+						"name": "SelectionBehavior"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The selection behavior for the collection."
+				},
+				"allowsDragging": {
+					"type": "property",
+					"name": "allowsDragging",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "boolean"
+							},
+							{
+								"type": "undefined"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item allows dragging."
+				},
+				"isDragging": {
+					"type": "property",
+					"name": "isDragging",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "boolean"
+							},
+							{
+								"type": "undefined"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item is currently being dragged."
+				},
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "boolean"
+							},
+							{
+								"type": "undefined"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item is currently an active drop target."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"HoverEvent": {
 			"type": "interface",
 			"name": "HoverEvent",
@@ -843,6 +1203,17 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Y position relative to the target."
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "identifier",
+						"name": "string | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
 				},
 				"continuePropagation": {
 					"type": "property",

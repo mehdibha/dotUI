@@ -3,24 +3,18 @@
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
 import * as Default from "./basic";
-import type { DisclosureVariant } from "./meta";
 import type { DisclosurePanelProps, DisclosureProps, DisclosureTriggerProps } from "./types";
 
-export const Disclosure = createDynamicComponent<DisclosureProps, DisclosureVariant>(
-	"disclosure",
-	"Disclosure",
-	Default.Disclosure,
-	{},
-);
+export const Disclosure = createDynamicComponent<DisclosureProps>("disclosure", "Disclosure", Default.Disclosure, {});
 
-export const DisclosurePanel = createDynamicComponent<DisclosurePanelProps, DisclosureVariant>(
+export const DisclosurePanel = createDynamicComponent<DisclosurePanelProps>(
 	"disclosure",
 	"DisclosurePanel",
 	Default.DisclosurePanel,
 	{},
 );
 
-export const DisclosureTrigger = createDynamicComponent<DisclosureTriggerProps, DisclosureVariant>(
+export const DisclosureTrigger = createDynamicComponent<DisclosureTriggerProps>(
 	"disclosure",
 	"DisclosureTrigger",
 	Default.DisclosureTrigger,

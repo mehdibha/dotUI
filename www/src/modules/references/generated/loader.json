@@ -91,13 +91,55 @@
 			"description": "The largest value allowed for the input.",
 			"default": "100"
 		},
-		"id": {
+		"className": {
+			"type": "string | (values: ProgressBarRenderProps) => string",
+			"detailedType": "string | (values: ProgressBarRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ProgressBarRenderProps",
+									"name": "ProgressBarRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-ProgressBar'"
+		},
+		"aria-label": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
 		},
 		"aria-describedby": {
 			"type": "string",
@@ -115,21 +157,13 @@
 			},
 			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		},
-		"aria-label": {
+		"id": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
 		"children": {
 			"type": "ReactNode | (values: ProgressBarRenderProps) => ReactNode",
@@ -165,39 +199,6 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"className": {
-			"type": "string | (values: ProgressBarRenderProps) => string",
-			"detailedType": "string | (values: ProgressBarRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "ProgressBarRenderProps",
-									"name": "ProgressBarRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-		},
 		"style": {
 			"type": "CSSProperties | (values: ProgressBarRenderProps) => CSSProperties",
 			"detailedType": "CSSProperties | (values: ProgressBarRenderProps) => CSSProperties | undefined",
@@ -232,6 +233,42 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", ProgressBarRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', ProgressBarRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps",
+								"name": "ProgressBarRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
 		"slot": {
 			"type": "string | null",
@@ -291,6 +328,62 @@
 					"description": "Whether the progress bar is indeterminate."
 				}
 			}
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps",
+			"name": "ProgressBarRenderProps",
+			"extends": [],
+			"properties": {
+				"percentage": {
+					"type": "property",
+					"name": "percentage",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The value as a percentage between the minimum and maximum."
+				},
+				"valueText": {
+					"type": "property",
+					"name": "valueText",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "A formatted version of the value."
+				},
+				"isIndeterminate": {
+					"type": "property",
+					"name": "isIndeterminate",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the progress bar is indeterminate."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
 		}
 	}
 }

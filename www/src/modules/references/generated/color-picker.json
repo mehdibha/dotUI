@@ -2,6 +2,41 @@
 	"name": "ColorPickerProps",
 	"description": "A ColorPicker synchronizes a color value between multiple React Aria color components.\nIt simplifies building color pickers with customizable layouts via composition.",
 	"props": {
+		"children": {
+			"type": "ReactNode | (values: ColorPickerRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ColorPickerRenderProps",
+									"name": "ColorPickerRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state.",
+			"required": true
+		},
 		"value": {
 			"type": "string | Color",
 			"detailedType": "string | Color | undefined",
@@ -16,7 +51,7 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 						"name": "Color"
 					}
 				]
@@ -37,7 +72,7 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 						"name": "Color"
 					}
 				]
@@ -88,40 +123,6 @@
 			},
 			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
 		},
-		"children": {
-			"type": "ReactNode | (values: ColorPickerRenderProps) => ReactNode",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "ColorPickerRenderProps",
-									"name": "ColorPickerRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
 		"isOpen": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
@@ -165,9 +166,26 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
+		"ColorPickerRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+			"name": "ColorPickerRenderProps",
+			"properties": {
+				"color": {
+					"type": "property",
+					"name": "color",
+					"value": {
+						"type": "identifier",
+						"name": "Color"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The currently selected color."
+				}
+			}
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
 			"name": "ColorChannelRange",
 			"extends": [],
 			"properties": {
@@ -732,9 +750,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 			"name": "Color",
 			"extends": [],
 			"properties": {
@@ -757,7 +775,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -883,7 +901,7 @@
 						"parameters": [],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -958,7 +976,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -985,7 +1003,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
 							"name": "ColorChannelRange"
 						},
 						"typeParameters": []
@@ -1383,23 +1401,6 @@
 			},
 			"typeParameters": [],
 			"description": "Represents a color value."
-		},
-		"ColorPickerRenderProps": {
-			"type": "interface",
-			"name": "ColorPickerRenderProps",
-			"properties": {
-				"color": {
-					"type": "property",
-					"name": "color",
-					"value": {
-						"type": "identifier",
-						"name": "Color"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The currently selected color."
-				}
-			}
 		}
 	}
 }

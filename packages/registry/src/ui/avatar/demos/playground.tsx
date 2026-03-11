@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 
 interface AvatarPlaygroundProps {
 	src?: string;
@@ -15,5 +15,10 @@ export function AvatarPlayground({
 	fallback = "MB",
 	size = "md",
 }: AvatarPlaygroundProps) {
-	return <Avatar src={src} alt={alt} fallback={fallback} size={size} />;
+	return (
+		<Avatar size={size}>
+			<AvatarImage src={src} alt={alt} />
+			<AvatarFallback>{fallback}</AvatarFallback>
+		</Avatar>
+	);
 }

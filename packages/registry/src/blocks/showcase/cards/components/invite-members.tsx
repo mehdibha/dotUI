@@ -3,7 +3,7 @@
 import { PlusCircleIcon } from "lucide-react";
 
 import { ExternalLinkIcon } from "@dotui/registry/icons";
-import { Avatar } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 import { Button } from "@dotui/registry/ui/button";
 import {
 	Card,
@@ -82,7 +82,10 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
 							{teamMembers.map((member) => (
 								<div key={member.name} className="flex items-center justify-between gap-2">
 									<div className="flex items-center gap-2">
-										<Avatar src={member.avatar} size="sm" />
+										<Avatar size="sm">
+											<AvatarImage src={member.avatar} alt={member.name} />
+											<AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+										</Avatar>
 										<div className="text-sm">
 											<p>{member.name}</p>
 											<p className="text-fg-muted">{member.role}</p>

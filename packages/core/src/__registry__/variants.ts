@@ -15,8 +15,8 @@ export const VARIANTS = {
 		group: "feedback",
 	},
 	avatar: {
-		options: ["basic"] as const,
-		default: "basic",
+		options: ["base"] as const,
+		default: "base",
 		group: "data-display",
 	},
 	badge: {

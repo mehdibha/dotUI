@@ -2,6 +2,15 @@
 	"name": "TableLoadMoreProps",
 	"description": "Missing description.",
 	"props": {
+		"className": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+			"default": "'react-aria-TableLoadMoreItem'"
+		},
 		"children": {
 			"type": "ReactNode",
 			"typeAst": {
@@ -48,14 +57,6 @@
 			"description": "The amount of offset from the bottom of your scrollable region that should trigger load more.\nUses a percentage value relative to the scroll body's client height. Load more is then triggered\nwhen your current scroll position's distance from the bottom of the currently loaded list of items is less than\nor equal to the provided value. (e.g. 1 = 100% of the scroll region's height).",
 			"default": "1"
 		},
-		"className": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
-		},
 		"style": {
 			"type": "CSSProperties",
 			"detailedType": "CSSProperties | undefined",
@@ -64,6 +65,44 @@
 				"name": "CSSProperties"
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\" | \"tr\", undefined>",
+			"detailedType": "| DOMRenderFunction<'div' | 'tr', undefined>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									},
+									{
+										"type": "stringLiteral",
+										"value": "tr"
+									}
+								]
+							},
+							{
+								"type": "undefined"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		}
 	}
 }

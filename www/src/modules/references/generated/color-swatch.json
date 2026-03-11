@@ -2,6 +2,40 @@
 	"name": "ColorSwatchProps",
 	"description": "A ColorSwatch displays a preview of a selected color.",
 	"props": {
+		"className": {
+			"type": "string | (values: ColorSwatchRenderProps) => string",
+			"detailedType": "string | (values: ColorSwatchRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ColorSwatchRenderProps",
+									"name": "ColorSwatchRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-ColorSwatch'"
+		},
 		"color": {
 			"type": "string | Color",
 			"detailedType": "string | Color | undefined",
@@ -16,7 +50,7 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 						"name": "Color"
 					}
 				]
@@ -71,39 +105,6 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"className": {
-			"type": "string | (values: ColorSwatchRenderProps) => string",
-			"detailedType": "string | (values: ColorSwatchRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "ColorSwatchRenderProps",
-									"name": "ColorSwatchRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-		},
 		"style": {
 			"type": "CSSProperties | (values: ColorSwatchRenderProps) => CSSProperties",
 			"detailedType": "CSSProperties | (values: ColorSwatchRenderProps) => CSSProperties | undefined",
@@ -139,6 +140,42 @@
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", ColorSwatchRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', ColorSwatchRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchRenderProps",
+								"name": "ColorSwatchRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
 		"slot": {
 			"type": "string | null",
 			"detailedType": "string | null | undefined",
@@ -160,9 +197,26 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
+		"ColorSwatchRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+			"name": "ColorSwatchRenderProps",
+			"properties": {
+				"color": {
+					"type": "property",
+					"name": "color",
+					"value": {
+						"type": "identifier",
+						"name": "Color"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The color of the swatch."
+				}
+			}
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
 			"name": "ColorChannelRange",
 			"extends": [],
 			"properties": {
@@ -727,9 +781,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 			"name": "Color",
 			"extends": [],
 			"properties": {
@@ -752,7 +806,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -878,7 +932,7 @@
 						"parameters": [],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -953,7 +1007,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -980,7 +1034,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.2_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
 							"name": "ColorChannelRange"
 						},
 						"typeParameters": []
@@ -1379,22 +1433,27 @@
 			"typeParameters": [],
 			"description": "Represents a color value."
 		},
-		"ColorSwatchRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchRenderProps",
 			"name": "ColorSwatchRenderProps",
+			"extends": [],
 			"properties": {
 				"color": {
 					"type": "property",
 					"name": "color",
 					"value": {
-						"type": "identifier",
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
 						"name": "Color"
 					},
 					"optional": false,
 					"readonly": false,
 					"description": "The color of the swatch."
 				}
-			}
+			},
+			"typeParameters": [],
+			"description": ""
 		}
 	}
 }

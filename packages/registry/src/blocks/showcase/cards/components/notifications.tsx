@@ -1,7 +1,7 @@
 import React from "react";
 
 import { cn } from "@dotui/registry/lib/utils";
-import { Avatar } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@dotui/registry/ui/card";
@@ -48,14 +48,15 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 											<Separator />
 											<ListBoxItem textValue={notification.text}>
 												<div className="flex items-start gap-3 py-2">
-													<Avatar
-														src={notification.user.avatar}
-														fallback={notification.user.name
-															.split(" ")
-															.map((n) => n[0])
-															.join("")}
-														size="md"
-													/>
+													<Avatar size="md">
+														<AvatarImage src={notification.user.avatar} alt={notification.user.name} />
+														<AvatarFallback>
+															{notification.user.name
+																.split(" ")
+																.map((n) => n[0])
+																.join("")}
+														</AvatarFallback>
+													</Avatar>
 													<div className="flex-1">
 														<p className="text-sm">
 															<span className="font-medium">{notification.user.name}</span>{" "}

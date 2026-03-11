@@ -1,11 +1,20 @@
-import { Avatar } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 
 export default function Demo() {
 	return (
-		<div className="space-x-4">
-			{(["sm", "md", "lg"] as const).map((size) => (
-				<Avatar key={size} size={size} src="https://github.com/mehdibha.png" alt="@mehdibha" fallback="M" />
-			))}
+		<div className="flex items-center gap-2">
+			<Avatar size="sm">
+				<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+				<AvatarFallback>M</AvatarFallback>
+			</Avatar>
+			<Avatar size="md">
+				<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+				<AvatarFallback>M</AvatarFallback>
+			</Avatar>
+			<Avatar size="lg">
+				<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+				<AvatarFallback>M</AvatarFallback>
+			</Avatar>
 		</div>
 	);
 }

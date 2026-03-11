@@ -17,10 +17,7 @@ import { Reference, type ReferenceProps } from "@/modules/docs/reference";
 export const mdxComponents: MDXComponents = {
 	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 font-bold text-4xl", className)} {...props} />,
 	h2: ({ className, ...props }) => (
-		<h2
-			className={cn("mt-12 scroll-m-20 font-semibold text-xl tracking-tight first:mt-0", className)}
-			{...props}
-		/>
+		<h2 className={cn("mt-12 scroll-m-20 font-semibold text-xl tracking-tight first:mt-0", className)} {...props} />
 	),
 	h3: ({ className, ...props }) => (
 		<h3 className={cn("mt-8 scroll-m-20 font-semibold text-lg tracking-tight", className)} {...props} />

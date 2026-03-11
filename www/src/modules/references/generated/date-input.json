@@ -79,6 +79,42 @@
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", DateInputRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', DateInputRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateInputRenderProps",
+								"name": "DateInputRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
 		"className": {
 			"type": "string | (values: DateInputRenderProps) => string",
 			"detailedType": "string | (values: DateInputRenderProps) => string | undefined",
@@ -110,7 +146,8 @@
 					}
 				]
 			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-DateInput'"
 		}
 	},
 	"renderProps": {
@@ -191,6 +228,66 @@
 					"description": "Whether the date input is invalid."
 				}
 			}
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateInputRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateInputRenderProps",
+			"name": "DateInputRenderProps",
+			"extends": [],
+			"properties": {
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date input is currently hovered with a mouse."
+				},
+				"isFocusWithin": {
+					"type": "property",
+					"name": "isFocusWithin",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether an element within the date input is focused, either via a mouse or keyboard."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether an element within the date input is keyboard focused."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date input is disabled."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date input is invalid."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
 		}
 	}
 }

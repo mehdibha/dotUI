@@ -1,6 +1,6 @@
 {
 	"name": "AvatarImageProps",
-	"description": "Missing description.",
+	"description": "The image element displayed within the avatar. Automatically hidden when the image fails to load.",
 	"extendsElement": "img",
 	"props": {
 		"src": {

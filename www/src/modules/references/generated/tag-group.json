@@ -2,45 +2,14 @@
 	"name": "TagGroupProps",
 	"description": "A tag group is a focusable list of labels, categories, keywords, filters, or other items,\nwith support for keyboard navigation, selection, and removal.",
 	"props": {
-		"id": {
+		"className": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+			"default": "'react-aria-TagGroup'"
 		},
 		"disabledKeys": {
 			"type": "Iterable<Key>",
@@ -69,38 +38,45 @@
 			},
 			"description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
 		},
-		"disallowEmptySelection": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "boolean"
+				"type": "string"
 			},
-			"description": "Whether the collection allows empty selection."
+			"description": "Defines a string value that labels the current element."
 		},
-		"onSelectionChange": {
-			"type": "((keys: Selection) => void)",
-			"detailedType": "((keys: Selection) => void) | undefined",
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "keys",
-						"value": {
-							"type": "link",
-							"id": "Selection",
-							"name": "Selection"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
+				"type": "string"
 			},
-			"description": "Handler that is called when the selection changes."
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
 		"selectionBehavior": {
 			"type": "SelectionBehavior",
@@ -146,6 +122,14 @@
 				"name": "SelectionMode"
 			},
 			"description": "The type of selection that is allowed in the collection."
+		},
+		"disallowEmptySelection": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the collection allows empty selection."
 		},
 		"selectedKeys": {
 			"type": "Iterable<Key> | \"all\"",
@@ -219,6 +203,31 @@
 			},
 			"description": "The initial selected keys in the collection (uncontrolled)."
 		},
+		"onSelectionChange": {
+			"type": "((keys: Selection) => void)",
+			"detailedType": "((keys: Selection) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "keys",
+						"value": {
+							"type": "link",
+							"id": "Selection",
+							"name": "Selection"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the selection changes."
+		},
 		"onRemove": {
 			"type": "((keys: Set<Key>) => void)",
 			"detailedType": "((keys: Set<Key>) => void) | undefined",
@@ -269,14 +278,6 @@
 			},
 			"description": "The children of the component."
 		},
-		"className": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
-		},
 		"style": {
 			"type": "CSSProperties",
 			"detailedType": "CSSProperties | undefined",
@@ -304,6 +305,40 @@
 				]
 			},
 			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", undefined>",
+			"detailedType": "DOMRenderFunction<'div', undefined> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "undefined"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		}
 	},
 	"typeLinks": {
@@ -442,9 +477,9 @@
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@67": {
+				"__@iterator@68": {
 					"type": "method",
-					"name": "__@iterator@67",
+					"name": "__@iterator@68",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -750,9 +785,9 @@
 					"optional": false,
 					"description": "Returns an iterable of values in the set."
 				},
-				"__@iterator@67": {
+				"__@iterator@68": {
 					"type": "method",
-					"name": "__@iterator@67",
+					"name": "__@iterator@68",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -775,9 +810,9 @@
 					"optional": false,
 					"description": "Iterates over values in the set."
 				},
-				"__@toStringTag@70": {
+				"__@toStringTag@71": {
 					"type": "property",
-					"name": "__@toStringTag@70",
+					"name": "__@toStringTag@71",
 					"value": {
 						"type": "string"
 					},

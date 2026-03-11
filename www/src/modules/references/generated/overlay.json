@@ -437,7 +437,7 @@
 					"types": [
 						{
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:PopoverProps",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:PopoverProps",
 							"name": "PopoverProps"
 						},
 						{
@@ -475,6 +475,44 @@
 					"optional": true,
 					"readonly": false,
 					"description": "Whether to show an arrow pointing to the trigger."
+				},
+				"className": {
+					"type": "property",
+					"name": "className",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "values",
+										"value": {
+											"type": "identifier",
+											"name": "PopoverRenderProps & { defaultClassName: string | undefined; }"
+										},
+										"optional": false,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "string"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
 				},
 				"trigger": {
 					"type": "property",
@@ -1145,7 +1183,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:PopoverRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:PopoverRenderProps",
 								"name": "PopoverRenderProps"
 							}
 						]
@@ -1153,44 +1191,6 @@
 					"optional": true,
 					"readonly": false,
 					"description": "The children of the component. A function may be provided to alter the children based on component state."
-				},
-				"className": {
-					"type": "property",
-					"name": "className",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							},
-							{
-								"type": "function",
-								"parameters": [
-									{
-										"type": "parameter",
-										"name": "values",
-										"value": {
-											"type": "identifier",
-											"name": "PopoverRenderProps & { defaultClassName: string | undefined; }"
-										},
-										"optional": false,
-										"rest": false
-									}
-								],
-								"return": {
-									"type": "identifier",
-									"name": "string"
-								},
-								"typeParameters": []
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
 				},
 				"style": {
 					"type": "property",
@@ -1230,6 +1230,38 @@
 					"optional": true,
 					"readonly": false,
 					"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+				},
+				"render": {
+					"type": "property",
+					"name": "render",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "application",
+								"base": {
+									"type": "identifier",
+									"name": "DOMRenderFunction"
+								},
+								"typeParameters": [
+									{
+										"type": "identifier",
+										"name": "\"div\""
+									},
+									{
+										"type": "identifier",
+										"name": "PopoverRenderProps"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 				},
 				"slot": {
 					"type": "property",
@@ -3315,6 +3347,44 @@
 				}
 			],
 			"properties": {
+				"className": {
+					"type": "property",
+					"name": "className",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "values",
+										"value": {
+											"type": "identifier",
+											"name": "ModalRenderProps & { defaultClassName: string | undefined; }"
+										},
+										"optional": false,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "string"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+				},
 				"isEntering": {
 					"type": "property",
 					"name": "isEntering",
@@ -3524,7 +3594,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ModalRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ModalRenderProps",
 								"name": "ModalRenderProps"
 							}
 						]
@@ -3532,44 +3602,6 @@
 					"optional": true,
 					"readonly": false,
 					"description": "The children of the component. A function may be provided to alter the children based on component state."
-				},
-				"className": {
-					"type": "property",
-					"name": "className",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							},
-							{
-								"type": "function",
-								"parameters": [
-									{
-										"type": "parameter",
-										"name": "values",
-										"value": {
-											"type": "identifier",
-											"name": "ModalRenderProps & { defaultClassName: string | undefined; }"
-										},
-										"optional": false,
-										"rest": false
-									}
-								],
-								"return": {
-									"type": "identifier",
-									"name": "string"
-								},
-								"typeParameters": []
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
 				},
 				"style": {
 					"type": "property",
@@ -3609,6 +3641,38 @@
 					"optional": true,
 					"readonly": false,
 					"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+				},
+				"render": {
+					"type": "property",
+					"name": "render",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "application",
+								"base": {
+									"type": "identifier",
+									"name": "DOMRenderFunction"
+								},
+								"typeParameters": [
+									{
+										"type": "identifier",
+										"name": "\"div\""
+									},
+									{
+										"type": "identifier",
+										"name": "ModalRenderProps"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 				},
 				"slot": {
 					"type": "property",
@@ -5620,7 +5684,7 @@
 					"types": [
 						{
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ModalOverlayProps",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ModalOverlayProps",
 							"name": "ModalOverlayProps"
 						},
 						{
@@ -5691,6 +5755,44 @@
 					"optional": true,
 					"readonly": false,
 					"description": "The side of the screen where the drawer appears."
+				},
+				"className": {
+					"type": "property",
+					"name": "className",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "values",
+										"value": {
+											"type": "identifier",
+											"name": "ModalRenderProps & { defaultClassName: string | undefined; }"
+										},
+										"optional": false,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "string"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
 				},
 				"isEntering": {
 					"type": "property",
@@ -5901,7 +6003,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ModalRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ModalRenderProps",
 								"name": "ModalRenderProps"
 							}
 						]
@@ -5909,44 +6011,6 @@
 					"optional": true,
 					"readonly": false,
 					"description": "The children of the component. A function may be provided to alter the children based on component state."
-				},
-				"className": {
-					"type": "property",
-					"name": "className",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							},
-							{
-								"type": "function",
-								"parameters": [
-									{
-										"type": "parameter",
-										"name": "values",
-										"value": {
-											"type": "identifier",
-											"name": "ModalRenderProps & { defaultClassName: string | undefined; }"
-										},
-										"optional": false,
-										"rest": false
-									}
-								],
-								"return": {
-									"type": "identifier",
-									"name": "string"
-								},
-								"typeParameters": []
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
 				},
 				"style": {
 					"type": "property",
@@ -5986,6 +6050,38 @@
 					"optional": true,
 					"readonly": false,
 					"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+				},
+				"render": {
+					"type": "property",
+					"name": "render",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "application",
+								"base": {
+									"type": "identifier",
+									"name": "DOMRenderFunction"
+								},
+								"typeParameters": [
+									{
+										"type": "identifier",
+										"name": "\"div\""
+									},
+									{
+										"type": "identifier",
+										"name": "ModalRenderProps"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 				},
 				"slot": {
 					"type": "property",

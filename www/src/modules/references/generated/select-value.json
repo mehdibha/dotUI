@@ -2,9 +2,357 @@
 	"name": "SelectValueProps",
 	"description": "SelectValue renders the current value of a Select, or a placeholder if no value is selected.\nIt is usually placed within the button element.",
 	"props": {
+		"className": {
+			"type": "string | (values: SelectValueRenderProps<T>) => string",
+			"detailedType": "string | (values: SelectValueRenderProps<T>) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "intersection",
+									"types": [
+										{
+											"type": "application",
+											"base": {
+												"type": "link",
+												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+												"name": "SelectValueRenderProps"
+											},
+											"typeParameters": [
+												{
+													"type": "typeParameter",
+													"name": "T",
+													"constraint": {
+														"type": "identifier",
+														"name": "object"
+													},
+													"default": null
+												}
+											]
+										},
+										{
+											"type": "objectLiteral",
+											"properties": {
+												"defaultClassName": {
+													"type": "property",
+													"name": "defaultClassName",
+													"value": {
+														"type": "union",
+														"elements": [
+															{
+																"type": "identifier",
+																"name": "undefined"
+															},
+															{
+																"type": "identifier",
+																"name": "string"
+															}
+														]
+													},
+													"optional": false,
+													"readonly": false,
+													"description": ""
+												}
+											}
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-SelectValue'"
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides a detailed, extended description for the object."
+		},
+		"aria-disabled": {
+			"type": "Booleanish",
+			"detailedType": "Booleanish | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Booleanish"
+			},
+			"description": "Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable."
+		},
+		"aria-expanded": {
+			"type": "Booleanish",
+			"detailedType": "Booleanish | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Booleanish"
+			},
+			"description": "Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed."
+		},
+		"aria-haspopup": {
+			"type": "boolean | \"dialog\" | \"menu\" | \"true\" | \"false\" | \"listbox\" | \"tree\" | \"grid\"",
+			"detailedType": "| boolean\n| 'dialog'\n| 'menu'\n| 'true'\n| 'false'\n| 'listbox'\n| 'tree'\n| 'grid'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "dialog"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "menu"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "true"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "false"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "listbox"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "tree"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "grid"
+							}
+						]
+					}
+				]
+			},
+			"description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
+		},
+		"aria-controls": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+		},
+		"aria-pressed": {
+			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
+			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "true"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "false"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "mixed"
+							}
+						]
+					}
+				]
+			},
+			"description": "Indicates the current \"pressed\" state of toggle buttons."
+		},
+		"aria-current": {
+			"type": "boolean | \"time\" | \"step\" | \"true\" | \"false\" | \"page\" | \"location\" | \"date\"",
+			"detailedType": "| boolean\n| 'time'\n| 'step'\n| 'true'\n| 'false'\n| 'page'\n| 'location'\n| 'date'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "time"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "step"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "true"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "false"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "page"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "location"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "date"
+							}
+						]
+					}
+				]
+			},
+			"description": "Indicates the element that represents the current item within a container or set of related elements."
+		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
 		"inputMode": {
-			"type": "\"search\" | \"text\" | \"none\" | \"tel\" | \"url\" | \"email\" | \"numeric\" | \"decimal\"",
-			"detailedType": "| 'search'\n| 'text'\n| 'none'\n| 'tel'\n| 'url'\n| 'email'\n| 'numeric'\n| 'decimal'\n| undefined",
+			"type": "\"search\" | \"text\" | \"decimal\" | \"email\" | \"tel\" | \"none\" | \"url\" | \"numeric\"",
+			"detailedType": "| 'search'\n| 'text'\n| 'decimal'\n| 'email'\n| 'tel'\n| 'none'\n| 'url'\n| 'numeric'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -18,15 +366,7 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "none"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "tel"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "url"
+						"value": "decimal"
 					},
 					{
 						"type": "stringLiteral",
@@ -34,11 +374,19 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "numeric"
+						"value": "tel"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "decimal"
+						"value": "none"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "url"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "numeric"
 					}
 				]
 			},
@@ -51,14 +399,6 @@
 				"type": "string"
 			},
 			"description": "Specify that a standard HTML element should behave like a defined custom built-in element"
-		},
-		"tw": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Specify styles using Tailwind CSS classes. This feature is currently experimental.\nIf `style` prop is also specified, styles generated with `tw` prop will be overridden.\n\nExample:\n- `tw='w-full h-full bg-blue-200'`\n- `tw='text-9xl'`\n- `tw='text-[80px]'`"
 		},
 		"aria-activedescendant": {
 			"type": "string",
@@ -194,101 +534,6 @@
 			},
 			"description": "Defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid."
 		},
-		"aria-controls": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
-		},
-		"aria-current": {
-			"type": "boolean | \"time\" | \"step\" | \"true\" | \"false\" | \"page\" | \"location\" | \"date\"",
-			"detailedType": "| boolean\n| 'time'\n| 'step'\n| 'true'\n| 'false'\n| 'page'\n| 'location'\n| 'date'\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "time"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "step"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "true"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "page"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "location"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "date"
-							}
-						]
-					}
-				]
-			},
-			"description": "Indicates the element that represents the current item within a container or set of related elements."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
 		"aria-description": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -296,23 +541,6 @@
 				"type": "string"
 			},
 			"description": "Defines a string value that describes or annotates the current element."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides a detailed, extended description for the object."
-		},
-		"aria-disabled": {
-			"type": "Booleanish",
-			"detailedType": "Booleanish | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Booleanish"
-			},
-			"description": "Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable."
 		},
 		"aria-dropeffect": {
 			"type": "\"link\" | \"none\" | \"copy\" | \"execute\" | \"move\" | \"popup\"",
@@ -348,23 +576,6 @@
 			},
 			"description": "Indicates what functions can be performed when a dragged object is released on the drop target."
 		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
-		},
-		"aria-expanded": {
-			"type": "Booleanish",
-			"detailedType": "Booleanish | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Booleanish"
-			},
-			"description": "Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed."
-		},
 		"aria-flowto": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -381,85 +592,6 @@
 				"name": "Booleanish"
 			},
 			"description": "Indicates an element's \"grabbed\" state in a drag-and-drop operation."
-		},
-		"aria-haspopup": {
-			"type": "boolean | \"dialog\" | \"menu\" | \"true\" | \"false\" | \"listbox\" | \"tree\" | \"grid\"",
-			"detailedType": "| boolean\n| 'dialog'\n| 'menu'\n| 'true'\n| 'false'\n| 'listbox'\n| 'tree'\n| 'grid'\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "dialog"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "menu"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "true"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "listbox"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "tree"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "grid"
-							}
-						]
-					}
-				]
-			},
-			"description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
 		},
 		"aria-hidden": {
 			"type": "Booleanish",
@@ -529,22 +661,6 @@
 				"type": "string"
 			},
 			"description": "Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
 		},
 		"aria-level": {
 			"type": "number",
@@ -645,49 +761,6 @@
 			},
 			"description": "Defines an element's number or position in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM."
 		},
-		"aria-pressed": {
-			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
-			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "true"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "mixed"
-							}
-						]
-					}
-				]
-			},
-			"description": "Indicates the current \"pressed\" state of toggle buttons."
-		},
 		"aria-readonly": {
 			"type": "Booleanish",
 			"detailedType": "Booleanish | undefined",
@@ -698,14 +771,18 @@
 			"description": "Indicates that the element is not editable, but is otherwise operable."
 		},
 		"aria-relevant": {
-			"type": "\"text\" | \"additions\" | \"additions removals\" | \"additions text\" | \"all\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
-			"detailedType": "| 'text'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'all'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
+			"type": "\"text\" | \"all\" | \"additions\" | \"additions removals\" | \"additions text\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
+			"detailedType": "| 'text'\n| 'all'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
 						"value": "text"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -718,10 +795,6 @@
 					{
 						"type": "stringLiteral",
 						"value": "additions text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -884,7 +957,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
 							"name": "SelectValueRenderProps"
 						},
 						"typeParameters": [
@@ -901,86 +974,6 @@
 				]
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
-		"className": {
-			"type": "string | (values: SelectValueRenderProps<T>) => string",
-			"detailedType": "string | (values: SelectValueRenderProps<T>) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "intersection",
-									"types": [
-										{
-											"type": "application",
-											"base": {
-												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
-												"name": "SelectValueRenderProps"
-											},
-											"typeParameters": [
-												{
-													"type": "typeParameter",
-													"name": "T",
-													"constraint": {
-														"type": "identifier",
-														"name": "object"
-													},
-													"default": null
-												}
-											]
-										},
-										{
-											"type": "objectLiteral",
-											"properties": {
-												"defaultClassName": {
-													"type": "property",
-													"name": "defaultClassName",
-													"value": {
-														"type": "union",
-														"elements": [
-															{
-																"type": "identifier",
-																"name": "undefined"
-															},
-															{
-																"type": "identifier",
-																"name": "string"
-															}
-														]
-													},
-													"optional": false,
-													"readonly": false,
-													"description": ""
-												}
-											}
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
 		},
 		"style": {
 			"type": "CSSProperties | (values: SelectValueRenderProps<T>) => CSSProperties",
@@ -1008,7 +1001,7 @@
 											"type": "application",
 											"base": {
 												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
 												"name": "SelectValueRenderProps"
 											},
 											"typeParameters": [
@@ -1062,6 +1055,55 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"render": {
+			"type": "DOMRenderFunction<\"span\", SelectValueRenderProps<T>>",
+			"detailedType": "| DOMRenderFunction<'span', SelectValueRenderProps<T>>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "span"
+									}
+								]
+							},
+							{
+								"type": "application",
+								"base": {
+									"type": "link",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+									"name": "SelectValueRenderProps"
+								},
+								"typeParameters": [
+									{
+										"type": "typeParameter",
+										"name": "T",
+										"constraint": {
+											"type": "object"
+										},
+										"default": null
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		}
 	},
 	"renderProps": {
@@ -1071,16 +1113,134 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.8.0_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:SelectState": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.8.0_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+			"name": "SelectValueRenderProps",
+			"extends": [],
+			"properties": {
+				"isPlaceholder": {
+					"type": "property",
+					"name": "isPlaceholder",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the value is a placeholder."
+				},
+				"selectedItem": {
+					"type": "property",
+					"name": "selectedItem",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": {
+									"type": "object"
+								},
+								"default": null
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The object value of the first selected item."
+				},
+				"selectedItems": {
+					"type": "property",
+					"name": "selectedItems",
+					"value": {
+						"type": "array",
+						"elementType": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "null"
+								},
+								{
+									"type": "typeParameter",
+									"name": "T",
+									"constraint": {
+										"type": "identifier",
+										"name": "object"
+									},
+									"default": null
+								}
+							]
+						}
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The object values of the currently selected items."
+				},
+				"selectedText": {
+					"type": "property",
+					"name": "selectedText",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The textValue of the currently selected items."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
+							"name": "Select.State"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": {
+									"type": "object"
+								},
+								"default": null
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "single"
+									},
+									{
+										"type": "stringLiteral",
+										"value": "multiple"
+									}
+								]
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The state of the select."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:SelectState": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
 			"name": "Select.State",
 			"extends": [
 				{
 					"type": "application",
 					"base": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+list@3.13.1_react@19.2.1/node_modules/@react-stately/list/dist/types.d.ts:ListState",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+list@3.13.4_react@19.2.1/node_modules/@react-stately/list/dist/types.d.ts:ListState",
 						"name": "ListState"
 					},
 					"typeParameters": [
@@ -1094,12 +1254,12 @@
 				},
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.20_react@19.2.1/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.23_react@19.2.1/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState",
 					"name": "OverlayTriggerState"
 				},
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.2_react@19.2.1/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.4_react@19.2.1/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
 					"name": "FormValidationState"
 				}
 			],
@@ -1292,7 +1452,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
 									"name": "Node"
 								},
 								"typeParameters": [
@@ -1317,7 +1477,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
 								"name": "Node"
 							},
 							"typeParameters": [
@@ -1506,7 +1666,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Collection",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Collection",
 							"name": "Collection"
 						},
 						"typeParameters": [
@@ -1514,7 +1674,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
 									"name": "Node"
 								},
 								"typeParameters": [
@@ -1556,7 +1716,7 @@
 					"name": "selectionManager",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+selection@3.20.6_react@19.2.1/node_modules/@react-stately/selection/dist/types.d.ts:SelectionManager",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+selection@3.20.9_react@19.2.1/node_modules/@react-stately/selection/dist/types.d.ts:SelectionManager",
 						"name": "SelectionManager"
 					},
 					"optional": false,
@@ -1616,7 +1776,7 @@
 					"name": "realtimeValidation",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
 						"name": "ValidationResult"
 					},
 					"optional": false,
@@ -1628,7 +1788,7 @@
 					"name": "displayValidation",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
 						"name": "ValidationResult"
 					},
 					"optional": false,
@@ -1646,7 +1806,7 @@
 								"name": "result",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.32.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
 									"name": "ValidationResult"
 								},
 								"optional": false,
@@ -1688,124 +1848,6 @@
 					},
 					"optional": false,
 					"description": "Commits the realtime validation so it is displayed to the user."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.13.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
-			"name": "SelectValueRenderProps",
-			"extends": [],
-			"properties": {
-				"isPlaceholder": {
-					"type": "property",
-					"name": "isPlaceholder",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the value is a placeholder."
-				},
-				"selectedItem": {
-					"type": "property",
-					"name": "selectedItem",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "null"
-							},
-							{
-								"type": "typeParameter",
-								"name": "T",
-								"constraint": {
-									"type": "object"
-								},
-								"default": null
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The object value of the first selected item."
-				},
-				"selectedItems": {
-					"type": "property",
-					"name": "selectedItems",
-					"value": {
-						"type": "array",
-						"elementType": {
-							"type": "union",
-							"elements": [
-								{
-									"type": "null"
-								},
-								{
-									"type": "typeParameter",
-									"name": "T",
-									"constraint": {
-										"type": "identifier",
-										"name": "object"
-									},
-									"default": null
-								}
-							]
-						}
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The object values of the currently selected items."
-				},
-				"selectedText": {
-					"type": "property",
-					"name": "selectedText",
-					"value": {
-						"type": "string"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The textValue of the currently selected items."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.8.0_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
-							"name": "Select.State"
-						},
-						"typeParameters": [
-							{
-								"type": "typeParameter",
-								"name": "T",
-								"constraint": {
-									"type": "object"
-								},
-								"default": null
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "multiple"
-									},
-									{
-										"type": "stringLiteral",
-										"value": "single"
-									}
-								]
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The state of the select."
 				}
 			},
 			"typeParameters": [],

@@ -2,6 +2,40 @@
 	"name": "AccordionProps",
 	"description": "A DisclosureGroup is a grouping of related disclosures, sometimes called an accordion.\nIt supports both single and multiple expanded items.",
 	"props": {
+		"className": {
+			"type": "string | (values: DisclosureGroupRenderProps) => string",
+			"detailedType": "string | (values: DisclosureGroupRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "DisclosureGroupRenderProps",
+									"name": "DisclosureGroupRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-DisclosureGroup'"
+		},
 		"allowsMultipleExpanded": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
@@ -148,39 +182,6 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"className": {
-			"type": "string | (values: DisclosureGroupRenderProps) => string",
-			"detailedType": "string | (values: DisclosureGroupRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "DisclosureGroupRenderProps",
-									"name": "DisclosureGroupRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
-		},
 		"style": {
 			"type": "CSSProperties | (values: DisclosureGroupRenderProps) => CSSProperties",
 			"detailedType": "CSSProperties | (values: DisclosureGroupRenderProps) => CSSProperties | undefined",
@@ -216,6 +217,42 @@
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", DisclosureGroupRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', DisclosureGroupRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DisclosureGroupRenderProps",
+								"name": "DisclosureGroupRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
 		"id": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -226,6 +263,33 @@
 		}
 	},
 	"typeLinks": {
+		"DisclosureGroupRenderProps": {
+			"type": "interface",
+			"name": "DisclosureGroupRenderProps",
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the disclosure group is disabled."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "identifier",
+						"name": "DisclosureGroupState"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the disclosure group."
+				}
+			}
+		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
@@ -361,9 +425,9 @@
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@67": {
+				"__@iterator@68": {
 					"type": "method",
-					"name": "__@iterator@67",
+					"name": "__@iterator@68",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -669,9 +733,9 @@
 					"optional": false,
 					"description": "Returns an iterable of values in the set."
 				},
-				"__@iterator@67": {
+				"__@iterator@68": {
 					"type": "method",
-					"name": "__@iterator@67",
+					"name": "__@iterator@68",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -694,9 +758,9 @@
 					"optional": false,
 					"description": "Iterates over values in the set."
 				},
-				"__@toStringTag@70": {
+				"__@toStringTag@71": {
 					"type": "property",
-					"name": "__@toStringTag@70",
+					"name": "__@toStringTag@71",
 					"value": {
 						"type": "string"
 					},
@@ -708,9 +772,11 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"DisclosureGroupRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DisclosureGroupRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DisclosureGroupRenderProps",
 			"name": "DisclosureGroupRenderProps",
+			"extends": [],
 			"properties": {
 				"isDisabled": {
 					"type": "property",
@@ -726,14 +792,17 @@
 					"type": "property",
 					"name": "state",
 					"value": {
-						"type": "identifier",
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+disclosure@3.0.11_react@19.2.1/node_modules/@react-stately/disclosure/dist/types.d.ts:DisclosureGroupState",
 						"name": "DisclosureGroupState"
 					},
 					"optional": false,
 					"readonly": false,
 					"description": "State of the disclosure group."
 				}
-			}
+			},
+			"typeParameters": [],
+			"description": ""
 		}
 	}
 }

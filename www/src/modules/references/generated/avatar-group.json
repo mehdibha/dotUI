@@ -1,6 +1,6 @@
 {
 	"name": "AvatarGroupProps",
-	"description": "Missing description.",
+	"description": "A group container that displays multiple avatars together with overlapping layout.",
 	"extendsElement": "div",
 	"props": {
 		"size": {

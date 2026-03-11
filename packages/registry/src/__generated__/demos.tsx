@@ -53,17 +53,49 @@ export const DemosIndex: Record<
 		files: ["ui/alert/demos/warning.tsx"],
 		component: React.lazy(() => import("@dotui/registry/ui/alert/demos/warning")),
 	},
-	"avatar/demos/composition": {
-		files: ["ui/avatar/demos/composition.tsx"],
-		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/composition")),
+	"avatar/demos/avatar-group-count": {
+		files: ["ui/avatar/demos/avatar-group-count.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/avatar-group-count")),
+	},
+	"avatar/demos/badge-notification": {
+		files: ["ui/avatar/demos/badge-notification.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/badge-notification")),
+	},
+	"avatar/demos/badge-top-right": {
+		files: ["ui/avatar/demos/badge-top-right.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/badge-top-right")),
+	},
+	"avatar/demos/badge-with-icon": {
+		files: ["ui/avatar/demos/badge-with-icon.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/badge-with-icon")),
+	},
+	"avatar/demos/badge": {
+		files: ["ui/avatar/demos/badge.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/badge")),
+	},
+	"avatar/demos/basic": {
+		files: ["ui/avatar/demos/basic.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/basic")),
 	},
 	"avatar/demos/default": {
 		files: ["ui/avatar/demos/default.tsx"],
 		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/default")),
 	},
-	"avatar/demos/shape": {
-		files: ["ui/avatar/demos/shape.tsx"],
-		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/shape")),
+	"avatar/demos/fallback-only": {
+		files: ["ui/avatar/demos/fallback-only.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/fallback-only")),
+	},
+	"avatar/demos/group": {
+		files: ["ui/avatar/demos/group.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/group")),
+	},
+	"avatar/demos/icon-fallback": {
+		files: ["ui/avatar/demos/icon-fallback.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/icon-fallback")),
+	},
+	"avatar/demos/radii": {
+		files: ["ui/avatar/demos/radii.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/radii")),
 	},
 	"avatar/demos/sizes": {
 		files: ["ui/avatar/demos/sizes.tsx"],
