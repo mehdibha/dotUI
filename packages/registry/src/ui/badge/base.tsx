@@ -3,7 +3,7 @@ import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 const badgeStyles = tv({
-	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md px-2 py-0.5 font-medium text-xs [&>svg]:pointer-events-none",
+	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md font-medium text-xs [&>svg]:pointer-events-none",
 	variants: {
 		variant: {
 			default: "bg-neutral text-fg-on-neutral",
@@ -14,9 +14,9 @@ const badgeStyles = tv({
 			info: "bg-info text-fg-on-info",
 		},
 		size: {
-			sm: "px-1.5 py-0.25 [&>svg]:size-3",
-			md: "px-2 py-0.5 [&>svg]:size-3",
-			lg: "px-2.5 py-0.75 [&>svg]:size-3",
+			sm: "h-4.5 min-w-4.5 px-1.5 text-xs [&>svg]:size-2.5 **:data-loader:*:[svg]:size-2.5",
+			md: "h-5 min-w-5 px-1.75 text-xs [&>svg]:size-3 **:data-loader:*:[svg]:size-3",
+			lg: "h-5.5 min-w-5.5 px-2.25 text-xs [&>svg]:size-3.5 **:data-loader:*:[svg]:size-3.5",
 		},
 	},
 	defaultVariants: {
