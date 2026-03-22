@@ -1,14 +1,10 @@
 "use client";
 
-import React from "react";
-
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { LoaderProps } from "./types";
 
-export const Loader = createDynamicComponent<LoaderProps>("loader", "Loader", Default.Loader, {
-	ring: React.lazy(() => import("./ring").then((mod) => ({ default: mod.Loader }))),
-});
+export const Loader = createDynamicComponent<LoaderProps>("loader", "Loader", Default.Loader, {});
 
 export type { LoaderProps };
