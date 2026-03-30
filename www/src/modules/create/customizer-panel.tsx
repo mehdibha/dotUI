@@ -4,13 +4,17 @@ import { AnimatePresence, motion, type Transition } from "motion/react";
 import { Button as AriaButton, DialogTrigger } from "react-aria-components";
 
 import * as icons from "@dotui/registry/icons";
+import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
+import { Checkbox } from "@dotui/registry/ui/checkbox";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
+import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Input } from "@dotui/registry/ui/input";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { Select, SelectValue } from "@dotui/registry/ui/select";
+import { Switch } from "@dotui/registry/ui/switch";
 import { TextField } from "@dotui/registry/ui/text-field";
 
 /* -------------------------------- Types -------------------------------- */
@@ -50,11 +54,15 @@ const menu: MenuItem[] = [
 		title: "Colors",
 		type: "page",
 		preview: (
-			<div className="flex items-center gap-2">
-				<ColorSwatch color="#FFD93D" />
-				<ColorSwatch color="#6BCB77" />
-				<ColorSwatch color="#4D96FF" />
-				<ColorSwatch color="#A29BFE" />
+			<div className="flex flex-col gap-1.5">
+				<div className="flex items-center gap-1 *:size-5 *:rounded-full *:border">
+					<div className="bg-neutral" />
+					<div className="bg-primary" />
+					<div className="bg-success" />
+					<div className="bg-warning" />
+					<div className="bg-danger" />
+					<div className="bg-info" />
+				</div>
 			</div>
 		),
 		config: null,
@@ -64,9 +72,15 @@ const menu: MenuItem[] = [
 		title: "Typography",
 		type: "page",
 		preview: (
-			<div className="text-right">
-				<p className="font-heading text-2xl">Heading</p>
-				<p className="font-body">body</p>
+			<div className="flex flex-col gap-1.5">
+				<div className="flex items-center justify-between">
+					<span className="text-[10px] text-fg-muted uppercase tracking-widest">Heading</span>
+					<p className="font-heading text-2xl leading-none tracking-tight">Ag</p>
+				</div>
+				<div className="flex items-center justify-between">
+					<span className="text-[10px] text-fg-muted uppercase tracking-widest">Body</span>
+					<p className="font-body text-base leading-none">Ag</p>
+				</div>
 			</div>
 		),
 		config: null,
@@ -76,13 +90,11 @@ const menu: MenuItem[] = [
 		title: "Iconography",
 		type: "page",
 		preview: (
-			<div className="grid max-h-[152px] gap-0.5 overflow-hidden [grid-template-columns:repeat(auto-fill,minmax(36px,1fr))] [grid-template-rows:repeat(auto-fill,minmax(36px,1fr))] [&_svg]:size-6">
+			<div className="flex items-center gap-2 overflow-hidden text-fg-muted [&_svg]:size-4 [&_svg]:shrink-0">
 				{Object.entries(icons)
-					.slice(0, 100)
+					.slice(0, 20)
 					.map(([name, IconComponent]) => (
-						<div key={name} className="flex items-center justify-center">
-							<IconComponent />
-						</div>
+						<IconComponent key={name} />
 					))}
 			</div>
 		),
@@ -92,14 +104,35 @@ const menu: MenuItem[] = [
 		id: "radius",
 		title: "Radius",
 		type: "popover",
-		preview: <></>,
+		preview: (
+			<div className="flex items-end gap-2">
+				<div className="size-7 rounded-none border-2 border-fg-muted/40" />
+				<div className="size-7 rounded-sm border-2 border-fg-muted/40" />
+				<div className="size-7 rounded-md border-2 border-fg-muted/40" />
+				<div className="size-7 rounded-lg border-2 border-fg-muted/40" />
+				<div className="size-7 rounded-xl border-2 border-fg-muted/40" />
+			</div>
+		),
 		config: null,
 	},
 	{
 		id: "compactness",
 		title: "Compactness",
 		type: "popover",
-		preview: <></>,
+		preview: (
+			<div className="flex max-h-12 gap-2 overflow-hidden">
+				<div className="flex min-w-0 flex-1 flex-col gap-1 rounded border border-fg-muted/20 p-1.5">
+					<div className="h-1.5 w-2/3 rounded-sm bg-fg-muted/30" />
+					<div className="h-1.5 w-1/3 rounded-sm bg-fg-muted/15" />
+					<div className="h-6 w-full rounded-sm bg-fg-muted/10" />
+				</div>
+				<div className="flex min-w-0 flex-1 flex-col gap-1 rounded border border-fg-muted/20 p-1.5">
+					<div className="h-1.5 w-2/3 rounded-sm bg-fg-muted/30" />
+					<div className="h-1.5 w-1/3 rounded-sm bg-fg-muted/15" />
+					<div className="h-6 w-full rounded-sm bg-fg-muted/10" />
+				</div>
+			</div>
+		),
 		config: null,
 	},
 	{
@@ -107,7 +140,11 @@ const menu: MenuItem[] = [
 		title: "Components",
 		type: "page",
 		preview: (
-			<></>
+			<div className="pointer-events-none flex items-center gap-2">
+				<Switch defaultSelected className="scale-75" />
+				<Checkbox defaultSelected className="scale-90" />
+				<Badge>Badge</Badge>
+			</div>
 		),
 		config: null,
 	},
@@ -213,15 +250,15 @@ export function CustomizerPanel() {
 							<div className="flex flex-col gap-4">
 								{menu.map((item) =>
 									item.type === "popover" ? (
-										<DialogTrigger key={item.id}>
+										<Dialog key={item.id}>
 											<AriaButton className="flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover">
 												<div className="text-left text-fg-muted">{item.title}</div>
 												<div>{item.preview}</div>
 											</AriaButton>
-											<Popover>
-												<div className="p-3">{item.config}</div>
+											<Popover placement="right top">
+												<DialogContent>{item.config}</DialogContent>
 											</Popover>
-										</DialogTrigger>
+										</Dialog>
 									) : (
 										<AriaButton
 											key={item.id}
