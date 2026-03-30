@@ -21,7 +21,7 @@ const { root, header, title, description, action, content, footer } = cardStyles
 interface CardProps extends React.ComponentProps<"div"> {}
 
 function Card({ className, ...props }: CardProps) {
-	return <div data-slot="card" className={root({ className })} {...props} />;
+	return <div data-card="" className={root({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -29,7 +29,7 @@ function Card({ className, ...props }: CardProps) {
 interface CardHeaderProps extends React.ComponentProps<"div"> {}
 
 function CardHeader({ className, ...props }: CardHeaderProps) {
-	return <div data-slot="card-header" className={header({ className })} {...props} />;
+	return <div data-card-header="" className={header({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -37,7 +37,7 @@ function CardHeader({ className, ...props }: CardHeaderProps) {
 interface CardTitleProps extends React.ComponentProps<"div"> {}
 
 function CardTitle({ className, ...props }: CardTitleProps) {
-	return <div data-slot="card-title" className={title({ className })} {...props} />;
+	return <div data-card-title="" className={title({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -45,7 +45,7 @@ function CardTitle({ className, ...props }: CardTitleProps) {
 interface CardDescriptionProps extends React.ComponentProps<"div"> {}
 
 function CardDescription({ className, ...props }: CardDescriptionProps) {
-	return <div data-slot="card-description" className={description({ className })} {...props} />;
+	return <div data-card-description="" className={description({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -53,7 +53,7 @@ function CardDescription({ className, ...props }: CardDescriptionProps) {
 interface CardActionProps extends React.ComponentProps<"div"> {}
 
 function CardAction({ className, ...props }: CardActionProps) {
-	return <div data-slot="card-action" className={action({ className })} {...props} />;
+	return <div data-card-action="" className={action({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -61,7 +61,7 @@ function CardAction({ className, ...props }: CardActionProps) {
 interface CardContentProps extends React.ComponentProps<"div"> {}
 
 function CardContent({ className, ...props }: CardContentProps) {
-	return <div data-slot="card-content" className={content({ className })} {...props} />;
+	return <div data-card-content="" className={content({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -69,7 +69,7 @@ function CardContent({ className, ...props }: CardContentProps) {
 interface CardFooterProps extends React.ComponentProps<"div"> {}
 
 function CardFooter({ className, ...props }: CardFooterProps) {
-	return <div data-slot="card-footer" className={footer({ className })} {...props} />;
+	return <div data-card-footer="" className={footer({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/

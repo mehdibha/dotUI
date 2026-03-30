@@ -48,7 +48,7 @@ export function PageTabPanel({ id, children }: PageTabPanelProps) {
 		>
 			<div className="min-w-0">{children}</div>
 			{id === "overview" && hasToc && (
-				<div className="sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden">
+				<div className="sticky top-22 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden">
 					<h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
 						<AlignLeftIcon className="size-4 text-fg-muted" />
 						On this page

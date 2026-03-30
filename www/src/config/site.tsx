@@ -31,8 +31,9 @@ export const siteConfig = {
 	},
 } as const;
 
-export const navItems: { icon: React.ReactNode; name: string; href: ToOptions }[] = [
-	{ icon: <BookIcon />, name: "Docs", href: { to: "/docs/$", params: { _splat: "" } } },
-	{ icon: <BoxIcon />, name: "Components", href: { to: "/docs/$", params: { _splat: "components" } } },
-	{ icon: <BlocksIcon />, name: "Blocks", href: { to: "/blocks" } },
+export const navItems: { name: string; href: ToOptions }[] = [
+	{ name: "Docs", href: { to: "/docs/$", params: { _splat: "" } } },
+	{ name: "Components", href: { to: "/docs/$", params: { _splat: "components" } } },
+	{ name: "Blocks", href: { to: "/blocks" } },
+	{ name: "Create", href: { to: "/create" } },
 ];
