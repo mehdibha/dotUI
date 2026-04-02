@@ -4,7 +4,7 @@ import { ColorSwatch as AriaColorSwatch, composeRenderProps } from "react-aria-c
 import { tv } from "tailwind-variants";
 
 const colorSwatchStyles = tv({
-	base: "relative size-5 rounded-sm border",
+	base: "relative size-5 shrink-0 rounded-sm border",
 });
 
 interface ColorSwatchProps extends React.ComponentProps<typeof AriaColorSwatch> {}

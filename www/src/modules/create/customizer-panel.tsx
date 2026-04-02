@@ -7,14 +7,17 @@ import * as icons from "@dotui/registry/icons";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { Checkbox } from "@dotui/registry/ui/checkbox";
+import { ColorEditor } from "@dotui/registry/ui/color-editor";
+import { ColorPicker } from "@dotui/registry/ui/color-picker";
 import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
+import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
 import { Radio, RadioGroup } from "@dotui/registry/ui/radio-group";
 import { SearchField } from "@dotui/registry/ui/search-field";
-import { Select, SelectValue } from "@dotui/registry/ui/select";
+import { Select, SelectTrigger, SelectValue } from "@dotui/registry/ui/select";
 import { Slider, SliderControl, SliderFiller, SliderOutput, SliderThumb } from "@dotui/registry/ui/slider";
 import { Switch } from "@dotui/registry/ui/switch";
 import { TextField } from "@dotui/registry/ui/text-field";
@@ -72,77 +75,59 @@ const accentPresets = [
 ];
 
 function ColorsConfig() {
-	const [selectedBase, setSelectedBase] = useState("neutral");
-	const [selectedAccent, setSelectedAccent] = useState("blue");
-
 	return (
-		<div className="flex flex-col gap-5">
-			{/* Base color */}
-			<div className="flex flex-col gap-2">
-				<span className="font-medium text-fg-muted text-xs">Base color</span>
-				<div className="flex flex-col gap-1">
-					{colorPresets.map((preset) => (
-						<button
-							key={preset.value}
-							type="button"
-							onClick={() => setSelectedBase(preset.value)}
-							className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted"
-						>
-							<div className="flex gap-0.5">
-								{preset.colors.map((c) => (
-									<div key={c} className="size-4 rounded-full border" style={{ backgroundColor: c }} />
-								))}
-							</div>
-							<span className="flex-1 text-left">{preset.name}</span>
-							{selectedBase === preset.value && <CheckIcon className="size-3.5 text-primary" />}
-						</button>
-					))}
-				</div>
-			</div>
-
-			{/* Accent color */}
-			<div className="flex flex-col gap-2">
-				<span className="font-medium text-fg-muted text-xs">Accent color</span>
-				<div className="grid grid-cols-4 gap-1.5">
-					{accentPresets.map((preset) => (
-						<button
-							key={preset.value}
-							type="button"
-							onClick={() => setSelectedAccent(preset.value)}
-							className="flex cursor-pointer flex-col items-center gap-1 rounded-md p-1.5 transition-colors hover:bg-muted"
-						>
-							<div
-								className="size-7 rounded-full border"
-								style={{
-									backgroundColor: preset.color,
-									boxShadow:
-										selectedAccent === preset.value
-											? `0 0 0 2px var(--color-bg), 0 0 0 4px ${preset.color}`
-											: undefined,
-								}}
-							/>
-							<span className="text-[10px] text-fg-muted">{preset.name}</span>
-						</button>
-					))}
-				</div>
-			</div>
-
-			{/* Semantic colors */}
-			<div className="flex flex-col gap-2">
-				<span className="font-medium text-fg-muted text-xs">Semantic colors</span>
-				<div className="flex flex-col gap-1.5">
-					{[
-						{ label: "Success", cls: "bg-success" },
-						{ label: "Warning", cls: "bg-warning" },
-						{ label: "Danger", cls: "bg-danger" },
-						{ label: "Info", cls: "bg-info" },
-					].map((item) => (
-						<div key={item.label} className="flex items-center justify-between rounded-md px-2 py-1">
-							<span className="text-sm">{item.label}</span>
-							<div className={`size-5 rounded-full border ${item.cls}`} />
-						</div>
-					))}
-				</div>
+		<div className="flex flex-col gap-4">
+			<Select className="w-full" defaultValue="material">
+				<Label>Color system</Label>
+				<SelectTrigger className="w-full" />
+				<Popover>
+					<ListBox>
+						<ListBoxItem id="material">Material design</ListBoxItem>
+					</ListBox>
+				</Popover>
+			</Select>
+			<div className="grid grid-cols-2 gap-4">
+				{[
+					{
+						name: "Base color",
+						value: "#737373",
+					},
+					{
+						name: "Accent color",
+						value: "#3b82f6",
+					},
+					{
+						name: "Success color",
+						value: "#22c55e",
+					},
+					{
+						name: "Warning color",
+						value: "#f97316",
+					},
+					{
+						name: "Danger color",
+						value: "#f43f5e",
+					},
+				].map(({ name, value }) => (
+					<ColorPicker key={name} defaultValue={value}>
+						{({ color }) => (
+							<>
+								<div className="flex flex-col gap-2">
+									<Label>{name}</Label>
+									<Button className="justify-start pl-2.5">
+										<ColorSwatch />
+										<span className="truncate">{color.getColorName("en")}</span>
+									</Button>
+								</div>
+								<Popover>
+									<DialogContent>
+										<ColorEditor />
+									</DialogContent>
+								</Popover>
+							</>
+						)}
+					</ColorPicker>
+				))}
 			</div>
 		</div>
 	);
@@ -523,61 +508,40 @@ export function CustomizerPanel() {
 		<div className="relative flex w-72 flex-col rounded-xl border bg-card">
 			{/* Header */}
 			<div className="relative overflow-hidden border-b p-3">
-				<AnimatePresence mode="popLayout" custom={direction.current} initial={false}>
-					<motion.div
-						key={viewKey}
-						custom={direction.current}
-						variants={slideVariants}
-						initial="enter"
-						animate="center"
-						exit="exit"
-						transition={slideTransition}
-					>
-						{activePage ? (
-							<div className="flex items-center gap-2">
-								<Button variant="quiet" size="sm" onPress={pop} aria-label="Back">
-									<ChevronLeftIcon />
-								</Button>
-								<h2 className="font-semibold text-sm">{activePage.title}</h2>
-							</div>
-						) : (
-							<div className="flex w-full items-center gap-2">
-								<Select defaultValue="preview" className="min-w-0 flex-1">
-									<Button size="sm" className="w-full pr-2!">
-										<SelectValue className="truncate" />
-										<ChevronDownIcon />
-									</Button>
-									<Popover>
-										<SearchField autoFocus className="m-2">
-											<Input />
-										</SearchField>
-										<ListBox>
-											<ListBoxItem id="preview">Preview</ListBoxItem>
-											<ListBoxItem id="accordion">Accordion</ListBoxItem>
-											<ListBoxItem id="button">Button</ListBoxItem>
-											<ListBoxItem id="checkbox">Checkbox</ListBoxItem>
-											<ListBoxItem id="checkbox-group">Checkbox Group</ListBoxItem>
-											<ListBoxItem id="date-field">Date Field</ListBoxItem>
-											<ListBoxItem id="date-picker">Date Picker</ListBoxItem>
-											<ListBoxItem id="date-range-picker">Date Range Picker</ListBoxItem>
-											<ListBoxItem id="dropdown">Dropdown</ListBoxItem>
-											<ListBoxItem id="dropdown-menu">Dropdown Menu</ListBoxItem>
-										</ListBox>
-									</Popover>
-								</Select>
-								<Button size="sm">
-									<ShuffleIcon />
-								</Button>
-								<Button size="sm">
-									<MoonIcon />
-								</Button>
-								<Button size="sm">
-									<Undo2Icon />
-								</Button>
-							</div>
-						)}
-					</motion.div>
-				</AnimatePresence>
+				<div className="flex w-full items-center gap-2">
+					<Select defaultValue="preview" className="min-w-0 flex-1">
+						<Button size="sm" className="w-full pr-2!">
+							<SelectValue className="truncate" />
+							<ChevronDownIcon />
+						</Button>
+						<Popover>
+							<SearchField autoFocus className="m-2">
+								<Input />
+							</SearchField>
+							<ListBox>
+								<ListBoxItem id="preview">Preview</ListBoxItem>
+								<ListBoxItem id="accordion">Accordion</ListBoxItem>
+								<ListBoxItem id="button">Button</ListBoxItem>
+								<ListBoxItem id="checkbox">Checkbox</ListBoxItem>
+								<ListBoxItem id="checkbox-group">Checkbox Group</ListBoxItem>
+								<ListBoxItem id="date-field">Date Field</ListBoxItem>
+								<ListBoxItem id="date-picker">Date Picker</ListBoxItem>
+								<ListBoxItem id="date-range-picker">Date Range Picker</ListBoxItem>
+								<ListBoxItem id="dropdown">Dropdown</ListBoxItem>
+								<ListBoxItem id="dropdown-menu">Dropdown Menu</ListBoxItem>
+							</ListBox>
+						</Popover>
+					</Select>
+					<Button size="sm">
+						<ShuffleIcon />
+					</Button>
+					<Button size="sm">
+						<MoonIcon />
+					</Button>
+					<Button size="sm">
+						<Undo2Icon />
+					</Button>
+				</div>
 			</div>
 
 			{/* Body */}
@@ -594,7 +558,15 @@ export function CustomizerPanel() {
 						className="h-full overflow-y-auto p-3"
 					>
 						{activePage ? (
-							<div>{activePage.config}</div>
+							<div>
+								<div className="mb-3 -ml-1 flex items-center gap-2">
+									<Button variant="quiet" size="sm" onPress={pop} aria-label="Back" className="size-6">
+										<ChevronLeftIcon />
+									</Button>
+									<h2 className="font-medium text-sm">{activePage.title}</h2>
+								</div>
+								<div className="**:data-label:pl-1 **:data-label:text-fg-muted">{activePage.config}</div>
+							</div>
 						) : (
 							<div className="flex flex-col gap-3">
 								{menu.map((item) => {
