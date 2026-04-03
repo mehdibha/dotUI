@@ -43,7 +43,6 @@
 		"tailwindcss": "^4.1.14",
 		"ts-morph": "^25.0.1",
 		"unist-util-visit": "^5.0.0",
-		"vite-tsconfig-paths": "^6.0.3",
 		"zod": "^4.2.1"
 	},
 	"devDependencies": {
