@@ -15,9 +15,6 @@ export default defineConfig({
 		alias: [
 			{ find: /^@\/\.source\//, replacement: `${path.resolve(import.meta.dirname, ".source")}/` },
 			{ find: /^@\//, replacement: `${path.resolve(import.meta.dirname, "src")}/` },
-			{ find: /^@dotui\/registry\/ui\/demos$/, replacement: path.resolve(import.meta.dirname, "../packages/registry/src/__generated__/demos.tsx") },
-			{ find: /^@dotui\/registry\//, replacement: `${path.resolve(import.meta.dirname, "../packages/registry/src")}/` },
-			{ find: /^@dotui\/core\//, replacement: `${path.resolve(import.meta.dirname, "../packages/core/src")}/` },
 		],
 	},
 	ssr: {
