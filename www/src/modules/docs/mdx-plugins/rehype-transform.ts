@@ -78,7 +78,7 @@ interface ImportInfo {
 // ============================================================================
 
 const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (options = {}) => {
-	const { registryBasePath = "../packages/registry/src" } = options;
+	const { registryBasePath = "src/registry" } = options;
 
 	return async (tree) => {
 		const demoNodes: DemoNodeInfo[] = [];
