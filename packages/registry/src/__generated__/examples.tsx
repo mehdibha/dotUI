@@ -1,6 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
 // Run "npx tsx scripts/generate-examples.ts" to regenerate
-import type React from "react";
 
 export const ExamplesIndex: Record<
   string,

@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as ViewBlockRouteImport } from './routes/view/$block'
+import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as legalSplatRouteImport } from './routes/(legal)/$'
@@ -52,6 +53,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const ViewBlockRoute = ViewBlockRouteImport.update({
   id: '/view/$block',
   path: '/view/$block',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreviewSlugRoute = PreviewSlugRouteImport.update({
+  id: '/preview/$slug',
+  path: '/preview/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemosSlugRoute = DemosSlugRouteImport.update({
@@ -133,6 +139,7 @@ const AppBlocksChar123CategoryChar125Route =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof AppIndexRoute
   '/login': typeof LoginRoute
   '/og': typeof OgRoute
   '/blocks': typeof AppBlocksRouteRouteWithChildren
@@ -141,8 +148,8 @@ export interface FileRoutesByFullPath {
   '/$': typeof legalSplatRoute
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/preview/$slug': typeof PreviewSlugRoute
   '/view/$block': typeof ViewBlockRoute
-  '/': typeof AppIndexRoute
   '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/components': typeof AppDocsComponentsRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/$': typeof legalSplatRoute
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/preview/$slug': typeof PreviewSlugRoute
   '/view/$block': typeof ViewBlockRoute
   '/': typeof AppIndexRoute
   '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
@@ -184,6 +192,7 @@ export interface FileRoutesById {
   '/(legal)/$': typeof legalSplatRoute
   '/_app/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/preview/$slug': typeof PreviewSlugRoute
   '/view/$block': typeof ViewBlockRoute
   '/_app/': typeof AppIndexRoute
   '/_app/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
@@ -199,6 +208,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/login'
     | '/og'
     | '/blocks'
@@ -207,8 +217,8 @@ export interface FileRouteTypes {
     | '/$'
     | '/create'
     | '/demos/$slug'
+    | '/preview/$slug'
     | '/view/$block'
-    | '/'
     | '/blocks/{-$category}'
     | '/docs/$'
     | '/docs/components'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/create'
     | '/demos/$slug'
+    | '/preview/$slug'
     | '/view/$block'
     | '/'
     | '/blocks/{-$category}'
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/(legal)/$'
     | '/_app/create'
     | '/demos/$slug'
+    | '/preview/$slug'
     | '/view/$block'
     | '/_app/'
     | '/_app/blocks/{-$category}'
@@ -268,6 +280,7 @@ export interface RootRouteChildren {
   OgRoute: typeof OgRoute
   legalSplatRoute: typeof legalSplatRoute
   DemosSlugRoute: typeof DemosSlugRoute
+  PreviewSlugRoute: typeof PreviewSlugRoute
   ViewBlockRoute: typeof ViewBlockRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
@@ -292,7 +305,7 @@ declare module '@tanstack/react-router' {
     '/_app': {
       id: '/_app'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -308,6 +321,13 @@ declare module '@tanstack/react-router' {
       path: '/view/$block'
       fullPath: '/view/$block'
       preLoaderRoute: typeof ViewBlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/preview/$slug': {
+      id: '/preview/$slug'
+      path: '/preview/$slug'
+      fullPath: '/preview/$slug'
+      preLoaderRoute: typeof PreviewSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demos/$slug': {
@@ -488,6 +508,7 @@ const rootRouteChildren: RootRouteChildren = {
   OgRoute: OgRoute,
   legalSplatRoute: legalSplatRoute,
   DemosSlugRoute: DemosSlugRoute,
+  PreviewSlugRoute: PreviewSlugRoute,
   ViewBlockRoute: ViewBlockRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,

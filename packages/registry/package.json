@@ -40,7 +40,8 @@
 		"./constants": "./src/constants.ts",
 		"./__generated__/demos": "./src/__generated__/demos.tsx",
 		"./__generated__/blocks": "./src/__generated__/blocks.tsx",
-		"./__generated__/icons": "./src/__generated__/icons.tsx"
+		"./__generated__/icons": "./src/__generated__/icons.tsx",
+		"./__generated__/examples": "./src/__generated__/examples.tsx"
 	},
 	"scripts": {
 		"build": "tsx scripts/build.ts && biome check --write src/__generated__ src/icons ../core/src/__registry__",
