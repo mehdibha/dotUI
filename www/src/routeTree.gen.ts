@@ -10,22 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OgRouteImport } from './routes/og'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as ViewBlockRouteImport } from './routes/view/$block'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
-import { Route as legalSplatRouteImport } from './routes/(legal)/$'
-import { Route as AppStylesRouteRouteImport } from './routes/_app/styles/route'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
 import { Route as AppBlocksRouteRouteImport } from './routes/_app/blocks/route'
-import { Route as AppStylesIndexRouteImport } from './routes/_app/styles/index'
-import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc.$'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
-import { Route as AppStylesMyStylesRouteImport } from './routes/_app/styles/my-styles'
-import { Route as AppStylesCommunityRouteImport } from './routes/_app/styles/community'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
 import { Route as AppDocsComponentsRouteImport } from './routes/_app/docs/components'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
@@ -34,11 +26,6 @@ import { Route as AppBlocksChar123CategoryChar125RouteImport } from './routes/_a
 const OgRoute = OgRouteImport.update({
   id: '/og',
   path: '/og',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRouteRoute = AppRouteRouteImport.update({
@@ -70,16 +57,6 @@ const AppCreateRoute = AppCreateRouteImport.update({
   path: '/create',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const legalSplatRoute = legalSplatRouteImport.update({
-  id: '/(legal)/$',
-  path: '/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppStylesRouteRoute = AppStylesRouteRouteImport.update({
-  id: '/styles',
-  path: '/styles',
-  getParentRoute: () => AppRouteRoute,
-} as any)
 const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
   id: '/docs',
   path: '/docs',
@@ -89,31 +66,6 @@ const AppBlocksRouteRoute = AppBlocksRouteRouteImport.update({
   id: '/blocks',
   path: '/blocks',
   getParentRoute: () => AppRouteRoute,
-} as any)
-const AppStylesIndexRoute = AppStylesIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppStylesRouteRoute,
-} as any)
-const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
-  id: '/api/trpc/$',
-  path: '/api/trpc/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppStylesMyStylesRoute = AppStylesMyStylesRouteImport.update({
-  id: '/my-styles',
-  path: '/my-styles',
-  getParentRoute: () => AppStylesRouteRoute,
-} as any)
-const AppStylesCommunityRoute = AppStylesCommunityRouteImport.update({
-  id: '/community',
-  path: '/community',
-  getParentRoute: () => AppStylesRouteRoute,
 } as any)
 const AppDocsChar123Char125DotmdRoute =
   AppDocsChar123Char125DotmdRouteImport.update({
@@ -140,12 +92,9 @@ const AppBlocksChar123CategoryChar125Route =
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
-  '/login': typeof LoginRoute
   '/og': typeof OgRoute
   '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/docs': typeof AppDocsRouteRouteWithChildren
-  '/styles': typeof AppStylesRouteRouteWithChildren
-  '/$': typeof legalSplatRoute
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -154,18 +103,11 @@ export interface FileRoutesByFullPath {
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/components': typeof AppDocsComponentsRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
-  '/styles/community': typeof AppStylesCommunityRoute
-  '/styles/my-styles': typeof AppStylesMyStylesRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/trpc/$': typeof ApiTrpcSplatRoute
-  '/styles/': typeof AppStylesIndexRoute
 }
 export interface FileRoutesByTo {
-  '/login': typeof LoginRoute
   '/og': typeof OgRoute
   '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/docs': typeof AppDocsRouteRouteWithChildren
-  '/$': typeof legalSplatRoute
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -175,21 +117,13 @@ export interface FileRoutesByTo {
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/components': typeof AppDocsComponentsRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
-  '/styles/community': typeof AppStylesCommunityRoute
-  '/styles/my-styles': typeof AppStylesMyStylesRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/trpc/$': typeof ApiTrpcSplatRoute
-  '/styles': typeof AppStylesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteRouteWithChildren
-  '/login': typeof LoginRoute
   '/og': typeof OgRoute
   '/_app/blocks': typeof AppBlocksRouteRouteWithChildren
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
-  '/_app/styles': typeof AppStylesRouteRouteWithChildren
-  '/(legal)/$': typeof legalSplatRoute
   '/_app/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -199,22 +133,14 @@ export interface FileRoutesById {
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/components': typeof AppDocsComponentsRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
-  '/_app/styles/community': typeof AppStylesCommunityRoute
-  '/_app/styles/my-styles': typeof AppStylesMyStylesRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/trpc/$': typeof ApiTrpcSplatRoute
-  '/_app/styles/': typeof AppStylesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
     | '/og'
     | '/blocks'
     | '/docs'
-    | '/styles'
-    | '/$'
     | '/create'
     | '/demos/$slug'
     | '/preview/$slug'
@@ -223,18 +149,11 @@ export interface FileRouteTypes {
     | '/docs/$'
     | '/docs/components'
     | '/docs/{$}.md'
-    | '/styles/community'
-    | '/styles/my-styles'
-    | '/api/auth/$'
-    | '/api/trpc/$'
-    | '/styles/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/login'
     | '/og'
     | '/blocks'
     | '/docs'
-    | '/$'
     | '/create'
     | '/demos/$slug'
     | '/preview/$slug'
@@ -244,20 +163,12 @@ export interface FileRouteTypes {
     | '/docs/$'
     | '/docs/components'
     | '/docs/{$}.md'
-    | '/styles/community'
-    | '/styles/my-styles'
-    | '/api/auth/$'
-    | '/api/trpc/$'
-    | '/styles'
   id:
     | '__root__'
     | '/_app'
-    | '/login'
     | '/og'
     | '/_app/blocks'
     | '/_app/docs'
-    | '/_app/styles'
-    | '/(legal)/$'
     | '/_app/create'
     | '/demos/$slug'
     | '/preview/$slug'
@@ -267,23 +178,14 @@ export interface FileRouteTypes {
     | '/_app/docs/$'
     | '/_app/docs/components'
     | '/_app/docs/{$}.md'
-    | '/_app/styles/community'
-    | '/_app/styles/my-styles'
-    | '/api/auth/$'
-    | '/api/trpc/$'
-    | '/_app/styles/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
-  LoginRoute: typeof LoginRoute
   OgRoute: typeof OgRoute
-  legalSplatRoute: typeof legalSplatRoute
   DemosSlugRoute: typeof DemosSlugRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   ViewBlockRoute: typeof ViewBlockRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -293,13 +195,6 @@ declare module '@tanstack/react-router' {
       path: '/og'
       fullPath: '/og'
       preLoaderRoute: typeof OgRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
@@ -344,20 +239,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppCreateRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/(legal)/$': {
-      id: '/(legal)/$'
-      path: '/$'
-      fullPath: '/$'
-      preLoaderRoute: typeof legalSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app/styles': {
-      id: '/_app/styles'
-      path: '/styles'
-      fullPath: '/styles'
-      preLoaderRoute: typeof AppStylesRouteRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
     '/_app/docs': {
       id: '/_app/docs'
       path: '/docs'
@@ -371,41 +252,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/blocks'
       preLoaderRoute: typeof AppBlocksRouteRouteImport
       parentRoute: typeof AppRouteRoute
-    }
-    '/_app/styles/': {
-      id: '/_app/styles/'
-      path: '/'
-      fullPath: '/styles/'
-      preLoaderRoute: typeof AppStylesIndexRouteImport
-      parentRoute: typeof AppStylesRouteRoute
-    }
-    '/api/trpc/$': {
-      id: '/api/trpc/$'
-      path: '/api/trpc/$'
-      fullPath: '/api/trpc/$'
-      preLoaderRoute: typeof ApiTrpcSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app/styles/my-styles': {
-      id: '/_app/styles/my-styles'
-      path: '/my-styles'
-      fullPath: '/styles/my-styles'
-      preLoaderRoute: typeof AppStylesMyStylesRouteImport
-      parentRoute: typeof AppStylesRouteRoute
-    }
-    '/_app/styles/community': {
-      id: '/_app/styles/community'
-      path: '/community'
-      fullPath: '/styles/community'
-      preLoaderRoute: typeof AppStylesCommunityRouteImport
-      parentRoute: typeof AppStylesRouteRoute
     }
     '/_app/docs/{$}.md': {
       id: '/_app/docs/{$}.md'
@@ -466,26 +312,9 @@ const AppDocsRouteRouteWithChildren = AppDocsRouteRoute._addFileChildren(
   AppDocsRouteRouteChildren,
 )
 
-interface AppStylesRouteRouteChildren {
-  AppStylesCommunityRoute: typeof AppStylesCommunityRoute
-  AppStylesMyStylesRoute: typeof AppStylesMyStylesRoute
-  AppStylesIndexRoute: typeof AppStylesIndexRoute
-}
-
-const AppStylesRouteRouteChildren: AppStylesRouteRouteChildren = {
-  AppStylesCommunityRoute: AppStylesCommunityRoute,
-  AppStylesMyStylesRoute: AppStylesMyStylesRoute,
-  AppStylesIndexRoute: AppStylesIndexRoute,
-}
-
-const AppStylesRouteRouteWithChildren = AppStylesRouteRoute._addFileChildren(
-  AppStylesRouteRouteChildren,
-)
-
 interface AppRouteRouteChildren {
   AppBlocksRouteRoute: typeof AppBlocksRouteRouteWithChildren
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
-  AppStylesRouteRoute: typeof AppStylesRouteRouteWithChildren
   AppCreateRoute: typeof AppCreateRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -493,7 +322,6 @@ interface AppRouteRouteChildren {
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppBlocksRouteRoute: AppBlocksRouteRouteWithChildren,
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
-  AppStylesRouteRoute: AppStylesRouteRouteWithChildren,
   AppCreateRoute: AppCreateRoute,
   AppIndexRoute: AppIndexRoute,
 }
@@ -504,14 +332,10 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
-  LoginRoute: LoginRoute,
   OgRoute: OgRoute,
-  legalSplatRoute: legalSplatRoute,
   DemosSlugRoute: DemosSlugRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   ViewBlockRoute: ViewBlockRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
-  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

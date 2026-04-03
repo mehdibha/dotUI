@@ -6,28 +6,24 @@ import { ReactJsIcon } from "@dotui/registry/components/icons/react-js";
 import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
 import { TailwindWordmark } from "@dotui/registry/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@dotui/registry/components/icons/typescript";
-import { Alert, AlertTitle } from "@dotui/registry/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
 import { LinkButton } from "@dotui/registry/ui/button";
 import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
 
 import { Announcement } from "@/components/marketing/announcement";
-import { FeaturedStylesShowcase } from "@/components/marketing/featured-styles-showcase";
 import { siteConfig } from "@/config/site";
 import { getGitHubContributors } from "@/lib/github";
-import { getFeaturedStyles } from "@/modules/styles/server";
 
 export const Route = createFileRoute("/_app/")({
 	loader: async () => {
-		const [contributors, featuredStyles] = await Promise.all([getGitHubContributors(), getFeaturedStyles()]);
-
-		return { contributors, featuredStyles };
+		const contributors = await getGitHubContributors();
+		return { contributors };
 	},
 	component: HomePage,
 });
 
 function HomePage() {
-	const { contributors, featuredStyles } = Route.useLoaderData();
+	const { contributors } = Route.useLoaderData();
 
 	return (
 		<div className="min-h-[calc(100vh-var(--header-height))]">
@@ -55,17 +51,6 @@ function HomePage() {
 							</LinkButton>
 						</div>
 					</div>
-				</section>
-
-				{/* Styles overview */}
-				<section className="container mt-10 sm:mt-14 md:mt-20">
-					{featuredStyles.length > 0 ? (
-						<FeaturedStylesShowcase styles={featuredStyles} />
-					) : (
-						<Alert>
-							<AlertTitle>No styles found.</AlertTitle>
-						</Alert>
-					)}
 				</section>
 
 				{/* Built on modern tools */}
