@@ -7,6 +7,7 @@ import * as icons from "@dotui/registry/icons";
 import { Badge } from "@dotui/registry/ui/badge";
 import { Button } from "@dotui/registry/ui/button";
 import { Checkbox } from "@dotui/registry/ui/checkbox";
+import { Command } from "@dotui/registry/ui/command";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Input } from "@dotui/registry/ui/input";
 import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
@@ -14,6 +15,8 @@ import { Popover } from "@dotui/registry/ui/popover";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { Select, SelectValue } from "@dotui/registry/ui/select";
 import { Switch } from "@dotui/registry/ui/switch";
+
+import { componentsData } from "@/modules/docs/components-list/components-data";
 
 import { ColorsConfig } from "./colors-config";
 import { ComponentsConfig } from "./components-config";
@@ -160,7 +163,12 @@ const menu: MenuItem[] = [
 
 /* -------------------------------- Panel -------------------------------- */
 
-export function CustomizerPanel() {
+interface CustomizerPanelProps {
+	selectedComponent: string;
+	onComponentChange: (component: string) => void;
+}
+
+export function CustomizerPanel({ selectedComponent, onComponentChange }: CustomizerPanelProps) {
 	const [activePageId, setActivePageId] = useState<string | null>(null);
 	const direction = useRef(1);
 
@@ -183,27 +191,31 @@ export function CustomizerPanel() {
 			{/* Header */}
 			<div className="relative overflow-hidden border-b p-3">
 				<div className="flex w-full items-center gap-2">
-					<Select defaultValue="preview" className="min-w-0 flex-1">
+					<Select
+						value={selectedComponent}
+						onChange={(key) => onComponentChange(key as string)}
+						className="min-w-0 flex-1"
+					>
 						<Button size="sm" className="w-full pr-2!">
 							<SelectValue className="truncate" />
 							<ChevronDownIcon />
 						</Button>
 						<Popover>
-							<SearchField autoFocus className="m-2">
-								<Input />
-							</SearchField>
-							<ListBox>
-								<ListBoxItem id="preview">Preview</ListBoxItem>
-								<ListBoxItem id="accordion">Accordion</ListBoxItem>
-								<ListBoxItem id="button">Button</ListBoxItem>
-								<ListBoxItem id="checkbox">Checkbox</ListBoxItem>
-								<ListBoxItem id="checkbox-group">Checkbox Group</ListBoxItem>
-								<ListBoxItem id="date-field">Date Field</ListBoxItem>
-								<ListBoxItem id="date-picker">Date Picker</ListBoxItem>
-								<ListBoxItem id="date-range-picker">Date Range Picker</ListBoxItem>
-								<ListBoxItem id="dropdown">Dropdown</ListBoxItem>
-								<ListBoxItem id="dropdown-menu">Dropdown Menu</ListBoxItem>
-							</ListBox>
+							<Command>
+								<SearchField autoFocus className="m-2">
+									<Input />
+								</SearchField>
+								<ListBox>
+									{componentsData
+										.flatMap((category) => category.components)
+										.sort((a, b) => a.name.localeCompare(b.name))
+										.map((comp) => (
+											<ListBoxItem key={comp.slug} id={comp.slug}>
+												{comp.name}
+											</ListBoxItem>
+										))}
+								</ListBox>
+							</Command>
 						</Popover>
 					</Select>
 					<Button size="sm">
