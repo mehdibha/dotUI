@@ -2,10 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { SearchIcon } from "lucide-react";
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { GitHubIcon } from "@dotui/registry/components/icons/github";
-import { cn } from "@dotui/registry/lib/utils";
-import { Button, LinkButton } from "@dotui/registry/ui/button";
-import { Kbd } from "@dotui/registry/ui/kbd";
+import { GitHubIcon } from "@/registry/components/icons/github";
+import { cn } from "@/registry/lib/utils";
+import { Button, LinkButton } from "@/registry/ui/button";
+import { Kbd } from "@/registry/ui/kbd";
 
 import { Logo } from "@/components/layout/logo";
 import { MobileNav } from "@/components/layout/mobile-nav";

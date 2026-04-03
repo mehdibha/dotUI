@@ -22,14 +22,14 @@ import {
 } from "lucide-react";
 import { ButtonContext } from "react-aria-components";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Field, Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
-import { Popover } from "@dotui/registry/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@dotui/registry/ui/select";
-import { Switch } from "@dotui/registry/ui/switch";
-import { TextField } from "@dotui/registry/ui/text-field";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Field, Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
+import { Popover } from "@/registry/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
+import { Switch } from "@/registry/ui/switch";
+import { TextField } from "@/registry/ui/text-field";
 
 import type {
 	ControlValues,

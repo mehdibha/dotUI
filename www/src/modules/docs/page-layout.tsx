@@ -1,4 +1,4 @@
-import { cn } from "@dotui/registry/lib/utils";
+import { cn } from "@/registry/lib/utils";
 
 export function PageLayout({ className, ...props }: React.ComponentProps<"div">) {
 	return <div className={cn("", className)} {...props} />;

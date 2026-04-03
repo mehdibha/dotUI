@@ -1,5 +1,5 @@
-import { ColorEditor } from "@dotui/registry/ui/color-editor";
-import { ColorPicker, ColorPickerContent, ColorPickerTrigger } from "@dotui/registry/ui/color-picker";
+import { ColorEditor } from "@/registry/ui/color-editor";
+import { ColorPicker, ColorPickerContent, ColorPickerTrigger } from "@/registry/ui/color-picker";
 
 export function ColorPickerDemo() {
 	return (

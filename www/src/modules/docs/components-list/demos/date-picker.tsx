@@ -1,7 +1,7 @@
-import { Calendar } from "@dotui/registry/ui/calendar";
-import { DatePicker, DatePickerInput } from "@dotui/registry/ui/date-picker";
-import { DialogContent } from "@dotui/registry/ui/dialog";
-import { Popover } from "@dotui/registry/ui/popover";
+import { Calendar } from "@/registry/ui/calendar";
+import { DatePicker, DatePickerInput } from "@/registry/ui/date-picker";
+import { DialogContent } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 export function DatePickerDemo() {
 	return (

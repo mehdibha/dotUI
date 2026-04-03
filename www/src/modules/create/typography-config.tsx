@@ -1,11 +1,11 @@
-import { monoFonts, sansSerifFonts, serifFonts } from "@dotui/registry/base/fonts";
-import { Command } from "@dotui/registry/ui/command";
-import { Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
-import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@dotui/registry/ui/list-box";
-import { Popover } from "@dotui/registry/ui/popover";
-import { SearchField } from "@dotui/registry/ui/search-field";
-import { Select, SelectTrigger } from "@dotui/registry/ui/select";
+import { monoFonts, sansSerifFonts, serifFonts } from "@/registry/base/fonts";
+import { Command } from "@/registry/ui/command";
+import { Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/registry/ui/list-box";
+import { Popover } from "@/registry/ui/popover";
+import { SearchField } from "@/registry/ui/search-field";
+import { Select, SelectTrigger } from "@/registry/ui/select";
 
 export function TypographyConfig() {
 	return (

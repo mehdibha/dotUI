@@ -1,6 +1,6 @@
 import type React from "react";
 
-import { cn } from "@dotui/registry/lib/utils";
+import { cn } from "@/registry/lib/utils";
 
 export function PageLastUpdate({ date, className, ...props }: { date: Date } & React.ComponentProps<"p">) {
 	if (!date) return null;

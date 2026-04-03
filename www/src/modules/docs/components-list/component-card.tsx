@@ -2,7 +2,7 @@
 
 import { Link } from "@tanstack/react-router";
 
-import { cn } from "@dotui/registry/lib/utils";
+import { cn } from "@/registry/lib/utils";
 
 import { componentDemos } from "./demos";
 

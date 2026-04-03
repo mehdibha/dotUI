@@ -196,7 +196,7 @@ async function processDemoNode(
 	try {
 		// Resolve file path
 		const filePath = resolveDemoPath(info.name, registryBasePath);
-		const importPath = `@dotui/registry/ui/${info.name}`;
+		const importPath = `@/registry/ui/${info.name}`;
 
 		// Read source file
 		const rawSource = await fs.readFile(filePath, "utf-8");
@@ -607,7 +607,7 @@ async function processInteractiveDemoNode(
 
 		// 3. Generate import info
 		const importName = `${toPascalCase(info.name)}Playground`;
-		const importPath = `@dotui/registry/ui/${info.name}/demos/playground`;
+		const importPath = `@/registry/ui/${info.name}/demos/playground`;
 
 		return {
 			nodeInfo: info,

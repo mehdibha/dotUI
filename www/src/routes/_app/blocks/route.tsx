@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, useParams } from "@tanstack/react-router";
 
-import { blocksCategories } from "@dotui/registry/blocks/registry";
-import { Tab, TabList, Tabs } from "@dotui/registry/ui/tabs";
+import { blocksCategories } from "@/registry/blocks/registry";
+import { Tab, TabList, Tabs } from "@/registry/ui/tabs";
 
 import { PageHeader, PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 

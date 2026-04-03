@@ -1,8 +1,8 @@
 import { MenuIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
-import { Popover } from "@dotui/registry/ui/popover";
+import { Button } from "@/registry/ui/button";
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
+import { Popover } from "@/registry/ui/popover";
 
 export function MenuDemo() {
 	return (

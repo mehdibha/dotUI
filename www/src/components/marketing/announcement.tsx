@@ -1,4 +1,4 @@
-import { LinkButton } from "@dotui/registry/ui/button";
+import { LinkButton } from "@/registry/ui/button";
 
 export function Announcement() {
 	return (

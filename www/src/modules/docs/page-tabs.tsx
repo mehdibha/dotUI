@@ -1,8 +1,8 @@
 import { useSearch } from "@tanstack/react-router";
 import { AlignLeftIcon } from "lucide-react";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
+import { cn } from "@/registry/lib/utils";
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
 
 import { TOCItems, TOCScrollArea, useTOCItems } from "./toc";
 

@@ -1,13 +1,13 @@
 import { ChevronDownIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Checkbox } from "@dotui/registry/ui/checkbox";
-import { Input } from "@dotui/registry/ui/input";
-import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
-import { Popover } from "@dotui/registry/ui/popover";
-import { Select, SelectValue } from "@dotui/registry/ui/select";
-import { Switch } from "@dotui/registry/ui/switch";
-import { TextField } from "@dotui/registry/ui/text-field";
+import { Button } from "@/registry/ui/button";
+import { Checkbox } from "@/registry/ui/checkbox";
+import { Input } from "@/registry/ui/input";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Popover } from "@/registry/ui/popover";
+import { Select, SelectValue } from "@/registry/ui/select";
+import { Switch } from "@/registry/ui/switch";
+import { TextField } from "@/registry/ui/text-field";
 
 export function ComponentsConfig() {
 	return (

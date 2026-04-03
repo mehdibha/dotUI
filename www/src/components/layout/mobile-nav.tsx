@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "@tanstack/react-router";
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Popover } from "@dotui/registry/ui/popover";
+import { cn } from "@/registry/lib/utils";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 import { navItems } from "@/config/site";
 

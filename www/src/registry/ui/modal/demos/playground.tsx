@@ -1,0 +1,42 @@
+"use client";
+
+import { Button } from "@/registry/ui/button";
+import {
+	Dialog,
+	DialogBody,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogHeading,
+} from "@/registry/ui/dialog";
+import { Modal } from "@/registry/ui/modal";
+
+interface ModalPlaygroundProps {
+	isDismissable?: boolean;
+}
+
+export function ModalPlayground({ isDismissable = true }: ModalPlaygroundProps) {
+	return (
+		<Dialog>
+			<Button>Open Modal</Button>
+			<Modal isDismissable={isDismissable}>
+				<DialogContent>
+					<DialogHeader>
+						<DialogHeading>Modal Title</DialogHeading>
+						<DialogDescription>This is a modal description.</DialogDescription>
+					</DialogHeader>
+					<DialogBody>
+						<p>Modal content goes here.</p>
+					</DialogBody>
+					<DialogFooter>
+						<Button slot="close">Cancel</Button>
+						<Button slot="close" variant="primary">
+							Confirm
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Modal>
+		</Dialog>
+	);
+}

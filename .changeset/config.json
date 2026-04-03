@@ -13,9 +13,7 @@
 		"@dotui/api",
 		"@dotui/auth",
 		"@dotui/db",
-		"@dotui/registry",
 		"@dotui/colors",
-		"@dotui/types",
-		"@dotui/core"
+		"@dotui/types"
 	]
 }

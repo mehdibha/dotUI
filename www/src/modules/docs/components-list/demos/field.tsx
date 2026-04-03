@@ -1,5 +1,5 @@
-import { Description, Field, Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
+import { Description, Field, Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
 
 export function FieldDemo() {
 	return (

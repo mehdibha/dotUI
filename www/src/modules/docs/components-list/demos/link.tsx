@@ -1,4 +1,4 @@
-import { Link } from "@dotui/registry/ui/link";
+import { Link } from "@/registry/ui/link";
 
 export function LinkDemo() {
 	return (

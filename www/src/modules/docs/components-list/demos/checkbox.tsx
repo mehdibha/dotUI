@@ -1,5 +1,5 @@
-import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
-import { Label } from "@dotui/registry/ui/field";
+import { Checkbox, CheckboxIndicator } from "@/registry/ui/checkbox";
+import { Label } from "@/registry/ui/field";
 
 export function CheckboxDemo() {
 	return (

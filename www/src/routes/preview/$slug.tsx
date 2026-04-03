@@ -1,7 +1,7 @@
 import { use } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { ExamplesIndex } from "@dotui/registry/__generated__/examples";
+import { ExamplesIndex } from "@/registry/__generated__/examples";
 
 const promiseCache = new Map<string, Promise<{ default: React.ComponentType }>>();
 

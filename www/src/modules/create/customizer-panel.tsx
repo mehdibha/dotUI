@@ -3,18 +3,18 @@ import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, ShuffleIcon, Undo2Icon } fr
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { Button as AriaButton } from "react-aria-components";
 
-import * as icons from "@dotui/registry/icons";
-import { Badge } from "@dotui/registry/ui/badge";
-import { Button } from "@dotui/registry/ui/button";
-import { Checkbox } from "@dotui/registry/ui/checkbox";
-import { Command } from "@dotui/registry/ui/command";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Input } from "@dotui/registry/ui/input";
-import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
-import { Popover } from "@dotui/registry/ui/popover";
-import { SearchField } from "@dotui/registry/ui/search-field";
-import { Select, SelectValue } from "@dotui/registry/ui/select";
-import { Switch } from "@dotui/registry/ui/switch";
+import * as icons from "@/registry/__generated__/icons";
+import { Badge } from "@/registry/ui/badge";
+import { Button } from "@/registry/ui/button";
+import { Checkbox } from "@/registry/ui/checkbox";
+import { Command } from "@/registry/ui/command";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Input } from "@/registry/ui/input";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Popover } from "@/registry/ui/popover";
+import { SearchField } from "@/registry/ui/search-field";
+import { Select, SelectValue } from "@/registry/ui/select";
+import { Switch } from "@/registry/ui/switch";
 
 import { componentsData } from "@/modules/docs/components-list/components-data";
 

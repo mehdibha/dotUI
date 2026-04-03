@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Heading } from "@dotui/registry/ui/heading";
+import { cn } from "@/registry/lib/utils";
+import { Heading } from "@/registry/ui/heading";
 
 import { siteConfig } from "@/config/site";
 

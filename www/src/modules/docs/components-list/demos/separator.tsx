@@ -1,4 +1,4 @@
-import { Separator } from "@dotui/registry/ui/separator";
+import { Separator } from "@/registry/ui/separator";
 
 export function SeparatorDemo() {
 	return (

@@ -10,13 +10,13 @@ import {
 import { composeRenderProps } from "react-aria-components";
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Command } from "@dotui/registry/ui/command";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Input, InputGroup } from "@dotui/registry/ui/input";
-import { MenuContent, MenuItem, MenuSection, MenuSectionHeader } from "@dotui/registry/ui/menu";
-import { Overlay } from "@dotui/registry/ui/overlay";
-import { SearchField } from "@dotui/registry/ui/search-field";
+import { Button } from "@/registry/ui/button";
+import { Command } from "@/registry/ui/command";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Input, InputGroup } from "@/registry/ui/input";
+import { MenuContent, MenuItem, MenuSection, MenuSectionHeader } from "@/registry/ui/menu";
+import { Overlay } from "@/registry/ui/overlay";
+import { SearchField } from "@/registry/ui/search-field";
 
 interface SearchCommandProps {
 	items: PageTree.Node[];

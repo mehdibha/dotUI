@@ -1,5 +1,5 @@
-import { Accordion } from "@dotui/registry/ui/accordion";
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@dotui/registry/ui/disclosure";
+import { Accordion } from "@/registry/ui/accordion";
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/registry/ui/disclosure";
 
 export function AccordionDemo() {
 	return (

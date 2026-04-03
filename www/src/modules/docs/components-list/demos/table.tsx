@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@dotui/registry/ui/table";
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
 
 const columns = [
 	{ name: "Name", id: "name", isRowHeader: true },

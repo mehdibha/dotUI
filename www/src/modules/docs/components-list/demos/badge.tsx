@@ -1,4 +1,4 @@
-import { Badge } from "@dotui/registry/ui/badge";
+import { Badge } from "@/registry/ui/badge";
 
 export function BadgeDemo() {
 	return (

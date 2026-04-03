@@ -7,9 +7,9 @@ import * as React from "react";
 import { ChevronRightIcon } from "lucide-react";
 import { Button, DialogTrigger } from "react-aria-components";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { DialogContent } from "@dotui/registry/ui/dialog";
-import { Popover } from "@dotui/registry/ui/popover";
+import { cn } from "@/registry/lib/utils";
+import { DialogContent } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 import { Type, useTypeLinks } from "./type-renderer";
 import type { TType } from "../types/type-ast";

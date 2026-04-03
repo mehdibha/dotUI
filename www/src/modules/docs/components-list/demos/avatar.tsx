@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@dotui/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/registry/ui/avatar";
 
 export function AvatarDemo() {
 	return (

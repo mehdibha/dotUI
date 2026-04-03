@@ -1,7 +1,7 @@
 import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-react";
 
-import { ToggleButton } from "@dotui/registry/ui/toggle-button";
-import { ToggleButtonGroup } from "@dotui/registry/ui/toggle-button-group";
+import { ToggleButton } from "@/registry/ui/toggle-button";
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group";
 
 export function ToggleButtonGroupDemo() {
 	return (

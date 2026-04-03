@@ -1,5 +1,5 @@
-import { ColorSlider, ColorSliderControl, ColorSliderOutput } from "@dotui/registry/ui/color-slider";
-import { Description, Label } from "@dotui/registry/ui/field";
+import { ColorSlider, ColorSliderControl, ColorSliderOutput } from "@/registry/ui/color-slider";
+import { Description, Label } from "@/registry/ui/field";
 
 export function ColorSliderDemo() {
 	return (

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { DemosIndex } from "@dotui/registry/ui/demos";
+import { DemosIndex } from "@/registry/__generated__/demos";
 
 export const Route = createFileRoute("/demos/$slug")({
 	component: DemoPage,

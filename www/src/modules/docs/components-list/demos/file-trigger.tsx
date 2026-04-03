@@ -1,8 +1,8 @@
 "use client";
 
-import { UploadIcon } from "@dotui/registry/icons";
-import { Button } from "@dotui/registry/ui/button";
-import { FileTrigger } from "@dotui/registry/ui/file-trigger";
+import { UploadIcon } from "@/registry/__generated__/icons";
+import { Button } from "@/registry/ui/button";
+import { FileTrigger } from "@/registry/ui/file-trigger";
 
 export function FileTriggerDemo() {
 	return (

@@ -1,8 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
-import { LinkButton } from "@dotui/registry/ui/button";
-import { Group } from "@dotui/registry/ui/group";
-import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
+import { LinkButton } from "@/registry/ui/button";
+import { Group } from "@/registry/ui/group";
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 type Neighbours = {
 	previous?: { name: string; path: string };

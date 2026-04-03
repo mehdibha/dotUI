@@ -1,4 +1,4 @@
-import { Breadcrumb, Breadcrumbs } from "@dotui/registry/ui/breadcrumbs";
+import { Breadcrumb, Breadcrumbs } from "@/registry/ui/breadcrumbs";
 
 export function BreadcrumbsDemo() {
 	return (

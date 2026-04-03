@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
-import { GitHubIcon } from "@dotui/registry/components/icons/github";
-import { ReactJsIcon } from "@dotui/registry/components/icons/react-js";
-import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
-import { TailwindWordmark } from "@dotui/registry/components/icons/tailwind-wordmark";
-import { TypeScriptIcon } from "@dotui/registry/components/icons/typescript";
-import { Avatar, AvatarFallback, AvatarImage } from "@dotui/registry/ui/avatar";
-import { LinkButton } from "@dotui/registry/ui/button";
-import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
+import { AdobeIcon } from "@/registry/components/icons/adobe";
+import { GitHubIcon } from "@/registry/components/icons/github";
+import { ReactJsIcon } from "@/registry/components/icons/react-js";
+import { ShadcnIcon } from "@/registry/components/icons/shadcn";
+import { TailwindWordmark } from "@/registry/components/icons/tailwind-wordmark";
+import { TypeScriptIcon } from "@/registry/components/icons/typescript";
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar";
+import { LinkButton } from "@/registry/ui/button";
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 import { Announcement } from "@/components/marketing/announcement";
 import { siteConfig } from "@/config/site";

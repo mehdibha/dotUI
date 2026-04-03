@@ -2,9 +2,9 @@
 
 import { ExternalLinkIcon, SunIcon } from "lucide-react";
 
-import { LinkButton } from "@dotui/registry/ui/button";
-import { ToggleButton } from "@dotui/registry/ui/toggle-button";
-import type { RegistryItem } from "@dotui/registry/types";
+import { LinkButton } from "@/registry/ui/button";
+import { ToggleButton } from "@/registry/ui/toggle-button";
+import type { RegistryItem } from "@/registry/types";
 
 interface BlockCardProps {
 	block: RegistryItem;

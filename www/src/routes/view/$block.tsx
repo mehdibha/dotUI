@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { Index } from "@dotui/registry/blocks";
+import { Index } from "@/registry/blocks";
 
 import { BlockViewer } from "@/modules/blocks/block-viewer";
 

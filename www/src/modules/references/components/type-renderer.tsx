@@ -6,7 +6,7 @@
 import * as React from "react";
 import { getDoc } from "globals-docs";
 
-import { cn } from "@dotui/registry/lib/utils";
+import { cn } from "@/registry/lib/utils";
 
 import { TypeLink } from "./type-popover";
 import type {

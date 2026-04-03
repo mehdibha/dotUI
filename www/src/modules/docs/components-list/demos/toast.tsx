@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { toast } from "@dotui/registry/ui/toast";
+import { Button } from "@/registry/ui/button";
+import { toast } from "@/registry/ui/toast";
 
 export function ToastDemo() {
 	React.useEffect(() => {

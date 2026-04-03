@@ -1,4 +1,4 @@
-import { Button } from "@dotui/registry/ui/button";
+import { Button } from "@/registry/ui/button";
 import {
 	Dialog,
 	DialogBody,
@@ -6,11 +6,11 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogHeading,
-} from "@dotui/registry/ui/dialog";
-import { Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
-import { Modal } from "@dotui/registry/ui/modal";
-import { TextField } from "@dotui/registry/ui/text-field";
+} from "@/registry/ui/dialog";
+import { Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
+import { Modal } from "@/registry/ui/modal";
+import { TextField } from "@/registry/ui/text-field";
 
 export function ModalDemo() {
 	return (

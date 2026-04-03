@@ -1,9 +1,9 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Alert, type AlertProps } from "@dotui/registry/ui/alert";
-import { Link } from "@dotui/registry/ui/link";
+import { cn } from "@/registry/lib/utils";
+import { Alert, type AlertProps } from "@/registry/ui/alert";
+import { Link } from "@/registry/ui/link";
 
 import { CodeBlock, Pre } from "@/modules/docs/code-block";
 import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "@/modules/docs/code-block-tabs";

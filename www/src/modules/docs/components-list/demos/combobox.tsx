@@ -1,8 +1,8 @@
 import { ChevronDownIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Combobox, ComboboxContent, ComboboxItem } from "@dotui/registry/ui/combobox";
-import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
+import { Button } from "@/registry/ui/button";
+import { Combobox, ComboboxContent, ComboboxItem } from "@/registry/ui/combobox";
+import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
 
 export function ComboboxDemo() {
 	return (

@@ -1,6 +1,6 @@
-import { ColorField } from "@dotui/registry/ui/color-field";
-import { Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
+import { ColorField } from "@/registry/ui/color-field";
+import { Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
 
 export function ColorFieldDemo() {
 	return (

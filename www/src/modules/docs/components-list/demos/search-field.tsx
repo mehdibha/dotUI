@@ -1,7 +1,7 @@
-import { SearchIcon, XIcon } from "@dotui/registry/icons";
-import { Button } from "@dotui/registry/ui/button";
-import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
-import { SearchField } from "@dotui/registry/ui/search-field";
+import { SearchIcon, XIcon } from "@/registry/__generated__/icons";
+import { Button } from "@/registry/ui/button";
+import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { SearchField } from "@/registry/ui/search-field";
 
 export function SearchFieldDemo() {
 	return (

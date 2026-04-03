@@ -1,7 +1,7 @@
 import { IconFolderCode } from "@tabler/icons-react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@dotui/registry/ui/empty";
+import { Button } from "@/registry/ui/button";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/registry/ui/empty";
 
 export function EmptyDemo() {
 	return (

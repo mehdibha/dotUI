@@ -1,6 +1,6 @@
-import { DateField } from "@dotui/registry/ui/date-field";
-import { Label } from "@dotui/registry/ui/field";
-import { DateInput } from "@dotui/registry/ui/input";
+import { DateField } from "@/registry/ui/date-field";
+import { Label } from "@/registry/ui/field";
+import { DateInput } from "@/registry/ui/input";
 
 export function DateFieldDemo() {
 	return (

@@ -2,9 +2,9 @@ import React, { type ComponentType, createElement, useCallback, useMemo, useStat
 import { flushSync } from "react-dom";
 import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-react";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
-import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
+import { cn } from "@/registry/lib/utils";
+import { Button } from "@/registry/ui/button";
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 import { CodeBlock } from "@/modules/docs/code-block";
 import { DynamicPre } from "@/modules/docs/dynamic-pre";

@@ -1,9 +1,9 @@
 import type React from "react";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@dotui/registry/ui/dialog";
-import { Overlay } from "@dotui/registry/ui/overlay";
+import { cn } from "@/registry/lib/utils";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Overlay } from "@/registry/ui/overlay";
 
 import { CodeBlock, Pre } from "./code-block";
 import { DemoCode, DemoCodePreview, getSlotContent } from "./demo";

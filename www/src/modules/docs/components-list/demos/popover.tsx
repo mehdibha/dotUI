@@ -1,8 +1,8 @@
 import { InfoIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogHeading } from "@dotui/registry/ui/dialog";
-import { Popover } from "@dotui/registry/ui/popover";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 export function PopoverDemo() {
 	return (

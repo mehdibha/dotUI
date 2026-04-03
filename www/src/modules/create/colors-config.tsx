@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { CheckIcon, SlidersHorizontalIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { ColorEditor } from "@dotui/registry/ui/color-editor";
-import { ColorPicker } from "@dotui/registry/ui/color-picker";
-import { ColorSwatch } from "@dotui/registry/ui/color-swatch";
-import { DialogContent } from "@dotui/registry/ui/dialog";
-import { Label } from "@dotui/registry/ui/field";
-import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
-import { Popover } from "@dotui/registry/ui/popover";
-import { Select, SelectTrigger } from "@dotui/registry/ui/select";
+import { Button } from "@/registry/ui/button";
+import { ColorEditor } from "@/registry/ui/color-editor";
+import { ColorPicker } from "@/registry/ui/color-picker";
+import { ColorSwatch } from "@/registry/ui/color-swatch";
+import { DialogContent } from "@/registry/ui/dialog";
+import { Label } from "@/registry/ui/field";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Popover } from "@/registry/ui/popover";
+import { Select, SelectTrigger } from "@/registry/ui/select";
 
 const colorPresets = [
 	{ name: "Neutral", value: "neutral", colors: ["#737373", "#a3a3a3", "#d4d4d4"] },

@@ -2,9 +2,9 @@
 
 import { SquarePenIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Kbd } from "@dotui/registry/ui/kbd";
-import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
+import { Button } from "@/registry/ui/button";
+import { Kbd } from "@/registry/ui/kbd";
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 export function TooltipDemo() {
 	return (

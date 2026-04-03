@@ -1,6 +1,6 @@
-import { Description, Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
-import { TextField } from "@dotui/registry/ui/text-field";
+import { Description, Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
+import { TextField } from "@/registry/ui/text-field";
 
 export function TextFieldDemo() {
 	return (

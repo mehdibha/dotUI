@@ -1,8 +1,8 @@
 import { createContext, useContext, useRef } from "react";
 import { CheckIcon, CopyIcon, FileIcon } from "lucide-react";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
+import { cn } from "@/registry/lib/utils";
+import { Button } from "@/registry/ui/button";
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 

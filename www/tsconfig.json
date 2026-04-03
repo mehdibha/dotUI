@@ -15,9 +15,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
-			"@/.source/*": ["./.source/*"],
-			"@dotui/core/*": ["../packages/core/src/*"],
-			"@dotui/registry/*": ["../packages/registry/src/*"]
+			"@/.source/*": ["./.source/*"]
 		}
 	},
 	"exclude": ["node_modules", ".vinxi", ".output"]

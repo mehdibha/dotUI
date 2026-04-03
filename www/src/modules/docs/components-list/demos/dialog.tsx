@@ -1,4 +1,4 @@
-import { Button } from "@dotui/registry/ui/button";
+import { Button } from "@/registry/ui/button";
 import {
 	Dialog,
 	DialogBody,
@@ -7,8 +7,8 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogHeading,
-} from "@dotui/registry/ui/dialog";
-import { Overlay } from "@dotui/registry/ui/overlay";
+} from "@/registry/ui/dialog";
+import { Overlay } from "@/registry/ui/overlay";
 
 export function DialogDemo() {
 	return (

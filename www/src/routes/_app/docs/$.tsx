@@ -3,12 +3,12 @@ import { createServerFn } from "@tanstack/react-start";
 import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
 import { findNeighbour } from "fumadocs-core/page-tree";
 
-import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
-import { GitHubIcon } from "@dotui/registry/components/icons/github";
-import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
-import { ExternalLinkIcon } from "@dotui/registry/icons";
-import { cn } from "@dotui/registry/lib/utils";
-import { LinkButton } from "@dotui/registry/ui/button";
+import { AdobeIcon } from "@/registry/components/icons/adobe";
+import { GitHubIcon } from "@/registry/components/icons/github";
+import { ShadcnIcon } from "@/registry/components/icons/shadcn";
+import { ExternalLinkIcon } from "@/registry/__generated__/icons";
+import { cn } from "@/registry/lib/utils";
+import { LinkButton } from "@/registry/ui/button";
 
 import browserCollections from "@/.source/browser";
 import { siteConfig } from "@/config/site";

@@ -1,5 +1,5 @@
-import { Label } from "@dotui/registry/ui/field";
-import { Tag, TagGroup, TagList } from "@dotui/registry/ui/tag-group";
+import { Label } from "@/registry/ui/field";
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group";
 
 export function TagGroupDemo() {
 	return (

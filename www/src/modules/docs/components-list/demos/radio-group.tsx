@@ -1,5 +1,5 @@
-import { FieldGroup, Label } from "@dotui/registry/ui/field";
-import { Radio, RadioGroup, RadioIndicator } from "@dotui/registry/ui/radio-group";
+import { FieldGroup, Label } from "@/registry/ui/field";
+import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 
 export function RadioGroupDemo() {
 	return (

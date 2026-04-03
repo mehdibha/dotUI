@@ -1,4 +1,4 @@
-import { Input, InputAddon, InputGroup } from "@dotui/registry/ui/input";
+import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
 
 export function InputGroupDemo() {
 	return (
