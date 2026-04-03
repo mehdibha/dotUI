@@ -56,9 +56,5 @@
 		"vitest": "^4.0.16"
 	},
 	"packageManager": "pnpm@10.24.0",
-	"pnpm": {
-		"patchedDependencies": {
-			"@tanstack/start-static-server-functions": "patches/@tanstack__start-static-server-functions.patch"
-		}
-	}
+	"pnpm": {}
 }
