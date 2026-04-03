@@ -7,59 +7,54 @@ links:
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="calendar/demos/calendar/default" />
 
-    <Demo name="calendar/demos/calendar/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/calendar
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/calendar
-    ```
+## Usage
 
-    ## Usage
+Use calendars to allow users to select a single date value.
 
-    Use calendars to allow users to select a single date value.
+```tsx
+import { Calendar } from "@/components/ui/calendar";
+```
 
-    ```tsx
-    import { Calendar } from "@/components/ui/calendar";
-    ```
+```tsx
+<Calendar aria-label="Date" />
+```
 
-    ```tsx
-    <Calendar aria-label="Date" />
-    ```
 
-    ## API Reference
+## Examples
 
-    ### Calendar
+<Examples>
+  <Example name="calendar/demos/calendar/default" />
+  <Example name="calendar/demos/calendar/variant" />
+  <Example name="calendar/demos/calendar/visible-months" />
+  <Example name="calendar/demos/calendar/page-behaviour" />
+  <Example name="calendar/demos/calendar/validation" />
+  <Example name="calendar/demos/calendar/unvailable-dates" />
+  <Example name="calendar/demos/calendar/error-message" />
+  <Example name="calendar/demos/calendar/disabled" />
+  <Example name="calendar/demos/calendar/read-only" />
+  <Example name="calendar/demos/calendar/composition" />
+  <Example name="calendar/demos/calendar/uncontrolled" />
+  <Example name="calendar/demos/calendar/controlled" />
+</Examples>
 
-    <Reference name="calendar-header" />
+## API Reference
 
-    ### CalendarGrid
+### Calendar
 
-    <Reference name="calendar-grid" />
+<Reference name="calendar-header" />
 
-    ### CalendarCell
+### CalendarGrid
 
-    <Reference name="calendar-cell" />
+<Reference name="calendar-grid" />
 
-  </PageTabPanel>
+### CalendarCell
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="calendar/demos/calendar/default" />
-      <Example name="calendar/demos/calendar/variant" />
-      <Example name="calendar/demos/calendar/visible-months" />
-      <Example name="calendar/demos/calendar/page-behaviour" />
-      <Example name="calendar/demos/calendar/validation" />
-      <Example name="calendar/demos/calendar/unvailable-dates" />
-      <Example name="calendar/demos/calendar/error-message" />
-      <Example name="calendar/demos/calendar/disabled" />
-      <Example name="calendar/demos/calendar/read-only" />
-      <Example name="calendar/demos/calendar/composition" />
-      <Example name="calendar/demos/calendar/uncontrolled" />
-      <Example name="calendar/demos/calendar/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="calendar-cell" />

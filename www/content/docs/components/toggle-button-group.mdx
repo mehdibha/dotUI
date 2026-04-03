@@ -7,42 +7,37 @@ links:
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="toggle-button-group/demos/default" />
 
-    <Demo name="toggle-button-group/demos/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/toggle-button-group
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/toggle-button-group
-    ```
+## Usage
 
-    ## Usage
+Use toggle button groups to let users toggle between multiple options.
 
-    Use toggle button groups to let users toggle between multiple options.
+```tsx
+import { ToggleButtonGroup, ToggleButton } from "@/components/ui/toggle-button-group";
+```
 
-    ```tsx
-    import { ToggleButtonGroup, ToggleButton } from "@/components/ui/toggle-button-group";
-    ```
+```tsx
+<ToggleButtonGroup>
+  <ToggleButton id="left">Left</ToggleButton>
+  <ToggleButton id="center">Center</ToggleButton>
+  <ToggleButton id="right">Right</ToggleButton>
+</ToggleButtonGroup>
+```
 
-    ```tsx
-    <ToggleButtonGroup>
-      <ToggleButton id="left">Left</ToggleButton>
-      <ToggleButton id="center">Center</ToggleButton>
-      <ToggleButton id="right">Right</ToggleButton>
-    </ToggleButtonGroup>
-    ```
 
-    ## API Reference
+## Examples
 
-    <Reference name="toggle-button-group" />
+<Examples>
+  <Example name="toggle-button-group/demos/default" />
+</Examples>
 
-  </PageTabPanel>
+## API Reference
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="toggle-button-group/demos/default" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="toggle-button-group" />

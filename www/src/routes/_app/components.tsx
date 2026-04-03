@@ -9,7 +9,7 @@ import { TOC, TOCProvider } from "@/modules/docs/toc";
 const title = "Components";
 const description = "Browse all available components in the library.";
 
-export const Route = createFileRoute("/_app/docs/components")({
+export const Route = createFileRoute("/_app/components")({
 	component: ComponentsPage,
 	head: () => {
 		const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/_app/docs/components")({
 				{ name: "twitter:image", content: ogImageUrl },
 				{ name: "twitter:creator", content: siteConfig.twitter.creator },
 			],
-		};
+		}
 	},
 });
 
@@ -47,5 +47,5 @@ function ComponentsPage() {
 				</div>
 			</PageLayout>
 		</TOCProvider>
-	);
+	)
 }

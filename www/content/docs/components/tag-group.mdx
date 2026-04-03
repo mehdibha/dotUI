@@ -7,41 +7,36 @@ links:
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="tag-group/demos/default" />
 
-    <Demo name="tag-group/demos/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/tag-group
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/tag-group
-    ```
+## Usage
 
-    ## Usage
+```tsx
+import { TagGroup, TagList, Tag } from "@/components/ui/tag-group";
+```
 
-    ```tsx
-    import { TagGroup, TagList, Tag } from "@/components/ui/tag-group";
-    ```
+```tsx
+<TagGroup>
+  <TagList>
+    <Tag>React</Tag>
+    <Tag>TypeScript</Tag>
+  </TagList>
+</TagGroup>
+```
 
-    ```tsx
-    <TagGroup>
-      <TagList>
-        <Tag>React</Tag>
-        <Tag>TypeScript</Tag>
-      </TagList>
-    </TagGroup>
-    ```
 
-    ## API Reference
+## Examples
 
-    <Reference name="tag-group" />
+<Examples>
+  <Example name="tag-group/demos/default" />
+</Examples>
 
-  </PageTabPanel>
+## API Reference
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="tag-group/demos/default" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="tag-group" />

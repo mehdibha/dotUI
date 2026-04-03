@@ -6,92 +6,87 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Disclosure.html
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="disclosure/demos/basic" className="**:data-disclosure:max-w-xs" />
 
-    <Demo name="disclosure/demos/basic" className="**:data-disclosure:max-w-xs" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/disclosure
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/disclosure
-    ```
+## Anatomy
 
-    ## Anatomy
+```tsx
+import {
+  Disclosure,
+  DisclosureHeading,
+  DisclosurePanel,
+} from "@/components/ui/disclosure";
+```
 
-    ```tsx
-    import {
-      Disclosure,
-      DisclosureHeading,
-      DisclosurePanel,
-    } from "@/components/ui/disclosure";
-    ```
+```tsx
+<Disclosure>
+  <DisclosureHeading>What is dotUI?</DisclosureHeading>
+  <DisclosurePanel>
+    dotUI is a design system platform.
+  </DisclosurePanel>
+</Disclosure>
+```
 
-    ```tsx
-    <Disclosure>
-      <DisclosureHeading>What is dotUI?</DisclosureHeading>
-      <DisclosurePanel>
-        dotUI is a design system platform.
-      </DisclosurePanel>
-    </Disclosure>
-    ```
+for more advanced composition, you can use this structure
 
-    for more advanced composition, you can use this structure
+```tsx
+import { Disclosure, DisclosurePanel } from "@/components/ui/disclosure";
+import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
+import { ChevronDownIcon } from "your-icon-library";
+```
 
-    ```tsx
-    import { Disclosure, DisclosurePanel } from "@/components/ui/disclosure";
-    import { Button } from "@/components/ui/button";
-    import { Heading } from "@/components/ui/heading";
-    import { ChevronDownIcon } from "your-icon-library";
-    ```
+```tsx
+<Disclosure>
+  <Heading>
+    <Button>
+      What is dotUI?
+      <ChevronDownIcon />
+    </Button>
+  </Heading>
+  <DisclosurePanel>
+    dotUI is a design system platform.
+  </DisclosurePanel>
+</Disclosure>
+```
 
-    ```tsx
-    <Disclosure>
-      <Heading>
-        <Button>
-          What is dotUI?
-          <ChevronDownIcon />
-        </Button>
-      </Heading>
-      <DisclosurePanel>
-        dotUI is a design system platform.
-      </DisclosurePanel>
-    </Disclosure>
-    ```
+## Playground
 
-    ## Playground
+Use the controls below to experiment with different disclosure props and see the live preview and code update.
 
-    Use the controls below to experiment with different disclosure props and see the live preview and code update.
+<InteractiveDemo
+  name="disclosure"
+  controls={["isDisabled"]}
+  className="**:data-disclosure:max-w-xs"
+/>
 
-    <InteractiveDemo
-      name="disclosure"
-      controls={["isDisabled"]}
-      className="**:data-disclosure:max-w-xs"
-    />
 
-    ## API Reference
+## Examples
 
-    ### Disclosure
+<Examples>
+  <Example name="disclosure/demos/basic" description="Basic disclosure" />
+  <Example name="disclosure/demos/default-expanded" description="Default expanded disclosure" />
+  <Example name="disclosure/demos/disabled" description="Disabled disclosure" />
+  <Example name="disclosure/demos/controlled" description="Controlled disclosure" />
+  <Example name="disclosure/demos/advanced-composition" description="Advanced composition" />
+</Examples>
 
-    <Reference name="disclosure" />
+## API Reference
 
-    ### DisclosureTrigger
+### Disclosure
 
-    <Reference name="disclosure-trigger" />
+<Reference name="disclosure" />
 
-    ### DisclosurePanel
+### DisclosureTrigger
 
-    <Reference name="disclosure-panel" />
+<Reference name="disclosure-trigger" />
 
-  </PageTabPanel>
+### DisclosurePanel
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="disclosure/demos/basic" description="Basic disclosure" />
-      <Example name="disclosure/demos/default-expanded" description="Default expanded disclosure" />
-      <Example name="disclosure/demos/disabled" description="Disabled disclosure" />
-      <Example name="disclosure/demos/controlled" description="Controlled disclosure" />
-      <Example name="disclosure/demos/advanced-composition" description="Advanced composition" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="disclosure-panel" />

@@ -7,83 +7,77 @@ links:
 wip: true
 ---
 
+<Demo name="tooltip/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="tooltip/demos/default" />
+```npm
+npx shadcn@latest add @dotui/tooltip
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/tooltip
-    ```
+Use tooltips to provide contextual information about an element when it receives focus or the user hovers over it.
 
-    ## Usage
+```tsx
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+```
 
-    Use tooltips to provide contextual information about an element when it receives focus or the user hovers over it.
+```tsx
+<Tooltip>
+  <Button>Hover me</Button>
+  <TooltipContent>Tooltip content</TooltipContent>
+</Tooltip>
+```
 
-    ```tsx
-    import { Button } from "@/components/ui/button";
-    import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
-    ```
+## Playground
 
-    ```tsx
-    <Tooltip>
-      <Button>Hover me</Button>
-      <TooltipContent>Tooltip content</TooltipContent>
-    </Tooltip>
-    ```
+Use the controls below to experiment with different tooltip props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo 
+  name="tooltip" 
+  controls={[
+    {
+      type: "string",
+      name: "content",
+      defaultValue: "Tooltip content",
+    },
+    {
+      type: "enum",
+      name: "placement",
+      options: ["top", "bottom", "left", "right"],
+      defaultValue: "top",
+    },
+    {
+      type: "boolean",
+      name: "hideArrow",
+      defaultValue: false,
+    },
+  ]}
+/>
 
-    Use the controls below to experiment with different tooltip props and see the live preview and code update.
 
-    <InteractiveDemo 
-      name="tooltip" 
-      controls={[
-        {
-          type: "string",
-          name: "content",
-          defaultValue: "Tooltip content",
-        },
-        {
-          type: "enum",
-          name: "placement",
-          options: ["top", "bottom", "left", "right"],
-          defaultValue: "top",
-        },
-        {
-          type: "boolean",
-          name: "hideArrow",
-          defaultValue: false,
-        },
-      ]}
-    />
+## Examples
 
-    ## API Reference
+<Examples>
+  <Example name="tooltip/demos/default" />
+  <Example name="tooltip/demos/placement" />
+  <Example name="tooltip/demos/offset" />
+  <Example name="tooltip/demos/delay" />
+  <Example name="tooltip/demos/with-arrow" />
+  <Example name="tooltip/demos/arrow" />
+  <Example name="tooltip/demos/flip" />
+  <Example name="tooltip/demos/container-padding" />
+  <Example name="tooltip/demos/variant" />
+</Examples>
 
-    ### Tooltip
+## API Reference
 
-    <Reference name="tooltip" />
+### Tooltip
 
-    ### TooltipContent
+<Reference name="tooltip" />
 
-    <Reference name="tooltip-content" />
+### TooltipContent
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="tooltip/demos/default" />
-      <Example name="tooltip/demos/placement" />
-      <Example name="tooltip/demos/offset" />
-      <Example name="tooltip/demos/delay" />
-      <Example name="tooltip/demos/with-arrow" />
-      <Example name="tooltip/demos/arrow" />
-      <Example name="tooltip/demos/flip" />
-      <Example name="tooltip/demos/container-padding" />
-      <Example name="tooltip/demos/variant" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="tooltip-content" />

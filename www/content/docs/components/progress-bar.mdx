@@ -7,84 +7,78 @@ links:
 wip: true
 ---
 
+<Demo name="progress-bar/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="progress-bar/demos/default" />
+```npm
+npx shadcn@latest add @dotui/progress-bar
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/progress-bar
-    ```
+Use progress bars to show the progression of a system operation or task.
 
-    ## Usage
+```tsx
+import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
+```
 
-    Use progress bars to show the progression of a system operation or task.
+```tsx
+<ProgressBar value={60}>
+  <ProgressBarControl />
+</ProgressBar>
+```
 
-    ```tsx
-    import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
-    ```
+## Playground
 
-    ```tsx
-    <ProgressBar value={60}>
-      <ProgressBarControl />
-    </ProgressBar>
-    ```
+Use the controls below to experiment with different progress bar props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo 
+  name="progress-bar" 
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Loading...",
+    },
+    {
+      type: "number",
+      name: "value",
+      defaultValue: 60,
+      min: 0,
+      max: 100,
+    },
+    {
+      type: "boolean",
+      name: "isIndeterminate",
+      defaultValue: false,
+    },
+  ]}
+/>
 
-    Use the controls below to experiment with different progress bar props and see the live preview and code update.
 
-    <InteractiveDemo 
-      name="progress-bar" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Loading...",
-        },
-        {
-          type: "number",
-          name: "value",
-          defaultValue: 60,
-          min: 0,
-          max: 100,
-        },
-        {
-          type: "boolean",
-          name: "isIndeterminate",
-          defaultValue: false,
-        },
-      ]}
-    />
+## Examples
 
-    ## API Reference
+<Examples>
+  <Example name="progress-bar/demos/default" />
+  <Example name="progress-bar/demos/sizes" />
+  <Example name="progress-bar/demos/variants" />
+  <Example name="progress-bar/demos/shape" />
+  <Example name="progress-bar/demos/label" />
+  <Example name="progress-bar/demos/value-label" />
+  <Example name="progress-bar/demos/custom-value-label" />
+  <Example name="progress-bar/demos/format-options" />
+  <Example name="progress-bar/demos/min-max-values" />
+  <Example name="progress-bar/demos/indeterminate" />
+  <Example name="progress-bar/demos/duration" />
+</Examples>
 
-    ### ProgressBar
+## API Reference
 
-    <Reference name="progress-bar" />
+### ProgressBar
 
-    ### ProgressBarControl
+<Reference name="progress-bar" />
 
-    <Reference name="progress-bar-control" />
+### ProgressBarControl
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="progress-bar/demos/default" />
-      <Example name="progress-bar/demos/sizes" />
-      <Example name="progress-bar/demos/variants" />
-      <Example name="progress-bar/demos/shape" />
-      <Example name="progress-bar/demos/label" />
-      <Example name="progress-bar/demos/value-label" />
-      <Example name="progress-bar/demos/custom-value-label" />
-      <Example name="progress-bar/demos/format-options" />
-      <Example name="progress-bar/demos/min-max-values" />
-      <Example name="progress-bar/demos/indeterminate" />
-      <Example name="progress-bar/demos/duration" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="progress-bar-control" />

@@ -31,7 +31,7 @@ export const siteConfig = {
 
 export const navItems: { name: string; href: ToOptions }[] = [
 	{ name: "Docs", href: { to: "/docs/$", params: { _splat: "" } } },
-	{ name: "Components", href: { to: "/docs/$", params: { _splat: "components" } } },
+	{ name: "Components", href: { to: "/components" } },
 	{ name: "Blocks", href: { to: "/blocks" } },
 	{ name: "Create", href: { to: "/create" } },
 ];

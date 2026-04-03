@@ -11,7 +11,6 @@ import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "@/modules/docs/
 import { Example, type ExampleProps } from "@/modules/docs/example";
 import { Examples } from "@/modules/docs/examples";
 import { InteractiveDemo } from "@/modules/docs/interactive-demo";
-import { PageTabPanel, PageTabs } from "@/modules/docs/page-tabs";
 import { Reference, type ReferenceProps } from "@/modules/docs/reference";
 
 export const mdxComponents: MDXComponents = {
@@ -73,8 +72,6 @@ export const mdxComponents: MDXComponents = {
 	),
 	Alert: ({ className, ...props }: AlertProps) => <Alert className={cn("mt-4", className)} {...props} />,
 	Steps: (props) => <div className="[&>h3]:step ml-4 border-l pl-8 [counter-reset:step]" {...props} />,
-	PageTabs,
-	PageTabPanel,
 	CodeBlockTabs,
 	CodeBlockTabsList,
 	CodeBlockTabsTrigger,

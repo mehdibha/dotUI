@@ -6,65 +6,60 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Disclosure.html
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="accordion/demos/basic" className="**:data-accordion:max-w-xs" />
 
-    <Demo name="accordion/demos/basic" className="**:data-accordion:max-w-xs" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/accordion
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/accordion
-    ```
+## Anatomy
 
-    ## Anatomy
+```tsx
+import { Accordion } from "@/components/ui/accordion";
+import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger
+} from "@/components/ui/disclosure";
+```
 
-    ```tsx
-    import { Accordion } from "@/components/ui/accordion";
-    import {
-      Disclosure,
-      DisclosurePanel,
-      DisclosureTrigger
-    } from "@/components/ui/disclosure";
-    ```
+```tsx
+<Accordion>
+  <Disclosure>
+    <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
+    <DisclosurePanel>Disclosure Panel</DisclosurePanel>
+  </Disclosure>
+  <Disclosure>
+    <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
+    <DisclosurePanel>Disclosure Panel</DisclosurePanel>
+  </Disclosure>
+</Accordion>
+```
 
-    ```tsx
-    <Accordion>
-      <Disclosure>
-        <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
-        <DisclosurePanel>Disclosure Panel</DisclosurePanel>
-      </Disclosure>
-      <Disclosure>
-        <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
-        <DisclosurePanel>Disclosure Panel</DisclosurePanel>
-      </Disclosure>
-    </Accordion>
-    ```
+## Playground
 
-    ## Playground
+Use the controls below to experiment with different accordion props and see the live preview and code update.
 
-    Use the controls below to experiment with different accordion props and see the live preview and code update.
+<InteractiveDemo
+  name="accordion"
+  controls={["allowsMultipleExpanded", "isDisabled"]}
+/>
 
-    <InteractiveDemo
-      name="accordion"
-      controls={["allowsMultipleExpanded", "isDisabled"]}
-    />
 
-    ## API Reference
+## Examples
 
-    ### Accordion
+<Examples>
+  <Example name="accordion/demos/basic" description="Basic accordion" />
+  <Example name="accordion/demos/allows-multiple" description="Multiple expanded items" />
+  <Example name="accordion/demos/default-expanded" description="Default expanded item" />
+  <Example name="accordion/demos/disabled" description="Disabled accordion" />
+  <Example name="accordion/demos/controlled" description="Controlled accordion" />
+</Examples>
 
-    <Reference name="accordion" />
+## API Reference
 
-  </PageTabPanel>
+### Accordion
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="accordion/demos/basic" description="Basic accordion" />
-      <Example name="accordion/demos/allows-multiple" description="Multiple expanded items" />
-      <Example name="accordion/demos/default-expanded" description="Default expanded item" />
-      <Example name="accordion/demos/disabled" description="Disabled accordion" />
-      <Example name="accordion/demos/controlled" description="Controlled accordion" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="accordion" />

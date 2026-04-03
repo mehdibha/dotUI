@@ -3,104 +3,99 @@ title: Avatar
 description: An avatar is a visual representation of a user or entity.
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="avatar/demos/default" />
 
-    <Demo name="avatar/demos/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/avatar
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/avatar
-    ```
+## Usage
 
-    ## Usage
+Use avatars to represent users or entities with an image or initials.
 
-    Use avatars to represent users or entities with an image or initials.
+```tsx
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+```
 
-    ```tsx
-    import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-    ```
+```tsx
+<Avatar>
+  <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+  <AvatarFallback>MB</AvatarFallback>
+</Avatar>
+```
 
-    ```tsx
-    <Avatar>
-      <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
-      <AvatarFallback>MB</AvatarFallback>
-    </Avatar>
-    ```
+## Playground
 
-    ## Playground
+Use the controls below to experiment with different avatar props and see the live preview and code update.
 
-    Use the controls below to experiment with different avatar props and see the live preview and code update.
+<InteractiveDemo
+  name="avatar"
+  controls={[
+    {
+      type: "string",
+      name: "src",
+      defaultValue: "https://github.com/mehdibha.png",
+    },
+    {
+      type: "string",
+      name: "alt",
+      defaultValue: "@mehdibha",
+    },
+    {
+      type: "string",
+      name: "fallback",
+      defaultValue: "M",
+    },
+    {
+      type: "enum",
+      name: "size",
+      options: ["sm", "md", "lg"],
+      defaultValue: "md",
+    },
+  ]}
+/>
 
-    <InteractiveDemo
-      name="avatar"
-      controls={[
-        {
-          type: "string",
-          name: "src",
-          defaultValue: "https://github.com/mehdibha.png",
-        },
-        {
-          type: "string",
-          name: "alt",
-          defaultValue: "@mehdibha",
-        },
-        {
-          type: "string",
-          name: "fallback",
-          defaultValue: "M",
-        },
-        {
-          type: "enum",
-          name: "size",
-          options: ["sm", "md", "lg"],
-          defaultValue: "md",
-        },
-      ]}
-    />
 
-    ## API Reference
+## Examples
 
-    ### Avatar
+<Examples>
+  <Example name="avatar/demos/basic" description="Avatar with image, fallback and placeholder" />
+  <Example name="avatar/demos/fallback-only" description="Fallback-only avatar" />
+  <Example name="avatar/demos/sizes" description="Avatars with different sizes" />
+  <Example name="avatar/demos/radii" description="Avatars with different radii" />
+  <Example name="avatar/demos/badge" description="Avatar with badge" />
+  <Example name="avatar/demos/badge-with-icon" description="Avatar with badge containing an icon" />
+  <Example name="avatar/demos/badge-top-right" description="Avatar with badge positioned at top right" />
+  <Example name="avatar/demos/badge-notification" description="Avatar with notification badge" />
+  <Example name="avatar/demos/icon-fallback" description="Avatar with user icon fallback" />
+  <Example name="avatar/demos/group" description="Group of avatars displayed together" />
+  <Example name="avatar/demos/avatar-group-count" description="Avatar group with remaining count indicator" />
+</Examples>
 
-    <Reference name="avatar" />
+## API Reference
 
-    ### AvatarImage
+### Avatar
 
-    <Reference name="avatar-image" />
+<Reference name="avatar" />
 
-    ### AvatarFallback
+### AvatarImage
 
-    <Reference name="avatar-fallback" />
+<Reference name="avatar-image" />
 
-    ### AvatarBadge
+### AvatarFallback
 
-    <Reference name="avatar-badge" />
+<Reference name="avatar-fallback" />
 
-    ### AvatarGroup
+### AvatarBadge
 
-    <Reference name="avatar-group" />
+<Reference name="avatar-badge" />
 
-    ### AvatarGroupCount
+### AvatarGroup
 
-    <Reference name="avatar-group-count" />
+<Reference name="avatar-group" />
 
-  </PageTabPanel>
+### AvatarGroupCount
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="avatar/demos/basic" description="Avatar with image, fallback and placeholder" />
-      <Example name="avatar/demos/fallback-only" description="Fallback-only avatar" />
-      <Example name="avatar/demos/sizes" description="Avatars with different sizes" />
-      <Example name="avatar/demos/radii" description="Avatars with different radii" />
-      <Example name="avatar/demos/badge" description="Avatar with badge" />
-      <Example name="avatar/demos/badge-with-icon" description="Avatar with badge containing an icon" />
-      <Example name="avatar/demos/badge-top-right" description="Avatar with badge positioned at top right" />
-      <Example name="avatar/demos/badge-notification" description="Avatar with notification badge" />
-      <Example name="avatar/demos/icon-fallback" description="Avatar with user icon fallback" />
-      <Example name="avatar/demos/group" description="Group of avatars displayed together" />
-      <Example name="avatar/demos/avatar-group-count" description="Avatar group with remaining count indicator" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="avatar-group-count" />

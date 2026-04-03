@@ -4,38 +4,33 @@ description: A field wraps form inputs with labels, descriptions, and error mess
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/field
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/field
-    ```
+## Usage
 
-    ## Usage
+```tsx
+import { Field, Label, Description, FieldError } from "@/components/ui/field";
+```
 
-    ```tsx
-    import { Field, Label, Description, FieldError } from "@/components/ui/field";
-    ```
+```tsx
+<Field>
+  <Label>Email</Label>
+  <Input type="email" />
+  <Description>We'll never share your email.</Description>
+</Field>
+```
 
-    ```tsx
-    <Field>
-      <Label>Email</Label>
-      <Input type="email" />
-      <Description>We'll never share your email.</Description>
-    </Field>
-    ```
 
-    ## API Reference
+## Examples
 
-    <Reference name="field" />
+<Examples>
+  <p className="text-fg-muted col-span-full">No examples yet.</p>
+</Examples>
 
-  </PageTabPanel>
+## API Reference
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <p className="text-fg-muted col-span-full">No examples yet.</p>
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="field" />

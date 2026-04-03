@@ -7,80 +7,74 @@ links:
 wip: true
 ---
 
+<Demo name="color-field/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="color-field/demos/default" />
+```npm
+npx shadcn@latest add @dotui/color-field
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/color-field
-    ```
+Use color fields to allow users to edit a color value using a text field.
 
-    ## Usage
+```tsx
+import { ColorField } from "@/components/ui/color-field";
+import { Label } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+```
 
-    Use color fields to allow users to edit a color value using a text field.
+```tsx
+<ColorField defaultValue="#ff0000">
+  <Label>Color</Label>
+  <Input />
+</ColorField>
+```
 
-    ```tsx
-    import { ColorField } from "@/components/ui/color-field";
-    import { Label } from "@/components/ui/field";
-    import { Input } from "@/components/ui/input";
-    ```
+## Playground
 
-    ```tsx
-    <ColorField defaultValue="#ff0000">
-      <Label>Color</Label>
-      <Input />
-    </ColorField>
-    ```
+Use the controls below to experiment with different color field props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo 
+  name="color-field" 
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Color",
+    },
+    {
+      type: "boolean",
+      name: "isDisabled",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isReadOnly",
+      defaultValue: false,
+    },
+  ]}
+/>
 
-    Use the controls below to experiment with different color field props and see the live preview and code update.
 
-    <InteractiveDemo 
-      name="color-field" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Color",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isReadOnly",
-          defaultValue: false,
-        },
-      ]}
-    />
+## Examples
 
-    ## API Reference
+<Examples>
+  <Example name="color-field/demos/default" />
+  <Example name="color-field/demos/sizes" />
+  <Example name="color-field/demos/label" />
+  <Example name="color-field/demos/description" />
+  <Example name="color-field/demos/error-message" />
+  <Example name="color-field/demos/prefix-and-suffix" />
+  <Example name="color-field/demos/color-channel" />
+  <Example name="color-field/demos/disabled" />
+  <Example name="color-field/demos/read-only" />
+  <Example name="color-field/demos/required" />
+  <Example name="color-field/demos/uncontrolled" />
+  <Example name="color-field/demos/controlled" />
+</Examples>
 
-    <Reference name="color-field" />
+## API Reference
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="color-field/demos/default" />
-      <Example name="color-field/demos/sizes" />
-      <Example name="color-field/demos/label" />
-      <Example name="color-field/demos/description" />
-      <Example name="color-field/demos/error-message" />
-      <Example name="color-field/demos/prefix-and-suffix" />
-      <Example name="color-field/demos/color-channel" />
-      <Example name="color-field/demos/disabled" />
-      <Example name="color-field/demos/read-only" />
-      <Example name="color-field/demos/required" />
-      <Example name="color-field/demos/uncontrolled" />
-      <Example name="color-field/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="color-field" />

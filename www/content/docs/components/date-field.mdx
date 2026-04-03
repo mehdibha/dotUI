@@ -7,95 +7,89 @@ links:
 wip: true
 ---
 
+<Demo name="date-field/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="date-field/demos/default" />
+```npm
+npx shadcn@latest add @dotui/date-field
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/date-field
-    ```
+Use `DateField` to allow users to enter and edit date values using a keyboard.
 
-    ## Usage
+```tsx
+import { DateField } from "@/components/ui/date-field";
+import { DateInput } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
 
-    Use `DateField` to allow users to enter and edit date values using a keyboard.
+```tsx
+<DateField>
+  <Label>Date</Label>
+  <DateInput />
+</DateField>
+```
 
-    ```tsx
-    import { DateField } from "@/components/ui/date-field";
-    import { DateInput } from "@/components/ui/input";
-    import { Label } from "@/components/ui/field";
-    ```
+## Playground
 
-    ```tsx
-    <DateField>
-      <Label>Date</Label>
-      <DateInput />
-    </DateField>
-    ```
+Use the controls below to experiment with different date field props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo 
+  name="date-field" 
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Date",
+    },
+    {
+      type: "boolean",
+      name: "isDisabled",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isReadOnly",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isInvalid",
+      defaultValue: false,
+    },
+  ]}
+/>
 
-    Use the controls below to experiment with different date field props and see the live preview and code update.
 
-    <InteractiveDemo 
-      name="date-field" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Date",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isReadOnly",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isInvalid",
-          defaultValue: false,
-        },
-      ]}
-    />
+## Examples
 
-    ## API Reference
+<Examples>
+  <Example name="date-field/demos/default" />
+  <Example name="date-field/demos/sizes" />
+  <Example name="date-field/demos/label" />
+  <Example name="date-field/demos/description" />
+  <Example name="date-field/demos/error-message" />
+  <Example name="date-field/demos/placeholder" />
+  <Example name="date-field/demos/granularity" />
+  <Example name="date-field/demos/hour-cycle" />
+  <Example name="date-field/demos/time-zones" />
+  <Example name="date-field/demos/hide-time-zone" />
+  <Example name="date-field/demos/prefix-and-suffix" />
+  <Example name="date-field/demos/disabled" />
+  <Example name="date-field/demos/read-only" />
+  <Example name="date-field/demos/required" />
+  <Example name="date-field/demos/uncontrolled" />
+  <Example name="date-field/demos/controlled" />
+</Examples>
 
-    ### DateField
+## API Reference
 
-    <Reference name="date-field" />
+### DateField
 
-    ### DateInput
+<Reference name="date-field" />
 
-    <Reference name="date-input" />
+### DateInput
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="date-field/demos/default" />
-      <Example name="date-field/demos/sizes" />
-      <Example name="date-field/demos/label" />
-      <Example name="date-field/demos/description" />
-      <Example name="date-field/demos/error-message" />
-      <Example name="date-field/demos/placeholder" />
-      <Example name="date-field/demos/granularity" />
-      <Example name="date-field/demos/hour-cycle" />
-      <Example name="date-field/demos/time-zones" />
-      <Example name="date-field/demos/hide-time-zone" />
-      <Example name="date-field/demos/prefix-and-suffix" />
-      <Example name="date-field/demos/disabled" />
-      <Example name="date-field/demos/read-only" />
-      <Example name="date-field/demos/required" />
-      <Example name="date-field/demos/uncontrolled" />
-      <Example name="date-field/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="date-input" />

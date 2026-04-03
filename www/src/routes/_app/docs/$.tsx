@@ -3,13 +3,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
 import { findNeighbour } from "fumadocs-core/page-tree";
 
-import { AdobeIcon } from "@/registry/components/icons/adobe";
-import { GitHubIcon } from "@/registry/components/icons/github";
-import { ShadcnIcon } from "@/registry/components/icons/shadcn";
-import { ExternalLinkIcon } from "@/registry/__generated__/icons";
-import { cn } from "@/registry/lib/utils";
-import { LinkButton } from "@/registry/ui/button";
-
 import browserCollections from "@/.source/browser";
 import { siteConfig } from "@/config/site";
 import { docsSource } from "@/lib/source";
@@ -20,6 +13,12 @@ import { PageLastUpdate } from "@/modules/docs/last-update";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
+import { ExternalLinkIcon } from "@/registry/__generated__/icons";
+import { AdobeIcon } from "@/registry/components/icons/adobe";
+import { GitHubIcon } from "@/registry/components/icons/github";
+import { ShadcnIcon } from "@/registry/components/icons/shadcn";
+import { cn } from "@/registry/lib/utils";
+import { LinkButton } from "@/registry/ui/button";
 
 export const Route = createFileRoute("/_app/docs/$")({
 	component: DocsPage,
@@ -98,49 +97,44 @@ const clientLoader = browserCollections.docs.createClientLoader({
 
 		return (
 			<TOCProvider toc={toc}>
-				<PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-20 xl:max-w-5xl">
-					<div data-page-header="" className="space-y-3 border-b pb-8">
-						<div className="flex items-center justify-between">
-							<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
-							<div className="flex items-center gap-2">
-								<DocsPager neighbours={neighbours} />
-								<DocsCopyPage content={rawContent} url={url} />
+				<PageLayout className="flex scroll-mt-24 mt-12 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
+					<div className="mx-auto flex w-full min-w-0 max-w-[40rem] flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
+						<div data-page-header="" className="space-y-3 border-b pb-8">
+							<div className="flex items-center justify-between">
+								<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
+								<div className="flex items-center gap-2">
+									<DocsPager neighbours={neighbours} />
+									<DocsCopyPage content={rawContent} url={url} />
+								</div>
 							</div>
+							<PageHeaderDescription className="text-wrap">{frontmatter.description}</PageHeaderDescription>
+							{frontmatter.links?.length && (
+								<div className="mt-2 flex items-center gap-2">
+									{frontmatter.links.map((link) => {
+										const icon = getIcon(link.href);
+										return (
+											<LinkButton
+												key={link.href}
+												href={link.href}
+												target="_blank"
+												size="sm"
+												className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
+											>
+												{icon}
+												{link.label}
+												<ExternalLinkIcon />
+											</LinkButton>
+										);
+									})}
+								</div>
+							)}
 						</div>
-						<PageHeaderDescription className="text-wrap">{frontmatter.description}</PageHeaderDescription>
-						{frontmatter.links?.length && (
-							<div className="mt-2 flex items-center gap-2">
-								{frontmatter.links.map((link) => {
-									const icon = getIcon(link.href);
-									return (
-										<LinkButton
-											key={link.href}
-											href={link.href}
-											target="_blank"
-											size="sm"
-											className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
-										>
-											{icon}
-											{link.label}
-											<ExternalLinkIcon />
-										</LinkButton>
-									);
-								})}
-							</div>
-						)}
+						<MDX components={mdxComponents} />
+						<div className="min-w-0">{lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}</div>
+						{/* <div className={cn("mt-12", hasToc && "xl:grid xl:grid-cols-[1fr_180px] xl:gap-10")}></div> */}
 					</div>
-					<div
-						className={cn(
-							"not-has-data-page-tabs:mt-12 has-data-page-tabs:**:data-outer-toc:hidden",
-							hasToc &&
-								"not-has-data-page-tabs:xl:grid not-has-data-page-tabs:xl:grid-cols-[1fr_180px] not-has-data-page-tabs:xl:gap-10",
-						)}
-					>
-						<div className="min-w-0">
-							<MDX components={mdxComponents} />
-							{lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}
-						</div>
-						{hasToc && <TOC data-outer-toc="" />}
+					<div className="sticky top-[calc(var(--header-height)+24px)] z-30 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+						{hasToc && <TOC className="px-8" />}
 					</div>
 				</PageLayout>
 			</TOCProvider>

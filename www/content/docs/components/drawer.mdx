@@ -7,63 +7,57 @@ links:
 wip: true
 ---
 
+<Demo name="drawer/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="drawer/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/drawer
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/drawer
-    ```
+Use drawers to display content that slides in from the edge of the screen.
 
-    ## Usage
+```tsx
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Drawer } from "@/components/ui/drawer";
+```
 
-    Use drawers to display content that slides in from the edge of the screen.
+```tsx
+<Dialog>
+  <Button>Open Drawer</Button>
+  <Drawer placement="bottom">
+    <DialogContent>Drawer content</DialogContent>
+  </Drawer>
+</Dialog>
+```
 
-    ```tsx
-    import { Button } from "@/components/ui/button";
-    import { Dialog, DialogContent } from "@/components/ui/dialog";
-    import { Drawer } from "@/components/ui/drawer";
-    ```
+## Playground
 
-    ```tsx
-    <Dialog>
-      <Button>Open Drawer</Button>
-      <Drawer placement="bottom">
-        <DialogContent>Drawer content</DialogContent>
-      </Drawer>
-    </Dialog>
-    ```
+Use the controls below to experiment with different drawer props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo 
+  name="drawer" 
+  controls={[
+    {
+      type: "enum",
+      name: "placement",
+      options: ["bottom", "top", "left", "right"],
+      defaultValue: "bottom",
+    },
+  ]}
+/>
 
-    Use the controls below to experiment with different drawer props and see the live preview and code update.
 
-    <InteractiveDemo 
-      name="drawer" 
-      controls={[
-        {
-          type: "enum",
-          name: "placement",
-          options: ["bottom", "top", "left", "right"],
-          defaultValue: "bottom",
-        },
-      ]}
-    />
+## Examples
 
-    ## API Reference
+<Examples>
+  <Example name="drawer/demos/basic" />
+  <Example name="drawer/demos/placement" />
+</Examples>
 
-    <Reference name="drawer" />
+## API Reference
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="drawer/demos/basic" />
-      <Example name="drawer/demos/placement" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="drawer" />

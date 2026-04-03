@@ -7,83 +7,77 @@ links:
 wip: true
 ---
 
+<Demo name="search-field/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="search-field/demos/default" />
+```npm
+npx shadcn@latest add @dotui/search-field
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/search-field
-    ```
+Use `SearchField` to allow users to enter and clear a search query.
 
-    ## Usage
+```tsx
+import { SearchField } from "@/components/ui/search-field";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
 
-    Use `SearchField` to allow users to enter and clear a search query.
+```tsx
+<SearchField>
+  <Label>Search</Label>
+  <Input />
+</SearchField>
+```
 
-    ```tsx
-    import { SearchField } from "@/components/ui/search-field";
-    import { Input } from "@/components/ui/input";
-    import { Label } from "@/components/ui/field";
-    ```
+## Playground
 
-    ```tsx
-    <SearchField>
-      <Label>Search</Label>
-      <Input />
-    </SearchField>
-    ```
+Use the controls below to experiment with different search field props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo 
+  name="search-field" 
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Search",
+    },
+    {
+      type: "string",
+      name: "placeholder",
+      defaultValue: "Search...",
+    },
+    {
+      type: "boolean",
+      name: "isDisabled",
+      defaultValue: false,
+    },
+    {
+      type: "boolean",
+      name: "isReadOnly",
+      defaultValue: false,
+    },
+  ]}
+/>
 
-    Use the controls below to experiment with different search field props and see the live preview and code update.
 
-    <InteractiveDemo 
-      name="search-field" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Search",
-        },
-        {
-          type: "string",
-          name: "placeholder",
-          defaultValue: "Search...",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isReadOnly",
-          defaultValue: false,
-        },
-      ]}
-    />
+## Examples
 
-    ## API Reference
+<Examples>
+  <Example name="search-field/demos/default" />
+  <Example name="search-field/demos/sizes" />
+  <Example name="search-field/demos/label" />
+  <Example name="search-field/demos/description" />
+  <Example name="search-field/demos/error-message" />
+  <Example name="search-field/demos/disabled" />
+  <Example name="search-field/demos/read-only" />
+  <Example name="search-field/demos/required" />
+  <Example name="search-field/demos/uncontrolled" />
+  <Example name="search-field/demos/controlled" />
+</Examples>
 
-    <Reference name="search-field" />
+## API Reference
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="search-field/demos/default" />
-      <Example name="search-field/demos/sizes" />
-      <Example name="search-field/demos/label" />
-      <Example name="search-field/demos/description" />
-      <Example name="search-field/demos/error-message" />
-      <Example name="search-field/demos/disabled" />
-      <Example name="search-field/demos/read-only" />
-      <Example name="search-field/demos/required" />
-      <Example name="search-field/demos/uncontrolled" />
-      <Example name="search-field/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="search-field" />

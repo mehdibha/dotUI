@@ -7,72 +7,66 @@ links:
 wip: true
 ---
 
+<Demo name="drop-zone/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="drop-zone/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/drop-zone
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/drop-zone
-    ```
+Use drop zones to allow users to drag and drop files or content into a designated area.
 
-    ## Usage
+```tsx
+import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
+```
 
-    Use drop zones to allow users to drag and drop files or content into a designated area.
+```tsx
+<DropZone>
+  <DropZoneLabel>Drop files here</DropZoneLabel>
+</DropZone>
+```
 
-    ```tsx
-    import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
-    ```
+## Playground
 
-    ```tsx
-    <DropZone>
-      <DropZoneLabel>Drop files here</DropZoneLabel>
-    </DropZone>
-    ```
+Use the controls below to experiment with different drop zone props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo 
+  name="drop-zone" 
+  controls={[
+    {
+      type: "string",
+      name: "label",
+      defaultValue: "Drop files here",
+    },
+    {
+      type: "boolean",
+      name: "isDisabled",
+      defaultValue: false,
+    },
+  ]}
+/>
 
-    Use the controls below to experiment with different drop zone props and see the live preview and code update.
 
-    <InteractiveDemo 
-      name="drop-zone" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Drop files here",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-      ]}
-    />
+## Examples
 
-    ## API Reference
+<Examples>
+  <Example name="drop-zone/demos/basic" />
+  <Example name="drop-zone/demos/label" />
+  <Example name="drop-zone/demos/visual-feedback" />
+  <Example name="drop-zone/demos/file-trigger" />
+  <Example name="drop-zone/demos/events" />
+  <Example name="drop-zone/demos/disabled" />
+</Examples>
 
-    ### DropZone
+## API Reference
 
-    <Reference name="drop-zone" />
+### DropZone
 
-    ### DropZoneLabel
+<Reference name="drop-zone" />
 
-    <Reference name="drop-zone-label" />
+### DropZoneLabel
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="drop-zone/demos/basic" />
-      <Example name="drop-zone/demos/label" />
-      <Example name="drop-zone/demos/visual-feedback" />
-      <Example name="drop-zone/demos/file-trigger" />
-      <Example name="drop-zone/demos/events" />
-      <Example name="drop-zone/demos/disabled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="drop-zone-label" />

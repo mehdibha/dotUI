@@ -7,76 +7,70 @@ links:
 wip: true
 ---
 
+<Demo name="command/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="command/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/command
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/command
-    ```
+Use command menus to provide users with a searchable list of commands or actions.
 
-    ## Usage
+```tsx
+import {
+  Command,
+  CommandContent,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+```
 
-    Use command menus to provide users with a searchable list of commands or actions.
+```tsx
+<Command>
+  <CommandInput placeholder="Type a command..." />
+  <CommandContent>
+    <CommandItem textValue="Create file">Create new file</CommandItem>
+    <CommandItem textValue="Open file">Open file</CommandItem>
+  </CommandContent>
+</Command>
+```
 
-    ```tsx
-    import {
-      Command,
-      CommandContent,
-      CommandInput,
-      CommandItem,
-    } from "@/components/ui/command";
-    ```
+## Playground
 
-    ```tsx
-    <Command>
-      <CommandInput placeholder="Type a command..." />
-      <CommandContent>
-        <CommandItem textValue="Create file">Create new file</CommandItem>
-        <CommandItem textValue="Open file">Open file</CommandItem>
-      </CommandContent>
-    </Command>
-    ```
+Use the controls below to experiment with different command props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo 
+  name="command" 
+  controls={[
+    {
+      type: "string",
+      name: "placeholder",
+      defaultValue: "Type a command...",
+    },
+  ]}
+/>
 
-    Use the controls below to experiment with different command props and see the live preview and code update.
 
-    <InteractiveDemo 
-      name="command" 
-      controls={[
-        {
-          type: "string",
-          name: "placeholder",
-          defaultValue: "Type a command...",
-        },
-      ]}
-    />
+## Examples
 
-    ## API Reference
+<Examples>
+  <Example name="command/demos/basic" />
+  <Example name="command/demos/dialog" />
+</Examples>
 
-    ### Command
+## API Reference
 
-    <Reference name="command" />
+### Command
 
-    ### CommandInput
+<Reference name="command" />
 
-    <Reference name="command-input" />
+### CommandInput
 
-    ### CommandContent
+<Reference name="command-input" />
 
-    <Reference name="command-content" />
+### CommandContent
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="command/demos/basic" />
-      <Example name="command/demos/dialog" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="command-content" />
