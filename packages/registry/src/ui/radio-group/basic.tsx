@@ -49,6 +49,7 @@ const Radio = ({ className, ...props }: RadioProps) => {
 	return (
 		<AriaRadio
 			data-slot="radio"
+			data-radio=""
 			className={composeRenderProps(className, (className) =>
 				props.children
 					? root({ className })

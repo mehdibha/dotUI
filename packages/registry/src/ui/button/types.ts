@@ -15,7 +15,7 @@ export interface ButtonProps extends React.ComponentProps<typeof AriaButton> {
 	 * The size of the button.
 	 * @default "md"
 	 */
-	size?: "sm" | "md" | "lg";
+	size?: "xs" | "sm" | "md" | "lg";
 
 	/**
 	 * Controls the button's aspect ratio behavior.

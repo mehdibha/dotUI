@@ -39,6 +39,7 @@ const buttonStyles = tv({
 			danger: "bg-danger pressed:bg-danger-active text-fg-on-danger hover:bg-danger-hover",
 		},
 		size: {
+			xs: "h-7 px-2.5 has-[>svg]:px-2 data-icon-only:not-with-[size]:not-with-[w]:w-7",
 			sm: "h-8 px-3 has-[>svg]:px-2.5 data-icon-only:not-with-[size]:not-with-[w]:w-8",
 			md: "h-9 px-4 has-[>svg]:px-3 data-icon-only:not-with-[size]:not-with-[w]:w-9",
 			lg: "h-10 px-5 has-[>svg]:px-4 data-icon-only:not-with-[size]:not-with-[w]:w-10",
