@@ -4,13 +4,13 @@ const checkboxMeta = {
 	name: "checkbox",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/checkbox/basic.tsx",
+					path: "ui/checkbox/base.tsx",
 					target: "ui/checkbox.tsx",
 				},
 			],

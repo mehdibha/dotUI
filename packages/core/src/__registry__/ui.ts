@@ -5,13 +5,13 @@ export const ui = [
 	{
 		name: "accordion",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/accordion/basic.tsx",
+						path: "ui/accordion/base.tsx",
 						target: "ui/accordion.tsx",
 						content: `"use client";
 
@@ -45,13 +45,13 @@ export type { AccordionProps };
 	{
 		name: "alert",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/alert/basic.tsx",
+						path: "ui/alert/base.tsx",
 						target: "ui/alert.tsx",
 						content: `import { tv } from "tailwind-variants";
 import type * as React from "react";
@@ -297,20 +297,20 @@ export type {
 	{
 		name: "badge",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/badge/basic.tsx",
+						path: "ui/badge/base.tsx",
 						target: "ui/badge.tsx",
 						content: `import { tv } from "tailwind-variants";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 const badgeStyles = tv({
-	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md px-2 py-0.5 font-medium text-xs [&>svg]:pointer-events-none",
+	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md font-medium text-xs [&>svg]:pointer-events-none",
 	variants: {
 		variant: {
 			default: "bg-neutral text-fg-on-neutral",
@@ -321,9 +321,9 @@ const badgeStyles = tv({
 			info: "bg-info text-fg-on-info",
 		},
 		size: {
-			sm: "px-1.5 py-0.25 [&>svg]:size-3",
-			md: "px-2 py-0.5 [&>svg]:size-3",
-			lg: "px-2.5 py-0.75 [&>svg]:size-3",
+			sm: "h-4.5 min-w-4.5 px-1.5 text-xs [&>svg]:size-2.5 **:data-loader:*:[svg]:size-2.5",
+			md: "h-5 min-w-5 px-1.75 text-xs [&>svg]:size-3 **:data-loader:*:[svg]:size-3",
+			lg: "h-5.5 min-w-5.5 px-2.25 text-xs [&>svg]:size-3.5 **:data-loader:*:[svg]:size-3.5",
 		},
 	},
 	defaultVariants: {
@@ -348,13 +348,13 @@ export { Badge };
 	{
 		name: "breadcrumbs",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/breadcrumbs/basic.tsx",
+						path: "ui/breadcrumbs/base.tsx",
 						target: "ui/breadcrumbs.tsx",
 						content: `"use client";
 
@@ -425,13 +425,13 @@ export type { BreadcrumbsProps, BreadcrumbProps, BreadcrumbItemProps, Breadcrumb
 	{
 		name: "button",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/button/basic.tsx",
+						path: "ui/button/base.tsx",
 						target: "ui/button.tsx",
 						content: `"use client";
 
@@ -474,6 +474,7 @@ const buttonStyles = tv({
 			danger: "bg-danger pressed:bg-danger-active text-fg-on-danger hover:bg-danger-hover",
 		},
 		size: {
+			xs: "h-7 px-2.5 has-[>svg]:px-2 data-icon-only:not-with-[size]:not-with-[w]:w-7",
 			sm: "h-8 px-3 has-[>svg]:px-2.5 data-icon-only:not-with-[size]:not-with-[w]:w-8",
 			md: "h-9 px-4 has-[>svg]:px-3 data-icon-only:not-with-[size]:not-with-[w]:w-9",
 			lg: "h-10 px-5 has-[>svg]:px-4 data-icon-only:not-with-[size]:not-with-[w]:w-10",
@@ -567,156 +568,18 @@ export { Button, LinkButton, ButtonProvider, buttonStyles };
 				],
 				registryDependencies: ["loader", "focus-styles"],
 			},
-			ripple: {
-				files: [
-					{
-						type: "registry:ui",
-						path: "ui/button/ripple.tsx",
-						target: "ui/button.tsx",
-						content: `"use client";
-
-import {
-	Button as AriaButton,
-	ButtonContext as AriaButtonContext,
-	Link as AriaLink,
-	composeRenderProps,
-} from "react-aria-components";
-import { tv } from "tailwind-variants";
-import type * as React from "react";
-import type { VariantProps } from "tailwind-variants";
-
-import { useButtonAspect } from "@dotui/registry/hooks/use-button-aspect";
-import { createVariantsContext } from "@dotui/registry/lib/context";
-import { Loader } from "@dotui/registry/ui/loader";
-
-const buttonStyles = tv({
-	base: [
-		"ripple relative box-border inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm leading-normal transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
-		"*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
-		// focus state
-		"focus-reset focus-visible:focus-ring",
-		// disabled state
-		"disabled:cursor-default disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
-		// pending state
-		"pending:cursor-default pending:border-border-disabled pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
-	],
-	variants: {
-		variant: {
-			default:
-				"border pressed:border-border-active bg-neutral pressed:bg-neutral-active text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover",
-			primary:
-				"pending:border-0 bg-primary pressed:bg-primary-active text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0",
-			quiet: "bg-transparent pressed:bg-inverse/20 text-fg hover:bg-inverse/10",
-			link: "text-fg underline-offset-4 hover:underline",
-			warning: "bg-warning pressed:bg-warning-active text-fg-on-warning hover:bg-warning-hover",
-			danger: "bg-danger pressed:bg-danger-active text-fg-on-danger hover:bg-danger-hover",
-		},
-		size: {
-			sm: "h-8 px-3 data-icon-only:not-with-[size]:not-with-[w]:w-8 [&_svg]:size-4",
-			md: "h-9 px-4 data-icon-only:not-with-[size]:not-with-[w]:w-9 [&_svg]:size-4",
-			lg: "h-10 px-5 data-icon-only:not-with-[size]:not-with-[w]:w-10 [&_svg]:size-5",
-		},
-	},
-	defaultVariants: {
-		variant: "default",
-		size: "md",
-	},
-});
-
-type ButtonVariants = VariantProps<typeof buttonStyles>;
-
-const [ButtonProvider, useContextProps] = createVariantsContext<
-	ButtonVariants,
-	React.ComponentProps<typeof AriaButton>
->(AriaButtonContext);
-
-/* -----------------------------------------------------------------------------------------------*/
-
-interface ButtonProps extends React.ComponentProps<typeof AriaButton>, ButtonVariants {
-	aspect?: "default" | "square" | "auto";
-}
-
-const Button = (localProps: ButtonProps) => {
-	const { variant, size, aspect = "auto", className, slot, style, children, ...props } = useContextProps(localProps);
-
-	const isIconOnly = useButtonAspect(children, aspect);
-
-	return (
-		<AriaButton
-			data-slot="button"
-			data-button=""
-			data-icon-only={isIconOnly || undefined}
-			className={composeRenderProps(className, (cn) => buttonStyles({ variant, size, className: cn }))}
-			slot={slot}
-			style={style}
-			{...props}
-		>
-			{composeRenderProps(children, (children, { isPending }) => (
-				<>
-					{isPending && (
-						<Loader
-							data-slot="spinner"
-							aria-label="loading"
-							className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-							size={16}
-						/>
-					)}
-					{typeof children === "string" ? <span className="truncate">{children}</span> : children}
-				</>
-			))}
-		</AriaButton>
-	);
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-
-interface LinkButtonProps extends React.ComponentProps<typeof AriaLink>, VariantProps<typeof buttonStyles> {
-	aspect?: "default" | "square" | "auto";
-}
-
-const LinkButton = (localProps: LinkButtonProps) => {
-	const { variant, size, aspect = "auto", className, slot, style, children, ...props } = useContextProps(localProps);
-
-	const isIconOnly = useButtonAspect(children, aspect);
-
-	return (
-		<AriaLink
-			data-slot="button"
-			data-button=""
-			data-icon-only={isIconOnly || undefined}
-			className={composeRenderProps(className, (cn) => buttonStyles({ variant, size, className: cn }))}
-			slot={slot}
-			style={style}
-			{...props}
-		>
-			{composeRenderProps(children, (children) => (
-				<>{typeof children === "string" ? <span className="truncate">{children}</span> : children}</>
-			))}
-		</AriaLink>
-	);
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-
-export type { ButtonProps, LinkButtonProps };
-
-export { Button, LinkButton, ButtonProvider, buttonStyles };
-`,
-					},
-				],
-			},
 		},
 	},
 	{
 		name: "calendar",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/calendar/basic.tsx",
+						path: "ui/calendar/base.tsx",
 						target: "ui/calendar.tsx",
 						content: `"use client";
 
@@ -1045,13 +908,13 @@ export type {
 	{
 		name: "card",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/card/basic.tsx",
+						path: "ui/card/base.tsx",
 						target: "ui/card.tsx",
 						content: `import { tv } from "tailwind-variants";
 import type * as React from "react";
@@ -1076,7 +939,7 @@ const { root, header, title, description, action, content, footer } = cardStyles
 interface CardProps extends React.ComponentProps<"div"> {}
 
 function Card({ className, ...props }: CardProps) {
-	return <div data-slot="card" className={root({ className })} {...props} />;
+	return <div data-card="" className={root({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -1084,7 +947,7 @@ function Card({ className, ...props }: CardProps) {
 interface CardHeaderProps extends React.ComponentProps<"div"> {}
 
 function CardHeader({ className, ...props }: CardHeaderProps) {
-	return <div data-slot="card-header" className={header({ className })} {...props} />;
+	return <div data-card-header="" className={header({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -1092,7 +955,7 @@ function CardHeader({ className, ...props }: CardHeaderProps) {
 interface CardTitleProps extends React.ComponentProps<"div"> {}
 
 function CardTitle({ className, ...props }: CardTitleProps) {
-	return <div data-slot="card-title" className={title({ className })} {...props} />;
+	return <div data-card-title="" className={title({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -1100,7 +963,7 @@ function CardTitle({ className, ...props }: CardTitleProps) {
 interface CardDescriptionProps extends React.ComponentProps<"div"> {}
 
 function CardDescription({ className, ...props }: CardDescriptionProps) {
-	return <div data-slot="card-description" className={description({ className })} {...props} />;
+	return <div data-card-description="" className={description({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -1108,7 +971,7 @@ function CardDescription({ className, ...props }: CardDescriptionProps) {
 interface CardActionProps extends React.ComponentProps<"div"> {}
 
 function CardAction({ className, ...props }: CardActionProps) {
-	return <div data-slot="card-action" className={action({ className })} {...props} />;
+	return <div data-card-action="" className={action({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -1116,7 +979,7 @@ function CardAction({ className, ...props }: CardActionProps) {
 interface CardContentProps extends React.ComponentProps<"div"> {}
 
 function CardContent({ className, ...props }: CardContentProps) {
-	return <div data-slot="card-content" className={content({ className })} {...props} />;
+	return <div data-card-content="" className={content({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -1124,7 +987,7 @@ function CardContent({ className, ...props }: CardContentProps) {
 interface CardFooterProps extends React.ComponentProps<"div"> {}
 
 function CardFooter({ className, ...props }: CardFooterProps) {
-	return <div data-slot="card-footer" className={footer({ className })} {...props} />;
+	return <div data-card-footer="" className={footer({ className })} {...props} />;
 }
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -1150,13 +1013,13 @@ export type {
 	{
 		name: "checkbox-group",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/checkbox-group/basic.tsx",
+						path: "ui/checkbox-group/base.tsx",
 						target: "ui/checkbox-group.tsx",
 						content: `"use client";
 
@@ -1185,13 +1048,13 @@ export { CheckboxGroup };
 	{
 		name: "checkbox",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/checkbox/basic.tsx",
+						path: "ui/checkbox/base.tsx",
 						target: "ui/checkbox.tsx",
 						content: `"use client";
 
@@ -1306,13 +1169,13 @@ export type { CheckboxProps, CheckboxIndicatorProps };
 	{
 		name: "color-area",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/color-area/basic.tsx",
+						path: "ui/color-area/base.tsx",
 						target: "ui/color-area.tsx",
 						content: `"use client";
 
@@ -1352,13 +1215,13 @@ export type { ColorAreaProps };
 	{
 		name: "color-editor",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/color-editor/basic.tsx",
+						path: "ui/color-editor/base.tsx",
 						target: "ui/color-editor.tsx",
 						content: `import React from "react";
 import { getColorChannels } from "react-aria-components";
@@ -1443,13 +1306,13 @@ export type { ColorEditorProps };
 	{
 		name: "color-field",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/color-field/basic.tsx",
+						path: "ui/color-field/base.tsx",
 						target: "ui/color-field.tsx",
 						content: `"use client";
 
@@ -1457,7 +1320,7 @@ import { ColorField as AriaColorField, composeRenderProps } from "react-aria-com
 import { tv } from "tailwind-variants";
 import type * as React from "react";
 
-import { fieldStyles } from "@dotui/registry/ui/field/basic";
+import { fieldStyles } from "@dotui/registry/ui/field";
 
 const colorFieldStyles = tv({
 	base: [fieldStyles().field({ orientation: "vertical" }), ""],
@@ -1486,13 +1349,13 @@ export type { ColorFieldProps };
 	{
 		name: "color-picker",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/color-picker/basic.tsx",
+						path: "ui/color-picker/base.tsx",
 						target: "ui/color-picker.tsx",
 						content: `"use client";
 
@@ -1584,13 +1447,13 @@ export type { ColorPickerProps, ColorPickerTriggerProps, ColorPickerContentProps
 	{
 		name: "color-slider",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/color-slider/basic.tsx",
+						path: "ui/color-slider/base.tsx",
 						target: "ui/color-slider.tsx",
 						content: `"use client";
 
@@ -1693,13 +1556,13 @@ export type { ColorSliderProps, ColorSliderControlProps, ColorSliderOutputProps 
 	{
 		name: "color-swatch-picker",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/color-swatch-picker/basic.tsx",
+						path: "ui/color-swatch-picker/base.tsx",
 						target: "ui/color-swatch-picker.tsx",
 						content: `"use client";
 
@@ -1780,13 +1643,13 @@ export { CompoundColorSwatchPicker as ColorSwatchPicker, ColorSwatchPickerItem }
 	{
 		name: "color-swatch",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/color-swatch/basic.tsx",
+						path: "ui/color-swatch/base.tsx",
 						target: "ui/color-swatch.tsx",
 						content: `"use client";
 
@@ -1794,7 +1657,7 @@ import { ColorSwatch as AriaColorSwatch, composeRenderProps } from "react-aria-c
 import { tv } from "tailwind-variants";
 
 const colorSwatchStyles = tv({
-	base: "relative size-5 rounded-sm border",
+	base: "relative size-5 shrink-0 rounded-sm border",
 });
 
 interface ColorSwatchProps extends React.ComponentProps<typeof AriaColorSwatch> {}
@@ -1824,13 +1687,13 @@ export { ColorSwatch };
 	{
 		name: "color-thumb",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/color-thumb/basic.tsx",
+						path: "ui/color-thumb/base.tsx",
 						target: "ui/color-thumb.tsx",
 						content: `"use client";
 
@@ -1865,13 +1728,13 @@ export { ColorThumb };
 	{
 		name: "combobox",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/combobox/basic.tsx",
+						path: "ui/combobox/base.tsx",
 						target: "ui/combobox.tsx",
 						content: `"use client";
 
@@ -2055,13 +1918,13 @@ export type { ComboboxProps, ComboboxInputProps, ComboboxContentProps };
 	{
 		name: "command",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/command/basic.tsx",
+						path: "ui/command/base.tsx",
 						target: "ui/command.tsx",
 						content: `"use client";
 
@@ -2172,13 +2035,13 @@ export type { CommandProps, CommandContentProps, CommandInputProps };
 	{
 		name: "date-field",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/date-field/basic.tsx",
+						path: "ui/date-field/base.tsx",
 						target: "ui/date-field.tsx",
 						content: `"use client";
 
@@ -2217,13 +2080,13 @@ export { DateField };
 	{
 		name: "date-picker",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/date-picker/basic.tsx",
+						path: "ui/date-picker/base.tsx",
 						target: "ui/date-picker.tsx",
 						content: `"use client";
 
@@ -2342,13 +2205,13 @@ export { DatePicker, DatePickerContent, DatePickerInput };
 	{
 		name: "dialog",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/dialog/basic.tsx",
+						path: "ui/dialog/base.tsx",
 						target: "ui/dialog.tsx",
 						content: `"use client";
 
@@ -2463,13 +2326,13 @@ export type {
 	{
 		name: "disclosure",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/disclosure/basic.tsx",
+						path: "ui/disclosure/base.tsx",
 						target: "ui/disclosure.tsx",
 						content: `"use client";
 
@@ -2561,13 +2424,13 @@ export type { DisclosureProps, DisclosurePanelProps, DisclosureTriggerProps };
 	{
 		name: "drawer",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/drawer/basic.tsx",
+						path: "ui/drawer/base.tsx",
 						target: "ui/drawer.tsx",
 						content: `"use client";
 
@@ -2639,13 +2502,13 @@ export { Drawer };
 	{
 		name: "drop-zone",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/drop-zone/basic.tsx",
+						path: "ui/drop-zone/base.tsx",
 						target: "ui/drop-zone.tsx",
 						content: `"use client";
 
@@ -2684,13 +2547,13 @@ export { DropZone, DropZoneLabel };
 	{
 		name: "empty",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/empty/basic.tsx",
+						path: "ui/empty/base.tsx",
 						target: "ui/empty.tsx",
 						content: `import { tv } from "tailwind-variants";
 import type { VariantProps } from "tailwind-variants";
@@ -2790,13 +2653,13 @@ export type {
 	{
 		name: "field",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/field/basic.tsx",
+						path: "ui/field/base.tsx",
 						target: "ui/field.tsx",
 						content: `"use client";
 
@@ -2973,13 +2836,13 @@ export type {
 	{
 		name: "file-trigger",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/file-trigger/basic.tsx",
+						path: "ui/file-trigger/base.tsx",
 						target: "ui/file-trigger.tsx",
 						content: `"use client";
 
@@ -2997,13 +2860,13 @@ export { FileTrigger };
 	{
 		name: "group",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/group/basic.tsx",
+						path: "ui/group/base.tsx",
 						target: "ui/group.tsx",
 						content: `"use client";
 
@@ -3097,13 +2960,13 @@ export type { GroupProps };
 	{
 		name: "input",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/input/basic.tsx",
+						path: "ui/input/base.tsx",
 						target: "ui/input.tsx",
 						content: `"use client";
 
@@ -3431,13 +3294,13 @@ export type { InputGroupProps, InputProps, TextAreaProps, InputAddonProps, DateI
 	{
 		name: "kbd",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/kbd/basic.tsx",
+						path: "ui/kbd/base.tsx",
 						target: "ui/kbd.tsx",
 						content: `"use client";
 
@@ -3485,13 +3348,13 @@ export type { KbdProps, KbdGroupProps };
 	{
 		name: "link",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/link/basic.tsx",
+						path: "ui/link/base.tsx",
 						target: "ui/link.tsx",
 						content: `"use client";
 
@@ -3540,13 +3403,13 @@ export { Link, linkVariants };
 	{
 		name: "list-box",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/list-box/basic.tsx",
+						path: "ui/list-box/base.tsx",
 						target: "ui/list-box.tsx",
 						content: `"use client";
 
@@ -3583,6 +3446,7 @@ const listboxStyles = tv({
 			"focus-reset focus-visible:focus-ring",
 			"data-standalone:max-h-68 data-standalone:w-48 data-standalone:overflow-y-auto data-standalone:rounded-md data-standalone:border data-standalone:bg-card data-standalone:p-1 data-standalone:shadow-sm",
 			"w-full p-1",
+			"h-full overflow-y-auto",
 		],
 		item: [
 			"relative flex cursor-pointer items-center gap-2 rounded-sm px-3 py-1.5 text-sm outline-hidden transition-colors focus:bg-inverse/10 disabled:pointer-events-none disabled:**:text-fg-disabled",
@@ -3715,148 +3579,34 @@ export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps, ListBoxSectio
 	{
 		name: "loader",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/loader/basic.tsx",
+						path: "ui/loader/base.tsx",
 						target: "ui/loader.tsx",
 						content: `"use client";
 
-import { ProgressBar as AriaProgressBar, composeRenderProps } from "react-aria-components";
+import { Loader2Icon } from "lucide-react";
+import { ProgressBar as AriaProgressBar } from "react-aria-components";
 import type { ProgressBarProps } from "react-aria-components";
 
 import { cn } from "@dotui/registry/lib/utils";
 
-interface LoaderProps extends ProgressBarProps {
-	size?: number;
-	stroke?: number;
-	speed?: number;
-	strokeLength?: number;
-}
+interface LoaderProps extends ProgressBarProps {}
 
-function Loader({ className, style, size = 20, stroke = 2, strokeLength = 0.25, speed = 0.8, ...props }: LoaderProps) {
-	const centerPoint = size / 2;
-	const radius = Math.max(0, size / 2 - stroke / 2);
-
+function Loader({ className, ...props }: LoaderProps) {
 	return (
 		<AriaProgressBar
-			data-slot="loader"
-			style={composeRenderProps(style, (style) => ({
-				...style,
-				"--loader-size": \`\${size}px\`,
-				"--loader-speed": \`\${speed}s\`,
-				"--loader-stroke": "2",
-				"--loader-dash": String(parseFloat(\`\${strokeLength}\`) * 100),
-				"--loader-gap": String(100 - parseFloat(\`\${strokeLength}\`) * 100),
-			}))}
-			className={cn("inline-flex size-(--loader-size) shrink-0 items-center justify-center", className)}
+			data-loader=""
+			className={cn("inline-flex shrink-0 items-center justify-center", className)}
 			aria-label="loading..."
 			{...props}
 			isIndeterminate
 		>
-			<svg
-				className="size-(--loader-size) origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
-				viewBox={\`\${centerPoint} \${centerPoint} \${size} \${size}\`}
-				height={size}
-				width={size}
-			>
-				<circle
-					className="stroke-[color-mix(in_oklab,currentColor_20%,transparent)] transition-[stroke] duration-500 ease-out"
-					cx={size}
-					cy={size}
-					r={radius}
-					pathLength="100"
-					strokeWidth={\`\${stroke}px\`}
-					fill="none"
-				/>
-				<circle
-					className="fill-none stroke-current transition-[stroke] duration-500 ease-out [stroke-dasharray:var(--loader-dash),var(--loader-gap)] [stroke-dashoffset:0] [stroke-linecap:round]"
-					cx={size}
-					cy={size}
-					r={radius}
-					pathLength="100"
-					strokeWidth={\`\${stroke}px\`}
-					fill="none"
-				/>
-			</svg>
-		</AriaProgressBar>
-	);
-}
-
-export type { LoaderProps };
-export { Loader };
-`,
-					},
-				],
-			},
-			ring: {
-				files: [
-					{
-						type: "registry:ui",
-						path: "ui/loader/ring.tsx",
-						target: "ui/loader.tsx",
-						content: `"use client";
-
-import { ProgressBar as AriaProgressBar, composeRenderProps } from "react-aria-components";
-import type { ProgressBarProps } from "react-aria-components";
-
-import { cn } from "@dotui/registry/lib/utils";
-
-interface LoaderProps extends ProgressBarProps {
-	size?: number;
-	stroke?: number;
-	speed?: number;
-	strokeLength?: number;
-}
-
-function Loader({ className, style, size = 20, stroke = 2, strokeLength = 0.25, speed = 0.8, ...props }: LoaderProps) {
-	const centerPoint = size / 2;
-	const radius = Math.max(0, size / 2 - stroke / 2);
-
-	return (
-		<AriaProgressBar
-			data-slot="loader"
-			style={composeRenderProps(style, (style) => ({
-				...style,
-				"--loader-size": \`\${size}px\`,
-				"--loader-speed": \`\${speed}s\`,
-				"--loader-stroke": "2",
-				"--loader-dash": String(parseFloat(\`\${strokeLength}\`) * 100),
-				"--loader-gap": String(100 - parseFloat(\`\${strokeLength}\`) * 100),
-			}))}
-			className={cn("inline-flex size-(--loader-size) shrink-0 items-center justify-center", className)}
-			aria-label="loading..."
-			{...props}
-			isIndeterminate
-		>
-			<svg
-				className="size-(--loader-size) origin-center animate-[spin_var(--loader-speed)_linear_infinite] overflow-visible will-change-transform"
-				viewBox={\`\${centerPoint} \${centerPoint} \${size} \${size}\`}
-				height={size}
-				width={size}
-			>
-				<circle
-					className="stroke-[color-mix(in_oklab,currentColor_20%,transparent)] transition-[stroke] duration-500 ease-out"
-					cx={size}
-					cy={size}
-					r={radius}
-					pathLength="100"
-					strokeWidth={\`\${stroke}px\`}
-					fill="none"
-				/>
-				<circle
-					className="fill-none stroke-current transition-[stroke] duration-500 ease-out [stroke-dasharray:var(--loader-dash),_var(--loader-gap)] [stroke-dashoffset:0] [stroke-linecap:round]"
-					cx={size}
-					cy={size}
-					r={radius}
-					pathLength="100"
-					strokeWidth={\`\${stroke}px\`}
-					fill="none"
-				/>
-			</svg>
+			<Loader2Icon role="status" aria-label="Loading" className={cn("size-4 animate-spin")} />
 		</AriaProgressBar>
 	);
 }
@@ -3872,13 +3622,13 @@ export { Loader };
 	{
 		name: "menu",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/menu/basic.tsx",
+						path: "ui/menu/base.tsx",
 						target: "ui/menu.tsx",
 						content: `"use client";
 
@@ -4023,13 +3773,13 @@ export type { MenuProps, MenuContentProps, MenuItemProps, MenuSectionProps, Menu
 	{
 		name: "modal",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/modal/basic.tsx",
+						path: "ui/modal/base.tsx",
 						target: "ui/modal.tsx",
 						content: `"use client";
 
@@ -4105,13 +3855,13 @@ export type { ModalProps, ModalOverlayProps, ModalContentProps, ModalBackdropPro
 	{
 		name: "number-field",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/number-field/basic.tsx",
+						path: "ui/number-field/base.tsx",
 						target: "ui/number-field.tsx",
 						content: `"use client";
 
@@ -4176,13 +3926,13 @@ export { NumberField };
 	{
 		name: "overlay",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/overlay/basic.tsx",
+						path: "ui/overlay/base.tsx",
 						target: "ui/overlay.tsx",
 						content: `"use client";
 
@@ -4247,13 +3997,13 @@ export { Overlay };
 	{
 		name: "popover",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/popover/basic.tsx",
+						path: "ui/popover/base.tsx",
 						target: "ui/popover.tsx",
 						content: `"use client";
 
@@ -4323,13 +4073,13 @@ export { Popover };
 	{
 		name: "progress-bar",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/progress-bar/basic.tsx",
+						path: "ui/progress-bar/base.tsx",
 						target: "ui/progress-bar.tsx",
 						content: `"use client";
 
@@ -4463,13 +4213,13 @@ export type { ProgressBarProps, ProgressBarControlProps, ProgressBarValueLabelPr
 	{
 		name: "radio-group",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/radio-group/basic.tsx",
+						path: "ui/radio-group/base.tsx",
 						target: "ui/radio-group.tsx",
 						content: `"use client";
 
@@ -4522,6 +4272,7 @@ const Radio = ({ className, ...props }: RadioProps) => {
 	return (
 		<AriaRadio
 			data-slot="radio"
+			data-radio=""
 			className={composeRenderProps(className, (className) =>
 				props.children
 					? root({ className })
@@ -4576,13 +4327,13 @@ export type { RadioGroupProps, RadioProps, RadioIndicatorProps };
 	{
 		name: "search-field",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/search-field/basic.tsx",
+						path: "ui/search-field/base.tsx",
 						target: "ui/search-field.tsx",
 						content: `"use client";
 
@@ -4623,13 +4374,13 @@ export type { SearchFieldProps };
 	{
 		name: "select",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/select/basic.tsx",
+						path: "ui/select/base.tsx",
 						target: "ui/select.tsx",
 						content: `"use client";
 
@@ -4767,13 +4518,13 @@ export type { SelectProps, SelectValueProps, SelectContentProps };
 	{
 		name: "separator",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/separator/basic.tsx",
+						path: "ui/separator/base.tsx",
 						target: "ui/separator.tsx",
 						content: `"use client";
 
@@ -4826,13 +4577,13 @@ export type { SeparatorProps };
 	{
 		name: "skeleton",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/skeleton/basic.tsx",
+						path: "ui/skeleton/base.tsx",
 						target: "ui/skeleton.tsx",
 						content: `"use client";
 
@@ -4893,13 +4644,13 @@ export function Skeleton({ className, show = true, ...props }: SkeletonProps) {
 	{
 		name: "slider",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/slider/basic.tsx",
+						path: "ui/slider/base.tsx",
 						target: "ui/slider.tsx",
 						content: `"use client";
 
@@ -5088,13 +4839,13 @@ export type { SliderProps, SliderControlProps, SliderFillerProps, SliderThumbPro
 	{
 		name: "switch",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/switch/basic.tsx",
+						path: "ui/switch/base.tsx",
 						target: "ui/switch.tsx",
 						content: `"use client";
 
@@ -5224,13 +4975,13 @@ export { Switch, SwitchIndicator, SwitchThumb };
 	{
 		name: "table",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/table/basic.tsx",
+						path: "ui/table/base.tsx",
 						target: "ui/table.tsx",
 						content: `"use client";
 
@@ -5466,13 +5217,13 @@ export type {
 	{
 		name: "tabs",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/tabs/basic.tsx",
+						path: "ui/tabs/base.tsx",
 						target: "ui/tabs.tsx",
 						content: `"use client";
 
@@ -5613,13 +5364,13 @@ export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabIndicatorProp
 	{
 		name: "tag-group",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/tag-group/basic.tsx",
+						path: "ui/tag-group/base.tsx",
 						target: "ui/tag-group.tsx",
 						content: `"use client";
 
@@ -5710,13 +5461,13 @@ export type { TagProps, TagGroupProps, TagListProps };
 	{
 		name: "text-field",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/text-field/basic.tsx",
+						path: "ui/text-field/base.tsx",
 						target: "ui/text-field.tsx",
 						content: `"use client";
 
@@ -5764,13 +5515,13 @@ export type { TextFieldProps };
 	{
 		name: "text",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/text/basic.tsx",
+						path: "ui/text/base.tsx",
 						target: "ui/text.tsx",
 						content: `"use client";
 
@@ -5798,13 +5549,13 @@ export { Text };
 	{
 		name: "time-field",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/time-field/basic.tsx",
+						path: "ui/time-field/base.tsx",
 						target: "ui/time-field.tsx",
 						content: `"use client";
 
@@ -5846,13 +5597,13 @@ export { TimeField };
 	{
 		name: "toast",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/toast/basic.tsx",
+						path: "ui/toast/base.tsx",
 						target: "ui/toast.tsx",
 						content: `"use client";
 
@@ -5973,13 +5724,13 @@ export { Toaster, queue as toast };
 	{
 		name: "toggle-button-group",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/toggle-button-group/basic.tsx",
+						path: "ui/toggle-button-group/base.tsx",
 						target: "ui/toggle-button-group.tsx",
 						content: `"use client";
 
@@ -6054,13 +5805,13 @@ export { ToggleButtonGroup };
 	{
 		name: "toggle-button",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/toggle-button/basic.tsx",
+						path: "ui/toggle-button/base.tsx",
 						target: "ui/toggle-button.tsx",
 						content: `"use client";
 
@@ -6167,13 +5918,13 @@ export type { ToggleButtonProps };
 	{
 		name: "tooltip",
 		type: "registry:ui",
-		defaultVariant: "basic",
+		defaultVariant: "base",
 		variants: {
-			basic: {
+			base: {
 				files: [
 					{
 						type: "registry:ui",
-						path: "ui/tooltip/basic.tsx",
+						path: "ui/tooltip/base.tsx",
 						target: "ui/tooltip.tsx",
 						content: `"use client";
 

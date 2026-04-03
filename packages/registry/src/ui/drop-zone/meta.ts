@@ -4,13 +4,13 @@ const dropZoneMeta = {
 	name: "drop-zone",
 	type: "registry:ui",
 	group: "forms",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/drop-zone/basic.tsx",
+					path: "ui/drop-zone/base.tsx",
 					target: "ui/drop-zone.tsx",
 				},
 			],

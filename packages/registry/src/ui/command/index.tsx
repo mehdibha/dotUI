@@ -3,7 +3,7 @@
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 import { ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@dotui/registry/ui/list-box";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { CommandContentProps, CommandInputProps, CommandProps } from "./types";
 
 export const Command = createDynamicComponent<CommandProps>("command", "Command", Default.Command, {});

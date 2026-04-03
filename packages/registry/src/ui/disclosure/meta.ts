@@ -4,13 +4,13 @@ const disclosureMeta = {
 	name: "disclosure",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/disclosure/basic.tsx",
+					path: "ui/disclosure/base.tsx",
 					target: "ui/disclosure.tsx",
 				},
 			],

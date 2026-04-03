@@ -4,13 +4,13 @@ const tooltipMeta = {
 	name: "tooltip",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/tooltip/basic.tsx",
+					path: "ui/tooltip/base.tsx",
 					target: "ui/tooltip.tsx",
 				},
 			],

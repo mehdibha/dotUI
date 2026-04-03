@@ -4,13 +4,13 @@ const fileTriggerMeta = {
 	name: "file-trigger",
 	type: "registry:ui",
 	group: "buttons",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/file-trigger/basic.tsx",
+					path: "ui/file-trigger/base.tsx",
 					target: "ui/file-trigger.tsx",
 				},
 			],

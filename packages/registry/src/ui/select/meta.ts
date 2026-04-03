@@ -4,13 +4,13 @@ const selectMeta = {
 	name: "select",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/select/basic.tsx",
+					path: "ui/select/base.tsx",
 					target: "ui/select.tsx",
 				},
 			],

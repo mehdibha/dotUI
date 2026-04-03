@@ -4,13 +4,13 @@ const menuMeta = {
 	name: "menu",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/menu/basic.tsx",
+					path: "ui/menu/base.tsx",
 					target: "ui/menu.tsx",
 				},
 			],

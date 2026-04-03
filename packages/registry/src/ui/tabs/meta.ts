@@ -4,13 +4,13 @@ const tabsMeta = {
 	name: "tabs",
 	type: "registry:ui",
 	group: "navigation",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/tabs/basic.tsx",
+					path: "ui/tabs/base.tsx",
 					target: "ui/tabs.tsx",
 				},
 			],

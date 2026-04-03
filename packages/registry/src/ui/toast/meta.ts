@@ -4,13 +4,13 @@ const toastMeta = {
 	name: "toast",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/toast/basic.tsx",
+					path: "ui/toast/base.tsx",
 					target: "ui/toast.tsx",
 				},
 			],

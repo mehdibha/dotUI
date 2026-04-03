@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { ToggleButtonProps } from "./types";
 
 export const ToggleButton = createDynamicComponent<ToggleButtonProps>(
@@ -19,5 +19,5 @@ export const ToggleButtonProvider = createDynamicComponent(
 	{},
 );
 
-export { toggleButtonStyles } from "./basic";
+export { toggleButtonStyles } from "./base";
 export type { ToggleButtonProps };

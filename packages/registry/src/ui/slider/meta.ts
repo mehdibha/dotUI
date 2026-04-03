@@ -4,13 +4,13 @@ const sliderMeta = {
 	name: "slider",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/slider/basic.tsx",
+					path: "ui/slider/base.tsx",
 					target: "ui/slider.tsx",
 				},
 			],

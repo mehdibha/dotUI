@@ -4,13 +4,13 @@ const datePickerMeta = {
 	name: "date-picker",
 	type: "registry:ui",
 	group: "date-time",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/date-picker/basic.tsx",
+					path: "ui/date-picker/base.tsx",
 					target: "ui/date-picker.tsx",
 				},
 			],

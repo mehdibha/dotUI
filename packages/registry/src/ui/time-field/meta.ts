@@ -4,13 +4,13 @@ const timeFieldMeta = {
 	name: "time-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/time-field/basic.tsx",
+					path: "ui/time-field/base.tsx",
 					target: "ui/time-field.tsx",
 				},
 			],

@@ -4,13 +4,13 @@ const searchFieldMeta = {
 	name: "search-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/search-field/basic.tsx",
+					path: "ui/search-field/base.tsx",
 					target: "ui/search-field.tsx",
 				},
 			],

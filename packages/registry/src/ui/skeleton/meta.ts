@@ -4,13 +4,13 @@ const skeletonMeta = {
 	name: "skeleton",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/skeleton/basic.tsx",
+					path: "ui/skeleton/base.tsx",
 					target: "ui/skeleton.tsx",
 				},
 			],

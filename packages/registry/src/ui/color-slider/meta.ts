@@ -4,13 +4,13 @@ const colorSliderMeta = {
 	name: "color-slider",
 	type: "registry:ui",
 	group: "color",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/color-slider/basic.tsx",
+					path: "ui/color-slider/base.tsx",
 					target: "ui/color-slider.tsx",
 				},
 			],

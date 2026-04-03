@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { TagGroupProps, TagListProps, TagProps } from "./types";
 
 export const TagGroup = createDynamicComponent<TagGroupProps>("tag-group", "TagGroup", Default.TagGroup, {});

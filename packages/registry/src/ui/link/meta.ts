@@ -4,13 +4,13 @@ const linkMeta = {
 	name: "link",
 	type: "registry:ui",
 	group: "buttons",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/link/basic.tsx",
+					path: "ui/link/base.tsx",
 					target: "ui/link.tsx",
 				},
 			],

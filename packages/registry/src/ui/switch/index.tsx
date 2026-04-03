@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { SwitchIndicatorProps, SwitchProps, SwitchThumbProps } from "./types";
 
 export const Switch = createDynamicComponent<SwitchProps>("switch", "Switch", Default.Switch, {});

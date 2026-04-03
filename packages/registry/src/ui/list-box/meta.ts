@@ -4,13 +4,13 @@ const listBoxMeta = {
 	name: "list-box",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/list-box/basic.tsx",
+					path: "ui/list-box/base.tsx",
 					target: "ui/list-box.tsx",
 				},
 			],

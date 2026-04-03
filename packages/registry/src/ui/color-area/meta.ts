@@ -4,13 +4,13 @@ const colorAreaMeta = {
 	name: "color-area",
 	type: "registry:ui",
 	group: "color",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/color-area/basic.tsx",
+					path: "ui/color-area/base.tsx",
 					target: "ui/color-area.tsx",
 				},
 			],

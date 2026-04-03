@@ -4,13 +4,13 @@ const textMeta = {
 	name: "text",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/text/basic.tsx",
+					path: "ui/text/base.tsx",
 					target: "ui/text.tsx",
 				},
 			],

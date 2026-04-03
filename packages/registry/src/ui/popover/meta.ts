@@ -4,13 +4,13 @@ const popoverMeta = {
 	name: "popover",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/popover/basic.tsx",
+					path: "ui/popover/base.tsx",
 					target: "ui/popover.tsx",
 				},
 			],

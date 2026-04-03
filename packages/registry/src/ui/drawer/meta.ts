@@ -4,13 +4,13 @@ const drawerMeta = {
 	name: "drawer",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/drawer/basic.tsx",
+					path: "ui/drawer/base.tsx",
 					target: "ui/drawer.tsx",
 				},
 			],

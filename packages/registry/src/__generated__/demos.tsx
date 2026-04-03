@@ -101,6 +101,10 @@ export const DemosIndex: Record<
 		files: ["ui/avatar/demos/sizes.tsx"],
 		component: React.lazy(() => import("@dotui/registry/ui/avatar/demos/sizes")),
 	},
+	"badge/demos/count": {
+		files: ["ui/badge/demos/count.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/badge/demos/count")),
+	},
 	"badge/demos/default": {
 		files: ["ui/badge/demos/default.tsx"],
 		component: React.lazy(() => import("@dotui/registry/ui/badge/demos/default")),
@@ -108,6 +112,18 @@ export const DemosIndex: Record<
 	"badge/demos/icon": {
 		files: ["ui/badge/demos/icon.tsx"],
 		component: React.lazy(() => import("@dotui/registry/ui/badge/demos/icon")),
+	},
+	"badge/demos/link": {
+		files: ["ui/badge/demos/link.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/badge/demos/link")),
+	},
+	"badge/demos/loader": {
+		files: ["ui/badge/demos/loader.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/badge/demos/loader")),
+	},
+	"badge/demos/pending": {
+		files: ["ui/badge/demos/pending.tsx"],
+		component: React.lazy(() => import("@dotui/registry/ui/badge/demos/pending")),
 	},
 	"badge/demos/sizes": {
 		files: ["ui/badge/demos/sizes.tsx"],

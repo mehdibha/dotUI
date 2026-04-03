@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { AccordionProps } from "./types";
 
 export const Accordion = createDynamicComponent<AccordionProps>("accordion", "Accordion", Default.Accordion, {});

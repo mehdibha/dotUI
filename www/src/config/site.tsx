@@ -1,6 +1,4 @@
-import { BlocksIcon, BookIcon, BoxIcon } from "lucide-react";
 import type { ToOptions } from "@tanstack/react-router";
-import type React from "react";
 
 export const siteConfig = {
 	url: "https://dotui.org",

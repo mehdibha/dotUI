@@ -4,13 +4,13 @@ const toggleButtonGroupMeta = {
 	name: "toggle-button-group",
 	type: "registry:ui",
 	group: "buttons",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/toggle-button-group/basic.tsx",
+					path: "ui/toggle-button-group/base.tsx",
 					target: "ui/toggle-button-group.tsx",
 				},
 			],

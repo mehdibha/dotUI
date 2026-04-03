@@ -4,13 +4,13 @@ const switchMeta = {
 	name: "switch",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/switch/basic.tsx",
+					path: "ui/switch/base.tsx",
 					target: "ui/switch.tsx",
 				},
 			],

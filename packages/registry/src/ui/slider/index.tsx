@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { SliderControlProps, SliderFillerProps, SliderOutputProps, SliderProps, SliderThumbProps } from "./types";
 
 export const Slider = createDynamicComponent<SliderProps>("slider", "Slider", Default.Slider, {});

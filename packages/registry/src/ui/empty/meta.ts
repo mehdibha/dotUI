@@ -4,13 +4,13 @@ const emptyMeta = {
 	name: "empty",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/empty/basic.tsx",
+					path: "ui/empty/base.tsx",
 					target: "ui/empty.tsx",
 				},
 			],

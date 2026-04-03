@@ -4,13 +4,13 @@ const numberFieldMeta = {
 	name: "number-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/number-field/basic.tsx",
+					path: "ui/number-field/base.tsx",
 					target: "ui/number-field.tsx",
 				},
 			],

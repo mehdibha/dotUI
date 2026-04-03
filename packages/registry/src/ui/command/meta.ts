@@ -4,13 +4,13 @@ const commandMeta = {
 	name: "command",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/command/basic.tsx",
+					path: "ui/command/base.tsx",
 					target: "ui/command.tsx",
 				},
 			],

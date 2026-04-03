@@ -4,13 +4,13 @@ const tableMeta = {
 	name: "table",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/table/basic.tsx",
+					path: "ui/table/base.tsx",
 					target: "ui/table.tsx",
 				},
 			],

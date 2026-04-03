@@ -4,13 +4,13 @@ const tagGroupMeta = {
 	name: "tag-group",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/tag-group/basic.tsx",
+					path: "ui/tag-group/base.tsx",
 					target: "ui/tag-group.tsx",
 				},
 			],

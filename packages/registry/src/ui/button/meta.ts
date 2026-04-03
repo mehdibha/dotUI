@@ -4,26 +4,17 @@ const buttonMeta = {
 	name: "button",
 	type: "registry:ui",
 	group: "buttons",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/button/basic.tsx",
+					path: "ui/button/base.tsx",
 					target: "ui/button.tsx",
 				},
 			],
 			registryDependencies: ["loader", "focus-styles"],
-		},
-		ripple: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/button/ripple.tsx",
-					target: "ui/button.tsx",
-				},
-			],
 		},
 	},
 } satisfies RegistryItem;

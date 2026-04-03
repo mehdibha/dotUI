@@ -4,13 +4,13 @@ const modalMeta = {
 	name: "modal",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/modal/basic.tsx",
+					path: "ui/modal/base.tsx",
 					target: "ui/modal.tsx",
 				},
 			],

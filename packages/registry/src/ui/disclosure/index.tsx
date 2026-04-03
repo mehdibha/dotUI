@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { DisclosurePanelProps, DisclosureProps, DisclosureTriggerProps } from "./types";
 
 export const Disclosure = createDynamicComponent<DisclosureProps>("disclosure", "Disclosure", Default.Disclosure, {});

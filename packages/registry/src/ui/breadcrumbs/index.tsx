@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { BreadcrumbItemProps, BreadcrumbLinkProps, BreadcrumbProps, BreadcrumbsProps } from "./types";
 
 export const Breadcrumbs = createDynamicComponent<BreadcrumbsProps<object>>(

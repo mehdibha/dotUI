@@ -4,13 +4,13 @@ const fieldMeta = {
 	name: "field",
 	type: "registry:ui",
 	group: "forms",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/field/basic.tsx",
+					path: "ui/field/base.tsx",
 					target: "ui/field.tsx",
 				},
 			],

@@ -4,13 +4,13 @@ const separatorMeta = {
 	name: "separator",
 	type: "registry:ui",
 	group: "layout",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/separator/basic.tsx",
+					path: "ui/separator/base.tsx",
 					target: "ui/separator.tsx",
 				},
 			],

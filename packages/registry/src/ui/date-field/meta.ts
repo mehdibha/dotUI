@@ -4,13 +4,13 @@ const dateFieldMeta = {
 	name: "date-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/date-field/basic.tsx",
+					path: "ui/date-field/base.tsx",
 					target: "ui/date-field.tsx",
 				},
 			],

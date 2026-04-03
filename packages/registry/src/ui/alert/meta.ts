@@ -4,14 +4,14 @@ const alertMeta = {
 	name: "alert",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			description: "Minimal with a subtle border and muted background.",
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/alert/basic.tsx",
+					path: "ui/alert/base.tsx",
 					target: "ui/alert.tsx",
 				},
 			],

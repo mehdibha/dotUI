@@ -4,13 +4,13 @@ const colorThumbMeta = {
 	name: "color-thumb",
 	type: "registry:ui",
 	group: "color",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/color-thumb/basic.tsx",
+					path: "ui/color-thumb/base.tsx",
 					target: "ui/color-thumb.tsx",
 				},
 			],

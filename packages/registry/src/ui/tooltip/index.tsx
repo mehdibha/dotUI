@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { TooltipContentProps, TooltipProps } from "./types";
 
 export const Tooltip = createDynamicComponent<TooltipProps>("tooltip", "Tooltip", Default.Tooltip, {});

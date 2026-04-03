@@ -4,7 +4,7 @@ import { ColorField as AriaColorField, composeRenderProps } from "react-aria-com
 import { tv } from "tailwind-variants";
 import type * as React from "react";
 
-import { fieldStyles } from "@dotui/registry/ui/field/basic";
+import { fieldStyles } from "@dotui/registry/ui/field";
 
 const colorFieldStyles = tv({
 	base: [fieldStyles().field({ orientation: "vertical" }), ""],

@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type {
 	DescriptionProps,
 	FieldContentProps,
@@ -35,7 +35,7 @@ export const Description = createDynamicComponent<DescriptionProps>("field", "De
 
 export const FieldError = createDynamicComponent<FieldErrorProps>("field", "FieldError", Default.FieldError, {});
 
-export { fieldStyles } from "./basic";
+export { fieldStyles } from "./base";
 
 export type {
 	LabelProps,

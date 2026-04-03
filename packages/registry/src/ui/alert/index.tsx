@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { AlertActionProps, AlertDescriptionProps, AlertProps, AlertTitleProps } from "./types";
 
 export const Alert = createDynamicComponent<AlertProps>("alert", "Alert", Default.Alert, {});

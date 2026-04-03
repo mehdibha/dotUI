@@ -4,13 +4,13 @@ const kbdMeta = {
 	name: "kbd",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/kbd/basic.tsx",
+					path: "ui/kbd/base.tsx",
 					target: "ui/kbd.tsx",
 				},
 			],

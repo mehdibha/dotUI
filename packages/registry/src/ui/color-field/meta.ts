@@ -4,13 +4,13 @@ const colorFieldMeta = {
 	name: "color-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/color-field/basic.tsx",
+					path: "ui/color-field/base.tsx",
 					target: "ui/color-field.tsx",
 				},
 			],

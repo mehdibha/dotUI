@@ -4,13 +4,13 @@ const inputMeta = {
 	name: "input",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/input/basic.tsx",
+					path: "ui/input/base.tsx",
 					target: "ui/input.tsx",
 				},
 			],

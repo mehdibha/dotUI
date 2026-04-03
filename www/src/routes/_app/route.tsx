@@ -3,7 +3,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import type { SerializedPageTree } from "@/lib/source";
 

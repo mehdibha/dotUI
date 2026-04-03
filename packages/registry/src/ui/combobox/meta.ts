@@ -4,13 +4,13 @@ const comboboxMeta = {
 	name: "combobox",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/combobox/basic.tsx",
+					path: "ui/combobox/base.tsx",
 					target: "ui/combobox.tsx",
 				},
 			],

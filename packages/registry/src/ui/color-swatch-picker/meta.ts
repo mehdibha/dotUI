@@ -4,13 +4,13 @@ const colorSwatchPickerMeta = {
 	name: "color-swatch-picker",
 	type: "registry:ui",
 	group: "color",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/color-swatch-picker/basic.tsx",
+					path: "ui/color-swatch-picker/base.tsx",
 					target: "ui/color-swatch-picker.tsx",
 				},
 			],

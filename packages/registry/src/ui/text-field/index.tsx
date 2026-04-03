@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { TextFieldProps } from "./types";
 
 export const TextField = createDynamicComponent<TextFieldProps>("text-field", "TextField", Default.TextField, {});

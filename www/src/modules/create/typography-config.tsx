@@ -1,13 +1,4 @@
-import { useState } from "react";
-
-import {
-	allFonts,
-	displayFonts,
-	handwritingFonts,
-	monoFonts,
-	sansSerifFonts,
-	serifFonts,
-} from "@dotui/registry/base/fonts";
+import { monoFonts, sansSerifFonts, serifFonts } from "@dotui/registry/base/fonts";
 import { Command } from "@dotui/registry/ui/command";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
@@ -15,15 +6,6 @@ import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@dot
 import { Popover } from "@dotui/registry/ui/popover";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { Select, SelectTrigger } from "@dotui/registry/ui/select";
-
-const fontOptions = [
-	{ name: "Inter", value: "inter", className: "font-sans" },
-	{ name: "Geist", value: "geist", className: "font-sans" },
-	{ name: "Josefin Sans", value: "josefin", className: "font-sans" },
-	{ name: "DM Sans", value: "dm-sans", className: "font-sans" },
-	{ name: "Space Grotesk", value: "space-grotesk", className: "font-sans" },
-	{ name: "Playfair Display", value: "playfair", className: "font-serif" },
-];
 
 export function TypographyConfig() {
 	return (

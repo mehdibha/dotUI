@@ -4,7 +4,7 @@ import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 import type { ButtonProps } from "@dotui/registry/ui/button";
 import type { ListBoxItemProps, ListBoxSectionHeaderProps, ListBoxSectionProps } from "@dotui/registry/ui/list-box";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { SelectContentProps, SelectProps, SelectValueProps } from "./types";
 
 export const Select = <T extends object = object>(props: SelectProps<T>) => {

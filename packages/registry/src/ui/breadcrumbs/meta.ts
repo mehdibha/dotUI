@@ -4,13 +4,13 @@ const breadcrumbsMeta = {
 	name: "breadcrumbs",
 	type: "registry:ui",
 	group: "navigation",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/breadcrumbs/basic.tsx",
+					path: "ui/breadcrumbs/base.tsx",
 					target: "ui/breadcrumbs.tsx",
 				},
 			],

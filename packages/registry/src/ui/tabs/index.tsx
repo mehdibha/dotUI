@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { TabListProps, TabPanelProps, TabProps, TabsProps } from "./types";
 
 export const Tabs = createDynamicComponent<TabsProps>("tabs", "Tabs", Default.Tabs, {

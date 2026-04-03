@@ -4,13 +4,13 @@ const dialogMeta = {
 	name: "dialog",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/dialog/basic.tsx",
+					path: "ui/dialog/base.tsx",
 					target: "ui/dialog.tsx",
 				},
 			],

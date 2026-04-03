@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { RadioGroupProps, RadioIndicatorProps, RadioProps } from "./types";
 
 export const Radio = createDynamicComponent<RadioProps>("radio-group", "Radio", Default.Radio, {});

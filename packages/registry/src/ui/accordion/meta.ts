@@ -4,13 +4,13 @@ const accordionMeta = {
 	name: "accordion",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/accordion/basic.tsx",
+					path: "ui/accordion/base.tsx",
 					target: "ui/accordion.tsx",
 				},
 			],

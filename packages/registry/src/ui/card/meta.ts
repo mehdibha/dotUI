@@ -4,13 +4,13 @@ const cardMeta = {
 	name: "card",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/card/basic.tsx",
+					path: "ui/card/base.tsx",
 					target: "ui/card.tsx",
 				},
 			],

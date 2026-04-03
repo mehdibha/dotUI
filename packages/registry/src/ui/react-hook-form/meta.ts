@@ -4,13 +4,13 @@ const formMeta = {
 	name: "form",
 	type: "registry:ui",
 	group: "forms",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/form/basic.tsx",
+					path: "ui/form/base.tsx",
 					target: "ui/form.tsx",
 				},
 			],

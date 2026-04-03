@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { CheckboxIndicatorProps, CheckboxProps } from "./types";
 
 export const Checkbox = createDynamicComponent<CheckboxProps>("checkbox", "Checkbox", Default.Checkbox, {});

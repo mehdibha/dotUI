@@ -4,13 +4,13 @@ const overlayMeta = {
 	name: "overlay",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/overlay/basic.tsx",
+					path: "ui/overlay/base.tsx",
 					target: "ui/overlay.tsx",
 				},
 			],

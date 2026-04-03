@@ -4,13 +4,13 @@ const colorEditorMeta = {
 	name: "color-editor",
 	type: "registry:ui",
 	group: "color",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/color-editor/basic.tsx",
+					path: "ui/color-editor/base.tsx",
 					target: "ui/color-editor.tsx",
 				},
 			],

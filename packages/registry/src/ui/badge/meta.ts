@@ -4,13 +4,13 @@ const badgeMeta = {
 	name: "badge",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/badge/basic.tsx",
+					path: "ui/badge/base.tsx",
 					target: "ui/badge.tsx",
 				},
 			],

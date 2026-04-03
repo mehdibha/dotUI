@@ -2,7 +2,7 @@
 
 import { createDynamicComponent } from "@dotui/core/react/dynamic-component";
 
-import * as Default from "./basic";
+import * as Default from "./base";
 import type { DropZoneLabelProps, DropZoneProps } from "./types";
 
 export const DropZone = createDynamicComponent<DropZoneProps>("drop-zone", "DropZone", Default.DropZone, {});

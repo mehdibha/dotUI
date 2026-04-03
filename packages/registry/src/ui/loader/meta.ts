@@ -4,22 +4,13 @@ const loaderMeta = {
 	name: "loader",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/loader/basic.tsx",
-					target: "ui/loader.tsx",
-				},
-			],
-		},
-		ring: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/loader/ring.tsx",
+					path: "ui/loader/base.tsx",
 					target: "ui/loader.tsx",
 				},
 			],

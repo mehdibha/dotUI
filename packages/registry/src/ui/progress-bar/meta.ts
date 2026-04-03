@@ -4,13 +4,13 @@ const progressBarMeta = {
 	name: "progress-bar",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/progress-bar/basic.tsx",
+					path: "ui/progress-bar/base.tsx",
 					target: "ui/progress-bar.tsx",
 				},
 			],

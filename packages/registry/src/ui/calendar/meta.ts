@@ -4,13 +4,13 @@ const calendarMeta = {
 	name: "calendar",
 	type: "registry:ui",
 	group: "date-time",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/calendar/basic.tsx",
+					path: "ui/calendar/base.tsx",
 					target: "ui/calendar.tsx",
 				},
 			],

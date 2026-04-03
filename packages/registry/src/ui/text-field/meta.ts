@@ -4,13 +4,13 @@ const textFieldMeta = {
 	name: "text-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "basic",
+	defaultVariant: "base",
 	variants: {
-		basic: {
+		base: {
 			files: [
 				{
 					type: "registry:ui",
-					path: "ui/text-field/basic.tsx",
+					path: "ui/text-field/base.tsx",
 					target: "ui/text-field.tsx",
 				},
 			],
