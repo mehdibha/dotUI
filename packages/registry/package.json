@@ -12,6 +12,7 @@
 		"./styles.css": "./src/styles.css",
 		"./types": "./src/types.ts",
 		"./base/registry": "./src/base/registry.ts",
+		"./base/fonts": "./src/base/fonts.ts",
 		"./blocks": "./src/blocks/index.ts",
 		"./blocks/registry": "./src/blocks/registry.ts",
 		"./blocks/*": "./src/blocks/*.tsx",

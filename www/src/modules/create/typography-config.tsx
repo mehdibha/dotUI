@@ -1,8 +1,17 @@
 import { useState } from "react";
 
+import {
+	allFonts,
+	displayFonts,
+	handwritingFonts,
+	monoFonts,
+	sansSerifFonts,
+	serifFonts,
+} from "@dotui/registry/base/fonts";
+import { Command } from "@dotui/registry/ui/command";
 import { Label } from "@dotui/registry/ui/field";
 import { Input } from "@dotui/registry/ui/input";
-import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@dotui/registry/ui/list-box";
 import { Popover } from "@dotui/registry/ui/popover";
 import { SearchField } from "@dotui/registry/ui/search-field";
 import { Select, SelectTrigger } from "@dotui/registry/ui/select";
@@ -31,16 +40,37 @@ const FontPicker = ({ label }: { label: string }) => {
 			<Label>{label}</Label>
 			<SelectTrigger className="w-full" />
 			<Popover>
-				<SearchField autoFocus className="w-full p-2">
-					<Input className="w-full" />
-				</SearchField>
-				<ListBox>
-					{fontOptions.map((option) => (
-						<ListBoxItem key={option.value} id={option.value}>
-							{option.name}
-						</ListBoxItem>
-					))}
-				</ListBox>
+				<Command>
+					<SearchField autoFocus className="w-full p-2">
+						<Input className="w-full" />
+					</SearchField>
+					<ListBox>
+						<ListBoxSection>
+							<ListBoxSectionHeader>Serif</ListBoxSectionHeader>
+							{serifFonts.map((font) => (
+								<ListBoxItem key={font} id={font}>
+									{font}
+								</ListBoxItem>
+							))}
+						</ListBoxSection>
+						<ListBoxSection>
+							<ListBoxSectionHeader>Sans Serif</ListBoxSectionHeader>
+							{sansSerifFonts.map((font) => (
+								<ListBoxItem key={font} id={font}>
+									{font}
+								</ListBoxItem>
+							))}
+						</ListBoxSection>
+						<ListBoxSection>
+							<ListBoxSectionHeader>Mono</ListBoxSectionHeader>
+							{monoFonts.map((font) => (
+								<ListBoxItem key={font} id={font}>
+									{font}
+								</ListBoxItem>
+							))}
+						</ListBoxSection>
+					</ListBox>
+				</Command>
 			</Popover>
 		</Select>
 	);
