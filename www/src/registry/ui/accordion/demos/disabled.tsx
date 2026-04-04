@@ -3,7 +3,7 @@ import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/registry/ui/di
 
 export default function Demo() {
 	return (
-		<Accordion isDisabled className="w-full max-w-2xl">
+		<Accordion isDisabled className="mx-auto w-full max-w-xl">
 			<Disclosure id="getting-started">
 				<DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>
 				<DisclosurePanel>

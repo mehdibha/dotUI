@@ -26,7 +26,7 @@ const faq = [
 
 export default function Demo() {
 	return (
-		<Accordion className="w-full max-w-2xl">
+		<Accordion className="mx-auto w-full max-w-xl">
 			{faq.map((item) => (
 				<Disclosure key={item.question}>
 					<DisclosureTrigger>{item.question}</DisclosureTrigger>

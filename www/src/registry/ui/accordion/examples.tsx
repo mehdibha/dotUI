@@ -8,10 +8,10 @@ import Disabled from "./demos/disabled";
 export default function Examples() {
 	return (
 		<>
-			<Example title="basic">
+			<Example title="Basic" >
 				<Basic />
 			</Example>
-			<Example title="allows multiple">
+			<Example title="Multiple">
 				<AllowsMultiple />
 			</Example>
 			<Example title="default expanded">

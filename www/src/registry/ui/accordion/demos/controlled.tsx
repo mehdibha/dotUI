@@ -9,7 +9,7 @@ export default function Demo() {
 	const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set(["getting-started"]));
 
 	return (
-		<div className="w-full max-w-2xl space-y-4">
+		<div className="mx-auto w-full max-w-xl space-y-4">
 			<p className="text-fg-muted text-sm">Expanded: {[...expandedKeys].join(", ") || "none"}</p>
 			<Accordion expandedKeys={expandedKeys} onExpandedChange={(keys) => setExpandedKeys(keys as Set<string>)}>
 				<Disclosure id="getting-started">

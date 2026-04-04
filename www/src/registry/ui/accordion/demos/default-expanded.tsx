@@ -3,7 +3,7 @@ import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/registry/ui/di
 
 export default function Demo() {
 	return (
-		<Accordion defaultExpandedKeys={["getting-started"]} className="w-full max-w-2xl">
+		<Accordion defaultExpandedKeys={["getting-started"]} className="mx-auto w-full max-w-xl">
 			<Disclosure id="getting-started">
 				<DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>
 				<DisclosurePanel>

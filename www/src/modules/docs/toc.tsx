@@ -38,10 +38,10 @@ export function TOC({ className, ...props }: React.ComponentProps<"div">) {
 			className={cn("sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden", className)}
 			{...props}
 		>
-			<h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
+			{/* <h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
 				<AlignLeftIcon className="size-4 text-fg-muted" />
 				On this page
-			</h3>
+			</h3> */}
 			<TOCScrollArea>
 				<TOCItems />
 			</TOCScrollArea>
@@ -144,7 +144,7 @@ export function TOCItems({ ref, className, ...props }: React.ComponentProps<"div
 				containerRef={containerRef}
 				className="absolute top-(--toc-top) h-(--toc-height) w-px bg-primary transition-[height,top]"
 			/>
-			<nav ref={mergeRefs(ref, containerRef)} className={cn("flex flex-col border-l", className)} {...props}>
+			<nav ref={mergeRefs(ref, containerRef)} className={cn("flex flex-col", className)} {...props}>
 				{items.map((item) => (
 					<TOCItem key={item.url} item={item} />
 				))}

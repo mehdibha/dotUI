@@ -1,5 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Footer } from "@/components/layout/footer";
+import { Announcement } from "@/components/marketing/announcement";
+import { siteConfig } from "@/config/site";
+import { getGitHubContributors } from "@/lib/github";
+import Cards from "@/registry/blocks/showcase/cards/components/cards";
 import { AdobeIcon } from "@/registry/components/icons/adobe";
 import { GitHubIcon } from "@/registry/components/icons/github";
 import { ReactJsIcon } from "@/registry/components/icons/react-js";
@@ -8,11 +13,8 @@ import { TailwindWordmark } from "@/registry/components/icons/tailwind-wordmark"
 import { TypeScriptIcon } from "@/registry/components/icons/typescript";
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar";
 import { LinkButton } from "@/registry/ui/button";
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
-
-import { Announcement } from "@/components/marketing/announcement";
-import { siteConfig } from "@/config/site";
-import { getGitHubContributors } from "@/lib/github";
 
 export const Route = createFileRoute("/_app/")({
 	loader: async () => {
@@ -39,8 +41,8 @@ function HomePage() {
 							Beautiful components, accessibility out of the box, composition, and more, all powered by{" "}
 							<AdobeIcon className="inline-flex size-4" />{" "}
 							<span className="font-medium text-fg">react-aria-components</span> and{" "}
-							<ShadcnIcon className="inline-flex size-5" />{" "}
-							<span className="font-medium text-fg">shadcn&nbsp;CLI</span>.
+							<ShadcnIcon className="inline-flex size-5" /> <span className="font-medium text-fg">shadcn&nbsp;CLI</span>
+							.
 						</p>
 						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
 							<LinkButton href="/docs" variant="primary" size="lg" className="h-10">
@@ -53,8 +55,23 @@ function HomePage() {
 					</div>
 				</section>
 
+				<section className="container mt-24">
+					<Tabs className="gap-3">
+						<TabList className="gap-2 border-b-0 font-medium **:data-tab-indicator:hidden **:data-tab:text-base">
+							<Tab id="cards">Cards</Tab>
+							<Tab id="dashboard">Dashboard</Tab>
+							<Tab id="tasks">Tasks</Tab>
+							<Tab id="playground">Playground</Tab>
+							<Tab id="authentication">Authentication</Tab>
+						</TabList>
+						<TabPanel id="cards">
+							<Cards />
+						</TabPanel>
+					</Tabs>
+				</section>
+
 				{/* Built on modern tools */}
-				<section className="mt-10 border-y py-12 shadow-xs">
+				<section className="mt-10 py-12 shadow-xs">
 					<div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
 						<h2 className="text-pretty font-mono text-fg-muted text-sm xs:text-base tracking-wide lg:text-base">
 							Built on modern tools
@@ -105,6 +122,7 @@ function HomePage() {
 				</section>
 
 				{/* Call to action */}
+				{/* 
 				<section className="container max-w-2xl py-20 sm:py-32">
 					<h2 className="text-pretty font-medium text-2xl tracking-tighter lg:text-3xl xl:text-4xl">
 						Fueled by your <span className="">stars</span>.
@@ -148,8 +166,9 @@ function HomePage() {
 							Star on GitHub
 						</LinkButton>
 					</div>
-				</section>
+				</section> */}
 			</main>
+			<Footer />
 		</div>
 	);
 }

@@ -22,7 +22,7 @@ export function PageHeaderHeading({ className, ...props }: React.ComponentProps<
 }
 
 export function PageHeaderDescription({ className, ...props }: React.ComponentProps<"p">) {
-	return <p className={cn("mt-1 max-w-3xl text-balance text-base text-fg-muted sm:text-lg", className)} {...props} />;
+	return <p className={cn("mt-1 max-w-3xl text-balance text-base text-fg-muted sm:text-md", className)} {...props} />;
 }
 
 export function PageActions({ className, ...props }: React.ComponentProps<"div">) {

@@ -22,7 +22,7 @@ export function Header({ className, items = [] }: HeaderProps) {
 	return (
 		<header
 			className={cn(
-				"sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between border-b bg-bg px-6",
+				"sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between bg-bg px-6",
 				className,
 			)}
 		>

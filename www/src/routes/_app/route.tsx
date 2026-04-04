@@ -29,7 +29,6 @@ function AppLayout() {
 		<div className="[--header-height:calc(var(--spacing)*14)]">
 			<Header items={items} />
 			<Outlet />
-			{/* <Footer /> */}
 		</div>
 	);
 }

@@ -83,7 +83,7 @@ interface TabProps extends React.ComponentProps<typeof AriaTab> {}
 
 const Tab = ({ className, ...props }: TabProps) => {
 	return (
-		<AriaTab className={composeRenderProps(className, (cn) => tab({ className: cn }))} {...props}>
+		<AriaTab data-tab="" className={composeRenderProps(className, (cn) => tab({ className: cn }))} {...props}>
 			{composeRenderProps(props.children, (children) => (
 				<>
 					{children}

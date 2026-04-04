@@ -17,7 +17,6 @@ import { ExternalLinkIcon } from "@/registry/__generated__/icons";
 import { AdobeIcon } from "@/registry/components/icons/adobe";
 import { GitHubIcon } from "@/registry/components/icons/github";
 import { ShadcnIcon } from "@/registry/components/icons/shadcn";
-import { cn } from "@/registry/lib/utils";
 import { LinkButton } from "@/registry/ui/button";
 
 export const Route = createFileRoute("/_app/docs/$")({
@@ -97,9 +96,9 @@ const clientLoader = browserCollections.docs.createClientLoader({
 
 		return (
 			<TOCProvider toc={toc}>
-				<PageLayout className="flex scroll-mt-24 mt-12 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
-					<div className="mx-auto flex w-full min-w-0 max-w-[40rem] flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
-						<div data-page-header="" className="space-y-3 border-b pb-8">
+				<PageLayout className="mt-12 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
+					<div className="mx-auto flex w-full min-w-0 max-w-160 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
+						<div data-page-header="" className="relative space-y-3 pb-8">
 							<div className="flex items-center justify-between">
 								<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
 								<div className="flex items-center gap-2">
@@ -128,13 +127,13 @@ const clientLoader = browserCollections.docs.createClientLoader({
 									})}
 								</div>
 							)}
+							<div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_50%,transparent)] via-[color-mix(in_oklab,var(--color-border)_80%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
 						</div>
 						<MDX components={mdxComponents} />
 						<div className="min-w-0">{lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}</div>
-						{/* <div className={cn("mt-12", hasToc && "xl:grid xl:grid-cols-[1fr_180px] xl:gap-10")}></div> */}
 					</div>
-					<div className="sticky top-[calc(var(--header-height)+24px)] z-30 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
-						{hasToc && <TOC className="px-8" />}
+					<div className="sticky top-[calc(var(--header-height)+14px)] z-30 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+						{hasToc && <TOC className="pr-12" />}
 					</div>
 				</PageLayout>
 			</TOCProvider>

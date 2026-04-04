@@ -11,7 +11,7 @@ import { cn } from "@/registry/lib/utils";
 
 export function Cards(props: React.ComponentProps<"div">) {
 	return (
-		<div {...props} className={cn("grid grid-cols-11 gap-4 p-4 md:p-6", props.className)}>
+		<div {...props} className={cn("grid grid-cols-11 gap-4", props.className)}>
 			<div className="col-span-11 flex gap-4 max-md:flex-col xl:col-span-8">
 				<Booking className="w-full max-md:col-span-1 md:w-80" />
 				<Filters className="flex-1 max-md:col-span-1" />

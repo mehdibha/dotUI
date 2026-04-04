@@ -9,10 +9,10 @@ export const Route = createFileRoute("/_app/create")({
 
 function CreatePage() {
 	const [selectedComponent, setSelectedComponent] = useState("accordion");
-	const iframeSrc = `/demos/${selectedComponent}`;
+	const iframeSrc = `/preview/${selectedComponent}`;
 
 	return (
-		<div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-row gap-6 p-6">
+		<div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-row gap-6 pt-2 p-6">
 			<CustomizerPanel selectedComponent={selectedComponent} onComponentChange={setSelectedComponent} />
 			<iframe key={iframeSrc} src={iframeSrc} title="preview" className="flex-1 rounded-xl border" />
 		</div>

@@ -12,9 +12,10 @@ function DocsLayout() {
 	const items = pageTree.children as PageTree.Node[];
 
 	return (
-		<div className="flex min-h-[calc(100vh-var(--header-height))]">
-			<aside className="sticky top-[var(--header-height)] hidden h-[calc(100vh-var(--header-height))] w-60 shrink-0 overflow-y-auto border-r py-6 pr-3 pl-4 md:block">
+		<div className="flex min-h-[calc(100vh-var(--header-height))] [--sidebar-width:240px]">
+			<aside className="sticky top-(--header-height) hidden h-[calc(100vh-var(--header-height))] w-(--sidebar-width) shrink-0 md:block">
 				<DocsSidebarNav items={items} />
+				<div className="absolute top-12 right-2 bottom-0 hidden h-full w-px bg-linear-to-b from-transparent via-border to-transparent lg:flex" />
 			</aside>
 			<div className="min-w-0 flex-1">
 				<Outlet />
@@ -27,7 +28,7 @@ function DocsSidebarNav({ items }: { items: PageTree.Node[] }) {
 	const { pathname } = useLocation();
 
 	return (
-		<nav className="flex flex-col gap-6">
+		<nav className="no-scrollbar flex h-full flex-col gap-6 overflow-y-auto scroll-smooth rounded-2xl py-6 pr-3 pl-4 [mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)] [webkit-mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)]">
 			{items.map((item) => {
 				if (item.type === "folder") {
 					return (
