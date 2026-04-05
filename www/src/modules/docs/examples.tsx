@@ -1,5 +1,5 @@
 import { cn } from "@/registry/lib/utils";
 
 export function Examples({ className, children }: { className?: string; children: React.ReactNode }) {
-	return <div className={cn("grid grid-cols-1 gap-4 *:data-example:mt-0 lg:grid-cols-2", className)}>{children}</div>;
+	return <div className={cn("grid grid-cols-1 gap-4 *:data-example:mt-0", className)}>{children}</div>;
 }

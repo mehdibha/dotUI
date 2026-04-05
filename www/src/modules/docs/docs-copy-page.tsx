@@ -83,11 +83,11 @@ export function DocsCopyPage({ content, url }: { content: string; url: string })
 
 	return (
 		<Group>
-			<Button size="sm" onPress={() => copyToClipboard(content)}>
+			<Button size="xs" onPress={() => copyToClipboard(content)}>
 				{isCopied ? <CheckIcon /> : <CopyIcon />} Copy page
 			</Button>
 			<Menu>
-				<Button size="sm">
+				<Button size="xs">
 					<ChevronDownIcon />
 				</Button>
 				<Popover placement="bottom end">

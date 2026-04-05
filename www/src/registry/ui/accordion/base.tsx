@@ -1,14 +1,12 @@
-"use client";
-
 import { DisclosureGroup as AriaDisclosureGroup, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 
-const accordionStyles = tv({
-	base: "**:data-disclosure:not-last:border-b",
-});
+import { useStyles } from "./styles";
+
+// MARK: accordionStyles
 
 interface AccordionProps extends React.ComponentProps<typeof AriaDisclosureGroup> {}
 function Accordion({ className, ...props }: AccordionProps) {
+	const accordionStyles = useStyles();
 	return (
 		<AriaDisclosureGroup
 			data-accordion=""
