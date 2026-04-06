@@ -7,8 +7,6 @@ import {
 	type TOCItemType,
 	useActiveAnchors,
 } from "fumadocs-core/toc";
-import { AlignLeftIcon } from "lucide-react";
-
 import { cn } from "@/registry/lib/utils";
 
 export type { TableOfContents, TOCItemType } from "fumadocs-core/toc";

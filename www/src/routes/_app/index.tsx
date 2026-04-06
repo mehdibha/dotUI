@@ -2,31 +2,22 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
-import { siteConfig } from "@/config/site";
 import { getGitHubContributors } from "@/lib/github";
 import Cards from "@/registry/blocks/showcase/cards/components/cards";
 import { AdobeIcon } from "@/registry/components/icons/adobe";
-import { GitHubIcon } from "@/registry/components/icons/github";
 import { ReactJsIcon } from "@/registry/components/icons/react-js";
 import { ShadcnIcon } from "@/registry/components/icons/shadcn";
 import { TailwindWordmark } from "@/registry/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@/registry/components/icons/typescript";
-import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar";
 import { LinkButton } from "@/registry/ui/button";
 import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 export const Route = createFileRoute("/_app/")({
-	loader: async () => {
-		const contributors = await getGitHubContributors();
-		return { contributors };
-	},
 	component: HomePage,
 });
 
 function HomePage() {
-	const { contributors } = Route.useLoaderData();
-
 	return (
 		<div className="min-h-[calc(100vh-var(--header-height))]">
 			<main>

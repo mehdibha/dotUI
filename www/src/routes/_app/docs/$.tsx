@@ -13,12 +13,6 @@ import { PageLastUpdate } from "@/modules/docs/last-update";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
-import { ExternalLinkIcon } from "@/registry/__generated__/icons";
-import { AdobeIcon } from "@/registry/components/icons/adobe";
-import { GitHubIcon } from "@/registry/components/icons/github";
-import { ShadcnIcon } from "@/registry/components/icons/shadcn";
-import { LinkButton } from "@/registry/ui/button";
-
 export const Route = createFileRoute("/_app/docs/$")({
 	component: DocsPage,
 	loader: async ({ params }) => {
@@ -152,9 +146,3 @@ function DocsPage() {
 	return <Content url={data.url} rawContent={data.rawContent} neighbours={data.neighbours} />;
 }
 
-const getIcon = (url: string) => {
-	if (url.includes("adobe")) return <AdobeIcon />;
-	if (url.includes("github")) return <GitHubIcon />;
-	if (url.includes("shadcn")) return <ShadcnIcon />;
-	return null;
-};
