@@ -4,24 +4,23 @@ const accordionMeta = {
 	name: "accordion",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/accordion/base.tsx",
-					target: "ui/accordion.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/accordion/base.tsx",
+			target: "ui/accordion.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default accordionMeta;
 
-export const accordionVariants = Object.keys(accordionMeta.variants) as (keyof typeof accordionMeta.variants)[];
+export type AccordionStyle = keyof typeof accordionMeta.styles;
 
-export type AccordionVariant = keyof typeof accordionMeta.variants;
+export const accordionStyleNames = Object.keys(accordionMeta.styles) as AccordionStyle[];
 
-export const defaultAccordionVariant = accordionMeta.defaultVariant;
+export const defaultAccordionStyle = accordionMeta.defaultStyle;

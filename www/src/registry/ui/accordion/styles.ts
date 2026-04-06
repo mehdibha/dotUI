@@ -2,21 +2,17 @@ import { tv } from "tailwind-variants";
 
 import { createStyles } from "@/modules/core/styles";
 
+import accordionMeta from "./meta";
+
 const baseStyles = tv({
-	base: "w-full",
+	base: "",
 });
 
-const defaultStyle = tv({
+const defaultStyles = tv({
 	extend: baseStyles,
 	base: "**:data-disclosure:not-last:border-b",
 });
 
-const testStyle = tv({
-	extend: baseStyles,
-	base: "bg-red-500",
-});
-
-export const { useStyles } = createStyles("accordion", {
-	default: defaultStyle,
-	test: testStyle,
+export const { useStyles } = createStyles(accordionMeta, {
+	default: defaultStyles,
 });

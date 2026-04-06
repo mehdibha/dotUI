@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Action from "./demos/action";
 import CustomIcon from "./demos/custom-icon";
@@ -7,27 +8,27 @@ import Default from "./demos/default";
 import Success from "./demos/success";
 import Warning from "./demos/warning";
 
-export default function Examples() {
+export default function AlertExamples() {
 	return (
-		<>
-			<Example title="action">
-				<Action />
-			</Example>
-			<Example title="custom icon">
-				<CustomIcon />
+		<Examples>
+			<Example title="default">
+				<Default />
 			</Example>
 			<Example title="danger">
 				<Danger />
 			</Example>
-			<Example title="default">
-				<Default />
+			<Example title="warning">
+				<Warning />
 			</Example>
 			<Example title="success">
 				<Success />
 			</Example>
-			<Example title="warning">
-				<Warning />
+			<Example title="custom icon">
+				<CustomIcon />
 			</Example>
-		</>
+			<Example title="action">
+				<Action />
+			</Example>
+		</Examples>
 	);
 }

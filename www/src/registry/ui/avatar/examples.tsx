@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import AvatarGroupCount from "./demos/avatar-group-count";
 import Badge from "./demos/badge";
@@ -13,11 +14,26 @@ import IconFallback from "./demos/icon-fallback";
 import Radii from "./demos/radii";
 import Sizes from "./demos/sizes";
 
-export default function Examples() {
+export default function AvatarExamples() {
 	return (
-		<>
-			<Example title="avatar group count">
-				<AvatarGroupCount />
+		<Examples>
+			<Example title="default">
+				<Default />
+			</Example>
+			<Example title="basic">
+				<Basic />
+			</Example>
+			<Example title="sizes">
+				<Sizes />
+			</Example>
+			<Example title="fallback only">
+				<FallbackOnly />
+			</Example>
+			<Example title="icon fallback">
+				<IconFallback />
+			</Example>
+			<Example title="radii">
+				<Radii />
 			</Example>
 			<Example title="badge">
 				<Badge />
@@ -31,27 +47,12 @@ export default function Examples() {
 			<Example title="badge with icon">
 				<BadgeWithIcon />
 			</Example>
-			<Example title="basic">
-				<Basic />
-			</Example>
-			<Example title="default">
-				<Default />
-			</Example>
-			<Example title="fallback only">
-				<FallbackOnly />
-			</Example>
 			<Example title="group">
 				<Group />
 			</Example>
-			<Example title="icon fallback">
-				<IconFallback />
+			<Example title="avatar group count">
+				<AvatarGroupCount />
 			</Example>
-			<Example title="radii">
-				<Radii />
-			</Example>
-			<Example title="sizes">
-				<Sizes />
-			</Example>
-		</>
+		</Examples>
 	);
 }

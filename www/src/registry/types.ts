@@ -16,13 +16,17 @@ export type ComponentGroup =
 	| "forms"
 	| "layout";
 
+export type StyleMeta = {
+	description?: string;
+};
+
 export type RegistryItem = ShadcnRegistryItem &
 	(
 		| {
-				variants: Record<string, Omit<ShadcnRegistryItem, "name" | "type">>;
-				defaultVariant: string;
+				styles: Record<string, StyleMeta>;
+				defaultStyle: string;
 		  }
-		| { variants?: never; defaultVariant?: never }
+		| { styles?: never; defaultStyle?: never }
 	) & {
 		/** Component group for style editor UI organization */
 		group?: ComponentGroup | null;

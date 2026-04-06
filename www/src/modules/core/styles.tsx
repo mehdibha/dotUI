@@ -15,12 +15,17 @@ function StyleProvider({ styles, children }: StyleProviderProps) {
 	return <StyleContext.Provider value={styles}>{children}</StyleContext.Provider>;
 }
 
-function createStyles<S>(componentName: string, stylesMap: Record<string, S>) {
-	function useStyles(): S {
-		// eslint-disable-next-line react-hooks/rules-of-hooks
+function createStyles<
+	M extends { name: string; defaultStyle: string; styles: Record<string, unknown> },
+	T extends Record<keyof M["styles"] & string, unknown>,
+>(meta: M, stylesMap: T) {
+	function useStyles(): T[keyof T] {
 		const selections = React.useContext(StyleContext);
-		const selected = selections[componentName];
-		return (selected && stylesMap[selected]) ?? stylesMap.default;
+		const selected = selections[meta.name];
+		if (selected && selected in stylesMap) {
+			return stylesMap[selected as keyof T];
+		}
+		return stylesMap[meta.defaultStyle as keyof T];
 	}
 	return { useStyles };
 }
