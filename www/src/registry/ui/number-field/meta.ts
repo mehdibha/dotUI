@@ -4,24 +4,24 @@ const numberFieldMeta = {
 	name: "number-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/number-field/base.tsx",
-					target: "ui/number-field.tsx",
-				},
-			],
-			registryDependencies: ["input", "field", "use-is-mobile"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/number-field/base.tsx",
+			target: "ui/number-field.tsx",
+		},
+	],
+	registryDependencies: ["input", "field", "use-is-mobile"],
 } satisfies RegistryItem;
 
 export default numberFieldMeta;
-export const numberFieldVariants = Object.keys(numberFieldMeta.variants) as (keyof typeof numberFieldMeta.variants)[];
 
-export type NumberFieldVariant = keyof typeof numberFieldMeta.variants;
+export type NumberFieldStyle = keyof typeof numberFieldMeta.styles;
 
-export const defaultNumberFieldVariant = numberFieldMeta.defaultVariant;
+export const numberFieldStyleNames = Object.keys(numberFieldMeta.styles) as NumberFieldStyle[];
+
+export const defaultNumberFieldStyle = numberFieldMeta.defaultStyle;

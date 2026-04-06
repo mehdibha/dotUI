@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Basic from "./demos/basic";
 import Controlled from "./demos/controlled";
@@ -7,9 +8,9 @@ import KeyboardActivation from "./demos/keyboard-activation";
 import Variant from "./demos/variant";
 import Vertical from "./demos/vertical";
 
-export default function Examples() {
+export default function TabsExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="basic">
 				<Basic />
 			</Example>
@@ -28,6 +29,6 @@ export default function Examples() {
 			<Example title="vertical">
 				<Vertical />
 			</Example>
-		</>
+		</Examples>
 	);
 }

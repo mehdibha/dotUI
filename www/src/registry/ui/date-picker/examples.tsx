@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Composition from "./demos/composition";
 import Controlled from "./demos/controlled";
@@ -16,9 +17,9 @@ import Required from "./demos/required";
 import TimeZones from "./demos/time-zones";
 import Uncontrolled from "./demos/uncontrolled";
 
-export default function Examples() {
+export default function DatePickerExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="composition">
 				<Composition />
 			</Example>
@@ -64,6 +65,6 @@ export default function Examples() {
 			<Example title="uncontrolled">
 				<Uncontrolled />
 			</Example>
-		</>
+		</Examples>
 	);
 }

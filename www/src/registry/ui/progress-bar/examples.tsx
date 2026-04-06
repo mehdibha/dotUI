@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import CustomValueLabel from "./demos/custom-value-label";
 import Default from "./demos/default";
@@ -12,9 +13,9 @@ import Sizes from "./demos/sizes";
 import ValueLabel from "./demos/value-label";
 import Variants from "./demos/variants";
 
-export default function Examples() {
+export default function ProgressBarExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="custom value label">
 				<CustomValueLabel />
 			</Example>
@@ -48,6 +49,6 @@ export default function Examples() {
 			<Example title="variants">
 				<Variants />
 			</Example>
-		</>
+		</Examples>
 	);
 }

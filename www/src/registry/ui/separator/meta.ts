@@ -4,23 +4,23 @@ const separatorMeta = {
 	name: "separator",
 	type: "registry:ui",
 	group: "layout",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/separator/base.tsx",
-					target: "ui/separator.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/separator/base.tsx",
+			target: "ui/separator.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default separatorMeta;
-export const separatorVariants = Object.keys(separatorMeta.variants) as (keyof typeof separatorMeta.variants)[];
 
-export type SeparatorVariant = keyof typeof separatorMeta.variants;
+export type SeparatorStyle = keyof typeof separatorMeta.styles;
 
-export const defaultSeparatorVariant = separatorMeta.defaultVariant;
+export const separatorStyleNames = Object.keys(separatorMeta.styles) as SeparatorStyle[];
+
+export const defaultSeparatorStyle = separatorMeta.defaultStyle;

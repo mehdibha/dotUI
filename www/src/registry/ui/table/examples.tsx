@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Basic from "./demos/basic";
 import ColumnResizing from "./demos/column-resizing";
@@ -17,9 +18,9 @@ import Sorting from "./demos/sorting";
 import StaticRowAction from "./demos/static-row-action";
 import Uncontrolled from "./demos/uncontrolled";
 
-export default function Examples() {
+export default function TableExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="basic">
 				<Basic />
 			</Example>
@@ -68,6 +69,6 @@ export default function Examples() {
 			<Example title="uncontrolled">
 				<Uncontrolled />
 			</Example>
-		</>
+		</Examples>
 	);
 }

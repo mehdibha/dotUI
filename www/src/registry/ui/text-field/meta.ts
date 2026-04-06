@@ -4,24 +4,24 @@ const textFieldMeta = {
 	name: "text-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/text-field/base.tsx",
-					target: "ui/text-field.tsx",
-				},
-			],
-			registryDependencies: ["field", "input"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/text-field/base.tsx",
+			target: "ui/text-field.tsx",
+		},
+	],
+	registryDependencies: ["field", "input"],
 } satisfies RegistryItem;
 
 export default textFieldMeta;
-export const textFieldVariants = Object.keys(textFieldMeta.variants) as (keyof typeof textFieldMeta.variants)[];
 
-export type TextFieldVariant = keyof typeof textFieldMeta.variants;
+export type TextFieldStyle = keyof typeof textFieldMeta.styles;
 
-export const defaultTextFieldVariant = textFieldMeta.defaultVariant;
+export const textFieldStyleNames = Object.keys(textFieldMeta.styles) as TextFieldStyle[];
+
+export const defaultTextFieldStyle = textFieldMeta.defaultStyle;

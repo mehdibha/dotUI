@@ -4,24 +4,24 @@ const listBoxMeta = {
 	name: "list-box",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/list-box/base.tsx",
-					target: "ui/list-box.tsx",
-				},
-			],
-			registryDependencies: ["text", "focus-styles"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/list-box/base.tsx",
+			target: "ui/list-box.tsx",
+		},
+	],
+	registryDependencies: ["text", "focus-styles"],
 } satisfies RegistryItem;
 
 export default listBoxMeta;
-export const listBoxVariants = Object.keys(listBoxMeta.variants) as (keyof typeof listBoxMeta.variants)[];
 
-export type ListBoxVariant = keyof typeof listBoxMeta.variants;
+export type ListBoxStyle = keyof typeof listBoxMeta.styles;
 
-export const defaultListBoxVariant = listBoxMeta.defaultVariant;
+export const listBoxStyleNames = Object.keys(listBoxMeta.styles) as ListBoxStyle[];
+
+export const defaultListBoxStyle = listBoxMeta.defaultStyle;

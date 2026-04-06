@@ -10,79 +10,51 @@ import {
 	Provider,
 	TextContext,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 import { useSkeletonText } from "@/registry/ui/skeleton";
 import { Text } from "@/registry/ui/text";
 
-const fieldStyles = tv({
-	slots: {
-		fieldset: ["flex flex-col gap-6", "has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3"],
-		legend: ["mb-3 font-medium text-base"],
-		fieldGroup:
-			"group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
-		field: "flex items-start gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
-		fieldContent: "flex flex-col gap-1",
-		label: [
-			"inline-flex items-center gap-px text-fg text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
-			// Required state
-			"in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
-			// Disabled state
-			"in-disabled:cursor-not-allowed in-disabled:text-fg-disabled",
-			// Invalid state
-			"in-data-invalid:text-fg-danger",
-		],
-		description: ["text-fg-muted text-xs", "in-data-disabled:text-fg-disabled"],
-		fieldError: "text-fg-danger text-xs",
-	},
-	variants: {
-		orientation: {
-			horizontal: {
-				field: "flex-row items-center gap-2 has-data-[slot=description]:items-start",
-			},
-			vertical: {
-				field: "flex-col gap-2",
-			},
-		},
-	},
-	defaultVariants: {
-		orientation: "vertical",
-	},
-});
+import { useStyles } from "./styles";
+import type { FieldStyles } from "./styles";
 
-const { fieldset, legend, fieldGroup, field, fieldContent, label, description, fieldError } = fieldStyles();
+// MARK: fieldStyles
+export { fieldStyles } from "./styles";
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: Fieldset
 
 interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
 function Fieldset({ className, ...props }: FieldsetProps) {
+	const { fieldset } = useStyles()();
 	return <fieldset data-slot="fieldset" className={fieldset({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: Legend
 
 interface LegendProps extends React.ComponentProps<"legend"> {}
 
 function Legend({ className, ...props }: LegendProps) {
+	const { legend } = useStyles()();
 	return <legend data-slot="legend" className={legend({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: FieldGroup
 
 interface FieldGroupProps extends React.ComponentProps<"div"> {}
 
 function FieldGroup({ className, ...props }: FieldGroupProps) {
+	const { fieldGroup } = useStyles()();
 	return <div data-slot="field-group" className={fieldGroup({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: Field
 
-interface FieldProps extends React.ComponentProps<"div">, VariantProps<typeof fieldStyles> {}
+interface FieldProps extends React.ComponentProps<"div">, VariantProps<FieldStyles> {}
 
 const Field = ({ children, className, orientation, ...props }: FieldProps) => {
+	const { field } = useStyles()();
 	const inputId = useSlotId();
 	const descriptionId = useSlotId();
 	return (
@@ -106,19 +78,21 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: FieldContent
 
 interface FieldContentProps extends React.ComponentProps<"div"> {}
 
 const FieldContent = ({ className, ...props }: FieldContentProps) => {
+	const { fieldContent } = useStyles()();
 	return <div data-slot="field-content" className={fieldContent({ className })} {...props} />;
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: Label
 
 interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
 
 const Label = ({ children, className, ...props }: LabelProps) => {
+	const { label } = useStyles()();
 	children = useSkeletonText(children);
 	return (
 		<AriaLabel data-slot="label" data-label="" className={label({ className })} {...props}>
@@ -127,18 +101,20 @@ const Label = ({ children, className, ...props }: LabelProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: Description
 
 interface DescriptionProps extends Omit<React.ComponentProps<typeof Text>, "slot"> {}
 
 const Description = ({ className, ...props }: DescriptionProps) => {
+	const { description } = useStyles()();
 	return <Text data-slot="description" slot="description" className={description({ className })} {...props} />;
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: FieldError
 
 interface FieldErrorProps extends React.ComponentProps<typeof AriaFieldError> {}
 const FieldError = ({ className, ...props }: FieldErrorProps) => {
+	const { fieldError } = useStyles()();
 	return (
 		<AriaFieldError
 			data-slot="field-error"
@@ -148,11 +124,9 @@ const FieldError = ({ className, ...props }: FieldErrorProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: exports
 
 export { Fieldset, Legend, FieldGroup, Field, FieldContent, Label, Description, FieldError };
-
-export { fieldStyles };
 
 export type {
 	FieldsetProps,

@@ -4,23 +4,23 @@ const dropZoneMeta = {
 	name: "drop-zone",
 	type: "registry:ui",
 	group: "forms",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/drop-zone/base.tsx",
-					target: "ui/drop-zone.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/drop-zone/base.tsx",
+			target: "ui/drop-zone.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default dropZoneMeta;
-export const dropZoneVariants = Object.keys(dropZoneMeta.variants) as (keyof typeof dropZoneMeta.variants)[];
 
-export type DropZoneVariant = keyof typeof dropZoneMeta.variants;
+export type DropZoneStyle = keyof typeof dropZoneMeta.styles;
 
-export const defaultDropZoneVariant = dropZoneMeta.defaultVariant;
+export const dropZoneStyleNames = Object.keys(dropZoneMeta.styles) as DropZoneStyle[];
+
+export const defaultDropZoneStyle = dropZoneMeta.defaultStyle;

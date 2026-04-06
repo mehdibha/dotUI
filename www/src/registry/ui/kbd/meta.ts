@@ -4,23 +4,23 @@ const kbdMeta = {
 	name: "kbd",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/kbd/base.tsx",
-					target: "ui/kbd.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/kbd/base.tsx",
+			target: "ui/kbd.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default kbdMeta;
-export const kbdVariants = Object.keys(kbdMeta.variants) as (keyof typeof kbdMeta.variants)[];
 
-export type KbdVariant = keyof typeof kbdMeta.variants;
+export type KbdStyle = keyof typeof kbdMeta.styles;
 
-export const defaultKbdVariant = kbdMeta.defaultVariant;
+export const kbdStyleNames = Object.keys(kbdMeta.styles) as KbdStyle[];
+
+export const defaultKbdStyle = kbdMeta.defaultStyle;

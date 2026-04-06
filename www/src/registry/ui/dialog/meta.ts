@@ -4,24 +4,24 @@ const dialogMeta = {
 	name: "dialog",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/dialog/base.tsx",
-					target: "ui/dialog.tsx",
-				},
-			],
-			registryDependencies: ["overlay"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/dialog/base.tsx",
+			target: "ui/dialog.tsx",
+		},
+	],
+	registryDependencies: ["overlay"],
 } satisfies RegistryItem;
 
 export default dialogMeta;
-export const dialogVariants = Object.keys(dialogMeta.variants) as (keyof typeof dialogMeta.variants)[];
 
-export type DialogVariant = keyof typeof dialogMeta.variants;
+export type DialogStyle = keyof typeof dialogMeta.styles;
 
-export const defaultDialogVariant = dialogMeta.defaultVariant;
+export const dialogStyleNames = Object.keys(dialogMeta.styles) as DialogStyle[];
+
+export const defaultDialogStyle = dialogMeta.defaultStyle;

@@ -1,20 +1,18 @@
 "use client";
 
 import { DateField as AriaDateField, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type { DateFieldProps as AriaDateFieldProps, DateValue } from "react-aria-components";
 
-import { fieldStyles } from "@/registry/ui/field";
+import { useStyles } from "./styles";
 
-const dateFieldStyles = tv({
-	base: [fieldStyles().field({ orientation: "vertical" })],
-});
+// MARK: dateFieldStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: DateField
 
 interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T> {}
 
 const DateField = <T extends DateValue>({ className, ...props }: DateFieldProps<T>) => {
+	const dateFieldStyles = useStyles();
 	return (
 		<AriaDateField
 			className={composeRenderProps(className, (className) => dateFieldStyles({ className }))}
@@ -22,6 +20,8 @@ const DateField = <T extends DateValue>({ className, ...props }: DateFieldProps<
 		/>
 	);
 };
+
+// MARK: exports
 
 export type { DateFieldProps };
 export { DateField };

@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import AsyncLoading from "./demos/async-loading";
 import Basic from "./demos/basic";
@@ -13,9 +14,9 @@ import Sections from "./demos/sections";
 import Uncontrolled from "./demos/uncontrolled";
 import Validation from "./demos/validation";
 
-export default function Examples() {
+export default function ComboboxExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="async loading">
 				<AsyncLoading />
 			</Example>
@@ -52,6 +53,6 @@ export default function Examples() {
 			<Example title="validation">
 				<Validation />
 			</Example>
-		</>
+		</Examples>
 	);
 }

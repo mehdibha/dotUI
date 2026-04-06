@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Cards from "./demos/cards";
 import Controlled from "./demos/controlled";
@@ -12,9 +13,9 @@ import ReadOnly from "./demos/read-only";
 import Required from "./demos/required";
 import Uncontrolled from "./demos/uncontrolled";
 
-export default function Examples() {
+export default function RadioGroupExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="cards">
 				<Cards />
 			</Example>
@@ -48,6 +49,6 @@ export default function Examples() {
 			<Example title="uncontrolled">
 				<Uncontrolled />
 			</Example>
-		</>
+		</Examples>
 	);
 }

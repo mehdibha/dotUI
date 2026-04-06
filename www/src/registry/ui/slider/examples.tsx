@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Composition from "./demos/composition";
 import Controlled from "./demos/controlled";
@@ -15,9 +16,9 @@ import ValueLabel from "./demos/value-label";
 import ValueScale from "./demos/value-scale";
 import Vertical from "./demos/vertical";
 
-export default function Examples() {
+export default function SliderExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="composition">
 				<Composition />
 			</Example>
@@ -60,6 +61,6 @@ export default function Examples() {
 			<Example title="vertical">
 				<Vertical />
 			</Example>
-		</>
+		</Examples>
 	);
 }

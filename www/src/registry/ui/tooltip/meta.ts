@@ -4,23 +4,23 @@ const tooltipMeta = {
 	name: "tooltip",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/tooltip/base.tsx",
-					target: "ui/tooltip.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/tooltip/base.tsx",
+			target: "ui/tooltip.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default tooltipMeta;
-export const tooltipVariants = Object.keys(tooltipMeta.variants) as (keyof typeof tooltipMeta.variants)[];
 
-export type TooltipVariant = keyof typeof tooltipMeta.variants;
+export type TooltipStyle = keyof typeof tooltipMeta.styles;
 
-export const defaultTooltipVariant = tooltipMeta.defaultVariant;
+export const tooltipStyleNames = Object.keys(tooltipMeta.styles) as TooltipStyle[];
+
+export const defaultTooltipStyle = tooltipMeta.defaultStyle;

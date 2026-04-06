@@ -2,7 +2,6 @@
 
 import { SearchIcon } from "lucide-react";
 import { Autocomplete as AriaAutocomplete, useFilter } from "react-aria-components";
-import { tv } from "tailwind-variants";
 
 import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
 import {
@@ -17,24 +16,16 @@ import type { ListBoxProps } from "@/registry/ui/list-box";
 import type { PopoverProps } from "@/registry/ui/popover";
 import type { SearchFieldProps } from "@/registry/ui/search-field";
 
-const commandStyles = tv({
-	slots: {
-		base: [
-			"in-drawer:rounded-[inherit] in-modal:rounded-[inherit] in-popover:rounded-[inherit] rounded-lg not-in-popover:not-in-modal:not-in-drawer:border not-in-popover:not-in-modal:not-in-drawer:bg-card",
-			"**:data-[slot=list-box]:w-full **:data-[slot=list-box]:border-0 **:data-[slot=list-box]:bg-transparent",
-			"**:data-[slot=search-field]:w-full **:data-[slot=search-field]:outline-none [&_[data-slot=search-field]_[data-slot=input-group]]:rounded-b-none [&_[data-slot=search-field]_[data-slot=input-group]]:border-0 [&_[data-slot=search-field]_[data-slot=input-group]]:border-b [&_[data-slot=search-field]_[data-slot=input-group]]:bg-transparent",
-			"in-modal:w-full",
-		],
-	},
-});
+import { useStyles } from "./styles";
 
-const { base } = commandStyles();
+// MARK: commandStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface CommandProps extends React.ComponentProps<"div"> {}
 
 function Command({ className, ...props }: CommandProps) {
+	const { base } = useStyles()();
 	const { contains } = useFilter({
 		sensitivity: "base",
 		ignorePunctuation: true,
@@ -47,7 +38,7 @@ function Command({ className, ...props }: CommandProps) {
 	);
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface CommandInputProps extends SearchFieldProps {
 	placeholder?: string;
@@ -67,7 +58,7 @@ const CommandInput = ({ placeholder, ...props }: CommandInputProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface CommandContentProps<T extends object> extends ListBoxProps<T> {
 	placement?: PopoverProps["placement"];
@@ -86,7 +77,7 @@ const CommandContent = <T extends object>({ virtulized, placement, ...props }: C
 	return <ListBox {...props} />;
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export {
 	Command,

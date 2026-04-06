@@ -4,24 +4,24 @@ const radioGroupMeta = {
 	name: "radio-group",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/radio-group/base.tsx",
-					target: "ui/radio-group.tsx",
-				},
-			],
-			registryDependencies: ["focus-styles", "field"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/radio-group/base.tsx",
+			target: "ui/radio-group.tsx",
+		},
+	],
+	registryDependencies: ["focus-styles", "field"],
 } satisfies RegistryItem;
 
 export default radioGroupMeta;
-export const radioGroupVariants = Object.keys(radioGroupMeta.variants) as (keyof typeof radioGroupMeta.variants)[];
 
-export type RadioGroupVariant = keyof typeof radioGroupMeta.variants;
+export type RadioGroupStyle = keyof typeof radioGroupMeta.styles;
 
-export const defaultRadioGroupVariant = radioGroupMeta.defaultVariant;
+export const radioGroupStyleNames = Object.keys(radioGroupMeta.styles) as RadioGroupStyle[];
+
+export const defaultRadioGroupStyle = radioGroupMeta.defaultStyle;

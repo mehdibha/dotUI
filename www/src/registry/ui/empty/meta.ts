@@ -4,24 +4,23 @@ const emptyMeta = {
 	name: "empty",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/empty/base.tsx",
-					target: "ui/empty.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/empty/base.tsx",
+			target: "ui/empty.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default emptyMeta;
 
-export const emptyVariants = Object.keys(emptyMeta.variants) as (keyof typeof emptyMeta.variants)[];
+export type EmptyStyle = keyof typeof emptyMeta.styles;
 
-export type EmptyVariant = keyof typeof emptyMeta.variants;
+export const emptyStyleNames = Object.keys(emptyMeta.styles) as EmptyStyle[];
 
-export const defaultEmptyVariant = emptyMeta.defaultVariant;
+export const defaultEmptyStyle = emptyMeta.defaultStyle;

@@ -8,7 +8,6 @@ import {
 	RangeCalendarContext as AriaRangeCalendarContext,
 	composeRenderProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type {
 	DateRangePickerProps as AriaDataRangePickerProps,
 	DatePickerProps as AriaDatePickerProps,
@@ -21,9 +20,11 @@ import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay, type OverlayProps } from "@/registry/ui/overlay";
 import type { InputGroupProps } from "@/registry/ui/input";
 
-const datePickerStyles = tv({
-	base: "flex flex-col items-start gap-2",
-});
+import { useStyles } from "./styles";
+
+// MARK: datePickerStyles
+
+// MARK: DatePicker
 
 type DatePickerProps<T extends DateValue> =
 	| ({
@@ -34,6 +35,7 @@ type DatePickerProps<T extends DateValue> =
 	  } & AriaDataRangePickerProps<T>);
 
 const DatePicker = <T extends DateValue>({ mode = "single", className, ...props }: DatePickerProps<T>) => {
+	const datePickerStyles = useStyles();
 	if (mode === "range") {
 		return (
 			<AriaDataRangePicker
@@ -55,7 +57,7 @@ const DatePicker = <T extends DateValue>({ mode = "single", className, ...props 
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: DatePickerInput
 
 interface DatePickerInputProps extends InputGroupProps {}
 
@@ -83,7 +85,7 @@ const DatePickerInput = (props: DatePickerInputProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: DatePickerContent
 
 interface DatePickerContentProps
 	extends DialogContentProps,
@@ -102,6 +104,8 @@ const DatePickerContent = ({
 		</Overlay>
 	);
 };
+
+// MARK: exports
 
 export type { DatePickerProps, DatePickerContentProps, DatePickerInputProps };
 export { DatePicker, DatePickerContent, DatePickerInput };

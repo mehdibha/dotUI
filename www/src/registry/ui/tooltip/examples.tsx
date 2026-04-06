@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Arrow from "./demos/arrow";
 import ContainerPadding from "./demos/container-padding";
@@ -10,9 +11,9 @@ import Placement from "./demos/placement";
 import Variant from "./demos/variant";
 import WithArrow from "./demos/with-arrow";
 
-export default function Examples() {
+export default function TooltipExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="arrow">
 				<Arrow />
 			</Example>
@@ -40,6 +41,6 @@ export default function Examples() {
 			<Example title="with arrow">
 				<WithArrow />
 			</Example>
-		</>
+		</Examples>
 	);
 }

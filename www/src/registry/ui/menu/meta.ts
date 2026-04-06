@@ -4,24 +4,24 @@ const menuMeta = {
 	name: "menu",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/menu/base.tsx",
-					target: "ui/menu.tsx",
-				},
-			],
-			registryDependencies: ["kbd", "overlay", "text"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/menu/base.tsx",
+			target: "ui/menu.tsx",
+		},
+	],
+	registryDependencies: ["kbd", "overlay", "text"],
 } satisfies RegistryItem;
 
 export default menuMeta;
-export const menuVariants = Object.keys(menuMeta.variants) as (keyof typeof menuMeta.variants)[];
 
-export type MenuVariant = keyof typeof menuMeta.variants;
+export type MenuStyle = keyof typeof menuMeta.styles;
 
-export const defaultMenuVariant = menuMeta.defaultVariant;
+export const menuStyleNames = Object.keys(menuMeta.styles) as MenuStyle[];
+
+export const defaultMenuStyle = menuMeta.defaultStyle;

@@ -1,37 +1,25 @@
 "use client";
 
 import { Link as AriaLink, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type { LinkProps as AriaLinkProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-const linkVariants = tv({
-	base: [
-		"focus-reset focus-visible:focus-ring",
-		"inline-flex items-center gap-1 transition-colors disabled:text-fg-disabled",
-	],
-	variants: {
-		variant: {
-			accent: "text-fg-accent",
-			quiet: "font-medium text-fg underline underline-offset-2",
-			unstyled: "",
-		},
-	},
-	defaultVariants: {
-		variant: "accent",
-	},
-});
+import type { LinkStyles } from "./styles";
+import { useStyles } from "./styles";
 
-interface LinkProps extends AriaLinkProps, VariantProps<typeof linkVariants> {}
+// MARK: linkStyles
+
+interface LinkProps extends AriaLinkProps, VariantProps<LinkStyles> {}
 
 const Link = ({ variant, ...props }: LinkProps) => {
+	const linkStyles = useStyles();
 	return (
 		<AriaLink
 			{...props}
-			className={composeRenderProps(props.className, (className) => linkVariants({ variant, className }))}
+			className={composeRenderProps(props.className, (className) => linkStyles({ variant, className }))}
 		/>
 	);
 };
 
 export type { LinkProps };
-export { Link, linkVariants };
+export { Link };

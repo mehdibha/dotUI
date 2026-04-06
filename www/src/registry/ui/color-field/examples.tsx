@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import ColorChannel from "./demos/color-channel";
 import Controlled from "./demos/controlled";
@@ -13,9 +14,9 @@ import Required from "./demos/required";
 import Sizes from "./demos/sizes";
 import Uncontrolled from "./demos/uncontrolled";
 
-export default function Examples() {
+export default function ColorFieldExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="color channel">
 				<ColorChannel />
 			</Example>
@@ -52,6 +53,6 @@ export default function Examples() {
 			<Example title="uncontrolled">
 				<Uncontrolled />
 			</Example>
-		</>
+		</Examples>
 	);
 }

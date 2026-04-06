@@ -2,48 +2,26 @@
 
 import { CheckIcon, MinusIcon } from "lucide-react";
 import { Checkbox as AriaCheckbox, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 import type { CheckboxRenderProps } from "react-aria-components";
 
 import { createContext } from "@/registry/lib/context";
 import { cn } from "@/registry/lib/utils";
 
-const checkboxStyles = tv({
-	slots: {
-		root: [
-			"focus-reset focus-visible:focus-ring",
-			"flex items-center gap-2 text-sm leading-none has-data-[slot=description]:items-start",
-			"disabled:cursor-not-allowed disabled:text-fg-disabled",
-		],
-		indicator: [
-			"flex size-4 shrink-0 items-center justify-center rounded-sm border border-border-control bg-transparent text-transparent",
-			"transition-[background-color,border-color,box-shadow,color] duration-75",
-			// selected state
-			"selected:border-transparent selected:bg-primary selected:text-fg-on-primary",
-			// read-only state
-			"read-only:cursor-default",
-			// disabled state
-			"disabled:cursor-not-allowed disabled:border-border-disabled selected:disabled:bg-disabled selected:disabled:text-fg-disabled indeterminate:disabled:bg-disabled",
-			// invalid state
-			"invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-onMutedDanger",
-			// indeterminate state
-			"indeterminate:border-transparent indeterminate:bg-primary indeterminate:text-fg-on-primary",
-		],
-	},
-});
+import { useStyles } from "./styles";
 
-const { root, indicator } = checkboxStyles();
+// MARK: checkboxStyles
 
 const [InternalCheckboxProvider, useInternalCheckbox] = createContext<CheckboxRenderProps>({
 	strict: true,
 });
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface CheckboxProps extends React.ComponentProps<typeof AriaCheckbox> {}
 
 const Checkbox = ({ className, ...props }: CheckboxProps) => {
+	const { root, indicator } = useStyles()();
 	return (
 		<AriaCheckbox
 			data-slot="checkbox"
@@ -69,11 +47,12 @@ const Checkbox = ({ className, ...props }: CheckboxProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface CheckboxIndicatorProps extends React.ComponentProps<"div"> {}
 
 const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
+	const { indicator } = useStyles()();
 	const ctx = useInternalCheckbox("CheckboxIndicator");
 	return (
 		<div
@@ -96,7 +75,7 @@ const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export { Checkbox, CheckboxIndicator };
 

@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Basic from "./demos/basic";
 import Composition from "./demos/composition";
@@ -6,9 +7,9 @@ import Disabled from "./demos/disabled";
 import Icon from "./demos/icon";
 import RouterIntegration from "./demos/router-integration";
 
-export default function Examples() {
+export default function BreadcrumbsExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="basic">
 				<Basic />
 			</Example>
@@ -24,6 +25,6 @@ export default function Examples() {
 			<Example title="router integration">
 				<RouterIntegration />
 			</Example>
-		</>
+		</Examples>
 	);
 }

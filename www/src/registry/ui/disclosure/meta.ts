@@ -4,24 +4,23 @@ const disclosureMeta = {
 	name: "disclosure",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/disclosure/base.tsx",
-					target: "ui/disclosure.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/disclosure/base.tsx",
+			target: "ui/disclosure.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default disclosureMeta;
 
-export const disclosureVariants = Object.keys(disclosureMeta.variants) as (keyof typeof disclosureMeta.variants)[];
+export type DisclosureStyle = keyof typeof disclosureMeta.styles;
 
-export type DisclosureVariant = keyof typeof disclosureMeta.variants;
+export const disclosureStyleNames = Object.keys(disclosureMeta.styles) as DisclosureStyle[];
 
-export const defaultDisclosureVariant = disclosureMeta.defaultVariant;
+export const defaultDisclosureStyle = disclosureMeta.defaultStyle;

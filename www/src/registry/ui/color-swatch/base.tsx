@@ -1,18 +1,18 @@
 "use client";
 
 import { ColorSwatch as AriaColorSwatch, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 
-const colorSwatchStyles = tv({
-	base: "relative size-5 shrink-0 rounded-sm border",
-});
+import { useStyles } from "./styles";
+
+// MARK: colorSwatchStyles
 
 interface ColorSwatchProps extends React.ComponentProps<typeof AriaColorSwatch> {}
 const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
+	const styles = useStyles();
 	return (
 		<AriaColorSwatch
 			data-slot="color-swatch"
-			className={composeRenderProps(className, (className) => colorSwatchStyles({ className }))}
+			className={composeRenderProps(className, (className) => styles({ className }))}
 			style={composeRenderProps(style, (style, { color }) => ({
 				...style,
 				background: `linear-gradient(${color}, ${color}),

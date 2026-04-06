@@ -2,11 +2,9 @@
 
 import { ChevronDownIcon } from "lucide-react";
 import { Select as AriaSelect, SelectValue as AriaSelectValue, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type { SelectProps as AriaSelectProps, SelectValueProps as AriaSelectValueProps } from "react-aria-components";
 
 import { Button } from "@/registry/ui/button";
-import { fieldStyles } from "@/registry/ui/field";
 import {
 	ListBox,
 	ListBoxItem,
@@ -19,20 +17,16 @@ import type { ButtonProps } from "@/registry/ui/button";
 import type { ListBoxProps } from "@/registry/ui/list-box";
 import type { PopoverProps } from "@/registry/ui/popover";
 
-const selectStyles = tv({
-	slots: {
-		root: fieldStyles().field(),
-		selectValue: "flex-1 truncate text-left placeholder-shown:text-fg-muted",
-	},
-});
+import { useStyles } from "./styles";
 
-const { root, selectValue } = selectStyles();
+// MARK: selectStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface SelectProps<T extends object> extends AriaSelectProps<T> {}
 
 const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
+	const { root } = useStyles()();
 	return (
 		<AriaSelect
 			data-field=""
@@ -44,7 +38,7 @@ const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 const SelectTrigger = (props: ButtonProps) => {
 	return (
@@ -61,11 +55,12 @@ const SelectTrigger = (props: ButtonProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface SelectValueProps<T extends object> extends AriaSelectValueProps<T> {}
 
 const SelectValue = <T extends object>({ className, ...props }: SelectValueProps<T>) => {
+	const { selectValue } = useStyles()();
 	return (
 		<AriaSelectValue
 			data-slot="select-value"
@@ -79,7 +74,7 @@ const SelectValue = <T extends object>({ className, ...props }: SelectValueProps
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface SelectContentProps<T extends object>
 	extends ListBoxProps<T>,

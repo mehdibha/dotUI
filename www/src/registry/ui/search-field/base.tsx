@@ -1,20 +1,18 @@
 "use client";
 
 import { SearchField as AriaSearchField, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 
-import { fieldStyles } from "@/registry/ui/field";
+import { useStyles } from "./styles";
 
-const searchFieldStyles = tv({
-	base: ["[&.flex-1]:*:data-[slot=input]:w-full [&.w-full]:*:data-[slot=input]:w-full", fieldStyles().field()],
-});
+// MARK: searchFieldStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: SearchField
 
 interface SearchFieldProps extends React.ComponentProps<typeof AriaSearchField> {}
 
 const SearchField = ({ className, ...props }: SearchFieldProps) => {
+	const searchFieldStyles = useStyles();
 	return (
 		<AriaSearchField
 			data-slot="search-field"
@@ -23,6 +21,8 @@ const SearchField = ({ className, ...props }: SearchFieldProps) => {
 		/>
 	);
 };
+
+// MARK: exports
 
 export { SearchField };
 

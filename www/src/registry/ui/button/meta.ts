@@ -4,25 +4,24 @@ const buttonMeta = {
 	name: "button",
 	type: "registry:ui",
 	group: "buttons",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/button/base.tsx",
-					target: "ui/button.tsx",
-				},
-			],
-			registryDependencies: ["loader", "focus-styles"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/button/base.tsx",
+			target: "ui/button.tsx",
+		},
+	],
+	registryDependencies: ["loader", "focus-styles"],
 } satisfies RegistryItem;
 
 export default buttonMeta;
 
-export const buttonVariants = Object.keys(buttonMeta.variants) as (keyof typeof buttonMeta.variants)[];
+export type ButtonStyle = keyof typeof buttonMeta.styles;
 
-export type ButtonVariant = keyof typeof buttonMeta.variants;
+export const buttonStyleNames = Object.keys(buttonMeta.styles) as ButtonStyle[];
 
-export const defaultButtonVariant = buttonMeta.defaultVariant;
+export const defaultButtonStyle = buttonMeta.defaultStyle;

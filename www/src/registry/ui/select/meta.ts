@@ -4,24 +4,24 @@ const selectMeta = {
 	name: "select",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/select/base.tsx",
-					target: "ui/select.tsx",
-				},
-			],
-			registryDependencies: ["button", "field", "list-box", "popover"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/select/base.tsx",
+			target: "ui/select.tsx",
+		},
+	],
+	registryDependencies: ["button", "field", "list-box", "popover"],
 } satisfies RegistryItem;
 
 export default selectMeta;
-export const selectVariants = Object.keys(selectMeta.variants) as (keyof typeof selectMeta.variants)[];
 
-export type SelectVariant = keyof typeof selectMeta.variants;
+export type SelectStyle = keyof typeof selectMeta.styles;
 
-export const defaultSelectVariant = selectMeta.defaultVariant;
+export const selectStyleNames = Object.keys(selectMeta.styles) as SelectStyle[];
+
+export const defaultSelectStyle = selectMeta.defaultStyle;

@@ -4,23 +4,23 @@ const popoverMeta = {
 	name: "popover",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/popover/base.tsx",
-					target: "ui/popover.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/popover/base.tsx",
+			target: "ui/popover.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default popoverMeta;
-export const popoverVariants = Object.keys(popoverMeta.variants) as (keyof typeof popoverMeta.variants)[];
 
-export type PopoverVariant = keyof typeof popoverMeta.variants;
+export type PopoverStyle = keyof typeof popoverMeta.styles;
 
-export const defaultPopoverVariant = popoverMeta.defaultVariant;
+export const popoverStyleNames = Object.keys(popoverMeta.styles) as PopoverStyle[];
+
+export const defaultPopoverStyle = popoverMeta.defaultStyle;

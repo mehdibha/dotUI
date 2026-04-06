@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import AsyncLoading from "./demos/async-loading";
 import Basic from "./demos/basic";
@@ -19,9 +20,9 @@ import SelectionMode from "./demos/selection-mode";
 import Separator from "./demos/separator";
 import Uncontrolled from "./demos/uncontrolled";
 
-export default function Examples() {
+export default function ListBoxExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="async loading">
 				<AsyncLoading />
 			</Example>
@@ -76,6 +77,6 @@ export default function Examples() {
 			<Example title="uncontrolled">
 				<Uncontrolled />
 			</Example>
-		</>
+		</Examples>
 	);
 }

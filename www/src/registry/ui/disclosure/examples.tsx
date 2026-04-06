@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import AdvancedComposition from "./demos/advanced-composition";
 import Basic from "./demos/basic";
@@ -6,9 +7,9 @@ import Controlled from "./demos/controlled";
 import DefaultExpanded from "./demos/default-expanded";
 import Disabled from "./demos/disabled";
 
-export default function Examples() {
+export default function DisclosureExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="advanced composition">
 				<AdvancedComposition />
 			</Example>
@@ -24,6 +25,6 @@ export default function Examples() {
 			<Example title="disabled">
 				<Disabled />
 			</Example>
-		</>
+		</Examples>
 	);
 }

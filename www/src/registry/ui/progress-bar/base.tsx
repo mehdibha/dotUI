@@ -1,67 +1,18 @@
 "use client";
 
 import { ProgressBar as AriaProgress, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
 import { createScopedContext } from "@/registry/lib/context";
 
-const progressStyles = tv({
-	slots: {
-		root: "flex w-60 flex-col gap-2",
-		indicator: "relative h-2.5 w-full overflow-hidden rounded-full",
-		filler: [
-			"h-full w-full min-w-14 flex-1 origin-left bg-fg transition-transform",
-			"indeterminate:mask-[linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:mask-size-[200%] indeterminate:animate-progress-indeterminate indeterminate:[-webkit-mask-image:linear-gradient(75deg,rgb(0,0,0)_30%,rgba(0,0,0,0.65)_80%)] indeterminate:[-webkit-mask-size:200%]",
-		],
-		valueLabel: "text-sm",
-	},
-	variants: {
-		variant: {
-			primary: {
-				indicator: "bg-muted",
-				filler: "bg-primary",
-			},
-			accent: {
-				indicator: "bg-accent-muted",
-				filler: "bg-accent",
-			},
-			warning: {
-				indicator: "bg-warning-muted",
-				filler: "bg-warning",
-			},
-			danger: {
-				indicator: "bg-danger-muted",
-				filler: "bg-danger",
-			},
-			success: {
-				indicator: "bg-success-muted",
-				filler: "bg-success",
-			},
-		},
-		size: {
-			sm: {
-				indicator: "h-1",
-			},
-			md: {
-				indicator: "h-2.5",
-			},
-			lg: {
-				indicator: "h-4",
-			},
-		},
-	},
-	defaultVariants: {
-		variant: "accent",
-		size: "md",
-	},
-});
+import type { ProgressBarStyles } from "./styles";
+import { useStyles } from "./styles";
 
-const { root, indicator, filler, valueLabel } = progressStyles();
+// MARK: progressBarStyles
 
 const [ProgressBarProvider, useProgressBarContext] = createScopedContext<
-	VariantProps<typeof progressStyles> & {
+	VariantProps<ProgressBarStyles> & {
 		isIndeterminate: boolean;
 		valueText?: string;
 		percentage?: number;
@@ -71,6 +22,7 @@ const [ProgressBarProvider, useProgressBarContext] = createScopedContext<
 interface ProgressBarProps extends React.ComponentProps<typeof AriaProgress> {}
 
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
+	const { root } = useStyles()();
 	return (
 		<AriaProgress className={composeRenderProps(className, (className) => root({ className }))} {...props}>
 			{composeRenderProps(children, (children, { isIndeterminate, valueText, percentage }) => (
@@ -82,11 +34,14 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
 	);
 };
 
-interface ProgressBarControlProps extends React.ComponentProps<"div">, VariantProps<typeof progressStyles> {
+// MARK: seperator
+
+interface ProgressBarControlProps extends React.ComponentProps<"div">, VariantProps<ProgressBarStyles> {
 	duration?: `${number}s` | `${number}ms`;
 }
 
 const ProgressBarControl = ({ className, variant, size, duration, ...props }: ProgressBarControlProps) => {
+	const { indicator, filler } = useStyles()();
 	const { isIndeterminate, percentage } = useProgressBarContext("ProgressBarControl");
 
 	return (
@@ -106,8 +61,11 @@ const ProgressBarControl = ({ className, variant, size, duration, ...props }: Pr
 	);
 };
 
+// MARK: seperator
+
 interface ProgressBarValueLabelProps extends React.ComponentProps<"span"> {}
 const ProgressBarValueLabel = ({ className, ...props }: ProgressBarValueLabelProps) => {
+	const { valueLabel } = useStyles()();
 	const { valueText } = useProgressBarContext("ProgressBarValueLabel");
 
 	return (
@@ -116,6 +74,8 @@ const ProgressBarValueLabel = ({ className, ...props }: ProgressBarValueLabelPro
 		</span>
 	);
 };
+
+// MARK: seperator
 
 export { ProgressBar, ProgressBarControl, ProgressBarValueLabel };
 

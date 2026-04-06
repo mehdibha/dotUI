@@ -4,25 +4,24 @@ const groupMeta = {
 	name: "group",
 	type: "registry:ui",
 	group: "forms",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/group/base.tsx",
-					target: "ui/group.tsx",
-				},
-			],
-			registryDependencies: ["button"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/group/base.tsx",
+			target: "ui/group.tsx",
+		},
+	],
+	registryDependencies: ["button"],
 } satisfies RegistryItem;
 
 export default groupMeta;
 
-export const groupVariants = Object.keys(groupMeta.variants) as (keyof typeof groupMeta.variants)[];
+export type GroupStyle = keyof typeof groupMeta.styles;
 
-export type GroupVariant = keyof typeof groupMeta.variants;
+export const groupStyleNames = Object.keys(groupMeta.styles) as GroupStyle[];
 
-export const defaultGroupVariant = groupMeta.defaultVariant;
+export const defaultGroupStyle = groupMeta.defaultStyle;

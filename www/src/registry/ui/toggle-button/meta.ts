@@ -4,26 +4,24 @@ const toggleButtonMeta = {
 	name: "toggle-button",
 	type: "registry:ui",
 	group: "buttons",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/toggle-button/base.tsx",
-					target: "ui/toggle-button.tsx",
-				},
-			],
-			registryDependencies: ["focus-styles"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/toggle-button/base.tsx",
+			target: "ui/toggle-button.tsx",
+		},
+	],
+	registryDependencies: ["focus-styles"],
 } satisfies RegistryItem;
 
 export default toggleButtonMeta;
-export const toggleButtonVariants = Object.keys(
-	toggleButtonMeta.variants,
-) as (keyof typeof toggleButtonMeta.variants)[];
 
-export type ToggleButtonVariant = keyof typeof toggleButtonMeta.variants;
+export type ToggleButtonStyle = keyof typeof toggleButtonMeta.styles;
 
-export const defaultToggleButtonVariant = toggleButtonMeta.defaultVariant;
+export const toggleButtonStyleNames = Object.keys(toggleButtonMeta.styles) as ToggleButtonStyle[];
+
+export const defaultToggleButtonStyle = toggleButtonMeta.defaultStyle;

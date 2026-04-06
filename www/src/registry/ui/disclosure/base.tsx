@@ -8,28 +8,17 @@ import {
 	Heading as AriaHeading,
 	composeRenderProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 
-const disclosureStyles = tv({
-	slots: {
-		root: "group/disclosure w-full disabled:text-fg-disabled **:data-button:[&[slot=trigger]]:w-full **:data-button:[&[slot=trigger]]:justify-between **:data-button:[&[slot=trigger]]:text-left disabled:**:[svg]:text-fg-disabled",
-		heading: "flex",
-		button: [
-			"focus-reset focus-visible:focus-ring",
-			"flex flex-1 cursor-interactive items-start justify-between gap-4 rounded-md py-3 text-left font-medium text-sm transition-shadow disabled:pointer-events-none",
-		],
-		panel:
-			"h-(--disclosure-panel-height) overflow-clip text-fg-muted text-sm opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
-	},
-});
+import { useStyles } from "./styles";
 
-const { root, panel, heading, button } = disclosureStyles();
+// MARK: disclosureStyles
 
-/* ---------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface DisclosureProps extends React.ComponentProps<typeof AriaDisclosure> {}
 
 function Disclosure({ className, ...props }: DisclosureProps) {
+	const { root } = useStyles()();
 	return (
 		<AriaDisclosure
 			data-disclosure=""
@@ -39,11 +28,12 @@ function Disclosure({ className, ...props }: DisclosureProps) {
 	);
 }
 
-/* ---------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface DisclosurePanelProps extends React.ComponentProps<typeof AriaDisclosurePanel> {}
 
 function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
+	const { panel } = useStyles()();
 	return (
 		<AriaDisclosurePanel
 			data-disclosure-panel=""
@@ -55,11 +45,12 @@ function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
 	);
 }
 
-/* ---------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface DisclosureTriggerProps extends React.ComponentProps<typeof AriaButton> {}
 
 function DisclosureTrigger(props: DisclosureTriggerProps) {
+	const { heading, button } = useStyles()();
 	return (
 		<AriaHeading className={heading()}>
 			<AriaButton slot="trigger" data-disclosure-trigger="" className={button()} {...props}>
@@ -74,7 +65,7 @@ function DisclosureTrigger(props: DisclosureTriggerProps) {
 	);
 }
 
-/* ---------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export { Disclosure, DisclosurePanel, DisclosureTrigger };
 

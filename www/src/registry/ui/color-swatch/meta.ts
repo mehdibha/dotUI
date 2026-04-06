@@ -4,23 +4,23 @@ const colorSwatchMeta = {
 	name: "color-swatch",
 	type: "registry:ui",
 	group: "color",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/color-swatch/base.tsx",
-					target: "ui/color-swatch.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/color-swatch/base.tsx",
+			target: "ui/color-swatch.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default colorSwatchMeta;
-export const colorSwatchVariants = Object.keys(colorSwatchMeta.variants) as (keyof typeof colorSwatchMeta.variants)[];
 
-export type ColorSwatchVariant = keyof typeof colorSwatchMeta.variants;
+export type ColorSwatchStyle = keyof typeof colorSwatchMeta.styles;
 
-export const defaultColorSwatchVariant = colorSwatchMeta.defaultVariant;
+export const colorSwatchStyleNames = Object.keys(colorSwatchMeta.styles) as ColorSwatchStyle[];
+
+export const defaultColorSwatchStyle = colorSwatchMeta.defaultStyle;

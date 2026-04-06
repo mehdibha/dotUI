@@ -8,50 +8,26 @@ import {
 	Tabs as AriaTabs,
 	composeRenderProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 
 import { createContext } from "@/registry/lib/context";
 
-const tabsStyles = tv({
-	slots: {
-		root: "flex flex-col gap-2",
-		list: "flex",
-		tab: "relative cursor-default p-2 selected:text-fg text-fg-muted text-sm transition-colors hover:text-fg [&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
-		selectionIndicator: [
-			"absolute rounded-full bg-accent duration-150 ease-out motion-safe:transition-[translate,width,height]",
-		],
-		panel: "",
-	},
-	variants: {
-		orientation: {
-			horizontal: {
-				root: "flex-col",
-				list: "flex-row border-b",
-				selectionIndicator: "bottom-0 left-0 h-0.5 w-full translate-y-px",
-			},
-			vertical: {
-				root: "flex-row",
-				list: "flex-col border-r",
-				selectionIndicator: "right-0 bottom-0 h-full w-0.5",
-			},
-		},
-	},
-});
+import { useStyles } from "./styles";
 
-const { root, list, tab, selectionIndicator, panel } = tabsStyles();
+// MARK: tabsStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
 	name: "TabsContext",
 });
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TabsProps extends React.ComponentProps<typeof AriaTabs> {}
 
 const Tabs = ({ className, ...props }: TabsProps) => {
+	const { root } = useStyles()();
 	return (
 		<AriaTabs
 			className={composeRenderProps(className, (cn, { orientation }) => root({ orientation, className: cn }))}
@@ -64,11 +40,12 @@ const Tabs = ({ className, ...props }: TabsProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TabListProps extends React.ComponentProps<typeof AriaTabList> {}
 
 const TabList = ({ className, ...props }: TabListProps) => {
+	const { list } = useStyles()();
 	return (
 		<AriaTabList
 			className={composeRenderProps(className, (cn, { orientation }) => list({ orientation, className: cn }))}
@@ -77,11 +54,12 @@ const TabList = ({ className, ...props }: TabListProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TabProps extends React.ComponentProps<typeof AriaTab> {}
 
 const Tab = ({ className, ...props }: TabProps) => {
+	const { tab } = useStyles()();
 	return (
 		<AriaTab data-tab="" className={composeRenderProps(className, (cn) => tab({ className: cn }))} {...props}>
 			{composeRenderProps(props.children, (children) => (
@@ -94,11 +72,12 @@ const Tab = ({ className, ...props }: TabProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TabIndicatorProps extends React.ComponentProps<typeof AriaSelectionIndicator> {}
 
 const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
+	const { selectionIndicator } = useStyles()();
 	const orientation = useTabsContext("TabIndicator");
 	return (
 		<AriaSelectionIndicator
@@ -109,11 +88,12 @@ const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TabPanelProps extends React.ComponentProps<typeof AriaTabPanel> {}
 
 const TabPanel = ({ className, ...props }: TabPanelProps) => {
+	const { panel } = useStyles()();
 	return (
 		<AriaTabPanel
 			data-tab-panel
@@ -123,7 +103,7 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export { Tabs, TabList, Tab, TabPanel, TabIndicator };
 export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabIndicatorProps };

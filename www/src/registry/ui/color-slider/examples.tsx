@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Channel from "./demos/channel";
 import Controlled from "./demos/controlled";
@@ -8,9 +9,9 @@ import Label from "./demos/label";
 import Uncontrolled from "./demos/uncontrolled";
 import Vertical from "./demos/vertical";
 
-export default function Examples() {
+export default function ColorSliderExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="channel">
 				<Channel />
 			</Example>
@@ -32,6 +33,6 @@ export default function Examples() {
 			<Example title="vertical">
 				<Vertical />
 			</Example>
-		</>
+		</Examples>
 	);
 }

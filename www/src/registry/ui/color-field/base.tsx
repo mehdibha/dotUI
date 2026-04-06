@@ -1,18 +1,18 @@
 "use client";
 
 import { ColorField as AriaColorField, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 
-import { fieldStyles } from "@/registry/ui/field";
+import { useStyles } from "./styles";
 
-const colorFieldStyles = tv({
-	base: [fieldStyles().field({ orientation: "vertical" }), ""],
-});
+// MARK: colorFieldStyles
+
+// MARK: ColorField
 
 interface ColorFieldProps extends React.ComponentProps<typeof AriaColorField> {}
 
 const ColorField = ({ className, ...props }: ColorFieldProps) => {
+	const colorFieldStyles = useStyles();
 	return (
 		<AriaColorField
 			className={composeRenderProps(className, (className) => colorFieldStyles({ className }))}
@@ -20,6 +20,8 @@ const ColorField = ({ className, ...props }: ColorFieldProps) => {
 		/>
 	);
 };
+
+// MARK: exports
 
 export { ColorField };
 export type { ColorFieldProps };

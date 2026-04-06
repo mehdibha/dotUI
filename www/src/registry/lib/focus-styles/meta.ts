@@ -3,23 +3,23 @@ import type { RegistryItem } from "@/registry/types";
 const focusStylesMeta = {
 	name: "focus-styles",
 	type: "registry:lib",
-	defaultVariant: "basic",
-	variants: {
-		basic: {
-			files: [
-				{
-					path: "lib/focus-styles/basic.ts",
-					type: "registry:lib",
-					target: "lib/focus-styles.ts",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			path: "lib/focus-styles/basic.ts",
+			type: "registry:lib",
+			target: "lib/focus-styles.ts",
+		},
+	],
 } satisfies RegistryItem;
 
 export default focusStylesMeta;
-export const focusStylesVariants = Object.keys(focusStylesMeta.variants) as (keyof typeof focusStylesMeta.variants)[];
 
-export type FocusStylesVariant = keyof typeof focusStylesMeta.variants;
+export type FocusStylesStyle = keyof typeof focusStylesMeta.styles;
 
-export const defaultFocusStylesVariant = focusStylesMeta.defaultVariant;
+export const focusStylesStyleNames = Object.keys(focusStylesMeta.styles) as FocusStylesStyle[];
+
+export const defaultFocusStylesStyle = focusStylesMeta.defaultStyle;

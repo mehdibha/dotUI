@@ -4,24 +4,24 @@ const tagGroupMeta = {
 	name: "tag-group",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/tag-group/base.tsx",
-					target: "ui/tag-group.tsx",
-				},
-			],
-			registryDependencies: ["field", "button", "focus-styles"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/tag-group/base.tsx",
+			target: "ui/tag-group.tsx",
+		},
+	],
+	registryDependencies: ["field", "button", "focus-styles"],
 } satisfies RegistryItem;
 
 export default tagGroupMeta;
-export const tagGroupVariants = Object.keys(tagGroupMeta.variants) as (keyof typeof tagGroupMeta.variants)[];
 
-export type TagGroupVariant = keyof typeof tagGroupMeta.variants;
+export type TagGroupStyle = keyof typeof tagGroupMeta.styles;
 
-export const defaultTagGroupVariant = tagGroupMeta.defaultVariant;
+export const tagGroupStyleNames = Object.keys(tagGroupMeta.styles) as TagGroupStyle[];
+
+export const defaultTagGroupStyle = tagGroupMeta.defaultStyle;

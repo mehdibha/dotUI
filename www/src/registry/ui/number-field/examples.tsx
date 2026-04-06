@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Controlled from "./demos/controlled";
 import Default from "./demos/default";
@@ -12,9 +13,9 @@ import Required from "./demos/required";
 import Sizes from "./demos/sizes";
 import Uncontrolled from "./demos/uncontrolled";
 
-export default function Examples() {
+export default function NumberFieldExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="controlled">
 				<Controlled />
 			</Example>
@@ -48,6 +49,6 @@ export default function Examples() {
 			<Example title="uncontrolled">
 				<Uncontrolled />
 			</Example>
-		</>
+		</Examples>
 	);
 }

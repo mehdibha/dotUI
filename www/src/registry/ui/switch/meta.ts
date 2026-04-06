@@ -4,24 +4,24 @@ const switchMeta = {
 	name: "switch",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/switch/base.tsx",
-					target: "ui/switch.tsx",
-				},
-			],
-			registryDependencies: ["focus-styles"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/switch/base.tsx",
+			target: "ui/switch.tsx",
+		},
+	],
+	registryDependencies: ["focus-styles"],
 } satisfies RegistryItem;
 
 export default switchMeta;
-export const switchVariants = Object.keys(switchMeta.variants) as (keyof typeof switchMeta.variants)[];
 
-export type SwitchVariant = keyof typeof switchMeta.variants;
+export type SwitchStyle = keyof typeof switchMeta.styles;
 
-export const defaultSwitchVariant = switchMeta.defaultVariant;
+export const switchStyleNames = Object.keys(switchMeta.styles) as SwitchStyle[];
+
+export const defaultSwitchStyle = switchMeta.defaultStyle;

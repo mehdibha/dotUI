@@ -6,7 +6,6 @@ import {
 	Link as AriaLink,
 	composeRenderProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -14,57 +13,27 @@ import { useButtonAspect } from "@/registry/hooks/use-button-aspect";
 import { createVariantsContext } from "@/registry/lib/context";
 import { Loader } from "@/registry/ui/loader";
 
-const buttonStyles = tv({
-	base: [
-		"relative box-border inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm leading-normal transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
-		"*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
-		// svg
-		"[&_svg]:pointer-events-none [&_svg]:not-with-[size]:size-4 [&_svg]:shrink-0",
-		// focus state
-		"focus-reset focus-visible:focus-ring",
-		// disabled state
-		"disabled:cursor-default disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
-		// pending state
-		"pending:cursor-default pending:border-border-disabled pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
-	],
-	variants: {
-		variant: {
-			default:
-				"border pressed:border-border-active bg-neutral pressed:bg-neutral-active text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover",
-			primary:
-				"pending:border-0 bg-primary pressed:bg-primary-active text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0",
-			quiet: "bg-transparent pressed:bg-inverse/20 text-fg hover:bg-inverse/10",
-			link: "text-fg underline-offset-4 hover:underline",
-			warning: "bg-warning pressed:bg-warning-active text-fg-on-warning hover:bg-warning-hover",
-			danger: "bg-danger pressed:bg-danger-active text-fg-on-danger hover:bg-danger-hover",
-		},
-		size: {
-			xs: "h-7 px-2.5 has-[>svg]:px-2 data-icon-only:not-with-[size]:not-with-[w]:w-7 [&_svg]:not-with-[size]:size-3",
-			sm: "h-8 px-3 has-[>svg]:px-2.5 data-icon-only:not-with-[size]:not-with-[w]:w-8",
-			md: "h-9 px-4 has-[>svg]:px-3 data-icon-only:not-with-[size]:not-with-[w]:w-9",
-			lg: "h-10 px-5 has-[>svg]:px-4 data-icon-only:not-with-[size]:not-with-[w]:w-10",
-		},
-	},
-	defaultVariants: {
-		variant: "default",
-		size: "md",
-	},
-});
+import { useStyles } from "./styles";
+import { buttonStyles } from "./styles";
+import type { ButtonStyles } from "./styles";
 
-type ButtonVariants = VariantProps<typeof buttonStyles>;
+// MARK: buttonStyles
+
+type ButtonVariants = VariantProps<ButtonStyles>;
 
 const [ButtonProvider, useContextProps] = createVariantsContext<
 	ButtonVariants,
 	React.ComponentProps<typeof AriaButton>
 >(AriaButtonContext);
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface ButtonProps extends React.ComponentProps<typeof AriaButton>, ButtonVariants {
 	aspect?: "default" | "square" | "auto";
 }
 
 const Button = (localProps: ButtonProps) => {
+	const styles = useStyles();
 	const { variant, size, aspect = "auto", className, slot, style, children, ...props } = useContextProps(localProps);
 
 	const isIconOnly = useButtonAspect(children, aspect);
@@ -73,7 +42,7 @@ const Button = (localProps: ButtonProps) => {
 		<AriaButton
 			data-button=""
 			data-icon-only={isIconOnly || undefined}
-			className={composeRenderProps(className, (cn) => buttonStyles({ variant, size, className: cn }))}
+			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
 			slot={slot}
 			style={style}
 			{...props}
@@ -94,13 +63,14 @@ const Button = (localProps: ButtonProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
-interface LinkButtonProps extends React.ComponentProps<typeof AriaLink>, VariantProps<typeof buttonStyles> {
+interface LinkButtonProps extends React.ComponentProps<typeof AriaLink>, VariantProps<ButtonStyles> {
 	aspect?: "default" | "square" | "auto";
 }
 
 const LinkButton = (localProps: LinkButtonProps) => {
+	const styles = useStyles();
 	const { variant, size, aspect = "auto", className, slot, style, children, ...props } = useContextProps(localProps);
 
 	const isIconOnly = useButtonAspect(children, aspect);
@@ -110,7 +80,7 @@ const LinkButton = (localProps: LinkButtonProps) => {
 			data-slot="button"
 			data-button=""
 			data-icon-only={isIconOnly || undefined}
-			className={composeRenderProps(className, (cn) => buttonStyles({ variant, size, className: cn }))}
+			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
 			slot={slot}
 			style={style}
 			{...props}
@@ -122,7 +92,7 @@ const LinkButton = (localProps: LinkButtonProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export type { ButtonProps, LinkButtonProps };
 

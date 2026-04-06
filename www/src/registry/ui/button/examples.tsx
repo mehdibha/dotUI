@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Default from "./demos/default";
 import Disabled from "./demos/disabled";
@@ -9,9 +10,9 @@ import Shapes from "./demos/shapes";
 import Sizes from "./demos/sizes";
 import Variants from "./demos/variants";
 
-export default function Examples() {
+export default function ButtonExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="default">
 				<Default />
 			</Example>
@@ -36,6 +37,6 @@ export default function Examples() {
 			<Example title="variants">
 				<Variants />
 			</Example>
-		</>
+		</Examples>
 	);
 }

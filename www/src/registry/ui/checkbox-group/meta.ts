@@ -4,26 +4,24 @@ const checkboxGroupMeta = {
 	name: "checkbox-group",
 	type: "registry:ui",
 	group: "selections",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/checkbox-group/base.tsx",
-					target: "ui/checkbox-group.tsx",
-				},
-			],
-			registryDependencies: ["field", "checkbox"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/checkbox-group/base.tsx",
+			target: "ui/checkbox-group.tsx",
+		},
+	],
+	registryDependencies: ["field", "checkbox"],
 } satisfies RegistryItem;
 
 export default checkboxGroupMeta;
-export const checkboxGroupVariants = Object.keys(
-	checkboxGroupMeta.variants,
-) as (keyof typeof checkboxGroupMeta.variants)[];
 
-export type CheckboxGroupVariant = keyof typeof checkboxGroupMeta.variants;
+export type CheckboxGroupStyle = keyof typeof checkboxGroupMeta.styles;
 
-export const defaultCheckboxGroupVariant = checkboxGroupMeta.defaultVariant;
+export const checkboxGroupStyleNames = Object.keys(checkboxGroupMeta.styles) as CheckboxGroupStyle[];
+
+export const defaultCheckboxGroupStyle = checkboxGroupMeta.defaultStyle;

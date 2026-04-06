@@ -1,12 +1,15 @@
 "use client";
 
 import { Radio as AriaRadio, RadioGroup as AriaRadioGroup, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type { RadioGroupProps, RadioRenderProps } from "react-aria-components";
 
 import { createContext } from "@/registry/lib/context";
 import { cn } from "@/registry/lib/utils";
 import { fieldStyles } from "@/registry/ui/field";
+
+import { useStyles } from "./styles";
+
+// MARK: radioGroupStyles
 
 const { field } = fieldStyles();
 
@@ -14,30 +17,7 @@ const RadioGroup = ({ className, ...props }: RadioGroupProps) => {
 	return <AriaRadioGroup className={composeRenderProps(className, (className) => field({ className }))} {...props} />;
 };
 
-/* -----------------------------------------------------------------------------------------------*/
-
-const radioStyles = tv({
-	slots: {
-		root: ["flex items-center gap-2 has-data-[slot=description]:items-start"],
-		indicator: [
-			"flex size-4 shrink-0 items-center justify-center rounded-full border border-border-control bg-transparent text-transparent",
-			"transition-[background-color,border-color,box-shadow,color] duration-75",
-			// focus state
-			// selected state
-			"selected:border-transparent selected:bg-primary selected:text-fg-on-primary",
-			// read-only state
-			"read-only:cursor-default",
-			// disabled state
-			"disabled:cursor-default disabled:border-border-disabled selected:disabled:bg-disabled selected:disabled:text-fg-disabled indeterminate:disabled:bg-disabled",
-			// invalid state
-			"invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-onMutedDanger",
-			// indeterminate state
-			"indeterminate:border-transparent indeterminate:bg-primary indeterminate:text-fg-on-primary",
-		],
-	},
-});
-
-const { root, indicator } = radioStyles();
+// MARK: seperator
 
 const [InternalRadioProvider, useInternalRadio] = createContext<RadioRenderProps>({
 	strict: true,
@@ -46,6 +26,7 @@ const [InternalRadioProvider, useInternalRadio] = createContext<RadioRenderProps
 interface RadioProps extends React.ComponentProps<typeof AriaRadio> {}
 
 const Radio = ({ className, ...props }: RadioProps) => {
+	const { root, indicator } = useStyles()();
 	return (
 		<AriaRadio
 			data-slot="radio"
@@ -69,6 +50,7 @@ const Radio = ({ className, ...props }: RadioProps) => {
 interface RadioIndicatorProps extends React.ComponentProps<"div"> {}
 
 const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
+	const { indicator } = useStyles()();
 	const ctx = useInternalRadio("RadioIndicator");
 	return (
 		<div
@@ -89,7 +71,7 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 		</div>
 	);
 };
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export { RadioGroup, Radio, RadioIndicator };
 

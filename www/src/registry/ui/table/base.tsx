@@ -16,7 +16,6 @@ import {
 	composeRenderProps,
 	useTableOptions,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type {
 	RowProps as AriaRowProps,
 	TableBodyProps as AriaTableBodyProps,
@@ -27,45 +26,32 @@ import { cn } from "@/registry/lib/utils";
 import { Checkbox } from "@/registry/ui/checkbox";
 import { Loader } from "@/registry/ui/loader";
 
-const tableStyles = tv({
-	slots: {
-		container: "relative scroll-pt-[2.321rem] overflow-auto rounded-lg border",
-		table: "w-full text-sm",
-		header: "sticky top-0 z-10 bg-bg",
-		column: "h-10 whitespace-nowrap px-2 text-left align-middle font-medium",
-		resizer: "",
-		body: "",
-		row: "",
-		cell: "whitespace-nowrap p-2 align-middle",
-		loadMore: [
-			"relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2",
-			"[&_[data-slot=loader]_svg]:size-4",
-		],
-	},
-});
+import { useStyles } from "./styles";
 
-const { container, table, header, column, resizer, body, row, cell, loadMore } = tableStyles();
+// MARK: tableStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TableContainerProps extends React.ComponentProps<typeof AriaResizableTableContainer> {
 	resizable?: boolean;
 }
 
 const TableContainer = ({ resizable, className, ...props }: TableContainerProps) => {
+	const { container } = useStyles()();
 	if (resizable) {
 		return <AriaResizableTableContainer className={container({ className })} {...props} />;
 	}
 	return <div className={container({ className })} {...props} />;
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TableProps extends React.ComponentProps<typeof AriaTable> {
 	resizable?: boolean;
 }
 
 const Table = ({ className, resizable, ...props }: TableProps) => {
+	const { table } = useStyles()();
 	return (
 		<TableContainer resizable={resizable}>
 			<AriaTable className={composeRenderProps(className, (cn) => table({ className: cn }))} {...props} />
@@ -73,11 +59,12 @@ const Table = ({ className, resizable, ...props }: TableProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TableHeaderProps<T extends object> extends AriaTableHeaderProps<T> {}
 
 const TableHeader = <T extends object>({ className, columns, children, ...props }: TableHeaderProps<T>) => {
+	const { header } = useStyles()();
 	const { selectionBehavior, selectionMode, allowsDragging } = useTableOptions();
 	return (
 		<AriaTableHeader
@@ -94,13 +81,14 @@ const TableHeader = <T extends object>({ className, columns, children, ...props 
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TableColumnProps extends React.ComponentProps<typeof AriaColumn> {
 	allowsResizing?: boolean;
 }
 
 const TableColumn = ({ allowsResizing, children, className, ...props }: TableColumnProps) => {
+	const { column, resizer } = useStyles()();
 	return (
 		<AriaColumn
 			data-slot="table-column"
@@ -123,7 +111,7 @@ const TableColumn = ({ allowsResizing, children, className, ...props }: TableCol
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TableBodyProps<T extends object> extends AriaTableBodyProps<T> {
 	isLoading?: boolean;
@@ -139,6 +127,7 @@ const TableBody = <T extends object>({
 	onLoadMore,
 	...props
 }: TableBodyProps<T>) => {
+	const { body } = useStyles()();
 	return (
 		<AriaTableBody
 			renderEmptyState={renderEmptyState}
@@ -151,11 +140,12 @@ const TableBody = <T extends object>({
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TableRowProps<T extends object> extends AriaRowProps<T> {}
 
 function TableRow<T extends object>({ columns, children, className, ...props }: TableRowProps<T>) {
+	const { row } = useStyles()();
 	const { selectionBehavior, allowsDragging } = useTableOptions();
 
 	return (
@@ -183,11 +173,12 @@ function TableRow<T extends object>({ columns, children, className, ...props }: 
 	);
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TableCellProps extends React.ComponentProps<typeof AriaCell> {}
 
 const TableCell = ({ className, ...props }: TableCellProps) => {
+	const { cell } = useStyles()();
 	return (
 		<AriaCell
 			data-slot="table-cell"
@@ -197,11 +188,12 @@ const TableCell = ({ className, ...props }: TableCellProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TableLoadMoreProps extends React.ComponentProps<typeof AriaTableLoadMoreItem> {}
 
 const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
+	const { loadMore } = useStyles()();
 	return (
 		<AriaTableLoadMoreItem className={loadMore({ className })} {...props}>
 			<Loader aria-label="Loading more..." />
@@ -209,7 +201,7 @@ const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export { Table, TableHeader, TableColumn, TableBody, TableLoadMore, TableRow, TableCell };
 

@@ -6,43 +6,29 @@ import {
 	TooltipTrigger as AriaTooltipTrigger,
 	composeRenderProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
-const tooltipStyles = tv({
-	slots: {
-		content: [
-			"w-fit max-w-xs origin-(--trigger-anchor-point) rounded-sm bg-tooltip px-3 py-1.5 text-center text-fg-on-tooltip text-xs outline-none forced-color-adjust-none",
-			"transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:calc(var(--spacing)*0.5)]",
-			"entering:transform-(--origin) entering:scale-95 entering:opacity-0",
-			"exiting:transform-(--origin) exiting:scale-95 exiting:opacity-0 exiting:duration-150",
-			"placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))] placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))]",
-		],
-		arrow: [
-			"block [&>svg]:size-2.5 [&>svg]:fill-tooltip",
-			"placement-bottom:[&>svg]:rotate-180 placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90",
-		],
-		trigger: "focus-reset focus-visible:focus-ring",
-	},
-});
+import { useStyles } from "./styles";
+import type { TooltipStyles } from "./styles";
 
-const { content, arrow } = tooltipStyles();
+// MARK: tooltipStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 interface TooltipProps extends React.ComponentProps<typeof AriaTooltipTrigger> {}
 
 const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
 	<AriaTooltipTrigger delay={delay} closeDelay={closeDelay} {...props} />
 );
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
-interface TooltipContentProps extends React.ComponentProps<typeof AriaTooltip>, VariantProps<typeof tooltipStyles> {
+interface TooltipContentProps extends React.ComponentProps<typeof AriaTooltip>, VariantProps<TooltipStyles> {
 	hideArrow?: boolean;
 }
 
 function TooltipContent({ offset = 10, hideArrow = false, className, ...props }: TooltipContentProps) {
+	const { content } = useStyles()();
 	return (
 		<AriaTooltip
 			data-slot="tooltip"
@@ -60,11 +46,12 @@ function TooltipContent({ offset = 10, hideArrow = false, className, ...props }:
 	);
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
 function TooltipArrow({ className }: TooltipArrowProps) {
+	const { arrow } = useStyles()();
 	return (
 		<AriaOverlayArrow className={arrow({ className })}>
 			<svg data-slot="tooltip-arrow" width={8} height={8} viewBox="0 0 8 8">
@@ -74,7 +61,7 @@ function TooltipArrow({ className }: TooltipArrowProps) {
 	);
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export { Tooltip, TooltipContent };
 

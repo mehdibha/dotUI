@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Basic from "./demos/basic";
 import Disabled from "./demos/disabled";
@@ -7,9 +8,9 @@ import FileTrigger from "./demos/file-trigger";
 import Label from "./demos/label";
 import VisualFeedback from "./demos/visual-feedback";
 
-export default function Examples() {
+export default function DropZoneExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="basic">
 				<Basic />
 			</Example>
@@ -28,6 +29,6 @@ export default function Examples() {
 			<Example title="visual feedback">
 				<VisualFeedback />
 			</Example>
-		</>
+		</Examples>
 	);
 }

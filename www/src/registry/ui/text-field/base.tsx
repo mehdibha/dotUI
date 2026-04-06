@@ -1,23 +1,18 @@
 "use client";
 
 import { TextField as AriaTextField, composeRenderProps } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 
-import { fieldStyles } from "@/registry/ui/field";
+import { useStyles } from "./styles";
 
-const textFieldStyles = tv({
-	base: [
-		"[&.flex-1]:*:data-[slot=input]:w-full [&.w-full]:*:data-[slot=input]:w-full",
-		fieldStyles().field({ orientation: "vertical" }),
-	],
-});
+// MARK: textFieldStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: TextField
 
 interface TextFieldProps extends React.ComponentProps<typeof AriaTextField> {}
 
 const TextField = ({ className, ...props }: TextFieldProps) => {
+	const textFieldStyles = useStyles();
 	return (
 		<AriaTextField
 			data-field=""
@@ -29,7 +24,7 @@ const TextField = ({ className, ...props }: TextFieldProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: exports
 
 export { TextField };
 

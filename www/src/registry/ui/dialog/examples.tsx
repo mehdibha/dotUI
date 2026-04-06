@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import AlertDialog from "./demos/alert-dialog";
 import AsyncFormSubmission from "./demos/async-form-submission";
@@ -14,9 +15,9 @@ import Popover from "./demos/popover";
 import Title from "./demos/title";
 import Types from "./demos/types";
 
-export default function Examples() {
+export default function DialogExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="alert dialog">
 				<AlertDialog />
 			</Example>
@@ -56,6 +57,6 @@ export default function Examples() {
 			<Example title="types">
 				<Types />
 			</Example>
-		</>
+		</Examples>
 	);
 }

@@ -4,24 +4,24 @@ const colorPickerMeta = {
 	name: "color-picker",
 	type: "registry:ui",
 	group: "color",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/color-picker/base.tsx",
-					target: "ui/color-picker.tsx",
-				},
-			],
-			registryDependencies: ["button", "color-area", "color-field", "color-slider", "color-swatch", "dialog", "select"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/color-picker/base.tsx",
+			target: "ui/color-picker.tsx",
+		},
+	],
+	registryDependencies: ["button", "color-area", "color-field", "color-slider", "color-swatch", "dialog", "select"],
 } satisfies RegistryItem;
 
 export default colorPickerMeta;
-export const colorPickerVariants = Object.keys(colorPickerMeta.variants) as (keyof typeof colorPickerMeta.variants)[];
 
-export type ColorPickerVariant = keyof typeof colorPickerMeta.variants;
+export type ColorPickerStyle = keyof typeof colorPickerMeta.styles;
 
-export const defaultColorPickerVariant = colorPickerMeta.defaultVariant;
+export const colorPickerStyleNames = Object.keys(colorPickerMeta.styles) as ColorPickerStyle[];
+
+export const defaultColorPickerStyle = colorPickerMeta.defaultStyle;

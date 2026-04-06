@@ -12,49 +12,17 @@ import {
 	composeRenderProps,
 	Provider,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
 
-import { fieldStyles } from "@/registry/ui/field";
+import { useStyles } from "./styles";
 
-const sliderStyles = tv({
-	slots: {
-		root: fieldStyles().field(),
-		track: "relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-not-allowed disabled:bg-disabled",
-		filler: "pointer-events-none absolute rounded-full bg-accent disabled:bg-disabled",
-		thumb: [
-			"size-4 rounded-full bg-white shadow-md ring-primary/30 transition-[width,height,box-shadow]",
-			"dragging:size-5 dragging:ring-0 ring-accent/30 hover:ring-4",
-			"top-[50%] left-[50%]",
-			"focus-visible:focus-ring",
-			"disabled:border disabled:border-bg disabled:bg-disabled",
-		],
-		output: "text-fg-muted text-sm disabled:text-fg-disabled",
-	},
-	variants: {
-		orientation: {
-			horizontal: {
-				track: "h-1.5 w-48",
-				filler: "top-0 h-full",
-			},
-			vertical: {
-				root: "items-center",
-				track: "h-48 w-2",
-				filler: "bottom-0 w-full",
-			},
-		},
-	},
-	defaultVariants: {
-		orientation: "horizontal",
-	},
-});
+// MARK: sliderStyles
 
-const { root, track, filler, thumb, output } = sliderStyles();
-
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface SliderProps extends React.ComponentProps<typeof AriaSlider> {}
 
 const Slider = ({ className, children, ...props }: SliderProps) => {
+	const { root } = useStyles()();
 	const descriptionId = useSlotId();
 	return (
 		<AriaSlider
@@ -69,11 +37,12 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface SliderControlProps extends React.ComponentProps<typeof AriaSliderTrack> {}
 
 const SliderControl = ({ className, ...props }: SliderControlProps) => {
+	const { track } = useStyles()();
 	return (
 		<AriaSliderTrack
 			data-slot="slider-track"
@@ -98,11 +67,12 @@ const SliderControl = ({ className, ...props }: SliderControlProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface SliderFillerProps extends React.ComponentProps<"div"> {}
 
 const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
+	const { filler } = useStyles()();
 	const { orientation, getThumbPercent, values, isDisabled } = use(AriaSliderStateContext)!;
 
 	const getFillerDimensions = (): React.CSSProperties => {
@@ -134,11 +104,12 @@ const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface SliderThumbProps extends React.ComponentProps<typeof AriaSliderThumb> {}
 
 const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
+	const { thumb } = useStyles()();
 	return (
 		<AriaSliderThumb
 			data-slot="slider-thumb"
@@ -150,11 +121,12 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 interface SliderOutputProps extends React.ComponentProps<typeof AriaSliderOutput> {}
 
 const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
+	const { output } = useStyles()();
 	return (
 		<AriaSliderOutput
 			data-slot="slider-output"
@@ -169,7 +141,7 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
 	);
 };
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: seperator
 
 export { Slider, SliderControl, SliderFiller, SliderThumb, SliderOutput };
 

@@ -4,24 +4,24 @@ const progressBarMeta = {
 	name: "progress-bar",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/progress-bar/base.tsx",
-					target: "ui/progress-bar.tsx",
-				},
-			],
-			registryDependencies: ["field"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/progress-bar/base.tsx",
+			target: "ui/progress-bar.tsx",
+		},
+	],
+	registryDependencies: ["field"],
 } satisfies RegistryItem;
 
 export default progressBarMeta;
-export const progressBarVariants = Object.keys(progressBarMeta.variants) as (keyof typeof progressBarMeta.variants)[];
 
-export type ProgressBarVariant = keyof typeof progressBarMeta.variants;
+export type ProgressBarStyle = keyof typeof progressBarMeta.styles;
 
-export const defaultProgressBarVariant = progressBarMeta.defaultVariant;
+export const progressBarStyleNames = Object.keys(progressBarMeta.styles) as ProgressBarStyle[];
+
+export const defaultProgressBarStyle = progressBarMeta.defaultStyle;

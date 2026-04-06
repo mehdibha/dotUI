@@ -4,23 +4,23 @@ const textMeta = {
 	name: "text",
 	type: "registry:ui",
 	group: "data-display",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/text/base.tsx",
-					target: "ui/text.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/text/base.tsx",
+			target: "ui/text.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default textMeta;
-export const textVariants = Object.keys(textMeta.variants) as (keyof typeof textMeta.variants)[];
 
-export type TextVariant = keyof typeof textMeta.variants;
+export type TextStyle = keyof typeof textMeta.styles;
 
-export const defaultTextVariant = textMeta.defaultVariant;
+export const textStyleNames = Object.keys(textMeta.styles) as TextStyle[];
+
+export const defaultTextStyle = textMeta.defaultStyle;

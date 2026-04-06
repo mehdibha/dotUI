@@ -4,33 +4,23 @@ const formMeta = {
 	name: "form",
 	type: "registry:ui",
 	group: "forms",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/form/base.tsx",
-					target: "ui/form.tsx",
-				},
-			],
-		},
-		"react-hook-form": {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/form/react-hook-form.tsx",
-					target: "ui/form.tsx",
-				},
-			],
-			dependencies: ["react-hook-form"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/react-hook-form/base.tsx",
+			target: "ui/react-hook-form.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default formMeta;
-export const formVariants = Object.keys(formMeta.variants) as (keyof typeof formMeta.variants)[];
 
-export type ReactHookFormVariant = keyof typeof formMeta.variants;
+export type FormStyle = keyof typeof formMeta.styles;
 
-export const defaultReactHookFormVariant = formMeta.defaultVariant;
+export const formStyleNames = Object.keys(formMeta.styles) as FormStyle[];
+
+export const defaultFormStyle = formMeta.defaultStyle;

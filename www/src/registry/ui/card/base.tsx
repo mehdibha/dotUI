@@ -1,78 +1,73 @@
-import { tv } from "tailwind-variants";
 import type * as React from "react";
 
-const cardStyles = tv({
-	slots: {
-		root: "flex flex-col gap-6 rounded-xl border bg-card py-6 text-fg shadow-sm",
-		header:
-			"@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-		title: "font-semibold leading-none",
-		description: "text-fg-muted text-sm",
-		action: "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
-		content: "flex-1 px-6",
-		footer: "flex items-center px-6 [.border-t]:pt-6",
-	},
-});
+import { useStyles } from "./styles";
 
-const { root, header, title, description, action, content, footer } = cardStyles();
+// MARK: cardStyles
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: Card
 
 interface CardProps extends React.ComponentProps<"div"> {}
 
 function Card({ className, ...props }: CardProps) {
+	const { root } = useStyles()();
 	return <div data-card="" className={root({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: CardHeader
 
 interface CardHeaderProps extends React.ComponentProps<"div"> {}
 
 function CardHeader({ className, ...props }: CardHeaderProps) {
+	const { header } = useStyles()();
 	return <div data-card-header="" className={header({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: CardTitle
 
 interface CardTitleProps extends React.ComponentProps<"div"> {}
 
 function CardTitle({ className, ...props }: CardTitleProps) {
+	const { title } = useStyles()();
 	return <div data-card-title="" className={title({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: CardDescription
 
 interface CardDescriptionProps extends React.ComponentProps<"div"> {}
 
 function CardDescription({ className, ...props }: CardDescriptionProps) {
+	const { description } = useStyles()();
 	return <div data-card-description="" className={description({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: CardAction
 
 interface CardActionProps extends React.ComponentProps<"div"> {}
 
 function CardAction({ className, ...props }: CardActionProps) {
+	const { action } = useStyles()();
 	return <div data-card-action="" className={action({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: CardContent
 
 interface CardContentProps extends React.ComponentProps<"div"> {}
 
 function CardContent({ className, ...props }: CardContentProps) {
+	const { content } = useStyles()();
 	return <div data-card-content="" className={content({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: CardFooter
 
 interface CardFooterProps extends React.ComponentProps<"div"> {}
 
 function CardFooter({ className, ...props }: CardFooterProps) {
+	const { footer } = useStyles()();
 	return <div data-card-footer="" className={footer({ className })} {...props} />;
 }
 
-/* -----------------------------------------------------------------------------------------------*/
+// MARK: separator
 
 export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };
 

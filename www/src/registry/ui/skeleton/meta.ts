@@ -4,23 +4,23 @@ const skeletonMeta = {
 	name: "skeleton",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/skeleton/base.tsx",
-					target: "ui/skeleton.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/skeleton/base.tsx",
+			target: "ui/skeleton.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default skeletonMeta;
-export const skeletonVariants = Object.keys(skeletonMeta.variants) as (keyof typeof skeletonMeta.variants)[];
 
-export type SkeletonVariant = keyof typeof skeletonMeta.variants;
+export type SkeletonStyle = keyof typeof skeletonMeta.styles;
 
-export const defaultSkeletonVariant = skeletonMeta.defaultVariant;
+export const skeletonStyleNames = Object.keys(skeletonMeta.styles) as SkeletonStyle[];
+
+export const defaultSkeletonStyle = skeletonMeta.defaultStyle;

@@ -4,24 +4,24 @@ const overlayMeta = {
 	name: "overlay",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/overlay/base.tsx",
-					target: "ui/overlay.tsx",
-				},
-			],
-			registryDependencies: ["modal", "popover", "drawer", "use-is-mobile"],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/overlay/base.tsx",
+			target: "ui/overlay.tsx",
+		},
+	],
+	registryDependencies: ["modal", "popover", "drawer", "use-is-mobile"],
 } satisfies RegistryItem;
 
 export default overlayMeta;
-export const overlayVariants = Object.keys(overlayMeta.variants) as (keyof typeof overlayMeta.variants)[];
 
-export type OverlayVariant = keyof typeof overlayMeta.variants;
+export type OverlayStyle = keyof typeof overlayMeta.styles;
 
-export const defaultOverlayVariant = overlayMeta.defaultVariant;
+export const overlayStyleNames = Object.keys(overlayMeta.styles) as OverlayStyle[];
+
+export const defaultOverlayStyle = overlayMeta.defaultStyle;

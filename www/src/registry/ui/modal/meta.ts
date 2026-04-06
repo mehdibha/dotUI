@@ -4,23 +4,23 @@ const modalMeta = {
 	name: "modal",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/modal/base.tsx",
-					target: "ui/modal.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/modal/base.tsx",
+			target: "ui/modal.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default modalMeta;
-export const modalVariants = Object.keys(modalMeta.variants) as (keyof typeof modalMeta.variants)[];
 
-export type ModalVariant = keyof typeof modalMeta.variants;
+export type ModalStyle = keyof typeof modalMeta.styles;
 
-export const defaultModalVariant = modalMeta.defaultVariant;
+export const modalStyleNames = Object.keys(modalMeta.styles) as ModalStyle[];
+
+export const defaultModalStyle = modalMeta.defaultStyle;

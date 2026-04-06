@@ -1,22 +1,18 @@
 "use client";
 
 import { ColorThumb as AriaColorThumb } from "react-aria-components";
-import { tv } from "tailwind-variants";
 import type { ColorThumbProps as AriaColorThumbProps } from "react-aria-components";
 
-const colorThumbStyles = tv({
-	base: [
-		"focus-reset focus-visible:focus-ring",
-		"z-30 size-6 rounded-full border-2 border-white ring-1 ring-black/40 disabled:border-border-disabled disabled:bg-disabled!",
-		"group-orientation-horizontal/color-slider:top-1/2 group-orientation-vertical/color-slider:left-1/2",
-	],
-});
+import { useStyles } from "./styles";
+
+// MARK: colorThumbStyles
 
 interface ColorThumbProps extends Omit<AriaColorThumbProps, "className"> {
 	className?: string;
 }
 const ColorThumb = ({ className, ...props }: ColorThumbProps) => {
-	return <AriaColorThumb data-slot="color-thumb" className={colorThumbStyles({ className })} {...props} />;
+	const styles = useStyles();
+	return <AriaColorThumb data-slot="color-thumb" className={styles({ className })} {...props} />;
 };
 
 export type { ColorThumbProps };

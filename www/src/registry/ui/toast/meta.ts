@@ -4,23 +4,23 @@ const toastMeta = {
 	name: "toast",
 	type: "registry:ui",
 	group: "feedback",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/toast/base.tsx",
-					target: "ui/toast.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/toast/base.tsx",
+			target: "ui/toast.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default toastMeta;
-export const toastVariants = Object.keys(toastMeta.variants) as (keyof typeof toastMeta.variants)[];
 
-export type ToastVariant = keyof typeof toastMeta.variants;
+export type ToastStyle = keyof typeof toastMeta.styles;
 
-export const defaultToastVariant = toastMeta.defaultVariant;
+export const toastStyleNames = Object.keys(toastMeta.styles) as ToastStyle[];
+
+export const defaultToastStyle = toastMeta.defaultStyle;

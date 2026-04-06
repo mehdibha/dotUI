@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Count from "./demos/count";
 import Default from "./demos/default";
@@ -9,9 +10,9 @@ import Pending from "./demos/pending";
 import Sizes from "./demos/sizes";
 import Variants from "./demos/variants";
 
-export default function Examples() {
+export default function BadgeExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="count">
 				<Count />
 			</Example>
@@ -36,6 +37,6 @@ export default function Examples() {
 			<Example title="variants">
 				<Variants />
 			</Example>
-		</>
+		</Examples>
 	);
 }

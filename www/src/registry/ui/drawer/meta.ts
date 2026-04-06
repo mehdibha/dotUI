@@ -4,23 +4,23 @@ const drawerMeta = {
 	name: "drawer",
 	type: "registry:ui",
 	group: "overlays",
-	defaultVariant: "base",
-	variants: {
-		base: {
-			files: [
-				{
-					type: "registry:ui",
-					path: "ui/drawer/base.tsx",
-					target: "ui/drawer.tsx",
-				},
-			],
-		},
+	defaultStyle: "default",
+	styles: {
+		default: {},
 	},
+	files: [
+		{
+			type: "registry:ui",
+			path: "ui/drawer/base.tsx",
+			target: "ui/drawer.tsx",
+		},
+	],
 } satisfies RegistryItem;
 
 export default drawerMeta;
-export const drawerVariants = Object.keys(drawerMeta.variants) as (keyof typeof drawerMeta.variants)[];
 
-export type DrawerVariant = keyof typeof drawerMeta.variants;
+export type DrawerStyle = keyof typeof drawerMeta.styles;
 
-export const defaultDrawerVariant = drawerMeta.defaultVariant;
+export const drawerStyleNames = Object.keys(drawerMeta.styles) as DrawerStyle[];
+
+export const defaultDrawerStyle = drawerMeta.defaultStyle;

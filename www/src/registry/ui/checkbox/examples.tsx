@@ -1,4 +1,5 @@
 import { Example } from "@/modules/create/preview/example";
+import { Examples } from "@/modules/create/preview/examples";
 
 import Card from "./demos/card";
 import Composition from "./demos/composition";
@@ -9,9 +10,9 @@ import Indeterminate from "./demos/indeterminate";
 import ReadOnly from "./demos/read-only";
 import Uncontrolled from "./demos/uncontrolled";
 
-export default function Examples() {
+export default function CheckboxExamples() {
 	return (
-		<>
+		<Examples>
 			<Example title="card">
 				<Card />
 			</Example>
@@ -36,6 +37,6 @@ export default function Examples() {
 			<Example title="uncontrolled">
 				<Uncontrolled />
 			</Example>
-		</>
+		</Examples>
 	);
 }
