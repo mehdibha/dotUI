@@ -13,8 +13,7 @@ import { useButtonAspect } from "@/registry/hooks/use-button-aspect";
 import { createVariantsContext } from "@/registry/lib/context";
 import { Loader } from "@/registry/ui/loader";
 
-import { useStyles } from "./styles";
-import { buttonStyles } from "./styles";
+import { buttonStyles, useStyles } from "./styles";
 import type { ButtonStyles } from "./styles";
 
 // MARK: buttonStyles
@@ -95,5 +94,4 @@ const LinkButton = (localProps: LinkButtonProps) => {
 // MARK: seperator
 
 export type { ButtonProps, LinkButtonProps };
-
-export { Button, LinkButton, ButtonProvider, buttonStyles };
+export { Button, ButtonProvider, buttonStyles, LinkButton };

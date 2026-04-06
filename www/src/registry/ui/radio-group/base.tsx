@@ -71,8 +71,8 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 		</div>
 	);
 };
+
 // MARK: seperator
 
-export { RadioGroup, Radio, RadioIndicator };
-
-export type { RadioGroupProps, RadioProps, RadioIndicatorProps };
+export type { RadioGroupProps, RadioIndicatorProps, RadioProps };
+export { Radio, RadioGroup, RadioIndicator };

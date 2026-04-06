@@ -71,4 +71,4 @@ function ToastItem({ className, ...props }: ToastProps) {
 	);
 }
 
-export { Toaster, queue as toast };
+export { queue as toast, Toaster };

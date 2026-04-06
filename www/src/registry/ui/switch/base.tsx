@@ -80,5 +80,5 @@ const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
 
 // MARK: seperator
 
-export type { SwitchProps, SwitchIndicatorProps, SwitchThumbProps };
+export type { SwitchIndicatorProps, SwitchProps, SwitchThumbProps };
 export { Switch, SwitchIndicator, SwitchThumb };

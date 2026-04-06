@@ -23,5 +23,5 @@ const ColorField = ({ className, ...props }: ColorFieldProps) => {
 
 // MARK: exports
 
-export { ColorField };
 export type { ColorFieldProps };
+export { ColorField };

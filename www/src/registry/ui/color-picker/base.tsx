@@ -68,5 +68,5 @@ const ColorPickerContent = ({ children, ...props }: ColorPickerContentProps) => 
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export { ColorPicker, ColorPickerTrigger, ColorPickerContent };
-export type { ColorPickerProps, ColorPickerTriggerProps, ColorPickerContentProps };
+export type { ColorPickerContentProps, ColorPickerProps, ColorPickerTriggerProps };
+export { ColorPicker, ColorPickerContent, ColorPickerTrigger };

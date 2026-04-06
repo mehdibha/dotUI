@@ -14,6 +14,5 @@ function Accordion({ className, ...props }: AccordionProps) {
 	);
 }
 
-export { Accordion };
-
 export type { AccordionProps };
+export { Accordion };

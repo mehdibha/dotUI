@@ -5,15 +5,7 @@ import { PlusCircleIcon } from "lucide-react";
 import { ExternalLinkIcon } from "@/registry/__generated__/icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar";
 import { Button } from "@/registry/ui/button";
-import {
-	Card,
-	CardAction,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/registry/ui/card";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/ui/card";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";

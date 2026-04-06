@@ -143,6 +143,5 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
 
 // MARK: seperator
 
-export { Slider, SliderControl, SliderFiller, SliderThumb, SliderOutput };
-
-export type { SliderProps, SliderControlProps, SliderFillerProps, SliderThumbProps, SliderOutputProps };
+export type { SliderControlProps, SliderFillerProps, SliderOutputProps, SliderProps, SliderThumbProps };
+export { Slider, SliderControl, SliderFiller, SliderOutput, SliderThumb };

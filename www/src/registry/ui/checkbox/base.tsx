@@ -77,6 +77,5 @@ const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
 
 // MARK: seperator
 
+export type { CheckboxIndicatorProps, CheckboxProps };
 export { Checkbox, CheckboxIndicator };
-
-export type { CheckboxProps, CheckboxIndicatorProps };

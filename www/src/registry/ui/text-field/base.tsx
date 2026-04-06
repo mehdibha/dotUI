@@ -26,6 +26,5 @@ const TextField = ({ className, ...props }: TextFieldProps) => {
 
 // MARK: exports
 
-export { TextField };
-
 export type { TextFieldProps };
+export { TextField };

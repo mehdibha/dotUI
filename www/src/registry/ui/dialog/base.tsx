@@ -85,15 +85,14 @@ const DialogInset = ({ className, ...props }: DialogInsetProps) => {
 
 // MARK: seperator
 
-export { Dialog, DialogHeader, DialogHeading, DialogDescription, DialogContent, DialogBody, DialogFooter, DialogInset };
-
 export type {
-	DialogProps,
 	DialogBodyProps,
+	DialogContentProps,
+	DialogDescriptionProps,
+	DialogFooterProps,
 	DialogHeaderProps,
 	DialogHeadingProps,
-	DialogDescriptionProps,
-	DialogContentProps,
-	DialogFooterProps,
 	DialogInsetProps,
+	DialogProps,
 };
+export { Dialog, DialogBody, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogHeading, DialogInset };

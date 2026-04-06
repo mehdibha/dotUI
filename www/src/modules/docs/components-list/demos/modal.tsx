@@ -1,12 +1,5 @@
 import { Button } from "@/registry/ui/button";
-import {
-	Dialog,
-	DialogBody,
-	DialogContent,
-	DialogFooter,
-	DialogHeader,
-	DialogHeading,
-} from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 import { Modal } from "@/registry/ui/modal";

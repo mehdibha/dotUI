@@ -1,9 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
+import { BlockCard } from "@/modules/blocks/block-card";
 import { blocksCategories, registryBlocks } from "@/registry/blocks/registry";
 import { TabPanel } from "@/registry/ui/tabs";
-
-import { BlockCard } from "@/modules/blocks/block-card";
 
 export const Route = createFileRoute("/_app/blocks/{-$category}")({
 	component: BlocksPage,

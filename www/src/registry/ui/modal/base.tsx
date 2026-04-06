@@ -52,6 +52,5 @@ const ModalBackdrop = ({ className, ...props }: ModalBackdropProps) => {
 	return <div className={backdrop({ className })} {...props} />;
 };
 
-export { Modal, ModalOverlay, ModalContent, ModalBackdrop };
-
-export type { ModalProps, ModalOverlayProps, ModalContentProps, ModalBackdropProps };
+export type { ModalBackdropProps, ModalContentProps, ModalOverlayProps, ModalProps };
+export { Modal, ModalBackdrop, ModalContent, ModalOverlay };

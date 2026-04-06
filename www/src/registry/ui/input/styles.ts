@@ -11,7 +11,7 @@ const defaultStyles = tv({
 
 			"flex cursor-text items-center rounded-md border border-border-field bg-neutral text-base shadow-xs sm:text-sm",
 
-			"gap-2 has-[>input]:px-3 has-[>input]:py-1 has-[>textarea]:py-2 has-[>textarea]:**:data-[slot=input-addon]:w-full has-[>textarea]:px-2",
+			"gap-2 has-[>input]:px-3 has-[>textarea]:px-2 has-[>input]:py-1 has-[>textarea]:py-2 has-[>textarea]:**:data-[slot=input-addon]:w-full",
 
 			"has-[>textarea]:min-h-16 has-[>textarea]:flex-col has-[>textarea]:[&:not([class*='h-'])]:h-auto",
 

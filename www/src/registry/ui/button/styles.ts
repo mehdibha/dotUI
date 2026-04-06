@@ -47,6 +47,7 @@ const defaultStyles = tv({
 });
 
 export type ButtonStyles = typeof defaultStyles;
+
 export { defaultStyles as buttonStyles };
 
 export const { useStyles } = createStyles(buttonMeta, {

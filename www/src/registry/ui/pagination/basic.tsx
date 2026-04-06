@@ -111,10 +111,10 @@ const CompoundPagination = Object.assign(Pagination, {
 
 export {
 	CompoundPagination as Pagination,
-	PaginationList,
-	PaginationLink,
+	PaginationEllipsis,
 	PaginationItem,
+	PaginationLink,
+	PaginationList,
 	PaginationNext,
 	PaginationPrevious,
-	PaginationEllipsis,
 };

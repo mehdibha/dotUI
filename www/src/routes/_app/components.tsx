@@ -29,7 +29,7 @@ export const Route = createFileRoute("/_app/components")({
 				{ name: "twitter:image", content: ogImageUrl },
 				{ name: "twitter:creator", content: siteConfig.twitter.creator },
 			],
-		}
+		};
 	},
 });
 
@@ -47,5 +47,5 @@ function ComponentsPage() {
 				</div>
 			</PageLayout>
 		</TOCProvider>
-	)
+	);
 }

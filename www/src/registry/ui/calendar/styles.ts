@@ -95,6 +95,7 @@ const defaultCellStyles = tv({
 
 export type CalendarStyles = typeof defaultStyles;
 export type CalendarCellStyles = typeof defaultCellStyles;
+
 export { defaultStyles as calendarStyles };
 
 export const { useStyles } = createStyles(calendarMeta, {

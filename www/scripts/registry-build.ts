@@ -49,7 +49,8 @@ export const BlocksIndex: Record<
 `;
 
 	for (const block of registryBlocks) {
-		const blockFiles = block.files?.map((file: string | { path: string }) => (typeof file === "string" ? file : file.path)) || [];
+		const blockFiles =
+			block.files?.map((file: string | { path: string }) => (typeof file === "string" ? file : file.path)) || [];
 
 		let componentPath = `@/registry/blocks/${block.name}`;
 

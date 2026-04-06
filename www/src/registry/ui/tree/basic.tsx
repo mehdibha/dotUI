@@ -67,6 +67,5 @@ const TreeItemContent = (_props: TreeItemContentProps) => {
 
 /* -----------------------------------------------------------------------------------------------*/
 
+export type { TreeItemContentProps, TreeItemProps, TreeProps };
 export { Tree, TreeItem, TreeItemContent };
-
-export type { TreeProps, TreeItemProps, TreeItemContentProps };

@@ -23,6 +23,5 @@ const ColorArea = ({ className, ...props }: ColorAreaProps) => {
 
 // MARK: seperator
 
-export { ColorArea };
-
 export type { ColorAreaProps };
+export { ColorArea };

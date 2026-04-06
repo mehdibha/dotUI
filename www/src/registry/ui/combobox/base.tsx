@@ -17,13 +17,7 @@ import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { fieldStyles } from "@/registry/ui/field";
 import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
-import {
-	ListBox,
-	ListBoxItem,
-	ListBoxSection,
-	ListBoxSectionHeader,
-	ListBoxVirtualizer,
-} from "@/registry/ui/list-box";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import type { InputGroupProps } from "@/registry/ui/input";
 import type { ListBoxProps } from "@/registry/ui/list-box";
@@ -160,13 +154,12 @@ const ComboboxContent = <T extends object>({
 
 /* -----------------------------------------------------------------------------------------------*/
 
+export type { ComboboxContentProps, ComboboxInputProps, ComboboxProps };
 export {
 	Combobox,
-	ComboboxInput,
 	ComboboxContent,
+	ComboboxInput,
 	ListBoxItem as ComboboxItem,
 	ListBoxSection as ComboboxSection,
 	ListBoxSectionHeader as ComboboxSectionHeader,
 };
-
-export type { ComboboxProps, ComboboxInputProps, ComboboxContentProps };

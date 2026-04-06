@@ -2,16 +2,15 @@ import { Link } from "@tanstack/react-router";
 import { SearchIcon } from "lucide-react";
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { GitHubIcon } from "@/registry/components/icons/github";
-import { cn } from "@/registry/lib/utils";
-import { Button, LinkButton } from "@/registry/ui/button";
-import { Kbd } from "@/registry/ui/kbd";
-
 import { Logo } from "@/components/layout/logo";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { SearchCommand } from "@/components/search-command";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { navItems, siteConfig } from "@/config/site";
+import { GitHubIcon } from "@/registry/components/icons/github";
+import { cn } from "@/registry/lib/utils";
+import { Button, LinkButton } from "@/registry/ui/button";
+import { Kbd } from "@/registry/ui/kbd";
 
 interface HeaderProps {
 	className?: string;

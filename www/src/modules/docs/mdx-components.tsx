@@ -1,10 +1,6 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import type { MDXComponents } from "mdx/types";
 
-import { cn } from "@/registry/lib/utils";
-import { Alert, type AlertProps } from "@/registry/ui/alert";
-import { Link } from "@/registry/ui/link";
-
 import { CodeBlock, Pre } from "@/modules/docs/code-block";
 import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "@/modules/docs/code-block-tabs";
 import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "@/modules/docs/demo";
@@ -12,6 +8,9 @@ import { Example, type ExampleProps } from "@/modules/docs/example";
 import { Examples } from "@/modules/docs/examples";
 import { InteractiveDemo } from "@/modules/docs/interactive-demo";
 import { Reference, type ReferenceProps } from "@/modules/docs/reference";
+import { cn } from "@/registry/lib/utils";
+import { Alert, type AlertProps } from "@/registry/ui/alert";
+import { Link } from "@/registry/ui/link";
 
 export const mdxComponents: MDXComponents = {
 	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 font-bold text-4xl", className)} {...props} />,

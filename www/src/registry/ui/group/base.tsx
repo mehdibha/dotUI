@@ -45,6 +45,5 @@ const Group = ({ orientation = "horizontal", className, ...props }: GroupProps) 
 
 // MARK: seperator
 
-export { Group };
-
 export type { GroupProps };
+export { Group };

@@ -96,13 +96,12 @@ const AvatarGroupCount = ({ className, ...props }: AvatarGroupCountProps) => {
 
 // MARK: seperator
 
-export { AvatarGroup, Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroupCount };
-
 export type {
-	AvatarGroupProps,
-	AvatarProps,
-	AvatarImageProps,
-	AvatarFallbackProps,
 	AvatarBadgeProps,
+	AvatarFallbackProps,
 	AvatarGroupCountProps,
+	AvatarGroupProps,
+	AvatarImageProps,
+	AvatarProps,
 };
+export { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage };

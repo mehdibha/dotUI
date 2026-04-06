@@ -4,8 +4,8 @@ import { Link as AriaLink, composeRenderProps } from "react-aria-components";
 import type { LinkProps as AriaLinkProps } from "react-aria-components";
 import type { VariantProps } from "tailwind-variants";
 
-import type { LinkStyles } from "./styles";
 import { useStyles } from "./styles";
+import type { LinkStyles } from "./styles";
 
 // MARK: linkStyles
 

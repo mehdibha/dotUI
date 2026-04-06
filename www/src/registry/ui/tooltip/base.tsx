@@ -63,6 +63,5 @@ function TooltipArrow({ className }: TooltipArrowProps) {
 
 // MARK: seperator
 
+export type { TooltipContentProps, TooltipProps };
 export { Tooltip, TooltipContent };
-
-export type { TooltipProps, TooltipContentProps };

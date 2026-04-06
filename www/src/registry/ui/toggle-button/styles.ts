@@ -37,6 +37,7 @@ const defaultStyles = tv({
 });
 
 export type ToggleButtonStyles = typeof defaultStyles;
+
 export { defaultStyles as toggleButtonStyles };
 
 export const { useStyles } = createStyles(toggleButtonMeta, {

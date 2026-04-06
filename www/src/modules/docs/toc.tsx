@@ -7,6 +7,7 @@ import {
 	type TOCItemType,
 	useActiveAnchors,
 } from "fumadocs-core/toc";
+
 import { cn } from "@/registry/lib/utils";
 
 export type { TableOfContents, TOCItemType } from "fumadocs-core/toc";

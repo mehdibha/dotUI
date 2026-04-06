@@ -25,5 +25,5 @@ const DropZoneLabel = ({ className, ...props }: DropZoneLabelProps) => {
 
 // MARK: seperator
 
-export type { DropZoneProps, DropZoneLabelProps };
+export type { DropZoneLabelProps, DropZoneProps };
 export { DropZone, DropZoneLabel };

@@ -67,6 +67,5 @@ function DisclosureTrigger(props: DisclosureTriggerProps) {
 
 // MARK: seperator
 
+export type { DisclosurePanelProps, DisclosureProps, DisclosureTriggerProps };
 export { Disclosure, DisclosurePanel, DisclosureTrigger };
-
-export type { DisclosureProps, DisclosurePanelProps, DisclosureTriggerProps };

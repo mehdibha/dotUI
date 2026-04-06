@@ -47,6 +47,5 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
 	return <AriaLink className={composeRenderProps(className, (className) => link({ className }))} {...props} />;
 };
 
-export { Breadcrumbs, Breadcrumb, BreadcrumbItem, BreadcrumbLink };
-
-export type { BreadcrumbsProps, BreadcrumbProps, BreadcrumbItemProps, BreadcrumbLinkProps };
+export type { BreadcrumbItemProps, BreadcrumbLinkProps, BreadcrumbProps, BreadcrumbsProps };
+export { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Breadcrumbs };

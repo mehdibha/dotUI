@@ -1,9 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
+import { siteConfig } from "@/config/site";
 import { cn } from "@/registry/lib/utils";
 import { Heading } from "@/registry/ui/heading";
-
-import { siteConfig } from "@/config/site";
 
 export function Logo({ className, type = "link" }: { className?: string; type?: "link" | "span" }) {
 	const content = (

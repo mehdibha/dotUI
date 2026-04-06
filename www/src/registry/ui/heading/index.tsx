@@ -8,5 +8,5 @@ function Heading(props: React.ComponentProps<typeof AriaHeading>) {
 	return <AriaHeading {...props} />;
 }
 
-export { Heading };
 export type { HeadingProps };
+export { Heading };

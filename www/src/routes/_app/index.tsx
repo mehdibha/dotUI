@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
-import { getGitHubContributors } from "@/lib/github";
 import Cards from "@/registry/blocks/showcase/cards/components/cards";
 import { AdobeIcon } from "@/registry/components/icons/adobe";
 import { ReactJsIcon } from "@/registry/components/icons/react-js";

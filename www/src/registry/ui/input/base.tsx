@@ -21,7 +21,7 @@ import type { VariantProps } from "tailwind-variants";
 
 import { createContext } from "@/registry/lib/context";
 
-import { useStyles, dateInputStyles } from "./styles";
+import { dateInputStyles, useStyles } from "./styles";
 import type { InputStyles } from "./styles";
 
 // MARK: inputStyles
@@ -35,9 +35,7 @@ const [InputGroupContext, useInputGroupContext] = createContext<boolean>({
 
 // MARK: InputGroup
 
-interface InputGroupProps
-	extends React.ComponentProps<typeof AriaGroup>,
-		Pick<VariantProps<InputStyles>, "size"> {}
+interface InputGroupProps extends React.ComponentProps<typeof AriaGroup>, Pick<VariantProps<InputStyles>, "size"> {}
 
 const InputGroup = ({ className, children, size = "md", ...props }: InputGroupProps) => {
 	const { group } = useStyles()();
@@ -203,6 +201,5 @@ const DateSegment = ({ className, ...props }: DateSegmentProps) => {
 
 // MARK: exports
 
-export { Input, TextArea, InputGroup, InputAddon, DateInput, DateSegment };
-
-export type { InputGroupProps, InputProps, TextAreaProps, InputAddonProps, DateInputProps, DateSegmentProps };
+export type { DateInputProps, DateSegmentProps, InputAddonProps, InputGroupProps, InputProps, TextAreaProps };
+export { DateInput, DateSegment, Input, InputAddon, InputGroup, TextArea };

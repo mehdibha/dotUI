@@ -66,6 +66,5 @@ const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
 
 // MARK: seperator
 
+export type { ColorSliderControlProps, ColorSliderOutputProps, ColorSliderProps };
 export { ColorSlider, ColorSliderControl, ColorSliderOutput };
-
-export type { ColorSliderProps, ColorSliderControlProps, ColorSliderOutputProps };

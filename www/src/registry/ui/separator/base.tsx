@@ -29,5 +29,5 @@ const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
 	);
 };
 
-export { Separator };
 export type { SeparatorProps };
+export { Separator };

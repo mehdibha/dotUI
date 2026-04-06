@@ -230,16 +230,15 @@ function SidebarTooltip({ content, children }: { content: React.ReactNode; child
 // MARK: seperator
 
 export {
-	SidebarProvider,
 	Sidebar,
-	SidebarHeader,
 	SidebarContent,
+	SidebarFooter,
+	SidebarHeader,
+	SidebarItem,
+	SidebarList,
+	SidebarProvider,
 	SidebarSection,
 	SidebarSectionHeading,
 	SidebarTooltip,
-	SidebarItem,
-	SidebarList,
-	SidebarFooter,
+	useSidebarContext,
 };
-
-export { useSidebarContext };

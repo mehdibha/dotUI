@@ -3,6 +3,7 @@ import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, ShuffleIcon, Undo2Icon } fr
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { Button as AriaButton } from "react-aria-components";
 
+import { componentsData } from "@/modules/docs/components-list/components-data";
 import * as icons from "@/registry/__generated__/icons";
 import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
@@ -15,8 +16,6 @@ import { Popover } from "@/registry/ui/popover";
 import { SearchField } from "@/registry/ui/search-field";
 import { Select, SelectValue } from "@/registry/ui/select";
 import { Switch } from "@/registry/ui/switch";
-
-import { componentsData } from "@/modules/docs/components-list/components-data";
 
 import { ColorsConfig } from "./colors-config";
 import { ComponentsConfig } from "./components-config";

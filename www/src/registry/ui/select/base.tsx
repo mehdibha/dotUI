@@ -5,13 +5,7 @@ import { Select as AriaSelect, SelectValue as AriaSelectValue, composeRenderProp
 import type { SelectProps as AriaSelectProps, SelectValueProps as AriaSelectValueProps } from "react-aria-components";
 
 import { Button } from "@/registry/ui/button";
-import {
-	ListBox,
-	ListBoxItem,
-	ListBoxSection,
-	ListBoxSectionHeader,
-	ListBoxVirtualizer,
-} from "@/registry/ui/list-box";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import type { ButtonProps } from "@/registry/ui/button";
 import type { ListBoxProps } from "@/registry/ui/list-box";
@@ -108,14 +102,13 @@ const SelectContent = <T extends object>({
 	);
 };
 
+export type { SelectContentProps, SelectProps, SelectValueProps };
 export {
-	Select,
-	SelectTrigger,
-	SelectValue,
-	SelectContent,
 	ListBoxItem as SelectItem,
 	ListBoxSection as SelectSection,
 	ListBoxSectionHeader as SelectSectionHeader,
+	Select,
+	SelectContent,
+	SelectTrigger,
+	SelectValue,
 };
-
-export type { SelectProps, SelectValueProps, SelectContentProps };

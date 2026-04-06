@@ -1,9 +1,8 @@
 import { createFileRoute, Outlet, useParams } from "@tanstack/react-router";
 
+import { PageHeader, PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { blocksCategories } from "@/registry/blocks/registry";
 import { Tab, TabList, Tabs } from "@/registry/ui/tabs";
-
-import { PageHeader, PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 
 export const Route = createFileRoute("/_app/blocks")({
 	component: BlocksLayout,

@@ -92,7 +92,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 			<TOCProvider toc={toc}>
 				<PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
 					<div className="mx-auto flex w-full min-w-0 max-w-3xl flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
-						<div data-page-header="" className="relative space-y-3 pb-4 mb-2">
+						<div data-page-header="" className="relative mb-2 space-y-3 pb-4">
 							<div className="flex items-start justify-between">
 								<div className="flex flex-col gap-2">
 									<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
@@ -145,4 +145,3 @@ function DocsPage() {
 
 	return <Content url={data.url} rawContent={data.rawContent} neighbours={data.neighbours} />;
 }
-

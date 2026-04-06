@@ -203,14 +203,13 @@ const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
 
 // MARK: seperator
 
-export { Table, TableHeader, TableColumn, TableBody, TableLoadMore, TableRow, TableCell };
-
 export type {
-	TableProps,
-	TableHeaderProps,
-	TableColumnProps,
 	TableBodyProps,
-	TableRowProps,
 	TableCellProps,
+	TableColumnProps,
+	TableHeaderProps,
 	TableLoadMoreProps,
+	TableProps,
+	TableRowProps,
 };
+export { Table, TableBody, TableCell, TableColumn, TableHeader, TableLoadMore, TableRow };

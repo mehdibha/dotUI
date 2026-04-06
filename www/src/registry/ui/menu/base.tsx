@@ -100,6 +100,5 @@ const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
 
 // MARK: seperator
 
-export { Menu, MenuItem, MenuContent, MenuSection, MenuSectionHeader, MenuSub };
-
-export type { MenuProps, MenuContentProps, MenuItemProps, MenuSectionProps, MenuSectionHeaderProps, MenuSubProps };
+export type { MenuContentProps, MenuItemProps, MenuProps, MenuSectionHeaderProps, MenuSectionProps, MenuSubProps };
+export { Menu, MenuContent, MenuItem, MenuSection, MenuSectionHeader, MenuSub };

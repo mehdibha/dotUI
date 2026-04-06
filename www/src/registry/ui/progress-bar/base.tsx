@@ -6,8 +6,8 @@ import type { VariantProps } from "tailwind-variants";
 
 import { createScopedContext } from "@/registry/lib/context";
 
-import type { ProgressBarStyles } from "./styles";
 import { useStyles } from "./styles";
+import type { ProgressBarStyles } from "./styles";
 
 // MARK: progressBarStyles
 
@@ -77,6 +77,5 @@ const ProgressBarValueLabel = ({ className, ...props }: ProgressBarValueLabelPro
 
 // MARK: seperator
 
+export type { ProgressBarControlProps, ProgressBarProps, ProgressBarValueLabelProps };
 export { ProgressBar, ProgressBarControl, ProgressBarValueLabel };
-
-export type { ProgressBarProps, ProgressBarControlProps, ProgressBarValueLabelProps };

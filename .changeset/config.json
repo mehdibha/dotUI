@@ -7,13 +7,5 @@
 	"access": "public",
 	"baseBranch": "main",
 	"updateInternalDependencies": "patch",
-	"ignore": [
-		"www",
-		"@dotui/ts-config",
-		"@dotui/api",
-		"@dotui/auth",
-		"@dotui/db",
-		"@dotui/colors",
-		"@dotui/types"
-	]
+	"ignore": ["www", "@dotui/ts-config", "@dotui/colors", "@dotui/types"]
 }

@@ -61,13 +61,12 @@ const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
 
 // MARK: seperator
 
-export { Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia };
-
 export type {
-	EmptyProps,
-	EmptyHeaderProps,
-	EmptyTitleProps,
-	EmptyDescriptionProps,
 	EmptyContentProps,
+	EmptyDescriptionProps,
+	EmptyHeaderProps,
 	EmptyMediaProps,
+	EmptyProps,
+	EmptyTitleProps,
 };
+export { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle };

@@ -126,8 +126,8 @@ const ListBoxVirtualizer = <T extends object>({ ...props }: ListBoxVirtualizerPr
 		/>
 	);
 };
+
 // MARK: seperator
 
+export type { ListBoxItemProps, ListBoxProps, ListBoxSectionHeaderProps, ListBoxSectionProps, ListBoxVirtualizerProps };
 export { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer };
-
-export type { ListBoxProps, ListBoxItemProps, ListBoxSectionProps, ListBoxSectionHeaderProps, ListBoxVirtualizerProps };

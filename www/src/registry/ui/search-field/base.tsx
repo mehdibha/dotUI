@@ -24,6 +24,5 @@ const SearchField = ({ className, ...props }: SearchFieldProps) => {
 
 // MARK: exports
 
-export { SearchField };
-
 export type { SearchFieldProps };
+export { SearchField };

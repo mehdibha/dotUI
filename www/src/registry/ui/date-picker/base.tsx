@@ -107,5 +107,5 @@ const DatePickerContent = ({
 
 // MARK: exports
 
-export type { DatePickerProps, DatePickerContentProps, DatePickerInputProps };
+export type { DatePickerContentProps, DatePickerInputProps, DatePickerProps };
 export { DatePicker, DatePickerContent, DatePickerInput };

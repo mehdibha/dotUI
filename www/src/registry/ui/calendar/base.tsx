@@ -26,8 +26,7 @@ import type { VariantProps } from "tailwind-variants";
 
 import { Button } from "@/registry/ui/button";
 
-import { useStyles, useCellStyles } from "./styles";
-import { calendarStyles } from "./styles";
+import { calendarStyles, useCellStyles, useStyles } from "./styles";
 import type { CalendarCellStyles } from "./styles";
 
 // MARK: calendarStyles
@@ -226,23 +225,22 @@ const CalendarCell = ({ variant = "accent", children, className, ...props }: Cal
 	);
 };
 
+export type {
+	CalendarCellProps,
+	CalendarGridBodyProps,
+	CalendarGridHeaderProps,
+	CalendarGridProps,
+	CalendarHeaderCellProps,
+	CalendarHeaderProps,
+	CalendarProps,
+};
 export {
 	Calendar,
-	CalendarHeader,
-	CalendarGrid,
-	CalendarGridHeader,
-	CalendarHeaderCell,
-	CalendarGridBody,
 	CalendarCell,
+	CalendarGrid,
+	CalendarGridBody,
+	CalendarGridHeader,
+	CalendarHeader,
+	CalendarHeaderCell,
 	calendarStyles,
-};
-
-export type {
-	CalendarProps,
-	CalendarHeaderProps,
-	CalendarGridProps,
-	CalendarGridHeaderProps,
-	CalendarHeaderCellProps,
-	CalendarGridBodyProps,
-	CalendarCellProps,
 };

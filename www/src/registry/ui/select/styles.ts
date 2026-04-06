@@ -1,7 +1,6 @@
 import { tv } from "tailwind-variants";
 
 import { createStyles } from "@/modules/core/styles";
-
 import { fieldStyles } from "@/registry/ui/field";
 
 import selectMeta from "./meta";

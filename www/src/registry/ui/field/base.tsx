@@ -126,15 +126,14 @@ const FieldError = ({ className, ...props }: FieldErrorProps) => {
 
 // MARK: exports
 
-export { Fieldset, Legend, FieldGroup, Field, FieldContent, Label, Description, FieldError };
-
 export type {
-	FieldsetProps,
-	LegendProps,
-	FieldContentProps,
-	LabelProps,
 	DescriptionProps,
+	FieldContentProps,
 	FieldErrorProps,
 	FieldGroupProps,
 	FieldProps,
+	FieldsetProps,
+	LabelProps,
+	LegendProps,
 };
+export { Description, Field, FieldContent, FieldError, FieldGroup, Fieldset, Label, Legend };

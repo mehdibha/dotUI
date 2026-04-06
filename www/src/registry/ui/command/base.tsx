@@ -4,13 +4,7 @@ import { SearchIcon } from "lucide-react";
 import { Autocomplete as AriaAutocomplete, useFilter } from "react-aria-components";
 
 import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
-import {
-	ListBox,
-	ListBoxItem,
-	ListBoxSection,
-	ListBoxSectionHeader,
-	ListBoxVirtualizer,
-} from "@/registry/ui/list-box";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { SearchField } from "@/registry/ui/search-field";
 import type { ListBoxProps } from "@/registry/ui/list-box";
 import type { PopoverProps } from "@/registry/ui/popover";
@@ -79,13 +73,12 @@ const CommandContent = <T extends object>({ virtulized, placement, ...props }: C
 
 // MARK: seperator
 
+export type { CommandContentProps, CommandInputProps, CommandProps };
 export {
 	Command,
-	CommandInput,
 	CommandContent,
+	CommandInput,
 	ListBoxItem as CommandItem,
 	ListBoxSection as CommandSection,
 	ListBoxSectionHeader as CommandSectionHeader,
 };
-
-export type { CommandProps, CommandContentProps, CommandInputProps };

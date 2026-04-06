@@ -67,6 +67,5 @@ function Tag({ className, ...props }: TagProps) {
 
 // MARK: seperator
 
-export { TagGroup, TagList, Tag };
-
-export type { TagProps, TagGroupProps, TagListProps };
+export type { TagGroupProps, TagListProps, TagProps };
+export { Tag, TagGroup, TagList };

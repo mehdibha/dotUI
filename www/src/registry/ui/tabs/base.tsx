@@ -105,5 +105,5 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
 
 // MARK: seperator
 
-export { Tabs, TabList, Tab, TabPanel, TabIndicator };
-export type { TabsProps, TabListProps, TabProps, TabPanelProps, TabIndicatorProps };
+export type { TabIndicatorProps, TabListProps, TabPanelProps, TabProps, TabsProps };
+export { Tab, TabIndicator, TabList, TabPanel, Tabs };

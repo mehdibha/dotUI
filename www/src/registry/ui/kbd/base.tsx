@@ -26,5 +26,5 @@ const Kbd = ({ className, ...props }: KbdProps) => {
 
 // MARK: separator
 
-export { KbdGroup, Kbd };
-export type { KbdProps, KbdGroupProps };
+export type { KbdGroupProps, KbdProps };
+export { Kbd, KbdGroup };

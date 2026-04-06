@@ -69,14 +69,13 @@ function CardFooter({ className, ...props }: CardFooterProps) {
 
 // MARK: separator
 
-export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };
-
 export type {
-	CardProps,
-	CardHeaderProps,
-	CardTitleProps,
-	CardDescriptionProps,
 	CardActionProps,
 	CardContentProps,
+	CardDescriptionProps,
 	CardFooterProps,
+	CardHeaderProps,
+	CardProps,
+	CardTitleProps,
 };
+export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };

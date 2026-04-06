@@ -2,12 +2,11 @@ import React from "react";
 import { Link } from "@tanstack/react-router";
 import type * as PageTree from "fumadocs-core/page-tree";
 
+import { navItems } from "@/config/site";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Dialog, DialogContent } from "@/registry/ui/dialog";
 import { Popover } from "@/registry/ui/popover";
-
-import { navItems } from "@/config/site";
 
 export function MobileNav({ items }: { items: PageTree.Node[] }) {
 	const [isOpen, setIsOpen] = React.useState(false);

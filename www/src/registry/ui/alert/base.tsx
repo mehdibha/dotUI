@@ -44,6 +44,5 @@ function AlertAction({ className, ...props }: AlertActionProps) {
 
 // MARK: seperator
 
-export { Alert, AlertTitle, AlertDescription, AlertAction };
-
-export type { AlertProps, AlertTitleProps, AlertDescriptionProps, AlertActionProps };
+export type { AlertActionProps, AlertDescriptionProps, AlertProps, AlertTitleProps };
+export { Alert, AlertAction, AlertDescription, AlertTitle };

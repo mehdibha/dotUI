@@ -69,5 +69,5 @@ const ColorEditor = ({
 	);
 };
 
-export { ColorEditor };
 export type { ColorEditorProps };
+export { ColorEditor };

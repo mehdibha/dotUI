@@ -30,4 +30,4 @@ function createStyles<
 	return { useStyles };
 }
 
-export { StyleContext, StyleProvider, createStyles };
+export { createStyles, StyleContext, StyleProvider };

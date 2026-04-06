@@ -2,12 +2,11 @@ import React, { type ComponentType, createElement, useCallback, useMemo, useStat
 import { flushSync } from "react-dom";
 import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-react";
 
+import { CodeBlock } from "@/modules/docs/code-block";
+import { DynamicPre } from "@/modules/docs/dynamic-pre";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
-
-import { CodeBlock } from "@/modules/docs/code-block";
-import { DynamicPre } from "@/modules/docs/dynamic-pre";
 
 import { availableIcons, Controls } from "./controls";
 import { elementToCode, elementToPreviewCode } from "./element-to-code";
