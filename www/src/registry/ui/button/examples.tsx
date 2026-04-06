@@ -1,4 +1,4 @@
-import { Example } from "@/registry/ui/example";
+import { Example } from "@/modules/create/preview/example";
 
 import Default from "./demos/default";
 import Disabled from "./demos/disabled";
@@ -10,32 +10,32 @@ import Sizes from "./demos/sizes";
 import Variants from "./demos/variants";
 
 export default function Examples() {
-  return (
-    <>
-      <Example title="default">
-        <Default />
-      </Example>
-      <Example title="disabled">
-        <Disabled />
-      </Example>
-      <Example title="link button">
-        <LinkButton />
-      </Example>
-      <Example title="loading">
-        <Loading />
-      </Example>
-      <Example title="prefix and suffix">
-        <PrefixAndSuffix />
-      </Example>
-      <Example title="shapes">
-        <Shapes />
-      </Example>
-      <Example title="sizes">
-        <Sizes />
-      </Example>
-      <Example title="variants">
-        <Variants />
-      </Example>
-    </>
-  );
+	return (
+		<>
+			<Example title="default">
+				<Default />
+			</Example>
+			<Example title="disabled">
+				<Disabled />
+			</Example>
+			<Example title="link button">
+				<LinkButton />
+			</Example>
+			<Example title="loading">
+				<Loading />
+			</Example>
+			<Example title="prefix and suffix">
+				<PrefixAndSuffix />
+			</Example>
+			<Example title="shapes">
+				<Shapes />
+			</Example>
+			<Example title="sizes">
+				<Sizes />
+			</Example>
+			<Example title="variants">
+				<Variants />
+			</Example>
+		</>
+	);
 }

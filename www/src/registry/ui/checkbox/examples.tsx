@@ -1,4 +1,4 @@
-import { Example } from "@/registry/ui/example";
+import { Example } from "@/modules/create/preview/example";
 
 import Card from "./demos/card";
 import Composition from "./demos/composition";
@@ -10,32 +10,32 @@ import ReadOnly from "./demos/read-only";
 import Uncontrolled from "./demos/uncontrolled";
 
 export default function Examples() {
-  return (
-    <>
-      <Example title="card">
-        <Card />
-      </Example>
-      <Example title="composition">
-        <Composition />
-      </Example>
-      <Example title="controlled">
-        <Controlled />
-      </Example>
-      <Example title="default">
-        <Default />
-      </Example>
-      <Example title="disabled">
-        <Disabled />
-      </Example>
-      <Example title="indeterminate">
-        <Indeterminate />
-      </Example>
-      <Example title="read only">
-        <ReadOnly />
-      </Example>
-      <Example title="uncontrolled">
-        <Uncontrolled />
-      </Example>
-    </>
-  );
+	return (
+		<>
+			<Example title="card">
+				<Card />
+			</Example>
+			<Example title="composition">
+				<Composition />
+			</Example>
+			<Example title="controlled">
+				<Controlled />
+			</Example>
+			<Example title="default">
+				<Default />
+			</Example>
+			<Example title="disabled">
+				<Disabled />
+			</Example>
+			<Example title="indeterminate">
+				<Indeterminate />
+			</Example>
+			<Example title="read only">
+				<ReadOnly />
+			</Example>
+			<Example title="uncontrolled">
+				<Uncontrolled />
+			</Example>
+		</>
+	);
 }

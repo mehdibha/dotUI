@@ -1,4 +1,4 @@
-import { Example } from "@/registry/ui/example";
+import { Example } from "@/modules/create/preview/example";
 
 import Basic from "./demos/basic";
 import Controlled from "./demos/controlled";
@@ -8,26 +8,26 @@ import Variant from "./demos/variant";
 import Vertical from "./demos/vertical";
 
 export default function Examples() {
-  return (
-    <>
-      <Example title="basic">
-        <Basic />
-      </Example>
-      <Example title="controlled">
-        <Controlled />
-      </Example>
-      <Example title="disabled">
-        <Disabled />
-      </Example>
-      <Example title="keyboard activation">
-        <KeyboardActivation />
-      </Example>
-      <Example title="variant">
-        <Variant />
-      </Example>
-      <Example title="vertical">
-        <Vertical />
-      </Example>
-    </>
-  );
+	return (
+		<>
+			<Example title="basic">
+				<Basic />
+			</Example>
+			<Example title="controlled">
+				<Controlled />
+			</Example>
+			<Example title="disabled">
+				<Disabled />
+			</Example>
+			<Example title="keyboard activation">
+				<KeyboardActivation />
+			</Example>
+			<Example title="variant">
+				<Variant />
+			</Example>
+			<Example title="vertical">
+				<Vertical />
+			</Example>
+		</>
+	);
 }

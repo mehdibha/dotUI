@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 import { createStyles } from "@/modules/core/styles";
 
 const baseStyles = tv({
-	base: "",
+	base: "w-full",
 });
 
 const defaultStyle = tv({
@@ -16,7 +16,6 @@ const testStyle = tv({
 	base: "bg-red-500",
 });
 
-/* --- styles:accordion --- */
 export const { useStyles } = createStyles("accordion", {
 	default: defaultStyle,
 	test: testStyle,

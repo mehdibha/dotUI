@@ -1,4 +1,4 @@
-import { Example } from "@/registry/ui/example";
+import { Example } from "@/modules/create/preview/example";
 
 import Channel from "./demos/channel";
 import Controlled from "./demos/controlled";
@@ -9,29 +9,29 @@ import Uncontrolled from "./demos/uncontrolled";
 import Vertical from "./demos/vertical";
 
 export default function Examples() {
-  return (
-    <>
-      <Example title="channel">
-        <Channel />
-      </Example>
-      <Example title="controlled">
-        <Controlled />
-      </Example>
-      <Example title="default">
-        <Default />
-      </Example>
-      <Example title="disabled">
-        <Disabled />
-      </Example>
-      <Example title="label">
-        <Label />
-      </Example>
-      <Example title="uncontrolled">
-        <Uncontrolled />
-      </Example>
-      <Example title="vertical">
-        <Vertical />
-      </Example>
-    </>
-  );
+	return (
+		<>
+			<Example title="channel">
+				<Channel />
+			</Example>
+			<Example title="controlled">
+				<Controlled />
+			</Example>
+			<Example title="default">
+				<Default />
+			</Example>
+			<Example title="disabled">
+				<Disabled />
+			</Example>
+			<Example title="label">
+				<Label />
+			</Example>
+			<Example title="uncontrolled">
+				<Uncontrolled />
+			</Example>
+			<Example title="vertical">
+				<Vertical />
+			</Example>
+		</>
+	);
 }

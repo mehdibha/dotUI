@@ -1,4 +1,4 @@
-import { Example } from "@/registry/ui/example";
+import { Example } from "@/modules/create/preview/example";
 
 import AsyncLoading from "./demos/async-loading";
 import Basic from "./demos/basic";
@@ -16,50 +16,50 @@ import Uncontrolled from "./demos/uncontrolled";
 import Validation from "./demos/validation";
 
 export default function Examples() {
-  return (
-    <>
-      <Example title="async loading">
-        <AsyncLoading />
-      </Example>
-      <Example title="basic">
-        <Basic />
-      </Example>
-      <Example title="composition">
-        <Composition />
-      </Example>
-      <Example title="controlled">
-        <Controlled />
-      </Example>
-      <Example title="description">
-        <Description />
-      </Example>
-      <Example title="disabled">
-        <Disabled />
-      </Example>
-      <Example title="label">
-        <Label />
-      </Example>
-      <Example title="links">
-        <Links />
-      </Example>
-      <Example title="loading">
-        <Loading />
-      </Example>
-      <Example title="placeholder">
-        <Placeholder />
-      </Example>
-      <Example title="required">
-        <Required />
-      </Example>
-      <Example title="sections">
-        <Sections />
-      </Example>
-      <Example title="uncontrolled">
-        <Uncontrolled />
-      </Example>
-      <Example title="validation">
-        <Validation />
-      </Example>
-    </>
-  );
+	return (
+		<>
+			<Example title="async loading">
+				<AsyncLoading />
+			</Example>
+			<Example title="basic">
+				<Basic />
+			</Example>
+			<Example title="composition">
+				<Composition />
+			</Example>
+			<Example title="controlled">
+				<Controlled />
+			</Example>
+			<Example title="description">
+				<Description />
+			</Example>
+			<Example title="disabled">
+				<Disabled />
+			</Example>
+			<Example title="label">
+				<Label />
+			</Example>
+			<Example title="links">
+				<Links />
+			</Example>
+			<Example title="loading">
+				<Loading />
+			</Example>
+			<Example title="placeholder">
+				<Placeholder />
+			</Example>
+			<Example title="required">
+				<Required />
+			</Example>
+			<Example title="sections">
+				<Sections />
+			</Example>
+			<Example title="uncontrolled">
+				<Uncontrolled />
+			</Example>
+			<Example title="validation">
+				<Validation />
+			</Example>
+		</>
+	);
 }

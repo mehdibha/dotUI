@@ -1,4 +1,4 @@
-import { Example } from "@/registry/ui/example";
+import { Example } from "@/modules/create/preview/example";
 
 import AlertDialog from "./demos/alert-dialog";
 import AsyncFormSubmission from "./demos/async-form-submission";
@@ -15,47 +15,47 @@ import Title from "./demos/title";
 import Types from "./demos/types";
 
 export default function Examples() {
-  return (
-    <>
-      <Example title="alert dialog">
-        <AlertDialog />
-      </Example>
-      <Example title="async form submission">
-        <AsyncFormSubmission />
-      </Example>
-      <Example title="basic">
-        <Basic />
-      </Example>
-      <Example title="composition">
-        <Composition />
-      </Example>
-      <Example title="controlled">
-        <Controlled />
-      </Example>
-      <Example title="description">
-        <Description />
-      </Example>
-      <Example title="dismissable">
-        <Dismissable />
-      </Example>
-      <Example title="drawer">
-        <Drawer />
-      </Example>
-      <Example title="inset content">
-        <InsetContent />
-      </Example>
-      <Example title="nested">
-        <Nested />
-      </Example>
-      <Example title="popover">
-        <Popover />
-      </Example>
-      <Example title="title">
-        <Title />
-      </Example>
-      <Example title="types">
-        <Types />
-      </Example>
-    </>
-  );
+	return (
+		<>
+			<Example title="alert dialog">
+				<AlertDialog />
+			</Example>
+			<Example title="async form submission">
+				<AsyncFormSubmission />
+			</Example>
+			<Example title="basic">
+				<Basic />
+			</Example>
+			<Example title="composition">
+				<Composition />
+			</Example>
+			<Example title="controlled">
+				<Controlled />
+			</Example>
+			<Example title="description">
+				<Description />
+			</Example>
+			<Example title="dismissable">
+				<Dismissable />
+			</Example>
+			<Example title="drawer">
+				<Drawer />
+			</Example>
+			<Example title="inset content">
+				<InsetContent />
+			</Example>
+			<Example title="nested">
+				<Nested />
+			</Example>
+			<Example title="popover">
+				<Popover />
+			</Example>
+			<Example title="title">
+				<Title />
+			</Example>
+			<Example title="types">
+				<Types />
+			</Example>
+		</>
+	);
 }

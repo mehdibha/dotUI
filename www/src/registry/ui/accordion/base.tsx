@@ -2,8 +2,6 @@ import { DisclosureGroup as AriaDisclosureGroup, composeRenderProps } from "reac
 
 import { useStyles } from "./styles";
 
-// MARK: accordionStyles
-
 interface AccordionProps extends React.ComponentProps<typeof AriaDisclosureGroup> {}
 function Accordion({ className, ...props }: AccordionProps) {
 	const accordionStyles = useStyles();

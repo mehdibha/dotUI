@@ -6,7 +6,7 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Disclosure.html
 ---
 
-<Demo name="disclosure/demos/basic" className="**:data-disclosure:max-w-xs" />
+<Demo name="disclosure/demos/basic" />
 
 ## Installation
 
@@ -27,9 +27,7 @@ import {
 ```tsx
 <Disclosure>
   <DisclosureHeading>What is dotUI?</DisclosureHeading>
-  <DisclosurePanel>
-    dotUI is a design system platform.
-  </DisclosurePanel>
+  <DisclosurePanel>dotUI is a design system platform.</DisclosurePanel>
 </Disclosure>
 ```
 
@@ -50,9 +48,7 @@ import { ChevronDownIcon } from "your-icon-library";
       <ChevronDownIcon />
     </Button>
   </Heading>
-  <DisclosurePanel>
-    dotUI is a design system platform.
-  </DisclosurePanel>
+  <DisclosurePanel>dotUI is a design system platform.</DisclosurePanel>
 </Disclosure>
 ```
 
@@ -60,21 +56,25 @@ import { ChevronDownIcon } from "your-icon-library";
 
 Use the controls below to experiment with different disclosure props and see the live preview and code update.
 
-<InteractiveDemo
-  name="disclosure"
-  controls={["isDisabled"]}
-  className="**:data-disclosure:max-w-xs"
-/>
-
+<InteractiveDemo name="disclosure" controls={["isDisabled"]} />
 
 ## Examples
 
 <Examples>
   <Example name="disclosure/demos/basic" description="Basic disclosure" />
-  <Example name="disclosure/demos/default-expanded" description="Default expanded disclosure" />
+  <Example
+    name="disclosure/demos/default-expanded"
+    description="Default expanded disclosure"
+  />
   <Example name="disclosure/demos/disabled" description="Disabled disclosure" />
-  <Example name="disclosure/demos/controlled" description="Controlled disclosure" />
-  <Example name="disclosure/demos/advanced-composition" description="Advanced composition" />
+  <Example
+    name="disclosure/demos/controlled"
+    description="Controlled disclosure"
+  />
+  <Example
+    name="disclosure/demos/advanced-composition"
+    description="Advanced composition"
+  />
 </Examples>
 
 ## API Reference

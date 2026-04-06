@@ -1,4 +1,4 @@
-import { Example } from "@/registry/ui/example";
+import { Example } from "@/modules/create/preview/example";
 
 import Composition from "./demos/composition";
 import Controlled from "./demos/controlled";
@@ -16,50 +16,50 @@ import ValueScale from "./demos/value-scale";
 import Vertical from "./demos/vertical";
 
 export default function Examples() {
-  return (
-    <>
-      <Example title="composition">
-        <Composition />
-      </Example>
-      <Example title="controlled">
-        <Controlled />
-      </Example>
-      <Example title="default">
-        <Default />
-      </Example>
-      <Example title="description">
-        <Description />
-      </Example>
-      <Example title="disabled">
-        <Disabled />
-      </Example>
-      <Example title="format options">
-        <FormatOptions />
-      </Example>
-      <Example title="label">
-        <Label />
-      </Example>
-      <Example title="range">
-        <Range />
-      </Example>
-      <Example title="sizes">
-        <Sizes />
-      </Example>
-      <Example title="step">
-        <Step />
-      </Example>
-      <Example title="uncontrolled">
-        <Uncontrolled />
-      </Example>
-      <Example title="value label">
-        <ValueLabel />
-      </Example>
-      <Example title="value scale">
-        <ValueScale />
-      </Example>
-      <Example title="vertical">
-        <Vertical />
-      </Example>
-    </>
-  );
+	return (
+		<>
+			<Example title="composition">
+				<Composition />
+			</Example>
+			<Example title="controlled">
+				<Controlled />
+			</Example>
+			<Example title="default">
+				<Default />
+			</Example>
+			<Example title="description">
+				<Description />
+			</Example>
+			<Example title="disabled">
+				<Disabled />
+			</Example>
+			<Example title="format options">
+				<FormatOptions />
+			</Example>
+			<Example title="label">
+				<Label />
+			</Example>
+			<Example title="range">
+				<Range />
+			</Example>
+			<Example title="sizes">
+				<Sizes />
+			</Example>
+			<Example title="step">
+				<Step />
+			</Example>
+			<Example title="uncontrolled">
+				<Uncontrolled />
+			</Example>
+			<Example title="value label">
+				<ValueLabel />
+			</Example>
+			<Example title="value scale">
+				<ValueScale />
+			</Example>
+			<Example title="vertical">
+				<Vertical />
+			</Example>
+		</>
+	);
 }

@@ -98,7 +98,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 			<TOCProvider toc={toc}>
 				<PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
 					<div className="mx-auto flex w-full min-w-0 max-w-3xl flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
-						<div data-page-header="" className="relative space-y-3 pb-8">
+						<div data-page-header="" className="relative space-y-3 pb-4 mb-2">
 							<div className="flex items-start justify-between">
 								<div className="flex flex-col gap-2">
 									<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
@@ -131,7 +131,9 @@ const clientLoader = browserCollections.docs.createClientLoader({
 							)} */}
 							<div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_50%,transparent)] via-[color-mix(in_oklab,var(--color-border)_80%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
 						</div>
-						<MDX components={mdxComponents} />
+						<div>
+							<MDX components={mdxComponents} />
+						</div>
 						<div className="min-w-0">{lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}</div>
 					</div>
 					<div className="sticky top-[calc(var(--header-height)+14px)] z-30 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">

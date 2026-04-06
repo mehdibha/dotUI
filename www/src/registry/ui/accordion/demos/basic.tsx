@@ -1,7 +1,7 @@
 import { Accordion } from "@/registry/ui/accordion";
 import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/registry/ui/disclosure";
 
-const faq = [
+const items = [
 	{
 		question: "How do I get started with DotUI?",
 		answer:
@@ -26,8 +26,8 @@ const faq = [
 
 export default function Demo() {
 	return (
-		<Accordion className="mx-auto w-full max-w-xl">
-			{faq.map((item) => (
+		<Accordion className="w-full max-w-md">
+			{items.map((item) => (
 				<Disclosure key={item.question}>
 					<DisclosureTrigger>{item.question}</DisclosureTrigger>
 					<DisclosurePanel>{item.answer}</DisclosurePanel>
