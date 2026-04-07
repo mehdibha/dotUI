@@ -1,10 +1,15 @@
-import { CircleAlert } from "lucide-react";
+import { CheckIcon, CircleAlert, CircleAlertIcon, InfoIcon } from "lucide-react";
 
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/registry/ui/alert";
 import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
+import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/ui/card";
+import { Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/registry/ui/select";
+import { TextField } from "@/registry/ui/text-field";
 
 export default function AlertExample() {
 	return (
@@ -13,6 +18,7 @@ export default function AlertExample() {
 			<AlertExample2 />
 			<AlertExample3 />
 			<AlertExample4 />
+			<AlertExample5 />
 		</Examples>
 	);
 }
@@ -37,6 +43,44 @@ function AlertExample1() {
 }
 
 function AlertExample2() {
+	return (
+		<Example title="Variants">
+			<div className="mx-auto flex w-full max-w-lg flex-col gap-4">
+				<Alert variant="danger">
+					<CircleAlert />
+					<AlertTitle>Something went wrong!</AlertTitle>
+					<AlertDescription>Your session has expired. Please log in again.</AlertDescription>
+				</Alert>
+				<Alert variant="danger">
+					<CircleAlert />
+					<AlertTitle>Unable to process your payment.</AlertTitle>
+					<AlertDescription>
+						<p>
+							Please verify your <a href="#">billing information</a> and try again.
+						</p>
+						<ul className="list-inside list-disc">
+							<li>Check your card details</li>
+							<li>Ensure sufficient funds</li>
+							<li>Verify billing address</li>
+						</ul>
+					</AlertDescription>
+				</Alert>
+				<Alert variant="warning">
+					<CircleAlert />
+					<AlertTitle>Something went wrong!</AlertTitle>
+					<AlertDescription>Your session has expired. Please log in again.</AlertDescription>
+				</Alert>
+				<Alert variant="success">
+					<CheckIcon />
+					<AlertTitle>Your changes have been saved.</AlertTitle>
+					<AlertDescription>This is an alert with title and description.</AlertDescription>
+				</Alert>
+			</div>
+		</Example>
+	);
+}
+
+function AlertExample3() {
 	return (
 		<Example title="With Icons">
 			<div className="mx-auto flex w-full max-w-lg flex-col gap-4">
@@ -91,34 +135,6 @@ function AlertExample2() {
 	);
 }
 
-function AlertExample3() {
-	return (
-		<Example title="Danger">
-			<div className="mx-auto flex w-full max-w-lg flex-col gap-4">
-				<Alert variant="destructive">
-					<CircleAlert />
-					<AlertTitle>Something went wrong!</AlertTitle>
-					<AlertDescription>Your session has expired. Please log in again.</AlertDescription>
-				</Alert>
-				<Alert variant="destructive">
-					<CircleAlert />
-					<AlertTitle>Unable to process your payment.</AlertTitle>
-					<AlertDescription>
-						<p>
-							Please verify your <a href="#">billing information</a> and try again.
-						</p>
-						<ul className="list-inside list-disc">
-							<li>Check your card details</li>
-							<li>Ensure sufficient funds</li>
-							<li>Verify billing address</li>
-						</ul>
-					</AlertDescription>
-				</Alert>
-			</div>
-		</Example>
-	);
-}
-
 function AlertExample4() {
 	return (
 		<Example title="With Actions">
@@ -127,7 +143,9 @@ function AlertExample4() {
 					<CircleAlert />
 					<AlertTitle>The selected emails have been marked as spam.</AlertTitle>
 					<AlertAction>
-						<Button size="xs">Undo</Button>
+						<Button variant="primary" size="xs" className="h-6">
+							Undo
+						</Button>
 					</AlertAction>
 				</Alert>
 				<Alert>
@@ -141,6 +159,54 @@ function AlertExample4() {
 					</AlertAction>
 				</Alert>
 			</div>
+		</Example>
+	);
+}
+
+function AlertExample5() {
+	return (
+		<Example title="Inside Card">
+			<Card className="mx-auto w-full max-w-lg">
+				<CardHeader>
+					<CardTitle>Create project</CardTitle>
+					<CardDescription>Create a new project to get started.</CardDescription>
+				</CardHeader>
+				<CardContent className="flex flex-col gap-4">
+					<Alert>
+						<CircleAlertIcon />
+						<AlertTitle>You have reached the limit of 3 free projects.</AlertTitle>
+						<AlertDescription>Upgrade to Pro to create unlimited projects.</AlertDescription>
+						<AlertAction>
+							<Button variant="primary" size="xs">
+								Upgrade
+							</Button>
+						</AlertAction>
+					</Alert>
+					<TextField className="flex w-full flex-col gap-2">
+						<Label>Name</Label>
+						<Input placeholder="My project" />
+					</TextField>
+					<div className="flex flex-col gap-2">
+						<Label htmlFor="project-framework">Framework</Label>
+						<Select placeholder="Select a framework" className="w-full">
+							<SelectTrigger>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem id="next">Next.js</SelectItem>
+								<SelectItem id="remix">Remix</SelectItem>
+								<SelectItem id="astro">Astro</SelectItem>
+								<SelectItem id="nuxt">Nuxt</SelectItem>
+							</SelectContent>
+						</Select>
+					</div>
+				</CardContent>
+				<CardFooter>
+					<Button variant="primary" className="w-full">
+						Create project
+					</Button>
+				</CardFooter>
+			</Card>
 		</Example>
 	);
 }

@@ -15,7 +15,7 @@ const baseStyles = tv({
 const defaultStyles = tv({
 	extend: baseStyles,
 	slots: {
-		root: fieldStyles().field(),
+		root: [fieldStyles().field(), "[&.flex-1]:*:data-button:w-full [&.w-full]:*:data-button:w-full"],
 		selectValue: "flex-1 truncate text-left placeholder-shown:text-fg-muted",
 	},
 });

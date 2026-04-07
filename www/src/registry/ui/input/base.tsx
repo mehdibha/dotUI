@@ -98,6 +98,7 @@ const Input = ({ size = "md", className, ...props }: InputProps) => {
 	return (
 		<AriaInput
 			data-slot="input"
+			data-input=""
 			data-in-group={inGroup || undefined}
 			data-size={size}
 			className={composeRenderProps(className, (className) => input({ className, inGroup, size }))}

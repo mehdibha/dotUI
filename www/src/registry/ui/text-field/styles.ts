@@ -12,7 +12,7 @@ const baseStyles = tv({
 const defaultStyles = tv({
 	extend: baseStyles,
 	base: [
-		"[&.flex-1]:*:data-[slot=input]:w-full [&.w-full]:*:data-[slot=input]:w-full",
+		"[&.flex-1]:*:data-input:w-full [&.w-full]:*:data-input:w-full",
 		fieldStyles().field({ orientation: "vertical" }),
 	],
 });
