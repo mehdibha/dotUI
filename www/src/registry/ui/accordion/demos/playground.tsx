@@ -8,29 +8,43 @@ interface AccordionPlaygroundProps {
 	isDisabled?: boolean;
 }
 
-export function AccordionPlayground({ allowsMultipleExpanded = false, isDisabled = false }: AccordionPlaygroundProps) {
+const items = [
+	{
+		id: "getting-started",
+		question: "How do I get started with DotUI?",
+		answer:
+			"Getting started is simple! Install the package using your preferred package manager, then import the components you need.",
+	},
+	{
+		id: "free-to-use",
+		question: "Is DotUI free to use?",
+		answer:
+			"Yes, DotUI is completely free and open source. You can use it in any project, whether personal or commercial.",
+	},
+	{
+		id: "customization",
+		question: "Can I customize the components?",
+		answer:
+			"Absolutely! All components use Tailwind Variants for styling, making it easy to customize colors, sizes, and other visual properties.",
+	},
+];
+
+export function AccordionPlayground({
+	allowsMultipleExpanded = false,
+	isDisabled = false,
+}: AccordionPlaygroundProps) {
 	return (
-		<Accordion allowsMultipleExpanded={allowsMultipleExpanded} isDisabled={isDisabled} className="w-full max-w-2xl">
-			<Disclosure id="getting-started">
-				<DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>
-				<DisclosurePanel>
-					Getting started is simple! Install the package using your preferred package manager, then import the
-					components you need.
-				</DisclosurePanel>
-			</Disclosure>
-			<Disclosure id="free-to-use">
-				<DisclosureTrigger>Is DotUI free to use?</DisclosureTrigger>
-				<DisclosurePanel>
-					Yes, DotUI is completely free and open source. You can use it in any project, whether personal or commercial.
-				</DisclosurePanel>
-			</Disclosure>
-			<Disclosure id="customization">
-				<DisclosureTrigger>Can I customize the components?</DisclosureTrigger>
-				<DisclosurePanel>
-					Absolutely! All components use Tailwind Variants for styling, making it easy to customize colors, sizes, and
-					other visual properties.
-				</DisclosurePanel>
-			</Disclosure>
+		<Accordion
+			allowsMultipleExpanded={allowsMultipleExpanded}
+			isDisabled={isDisabled}
+			className="max-w-2xl"
+		>
+			{items.map((item) => (
+				<Disclosure id={item.id} key={item.id}>
+					<DisclosureTrigger>{item.question}</DisclosureTrigger>
+					<DisclosurePanel>{item.answer}</DisclosurePanel>
+				</Disclosure>
+			))}
 		</Accordion>
 	);
 }

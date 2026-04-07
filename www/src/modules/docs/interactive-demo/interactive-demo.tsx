@@ -144,7 +144,7 @@ export function InteractiveDemo({
 				<div
 					className={cn(
 						"flex min-h-56 flex-1 items-center justify-center border bg-bg p-10",
-						layout === "horizontal" && "rounded-tl-lg border-r-0",
+						layout === "horizontal" && "rounded-tl-lg",
 						layout === "vertical" && "rounded-t-lg",
 					)}
 				>
@@ -156,7 +156,7 @@ export function InteractiveDemo({
 					className={cn(
 						"relative flex flex-col gap-2.5 bg-card p-4 **:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
 						layout === "horizontal" && "min-w-48 rounded-tr-lg border-y border-r",
-						layout === "vertical" && "border-x",
+						layout === "vertical" && "border-x border-b",
 					)}
 				>
 					<Controls controls={controls} values={values} onChange={handleChange} />

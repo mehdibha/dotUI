@@ -23,6 +23,7 @@
 		"build": "turbo run build",
 		"dev": "turbo run dev --parallel",
 		"dev:www": "pnpm --filter=www dev",
+		"dev:www:clean": "pnpm --filter=www dev:clean",
 		"build:www": "pnpm --filter=www build",
 		"build:registry": "pnpm --filter=www build:registry",
 		"preview:www": "pnpm --filter=www preview",

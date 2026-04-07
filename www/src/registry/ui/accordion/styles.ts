@@ -5,7 +5,7 @@ import { createStyles } from "@/modules/core/styles";
 import accordionMeta from "./meta";
 
 const baseStyles = tv({
-	base: "",
+	base: "flex w-full flex-col",
 });
 
 const defaultStyles = tv({
