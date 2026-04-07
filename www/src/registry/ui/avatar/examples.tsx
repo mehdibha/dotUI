@@ -1,58 +1,338 @@
+import { CheckIcon, PlusIcon } from "lucide-react";
+
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
+import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from "@/registry/ui/avatar";
+import { Button } from "@/registry/ui/button";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/registry/ui/empty";
 
-import AvatarGroupCount from "./demos/avatar-group-count";
-import Badge from "./demos/badge";
-import BadgeNotification from "./demos/badge-notification";
-import BadgeTopRight from "./demos/badge-top-right";
-import BadgeWithIcon from "./demos/badge-with-icon";
-import Basic from "./demos/basic";
-import Default from "./demos/default";
-import FallbackOnly from "./demos/fallback-only";
-import Group from "./demos/group";
-import IconFallback from "./demos/icon-fallback";
-import Radii from "./demos/radii";
-import Sizes from "./demos/sizes";
-
-export default function AvatarExamples() {
+export default function AvatarExample() {
 	return (
-		<Examples>
-			<Example title="default">
-				<Default />
-			</Example>
-			<Example title="basic">
-				<Basic />
-			</Example>
-			<Example title="sizes">
-				<Sizes />
-			</Example>
-			<Example title="fallback only">
-				<FallbackOnly />
-			</Example>
-			<Example title="icon fallback">
-				<IconFallback />
-			</Example>
-			<Example title="radii">
-				<Radii />
-			</Example>
-			<Example title="badge">
-				<Badge />
-			</Example>
-			<Example title="badge notification">
-				<BadgeNotification />
-			</Example>
-			<Example title="badge top right">
-				<BadgeTopRight />
-			</Example>
-			<Example title="badge with icon">
-				<BadgeWithIcon />
-			</Example>
-			<Example title="group">
-				<Group />
-			</Example>
-			<Example title="avatar group count">
-				<AvatarGroupCount />
-			</Example>
+		<Examples className="sm:grid-cols-2 lg:grid-cols-3">
+			<AvatarSizes />
+			<AvatarWithBadge />
+			<AvatarWithBadgeIcon />
+			<AvatarGroupExample />
+			<AvatarGroupWithCount />
+			<AvatarGroupWithIconCount />
+			<AvatarInEmpty />
 		</Examples>
+	);
+}
+
+function AvatarSizes() {
+	return (
+		<Example title="Sizes">
+			<div className="flex flex-wrap items-center gap-2">
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+			</div>
+			<div className="flex flex-wrap items-center gap-2">
+				<Avatar size="sm">
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar>
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+			</div>
+		</Example>
+	);
+}
+
+function AvatarWithBadge() {
+	return (
+		<Example title="Badge">
+			<div className="flex flex-wrap items-center gap-2">
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/jorgezreik.png" alt="@jorgezreik" />
+					<AvatarFallback>JZ</AvatarFallback>
+					<AvatarBadge />
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/jorgezreik.png" alt="@jorgezreik" />
+					<AvatarFallback>JZ</AvatarFallback>
+					<AvatarBadge />
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/jorgezreik.png" alt="@jorgezreik" />
+					<AvatarFallback>JZ</AvatarFallback>
+					<AvatarBadge />
+				</Avatar>
+			</div>
+			<div className="flex flex-wrap items-center gap-2">
+				<Avatar size="sm">
+					<AvatarFallback>JZ</AvatarFallback>
+					<AvatarBadge />
+				</Avatar>
+				<Avatar>
+					<AvatarFallback>JZ</AvatarFallback>
+					<AvatarBadge />
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarFallback>JZ</AvatarFallback>
+					<AvatarBadge />
+				</Avatar>
+			</div>
+		</Example>
+	);
+}
+
+function AvatarWithBadgeIcon() {
+	return (
+		<Example title="Badge with Icon">
+			<div className="flex flex-wrap items-center gap-2">
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/pranathip.png" alt="@pranathip" />
+					<AvatarFallback>PP</AvatarFallback>
+					<AvatarBadge>
+						<PlusIcon />
+					</AvatarBadge>
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/pranathip.png" alt="@pranathip" />
+					<AvatarFallback>PP</AvatarFallback>
+					<AvatarBadge>
+						<PlusIcon />
+					</AvatarBadge>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/pranathip.png" alt="@pranathip" />
+					<AvatarFallback>PP</AvatarFallback>
+					<AvatarBadge>
+						<PlusIcon />
+					</AvatarBadge>
+				</Avatar>
+			</div>
+			<div className="flex flex-wrap items-center gap-2">
+				<Avatar size="sm">
+					<AvatarFallback>PP</AvatarFallback>
+					<AvatarBadge>
+						<CheckIcon />
+					</AvatarBadge>
+				</Avatar>
+				<Avatar>
+					<AvatarFallback>PP</AvatarFallback>
+					<AvatarBadge>
+						<CheckIcon />
+					</AvatarBadge>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarFallback>PP</AvatarFallback>
+					<AvatarBadge>
+						<CheckIcon />
+					</AvatarBadge>
+				</Avatar>
+			</div>
+		</Example>
+	);
+}
+
+function AvatarGroupExample() {
+	return (
+		<Example title="Group">
+			<AvatarGroup>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+			</AvatarGroup>
+			<AvatarGroup>
+				<Avatar>
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+			</AvatarGroup>
+			<AvatarGroup>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+			</AvatarGroup>
+		</Example>
+	);
+}
+
+function AvatarGroupWithCount() {
+	return (
+		<Example title="Group with Count">
+			<AvatarGroup>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+				<AvatarGroupCount>+3</AvatarGroupCount>
+			</AvatarGroup>
+			<AvatarGroup>
+				<Avatar>
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+				<AvatarGroupCount>+3</AvatarGroupCount>
+			</AvatarGroup>
+			<AvatarGroup>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+				<AvatarGroupCount>+3</AvatarGroupCount>
+			</AvatarGroup>
+		</Example>
+	);
+}
+
+function AvatarGroupWithIconCount() {
+	return (
+		<Example title="Group with Icon Count">
+			<AvatarGroup>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar size="sm">
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+				<AvatarGroupCount>
+					<PlusIcon />
+				</AvatarGroupCount>
+			</AvatarGroup>
+			<AvatarGroup>
+				<Avatar>
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar>
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+				<AvatarGroupCount>
+					<PlusIcon />
+				</AvatarGroupCount>
+			</AvatarGroup>
+			<AvatarGroup>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" className="grayscale" />
+					<AvatarFallback>M</AvatarFallback>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" className="grayscale" />
+					<AvatarFallback>LR</AvatarFallback>
+				</Avatar>
+				<Avatar size="lg">
+					<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" className="grayscale" />
+					<AvatarFallback>ER</AvatarFallback>
+				</Avatar>
+				<AvatarGroupCount>
+					<PlusIcon />
+				</AvatarGroupCount>
+			</AvatarGroup>
+		</Example>
+	);
+}
+
+function AvatarInEmpty() {
+	return (
+		<Example title="In Empty" className="col-span-2!">
+			<Empty className="w-full flex-none border">
+				<EmptyHeader>
+					<EmptyMedia>
+						<AvatarGroup>
+							<Avatar size="lg">
+								<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" className="grayscale" />
+								<AvatarFallback>M</AvatarFallback>
+							</Avatar>
+							<Avatar size="lg">
+								<AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" className="grayscale" />
+								<AvatarFallback>LR</AvatarFallback>
+							</Avatar>
+							<Avatar size="lg">
+								<AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" className="grayscale" />
+								<AvatarFallback>ER</AvatarFallback>
+							</Avatar>
+							<AvatarGroupCount>
+								<PlusIcon />
+							</AvatarGroupCount>
+						</AvatarGroup>
+					</EmptyMedia>
+					<EmptyTitle>No Team Members</EmptyTitle>
+					<EmptyDescription>Invite your team to collaborate on this project.</EmptyDescription>
+				</EmptyHeader>
+				<EmptyContent>
+					<Button>
+						<PlusIcon />
+						Invite Members
+					</Button>
+				</EmptyContent>
+			</Empty>
+		</Example>
 	);
 }

@@ -185,6 +185,12 @@ export function ThemeProvider({
 		[forcedTheme, storageKey, enableColorScheme, nonce, disableTransitionOnChange],
 	);
 
+	// Apply theme to DOM on mount (without disabling transitions)
+	// Ensures correct theme after HMR or re-mounts
+	useEffect(() => {
+		applyThemeToDOM(forcedTheme ?? theme, enableColorScheme, nonce, false);
+	}, [theme, forcedTheme, enableColorScheme, nonce]);
+
 	// Listen to system preference changes
 	useEffect(() => {
 		const cleanup = setupMediaListener((newSystemTheme) => {

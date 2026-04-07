@@ -5,11 +5,6 @@ const alertMeta = {
 	type: "registry:ui",
 	group: "feedback",
 	defaultStyle: "default",
-	styles: {
-		default: {
-			description: "Minimal with a subtle border and muted background.",
-		},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -17,6 +12,17 @@ const alertMeta = {
 			target: "ui/alert.tsx",
 		},
 	],
+	styles: {
+		default: {
+			description: "Minimal with a subtle border and muted background.",
+		},
+	},
+	params: {
+		"--alert-radius": {
+			type: "radius",
+			default: "--radius-lg",
+		},
+	},
 } satisfies RegistryItem;
 
 export default alertMeta;

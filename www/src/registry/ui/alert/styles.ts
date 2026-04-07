@@ -8,6 +8,7 @@ const baseStyles = tv({
 	slots: {
 		root: [
 			"relative grid w-full items-start px-4 py-3",
+			"rounded-(--alert-radius)",
 			"has-[>svg]:has-data-alert-action:grid-cols-[calc(var(--spacing)*4)_1fr_auto] has-data-alert-title:has-data-alert-description:gap-y-0.5 has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-data-alert-action:grid-cols-[1fr_auto] has-[>svg]:gap-x-3 has-data-alert-action:pr-3",
 			"*:[svg]:size-4 *:[svg]:translate-y-0.5 *:[svg]:text-current",
 		],
@@ -33,7 +34,7 @@ const baseStyles = tv({
 const defaultStyles = tv({
 	extend: baseStyles,
 	slots: {
-		root: "rounded-lg border bg-card text-sm",
+		root: "border bg-card text-sm",
 		title: "font-medium tracking-tight",
 		description: "text-fg-muted **:[p]:leading-relaxed [svg~&]:col-start-2",
 		action: "",
@@ -62,8 +63,41 @@ const defaultStyles = tv({
 	},
 });
 
+const sousseStyles = tv({
+	extend: baseStyles,
+	slots: {
+		root: "border bg-card text-sm",
+		title: "font-medium tracking-tight",
+		description: "text-fg-muted **:[p]:leading-relaxed [svg~&]:col-start-2",
+		action: "",
+	},
+	variants: {
+		variant: {
+			neutral: {
+				root: "text-fg",
+			},
+			danger: {
+				root: "border-border-danger text-fg-danger",
+			},
+			warning: {
+				root: "border-border-warning text-fg-warning",
+			},
+			info: {
+				root: "border-border-info text-fg-info",
+			},
+			success: {
+				root: "border-border-success text-fg-success",
+			},
+		},
+	},
+	defaultVariants: {
+		variant: "neutral",
+	},
+});
+
 export type AlertStyles = typeof defaultStyles;
 
 export const { useStyles } = createStyles(alertMeta, {
 	default: defaultStyles,
+	sousse: sousseStyles,
 });
