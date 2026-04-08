@@ -4,10 +4,6 @@ const avatarMeta = {
 	name: "avatar",
 	type: "registry:ui",
 	group: "data-display",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -18,9 +14,3 @@ const avatarMeta = {
 } satisfies RegistryItem;
 
 export default avatarMeta;
-
-export type AvatarStyle = keyof typeof avatarMeta.styles;
-
-export const avatarStyleNames = Object.keys(avatarMeta.styles) as AvatarStyle[];
-
-export const defaultAvatarStyle = avatarMeta.defaultStyle;
