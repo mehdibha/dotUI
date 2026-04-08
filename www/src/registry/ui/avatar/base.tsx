@@ -9,7 +9,7 @@ import type { ImageLoadingStatus } from "@/registry/hooks/use-image-loading-stat
 
 const avatarStyles = tv({
 	slots: {
-		root: "group/avatar relative inline-flex size-8 shrink-0 rounded-full bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0",
+		root: "group/avatar relative inline-flex size-8 shrink-0 rounded-(--avatar-radius) bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0",
 		image: "aspect-square size-full rounded-[inherit] object-cover",
 		fallback:
 			"flex size-full select-none items-center justify-center rounded-[inherit] bg-muted text-sm group-data-[size=sm]/avatar:text-xs",
@@ -21,7 +21,7 @@ const avatarStyles = tv({
 		],
 		group: "group/avatar-group flex -space-x-2 *:data-avatar:ring-2 *:data-avatar:ring-bg",
 		groupCount: [
-			"relative flex shrink-0 items-center justify-center rounded-full bg-muted text-fg-muted ring-2 ring-bg",
+			"relative flex shrink-0 items-center justify-center rounded-(--avatar-radius) bg-muted text-fg-muted ring-2 ring-bg",
 			"size-8 text-sm [&>svg]:size-4",
 			"group-data-[size=sm]/avatar-group:size-6 group-data-[size=sm]/avatar-group:text-[0.625rem] group-data-[size=sm]/avatar-group:[&>svg]:size-3",
 			"group-data-[size=lg]/avatar-group:size-10 group-data-[size=lg]/avatar-group:text-base group-data-[size=lg]/avatar-group:[&>svg]:size-5",

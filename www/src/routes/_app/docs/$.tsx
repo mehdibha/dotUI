@@ -103,29 +103,9 @@ const clientLoader = browserCollections.docs.createClientLoader({
 									<DocsCopyPage content={rawContent} url={url} />
 								</div>
 							</div>
-							{/* {frontmatter.links?.length && (
-								<div className="mt-2 flex items-center gap-2">
-									{frontmatter.links.map((link) => {
-										const icon = getIcon(link.href);
-										return (
-											<LinkButton
-												key={link.href}
-												href={link.href}
-												target="_blank"
-												size="sm"
-												className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
-											>
-												{icon}
-												{link.label}
-												<ExternalLinkIcon />
-											</LinkButton>
-										);
-									})}
-								</div>
-							)} */}
 							<div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_50%,transparent)] via-[color-mix(in_oklab,var(--color-border)_80%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
 						</div>
-						<div>
+						<div >
 							<MDX components={mdxComponents} />
 						</div>
 						<div className="min-w-0">{lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}</div>

@@ -11,6 +11,12 @@ const avatarMeta = {
 			target: "ui/avatar.tsx",
 		},
 	],
+	params: {
+		"--avatar-radius": {
+			type: "radius",
+			default: "--radius-full",
+		},
+	},
 } satisfies RegistryItem;
 
 export default avatarMeta;

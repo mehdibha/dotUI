@@ -19,7 +19,7 @@ export function Example({ component: Component, description, children, className
 	const previewContent = getSlotContent(children, DemoCodePreview);
 
 	return (
-		<div className={cn("flex items-center justify-center rounded-t-md border bg-bg p-10", className)} {...props}>
+		<div className={cn("flex flex-1 items-center justify-center rounded-t-md border bg-bg p-10", className)} {...props}>
 			<Component />
 		</div>
 	);
