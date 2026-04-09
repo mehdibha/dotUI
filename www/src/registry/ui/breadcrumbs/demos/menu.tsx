@@ -18,21 +18,16 @@ export default function Demo() {
 			</BreadcrumbItem>
 			<BreadcrumbItem>
 				<Menu>
-					<Button variant="quiet" size="sm" aria-label="More pages">
+					<Button variant="quiet" size="xs" aria-label="More pages">
 						<MoreHorizontalIcon />
 					</Button>
 					<Popover placement="bottom">
 						<MenuContent>
 							<MenuItem href="#">Documentation</MenuItem>
-							<MenuItem href="#">Themes</MenuItem>
-							<MenuItem href="#">GitHub</MenuItem>
+							<MenuItem href="#">Components</MenuItem>
 						</MenuContent>
 					</Popover>
 				</Menu>
-				<ChevronRightIcon />
-			</BreadcrumbItem>
-			<BreadcrumbItem>
-				<BreadcrumbLink href="#">Components</BreadcrumbLink>
 				<ChevronRightIcon />
 			</BreadcrumbItem>
 			<BreadcrumbItem>
