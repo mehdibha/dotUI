@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_app/components")({
 				{ property: "og:title", content: title },
 				{ property: "og:description", content: description },
 				{ property: "og:type", content: "article" },
-				{ property: "og:url", content: `${siteConfig.url}/docs/components` },
+				{ property: "og:url", content: `${siteConfig.url}/components` },
 				{ property: "og:image", content: ogImageUrl },
 				{ name: "twitter:card", content: "summary_large_image" },
 				{ name: "twitter:title", content: title },
