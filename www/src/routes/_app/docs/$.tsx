@@ -13,6 +13,7 @@ import { PageLastUpdate } from "@/modules/docs/last-update";
 import { mdxComponents } from "@/modules/docs/mdx-components";
 import { PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
 import { TOC, TOCProvider } from "@/modules/docs/toc";
+
 export const Route = createFileRoute("/_app/docs/$")({
 	component: DocsPage,
 	loader: async ({ params }) => {

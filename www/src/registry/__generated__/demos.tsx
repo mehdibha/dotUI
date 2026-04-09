@@ -153,6 +153,10 @@ export const DemosIndex: Record<
     files: ["ui/breadcrumbs/demos/icon.tsx"],
     component: React.lazy(() => import("@/registry/ui/breadcrumbs/demos/icon")),
   },
+  "breadcrumbs/demos/menu": {
+    files: ["ui/breadcrumbs/demos/menu.tsx"],
+    component: React.lazy(() => import("@/registry/ui/breadcrumbs/demos/menu")),
+  },
   "breadcrumbs/demos/router-integration": {
     files: ["ui/breadcrumbs/demos/router-integration.tsx"],
     component: React.lazy(() => import("@/registry/ui/breadcrumbs/demos/router-integration")),

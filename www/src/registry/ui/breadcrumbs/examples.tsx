@@ -5,6 +5,7 @@ import Basic from "./demos/basic";
 import Composition from "./demos/composition";
 import Disabled from "./demos/disabled";
 import Icon from "./demos/icon";
+import MenuDemo from "./demos/menu";
 import RouterIntegration from "./demos/router-integration";
 
 export default function BreadcrumbsExamples() {
@@ -21,6 +22,9 @@ export default function BreadcrumbsExamples() {
 			</Example>
 			<Example title="icon">
 				<Icon />
+			</Example>
+			<Example title="menu">
+				<MenuDemo />
 			</Example>
 			<Example title="router integration">
 				<RouterIntegration />
