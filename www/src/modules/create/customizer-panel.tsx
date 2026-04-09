@@ -1,7 +1,8 @@
-import { type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useMemo } from "react";
 import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, ShuffleIcon, Undo2Icon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { Button as AriaButton } from "react-aria-components";
+import { getRouteApi } from "@tanstack/react-router";
 
 import { componentsData } from "@/modules/docs/components-list/components-data";
 import * as icons from "@/registry/__generated__/icons";
@@ -9,7 +10,6 @@ import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
 import { Checkbox } from "@/registry/ui/checkbox";
 import { Command } from "@/registry/ui/command";
-import { Dialog, DialogContent } from "@/registry/ui/dialog";
 import { Input } from "@/registry/ui/input";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
@@ -18,7 +18,7 @@ import { Select, SelectValue } from "@/registry/ui/select";
 import { Switch } from "@/registry/ui/switch";
 
 import { ColorsConfig } from "./colors-config";
-import { ComponentsConfig } from "./components-config";
+import { AllComponentsView, ComponentDetailView, getComponentDisplayName } from "./components-config";
 import { IconographyConfig } from "./iconography-config";
 import { LayoutConfig } from "./layout-config";
 import { TypographyConfig } from "./typography-config";
@@ -28,29 +28,14 @@ import { TypographyConfig } from "./typography-config";
 interface MenuItem {
 	id: string;
 	title: string;
-	type: "page" | "popover";
-	direction?: "vertical" | "horizontal";
 	preview: ReactNode;
 	config: ReactNode;
 }
 
 /* ------------------------------ Animation ------------------------------ */
 
-const slideVariants = {
-	enter: (dir: number) => ({
-		x: dir > 0 ? "100%" : "-100%",
-		opacity: 0,
-	}),
-	center: { x: 0, opacity: 1 },
-	exit: (dir: number) => ({
-		x: dir > 0 ? "-100%" : "100%",
-		opacity: 0,
-	}),
-};
-
-const slideTransition: Transition = {
+const stackTransition: Transition = {
 	x: { type: "tween", duration: 0.35, ease: [0.32, 0.72, 0, 1] },
-	opacity: { duration: 0.25 },
 };
 
 /* --------------------------------- Menu -------------------------------- */
@@ -59,7 +44,6 @@ const menu: MenuItem[] = [
 	{
 		id: "colors",
 		title: "Colors",
-		type: "page",
 		preview: (
 			<div className="flex flex-col gap-1.5">
 				<div className="flex items-center gap-1 *:size-5 *:rounded-full *:border">
@@ -77,7 +61,6 @@ const menu: MenuItem[] = [
 	{
 		id: "typography",
 		title: "Typography",
-		type: "page",
 		preview: (
 			<div className="flex flex-col gap-1.5">
 				<div className="flex items-center justify-between">
@@ -101,7 +84,6 @@ const menu: MenuItem[] = [
 	{
 		id: "iconography",
 		title: "Icon Library",
-		type: "page",
 		preview: (
 			<div className="-mt-1 flex flex-col items-start gap-1">
 				<p className="font-medium">Lucide icons</p>
@@ -119,7 +101,6 @@ const menu: MenuItem[] = [
 	{
 		id: "layout",
 		title: "Layout",
-		type: "page",
 		preview: (
 			<div className="flex flex-col gap-1.5">
 				<div className="grid grid-cols-2 gap-1">
@@ -148,7 +129,6 @@ const menu: MenuItem[] = [
 	{
 		id: "components",
 		title: "Components",
-		type: "page",
 		preview: (
 			<div className="pointer-events-none flex items-center gap-2">
 				<Switch defaultSelected className="scale-75" />
@@ -156,34 +136,67 @@ const menu: MenuItem[] = [
 				<Badge>Badge</Badge>
 			</div>
 		),
-		config: <ComponentsConfig />,
+		config: null, // Handled by stack-based sub-navigation
 	},
 ];
 
 /* -------------------------------- Panel -------------------------------- */
 
-interface CustomizerPanelProps {
-	selectedComponent: string;
-	onComponentChange: (component: string) => void;
-}
+const routeApi = getRouteApi("/_app/create");
 
-export function CustomizerPanel({ selectedComponent, onComponentChange }: CustomizerPanelProps) {
-	const [activePageId, setActivePageId] = useState<string | null>(null);
-	const direction = useRef(1);
+export function CustomizerPanel() {
+	const { panel, preview } = routeApi.useSearch();
+	const navigate = routeApi.useNavigate();
 
-	const activePage = activePageId ? menu.find((m) => m.id === activePageId) : null;
+	const navStack = useMemo(() => (panel ? panel.split(".") : []), [panel]);
 
 	function push(id: string) {
-		direction.current = 1;
-		setActivePageId(id);
+		navigate({ search: (prev) => ({ ...prev, panel: [...navStack, id].join(".") }) });
 	}
 
 	function pop() {
-		direction.current = -1;
-		setActivePageId(null);
+		const next = navStack.slice(0, -1);
+		navigate({ search: (prev) => ({ ...prev, panel: next.length > 0 ? next.join(".") : undefined }) });
 	}
 
-	const viewKey = activePageId ?? "home";
+	// When on a component detail, lock the preview to that component
+	const activeComponent = navStack[0] === "components" && navStack.length === 2 ? navStack[1]! : null;
+	const effectivePreview = activeComponent ?? preview;
+
+	function renderStackedView(index: number) {
+		const topLevel = navStack[0]!;
+
+		if (index === 0) {
+			if (topLevel === "components") {
+				return (
+					<>
+						<ViewHeader title="Components" onBack={pop} />
+						<AllComponentsView onSelect={(comp) => push(comp)} />
+					</>
+				);
+			}
+			const menuItem = menu.find((m) => m.id === topLevel);
+			if (!menuItem) return null;
+			return (
+				<>
+					<ViewHeader title={menuItem.title} onBack={pop} />
+					<div className="mt-4 **:data-label:pl-1 **:data-label:text-fg-muted">{menuItem.config}</div>
+				</>
+			);
+		}
+
+		if (index === 1 && topLevel === "components") {
+			const componentName = navStack[1]!;
+			return (
+				<>
+					<ViewHeader title={getComponentDisplayName(componentName)} onBack={pop} />
+					<ComponentDetailView componentName={componentName} />
+				</>
+			);
+		}
+
+		return null;
+	}
 
 	return (
 		<div className="relative flex w-72 flex-col rounded-xl border bg-card">
@@ -191,8 +204,9 @@ export function CustomizerPanel({ selectedComponent, onComponentChange }: Custom
 			<div className="relative overflow-hidden border-b p-3">
 				<div className="flex w-full items-center gap-2">
 					<Select
-						value={selectedComponent}
-						onChange={(key) => onComponentChange(key as string)}
+						value={effectivePreview}
+						onChange={(v) => navigate({ search: (prev) => ({ ...prev, preview: v as string }) })}
+						isDisabled={!!activeComponent}
 						className="min-w-0 flex-1"
 					>
 						<Button size="sm" className="w-full pr-2!">
@@ -231,55 +245,44 @@ export function CustomizerPanel({ selectedComponent, onComponentChange }: Custom
 
 			{/* Body */}
 			<div className="relative flex-1 overflow-hidden">
-				<AnimatePresence mode="popLayout" custom={direction.current} initial={false}>
-					<motion.div
-						key={viewKey}
-						custom={direction.current}
-						variants={slideVariants}
-						initial="enter"
-						animate="center"
-						exit="exit"
-						transition={slideTransition}
-						className="h-full overflow-y-auto p-3"
-					>
-						{activePage ? (
-							<div>
-								<div className="mb-3 -ml-1 flex items-center gap-2">
-									<Button variant="quiet" size="sm" onPress={pop} aria-label="Back" className="size-6">
-										<ChevronLeftIcon />
-									</Button>
-									<h2 className="font-medium text-sm">{activePage.title}</h2>
-								</div>
-								<div className="mt-4 **:data-label:pl-1 **:data-label:text-fg-muted">{activePage.config}</div>
-							</div>
-						) : (
-							<div className="flex flex-col gap-3">
-								{menu.map((item) => {
-									const isHorizontal = item.direction === "horizontal";
-									const cardClass = isHorizontal
-										? "flex flex-row items-center justify-between rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover"
-										: "flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover";
+				{/* Home — always mounted, shifts left when covered */}
+				<motion.div
+					initial={false}
+					animate={{ x: navStack.length > 0 ? "-50%" : 0 }}
+					transition={stackTransition}
+					className="absolute inset-0 overflow-y-auto p-3"
+				>
+					<div className="flex flex-col gap-3">
+						{menu.map((item) => (
+							<AriaButton
+								key={item.id}
+								onPress={() => push(item.id)}
+								className="flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover"
+							>
+								<div className="text-left text-fg-muted">{item.title}</div>
+								<div>{item.preview}</div>
+							</AriaButton>
+						))}
+					</div>
+				</motion.div>
 
-									return item.type === "popover" ? (
-										<Dialog key={item.id}>
-											<AriaButton className={cardClass}>
-												<div className="text-left text-fg-muted">{item.title}</div>
-												<div>{item.preview}</div>
-											</AriaButton>
-											<Popover placement="right top">
-												<DialogContent>{item.config}</DialogContent>
-											</Popover>
-										</Dialog>
-									) : (
-										<AriaButton key={item.id} onPress={() => push(item.id)} className={cardClass}>
-											<div className="text-left text-fg-muted">{item.title}</div>
-											<div>{item.preview}</div>
-										</AriaButton>
-									);
-								})}
-							</div>
-						)}
-					</motion.div>
+				{/* Stacked views — each layer covers the one below */}
+				<AnimatePresence initial={false}>
+					{navStack.map((_, index) => {
+						const isCovered = index < navStack.length - 1;
+						return (
+							<motion.div
+								key={navStack.slice(0, index + 1).join("/")}
+								initial={{ x: "100%" }}
+								animate={{ x: isCovered ? "-50%" : 0 }}
+								exit={{ x: "100%" }}
+								transition={stackTransition}
+								className="absolute inset-0 overflow-y-auto bg-card p-3"
+							>
+								{renderStackedView(index)}
+							</motion.div>
+						);
+					})}
 				</AnimatePresence>
 			</div>
 
@@ -292,6 +295,17 @@ export function CustomizerPanel({ selectedComponent, onComponentChange }: Custom
 					Create project
 				</Button>
 			</div>
+		</div>
+	);
+}
+
+function ViewHeader({ title, onBack }: { title: string; onBack: () => void }) {
+	return (
+		<div className="mb-3 -ml-1 flex items-center gap-2">
+			<Button variant="quiet" size="sm" onPress={onBack} aria-label="Back" className="size-6">
+				<ChevronLeftIcon />
+			</Button>
+			<h2 className="font-medium text-sm">{title}</h2>
 		</div>
 	);
 }

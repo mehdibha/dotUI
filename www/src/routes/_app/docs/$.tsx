@@ -103,7 +103,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
 									<DocsCopyPage content={rawContent} url={url} />
 								</div>
 							</div>
-							<div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_50%,transparent)] via-[color-mix(in_oklab,var(--color-border)_80%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
+							<div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_40%,transparent)] via-[color-mix(in_oklab,var(--color-border)_90%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
 						</div>
 						<div>
 							<MDX components={mdxComponents} />

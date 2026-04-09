@@ -13,9 +13,8 @@ const alertMeta = {
 		},
 	],
 	styles: {
-		default: {
-			description: "Minimal with a subtle border and muted background.",
-		},
+		default: {},
+		sousse: {},
 	},
 	params: {
 		"--alert-radius": {
