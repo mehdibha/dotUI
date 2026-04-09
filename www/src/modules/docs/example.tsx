@@ -2,7 +2,7 @@ import type React from "react";
 
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent } from "@/registry/ui/dialog";
 import { Modal } from "@/registry/ui/modal";
 
 // import { DemoCode, DemoCodePreview, getSlotContent } from "./demo";

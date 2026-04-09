@@ -16,7 +16,7 @@ export const statuses = [
 	{
 		value: "draft",
 		label: "Draft",
-		variant: "default",
+		variant: "neutral",
 		icon: CircleDashedIcon,
 	},
 	{
@@ -61,7 +61,7 @@ export const priorities = [
 	{
 		value: "P3",
 		label: "P3",
-		variant: "default",
+		variant: "neutral",
 		icon: Circle,
 	},
 ] as const;
@@ -257,7 +257,7 @@ export function Backlog(props: React.ComponentProps<"div">) {
 										if (!type) return null;
 										return (
 											<div className="flex items-center gap-2">
-												<Badge variant="default">{type?.label || item.type}</Badge>
+												<Badge variant="neutral">{type?.label || item.type}</Badge>
 												<span className="truncate">{item.title}</span>
 											</div>
 										);

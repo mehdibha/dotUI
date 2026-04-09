@@ -12,7 +12,6 @@ import {
 	type ConversionContext,
 	createConversionContext,
 	parseSimpleType,
-	sortUnionElements,
 	typeToAst,
 } from "./type-to-ast";
 
@@ -309,7 +308,7 @@ function sortUnionTypeString(typeStr: string): string {
 function sortByDeclarationOrder<T>(
 	obj: Record<string, T>,
 	order: string[],
-	originalOrder: string[],
+	_originalOrder: string[],
 ): Record<string, T> {
 	const sorted: Record<string, T> = {};
 	const seen = new Set<string>();

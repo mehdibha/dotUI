@@ -1,11 +1,11 @@
-import { CheckIcon, CircleAlert, CircleAlertIcon, InfoIcon } from "lucide-react";
+import { CheckIcon, CircleAlert, CircleAlertIcon } from "lucide-react";
 
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/registry/ui/alert";
 import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/registry/ui/card";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/registry/ui/select";
