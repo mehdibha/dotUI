@@ -201,237 +201,6 @@
 			},
 			"description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
 		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input is disabled."
-		},
-		"autoFocus": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element should receive focus on render."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"name": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-		},
-		"value": {
-			"type": "string | Color | null",
-			"detailedType": "string | Color | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-						"name": "Color"
-					}
-				]
-			},
-			"description": "The current value (controlled)."
-		},
-		"excludeFromTabOrder": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		},
-		"onChange": {
-			"type": "((color: Color | null) => void)",
-			"detailedType": "((color: Color | null) => void) | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "color",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "null"
-										},
-										{
-											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-											"name": "Color"
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "Handler that is called when the value changes."
-		},
-		"isReadOnly": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input can be selected but not changed by the user."
-		},
-		"isRequired": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether user input is required on the input before form submission."
-		},
-		"isInvalid": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input value is invalid."
-		},
-		"validate": {
-			"type": "((value: Color | null) => true | ValidationError | null | undefined)",
-			"detailedType": "| ((\n    value: Color | null,\n  ) => true | ValidationError | null | undefined)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "value",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "null"
-										},
-										{
-											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-											"name": "Color"
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "union",
-							"elements": [
-								{
-									"type": "undefined"
-								},
-								{
-									"type": "null"
-								},
-								{
-									"type": "string"
-								},
-								{
-									"type": "booleanLiteral",
-									"value": true
-								},
-								{
-									"type": "array",
-									"elementType": {
-										"type": "string"
-									}
-								}
-							]
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
-		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
-		},
 		"defaultValue": {
 			"type": "string | Color | null",
 			"detailedType": "string | Color | null | undefined",
@@ -455,6 +224,62 @@
 				]
 			},
 			"description": "The default value (uncontrolled)."
+		},
+		"autoFocus": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the element should receive focus on render."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
 		},
 		"onCopy": {
 			"type": "ClipboardEventHandler<HTMLInputElement>",
@@ -618,6 +443,47 @@
 			},
 			"description": "Handler that is called when a new character is received in the current text composition session. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionupdate_event)."
 		},
+		"onChange": {
+			"type": "((color: Color | null) => void)",
+			"detailedType": "((color: Color | null) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "color",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+											"name": "Color"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the value changes."
+		},
 		"onBeforeInput": {
 			"type": "FormEventHandler<HTMLInputElement>",
 			"detailedType": "FormEventHandler<HTMLInputElement> | undefined",
@@ -698,6 +564,140 @@
 				]
 			},
 			"description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input is disabled."
+		},
+		"name": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+		},
+		"value": {
+			"type": "string | Color | null",
+			"detailedType": "string | Color | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"name": "Color"
+					}
+				]
+			},
+			"description": "The current value (controlled)."
+		},
+		"excludeFromTabOrder": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
+		},
+		"isReadOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input can be selected but not changed by the user."
+		},
+		"isRequired": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether user input is required on the input before form submission."
+		},
+		"isInvalid": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input value is invalid."
+		},
+		"validate": {
+			"type": "((value: Color | null) => true | ValidationError | null | undefined)",
+			"detailedType": "| ((\n    value: Color | null,\n  ) => true | ValidationError | null | undefined)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+											"name": "Color"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "undefined"
+								},
+								{
+									"type": "null"
+								},
+								{
+									"type": "string"
+								},
+								{
+									"type": "booleanLiteral",
+									"value": true
+								},
+								{
+									"type": "array",
+									"elementType": {
+										"type": "string"
+									}
+								}
+							]
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
 		},
 		"isWheelDisabled": {
 			"type": "boolean",
@@ -4516,7 +4516,7 @@
 						]
 					},
 					"optional": false,
-					"description": "\nThe **`addEventListener()`** method of the EventTarget interface sets up a function that will be called whenever the specified event is delivered to the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/addEventListener)\nThe **`addEventListener()`** method of the EventTarget interface sets up a function that will be called whenever the specified event is delivered to the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/addEventListener)"
+					"description": "\nThe **`addEventListener()`** method of the EventTarget interface sets up a function that will be called whenever the specified event is delivered to the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/addEventListener)"
 				},
 				"removeEventListener": {
 					"type": "method",
@@ -6003,7 +6003,7 @@
 						]
 					},
 					"optional": false,
-					"description": "\nThe **`removeEventListener()`** method of the EventTarget interface removes an event listener previously registered with EventTarget.addEventListener() from the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/removeEventListener)\nThe **`removeEventListener()`** method of the EventTarget interface removes an event listener previously registered with EventTarget.addEventListener() from the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/removeEventListener)"
+					"description": "\nThe **`removeEventListener()`** method of the EventTarget interface removes an event listener previously registered with EventTarget.addEventListener() from the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/removeEventListener)"
 				},
 				"accessKey": {
 					"type": "property",

@@ -183,63 +183,7 @@
 			},
 			"description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
 		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input is disabled."
-		},
-		"autoFocus": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element should receive focus on render."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"name": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-		},
-		"value": {
+		"defaultValue": {
 			"type": "T | null",
 			"detailedType": "T | null | undefined",
 			"typeAst": {
@@ -262,7 +206,15 @@
 					}
 				]
 			},
-			"description": "The current value (controlled)."
+			"description": "The default value (uncontrolled)."
+		},
+		"autoFocus": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the element should receive focus on render."
 		},
 		"id": {
 			"type": "string",
@@ -271,6 +223,38 @@
 				"type": "string"
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
 		},
 		"onChange": {
 			"type": "((value: MappedTimeValue<T> | null) => void)",
@@ -325,6 +309,47 @@
 				]
 			},
 			"description": "Handler that is called when the value changes."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input is disabled."
+		},
+		"name": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+		},
+		"value": {
+			"type": "T | null",
+			"detailedType": "T | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "typeParameter",
+						"name": "T",
+						"constraint": {
+							"type": "identifier",
+							"name": "TimeValue"
+						},
+						"default": null
+					}
+				]
+			},
+			"description": "The current value (controlled)."
 		},
 		"isReadOnly": {
 			"type": "boolean",
@@ -416,31 +441,6 @@
 				]
 			},
 			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
-		},
-		"defaultValue": {
-			"type": "T | null",
-			"detailedType": "T | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "typeParameter",
-						"name": "T",
-						"constraint": {
-							"type": "identifier",
-							"name": "TimeValue"
-						},
-						"default": null
-					}
-				]
-			},
-			"description": "The default value (uncontrolled)."
 		},
 		"minValue": {
 			"type": "TimeValue | null",

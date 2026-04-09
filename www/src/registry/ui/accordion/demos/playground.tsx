@@ -29,16 +29,9 @@ const items = [
 	},
 ];
 
-export function AccordionPlayground({
-	allowsMultipleExpanded = false,
-	isDisabled = false,
-}: AccordionPlaygroundProps) {
+export function AccordionPlayground({ allowsMultipleExpanded = false, isDisabled = false }: AccordionPlaygroundProps) {
 	return (
-		<Accordion
-			allowsMultipleExpanded={allowsMultipleExpanded}
-			isDisabled={isDisabled}
-			className="max-w-2xl"
-		>
+		<Accordion allowsMultipleExpanded={allowsMultipleExpanded} isDisabled={isDisabled} className="max-w-2xl">
 			{items.map((item) => (
 				<Disclosure id={item.id} key={item.id}>
 					<DisclosureTrigger>{item.question}</DisclosureTrigger>

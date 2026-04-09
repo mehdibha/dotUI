@@ -141,6 +141,40 @@
 			},
 			"description": "A list of row keys to disable."
 		},
+		"selectionMode": {
+			"type": "SelectionMode",
+			"detailedType": "SelectionMode | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "SelectionMode"
+			},
+			"description": "The type of selection that is allowed in the collection."
+		},
+		"onSelectionChange": {
+			"type": "((keys: Selection) => void)",
+			"detailedType": "((keys: Selection) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "keys",
+						"value": {
+							"type": "link",
+							"id": "Selection",
+							"name": "Selection"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the selection changes."
+		},
 		"shouldSelectOnPressUp": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
@@ -167,15 +201,6 @@
 			},
 			"description": "Whether pressing the escape key should clear selection in the table or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
 			"default": "'clearSelection'"
-		},
-		"selectionMode": {
-			"type": "SelectionMode",
-			"detailedType": "SelectionMode | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "SelectionMode"
-			},
-			"description": "The type of selection that is allowed in the collection."
 		},
 		"disallowEmptySelection": {
 			"type": "boolean",
@@ -256,31 +281,6 @@
 				]
 			},
 			"description": "The initial selected keys in the collection (uncontrolled)."
-		},
-		"onSelectionChange": {
-			"type": "((keys: Selection) => void)",
-			"detailedType": "((keys: Selection) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "keys",
-						"value": {
-							"type": "link",
-							"id": "Selection",
-							"name": "Selection"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the selection changes."
 		},
 		"sortDescriptor": {
 			"type": "SortDescriptor",
@@ -640,9 +640,9 @@
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@68": {
+				"__@iterator@76": {
 					"type": "method",
-					"name": "__@iterator@68",
+					"name": "__@iterator@76",
 					"value": {
 						"type": "function",
 						"parameters": [],

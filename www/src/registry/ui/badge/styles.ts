@@ -38,7 +38,8 @@ const defaultStyles = tv({
 	variants: {
 		appearance: {
 			solid: "bg-(--color) text-(--fg)",
-			subtle: "bg-[color-mix(in_srgb,var(--color)_20%,var(--color-bg))] text-[color-mix(in_srgb,var(--color)_85%,var(--color-fg))]",
+			subtle:
+				"bg-[color-mix(in_srgb,var(--color)_20%,var(--color-bg))] text-[color-mix(in_srgb,var(--color)_85%,var(--color-fg))]",
 		},
 		variant: {
 			neutral: "bg-neutral text-fg-on-neutral",

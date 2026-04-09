@@ -44,13 +44,50 @@
 			},
 			"description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
 		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
+		"defaultValue": {
+			"type": "string | Color",
+			"detailedType": "string | Color | undefined",
 			"typeAst": {
-				"type": "boolean"
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "string"
+					},
+					{
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"name": "Color"
+					}
+				]
 			},
-			"description": "Whether the whole Slider is disabled."
+			"description": "The default value (uncontrolled)."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		},
 		"aria-label": {
 			"type": "string",
@@ -68,21 +105,38 @@
 			},
 			"description": "Identifies the element (or elements) that labels the current element."
 		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"onChange": {
+			"type": "((value: Color) => void)",
+			"detailedType": "((value: Color) => void) | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "value",
+						"value": {
+							"type": "link",
+							"id": "Color",
+							"name": "Color"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
 			},
-			"description": "Identifies the element (or elements) that describes the object."
+			"description": "Handler that is called when the value changes, as the user drags."
 		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "boolean"
 			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+			"description": "Whether the whole Slider is disabled."
 		},
 		"name": {
 			"type": "string",
@@ -112,60 +166,6 @@
 				]
 			},
 			"description": "The current value (controlled)."
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		},
-		"onChange": {
-			"type": "((value: Color) => void)",
-			"detailedType": "((value: Color) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "value",
-						"value": {
-							"type": "link",
-							"id": "Color",
-							"name": "Color"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the value changes, as the user drags."
-		},
-		"defaultValue": {
-			"type": "string | Color",
-			"detailedType": "string | Color | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-						"name": "Color"
-					}
-				]
-			},
-			"description": "The default value (uncontrolled)."
 		},
 		"onChangeEnd": {
 			"type": "((value: Color) => void)",

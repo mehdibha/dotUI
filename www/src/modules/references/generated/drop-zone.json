@@ -111,14 +111,6 @@
 			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
 			"default": "'react-aria-DropZone'"
 		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
-		},
 		"onDrop": {
 			"type": "((e: DropEvent) => void)",
 			"detailedType": "((e: DropEvent) => void) | undefined",
@@ -143,6 +135,14 @@
 				"typeParameters": []
 			},
 			"description": "Handler that is called when a valid drag is dropped on the drop target."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the drop target is disabled. If true, the drop target will not accept any drops."
 		},
 		"getDropOperation": {
 			"type": "((types: DragTypes, allowedOperations: DropOperation[]) => DropOperation)",

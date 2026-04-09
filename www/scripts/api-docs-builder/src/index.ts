@@ -19,7 +19,7 @@ import { hideBin } from "yargs/helpers";
 
 import { formatComponentData, isPublicPropsType, type ParserContext } from "./componentHandler";
 
-const CONFIG_PATH = path.join(process.cwd(), "../packages/registry/tsconfig.build.json");
+const CONFIG_PATH = path.join(process.cwd(), "tsconfig.references.json");
 const OUTPUT_DIR = path.join(process.cwd(), "src/modules/references/generated");
 
 interface RunOptions {
@@ -125,7 +125,7 @@ async function getFilesToProcess(options: RunOptions, configDir: string): Promis
 	}
 
 	// Default: find all types.ts files in ui folder
-	const uiDir = path.join(configDir, "src/ui");
+	const uiDir = path.join(configDir, "src/registry/ui");
 	const files = await globby("**/types.ts", {
 		cwd: uiDir,
 		absolute: true,

@@ -482,7 +482,7 @@ interface RenderPropInfo {
 	description?: string;
 }
 
-const registryDir = path.resolve(process.cwd(), "../packages/registry/src");
+const registryDir = path.resolve(process.cwd(), "src/registry");
 
 /**
  * Expand type aliases into their readable form

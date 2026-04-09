@@ -3,12 +3,35 @@
 	"description": "Missing description.",
 	"extendsElement": "span",
 	"props": {
-		"variant": {
-			"type": "\"danger\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"default\"",
-			"detailedType": "| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| 'primary'\n| 'default'\n| undefined",
+		"appearance": {
+			"type": "\"solid\" | \"subtle\"",
+			"detailedType": "'solid' | 'subtle' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "solid"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "subtle"
+					}
+				]
+			},
+			"description": "The visual appearance of the badge.",
+			"default": "'solid'"
+		},
+		"variant": {
+			"type": "\"neutral\" | \"danger\" | \"warning\" | \"info\" | \"success\" | \"accent\"",
+			"detailedType": "| 'neutral'\n| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| 'accent'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "neutral"
+					},
 					{
 						"type": "stringLiteral",
 						"value": "danger"
@@ -27,11 +50,7 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "primary"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "default"
+						"value": "accent"
 					}
 				]
 			},

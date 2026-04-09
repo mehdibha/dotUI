@@ -2,301 +2,6 @@
 	"name": "DropZoneLabelProps",
 	"description": "Missing description.",
 	"props": {
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides a detailed, extended description for the object."
-		},
-		"render": {
-			"type": "DOMRenderFunction<any, any>",
-			"detailedType": "DOMRenderFunction<any, any> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "DOMRenderFunction"
-						},
-						"typeParameters": [
-							{
-								"type": "any"
-							},
-							{
-								"type": "any"
-							}
-						]
-					}
-				]
-			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
-		},
-		"aria-disabled": {
-			"type": "Booleanish",
-			"detailedType": "Booleanish | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Booleanish"
-			},
-			"description": "Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable."
-		},
-		"aria-expanded": {
-			"type": "Booleanish",
-			"detailedType": "Booleanish | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Booleanish"
-			},
-			"description": "Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed."
-		},
-		"aria-haspopup": {
-			"type": "boolean | \"dialog\" | \"menu\" | \"true\" | \"false\" | \"listbox\" | \"tree\" | \"grid\"",
-			"detailedType": "| boolean\n| 'dialog'\n| 'menu'\n| 'true'\n| 'false'\n| 'listbox'\n| 'tree'\n| 'grid'\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "dialog"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "menu"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "true"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "listbox"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "tree"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "grid"
-							}
-						]
-					}
-				]
-			},
-			"description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
-		},
-		"aria-controls": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
-		},
-		"aria-pressed": {
-			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
-			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "true"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "mixed"
-							}
-						]
-					}
-				]
-			},
-			"description": "Indicates the current \"pressed\" state of toggle buttons."
-		},
-		"aria-current": {
-			"type": "boolean | \"time\" | \"step\" | \"true\" | \"false\" | \"page\" | \"location\" | \"date\"",
-			"detailedType": "| boolean\n| 'time'\n| 'step'\n| 'true'\n| 'false'\n| 'page'\n| 'location'\n| 'date'\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "time"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "step"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "true"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "page"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "location"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "date"
-							}
-						]
-					}
-				]
-			},
-			"description": "Indicates the element that represents the current item within a container or set of related elements."
-		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
-		},
 		"inputMode": {
 			"type": "\"search\" | \"text\" | \"decimal\" | \"email\" | \"tel\" | \"none\" | \"url\" | \"numeric\"",
 			"detailedType": "| 'search'\n| 'text'\n| 'decimal'\n| 'email'\n| 'tel'\n| 'none'\n| 'url'\n| 'numeric'\n| undefined",
@@ -481,6 +186,101 @@
 			},
 			"description": "Defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid."
 		},
+		"aria-controls": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+		},
+		"aria-current": {
+			"type": "boolean | \"time\" | \"true\" | \"false\" | \"step\" | \"page\" | \"location\" | \"date\"",
+			"detailedType": "| boolean\n| 'time'\n| 'true'\n| 'false'\n| 'step'\n| 'page'\n| 'location'\n| 'date'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "time"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "true"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "false"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "step"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "page"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "location"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "date"
+							}
+						]
+					}
+				]
+			},
+			"description": "Indicates the element that represents the current item within a container or set of related elements."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
 		"aria-description": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -488,6 +288,23 @@
 				"type": "string"
 			},
 			"description": "Defines a string value that describes or annotates the current element."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides a detailed, extended description for the object."
+		},
+		"aria-disabled": {
+			"type": "Booleanish",
+			"detailedType": "Booleanish | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Booleanish"
+			},
+			"description": "Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable."
 		},
 		"aria-dropeffect": {
 			"type": "\"link\" | \"none\" | \"copy\" | \"execute\" | \"move\" | \"popup\"",
@@ -523,6 +340,23 @@
 			},
 			"description": "Indicates what functions can be performed when a dragged object is released on the drop target."
 		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
+		"aria-expanded": {
+			"type": "Booleanish",
+			"detailedType": "Booleanish | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Booleanish"
+			},
+			"description": "Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed."
+		},
 		"aria-flowto": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -539,6 +373,85 @@
 				"name": "Booleanish"
 			},
 			"description": "Indicates an element's \"grabbed\" state in a drag-and-drop operation."
+		},
+		"aria-haspopup": {
+			"type": "boolean | \"dialog\" | \"menu\" | \"true\" | \"false\" | \"listbox\" | \"tree\" | \"grid\"",
+			"detailedType": "| boolean\n| 'dialog'\n| 'menu'\n| 'true'\n| 'false'\n| 'listbox'\n| 'tree'\n| 'grid'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "dialog"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "menu"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "true"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "false"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "listbox"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "tree"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "grid"
+							}
+						]
+					}
+				]
+			},
+			"description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
 		},
 		"aria-hidden": {
 			"type": "Booleanish",
@@ -608,6 +521,22 @@
 				"type": "string"
 			},
 			"description": "Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
 		},
 		"aria-level": {
 			"type": "number",
@@ -708,6 +637,49 @@
 			},
 			"description": "Defines an element's number or position in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM."
 		},
+		"aria-pressed": {
+			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
+			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "true"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "false"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "mixed"
+							}
+						]
+					}
+				]
+			},
+			"description": "Indicates the current \"pressed\" state of toggle buttons."
+		},
 		"aria-readonly": {
 			"type": "Booleanish",
 			"detailedType": "Booleanish | undefined",
@@ -718,18 +690,14 @@
 			"description": "Indicates that the element is not editable, but is otherwise operable."
 		},
 		"aria-relevant": {
-			"type": "\"text\" | \"all\" | \"additions\" | \"additions removals\" | \"additions text\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
-			"detailedType": "| 'text'\n| 'all'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
+			"type": "\"text\" | \"additions\" | \"additions removals\" | \"additions text\" | \"all\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
+			"detailedType": "| 'text'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'all'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
 						"value": "text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -742,6 +710,10 @@
 					{
 						"type": "stringLiteral",
 						"value": "additions text"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -890,6 +862,34 @@
 				"type": "string"
 			},
 			"description": "Defines the human readable text alternative of aria-valuenow for a range widget."
+		},
+		"render": {
+			"type": "DOMRenderFunction<any, any>",
+			"detailedType": "DOMRenderFunction<any, any> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "any"
+							},
+							{
+								"type": "any"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		}
 	}
 }

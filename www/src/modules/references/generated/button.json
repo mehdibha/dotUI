@@ -3,8 +3,8 @@
 	"description": "A clickable element that triggers an action. Buttons communicate actions users can take\nand allow users to interact with the page.",
 	"props": {
 		"variant": {
-			"type": "\"link\" | \"danger\" | \"warning\" | \"primary\" | \"default\" | \"quiet\"",
-			"detailedType": "| 'link'\n| 'danger'\n| 'warning'\n| 'primary'\n| 'default'\n| 'quiet'\n| undefined",
+			"type": "\"link\" | \"danger\" | \"warning\" | \"default\" | \"primary\" | \"quiet\"",
+			"detailedType": "| 'link'\n| 'danger'\n| 'warning'\n| 'default'\n| 'primary'\n| 'quiet'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -22,11 +22,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "primary"
+						"value": "default"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "default"
+						"value": "primary"
 					},
 					{
 						"type": "stringLiteral",
@@ -38,8 +38,8 @@
 			"default": "'default'"
 		},
 		"size": {
-			"type": "\"sm\" | \"md\" | \"lg\"",
-			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"type": "\"sm\" | \"md\" | \"lg\" | \"xs\"",
+			"detailedType": "'sm' | 'md' | 'lg' | 'xs' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -54,6 +54,10 @@
 					{
 						"type": "stringLiteral",
 						"value": "lg"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "xs"
 					}
 				]
 			},
@@ -513,14 +517,6 @@
 			},
 			"description": "The `<form>` element to associate the button with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#form)."
 		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the button is disabled."
-		},
 		"autoFocus": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
@@ -529,21 +525,100 @@
 			},
 			"description": "Whether the element should receive focus on render."
 		},
-		"aria-label": {
+		"id": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Defines a string value that labels the current element."
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"aria-labelledby": {
+		"aria-controls": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Identifies the element (or elements) that labels the current element."
+			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+		},
+		"aria-current": {
+			"type": "boolean | \"time\" | \"true\" | \"false\" | \"step\" | \"page\" | \"location\" | \"date\"",
+			"detailedType": "| boolean\n| 'time'\n| 'true'\n| 'false'\n| 'step'\n| 'page'\n| 'location'\n| 'date'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "boolean"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "time"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "true"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "false"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "step"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "page"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "location"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "date"
+							}
+						]
+					}
+				]
+			},
+			"description": "Indicates whether this element represents the current item within a container or set of related elements."
 		},
 		"aria-describedby": {
 			"type": "string",
@@ -708,13 +783,21 @@
 			},
 			"description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
 		},
-		"aria-controls": {
+		"aria-label": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
 		},
 		"aria-pressed": {
 			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
@@ -759,84 +842,13 @@
 			},
 			"description": "Indicates the current \"pressed\" state of toggle buttons."
 		},
-		"aria-current": {
-			"type": "boolean | \"time\" | \"step\" | \"true\" | \"false\" | \"page\" | \"location\" | \"date\"",
-			"detailedType": "| boolean\n| 'time'\n| 'step'\n| 'true'\n| 'false'\n| 'page'\n| 'location'\n| 'date'\n| undefined",
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "time"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "step"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "true"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "page"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "location"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "date"
-							}
-						]
-					}
-				]
+				"type": "boolean"
 			},
-			"description": "Indicates whether this element represents the current item within a container or set of related elements."
+			"description": "Whether the button is disabled."
 		},
 		"type": {
 			"type": "\"button\" | \"submit\" | \"reset\"",
@@ -978,14 +990,6 @@
 				"type": "boolean"
 			},
 			"description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
 		"slot": {
 			"type": "string | null",
@@ -1683,9 +1687,9 @@
 					"optional": false,
 					"description": "Returns a list of values in the list."
 				},
-				"__@iterator@68": {
+				"__@iterator@76": {
 					"type": "method",
-					"name": "__@iterator@68",
+					"name": "__@iterator@76",
 					"value": {
 						"type": "function",
 						"parameters": [],

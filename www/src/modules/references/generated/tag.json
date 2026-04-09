@@ -642,17 +642,6 @@
 					"readonly": false,
 					"description": "Whether the item is currently selected."
 				},
-				"selectionBehavior": {
-					"type": "property",
-					"name": "selectionBehavior",
-					"value": {
-						"type": "identifier",
-						"name": "SelectionBehavior"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The selection behavior for the collection."
-				},
 				"selectionMode": {
 					"type": "property",
 					"name": "selectionMode",
@@ -663,6 +652,17 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The type of selection that is allowed in the collection."
+				},
+				"selectionBehavior": {
+					"type": "property",
+					"name": "selectionBehavior",
+					"value": {
+						"type": "identifier",
+						"name": "SelectionBehavior"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The selection behavior for the collection."
 				},
 				"isFocused": {
 					"type": "property",
@@ -774,17 +774,6 @@
 					"readonly": false,
 					"description": "Whether the item is currently selected."
 				},
-				"selectionBehavior": {
-					"type": "property",
-					"name": "selectionBehavior",
-					"value": {
-						"type": "identifier",
-						"name": "SelectionBehavior"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The selection behavior for the collection."
-				},
 				"selectionMode": {
 					"type": "property",
 					"name": "selectionMode",
@@ -795,6 +784,17 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The type of selection that is allowed in the collection."
+				},
+				"selectionBehavior": {
+					"type": "property",
+					"name": "selectionBehavior",
+					"value": {
+						"type": "identifier",
+						"name": "SelectionBehavior"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The selection behavior for the collection."
 				},
 				"isFocused": {
 					"type": "property",

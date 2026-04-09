@@ -1799,11 +1799,11 @@
 							"elements": [
 								{
 									"type": "stringLiteral",
-									"value": "selectionBehavior"
+									"value": "selectionMode"
 								},
 								{
 									"type": "stringLiteral",
-									"value": "selectionMode"
+									"value": "selectionBehavior"
 								}
 							]
 						}

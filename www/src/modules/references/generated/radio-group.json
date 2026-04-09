@@ -133,13 +133,56 @@
 			},
 			"description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
 		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
+		"defaultValue": {
+			"type": "string | null",
+			"detailedType": "string | null | undefined",
 			"typeAst": {
-				"type": "boolean"
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "null"
+					},
+					{
+						"type": "string"
+					}
+				]
 			},
-			"description": "Whether the input is disabled."
+			"description": "The default value (uncontrolled)."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
 		},
 		"aria-label": {
 			"type": "string",
@@ -157,21 +200,38 @@
 			},
 			"description": "Identifies the element (or elements) that labels the current element."
 		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"onChange": {
+			"type": "((value: string) => void)",
+			"detailedType": "((value: string) => void) | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "value",
+						"value": {
+							"type": "link",
+							"id": "string",
+							"name": "string"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
 			},
-			"description": "Identifies the element (or elements) that describes the object."
+			"description": "Handler that is called when the value changes."
 		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "boolean"
 			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+			"description": "Whether the input is disabled."
 		},
 		"name": {
 			"type": "string",
@@ -199,39 +259,6 @@
 				]
 			},
 			"description": "The current value (controlled)."
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		},
-		"onChange": {
-			"type": "((value: string) => void)",
-			"detailedType": "((value: string) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "value",
-						"value": {
-							"type": "link",
-							"id": "string",
-							"name": "string"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the value changes."
 		},
 		"isReadOnly": {
 			"type": "boolean",
@@ -308,33 +335,6 @@
 				]
 			},
 			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
-		},
-		"aria-errormessage": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element that provides an error message for the object."
-		},
-		"defaultValue": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "The default value (uncontrolled)."
 		},
 		"orientation": {
 			"type": "Orientation",

@@ -3,9 +3,8 @@
 @import "./base/theme.css";
 @import "./base/fonts.css";
 
-
 /* dynamic styles */
 :root {
-  --alert-radius: var(--radius-lg);
-  --avatar-radius: calc(infinity * 1px);
+	--alert-radius: var(--radius-lg);
+	--avatar-radius: calc(infinity * 1px);
 }

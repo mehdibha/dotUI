@@ -175,13 +175,13 @@
 			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
 			"default": "'react-aria-NumberField'"
 		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
+		"defaultValue": {
+			"type": "number",
+			"detailedType": "number | undefined",
 			"typeAst": {
-				"type": "boolean"
+				"type": "number"
 			},
-			"description": "Whether the input is disabled."
+			"description": "The default value (uncontrolled)."
 		},
 		"autoFocus": {
 			"type": "boolean",
@@ -191,21 +191,13 @@
 			},
 			"description": "Whether the element should receive focus on render."
 		},
-		"aria-label": {
+		"id": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
 		"aria-describedby": {
 			"type": "string",
@@ -223,130 +215,21 @@
 			},
 			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		},
-		"value": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The current value (controlled)."
-		},
-		"id": {
+		"aria-label": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+			"description": "Defines a string value that labels the current element."
 		},
-		"onChange": {
-			"type": "((value: number) => void)",
-			"detailedType": "((value: number) => void) | undefined",
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "value",
-						"value": {
-							"type": "link",
-							"id": "number",
-							"name": "number"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
+				"type": "string"
 			},
-			"description": "Handler that is called when the value changes."
-		},
-		"isReadOnly": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input can be selected but not changed by the user."
-		},
-		"isRequired": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether user input is required on the input before form submission."
-		},
-		"isInvalid": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input value is invalid."
-		},
-		"validate": {
-			"type": "((value: number) => true | ValidationError | null | undefined)",
-			"detailedType": "| ((\n    value: number,\n  ) => true | ValidationError | null | undefined)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "value",
-								"value": {
-									"type": "number"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "union",
-							"elements": [
-								{
-									"type": "undefined"
-								},
-								{
-									"type": "null"
-								},
-								{
-									"type": "string"
-								},
-								{
-									"type": "booleanLiteral",
-									"value": true
-								},
-								{
-									"type": "array",
-									"elementType": {
-										"type": "string"
-									}
-								}
-							]
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
-		},
-		"defaultValue": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The default value (uncontrolled)."
+			"description": "Identifies the element (or elements) that labels the current element."
 		},
 		"onCopy": {
 			"type": "ClipboardEventHandler<HTMLInputElement>",
@@ -510,6 +393,31 @@
 			},
 			"description": "Handler that is called when a new character is received in the current text composition session. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionupdate_event)."
 		},
+		"onChange": {
+			"type": "((value: number) => void)",
+			"detailedType": "((value: number) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "value",
+						"value": {
+							"type": "link",
+							"id": "number",
+							"name": "number"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the value changes."
+		},
 		"onBeforeInput": {
 			"type": "FormEventHandler<HTMLInputElement>",
 			"detailedType": "FormEventHandler<HTMLInputElement> | undefined",
@@ -590,6 +498,98 @@
 				]
 			},
 			"description": "Handler that is called when text in the input is selected. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input is disabled."
+		},
+		"value": {
+			"type": "number",
+			"detailedType": "number | undefined",
+			"typeAst": {
+				"type": "number"
+			},
+			"description": "The current value (controlled)."
+		},
+		"isReadOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input can be selected but not changed by the user."
+		},
+		"isRequired": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether user input is required on the input before form submission."
+		},
+		"isInvalid": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input value is invalid."
+		},
+		"validate": {
+			"type": "((value: number) => true | ValidationError | null | undefined)",
+			"detailedType": "| ((\n    value: number,\n  ) => true | ValidationError | null | undefined)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "number"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "undefined"
+								},
+								{
+									"type": "null"
+								},
+								{
+									"type": "string"
+								},
+								{
+									"type": "booleanLiteral",
+									"value": true
+								},
+								{
+									"type": "array",
+									"elementType": {
+										"type": "string"
+									}
+								}
+							]
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
 		},
 		"isWheelDisabled": {
 			"type": "boolean",
@@ -3225,7 +3225,7 @@
 						]
 					},
 					"optional": false,
-					"description": "\nThe **`addEventListener()`** method of the EventTarget interface sets up a function that will be called whenever the specified event is delivered to the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/addEventListener)\nThe **`addEventListener()`** method of the EventTarget interface sets up a function that will be called whenever the specified event is delivered to the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/addEventListener)"
+					"description": "\nThe **`addEventListener()`** method of the EventTarget interface sets up a function that will be called whenever the specified event is delivered to the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/addEventListener)"
 				},
 				"removeEventListener": {
 					"type": "method",
@@ -4712,7 +4712,7 @@
 						]
 					},
 					"optional": false,
-					"description": "\nThe **`removeEventListener()`** method of the EventTarget interface removes an event listener previously registered with EventTarget.addEventListener() from the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/removeEventListener)\nThe **`removeEventListener()`** method of the EventTarget interface removes an event listener previously registered with EventTarget.addEventListener() from the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/removeEventListener)"
+					"description": "\nThe **`removeEventListener()`** method of the EventTarget interface removes an event listener previously registered with EventTarget.addEventListener() from the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/removeEventListener)"
 				},
 				"accessKey": {
 					"type": "property",

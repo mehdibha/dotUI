@@ -33,7 +33,7 @@
 											"typeParameters": [
 												{
 													"type": "link",
-													"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
 													"name": "Toast"
 												}
 											]
@@ -91,7 +91,7 @@
 				"typeParameters": [
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
 						"name": "Toast"
 					}
 				]
@@ -150,7 +150,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
 								"name": "Toast"
 							}
 						]
@@ -191,7 +191,7 @@
 											"typeParameters": [
 												{
 													"type": "link",
-													"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
 													"name": "Toast"
 												}
 											]
@@ -271,7 +271,7 @@
 								"typeParameters": [
 									{
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
 										"name": "Toast"
 									}
 								]
@@ -313,7 +313,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
 								"name": "Toast"
 							}
 						]
@@ -346,9 +346,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
 			"name": "Toast",
 			"extends": [],
 			"properties": {
@@ -521,7 +521,7 @@
 					"name": "content",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/toast/types.ts:Toast",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
 						"name": "Toast"
 					},
 					"optional": false,

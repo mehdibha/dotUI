@@ -3,8 +3,8 @@
 	"description": "A MenuItem represents an individual action in a Menu.",
 	"props": {
 		"variant": {
-			"type": "\"danger\" | \"warning\" | \"success\" | \"accent\" | \"default\"",
-			"detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'accent'\n| 'default'\n| undefined",
+			"type": "\"danger\" | \"warning\" | \"success\" | \"default\" | \"accent\"",
+			"detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'default'\n| 'accent'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -22,11 +22,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "accent"
+						"value": "default"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "default"
+						"value": "accent"
 					}
 				]
 			},

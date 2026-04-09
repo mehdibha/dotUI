@@ -74,7 +74,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/popover/types.ts:PopoverProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/popover/base.tsx:PopoverProps",
 								"name": "PopoverProps"
 							},
 							{
@@ -169,7 +169,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/modal/types.ts:ModalProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/modal/base.tsx:ModalProps",
 								"name": "ModalProps"
 							},
 							{
@@ -264,7 +264,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/drawer/types.ts:DrawerProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/drawer/base.tsx:DrawerProps",
 								"name": "DrawerProps"
 							},
 							{
@@ -427,9 +427,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/popover/types.ts:PopoverProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/popover/base.tsx:PopoverProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/popover/types.ts:PopoverProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/popover/base.tsx:PopoverProps",
 			"name": "PopoverProps",
 			"extends": [
 				{
@@ -474,7 +474,7 @@
 					},
 					"optional": true,
 					"readonly": false,
-					"description": "Whether to show an arrow pointing to the trigger."
+					"description": ""
 				},
 				"className": {
 					"type": "property",
@@ -3333,16 +3333,16 @@
 				}
 			},
 			"typeParameters": [],
-			"description": "A popover is an overlay element positioned relative to a trigger."
+			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/modal/types.ts:ModalProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/modal/base.tsx:ModalProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/modal/types.ts:ModalProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/modal/base.tsx:ModalProps",
 			"name": "ModalProps",
 			"extends": [
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/modal/types.ts:ModalOverlayProps",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/modal/base.tsx:ModalOverlayProps",
 					"name": "ModalOverlayProps"
 				}
 			],
@@ -5672,11 +5672,11 @@
 				}
 			},
 			"typeParameters": [],
-			"description": "A modal is an overlay element which blocks interaction with elements outside it."
+			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/drawer/types.ts:DrawerProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/drawer/base.tsx:DrawerProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/packages/registry/src/ui/drawer/types.ts:DrawerProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/drawer/base.tsx:DrawerProps",
 			"name": "DrawerProps",
 			"extends": [
 				{
@@ -5754,7 +5754,7 @@
 					},
 					"optional": true,
 					"readonly": false,
-					"description": "The side of the screen where the drawer appears."
+					"description": ""
 				},
 				"className": {
 					"type": "property",
@@ -8081,7 +8081,7 @@
 				}
 			},
 			"typeParameters": [],
-			"description": "Missing description."
+			"description": ""
 		}
 	}
 }
