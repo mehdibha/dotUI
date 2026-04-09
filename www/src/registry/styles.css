@@ -7,4 +7,5 @@
 :root {
 	--alert-radius: var(--radius-lg);
 	--avatar-radius: calc(infinity * 1px);
+	--badge-radius: var(--radius-md);
 }

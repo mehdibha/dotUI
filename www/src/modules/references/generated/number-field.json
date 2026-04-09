@@ -4527,6 +4527,42 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "ol"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "li"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "style"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "span"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "a"
 												}
 											]
@@ -5031,15 +5067,6 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "li"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "link"
 												}
 											]
@@ -5104,15 +5131,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "noscript"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "ol"
 												}
 											]
 										},
@@ -5301,25 +5319,7 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "span"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "strong"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "style"
 												}
 											]
 										},
@@ -6841,6 +6841,42 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "ol"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "li"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "style"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "span"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "a"
 												}
 											]
@@ -7345,15 +7381,6 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "li"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "link"
 												}
 											]
@@ -7418,15 +7445,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "noscript"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "ol"
 												}
 											]
 										},
@@ -7615,25 +7633,7 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "span"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "strong"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "style"
 												}
 											]
 										},
@@ -13270,6 +13270,42 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "ol"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "li"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "style"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "span"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "a"
 												}
 											]
@@ -13774,15 +13810,6 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "li"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "link"
 												}
 											]
@@ -13847,15 +13874,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "noscript"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "ol"
 												}
 											]
 										},
@@ -14044,25 +14062,7 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "span"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "strong"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "style"
 												}
 											]
 										},
@@ -14786,6 +14786,42 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "ol"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "li"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "style"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "span"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "a"
 												}
 											]
@@ -15290,15 +15326,6 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "li"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "link"
 												}
 											]
@@ -15363,15 +15390,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "noscript"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "ol"
 												}
 											]
 										},
@@ -15560,25 +15578,7 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "span"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "strong"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "style"
 												}
 											]
 										},

@@ -55,7 +55,7 @@
 				]
 			},
 			"description": "The visual style of the badge.",
-			"default": "'default'"
+			"default": "'neutral'"
 		},
 		"size": {
 			"type": "\"lg\" | \"md\" | \"sm\"",
@@ -78,7 +78,7 @@
 				]
 			},
 			"description": "The size of the badge.",
-			"default": "'neutral'"
+			"default": "'md'"
 		}
 	}
 }

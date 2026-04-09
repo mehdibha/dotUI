@@ -3,24 +3,44 @@ import type React from "react";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
-import { Overlay } from "@/registry/ui/overlay";
+import { Modal } from "@/registry/ui/modal";
 
-import { CodeBlock, Pre } from "./code-block";
-import { DemoCode, DemoCodePreview, getSlotContent } from "./demo";
+// import { DemoCode, DemoCodePreview, getSlotContent } from "./demo";
 
 export interface ExampleProps extends React.ComponentProps<"div"> {
 	component: React.ComponentType;
-	description?: string;
+	title?: string;
 	children: React.ReactNode;
 }
 
-export function Example({ component: Component, description, children, className, ...props }: ExampleProps) {
-	const codeContent = getSlotContent(children, DemoCode);
-	const previewContent = getSlotContent(children, DemoCodePreview);
+export function Example({ component: Component, title, children, className, ...props }: ExampleProps) {
+	// const codeContent = getSlotContent(children, DemoCode);
+	// const previewContent = getSlotContent(children, DemoCodePreview);
 
 	return (
-		<div className={cn("flex flex-1 items-center justify-center rounded-t-md border bg-bg p-10", className)} {...props}>
-			<Component />
+		<div className={cn("flex flex-col gap-1", className)} {...props}>
+			<h3 className="px-1.5 py-2 font-normal text-fg-muted text-sm">{title}</h3>
+			<div className="relative flex flex-1 flex-col">
+				<div
+					tabIndex={-1}
+					className="pointer-events-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 p-6"
+				>
+					<Component />
+				</div>
+				<Dialog>
+					<Button variant="quiet" className="absolute inset-0 z-2 size-auto border hover:border-border-hover" />
+					<Modal>
+						<DialogContent>
+							{/* <DialogHeader>
+								<DialogHeading>{title}</DialogHeading>
+							</DialogHeader> */}
+							<DialogBody>
+								<Component />
+							</DialogBody>
+						</DialogContent>
+					</Modal>
+				</Dialog>
+			</div>
 		</div>
 	);
 }

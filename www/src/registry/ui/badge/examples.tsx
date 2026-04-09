@@ -1,4 +1,4 @@
-import { ArrowRightIcon, ArrowUpRightIcon, BadgeCheckIcon } from "lucide-react";
+import { ArrowRightIcon, BadgeCheckIcon } from "lucide-react";
 
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
@@ -12,7 +12,6 @@ export default function BadgeExample() {
 			<BadgeWithIconLeft />
 			<BadgeWithIconRight />
 			<BadgeWithSpinner />
-			<BadgeAsLink />
 			<BadgeLongText />
 			<BadgeCustomColors />
 		</Examples>
@@ -22,14 +21,16 @@ export default function BadgeExample() {
 function BadgeVariants() {
 	return (
 		<Example title="Variants">
-			<div className="flex flex-wrap gap-2">
-				<Badge>Default</Badge>
-				<Badge variant="secondary">Secondary</Badge>
-				<Badge variant="destructive">Destructive</Badge>
-				<Badge variant="outline">Outline</Badge>
-				<Badge variant="ghost">Ghost</Badge>
-				<Badge variant="link">Link</Badge>
-			</div>
+			{(["solid", "subtle"] as const).map((appearance) => (
+				<div key={appearance} className="flex flex-wrap gap-2">
+					{(["neutral", "accent", "danger", "success", "warning", "info"] as const).map((variant) => (
+						<Badge key={variant} appearance={appearance} variant={variant}>
+							{variant}
+							{appearance === "solid" ? "" : "-subtle"}
+						</Badge>
+					))}
+				</div>
+			))}
 		</Example>
 	);
 }
@@ -38,30 +39,12 @@ function BadgeWithIconLeft() {
 	return (
 		<Example title="Icon Left" className="max-w-fit">
 			<div className="flex flex-wrap gap-2">
-				<Badge>
-					<BadgeCheckIcon data-icon="inline-start" />
-					Default
-				</Badge>
-				<Badge variant="secondary">
-					<BadgeCheckIcon data-icon="inline-start" />
-					Secondary
-				</Badge>
-				<Badge variant="destructive">
-					<BadgeCheckIcon data-icon="inline-start" />
-					Destructive
-				</Badge>
-				<Badge variant="outline">
-					<BadgeCheckIcon data-icon="inline-start" />
-					Outline
-				</Badge>
-				<Badge variant="ghost">
-					<BadgeCheckIcon data-icon="inline-start" />
-					Ghost
-				</Badge>
-				<Badge variant="link">
-					<BadgeCheckIcon data-icon="inline-start" />
-					Link
-				</Badge>
+				{(["neutral", "accent", "danger", "success", "warning", "info"] as const).map((variant) => (
+					<Badge key={variant} variant={variant}>
+						<BadgeCheckIcon data-icon="inline-start" />
+						{variant}
+					</Badge>
+				))}
 			</div>
 		</Example>
 	);
@@ -71,30 +54,12 @@ function BadgeWithIconRight() {
 	return (
 		<Example title="Icon Right" className="max-w-fit">
 			<div className="flex flex-wrap gap-2">
-				<Badge>
-					Default
-					<ArrowRightIcon data-icon="inline-end" />
-				</Badge>
-				<Badge variant="secondary">
-					Secondary
-					<ArrowRightIcon data-icon="inline-end" />
-				</Badge>
-				<Badge variant="destructive">
-					Destructive
-					<ArrowRightIcon data-icon="inline-end" />
-				</Badge>
-				<Badge variant="outline">
-					Outline
-					<ArrowRightIcon data-icon="inline-end" />
-				</Badge>
-				<Badge variant="ghost">
-					Ghost
-					<ArrowRightIcon data-icon="inline-end" />
-				</Badge>
-				<Badge variant="link">
-					Link
-					<ArrowRightIcon data-icon="inline-end" />
-				</Badge>
+				{(["neutral", "accent", "danger", "success", "warning", "info"] as const).map((variant) => (
+					<Badge key={variant} variant={variant}>
+						{variant}
+						<ArrowRightIcon data-icon="inline-end" />
+					</Badge>
+				))}
 			</div>
 		</Example>
 	);
@@ -104,70 +69,12 @@ function BadgeWithSpinner() {
 	return (
 		<Example title="With Spinner" className="max-w-fit">
 			<div className="flex flex-wrap gap-2">
-				<Badge>
-					<Loader />
-					Default
-				</Badge>
-				<Badge variant="secondary">
-					<Loader />
-					Secondary
-				</Badge>
-				<Badge variant="destructive">
-					<Loader />
-					Destructive
-				</Badge>
-				<Badge variant="outline">
-					<Loader />
-					Outline
-				</Badge>
-				<Badge variant="ghost">
-					<Loader />
-					Ghost
-				</Badge>
-				<Badge variant="link">
-					<Loader />
-					Link
-				</Badge>
-			</div>
-		</Example>
-	);
-}
-
-function BadgeAsLink() {
-	return (
-		<Example title="asChild">
-			<div className="flex flex-wrap gap-2">
-				<Badge
-					render={
-						<a href="#">
-							Link <ArrowUpRightIcon data-icon="inline-end" />
-						</a>
-					}
-				/>
-				<Badge
-					variant="secondary"
-					render={
-						<a href="#">
-							Link <ArrowUpRightIcon data-icon="inline-end" />
-						</a>
-					}
-				/>
-				<Badge
-					variant="destructive"
-					render={
-						<a href="#">
-							Link <ArrowUpRightIcon data-icon="inline-end" />
-						</a>
-					}
-				/>
-				<Badge
-					variant="ghost"
-					render={
-						<a href="#">
-							Link <ArrowUpRightIcon data-icon="inline-end" />
-						</a>
-					}
-				/>
+				{(["neutral", "accent", "danger", "success", "warning", "info"] as const).map((variant) => (
+					<Badge key={variant} variant={variant}>
+						<Loader />
+						{variant}
+					</Badge>
+				))}
 			</div>
 		</Example>
 	);
@@ -177,7 +84,7 @@ function BadgeLongText() {
 	return (
 		<Example title="Long Text">
 			<div className="flex flex-wrap gap-2">
-				<Badge variant="secondary">A badge with a lot of text to see how it wraps</Badge>
+				<Badge>A badge with a lot of text to see how it wraps</Badge>
 			</div>
 		</Example>
 	);

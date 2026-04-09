@@ -5,7 +5,7 @@ import { createStyles } from "@/modules/core/styles";
 import badgeMeta from "./meta";
 
 const baseStyles = tv({
-	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md font-medium text-xs [&>svg]:pointer-events-none",
+	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-(--badge-radius) font-medium text-xs [&>svg]:pointer-events-none",
 	variants: {
 		appearance: {
 			solid: "",
@@ -39,15 +39,15 @@ const defaultStyles = tv({
 		appearance: {
 			solid: "bg-(--color) text-(--fg)",
 			subtle:
-				"bg-[color-mix(in_srgb,var(--color)_20%,var(--color-bg))] text-[color-mix(in_srgb,var(--color)_85%,var(--color-fg))]",
+				"bg-[color-mix(in_srgb,var(--color)_30%,var(--color-bg))] text-[color-mix(in_srgb,var(--color)_60%,var(--color-fg))]",
 		},
 		variant: {
 			neutral: "bg-neutral text-fg-on-neutral",
-			accent: "[--color:var(--color-accent)] [--fg:var(--fg-on-accent)]",
-			danger: "[--color:var(--color-danger)] [--fg:var(--fg-on-danger)]",
-			success: "[--color:var(--color-success)] [--fg:var(--fg-on-success)]",
-			warning: "[--color:var(--color-warning)] [--fg:var(--fg-on-warning)]",
-			info: "[--color:var(--color-info)] [--fg:var(--fg-on-info)]",
+			accent: "[--color:var(--color-accent)] [--fg:var(--color-fg-on-accent)]",
+			danger: "[--color:var(--color-danger)] [--fg:var(--color-fg-on-danger)]",
+			success: "[--color:var(--color-success)] [--fg:var(--color-fg-on-success)]",
+			warning: "[--color:var(--color-warning)] [--fg:var(--color-fg-on-warning)]",
+			info: "[--color:var(--color-info)] [--fg:var(--color-fg-on-info)]",
 		},
 	},
 });

@@ -6,7 +6,7 @@ export default function Demo() {
 		<Avatar>
 			<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
 			<AvatarFallback>M</AvatarFallback>
-			<Badge variant="primary" size="sm" className="-top-1.5 -right-1.5 rounded-full">
+			<Badge size="sm" className="-top-1.5 -right-1.5 rounded-full">
 				6
 			</Badge>
 		</Avatar>

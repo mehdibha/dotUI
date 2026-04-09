@@ -9,12 +9,12 @@ export interface BadgeProps extends React.ComponentProps<"span"> {
 	appearance?: "solid" | "subtle";
 	/**
 	 * The visual style of the badge.
-	 * @default 'default'
+	 * @default 'neutral'
 	 */
 	variant?: "neutral" | "accent" | "danger" | "success" | "warning" | "info";
 	/**
 	 * The size of the badge.
-	 * @default 'neutral'
+	 * @default 'md'
 	 */
 	size?: "sm" | "md" | "lg";
 }

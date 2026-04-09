@@ -4,8 +4,8 @@ import type { MDXComponents } from "mdx/types";
 import { CodeBlock, Pre } from "@/modules/docs/code-block";
 import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "@/modules/docs/code-block-tabs";
 import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "@/modules/docs/demo";
-import { Example, type ExampleProps } from "@/modules/docs/example";
-import { Examples } from "@/modules/docs/examples";
+import { Example } from "@/modules/docs/example";
+import { Examples, type ExamplesProps } from "@/modules/docs/examples";
 import { InteractiveDemo } from "@/modules/docs/interactive-demo";
 import { Reference, type ReferenceProps } from "@/modules/docs/reference";
 import { cn } from "@/registry/lib/utils";
@@ -78,10 +78,10 @@ export const mdxComponents: MDXComponents = {
 	Demo: ({ className, ...props }: DemoProps) => <Demo className={cn("not-first:mt-4", className)} {...props} />,
 	DemoCode,
 	DemoCodePreview,
-	Example: ({ className, ...props }: ExampleProps) => (
-		<Example className={cn("not-first:mt-4", className)} {...props} />
+	Examples: ({ className, ...props }: ExamplesProps) => (
+		<Examples className={cn("not-first:mt-4", className)} {...props} />
 	),
-	Examples,
+	Example,
 	InteractiveDemo: ({ className, ...props }: React.ComponentProps<typeof InteractiveDemo>) => (
 		<InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />
 	),

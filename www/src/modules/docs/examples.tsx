@@ -1,8 +1,14 @@
+import type React from "react";
+
 import { cn } from "@/registry/lib/utils";
 
-export function Examples({ className, children }: { className?: string; children: React.ReactNode }) {
+export interface ExamplesProps extends React.ComponentProps<"div"> {
+	children: React.ReactNode;
+}
+
+export function Examples({ className, children, ...props }: ExamplesProps) {
 	return (
-		<div className={cn("grid grid-cols-3 gap-2 **:[h3]:font-medium **:[h3]:text-fg-muted **:[h3]:text-sm", className)}>
+		<div className={cn("grid grid-cols-3 gap-4", className)} {...props}>
 			{children}
 		</div>
 	);

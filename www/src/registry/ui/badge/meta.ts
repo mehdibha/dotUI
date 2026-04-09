@@ -8,6 +8,12 @@ const badgeMeta = {
 	styles: {
 		default: {},
 	},
+	params: {
+		"--badge-radius": {
+			type: "radius",
+			default: "--radius-md",
+		},
+	},
 	files: [
 		{
 			type: "registry:ui",
