@@ -3,14 +3,14 @@
 	"description": "A date input groups the editable date segments within a date field.",
 	"props": {
 		"size": {
-			"type": "\"sm\" | \"md\" | \"lg\"",
-			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\"",
+			"detailedType": "'lg' | 'md' | 'sm' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "sm"
+						"value": "lg"
 					},
 					{
 						"type": "stringLiteral",
@@ -18,66 +18,12 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "lg"
+						"value": "sm"
 					}
 				]
 			},
 			"description": "The size of the date input.",
 			"default": "'md'"
-		},
-		"slot": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-		},
-		"style": {
-			"type": "CSSProperties | (values: DateInputRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: DateInputRenderProps) => CSSProperties | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "DateInputRenderProps",
-									"name": "DateInputRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
 		"className": {
 			"type": "string | (values: DateInputRenderProps) => string",
@@ -148,24 +94,78 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"slot": {
+			"type": "null | string",
+			"detailedType": "null | string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "null"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		},
+		"style": {
+			"type": "CSSProperties | (values: DateInputRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: DateInputRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "DateInputRenderProps",
+									"name": "DateInputRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		}
 	},
 	"renderProps": {
-		"isHovered": {
-			"selector": "[data-hovered]",
-			"description": "Whether the date input is currently hovered with a mouse."
-		},
-		"isFocusWithin": {
-			"selector": "[data-focus-within]",
-			"description": "Whether an element within the date input is focused, either via a mouse or keyboard."
+		"isDisabled": {
+			"selector": "[data-disabled]",
+			"description": "Whether the date input is disabled."
 		},
 		"isFocusVisible": {
 			"selector": "[data-focus-visible]",
 			"description": "Whether an element within the date input is keyboard focused."
 		},
-		"isDisabled": {
-			"selector": "[data-disabled]",
-			"description": "Whether the date input is disabled."
+		"isFocusWithin": {
+			"selector": "[data-focus-within]",
+			"description": "Whether an element within the date input is focused, either via a mouse or keyboard."
+		},
+		"isHovered": {
+			"selector": "[data-hovered]",
+			"description": "Whether the date input is currently hovered with a mouse."
 		},
 		"isInvalid": {
 			"selector": "[data-invalid]",
@@ -173,87 +173,21 @@
 		}
 	},
 	"typeLinks": {
-		"DateInputRenderProps": {
-			"type": "interface",
-			"name": "DateInputRenderProps",
-			"properties": {
-				"isHovered": {
-					"type": "property",
-					"name": "isHovered",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the date input is currently hovered with a mouse."
-				},
-				"isFocusWithin": {
-					"type": "property",
-					"name": "isFocusWithin",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether an element within the date input is focused, either via a mouse or keyboard."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether an element within the date input is keyboard focused."
-				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the date input is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the date input is invalid."
-				}
-			}
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateInputRenderProps": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateInputRenderProps",
 			"name": "DateInputRenderProps",
 			"extends": [],
 			"properties": {
-				"isHovered": {
+				"isDisabled": {
 					"type": "property",
-					"name": "isHovered",
+					"name": "isDisabled",
 					"value": {
 						"type": "boolean"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the date input is currently hovered with a mouse."
-				},
-				"isFocusWithin": {
-					"type": "property",
-					"name": "isFocusWithin",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether an element within the date input is focused, either via a mouse or keyboard."
+					"description": "Whether the date input is disabled."
 				},
 				"isFocusVisible": {
 					"type": "property",
@@ -265,15 +199,25 @@
 					"readonly": false,
 					"description": "Whether an element within the date input is keyboard focused."
 				},
-				"isDisabled": {
+				"isFocusWithin": {
 					"type": "property",
-					"name": "isDisabled",
+					"name": "isFocusWithin",
 					"value": {
 						"type": "boolean"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the date input is disabled."
+					"description": "Whether an element within the date input is focused, either via a mouse or keyboard."
+				},
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date input is currently hovered with a mouse."
 				},
 				"isInvalid": {
 					"type": "property",
@@ -288,6 +232,62 @@
 			},
 			"typeParameters": [],
 			"description": ""
+		},
+		"DateInputRenderProps": {
+			"type": "interface",
+			"name": "DateInputRenderProps",
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date input is disabled."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether an element within the date input is keyboard focused."
+				},
+				"isFocusWithin": {
+					"type": "property",
+					"name": "isFocusWithin",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether an element within the date input is focused, either via a mouse or keyboard."
+				},
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date input is currently hovered with a mouse."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the date input is invalid."
+				}
+			}
 		}
 	}
 }

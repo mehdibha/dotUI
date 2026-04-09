@@ -10,6 +10,46 @@
 			},
 			"description": "Whether the table columns are resizable."
 		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"children": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The elements that make up the table. Includes the TableHeader, TableBody, Columns, and Rows."
+		},
 		"className": {
 			"type": "string | (values: TableRenderProps) => string",
 			"detailedType": "string | (values: TableRenderProps) => string | undefined",
@@ -43,208 +83,6 @@
 			},
 			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
 			"default": "'react-aria-Table'"
-		},
-		"children": {
-			"type": "ReactNode",
-			"typeAst": {
-				"type": "identifier",
-				"name": "ReactNode"
-			},
-			"description": "The elements that make up the table. Includes the TableHeader, TableBody, Columns, and Rows."
-		},
-		"selectionBehavior": {
-			"type": "SelectionBehavior",
-			"detailedType": "SelectionBehavior | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "SelectionBehavior"
-			},
-			"description": "How multiple selection should behave in the collection.",
-			"default": "\"toggle\""
-		},
-		"disabledBehavior": {
-			"type": "DisabledBehavior",
-			"detailedType": "DisabledBehavior | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "DisabledBehavior"
-			},
-			"description": "Whether `disabledKeys` applies to all interactions, or only selection.",
-			"default": "\"all\""
-		},
-		"onRowAction": {
-			"type": "((key: Key) => void)",
-			"detailedType": "((key: Key) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "key",
-						"value": {
-							"type": "link",
-							"id": "Key",
-							"name": "Key"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when a user performs an action on the row."
-		},
-		"dragAndDropHooks": {
-			"type": "DragAndDropHooks<object>",
-			"detailedType": "DragAndDropHooks<object> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "identifier",
-						"name": "DragAndDropHooks"
-					}
-				]
-			},
-			"description": "The drag and drop hooks returned by `useDragAndDrop` used to enable drag and drop behavior for the Table."
-		},
-		"disabledKeys": {
-			"type": "Iterable<Key>",
-			"detailedType": "Iterable<Key> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-							"name": "Iterable"
-						},
-						"typeParameters": [
-							{
-								"type": "identifier",
-								"name": "Key"
-							}
-						]
-					}
-				]
-			},
-			"description": "A list of row keys to disable."
-		},
-		"selectionMode": {
-			"type": "SelectionMode",
-			"detailedType": "SelectionMode | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "SelectionMode"
-			},
-			"description": "The type of selection that is allowed in the collection."
-		},
-		"onSelectionChange": {
-			"type": "((keys: Selection) => void)",
-			"detailedType": "((keys: Selection) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "keys",
-						"value": {
-							"type": "link",
-							"id": "Selection",
-							"name": "Selection"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the selection changes."
-		},
-		"shouldSelectOnPressUp": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether selection should occur on press up instead of press down."
-		},
-		"escapeKeyBehavior": {
-			"type": "\"none\" | \"clearSelection\"",
-			"detailedType": "'none' | 'clearSelection' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "none"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "clearSelection"
-					}
-				]
-			},
-			"description": "Whether pressing the escape key should clear selection in the table or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
-			"default": "'clearSelection'"
-		},
-		"disallowEmptySelection": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the collection allows empty selection."
-		},
-		"selectedKeys": {
-			"type": "Iterable<Key> | \"all\"",
-			"detailedType": "Iterable<Key> | 'all' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-							"name": "Iterable"
-						},
-						"typeParameters": [
-							{
-								"type": "identifier",
-								"name": "Key"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "all"
-							}
-						]
-					}
-				]
-			},
-			"description": "The currently selected keys in the collection (controlled)."
 		},
 		"defaultSelectedKeys": {
 			"type": "Iterable<Key> | \"all\"",
@@ -282,14 +120,136 @@
 			},
 			"description": "The initial selected keys in the collection (uncontrolled)."
 		},
-		"sortDescriptor": {
-			"type": "SortDescriptor",
-			"detailedType": "SortDescriptor | undefined",
+		"disabledBehavior": {
+			"type": "DisabledBehavior",
+			"detailedType": "DisabledBehavior | undefined",
 			"typeAst": {
 				"type": "identifier",
-				"name": "SortDescriptor"
+				"name": "DisabledBehavior"
 			},
-			"description": "The current sorted column and direction."
+			"description": "Whether `disabledKeys` applies to all interactions, or only selection.",
+			"default": "\"all\""
+		},
+		"disabledKeys": {
+			"type": "Iterable<Key>",
+			"detailedType": "Iterable<Key> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					}
+				]
+			},
+			"description": "A list of row keys to disable."
+		},
+		"disallowEmptySelection": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the collection allows empty selection."
+		},
+		"dragAndDropHooks": {
+			"type": "DragAndDropHooks<object>",
+			"detailedType": "DragAndDropHooks<object> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "identifier",
+						"name": "DragAndDropHooks"
+					}
+				]
+			},
+			"description": "The drag and drop hooks returned by `useDragAndDrop` used to enable drag and drop behavior for the Table."
+		},
+		"escapeKeyBehavior": {
+			"type": "\"clearSelection\" | \"none\"",
+			"detailedType": "'clearSelection' | 'none' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "clearSelection"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
+					}
+				]
+			},
+			"description": "Whether pressing the escape key should clear selection in the table or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
+			"default": "'clearSelection'"
+		},
+		"onRowAction": {
+			"type": "((key: Key) => void)",
+			"detailedType": "((key: Key) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "key",
+						"value": {
+							"type": "link",
+							"id": "Key",
+							"name": "Key"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a user performs an action on the row."
+		},
+		"onSelectionChange": {
+			"type": "((keys: Selection) => void)",
+			"detailedType": "((keys: Selection) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "keys",
+						"value": {
+							"type": "link",
+							"id": "Selection",
+							"name": "Selection"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the selection changes."
 		},
 		"onSortChange": {
 			"type": "((descriptor: SortDescriptor) => any)",
@@ -315,41 +275,6 @@
 				"typeParameters": []
 			},
 			"description": "Handler that is called when the sorted column or direction changes."
-		},
-		"style": {
-			"type": "CSSProperties | (values: TableRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: TableRenderProps) => CSSProperties | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TableRenderProps",
-									"name": "TableRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\" | \"table\", TableRenderProps>",
@@ -391,9 +316,9 @@
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
-		"slot": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
+		"selectedKeys": {
+			"type": "Iterable<Key> | \"all\"",
+			"detailedType": "Iterable<Key> | 'all' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -401,7 +326,70 @@
 						"type": "undefined"
 					},
 					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
+								"value": "all"
+							}
+						]
+					}
+				]
+			},
+			"description": "The currently selected keys in the collection (controlled)."
+		},
+		"selectionBehavior": {
+			"type": "SelectionBehavior",
+			"detailedType": "SelectionBehavior | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "SelectionBehavior"
+			},
+			"description": "How multiple selection should behave in the collection.",
+			"default": "\"toggle\""
+		},
+		"selectionMode": {
+			"type": "SelectionMode",
+			"detailedType": "SelectionMode | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "SelectionMode"
+			},
+			"description": "The type of selection that is allowed in the collection."
+		},
+		"shouldSelectOnPressUp": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether selection should occur on press up instead of press down."
+		},
+		"slot": {
+			"type": "null | string",
+			"detailedType": "null | string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
 						"type": "null"
+					},
+					{
+						"type": "undefined"
 					},
 					{
 						"type": "string"
@@ -410,40 +398,56 @@
 			},
 			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
 		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"sortDescriptor": {
+			"type": "SortDescriptor",
+			"detailedType": "SortDescriptor | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "identifier",
+				"name": "SortDescriptor"
 			},
-			"description": "Defines a string value that labels the current element."
+			"description": "The current sorted column and direction."
 		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"style": {
+			"type": "CSSProperties | (values: TableRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: TableRenderProps) => CSSProperties | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "TableRenderProps",
+									"name": "TableRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
 			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		}
 	},
 	"renderProps": {
+		"isDropTarget": {
+			"selector": "[data-drop-target]",
+			"description": "Whether the table is currently the active drop target."
+		},
 		"isFocused": {
 			"selector": "[data-focused]",
 			"description": "Whether the table is currently focused."
@@ -451,17 +455,25 @@
 		"isFocusVisible": {
 			"selector": "[data-focus-visible]",
 			"description": "Whether the table is currently keyboard focused."
-		},
-		"isDropTarget": {
-			"selector": "[data-drop-target]",
-			"description": "Whether the table is currently the active drop target."
 		}
 	},
 	"typeLinks": {
-		"TableRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
 			"name": "TableRenderProps",
+			"extends": [],
 			"properties": {
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the table is currently the active drop target."
+				},
 				"isFocused": {
 					"type": "property",
 					"name": "isFocused",
@@ -482,28 +494,64 @@
 					"readonly": false,
 					"description": "Whether the table is currently keyboard focused."
 				},
-				"isDropTarget": {
-					"type": "property",
-					"name": "isDropTarget",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the table is currently the active drop target."
-				},
 				"state": {
 					"type": "property",
 					"name": "state",
 					"value": {
-						"type": "identifier",
-						"name": "Table.State<unknown>"
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+table@3.15.4_react@19.2.1/node_modules/@react-stately/table/dist/types.d.ts:Table.State",
+							"name": "Table.State"
+						},
+						"typeParameters": [
+							{
+								"type": "unknown"
+							}
+						]
 					},
 					"optional": false,
 					"readonly": false,
 					"description": "State of the table."
 				}
-			}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+			"name": "Iterable",
+			"extends": [],
+			"properties": {
+				"__@iterator@76": {
+					"type": "method",
+					"name": "__@iterator@76",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+								"name": "Iterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
 		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
 			"type": "interface",
@@ -634,47 +682,20 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
+		"TableRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-			"name": "Iterable",
-			"extends": [],
+			"name": "TableRenderProps",
 			"properties": {
-				"__@iterator@26": {
-					"type": "method",
-					"name": "__@iterator@26",
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
 					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "application",
-							"base": {
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
-								"name": "Iterator"
-							},
-							"typeParameters": [
-								{
-									"type": "identifier",
-									"name": "Key"
-								}
-							]
-						},
-						"typeParameters": []
+						"type": "boolean"
 					},
 					"optional": false,
-					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
-			"name": "TableRenderProps",
-			"extends": [],
-			"properties": {
+					"readonly": false,
+					"description": "Whether the table is currently the active drop target."
+				},
 				"isFocused": {
 					"type": "property",
 					"name": "isFocused",
@@ -695,39 +716,18 @@
 					"readonly": false,
 					"description": "Whether the table is currently keyboard focused."
 				},
-				"isDropTarget": {
-					"type": "property",
-					"name": "isDropTarget",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the table is currently the active drop target."
-				},
 				"state": {
 					"type": "property",
 					"name": "state",
 					"value": {
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+table@3.15.4_react@19.2.1/node_modules/@react-stately/table/dist/types.d.ts:Table.State",
-							"name": "Table.State"
-						},
-						"typeParameters": [
-							{
-								"type": "unknown"
-							}
-						]
+						"type": "identifier",
+						"name": "Table.State<unknown>"
 					},
 					"optional": false,
 					"readonly": false,
 					"description": "State of the table."
 				}
-			},
-			"typeParameters": [],
-			"description": ""
+			}
 		}
 	}
 }

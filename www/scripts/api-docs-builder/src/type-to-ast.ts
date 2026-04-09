@@ -364,7 +364,7 @@ export function buildTypeAstFromString(typeString: string, _context: ConversionC
 	// Pattern: String literal unions like "sm" | "md" | "lg"
 	// ============================================================================
 	if (/^"[^"]*"(\s*\|\s*"[^"]*")*$/.test(typeString)) {
-		const literals = typeString.match(/"[^"]*"/g) || [];
+		const literals = (typeString.match(/"[^"]*"/g) || []).sort();
 		return {
 			type: "union",
 			elements: literals.map(
@@ -544,7 +544,7 @@ export function typeToAst(type: ts.Type, context: ConversionContext): TType | nu
 		const firstElement = collapsedElements[0];
 		if (collapsedElements.length === 1 && firstElement) return firstElement;
 
-		return { type: "union", elements: collapsedElements } as TUnion;
+		return { type: "union", elements: sortUnionElements(collapsedElements) } as TUnion;
 	}
 
 	// Intersection types
@@ -860,7 +860,7 @@ function objectTypeToAst(_type: ts.Type, properties: ts.Symbol[], context: Conve
 
 	const propsRecord: Record<string, TProperty | TMethod> = {};
 
-	for (const prop of properties) {
+	for (const prop of [...properties].sort((a, b) => a.getName().localeCompare(b.getName()))) {
 		const propType = checker.getTypeOfSymbol(prop);
 		const declaration = prop.valueDeclaration;
 
@@ -914,7 +914,7 @@ function resolveNamedType(type: ts.Type, symbol: ts.Symbol, context: ConversionC
 		const properties = type.getProperties();
 		const propsRecord: Record<string, TProperty | TMethod> = {};
 
-		for (const prop of properties) {
+		for (const prop of [...properties].sort((a, b) => a.getName().localeCompare(b.getName()))) {
 			const propType = checker.getTypeOfSymbol(prop);
 			const callSignatures = propType.getCallSignatures();
 			const firstCallSig = callSignatures[0];
@@ -989,6 +989,51 @@ function resolveNamedType(type: ts.Type, symbol: ts.Symbol, context: ConversionC
 	}
 
 	return null;
+}
+
+/**
+ * Deterministically sort union elements to ensure stable output across runs.
+ * TypeScript's type checker may return union members in different orders.
+ */
+export function sortUnionElements(elements: TType[]): TType[] {
+	return [...elements].sort((a, b) => {
+		// Sort by a stable string key derived from the AST node
+		return getTypeSortKey(a).localeCompare(getTypeSortKey(b));
+	});
+}
+
+function getTypeSortKey(node: TType): string {
+	switch (node.type) {
+		case "stringLiteral":
+			return `0_${(node as TStringLiteral).value}`;
+		case "numberLiteral":
+			return `1_${(node as TNumberLiteral).value}`;
+		case "booleanLiteral":
+			return `2_${(node as TBooleanLiteral).value}`;
+		case "null":
+			return "3_null";
+		case "undefined":
+			return "4_undefined";
+		case "string":
+		case "number":
+		case "boolean":
+		case "bigint":
+		case "symbol":
+		case "void":
+		case "any":
+		case "unknown":
+		case "never":
+		case "object":
+			return `5_${node.type}`;
+		case "identifier":
+			return `6_${(node as TIdentifier).name}`;
+		case "link":
+			return `7_${(node as TLink).name}`;
+		case "function":
+			return `8_function`;
+		default:
+			return `9_${node.type}`;
+	}
 }
 
 /**

@@ -2,6 +2,14 @@
 	"name": "FileTriggerProps",
 	"description": "A FileTrigger allows a user to access the file system with any pressable React Aria\nor React Spectrum component, or custom components built with usePress.",
 	"props": {
+		"acceptDirectory": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Enables the selection of directories instead of individual files."
+		},
 		"acceptedFileTypes": {
 			"type": "readonly string[]",
 			"detailedType": "readonly string[] | undefined",
@@ -29,19 +37,27 @@
 			},
 			"description": "Whether multiple files can be selected."
 		},
+		"children": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The children of the component."
+		},
 		"defaultCamera": {
-			"type": "\"user\" | \"environment\"",
-			"detailedType": "'user' | 'environment' | undefined",
+			"type": "\"environment\" | \"user\"",
+			"detailedType": "'environment' | 'user' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "user"
+						"value": "environment"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "environment"
+						"value": "user"
 					}
 				]
 			},
@@ -87,22 +103,6 @@
 				]
 			},
 			"description": "Handler when a user selects a file."
-		},
-		"children": {
-			"type": "ReactNode",
-			"typeAst": {
-				"type": "identifier",
-				"name": "ReactNode"
-			},
-			"description": "The children of the component."
-		},
-		"acceptDirectory": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Enables the selection of directories instead of individual files."
 		}
 	}
 }

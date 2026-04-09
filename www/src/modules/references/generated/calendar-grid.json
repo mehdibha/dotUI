@@ -2,15 +2,6 @@
 	"name": "CalendarGridProps",
 	"description": "A calendar grid displays a single grid of days within a calendar or range calendar\nwhich can be keyboard navigated and selected by the user.",
 	"props": {
-		"className": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
-			"default": "'react-aria-CalendarGrid'"
-		},
 		"children": {
 			"type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ReactElement<unknown, string | JSXElementConstructor<any>>[] | ((date: CalendarDate) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
 			"detailedType": "| ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >\n| ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >[]\n| ((\n    date: CalendarDate,\n  ) => ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >)\n| undefined",
@@ -23,13 +14,6 @@
 					{
 						"type": "identifier",
 						"name": "ReactElement"
-					},
-					{
-						"type": "array",
-						"elementType": {
-							"type": "identifier",
-							"name": "ReactElement"
-						}
 					},
 					{
 						"type": "function",
@@ -51,10 +35,26 @@
 							"name": "ReactElement"
 						},
 						"typeParameters": []
+					},
+					{
+						"type": "array",
+						"elementType": {
+							"type": "identifier",
+							"name": "ReactElement"
+						}
 					}
 				]
 			},
 			"description": "Either a function to render calendar cells for each date in the month,\nor children containing a `<CalendarGridHeader>`` and `<CalendarGridBody>`\nwhen additional customization is needed."
+		},
+		"className": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+			"default": "'react-aria-CalendarGrid'"
 		},
 		"offset": {
 			"type": "DateDuration",
@@ -64,38 +64,6 @@
 				"name": "DateDuration"
 			},
 			"description": "An offset from the beginning of the visible date range that this\nCalendarGrid should display. Useful when displaying more than one\nmonth at a time."
-		},
-		"weekdayStyle": {
-			"type": "\"narrow\" | \"short\" | \"long\"",
-			"detailedType": "'narrow' | 'short' | 'long' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "narrow"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "short"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "long"
-					}
-				]
-			},
-			"description": "The style of weekday names to display in the calendar grid header,\ne.g. single letter, abbreviation, or full day name.",
-			"default": "\"narrow\""
-		},
-		"style": {
-			"type": "CSSProperties",
-			"detailedType": "CSSProperties | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "CSSProperties"
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"table\", undefined>",
@@ -130,6 +98,38 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"style": {
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CSSProperties"
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+		},
+		"weekdayStyle": {
+			"type": "\"long\" | \"narrow\" | \"short\"",
+			"detailedType": "'long' | 'narrow' | 'short' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "long"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "narrow"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "short"
+					}
+				]
+			},
+			"description": "The style of weekday names to display in the calendar grid header,\ne.g. single letter, abbreviation, or full day name.",
+			"default": "\"narrow\""
 		}
 	}
 }

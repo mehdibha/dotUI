@@ -87,7 +87,7 @@ async function run(options: RunOptions) {
 	for (const exportNode of propsExports) {
 		try {
 			const componentRef = await formatComponentData(exportNode, parserContext);
-			const json = `${JSON.stringify(componentRef, null, 2)}\n`;
+			const json = `${JSON.stringify(componentRef, null, "\t")}\n`;
 
 			// Remove "Props" suffix for filename
 			const baseName = exportNode.name.replace(/Props$/, "");

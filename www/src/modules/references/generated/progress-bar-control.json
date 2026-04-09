@@ -4,22 +4,18 @@
 	"extendsElement": "div",
 	"props": {
 		"variant": {
-			"type": "\"danger\" | \"warning\" | \"success\" | \"primary\" | \"accent\"",
-			"detailedType": "| 'danger'\n| 'warning'\n| 'success'\n| 'primary'\n| 'accent'\n| undefined",
+			"type": "\"accent\" | \"danger\" | \"primary\" | \"success\" | \"warning\"",
+			"detailedType": "| 'accent'\n| 'danger'\n| 'primary'\n| 'success'\n| 'warning'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
+						"value": "accent"
+					},
+					{
+						"type": "stringLiteral",
 						"value": "danger"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "warning"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "success"
 					},
 					{
 						"type": "stringLiteral",
@@ -27,7 +23,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "accent"
+						"value": "success"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "warning"
 					}
 				]
 			},
@@ -35,14 +35,14 @@
 			"default": "'accent'"
 		},
 		"size": {
-			"type": "\"sm\" | \"md\" | \"lg\"",
-			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\"",
+			"detailedType": "'lg' | 'md' | 'sm' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "sm"
+						"value": "lg"
 					},
 					{
 						"type": "stringLiteral",
@@ -50,7 +50,7 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "lg"
+						"value": "sm"
 					}
 				]
 			},
@@ -58,8 +58,8 @@
 			"default": "'md'"
 		},
 		"duration": {
-			"type": "`${number}s` | `${number}ms`",
-			"detailedType": "`${number}s` | `${number}ms` | undefined",
+			"type": "`${number}ms` | `${number}s`",
+			"detailedType": "`${number}ms` | `${number}s` | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [

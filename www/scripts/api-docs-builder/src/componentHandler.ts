@@ -12,6 +12,7 @@ import {
 	type ConversionContext,
 	createConversionContext,
 	parseSimpleType,
+	sortUnionElements,
 	typeToAst,
 } from "./type-to-ast";
 
@@ -288,9 +289,21 @@ function getPropertyDeclarationOrder(
 }
 
 /**
+ * Sort union members in a type string for deterministic output.
+ * Only sorts simple union types (string literals, identifiers) to avoid breaking complex types.
+ */
+function sortUnionTypeString(typeStr: string): string {
+	// Only sort if it looks like a simple union (no parentheses, arrows, or generics)
+	if (/[()=><]/.test(typeStr)) return typeStr;
+	const parts = typeStr.split(/\s*\|\s*/);
+	if (parts.length <= 1) return typeStr;
+	return parts.sort().join(" | ");
+}
+
+/**
  * Sort an object's keys based on a reference order array.
  * Props in the order array come first (in that order),
- * then remaining props follow in their original order (from TypeScript's type checker).
+ * then remaining props follow alphabetically for deterministic output.
  * Event props are sorted according to REACT_ARIA_EVENT_ORDER for consistency.
  */
 function sortByDeclarationOrder<T>(
@@ -317,12 +330,13 @@ function sortByDeclarationOrder<T>(
 		}
 	}
 
-	// Then add remaining props in their original order from TypeScript's type checker
-	for (const key of originalOrder) {
-		if (!seen.has(key) && key in obj) {
-			sorted[key] = obj[key] as T;
-			seen.add(key);
-		}
+	// Then add remaining props in alphabetical order for deterministic output
+	const remainingKeys = Object.keys(obj)
+		.filter((key) => !seen.has(key))
+		.sort();
+	for (const key of remainingKeys) {
+		sorted[key] = obj[key] as T;
+		seen.add(key);
 	}
 
 	return sorted;
@@ -433,7 +447,7 @@ function resolveTypeByName(typeName: string, context: ParserContext, _astContext
 					}
 				> = {};
 
-				for (const prop of properties) {
+				for (const prop of [...properties].sort((a, b) => a.name.localeCompare(b.name))) {
 					const propType = checker.getTypeOfSymbolAtLocation(prop, node);
 					// Use a simple type string instead of recursive AST to avoid explosion
 					const typeString = checker.typeToString(propType);
@@ -548,8 +562,10 @@ export async function formatComponentData(exportNode: tae.ExportNode, context: P
 	// Extract render props (CSS state selectors)
 	const renderProps = extractRenderProps(exportNode.name, context);
 
-	// Collect type links for the component
-	const typeLinks = Object.keys(astContext.links).length > 0 ? astContext.links : undefined;
+	// Collect type links for the component (sorted for deterministic output)
+	const linkKeys = Object.keys(astContext.links).sort();
+	const typeLinks =
+		linkKeys.length > 0 ? Object.fromEntries(linkKeys.map((key) => [key, astContext.links[key]])) : undefined;
 
 	const raw = {
 		name: exportNode.name,
@@ -606,7 +622,7 @@ async function getPropsWithTypeChecker(
 				if (!symbol) return;
 
 				const type = checker.getDeclaredTypeOfSymbol(symbol);
-				const properties = checker.getPropertiesOfType(type);
+				const properties = [...checker.getPropertiesOfType(type)].sort((a, b) => a.name.localeCompare(b.name));
 
 				for (const prop of properties) {
 					originalOrder.push(prop.name);
@@ -663,10 +679,10 @@ async function getPropsWithTypeChecker(
 
 					// Clean up and expand type aliases
 					const cleanedType = cleanTypeString(typeString);
-					const fullType = expandTypeAliasInString(cleanedType);
+					const fullType = sortUnionTypeString(expandTypeAliasInString(cleanedType));
 
 					// Remove | undefined first for optional props
-					const shortType = isOptional ? removeUndefinedFromType(fullType) : fullType;
+					const shortType = sortUnionTypeString(isOptional ? removeUndefinedFromType(fullType) : fullType);
 
 					// Generate AST type for rich rendering
 					// First, try to detect if the type string represents a simple type alias
@@ -774,7 +790,7 @@ function extractRenderProps(propsTypeName: string, context: ParserContext): Reco
 				if (!symbol) return;
 
 				const type = checker.getDeclaredTypeOfSymbol(symbol);
-				const properties = checker.getPropertiesOfType(type);
+				const properties = [...checker.getPropertiesOfType(type)].sort((a, b) => a.name.localeCompare(b.name));
 
 				for (const prop of properties) {
 					// Get JSDoc tags

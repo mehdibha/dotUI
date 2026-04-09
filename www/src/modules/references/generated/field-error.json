@@ -2,40 +2,6 @@
 	"name": "FieldErrorProps",
 	"description": "A FieldError displays validation errors for a form field.",
 	"props": {
-		"className": {
-			"type": "string | (values: FieldErrorRenderProps) => string",
-			"detailedType": "string | (values: FieldErrorRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "FieldErrorRenderProps",
-									"name": "FieldErrorRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-FieldError'"
-		},
 		"children": {
 			"type": "ReactNode | (values: FieldErrorRenderProps) => ReactNode",
 			"typeAst": {
@@ -70,15 +36,14 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"style": {
-			"type": "CSSProperties | (values: FieldErrorRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: FieldErrorRenderProps) => CSSProperties | undefined",
+		"className": {
+			"type": "string | (values: FieldErrorRenderProps) => string",
+			"detailedType": "string | (values: FieldErrorRenderProps) => string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "identifier",
-						"name": "CSSProperties"
+						"type": "string"
 					},
 					{
 						"type": "function",
@@ -96,14 +61,22 @@
 							}
 						],
 						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
+							"type": "string"
 						},
 						"typeParameters": []
 					}
 				]
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-FieldError'"
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", FieldErrorRenderProps>",
@@ -141,54 +114,43 @@
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"style": {
+			"type": "CSSProperties | (values: FieldErrorRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: FieldErrorRenderProps) => CSSProperties | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "FieldErrorRenderProps",
+									"name": "FieldErrorRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
 			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		}
 	},
 	"typeLinks": {
-		"FieldErrorRenderProps": {
-			"type": "interface",
-			"name": "FieldErrorRenderProps",
-			"properties": {
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the input value is invalid."
-				},
-				"validationErrors": {
-					"type": "property",
-					"name": "validationErrors",
-					"value": {
-						"type": "identifier",
-						"name": "string[]"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The current error messages for the input if it is invalid, otherwise an empty array."
-				},
-				"validationDetails": {
-					"type": "property",
-					"name": "validationDetails",
-					"value": {
-						"type": "identifier",
-						"name": "ValidityState"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The native validation details for the input."
-				}
-			}
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:FieldErrorRenderProps": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:FieldErrorRenderProps",
@@ -211,6 +173,18 @@
 					"readonly": false,
 					"description": "Whether the input value is invalid."
 				},
+				"validationDetails": {
+					"type": "property",
+					"name": "validationDetails",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ValidityState",
+						"name": "ValidityState"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The native validation details for the input."
+				},
 				"validationErrors": {
 					"type": "property",
 					"name": "validationErrors",
@@ -223,22 +197,48 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The current error messages for the input if it is invalid, otherwise an empty array."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"FieldErrorRenderProps": {
+			"type": "interface",
+			"name": "FieldErrorRenderProps",
+			"properties": {
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the input value is invalid."
 				},
 				"validationDetails": {
 					"type": "property",
 					"name": "validationDetails",
 					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ValidityState",
+						"type": "identifier",
 						"name": "ValidityState"
 					},
 					"optional": false,
 					"readonly": false,
 					"description": "The native validation details for the input."
+				},
+				"validationErrors": {
+					"type": "property",
+					"name": "validationErrors",
+					"value": {
+						"type": "identifier",
+						"name": "string[]"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The current error messages for the input if it is invalid, otherwise an empty array."
 				}
-			},
-			"typeParameters": [],
-			"description": ""
+			}
 		}
 	}
 }

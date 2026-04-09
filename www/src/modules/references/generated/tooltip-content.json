@@ -11,90 +11,6 @@
 			"description": "Whether to hide the tooltip arrow.",
 			"default": "false"
 		},
-		"className": {
-			"type": "string | (values: TooltipRenderProps) => string",
-			"detailedType": "string | (values: TooltipRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TooltipRenderProps",
-									"name": "TooltipRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-Tooltip'"
-		},
-		"triggerRef": {
-			"type": "RefObject<Element | null>",
-			"detailedType": "RefObject<Element | null> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "RefObject"
-						},
-						"typeParameters": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "null"
-									},
-									{
-										"type": "identifier",
-										"name": "Element"
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			"description": "The ref for the element which the tooltip positions itself with respect to.\n\nWhen used within a TooltipTrigger this is set automatically. It is only required when used standalone."
-		},
-		"isEntering": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the tooltip is currently performing an entry animation."
-		},
-		"isExiting": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the tooltip is currently performing an exit animation."
-		},
 		"UNSTABLE_portalContainer": {
 			"type": "Element",
 			"detailedType": "Element | undefined",
@@ -105,101 +21,21 @@
 			"description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
 			"default": "document.body"
 		},
-		"placement": {
-			"type": "Placement",
-			"detailedType": "Placement | undefined",
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "identifier",
-				"name": "Placement"
+				"type": "string"
 			},
-			"description": "The placement of the tooltip with respect to the trigger.",
-			"default": "'top'"
+			"description": "Identifies the element (or elements) that describes the object."
 		},
-		"containerPadding": {
-			"type": "number",
-			"detailedType": "number | undefined",
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "number"
+				"type": "string"
 			},
-			"description": "The placement padding that should be applied between the element and its\nsurrounding container.",
-			"default": "12"
-		},
-		"offset": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The additional offset applied along the main axis between the element and its\nanchor element.",
-			"default": "0"
-		},
-		"crossOffset": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The additional offset applied along the cross axis between the element and its\nanchor element.",
-			"default": "0"
-		},
-		"shouldFlip": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element should flip its orientation (e.g. top to bottom or left to right) when\nthere is insufficient room for it to render completely.",
-			"default": "true"
-		},
-		"isOpen": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element is rendered."
-		},
-		"arrowBoundaryOffset": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The minimum distance the arrow's edge should be from the edge of the overlay element.",
-			"default": "0"
-		},
-		"defaultOpen": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the overlay is open by default (uncontrolled)."
-		},
-		"onOpenChange": {
-			"type": "((isOpen: boolean) => void)",
-			"detailedType": "((isOpen: boolean) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "isOpen",
-						"value": {
-							"type": "link",
-							"id": "boolean",
-							"name": "boolean"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the overlay's open state changes."
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		},
 		"aria-label": {
 			"type": "string",
@@ -217,21 +53,14 @@
 			},
 			"description": "Identifies the element (or elements) that labels the current element."
 		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"arrowBoundaryOffset": {
+			"type": "number",
+			"detailedType": "number | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "number"
 			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+			"description": "The minimum distance the arrow's edge should be from the edge of the overlay element.",
+			"default": "0"
 		},
 		"children": {
 			"type": "ReactNode | (values: TooltipRenderProps) => ReactNode",
@@ -267,15 +96,14 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"style": {
-			"type": "CSSProperties | (values: TooltipRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: TooltipRenderProps) => CSSProperties | undefined",
+		"className": {
+			"type": "string | (values: TooltipRenderProps) => string",
+			"detailedType": "string | (values: TooltipRenderProps) => string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "identifier",
-						"name": "CSSProperties"
+						"type": "string"
 					},
 					{
 						"type": "function",
@@ -293,14 +121,108 @@
 							}
 						],
 						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
+							"type": "string"
 						},
 						"typeParameters": []
 					}
 				]
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-Tooltip'"
+		},
+		"containerPadding": {
+			"type": "number",
+			"detailedType": "number | undefined",
+			"typeAst": {
+				"type": "number"
+			},
+			"description": "The placement padding that should be applied between the element and its\nsurrounding container.",
+			"default": "12"
+		},
+		"crossOffset": {
+			"type": "number",
+			"detailedType": "number | undefined",
+			"typeAst": {
+				"type": "number"
+			},
+			"description": "The additional offset applied along the cross axis between the element and its\nanchor element.",
+			"default": "0"
+		},
+		"defaultOpen": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the overlay is open by default (uncontrolled)."
+		},
+		"isEntering": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the tooltip is currently performing an entry animation."
+		},
+		"isExiting": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the tooltip is currently performing an exit animation."
+		},
+		"isOpen": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the element is rendered."
+		},
+		"offset": {
+			"type": "number",
+			"detailedType": "number | undefined",
+			"typeAst": {
+				"type": "number"
+			},
+			"description": "The additional offset applied along the main axis between the element and its\nanchor element.",
+			"default": "0"
+		},
+		"onOpenChange": {
+			"type": "((isOpen: boolean) => void)",
+			"detailedType": "((isOpen: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isOpen",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the overlay's open state changes."
+		},
+		"placement": {
+			"type": "Placement",
+			"detailedType": "Placement | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Placement"
+			},
+			"description": "The placement of the tooltip with respect to the trigger.",
+			"default": "'top'"
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", TooltipRenderProps>",
@@ -337,24 +259,93 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"shouldFlip": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the element should flip its orientation (e.g. top to bottom or left to right) when\nthere is insufficient room for it to render completely.",
+			"default": "true"
+		},
+		"style": {
+			"type": "CSSProperties | (values: TooltipRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: TooltipRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "TooltipRenderProps",
+									"name": "TooltipRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"triggerRef": {
+			"type": "RefObject<Element | null>",
+			"detailedType": "RefObject<Element | null> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "RefObject"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "null"
+									},
+									{
+										"type": "identifier",
+										"name": "Element"
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"description": "The ref for the element which the tooltip positions itself with respect to.\n\nWhen used within a TooltipTrigger this is set automatically. It is only required when used standalone."
 		}
 	},
 	"typeLinks": {
-		"TooltipRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TooltipRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TooltipRenderProps",
 			"name": "TooltipRenderProps",
+			"extends": [],
 			"properties": {
-				"placement": {
-					"type": "property",
-					"name": "placement",
-					"value": {
-						"type": "identifier",
-						"name": "PlacementAxis | null"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The placement of the tooltip relative to the trigger."
-				},
 				"isEntering": {
 					"type": "property",
 					"name": "isEntering",
@@ -375,25 +366,6 @@
 					"readonly": false,
 					"description": "Whether the tooltip is currently exiting. Use this to apply animations."
 				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "identifier",
-						"name": "TooltipTriggerState"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the tooltip."
-				}
-			}
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TooltipRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TooltipRenderProps",
-			"name": "TooltipRenderProps",
-			"extends": [],
-			"properties": {
 				"placement": {
 					"type": "property",
 					"name": "placement",
@@ -454,6 +426,26 @@
 					"readonly": false,
 					"description": "The placement of the tooltip relative to the trigger."
 				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+tooltip@3.5.11_react@19.2.1/node_modules/@react-stately/tooltip/dist/types.d.ts:TooltipTriggerState",
+						"name": "TooltipTriggerState"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the tooltip."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"TooltipRenderProps": {
+			"type": "interface",
+			"name": "TooltipRenderProps",
+			"properties": {
 				"isEntering": {
 					"type": "property",
 					"name": "isEntering",
@@ -474,21 +466,29 @@
 					"readonly": false,
 					"description": "Whether the tooltip is currently exiting. Use this to apply animations."
 				},
+				"placement": {
+					"type": "property",
+					"name": "placement",
+					"value": {
+						"type": "identifier",
+						"name": "PlacementAxis | null"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The placement of the tooltip relative to the trigger."
+				},
 				"state": {
 					"type": "property",
 					"name": "state",
 					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+tooltip@3.5.11_react@19.2.1/node_modules/@react-stately/tooltip/dist/types.d.ts:TooltipTriggerState",
+						"type": "identifier",
 						"name": "TooltipTriggerState"
 					},
 					"optional": false,
 					"readonly": false,
 					"description": "State of the tooltip."
 				}
-			},
-			"typeParameters": [],
-			"description": ""
+			}
 		}
 	}
 }

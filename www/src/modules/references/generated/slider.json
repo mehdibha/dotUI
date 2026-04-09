@@ -2,6 +2,72 @@
 	"name": "SliderProps",
 	"description": "A slider allows a user to select one or more values within a range.",
 	"props": {
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
+		"children": {
+			"type": "ReactNode | (values: SliderRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "SliderRenderProps",
+									"name": "SliderRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
 		"className": {
 			"type": "string | (values: SliderRenderProps) => string",
 			"detailedType": "string | (values: SliderRenderProps) => string | undefined",
@@ -36,15 +102,6 @@
 			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
 			"default": "'react-aria-Slider'"
 		},
-		"formatOptions": {
-			"type": "NumberFormatOptions",
-			"detailedType": "NumberFormatOptions | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "NumberFormatOptions"
-			},
-			"description": "The display format of the value label."
-		},
 		"defaultValue": {
 			"type": "number | number[]",
 			"detailedType": "number | number[] | undefined",
@@ -67,6 +124,15 @@
 			},
 			"description": "The default value (uncontrolled)."
 		},
+		"formatOptions": {
+			"type": "NumberFormatOptions",
+			"detailedType": "NumberFormatOptions | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "NumberFormatOptions"
+			},
+			"description": "The display format of the value label."
+		},
 		"id": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -75,37 +141,31 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "boolean"
 			},
-			"description": "Identifies the element (or elements) that describes the object."
+			"description": "Whether the whole Slider is disabled."
 		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"maxValue": {
+			"type": "number",
+			"detailedType": "number | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "number"
 			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+			"description": "The slider's maximum value.",
+			"default": "100"
 		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"minValue": {
+			"type": "number",
+			"detailedType": "number | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "number"
 			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
+			"description": "The slider's minimum value.",
+			"default": "0"
 		},
 		"onChange": {
 			"type": "((value: number | number[]) => void)",
@@ -148,63 +208,6 @@
 				]
 			},
 			"description": "Handler that is called when the value changes."
-		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the whole Slider is disabled."
-		},
-		"value": {
-			"type": "number | number[]",
-			"detailedType": "number | number[] | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "array",
-						"elementType": {
-							"type": "number"
-						}
-					}
-				]
-			},
-			"description": "The current value (controlled)."
-		},
-		"minValue": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The slider's minimum value.",
-			"default": "0"
-		},
-		"maxValue": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The slider's maximum value.",
-			"default": "100"
-		},
-		"step": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The slider's step value.",
-			"default": "1"
 		},
 		"onChangeEnd": {
 			"type": "((value: number | number[]) => void)",
@@ -258,75 +261,6 @@
 			"description": "The orientation of the Slider.",
 			"default": "'horizontal'"
 		},
-		"children": {
-			"type": "ReactNode | (values: SliderRenderProps) => ReactNode",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "SliderRenderProps",
-									"name": "SliderRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
-		"style": {
-			"type": "CSSProperties | (values: SliderRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: SliderRenderProps) => CSSProperties | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "SliderRenderProps",
-									"name": "SliderRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", SliderRenderProps>",
 			"detailedType": "| DOMRenderFunction<'div', SliderRenderProps>\n| undefined",
@@ -364,16 +298,16 @@
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
 		"slot": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
+			"type": "null | string",
+			"detailedType": "null | string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "undefined"
+						"type": "null"
 					},
 					{
-						"type": "null"
+						"type": "undefined"
 					},
 					{
 						"type": "string"
@@ -381,63 +315,101 @@
 				]
 			},
 			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		},
+		"step": {
+			"type": "number",
+			"detailedType": "number | undefined",
+			"typeAst": {
+				"type": "number"
+			},
+			"description": "The slider's step value.",
+			"default": "1"
+		},
+		"style": {
+			"type": "CSSProperties | (values: SliderRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: SliderRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "SliderRenderProps",
+									"name": "SliderRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"value": {
+			"type": "number | number[]",
+			"detailedType": "number | number[] | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "number"
+					},
+					{
+						"type": "array",
+						"elementType": {
+							"type": "number"
+						}
+					}
+				]
+			},
+			"description": "The current value (controlled)."
 		}
 	},
 	"renderProps": {
-		"orientation": {
-			"selector": "[data-orientation=\"horizontal | vertical\"]",
-			"description": "The orientation of the slider."
-		},
 		"isDisabled": {
 			"selector": "[data-disabled]",
 			"description": "Whether the slider is disabled."
+		},
+		"orientation": {
+			"selector": "[data-orientation=\"horizontal | vertical\"]",
+			"description": "The orientation of the slider."
 		}
 	},
 	"typeLinks": {
-		"SliderRenderProps": {
-			"type": "interface",
-			"name": "SliderRenderProps",
-			"properties": {
-				"orientation": {
-					"type": "property",
-					"name": "orientation",
-					"value": {
-						"type": "identifier",
-						"name": "Orientation"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The orientation of the slider."
-				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the slider is disabled."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "identifier",
-						"name": "Slider.State"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the slider."
-				}
-			}
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
 			"name": "SliderRenderProps",
 			"extends": [],
 			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the slider is disabled."
+				},
 				"orientation": {
 					"type": "property",
 					"name": "orientation",
@@ -448,16 +420,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The orientation of the slider."
-				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the slider is disabled."
 				},
 				"state": {
 					"type": "property",
@@ -474,6 +436,44 @@
 			},
 			"typeParameters": [],
 			"description": ""
+		},
+		"SliderRenderProps": {
+			"type": "interface",
+			"name": "SliderRenderProps",
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the slider is disabled."
+				},
+				"orientation": {
+					"type": "property",
+					"name": "orientation",
+					"value": {
+						"type": "identifier",
+						"name": "Orientation"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The orientation of the slider."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "identifier",
+						"name": "Slider.State"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the slider."
+				}
+			}
 		}
 	}
 }

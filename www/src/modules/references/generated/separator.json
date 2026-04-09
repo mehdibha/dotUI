@@ -2,40 +2,21 @@
 	"name": "SeparatorProps",
 	"description": "Missing description.",
 	"props": {
-		"className": {
+		"aria-describedby": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
-			"default": "'react-aria-Separator'"
+			"description": "Identifies the element (or elements) that describes the object."
 		},
-		"orientation": {
-			"type": "Orientation",
-			"detailedType": "Orientation | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Orientation"
-			},
-			"description": "The orientation of the separator.",
-			"default": "'horizontal'"
-		},
-		"elementType": {
+		"aria-details": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "The HTML element type that will be used to render the separator."
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		},
 		"aria-label": {
 			"type": "string",
@@ -53,49 +34,40 @@
 			},
 			"description": "Identifies the element (or elements) that labels the current element."
 		},
-		"aria-describedby": {
+		"className": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Identifies the element (or elements) that describes the object."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+			"default": "'react-aria-Separator'"
 		},
-		"aria-details": {
+		"elementType": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+			"description": "The HTML element type that will be used to render the separator."
 		},
-		"style": {
-			"type": "CSSProperties",
-			"detailedType": "CSSProperties | undefined",
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"orientation": {
+			"type": "Orientation",
+			"detailedType": "Orientation | undefined",
 			"typeAst": {
 				"type": "identifier",
-				"name": "CSSProperties"
+				"name": "Orientation"
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
-		},
-		"slot": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+			"description": "The orientation of the separator.",
+			"default": "'horizontal'"
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\" | \"hr\", undefined>",
@@ -134,6 +106,34 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"slot": {
+			"type": "null | string",
+			"detailedType": "null | string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "null"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		},
+		"style": {
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CSSProperties"
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
 		}
 	}
 }

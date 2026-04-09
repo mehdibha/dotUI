@@ -77,40 +77,6 @@
 			},
 			"description": "Handler that is called when the hover state changes."
 		},
-		"className": {
-			"type": "string | (values: SliderTrackRenderProps) => string",
-			"detailedType": "string | (values: SliderTrackRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "SliderTrackRenderProps",
-									"name": "SliderTrackRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-SliderTrack'"
-		},
 		"children": {
 			"type": "ReactNode | (values: SliderTrackRenderProps) => ReactNode",
 			"typeAst": {
@@ -145,15 +111,14 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"style": {
-			"type": "CSSProperties | (values: SliderTrackRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: SliderTrackRenderProps) => CSSProperties | undefined",
+		"className": {
+			"type": "string | (values: SliderTrackRenderProps) => string",
+			"detailedType": "string | (values: SliderTrackRenderProps) => string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "identifier",
-						"name": "CSSProperties"
+						"type": "string"
 					},
 					{
 						"type": "function",
@@ -171,14 +136,14 @@
 							}
 						],
 						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
+							"type": "string"
 						},
 						"typeParameters": []
 					}
 				]
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-SliderTrack'"
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", SliderTrackRenderProps>",
@@ -215,13 +180,66 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"style": {
+			"type": "CSSProperties | (values: SliderTrackRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: SliderTrackRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "SliderTrackRenderProps",
+									"name": "SliderTrackRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		}
 	},
 	"typeLinks": {
-		"SliderTrackRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderTrackRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderTrackRenderProps",
 			"name": "SliderTrackRenderProps",
+			"extends": [
+				{
+					"type": "link",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
+					"name": "SliderRenderProps"
+				}
+			],
 			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the slider is disabled."
+				},
 				"isHovered": {
 					"type": "property",
 					"name": "isHovered",
@@ -243,44 +261,26 @@
 					"readonly": false,
 					"description": "The orientation of the slider."
 				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the slider is disabled."
-				},
 				"state": {
 					"type": "property",
 					"name": "state",
 					"value": {
-						"type": "identifier",
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.5_react@19.2.1/node_modules/@react-stately/slider/dist/types.d.ts:Slider.State",
 						"name": "Slider.State"
 					},
 					"optional": false,
 					"readonly": false,
 					"description": "State of the slider."
 				}
-			}
+			},
+			"typeParameters": [],
+			"description": ""
 		},
 		"HoverEvent": {
 			"type": "interface",
 			"name": "HoverEvent",
 			"properties": {
-				"type": {
-					"type": "property",
-					"name": "type",
-					"value": {
-						"type": "identifier",
-						"name": "\"hoverstart\" | \"hoverend\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of hover event being fired."
-				},
 				"pointerType": {
 					"type": "property",
 					"name": "pointerType",
@@ -302,21 +302,34 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The target element of the hover event."
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"hoverstart\" | \"hoverend\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of hover event being fired."
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderTrackRenderProps": {
+		"SliderTrackRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderTrackRenderProps",
 			"name": "SliderTrackRenderProps",
-			"extends": [
-				{
-					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SliderRenderProps",
-					"name": "SliderRenderProps"
-				}
-			],
 			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the slider is disabled."
+				},
 				"isHovered": {
 					"type": "property",
 					"name": "isHovered",
@@ -338,31 +351,18 @@
 					"readonly": false,
 					"description": "The orientation of the slider."
 				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the slider is disabled."
-				},
 				"state": {
 					"type": "property",
 					"name": "state",
 					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+slider@3.7.5_react@19.2.1/node_modules/@react-stately/slider/dist/types.d.ts:Slider.State",
+						"type": "identifier",
 						"name": "Slider.State"
 					},
 					"optional": false,
 					"readonly": false,
 					"description": "State of the slider."
 				}
-			},
-			"typeParameters": [],
-			"description": ""
+			}
 		}
 	}
 }

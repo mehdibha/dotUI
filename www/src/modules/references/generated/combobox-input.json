@@ -85,169 +85,6 @@
 			},
 			"description": "Handler that is called when the hover state changes."
 		},
-		"className": {
-			"type": "string | (values: GroupRenderProps) => string",
-			"detailedType": "string | (values: GroupRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "GroupRenderProps",
-									"name": "GroupRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-Group'"
-		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the group is disabled."
-		},
-		"isInvalid": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the group is invalid."
-		},
-		"isReadOnly": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the group is read only."
-		},
-		"role": {
-			"type": "\"group\" | \"region\" | \"presentation\"",
-			"detailedType": "'group' | 'region' | 'presentation' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "group"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "region"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "presentation"
-					}
-				]
-			},
-			"description": "An accessibility role for the group. By default, this is set to `'group'`.\nUse `'region'` when the contents of the group is important enough to be\nincluded in the page table of contents. Use `'presentation'` if the group\nis visual only and does not represent a semantic grouping of controls.",
-			"default": "'group'"
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"inputMode": {
-			"type": "\"search\" | \"text\" | \"decimal\" | \"email\" | \"tel\" | \"none\" | \"url\" | \"numeric\"",
-			"detailedType": "| 'search'\n| 'text'\n| 'decimal'\n| 'email'\n| 'tel'\n| 'none'\n| 'url'\n| 'numeric'\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "search"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "decimal"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "email"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "tel"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "none"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "url"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "numeric"
-					}
-				]
-			},
-			"description": "Hints at the type of data that might be entered by the user while editing the element or its contents"
-		},
-		"is": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Specify that a standard HTML element should behave like a defined custom built-in element"
-		},
 		"aria-activedescendant": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -266,18 +103,14 @@
 			"description": "Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute."
 		},
 		"aria-autocomplete": {
-			"type": "\"list\" | \"none\" | \"inline\" | \"both\"",
-			"detailedType": "'list' | 'none' | 'inline' | 'both' | undefined",
+			"type": "\"both\" | \"inline\" | \"list\" | \"none\"",
+			"detailedType": "'both' | 'inline' | 'list' | 'none' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "list"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "none"
+						"value": "both"
 					},
 					{
 						"type": "stringLiteral",
@@ -285,7 +118,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "both"
+						"value": "list"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
 					}
 				]
 			},
@@ -308,16 +145,16 @@
 			"description": "Defines a human-readable, author-localized abbreviated description for the role of an element, which is intended to be converted into Braille."
 		},
 		"aria-checked": {
-			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
-			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
+			"type": "\"false\" | \"mixed\" | \"true\" | boolean",
+			"detailedType": "'false' | 'mixed' | 'true' | boolean | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -391,16 +228,16 @@
 			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
 		},
 		"aria-current": {
-			"type": "boolean | \"time\" | \"true\" | \"false\" | \"step\" | \"page\" | \"location\" | \"date\"",
-			"detailedType": "| boolean\n| 'time'\n| 'true'\n| 'false'\n| 'step'\n| 'page'\n| 'location'\n| 'date'\n| undefined",
+			"type": "\"date\" | \"false\" | \"location\" | \"page\" | \"step\" | \"time\" | \"true\" | boolean",
+			"detailedType": "| 'date'\n| 'false'\n| 'location'\n| 'page'\n| 'step'\n| 'time'\n| 'true'\n| boolean\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -469,6 +306,14 @@
 			},
 			"description": "Indicates the element that represents the current item within a container or set of related elements."
 		},
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
 		"aria-description": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -476,6 +321,14 @@
 				"type": "string"
 			},
 			"description": "Defines a string value that describes or annotates the current element."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		},
 		"aria-disabled": {
 			"type": "Booleanish",
@@ -487,19 +340,11 @@
 			"description": "Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable."
 		},
 		"aria-dropeffect": {
-			"type": "\"link\" | \"none\" | \"copy\" | \"execute\" | \"move\" | \"popup\"",
-			"detailedType": "| 'link'\n| 'none'\n| 'copy'\n| 'execute'\n| 'move'\n| 'popup'\n| undefined",
+			"type": "\"copy\" | \"execute\" | \"link\" | \"move\" | \"none\" | \"popup\"",
+			"detailedType": "| 'copy'\n| 'execute'\n| 'link'\n| 'move'\n| 'none'\n| 'popup'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "link"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "none"
-					},
 					{
 						"type": "stringLiteral",
 						"value": "copy"
@@ -510,7 +355,15 @@
 					},
 					{
 						"type": "stringLiteral",
+						"value": "link"
+					},
+					{
+						"type": "stringLiteral",
 						"value": "move"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
 					},
 					{
 						"type": "stringLiteral",
@@ -555,16 +408,16 @@
 			"description": "Indicates an element's \"grabbed\" state in a drag-and-drop operation."
 		},
 		"aria-haspopup": {
-			"type": "boolean | \"dialog\" | \"menu\" | \"true\" | \"false\" | \"listbox\" | \"tree\" | \"grid\"",
-			"detailedType": "| boolean\n| 'dialog'\n| 'menu'\n| 'true'\n| 'false'\n| 'listbox'\n| 'tree'\n| 'grid'\n| undefined",
+			"type": "\"dialog\" | \"false\" | \"grid\" | \"listbox\" | \"menu\" | \"tree\" | \"true\" | boolean",
+			"detailedType": "| 'dialog'\n| 'false'\n| 'grid'\n| 'listbox'\n| 'menu'\n| 'tree'\n| 'true'\n| boolean\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -643,16 +496,16 @@
 			"description": "Indicates whether the element is exposed to an accessibility API."
 		},
 		"aria-invalid": {
-			"type": "boolean | \"true\" | \"false\" | \"grammar\" | \"spelling\"",
-			"detailedType": "| boolean\n| 'true'\n| 'false'\n| 'grammar'\n| 'spelling'\n| undefined",
+			"type": "\"false\" | \"grammar\" | \"spelling\" | \"true\" | boolean",
+			"detailedType": "| 'false'\n| 'grammar'\n| 'spelling'\n| 'true'\n| boolean\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -702,6 +555,22 @@
 			},
 			"description": "Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element."
 		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
 		"aria-level": {
 			"type": "number",
 			"detailedType": "number | undefined",
@@ -711,18 +580,18 @@
 			"description": "Defines the hierarchical level of an element within a structure."
 		},
 		"aria-live": {
-			"type": "\"off\" | \"assertive\" | \"polite\"",
-			"detailedType": "'off' | 'assertive' | 'polite' | undefined",
+			"type": "\"assertive\" | \"off\" | \"polite\"",
+			"detailedType": "'assertive' | 'off' | 'polite' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "off"
+						"value": "assertive"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "assertive"
+						"value": "off"
 					},
 					{
 						"type": "stringLiteral",
@@ -802,16 +671,16 @@
 			"description": "Defines an element's number or position in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM."
 		},
 		"aria-pressed": {
-			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
-			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
+			"type": "\"false\" | \"mixed\" | \"true\" | boolean",
+			"detailedType": "'false' | 'mixed' | 'true' | boolean | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -854,19 +723,11 @@
 			"description": "Indicates that the element is not editable, but is otherwise operable."
 		},
 		"aria-relevant": {
-			"type": "\"text\" | \"additions\" | \"additions removals\" | \"additions text\" | \"all\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
-			"detailedType": "| 'text'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'all'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
+			"type": "\"additions removals\" | \"additions text\" | \"additions\" | \"all\" | \"removals additions\" | \"removals text\" | \"removals\" | \"text additions\" | \"text removals\" | \"text\"",
+			"detailedType": "| 'additions removals'\n| 'additions text'\n| 'additions'\n| 'all'\n| 'removals additions'\n| 'removals text'\n| 'removals'\n| 'text additions'\n| 'text removals'\n| 'text'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "additions"
-					},
 					{
 						"type": "stringLiteral",
 						"value": "additions removals"
@@ -877,11 +738,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "all"
+						"value": "additions"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "removals"
+						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -893,11 +754,19 @@
 					},
 					{
 						"type": "stringLiteral",
+						"value": "removals"
+					},
+					{
+						"type": "stringLiteral",
 						"value": "text additions"
 					},
 					{
 						"type": "stringLiteral",
 						"value": "text removals"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "text"
 					}
 				]
 			},
@@ -970,15 +839,11 @@
 			"description": "Defines the number of items in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM."
 		},
 		"aria-sort": {
-			"type": "\"none\" | \"ascending\" | \"descending\" | \"other\"",
-			"detailedType": "| 'none'\n| 'ascending'\n| 'descending'\n| 'other'\n| undefined",
+			"type": "\"ascending\" | \"descending\" | \"none\" | \"other\"",
+			"detailedType": "| 'ascending'\n| 'descending'\n| 'none'\n| 'other'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "none"
-					},
 					{
 						"type": "stringLiteral",
 						"value": "ascending"
@@ -986,6 +851,10 @@
 					{
 						"type": "stringLiteral",
 						"value": "descending"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
 					},
 					{
 						"type": "stringLiteral",
@@ -1061,15 +930,14 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"style": {
-			"type": "CSSProperties | (values: GroupRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: GroupRenderProps) => CSSProperties | undefined",
+		"className": {
+			"type": "string | (values: GroupRenderProps) => string",
+			"detailedType": "string | (values: GroupRenderProps) => string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "identifier",
-						"name": "CSSProperties"
+						"type": "string"
 					},
 					{
 						"type": "function",
@@ -1087,14 +955,88 @@
 							}
 						],
 						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
+							"type": "string"
 						},
 						"typeParameters": []
 					}
 				]
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-Group'"
+		},
+		"inputMode": {
+			"type": "\"decimal\" | \"email\" | \"none\" | \"numeric\" | \"search\" | \"tel\" | \"text\" | \"url\"",
+			"detailedType": "| 'decimal'\n| 'email'\n| 'none'\n| 'numeric'\n| 'search'\n| 'tel'\n| 'text'\n| 'url'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "decimal"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "email"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "numeric"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "search"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "tel"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "text"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "url"
+					}
+				]
+			},
+			"description": "Hints at the type of data that might be entered by the user while editing the element or its contents"
+		},
+		"is": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Specify that a standard HTML element should behave like a defined custom built-in element"
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the group is disabled."
+		},
+		"isInvalid": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the group is invalid."
+		},
+		"isReadOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the group is read only."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", GroupRenderProps>",
@@ -1132,17 +1074,40 @@
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
-		"slot": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
+		"role": {
+			"type": "\"group\" | \"presentation\" | \"region\"",
+			"detailedType": "'group' | 'presentation' | 'region' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "undefined"
+						"type": "stringLiteral",
+						"value": "group"
 					},
 					{
+						"type": "stringLiteral",
+						"value": "presentation"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "region"
+					}
+				]
+			},
+			"description": "An accessibility role for the group. By default, this is set to `'group'`.\nUse `'region'` when the contents of the group is important enough to be\nincluded in the page table of contents. Use `'presentation'` if the group\nis visual only and does not represent a semantic grouping of controls.",
+			"default": "'group'"
+		},
+		"slot": {
+			"type": "null | string",
+			"detailedType": "null | string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
 						"type": "null"
+					},
+					{
+						"type": "undefined"
 					},
 					{
 						"type": "string"
@@ -1150,32 +1115,59 @@
 				]
 			},
 			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		},
+		"style": {
+			"type": "CSSProperties | (values: GroupRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: GroupRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "GroupRenderProps",
+									"name": "GroupRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		}
 	},
 	"typeLinks": {
-		"GroupRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps",
 			"name": "GroupRenderProps",
+			"extends": [],
 			"properties": {
-				"isHovered": {
+				"isDisabled": {
 					"type": "property",
-					"name": "isHovered",
+					"name": "isDisabled",
 					"value": {
 						"type": "boolean"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the group is currently hovered with a mouse."
-				},
-				"isFocusWithin": {
-					"type": "property",
-					"name": "isFocusWithin",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether an element within the group is focused, either via a mouse or keyboard."
+					"description": "Whether the group is disabled."
 				},
 				"isFocusVisible": {
 					"type": "property",
@@ -1187,6 +1179,44 @@
 					"readonly": false,
 					"description": "Whether an element within the group is keyboard focused."
 				},
+				"isFocusWithin": {
+					"type": "property",
+					"name": "isFocusWithin",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether an element within the group is focused, either via a mouse or keyboard."
+				},
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the group is currently hovered with a mouse."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the group is invalid."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"GroupRenderProps": {
+			"type": "interface",
+			"name": "GroupRenderProps",
+			"properties": {
 				"isDisabled": {
 					"type": "property",
 					"name": "isDisabled",
@@ -1196,6 +1226,36 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the group is disabled."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether an element within the group is keyboard focused."
+				},
+				"isFocusWithin": {
+					"type": "property",
+					"name": "isFocusWithin",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether an element within the group is focused, either via a mouse or keyboard."
+				},
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the group is currently hovered with a mouse."
 				},
 				"isInvalid": {
 					"type": "property",
@@ -1213,17 +1273,6 @@
 			"type": "interface",
 			"name": "HoverEvent",
 			"properties": {
-				"type": {
-					"type": "property",
-					"name": "type",
-					"value": {
-						"type": "identifier",
-						"name": "\"hoverstart\" | \"hoverend\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of hover event being fired."
-				},
 				"pointerType": {
 					"type": "property",
 					"name": "pointerType",
@@ -1245,68 +1294,19 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The target element of the hover event."
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"hoverstart\" | \"hoverend\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of hover event being fired."
 				}
 			}
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:GroupRenderProps",
-			"name": "GroupRenderProps",
-			"extends": [],
-			"properties": {
-				"isHovered": {
-					"type": "property",
-					"name": "isHovered",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the group is currently hovered with a mouse."
-				},
-				"isFocusWithin": {
-					"type": "property",
-					"name": "isFocusWithin",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether an element within the group is focused, either via a mouse or keyboard."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether an element within the group is keyboard focused."
-				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the group is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the group is invalid."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
 		}
 	}
 }

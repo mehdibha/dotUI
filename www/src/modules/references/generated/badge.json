@@ -23,14 +23,14 @@
 			"default": "'solid'"
 		},
 		"variant": {
-			"type": "\"neutral\" | \"danger\" | \"warning\" | \"info\" | \"success\" | \"accent\"",
-			"detailedType": "| 'neutral'\n| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| 'accent'\n| undefined",
+			"type": "\"accent\" | \"danger\" | \"info\" | \"neutral\" | \"success\" | \"warning\"",
+			"detailedType": "| 'accent'\n| 'danger'\n| 'info'\n| 'neutral'\n| 'success'\n| 'warning'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "neutral"
+						"value": "accent"
 					},
 					{
 						"type": "stringLiteral",
@@ -38,11 +38,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "warning"
+						"value": "info"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "info"
+						"value": "neutral"
 					},
 					{
 						"type": "stringLiteral",
@@ -50,7 +50,7 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "accent"
+						"value": "warning"
 					}
 				]
 			},
@@ -58,14 +58,14 @@
 			"default": "'default'"
 		},
 		"size": {
-			"type": "\"sm\" | \"md\" | \"lg\"",
-			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\"",
+			"detailedType": "'lg' | 'md' | 'sm' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "sm"
+						"value": "lg"
 					},
 					{
 						"type": "stringLiteral",
@@ -73,7 +73,7 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "lg"
+						"value": "sm"
 					}
 				]
 			},

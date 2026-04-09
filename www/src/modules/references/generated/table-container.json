@@ -10,6 +10,14 @@
 			},
 			"description": "Whether the table columns are resizable."
 		},
+		"children": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The children of the component."
+		},
 		"className": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -19,51 +27,13 @@
 			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
 			"default": "'react-aria-ResizableTableContainer'"
 		},
-		"onResizeStart": {
-			"type": "((widths: Map<Key, ColumnSize>) => void)",
-			"detailedType": "| ((widths: Map<Key, ColumnSize>) => void)\n| undefined",
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "widths",
-								"value": {
-									"type": "application",
-									"base": {
-										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
-										"name": "Map"
-									},
-									"typeParameters": [
-										{
-											"type": "identifier",
-											"name": "Key"
-										},
-										{
-											"type": "identifier",
-											"name": "ColumnSize"
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
+				"type": "string"
 			},
-			"description": "Handler that is called when a user starts a column resize."
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
 		"onResize": {
 			"type": "((widths: Map<Key, ColumnSize>) => void)",
@@ -157,30 +127,51 @@
 			},
 			"description": "Handler that is called after a user performs a column resize.\nCan be used to store the widths of columns for another future session."
 		},
-		"children": {
-			"type": "ReactNode",
+		"onResizeStart": {
+			"type": "((widths: Map<Key, ColumnSize>) => void)",
+			"detailedType": "| ((widths: Map<Key, ColumnSize>) => void)\n| undefined",
 			"typeAst": {
-				"type": "identifier",
-				"name": "ReactNode"
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "widths",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "link",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+										"name": "Map"
+									},
+									"typeParameters": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "ColumnSize"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
 			},
-			"description": "The children of the component."
-		},
-		"style": {
-			"type": "CSSProperties",
-			"detailedType": "CSSProperties | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "CSSProperties"
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+			"description": "Handler that is called when a user starts a column resize."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", undefined>",
@@ -215,6 +206,15 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"style": {
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CSSProperties"
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
 		}
 	},
 	"typeLinks": {
@@ -224,6 +224,50 @@
 			"name": "Map",
 			"extends": [],
 			"properties": {
+				"__@iterator@76": {
+					"type": "method",
+					"name": "__@iterator@76",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"name": "MapIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "tuple",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "ColumnSize"
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of entries in the map."
+				},
+				"__@toStringTag@79": {
+					"type": "property",
+					"name": "__@toStringTag@79",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
 				"clear": {
 					"type": "method",
 					"name": "clear",
@@ -262,6 +306,40 @@
 					},
 					"optional": false,
 					"description": ""
+				},
+				"entries": {
+					"type": "method",
+					"name": "entries",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"name": "MapIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "tuple",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "ColumnSize"
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of key, value pairs for every entry in the map."
 				},
 				"forEach": {
 					"type": "method",
@@ -439,6 +517,31 @@
 					"optional": false,
 					"description": ""
 				},
+				"keys": {
+					"type": "method",
+					"name": "keys",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"name": "MapIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of keys in the map"
+				},
 				"set": {
 					"type": "method",
 					"name": "set",
@@ -499,65 +602,6 @@
 					"readonly": false,
 					"description": ""
 				},
-				"entries": {
-					"type": "method",
-					"name": "entries",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "application",
-							"base": {
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
-								"name": "MapIterator"
-							},
-							"typeParameters": [
-								{
-									"type": "tuple",
-									"elements": [
-										{
-											"type": "identifier",
-											"name": "Key"
-										},
-										{
-											"type": "identifier",
-											"name": "ColumnSize"
-										}
-									]
-								}
-							]
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns an iterable of key, value pairs for every entry in the map."
-				},
-				"keys": {
-					"type": "method",
-					"name": "keys",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "application",
-							"base": {
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
-								"name": "MapIterator"
-							},
-							"typeParameters": [
-								{
-									"type": "identifier",
-									"name": "Key"
-								}
-							]
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns an iterable of keys in the map"
-				},
 				"values": {
 					"type": "method",
 					"name": "values",
@@ -582,50 +626,6 @@
 					},
 					"optional": false,
 					"description": "Returns an iterable of values in the map"
-				},
-				"__@iterator@26": {
-					"type": "method",
-					"name": "__@iterator@26",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "application",
-							"base": {
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
-								"name": "MapIterator"
-							},
-							"typeParameters": [
-								{
-									"type": "tuple",
-									"elements": [
-										{
-											"type": "identifier",
-											"name": "Key"
-										},
-										{
-											"type": "identifier",
-											"name": "ColumnSize"
-										}
-									]
-								}
-							]
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns an iterable of entries in the map."
-				},
-				"__@toStringTag@591": {
-					"type": "property",
-					"name": "__@toStringTag@591",
-					"value": {
-						"type": "string"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": ""
 				}
 			},
 			"typeParameters": [],

@@ -2,6 +2,38 @@
 	"name": "ColorSwatchProps",
 	"description": "A ColorSwatch displays a preview of a selected color.",
 	"props": {
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
 		"className": {
 			"type": "string | (values: ColorSwatchRenderProps) => string",
 			"detailedType": "string | (values: ColorSwatchRenderProps) => string | undefined",
@@ -37,8 +69,8 @@
 			"default": "'react-aria-ColorSwatch'"
 		},
 		"color": {
-			"type": "string | Color",
-			"detailedType": "string | Color | undefined",
+			"type": "Color | string",
+			"detailedType": "Color | string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -65,38 +97,6 @@
 			},
 			"description": "A localized accessible name for the color.\nBy default, a description is generated from the color value,\nbut this can be overridden if you have a more specific color\nname (e.g. Pantone colors)."
 		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
 		"id": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -104,41 +104,6 @@
 				"type": "string"
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		},
-		"style": {
-			"type": "CSSProperties | (values: ColorSwatchRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: ColorSwatchRenderProps) => CSSProperties | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "ColorSwatchRenderProps",
-									"name": "ColorSwatchRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", ColorSwatchRenderProps>",
@@ -177,16 +142,16 @@
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
 		"slot": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
+			"type": "null | string",
+			"detailedType": "null | string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "undefined"
+						"type": "null"
 					},
 					{
-						"type": "null"
+						"type": "undefined"
 					},
 					{
 						"type": "string"
@@ -194,736 +159,50 @@
 				]
 			},
 			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-		}
-	},
-	"typeLinks": {
-		"ColorSwatchRenderProps": {
-			"type": "interface",
-			"name": "ColorSwatchRenderProps",
-			"properties": {
-				"color": {
-					"type": "property",
-					"name": "color",
-					"value": {
+		},
+		"style": {
+			"type": "CSSProperties | (values: ColorSwatchRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: ColorSwatchRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
 						"type": "identifier",
-						"name": "Color"
+						"name": "CSSProperties"
 					},
-					"optional": false,
-					"readonly": false,
-					"description": "The color of the swatch."
-				}
-			}
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
-			"name": "ColorChannelRange",
-			"extends": [],
-			"properties": {
-				"minValue": {
-					"type": "property",
-					"name": "minValue",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The minimum value of the color channel."
-				},
-				"maxValue": {
-					"type": "property",
-					"name": "maxValue",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The maximum value of the color channel."
-				},
-				"step": {
-					"type": "property",
-					"name": "step",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The step value of the color channel, used when incrementing and decrementing."
-				},
-				"pageSize": {
-					"type": "property",
-					"name": "pageSize",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The page step value of the color channel, used when incrementing and decrementing."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-			"name": "NumberFormatOptions",
-			"extends": [],
-			"properties": {
-				"localeMatcher": {
-					"type": "property",
-					"name": "localeMatcher",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "lookup"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "best fit"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"style": {
-					"type": "property",
-					"name": "style",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "decimal"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "percent"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "currency"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "unit"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"currency": {
-					"type": "property",
-					"name": "currency",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"currencyDisplay": {
-					"type": "property",
-					"name": "currencyDisplay",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "symbol"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "code"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "name"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "narrowSymbol"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"useGrouping": {
-					"type": "property",
-					"name": "useGrouping",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "boolean"
-							},
-							{
-								"type": "undefined"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"minimumIntegerDigits": {
-					"type": "property",
-					"name": "minimumIntegerDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"minimumFractionDigits": {
-					"type": "property",
-					"name": "minimumFractionDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"maximumFractionDigits": {
-					"type": "property",
-					"name": "maximumFractionDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"minimumSignificantDigits": {
-					"type": "property",
-					"name": "minimumSignificantDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"maximumSignificantDigits": {
-					"type": "property",
-					"name": "maximumSignificantDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"numberingSystem": {
-					"type": "property",
-					"name": "numberingSystem",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"compactDisplay": {
-					"type": "property",
-					"name": "compactDisplay",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "short"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "long"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"notation": {
-					"type": "property",
-					"name": "notation",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "standard"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "scientific"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "engineering"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "compact"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"signDisplay": {
-					"type": "property",
-					"name": "signDisplay",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "auto"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "never"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "always"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "exceptZero"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"unit": {
-					"type": "property",
-					"name": "unit",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"unitDisplay": {
-					"type": "property",
-					"name": "unitDisplay",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "narrow"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "short"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "long"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"currencySign": {
-					"type": "property",
-					"name": "currencySign",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "standard"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "accounting"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-			"name": "Color",
-			"extends": [],
-			"properties": {
-				"toFormat": {
-					"type": "method",
-					"name": "toFormat",
-					"value": {
+					{
 						"type": "function",
 						"parameters": [
 							{
 								"type": "parameter",
-								"name": "format",
+								"name": "values",
 								"value": {
-									"type": "identifier",
-									"name": "ColorFormat"
+									"type": "link",
+									"id": "ColorSwatchRenderProps",
+									"name": "ColorSwatchRenderProps"
 								},
 								"optional": false,
 								"rest": false
 							}
 						],
 						"return": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-							"name": "Color"
+							"type": "identifier",
+							"name": "CSSProperties"
 						},
 						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Converts the color to the given color format, and returns a new Color object."
-				},
-				"toString": {
-					"type": "method",
-					"name": "toString",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "format",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "undefined"
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hex"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "rgb"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hsl"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hsb"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hexa"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "rgba"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hsla"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hsba"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "css"
-												}
-											]
-										}
-									]
-								},
-								"optional": true,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Converts the color to a string in the given format."
-				},
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		}
+	},
+	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+			"name": "Color",
+			"extends": [],
+			"properties": {
 				"clone": {
 					"type": "method",
 					"name": "clone",
@@ -940,48 +219,9 @@
 					"optional": false,
 					"description": "Returns a duplicate of the color value."
 				},
-				"toHexInt": {
+				"formatChannelValue": {
 					"type": "method",
-					"name": "toHexInt",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "number"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Converts the color to hex, and returns an integer representation."
-				},
-				"getChannelValue": {
-					"type": "method",
-					"name": "getChannelValue",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "channel",
-								"value": {
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "number"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns the numeric value for a given channel.\nThrows an error if the channel is unsupported in the current color format."
-				},
-				"withChannelValue": {
-					"type": "method",
-					"name": "withChannelValue",
+					"name": "formatChannelValue",
 					"value": {
 						"type": "function",
 						"parameters": [
@@ -997,27 +237,25 @@
 							},
 							{
 								"type": "parameter",
-								"name": "value",
+								"name": "locale",
 								"value": {
-									"type": "number"
+									"type": "string"
 								},
 								"optional": false,
 								"rest": false
 							}
 						],
 						"return": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-							"name": "Color"
+							"type": "string"
 						},
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "Sets the numeric value for a given channel, and returns a new Color object.\nThrows an error if the channel is unsupported in the current color format."
+					"description": "Formats the numeric value for a given channel for display according to the provided locale."
 				},
-				"getChannelRange": {
+				"getChannelFormatOptions": {
 					"type": "method",
-					"name": "getChannelRange",
+					"name": "getChannelFormatOptions",
 					"value": {
 						"type": "function",
 						"parameters": [
@@ -1034,13 +272,13 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
-							"name": "ColorChannelRange"
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+							"name": "NumberFormatOptions"
 						},
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "Returns the minimum, maximum, and step values for a given channel."
+					"description": "Returns the number formatting options for the given channel."
 				},
 				"getChannelName": {
 					"type": "method",
@@ -1076,9 +314,9 @@
 					"optional": false,
 					"description": "Returns a localized color channel name for a given channel and locale,\nfor use in visual or accessibility labels."
 				},
-				"getChannelFormatOptions": {
+				"getChannelRange": {
 					"type": "method",
-					"name": "getChannelFormatOptions",
+					"name": "getChannelRange",
 					"value": {
 						"type": "function",
 						"parameters": [
@@ -1095,17 +333,17 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-							"name": "NumberFormatOptions"
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+							"name": "ColorChannelRange"
 						},
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "Returns the number formatting options for the given channel."
+					"description": "Returns the minimum, maximum, and step values for a given channel."
 				},
-				"formatChannelValue": {
+				"getChannelValue": {
 					"type": "method",
-					"name": "formatChannelValue",
+					"name": "getChannelValue",
 					"value": {
 						"type": "function",
 						"parameters": [
@@ -1118,7 +356,50 @@
 								},
 								"optional": false,
 								"rest": false
-							},
+							}
+						],
+						"return": {
+							"type": "number"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns the numeric value for a given channel.\nThrows an error if the channel is unsupported in the current color format."
+				},
+				"getColorChannels": {
+					"type": "method",
+					"name": "getColorChannels",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "tuple",
+							"elements": [
+								{
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								{
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								{
+									"type": "identifier",
+									"name": "ColorChannel"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an array of the color channels within the current color space space."
+				},
+				"getColorName": {
+					"type": "method",
+					"name": "getColorName",
+					"value": {
+						"type": "function",
+						"parameters": [
 							{
 								"type": "parameter",
 								"name": "locale",
@@ -1135,7 +416,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "Formats the numeric value for a given channel for display according to the provided locale."
+					"description": "Returns a localized name for the color, for use in visual or accessibility labels."
 				},
 				"getColorSpace": {
 					"type": "method",
@@ -1353,58 +634,6 @@
 					"optional": false,
 					"description": "Returns the color space axes, xChannel, yChannel, zChannel."
 				},
-				"getColorChannels": {
-					"type": "method",
-					"name": "getColorChannels",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "tuple",
-							"elements": [
-								{
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								{
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								{
-									"type": "identifier",
-									"name": "ColorChannel"
-								}
-							]
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns an array of the color channels within the current color space space."
-				},
-				"getColorName": {
-					"type": "method",
-					"name": "getColorName",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "locale",
-								"value": {
-									"type": "string"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns a localized name for the color, for use in visual or accessibility labels."
-				},
 				"getHueName": {
 					"type": "method",
 					"name": "getHueName",
@@ -1428,10 +657,247 @@
 					},
 					"optional": false,
 					"description": "Returns a localized name for the hue, for use in visual or accessibility labels."
+				},
+				"toFormat": {
+					"type": "method",
+					"name": "toFormat",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "format",
+								"value": {
+									"type": "identifier",
+									"name": "ColorFormat"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"name": "Color"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Converts the color to the given color format, and returns a new Color object."
+				},
+				"toHexInt": {
+					"type": "method",
+					"name": "toHexInt",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "number"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Converts the color to hex, and returns an integer representation."
+				},
+				"toString": {
+					"type": "method",
+					"name": "toString",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "format",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hex"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "rgb"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hsl"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hsb"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hexa"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "rgba"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hsla"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hsba"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "css"
+												}
+											]
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Converts the color to a string in the given format."
+				},
+				"withChannelValue": {
+					"type": "method",
+					"name": "withChannelValue",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "channel",
+								"value": {
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "number"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+							"name": "Color"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Sets the numeric value for a given channel, and returns a new Color object.\nThrows an error if the channel is unsupported in the current color format."
 				}
 			},
 			"typeParameters": [],
 			"description": "Represents a color value."
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
+			"name": "ColorChannelRange",
+			"extends": [],
+			"properties": {
+				"maxValue": {
+					"type": "property",
+					"name": "maxValue",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The maximum value of the color channel."
+				},
+				"minValue": {
+					"type": "property",
+					"name": "minValue",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The minimum value of the color channel."
+				},
+				"pageSize": {
+					"type": "property",
+					"name": "pageSize",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The page step value of the color channel, used when incrementing and decrementing."
+				},
+				"step": {
+					"type": "property",
+					"name": "step",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The step value of the color channel, used when incrementing and decrementing."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
 		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorSwatchRenderProps": {
 			"type": "interface",
@@ -1454,6 +920,540 @@
 			},
 			"typeParameters": [],
 			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+			"name": "NumberFormatOptions",
+			"extends": [],
+			"properties": {
+				"compactDisplay": {
+					"type": "property",
+					"name": "compactDisplay",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "short"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "long"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"currency": {
+					"type": "property",
+					"name": "currency",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"currencyDisplay": {
+					"type": "property",
+					"name": "currencyDisplay",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "symbol"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "code"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "name"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "narrowSymbol"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"currencySign": {
+					"type": "property",
+					"name": "currencySign",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "standard"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "accounting"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"localeMatcher": {
+					"type": "property",
+					"name": "localeMatcher",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "lookup"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "best fit"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"maximumFractionDigits": {
+					"type": "property",
+					"name": "maximumFractionDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"maximumSignificantDigits": {
+					"type": "property",
+					"name": "maximumSignificantDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"minimumFractionDigits": {
+					"type": "property",
+					"name": "minimumFractionDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"minimumIntegerDigits": {
+					"type": "property",
+					"name": "minimumIntegerDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"minimumSignificantDigits": {
+					"type": "property",
+					"name": "minimumSignificantDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"notation": {
+					"type": "property",
+					"name": "notation",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "standard"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "scientific"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "engineering"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "compact"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"numberingSystem": {
+					"type": "property",
+					"name": "numberingSystem",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"signDisplay": {
+					"type": "property",
+					"name": "signDisplay",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "auto"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "never"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "always"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "exceptZero"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"style": {
+					"type": "property",
+					"name": "style",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "decimal"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "percent"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "currency"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "unit"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"unit": {
+					"type": "property",
+					"name": "unit",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"unitDisplay": {
+					"type": "property",
+					"name": "unitDisplay",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "narrow"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "short"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "long"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"useGrouping": {
+					"type": "property",
+					"name": "useGrouping",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "boolean"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"ColorSwatchRenderProps": {
+			"type": "interface",
+			"name": "ColorSwatchRenderProps",
+			"properties": {
+				"color": {
+					"type": "property",
+					"name": "color",
+					"value": {
+						"type": "identifier",
+						"name": "Color"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The color of the swatch."
+				}
+			}
 		}
 	}
 }

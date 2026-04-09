@@ -4,22 +4,14 @@
 	"extendsElement": "div",
 	"props": {
 		"variant": {
-			"type": "\"neutral\" | \"danger\" | \"warning\" | \"info\" | \"success\"",
-			"detailedType": "| 'neutral'\n| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| undefined",
+			"type": "\"danger\" | \"info\" | \"neutral\" | \"success\" | \"warning\"",
+			"detailedType": "| 'danger'\n| 'info'\n| 'neutral'\n| 'success'\n| 'warning'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "neutral"
-					},
-					{
-						"type": "stringLiteral",
 						"value": "danger"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "warning"
 					},
 					{
 						"type": "stringLiteral",
@@ -27,7 +19,15 @@
 					},
 					{
 						"type": "stringLiteral",
+						"value": "neutral"
+					},
+					{
+						"type": "stringLiteral",
 						"value": "success"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "warning"
 					}
 				]
 			},

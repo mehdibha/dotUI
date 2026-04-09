@@ -2,98 +2,6 @@
 	"name": "TabIndicatorProps",
 	"description": "An animated indicator of selection state within a group of items.",
 	"props": {
-		"className": {
-			"type": "string | (values: SharedElementRenderProps) => string",
-			"detailedType": "string | (values: SharedElementRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "SharedElementRenderProps",
-									"name": "SharedElementRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-SelectionIndicator'"
-		},
-		"isSelected": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the SelectionIndicator is visible. This is usually set automatically by the parent component."
-		},
-		"inputMode": {
-			"type": "\"search\" | \"text\" | \"decimal\" | \"email\" | \"tel\" | \"none\" | \"url\" | \"numeric\"",
-			"detailedType": "| 'search'\n| 'text'\n| 'decimal'\n| 'email'\n| 'tel'\n| 'none'\n| 'url'\n| 'numeric'\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "search"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "decimal"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "email"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "tel"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "none"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "url"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "numeric"
-					}
-				]
-			},
-			"description": "Hints at the type of data that might be entered by the user while editing the element or its contents"
-		},
-		"is": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Specify that a standard HTML element should behave like a defined custom built-in element"
-		},
 		"aria-activedescendant": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -112,18 +20,14 @@
 			"description": "Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute."
 		},
 		"aria-autocomplete": {
-			"type": "\"list\" | \"none\" | \"inline\" | \"both\"",
-			"detailedType": "'list' | 'none' | 'inline' | 'both' | undefined",
+			"type": "\"both\" | \"inline\" | \"list\" | \"none\"",
+			"detailedType": "'both' | 'inline' | 'list' | 'none' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "list"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "none"
+						"value": "both"
 					},
 					{
 						"type": "stringLiteral",
@@ -131,7 +35,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "both"
+						"value": "list"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
 					}
 				]
 			},
@@ -154,16 +62,16 @@
 			"description": "Defines a human-readable, author-localized abbreviated description for the role of an element, which is intended to be converted into Braille."
 		},
 		"aria-checked": {
-			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
-			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
+			"type": "\"false\" | \"mixed\" | \"true\" | boolean",
+			"detailedType": "'false' | 'mixed' | 'true' | boolean | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -237,16 +145,16 @@
 			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
 		},
 		"aria-current": {
-			"type": "boolean | \"time\" | \"true\" | \"false\" | \"step\" | \"page\" | \"location\" | \"date\"",
-			"detailedType": "| boolean\n| 'time'\n| 'true'\n| 'false'\n| 'step'\n| 'page'\n| 'location'\n| 'date'\n| undefined",
+			"type": "\"date\" | \"false\" | \"location\" | \"page\" | \"step\" | \"time\" | \"true\" | boolean",
+			"detailedType": "| 'date'\n| 'false'\n| 'location'\n| 'page'\n| 'step'\n| 'time'\n| 'true'\n| boolean\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -349,19 +257,11 @@
 			"description": "Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable."
 		},
 		"aria-dropeffect": {
-			"type": "\"link\" | \"none\" | \"copy\" | \"execute\" | \"move\" | \"popup\"",
-			"detailedType": "| 'link'\n| 'none'\n| 'copy'\n| 'execute'\n| 'move'\n| 'popup'\n| undefined",
+			"type": "\"copy\" | \"execute\" | \"link\" | \"move\" | \"none\" | \"popup\"",
+			"detailedType": "| 'copy'\n| 'execute'\n| 'link'\n| 'move'\n| 'none'\n| 'popup'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "link"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "none"
-					},
 					{
 						"type": "stringLiteral",
 						"value": "copy"
@@ -372,7 +272,15 @@
 					},
 					{
 						"type": "stringLiteral",
+						"value": "link"
+					},
+					{
+						"type": "stringLiteral",
 						"value": "move"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
 					},
 					{
 						"type": "stringLiteral",
@@ -417,16 +325,16 @@
 			"description": "Indicates an element's \"grabbed\" state in a drag-and-drop operation."
 		},
 		"aria-haspopup": {
-			"type": "boolean | \"dialog\" | \"menu\" | \"true\" | \"false\" | \"listbox\" | \"tree\" | \"grid\"",
-			"detailedType": "| boolean\n| 'dialog'\n| 'menu'\n| 'true'\n| 'false'\n| 'listbox'\n| 'tree'\n| 'grid'\n| undefined",
+			"type": "\"dialog\" | \"false\" | \"grid\" | \"listbox\" | \"menu\" | \"tree\" | \"true\" | boolean",
+			"detailedType": "| 'dialog'\n| 'false'\n| 'grid'\n| 'listbox'\n| 'menu'\n| 'tree'\n| 'true'\n| boolean\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -505,16 +413,16 @@
 			"description": "Indicates whether the element is exposed to an accessibility API."
 		},
 		"aria-invalid": {
-			"type": "boolean | \"true\" | \"false\" | \"grammar\" | \"spelling\"",
-			"detailedType": "| boolean\n| 'true'\n| 'false'\n| 'grammar'\n| 'spelling'\n| undefined",
+			"type": "\"false\" | \"grammar\" | \"spelling\" | \"true\" | boolean",
+			"detailedType": "| 'false'\n| 'grammar'\n| 'spelling'\n| 'true'\n| boolean\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -589,18 +497,18 @@
 			"description": "Defines the hierarchical level of an element within a structure."
 		},
 		"aria-live": {
-			"type": "\"off\" | \"assertive\" | \"polite\"",
-			"detailedType": "'off' | 'assertive' | 'polite' | undefined",
+			"type": "\"assertive\" | \"off\" | \"polite\"",
+			"detailedType": "'assertive' | 'off' | 'polite' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "off"
+						"value": "assertive"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "assertive"
+						"value": "off"
 					},
 					{
 						"type": "stringLiteral",
@@ -680,16 +588,16 @@
 			"description": "Defines an element's number or position in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM."
 		},
 		"aria-pressed": {
-			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
-			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
+			"type": "\"false\" | \"mixed\" | \"true\" | boolean",
+			"detailedType": "'false' | 'mixed' | 'true' | boolean | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -732,19 +640,11 @@
 			"description": "Indicates that the element is not editable, but is otherwise operable."
 		},
 		"aria-relevant": {
-			"type": "\"text\" | \"additions\" | \"additions removals\" | \"additions text\" | \"all\" | \"removals\" | \"removals additions\" | \"removals text\" | \"text additions\" | \"text removals\"",
-			"detailedType": "| 'text'\n| 'additions'\n| 'additions removals'\n| 'additions text'\n| 'all'\n| 'removals'\n| 'removals additions'\n| 'removals text'\n| 'text additions'\n| 'text removals'\n| undefined",
+			"type": "\"additions removals\" | \"additions text\" | \"additions\" | \"all\" | \"removals additions\" | \"removals text\" | \"removals\" | \"text additions\" | \"text removals\" | \"text\"",
+			"detailedType": "| 'additions removals'\n| 'additions text'\n| 'additions'\n| 'all'\n| 'removals additions'\n| 'removals text'\n| 'removals'\n| 'text additions'\n| 'text removals'\n| 'text'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "text"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "additions"
-					},
 					{
 						"type": "stringLiteral",
 						"value": "additions removals"
@@ -755,11 +655,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "all"
+						"value": "additions"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "removals"
+						"value": "all"
 					},
 					{
 						"type": "stringLiteral",
@@ -771,11 +671,19 @@
 					},
 					{
 						"type": "stringLiteral",
+						"value": "removals"
+					},
+					{
+						"type": "stringLiteral",
 						"value": "text additions"
 					},
 					{
 						"type": "stringLiteral",
 						"value": "text removals"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "text"
 					}
 				]
 			},
@@ -848,15 +756,11 @@
 			"description": "Defines the number of items in the current set of listitems or treeitems. Not required if all elements in the set are present in the DOM."
 		},
 		"aria-sort": {
-			"type": "\"none\" | \"ascending\" | \"descending\" | \"other\"",
-			"detailedType": "| 'none'\n| 'ascending'\n| 'descending'\n| 'other'\n| undefined",
+			"type": "\"ascending\" | \"descending\" | \"none\" | \"other\"",
+			"detailedType": "| 'ascending'\n| 'descending'\n| 'none'\n| 'other'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "none"
-					},
 					{
 						"type": "stringLiteral",
 						"value": "ascending"
@@ -864,6 +768,10 @@
 					{
 						"type": "stringLiteral",
 						"value": "descending"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
 					},
 					{
 						"type": "stringLiteral",
@@ -939,15 +847,14 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"style": {
-			"type": "CSSProperties | (values: SharedElementRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: SharedElementRenderProps) => CSSProperties | undefined",
+		"className": {
+			"type": "string | (values: SharedElementRenderProps) => string",
+			"detailedType": "string | (values: SharedElementRenderProps) => string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "identifier",
-						"name": "CSSProperties"
+						"type": "string"
 					},
 					{
 						"type": "function",
@@ -965,14 +872,72 @@
 							}
 						],
 						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
+							"type": "string"
 						},
 						"typeParameters": []
 					}
 				]
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-SelectionIndicator'"
+		},
+		"inputMode": {
+			"type": "\"decimal\" | \"email\" | \"none\" | \"numeric\" | \"search\" | \"tel\" | \"text\" | \"url\"",
+			"detailedType": "| 'decimal'\n| 'email'\n| 'none'\n| 'numeric'\n| 'search'\n| 'tel'\n| 'text'\n| 'url'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "decimal"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "email"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "none"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "numeric"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "search"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "tel"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "text"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "url"
+					}
+				]
+			},
+			"description": "Hints at the type of data that might be entered by the user while editing the element or its contents"
+		},
+		"is": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Specify that a standard HTML element should behave like a defined custom built-in element"
+		},
+		"isSelected": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the SelectionIndicator is visible. This is usually set automatically by the parent component."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", SharedElementRenderProps>",
@@ -1009,35 +974,44 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"style": {
+			"type": "CSSProperties | (values: SharedElementRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: SharedElementRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "SharedElementRenderProps",
+									"name": "SharedElementRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		}
 	},
 	"typeLinks": {
-		"SharedElementRenderProps": {
-			"type": "interface",
-			"name": "SharedElementRenderProps",
-			"properties": {
-				"isEntering": {
-					"type": "property",
-					"name": "isEntering",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the element is currently entering."
-				},
-				"isExiting": {
-					"type": "property",
-					"name": "isExiting",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the element is currently exiting."
-				}
-			}
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SharedElementRenderProps": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SharedElementRenderProps",
@@ -1067,6 +1041,32 @@
 			},
 			"typeParameters": [],
 			"description": ""
+		},
+		"SharedElementRenderProps": {
+			"type": "interface",
+			"name": "SharedElementRenderProps",
+			"properties": {
+				"isEntering": {
+					"type": "property",
+					"name": "isEntering",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the element is currently entering."
+				},
+				"isExiting": {
+					"type": "property",
+					"name": "isExiting",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the element is currently exiting."
+				}
+			}
 		}
 	}
 }
