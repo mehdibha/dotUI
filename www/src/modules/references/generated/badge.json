@@ -78,7 +78,7 @@
 				]
 			},
 			"description": "The size of the badge.",
-			"default": "'default'"
+			"default": "'neutral'"
 		}
 	}
 }

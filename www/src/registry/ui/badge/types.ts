@@ -14,7 +14,7 @@ export interface BadgeProps extends React.ComponentProps<"span"> {
 	variant?: "neutral" | "accent" | "danger" | "success" | "warning" | "info";
 	/**
 	 * The size of the badge.
-	 * @default 'default'
+	 * @default 'neutral'
 	 */
 	size?: "sm" | "md" | "lg";
 }

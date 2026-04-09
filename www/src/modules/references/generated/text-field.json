@@ -5759,10 +5759,6 @@
 											},
 											{
 												"type": "identifier",
-												"name": "\"map\""
-											},
-											{
-												"type": "identifier",
 												"name": "\"div\""
 											},
 											{
@@ -6000,6 +5996,10 @@
 											{
 												"type": "identifier",
 												"name": "\"main\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"map\""
 											},
 											{
 												"type": "identifier",
@@ -6241,15 +6241,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "object"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -6790,6 +6781,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
 												}
 											]
 										},
@@ -7539,10 +7539,6 @@
 											},
 											{
 												"type": "identifier",
-												"name": "\"map\""
-											},
-											{
-												"type": "identifier",
 												"name": "\"div\""
 											},
 											{
@@ -7780,6 +7776,10 @@
 											{
 												"type": "identifier",
 												"name": "\"main\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"map\""
 											},
 											{
 												"type": "identifier",
@@ -8023,15 +8023,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "object"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -8572,6 +8563,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
 												}
 											]
 										},
@@ -12354,10 +12354,6 @@
 											},
 											{
 												"type": "identifier",
-												"name": "\"map\""
-											},
-											{
-												"type": "identifier",
 												"name": "\"div\""
 											},
 											{
@@ -12595,6 +12591,10 @@
 											{
 												"type": "identifier",
 												"name": "\"main\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"map\""
 											},
 											{
 												"type": "identifier",
@@ -12836,15 +12836,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "object"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -13385,6 +13376,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
 												}
 											]
 										},
@@ -13868,10 +13868,6 @@
 											},
 											{
 												"type": "identifier",
-												"name": "\"map\""
-											},
-											{
-												"type": "identifier",
 												"name": "\"div\""
 											},
 											{
@@ -14109,6 +14105,10 @@
 											{
 												"type": "identifier",
 												"name": "\"main\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"map\""
 											},
 											{
 												"type": "identifier",
@@ -14352,15 +14352,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "object"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -14901,6 +14892,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
 												}
 											]
 										},

@@ -2,8 +2,8 @@
 	"name": "LinkButtonProps",
 	"props": {
 		"variant": {
-			"type": "\"link\" | \"danger\" | \"warning\" | \"default\" | \"primary\" | \"quiet\"",
-			"detailedType": "| 'link'\n| 'danger'\n| 'warning'\n| 'default'\n| 'primary'\n| 'quiet'\n| undefined",
+			"type": "\"link\" | \"danger\" | \"warning\" | \"primary\" | \"default\" | \"quiet\"",
+			"detailedType": "| 'link'\n| 'danger'\n| 'warning'\n| 'primary'\n| 'default'\n| 'quiet'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -21,11 +21,11 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "default"
+						"value": "primary"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "primary"
+						"value": "default"
 					},
 					{
 						"type": "stringLiteral",
