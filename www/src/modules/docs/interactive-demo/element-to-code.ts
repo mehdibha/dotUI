@@ -145,7 +145,9 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Breadcrumbs
 	Breadcrumbs: "@/components/ui/breadcrumbs",
-	Breadcrumb: "@/components/ui/breadcrumbs",
+	BreadcrumbItem: "@/components/ui/breadcrumbs",
+	BreadcrumbLink: "@/components/ui/breadcrumbs",
+	BreadcrumbSeparator: "@/components/ui/breadcrumbs",
 
 	// Kbd
 	Kbd: "@/components/ui/kbd",

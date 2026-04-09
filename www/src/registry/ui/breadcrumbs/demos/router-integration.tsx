@@ -2,22 +2,30 @@
 
 import { Link } from "@tanstack/react-router";
 
-import { Breadcrumb, Breadcrumbs } from "@/registry/ui/breadcrumbs";
+import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from "@/registry/ui/breadcrumbs";
 
 export default function Demo() {
 	return (
 		<Breadcrumbs>
-			<Breadcrumb render={() => <Link to="/">Home</Link>}>Home</Breadcrumb>
-			<Breadcrumb render={() => <Link to="/components">Components</Link>}>Components</Breadcrumb>
-			<Breadcrumb
-				render={() => (
-					<Link to="/docs/$" params={{ _splat: "components/breadcrumbs" }}>
-						Breadcrumbs
-					</Link>
-				)}
-			>
-				Breadcrumbs
-			</Breadcrumb>
+			<BreadcrumbItem>
+				<BreadcrumbLink render={() => <Link to="/">Home</Link>}>Home</BreadcrumbLink>
+				<BreadcrumbSeparator />
+			</BreadcrumbItem>
+			<BreadcrumbItem>
+				<BreadcrumbLink render={() => <Link to="/components">Components</Link>}>Components</BreadcrumbLink>
+				<BreadcrumbSeparator />
+			</BreadcrumbItem>
+			<BreadcrumbItem>
+				<BreadcrumbLink
+					render={() => (
+						<Link to="/docs/$" params={{ _splat: "components/breadcrumbs" }}>
+							Breadcrumbs
+						</Link>
+					)}
+				>
+					Breadcrumbs
+				</BreadcrumbLink>
+			</BreadcrumbItem>
 		</Breadcrumbs>
 	);
 }

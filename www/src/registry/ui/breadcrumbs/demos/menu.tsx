@@ -2,19 +2,19 @@ import { MoreHorizontalIcon } from "@/registry/__generated__/icons";
 import {
 	BreadcrumbItem,
 	BreadcrumbLink,
+	BreadcrumbSeparator,
 	Breadcrumbs,
 } from "@/registry/ui/breadcrumbs";
 import { Button } from "@/registry/ui/button";
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
 import { Popover } from "@/registry/ui/popover";
-import { ChevronRightIcon } from "lucide-react";
 
 export default function Demo() {
 	return (
 		<Breadcrumbs>
 			<BreadcrumbItem>
 				<BreadcrumbLink href="#">Home</BreadcrumbLink>
-				<ChevronRightIcon />
+				<BreadcrumbSeparator />
 			</BreadcrumbItem>
 			<BreadcrumbItem>
 				<Menu>
@@ -28,7 +28,7 @@ export default function Demo() {
 						</MenuContent>
 					</Popover>
 				</Menu>
-				<ChevronRightIcon />
+				<BreadcrumbSeparator />
 			</BreadcrumbItem>
 			<BreadcrumbItem>
 				<BreadcrumbLink>Breadcrumbs</BreadcrumbLink>

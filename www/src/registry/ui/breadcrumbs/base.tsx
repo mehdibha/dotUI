@@ -21,19 +21,7 @@ const Breadcrumbs = <T extends object>({ className, ...props }: BreadcrumbsProps
 	return <AriaBreadcrumbs className={root({ className })} {...props} />;
 };
 
-type BreadcrumbProps = BreadcrumbItemProps & Omit<BreadcrumbLinkProps, "children">;
-const Breadcrumb = ({ ref, children, ...props }: BreadcrumbProps) => {
-	return (
-		<BreadcrumbItem ref={ref} {...props}>
-			{composeRenderProps(children, (children, { isCurrent }) => (
-				<>
-					<BreadcrumbLink {...props}>{children}</BreadcrumbLink>
-					{!isCurrent && <ChevronRightIcon />}
-				</>
-			))}
-		</BreadcrumbItem>
-	);
-};
+// MARK: seperator
 
 interface BreadcrumbItemProps extends React.ComponentProps<typeof AriaBreadcrumb> {}
 const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
@@ -41,11 +29,27 @@ const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
 	return <AriaBreadcrumb className={composeRenderProps(className, (className) => item({ className }))} {...props} />;
 };
 
+// MARK: seperator
+
 interface BreadcrumbLinkProps extends React.ComponentProps<typeof AriaLink> {}
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
 	const { link } = useStyles()();
 	return <AriaLink className={composeRenderProps(className, (className) => link({ className }))} {...props} />;
 };
 
-export type { BreadcrumbItemProps, BreadcrumbLinkProps, BreadcrumbProps, BreadcrumbsProps };
-export { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Breadcrumbs };
+// MARK: seperator
+
+interface BreadcrumbSeparatorProps extends React.ComponentProps<"span"> {}
+const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => {
+	const { separator } = useStyles()();
+	return (
+		<span aria-hidden="true" className={separator({ className })} {...props}>
+			{children ?? <ChevronRightIcon />}
+		</span>
+	);
+};
+
+// MARK: seperator
+
+export type { BreadcrumbItemProps, BreadcrumbLinkProps, BreadcrumbSeparatorProps, BreadcrumbsProps };
+export { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs };

@@ -21,4 +21,7 @@ export interface BreadcrumbItemProps extends React.ComponentProps<typeof AriaBre
  */
 export interface BreadcrumbLinkProps extends React.ComponentProps<typeof AriaLink> {}
 
-export type BreadcrumbProps = BreadcrumbItemProps & Omit<BreadcrumbLinkProps, "children">;
+/**
+ * A separator visually divides breadcrumb items.
+ */
+export interface BreadcrumbSeparatorProps extends React.ComponentProps<"span"> {}
