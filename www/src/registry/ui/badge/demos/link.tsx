@@ -4,7 +4,7 @@ import { Badge } from "@/registry/ui/badge";
 
 export default function Demo() {
 	return (
-		<Badge variant="primary">
+		<Badge variant="accent">
 			Open Link <ArrowUpRightIcon data-icon-inline-end="" />
 		</Badge>
 	);

@@ -5,30 +5,49 @@ import { createStyles } from "@/modules/core/styles";
 import badgeMeta from "./meta";
 
 const baseStyles = tv({
-	base: "",
+	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md font-medium text-xs [&>svg]:pointer-events-none",
+	variants: {
+		appearance: {
+			solid: "",
+			subtle: "",
+		},
+		variant: {
+			neutral: "",
+			accent: "",
+			danger: "",
+			success: "",
+			warning: "",
+			info: "",
+		},
+		size: {
+			sm: "h-4.5 min-w-4.5 px-1.5 [&>svg]:size-2.5 **:data-loader:*:[svg]:size-2.5",
+			md: "h-5 min-w-5 px-1.75 [&>svg]:size-3 **:data-loader:*:[svg]:size-3",
+			lg: "h-5.5 min-w-5.5 px-2.25 [&>svg]:size-3.5 **:data-loader:*:[svg]:size-3.5",
+		},
+	},
+	defaultVariants: {
+		appearance: "solid",
+		variant: "neutral",
+		size: "md",
+	},
 });
 
 const defaultStyles = tv({
 	extend: baseStyles,
-	base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-md font-medium text-xs [&>svg]:pointer-events-none",
+	base: "",
 	variants: {
+		appearance: {
+			solid: "bg-(--color) text-(--fg)",
+			subtle: "bg-[color-mix(in_srgb,var(--color)_20%,var(--color-bg))] text-[color-mix(in_srgb,var(--color)_85%,var(--color-fg))]",
+		},
 		variant: {
-			default: "bg-neutral text-fg-on-neutral",
-			primary: "bg-primary text-fg-on-primary",
-			danger: "bg-danger text-fg-on-danger",
-			success: "bg-success text-fg-on-success",
-			warning: "bg-warning text-fg-on-warning",
-			info: "bg-info text-fg-on-info",
+			neutral: "bg-neutral text-fg-on-neutral",
+			accent: "[--color:var(--color-accent)] [--fg:var(--fg-on-accent)]",
+			danger: "[--color:var(--color-danger)] [--fg:var(--fg-on-danger)]",
+			success: "[--color:var(--color-success)] [--fg:var(--fg-on-success)]",
+			warning: "[--color:var(--color-warning)] [--fg:var(--fg-on-warning)]",
+			info: "[--color:var(--color-info)] [--fg:var(--fg-on-info)]",
 		},
-		size: {
-			sm: "h-4.5 min-w-4.5 px-1.5 text-xs [&>svg]:size-2.5 **:data-loader:*:[svg]:size-2.5",
-			md: "h-5 min-w-5 px-1.75 text-xs [&>svg]:size-3 **:data-loader:*:[svg]:size-3",
-			lg: "h-5.5 min-w-5.5 px-2.25 text-xs [&>svg]:size-3.5 **:data-loader:*:[svg]:size-3.5",
-		},
-	},
-	defaultVariants: {
-		variant: "default",
-		size: "md",
 	},
 });
 

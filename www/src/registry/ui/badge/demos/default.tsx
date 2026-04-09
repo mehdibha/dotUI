@@ -1,5 +1,5 @@
 import { Badge } from "@/registry/ui/badge";
 
 export default function Demo() {
-	return <Badge>Badge</Badge>;
+	return <Badge appearance="subtle" variant="accent">Badge</Badge>;
 }
