@@ -13,6 +13,12 @@ const defaultStyles = tv({
 	base: "**:data-disclosure:not-last:border-b",
 });
 
+const hammametStyles = tv({
+	extend: baseStyles,
+	base: "border **:data-disclosure:not-last:border-b",
+});
+
 export const { useStyles } = createStyles(accordionMeta, {
 	default: defaultStyles,
+	hammamet: hammametStyles,
 });

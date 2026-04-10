@@ -1,5 +1,6 @@
 "use client";
 
+import { Link as RouterLink, type ToOptions } from "@tanstack/react-router";
 import { ChevronRightIcon } from "lucide-react";
 import {
 	Breadcrumb as AriaBreadcrumb,
@@ -43,7 +44,7 @@ interface BreadcrumbSeparatorProps extends React.ComponentProps<"span"> {}
 const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => {
 	const { separator } = useStyles()();
 	return (
-		<span aria-hidden="true" className={separator({ className })} {...props}>
+		<span data-breadcrumb-separator="" aria-hidden="true" className={separator({ className })} {...props}>
 			{children ?? <ChevronRightIcon />}
 		</span>
 	);

@@ -1074,9 +1074,9 @@
 			"name": "FormData",
 			"extends": [],
 			"properties": {
-				"__@iterator@76": {
+				"__@iterator@89": {
 					"type": "method",
-					"name": "__@iterator@76",
+					"name": "__@iterator@89",
 					"value": {
 						"type": "function",
 						"parameters": [],

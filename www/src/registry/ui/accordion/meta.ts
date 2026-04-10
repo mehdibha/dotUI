@@ -7,6 +7,7 @@ const accordionMeta = {
 	defaultStyle: "default",
 	styles: {
 		default: {},
+		hammamet: {},
 	},
 	files: [
 		{

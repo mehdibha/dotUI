@@ -20,14 +20,22 @@ npx shadcn@latest add @dotui/breadcrumbs
 Use breadcrumbs to display a hierarchy of links showing the user's location in a site or application.
 
 ```tsx
-import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from "@/components/ui/breadcrumbs";
 ```
 
 ```tsx
 <Breadcrumbs>
-  <Breadcrumb href="#">Home</Breadcrumb>
-  <Breadcrumb href="#">Components</Breadcrumb>
-  <Breadcrumb href="#">Breadcrumbs</Breadcrumb>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Home</BreadcrumbLink>
+    <BreadcrumbSeparator />
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Components</BreadcrumbLink>
+    <BreadcrumbSeparator />
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
+  </BreadcrumbItem>
 </Breadcrumbs>
 ```
 
@@ -35,8 +43,8 @@ import { Breadcrumb, Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 Use the controls below to experiment with different breadcrumbs props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="breadcrumbs" 
+<InteractiveDemo
+  name="breadcrumbs"
   controls={[
     {
       type: "boolean",
@@ -46,12 +54,81 @@ Use the controls below to experiment with different breadcrumbs props and see th
   ]}
 />
 
+## Framework Setup
+
+By default, `BreadcrumbLink` renders a plain `<a>` tag. To integrate with your framework's router, override the component in your project's `breadcrumbs.tsx`.
+
+
+### Next.js
+
+```tsx title="ui/breadcrumbs.tsx"
+import RouterLink from "next/link"; // [!code highlight]
+
+// ..
+
+const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
+  return (
+    <AriaLink
+      // [!code highlight:11]
+      render={({ ref, href, ...domProps }) => {
+        "href" in domProps ? (
+          <RouterLink
+            ref={ref as React.Ref<HTMLAnchorElement>}
+            href={href}
+            {...domProps}
+          />
+        ) : (
+          <span ref={ref as React.Ref<HTMLSpanElement>} {...domProps} />
+        )
+      }
+      className={composeRenderProps(className, (className) =>
+        link({ className }),
+      )}
+      {...props}
+    />
+  );
+};
+```
+
+
+### TanStack Start
+
+```tsx title="ui/breadcrumbs.tsx"
+// [!code highlight:2]
+import { Link as RouterLink } from "@tanstack/react-router";
+import type { ToOptions } from "@tanstack/react-router";
+
+// ..
+
+interface BreadcrumbLinkProps extends Omit<React.ComponentProps<typeof AriaLink>, "href"> {
+  href?: string | ToOptions; // [!code highlight]
+}
+const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
+  return (
+    <AriaLink
+      // [!code highlight:10]
+      href={typeof href === "object" ? href.to : href}
+      render={({ ref, ...domProps }) => {
+        if (typeof href === "object") {
+          return <RouterLink ref={ref as React.Ref<HTMLAnchorElement>} {...href} {...domProps} />;
+        }
+        if (typeof href === "string") {
+          return <a ref={ref as React.Ref<HTMLAnchorElement>} href={href} {...domProps} />;
+        }
+        return <span ref={ref} {...domProps} />;
+      }}
+      className={composeRenderProps(className, (className) => link({ className }))}
+      {...props}
+    />
+  );
+};
+```
 
 ## Examples
 
 <Examples className="lg:grid-cols-2">
   <Example title="With Menu" name="breadcrumbs/demos/menu" />
-  <Example title="Router Integration" name="breadcrumbs/demos/router-integration" />
+  <Example title="Custom Seperator" name="breadcrumbs/demos/custom-seperator" />
 </Examples>
 
 ## API Reference
@@ -60,6 +137,14 @@ Use the controls below to experiment with different breadcrumbs props and see th
 
 <Reference name="breadcrumbs" />
 
-### Breadcrumb
+### BreadcrumbItem
 
 <Reference name="breadcrumb-item" />
+
+### BreadcrumbLink
+
+<Reference name="breadcrumb-link" />
+
+### BreadcrumbSeparator
+
+<Reference name="breadcrumb-separator" />

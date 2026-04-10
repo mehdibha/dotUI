@@ -57,32 +57,32 @@ export const Route = createRootRoute({
 	component: RootComponent,
 });
 
-declare module "react-aria-components" {
-	interface RouterConfig {
-		href: ToOptions;
-		routerOptions: Omit<NavigateOptions, keyof ToOptions>;
-	}
-}
+// declare module "react-aria-components" {
+// 	interface RouterConfig {
+// 		href: ToOptions;
+// 		routerOptions: Omit<NavigateOptions, keyof ToOptions>;
+// 	}
+// }
 
 function RootComponent() {
 	const router = useRouter();
 	return (
-		<RouterProvider
-			navigate={(href, opts) => {
-				if (typeof href === "string") return;
-				return router.navigate({ ...href, ...opts });
-			}}
-			useHref={(href) => {
-				if (typeof href === "string") return href;
-				return router.buildLocation(href).href;
-			}}
-		>
+		// <RouterProvider
+		// 	navigate={(href, opts) => {
+		// 		if (typeof href === "string") return;
+		// 		return router.navigate({ ...href, ...opts });
+		// 	}}
+		// 	useHref={(href) => {
+		// 		if (typeof href === "string") return href;
+		// 		return router.buildLocation(href).href;
+		// 	}}
+		// >
 			<ThemeProvider>
 				<RootDocument>
 					<Outlet />
 				</RootDocument>
 			</ThemeProvider>
-		</RouterProvider>
+		// </RouterProvider>
 	);
 }
 

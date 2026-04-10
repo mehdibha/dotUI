@@ -1,0 +1,6 @@
+{
+	"name": "BreadcrumbSeparatorProps",
+	"description": "A separator visually divides breadcrumb items.",
+	"extendsElement": "span",
+	"props": {}
+}

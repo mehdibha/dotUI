@@ -5,14 +5,10 @@ export default function Demo() {
 		<Breadcrumbs>
 			<BreadcrumbItem>
 				<BreadcrumbLink href="#">Home</BreadcrumbLink>
-			</BreadcrumbItem>
-			<BreadcrumbItem>
 				<BreadcrumbSeparator />
 			</BreadcrumbItem>
 			<BreadcrumbItem>
 				<BreadcrumbLink href="#">Components</BreadcrumbLink>
-			</BreadcrumbItem>
-			<BreadcrumbItem>
 				<BreadcrumbSeparator />
 			</BreadcrumbItem>
 			<BreadcrumbItem>
