@@ -8,7 +8,6 @@ import {
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
-import { useButtonAspect } from "@/registry/hooks/use-button-aspect";
 import { createVariantsContext } from "@/registry/lib/context";
 
 import { toggleButtonStyles, useStyles } from "./styles";
@@ -27,27 +26,21 @@ const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 
 // MARK: seperator
 
-interface ToggleButtonProps extends React.ComponentProps<typeof AriaToggleButton>, ToggleButtonVariants {
-	aspect?: "default" | "square" | "auto";
-}
+interface ToggleButtonProps extends React.ComponentProps<typeof AriaToggleButton>, ToggleButtonVariants {}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
 	const styles = useStyles();
 	const {
 		variant = "default",
 		size = "md",
-		aspect = "auto",
 		className,
 		children,
 		...props
 	} = useContextProps(localProps);
 
-	const isIconOnly = useButtonAspect(children, aspect);
-
 	return (
 		<AriaToggleButton
 			data-slot="button"
-			data-icon-only={isIconOnly || undefined}
 			data-variant={variant}
 			data-size={size}
 			className={composeRenderProps(className, (cn) =>

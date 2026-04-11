@@ -16,7 +16,7 @@ export default function Demo() {
 	return (
 		<div className="flex items-center gap-12">
 			<Tooltip delay={delay} closeDelay={closeDelay}>
-				<Button>
+				<Button size="icon">
 					<PenSquareIcon />
 				</Button>
 				<TooltipContent>Create new issue</TooltipContent>

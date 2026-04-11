@@ -101,11 +101,11 @@ const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
 		<header className={header({ className })} {...props}>
 			{props.children ?? (
 				<>
-					<Button slot="previous" variant="default" size="sm">
+					<Button slot="previous" variant="default" size="icon-sm">
 						<ChevronLeftIcon />
 					</Button>
 					<AriaHeading className="font-medium text-sm" />
-					<Button slot="next" variant="default" size="sm">
+					<Button slot="next" variant="default" size="icon-sm">
 						<ChevronRightIcon />
 					</Button>
 				</>

@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 export default function Demo() {
 	return (
 		<Tooltip>
-			<Button>
+			<Button size="icon">
 				<PenSquareIcon />
 			</Button>
 			<TooltipContent hideArrow>Create new issue</TooltipContent>

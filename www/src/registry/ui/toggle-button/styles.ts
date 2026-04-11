@@ -11,7 +11,7 @@ const baseStyles = tv({
 const defaultStyles = tv({
 	extend: baseStyles,
 	base: [
-		"inline-flex shrink-0 cursor-default items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm leading-normal transition-[background-color,border-color,color,box-shadow] data-icon-only:px-0",
+		"inline-flex shrink-0 cursor-default items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm leading-normal transition-[background-color,border-color,color,box-shadow]",
 
 		// focus state
 		"focus-reset focus-visible:focus-ring",
@@ -29,9 +29,12 @@ const defaultStyles = tv({
 			quiet: "bg-transparent pressed:bg-inverse/20 text-fg hover:bg-inverse/10",
 		},
 		size: {
-			sm: "h-8 px-3 data-icon-only:w-8 [&_svg]:size-4",
-			md: "h-9 px-4 data-icon-only:w-9 [&_svg]:size-4",
-			lg: "h-10 px-5 data-icon-only:w-10 [&_svg]:size-5",
+			sm: "h-8 px-3 [&_svg]:size-4",
+			md: "h-9 px-4 [&_svg]:size-4",
+			lg: "h-10 px-5 [&_svg]:size-5",
+			"icon-sm": "h-8 w-8 px-0 [&_svg]:size-4",
+			icon: "h-9 w-9 px-0 [&_svg]:size-4",
+			"icon-lg": "h-10 w-10 px-0 [&_svg]:size-5",
 		},
 	},
 });

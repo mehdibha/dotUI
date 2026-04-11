@@ -7,7 +7,7 @@ import { ToggleButton } from "@/registry/ui/toggle-button";
 
 interface ToggleButtonPlaygroundProps {
 	variant?: "default" | "quiet";
-	size?: "sm" | "md" | "lg";
+	size?: "sm" | "md" | "lg" | "icon-sm" | "icon" | "icon-lg";
 	isDisabled?: boolean;
 	children?: ReactNode;
 }

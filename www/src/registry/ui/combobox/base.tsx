@@ -105,7 +105,7 @@ const ComboboxInput = ({ placeholder, ...props }: ComboboxInputProps) => {
 		<InputGroup {...props}>
 			<Input placeholder={placeholder} />
 			<InputAddon>
-				<Button variant="quiet">
+				<Button variant="quiet" size="icon">
 					<ChevronDownIcon />
 				</Button>
 			</InputAddon>

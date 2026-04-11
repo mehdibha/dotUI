@@ -18,11 +18,11 @@ export default function Demo() {
 	return (
 		<Calendar aria-label="Event date">
 			<CalendarHeader>
-				<Button slot="previous" className="rounded-full" size="sm">
+				<Button slot="previous" className="rounded-full" size="icon-sm">
 					<ChevronLeftIcon />
 				</Button>
 				<Heading className="text-fg-muted text-sm" />
-				<Button slot="next" className="rounded-full" size="sm">
+				<Button slot="next" className="rounded-full" size="icon-sm">
 					<ChevronRightIcon />
 				</Button>
 			</CalendarHeader>

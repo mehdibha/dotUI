@@ -12,7 +12,7 @@ export default function Demo() {
 	return (
 		<div className="flex flex-col-reverse items-center gap-4">
 			<Menu isOpen={isOpen} onOpenChange={setOpen}>
-				<Button>
+				<Button size="icon">
 					<MenuIcon />
 				</Button>
 				<Popover>

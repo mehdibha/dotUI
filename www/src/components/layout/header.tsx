@@ -44,10 +44,10 @@ export function Header({ className, items = [] }: HeaderProps) {
 						<Kbd className="max-md:hidden">⌘ K</Kbd>
 					</Button>
 				</SearchCommand>
-				<LinkButton aria-label="GitHub" href={siteConfig.links.github} target="_blank" size="sm">
+				<LinkButton aria-label="GitHub" href={siteConfig.links.github} target="_blank" size="icon-sm">
 					<GitHubIcon />
 				</LinkButton>
-				<ThemeToggle size="sm" />
+				<ThemeToggle size="icon-sm" />
 			</div>
 		</header>
 	);

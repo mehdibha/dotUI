@@ -9,7 +9,6 @@ import {
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
-import { useButtonAspect } from "@/registry/hooks/use-button-aspect";
 import { createVariantsContext } from "@/registry/lib/context";
 import { Loader } from "@/registry/ui/loader";
 
@@ -27,20 +26,15 @@ const [ButtonProvider, useContextProps] = createVariantsContext<
 
 // MARK: seperator
 
-interface ButtonProps extends React.ComponentProps<typeof AriaButton>, ButtonVariants {
-	aspect?: "default" | "square" | "auto";
-}
+interface ButtonProps extends React.ComponentProps<typeof AriaButton>, ButtonVariants {}
 
 const Button = (localProps: ButtonProps) => {
 	const styles = useStyles();
-	const { variant, size, aspect = "auto", className, slot, style, children, ...props } = useContextProps(localProps);
-
-	const isIconOnly = useButtonAspect(children, aspect);
+	const { variant, size, className, slot, style, children, ...props } = useContextProps(localProps);
 
 	return (
 		<AriaButton
 			data-button=""
-			data-icon-only={isIconOnly || undefined}
 			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
 			slot={slot}
 			style={style}
@@ -64,21 +58,16 @@ const Button = (localProps: ButtonProps) => {
 
 // MARK: seperator
 
-interface LinkButtonProps extends React.ComponentProps<typeof AriaLink>, VariantProps<ButtonStyles> {
-	aspect?: "default" | "square" | "auto";
-}
+interface LinkButtonProps extends React.ComponentProps<typeof AriaLink>, VariantProps<ButtonStyles> {}
 
 const LinkButton = (localProps: LinkButtonProps) => {
 	const styles = useStyles();
-	const { variant, size, aspect = "auto", className, slot, style, children, ...props } = useContextProps(localProps);
-
-	const isIconOnly = useButtonAspect(children, aspect);
+	const { variant, size, className, slot, style, children, ...props } = useContextProps(localProps);
 
 	return (
 		<AriaLink
 			data-slot="button"
 			data-button=""
-			data-icon-only={isIconOnly || undefined}
 			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
 			slot={slot}
 			style={style}

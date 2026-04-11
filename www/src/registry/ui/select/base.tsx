@@ -36,7 +36,7 @@ const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
 
 const SelectTrigger = (props: ButtonProps) => {
 	return (
-		<Button aspect="default" {...props}>
+		<Button {...props}>
 			{composeRenderProps(props.children, (children) => {
 				return (
 					<>

@@ -34,7 +34,7 @@ export default function Demo() {
 					<Input />
 					<InputAddon>
 						<Tooltip>
-							<Button variant="quiet">
+							<Button variant="quiet" size="icon">
 								<XCircleIcon />
 							</Button>
 							<TooltipContent placement="bottom">

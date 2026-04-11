@@ -55,7 +55,7 @@ function Tag({ className, ...props }: TagProps) {
 				<>
 					{children}
 					{allowsRemoving && (
-						<Button variant="quiet" slot="remove">
+						<Button variant="quiet" size="icon" slot="remove">
 							<XIcon />
 						</Button>
 					)}

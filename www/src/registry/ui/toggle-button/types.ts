@@ -12,16 +12,8 @@ export interface ToggleButtonProps extends React.ComponentProps<typeof AriaToggl
 
 	/**
 	 * The size of the toggle button.
+	 * Use `icon-sm`, `icon`, or `icon-lg` for icon-only buttons.
 	 * @default 'md'
 	 */
-	size?: "sm" | "md" | "lg";
-
-	/**
-	 * Controls the button's aspect ratio behavior.
-	 * - `"auto"`: Automatically detects if the button contains only an icon and applies square aspect.
-	 * - `"square"`: Forces square aspect ratio.
-	 * - `"default"`: Standard button sizing with padding.
-	 * @default "auto"
-	 */
-	aspect?: "default" | "square" | "auto";
+	size?: "sm" | "md" | "lg" | "icon-sm" | "icon" | "icon-lg";
 }

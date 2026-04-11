@@ -60,7 +60,6 @@ function PaginationPrevious({ className, ...props }: PaginationLinkProps) {
 		<PaginationLink
 			aria-label="Go to previous page"
 			className={composeRenderProps(className, (cn) => previous({ className: cn }))}
-			data-icon-only={undefined}
 			{...props}
 		>
 			<ChevronLeftIcon />
@@ -76,7 +75,6 @@ function PaginationNext({ className, ...props }: PaginationLinkProps) {
 		<PaginationLink
 			aria-label="Go to next page"
 			className={composeRenderProps(className, (cn) => next({ className: cn }))}
-			data-icon-only={undefined}
 			{...props}
 		>
 			<span className="hidden sm:block">Next</span>

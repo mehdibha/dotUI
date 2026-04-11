@@ -44,10 +44,10 @@ export default function Demo() {
 				<InputAddon>
 					<Group className="justify-between">
 						<ToggleButtonGroup>
-							<ToggleButton>
+							<ToggleButton size="icon">
 								<BoldIcon />
 							</ToggleButton>
-							<ToggleButton>
+							<ToggleButton size="icon">
 								<ItalicIcon />
 							</ToggleButton>
 						</ToggleButtonGroup>

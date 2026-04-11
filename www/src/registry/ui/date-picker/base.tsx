@@ -77,7 +77,7 @@ const DatePickerInput = (props: DatePickerInputProps) => {
 				</>
 			)}
 			<InputAddon>
-				<Button>
+				<Button size="icon">
 					<CalendarIcon />
 				</Button>
 			</InputAddon>

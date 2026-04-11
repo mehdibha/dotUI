@@ -16,7 +16,7 @@ export default function Demo() {
 	return (
 		<div className="flex items-center gap-14">
 			<Menu>
-				<Button variant="default" aspect="square">
+				<Button variant="default" size="icon">
 					<MenuIcon />
 				</Button>
 				<Overlay type={type as OverlayProps["type"]} mobileType={mobileType as OverlayProps["type"]}>

@@ -12,7 +12,7 @@ export function SearchFieldDemo() {
 				</InputAddon>
 				<Input placeholder="Search..." />
 				<InputAddon>
-					<Button variant="quiet" className="rounded-full">
+					<Button variant="quiet" size="icon" className="rounded-full">
 						<XIcon />
 					</Button>
 				</InputAddon>

@@ -1,42 +1,86 @@
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
-
-import Default from "./demos/default";
-import Disabled from "./demos/disabled";
-import LinkButton from "./demos/link-button";
-import Loading from "./demos/loading";
-import PrefixAndSuffix from "./demos/prefix-and-suffix";
-import Shapes from "./demos/shapes";
-import Sizes from "./demos/sizes";
-import Variants from "./demos/variants";
+import { Button } from "@/registry/ui/button";
 
 export default function ButtonExamples() {
 	return (
 		<Examples>
-			<Example title="default">
-				<Default />
-			</Example>
-			<Example title="disabled">
-				<Disabled />
-			</Example>
-			<Example title="link button">
-				<LinkButton />
-			</Example>
-			<Example title="loading">
-				<Loading />
-			</Example>
-			<Example title="prefix and suffix">
-				<PrefixAndSuffix />
-			</Example>
-			<Example title="shapes">
-				<Shapes />
-			</Example>
-			<Example title="sizes">
-				<Sizes />
-			</Example>
-			<Example title="variants">
-				<Variants />
-			</Example>
+			<ButtonVariantsAndSizes />
+			<ButtonIconRight />
+			<ButtonIconLeft />
+			<ButtonIconOnly />
 		</Examples>
 	);
 }
+
+const sizes = ["xs", "sm", "md", "lg"] as const;
+const iconSizes = ["icon-xs", "icon-sm", "icon", "icon-lg"] as const;
+const variants = ["primary", "default", "link", "danger", "quiet"] as const;
+
+const ButtonVariantsAndSizes = () => {
+	return (
+		<Example title="Variants and sizes">
+			{sizes.map((size) => (
+				<div key={size} className="flex w-full items-center gap-3">
+					{variants.map((variant) => (
+						<Button key={variant} size={size} variant={variant}>
+							{variant}
+						</Button>
+					))}
+				</div>
+			))}
+		</Example>
+	);
+};
+
+const ButtonIconRight = () => {
+	return (
+		<Example title="Icon right">
+			{sizes.map((size) => (
+				<div key={size} className="flex w-full items-center gap-3">
+					{variants.map((variant) => (
+						<Button key={variant} size={size} variant={variant}>
+							{variant}
+							<ArrowRightIcon />
+						</Button>
+					))}
+				</div>
+			))}
+		</Example>
+	);
+};
+
+const ButtonIconLeft = () => {
+	return (
+		<Example title="Icon left">
+			{sizes.map((size) => (
+				<div key={size} className="flex w-full items-center gap-3">
+					{variants.map((variant) => (
+						<Button key={variant} size={size} variant={variant}>
+							<ArrowLeftIcon />
+							{variant}
+						</Button>
+					))}
+				</div>
+			))}
+		</Example>
+	);
+};
+
+const ButtonIconOnly = () => {
+	return (
+		<Example title="Icon only">
+			{iconSizes.map((size) => (
+				<div key={size} className="flex w-full items-center gap-3">
+					{variants.map((variant) => (
+						<Button key={variant} size={size} variant={variant}>
+							<ArrowRightIcon />
+						</Button>
+					))}
+				</div>
+			))}
+		</Example>
+	);
+};

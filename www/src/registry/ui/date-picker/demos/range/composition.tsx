@@ -18,7 +18,7 @@ export default function Demo() {
 				<span>–</span>
 				<DateInput slot="end" />
 				<InputAddon>
-					<Button variant="default" size="sm">
+					<Button variant="default" size="icon-sm">
 						<CalendarIcon />
 					</Button>
 				</InputAddon>

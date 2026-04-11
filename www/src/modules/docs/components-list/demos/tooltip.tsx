@@ -10,7 +10,7 @@ export function TooltipDemo() {
 	return (
 		<div className="flex h-20 w-40 items-end justify-center pb-2">
 			<Tooltip>
-				<Button>
+				<Button size="icon">
 					<SquarePenIcon />
 				</Button>
 				<TooltipContent>

@@ -24,7 +24,7 @@ export default function Demo() {
 		<div className="flex w-full items-center">
 			<div className="flex flex-1 items-center justify-center">
 				<Dialog>
-					<Button variant="default">
+					<Button variant="default" size="icon">
 						<InfoIcon />
 					</Button>
 					<Overlay type="popover">

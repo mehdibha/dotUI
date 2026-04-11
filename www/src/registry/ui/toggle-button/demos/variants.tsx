@@ -7,7 +7,7 @@ export default function Demo() {
 	return (
 		<div className="flex items-center gap-4">
 			{variants.map((variant) => (
-				<ToggleButton key={variant} variant={variant} aria-label="Toggle pin" defaultSelected>
+				<ToggleButton key={variant} variant={variant} size="icon" aria-label="Toggle pin" defaultSelected>
 					<PinIcon className="rotate-45" />
 				</ToggleButton>
 			))}
