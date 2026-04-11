@@ -8,27 +8,99 @@
 	--alert-radius: var(--radius-lg);
 	--avatar-radius: calc(infinity * 1px);
 	--badge-radius: var(--radius-md);
+	--btn-radius: var(--radius-md);
+	--btn-font-weight: var(--font-weight-medium);
 }
 
 .density-compact {
 	/* button */
-	--button-xs-px: calc(var(--spacing) * 2.5);
-	--button-xs-h: calc(var(--spacing) * 7);
-
-	--button-sm-px: calc(var(--spacing) * 3);
-	--button-sm-h: calc(var(--spacing) * 8);
-
-	--button-md-px: calc(var(--spacing) * 4);
-	--button-md-h: calc(var(--spacing) * 9);
-	
-	--button-lg-px: calc(var(--spacing) * 5);
-	--button-lg-h: calc(var(--spacing) * 10);
+	.cn-button-base {
+		@apply gap-1 text-xs/relaxed;
+	}
+	.cn-button-size-xs {
+		@apply h-5 px-2 rounded-sm text-[0.625rem] has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-2.5;
+	}
+	.cn-button-size-sm {
+		@apply h-6 px-2 has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3;
+	}
+	.cn-button-size-md {
+		@apply h-7 px-2 has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3.5;
+	}
+	.cn-button-size-lg {
+		@apply h-8 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-4;
+	}
+	.cn-button-size-icon-xs {
+		@apply size-5 rounded-sm **:[svg]:not-with-[size]:size-2.5;
+	}
+	.cn-button-size-icon-sm {
+		@apply size-6 **:[svg]:not-with-[size]:size-3;
+	}
+	.cn-button-size-icon {
+		@apply size-7 **:[svg]:not-with-[size]:size-3.5;
+	}
+	.cn-button-size-icon-lg {
+		@apply size-8 **:[svg]:not-with-[size]:size-4;
+	}
 }
 
 .density-default {
-	--button-padding-x: 0.75rem;
+	/* button */
+	.cn-button-base {
+		@apply text-sm *:[svg]:not-with-[size]:size-4;
+	}
+	.cn-button-size-xs {
+		@apply h-6 gap-1 px-2 has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3;
+	}
+	.cn-button-size-sm {
+		@apply h-7 gap-1 px-2.5 text-[0.8125rem] has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5;
+	}
+	.cn-button-size-md {
+		@apply h-8 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-3.5;
+	}
+	.cn-button-size-lg {
+		@apply h-9 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-4;
+	}
+	.cn-button-size-icon-xs {
+		@apply size-6 **:[svg]:not-with-[size]:size-3;
+	}
+	.cn-button-size-icon-sm {
+		@apply size-7;
+	}
+	.cn-button-size-icon {
+		@apply size-8;
+	}
+	.cn-button-size-icon-lg {
+		@apply size-9;
+	}
 }
 
 .density-comfortable {
-	--button-padding-x: 1rem;
+	/* button */
+	.cn-button-base {
+		@apply text-sm *:[svg]:not-with-[size]:size-4;
+	}
+	.cn-button-size-xs {
+		@apply h-7 gap-1 px-2.5 text-[0.8125rem] has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3.5;
+	}
+	.cn-button-size-sm {
+		@apply h-8 gap-1 px-2.5 has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5;
+	}
+	.cn-button-size-md {
+		@apply h-9 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2;
+	}
+	.cn-button-size-lg {
+		@apply h-10 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2;
+	}
+	.cn-button-size-icon-xs {
+		@apply size-7;
+	}
+	.cn-button-size-icon-sm {
+		@apply size-8;
+	}
+	.cn-button-size-icon {
+		@apply size-9;
+	}
+	.cn-button-size-icon-lg {
+		@apply size-10;
+	}
 }

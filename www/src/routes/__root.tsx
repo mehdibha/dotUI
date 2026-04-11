@@ -77,11 +77,11 @@ function RootComponent() {
 		// 		return router.buildLocation(href).href;
 		// 	}}
 		// >
-			<ThemeProvider>
-				<RootDocument>
-					<Outlet />
-				</RootDocument>
-			</ThemeProvider>
+		<ThemeProvider>
+			<RootDocument>
+				<Outlet />
+			</RootDocument>
+		</ThemeProvider>
 		// </RouterProvider>
 	);
 }
@@ -92,7 +92,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="min-h-screen bg-bg font-sans text-fg antialiased">
+			<body className="density-compact min-h-screen bg-bg font-sans text-fg antialiased">
 				{children}
 				<TanStackRouterDevtools position="bottom-right" />
 				<Scripts />

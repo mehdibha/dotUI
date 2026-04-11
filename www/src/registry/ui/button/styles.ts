@@ -6,16 +6,15 @@ import buttonMeta from "./meta";
 
 const baseStyles = tv({
 	base: [
-		"relative box-border inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium text-sm leading-normal transition-[background-color,border-color,color,box-shadow]",
-		"*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
-		// svg
-		"[&_svg]:pointer-events-none [&_svg]:not-with-[size]:size-4 [&_svg]:shrink-0",
+		"cn-button-base group/button relative inline-flex shrink-0 cursor-interactive select-none items-center justify-center whitespace-nowrap rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) transition-[background-color,border-color,color,box-shadow]",
 		// focus state
 		"focus-reset focus-visible:focus-ring",
-		// disabled state
-		"disabled:cursor-default disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
+		// svg
+		"**:[svg]:pointer-events-none **:[svg]:not-with-[size]:size-4 **:[svg]:shrink-0",
 		// pending state
 		"pending:cursor-default pending:border-border-disabled pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
+		// disabled state
+		"disabled:cursor-default disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
 	],
 	variants: {
 		variant: {
@@ -27,14 +26,14 @@ const baseStyles = tv({
 			danger: "",
 		},
 		size: {
-			xs: "h-7 px-2.5 has-[>svg]:px-2 [&_svg]:not-with-[size]:size-3",
-			sm: "h-8 px-3 has-[>svg]:px-2.5",
-			md: "h-9 px-4 has-[>svg]:px-3",
-			lg: "h-10 px-5 has-[>svg]:px-4",
-			"icon-xs": "h-7 w-7 px-0 [&_svg]:not-with-[size]:size-3",
-			"icon-sm": "h-8 w-8 px-0",
-			icon: "h-9 w-9 px-0",
-			"icon-lg": "h-10 w-10 px-0",
+			xs: "cn-button-size-xs",
+			sm: "cn-button-size-sm",
+			md: "cn-button-size-md",
+			lg: "cn-button-size-lg",
+			"icon-xs": "cn-button-size-icon-xs",
+			"icon-sm": "cn-button-size-icon-sm",
+			icon: "cn-button-size-icon",
+			"icon-lg": "cn-button-size-icon-lg",
 		},
 	},
 	defaultVariants: {
