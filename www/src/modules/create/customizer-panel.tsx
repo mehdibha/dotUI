@@ -1,8 +1,8 @@
 import { type ReactNode, useMemo } from "react";
+import { getRouteApi } from "@tanstack/react-router";
 import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, ShuffleIcon, Undo2Icon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import { Button as AriaButton } from "react-aria-components";
-import { getRouteApi } from "@tanstack/react-router";
 
 import { componentsData } from "@/modules/docs/components-list/components-data";
 import * as icons from "@/registry/__generated__/icons";
@@ -21,6 +21,7 @@ import { ColorsConfig } from "./colors-config";
 import { AllComponentsView, ComponentDetailView, getComponentDisplayName } from "./components-config";
 import { IconographyConfig } from "./iconography-config";
 import { LayoutConfig } from "./layout-config";
+import { useDesignSystem } from "./preset";
 import { TypographyConfig } from "./typography-config";
 
 /* -------------------------------- Types -------------------------------- */
@@ -46,14 +47,26 @@ const menu: MenuItem[] = [
 		title: "Colors",
 		preview: (
 			<div className="flex flex-col gap-1.5">
-				<div className="flex items-center gap-1 *:size-5 *:rounded-full *:border">
-					<div className="bg-neutral" />
-					<div className="bg-primary" />
-					<div className="bg-success" />
-					<div className="bg-warning" />
-					<div className="bg-danger" />
-					<div className="bg-info" />
-				</div>
+				{[
+					{
+						name: "Base color",
+						value: "neutral",
+						className: "bg-neutral",
+					},
+					{
+						name: "Theme",
+						value: "blue",
+						className: "bg-blue-500",
+					},
+				].map((item) => (
+					<div key={item.name} className="flex items-center justify-between">
+						<div className="flex flex-col items-start gap-1">
+							<span className="text-[10px] text-fg-muted uppercase tracking-widest">{item.name}</span>
+							<p className="font-medium">{item.value}</p>
+						</div>
+						<div className={`size-7 rounded-md border ${item.className}`} />
+					</div>
+				))}
 			</div>
 		),
 		config: <ColorsConfig />,
@@ -147,6 +160,7 @@ const routeApi = getRouteApi("/_app/create");
 export function CustomizerPanel() {
 	const { panel, preview } = routeApi.useSearch();
 	const navigate = routeApi.useNavigate();
+	const { designSystem, setComponentStyle, setComponentParam } = useDesignSystem();
 
 	const navStack = useMemo(() => (panel ? panel.split(".") : []), [panel]);
 
@@ -190,7 +204,13 @@ export function CustomizerPanel() {
 			return (
 				<>
 					<ViewHeader title={getComponentDisplayName(componentName)} onBack={pop} />
-					<ComponentDetailView componentName={componentName} />
+					<ComponentDetailView
+						componentName={componentName}
+						selectedStyle={designSystem.componentStyles[componentName]}
+						onStyleChange={setComponentStyle}
+						selectedParams={designSystem.componentParams}
+						onParamChange={setComponentParam}
+					/>
 				</>
 			);
 		}

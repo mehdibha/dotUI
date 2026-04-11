@@ -1,6 +1,9 @@
-import { use } from "react";
+import { use, useCallback, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { DesignSystemProvider } from "@/modules/core/styles";
+import { DEFAULTS, useIframeMessageListener } from "@/modules/create/preset";
+import type { DesignSystem } from "@/modules/create/preset";
 import { ExamplesIndex } from "@/registry/__generated__/examples";
 
 const promiseCache = new Map<string, Promise<{ default: React.ComponentType }>>();
@@ -25,6 +28,12 @@ export const Route = createFileRoute("/preview/$slug")({
 
 function PreviewPage() {
 	const { slug } = Route.useParams();
+	const [designSystem, setDesignSystem] = useState<DesignSystem>(DEFAULTS);
+
+	useIframeMessageListener(
+		useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
+	);
+
 	const promise = getExamplesPromise(slug);
 
 	if (!promise) {
@@ -37,5 +46,12 @@ function PreviewPage() {
 
 	const { default: Examples } = use(promise);
 
-	return <Examples />;
+	return (
+		<DesignSystemProvider
+			styles={designSystem.componentStyles}
+			params={designSystem.componentParams}
+		>
+			<Examples />
+		</DesignSystemProvider>
+	);
 }

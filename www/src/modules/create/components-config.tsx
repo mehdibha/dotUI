@@ -88,9 +88,19 @@ const radiusOptions = [
 
 interface ComponentDetailViewProps {
 	componentName: string;
+	selectedStyle?: string;
+	onStyleChange?: (componentName: string, style: string) => void;
+	selectedParams?: Record<string, string>;
+	onParamChange?: (paramName: string, value: string) => void;
 }
 
-export function ComponentDetailView({ componentName }: ComponentDetailViewProps) {
+export function ComponentDetailView({
+	componentName,
+	selectedStyle,
+	onStyleChange,
+	selectedParams,
+	onParamChange,
+}: ComponentDetailViewProps) {
 	const meta = componentMetaMap.get(componentName);
 	if (!meta) {
 		return <p className="text-sm text-fg-muted">Component not found.</p>;
@@ -107,7 +117,10 @@ export function ComponentDetailView({ componentName }: ComponentDetailViewProps)
 			{styles.length > 0 && (
 				<div className="flex flex-col gap-2">
 					<span className="font-medium text-fg-muted text-xs">Style</span>
-					<Select defaultSelectedKey={meta.defaultStyle ?? styles[0]}>
+					<Select
+						selectedKey={selectedStyle ?? meta.defaultStyle ?? styles[0]}
+						onSelectionChange={(key) => onStyleChange?.(componentName, key as string)}
+					>
 						<Button size="sm" className="w-full">
 							<SelectValue />
 							<ChevronDownIcon />
@@ -133,7 +146,10 @@ export function ComponentDetailView({ componentName }: ComponentDetailViewProps)
 				<div key={paramName} className="flex flex-col gap-2">
 					<span className="font-medium text-fg-muted text-xs">{formatParamName(paramName)}</span>
 					{paramDef.type === "radius" && (
-						<Select defaultSelectedKey={paramDef.default}>
+						<Select
+							selectedKey={selectedParams?.[paramName] ?? paramDef.default}
+							onSelectionChange={(key) => onParamChange?.(paramName, key as string)}
+						>
 							<Button size="sm" className="w-full">
 								<SelectValue />
 								<ChevronDownIcon />

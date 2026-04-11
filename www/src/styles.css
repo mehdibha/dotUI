@@ -13,6 +13,8 @@
 
 	--breakpoint-xs: 30rem;
 	--breakpoint-3xl: 120rem;
+
+	--radius-full: calc(infinity * 1px);
 }
 
 @utility container {

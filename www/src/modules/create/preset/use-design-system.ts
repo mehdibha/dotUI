@@ -1,0 +1,55 @@
+"use client";
+
+import { useCallback, useMemo } from "react";
+import { getRouteApi } from "@tanstack/react-router";
+
+import { decodePreset, encodePreset } from "./codec";
+import { DEFAULTS } from "./defaults";
+import type { DesignSystem } from "./types";
+
+const routeApi = getRouteApi("/_app/create");
+
+export function useDesignSystem() {
+	const { preset } = routeApi.useSearch();
+	const navigate = routeApi.useNavigate();
+
+	const designSystem: DesignSystem = useMemo(() => {
+		if (!preset) return DEFAULTS;
+		return decodePreset(preset);
+	}, [preset]);
+
+	const setDesignSystem = useCallback(
+		(updater: DesignSystem | ((prev: DesignSystem) => DesignSystem)) => {
+			const next =
+				typeof updater === "function" ? updater(designSystem) : updater;
+			const encoded = encodePreset(next);
+			navigate({
+				search: (prev) => ({ ...prev, preset: encoded }),
+				replace: true,
+			});
+		},
+		[designSystem, navigate],
+	);
+
+	const setComponentStyle = useCallback(
+		(componentName: string, style: string) => {
+			setDesignSystem((prev) => ({
+				...prev,
+				componentStyles: { ...prev.componentStyles, [componentName]: style },
+			}));
+		},
+		[setDesignSystem],
+	);
+
+	const setComponentParam = useCallback(
+		(paramName: string, value: string) => {
+			setDesignSystem((prev) => ({
+				...prev,
+				componentParams: { ...prev.componentParams, [paramName]: value },
+			}));
+		},
+		[setDesignSystem],
+	);
+
+	return { designSystem, setDesignSystem, setComponentStyle, setComponentParam };
+}
