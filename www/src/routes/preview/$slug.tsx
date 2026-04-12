@@ -1,8 +1,9 @@
 import { use, useCallback, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { z } from "zod";
 
 import { DesignSystemProvider } from "@/modules/core/styles";
-import { DEFAULTS, useIframeMessageListener } from "@/modules/create/preset";
+import { decodePreset, DEFAULTS, useIframeMessageListener } from "@/modules/create/preset";
 import type { DesignSystem } from "@/modules/create/preset";
 import { ExamplesIndex } from "@/registry/__generated__/examples";
 
@@ -20,6 +21,8 @@ function getExamplesPromise(slug: string) {
 }
 
 export const Route = createFileRoute("/preview/$slug")({
+	ssr: false,
+	validateSearch: z.object({ preset: z.string().optional().catch(undefined) }),
 	beforeLoad: ({ params }) => {
 		getExamplesPromise(params.slug);
 	},
@@ -28,7 +31,10 @@ export const Route = createFileRoute("/preview/$slug")({
 
 function PreviewPage() {
 	const { slug } = Route.useParams();
-	const [designSystem, setDesignSystem] = useState<DesignSystem>(DEFAULTS);
+	const { preset } = Route.useSearch();
+	const [designSystem, setDesignSystem] = useState<DesignSystem>(
+		() => (preset ? decodePreset(preset) : DEFAULTS),
+	);
 
 	useIframeMessageListener(
 		useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
@@ -50,6 +56,7 @@ function PreviewPage() {
 		<DesignSystemProvider
 			styles={designSystem.componentStyles}
 			params={designSystem.componentParams}
+			density={designSystem.density}
 		>
 			<Examples />
 		</DesignSystemProvider>

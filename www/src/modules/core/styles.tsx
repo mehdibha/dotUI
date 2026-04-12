@@ -6,6 +6,7 @@ import * as React from "react";
 
 type StyleSelections = Record<string, string>;
 type ParamSelections = Record<string, string>;
+type Density = "compact" | "default" | "comfortable";
 
 interface DesignSystemContextValue {
 	styles: StyleSelections;
@@ -29,15 +30,25 @@ function resolveCssValue(value: string): string {
 interface DesignSystemProviderProps {
 	styles: StyleSelections;
 	params?: ParamSelections;
+	density?: Density;
 	children: React.ReactNode;
 }
 
 function DesignSystemProvider({
 	styles,
 	params = {},
+	density,
 	children,
 }: DesignSystemProviderProps) {
 	const value = React.useMemo(() => ({ styles, params }), [styles, params]);
+
+	// Apply density class to the document body when inside an iframe
+	React.useLayoutEffect(() => {
+		if (!density) return;
+		const body = document.body;
+		body.classList.remove("density-compact", "density-default", "density-comfortable");
+		body.classList.add(`density-${density}`);
+	}, [density]);
 
 	const cssVars = React.useMemo(() => {
 		const vars: Record<string, string> = {};

@@ -17,7 +17,7 @@ function deriveDefaults(): DesignSystem {
 		}
 	}
 
-	return { componentStyles, componentParams };
+	return { componentStyles, componentParams, density: "compact" };
 }
 
 export const DEFAULTS: DesignSystem = deriveDefaults();

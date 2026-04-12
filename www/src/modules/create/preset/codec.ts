@@ -55,7 +55,9 @@ export function encodePreset(ds: DesignSystem): string | undefined {
 	const paramDiff = diffRecords(ds.componentParams, DEFAULTS.componentParams);
 	if (paramDiff) compact.p = paramDiff;
 
-	if (!compact.s && !compact.p) return undefined;
+	if (ds.density !== DEFAULTS.density) compact.d = ds.density;
+
+	if (!compact.s && !compact.p && !compact.d) return undefined;
 
 	const json = JSON.stringify(compact);
 	const compressed = deflateRaw(json, { level: 9 });
@@ -77,6 +79,7 @@ export function decodePreset(encoded: string): DesignSystem {
 		return {
 			componentStyles: { ...DEFAULTS.componentStyles, ...ds.componentStyles },
 			componentParams: { ...DEFAULTS.componentParams, ...ds.componentParams },
+			density: ds.density,
 		};
 	} catch {
 		return DEFAULTS;

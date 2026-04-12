@@ -20,7 +20,7 @@ import { Switch } from "@/registry/ui/switch";
 import { ColorsConfig } from "./colors-config";
 import { AllComponentsView, ComponentDetailView, getComponentDisplayName } from "./components-config";
 import { IconographyConfig } from "./iconography-config";
-import { LayoutConfig } from "./layout-config";
+import { DensityConfig, RadiusConfig } from "./layout-config";
 import { useDesignSystem } from "./preset";
 import { TypographyConfig } from "./typography-config";
 
@@ -112,32 +112,29 @@ const menu: MenuItem[] = [
 		config: <IconographyConfig />,
 	},
 	{
-		id: "layout",
-		title: "Layout",
+		id: "radius",
+		title: "Radius",
 		preview: (
-			<div className="flex flex-col gap-1.5">
-				<div className="grid grid-cols-2 gap-1">
-					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Spacing</span>
-						<p className="font-medium">Compact</p>
+			<div className="flex items-center gap-3">
+				{[
+					{ label: "SM", className: "rounded-sm" },
+					{ label: "MD", className: "rounded-md" },
+					{ label: "LG", className: "rounded-lg" },
+				].map((opt) => (
+					<div key={opt.label} className="flex flex-col items-center gap-1">
+						<div className={`size-8 border-2 border-fg-muted/40 ${opt.className}`} />
+						<span className="text-[10px] text-fg-muted">{opt.label}</span>
 					</div>
-					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Radius</span>
-						<p className="font-medium">Small</p>
-					</div>
-				</div>
-				{/* Mini card preview */}
-				<div className="mt-2 flex w-full flex-col gap-2 rounded-sm border border-border p-2.5">
-					<div className="h-2 w-2/3 rounded-sm bg-fg/15" />
-					<div className="h-1.5 w-full rounded-sm bg-fg-muted/10" />
-					<div className="flex items-center gap-1.5">
-						<div className="h-5 flex-1 rounded-sm bg-primary/20" />
-						<div className="h-5 flex-1 rounded-sm border border-border" />
-					</div>
-				</div>
+				))}
 			</div>
 		),
-		config: <LayoutConfig />,
+		config: <RadiusConfig />,
+	},
+	{
+		id: "density",
+		title: "Density",
+		preview: "dynamic",
+		config: null,
 	},
 	{
 		id: "components",
@@ -160,7 +157,7 @@ const routeApi = getRouteApi("/_app/create");
 export function CustomizerPanel() {
 	const { panel, preview } = routeApi.useSearch();
 	const navigate = routeApi.useNavigate();
-	const { designSystem, setComponentStyle, setComponentParam } = useDesignSystem();
+	const { designSystem, setComponentStyle, setComponentParam, setDensity } = useDesignSystem();
 
 	const navStack = useMemo(() => (panel ? panel.split(".") : []), [panel]);
 
@@ -186,6 +183,16 @@ export function CustomizerPanel() {
 					<>
 						<ViewHeader title="Components" onBack={pop} />
 						<AllComponentsView onSelect={(comp) => push(comp)} />
+					</>
+				);
+			}
+			if (topLevel === "density") {
+				return (
+					<>
+						<ViewHeader title="Density" onBack={pop} />
+						<div className="mt-4">
+							<DensityConfig value={designSystem.density} onChange={setDensity} />
+						</div>
 					</>
 				);
 			}
@@ -280,7 +287,13 @@ export function CustomizerPanel() {
 								className="flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover"
 							>
 								<div className="text-left text-fg-muted">{item.title}</div>
-								<div>{item.preview}</div>
+								<div>
+									{item.id === "density" ? (
+										<p className="font-medium capitalize">{designSystem.density}</p>
+									) : (
+										item.preview
+									)}
+								</div>
 							</AriaButton>
 						))}
 					</div>

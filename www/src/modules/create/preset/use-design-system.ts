@@ -5,7 +5,7 @@ import { getRouteApi } from "@tanstack/react-router";
 
 import { decodePreset, encodePreset } from "./codec";
 import { DEFAULTS } from "./defaults";
-import type { DesignSystem } from "./types";
+import type { Density, DesignSystem } from "./types";
 
 const routeApi = getRouteApi("/_app/create");
 
@@ -51,5 +51,12 @@ export function useDesignSystem() {
 		[setDesignSystem],
 	);
 
-	return { designSystem, setDesignSystem, setComponentStyle, setComponentParam };
+	const setDensity = useCallback(
+		(density: Density) => {
+			setDesignSystem((prev) => ({ ...prev, density }));
+		},
+		[setDesignSystem],
+	);
+
+	return { designSystem, setDesignSystem, setComponentStyle, setComponentParam, setDensity };
 }
