@@ -228,7 +228,7 @@ export function CustomizerPanel() {
 	return (
 		<div className="relative flex w-72 flex-col rounded-xl border bg-card">
 			{/* Header */}
-			<div className="relative overflow-hidden border-b p-3">
+			<div className="relative overflow-hidden border-b p-2">
 				<div className="flex w-full items-center gap-2">
 					<Select
 						value={effectivePreview}
@@ -236,9 +236,9 @@ export function CustomizerPanel() {
 						isDisabled={!!activeComponent}
 						className="min-w-0 flex-1"
 					>
-						<Button size="sm" className="w-full pr-2!">
+						<Button size="sm" className="w-full">
 							<SelectValue className="truncate" />
-							<ChevronDownIcon />
+							<ChevronDownIcon data-icon-end="" />
 						</Button>
 						<Popover>
 							<Command>

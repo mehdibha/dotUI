@@ -92,7 +92,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			<head>
 				<HeadContent />
 			</head>
-			<body className="density-compact min-h-screen bg-bg font-sans text-fg antialiased">
+			<body className="density-default min-h-screen bg-bg font-sans text-fg antialiased">
 				{children}
 				<TanStackRouterDevtools position="bottom-right" />
 				<Scripts />

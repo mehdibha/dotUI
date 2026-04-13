@@ -6,7 +6,7 @@ import { Button } from "@/registry/ui/button";
 
 export default function ButtonExamples() {
 	return (
-		<Examples>
+		<Examples className="**:data-button:capitalize">
 			<ButtonVariantsAndSizes />
 			<ButtonIconRight />
 			<ButtonIconLeft />
@@ -43,7 +43,7 @@ const ButtonIconRight = () => {
 					{variants.map((variant) => (
 						<Button key={variant} size={size} variant={variant}>
 							{variant}
-							<ArrowRightIcon />
+							<ArrowRightIcon data-icon-end="" />
 						</Button>
 					))}
 				</div>
@@ -59,7 +59,7 @@ const ButtonIconLeft = () => {
 				<div key={size} className="flex w-full items-center gap-3">
 					{variants.map((variant) => (
 						<Button key={variant} size={size} variant={variant}>
-							<ArrowLeftIcon />
+							<ArrowLeftIcon data-icon-start="" />
 							{variant}
 						</Button>
 					))}

@@ -49,7 +49,7 @@
 		@apply text-sm *:[svg]:not-with-[size]:size-4;
 	}
 	.cn-button-size-xs {
-		@apply h-6 gap-1 px-2 has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3;
+		@apply h-6 gap-1 px-2 has-data-icon-end:pr-1.5 text-xs has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3;
 	}
 	.cn-button-size-sm {
 		@apply h-7 gap-1 px-2.5 text-[0.8125rem] has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5;
@@ -89,7 +89,7 @@
 		@apply h-9 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2;
 	}
 	.cn-button-size-lg {
-		@apply h-10 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2;
+		@apply h-10 gap-1.5 px-3 has-data-icon-end:pr-2 has-data-icon-start:pl-2;
 	}
 	.cn-button-size-icon-xs {
 		@apply size-7;
