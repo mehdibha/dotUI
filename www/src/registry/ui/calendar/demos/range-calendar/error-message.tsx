@@ -4,7 +4,7 @@ import React from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import type { DateRange } from "react-aria-components";
 
-import { Calendar, CalendarGrid, CalendarHeader } from "@/registry/ui/calendar";
+import { CalendarGrid, CalendarHeader, RangeCalendar } from "@/registry/ui/calendar";
 import { FieldError } from "@/registry/ui/field";
 
 export default function Demo() {
@@ -15,10 +15,10 @@ export default function Demo() {
 	const isInvalid = range ? range.end.compare(range.start) > 7 : false;
 
 	return (
-		<Calendar mode="range" aria-label="Trip dates" value={range} onChange={setRange} isInvalid={isInvalid}>
+		<RangeCalendar aria-label="Trip dates" value={range} onChange={setRange} isInvalid={isInvalid}>
 			<CalendarHeader />
 			<CalendarGrid />
 			<FieldError>Maximum stay duration is 1 week</FieldError>
-		</Calendar>
+		</RangeCalendar>
 	);
 }

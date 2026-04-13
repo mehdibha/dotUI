@@ -1,18 +1,34 @@
 "use client";
 
-import { Calendar } from "@/registry/ui/calendar";
-import { DatePicker, DatePickerContent, DatePickerInput } from "@/registry/ui/date-picker";
+import { CalendarIcon } from "@/registry/__generated__/icons";
+import { Button } from "@/registry/ui/button";
+import { RangeCalendar } from "@/registry/ui/calendar";
+import { DateRangePicker } from "@/registry/ui/date-picker";
+import { DialogContent } from "@/registry/ui/dialog";
 import { Description, Label } from "@/registry/ui/field";
+import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
 	return (
-		<DatePicker mode="range">
+		<DateRangePicker>
 			<Label>Appointment</Label>
-			<DatePickerInput />
+			<InputGroup>
+				<DateInput slot="start" />
+				<span>–</span>
+				<DateInput slot="end" />
+				<InputAddon>
+					<Button variant="default" size="icon-sm">
+						<CalendarIcon />
+					</Button>
+				</InputAddon>
+			</InputGroup>
 			<Description>Please select a date.</Description>
-			<DatePickerContent>
-				<Calendar />
-			</DatePickerContent>
-		</DatePicker>
+			<Overlay type="popover" mobileType="drawer">
+				<DialogContent>
+					<RangeCalendar />
+				</DialogContent>
+			</Overlay>
+		</DateRangePicker>
 	);
 }

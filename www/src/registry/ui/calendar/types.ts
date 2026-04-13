@@ -11,15 +11,13 @@ import type {
 
 /**
  * A calendar displays one or more date grids and allows users to select a single date.
- * When mode is "range", it allows users to select a contiguous range of dates.
  */
-export type CalendarProps<T extends DateValue> =
-	| ({
-			mode?: "single";
-	  } & AriaCalendarProps<T>)
-	| ({
-			mode: "range";
-	  } & AriaRangeCalendarProps<T>);
+export interface CalendarProps<T extends DateValue> extends AriaCalendarProps<T> {}
+
+/**
+ * A range calendar displays one or more date grids and allows users to select a contiguous range of dates.
+ */
+export interface RangeCalendarProps<T extends DateValue> extends AriaRangeCalendarProps<T> {}
 
 /**
  * Missing description.

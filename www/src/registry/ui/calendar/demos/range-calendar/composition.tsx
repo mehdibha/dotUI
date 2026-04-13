@@ -5,18 +5,18 @@ import { Heading } from "react-aria-components";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import {
-	Calendar,
 	CalendarCell,
 	CalendarGrid,
 	CalendarGridBody,
 	CalendarGridHeader,
 	CalendarHeader,
 	CalendarHeaderCell,
+	RangeCalendar,
 } from "@/registry/ui/calendar";
 
 export default function Demo() {
 	return (
-		<Calendar mode="range" aria-label="Trip dates">
+		<RangeCalendar aria-label="Trip dates">
 			<CalendarHeader>
 				<Button slot="previous" className="rounded-full" size="icon-sm">
 					<ChevronLeftIcon />
@@ -30,6 +30,6 @@ export default function Demo() {
 				<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
 				<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
 			</CalendarGrid>
-		</Calendar>
+		</RangeCalendar>
 	);
 }

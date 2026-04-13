@@ -1,111 +1,47 @@
 "use client";
 
-import { useContext } from "react";
-import { CalendarIcon } from "lucide-react";
 import {
-	DateRangePicker as AriaDataRangePicker,
+	DateRangePicker as AriaDateRangePicker,
 	DatePicker as AriaDatePicker,
-	RangeCalendarContext as AriaRangeCalendarContext,
 	composeRenderProps,
 } from "react-aria-components";
 import type {
-	DateRangePickerProps as AriaDataRangePickerProps,
+	DateRangePickerProps as AriaDateRangePickerProps,
 	DatePickerProps as AriaDatePickerProps,
 	DateValue,
 } from "react-aria-components";
 
-import { Button } from "@/registry/ui/button";
-import { DialogContent, type DialogContentProps } from "@/registry/ui/dialog";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
-import { Overlay, type OverlayProps } from "@/registry/ui/overlay";
-import type { InputGroupProps } from "@/registry/ui/input";
-
 import { useStyles } from "./styles";
-
-// MARK: datePickerStyles
 
 // MARK: DatePicker
 
-type DatePickerProps<T extends DateValue> =
-	| ({
-			mode?: "single";
-	  } & AriaDatePickerProps<T>)
-	| ({
-			mode: "range";
-	  } & AriaDataRangePickerProps<T>);
+interface DatePickerProps<T extends DateValue> extends AriaDatePickerProps<T> {}
 
-const DatePicker = <T extends DateValue>({ mode = "single", className, ...props }: DatePickerProps<T>) => {
+const DatePicker = <T extends DateValue>({ className, ...props }: DatePickerProps<T>) => {
 	const datePickerStyles = useStyles();
-	if (mode === "range") {
-		return (
-			<AriaDataRangePicker
-				className={composeRenderProps(className as AriaDataRangePickerProps<T>["className"], (className) =>
-					datePickerStyles({ className }),
-				)}
-				{...(props as AriaDataRangePickerProps<T>)}
-			/>
-		);
-	}
-
 	return (
 		<AriaDatePicker
-			className={composeRenderProps(className as AriaDatePickerProps<T>["className"], (className) =>
-				datePickerStyles({ className }),
-			)}
-			{...(props as AriaDatePickerProps<T>)}
+			className={composeRenderProps(className, (className) => datePickerStyles({ className }))}
+			{...props}
 		/>
 	);
 };
 
-// MARK: DatePickerInput
+// MARK: DateRangePicker
 
-interface DatePickerInputProps extends InputGroupProps {}
+interface DateRangePickerProps<T extends DateValue> extends AriaDateRangePickerProps<T> {}
 
-const DatePickerInput = (props: DatePickerInputProps) => {
-	const rangeCalendarContext = useContext(AriaRangeCalendarContext);
-	const mode = rangeCalendarContext ? "range" : "single";
-
+const DateRangePicker = <T extends DateValue>({ className, ...props }: DateRangePickerProps<T>) => {
+	const datePickerStyles = useStyles();
 	return (
-		<InputGroup {...props}>
-			{mode === "single" ? (
-				<DateInput />
-			) : (
-				<>
-					<DateInput slot="start" />
-					<span>–</span>
-					<DateInput slot="end" />
-				</>
-			)}
-			<InputAddon>
-				<Button size="icon">
-					<CalendarIcon />
-				</Button>
-			</InputAddon>
-		</InputGroup>
-	);
-};
-
-// MARK: DatePickerContent
-
-interface DatePickerContentProps
-	extends DialogContentProps,
-		Pick<OverlayProps, "type" | "mobileType" | "popoverProps"> {}
-
-const DatePickerContent = ({
-	children,
-	type = "popover",
-	mobileType,
-	popoverProps,
-	...props
-}: DatePickerContentProps) => {
-	return (
-		<Overlay type={type} mobileType={mobileType} popoverProps={popoverProps}>
-			<DialogContent {...props}>{children}</DialogContent>
-		</Overlay>
+		<AriaDateRangePicker
+			className={composeRenderProps(className, (className) => datePickerStyles({ className }))}
+			{...props}
+		/>
 	);
 };
 
 // MARK: exports
 
-export type { DatePickerContentProps, DatePickerInputProps, DatePickerProps };
-export { DatePicker, DatePickerContent, DatePickerInput };
+export type { DatePickerProps, DateRangePickerProps };
+export { DatePicker, DateRangePicker };

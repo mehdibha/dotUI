@@ -159,6 +159,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Calendar
 	Calendar: "@/components/ui/calendar",
+	RangeCalendar: "@/components/ui/calendar",
 	CalendarHeader: "@/components/ui/calendar",
 	CalendarGrid: "@/components/ui/calendar",
 	CalendarGridHeader: "@/components/ui/calendar",
@@ -168,8 +169,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// DatePicker
 	DatePicker: "@/components/ui/date-picker",
-	DatePickerInput: "@/components/ui/date-picker",
-	DatePickerContent: "@/components/ui/date-picker",
+	DateRangePicker: "@/components/ui/date-picker",
 
 	// DateField
 	DateField: "@/components/ui/date-field",

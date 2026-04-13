@@ -1,8 +1,13 @@
 "use client";
 
-import { Calendar } from "@/registry/ui/calendar";
-import { DatePicker, DatePickerContent, DatePickerInput } from "@/registry/ui/date-picker";
+import { CalendarIcon } from "@/registry/__generated__/icons";
+import { Button } from "@/registry/ui/button";
+import { RangeCalendar } from "@/registry/ui/calendar";
+import { DateRangePicker } from "@/registry/ui/date-picker";
+import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
+import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Overlay } from "@/registry/ui/overlay";
 
 interface DateRangePickerPlaygroundProps {
 	label?: string;
@@ -16,12 +21,23 @@ export function DateRangePickerPlayground({
 	isReadOnly = false,
 }: DateRangePickerPlaygroundProps) {
 	return (
-		<DatePicker mode="range" isDisabled={isDisabled} isReadOnly={isReadOnly}>
+		<DateRangePicker isDisabled={isDisabled} isReadOnly={isReadOnly}>
 			{label && <Label>{label}</Label>}
-			<DatePickerInput />
-			<DatePickerContent>
-				<Calendar mode="range" />
-			</DatePickerContent>
-		</DatePicker>
+			<InputGroup>
+				<DateInput slot="start" />
+				<span>–</span>
+				<DateInput slot="end" />
+				<InputAddon>
+					<Button variant="default" size="icon-sm">
+						<CalendarIcon />
+					</Button>
+				</InputAddon>
+			</InputGroup>
+			<Overlay type="popover" mobileType="drawer">
+				<DialogContent>
+					<RangeCalendar />
+				</DialogContent>
+			</Overlay>
+		</DateRangePicker>
 	);
 }

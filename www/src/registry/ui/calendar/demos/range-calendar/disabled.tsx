@@ -1,5 +1,5 @@
-import { Calendar } from "@/registry/ui/calendar";
+import { RangeCalendar } from "@/registry/ui/calendar";
 
 export default function Demo() {
-	return <Calendar mode="range" aria-label="Trip dates" isDisabled />;
+	return <RangeCalendar aria-label="Trip dates" isDisabled />;
 }

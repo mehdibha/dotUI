@@ -2,12 +2,11 @@
 
 import { parseDate } from "@internationalized/date";
 
-import { Calendar } from "@/registry/ui/calendar";
+import { RangeCalendar } from "@/registry/ui/calendar";
 
 export default function Demo() {
 	return (
-		<Calendar
-			mode="range"
+		<RangeCalendar
 			aria-label="Trip dates"
 			isReadOnly
 			value={{

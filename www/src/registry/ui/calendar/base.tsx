@@ -31,54 +31,22 @@ import type { CalendarCellStyles } from "./styles";
 
 // MARK: calendarStyles
 
-// MARK: seperator
+// MARK: Calendar
 
-type CalendarProps<T extends DateValue> =
-	| ({
-			mode?: "single";
-	  } & AriaCalendarProps<T>)
-	| ({
-			mode: "range";
-	  } & AriaRangeCalendarProps<T>);
+interface CalendarProps<T extends DateValue> extends AriaCalendarProps<T> {}
 
-const Calendar = <T extends DateValue>({ mode, className, ...props }: CalendarProps<T>) => {
+const Calendar = <T extends DateValue>({ className, ...props }: CalendarProps<T>) => {
 	const { root } = useStyles()();
-	const rangeCalendarContext = useSlottedContext(AriaRangeCalendarContext);
 	const calendarContext = useSlottedContext(AriaCalendarContext);
+	const standalone = !calendarContext;
 
-	if (mode === "range" || rangeCalendarContext) {
-		const standalone = Object.keys(rangeCalendarContext ?? {}).length === 0;
-		return (
-			<AriaRangeCalendar
-				className={composeRenderProps(className as AriaRangeCalendarProps<T>["className"], (className) =>
-					root({ standalone, className }),
-				)}
-				{...(props as AriaRangeCalendarProps<T>)}
-			>
-				{composeRenderProps(
-					props.children as AriaRangeCalendarProps<T>["children"],
-					(children) =>
-						children ?? (
-							<>
-								<CalendarHeader />
-								<CalendarGrid />
-							</>
-						),
-				)}
-			</AriaRangeCalendar>
-		);
-	}
-
-	const standalone = !!calendarContext;
 	return (
 		<AriaCalendar
-			className={composeRenderProps(className as AriaCalendarProps<T>["className"], (className) =>
-				root({ standalone, className }),
-			)}
-			{...(props as AriaCalendarProps<T>)}
+			className={composeRenderProps(className, (className) => root({ standalone, className }))}
+			{...props}
 		>
 			{composeRenderProps(
-				props.children as AriaCalendarProps<T>["children"],
+				props.children,
 				(children) =>
 					children ?? (
 						<>
@@ -88,6 +56,34 @@ const Calendar = <T extends DateValue>({ mode, className, ...props }: CalendarPr
 					),
 			)}
 		</AriaCalendar>
+	);
+};
+
+// MARK: RangeCalendar
+
+interface RangeCalendarProps<T extends DateValue> extends AriaRangeCalendarProps<T> {}
+
+const RangeCalendar = <T extends DateValue>({ className, ...props }: RangeCalendarProps<T>) => {
+	const { root } = useStyles()();
+	const rangeCalendarContext = useSlottedContext(AriaRangeCalendarContext);
+	const standalone = Object.keys(rangeCalendarContext ?? {}).length === 0;
+
+	return (
+		<AriaRangeCalendar
+			className={composeRenderProps(className, (className) => root({ standalone, className }))}
+			{...props}
+		>
+			{composeRenderProps(
+				props.children,
+				(children) =>
+					children ?? (
+						<>
+							<CalendarHeader />
+							<CalendarGrid />
+						</>
+					),
+			)}
+		</AriaRangeCalendar>
 	);
 };
 
@@ -233,6 +229,7 @@ export type {
 	CalendarHeaderCellProps,
 	CalendarHeaderProps,
 	CalendarProps,
+	RangeCalendarProps,
 };
 export {
 	Calendar,
@@ -242,5 +239,6 @@ export {
 	CalendarGridHeader,
 	CalendarHeader,
 	CalendarHeaderCell,
+	RangeCalendar,
 	calendarStyles,
 };

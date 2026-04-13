@@ -20,18 +20,33 @@ npx shadcn@latest add @dotui/date-picker
 Use date pickers to allow users to select a date using a field and a calendar popover.
 
 ```tsx
+import { CalendarIcon } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { DatePicker, DatePickerContent, DatePickerInput } from "@/components/ui/date-picker";
+import { DatePicker } from "@/components/ui/date-picker";
+import { DialogContent } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/field";
+import { DateInput, InputAddon, InputGroup } from "@/components/ui/input";
+import { Overlay } from "@/components/ui/overlay";
 ```
 
 ```tsx
 <DatePicker>
   <Label>Date</Label>
-  <DatePickerInput />
-  <DatePickerContent>
-    <Calendar />
-  </DatePickerContent>
+  <InputGroup>
+    <DateInput />
+    <InputAddon>
+      <Button variant="default" size="icon-sm">
+        <CalendarIcon />
+      </Button>
+    </InputAddon>
+  </InputGroup>
+  <Overlay type="popover" mobileType="drawer">
+    <DialogContent>
+      <Calendar />
+    </DialogContent>
+  </Overlay>
 </DatePicker>
 ```
 
@@ -60,8 +75,8 @@ import { Label } from "@/components/ui/field";
 
 ### DatePicker
 
-<Reference name="date-picker-input" />
+<Reference name="date-picker" />
 
-### DatePickerContent
+### DateRangePicker
 
-<Reference name="date-picker-content" />
+<Reference name="date-range-picker" />

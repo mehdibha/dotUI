@@ -225,9 +225,7 @@ export const { useAppForm } = createFormHook({
 		DatePicker: (props: DatePickerProps<DateValue>) => {
 			const field = useFieldContext<DateValue | null>();
 			return (
-				// @ts-expect-error - TODO: fix this
 				<DatePicker
-					mode="single"
 					value={undefined}
 					onChange={(value) => field.handleChange(value)}
 					onBlur={field.handleBlur}

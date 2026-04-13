@@ -3,7 +3,7 @@
 import { getLocalTimeZone, today } from "@internationalized/date";
 import type { DateValue } from "@internationalized/date";
 
-import { Calendar } from "@/registry/ui/calendar";
+import { RangeCalendar } from "@/registry/ui/calendar";
 
 export default function Demo() {
 	const now = today(getLocalTimeZone());
@@ -17,8 +17,7 @@ export default function Demo() {
 		disabledRanges.some((interval) => date.compare(interval[0]) >= 0 && date.compare(interval[1]) <= 0);
 
 	return (
-		<Calendar
-			mode="range"
+		<RangeCalendar
 			aria-label="Trip dates"
 			minValue={today(getLocalTimeZone())}
 			isDateUnavailable={isDateUnavailable}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar } from "@/registry/ui/calendar";
+import { Calendar, RangeCalendar } from "@/registry/ui/calendar";
 
 interface CalendarPlaygroundProps {
 	isDisabled?: boolean;
@@ -17,5 +17,5 @@ interface RangeCalendarPlaygroundProps {
 }
 
 export function RangeCalendarPlayground({ isDisabled = false, isReadOnly = false }: RangeCalendarPlaygroundProps) {
-	return <Calendar mode="range" aria-label="Date range" isDisabled={isDisabled} isReadOnly={isReadOnly} />;
+	return <RangeCalendar aria-label="Date range" isDisabled={isDisabled} isReadOnly={isReadOnly} />;
 }

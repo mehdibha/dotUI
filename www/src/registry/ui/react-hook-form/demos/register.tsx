@@ -5,13 +5,16 @@ import { parseDate } from "@internationalized/date";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { CalendarIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Calendar } from "@/registry/ui/calendar";
 import { Checkbox, CheckboxIndicator } from "@/registry/ui/checkbox";
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/registry/ui/combobox";
-import { DatePicker, DatePickerContent, DatePickerInput } from "@/registry/ui/date-picker";
+import { DatePicker } from "@/registry/ui/date-picker";
+import { DialogContent } from "@/registry/ui/dialog";
 import { FieldGroup, Label } from "@/registry/ui/field";
-import { Input } from "@/registry/ui/input";
+import { DateInput, Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Overlay } from "@/registry/ui/overlay";
 import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { FormControl } from "@/registry/ui/react-hook-form";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
@@ -102,10 +105,19 @@ export default function Demo() {
 							{...props}
 						>
 							<Label>Birth Date</Label>
-							<DatePickerInput />
-							<DatePickerContent>
-								<Calendar aria-label="Pick a date" />
-							</DatePickerContent>
+							<InputGroup>
+								<DateInput />
+								<InputAddon>
+									<Button variant="default" size="icon-sm">
+										<CalendarIcon />
+									</Button>
+								</InputAddon>
+							</InputGroup>
+							<Overlay type="popover" mobileType="drawer">
+								<DialogContent>
+									<Calendar aria-label="Pick a date" />
+								</DialogContent>
+							</Overlay>
 						</DatePicker>
 					)}
 				/>
