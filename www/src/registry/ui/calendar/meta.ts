@@ -15,7 +15,7 @@ const calendarMeta = {
 			target: "ui/calendar.tsx",
 		},
 	],
-	registryDependencies: ["button", "text", "focus-styles"],
+	registryDependencies: ["button", "select", "text", "focus-styles"],
 } satisfies RegistryItem;
 
 export default calendarMeta;

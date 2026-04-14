@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { getLocalTimeZone, isSameDay, isWeekend, Time, today } from "@internationalized/date";
+import { getLocalTimeZone, isWeekend, Time, today } from "@internationalized/date";
 import { TimerIcon } from "lucide-react";
-import { CalendarCell as AriaCalendarCell, I18nProvider, Text, useLocale } from "react-aria-components";
-import type { DateRange, DateValue, Key } from "react-aria-components";
+import { CalendarCell as AriaCalendarCell, I18nProvider, useLocale } from "react-aria-components";
+import type { DateRange, DateValue } from "react-aria-components";
 
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
@@ -19,10 +19,12 @@ import {
 	CalendarHeader,
 	CalendarHeaderCell,
 	CalendarHeading,
+	CalendarMonthPicker,
+	CalendarYearPicker,
 	RangeCalendar,
 } from "@/registry/ui/calendar";
 import { Card, CardContent, CardFooter } from "@/registry/ui/card";
-import { FieldError, Label } from "@/registry/ui/field";
+import { Label } from "@/registry/ui/field";
 import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 import { TimeField } from "@/registry/ui/time-field";
@@ -37,6 +39,8 @@ export default function CalendarExamples() {
 			<CalendarWithPresets />
 			<CalendarWithTime />
 			<CalendarWithDropdowns />
+			<CalendarWithSlottedPickers />
+			<CalendarShortWeekdays />
 			<CalendarCustomDays />
 			<CalendarDisabled />
 			<CalendarMinMax />
@@ -44,7 +48,7 @@ export default function CalendarExamples() {
 			<CalendarInvalid />
 			<CalendarTodayIndicator />
 			<CalendarInternational />
-			<CalendarShortWeekdays />
+			<CalendarScheduler />
 		</Examples>
 	);
 }
@@ -52,7 +56,21 @@ export default function CalendarExamples() {
 function CalendarSingle() {
 	return (
 		<Example title="Single">
-			<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())} />
+			<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())}>
+				<CalendarHeader>
+					<Button slot="previous" variant="quiet" size="icon">
+						<ChevronLeftIcon />
+					</Button>
+					<CalendarHeading />
+					<Button slot="next" variant="quiet" size="icon">
+						<ChevronRightIcon />
+					</Button>
+				</CalendarHeader>
+				<CalendarGrid>
+					<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+					<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
+				</CalendarGrid>
+			</Calendar>
 		</Example>
 	);
 }
@@ -75,21 +93,10 @@ function CalendarRangeMultipleMonths() {
 	return (
 		<Example title="Range Multiple Months" className="lg:col-span-2">
 			<RangeCalendar aria-label="Trip dates" visibleDuration={{ months: 2 }}>
-				<CalendarHeader>
-					<Button slot="previous" variant="quiet" size="icon">
-						<ChevronLeftIcon />
-					</Button>
-					<CalendarHeading />
-					<Button slot="next" variant="quiet" size="icon">
-						<ChevronRightIcon />
-					</Button>
-				</CalendarHeader>
+				<CalendarHeader />
 				<div className="flex items-start gap-4">
 					{Array.from({ length: 2 }).map((_, index) => (
-						<CalendarGrid key={index} offset={{ months: index }}>
-							<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
-							<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
-						</CalendarGrid>
+						<CalendarGrid key={index} offset={{ months: index }} />
 					))}
 				</div>
 			</RangeCalendar>
@@ -205,33 +212,49 @@ const MONTHS = [
 	"December",
 ];
 
+// Approach B — dedicated picker components
 function CalendarWithDropdowns() {
-	const [date, setDate] = React.useState<DateValue | null>(today(getLocalTimeZone()));
-	const [focused, setFocused] = React.useState<DateValue>(today(getLocalTimeZone()));
-
-	const currentYear = today(getLocalTimeZone()).year;
-	const years = Array.from({ length: 21 }, (_, i) => currentYear - 10 + i);
-
-	const handleMonthChange = (key: Key | null) => {
-		if (key == null) return;
-		setFocused(focused.set({ month: Number(key) }));
-	};
-	const handleYearChange = (key: Key | null) => {
-		if (key == null) return;
-		setFocused(focused.set({ year: Number(key) }));
-	};
-
 	return (
-		<Example title="With Dropdowns">
+		<Example title="With Dropdowns (dedicated)">
 			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
-					<Calendar aria-label="Date" value={date} onChange={setDate} focusedValue={focused} onFocusChange={setFocused}>
+				<CardContent>
+					<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())}>
 						<CalendarHeader>
 							<Button slot="previous" variant="default" size="icon-sm">
 								<ChevronLeftIcon />
 							</Button>
-							<div className="flex gap-1.5">
-								<Select aria-label="Month" value={String(focused.month)} onChange={handleMonthChange}>
+							<div className="flex flex-1 gap-1.5">
+								<CalendarMonthPicker />
+								<CalendarYearPicker />
+							</div>
+							<Button slot="next" variant="default" size="icon-sm">
+								<ChevronRightIcon />
+							</Button>
+						</CalendarHeader>
+						<CalendarGrid />
+					</Calendar>
+				</CardContent>
+			</Card>
+		</Example>
+	);
+}
+
+// Approach A — slotted SelectContext via slot="month-picker" / "year-picker"
+function CalendarWithSlottedPickers() {
+	const currentYear = today(getLocalTimeZone()).year;
+	const years = Array.from({ length: 21 }, (_, i) => currentYear - 10 + i);
+
+	return (
+		<Example title="With Dropdowns (slotted)">
+			<Card className="mx-auto w-fit">
+				<CardContent className="p-0">
+					<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())}>
+						<CalendarHeader>
+							<Button slot="previous" variant="default" size="icon-sm">
+								<ChevronLeftIcon />
+							</Button>
+							<div className="flex flex-1 gap-1.5">
+								<Select slot="month-picker">
 									<SelectTrigger slot={null} />
 									<SelectContent>
 										{MONTHS.map((name, i) => (
@@ -241,7 +264,7 @@ function CalendarWithDropdowns() {
 										))}
 									</SelectContent>
 								</Select>
-								<Select aria-label="Year" value={String(focused.year)} onChange={handleYearChange}>
+								<Select slot="year-picker">
 									<SelectTrigger slot={null} />
 									<SelectContent>
 										{years.map((y) => (
@@ -303,26 +326,9 @@ function CalendarInvalid() {
 		<Example title="Invalid">
 			<Card className="mx-auto w-fit">
 				<CardContent>
-					<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())} isInvalid>
-						<CalendarHeader>
-							<Button slot="previous" variant="quiet" size="icon">
-								<ChevronLeftIcon />
-							</Button>
-							<CalendarHeading />
-							<Button slot="next" variant="quiet" size="icon">
-								<ChevronRightIcon />
-							</Button>
-						</CalendarHeader>
-						<CalendarGrid>
-							<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
-							<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
-						</CalendarGrid>
-					</Calendar>
-					<div className="mt-2">
-						<p className="text-fg-danger text-sm">We are closed on weekends</p>
-					</div>
+					<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())} isInvalid />
+					<p className="mt-2 text-fg-danger text-sm">We are closed on weekends</p>
 				</CardContent>
-				{/* <CardFooter className="flex-wrap gap-2 border-t"></CardFooter> */}
 			</Card>
 		</Example>
 	);
@@ -332,15 +338,7 @@ function CalendarTodayIndicator() {
 	return (
 		<Example title="Today Indicator">
 			<Calendar aria-label="Date">
-				<CalendarHeader>
-					<Button slot="previous" variant="quiet" size="icon">
-						<ChevronLeftIcon />
-					</Button>
-					<CalendarHeading />
-					<Button slot="next" variant="quiet" size="icon">
-						<ChevronRightIcon />
-					</Button>
-				</CalendarHeader>
+				<CalendarHeader />
 				<CalendarGrid>
 					<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
 					<CalendarGridBody>
@@ -377,19 +375,8 @@ function CalendarShortWeekdays() {
 	return (
 		<Example title="Short Weekdays">
 			<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())}>
-				<CalendarHeader>
-					<Button slot="previous" variant="quiet" size="icon">
-						<ChevronLeftIcon />
-					</Button>
-					<CalendarHeading />
-					<Button slot="next" variant="quiet" size="icon">
-						<ChevronRightIcon />
-					</Button>
-				</CalendarHeader>
-				<CalendarGrid weekdayStyle="short">
-					<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
-					<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
-				</CalendarGrid>
+				<CalendarHeader />
+				<CalendarGrid weekdayStyle="short" />
 			</Calendar>
 		</Example>
 	);
@@ -409,23 +396,15 @@ function CalendarCustomDays() {
 
 	return (
 		<Example title="Custom Days" className="lg:col-span-2">
-			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
+			<Card>
+				<CardContent>
 					<RangeCalendar
 						aria-label="Stay"
 						value={range}
 						onChange={setRange}
 						className="[--cell-size:calc(var(--spacing)*12)]"
 					>
-						<CalendarHeader>
-							<Button slot="previous" variant="quiet" size="icon">
-								<ChevronLeftIcon />
-							</Button>
-							<CalendarHeading />
-							<Button slot="next" variant="quiet" size="icon">
-								<ChevronRightIcon />
-							</Button>
-						</CalendarHeader>
+						<CalendarHeader />
 						<CalendarGrid>
 							<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
 							<CalendarGridBody>
@@ -447,6 +426,137 @@ function CalendarCustomDays() {
 						</CalendarGrid>
 					</RangeCalendar>
 				</CardContent>
+			</Card>
+		</Example>
+	);
+}
+
+type ScheduleEvent = {
+	id: string;
+	title: string;
+	date: DateValue;
+	color: "accent" | "blue" | "emerald" | "amber" | "rose";
+};
+
+const EVENT_PILL_CLASS: Record<ScheduleEvent["color"], string> = {
+	accent: "bg-accent/15 text-accent border-accent/30",
+	blue: "bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-500/30",
+	emerald: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30",
+	amber: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
+	rose: "bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/30",
+};
+
+const EVENT_DOT_CLASS: Record<ScheduleEvent["color"], string> = {
+	accent: "bg-accent",
+	blue: "bg-blue-500",
+	emerald: "bg-emerald-500",
+	amber: "bg-amber-500",
+	rose: "bg-rose-500",
+};
+
+function CalendarScheduler() {
+	const now = today(getLocalTimeZone());
+	const [selected, setSelected] = React.useState<DateValue | null>(now);
+
+	const events = React.useMemo<ScheduleEvent[]>(
+		() => [
+			{ id: "1", title: "Standup", date: now.subtract({ days: 2 }), color: "accent" },
+			{ id: "2", title: "Design review", date: now, color: "blue" },
+			{ id: "3", title: "1:1 with Sam", date: now, color: "emerald" },
+			{ id: "4", title: "Product sync", date: now, color: "amber" },
+			{ id: "5", title: "Lunch w/ Alex", date: now, color: "rose" },
+			{ id: "6", title: "Sprint planning", date: now.add({ days: 1 }), color: "accent" },
+			{ id: "7", title: "Ship v2.1", date: now.add({ days: 3 }), color: "blue" },
+			{ id: "8", title: "Customer call", date: now.add({ days: 4 }), color: "emerald" },
+			{ id: "9", title: "Team offsite", date: now.add({ days: 7 }), color: "amber" },
+			{ id: "10", title: "Board meeting", date: now.add({ days: 9 }), color: "rose" },
+			{ id: "11", title: "Interview: FE eng", date: now.add({ days: 12 }), color: "accent" },
+			{ id: "12", title: "Launch review", date: now.add({ days: 14 }), color: "blue" },
+			{ id: "13", title: "QBR prep", date: now.add({ days: 18 }), color: "emerald" },
+		],
+		[now],
+	);
+
+	const eventsByDay = React.useMemo(() => {
+		const map = new Map<string, ScheduleEvent[]>();
+		for (const e of events) {
+			const key = e.date.toString();
+			const list = map.get(key) ?? [];
+			list.push(e);
+			map.set(key, list);
+		}
+		return map;
+	}, [events]);
+
+	const getEvents = (d: DateValue) => eventsByDay.get(d.toString()) ?? [];
+	const selectedEvents = selected ? getEvents(selected) : [];
+	const selectedLabel = selected
+		? selected.toDate(getLocalTimeZone()).toLocaleDateString(undefined, {
+				weekday: "long",
+				month: "long",
+				day: "numeric",
+			})
+		: "";
+
+	return (
+		<Example title="Scheduler" className="lg:col-span-2">
+			<Card className="mx-auto flex w-fit flex-col overflow-hidden md:flex-row md:items-stretch">
+				<CardContent className="p-4">
+					<Calendar aria-label="Schedule" value={selected} onChange={setSelected}>
+						<CalendarHeader />
+						<CalendarGrid>
+							<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+							<CalendarGridBody>
+								{(date) => (
+									<AriaCalendarCell
+										date={date}
+										className="focus-visible:focus-ring flex aspect-auto h-20 cursor-pointer flex-col gap-0.5 rounded-md selected:bg-accent/10 p-1 text-left outside-month:text-fg-muted/40 outline-none selected:ring-1 selected:ring-accent/40 transition-colors hover:bg-inverse/5"
+									>
+										{({ formattedDate, isOutsideMonth }) => {
+											const dayEvents = getEvents(date);
+											const visible = dayEvents.slice(0, 2);
+											const overflow = dayEvents.length - visible.length;
+											return (
+												<>
+													<span className="px-1 font-medium text-center text-xs">{formattedDate}</span>
+													{!isOutsideMonth && dayEvents.length > 0 && (
+														<div className="flex min-w-0 flex-col gap-0.5">
+															{visible.map((e) => (
+																<span
+																	key={e.id}
+																	className={`truncate rounded-sm border px-1 text-[10px] leading-tight ${EVENT_PILL_CLASS[e.color]}`}
+																>
+																	{e.title}
+																</span>
+															))}
+															{overflow > 0 && <span className="px-1 text-[10px] text-fg-muted">+{overflow} more</span>}
+														</div>
+													)}
+												</>
+											);
+										}}
+									</AriaCalendarCell>
+								)}
+							</CalendarGridBody>
+						</CalendarGrid>
+					</Calendar>
+				</CardContent>
+				<div className="flex w-full flex-col border-t p-4 md:w-64 md:border-t-0 md:border-l">
+					<h4 className="font-medium text-sm">{selectedLabel || "No date selected"}</h4>
+					<p className="mt-0.5 text-fg-muted text-xs">
+						{selectedEvents.length === 0
+							? "Nothing scheduled."
+							: `${selectedEvents.length} event${selectedEvents.length > 1 ? "s" : ""}`}
+					</p>
+					<div className="mt-3 flex flex-col gap-2">
+						{selectedEvents.map((e) => (
+							<div key={e.id} className="flex items-center gap-2 rounded-md border p-2">
+								<span className={`size-2 shrink-0 rounded-full ${EVENT_DOT_CLASS[e.color]}`} />
+								<span className="truncate text-xs">{e.title}</span>
+							</div>
+						))}
+					</div>
+				</div>
 			</Card>
 		</Example>
 	);
