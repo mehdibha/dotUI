@@ -11,7 +11,10 @@ const baseStyles = tv({
 
 const defaultStyles = tv({
 	extend: baseStyles,
-	base: [fieldStyles().field({ orientation: "vertical" })],
+	base: [
+		"[.flex-1]:*:data-date-input:w-full [.w-full]:*:data-date-input:w-full [.w-full]:*:data-input-group:w-full",
+		fieldStyles().field({ orientation: "vertical" }),
+	],
 });
 
 export type TimeFieldStyles = typeof defaultStyles;

@@ -24,6 +24,19 @@
 	@apply border-border-focus ring-2 ring-border-focus-muted;
 }
 
+@utility no-highlight {
+	-webkit-tap-highlight-color: transparent;
+}
+
+@utility no-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
 @layer base {
 	* {
 		@apply border-border;
@@ -43,4 +56,5 @@
 
 @theme {
 	--ease-fluid-out: cubic-bezier(0.32, 0.72, 0, 1);
+	--cursor-interactive: default;
 }

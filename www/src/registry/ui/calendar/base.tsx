@@ -1,48 +1,41 @@
 "use client";
 
-import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import {
 	Calendar as AriaCalendar,
 	CalendarCell as AriaCalendarCell,
-	CalendarContext as AriaCalendarContext,
 	CalendarGrid as AriaCalendarGrid,
 	CalendarGridBody as AriaCalendarGridBody,
 	CalendarGridHeader as AriaCalendarGridHeader,
 	CalendarHeaderCell as AriaCalendarHeaderCell,
 	Heading as AriaHeading,
 	RangeCalendar as AriaRangeCalendar,
-	RangeCalendarContext as AriaRangeCalendarContext,
-	RangeCalendarStateContext as AriaRangeCalendarStateContext,
 	composeRenderProps,
-	useSlottedContext,
 } from "react-aria-components";
+import type React from "react";
 import type {
 	CalendarProps as AriaCalendarProps,
 	RangeCalendarProps as AriaRangeCalendarProps,
 	DateValue,
 } from "react-aria-components";
-import type { VariantProps } from "tailwind-variants";
 
 import { Button } from "@/registry/ui/button";
 
-import { calendarStyles, useCellStyles, useStyles } from "./styles";
-import type { CalendarCellStyles } from "./styles";
+import { useStyles } from "./styles";
 
 // MARK: calendarStyles
 
-// MARK: Calendar
+// MARK: seperator
 
 interface CalendarProps<T extends DateValue> extends AriaCalendarProps<T> {}
 
 const Calendar = <T extends DateValue>({ className, ...props }: CalendarProps<T>) => {
 	const { root } = useStyles()();
-	const calendarContext = useSlottedContext(AriaCalendarContext);
-	const standalone = !calendarContext;
 
 	return (
 		<AriaCalendar
-			className={composeRenderProps(className, (className) => root({ standalone, className }))}
+			data-calendar=""
+			className={composeRenderProps(className, (className) => root({ className }))}
 			{...props}
 		>
 			{composeRenderProps(
@@ -50,8 +43,19 @@ const Calendar = <T extends DateValue>({ className, ...props }: CalendarProps<T>
 				(children) =>
 					children ?? (
 						<>
-							<CalendarHeader />
-							<CalendarGrid />
+							<CalendarHeader>
+								<Button slot="previous" variant="quiet" size="icon">
+									<ChevronLeftIcon />
+								</Button>
+								<CalendarHeading />
+								<Button slot="next" variant="quiet" size="icon">
+									<ChevronRightIcon />
+								</Button>
+							</CalendarHeader>
+							<CalendarGrid>
+								<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+								<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
+							</CalendarGrid>
 						</>
 					),
 			)}
@@ -59,18 +63,17 @@ const Calendar = <T extends DateValue>({ className, ...props }: CalendarProps<T>
 	);
 };
 
-// MARK: RangeCalendar
+// MARK: seperator
 
 interface RangeCalendarProps<T extends DateValue> extends AriaRangeCalendarProps<T> {}
 
 const RangeCalendar = <T extends DateValue>({ className, ...props }: RangeCalendarProps<T>) => {
 	const { root } = useStyles()();
-	const rangeCalendarContext = useSlottedContext(AriaRangeCalendarContext);
-	const standalone = Object.keys(rangeCalendarContext ?? {}).length === 0;
 
 	return (
 		<AriaRangeCalendar
-			className={composeRenderProps(className, (className) => root({ standalone, className }))}
+			data-range-calendar=""
+			className={composeRenderProps(className, (className) => root({ className }))}
 			{...props}
 		>
 			{composeRenderProps(
@@ -78,8 +81,19 @@ const RangeCalendar = <T extends DateValue>({ className, ...props }: RangeCalend
 				(children) =>
 					children ?? (
 						<>
-							<CalendarHeader />
-							<CalendarGrid />
+							<CalendarHeader>
+								<Button slot="previous" variant="quiet" size="icon">
+									<ChevronLeftIcon />
+								</Button>
+								<CalendarHeading />
+								<Button slot="next" variant="quiet" size="icon">
+									<ChevronRightIcon />
+								</Button>
+							</CalendarHeader>
+							<CalendarGrid>
+								<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+								<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
+							</CalendarGrid>
 						</>
 					),
 			)}
@@ -93,21 +107,15 @@ interface CalendarHeaderProps extends React.ComponentProps<"header"> {}
 
 const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
 	const { header } = useStyles()();
-	return (
-		<header className={header({ className })} {...props}>
-			{props.children ?? (
-				<>
-					<Button slot="previous" variant="default" size="icon-sm">
-						<ChevronLeftIcon />
-					</Button>
-					<AriaHeading className="font-medium text-sm" />
-					<Button slot="next" variant="default" size="icon-sm">
-						<ChevronRightIcon />
-					</Button>
-				</>
-			)}
-		</header>
-	);
+	return <header className={header({ className })} {...props} />;
+};
+
+// MARK: seperator
+
+interface CalendarHeadingProps extends React.ComponentProps<typeof AriaHeading> {}
+const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
+	const { heading } = useStyles()();
+	return <AriaHeading className={heading({ className })} {...props} />;
 };
 
 // MARK: seperator
@@ -116,16 +124,7 @@ interface CalendarGridProps extends React.ComponentProps<typeof AriaCalendarGrid
 
 const CalendarGrid = ({ className, ...props }: CalendarGridProps) => {
 	const { grid } = useStyles()();
-	return (
-		<AriaCalendarGrid className={grid({ className })} {...props}>
-			{props.children ?? (
-				<>
-					<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
-					<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
-				</>
-			)}
-		</AriaCalendarGrid>
-	);
+	return <AriaCalendarGrid className={grid({ className })} {...props} />;
 };
 
 // MARK: seperator
@@ -154,69 +153,24 @@ const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
 
 // MARK: seperator
 
-interface CalendarCellProps
-	extends React.ComponentProps<typeof AriaCalendarCell>,
-		Omit<VariantProps<CalendarCellStyles>, "range"> {}
-const CalendarCell = ({ variant = "accent", children, className, ...props }: CalendarCellProps) => {
-	const { cellRoot, cell } = useCellStyles()();
-	const rangeCalendarState = React.use(AriaRangeCalendarStateContext);
-	const range = !!rangeCalendarState;
+interface CalendarCellProps extends React.ComponentProps<typeof AriaCalendarCell> {}
+const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
+	const { cell, cellInner } = useStyles()();
 
 	return (
 		<AriaCalendarCell
-			{...props}
 			className={composeRenderProps(className, (className) =>
-				cellRoot({
-					range,
-					variant,
+				cell({
 					className,
 				}),
 			)}
+			{...props}
 		>
-			{composeRenderProps(
-				children,
-				(
-					_,
-					{
-						isSelected,
-						isFocused,
-						isHovered,
-						isPressed,
-						isUnavailable,
-						isDisabled,
-						isFocusVisible,
-						isInvalid,
-						isOutsideMonth,
-						isOutsideVisibleRange,
-						isSelectionEnd,
-						isSelectionStart,
-						formattedDate,
-					},
-				) => (
-					<span
-						data-slot="calendar-cell"
-						data-rac=""
-						data-focused={isFocused || undefined}
-						data-selected={isSelected || undefined}
-						data-hovered={isHovered || undefined}
-						data-pressed={isPressed || undefined}
-						data-unavailable={isUnavailable || undefined}
-						data-disabled={isDisabled || undefined}
-						data-focus-visible={isFocusVisible || undefined}
-						data-invalid={isInvalid || undefined}
-						data-outside-month={isOutsideMonth || undefined}
-						data-outside-visible-range={isOutsideVisibleRange || undefined}
-						data-selection-end={isSelectionEnd || undefined}
-						data-selection-start={isSelectionStart || undefined}
-						className={cell({
-							range,
-							variant,
-						})}
-					>
-						{formattedDate}
-					</span>
-				),
-			)}
+			{composeRenderProps(props.children, (children, { formattedDate }) => (
+				<span data-cell-inner="" className={cellInner()}>
+					{children ?? formattedDate}
+				</span>
+			))}
 		</AriaCalendarCell>
 	);
 };
@@ -228,6 +182,7 @@ export type {
 	CalendarGridProps,
 	CalendarHeaderCellProps,
 	CalendarHeaderProps,
+	CalendarHeadingProps,
 	CalendarProps,
 	RangeCalendarProps,
 };
@@ -239,6 +194,6 @@ export {
 	CalendarGridHeader,
 	CalendarHeader,
 	CalendarHeaderCell,
+	CalendarHeading,
 	RangeCalendar,
-	calendarStyles,
 };

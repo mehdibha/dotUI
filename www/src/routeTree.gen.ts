@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as OgRouteImport } from './routes/og'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
@@ -23,6 +24,11 @@ import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/do
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
 import { Route as AppBlocksChar123CategoryChar125RouteImport } from './routes/_app/blocks/{-$category}'
 
+const PlaygroundRoute = PlaygroundRouteImport.update({
+  id: '/playground',
+  path: '/playground',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OgRoute = OgRouteImport.update({
   id: '/og',
   path: '/og',
@@ -93,6 +99,7 @@ const AppBlocksChar123CategoryChar125Route =
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/og': typeof OgRoute
+  '/playground': typeof PlaygroundRoute
   '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/components': typeof AppComponentsRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/og': typeof OgRoute
+  '/playground': typeof PlaygroundRoute
   '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/components': typeof AppComponentsRoute
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteRouteWithChildren
   '/og': typeof OgRoute
+  '/playground': typeof PlaygroundRoute
   '/_app/blocks': typeof AppBlocksRouteRouteWithChildren
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
   '/_app/components': typeof AppComponentsRoute
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/og'
+    | '/playground'
     | '/blocks'
     | '/docs'
     | '/components'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/og'
+    | '/playground'
     | '/blocks'
     | '/docs'
     | '/components'
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_app'
     | '/og'
+    | '/playground'
     | '/_app/blocks'
     | '/_app/docs'
     | '/_app/components'
@@ -183,6 +195,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
   OgRoute: typeof OgRoute
+  PlaygroundRoute: typeof PlaygroundRoute
   DemosSlugRoute: typeof DemosSlugRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   ViewBlockRoute: typeof ViewBlockRoute
@@ -190,6 +203,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/playground': {
+      id: '/playground'
+      path: '/playground'
+      fullPath: '/playground'
+      preLoaderRoute: typeof PlaygroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/og': {
       id: '/og'
       path: '/og'
@@ -333,6 +353,7 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
   OgRoute: OgRoute,
+  PlaygroundRoute: PlaygroundRoute,
   DemosSlugRoute: DemosSlugRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   ViewBlockRoute: ViewBlockRoute,

@@ -28,7 +28,7 @@ export function Example({ component: Component, title, children, className, ...p
 					<Component />
 				</div>
 				<Dialog>
-					<Button variant="quiet" className="absolute inset-0 z-2 size-auto border hover:border-border-hover" />
+					<Button variant="quiet" className="absolute inset-0 z-2 size-auto h-auto! border hover:border-border-hover" />
 					<Modal>
 						<DialogContent>
 							{/* <DialogHeader>

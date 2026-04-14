@@ -66,6 +66,7 @@ const InputGroup = ({ className, children, size = "md", ...props }: InputGroupPr
 	return (
 		<AriaGroup
 			role="presentation"
+			data-input-group=""
 			data-slot="input-group"
 			data-size={size}
 			className={composeRenderProps(className, (className) => group({ size, className }))}
@@ -180,6 +181,7 @@ const DateInput = ({ className, size, ...props }: DateInputProps) => {
 	return (
 		<AriaDateInput
 			data-slot="date-input"
+			data-date-input=""
 			data-in-group={inGroup || undefined}
 			className={composeRenderProps(className, (className) => input({ className, inGroup, size }))}
 			{...props}

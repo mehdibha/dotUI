@@ -1,34 +1,35 @@
 "use client";
 
 import React from "react";
-import { getLocalTimeZone, today } from "@internationalized/date";
-import { CalendarCell as AriaCalendarCell } from "react-aria-components";
+import { getLocalTimeZone, isSameDay, isWeekend, Time, today } from "@internationalized/date";
+import { TimerIcon } from "lucide-react";
+import { CalendarCell as AriaCalendarCell, I18nProvider, Text, useLocale } from "react-aria-components";
 import type { DateRange, DateValue, Key } from "react-aria-components";
 
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
-import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from "@/registry/__generated__/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import {
 	Calendar,
+	CalendarCell,
 	CalendarGrid,
 	CalendarGridBody,
 	CalendarGridHeader,
 	CalendarHeader,
 	CalendarHeaderCell,
+	CalendarHeading,
 	RangeCalendar,
 } from "@/registry/ui/calendar";
 import { Card, CardContent, CardFooter } from "@/registry/ui/card";
-import { Dialog, DialogContent } from "@/registry/ui/dialog";
-import { Label } from "@/registry/ui/field";
-import { DateInput } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
+import { FieldError, Label } from "@/registry/ui/field";
+import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 import { TimeField } from "@/registry/ui/time-field";
 
 export default function CalendarExamples() {
 	return (
-		<Examples>
+		<Examples className="**:data-example-preview:items-center **:data-example-preview:justify-center lg:grid-cols-2">
 			<CalendarSingle />
 			<CalendarRange />
 			<CalendarRangeMultipleMonths />
@@ -37,71 +38,61 @@ export default function CalendarExamples() {
 			<CalendarWithTime />
 			<CalendarWithDropdowns />
 			<CalendarCustomDays />
-			<CalendarInCard />
-			<CalendarInPopover />
+			<CalendarDisabled />
+			<CalendarMinMax />
+			<CalendarUnavailableWeekends />
+			<CalendarInvalid />
+			<CalendarTodayIndicator />
+			<CalendarInternational />
+			<CalendarShortWeekdays />
 		</Examples>
 	);
 }
 
 function CalendarSingle() {
-	const [date, setDate] = React.useState<DateValue | null>(today(getLocalTimeZone()));
 	return (
 		<Example title="Single">
-			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
-					<Calendar aria-label="Date" value={date} onChange={setDate} />
-				</CardContent>
-			</Card>
+			<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())} />
 		</Example>
 	);
 }
 
 function CalendarRange() {
-	const [range, setRange] = React.useState<DateRange | null>({
-		start: today(getLocalTimeZone()).subtract({ days: 30 }),
-		end: today(getLocalTimeZone()),
-	});
 	return (
 		<Example title="Range">
-			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
-					<RangeCalendar
-						aria-label="Trip dates"
-						value={range}
-						onChange={setRange}
-						maxValue={today(getLocalTimeZone())}
-					>
-						<CalendarHeader />
-						<div className="flex gap-2">
-							<CalendarGrid />
-							<CalendarGrid offset={{ months: 1 }} />
-						</div>
-					</RangeCalendar>
-				</CardContent>
-			</Card>
+			<RangeCalendar
+				aria-label="Trip dates"
+				defaultValue={{
+					start: today(getLocalTimeZone()).subtract({ days: 6 }),
+					end: today(getLocalTimeZone()),
+				}}
+			/>
 		</Example>
 	);
 }
 
 function CalendarRangeMultipleMonths() {
-	const [range, setRange] = React.useState<DateRange | null>({
-		start: today(getLocalTimeZone()),
-		end: today(getLocalTimeZone()).add({ days: 60 }),
-	});
 	return (
-		<Example title="Range Multiple Months">
-			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
-					<RangeCalendar aria-label="Trip dates" value={range} onChange={setRange}>
-						<CalendarHeader />
-						<div className="flex gap-2">
-							<CalendarGrid />
-							<CalendarGrid offset={{ months: 1 }} />
-							<CalendarGrid offset={{ months: 2 }} />
-						</div>
-					</RangeCalendar>
-				</CardContent>
-			</Card>
+		<Example title="Range Multiple Months" className="lg:col-span-2">
+			<RangeCalendar aria-label="Trip dates" visibleDuration={{ months: 2 }}>
+				<CalendarHeader>
+					<Button slot="previous" variant="quiet" size="icon">
+						<ChevronLeftIcon />
+					</Button>
+					<CalendarHeading />
+					<Button slot="next" variant="quiet" size="icon">
+						<ChevronRightIcon />
+					</Button>
+				</CalendarHeader>
+				<div className="flex items-start gap-4">
+					{Array.from({ length: 2 }).map((_, index) => (
+						<CalendarGrid key={index} offset={{ months: index }}>
+							<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+							<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
+						</CalendarGrid>
+					))}
+				</div>
+			</RangeCalendar>
 		</Example>
 	);
 }
@@ -115,11 +106,7 @@ function CalendarBookedDates() {
 
 	return (
 		<Example title="Booked Dates">
-			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
-					<Calendar aria-label="Booking date" value={date} onChange={setDate} isDateUnavailable={isBooked} />
-				</CardContent>
-			</Card>
+			<Calendar aria-label="Booking date" value={date} onChange={setDate} isDateUnavailable={isBooked} />
 		</Example>
 	);
 }
@@ -138,22 +125,22 @@ function CalendarWithPresets() {
 
 	return (
 		<Example title="With Presets">
-			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
+			<Card className="mx-auto w-fit max-w-[300px]">
+				<CardContent>
 					<Calendar
 						aria-label="Date"
 						value={date}
 						onChange={setDate}
 						focusedValue={focused}
 						onFocusChange={setFocused}
+						className="mx-auto"
 					/>
 				</CardContent>
-				<CardFooter className="flex flex-wrap gap-2 border-t pt-4">
+				<CardFooter className="flex-wrap gap-2 border-t">
 					{presets.map((preset) => (
 						<Button
 							key={preset.label}
 							variant="default"
-							size="sm"
 							className="flex-1"
 							onPress={() => {
 								const next = today(getLocalTimeZone()).add({ days: preset.days });
@@ -175,17 +162,27 @@ function CalendarWithTime() {
 	return (
 		<Example title="With Time">
 			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
+				<CardContent>
 					<Calendar aria-label="Date" value={date} onChange={setDate} />
 				</CardContent>
-				<CardFooter className="flex flex-col gap-3 border-t pt-4">
-					<TimeField>
+				<CardFooter className="flex flex-col gap-4 border-t">
+					<TimeField className="w-full" defaultValue={new Time(11, 45)}>
 						<Label>Start time</Label>
-						<DateInput />
+						<InputGroup>
+							<InputAddon>
+								<TimerIcon />
+							</InputAddon>
+							<DateInput />
+						</InputGroup>
 					</TimeField>
-					<TimeField>
+					<TimeField className="w-full" defaultValue={new Time(13, 30)}>
 						<Label>End time</Label>
-						<DateInput />
+						<InputGroup>
+							<InputAddon>
+								<TimerIcon />
+							</InputAddon>
+							<DateInput />
+						</InputGroup>
 					</TimeField>
 				</CardFooter>
 			</Card>
@@ -228,13 +225,7 @@ function CalendarWithDropdowns() {
 		<Example title="With Dropdowns">
 			<Card className="mx-auto w-fit">
 				<CardContent className="p-0">
-					<Calendar
-						aria-label="Date"
-						value={date}
-						onChange={setDate}
-						focusedValue={focused}
-						onFocusChange={setFocused}
-					>
+					<Calendar aria-label="Date" value={date} onChange={setDate} focusedValue={focused} onFocusChange={setFocused}>
 						<CalendarHeader>
 							<Button slot="previous" variant="default" size="icon-sm">
 								<ChevronLeftIcon />
@@ -273,73 +264,190 @@ function CalendarWithDropdowns() {
 	);
 }
 
+function CalendarDisabled() {
+	return (
+		<Example title="Disabled">
+			<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())} isDisabled />
+		</Example>
+	);
+}
+
+function CalendarMinMax() {
+	const now = today(getLocalTimeZone());
+	return (
+		<Example title="Min & Max">
+			<Calendar
+				aria-label="Date"
+				defaultValue={now}
+				minValue={now.subtract({ days: 3 })}
+				maxValue={now.add({ days: 14 })}
+			/>
+		</Example>
+	);
+}
+
+function CalendarUnavailableWeekends() {
+	const isWeekend = (d: DateValue) => {
+		const day = d.toDate(getLocalTimeZone()).getDay();
+		return day === 0 || day === 6;
+	};
+	return (
+		<Example title="Unavailable Weekends">
+			<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())} isDateUnavailable={isWeekend} />
+		</Example>
+	);
+}
+
+function CalendarInvalid() {
+	return (
+		<Example title="Invalid">
+			<Card className="mx-auto w-fit">
+				<CardContent>
+					<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())} isInvalid>
+						<CalendarHeader>
+							<Button slot="previous" variant="quiet" size="icon">
+								<ChevronLeftIcon />
+							</Button>
+							<CalendarHeading />
+							<Button slot="next" variant="quiet" size="icon">
+								<ChevronRightIcon />
+							</Button>
+						</CalendarHeader>
+						<CalendarGrid>
+							<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+							<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
+						</CalendarGrid>
+					</Calendar>
+					<div className="mt-2">
+						<p className="text-fg-danger text-sm">We are closed on weekends</p>
+					</div>
+				</CardContent>
+				{/* <CardFooter className="flex-wrap gap-2 border-t"></CardFooter> */}
+			</Card>
+		</Example>
+	);
+}
+
+function CalendarTodayIndicator() {
+	return (
+		<Example title="Today Indicator">
+			<Calendar aria-label="Date">
+				<CalendarHeader>
+					<Button slot="previous" variant="quiet" size="icon">
+						<ChevronLeftIcon />
+					</Button>
+					<CalendarHeading />
+					<Button slot="next" variant="quiet" size="icon">
+						<ChevronRightIcon />
+					</Button>
+				</CalendarHeader>
+				<CalendarGrid>
+					<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+					<CalendarGridBody>
+						{(date) => (
+							<CalendarCell date={date}>
+								{({ formattedDate, isToday }) => (
+									<>
+										<span>{formattedDate}</span>
+										{isToday && (
+											<span className="absolute bottom-1 left-1/2 size-0.75 -translate-x-1/2 rounded-full bg-fg-muted" />
+										)}
+									</>
+								)}
+							</CalendarCell>
+						)}
+					</CalendarGridBody>
+				</CalendarGrid>
+			</Calendar>
+		</Example>
+	);
+}
+
+function CalendarInternational() {
+	return (
+		<Example title="International (Arabic)">
+			<I18nProvider locale="ar-EG">
+				<Calendar aria-label="التاريخ" defaultValue={today(getLocalTimeZone())} />
+			</I18nProvider>
+		</Example>
+	);
+}
+
+function CalendarShortWeekdays() {
+	return (
+		<Example title="Short Weekdays">
+			<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())}>
+				<CalendarHeader>
+					<Button slot="previous" variant="quiet" size="icon">
+						<ChevronLeftIcon />
+					</Button>
+					<CalendarHeading />
+					<Button slot="next" variant="quiet" size="icon">
+						<ChevronRightIcon />
+					</Button>
+				</CalendarHeader>
+				<CalendarGrid weekdayStyle="short">
+					<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
+					<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
+				</CalendarGrid>
+			</Calendar>
+		</Example>
+	);
+}
+
 function CalendarCustomDays() {
+	const { locale } = useLocale();
 	const [range, setRange] = React.useState<DateRange | null>({
 		start: today(getLocalTimeZone()).add({ days: 2 }),
 		end: today(getLocalTimeZone()).add({ days: 9 }),
 	});
+
 	const getPrice = (d: DateValue) => {
-		const day = d.toDate(getLocalTimeZone()).getDay();
-		return day === 0 || day === 6 ? "$120" : "$100";
+		if (isWeekend(d, locale)) return "$120";
+		return "$100";
 	};
 
 	return (
-		<Example title="Custom Days">
+		<Example title="Custom Days" className="lg:col-span-2">
 			<Card className="mx-auto w-fit">
 				<CardContent className="p-0">
-					<RangeCalendar aria-label="Stay" value={range} onChange={setRange}>
-						<CalendarHeader />
+					<RangeCalendar
+						aria-label="Stay"
+						value={range}
+						onChange={setRange}
+						className="[--cell-size:calc(var(--spacing)*12)]"
+					>
+						<CalendarHeader>
+							<Button slot="previous" variant="quiet" size="icon">
+								<ChevronLeftIcon />
+							</Button>
+							<CalendarHeading />
+							<Button slot="next" variant="quiet" size="icon">
+								<ChevronRightIcon />
+							</Button>
+						</CalendarHeader>
 						<CalendarGrid>
 							<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
 							<CalendarGridBody>
 								{(date) => (
-									<AriaCalendarCell
-										date={date}
-										className="flex size-14 cursor-pointer flex-col items-center justify-center rounded-md text-sm outline-none transition-colors hover:bg-inverse/10 focus-visible:focus-ring selected:bg-accent/20 selection-end:bg-accent selection-end:text-fg-on-accent selection-start:bg-accent selection-start:text-fg-on-accent outside-month:text-fg-muted/40"
-									>
-										{({ formattedDate, isOutsideMonth }) => (
-											<>
+									<CalendarCell date={date}>
+										{({ formattedDate, date, isOutsideMonth }) => (
+											<span className="flex flex-col">
 												<span>{formattedDate}</span>
-												{!isOutsideMonth && <span className="text-[10px] opacity-80">{getPrice(date)}</span>}
-											</>
+												{!isOutsideMonth && (
+													<span className="in-selection-end:text-fg-on-accent/60 in-selection-start:text-fg-on-accent/60 text-fg-muted text-xs">
+														{getPrice(date)}
+													</span>
+												)}
+											</span>
 										)}
-									</AriaCalendarCell>
+									</CalendarCell>
 								)}
 							</CalendarGridBody>
 						</CalendarGrid>
 					</RangeCalendar>
 				</CardContent>
 			</Card>
-		</Example>
-	);
-}
-
-function CalendarInCard() {
-	return (
-		<Example title="In Card">
-			<Card className="mx-auto w-fit">
-				<CardContent className="p-0">
-					<Calendar aria-label="Date" />
-				</CardContent>
-			</Card>
-		</Example>
-	);
-}
-
-function CalendarInPopover() {
-	return (
-		<Example title="In Popover">
-			<Dialog>
-				<Button variant="default" className="gap-2">
-					<CalendarIcon />
-					Open Calendar
-				</Button>
-				<Overlay type="popover">
-					<DialogContent className="in-popover:p-0">
-						<Calendar aria-label="Date" />
-					</DialogContent>
-				</Overlay>
-			</Dialog>
 		</Example>
 	);
 }
