@@ -82,6 +82,7 @@
 		"mdast-util-mdx-jsx": "^3.2.0",
 		"nitro": "^3.0.260311-beta",
 		"prettier": "^3.7.4",
+		"react-scan": "^0.5.3",
 		"rimraf": "^6.0.1",
 		"shadcn": "^3.6.1",
 		"tsx": "^4.21.0",

@@ -90,6 +90,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head>
+				{/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
 				<HeadContent />
 			</head>
 			<body className="density-default min-h-screen bg-bg font-sans text-fg antialiased">

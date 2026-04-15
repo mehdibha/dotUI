@@ -3,12 +3,13 @@
 import React from "react";
 import { getLocalTimeZone, isWeekend, Time, today } from "@internationalized/date";
 import { TimerIcon } from "lucide-react";
-import { CalendarCell as AriaCalendarCell, I18nProvider, useLocale } from "react-aria-components";
+import { I18nProvider, useLocale } from "react-aria-components";
 import type { DateRange, DateValue } from "react-aria-components";
 
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/registry/__generated__/icons";
+import { ChevronLeftIcon, ChevronRightIcon, PlusIcon, Trash2Icon } from "@/registry/__generated__/icons";
+import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
 import {
 	Calendar,
@@ -24,9 +25,16 @@ import {
 	RangeCalendar,
 } from "@/registry/ui/calendar";
 import { Card, CardContent, CardFooter } from "@/registry/ui/card";
+import { ColorPicker } from "@/registry/ui/color-picker";
+import { ColorSwatch } from "@/registry/ui/color-swatch";
+import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/registry/ui/color-swatch-picker";
+import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Group } from "@/registry/ui/group";
+import { DateInput, Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Popover } from "@/registry/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
+import { TextField } from "@/registry/ui/text-field";
 import { TimeField } from "@/registry/ui/time-field";
 
 export default function CalendarExamples() {
@@ -431,51 +439,45 @@ function CalendarCustomDays() {
 	);
 }
 
+type EventVariant = "accent" | "info" | "success" | "warning" | "danger";
 type ScheduleEvent = {
 	id: string;
 	title: string;
 	date: DateValue;
-	color: "accent" | "blue" | "emerald" | "amber" | "rose";
+	variant: EventVariant;
 };
 
-const EVENT_PILL_CLASS: Record<ScheduleEvent["color"], string> = {
-	accent: "bg-accent/15 text-accent border-accent/30",
-	blue: "bg-blue-500/15 text-blue-700 dark:text-blue-300 border-blue-500/30",
-	emerald: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30",
-	amber: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30",
-	rose: "bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/30",
-};
-
-const EVENT_DOT_CLASS: Record<ScheduleEvent["color"], string> = {
+const EVENT_DOT_CLASS: Record<EventVariant, string> = {
 	accent: "bg-accent",
-	blue: "bg-blue-500",
-	emerald: "bg-emerald-500",
-	amber: "bg-amber-500",
-	rose: "bg-rose-500",
+	info: "bg-info",
+	success: "bg-success",
+	warning: "bg-warning",
+	danger: "bg-danger",
 };
+
+const EVENT_VARIANTS: EventVariant[] = ["accent", "info", "success", "warning", "danger"];
+
+const INITIAL_EVENTS = (now: DateValue): ScheduleEvent[] => [
+	{ id: "1", title: "Standup", date: now.subtract({ days: 2 }), variant: "accent" },
+	{ id: "2", title: "Design review", date: now, variant: "info" },
+	{ id: "3", title: "1:1 with Sam", date: now, variant: "success" },
+	{ id: "4", title: "Product sync", date: now, variant: "warning" },
+	{ id: "5", title: "Lunch w/ Alex", date: now, variant: "danger" },
+	{ id: "6", title: "Sprint planning", date: now.add({ days: 1 }), variant: "accent" },
+	{ id: "7", title: "Ship v2.1", date: now.add({ days: 3 }), variant: "info" },
+	{ id: "8", title: "Customer call", date: now.add({ days: 4 }), variant: "success" },
+	{ id: "9", title: "Team offsite", date: now.add({ days: 7 }), variant: "warning" },
+	{ id: "10", title: "Board meeting", date: now.add({ days: 9 }), variant: "danger" },
+	{ id: "11", title: "Launch review", date: now.add({ days: 14 }), variant: "info" },
+];
 
 function CalendarScheduler() {
-	const now = today(getLocalTimeZone());
-	const [selected, setSelected] = React.useState<DateValue | null>(now);
-
-	const events = React.useMemo<ScheduleEvent[]>(
-		() => [
-			{ id: "1", title: "Standup", date: now.subtract({ days: 2 }), color: "accent" },
-			{ id: "2", title: "Design review", date: now, color: "blue" },
-			{ id: "3", title: "1:1 with Sam", date: now, color: "emerald" },
-			{ id: "4", title: "Product sync", date: now, color: "amber" },
-			{ id: "5", title: "Lunch w/ Alex", date: now, color: "rose" },
-			{ id: "6", title: "Sprint planning", date: now.add({ days: 1 }), color: "accent" },
-			{ id: "7", title: "Ship v2.1", date: now.add({ days: 3 }), color: "blue" },
-			{ id: "8", title: "Customer call", date: now.add({ days: 4 }), color: "emerald" },
-			{ id: "9", title: "Team offsite", date: now.add({ days: 7 }), color: "amber" },
-			{ id: "10", title: "Board meeting", date: now.add({ days: 9 }), color: "rose" },
-			{ id: "11", title: "Interview: FE eng", date: now.add({ days: 12 }), color: "accent" },
-			{ id: "12", title: "Launch review", date: now.add({ days: 14 }), color: "blue" },
-			{ id: "13", title: "QBR prep", date: now.add({ days: 18 }), color: "emerald" },
-		],
-		[now],
-	);
+	const now = React.useMemo(() => today(getLocalTimeZone()), []);
+	const [events, setEvents] = React.useState<ScheduleEvent[]>(() => INITIAL_EVENTS(now));
+	const [selectedDate, setSelectedDate] = React.useState<DateValue>(now);
+	const [newTitle, setNewTitle] = React.useState("");
+	const [newVariant, setNewVariant] = React.useState<EventVariant>("accent");
+	const idCounter = React.useRef(events.length + 1);
 
 	const eventsByDay = React.useMemo(() => {
 		const map = new Map<string, ScheduleEvent[]>();
@@ -489,28 +491,37 @@ function CalendarScheduler() {
 	}, [events]);
 
 	const getEvents = (d: DateValue) => eventsByDay.get(d.toString()) ?? [];
-	const selectedEvents = selected ? getEvents(selected) : [];
-	const selectedLabel = selected
-		? selected.toDate(getLocalTimeZone()).toLocaleDateString(undefined, {
-				weekday: "long",
-				month: "long",
-				day: "numeric",
-			})
-		: "";
+
+	const selectedLabel = selectedDate.toDate(getLocalTimeZone()).toLocaleDateString(undefined, {
+		weekday: "long",
+		month: "long",
+		day: "numeric",
+	});
+	const selectedEvents = getEvents(selectedDate);
+
+	const submitNewEvent = () => {
+		const trimmed = newTitle.trim();
+		if (!trimmed) return;
+		setEvents((prev) => [
+			...prev,
+			{ id: String(idCounter.current++), title: trimmed, date: selectedDate, variant: newVariant },
+		]);
+		setNewTitle("");
+	};
 
 	return (
 		<Example title="Scheduler" className="lg:col-span-2">
-			<Card className="mx-auto flex w-fit flex-col overflow-hidden md:flex-row md:items-stretch">
-				<CardContent className="p-4">
-					<Calendar aria-label="Schedule" value={selected} onChange={setSelected}>
+			<Card className="mx-auto w-fit overflow-hidden">
+				<CardContent className="flex flex-col gap-4 p-4 lg:flex-row">
+					<Calendar aria-label="Schedule" value={selectedDate} onChange={(d) => d && setSelectedDate(d)}>
 						<CalendarHeader />
 						<CalendarGrid>
 							<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
 							<CalendarGridBody>
 								{(date) => (
-									<AriaCalendarCell
+									<CalendarCell
 										date={date}
-										className="focus-visible:focus-ring flex aspect-auto h-20 cursor-pointer flex-col gap-0.5 rounded-md selected:bg-accent/10 p-1 text-left outside-month:text-fg-muted/40 outline-none selected:ring-1 selected:ring-accent/40 transition-colors hover:bg-inverse/5"
+										className="focus-visible:focus-ring flex aspect-auto h-20 w-full cursor-pointer flex-col items-stretch justify-start gap-0.5 overflow-hidden rounded-md selected:bg-accent/15! p-2 text-left outside-month:text-fg-muted/40 selected:text-fg! outline-none transition-colors hover:bg-inverse/5!"
 									>
 										{({ formattedDate, isOutsideMonth }) => {
 											const dayEvents = getEvents(date);
@@ -518,16 +529,19 @@ function CalendarScheduler() {
 											const overflow = dayEvents.length - visible.length;
 											return (
 												<>
-													<span className="px-1 font-medium text-center text-xs">{formattedDate}</span>
+													<span className="px-1 text-center font-medium text-xs">{formattedDate}</span>
 													{!isOutsideMonth && dayEvents.length > 0 && (
-														<div className="flex min-w-0 flex-col gap-0.5">
+														<div className="flex min-w-0 flex-col items-stretch gap-0.5">
 															{visible.map((e) => (
-																<span
+																<Badge
 																	key={e.id}
-																	className={`truncate rounded-sm border px-1 text-[10px] leading-tight ${EVENT_PILL_CLASS[e.color]}`}
+																	variant={e.variant}
+																	appearance="subtle"
+																	size="sm"
+																	className="flex w-full min-w-0 justify-start overflow-hidden"
 																>
-																	{e.title}
-																</span>
+																	<span className="min-w-0 flex-1 truncate">{e.title}</span>
+																</Badge>
 															))}
 															{overflow > 0 && <span className="px-1 text-[10px] text-fg-muted">+{overflow} more</span>}
 														</div>
@@ -535,28 +549,75 @@ function CalendarScheduler() {
 												</>
 											);
 										}}
-									</AriaCalendarCell>
+									</CalendarCell>
 								)}
 							</CalendarGridBody>
 						</CalendarGrid>
 					</Calendar>
-				</CardContent>
-				<div className="flex w-full flex-col border-t p-4 md:w-64 md:border-t-0 md:border-l">
-					<h4 className="font-medium text-sm">{selectedLabel || "No date selected"}</h4>
-					<p className="mt-0.5 text-fg-muted text-xs">
-						{selectedEvents.length === 0
-							? "Nothing scheduled."
-							: `${selectedEvents.length} event${selectedEvents.length > 1 ? "s" : ""}`}
-					</p>
-					<div className="mt-3 flex flex-col gap-2">
-						{selectedEvents.map((e) => (
-							<div key={e.id} className="flex items-center gap-2 rounded-md border p-2">
-								<span className={`size-2 shrink-0 rounded-full ${EVENT_DOT_CLASS[e.color]}`} />
-								<span className="truncate text-xs">{e.title}</span>
+					<div className="flex w-full min-w-64 flex-col gap-3 border-t pt-4 lg:w-72 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-4">
+						<div>
+							<h4 className="font-medium text-sm">{selectedLabel}</h4>
+							<p className="text-fg-muted text-xs">
+								{selectedEvents.length} {selectedEvents.length === 1 ? "event" : "events"}
+							</p>
+						</div>
+						{selectedEvents.length === 0 ? (
+							<p className="text-fg-muted text-sm">No events yet. Add one below.</p>
+						) : (
+							<ul className="flex flex-col gap-2">
+								{selectedEvents.map((e) => (
+									<li key={e.id} className="flex items-center gap-2 rounded-md border p-2">
+										<span className={`size-2 shrink-0 rounded-full ${EVENT_DOT_CLASS[e.variant]}`} />
+										<span className="flex-1 truncate text-sm">{e.title}</span>
+										<Button
+											variant="quiet"
+											size="icon-sm"
+											aria-label={`Remove ${e.title}`}
+											onPress={() => setEvents((prev) => prev.filter((ev) => ev.id !== e.id))}
+										>
+											<Trash2Icon />
+										</Button>
+									</li>
+								))}
+							</ul>
+						)}
+						<form
+							className="flex flex-col gap-2 border-t pt-3"
+							onSubmit={(e) => {
+								e.preventDefault();
+								submitNewEvent();
+							}}
+						>
+							<div className="flex items-center gap-2">
+								<TextField aria-label="Event title" value={newTitle} onChange={setNewTitle} className="flex-1 w-auto">
+									<InputGroup>
+										<InputAddon>
+											<ColorPicker>
+												<Button>
+													<ColorSwatch />
+												</Button>
+												<Popover>
+													<DialogContent>
+														<ColorSwatchPicker>
+															{[""].map((v) => (
+																<ColorSwatchPickerItem key={v} color={v} />
+															))}
+														</ColorSwatchPicker>
+													</DialogContent>
+												</Popover>
+											</ColorPicker>
+										</InputAddon>
+										<Input placeholder="New event…" className="w-auto" />
+									</InputGroup>
+								</TextField>
+								<Button type="submit" isDisabled={newTitle.trim().length === 0}>
+									<PlusIcon />
+									Add
+								</Button>
 							</div>
-						))}
+						</form>
 					</div>
-				</div>
+				</CardContent>
 			</Card>
 		</Example>
 	);
