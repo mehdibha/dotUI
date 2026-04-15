@@ -6,11 +6,13 @@ import { useStyles } from "./styles";
 
 // MARK: Card
 
-interface CardProps extends React.ComponentProps<"div"> {}
+interface CardProps extends React.ComponentProps<"div"> {
+	size?: "sm" | "default";
+}
 
-function Card({ className, ...props }: CardProps) {
+function Card({ className, size = "default", ...props }: CardProps) {
 	const { root } = useStyles()();
-	return <div data-card="" className={root({ className })} {...props} />;
+	return <div data-card="" data-size={size} className={root({ className })} {...props} />;
 }
 
 // MARK: CardHeader

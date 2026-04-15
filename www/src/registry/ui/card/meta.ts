@@ -7,6 +7,7 @@ const cardMeta = {
 	defaultStyle: "default",
 	styles: {
 		default: {},
+		tasnim: {},
 	},
 	files: [
 		{

@@ -6,6 +6,20 @@ import cardMeta from "./meta";
 
 const baseStyles = tv({
 	slots: {
+		root: "cn-card group/card flex flex-col rounded-(--card-radius) border bg-card has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-(--card-radius) *:[img]:last:rounded-b-(--card-radius)",
+		header:
+			"cn-card-header group/card-header @container/card-header grid auto-rows-min items-start rounded-t-(--card-radius) has-data-card-action:grid-cols-[1fr_auto] has-data-card-description:grid-rows-[auto_auto]",
+		title: "cn-card-title font-heading",
+		description: "cn-card-description text-fg-muted",
+		action: "cn-card-action col-start-2 row-span-2 row-start-1 self-start justify-self-end",
+		content: "cn-card-content",
+		footer: "cn-card-footer flex items-center rounded-b-(--card-radius)",
+	},
+});
+
+const defaultStyles = tv({
+	extend: baseStyles,
+	slots: {
 		root: "",
 		header: "",
 		title: "",
@@ -16,17 +30,16 @@ const baseStyles = tv({
 	},
 });
 
-const defaultStyles = tv({
+const tasnimStyles = tv({
 	extend: baseStyles,
 	slots: {
-		root: "flex flex-col gap-4 rounded-xl border bg-card py-4 text-fg shadow-sm",
-		header:
-			"@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-		title: "font-semibold leading-none",
-		description: "text-fg-muted text-sm",
-		action: "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
-		content: "flex-1 px-4",
-		footer: "flex items-center px-4 [.border-t]:pt-4",
+		root: "",
+		header: "",
+		title: "",
+		description: "",
+		action: "",
+		content: "",
+		footer: "border-t bg-neutral-900/50",
 	},
 });
 
@@ -34,4 +47,5 @@ export type CardStyles = typeof defaultStyles;
 
 export const { useStyles } = createStyles(cardMeta, {
 	default: defaultStyles,
+	tasnim: tasnimStyles,
 });

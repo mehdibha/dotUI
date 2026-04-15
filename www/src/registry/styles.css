@@ -3,6 +3,8 @@
 @import "./base/theme.css";
 @import "./base/fonts.css";
 
+@import "./ui/card/styles.css";
+
 /* dynamic styles */
 :root {
 	--alert-radius: var(--radius-lg);

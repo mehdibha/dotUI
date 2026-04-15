@@ -24,7 +24,7 @@ const defaultStyles = tv({
 		legend: ["mb-3 font-medium text-base"],
 		fieldGroup:
 			"group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
-		field: "flex items-start gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
+		field: "flex gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
 		fieldContent: "flex flex-col gap-1",
 		label: [
 			"inline-flex items-center gap-px text-fg text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",

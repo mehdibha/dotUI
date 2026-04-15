@@ -12,6 +12,7 @@ export const ExamplesIndex: Record<
   "breadcrumbs": () => import("@/registry/ui/breadcrumbs/examples"),
   "button": () => import("@/registry/ui/button/examples"),
   "calendar": () => import("@/registry/ui/calendar/examples"),
+  "card": () => import("@/registry/ui/card/examples"),
   "checkbox": () => import("@/registry/ui/checkbox/examples"),
   "checkbox-group": () => import("@/registry/ui/checkbox-group/examples"),
   "color-area": () => import("@/registry/ui/color-area/examples"),

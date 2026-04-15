@@ -8,7 +8,7 @@ export interface ExamplesProps extends React.ComponentProps<"div"> {
 
 export function Examples({ className, children, ...props }: ExamplesProps) {
 	return (
-		<div className={cn("grid grid-cols-3 gap-4", className)} {...props}>
+		<div className={cn("grid gap-4", className)} {...props}>
 			{children}
 		</div>
 	);

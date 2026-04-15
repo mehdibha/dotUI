@@ -289,6 +289,10 @@ export const DemosIndex: Record<
     files: ["ui/calendar/demos/range-calendar/visible-months.tsx"],
     component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/visible-months")),
   },
+  "card/demos/basic": {
+    files: ["ui/card/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/basic")),
+  },
   "checkbox/demos/card": {
     files: ["ui/checkbox/demos/card.tsx"],
     component: React.lazy(() => import("@/registry/ui/checkbox/demos/card")),
