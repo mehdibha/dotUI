@@ -189,109 +189,117 @@ export const DemosIndex: Record<
     files: ["ui/button/demos/variants.tsx"],
     component: React.lazy(() => import("@/registry/ui/button/demos/variants")),
   },
-  "calendar/demos/calendar/composition": {
-    files: ["ui/calendar/demos/calendar/composition.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/composition")),
+  "calendar/demos/booked-dates": {
+    files: ["ui/calendar/demos/booked-dates.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/booked-dates")),
   },
-  "calendar/demos/calendar/controlled": {
-    files: ["ui/calendar/demos/calendar/controlled.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/controlled")),
+  "calendar/demos/custom-days": {
+    files: ["ui/calendar/demos/custom-days.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/custom-days")),
   },
-  "calendar/demos/calendar/default": {
-    files: ["ui/calendar/demos/calendar/default.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/default")),
+  "calendar/demos/disabled-example": {
+    files: ["ui/calendar/demos/disabled-example.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/disabled-example")),
   },
-  "calendar/demos/calendar/disabled": {
-    files: ["ui/calendar/demos/calendar/disabled.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/disabled")),
+  "calendar/demos/international": {
+    files: ["ui/calendar/demos/international.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/international")),
   },
-  "calendar/demos/calendar/error-message": {
-    files: ["ui/calendar/demos/calendar/error-message.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/error-message")),
+  "calendar/demos/invalid": {
+    files: ["ui/calendar/demos/invalid.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/invalid")),
   },
-  "calendar/demos/calendar/page-behaviour": {
-    files: ["ui/calendar/demos/calendar/page-behaviour.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/page-behaviour")),
+  "calendar/demos/min-max": {
+    files: ["ui/calendar/demos/min-max.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/min-max")),
   },
-  "calendar/demos/calendar/read-only": {
-    files: ["ui/calendar/demos/calendar/read-only.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/read-only")),
+  "calendar/demos/non-contiguous-ranges": {
+    files: ["ui/calendar/demos/non-contiguous-ranges.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/non-contiguous-ranges")),
   },
-  "calendar/demos/calendar/uncontrolled": {
-    files: ["ui/calendar/demos/calendar/uncontrolled.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/uncontrolled")),
+  "calendar/demos/range-multiple-months": {
+    files: ["ui/calendar/demos/range-multiple-months.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-multiple-months")),
   },
-  "calendar/demos/calendar/unvailable-dates": {
-    files: ["ui/calendar/demos/calendar/unvailable-dates.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/unvailable-dates")),
+  "calendar/demos/range": {
+    files: ["ui/calendar/demos/range.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/range")),
   },
-  "calendar/demos/calendar/validation": {
-    files: ["ui/calendar/demos/calendar/validation.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/validation")),
+  "calendar/demos/scheduler": {
+    files: ["ui/calendar/demos/scheduler.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/scheduler")),
   },
-  "calendar/demos/calendar/variant": {
-    files: ["ui/calendar/demos/calendar/variant.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/variant")),
+  "calendar/demos/short-weekdays": {
+    files: ["ui/calendar/demos/short-weekdays.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/short-weekdays")),
   },
-  "calendar/demos/calendar/visible-months": {
-    files: ["ui/calendar/demos/calendar/visible-months.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/calendar/visible-months")),
+  "calendar/demos/single": {
+    files: ["ui/calendar/demos/single.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/single")),
   },
-  "calendar/demos/range-calendar/composition": {
-    files: ["ui/calendar/demos/range-calendar/composition.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/composition")),
+  "calendar/demos/today-indicator": {
+    files: ["ui/calendar/demos/today-indicator.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/today-indicator")),
   },
-  "calendar/demos/range-calendar/controlled": {
-    files: ["ui/calendar/demos/range-calendar/controlled.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/controlled")),
+  "calendar/demos/unavailable-weekends": {
+    files: ["ui/calendar/demos/unavailable-weekends.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/unavailable-weekends")),
   },
-  "calendar/demos/range-calendar/default": {
-    files: ["ui/calendar/demos/range-calendar/default.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/default")),
+  "calendar/demos/with-dropdowns": {
+    files: ["ui/calendar/demos/with-dropdowns.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/with-dropdowns")),
   },
-  "calendar/demos/range-calendar/disabled": {
-    files: ["ui/calendar/demos/range-calendar/disabled.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/disabled")),
+  "calendar/demos/with-presets": {
+    files: ["ui/calendar/demos/with-presets.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/with-presets")),
   },
-  "calendar/demos/range-calendar/error-message": {
-    files: ["ui/calendar/demos/range-calendar/error-message.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/error-message")),
+  "calendar/demos/with-slotted-pickers": {
+    files: ["ui/calendar/demos/with-slotted-pickers.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/with-slotted-pickers")),
   },
-  "calendar/demos/range-calendar/non-contiguous-ranges": {
-    files: ["ui/calendar/demos/range-calendar/non-contiguous-ranges.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/non-contiguous-ranges")),
-  },
-  "calendar/demos/range-calendar/page-behaviour": {
-    files: ["ui/calendar/demos/range-calendar/page-behaviour.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/page-behaviour")),
-  },
-  "calendar/demos/range-calendar/read-only": {
-    files: ["ui/calendar/demos/range-calendar/read-only.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/read-only")),
-  },
-  "calendar/demos/range-calendar/uncontrolled": {
-    files: ["ui/calendar/demos/range-calendar/uncontrolled.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/uncontrolled")),
-  },
-  "calendar/demos/range-calendar/unvailable-dates": {
-    files: ["ui/calendar/demos/range-calendar/unvailable-dates.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/unvailable-dates")),
-  },
-  "calendar/demos/range-calendar/validation": {
-    files: ["ui/calendar/demos/range-calendar/validation.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/validation")),
-  },
-  "calendar/demos/range-calendar/variant": {
-    files: ["ui/calendar/demos/range-calendar/variant.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/variant")),
-  },
-  "calendar/demos/range-calendar/visible-months": {
-    files: ["ui/calendar/demos/range-calendar/visible-months.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/range-calendar/visible-months")),
+  "calendar/demos/with-time": {
+    files: ["ui/calendar/demos/with-time.tsx"],
+    component: React.lazy(() => import("@/registry/ui/calendar/demos/with-time")),
   },
   "card/demos/basic": {
     files: ["ui/card/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/card/demos/basic")),
+  },
+  "card/demos/default": {
+    files: ["ui/card/demos/default.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/default")),
+  },
+  "card/demos/footer-border-small": {
+    files: ["ui/card/demos/footer-border-small.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/footer-border-small")),
+  },
+  "card/demos/footer-border": {
+    files: ["ui/card/demos/footer-border.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/footer-border")),
+  },
+  "card/demos/header-border-small": {
+    files: ["ui/card/demos/header-border-small.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/header-border-small")),
+  },
+  "card/demos/header-border": {
+    files: ["ui/card/demos/header-border.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/header-border")),
+  },
+  "card/demos/meeting-notes": {
+    files: ["ui/card/demos/meeting-notes.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/meeting-notes")),
+  },
+  "card/demos/small": {
+    files: ["ui/card/demos/small.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/small")),
+  },
+  "card/demos/with-image-small": {
+    files: ["ui/card/demos/with-image-small.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/with-image-small")),
+  },
+  "card/demos/with-image": {
+    files: ["ui/card/demos/with-image.tsx"],
+    component: React.lazy(() => import("@/registry/ui/card/demos/with-image")),
   },
   "checkbox/demos/card": {
     files: ["ui/checkbox/demos/card.tsx"],

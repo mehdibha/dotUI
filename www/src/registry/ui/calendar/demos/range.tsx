@@ -1,6 +1,6 @@
 "use client";
 
-import { parseDate } from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 import { RangeCalendar } from "@/registry/ui/calendar";
 
@@ -9,8 +9,8 @@ export default function Demo() {
 		<RangeCalendar
 			aria-label="Trip dates"
 			defaultValue={{
-				start: parseDate("2020-02-03"),
-				end: parseDate("2020-02-12"),
+				start: today(getLocalTimeZone()).subtract({ days: 6 }),
+				end: today(getLocalTimeZone()),
 			}}
 		/>
 	);

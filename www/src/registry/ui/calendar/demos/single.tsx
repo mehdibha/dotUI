@@ -1,28 +1,29 @@
 "use client";
 
-import { Heading } from "react-aria-components";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import {
+	Calendar,
 	CalendarCell,
 	CalendarGrid,
 	CalendarGridBody,
 	CalendarGridHeader,
 	CalendarHeader,
 	CalendarHeaderCell,
-	RangeCalendar,
+	CalendarHeading,
 } from "@/registry/ui/calendar";
 
 export default function Demo() {
 	return (
-		<RangeCalendar aria-label="Trip dates">
+		<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())}>
 			<CalendarHeader>
-				<Button slot="previous" className="rounded-full" size="icon-sm">
+				<Button slot="previous" variant="quiet" size="icon">
 					<ChevronLeftIcon />
 				</Button>
-				<Heading className="text-sm" />
-				<Button slot="next" className="rounded-full" size="icon-sm">
+				<CalendarHeading />
+				<Button slot="next" variant="quiet" size="icon">
 					<ChevronRightIcon />
 				</Button>
 			</CalendarHeader>
@@ -30,6 +31,6 @@ export default function Demo() {
 				<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
 				<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
 			</CalendarGrid>
-		</RangeCalendar>
+		</Calendar>
 	);
 }

@@ -38,11 +38,27 @@
 			"default": "'default'"
 		},
 		"size": {
-			"type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
-			"detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
+			"type": "\"icon\" | \"icon-lg\" | \"icon-sm\" | \"icon-xs\" | \"lg\" | \"md\" | \"sm\" | \"xs\"",
+			"detailedType": "| 'icon'\n| 'icon-lg'\n| 'icon-sm'\n| 'icon-xs'\n| 'lg'\n| 'md'\n| 'sm'\n| 'xs'\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "icon"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "icon-lg"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "icon-sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "icon-xs"
+					},
 					{
 						"type": "stringLiteral",
 						"value": "lg"
@@ -61,31 +77,8 @@
 					}
 				]
 			},
-			"description": "The size of the button.",
+			"description": "The size of the button.\nUse `icon-xs`, `icon-sm`, `icon`, or `icon-lg` for icon-only buttons.",
 			"default": "\"md\""
-		},
-		"aspect": {
-			"type": "\"auto\" | \"default\" | \"square\"",
-			"detailedType": "'auto' | 'default' | 'square' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "auto"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "default"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "square"
-					}
-				]
-			},
-			"description": "Controls the button's aspect ratio behavior.\n- `\"auto\"`: Automatically detects if the button contains only an icon and applies square aspect.\n- `\"square\"`: Forces square aspect ratio.\n- `\"default\"`: Standard button sizing with padding.",
-			"default": "\"auto\""
 		},
 		"onPress": {
 			"type": "((e: PressEvent) => void)",

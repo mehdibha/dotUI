@@ -29,7 +29,9 @@ export const mdxComponents: MDXComponents = {
 	h6: ({ className, ...props }) => (
 		<h6 className={cn("mt-8 scroll-m-20 font-medium text-base tracking-tight", className)} {...props} />
 	),
-	p: ({ className, ...props }) => <p className={cn("not-first:mt-4 text-base leading-7", className)} {...props} />,
+	p: ({ className, ...props }) => (
+		<p className={cn("not-first:mt-4 text-[0.9375rem] leading-7", className)} {...props} />
+	),
 	a: ({ className, children, href, ...props }): React.ComponentProps<"a"> => {
 		const isInternal = href.startsWith("/");
 		return (
@@ -65,7 +67,7 @@ export const mdxComponents: MDXComponents = {
 	},
 	code: (props) => (
 		<code
-			className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-card not-in-[pre]:px-1.25 not-in-[pre]:py-0.75 not-in-[pre]:font-normal not-in-[pre]:text-[0.9375rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+			className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-card not-in-[pre]:px-1.25 not-in-[pre]:py-0.75 not-in-[pre]:font-normal not-in-[pre]:text-[0.8rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
 			{...props}
 		/>
 	),
