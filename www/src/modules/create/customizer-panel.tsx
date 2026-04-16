@@ -374,7 +374,7 @@ export function CustomizerPanel() {
 							<ButtonPrimitives.Button
 								key={item.id}
 								onPress={() => push(item.id)}
-								className="flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover"
+								className="flex flex-col items-stretch gap-2 rounded-lg border p-3 text-sm transition-colors hover:bg-neutral"
 							>
 								<div className="text-left text-fg-muted">{item.title}</div>
 								<div className="text-left">

@@ -5,6 +5,7 @@
 
 @import "./ui/card/styles.css";
 @import "./ui/checkbox/styles.css";
+@import "./ui/field/styles.css";
 
 /* dynamic styles */
 :root {

@@ -6,15 +6,15 @@ import fieldMeta from "./meta";
 
 const baseStyles = tv({
 	slots: {
-		fieldset: "",
-		legend: "",
+		fieldset: "cn-fieldset",
+		legend: "cn-legend",
 		fieldGroup:
 			"cn-field-group group/field-group @container/field-group flex w-full flex-col has-[[data-checkbox]_[data-label]]:gap-2 has-data-checkbox:gap-3",
-		field: "",
+		field: "cn-label",
 		fieldContent: "cn-field flex flex-col gap-1",
-		label: "",
-		description: "",
-		fieldError: "",
+		label: "cn-label",
+		description: "cn-description",
+		fieldError: "cn-field-error",
 	},
 });
 

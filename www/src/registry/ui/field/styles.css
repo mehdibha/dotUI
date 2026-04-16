@@ -1,0 +1,26 @@
+.density-compact {
+	.cn-label {
+		@apply text-xs;
+	}
+  .cn-description {
+    @apply text-xs;
+  }
+}
+
+.density-default {
+	.cn-label {
+		@apply text-sm;
+	}
+	.cn-description {
+		@apply text-sm;
+	}
+}
+
+.density-comfortable {
+	.cn-label {
+		@apply text-sm;
+	}
+	.cn-description {
+		@apply text-sm;
+	}
+}
