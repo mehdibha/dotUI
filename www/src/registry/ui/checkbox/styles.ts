@@ -7,6 +7,7 @@ import checkboxMeta from "./meta";
 const baseStyles = tv({
 	slots: {
 		root: "",
+		label: "",
 		indicator: "",
 	},
 });
