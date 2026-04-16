@@ -20,7 +20,7 @@ import {
 	UserIcon,
 	XIcon,
 } from "lucide-react";
-import { ButtonContext } from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { Button } from "@/registry/ui/button";
 import { Dialog, DialogContent } from "@/registry/ui/dialog";
@@ -74,7 +74,7 @@ function ContextualHelp({ name, reference }: { name: string; reference?: Seriali
 	}
 
 	return (
-		<ButtonContext value={null}>
+		<ButtonPrimitives.ButtonContext value={null}>
 			<Dialog>
 				<Button size="sm" variant="quiet" className="size-6 [&_svg]:size-3" aria-label={`Info about ${name}`}>
 					<InfoIcon />
@@ -92,7 +92,7 @@ function ContextualHelp({ name, reference }: { name: string; reference?: Seriali
 					</DialogContent>
 				</Popover>
 			</Dialog>
-		</ButtonContext>
+		</ButtonPrimitives.ButtonContext>
 	);
 }
 

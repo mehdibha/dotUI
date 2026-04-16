@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import type React from "react";
-import type { PressEvent } from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
 
 function getUniqueID(prefix: string) {
 	return `${prefix}-${Math.floor(Math.random() * 1000000)}`;
@@ -18,7 +18,7 @@ export type UseRippleProps = Record<string, never>;
 export function useRipple(props: UseRippleProps = {}) {
 	const [ripples, setRipples] = useState<RippleType[]>([]);
 
-	const onPress = useCallback((event: PressEvent) => {
+	const onPress = useCallback((event: ButtonPrimitives.PressEvent) => {
 		const trigger = event.target;
 
 		const size = Math.max(trigger.clientWidth, trigger.clientHeight);

@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { parseColor } from "react-aria-components";
-import type { Color } from "react-aria-components";
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
+
 
 import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/registry/ui/color-swatch-picker";
 
 export default function Demo() {
-	const [value, setValue] = React.useState<Color>(parseColor("#f80"));
+	const [value, setValue] = React.useState<ColorAreaPrimitives.Color>(ColorAreaPrimitives.parseColor("#f80"));
 	return (
 		<ColorSwatchPicker defaultValue="#fff" value={value} onChange={setValue}>
 			<ColorSwatchPickerItem color="#fff" />

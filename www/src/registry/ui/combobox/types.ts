@@ -1,4 +1,4 @@
-import type { ComboBoxProps as AriaComboboxProps } from "react-aria-components";
+import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
 
 import type { InputGroupProps } from "@/registry/ui/input";
 import type { ListBoxProps } from "@/registry/ui/list-box";
@@ -8,7 +8,7 @@ import type { PopoverProps } from "@/registry/ui/popover";
  * A combo box combines a text input with a listbox, allowing users to filter
  * a list of options to items matching a query.
  */
-export interface ComboboxProps<T extends object> extends Omit<AriaComboboxProps<T>, "className"> {
+export interface ComboboxProps<T extends object> extends Omit<ComboBoxPrimitives.ComboBoxProps<T>, "className"> {
 	className?: string;
 }
 

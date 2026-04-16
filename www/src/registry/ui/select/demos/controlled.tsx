@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import type { Key } from "react-aria-components";
+import * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 
 export default function Demo() {
-	const [provider, setProvider] = React.useState<Key | null>("eleven-labs");
+	const [provider, setProvider] = React.useState<MenuPrimitives.Key | null>("eleven-labs");
 	return (
 		<div className="flex flex-col items-center gap-6">
 			<Select aria-label="Provider" value={provider} onChange={setProvider}>

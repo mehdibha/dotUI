@@ -1,12 +1,13 @@
-import { DisclosureGroup as AriaDisclosureGroup, composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as DisclosureGroupPrimitives from "react-aria-components/DisclosureGroup";
 
 import { useStyles } from "./styles";
 
-interface AccordionProps extends React.ComponentProps<typeof AriaDisclosureGroup> {}
+interface AccordionProps extends React.ComponentProps<typeof DisclosureGroupPrimitives.DisclosureGroup> {}
 function Accordion({ className, ...props }: AccordionProps) {
 	const accordionStyles = useStyles();
 	return (
-		<AriaDisclosureGroup
+		<DisclosureGroupPrimitives.DisclosureGroup
 			data-accordion=""
 			className={composeRenderProps(className, (c) => accordionStyles({ className: c }))}
 			{...props}

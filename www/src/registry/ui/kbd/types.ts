@@ -1,4 +1,4 @@
-import type { Keyboard as AriaKeyboard } from "react-aria-components";
+import * as KeyboardPrimitives from "react-aria-components/Keyboard";
 
 /**
  * Missing description.
@@ -8,4 +8,4 @@ export interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
 /**
  * Missing description.
  */
-export interface KbdProps extends React.ComponentProps<typeof AriaKeyboard> {}
+export interface KbdProps extends React.ComponentProps<typeof KeyboardPrimitives.Keyboard> {}

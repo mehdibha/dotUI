@@ -1,16 +1,16 @@
 "use client";
 
-import { Text as AriaText } from "react-aria-components";
-import type { TextProps as AriaTextProps } from "react-aria-components";
+import * as TextPrimitives from "react-aria-components/Text";
+
 
 import { useSkeletonText } from "@/registry/ui/skeleton";
 
-interface TextProps extends AriaTextProps {}
+interface TextProps extends TextPrimitives.TextProps {}
 
 const Text = ({ children, ...props }: TextProps) => {
 	children = useSkeletonText(children);
 
-	return <AriaText {...props}>{children}</AriaText>;
+	return <TextPrimitives.Text {...props}>{children}</TextPrimitives.Text>;
 };
 
 export type { TextProps };

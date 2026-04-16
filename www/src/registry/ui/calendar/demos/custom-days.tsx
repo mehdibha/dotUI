@@ -2,8 +2,10 @@
 
 import React from "react";
 import { getLocalTimeZone, isWeekend, today } from "@internationalized/date";
-import { useLocale } from "react-aria-components";
-import type { DateRange, DateValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
+import * as I18nProviderPrimitives from "react-aria-components/I18nProvider";
+import * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar";
+
 
 import {
 	CalendarCell,
@@ -17,13 +19,13 @@ import {
 import { Card, CardContent } from "@/registry/ui/card";
 
 export default function Demo() {
-	const { locale } = useLocale();
-	const [range, setRange] = React.useState<DateRange | null>({
+	const { locale } = I18nProviderPrimitives.useLocale();
+	const [range, setRange] = React.useState<RangeCalendarPrimitives.DateRange | null>({
 		start: today(getLocalTimeZone()).add({ days: 2 }),
 		end: today(getLocalTimeZone()).add({ days: 9 }),
 	});
 
-	const getPrice = (d: DateValue) => {
+	const getPrice = (d: CalendarPrimitives.DateValue) => {
 		if (isWeekend(d, locale)) return "$120";
 		return "$100";
 	};

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { parseDate } from "@internationalized/date";
-import type { DateValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { CalendarIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
@@ -14,7 +14,7 @@ import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
-	const [value, setValue] = React.useState<DateValue | null>(parseDate("2020-02-03"));
+	const [value, setValue] = React.useState<CalendarPrimitives.DateValue | null>(parseDate("2020-02-03"));
 	return (
 		<div className="flex flex-col items-center gap-4">
 			<DatePicker value={value} onChange={setValue}>

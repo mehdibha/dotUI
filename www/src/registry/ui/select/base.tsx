@@ -1,8 +1,9 @@
 "use client";
 
 import { ChevronDownIcon } from "lucide-react";
-import { Select as AriaSelect, SelectValue as AriaSelectValue, composeRenderProps } from "react-aria-components";
-import type { SelectProps as AriaSelectProps, SelectValueProps as AriaSelectValueProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as SelectPrimitives from "react-aria-components/Select";
+
 
 import { Button } from "@/registry/ui/button";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
@@ -17,12 +18,12 @@ import { useStyles } from "./styles";
 
 // MARK: seperator
 
-interface SelectProps<T extends object> extends AriaSelectProps<T> {}
+interface SelectProps<T extends object> extends SelectPrimitives.SelectProps<T> {}
 
 const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
 	const { root } = useStyles()();
 	return (
-		<AriaSelect
+		<SelectPrimitives.Select
 			data-field=""
 			data-select=""
 			data-slot="select"
@@ -51,12 +52,12 @@ const SelectTrigger = (props: ButtonProps) => {
 
 // MARK: seperator
 
-interface SelectValueProps<T extends object> extends AriaSelectValueProps<T> {}
+interface SelectValueProps<T extends object> extends SelectPrimitives.SelectValueProps<T> {}
 
 const SelectValue = <T extends object>({ className, ...props }: SelectValueProps<T>) => {
 	const { selectValue } = useStyles()();
 	return (
-		<AriaSelectValue
+		<SelectPrimitives.SelectValue
 			data-slot="select-value"
 			className={composeRenderProps(className, (className) => selectValue({ className }))}
 			{...props}
@@ -64,7 +65,7 @@ const SelectValue = <T extends object>({ className, ...props }: SelectValueProps
 			{composeRenderProps(props.children, (children, { selectedText, defaultChildren }) => {
 				return <>{children || selectedText || defaultChildren}</>;
 			})}
-		</AriaSelectValue>
+		</SelectPrimitives.SelectValue>
 	);
 };
 

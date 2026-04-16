@@ -1,6 +1,6 @@
-import type { TextProps as AriaTextProps } from "react-aria-components";
+import * as TextPrimitives from "react-aria-components/Text";
 
 /**
  * Missing description.
  */
-export interface TextProps extends AriaTextProps {}
+export interface TextProps extends TextPrimitives.TextProps {}

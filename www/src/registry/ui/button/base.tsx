@@ -1,15 +1,11 @@
 "use client";
 
-import {
-	Button as AriaButton,
-	ButtonContext as AriaButtonContext,
-	Link as AriaLink,
-	composeRenderProps,
-} from "react-aria-components";
+import * as ButtonPrimitive from "react-aria-components/Button";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as LinkPrimitives from "react-aria-components/Link";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
-import { createVariantsContext } from "@/registry/lib/context";
 import { Loader } from "@/registry/ui/loader";
 
 import { buttonStyles, useStyles } from "./styles";
@@ -19,25 +15,17 @@ import type { ButtonStyles } from "./styles";
 
 type ButtonVariants = VariantProps<ButtonStyles>;
 
-const [ButtonProvider, useContextProps] = createVariantsContext<
-	ButtonVariants,
-	React.ComponentProps<typeof AriaButton>
->(AriaButtonContext);
-
 // MARK: seperator
 
-interface ButtonProps extends React.ComponentProps<typeof AriaButton>, ButtonVariants {}
+interface ButtonProps extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {}
 
-const Button = (localProps: ButtonProps) => {
+const Button = ({ variant, size, className, children, ...props }: ButtonProps) => {
 	const styles = useStyles();
-	const { variant, size, className, slot, style, children, ...props } = useContextProps(localProps);
 
 	return (
-		<AriaButton
+		<ButtonPrimitive.Button
 			data-button=""
 			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
-			slot={slot}
-			style={style}
 			{...props}
 		>
 			{composeRenderProps(children, (children, { isPending }) => (
@@ -52,35 +40,32 @@ const Button = (localProps: ButtonProps) => {
 					{typeof children === "string" ? <span className="truncate">{children}</span> : children}
 				</>
 			))}
-		</AriaButton>
+		</ButtonPrimitive.Button>
 	);
 };
 
 // MARK: seperator
 
-interface LinkButtonProps extends React.ComponentProps<typeof AriaLink>, VariantProps<ButtonStyles> {}
+interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitives.Link>, VariantProps<ButtonStyles> {}
 
-const LinkButton = (localProps: LinkButtonProps) => {
+const LinkButton = ({ variant, size, className, children, ...props }: LinkButtonProps) => {
 	const styles = useStyles();
-	const { variant, size, className, slot, style, children, ...props } = useContextProps(localProps);
 
 	return (
-		<AriaLink
+		<LinkPrimitives.Link
 			data-slot="button"
 			data-button=""
 			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
-			slot={slot}
-			style={style}
 			{...props}
 		>
 			{composeRenderProps(children, (children) => (
 				<>{typeof children === "string" ? <span className="truncate">{children}</span> : children}</>
 			))}
-		</AriaLink>
+		</LinkPrimitives.Link>
 	);
 };
 
 // MARK: seperator
 
 export type { ButtonProps, LinkButtonProps };
-export { Button, ButtonProvider, buttonStyles, LinkButton };
+export { Button, buttonStyles, LinkButton };

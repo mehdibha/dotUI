@@ -1,17 +1,15 @@
 "use client";
 
 import React from "react";
-import { useResizeObserver } from "@react-aria/utils";
+import { useResizeObserver } from "react-aria/private/utils/useResizeObserver";
 import { ChevronDownIcon } from "lucide-react";
 import { mergeProps } from "react-aria";
-import {
-	ComboBox as AriaCombobox,
-	GroupContext as AriaGroupContext,
-	PopoverContext as AriaPopoverContext,
-	composeRenderProps,
-	Provider,
-} from "react-aria-components";
-import type { ComboBoxProps as AriaComboboxProps } from "react-aria-components";
+import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as GroupPrimitives from "react-aria-components/Group";
+import * as PopoverPrimitives from "react-aria-components/Popover";
+import { Provider } from "react-aria-components/slots";
+
 
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
@@ -25,12 +23,12 @@ import type { PopoverProps } from "@/registry/ui/popover";
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface ComboboxProps<T extends object> extends Omit<AriaComboboxProps<T>, "className"> {
+interface ComboboxProps<T extends object> extends Omit<ComboBoxPrimitives.ComboBoxProps<T>, "className"> {
 	className?: string;
 }
 const Combobox = <T extends object>({ menuTrigger = "focus", className, ...props }: ComboboxProps<T>) => {
 	return (
-		<AriaCombobox
+		<ComboBoxPrimitives.ComboBox
 			menuTrigger={menuTrigger}
 			className={fieldStyles().field({
 				className: cn(className),
@@ -40,7 +38,7 @@ const Combobox = <T extends object>({ menuTrigger = "focus", className, ...props
 			{composeRenderProps(props.children, (children) => (
 				<ComboboxInner>{children}</ComboboxInner>
 			))}
-		</AriaCombobox>
+		</ComboBoxPrimitives.ComboBox>
 	);
 };
 
@@ -54,8 +52,8 @@ const Combobox = <T extends object>({ menuTrigger = "focus", className, ...props
 const ComboboxInner = ({ children }: { children: React.ReactNode }) => {
 	const [menuWidth, setMenuWidth] = React.useState<string | undefined>(undefined);
 
-	const groupProps = React.use(AriaGroupContext);
-	const popoverProps = React.use(AriaPopoverContext);
+	const groupProps = React.use(GroupPrimitives.GroupContext);
+	const popoverProps = React.use(PopoverPrimitives.PopoverContext);
 	const triggerRef = React.useRef<HTMLDivElement>(null);
 
 	const onResize = React.useCallback(() => {
@@ -73,9 +71,9 @@ const ComboboxInner = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<Provider
 			values={[
-				[AriaGroupContext, mergeProps(groupProps, { ref: triggerRef })],
+				[GroupPrimitives.GroupContext, mergeProps(groupProps, { ref: triggerRef })],
 				[
-					AriaPopoverContext,
+					PopoverPrimitives.PopoverContext,
 					triggerRef.current
 						? {
 								...mergeProps(popoverProps, {

@@ -1,8 +1,9 @@
 "use client";
 
+import { Link as RouterLink } from "@tanstack/react-router";
 import { ExternalLinkIcon, SunIcon } from "lucide-react";
 
-import { LinkButton } from "@/registry/ui/button";
+import { buttonStyles } from "@/registry/ui/button";
 import { ToggleButton } from "@/registry/ui/toggle-button";
 import type { RegistryItem } from "@/registry/types";
 
@@ -29,10 +30,16 @@ export function BlockCard({ block }: BlockCardProps) {
 						{isCopied ? <CheckIcon className="fade-in animate-in" /> : <TerminalIcon className="fade-in animate-in" />}
 						<span className="truncate text-xs">npx shadcn@latest add @dotui/{block.name}</span>
 					</Button> */}
-					<LinkButton href={iframeUrl} variant="primary" size="sm" target="_blank" className="max-lg:hidden">
+					<RouterLink
+						to="/view/$block"
+						params={{ block: block.name }}
+						target="_blank"
+						rel="noopener noreferrer"
+						className={buttonStyles({ variant: "primary", size: "sm", className: "max-lg:hidden" })}
+					>
 						<ExternalLinkIcon />
 						Open in new tab
-					</LinkButton>
+					</RouterLink>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-lg border bg-muted">

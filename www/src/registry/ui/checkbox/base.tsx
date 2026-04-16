@@ -1,9 +1,10 @@
 "use client";
 
 import { CheckIcon, MinusIcon } from "lucide-react";
-import { Checkbox as AriaCheckbox, composeRenderProps } from "react-aria-components";
+import * as CheckboxPrimitives from "react-aria-components/Checkbox";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import type * as React from "react";
-import type { CheckboxRenderProps } from "react-aria-components";
+
 
 import { createContext } from "@/registry/lib/context";
 import { cn } from "@/registry/lib/utils";
@@ -12,18 +13,18 @@ import { useStyles } from "./styles";
 
 // MARK: checkboxStyles
 
-const [InternalCheckboxProvider, useInternalCheckbox] = createContext<CheckboxRenderProps>({
+const [InternalCheckboxProvider, useInternalCheckbox] = createContext<CheckboxPrimitives.CheckboxRenderProps>({
 	strict: true,
 });
 
 // MARK: seperator
 
-interface CheckboxProps extends React.ComponentProps<typeof AriaCheckbox> {}
+interface CheckboxProps extends React.ComponentProps<typeof CheckboxPrimitives.Checkbox> {}
 
 const Checkbox = ({ className, ...props }: CheckboxProps) => {
 	const { root, indicator } = useStyles()();
 	return (
-		<AriaCheckbox
+		<CheckboxPrimitives.Checkbox
 			data-slot="checkbox"
 			className={composeRenderProps(className, (className) =>
 				props.children
@@ -43,7 +44,7 @@ const Checkbox = ({ className, ...props }: CheckboxProps) => {
 					<CheckIcon className="size-3" />
 				);
 			})}
-		</AriaCheckbox>
+		</CheckboxPrimitives.Checkbox>
 	);
 };
 

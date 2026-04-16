@@ -1,10 +1,11 @@
-import type { Button as AriaButton, Link as AriaLink } from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
+import * as LinkPrimitives from "react-aria-components/Link";
 
 /**
  * A clickable element that triggers an action. Buttons communicate actions users can take
  * and allow users to interact with the page.
  */
-export interface ButtonProps extends React.ComponentProps<typeof AriaButton> {
+export interface ButtonProps extends React.ComponentProps<typeof ButtonPrimitives.Button> {
 	/**
 	 * The visual style of the button (Vanilla CSS implementation specific).
 	 * @default 'default'
@@ -19,7 +20,7 @@ export interface ButtonProps extends React.ComponentProps<typeof AriaButton> {
 	size?: "xs" | "sm" | "md" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg";
 }
 
-export interface LinkButtonProps extends React.ComponentProps<typeof AriaLink> {
+export interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitives.Link> {
 	/**
 	 * The visual style of the button.
 	 * @default "default"

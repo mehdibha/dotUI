@@ -16,7 +16,6 @@ import TodayIndicatorDemo from "./demos/today-indicator";
 import UnavailableWeekendsDemo from "./demos/unavailable-weekends";
 import WithDropdownsDemo from "./demos/with-dropdowns";
 import WithPresetsDemo from "./demos/with-presets";
-import WithSlottedPickersDemo from "./demos/with-slotted-pickers";
 import WithTimeDemo from "./demos/with-time";
 
 export default function CalendarExamples() {
@@ -40,11 +39,8 @@ export default function CalendarExamples() {
 			<Example title="With Time">
 				<WithTimeDemo />
 			</Example>
-			<Example title="With Dropdowns (dedicated)">
+			<Example title="With Dropdowns">
 				<WithDropdownsDemo />
-			</Example>
-			<Example title="With Dropdowns (slotted)">
-				<WithSlottedPickersDemo />
 			</Example>
 			<Example title="Short Weekdays">
 				<ShortWeekdaysDemo />

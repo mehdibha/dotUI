@@ -1,9 +1,9 @@
-import type { ProgressBar as AriaProgressBar } from "react-aria-components";
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
 
 /**
  * Progress bars show either determinate or indeterminate progress of an operation over time.
  */
-export interface ProgressBarProps extends React.ComponentProps<typeof AriaProgressBar> {}
+export interface ProgressBarProps extends React.ComponentProps<typeof ProgressBarPrimitives.ProgressBar> {}
 
 /**
  * Missing description.

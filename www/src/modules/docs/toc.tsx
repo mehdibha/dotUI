@@ -1,5 +1,5 @@
 import React from "react";
-import { mergeRefs } from "@react-aria/utils";
+import { mergeRefs } from "react-aria/mergeRefs";
 import {
 	AnchorProvider,
 	TOCItem as PrimitiveTOCItem,

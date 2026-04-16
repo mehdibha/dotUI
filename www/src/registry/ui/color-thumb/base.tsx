@@ -1,18 +1,18 @@
 "use client";
 
-import { ColorThumb as AriaColorThumb } from "react-aria-components";
-import type { ColorThumbProps as AriaColorThumbProps } from "react-aria-components";
+import * as ColorThumbPrimitives from "react-aria-components/ColorThumb";
+
 
 import { useStyles } from "./styles";
 
 // MARK: colorThumbStyles
 
-interface ColorThumbProps extends Omit<AriaColorThumbProps, "className"> {
+interface ColorThumbProps extends Omit<ColorThumbPrimitives.ColorThumbProps, "className"> {
 	className?: string;
 }
 const ColorThumb = ({ className, ...props }: ColorThumbProps) => {
 	const styles = useStyles();
-	return <AriaColorThumb data-slot="color-thumb" className={styles({ className })} {...props} />;
+	return <ColorThumbPrimitives.ColorThumb data-slot="color-thumb" className={styles({ className })} {...props} />;
 };
 
 export type { ColorThumbProps };

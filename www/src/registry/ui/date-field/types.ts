@@ -1,7 +1,8 @@
-import type { DateFieldProps as AriaDateFieldProps, DateValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
+import * as DateFieldPrimitives from "react-aria-components/DateField";
 
 /**
  * A date field allows users to enter and edit date and time values using a keyboard.
  * Each part of a date value is displayed in an individually editable segment.
  */
-export interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T> {}
+export interface DateFieldProps<T extends CalendarPrimitives.DateValue> extends DateFieldPrimitives.DateFieldProps<T> {}

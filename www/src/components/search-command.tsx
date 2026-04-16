@@ -7,7 +7,7 @@ import {
 	FileTextIcon,
 	SearchIcon,
 } from "lucide-react";
-import { composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { Button } from "@/registry/ui/button";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useDragAndDrop } from "react-aria-components";
+import { useDragAndDrop } from "react-aria-components/useDragAndDrop";
 import { useListData } from "react-stately";
 
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";

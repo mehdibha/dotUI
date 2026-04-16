@@ -1,12 +1,12 @@
 "use client";
 
 import { getLocalTimeZone, today } from "@internationalized/date";
-import type { DateValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { Calendar } from "@/registry/ui/calendar";
 
 export default function Demo() {
-	const isWeekend = (d: DateValue) => {
+	const isWeekend = (d: CalendarPrimitives.DateValue) => {
 		const day = d.toDate(getLocalTimeZone()).getDay();
 		return day === 0 || day === 6;
 	};

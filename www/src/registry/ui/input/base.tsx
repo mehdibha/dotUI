@@ -1,22 +1,17 @@
 "use client";
 
 import React, { useCallback } from "react";
-import { mergeProps, mergeRefs, useLayoutEffect } from "@react-aria/utils";
-import { useControlledState } from "@react-stately/utils";
-import { chain } from "react-aria";
-import {
-	DateInput as AriaDateInput,
-	DateSegment as AriaDateSegment,
-	Group as AriaGroup,
-	Input as AriaInput,
-	InputContext as AriaInputContext,
-	TextArea as AriaTextArea,
-	TextAreaContext as AriaTextAreaContext,
-	composeRenderProps,
-	Provider,
-	useContextProps,
-} from "react-aria-components";
-import type { DateInputProps as AriaDateInputProps } from "react-aria-components";
+import { chain, mergeProps } from "react-aria";
+import { mergeRefs } from "react-aria/mergeRefs";
+import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
+import { useControlledState } from "react-stately/useControlledState";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as DateFieldPrimitives from "react-aria-components/DateField";
+import * as GroupPrimitives from "react-aria-components/Group";
+import * as InputPrimitives from "react-aria-components/Input";
+import { Provider, useContextProps } from "react-aria-components/slots";
+import * as TextAreaPrimitives from "react-aria-components/TextArea";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { createContext } from "@/registry/lib/context";
@@ -35,7 +30,7 @@ const [InputGroupContext, useInputGroupContext] = createContext<boolean>({
 
 // MARK: InputGroup
 
-interface InputGroupProps extends React.ComponentProps<typeof AriaGroup>, Pick<VariantProps<InputStyles>, "size"> {}
+interface InputGroupProps extends React.ComponentProps<typeof GroupPrimitives.Group>, Pick<VariantProps<InputStyles>, "size"> {}
 
 const InputGroup = ({ className, children, size = "md", ...props }: InputGroupProps) => {
 	const { group } = useStyles()();
@@ -43,12 +38,12 @@ const InputGroup = ({ className, children, size = "md", ...props }: InputGroupPr
 	const [inputContextProps, mergedInputRef] = useContextProps(
 		{},
 		inputRef as React.RefObject<HTMLInputElement>,
-		AriaInputContext,
+		InputPrimitives.InputContext,
 	);
 	const [textAreaContextProps, mergedTextAreaRef] = useContextProps(
 		{},
 		inputRef as React.RefObject<HTMLTextAreaElement>,
-		AriaTextAreaContext,
+		TextAreaPrimitives.TextAreaContext,
 	);
 	const inputProps = { ...inputContextProps, ref: mergedInputRef };
 	const textAreaProps = { ...textAreaContextProps, ref: mergedTextAreaRef };
@@ -64,7 +59,7 @@ const InputGroup = ({ className, children, size = "md", ...props }: InputGroupPr
 	};
 
 	return (
-		<AriaGroup
+		<GroupPrimitives.Group
 			role="presentation"
 			data-input-group=""
 			data-slot="input-group"
@@ -75,29 +70,29 @@ const InputGroup = ({ className, children, size = "md", ...props }: InputGroupPr
 			{composeRenderProps(children, (children) => (
 				<Provider
 					values={[
-						[AriaInputContext, inputProps],
-						[AriaTextAreaContext, textAreaProps],
+						[InputPrimitives.InputContext, inputProps],
+						[TextAreaPrimitives.TextAreaContext, textAreaProps],
 						[InputGroupContext, true],
 					]}
 				>
 					{children}
 				</Provider>
 			))}
-		</AriaGroup>
+		</GroupPrimitives.Group>
 	);
 };
 
 // MARK: Input
 
 interface InputProps
-	extends Omit<React.ComponentProps<typeof AriaInput>, "size">,
+	extends Omit<React.ComponentProps<typeof InputPrimitives.Input>, "size">,
 		Pick<VariantProps<InputStyles>, "size"> {}
 
 const Input = ({ size = "md", className, ...props }: InputProps) => {
 	const { input } = useStyles()();
 	const inGroup = useInputGroupContext("Input");
 	return (
-		<AriaInput
+		<InputPrimitives.Input
 			data-slot="input"
 			data-input=""
 			data-in-group={inGroup || undefined}
@@ -111,7 +106,7 @@ const Input = ({ size = "md", className, ...props }: InputProps) => {
 // MARK: TextArea
 
 interface TextAreaProps
-	extends Omit<React.ComponentProps<typeof AriaTextArea>, "size">,
+	extends Omit<React.ComponentProps<typeof TextAreaPrimitives.TextArea>, "size">,
 		Pick<VariantProps<InputStyles>, "size"> {}
 
 const TextArea = ({ ref, className, onChange, size = "md", ...props }: TextAreaProps) => {
@@ -149,7 +144,7 @@ const TextArea = ({ ref, className, onChange, size = "md", ...props }: TextAreaP
 	}, [onHeightChange, inputValue, inputRef]);
 
 	return (
-		<AriaTextArea
+		<TextAreaPrimitives.TextArea
 			ref={mergeRefs(inputRef, ref)}
 			data-slot="textarea"
 			data-in-group={inGroup || undefined}
@@ -171,15 +166,15 @@ function InputAddon({ className, ...props }: InputAddonProps) {
 
 // MARK: DateInput
 
-interface DateInputProps extends Omit<AriaDateInputProps, "children">, Pick<VariantProps<InputStyles>, "size"> {
-	children?: AriaDateInputProps["children"];
+interface DateInputProps extends Omit<DateFieldPrimitives.DateInputProps, "children">, Pick<VariantProps<InputStyles>, "size"> {
+	children?: DateFieldPrimitives.DateInputProps["children"];
 }
 
 const DateInput = ({ className, size, ...props }: DateInputProps) => {
 	const { input } = useStyles()();
 	const inGroup = useInputGroupContext("DateInput");
 	return (
-		<AriaDateInput
+		<DateFieldPrimitives.DateInput
 			data-slot="date-input"
 			data-date-input=""
 			data-in-group={inGroup || undefined}
@@ -187,18 +182,18 @@ const DateInput = ({ className, size, ...props }: DateInputProps) => {
 			{...props}
 		>
 			{props.children ? props.children : (segment) => <DateSegment segment={segment} />}
-		</AriaDateInput>
+		</DateFieldPrimitives.DateInput>
 	);
 };
 
 // MARK: DateSegment
 
-interface DateSegmentProps extends React.ComponentProps<typeof AriaDateSegment> {}
+interface DateSegmentProps extends React.ComponentProps<typeof DateFieldPrimitives.DateSegment> {}
 
 const DateSegment = ({ className, ...props }: DateSegmentProps) => {
 	const { dateSegment } = dateInputStyles();
 	return (
-		<AriaDateSegment className={composeRenderProps(className, (className) => dateSegment({ className }))} {...props} />
+		<DateFieldPrimitives.DateSegment className={composeRenderProps(className, (className) => dateSegment({ className }))} {...props} />
 	);
 };
 

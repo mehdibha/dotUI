@@ -16,7 +16,7 @@ const inputMeta = {
 		},
 	],
 	registryDependencies: ["focus-styles"],
-	dependencies: ["@react-stately/utils", "react-aria"],
+	dependencies: ["react-aria", "react-stately"],
 } satisfies RegistryItem;
 
 export default inputMeta;

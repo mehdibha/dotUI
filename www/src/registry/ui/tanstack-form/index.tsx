@@ -1,7 +1,11 @@
 "use client";
 
 import { createFormHook, createFormHookContexts, useStore } from "@tanstack/react-form";
-import { type Color, composeRenderProps, type DateValue, type Key, type TimeValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as MenuPrimitives from "react-aria-components/Menu";
+import * as TimeFieldPrimitives from "react-aria-components/TimeField";
 
 import { Button } from "@/registry/ui/button";
 import { Checkbox } from "@/registry/ui/checkbox";
@@ -147,7 +151,7 @@ export const { useAppForm } = createFormHook({
 			);
 		},
 		Select: <T extends object>(props: SelectProps<T>) => {
-			const field = useFieldContext<Key | null>();
+			const field = useFieldContext<MenuPrimitives.Key | null>();
 			return (
 				<Select
 					value={field.state.value}
@@ -166,7 +170,7 @@ export const { useAppForm } = createFormHook({
 			);
 		},
 		Combobox: <T extends object>(props: ComboboxProps<T>) => {
-			const field = useFieldContext<Key | null>();
+			const field = useFieldContext<MenuPrimitives.Key | null>();
 			return (
 				<Combobox
 					selectedKey={field.state.value}
@@ -203,8 +207,8 @@ export const { useAppForm } = createFormHook({
 				</SearchField>
 			);
 		},
-		DateField: (props: DateFieldProps<DateValue>) => {
-			const field = useFieldContext<DateValue | null>();
+		DateField: (props: DateFieldProps<CalendarPrimitives.DateValue>) => {
+			const field = useFieldContext<CalendarPrimitives.DateValue | null>();
 			return (
 				<DateField
 					value={field.state.value}
@@ -222,8 +226,8 @@ export const { useAppForm } = createFormHook({
 				</DateField>
 			);
 		},
-		DatePicker: (props: DatePickerProps<DateValue>) => {
-			const field = useFieldContext<DateValue | null>();
+		DatePicker: (props: DatePickerProps<CalendarPrimitives.DateValue>) => {
+			const field = useFieldContext<CalendarPrimitives.DateValue | null>();
 			return (
 				<DatePicker
 					value={undefined}
@@ -234,8 +238,8 @@ export const { useAppForm } = createFormHook({
 				/>
 			);
 		},
-		TimeField: (props: TimeFieldProps<TimeValue>) => {
-			const field = useFieldContext<TimeValue | null>();
+		TimeField: (props: TimeFieldProps<TimeFieldPrimitives.TimeValue>) => {
+			const field = useFieldContext<TimeFieldPrimitives.TimeValue | null>();
 			return (
 				<TimeField
 					value={field.state.value}
@@ -254,7 +258,7 @@ export const { useAppForm } = createFormHook({
 			);
 		},
 		ColorField: (props: ColorFieldProps) => {
-			const field = useFieldContext<Color | null>();
+			const field = useFieldContext<ColorAreaPrimitives.Color | null>();
 			return (
 				<ColorField
 					value={field.state.value}
@@ -273,7 +277,7 @@ export const { useAppForm } = createFormHook({
 			);
 		},
 		ColorPicker: (props: ColorPickerProps) => {
-			const field = useFieldContext<string | Color>();
+			const field = useFieldContext<string | ColorAreaPrimitives.Color>();
 			return <ColorPicker value={field.state.value} onChange={(value) => field.handleChange(value)} {...props} />;
 		},
 	},

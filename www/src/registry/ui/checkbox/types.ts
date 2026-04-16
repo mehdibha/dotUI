@@ -1,10 +1,10 @@
-import type { Checkbox as AriaCheckbox } from "react-aria-components";
+import * as CheckboxPrimitives from "react-aria-components/Checkbox";
 
 /**
  * A checkbox allows a user to select multiple items from a list of individual items,
  * or to mark one individual item as selected.
  */
-export interface CheckboxProps extends React.ComponentProps<typeof AriaCheckbox> {}
+export interface CheckboxProps extends React.ComponentProps<typeof CheckboxPrimitives.Checkbox> {}
 
 /**
  * Missing description.

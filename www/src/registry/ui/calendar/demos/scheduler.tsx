@@ -2,7 +2,7 @@
 
 import React from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import type { DateValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { PlusIcon, Trash2Icon } from "@/registry/__generated__/icons";
 import { Badge } from "@/registry/ui/badge";
@@ -29,7 +29,7 @@ type EventVariant = "accent" | "info" | "success" | "warning" | "danger";
 type ScheduleEvent = {
 	id: string;
 	title: string;
-	date: DateValue;
+	date: CalendarPrimitives.DateValue;
 	variant: EventVariant;
 };
 
@@ -41,7 +41,7 @@ const EVENT_DOT_CLASS: Record<EventVariant, string> = {
 	danger: "bg-danger",
 };
 
-const INITIAL_EVENTS = (now: DateValue): ScheduleEvent[] => [
+const INITIAL_EVENTS = (now: CalendarPrimitives.DateValue): ScheduleEvent[] => [
 	{ id: "1", title: "Standup", date: now.subtract({ days: 2 }), variant: "accent" },
 	{ id: "2", title: "Design review", date: now, variant: "info" },
 	{ id: "3", title: "1:1 with Sam", date: now, variant: "success" },
@@ -58,7 +58,7 @@ const INITIAL_EVENTS = (now: DateValue): ScheduleEvent[] => [
 export default function Demo() {
 	const now = React.useMemo(() => today(getLocalTimeZone()), []);
 	const [events, setEvents] = React.useState<ScheduleEvent[]>(() => INITIAL_EVENTS(now));
-	const [selectedDate, setSelectedDate] = React.useState<DateValue>(now);
+	const [selectedDate, setSelectedDate] = React.useState<CalendarPrimitives.DateValue>(now);
 	const [newTitle, setNewTitle] = React.useState("");
 	const [newVariant] = React.useState<EventVariant>("accent");
 	const idCounter = React.useRef(events.length + 1);
@@ -74,7 +74,7 @@ export default function Demo() {
 		return map;
 	}, [events]);
 
-	const getEvents = (d: DateValue) => eventsByDay.get(d.toString()) ?? [];
+	const getEvents = (d: CalendarPrimitives.DateValue) => eventsByDay.get(d.toString()) ?? [];
 
 	const selectedLabel = selectedDate.toDate(getLocalTimeZone()).toLocaleDateString(undefined, {
 		weekday: "long",

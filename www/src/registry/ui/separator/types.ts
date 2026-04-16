@@ -1,6 +1,6 @@
-import type { Separator as AriaSeparator } from "react-aria-components";
+import * as SeparatorPrimitives from "react-aria-components/Separator";
 
 /**
  * Missing description.
  */
-export interface SeparatorProps extends React.ComponentProps<typeof AriaSeparator> {}
+export interface SeparatorProps extends React.ComponentProps<typeof SeparatorPrimitives.Separator> {}

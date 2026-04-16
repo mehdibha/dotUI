@@ -1,7 +1,8 @@
 "use client";
 
 import { SearchIcon } from "lucide-react";
-import { Autocomplete as AriaAutocomplete, useFilter } from "react-aria-components";
+import * as AutocompletePrimitives from "react-aria-components/Autocomplete";
+import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
 
 import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
@@ -20,15 +21,15 @@ interface CommandProps extends React.ComponentProps<"div"> {}
 
 function Command({ className, ...props }: CommandProps) {
 	const { base } = useStyles()();
-	const { contains } = useFilter({
+	const { contains } = ComboBoxPrimitives.useFilter({
 		sensitivity: "base",
 		ignorePunctuation: true,
 	});
 
 	return (
-		<AriaAutocomplete filter={contains}>
+		<AutocompletePrimitives.Autocomplete filter={contains}>
 			<div {...props} className={base({ className })}></div>
-		</AriaAutocomplete>
+		</AutocompletePrimitives.Autocomplete>
 	);
 }
 

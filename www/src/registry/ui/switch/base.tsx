@@ -1,8 +1,9 @@
 "use client";
 
-import { Switch as AriaSwitch, composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as SwitchPrimitives from "react-aria-components/Switch";
 import type * as React from "react";
-import type { SwitchRenderProps } from "react-aria-components";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { createContext } from "@/registry/lib/context";
@@ -14,7 +15,7 @@ import type { SwitchStyles } from "./styles";
 
 // MARK: seperator
 
-interface InternalSwitchContextValue extends SwitchRenderProps, VariantProps<SwitchStyles> {}
+interface InternalSwitchContextValue extends SwitchPrimitives.SwitchRenderProps, VariantProps<SwitchStyles> {}
 
 const [InternalSwitchProvider, useInternalSwitch] = createContext<InternalSwitchContextValue>({
 	strict: true,
@@ -22,12 +23,12 @@ const [InternalSwitchProvider, useInternalSwitch] = createContext<InternalSwitch
 
 // MARK: seperator
 
-interface SwitchProps extends React.ComponentProps<typeof AriaSwitch>, VariantProps<SwitchStyles> {}
+interface SwitchProps extends React.ComponentProps<typeof SwitchPrimitives.Switch>, VariantProps<SwitchStyles> {}
 
 const Switch = ({ children, variant, size, className, ...props }: SwitchProps) => {
 	const { root } = useStyles()();
 	return (
-		<AriaSwitch className={composeRenderProps(className, (className) => root({ variant, size, className }))} {...props}>
+		<SwitchPrimitives.Switch className={composeRenderProps(className, (className) => root({ variant, size, className }))} {...props}>
 			{composeRenderProps(children, (children, renderProps) => {
 				return (
 					<InternalSwitchProvider value={{ ...renderProps, variant, size }}>
@@ -41,7 +42,7 @@ const Switch = ({ children, variant, size, className, ...props }: SwitchProps) =
 					</InternalSwitchProvider>
 				);
 			})}
-		</AriaSwitch>
+		</SwitchPrimitives.Switch>
 	);
 };
 

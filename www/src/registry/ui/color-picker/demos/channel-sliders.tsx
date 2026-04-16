@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { getColorChannels } from "react-aria-components";
-import type { ColorSpace } from "react-aria-components";
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
+
 
 import { Button } from "@/registry/ui/button";
 import { ColorPicker } from "@/registry/ui/color-picker";
@@ -14,7 +14,7 @@ import { Popover } from "@/registry/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 
 export default function Demo() {
-	const [space, setSpace] = React.useState<ColorSpace>("rgb");
+	const [space, setSpace] = React.useState<ColorAreaPrimitives.ColorSpace>("rgb");
 	return (
 		<ColorPicker defaultValue="#5100FF">
 			<Button>
@@ -22,7 +22,7 @@ export default function Demo() {
 			</Button>
 			<Popover>
 				<DialogContent>
-					<Select aria-label="Color format" defaultValue={space} onChange={(key) => setSpace(key as ColorSpace)}>
+					<Select aria-label="Color format" defaultValue={space} onChange={(key) => setSpace(key as ColorAreaPrimitives.ColorSpace)}>
 						<SelectTrigger size="sm" />
 						<SelectContent>
 							<SelectItem id="rgb">RGB</SelectItem>
@@ -30,7 +30,7 @@ export default function Demo() {
 							<SelectItem id="hsb">HSB</SelectItem>
 						</SelectContent>
 					</Select>
-					{getColorChannels(space).map((channel) => (
+					{ColorAreaPrimitives.getColorChannels(space).map((channel) => (
 						<ColorSlider key={channel} colorSpace={space} channel={channel}>
 							<Label>{channel}</Label>
 							<ColorSliderControl />

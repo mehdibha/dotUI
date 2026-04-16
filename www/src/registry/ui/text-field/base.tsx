@@ -1,6 +1,7 @@
 "use client";
 
-import { TextField as AriaTextField, composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as TextFieldPrimitives from "react-aria-components/TextField";
 import type * as React from "react";
 
 import { useStyles } from "./styles";
@@ -9,12 +10,12 @@ import { useStyles } from "./styles";
 
 // MARK: TextField
 
-interface TextFieldProps extends React.ComponentProps<typeof AriaTextField> {}
+interface TextFieldProps extends React.ComponentProps<typeof TextFieldPrimitives.TextField> {}
 
 const TextField = ({ className, ...props }: TextFieldProps) => {
 	const textFieldStyles = useStyles();
 	return (
-		<AriaTextField
+		<TextFieldPrimitives.TextField
 			data-field=""
 			data-textfield=""
 			data-slot="text-field"

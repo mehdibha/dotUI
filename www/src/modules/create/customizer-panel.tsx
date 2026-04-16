@@ -2,7 +2,7 @@ import { type ReactNode, useMemo } from "react";
 import { getRouteApi } from "@tanstack/react-router";
 import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, ShuffleIcon, Undo2Icon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
-import { Button as AriaButton } from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { componentsData } from "@/modules/docs/components-list/components-data";
 import * as icons from "@/registry/__generated__/icons";
@@ -281,7 +281,7 @@ export function CustomizerPanel() {
 				>
 					<div className="flex flex-col gap-3">
 						{menu.map((item) => (
-							<AriaButton
+							<ButtonPrimitives.Button
 								key={item.id}
 								onPress={() => push(item.id)}
 								className="flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover"
@@ -294,7 +294,7 @@ export function CustomizerPanel() {
 										item.preview
 									)}
 								</div>
-							</AriaButton>
+							</ButtonPrimitives.Button>
 						))}
 					</div>
 				</motion.div>

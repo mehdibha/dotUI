@@ -1,11 +1,8 @@
 "use client";
 
-import {
-	Dialog as AriaDialog,
-	DialogTrigger as AriaDialogTrigger,
-	Heading as AriaHeading,
-	Text as AriaText,
-} from "react-aria-components";
+import * as DialogPrimitives from "react-aria-components/Dialog";
+import * as HeadingPrimitives from "react-aria-components/Heading";
+import * as TextPrimitives from "react-aria-components/Text";
 import type * as React from "react";
 
 import { useStyles } from "./styles";
@@ -14,19 +11,19 @@ import { useStyles } from "./styles";
 
 // MARK: seperator
 
-interface DialogProps extends React.ComponentProps<typeof AriaDialogTrigger> {}
+interface DialogProps extends React.ComponentProps<typeof DialogPrimitives.DialogTrigger> {}
 
 const Dialog = (props: DialogProps) => {
-	return <AriaDialogTrigger {...props} />;
+	return <DialogPrimitives.DialogTrigger {...props} />;
 };
 
 // MARK: seperator
 
-interface DialogContentProps extends React.ComponentProps<typeof AriaDialog> {}
+interface DialogContentProps extends React.ComponentProps<typeof DialogPrimitives.Dialog> {}
 
 const DialogContent = ({ className, ...props }: DialogContentProps) => {
 	const { content } = useStyles()();
-	return <AriaDialog data-slot="dialog-content" className={content({ className })} {...props} />;
+	return <DialogPrimitives.Dialog data-slot="dialog-content" className={content({ className })} {...props} />;
 };
 
 // MARK: seperator
@@ -40,20 +37,20 @@ const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
 
 // MARK: seperator
 
-interface DialogHeadingProps extends React.ComponentProps<typeof AriaHeading> {}
+interface DialogHeadingProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
 
 const DialogHeading = ({ className, ...props }: DialogHeadingProps) => {
 	const { heading } = useStyles()();
-	return <AriaHeading className={heading({ className })} {...props} />;
+	return <HeadingPrimitives.Heading className={heading({ className })} {...props} />;
 };
 
 // MARK: seperator
 
-interface DialogDescriptionProps extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
+interface DialogDescriptionProps extends Omit<React.ComponentProps<typeof TextPrimitives.Text>, "slot"> {}
 
 const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
 	const { description } = useStyles()();
-	return <AriaText slot="description" className={description({ className })} {...props} />;
+	return <TextPrimitives.Text slot="description" className={description({ className })} {...props} />;
 };
 
 // MARK: seperator

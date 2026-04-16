@@ -1,6 +1,6 @@
 "use client";
 
-import { Form } from "react-aria-components";
+import * as FormPrimitives from "react-aria-components/Form";
 
 import { Button } from "@/registry/ui/button";
 import { Checkbox, CheckboxIndicator } from "@/registry/ui/checkbox";
@@ -16,7 +16,7 @@ export default function Demo() {
 	return (
 		<div className="w-sm space-y-4 rounded-lg border bg-muted p-8">
 			<h1 className="font-bold text-xl">Register</h1>
-			<Form
+			<FormPrimitives.Form
 				onSubmit={(e) => {
 					e.preventDefault();
 					const data = Object.fromEntries(new FormData(e.currentTarget));
@@ -79,7 +79,7 @@ export default function Demo() {
 				<div className="flex justify-end">
 					<Button type="submit">Register</Button>
 				</div>
-			</Form>
+			</FormPrimitives.Form>
 		</div>
 	);
 }

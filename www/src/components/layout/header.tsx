@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link as RouterLink } from "@tanstack/react-router";
 import { SearchIcon } from "lucide-react";
 import type * as PageTree from "fumadocs-core/page-tree";
 
@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { navItems, siteConfig } from "@/config/site";
 import { GitHubIcon } from "@/registry/components/icons/github";
 import { cn } from "@/registry/lib/utils";
-import { Button, LinkButton } from "@/registry/ui/button";
+import { Button, buttonStyles } from "@/registry/ui/button";
 import { Kbd } from "@/registry/ui/kbd";
 
 interface HeaderProps {
@@ -30,9 +30,9 @@ export function Header({ className, items = [] }: HeaderProps) {
 				<Logo className="max-md:hidden" />
 				<nav className="flex items-center gap-3 text-sm max-md:hidden">
 					{navItems.map((item) => (
-						<Link key={item.name} {...item.href} className="px-0.5 text-fg-muted transition-colors hover:text-fg">
+						<RouterLink key={item.name} {...item.href} className="px-0.5 text-fg-muted transition-colors hover:text-fg">
 							{item.name}
-						</Link>
+						</RouterLink>
 					))}
 				</nav>
 			</div>
@@ -44,9 +44,15 @@ export function Header({ className, items = [] }: HeaderProps) {
 						<Kbd className="max-md:hidden">⌘ K</Kbd>
 					</Button>
 				</SearchCommand>
-				<LinkButton aria-label="GitHub" href={siteConfig.links.github} target="_blank" size="icon-sm">
+				<a
+					aria-label="GitHub"
+					href={siteConfig.links.github}
+					target="_blank"
+					rel="noopener noreferrer"
+					className={buttonStyles({ variant: "default", size: "icon-sm" })}
+				>
 					<GitHubIcon />
-				</LinkButton>
+				</a>
 				<ThemeToggle size="icon-sm" />
 			</div>
 		</header>

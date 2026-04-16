@@ -1,7 +1,8 @@
 "use client";
 
-import { Radio as AriaRadio, RadioGroup as AriaRadioGroup, composeRenderProps } from "react-aria-components";
-import type { RadioGroupProps, RadioRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
+
 
 import { createContext } from "@/registry/lib/context";
 import { cn } from "@/registry/lib/utils";
@@ -13,22 +14,22 @@ import { useStyles } from "./styles";
 
 const { field } = fieldStyles();
 
-const RadioGroup = ({ className, ...props }: RadioGroupProps) => {
-	return <AriaRadioGroup className={composeRenderProps(className, (className) => field({ className }))} {...props} />;
+const RadioGroup = ({ className, ...props }: RadioGroupPrimitives.RadioGroupProps) => {
+	return <RadioGroupPrimitives.RadioGroup className={composeRenderProps(className, (className) => field({ className }))} {...props} />;
 };
 
 // MARK: seperator
 
-const [InternalRadioProvider, useInternalRadio] = createContext<RadioRenderProps>({
+const [InternalRadioProvider, useInternalRadio] = createContext<RadioGroupPrimitives.RadioRenderProps>({
 	strict: true,
 });
 
-interface RadioProps extends React.ComponentProps<typeof AriaRadio> {}
+interface RadioProps extends React.ComponentProps<typeof RadioGroupPrimitives.Radio> {}
 
 const Radio = ({ className, ...props }: RadioProps) => {
 	const { root, indicator } = useStyles()();
 	return (
-		<AriaRadio
+		<RadioGroupPrimitives.Radio
 			data-slot="radio"
 			data-radio=""
 			className={composeRenderProps(className, (className) =>
@@ -43,7 +44,7 @@ const Radio = ({ className, ...props }: RadioProps) => {
 			{composeRenderProps(props.children, (children, renderProps) => {
 				return children ? <InternalRadioProvider value={renderProps}>{children}</InternalRadioProvider> : <span />;
 			})}
-		</AriaRadio>
+		</RadioGroupPrimitives.Radio>
 	);
 };
 
@@ -74,5 +75,6 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 
 // MARK: seperator
 
+type RadioGroupProps = RadioGroupPrimitives.RadioGroupProps;
 export type { RadioGroupProps, RadioIndicatorProps, RadioProps };
 export { Radio, RadioGroup, RadioIndicator };

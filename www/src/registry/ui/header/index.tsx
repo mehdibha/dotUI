@@ -1,7 +1,7 @@
 "use client";
 
-import { Header as AriaHeader } from "react-aria-components";
+import * as HeaderPrimitives from "react-aria-components/Header";
 
-export function Header(props: React.ComponentProps<typeof AriaHeader>) {
-	return <AriaHeader {...props} />;
+export function Header(props: React.ComponentProps<typeof HeaderPrimitives.Header>) {
+	return <HeaderPrimitives.Header {...props} />;
 }

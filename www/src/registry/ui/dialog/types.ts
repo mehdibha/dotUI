@@ -1,19 +1,16 @@
-import type {
-	Dialog as AriaDialog,
-	DialogTrigger as AriaDialogTrigger,
-	Heading as AriaHeading,
-	Text as AriaText,
-} from "react-aria-components";
+import * as DialogPrimitives from "react-aria-components/Dialog";
+import * as HeadingPrimitives from "react-aria-components/Heading";
+import * as TextPrimitives from "react-aria-components/Text";
 
 /**
  * A DialogTrigger opens a dialog when a trigger element is pressed.
  */
-export interface DialogProps extends React.ComponentProps<typeof AriaDialogTrigger> {}
+export interface DialogProps extends React.ComponentProps<typeof DialogPrimitives.DialogTrigger> {}
 
 /**
  * A dialog is an overlay shown above other content in an application.
  */
-export interface DialogContentProps extends React.ComponentProps<typeof AriaDialog> {}
+export interface DialogContentProps extends React.ComponentProps<typeof DialogPrimitives.Dialog> {}
 
 /**
  * Missing description.
@@ -23,12 +20,12 @@ export interface DialogHeaderProps extends React.ComponentProps<"header"> {}
 /**
  * Missing description.
  */
-export interface DialogHeadingProps extends React.ComponentProps<typeof AriaHeading> {}
+export interface DialogHeadingProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
 
 /**
  * Missing description.
  */
-export interface DialogDescriptionProps extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
+export interface DialogDescriptionProps extends Omit<React.ComponentProps<typeof TextPrimitives.Text>, "slot"> {}
 
 /**
  * Missing description.

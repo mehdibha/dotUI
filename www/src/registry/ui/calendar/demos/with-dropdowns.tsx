@@ -4,13 +4,7 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
-import {
-	Calendar,
-	CalendarGrid,
-	CalendarHeader,
-	CalendarMonthPicker,
-	CalendarYearPicker,
-} from "@/registry/ui/calendar";
+import { Calendar, CalendarGrid, CalendarHeader } from "@/registry/ui/calendar";
 import { Card, CardContent } from "@/registry/ui/card";
 
 export default function Demo() {
@@ -22,10 +16,7 @@ export default function Demo() {
 						<Button slot="previous" variant="default" size="icon-sm">
 							<ChevronLeftIcon />
 						</Button>
-						<div className="flex flex-1 gap-1.5">
-							<CalendarMonthPicker />
-							<CalendarYearPicker />
-						</div>
+						<div className="flex flex-1 gap-1.5">dropdowns</div>
 						<Button slot="next" variant="default" size="icon-sm">
 							<ChevronRightIcon />
 						</Button>

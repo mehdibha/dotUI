@@ -1,9 +1,9 @@
-import type { Switch as AriaSwitch } from "react-aria-components";
+import * as SwitchPrimitives from "react-aria-components/Switch";
 
 /**
  * A switch allows a user to turn a setting on or off.
  */
-export interface SwitchProps extends React.ComponentProps<typeof AriaSwitch> {
+export interface SwitchProps extends React.ComponentProps<typeof SwitchPrimitives.Switch> {
 	/**
 	 * The visual style of the switch.
 	 * @default 'default'

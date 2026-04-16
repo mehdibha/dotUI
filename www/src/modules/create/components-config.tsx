@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronRightIcon, SlidersHorizontalIcon } from "lucide-react";
-import { Button as AriaButton } from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { registryUi } from "@/registry/ui/registry";
 import type { RegistryItem } from "@/registry/types";
@@ -47,7 +47,7 @@ export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
 				const styleCount = comp.styles ? Object.keys(comp.styles).length : 0;
 				const paramCount = comp.params ? Object.keys(comp.params).length : 0;
 				return (
-					<AriaButton
+					<ButtonPrimitives.Button
 						key={comp.name}
 						onPress={() => onSelect(comp.name)}
 						className={cardClass}
@@ -69,7 +69,7 @@ export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
 								)}
 							</div>
 						)}
-					</AriaButton>
+					</ButtonPrimitives.Button>
 				);
 			})}
 		</div>

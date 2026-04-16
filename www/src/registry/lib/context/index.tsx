@@ -1,6 +1,6 @@
 import * as React from "react";
 import { mergeProps } from "react-aria";
-import { useSlottedContext } from "react-aria-components";
+import { useSlottedContext } from "react-aria-components/slots";
 
 export interface CreateContextOptions {
 	strict?: boolean;

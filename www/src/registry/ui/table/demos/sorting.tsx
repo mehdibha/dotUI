@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { SortDescriptor } from "react-aria-components";
+import * as TablePrimitives from "react-aria-components/Table";
 
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
 
@@ -19,7 +19,7 @@ const items: Item[] = [
 ];
 
 export default function Demo() {
-	const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
+	const [sortDescriptor, setSortDescriptor] = React.useState<TablePrimitives.SortDescriptor>({
 		column: "name",
 		direction: "ascending",
 	});

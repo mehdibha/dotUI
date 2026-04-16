@@ -5,7 +5,8 @@
 
 import * as React from "react";
 import { ChevronRightIcon } from "lucide-react";
-import { Button, DialogTrigger } from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
+import * as DialogPrimitives from "react-aria-components/Dialog";
 
 import { cn } from "@/registry/lib/utils";
 import { DialogContent } from "@/registry/ui/dialog";
@@ -95,10 +96,10 @@ function TypePopover({ name, type }: TypePopoverProps) {
 	);
 
 	return (
-		<DialogTrigger onOpenChange={handleOpenChange}>
-			<Button className="focus-visible:focus-ring cursor-pointer rounded-sm font-mono text-fg-accent underline underline-offset-2 outline-none">
+		<DialogPrimitives.DialogTrigger onOpenChange={handleOpenChange}>
+			<ButtonPrimitives.Button className="focus-visible:focus-ring cursor-pointer rounded-sm font-mono text-fg-accent underline underline-offset-2 outline-none">
 				{name}
-			</Button>
+			</ButtonPrimitives.Button>
 			<Popover placement="bottom" showArrow className="max-w-md p-3">
 				<DialogContent className="outline-none">
 					{/* Breadcrumbs */}
@@ -128,7 +129,7 @@ function TypePopover({ name, type }: TypePopoverProps) {
 					</TypeNavigationContext.Provider>
 				</DialogContent>
 			</Popover>
-		</DialogTrigger>
+		</DialogPrimitives.DialogTrigger>
 	);
 }
 

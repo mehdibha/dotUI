@@ -1,17 +1,10 @@
 "use client";
 
 import React from "react";
-import {
-	ListBox as AriaListBox,
-	ListBoxItem as AriaListBoxItem,
-	composeRenderProps,
-} from "react-aria-components";
-import type {
-	Key,
-	ListBoxItemProps as AriaListBoxItemProps,
-	ListBoxProps as AriaListBoxProps,
-	Selection,
-} from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as ListBoxPrimitives from "react-aria-components/ListBox";
+import * as MenuPrimitives from "react-aria-components/Menu";
+
 
 // --------------------------------------------------------------------------
 // Global CSS (scrollbar hiding) — injected once per document.
@@ -58,7 +51,7 @@ function useWheelPickerContext() {
 
 interface WheelPickerProps<T>
 	extends Omit<
-		AriaListBoxProps<T>,
+		ListBoxPrimitives.ListBoxProps<T>,
 		| "layout"
 		| "orientation"
 		| "selectionMode"
@@ -69,11 +62,11 @@ interface WheelPickerProps<T>
 		| "onSelectionChange"
 	> {
 	/** Selected item id. */
-	value?: Key;
+	value?: MenuPrimitives.Key;
 	/** Uncontrolled default. */
-	defaultValue?: Key;
+	defaultValue?: MenuPrimitives.Key;
 	/** Fires when the committed value changes. */
-	onValueChange?: (value: Key) => void;
+	onValueChange?: (value: MenuPrimitives.Key) => void;
 	/** Pixel height of each row. Default 36. */
 	itemHeight?: number;
 	/** Number of rows visible at once (odd numbers center nicely). Default 5. */
@@ -99,24 +92,24 @@ function WheelPicker<T extends object>({
 	const suppressScrollSyncUntil = React.useRef(0);
 
 	const isControlled = valueProp !== undefined;
-	const [uncontrolled, setUncontrolled] = React.useState<Key | undefined>(
+	const [uncontrolled, setUncontrolled] = React.useState<MenuPrimitives.Key | undefined>(
 		defaultValue,
 	);
 	const value = isControlled ? valueProp : uncontrolled;
 
 	// ----- Ordered key list (for scroll-to-index math) ---------------------
 	const keys = React.useMemo(() => {
-		const arr: Key[] = [];
+		const arr: MenuPrimitives.Key[] = [];
 		if (items) {
 			for (const item of items as Iterable<unknown>) {
-				const any = item as { id?: Key; key?: Key };
+				const any = item as { id?: MenuPrimitives.Key; key?: MenuPrimitives.Key };
 				const id = any.id ?? any.key;
 				if (id != null) arr.push(id);
 			}
 		} else {
 			React.Children.toArray(children as React.ReactNode).forEach((child) => {
 				if (React.isValidElement(child)) {
-					const p = child.props as { id?: Key };
+					const p = child.props as { id?: MenuPrimitives.Key };
 					if (p.id != null) arr.push(p.id);
 				}
 			});
@@ -125,7 +118,7 @@ function WheelPicker<T extends object>({
 	}, [items, children]);
 
 	const indexByKey = React.useMemo(() => {
-		const m = new Map<Key, number>();
+		const m = new Map<MenuPrimitives.Key, number>();
 		keys.forEach((k, i) => m.set(k, i));
 		return m;
 	}, [keys]);
@@ -133,13 +126,13 @@ function WheelPicker<T extends object>({
 	const containerHeight = itemHeight * visibleCount;
 	const padding = (containerHeight - itemHeight) / 2;
 
-	const selectionSet: Selection = React.useMemo(
-		() => (value != null ? new Set<Key>([value]) : new Set<Key>()),
+	const selectionSet: MenuPrimitives.Selection = React.useMemo(
+		() => (value != null ? new Set<MenuPrimitives.Key>([value]) : new Set<MenuPrimitives.Key>()),
 		[value],
 	);
 
 	const setValue = React.useCallback(
-		(next: Key) => {
+		(next: MenuPrimitives.Key) => {
 			if (!isControlled) setUncontrolled(next);
 			onValueChange?.(next);
 		},
@@ -226,7 +219,7 @@ function WheelPicker<T extends object>({
 
 	// ----- RAC selection (clicks, keyboard) --------------------------------
 	const handleSelectionChange = React.useCallback(
-		(next: Selection) => {
+		(next: MenuPrimitives.Selection) => {
 			if (next === "all") return;
 			const first = [...next][0];
 			if (first != null && first !== value) setValue(first);
@@ -248,7 +241,7 @@ function WheelPicker<T extends object>({
 					...style,
 				}}
 			>
-				<AriaListBox
+				<ListBoxPrimitives.ListBox
 					{...props}
 					ref={scrollerRef}
 					items={items}
@@ -271,7 +264,7 @@ function WheelPicker<T extends object>({
 					}}
 				>
 					{children}
-				</AriaListBox>
+				</ListBoxPrimitives.ListBox>
 			</div>
 		</WheelPickerContext.Provider>
 	);
@@ -281,7 +274,7 @@ function WheelPicker<T extends object>({
 // WheelPickerItem
 // --------------------------------------------------------------------------
 
-interface WheelPickerItemProps<T> extends AriaListBoxItemProps<T> {}
+interface WheelPickerItemProps<T> extends ListBoxPrimitives.ListBoxItemProps<T> {}
 
 function WheelPickerItem<T extends object>({
 	className,
@@ -292,7 +285,7 @@ function WheelPickerItem<T extends object>({
 	const { itemHeight } = useWheelPickerContext();
 
 	return (
-		<AriaListBoxItem
+		<ListBoxPrimitives.ListBoxItem
 			{...props}
 			className={composeRenderProps(className, (cn) =>
 				[
@@ -314,7 +307,7 @@ function WheelPickerItem<T extends object>({
 			)}
 		>
 			{children}
-		</AriaListBoxItem>
+		</ListBoxPrimitives.ListBoxItem>
 	);
 }
 

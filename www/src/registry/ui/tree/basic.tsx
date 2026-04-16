@@ -1,16 +1,8 @@
 import { ChevronRightIcon, GripVertical } from "lucide-react";
-import {
-	Tree as AriaTree,
-	TreeItem as AriaTreeItem,
-	TreeItemContent as AriaTreeItemContent,
-	composeRenderProps,
-} from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as TreePrimitives from "react-aria-components/Tree";
 import { tv } from "tailwind-variants";
-import type {
-	TreeItemContentProps as AriaTreeItemContentProps,
-	TreeItemProps as AriaTreeItemProps,
-	TreeProps as AriaTreeProps,
-} from "react-aria-components";
+
 
 import { Button } from "@/registry/ui/button";
 import { Checkbox } from "@/registry/ui/checkbox";
@@ -27,27 +19,27 @@ const { root, item } = treeStyles();
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface TreeProps<T> extends AriaTreeProps<T> {}
+interface TreeProps<T> extends TreePrimitives.TreeProps<T> {}
 
 const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
-	return <AriaTree className={composeRenderProps(className, (cn) => root({ className: cn }))} {...props} />;
+	return <TreePrimitives.Tree className={composeRenderProps(className, (cn) => root({ className: cn }))} {...props} />;
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface TreeItemProps extends AriaTreeItemProps {}
+interface TreeItemProps extends TreePrimitives.TreeItemProps {}
 
 const TreeItem = ({ className, ...props }: TreeItemProps) => {
-	return <AriaTreeItem className={composeRenderProps(className, (cn) => item({ className: cn }))} {...props} />;
+	return <TreePrimitives.TreeItem className={composeRenderProps(className, (cn) => item({ className: cn }))} {...props} />;
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface TreeItemContentProps extends AriaTreeItemContentProps {}
+interface TreeItemContentProps extends TreePrimitives.TreeItemContentProps {}
 
 const TreeItemContent = (_props: TreeItemContentProps) => {
 	return (
-		<AriaTreeItemContent>
+		<TreePrimitives.TreeItemContent>
 			{({ selectionBehavior, selectionMode, allowsDragging }) => (
 				<>
 					{allowsDragging && (
@@ -61,7 +53,7 @@ const TreeItemContent = (_props: TreeItemContentProps) => {
 					</Button>
 				</>
 			)}
-		</AriaTreeItemContent>
+		</TreePrimitives.TreeItemContent>
 	);
 };
 

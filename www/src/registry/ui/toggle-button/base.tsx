@@ -1,10 +1,7 @@
 "use client";
 
-import {
-	ToggleButton as AriaToggleButton,
-	ToggleButtonContext as AriaToggleButtonContext,
-	composeRenderProps,
-} from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -21,12 +18,12 @@ type ToggleButtonVariants = VariantProps<ToggleButtonStyles>;
 
 const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 	ToggleButtonVariants,
-	React.ComponentProps<typeof AriaToggleButton>
->(AriaToggleButtonContext);
+	React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>
+>(ToggleButtonPrimitives.ToggleButtonContext);
 
 // MARK: seperator
 
-interface ToggleButtonProps extends React.ComponentProps<typeof AriaToggleButton>, ToggleButtonVariants {}
+interface ToggleButtonProps extends React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>, ToggleButtonVariants {}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
 	const styles = useStyles();
@@ -39,7 +36,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 	} = useContextProps(localProps);
 
 	return (
-		<AriaToggleButton
+		<ToggleButtonPrimitives.ToggleButton
 			data-slot="button"
 			data-variant={variant}
 			data-size={size}
@@ -55,7 +52,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 			{composeRenderProps(children, (children) => (
 				<>{typeof children === "string" ? <span className="truncate">{children}</span> : children}</>
 			))}
-		</AriaToggleButton>
+		</ToggleButtonPrimitives.ToggleButton>
 	);
 };
 

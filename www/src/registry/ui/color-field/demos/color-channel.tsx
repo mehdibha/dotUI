@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
-import { parseColor } from "react-aria-components";
-import type { Color } from "react-aria-components";
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
+
 
 import { ColorField } from "@/registry/ui/color-field";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 
 export default function Demo() {
-	const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"));
+	const [color, setColor] = React.useState<ColorAreaPrimitives.Color | null>(ColorAreaPrimitives.parseColor("#7f007f"));
 
 	return (
 		<div className="grid grid-cols-3 gap-2 *:w-24">

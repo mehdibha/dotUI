@@ -1,26 +1,11 @@
 "use client";
 
 import { ChevronDownIcon, ChevronUpIcon, GripVerticalIcon } from "lucide-react";
-import {
-	Button as AriaButton,
-	Cell as AriaCell,
-	Collection as AriaCollection,
-	Column as AriaColumn,
-	ColumnResizer as AriaColumnResizer,
-	ResizableTableContainer as AriaResizableTableContainer,
-	Row as AriaRow,
-	Table as AriaTable,
-	TableBody as AriaTableBody,
-	TableHeader as AriaTableHeader,
-	TableLoadMoreItem as AriaTableLoadMoreItem,
-	composeRenderProps,
-	useTableOptions,
-} from "react-aria-components";
-import type {
-	RowProps as AriaRowProps,
-	TableBodyProps as AriaTableBodyProps,
-	TableHeaderProps as AriaTableHeaderProps,
-} from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
+import * as CollectionPrimitives from "react-aria-components/Collection";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as TablePrimitives from "react-aria-components/Table";
+
 
 import { cn } from "@/registry/lib/utils";
 import { Checkbox } from "@/registry/ui/checkbox";
@@ -32,21 +17,21 @@ import { useStyles } from "./styles";
 
 // MARK: seperator
 
-interface TableContainerProps extends React.ComponentProps<typeof AriaResizableTableContainer> {
+interface TableContainerProps extends React.ComponentProps<typeof TablePrimitives.ResizableTableContainer> {
 	resizable?: boolean;
 }
 
 const TableContainer = ({ resizable, className, ...props }: TableContainerProps) => {
 	const { container } = useStyles()();
 	if (resizable) {
-		return <AriaResizableTableContainer className={container({ className })} {...props} />;
+		return <TablePrimitives.ResizableTableContainer className={container({ className })} {...props} />;
 	}
 	return <div className={container({ className })} {...props} />;
 };
 
 // MARK: seperator
 
-interface TableProps extends React.ComponentProps<typeof AriaTable> {
+interface TableProps extends React.ComponentProps<typeof TablePrimitives.Table> {
 	resizable?: boolean;
 }
 
@@ -54,20 +39,20 @@ const Table = ({ className, resizable, ...props }: TableProps) => {
 	const { table } = useStyles()();
 	return (
 		<TableContainer resizable={resizable}>
-			<AriaTable className={composeRenderProps(className, (cn) => table({ className: cn }))} {...props} />
+			<TablePrimitives.Table className={composeRenderProps(className, (cn) => table({ className: cn }))} {...props} />
 		</TableContainer>
 	);
 };
 
 // MARK: seperator
 
-interface TableHeaderProps<T extends object> extends AriaTableHeaderProps<T> {}
+interface TableHeaderProps<T extends object> extends TablePrimitives.TableHeaderProps<T> {}
 
 const TableHeader = <T extends object>({ className, columns, children, ...props }: TableHeaderProps<T>) => {
 	const { header } = useStyles()();
-	const { selectionBehavior, selectionMode, allowsDragging } = useTableOptions();
+	const { selectionBehavior, selectionMode, allowsDragging } = TablePrimitives.useTableOptions();
 	return (
-		<AriaTableHeader
+		<TablePrimitives.TableHeader
 			data-slot="table-header"
 			className={composeRenderProps(className, (cn) => header({ className: cn }))}
 			{...props}
@@ -76,21 +61,21 @@ const TableHeader = <T extends object>({ className, columns, children, ...props 
 			{selectionBehavior === "toggle" && (
 				<TableColumn>{selectionMode === "multiple" && <Checkbox slot="selection" />}</TableColumn>
 			)}
-			<AriaCollection items={columns}>{children}</AriaCollection>
-		</AriaTableHeader>
+			<CollectionPrimitives.Collection items={columns}>{children}</CollectionPrimitives.Collection>
+		</TablePrimitives.TableHeader>
 	);
 };
 
 // MARK: seperator
 
-interface TableColumnProps extends React.ComponentProps<typeof AriaColumn> {
+interface TableColumnProps extends React.ComponentProps<typeof TablePrimitives.Column> {
 	allowsResizing?: boolean;
 }
 
 const TableColumn = ({ allowsResizing, children, className, ...props }: TableColumnProps) => {
 	const { column, resizer } = useStyles()();
 	return (
-		<AriaColumn
+		<TablePrimitives.Column
 			data-slot="table-column"
 			className={composeRenderProps(className, (cn) => column({ className: cn }))}
 			{...props}
@@ -104,16 +89,16 @@ const TableColumn = ({ allowsResizing, children, className, ...props }: TableCol
 						) : (
 							<ChevronDownIcon aria-hidden className="size-3 text-fg-muted" />
 						))}
-					{!props.width && allowsResizing && <AriaColumnResizer className={resizer()} />}
+					{!props.width && allowsResizing && <TablePrimitives.ColumnResizer className={resizer()} />}
 				</div>
 			))}
-		</AriaColumn>
+		</TablePrimitives.Column>
 	);
 };
 
 // MARK: seperator
 
-interface TableBodyProps<T extends object> extends AriaTableBodyProps<T> {
+interface TableBodyProps<T extends object> extends TablePrimitives.TableBodyProps<T> {
 	isLoading?: boolean;
 	onLoadMore?: () => void;
 }
@@ -129,30 +114,30 @@ const TableBody = <T extends object>({
 }: TableBodyProps<T>) => {
 	const { body } = useStyles()();
 	return (
-		<AriaTableBody
+		<TablePrimitives.TableBody
 			renderEmptyState={renderEmptyState}
 			className={composeRenderProps(className, (className) => body({ className }))}
 			{...props}
 		>
-			<AriaCollection items={items}>{children}</AriaCollection>
+			<CollectionPrimitives.Collection items={items}>{children}</CollectionPrimitives.Collection>
 			<TableLoadMore isLoading={isLoading} onLoadMore={onLoadMore} />
-		</AriaTableBody>
+		</TablePrimitives.TableBody>
 	);
 };
 
 // MARK: seperator
 
-interface TableRowProps<T extends object> extends AriaRowProps<T> {}
+interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
 function TableRow<T extends object>({ columns, children, className, ...props }: TableRowProps<T>) {
 	const { row } = useStyles()();
-	const { selectionBehavior, allowsDragging } = useTableOptions();
+	const { selectionBehavior, allowsDragging } = TablePrimitives.useTableOptions();
 
 	return (
-		<AriaRow className={composeRenderProps(className, (cn) => row({ className: cn }))} {...props}>
+		<TablePrimitives.Row className={composeRenderProps(className, (cn) => row({ className: cn }))} {...props}>
 			{allowsDragging && (
 				<TableCell className="cursor-grab">
-					<AriaButton
+					<ButtonPrimitives.Button
 						slot="drag"
 						className={cn(
 							"focus-reset focus-visible:focus-ring",
@@ -160,7 +145,7 @@ function TableRow<T extends object>({ columns, children, className, ...props }: 
 						)}
 					>
 						<GripVerticalIcon />
-					</AriaButton>
+					</ButtonPrimitives.Button>
 				</TableCell>
 			)}
 			{selectionBehavior === "toggle" && (
@@ -168,19 +153,19 @@ function TableRow<T extends object>({ columns, children, className, ...props }: 
 					<Checkbox slot="selection" />
 				</TableCell>
 			)}
-			<AriaCollection items={columns}>{children}</AriaCollection>
-		</AriaRow>
+			<CollectionPrimitives.Collection items={columns}>{children}</CollectionPrimitives.Collection>
+		</TablePrimitives.Row>
 	);
 }
 
 // MARK: seperator
 
-interface TableCellProps extends React.ComponentProps<typeof AriaCell> {}
+interface TableCellProps extends React.ComponentProps<typeof TablePrimitives.Cell> {}
 
 const TableCell = ({ className, ...props }: TableCellProps) => {
 	const { cell } = useStyles()();
 	return (
-		<AriaCell
+		<TablePrimitives.Cell
 			data-slot="table-cell"
 			className={composeRenderProps(className, (cn) => cell({ className: cn }))}
 			{...props}
@@ -190,14 +175,14 @@ const TableCell = ({ className, ...props }: TableCellProps) => {
 
 // MARK: seperator
 
-interface TableLoadMoreProps extends React.ComponentProps<typeof AriaTableLoadMoreItem> {}
+interface TableLoadMoreProps extends React.ComponentProps<typeof TablePrimitives.TableLoadMoreItem> {}
 
 const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
 	const { loadMore } = useStyles()();
 	return (
-		<AriaTableLoadMoreItem className={loadMore({ className })} {...props}>
+		<TablePrimitives.TableLoadMoreItem className={loadMore({ className })} {...props}>
 			<Loader aria-label="Loading more..." />
-		</AriaTableLoadMoreItem>
+		</TablePrimitives.TableLoadMoreItem>
 	);
 };
 

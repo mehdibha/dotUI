@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Form } from "react-aria-components";
+import * as FormPrimitives from "react-aria-components/Form";
 
 import { Button } from "@/registry/ui/button";
 import {
@@ -40,7 +40,7 @@ export default function Demo() {
 								<DialogDescription>Make changes to your profile.</DialogDescription>
 							</DialogHeader>
 							<DialogBody>
-								<Form
+								<FormPrimitives.Form
 									onSubmit={(e) => {
 										handleSubmit(e);
 										close();
@@ -50,7 +50,7 @@ export default function Demo() {
 										<Label>Username</Label>
 										<Input className="w-full" />
 									</TextField>
-								</Form>
+								</FormPrimitives.Form>
 							</DialogBody>
 							<DialogFooter>
 								<Button variant="default" slot="close">

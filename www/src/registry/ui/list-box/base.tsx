@@ -2,28 +2,14 @@
 
 import React from "react";
 import { CheckIcon } from "lucide-react";
-import {
-	Header as AriaHeader,
-	ListBox as AriaListBox,
-	ListBoxItem as AriaListBoxItem,
-	ListBoxSection as AriaListBoxSection,
-	TextContext as AriaTextContext,
-	Virtualizer as AriaVirtualizer,
-	composeRenderProps,
-	LabelContext,
-	ListLayout,
-	ListStateContext,
-	Provider,
-	useSlottedContext,
-} from "react-aria-components";
-import type {
-	LabelProps as AriaLabelProps,
-	ListBoxItemProps as AriaListBoxItemProps,
-	ListBoxProps as AriaListBoxProps,
-	ListBoxSectionProps as AriaListBoxSectionProps,
-	VirtualizerProps as AriaVirtualizerProps,
-	ContextValue,
-} from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as HeaderPrimitives from "react-aria-components/Header";
+import * as LabelPrimitives from "react-aria-components/Label";
+import * as ListBoxPrimitives from "react-aria-components/ListBox";
+import { Provider, useSlottedContext, type ContextValue } from "react-aria-components/slots";
+import * as TextPrimitives from "react-aria-components/Text";
+import * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { useStyles } from "./styles";
@@ -33,15 +19,15 @@ import type { ListBoxStyles } from "./styles";
 
 // MARK: seperator
 
-interface ListBoxProps<T> extends AriaListBoxProps<T> {
+interface ListBoxProps<T> extends ListBoxPrimitives.ListBoxProps<T> {
 	isLoading?: boolean;
 }
 
 const ListBox = <T extends object>({ className, isLoading, ...props }: ListBoxProps<T>) => {
 	const { root } = useStyles()();
-	const standalone = !React.use(ListStateContext);
+	const standalone = !React.use(ListBoxPrimitives.ListStateContext);
 	return (
-		<AriaListBox
+		<ListBoxPrimitives.ListBox
 			data-standalone={standalone || undefined}
 			className={composeRenderProps(className, (cn) => root({ className: cn }))}
 			{...props}
@@ -51,7 +37,7 @@ const ListBox = <T extends object>({ className, isLoading, ...props }: ListBoxPr
 
 // MARK: seperator
 
-interface ListBoxItemProps<T> extends AriaListBoxItemProps<T>, VariantProps<ListBoxStyles> {}
+interface ListBoxItemProps<T> extends ListBoxPrimitives.ListBoxItemProps<T>, VariantProps<ListBoxStyles> {}
 
 const ListBoxItem = <T extends object>({
 	className,
@@ -63,7 +49,7 @@ const ListBoxItem = <T extends object>({
 	const textValue = textValueProp || (typeof props.children === "string" ? props.children : undefined);
 
 	return (
-		<AriaListBoxItem
+		<ListBoxPrimitives.ListBoxItem
 			textValue={textValue}
 			className={composeRenderProps(className, (cn) => item({ className: cn, variant }))}
 			{...props}
@@ -78,14 +64,14 @@ const ListBoxItem = <T extends object>({
 					)}
 				</ListBoxItemInner>
 			))}
-		</AriaListBoxItem>
+		</ListBoxPrimitives.ListBoxItem>
 	);
 };
 
 const ListBoxItemInner = ({ children }: { children: React.ReactNode }) => {
-	const labelProps = useSlottedContext(AriaTextContext, "label")!;
+	const labelProps = useSlottedContext(TextPrimitives.TextContext, "label")!;
 	return (
-		<Provider values={[[LabelContext as React.Context<ContextValue<AriaLabelProps, HTMLElement>>, labelProps]]}>
+		<Provider values={[[LabelPrimitives.LabelContext as React.Context<ContextValue<LabelPrimitives.LabelProps, HTMLElement>>, labelProps]]}>
 			{children}
 		</Provider>
 	);
@@ -93,30 +79,30 @@ const ListBoxItemInner = ({ children }: { children: React.ReactNode }) => {
 
 // MARK: seperator
 
-interface ListBoxSectionProps<T> extends AriaListBoxSectionProps<T> {}
+interface ListBoxSectionProps<T> extends ListBoxPrimitives.ListBoxSectionProps<T> {}
 
 const ListBoxSection = <T extends object>({ className, ...props }: ListBoxSectionProps<T>) => {
 	const { section } = useStyles()();
-	return <AriaListBoxSection data-slot="listbox-section" className={section({ className })} {...props} />;
+	return <ListBoxPrimitives.ListBoxSection data-slot="listbox-section" className={section({ className })} {...props} />;
 };
 
 // MARK: seperator
 
-interface ListBoxSectionHeaderProps extends React.ComponentProps<typeof AriaHeader> {}
+interface ListBoxSectionHeaderProps extends React.ComponentProps<typeof HeaderPrimitives.Header> {}
 
 const ListBoxSectionHeader = ({ className, ...props }: ListBoxSectionHeaderProps) => {
 	const { sectionTitle } = useStyles()();
-	return <AriaHeader className={sectionTitle({ className })} {...props} />;
+	return <HeaderPrimitives.Header className={sectionTitle({ className })} {...props} />;
 };
 
 // MARK: seperator
 
-interface ListBoxVirtualizerProps<T> extends Omit<AriaVirtualizerProps<T>, "layout"> {}
+interface ListBoxVirtualizerProps<T> extends Omit<VirtualizerPrimitives.VirtualizerProps<T>, "layout"> {}
 
 const ListBoxVirtualizer = <T extends object>({ ...props }: ListBoxVirtualizerProps<T>) => {
 	return (
-		<AriaVirtualizer
-			layout={ListLayout}
+		<VirtualizerPrimitives.Virtualizer
+			layout={VirtualizerPrimitives.ListLayout}
 			layoutOptions={{
 				rowHeight: 32,
 				padding: 4,

@@ -1,26 +1,21 @@
 "use client";
 
-import {
-	DateRangePicker as AriaDateRangePicker,
-	DatePicker as AriaDatePicker,
-	composeRenderProps,
-} from "react-aria-components";
-import type {
-	DateRangePickerProps as AriaDateRangePickerProps,
-	DatePickerProps as AriaDatePickerProps,
-	DateValue,
-} from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as DatePickerPrimitives from "react-aria-components/DatePicker";
+import * as DateRangePickerPrimitives from "react-aria-components/DateRangePicker";
+
 
 import { useStyles } from "./styles";
 
 // MARK: DatePicker
 
-interface DatePickerProps<T extends DateValue> extends AriaDatePickerProps<T> {}
+interface DatePickerProps<T extends CalendarPrimitives.DateValue> extends DatePickerPrimitives.DatePickerProps<T> {}
 
-const DatePicker = <T extends DateValue>({ className, ...props }: DatePickerProps<T>) => {
+const DatePicker = <T extends CalendarPrimitives.DateValue>({ className, ...props }: DatePickerProps<T>) => {
 	const datePickerStyles = useStyles();
 	return (
-		<AriaDatePicker
+		<DatePickerPrimitives.DatePicker
 			className={composeRenderProps(className, (className) => datePickerStyles({ className }))}
 			{...props}
 		/>
@@ -29,12 +24,12 @@ const DatePicker = <T extends DateValue>({ className, ...props }: DatePickerProp
 
 // MARK: DateRangePicker
 
-interface DateRangePickerProps<T extends DateValue> extends AriaDateRangePickerProps<T> {}
+interface DateRangePickerProps<T extends CalendarPrimitives.DateValue> extends DateRangePickerPrimitives.DateRangePickerProps<T> {}
 
-const DateRangePicker = <T extends DateValue>({ className, ...props }: DateRangePickerProps<T>) => {
+const DateRangePicker = <T extends CalendarPrimitives.DateValue>({ className, ...props }: DateRangePickerProps<T>) => {
 	const datePickerStyles = useStyles();
 	return (
-		<AriaDateRangePicker
+		<DateRangePickerPrimitives.DateRangePicker
 			className={composeRenderProps(className, (className) => datePickerStyles({ className }))}
 			{...props}
 		/>

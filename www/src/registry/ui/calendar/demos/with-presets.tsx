@@ -2,15 +2,15 @@
 
 import React from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import type { DateValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { Button } from "@/registry/ui/button";
 import { Calendar } from "@/registry/ui/calendar";
 import { Card, CardContent, CardFooter } from "@/registry/ui/card";
 
 export default function Demo() {
-	const [date, setDate] = React.useState<DateValue | null>(today(getLocalTimeZone()));
-	const [focused, setFocused] = React.useState<DateValue>(today(getLocalTimeZone()));
+	const [date, setDate] = React.useState<CalendarPrimitives.DateValue | null>(today(getLocalTimeZone()));
+	const [focused, setFocused] = React.useState<CalendarPrimitives.DateValue>(today(getLocalTimeZone()));
 
 	const presets = [
 		{ label: "Today", days: 0 },

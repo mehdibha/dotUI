@@ -1,23 +1,11 @@
 "use client";
 
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
-import {
-	Header as AriaHeader,
-	Menu as AriaMenu,
-	MenuItem as AriaMenuItem,
-	MenuSection as AriaMenuSection,
-	MenuTrigger as AriaMenuTrigger,
-	SubmenuTrigger as AriaSubmenuTrigger,
-	composeRenderProps,
-} from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as HeaderPrimitives from "react-aria-components/Header";
+import * as MenuPrimitives from "react-aria-components/Menu";
 import type * as React from "react";
-import type {
-	MenuItemProps as AriaMenuItemProps,
-	MenuProps as AriaMenuProps,
-	MenuSectionProps as AriaMenuSectionProps,
-	MenuTriggerProps as AriaMenuTriggerProps,
-	SubmenuTriggerProps as AriaSubmenuTriggerProps,
-} from "react-aria-components";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { cn } from "@/registry/lib/utils";
@@ -29,36 +17,36 @@ import type { MenuStyles } from "./styles";
 
 // MARK: seperator
 
-interface MenuProps extends AriaMenuTriggerProps {}
+interface MenuProps extends MenuPrimitives.MenuTriggerProps {}
 
 const Menu = (props: MenuProps) => {
-	return <AriaMenuTrigger {...props} />;
+	return <MenuPrimitives.MenuTrigger {...props} />;
 };
 
 // MARK: seperator
 
-interface MenuContentProps<T> extends AriaMenuProps<T> {}
+interface MenuContentProps<T> extends MenuPrimitives.MenuProps<T> {}
 const MenuContent = <T extends object>({ className, ...props }: MenuContentProps<T>) => {
 	const { root } = useStyles()();
-	return <AriaMenu className={composeRenderProps(className, (className) => root({ className }))} {...props} />;
+	return <MenuPrimitives.Menu className={composeRenderProps(className, (className) => root({ className }))} {...props} />;
 };
 
 // MARK: seperator
 
-interface MenuSubProps extends AriaSubmenuTriggerProps {}
+interface MenuSubProps extends MenuPrimitives.SubmenuTriggerProps {}
 
 const MenuSub = (props: MenuSubProps) => {
-	return <AriaSubmenuTrigger {...props} />;
+	return <MenuPrimitives.SubmenuTrigger {...props} />;
 };
 
 // MARK: seperator
 
-interface MenuItemProps<T> extends AriaMenuItemProps<T>, VariantProps<MenuStyles> {}
+interface MenuItemProps<T> extends MenuPrimitives.MenuItemProps<T>, VariantProps<MenuStyles> {}
 
 const MenuItem = <T extends object>({ className, variant, ...props }: MenuItemProps<T>) => {
 	const { item } = useStyles()();
 	return (
-		<AriaMenuItem
+		<MenuPrimitives.MenuItem
 			data-slot="menu-item"
 			className={composeRenderProps(className, (className) => item({ className, variant }))}
 			{...props}
@@ -74,28 +62,28 @@ const MenuItem = <T extends object>({ className, variant, ...props }: MenuItemPr
 					{hasSubmenu && <ChevronRightIcon aria-hidden className="size-4" />}
 				</>
 			))}
-		</AriaMenuItem>
+		</MenuPrimitives.MenuItem>
 	);
 };
 
 // MARK: seperator
 
-interface MenuSectionProps<T> extends AriaMenuSectionProps<T> {}
+interface MenuSectionProps<T> extends MenuPrimitives.MenuSectionProps<T> {}
 const MenuSection = <T extends object>({ children, className, ...props }: MenuSectionProps<T>) => {
 	const { section } = useStyles()();
 	return (
-		<AriaMenuSection className={section({ className })} {...props}>
+		<MenuPrimitives.MenuSection className={section({ className })} {...props}>
 			{children}
-		</AriaMenuSection>
+		</MenuPrimitives.MenuSection>
 	);
 };
 
 // MARK: seperator
 
-interface MenuSectionHeaderProps extends React.ComponentProps<typeof AriaHeader> {}
+interface MenuSectionHeaderProps extends React.ComponentProps<typeof HeaderPrimitives.Header> {}
 
 const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
-	return <AriaHeader className={cn("font-medium text-fg-muted text-sm", className)} {...props} />;
+	return <HeaderPrimitives.Header className={cn("font-medium text-fg-muted text-sm", className)} {...props} />;
 };
 
 // MARK: seperator

@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { parseColor } from "react-aria-components";
-import type { Color } from "react-aria-components";
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
+
 
 import { ColorEditor } from "@/registry/ui/color-editor";
 import { ColorPicker, ColorPickerContent, ColorPickerTrigger } from "@/registry/ui/color-picker";
 
 export default function Demo() {
-	const [value, setValue] = React.useState<Color>(parseColor("hsl(26, 33%, 78%)"));
+	const [value, setValue] = React.useState<ColorAreaPrimitives.Color>(ColorAreaPrimitives.parseColor("hsl(26, 33%, 78%)"));
 
 	return (
 		<ColorPicker value={value} onChange={setValue}>

@@ -1,7 +1,7 @@
-import type { FileTriggerProps as AriaFileTriggerProps } from "react-aria-components";
+import * as FileTriggerPrimitives from "react-aria-components/FileTrigger";
 
 /**
  * A FileTrigger allows a user to access the file system with any pressable React Aria
  * or React Spectrum component, or custom components built with usePress.
  */
-export interface FileTriggerProps extends AriaFileTriggerProps {}
+export interface FileTriggerProps extends FileTriggerPrimitives.FileTriggerProps {}

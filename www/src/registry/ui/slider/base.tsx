@@ -1,17 +1,11 @@
 "use client";
 
 import { use } from "react";
-import { useSlotId } from "@react-aria/utils";
-import {
-	Slider as AriaSlider,
-	SliderOutput as AriaSliderOutput,
-	SliderStateContext as AriaSliderStateContext,
-	SliderThumb as AriaSliderThumb,
-	SliderTrack as AriaSliderTrack,
-	TextContext as AriaTextContext,
-	composeRenderProps,
-	Provider,
-} from "react-aria-components";
+import { useSlotId } from "react-aria/private/utils/useId";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as SliderPrimitives from "react-aria-components/Slider";
+import { Provider } from "react-aria-components/slots";
+import * as TextPrimitives from "react-aria-components/Text";
 
 import { useStyles } from "./styles";
 
@@ -19,32 +13,32 @@ import { useStyles } from "./styles";
 
 // MARK: seperator
 
-interface SliderProps extends React.ComponentProps<typeof AriaSlider> {}
+interface SliderProps extends React.ComponentProps<typeof SliderPrimitives.Slider> {}
 
 const Slider = ({ className, children, ...props }: SliderProps) => {
 	const { root } = useStyles()();
 	const descriptionId = useSlotId();
 	return (
-		<AriaSlider
+		<SliderPrimitives.Slider
 			className={composeRenderProps(className, (cn, { orientation }) => root({ className: cn, orientation }))}
 			aria-describedby={descriptionId}
 			{...props}
 		>
 			{composeRenderProps(children, (children) => (
-				<Provider values={[[AriaTextContext, { slot: "description", id: descriptionId }]]}>{children}</Provider>
+				<Provider values={[[TextPrimitives.TextContext, { slot: "description", id: descriptionId }]]}>{children}</Provider>
 			))}
-		</AriaSlider>
+		</SliderPrimitives.Slider>
 	);
 };
 
 // MARK: seperator
 
-interface SliderControlProps extends React.ComponentProps<typeof AriaSliderTrack> {}
+interface SliderControlProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
 
 const SliderControl = ({ className, ...props }: SliderControlProps) => {
 	const { track } = useStyles()();
 	return (
-		<AriaSliderTrack
+		<SliderPrimitives.SliderTrack
 			data-slot="slider-track"
 			data-slider-track=""
 			data-slider-control=""
@@ -63,7 +57,7 @@ const SliderControl = ({ className, ...props }: SliderControlProps) => {
 						</>
 					),
 			)}
-		</AriaSliderTrack>
+		</SliderPrimitives.SliderTrack>
 	);
 };
 
@@ -73,7 +67,7 @@ interface SliderFillerProps extends React.ComponentProps<"div"> {}
 
 const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
 	const { filler } = useStyles()();
-	const { orientation, getThumbPercent, values, isDisabled } = use(AriaSliderStateContext)!;
+	const { orientation, getThumbPercent, values, isDisabled } = use(SliderPrimitives.SliderStateContext)!;
 
 	const getFillerDimensions = (): React.CSSProperties => {
 		if (values.length === 1 && orientation === "horizontal") return { width: `${getThumbPercent(0) * 100}%` };
@@ -106,12 +100,12 @@ const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
 
 // MARK: seperator
 
-interface SliderThumbProps extends React.ComponentProps<typeof AriaSliderThumb> {}
+interface SliderThumbProps extends React.ComponentProps<typeof SliderPrimitives.SliderThumb> {}
 
 const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
 	const { thumb } = useStyles()();
 	return (
-		<AriaSliderThumb
+		<SliderPrimitives.SliderThumb
 			data-slot="slider-thumb"
 			className={composeRenderProps(className, (className, { state: { orientation } }) =>
 				thumb({ orientation, className }),
@@ -123,12 +117,12 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
 
 // MARK: seperator
 
-interface SliderOutputProps extends React.ComponentProps<typeof AriaSliderOutput> {}
+interface SliderOutputProps extends React.ComponentProps<typeof SliderPrimitives.SliderOutput> {}
 
 const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
 	const { output } = useStyles()();
 	return (
-		<AriaSliderOutput
+		<SliderPrimitives.SliderOutput
 			data-slot="slider-output"
 			className={composeRenderProps(className, (className) => output({ className }))}
 			{...props}
@@ -137,7 +131,7 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
 				children,
 				(children, { state }) => children ?? state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - "),
 			)}
-		</AriaSliderOutput>
+		</SliderPrimitives.SliderOutput>
 	);
 };
 

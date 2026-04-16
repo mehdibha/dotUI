@@ -3,7 +3,7 @@
 import React from "react";
 import { getLocalTimeZone, parseDate } from "@internationalized/date";
 import { useDateFormatter } from "react-aria";
-import type { DateRange } from "react-aria-components";
+import * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar";
 
 import { CalendarIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
@@ -15,7 +15,7 @@ import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
-	const [value, setValue] = React.useState<DateRange | null>({
+	const [value, setValue] = React.useState<RangeCalendarPrimitives.DateRange | null>({
 		start: parseDate("2024-02-03"),
 		end: parseDate("2024-02-08"),
 	});

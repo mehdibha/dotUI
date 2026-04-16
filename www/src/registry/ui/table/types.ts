@@ -1,18 +1,9 @@
-import type {
-	Cell as AriaCell,
-	Column as AriaColumn,
-	ResizableTableContainer as AriaResizableTableContainer,
-	RowProps as AriaRowProps,
-	Table as AriaTable,
-	TableBodyProps as AriaTableBodyProps,
-	TableHeaderProps as AriaTableHeaderProps,
-	TableLoadMoreItem as AriaTableLoadMoreItem,
-} from "react-aria-components";
+import * as TablePrimitives from "react-aria-components/Table";
 
 /**
  * Missing description.
  */
-export interface TableContainerProps extends React.ComponentProps<typeof AriaResizableTableContainer> {
+export interface TableContainerProps extends React.ComponentProps<typeof TablePrimitives.ResizableTableContainer> {
 	/**
 	 * Whether the table columns are resizable.
 	 */
@@ -23,7 +14,7 @@ export interface TableContainerProps extends React.ComponentProps<typeof AriaRes
  * A table displays data in rows and columns and enables a user to navigate its contents
  * via directional navigation keys, and optionally supports row selection and sorting.
  */
-export interface TableProps extends React.ComponentProps<typeof AriaTable> {
+export interface TableProps extends React.ComponentProps<typeof TablePrimitives.Table> {
 	/**
 	 * Whether the table columns are resizable.
 	 */
@@ -33,12 +24,12 @@ export interface TableProps extends React.ComponentProps<typeof AriaTable> {
 /**
  * A header within a Table, containing the table columns.
  */
-export interface TableHeaderProps<T extends object> extends AriaTableHeaderProps<T> {}
+export interface TableHeaderProps<T extends object> extends TablePrimitives.TableHeaderProps<T> {}
 
 /**
  * A column within a Table.
  */
-export interface TableColumnProps extends React.ComponentProps<typeof AriaColumn> {
+export interface TableColumnProps extends React.ComponentProps<typeof TablePrimitives.Column> {
 	/**
 	 * Whether the column is resizable.
 	 */
@@ -48,7 +39,7 @@ export interface TableColumnProps extends React.ComponentProps<typeof AriaColumn
 /**
  * The body of a Table, containing the table rows.
  */
-export interface TableBodyProps<T extends object> extends AriaTableBodyProps<T> {
+export interface TableBodyProps<T extends object> extends TablePrimitives.TableBodyProps<T> {
 	/**
 	 * Whether the table body is in a loading state.
 	 */
@@ -63,14 +54,14 @@ export interface TableBodyProps<T extends object> extends AriaTableBodyProps<T> 
 /**
  * A row within a Table.
  */
-export interface TableRowProps<T extends object> extends AriaRowProps<T> {}
+export interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
 /**
  * A cell within a table row.
  */
-export interface TableCellProps extends React.ComponentProps<typeof AriaCell> {}
+export interface TableCellProps extends React.ComponentProps<typeof TablePrimitives.Cell> {}
 
 /**
  * Missing description.
  */
-export interface TableLoadMoreProps extends React.ComponentProps<typeof AriaTableLoadMoreItem> {}
+export interface TableLoadMoreProps extends React.ComponentProps<typeof TablePrimitives.TableLoadMoreItem> {}

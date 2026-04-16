@@ -1,12 +1,9 @@
 "use client";
 
 import { useContext } from "react";
-import {
-	ColorPicker as AriaColorPicker,
-	ColorPickerStateContext as AriaColorPickerStateContext,
-	composeRenderProps,
-} from "react-aria-components";
-import type { ColorPickerProps as AriaColorPickerProps, ColorPickerState } from "react-aria-components";
+import * as ColorPickerPrimitives from "react-aria-components/ColorPicker";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+
 
 import { Button } from "@/registry/ui/button";
 import { ColorSwatch } from "@/registry/ui/color-swatch";
@@ -15,28 +12,28 @@ import { Overlay } from "@/registry/ui/overlay";
 import type { ButtonProps } from "@/registry/ui/button";
 import type { DialogContentProps, DialogProps } from "@/registry/ui/dialog";
 
-interface ColorPickerProps extends AriaColorPickerProps, Omit<DialogProps, "children"> {}
+interface ColorPickerProps extends ColorPickerPrimitives.ColorPickerProps, Omit<DialogProps, "children"> {}
 
 const ColorPicker = ({ defaultOpen, isOpen, onOpenChange, ...props }: ColorPickerProps) => {
 	return (
-		<AriaColorPicker {...props}>
+		<ColorPickerPrimitives.ColorPicker {...props}>
 			{composeRenderProps(props.children, (children) => (
 				<Dialog defaultOpen={defaultOpen} isOpen={isOpen} onOpenChange={onOpenChange}>
 					{children}
 				</Dialog>
 			))}
-		</AriaColorPicker>
+		</ColorPickerPrimitives.ColorPicker>
 	);
 };
 
 /* -----------------------------------------------------------------------------------------------*/
 
 interface ColorPickerTriggerProps extends Omit<ButtonProps, "children"> {
-	children?: React.ReactNode | ((props: ColorPickerState) => React.ReactNode);
+	children?: React.ReactNode | ((props: ColorPickerPrimitives.ColorPickerState) => React.ReactNode);
 }
 
 const ColorPickerTrigger = ({ children, ...props }: ColorPickerTriggerProps) => {
-	const state = useContext(AriaColorPickerStateContext)!;
+	const state = useContext(ColorPickerPrimitives.ColorPickerStateContext)!;
 	return (
 		<Button {...props}>
 			{children ? (

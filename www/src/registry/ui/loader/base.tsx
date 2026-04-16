@@ -1,16 +1,16 @@
 "use client";
 
 import { Loader2Icon } from "lucide-react";
-import { ProgressBar as AriaProgressBar } from "react-aria-components";
-import type { ProgressBarProps } from "react-aria-components";
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
+
 
 import { cn } from "@/registry/lib/utils";
 
-interface LoaderProps extends ProgressBarProps {}
+interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
 
 function Loader({ className, ...props }: LoaderProps) {
 	return (
-		<AriaProgressBar
+		<ProgressBarPrimitives.ProgressBar
 			data-loader=""
 			className={cn("inline-flex shrink-0 items-center justify-center", className)}
 			aria-label="loading..."
@@ -18,7 +18,7 @@ function Loader({ className, ...props }: LoaderProps) {
 			isIndeterminate
 		>
 			<Loader2Icon role="status" aria-label="Loading" className={cn("size-4 animate-spin")} />
-		</AriaProgressBar>
+		</ProgressBarPrimitives.ProgressBar>
 	);
 }
 

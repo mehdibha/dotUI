@@ -1,14 +1,11 @@
 "use client";
 
-import { useSlotId } from "@react-aria/utils";
-import {
-	ColorSlider as AriaColorSlider,
-	SliderOutput as AriaSliderOutput,
-	SliderTrack as AriaSliderTrack,
-	composeRenderProps,
-	Provider,
-	TextContext,
-} from "react-aria-components";
+import { useSlotId } from "react-aria/private/utils/useId";
+import * as ColorSliderPrimitives from "react-aria-components/ColorSlider";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as SliderPrimitives from "react-aria-components/Slider";
+import { Provider } from "react-aria-components/slots";
+import * as TextPrimitives from "react-aria-components/Text";
 
 import { ColorThumb } from "@/registry/ui/color-thumb";
 
@@ -18,49 +15,49 @@ import { useStyles } from "./styles";
 
 // MARK: seperator
 
-interface ColorSliderProps extends React.ComponentProps<typeof AriaColorSlider> {}
+interface ColorSliderProps extends React.ComponentProps<typeof ColorSliderPrimitives.ColorSlider> {}
 
 const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
 	const { root } = useStyles()();
 	const descriptionId = useSlotId();
 	return (
-		<Provider values={[[TextContext, { slot: "description", id: descriptionId }]]}>
-			<AriaColorSlider
+		<Provider values={[[TextPrimitives.TextContext, { slot: "description", id: descriptionId }]]}>
+			<ColorSliderPrimitives.ColorSlider
 				className={composeRenderProps(className, (cn, { orientation }) => root({ orientation, className: cn }))}
 				aria-describedby={descriptionId}
 				{...props}
 			>
 				{props.children ?? <ColorSliderControl />}
-			</AriaColorSlider>
+			</ColorSliderPrimitives.ColorSlider>
 		</Provider>
 	);
 };
 
 // MARK: seperator
 
-interface ColorSliderControlProps extends React.ComponentProps<typeof AriaSliderTrack> {}
+interface ColorSliderControlProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
 
 const ColorSliderControl = ({ className, ...props }: ColorSliderControlProps) => {
 	const { track } = useStyles()();
 	return (
-		<AriaSliderTrack
+		<SliderPrimitives.SliderTrack
 			data-slot="color-slider-control"
 			className={composeRenderProps(className, (cn, { orientation }) => track({ orientation, className: cn }))}
 			{...props}
 		>
 			{props.children ?? <ColorThumb />}
-		</AriaSliderTrack>
+		</SliderPrimitives.SliderTrack>
 	);
 };
 
 // MARK: seperator
 
-interface ColorSliderOutputProps extends React.ComponentProps<typeof AriaSliderOutput> {}
+interface ColorSliderOutputProps extends React.ComponentProps<typeof SliderPrimitives.SliderOutput> {}
 
 const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
 	const { output } = useStyles()();
 	return (
-		<AriaSliderOutput className={composeRenderProps(className, (className) => output({ className }))} {...props} />
+		<SliderPrimitives.SliderOutput className={composeRenderProps(className, (className) => output({ className }))} {...props} />
 	);
 };
 

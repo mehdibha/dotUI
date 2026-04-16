@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { Selection } from "react-aria-components";
+import * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
 
@@ -19,7 +19,7 @@ const data: Item[] = [
 ];
 
 export default function Demo() {
-	const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([2, 3]));
+	const [selectedKeys, setSelectedKeys] = React.useState<MenuPrimitives.Selection>(new Set([2, 3]));
 	return (
 		<Table aria-label="Files" selectionMode="multiple" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
 			<TableHeader columns={columns}>

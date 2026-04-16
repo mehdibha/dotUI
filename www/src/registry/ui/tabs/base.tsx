@@ -1,13 +1,8 @@
 "use client";
 
-import {
-	SelectionIndicator as AriaSelectionIndicator,
-	Tab as AriaTab,
-	TabList as AriaTabList,
-	TabPanel as AriaTabPanel,
-	Tabs as AriaTabs,
-	composeRenderProps,
-} from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator";
+import * as TabsPrimitives from "react-aria-components/Tabs";
 import type * as React from "react";
 
 import { createContext } from "@/registry/lib/context";
@@ -24,30 +19,30 @@ const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
 
 // MARK: seperator
 
-interface TabsProps extends React.ComponentProps<typeof AriaTabs> {}
+interface TabsProps extends React.ComponentProps<typeof TabsPrimitives.Tabs> {}
 
 const Tabs = ({ className, ...props }: TabsProps) => {
 	const { root } = useStyles()();
 	return (
-		<AriaTabs
+		<TabsPrimitives.Tabs
 			className={composeRenderProps(className, (cn, { orientation }) => root({ orientation, className: cn }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children, { orientation }) => (
 				<TabsProvider value={orientation}>{children}</TabsProvider>
 			))}
-		</AriaTabs>
+		</TabsPrimitives.Tabs>
 	);
 };
 
 // MARK: seperator
 
-interface TabListProps extends React.ComponentProps<typeof AriaTabList> {}
+interface TabListProps extends React.ComponentProps<typeof TabsPrimitives.TabList> {}
 
 const TabList = ({ className, ...props }: TabListProps) => {
 	const { list } = useStyles()();
 	return (
-		<AriaTabList
+		<TabsPrimitives.TabList
 			className={composeRenderProps(className, (cn, { orientation }) => list({ orientation, className: cn }))}
 			{...props}
 		/>
@@ -56,31 +51,31 @@ const TabList = ({ className, ...props }: TabListProps) => {
 
 // MARK: seperator
 
-interface TabProps extends React.ComponentProps<typeof AriaTab> {}
+interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 
 const Tab = ({ className, ...props }: TabProps) => {
 	const { tab } = useStyles()();
 	return (
-		<AriaTab data-tab="" className={composeRenderProps(className, (cn) => tab({ className: cn }))} {...props}>
+		<TabsPrimitives.Tab data-tab="" className={composeRenderProps(className, (cn) => tab({ className: cn }))} {...props}>
 			{composeRenderProps(props.children, (children) => (
 				<>
 					{children}
 					<TabIndicator />
 				</>
 			))}
-		</AriaTab>
+		</TabsPrimitives.Tab>
 	);
 };
 
 // MARK: seperator
 
-interface TabIndicatorProps extends React.ComponentProps<typeof AriaSelectionIndicator> {}
+interface TabIndicatorProps extends React.ComponentProps<typeof SelectionIndicatorPrimitives.SelectionIndicator> {}
 
 const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
 	const { selectionIndicator } = useStyles()();
 	const orientation = useTabsContext("TabIndicator");
 	return (
-		<AriaSelectionIndicator
+		<SelectionIndicatorPrimitives.SelectionIndicator
 			data-tab-indicator=""
 			className={composeRenderProps(className, (cn) => selectionIndicator({ orientation, className: cn }))}
 			{...props}
@@ -90,12 +85,12 @@ const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
 
 // MARK: seperator
 
-interface TabPanelProps extends React.ComponentProps<typeof AriaTabPanel> {}
+interface TabPanelProps extends React.ComponentProps<typeof TabsPrimitives.TabPanel> {}
 
 const TabPanel = ({ className, ...props }: TabPanelProps) => {
 	const { panel } = useStyles()();
 	return (
-		<AriaTabPanel
+		<TabsPrimitives.TabPanel
 			data-tab-panel
 			className={composeRenderProps(className, (cn) => panel({ className: cn }))}
 			{...props}

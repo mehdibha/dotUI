@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import type { Key } from "react-aria-components";
+import * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Button } from "@/registry/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem } from "@/registry/ui/select";
 import { Switch } from "@/registry/ui/switch";
 
 export default function Demo() {
-	const [placement, setPlacement] = React.useState<Key | null>("top");
+	const [placement, setPlacement] = React.useState<MenuPrimitives.Key | null>("top");
 	const [swipeable, setSwipeable] = React.useState<boolean>(true);
 	return (
 		<div className="flex w-full items-center">

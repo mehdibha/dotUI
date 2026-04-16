@@ -1,15 +1,12 @@
 "use client";
 
-import { useSlotId } from "@react-aria/utils";
-import {
-	FieldError as AriaFieldError,
-	Label as AriaLabel,
-	CheckboxContext,
-	composeRenderProps,
-	LabelContext,
-	Provider,
-	TextContext,
-} from "react-aria-components";
+import { useSlotId } from "react-aria/private/utils/useId";
+import * as CheckboxPrimitives from "react-aria-components/Checkbox";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as FieldErrorPrimitives from "react-aria-components/FieldError";
+import * as LabelPrimitives from "react-aria-components/Label";
+import { Provider } from "react-aria-components/slots";
+import * as TextPrimitives from "react-aria-components/Text";
 import type React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -62,14 +59,14 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
 			<Provider
 				values={[
 					[
-						CheckboxContext,
+						CheckboxPrimitives.CheckboxContext,
 						{
 							id: inputId,
 							"aria-describedby": descriptionId,
 						},
 					],
-					[LabelContext, { htmlFor: inputId }],
-					[TextContext, { slot: "description", id: descriptionId }],
+					[LabelPrimitives.LabelContext, { htmlFor: inputId }],
+					[TextPrimitives.TextContext, { slot: "description", id: descriptionId }],
 				]}
 			>
 				{children}
@@ -89,15 +86,15 @@ const FieldContent = ({ className, ...props }: FieldContentProps) => {
 
 // MARK: Label
 
-interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
+interface LabelProps extends React.ComponentProps<typeof LabelPrimitives.Label> {}
 
 const Label = ({ children, className, ...props }: LabelProps) => {
 	const { label } = useStyles()();
 	children = useSkeletonText(children);
 	return (
-		<AriaLabel data-slot="label" data-label="" className={label({ className })} {...props}>
+		<LabelPrimitives.Label data-slot="label" data-label="" className={label({ className })} {...props}>
 			{children}
-		</AriaLabel>
+		</LabelPrimitives.Label>
 	);
 };
 
@@ -112,11 +109,11 @@ const Description = ({ className, ...props }: DescriptionProps) => {
 
 // MARK: FieldError
 
-interface FieldErrorProps extends React.ComponentProps<typeof AriaFieldError> {}
+interface FieldErrorProps extends React.ComponentProps<typeof FieldErrorPrimitives.FieldError> {}
 const FieldError = ({ className, ...props }: FieldErrorProps) => {
 	const { fieldError } = useStyles()();
 	return (
-		<AriaFieldError
+		<FieldErrorPrimitives.FieldError
 			data-slot="field-error"
 			className={composeRenderProps(className, (className) => fieldError({ className }))}
 			{...props}

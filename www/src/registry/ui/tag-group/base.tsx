@@ -1,17 +1,9 @@
 "use client";
 
 import { XIcon } from "lucide-react";
-import {
-	Tag as AriaTag,
-	TagGroup as AriaTagGroup,
-	TagList as AriaTagList,
-	composeRenderProps,
-} from "react-aria-components";
-import type {
-	TagGroupProps as AriaTagGroupProps,
-	TagListProps as AriaTagListProps,
-	TagProps as AriaTagProps,
-} from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as TagGroupPrimitives from "react-aria-components/TagGroup";
+
 
 import { Button } from "@/registry/ui/button";
 
@@ -21,32 +13,32 @@ import { useStyles } from "./styles";
 
 // MARK: seperator
 
-interface TagGroupProps extends AriaTagGroupProps {}
+interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {}
 
 function TagGroup({ className, ...props }: TagGroupProps) {
 	const { group } = useStyles()();
-	return <AriaTagGroup {...props} className={group({ className })} />;
+	return <TagGroupPrimitives.TagGroup {...props} className={group({ className })} />;
 }
 
 // MARK: seperator
 
-interface TagListProps<T> extends AriaTagListProps<T> {}
+interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
 function TagList<T extends object>(props: TagListProps<T>) {
 	const { list } = useStyles()();
-	return <AriaTagList {...props} className={composeRenderProps(props.className, (className) => list({ className }))} />;
+	return <TagGroupPrimitives.TagList {...props} className={composeRenderProps(props.className, (className) => list({ className }))} />;
 }
 
 // MARK: seperator
 
-interface TagProps extends AriaTagProps {}
+interface TagProps extends TagGroupPrimitives.TagProps {}
 
 function Tag({ className, ...props }: TagProps) {
 	const { tag } = useStyles()();
 	const textValue = typeof props.children === "string" ? props.children : undefined;
 
 	return (
-		<AriaTag
+		<TagGroupPrimitives.Tag
 			textValue={textValue}
 			className={composeRenderProps(className, (className) => tag({ className }))}
 			{...props}
@@ -61,7 +53,7 @@ function Tag({ className, ...props }: TagProps) {
 					)}
 				</>
 			))}
-		</AriaTag>
+		</TagGroupPrimitives.Tag>
 	);
 }
 

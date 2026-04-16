@@ -1,7 +1,9 @@
 "use client";
 
-import { DateField as AriaDateField, composeRenderProps } from "react-aria-components";
-import type { DateFieldProps as AriaDateFieldProps, DateValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as DateFieldPrimitives from "react-aria-components/DateField";
+
 
 import { useStyles } from "./styles";
 
@@ -9,12 +11,12 @@ import { useStyles } from "./styles";
 
 // MARK: DateField
 
-interface DateFieldProps<T extends DateValue> extends AriaDateFieldProps<T> {}
+interface DateFieldProps<T extends CalendarPrimitives.DateValue> extends DateFieldPrimitives.DateFieldProps<T> {}
 
-const DateField = <T extends DateValue>({ className, ...props }: DateFieldProps<T>) => {
+const DateField = <T extends CalendarPrimitives.DateValue>({ className, ...props }: DateFieldProps<T>) => {
 	const dateFieldStyles = useStyles();
 	return (
-		<AriaDateField
+		<DateFieldPrimitives.DateField
 			className={composeRenderProps(className, (className) => dateFieldStyles({ className }))}
 			{...props}
 		/>

@@ -1,7 +1,8 @@
 "use client";
 
-import { TimeField as AriaTimeField, composeRenderProps } from "react-aria-components";
-import type { TimeFieldProps as AriaTimeFieldProps, TimeValue } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as TimeFieldPrimitives from "react-aria-components/TimeField";
+
 
 import { useStyles } from "./styles";
 
@@ -9,12 +10,12 @@ import { useStyles } from "./styles";
 
 // MARK: TimeField
 
-interface TimeFieldProps<T extends TimeValue> extends AriaTimeFieldProps<T> {}
+interface TimeFieldProps<T extends TimeFieldPrimitives.TimeValue> extends TimeFieldPrimitives.TimeFieldProps<T> {}
 
-const TimeField = <T extends TimeValue>({ className, ...props }: TimeFieldProps<T>) => {
+const TimeField = <T extends TimeFieldPrimitives.TimeValue>({ className, ...props }: TimeFieldProps<T>) => {
 	const timeFieldStyles = useStyles();
 	return (
-		<AriaTimeField
+		<TimeFieldPrimitives.TimeField
 			className={composeRenderProps(className, (className) => timeFieldStyles({ className }))}
 			{...props}
 		/>

@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import type { Key } from "react-aria-components";
+import * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/registry/ui/combobox";
 
 export default function Demo() {
-	const [country, setCountry] = React.useState<Key | null>("tn");
+	const [country, setCountry] = React.useState<MenuPrimitives.Key | null>("tn");
 	return (
 		<div className="flex flex-col items-center gap-6">
 			<Combobox aria-label="country" selectedKey={country} onSelectionChange={setCountry}>

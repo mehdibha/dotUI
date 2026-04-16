@@ -1,14 +1,9 @@
 "use client";
 
-import {
-	UNSTABLE_Toast as AriaToast,
-	UNSTABLE_ToastContent as AriaToastContent,
-	UNSTABLE_ToastQueue as AriaToastQueue,
-	UNSTABLE_ToastRegion as AriaToastRegion,
-	composeRenderProps,
-	Text,
-} from "react-aria-components";
-import type { ToastProps as AriaToastProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as TextPrimitives from "react-aria-components/Text";
+import * as ToastPrimitives from "react-aria-components/Toast";
+
 
 import { useStyles } from "./styles";
 
@@ -20,23 +15,23 @@ interface Toast {
 	variant?: "success" | "error" | "warning" | "info" | "neutral" | "danger";
 }
 
-const queue = new AriaToastQueue<Toast>();
+const queue = new ToastPrimitives.UNSTABLE_ToastQueue<Toast>();
 
 const Toaster = () => {
 	const { region } = useStyles()();
 	return (
-		<AriaToastRegion queue={queue} className={region()}>
+		<ToastPrimitives.UNSTABLE_ToastRegion queue={queue} className={region()}>
 			{({ toast }) => <ToastItem toast={toast} />}
-		</AriaToastRegion>
+		</ToastPrimitives.UNSTABLE_ToastRegion>
 	);
 };
 
-interface ToastProps extends AriaToastProps<Toast> {}
+interface ToastProps extends ToastPrimitives.ToastProps<Toast> {}
 
 function ToastItem({ className, ...props }: ToastProps) {
 	const { toast: toastStyle, content, title, description, actions } = useStyles()();
 	return (
-		<AriaToast
+		<ToastPrimitives.UNSTABLE_Toast
 			className={composeRenderProps(className, (className) =>
 				toastStyle({ className, variant: props.toast.content.variant }),
 			)}
@@ -44,16 +39,16 @@ function ToastItem({ className, ...props }: ToastProps) {
 		>
 			{({ toast }) => (
 				<>
-					<AriaToastContent className={content()}>
-						<Text slot="title" className={title()}>
+					<ToastPrimitives.UNSTABLE_ToastContent className={content()}>
+						<TextPrimitives.Text slot="title" className={title()}>
 							{toast.content.title}
-						</Text>
+						</TextPrimitives.Text>
 						{toast.content.description ? (
-							<Text slot="description" className={description()}>
+							<TextPrimitives.Text slot="description" className={description()}>
 								{toast.content.description}
-							</Text>
+							</TextPrimitives.Text>
 						) : null}
-					</AriaToastContent>
+					</ToastPrimitives.UNSTABLE_ToastContent>
 					<div className={actions()}>
 						{/* <Button
               variant="quiet"
@@ -67,7 +62,7 @@ function ToastItem({ className, ...props }: ToastProps) {
 					</div>
 				</>
 			)}
-		</AriaToast>
+		</ToastPrimitives.UNSTABLE_Toast>
 	);
 }
 

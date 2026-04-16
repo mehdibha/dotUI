@@ -1,6 +1,7 @@
 "use client";
 
-import { ColorField as AriaColorField, composeRenderProps } from "react-aria-components";
+import * as ColorFieldPrimitives from "react-aria-components/ColorField";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import type * as React from "react";
 
 import { useStyles } from "./styles";
@@ -9,12 +10,12 @@ import { useStyles } from "./styles";
 
 // MARK: ColorField
 
-interface ColorFieldProps extends React.ComponentProps<typeof AriaColorField> {}
+interface ColorFieldProps extends React.ComponentProps<typeof ColorFieldPrimitives.ColorField> {}
 
 const ColorField = ({ className, ...props }: ColorFieldProps) => {
 	const colorFieldStyles = useStyles();
 	return (
-		<AriaColorField
+		<ColorFieldPrimitives.ColorField
 			className={composeRenderProps(className, (className) => colorFieldStyles({ className }))}
 			{...props}
 		/>

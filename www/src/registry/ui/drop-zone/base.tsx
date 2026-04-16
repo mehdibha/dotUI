@@ -1,6 +1,8 @@
 "use client";
 
-import { DropZone as AriaDropZone, Text as AriaText, composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as DropZonePrimitives from "react-aria-components/DropZone";
+import * as TextPrimitives from "react-aria-components/Text";
 import type * as React from "react";
 
 import { useStyles } from "./styles";
@@ -9,18 +11,18 @@ import { useStyles } from "./styles";
 
 // MARK: seperator
 
-interface DropZoneProps extends React.ComponentProps<typeof AriaDropZone> {}
+interface DropZoneProps extends React.ComponentProps<typeof DropZonePrimitives.DropZone> {}
 const DropZone = ({ className, ...props }: DropZoneProps) => {
 	const { dropzone } = useStyles()();
-	return <AriaDropZone className={composeRenderProps(className, (className) => dropzone({ className }))} {...props} />;
+	return <DropZonePrimitives.DropZone className={composeRenderProps(className, (className) => dropzone({ className }))} {...props} />;
 };
 
 // MARK: seperator
 
-interface DropZoneLabelProps extends Omit<React.ComponentProps<typeof AriaText>, "slot"> {}
+interface DropZoneLabelProps extends Omit<React.ComponentProps<typeof TextPrimitives.Text>, "slot"> {}
 const DropZoneLabel = ({ className, ...props }: DropZoneLabelProps) => {
 	const { label } = useStyles()();
-	return <AriaText slot="label" className={label({ className })} {...props} />;
+	return <TextPrimitives.Text slot="label" className={label({ className })} {...props} />;
 };
 
 // MARK: seperator

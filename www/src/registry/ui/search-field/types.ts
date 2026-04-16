@@ -1,6 +1,6 @@
-import type { SearchField as AriaSearchField } from "react-aria-components";
+import * as SearchFieldPrimitives from "react-aria-components/SearchField";
 
 /**
  * A search field allows a user to enter and clear a search query.
  */
-export interface SearchFieldProps extends React.ComponentProps<typeof AriaSearchField> {}
+export interface SearchFieldProps extends React.ComponentProps<typeof SearchFieldPrimitives.SearchField> {}

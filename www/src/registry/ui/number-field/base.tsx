@@ -1,21 +1,18 @@
 "use client";
 
 import { MinusIcon, PlusIcon } from "lucide-react";
-import {
-	ButtonContext as AriaButtonContext,
-	NumberField as AriaNumberField,
-	composeRenderProps,
-	Provider,
-	useSlottedContext,
-} from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as NumberFieldPrimitives from "react-aria-components/NumberField";
+import { Provider, useSlottedContext } from "react-aria-components/slots";
 import type * as React from "react";
 
 import { fieldStyles } from "@/registry/ui/field";
 
-interface NumberFieldProps extends React.ComponentProps<typeof AriaNumberField> {}
+interface NumberFieldProps extends React.ComponentProps<typeof NumberFieldPrimitives.NumberField> {}
 const NumberField = ({ className, ...props }: NumberFieldProps) => {
 	return (
-		<AriaNumberField
+		<NumberFieldPrimitives.NumberField
 			data-slot="number-field"
 			className={composeRenderProps(className, (className) => fieldStyles().field({ className }))}
 			{...props}
@@ -23,18 +20,18 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
 			{composeRenderProps(props.children, (children) => (
 				<NumberFieldInner>{children}</NumberFieldInner>
 			))}
-		</AriaNumberField>
+		</NumberFieldPrimitives.NumberField>
 	);
 };
 
 const NumberFieldInner = ({ children }: { children: React.ReactNode }) => {
-	const incrementBtnCtx = useSlottedContext(AriaButtonContext, "increment");
-	const decrementBtnCtx = useSlottedContext(AriaButtonContext, "decrement");
+	const incrementBtnCtx = useSlottedContext(ButtonPrimitives.ButtonContext, "increment");
+	const decrementBtnCtx = useSlottedContext(ButtonPrimitives.ButtonContext, "decrement");
 	return (
 		<Provider
 			values={[
 				[
-					AriaButtonContext,
+					ButtonPrimitives.ButtonContext,
 					{
 						slots: {
 							increment: { ...incrementBtnCtx, children: <PlusIcon /> },

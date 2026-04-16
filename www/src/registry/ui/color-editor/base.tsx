@@ -1,5 +1,5 @@
 import React from "react";
-import { getColorChannels } from "react-aria-components";
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 
 import { cn } from "@/registry/lib/utils";
 import { ColorArea } from "@/registry/ui/color-area";
@@ -57,7 +57,7 @@ const ColorEditor = ({
 							<Input size="sm" className="w-full" />
 						</ColorField>
 					) : (
-						getColorChannels(colorFormat).map((channel) => (
+						ColorAreaPrimitives.getColorChannels(colorFormat).map((channel) => (
 							<ColorField key={channel} colorSpace={colorFormat} channel={channel} className="w-10 flex-1">
 								<Input size="sm" className="w-full" />
 							</ColorField>

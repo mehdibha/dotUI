@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import type { Selection } from "react-aria-components";
+import * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Button } from "@/registry/ui/button";
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
 import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
-	const [selected, setSelected] = React.useState<Selection>(new Set(["center"]));
+	const [selected, setSelected] = React.useState<MenuPrimitives.Selection>(new Set(["center"]));
 	return (
 		<Menu>
 			<Button variant="default" size="sm">

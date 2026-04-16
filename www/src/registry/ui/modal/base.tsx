@@ -1,6 +1,7 @@
 "use client";
 
-import { Modal as AriaModal, ModalOverlay as AriaModalOverlay, composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as ModalPrimitives from "react-aria-components/Modal";
 import type React from "react";
 
 import { useStyles } from "./styles";
@@ -20,29 +21,29 @@ const Modal = ({ children, className, ...props }: ModalProps) => (
 
 // MARK: seperator
 
-interface ModalOverlayProps extends React.ComponentProps<typeof AriaModalOverlay> {}
+interface ModalOverlayProps extends React.ComponentProps<typeof ModalPrimitives.ModalOverlay> {}
 const ModalOverlay = ({ children, className, isDismissable = true, ...props }: ModalOverlayProps) => {
 	const { overlay } = useStyles()();
 	return (
-		<AriaModalOverlay
+		<ModalPrimitives.ModalOverlay
 			isDismissable={isDismissable}
 			className={composeRenderProps(className, (className) => overlay({ className }))}
 			{...props}
 		>
 			{children}
-		</AriaModalOverlay>
+		</ModalPrimitives.ModalOverlay>
 	);
 };
 
 // MARK: seperator
 
-interface ModalContentProps extends React.ComponentProps<typeof AriaModal> {}
+interface ModalContentProps extends React.ComponentProps<typeof ModalPrimitives.Modal> {}
 const ModalContent = ({ children, className, ...props }: ModalContentProps) => {
 	const { modal } = useStyles()();
 	return (
-		<AriaModal data-modal="" className={composeRenderProps(className, (className) => modal({ className }))} {...props}>
+		<ModalPrimitives.Modal data-modal="" className={composeRenderProps(className, (className) => modal({ className }))} {...props}>
 			{children}
-		</AriaModal>
+		</ModalPrimitives.Modal>
 	);
 };
 

@@ -1,4 +1,5 @@
-import type { FieldError as AriaFieldError, Label as AriaLabel } from "react-aria-components";
+import * as FieldErrorPrimitives from "react-aria-components/FieldError";
+import * as LabelPrimitives from "react-aria-components/Label";
 
 import type { Text } from "@/registry/ui/text";
 
@@ -36,7 +37,7 @@ export interface FieldContentProps extends React.ComponentProps<"div"> {}
 /**
  * Missing description.
  */
-export interface LabelProps extends React.ComponentProps<typeof AriaLabel> {}
+export interface LabelProps extends React.ComponentProps<typeof LabelPrimitives.Label> {}
 
 /**
  * Missing description.
@@ -46,4 +47,4 @@ export interface DescriptionProps extends Omit<React.ComponentProps<typeof Text>
 /**
  * A FieldError displays validation errors for a form field.
  */
-export interface FieldErrorProps extends React.ComponentProps<typeof AriaFieldError> {}
+export interface FieldErrorProps extends React.ComponentProps<typeof FieldErrorPrimitives.FieldError> {}

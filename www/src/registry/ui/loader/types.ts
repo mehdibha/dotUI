@@ -1,9 +1,9 @@
-import type { ProgressBarProps } from "react-aria-components";
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
 
 /**
  * Missing description.
  */
-export interface LoaderProps extends ProgressBarProps {
+export interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {
 	/**
 	 * The size of the loader in pixels.
 	 * @default 20

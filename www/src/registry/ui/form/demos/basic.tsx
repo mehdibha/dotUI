@@ -1,6 +1,6 @@
 "use client";
 
-import { Form } from "react-aria-components";
+import * as FormPrimitives from "react-aria-components/Form";
 import type React from "react";
 
 import { Button } from "@/registry/ui/button";
@@ -16,7 +16,7 @@ export default function Demo() {
 	};
 
 	return (
-		<Form onSubmit={handleSubmit} className="w-xs space-y-4">
+		<FormPrimitives.Form onSubmit={handleSubmit} className="w-xs space-y-4">
 			<TextField name="name" minLength={2} isRequired>
 				<Label>Name</Label>
 				<Input placeholder="Name" />
@@ -25,6 +25,6 @@ export default function Demo() {
 			<Button variant="primary" type="submit">
 				Submit
 			</Button>
-		</Form>
+		</FormPrimitives.Form>
 	);
 }

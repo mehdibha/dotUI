@@ -3,7 +3,7 @@
 import React from "react";
 import { getLocalTimeZone, Time, today } from "@internationalized/date";
 import { TimerIcon } from "lucide-react";
-import type { DateValue } from "react-aria-components";
+import * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { Calendar } from "@/registry/ui/calendar";
 import { Card, CardContent, CardFooter } from "@/registry/ui/card";
@@ -12,7 +12,7 @@ import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
 import { TimeField } from "@/registry/ui/time-field";
 
 export default function Demo() {
-	const [date, setDate] = React.useState<DateValue | null>(today(getLocalTimeZone()));
+	const [date, setDate] = React.useState<CalendarPrimitives.DateValue | null>(today(getLocalTimeZone()));
 	return (
 		<Card className="mx-auto w-fit">
 			<CardContent>

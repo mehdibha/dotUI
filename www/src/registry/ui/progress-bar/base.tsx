@@ -1,6 +1,7 @@
 "use client";
 
-import { ProgressBar as AriaProgress, composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -19,18 +20,18 @@ const [ProgressBarProvider, useProgressBarContext] = createScopedContext<
 	}
 >("ProgressRoot");
 
-interface ProgressBarProps extends React.ComponentProps<typeof AriaProgress> {}
+interface ProgressBarProps extends React.ComponentProps<typeof ProgressBarPrimitives.ProgressBar> {}
 
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
 	const { root } = useStyles()();
 	return (
-		<AriaProgress className={composeRenderProps(className, (className) => root({ className }))} {...props}>
+		<ProgressBarPrimitives.ProgressBar className={composeRenderProps(className, (className) => root({ className }))} {...props}>
 			{composeRenderProps(children, (children, { isIndeterminate, valueText, percentage }) => (
 				<ProgressBarProvider isIndeterminate={isIndeterminate} valueText={valueText} percentage={percentage}>
 					{children ?? <ProgressBarControl />}
 				</ProgressBarProvider>
 			))}
-		</AriaProgress>
+		</ProgressBarPrimitives.ProgressBar>
 	);
 };
 

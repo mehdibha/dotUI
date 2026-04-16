@@ -1,16 +1,17 @@
 "use client";
 
-import { ColorSwatch as AriaColorSwatch, composeRenderProps } from "react-aria-components";
+import * as ColorSwatchPrimitives from "react-aria-components/ColorSwatch";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 
 import { useStyles } from "./styles";
 
 // MARK: colorSwatchStyles
 
-interface ColorSwatchProps extends React.ComponentProps<typeof AriaColorSwatch> {}
+interface ColorSwatchProps extends React.ComponentProps<typeof ColorSwatchPrimitives.ColorSwatch> {}
 const ColorSwatch = ({ className, style, ...props }: ColorSwatchProps) => {
 	const styles = useStyles();
 	return (
-		<AriaColorSwatch
+		<ColorSwatchPrimitives.ColorSwatch
 			data-slot="color-swatch"
 			className={composeRenderProps(className, (className) => styles({ className }))}
 			style={composeRenderProps(style, (style, { color }) => ({

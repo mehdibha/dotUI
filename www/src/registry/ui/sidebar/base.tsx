@@ -1,17 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { useSlotId } from "@react-aria/utils";
-import { useControlledState } from "@react-stately/utils";
+import { useSlotId } from "react-aria/private/utils/useId";
+import { useControlledState } from "react-stately/useControlledState";
 import { PanelLeftIcon } from "lucide-react";
-import {
-	ButtonContext as AriaButtonContext,
-	Header as AriaHeader,
-	Heading as AriaHeading,
-	HeadingContext as AriaHeadingContext,
-	DEFAULT_SLOT,
-	Provider,
-} from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
+import * as HeaderPrimitives from "react-aria-components/Header";
+import * as HeadingPrimitives from "react-aria-components/Heading";
+import { DEFAULT_SLOT, Provider } from "react-aria-components/slots";
 
 import { useKeyboardShortcut } from "@/registry/hooks/use-keyboard-shortcut";
 import { createContext } from "@/registry/lib/context";
@@ -107,9 +103,9 @@ function Sidebar({
 				<nav data-slot="sidebar-inner" className={inner({ className })} aria-labelledby={headingId}>
 					<Provider
 						values={[
-							[AriaHeadingContext, { id: headingId }],
+							[HeadingPrimitives.HeadingContext, { id: headingId }],
 							[
-								AriaButtonContext,
+								ButtonPrimitives.ButtonContext,
 								{
 									slots: {
 										[DEFAULT_SLOT]: {},
@@ -135,7 +131,7 @@ function Sidebar({
 
 function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
 	const { header } = useStyles()();
-	return <AriaHeader data-slot="sidebar-header" className={header({ className })} {...props} />;
+	return <HeaderPrimitives.Header data-slot="sidebar-header" className={header({ className })} {...props} />;
 }
 
 // MARK: seperator
@@ -143,7 +139,7 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
 function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
 	const { content } = useStyles()();
 	return (
-		<Provider values={[[AriaHeadingContext, null]]}>
+		<Provider values={[[HeadingPrimitives.HeadingContext, null]]}>
 			<div data-slot="sidebar-content" data-sidebar="content" className={content({ className })} {...props} />
 		</Provider>
 	);
@@ -154,7 +150,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
 function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
 	const { footer } = useStyles()();
 	return (
-		<Provider values={[[AriaHeadingContext, null]]}>
+		<Provider values={[[HeadingPrimitives.HeadingContext, null]]}>
 			<div data-slot="sidebar-footer" className={footer({ className })} {...props} />
 		</Provider>
 	);
@@ -166,7 +162,7 @@ function SidebarSection({ className, ...props }: React.ComponentProps<"section">
 	const { section } = useStyles()();
 	const headingId = useSlotId();
 	return (
-		<Provider values={[[AriaHeadingContext, { id: headingId }]]}>
+		<Provider values={[[HeadingPrimitives.HeadingContext, { id: headingId }]]}>
 			<section data-slot="sidebar-section" aria-labelledby={headingId} className={section({ className })} {...props} />
 		</Provider>
 	);
@@ -176,7 +172,7 @@ function SidebarSection({ className, ...props }: React.ComponentProps<"section">
 
 function SidebarSectionHeading({ className, ...props }: React.ComponentProps<"div">) {
 	const { heading } = useStyles()();
-	return <AriaHeading data-slot="sidebar-group-label" className={heading({ className })} {...props} />;
+	return <HeadingPrimitives.Heading data-slot="sidebar-group-label" className={heading({ className })} {...props} />;
 }
 
 // MARK: seperator

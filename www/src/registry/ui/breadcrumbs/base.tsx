@@ -2,40 +2,37 @@
 
 import { Link as RouterLink, type ToOptions } from "@tanstack/react-router";
 import { ChevronRightIcon } from "lucide-react";
-import {
-	Breadcrumb as AriaBreadcrumb,
-	Breadcrumbs as AriaBreadcrumbs,
-	Link as AriaLink,
-	composeRenderProps,
-} from "react-aria-components";
-import type { BreadcrumbsProps as AriaBreadcrumbsProps } from "react-aria-components";
+import * as BreadcrumbsPrimitives from "react-aria-components/Breadcrumbs";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import * as LinkPrimitives from "react-aria-components/Link";
+
 
 import { useStyles } from "./styles";
 
 // MARK: breadcrumbsStyles
 
-interface BreadcrumbsProps<T extends object> extends AriaBreadcrumbsProps<T> {
+interface BreadcrumbsProps<T extends object> extends BreadcrumbsPrimitives.BreadcrumbsProps<T> {
 	ref?: React.RefObject<HTMLOListElement>;
 }
 const Breadcrumbs = <T extends object>({ className, ...props }: BreadcrumbsProps<T>) => {
 	const { root } = useStyles()();
-	return <AriaBreadcrumbs className={root({ className })} {...props} />;
+	return <BreadcrumbsPrimitives.Breadcrumbs className={root({ className })} {...props} />;
 };
 
 // MARK: seperator
 
-interface BreadcrumbItemProps extends React.ComponentProps<typeof AriaBreadcrumb> {}
+interface BreadcrumbItemProps extends React.ComponentProps<typeof BreadcrumbsPrimitives.Breadcrumb> {}
 const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
 	const { item } = useStyles()();
-	return <AriaBreadcrumb className={composeRenderProps(className, (className) => item({ className }))} {...props} />;
+	return <BreadcrumbsPrimitives.Breadcrumb className={composeRenderProps(className, (className) => item({ className }))} {...props} />;
 };
 
 // MARK: seperator
 
-interface BreadcrumbLinkProps extends React.ComponentProps<typeof AriaLink> {}
+interface BreadcrumbLinkProps extends React.ComponentProps<typeof LinkPrimitives.Link> {}
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
 	const { link } = useStyles()();
-	return <AriaLink className={composeRenderProps(className, (className) => link({ className }))} {...props} />;
+	return <LinkPrimitives.Link className={composeRenderProps(className, (className) => link({ className }))} {...props} />;
 };
 
 // MARK: seperator

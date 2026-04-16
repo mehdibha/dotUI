@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Input } from "react-aria-components";
+import * as InputPrimitives from "react-aria-components/Input";
 
 import { XCircleIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
@@ -19,19 +19,19 @@ export default function Demo() {
 				<Label>Website</Label>
 				<InputGroup>
 					<InputAddon>https://</InputAddon>
-					<Input />
+					<InputPrimitives.Input />
 				</InputGroup>
 			</TextField>
 			<TextField>
 				<Label>Email</Label>
 				<InputGroup>
-					<Input />
+					<InputPrimitives.Input />
 					<InputAddon>@dotui.org</InputAddon>
 				</InputGroup>
 			</TextField>
 			<TextField aria-label="Textfield with clear input" ref={inputRef} value={inputValue} onChange={setInputValue}>
 				<InputGroup>
-					<Input />
+					<InputPrimitives.Input />
 					<InputAddon>
 						<Tooltip>
 							<Button variant="quiet" size="icon">
@@ -42,7 +42,7 @@ export default function Demo() {
 							</TooltipContent>
 						</Tooltip>
 					</InputAddon>
-					<Input />
+					<InputPrimitives.Input />
 				</InputGroup>
 			</TextField>
 		</div>
