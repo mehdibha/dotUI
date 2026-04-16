@@ -1,38 +1,47 @@
 import type { Density } from "@/modules/create/preset";
 
-import { ToggleButton } from "@/registry/ui/toggle-button";
-import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group";
+import { Description, FieldContent, FieldGroup, Label } from "@/registry/ui/field";
+import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { Slider, SliderControl } from "@/registry/ui/slider";
 
-export function RadiusConfig() {
+export const RADIUS_FACTOR_VAR = "--radius-factor";
+export const DEFAULT_RADIUS_FACTOR = "1";
+
+export function RadiusConfig({
+	value,
+	onChange,
+}: {
+	value: string;
+	onChange: (value: string) => void;
+}) {
+	const parsed = Number.parseFloat(value || DEFAULT_RADIUS_FACTOR);
+	const numeric = Number.isFinite(parsed) ? parsed : 1;
 	return (
 		<div className="flex flex-col gap-3">
-			<span className="font-medium text-fg-muted text-xs">Border radius</span>
-			<div className="flex items-center gap-2">
-				{[
-					{ label: "None", value: "none", className: "rounded-none" },
-					{ label: "SM", value: "sm", className: "rounded-sm" },
-					{ label: "MD", value: "md", className: "rounded-md" },
-					{ label: "LG", value: "lg", className: "rounded-lg" },
-					{ label: "XL", value: "xl", className: "rounded-xl" },
-				].map((opt) => (
-					<button
-						key={opt.value}
-						type="button"
-						className="flex cursor-pointer flex-col items-center gap-1.5 rounded-md p-1.5 transition-colors hover:bg-muted"
-					>
-						<div className={`size-8 border-2 border-fg-muted/40 ${opt.className}`} />
-						<span className="text-[10px] text-fg-muted">{opt.label}</span>
-					</button>
-				))}
+			<div className="flex items-center justify-between">
+				<span className="font-medium text-fg-muted text-xs">Radius factor</span>
+				<span className="font-medium text-fg text-xs tabular-nums">
+					{numeric.toFixed(2)}x
+				</span>
 			</div>
+			<Slider
+				aria-label="Radius factor"
+				value={numeric}
+				minValue={0}
+				maxValue={2}
+				step={0.05}
+				onChange={(v) => onChange(String(v))}
+			>
+				<SliderControl />
+			</Slider>
 		</div>
 	);
 }
 
-const densityOptions: { id: Density; label: string }[] = [
-	{ id: "compact", label: "Compact" },
-	{ id: "default", label: "Default" },
-	{ id: "comfortable", label: "Comfortable" },
+const densityOptions: { id: Density; label: string; description: string }[] = [
+	{ id: "compact", label: "Compact", description: "Tight spacing for dense UIs" },
+	{ id: "default", label: "Default", description: "Balanced, comfortable spacing" },
+	{ id: "comfortable", label: "Comfortable", description: "Generous breathing room" },
 ];
 
 export function DensityConfig({
@@ -43,23 +52,22 @@ export function DensityConfig({
 	onChange: (density: Density) => void;
 }) {
 	return (
-		<div className="flex flex-col gap-3">
-			<span className="font-medium text-fg-muted text-xs">Density</span>
-			<ToggleButtonGroup
-				selectedKeys={[value]}
-				onSelectionChange={(keys) => {
-					const selected = [...keys][0] as Density;
-					if (selected) onChange(selected);
-				}}
-				selectionMode="single"
-				disallowEmptySelection
-			>
+		<RadioGroup
+			value={value}
+			onChange={(v) => onChange(v as Density)}
+			aria-label="Density"
+		>
+			<FieldGroup>
 				{densityOptions.map((opt) => (
-					<ToggleButton key={opt.id} id={opt.id} size="sm">
-						{opt.label}
-					</ToggleButton>
+					<Radio key={opt.id} value={opt.id}>
+						<RadioIndicator />
+						<FieldContent>
+							<Label>{opt.label}</Label>
+							<Description>{opt.description}</Description>
+						</FieldContent>
+					</Radio>
 				))}
-			</ToggleButtonGroup>
-		</div>
+			</FieldGroup>
+		</RadioGroup>
 	);
 }

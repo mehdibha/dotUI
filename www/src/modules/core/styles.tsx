@@ -58,17 +58,28 @@ function DesignSystemProvider({
 		return vars;
 	}, [params]);
 
-	const hasParams = Object.keys(cssVars).length > 0;
+	// Apply CSS custom properties to :root.
+	// Using a wrapper <div> doesn't work for tokens that reference each other
+	// via calc() + var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor)))
+	// because the inner var() is substituted at declaration time at :root and
+	// the resolved value is inherited. Setting the overrides on :root forces
+	// those dependent tokens to recompute with the new values.
+	React.useLayoutEffect(() => {
+		const root = document.documentElement;
+		const applied = Object.keys(cssVars);
+		for (const key of applied) {
+			root.style.setProperty(key, cssVars[key]!);
+		}
+		return () => {
+			for (const key of applied) {
+				root.style.removeProperty(key);
+			}
+		};
+	}, [cssVars]);
 
 	return (
 		<DesignSystemContext.Provider value={value}>
-			{hasParams ? (
-				<div style={cssVars} className="contents">
-					{children}
-				</div>
-			) : (
-				children
-			)}
+			{children}
 		</DesignSystemContext.Provider>
 	);
 }

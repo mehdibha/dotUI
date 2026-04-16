@@ -104,7 +104,7 @@ interface DescriptionProps extends Omit<React.ComponentProps<typeof Text>, "slot
 
 const Description = ({ className, ...props }: DescriptionProps) => {
 	const { description } = useStyles()();
-	return <Text data-slot="description" slot="description" className={description({ className })} {...props} />;
+	return <Text data-slot="description" data-description="" slot="description" className={description({ className })} {...props} />;
 };
 
 // MARK: FieldError
@@ -115,6 +115,7 @@ const FieldError = ({ className, ...props }: FieldErrorProps) => {
 	return (
 		<FieldErrorPrimitives.FieldError
 			data-slot="field-error"
+			data-field-error=""
 			className={composeRenderProps(className, (className) => fieldError({ className }))}
 			{...props}
 		/>

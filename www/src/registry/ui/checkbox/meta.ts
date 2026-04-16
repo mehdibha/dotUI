@@ -8,6 +8,12 @@ const checkboxMeta = {
 	styles: {
 		default: {},
 	},
+	params: {
+		"--checkbox-radius": {
+			type: "radius",
+			default: "--radius-sm",
+		},
+	},
 	files: [
 		{
 			type: "registry:ui",

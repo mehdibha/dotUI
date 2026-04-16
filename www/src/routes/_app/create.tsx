@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { CustomizerPanel } from "@/modules/create/customizer-panel";
+import { CustomizerPanel, MENU_IDS } from "@/modules/create/customizer-panel";
 import { sendToIframe, useDesignSystem } from "@/modules/create/preset";
 
 export const createSearchSchema = z.object({
@@ -26,8 +26,12 @@ function CreatePage() {
 	const { designSystem } = useDesignSystem();
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 
-	// When viewing a specific component detail, preview that component
-	const effectivePreview = panel?.startsWith("components.") ? panel.split(".")[1]! : preview;
+	// When viewing a specific component detail, preview that component.
+	// Component detail = a single, non-menu id as the top-level panel entry.
+	const firstPanelSegment = panel?.split(".")[0];
+	const activeComponent =
+		firstPanelSegment && !MENU_IDS.has(firstPanelSegment) ? firstPanelSegment : null;
+	const effectivePreview = activeComponent ?? preview;
 
 	// Bake the preset into the iframe src so the initial render has the right state.
 	// Only recompute when the previewed component changes (not on every param change)

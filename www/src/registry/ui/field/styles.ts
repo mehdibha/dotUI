@@ -8,8 +8,8 @@ const baseStyles = tv({
 	slots: {
 		fieldset: "",
 		legend: "",
-		fieldGroup: "",
-		field: "",
+		fieldGroup: "cn-field-group group/field-group @container/field-group flex w-full flex-col has-data-checkbox:gap-3",
+		field: "cn-field flex flex-col gap-1",
 		fieldContent: "",
 		label: "",
 		description: "",
@@ -22,10 +22,10 @@ const defaultStyles = tv({
 	slots: {
 		fieldset: ["flex flex-col gap-6", "has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3"],
 		legend: ["mb-3 font-medium text-base"],
-		fieldGroup:
-			"group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
+		fieldGroup: "",
+		// fieldGroup: "group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
 		field: "flex gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
-		fieldContent: "flex flex-col gap-1",
+		fieldContent: "",
 		label: [
 			"inline-flex select-none items-center gap-px text-fg text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
 			// Required state

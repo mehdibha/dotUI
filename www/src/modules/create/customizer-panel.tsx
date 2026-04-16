@@ -1,26 +1,42 @@
 import { type ReactNode, useMemo } from "react";
 import { getRouteApi } from "@tanstack/react-router";
-import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, ShuffleIcon, Undo2Icon } from "lucide-react";
+import {
+	ChevronDownIcon,
+	ChevronLeftIcon,
+	MoonIcon,
+	MousePointer2Icon,
+	ShuffleIcon,
+	Undo2Icon,
+} from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { componentsData } from "@/modules/docs/components-list/components-data";
 import * as icons from "@/registry/__generated__/icons";
-import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
-import { Checkbox } from "@/registry/ui/checkbox";
 import { Command } from "@/registry/ui/command";
 import { Input } from "@/registry/ui/input";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import { SearchField } from "@/registry/ui/search-field";
 import { Select, SelectValue } from "@/registry/ui/select";
-import { Switch } from "@/registry/ui/switch";
 
 import { ColorsConfig } from "./colors-config";
 import { AllComponentsView, ComponentDetailView, getComponentDisplayName } from "./components-config";
+import {
+	CURSOR_DISABLED_VAR,
+	CURSOR_INTERACTIVE_VAR,
+	CursorConfig,
+	DEFAULT_CURSOR_DISABLED,
+	DEFAULT_CURSOR_INTERACTIVE,
+} from "./cursor-config";
 import { IconographyConfig } from "./iconography-config";
-import { DensityConfig, RadiusConfig } from "./layout-config";
+import {
+	DEFAULT_RADIUS_FACTOR,
+	DensityConfig,
+	RADIUS_FACTOR_VAR,
+	RadiusConfig,
+} from "./layout-config";
 import { useDesignSystem } from "./preset";
 import { TypographyConfig } from "./typography-config";
 
@@ -29,8 +45,8 @@ import { TypographyConfig } from "./typography-config";
 interface MenuItem {
 	id: string;
 	title: string;
-	preview: ReactNode;
-	config: ReactNode;
+	preview: ReactNode | "dynamic";
+	config: ReactNode | "dynamic";
 }
 
 /* ------------------------------ Animation ------------------------------ */
@@ -114,41 +130,25 @@ const menu: MenuItem[] = [
 	{
 		id: "radius",
 		title: "Radius",
-		preview: (
-			<div className="flex items-center gap-3">
-				{[
-					{ label: "SM", className: "rounded-sm" },
-					{ label: "MD", className: "rounded-md" },
-					{ label: "LG", className: "rounded-lg" },
-				].map((opt) => (
-					<div key={opt.label} className="flex flex-col items-center gap-1">
-						<div className={`size-8 border-2 border-fg-muted/40 ${opt.className}`} />
-						<span className="text-[10px] text-fg-muted">{opt.label}</span>
-					</div>
-				))}
-			</div>
-		),
-		config: <RadiusConfig />,
+		preview: "dynamic",
+		config: "dynamic",
 	},
 	{
 		id: "density",
 		title: "Density",
 		preview: "dynamic",
-		config: null,
+		config: "dynamic",
 	},
 	{
-		id: "components",
-		title: "Components",
-		preview: (
-			<div className="pointer-events-none flex items-center gap-2">
-				<Switch defaultSelected className="scale-75" />
-				<Checkbox defaultSelected className="scale-90" />
-				<Badge>Badge</Badge>
-			</div>
-		),
-		config: null, // Handled by stack-based sub-navigation
+		id: "cursor",
+		title: "Cursor",
+		preview: "dynamic",
+		config: "dynamic",
 	},
 ];
+
+export const MENU_IDS = new Set(menu.map((m) => m.id));
+const menuIds = MENU_IDS;
 
 /* -------------------------------- Panel -------------------------------- */
 
@@ -170,50 +170,130 @@ export function CustomizerPanel() {
 		navigate({ search: (prev) => ({ ...prev, panel: next.length > 0 ? next.join(".") : undefined }) });
 	}
 
-	// When on a component detail, lock the preview to that component
-	const activeComponent = navStack[0] === "components" && navStack.length === 2 ? navStack[1]! : null;
+	// Resolve param values with fallbacks to their defaults
+	const radiusFactor = designSystem.componentParams[RADIUS_FACTOR_VAR] ?? DEFAULT_RADIUS_FACTOR;
+	const cursorInteractive =
+		designSystem.componentParams[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE;
+	const cursorDisabled =
+		designSystem.componentParams[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED;
+
+	// When viewing a component (navStack is a single, non-menu id), lock the preview
+	const activeComponent =
+		navStack.length === 1 && !menuIds.has(navStack[0]!) ? navStack[0]! : null;
 	const effectivePreview = activeComponent ?? preview;
+
+	function renderDynamicPreview(id: string): ReactNode {
+		if (id === "radius") {
+			const parsed = Number.parseFloat(radiusFactor);
+			const numeric = Number.isFinite(parsed) ? parsed : 1;
+			return (
+				<div className="-mt-1 flex items-center justify-between">
+					<div className="flex flex-col items-start gap-1">
+						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Factor</span>
+						<p className="font-medium tabular-nums">{numeric.toFixed(2)}x</p>
+					</div>
+					<div
+						className="size-7 border"
+						style={{ borderRadius: `calc(0.5rem * ${numeric})` }}
+					/>
+				</div>
+			);
+		}
+		if (id === "density") {
+			const gapPx =
+				designSystem.density === "compact"
+					? 2
+					: designSystem.density === "default"
+						? 4
+						: 7;
+			return (
+				<div className="-mt-1 flex items-center justify-between">
+					<div className="flex flex-col items-start gap-1">
+						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Mode</span>
+						<p className="font-medium capitalize">{designSystem.density}</p>
+					</div>
+					<div className="flex flex-col items-end" style={{ gap: `${gapPx}px` }}>
+						<div className="h-[2px] w-7 rounded-full bg-fg-muted" />
+						<div className="h-[2px] w-7 rounded-full bg-fg-muted" />
+						<div className="h-[2px] w-7 rounded-full bg-fg-muted" />
+					</div>
+				</div>
+			);
+		}
+		if (id === "cursor") {
+			return (
+				<div className="flex flex-col gap-1.5 text-left">
+					<div className="flex items-center justify-between">
+						<div className="flex flex-col items-start gap-1">
+							<span className="text-[10px] text-fg-muted uppercase tracking-widest">
+								Interactive
+							</span>
+							<p className="font-medium">{cursorInteractive}</p>
+						</div>
+						<div
+							className="flex size-7 items-center justify-center rounded-md border text-fg-muted"
+							style={{ cursor: cursorInteractive }}
+						>
+							<MousePointer2Icon className="size-3.5" />
+						</div>
+					</div>
+					<div className="flex items-center justify-between">
+						<div className="flex flex-col items-start gap-1">
+							<span className="text-[10px] text-fg-muted uppercase tracking-widest">
+								Disabled
+							</span>
+							<p className="font-medium">{cursorDisabled}</p>
+						</div>
+						<div
+							className="flex size-7 items-center justify-center rounded-md border text-fg-muted"
+							style={{ cursor: cursorDisabled }}
+						>
+							<MousePointer2Icon className="size-3.5" />
+						</div>
+					</div>
+				</div>
+			);
+		}
+		return null;
+	}
+
+	function renderDynamicConfig(id: string): ReactNode {
+		if (id === "radius") {
+			return (
+				<RadiusConfig
+					value={radiusFactor}
+					onChange={(v) => setComponentParam(RADIUS_FACTOR_VAR, v)}
+				/>
+			);
+		}
+		if (id === "density") {
+			return <DensityConfig value={designSystem.density} onChange={setDensity} />;
+		}
+		if (id === "cursor") {
+			return (
+				<CursorConfig
+					interactive={cursorInteractive}
+					disabled={cursorDisabled}
+					onChange={setComponentParam}
+				/>
+			);
+		}
+		return null;
+	}
 
 	function renderStackedView(index: number) {
 		const topLevel = navStack[0]!;
 
-		if (index === 0) {
-			if (topLevel === "components") {
-				return (
-					<>
-						<ViewHeader title="Components" onBack={pop} />
-						<AllComponentsView onSelect={(comp) => push(comp)} />
-					</>
-				);
-			}
-			if (topLevel === "density") {
-				return (
-					<>
-						<ViewHeader title="Density" onBack={pop} />
-						<div className="mt-4">
-							<DensityConfig value={designSystem.density} onChange={setDensity} />
-						</div>
-					</>
-				);
-			}
-			const menuItem = menu.find((m) => m.id === topLevel);
-			if (!menuItem) return null;
-			return (
-				<>
-					<ViewHeader title={menuItem.title} onBack={pop} />
-					<div className="mt-4 **:data-label:pl-1 **:data-label:text-fg-muted">{menuItem.config}</div>
-				</>
-			);
-		}
+		if (index !== 0) return null;
 
-		if (index === 1 && topLevel === "components") {
-			const componentName = navStack[1]!;
+		// Component detail view (top-level component slug)
+		if (!menuIds.has(topLevel)) {
 			return (
 				<>
-					<ViewHeader title={getComponentDisplayName(componentName)} onBack={pop} />
+					<ViewHeader title={getComponentDisplayName(topLevel)} onBack={pop} />
 					<ComponentDetailView
-						componentName={componentName}
-						selectedStyle={designSystem.componentStyles[componentName]}
+						componentName={topLevel}
+						selectedStyle={designSystem.componentStyles[topLevel]}
 						onStyleChange={setComponentStyle}
 						selectedParams={designSystem.componentParams}
 						onParamChange={setComponentParam}
@@ -222,7 +302,17 @@ export function CustomizerPanel() {
 			);
 		}
 
-		return null;
+		const menuItem = menu.find((m) => m.id === topLevel);
+		if (!menuItem) return null;
+
+		const configNode = menuItem.config === "dynamic" ? renderDynamicConfig(topLevel) : menuItem.config;
+
+		return (
+			<>
+				<ViewHeader title={menuItem.title} onBack={pop} />
+				<div className="mt-4 **:data-label:pl-1 **:data-label:text-fg-muted">{configNode}</div>
+			</>
+		);
 	}
 
 	return (
@@ -287,15 +377,19 @@ export function CustomizerPanel() {
 								className="flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover"
 							>
 								<div className="text-left text-fg-muted">{item.title}</div>
-								<div>
-									{item.id === "density" ? (
-										<p className="font-medium capitalize">{designSystem.density}</p>
-									) : (
-										item.preview
-									)}
+								<div className="text-left">
+									{item.preview === "dynamic" ? renderDynamicPreview(item.id) : item.preview}
 								</div>
 							</ButtonPrimitives.Button>
 						))}
+
+						{/* All components directly accessible from home */}
+						<div className="mt-2 flex flex-col gap-2">
+							<div className="px-1 text-[10px] text-fg-muted uppercase tracking-widest">
+								Components
+							</div>
+							<AllComponentsView onSelect={(comp) => push(comp)} />
+						</div>
 					</div>
 				</motion.div>
 
