@@ -8,9 +8,10 @@ const baseStyles = tv({
 	slots: {
 		fieldset: "",
 		legend: "",
-		fieldGroup: "cn-field-group group/field-group @container/field-group flex w-full flex-col has-data-checkbox:gap-3",
-		field: "cn-field flex flex-col gap-1",
-		fieldContent: "",
+		fieldGroup:
+			"cn-field-group group/field-group @container/field-group flex w-full flex-col has-[[data-checkbox]_[data-label]]:gap-2 has-data-checkbox:gap-3",
+		field: "",
+		fieldContent: "cn-field flex flex-col gap-1",
 		label: "",
 		description: "",
 		fieldError: "",

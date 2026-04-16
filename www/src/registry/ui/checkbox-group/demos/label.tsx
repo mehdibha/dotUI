@@ -4,9 +4,21 @@ import { FieldGroup, Label } from "@/registry/ui/field";
 
 export default function Demo() {
 	return (
-		<div className="flex items-center gap-10">
+		<div className="flex items-start gap-10">
 			<CheckboxGroup defaultValue={["nextjs"]}>
 				<Label>React frameworks</Label>
+				<FieldGroup>
+					<Checkbox value="nextjs">
+						<CheckboxControl />
+						<Label>Next.js</Label>
+					</Checkbox>
+					<Checkbox value="remix">
+						<CheckboxControl />
+						<Label>Remix</Label>
+					</Checkbox>
+				</FieldGroup>
+			</CheckboxGroup>
+			<CheckboxGroup defaultValue={["nextjs"]} aria-label="React frameworks">
 				<FieldGroup>
 					<Checkbox value="nextjs">
 						<CheckboxControl />

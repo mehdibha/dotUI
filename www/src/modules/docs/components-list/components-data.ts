@@ -40,6 +40,7 @@ export const componentsData: ComponentCategory[] = [
 			{ name: "SearchField", slug: "search-field", href: "/docs/components/search-field" },
 			{ name: "NumberField", slug: "number-field", href: "/docs/components/number-field" },
 			{ name: "Checkbox", slug: "checkbox", href: "/docs/components/checkbox" },
+			{ name: "CheckboxGroup", slug: "checkbox-group", href: "/docs/components/checkbox-group" },
 			{ name: "RadioGroup", slug: "radio-group", href: "/docs/components/radio-group" },
 			{ name: "Switch", slug: "switch", href: "/docs/components/switch" },
 			{ name: "Slider", slug: "slider", href: "/docs/components/slider" },

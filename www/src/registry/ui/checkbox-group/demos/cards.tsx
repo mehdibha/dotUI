@@ -1,37 +1,37 @@
 import { Checkbox, CheckboxControl, CheckboxIndicator } from "@/registry/ui/checkbox";
 import { CheckboxGroup } from "@/registry/ui/checkbox-group";
-import { Description, FieldGroup, Label } from "@/registry/ui/field";
+import { Description, FieldContent, FieldGroup, Label } from "@/registry/ui/field";
 
 export default function Demo() {
 	return (
-		<CheckboxGroup defaultValue={["nextjs"]}>
+		<CheckboxGroup defaultValue={["nextjs"]} className="w-full max-w-xs">
 			<Label>React frameworks</Label>
 			<FieldGroup>
 				<Checkbox value="nextjs">
-					<CheckboxControl className="flex w-52 cursor-pointer items-start gap-3 rounded-lg border border-border p-4 selected:border-primary selected:bg-primary/5">
-						<CheckboxIndicator className="mt-0.5" />
-						<div className="flex flex-col gap-1">
+					<CheckboxControl>
+						<CheckboxIndicator />
+						<FieldContent>
 							<Label>Next.js</Label>
 							<Description>The React framework for the web</Description>
-						</div>
+						</FieldContent>
 					</CheckboxControl>
 				</Checkbox>
 				<Checkbox value="remix">
-					<CheckboxControl className="flex w-52 cursor-pointer items-start gap-3 rounded-lg border border-border p-4 selected:border-primary selected:bg-primary/5">
-						<CheckboxIndicator className="mt-0.5" />
-						<div className="flex flex-col gap-1">
+					<CheckboxControl>
+						<CheckboxIndicator />
+						<FieldContent>
 							<Label>Remix</Label>
 							<Description>Full stack web framework</Description>
-						</div>
+						</FieldContent>
 					</CheckboxControl>
 				</Checkbox>
 				<Checkbox value="gatsby">
-					<CheckboxControl className="flex w-52 cursor-pointer items-start gap-3 rounded-lg border border-border p-4 selected:border-primary selected:bg-primary/5">
-						<CheckboxIndicator className="mt-0.5" />
-						<div className="flex flex-col gap-1">
+					<CheckboxControl>
+						<CheckboxIndicator />
+						<FieldContent>
 							<Label>Gatsby</Label>
 							<Description>Build fast, modern websites</Description>
-						</div>
+						</FieldContent>
 					</CheckboxControl>
 				</Checkbox>
 			</FieldGroup>

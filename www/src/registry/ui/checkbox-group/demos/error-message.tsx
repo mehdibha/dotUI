@@ -1,4 +1,4 @@
-import { Checkbox } from "@/registry/ui/checkbox";
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import { CheckboxGroup } from "@/registry/ui/checkbox-group";
 import { FieldError, FieldGroup, Label } from "@/registry/ui/field";
 
@@ -7,9 +7,18 @@ export default function Demo() {
 		<CheckboxGroup isInvalid>
 			<Label>React frameworks</Label>
 			<FieldGroup>
-				<Checkbox value="nextjs">Next.js</Checkbox>
-				<Checkbox value="remix">Remix</Checkbox>
-				<Checkbox value="gatsby">Gatsby</Checkbox>
+				<Checkbox value="nextjs">
+					<CheckboxControl />
+					<Label>Next.js</Label>
+				</Checkbox>
+				<Checkbox value="remix">
+					<CheckboxControl />
+					<Label>Remix</Label>
+				</Checkbox>
+				<Checkbox value="gatsby">
+					<CheckboxControl />
+					<Label>Gatsby</Label>
+				</Checkbox>
 			</FieldGroup>
 			<FieldError>Please select a framework.</FieldError>
 		</CheckboxGroup>

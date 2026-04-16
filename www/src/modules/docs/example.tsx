@@ -19,11 +19,12 @@ export function Example({ component: Component, title, children, className, ...p
 
 	return (
 		<div className={cn("flex flex-col gap-1", className)} {...props}>
-			<h3 className="px-1.5 py-2 font-normal text-fg-muted text-sm">{title}</h3>
+			<h3 className="px-1.5 py-2 font-normal text-fg-muted text-sm capitalize">{title}</h3>
 			<div className="relative flex flex-1 flex-col">
 				<div
+					data-example-preview=""
 					tabIndex={-1}
-					className="pointer-events-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 p-6"
+					className="pointer-events-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 p-10"
 				>
 					<Component />
 				</div>
