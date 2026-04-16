@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, CheckboxIndicator } from "@/registry/ui/checkbox";
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import { CheckboxGroup } from "@/registry/ui/checkbox-group";
 import { FieldGroup, Label } from "@/registry/ui/field";
 
@@ -18,15 +18,15 @@ export function CheckboxGroupPlayground({ label = "Select frameworks", ...props 
 			{label && <Label>{label}</Label>}
 			<FieldGroup>
 				<Checkbox value="react">
-					<CheckboxIndicator />
+					<CheckboxControl />
 					<Label>React</Label>
 				</Checkbox>
 				<Checkbox value="vue">
-					<CheckboxIndicator />
+					<CheckboxControl />
 					<Label>Vue</Label>
 				</Checkbox>
 				<Checkbox value="angular">
-					<CheckboxIndicator />
+					<CheckboxControl />
 					<Label>Angular</Label>
 				</Checkbox>
 			</FieldGroup>

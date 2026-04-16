@@ -3,7 +3,7 @@
 import * as FormPrimitives from "react-aria-components/Form";
 
 import { Button } from "@/registry/ui/button";
-import { Checkbox, CheckboxIndicator } from "@/registry/ui/checkbox";
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/registry/ui/combobox";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { FieldGroup, Label } from "@/registry/ui/field";
@@ -73,7 +73,7 @@ export default function Demo() {
 					</SelectContent>
 				</Select>
 				<Checkbox isRequired>
-					<CheckboxIndicator />
+					<CheckboxControl />
 					<Label>I agree to the terms and conditions</Label>
 				</Checkbox>
 				<div className="flex justify-end">

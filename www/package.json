@@ -42,7 +42,7 @@
 		"pako": "^2.1.0",
 		"react": "^19.2.1",
 		"react-aria": "^3.48.0",
-		"react-aria-components": "^1.17.0",
+		"react-aria-components": "link:../../react-spectrum/packages/react-aria-components",
 		"react-dom": "^19.2.1",
 		"react-error-boundary": "^6.0.0",
 		"react-hook-form": "^7.54.2",

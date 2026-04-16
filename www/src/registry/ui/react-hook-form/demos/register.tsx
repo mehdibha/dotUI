@@ -8,7 +8,7 @@ import { z } from "zod";
 import { CalendarIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Calendar } from "@/registry/ui/calendar";
-import { Checkbox, CheckboxIndicator } from "@/registry/ui/checkbox";
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/registry/ui/combobox";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
@@ -157,7 +157,7 @@ export default function Demo() {
 					control={control}
 					render={({ value, ...props }) => (
 						<Checkbox isSelected={value} {...props}>
-							<CheckboxIndicator />
+							<CheckboxControl />
 							<Label>I agree to the terms and conditions</Label>
 						</Checkbox>
 					)}

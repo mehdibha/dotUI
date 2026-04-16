@@ -253,10 +253,6 @@ export const DemosIndex: Record<
     files: ["ui/calendar/demos/with-presets.tsx"],
     component: React.lazy(() => import("@/registry/ui/calendar/demos/with-presets")),
   },
-  "calendar/demos/with-slotted-pickers": {
-    files: ["ui/calendar/demos/with-slotted-pickers.tsx"],
-    component: React.lazy(() => import("@/registry/ui/calendar/demos/with-slotted-pickers")),
-  },
   "calendar/demos/with-time": {
     files: ["ui/calendar/demos/with-time.tsx"],
     component: React.lazy(() => import("@/registry/ui/calendar/demos/with-time")),
@@ -301,21 +297,17 @@ export const DemosIndex: Record<
     files: ["ui/card/demos/with-image.tsx"],
     component: React.lazy(() => import("@/registry/ui/card/demos/with-image")),
   },
+  "checkbox/demos/basic": {
+    files: ["ui/checkbox/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/checkbox/demos/basic")),
+  },
   "checkbox/demos/card": {
     files: ["ui/checkbox/demos/card.tsx"],
     component: React.lazy(() => import("@/registry/ui/checkbox/demos/card")),
   },
-  "checkbox/demos/composition": {
-    files: ["ui/checkbox/demos/composition.tsx"],
-    component: React.lazy(() => import("@/registry/ui/checkbox/demos/composition")),
-  },
-  "checkbox/demos/controlled": {
-    files: ["ui/checkbox/demos/controlled.tsx"],
-    component: React.lazy(() => import("@/registry/ui/checkbox/demos/controlled")),
-  },
-  "checkbox/demos/default": {
-    files: ["ui/checkbox/demos/default.tsx"],
-    component: React.lazy(() => import("@/registry/ui/checkbox/demos/default")),
+  "checkbox/demos/description": {
+    files: ["ui/checkbox/demos/description.tsx"],
+    component: React.lazy(() => import("@/registry/ui/checkbox/demos/description")),
   },
   "checkbox/demos/disabled": {
     files: ["ui/checkbox/demos/disabled.tsx"],
@@ -325,13 +317,17 @@ export const DemosIndex: Record<
     files: ["ui/checkbox/demos/indeterminate.tsx"],
     component: React.lazy(() => import("@/registry/ui/checkbox/demos/indeterminate")),
   },
+  "checkbox/demos/invalid": {
+    files: ["ui/checkbox/demos/invalid.tsx"],
+    component: React.lazy(() => import("@/registry/ui/checkbox/demos/invalid")),
+  },
   "checkbox/demos/read-only": {
     files: ["ui/checkbox/demos/read-only.tsx"],
     component: React.lazy(() => import("@/registry/ui/checkbox/demos/read-only")),
   },
-  "checkbox/demos/uncontrolled": {
-    files: ["ui/checkbox/demos/uncontrolled.tsx"],
-    component: React.lazy(() => import("@/registry/ui/checkbox/demos/uncontrolled")),
+  "checkbox/demos/standalone": {
+    files: ["ui/checkbox/demos/standalone.tsx"],
+    component: React.lazy(() => import("@/registry/ui/checkbox/demos/standalone")),
   },
   "checkbox-group/demos/cards": {
     files: ["ui/checkbox-group/demos/cards.tsx"],

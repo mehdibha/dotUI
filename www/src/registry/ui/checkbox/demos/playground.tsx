@@ -1,6 +1,6 @@
 "use client";
 
-import { Checkbox, CheckboxIndicator } from "@/registry/ui/checkbox";
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import { Label } from "@/registry/ui/field";
 
 interface CheckboxPlaygroundProps {
@@ -14,7 +14,7 @@ interface CheckboxPlaygroundProps {
 export function CheckboxPlayground({ label = "Accept terms", ...props }: CheckboxPlaygroundProps) {
 	return (
 		<Checkbox {...props}>
-			<CheckboxIndicator />
+			<CheckboxControl />
 			<Label>{label}</Label>
 		</Checkbox>
 	);

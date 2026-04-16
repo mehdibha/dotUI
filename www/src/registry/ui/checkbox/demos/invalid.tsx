@@ -5,9 +5,9 @@ import { Label } from "@/registry/ui/field";
 
 export default function Demo() {
 	return (
-		<Checkbox isDisabled>
+		<Checkbox isInvalid>
 			<CheckboxControl />
-			<Label>I accept the terms and conditions</Label>
+			<Label>Accept terms and conditions</Label>
 		</Checkbox>
 	);
 }

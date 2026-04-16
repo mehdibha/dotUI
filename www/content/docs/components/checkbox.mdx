@@ -7,7 +7,7 @@ links:
 wip: true
 ---
 
-<Demo name="checkbox/demos/default" />
+<Demo name="checkbox/demos/basic" />
 
 ## Installation
 
@@ -20,19 +20,37 @@ npx shadcn@latest add @dotui/checkbox
 Use `Checkbox` to allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
 
 ```tsx
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox, CheckboxControl } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/field";
 ```
 
 ```tsx
-<Checkbox>I accept the terms and conditions</Checkbox>
+<Checkbox>
+  <CheckboxControl />
+  <Label>I accept the terms and conditions</Label>
+</Checkbox>
+```
+
+## Selection
+
+Use `defaultSelected` for uncontrolled checkboxes, or `isSelected` and `onChange` for controlled checkboxes.
+
+```tsx
+<Checkbox defaultSelected />
+```
+
+```tsx
+const [isSelected, setIsSelected] = useState(false);
+
+<Checkbox isSelected={isSelected} onChange={setIsSelected} />;
 ```
 
 ## Playground
 
 Use the controls below to experiment with different checkbox props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="checkbox" 
+<InteractiveDemo
+  name="checkbox"
   controls={[
     {
       type: "string",
@@ -62,18 +80,17 @@ Use the controls below to experiment with different checkbox props and see the l
   ]}
 />
 
-
 ## Examples
 
-<Examples>
-  <Example name="checkbox/demos/default" />
-  <Example name="checkbox/demos/card" />
-  <Example name="checkbox/demos/indeterminate" />
-  <Example name="checkbox/demos/disabled" />
-  <Example name="checkbox/demos/read-only" />
-  <Example name="checkbox/demos/composition" />
-  <Example name="checkbox/demos/uncontrolled" />
-  <Example name="checkbox/demos/controlled" />
+<Examples className="lg:grid-cols-2">
+  <Example name="checkbox/demos/standalone" title="Standalone" />
+  <Example name="checkbox/demos/basic" title="Basic" />
+  <Example name="checkbox/demos/description" title="With Description" />
+  <Example name="checkbox/demos/invalid" title="Invalid" />
+  <Example name="checkbox/demos/indeterminate" title="Indeterminate" />
+  <Example name="checkbox/demos/disabled" title="Disabled" />
+  <Example name="checkbox/demos/read-only" title="Read Only" />
+  <Example name="checkbox/demos/card" title="Card" />
 </Examples>
 
 ## API Reference

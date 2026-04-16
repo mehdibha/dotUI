@@ -54,7 +54,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Checkbox
 	Checkbox: "@/components/ui/checkbox",
-	CheckboxIndicator: "@/components/ui/checkbox",
+	CheckboxControl: "@/components/ui/checkbox",
 
 	// Switch
 	Switch: "@/components/ui/switch",

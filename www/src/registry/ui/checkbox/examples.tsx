@@ -1,41 +1,41 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import Card from "./demos/card";
-import Composition from "./demos/composition";
-import Controlled from "./demos/controlled";
-import Default from "./demos/default";
-import Disabled from "./demos/disabled";
-import Indeterminate from "./demos/indeterminate";
-import ReadOnly from "./demos/read-only";
-import Uncontrolled from "./demos/uncontrolled";
+import BasicDemo from "./demos/basic";
+import CardDemo from "./demos/card";
+import DescriptionDemo from "./demos/description";
+import DisabledDemo from "./demos/disabled";
+import IndeterminateDemo from "./demos/indeterminate";
+import InvalidDemo from "./demos/invalid";
+import ReadOnlyDemo from "./demos/read-only";
+import StandaloneDemo from "./demos/standalone";
 
 export default function CheckboxExamples() {
 	return (
-		<Examples>
-			<Example title="card">
-				<Card />
+		<Examples className="**:data-example-preview:justify-center lg:grid-cols-2">
+			<Example title="Standalone">
+				<StandaloneDemo />
 			</Example>
-			<Example title="composition">
-				<Composition />
+			<Example title="Basic">
+				<BasicDemo />
 			</Example>
-			<Example title="controlled">
-				<Controlled />
+			<Example title="With description">
+				<DescriptionDemo />
 			</Example>
-			<Example title="default">
-				<Default />
+			<Example title="Invalid">
+				<InvalidDemo />
 			</Example>
-			<Example title="disabled">
-				<Disabled />
+			<Example title="Disabled">
+				<DisabledDemo />
 			</Example>
 			<Example title="indeterminate">
-				<Indeterminate />
+				<IndeterminateDemo />
 			</Example>
 			<Example title="read only">
-				<ReadOnly />
+				<ReadOnlyDemo />
 			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
+			<Example title="Card">
+				<CardDemo />
 			</Example>
 		</Examples>
 	);

@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxIndicator } from "@/registry/ui/checkbox";
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import { CheckboxGroup } from "@/registry/ui/checkbox-group";
 import { FieldGroup, Label } from "@/registry/ui/field";
 
@@ -9,11 +9,11 @@ export default function Demo() {
 				<Label>React frameworks</Label>
 				<FieldGroup>
 					<Checkbox value="nextjs">
-						<CheckboxIndicator />
+						<CheckboxControl />
 						<Label>Next.js</Label>
 					</Checkbox>
 					<Checkbox value="remix">
-						<CheckboxIndicator />
+						<CheckboxControl />
 						<Label>Remix</Label>
 					</Checkbox>
 				</FieldGroup>
