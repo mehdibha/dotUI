@@ -1,9 +1,9 @@
 "use client";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import * as CalendarPrimitives from "react-aria-components/Calendar";
+import * as CalendarPrimitive from "react-aria-components/Calendar";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar";
+import * as RangeCalendarPrimitive from "react-aria-components/RangeCalendar";
 import type React from "react";
 
 import { Button } from "@/registry/ui/button";
@@ -14,11 +14,11 @@ import { useStyles } from "./styles";
 
 // MARK: seperator
 
-interface CalendarProps<T extends CalendarPrimitives.DateValue> extends CalendarPrimitives.CalendarProps<T> {}
-const Calendar = <T extends CalendarPrimitives.DateValue>({ className, ...props }: CalendarProps<T>) => {
+interface CalendarProps<T extends CalendarPrimitive.DateValue> extends CalendarPrimitive.CalendarProps<T> {}
+const Calendar = <T extends CalendarPrimitive.DateValue>({ className, ...props }: CalendarProps<T>) => {
 	const { root } = useStyles()();
 	return (
-		<CalendarPrimitives.Calendar
+		<CalendarPrimitive.Calendar
 			data-calendar=""
 			className={composeRenderProps(className, (className) => root({ className }))}
 			{...props}
@@ -41,24 +41,24 @@ const Calendar = <T extends CalendarPrimitives.DateValue>({ className, ...props 
 					)}
 				</>
 			))}
-		</CalendarPrimitives.Calendar>
+		</CalendarPrimitive.Calendar>
 	);
 };
 
 // MARK: seperator
 
-interface RangeCalendarProps<T extends CalendarPrimitives.DateValue>
-	extends RangeCalendarPrimitives.RangeCalendarProps<T> {}
-const RangeCalendar = <T extends CalendarPrimitives.DateValue>({ className, ...props }: RangeCalendarProps<T>) => {
+interface RangeCalendarProps<T extends CalendarPrimitive.DateValue>
+	extends RangeCalendarPrimitive.RangeCalendarProps<T> {}
+const RangeCalendar = <T extends CalendarPrimitive.DateValue>({ className, ...props }: RangeCalendarProps<T>) => {
 	const { root } = useStyles()();
 	return (
-		<RangeCalendarPrimitives.RangeCalendar
+		<RangeCalendarPrimitive.RangeCalendar
 			data-range-calendar=""
 			className={composeRenderProps(className, (className) => root({ className }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children) => (
-				<CalendarPickerBridge>
+				<>
 					{children ?? (
 						<>
 							<CalendarHeader>
@@ -73,9 +73,9 @@ const RangeCalendar = <T extends CalendarPrimitives.DateValue>({ className, ...p
 							<CalendarGrid />
 						</>
 					)}
-				</CalendarPickerBridge>
+				</>
 			))}
-		</RangeCalendarPrimitives.RangeCalendar>
+		</RangeCalendarPrimitive.RangeCalendar>
 	);
 };
 
@@ -103,36 +103,36 @@ const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
 
 // MARK: seperator
 
-interface CalendarHeadingProps extends React.ComponentProps<typeof CalendarPrimitives.Heading> {}
+interface CalendarHeadingProps extends React.ComponentProps<typeof CalendarPrimitive.Heading> {}
 const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
 	const { heading } = useStyles()();
-	return <CalendarPrimitives.Heading data-calendar-heading="" className={heading({ className })} {...props} />;
+	return <CalendarPrimitive.Heading data-calendar-heading="" className={heading({ className })} {...props} />;
 };
 
 // MARK: seperator
 
-interface CalendarGridProps extends React.ComponentProps<typeof CalendarPrimitives.CalendarGrid> {}
+interface CalendarGridProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarGrid> {}
 const CalendarGrid = ({ className, children, ...props }: CalendarGridProps) => {
 	const { grid } = useStyles()();
 	return (
-		<CalendarPrimitives.CalendarGrid data-calendar-grid="" className={grid({ className })} {...props}>
+		<CalendarPrimitive.CalendarGrid data-calendar-grid="" className={grid({ className })} {...props}>
 			{children ?? (
 				<>
 					<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>
 					<CalendarGridBody>{(date) => <CalendarCell date={date} />}</CalendarGridBody>
 				</>
 			)}
-		</CalendarPrimitives.CalendarGrid>
+		</CalendarPrimitive.CalendarGrid>
 	);
 };
 
 // MARK: seperator
 
-interface CalendarGridHeaderProps extends React.ComponentProps<typeof CalendarPrimitives.CalendarGridHeader> {}
+interface CalendarGridHeaderProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarGridHeader> {}
 const CalendarGridHeader = ({ className, ...props }: CalendarGridHeaderProps) => {
 	const { gridHeader } = useStyles()();
 	return (
-		<CalendarPrimitives.CalendarGridHeader
+		<CalendarPrimitive.CalendarGridHeader
 			data-calendar-grid-header=""
 			className={gridHeader({ className })}
 			{...props}
@@ -142,11 +142,11 @@ const CalendarGridHeader = ({ className, ...props }: CalendarGridHeaderProps) =>
 
 // MARK: seperator
 
-interface CalendarHeaderCellProps extends React.ComponentProps<typeof CalendarPrimitives.CalendarHeaderCell> {}
+interface CalendarHeaderCellProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarHeaderCell> {}
 const CalendarHeaderCell = ({ className, ...props }: CalendarHeaderCellProps) => {
 	const { gridHeaderCell } = useStyles()();
 	return (
-		<CalendarPrimitives.CalendarHeaderCell
+		<CalendarPrimitive.CalendarHeaderCell
 			data-calendar-header-cell=""
 			className={gridHeaderCell({ className })}
 			{...props}
@@ -156,21 +156,21 @@ const CalendarHeaderCell = ({ className, ...props }: CalendarHeaderCellProps) =>
 
 // MARK: seperator
 
-interface CalendarGridBodyProps extends React.ComponentProps<typeof CalendarPrimitives.CalendarGridBody> {}
+interface CalendarGridBodyProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarGridBody> {}
 const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
 	const { gridBody } = useStyles()();
 	return (
-		<CalendarPrimitives.CalendarGridBody data-calendar-grid-body="" className={gridBody({ className })} {...props} />
+		<CalendarPrimitive.CalendarGridBody data-calendar-grid-body="" className={gridBody({ className })} {...props} />
 	);
 };
 
 // MARK: seperator
 
-interface CalendarCellProps extends React.ComponentProps<typeof CalendarPrimitives.CalendarCell> {}
+interface CalendarCellProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarCell> {}
 const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
 	const { cell, cellInner } = useStyles()();
 	return (
-		<CalendarPrimitives.CalendarCell
+		<CalendarPrimitive.CalendarCell
 			data-calendar-cell=""
 			className={composeRenderProps(className, (className) =>
 				cell({
@@ -184,7 +184,7 @@ const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
 					{children ?? formattedDate}
 				</span>
 			))}
-		</CalendarPrimitives.CalendarCell>
+		</CalendarPrimitive.CalendarCell>
 	);
 };
 

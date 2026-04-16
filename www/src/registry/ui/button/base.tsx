@@ -2,7 +2,7 @@
 
 import * as ButtonPrimitive from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as LinkPrimitives from "react-aria-components/Link";
+import * as LinkPrimitive from "react-aria-components/Link";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -46,13 +46,13 @@ const Button = ({ variant, size, className, children, ...props }: ButtonProps) =
 
 // MARK: seperator
 
-interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitives.Link>, VariantProps<ButtonStyles> {}
+interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitive.Link>, VariantProps<ButtonStyles> {}
 
 const LinkButton = ({ variant, size, className, children, ...props }: LinkButtonProps) => {
 	const styles = useStyles();
 
 	return (
-		<LinkPrimitives.Link
+		<LinkPrimitive.Link
 			data-slot="button"
 			data-button=""
 			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
@@ -61,7 +61,7 @@ const LinkButton = ({ variant, size, className, children, ...props }: LinkButton
 			{composeRenderProps(children, (children) => (
 				<>{typeof children === "string" ? <span className="truncate">{children}</span> : children}</>
 			))}
-		</LinkPrimitives.Link>
+		</LinkPrimitive.Link>
 	);
 };
 
