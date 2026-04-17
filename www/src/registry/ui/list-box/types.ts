@@ -1,6 +1,6 @@
-import * as HeaderPrimitives from "react-aria-components/Header";
-import * as ListBoxPrimitives from "react-aria-components/ListBox";
-import * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
+import type * as HeaderPrimitives from "react-aria-components/Header";
+import type * as ListBoxPrimitives from "react-aria-components/ListBox";
+import type * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
 
 /**
  * A listbox displays a list of options and allows a user to select one or more of them.

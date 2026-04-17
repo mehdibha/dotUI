@@ -12,7 +12,7 @@
 						"name": "date",
 						"value": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
 							"name": "CalendarDate"
 						},
 						"optional": false,

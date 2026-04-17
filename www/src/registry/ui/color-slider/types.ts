@@ -1,5 +1,5 @@
-import * as ColorSliderPrimitives from "react-aria-components/ColorSlider";
-import * as SliderPrimitives from "react-aria-components/Slider";
+import type * as ColorSliderPrimitives from "react-aria-components/ColorSlider";
+import type * as SliderPrimitives from "react-aria-components/Slider";
 
 /**
  * A color slider allows users to adjust an individual channel of a color value.

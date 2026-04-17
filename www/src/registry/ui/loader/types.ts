@@ -1,4 +1,4 @@
-import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
+import type * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
 
 /**
  * Missing description.

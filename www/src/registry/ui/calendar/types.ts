@@ -1,5 +1,5 @@
-import * as CalendarPrimitives from "react-aria-components/Calendar";
-import * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar";
+import type * as CalendarPrimitives from "react-aria-components/Calendar";
+import type * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar";
 
 /**
  * A calendar displays one or more date grids and allows users to select a single date.
@@ -9,7 +9,8 @@ export interface CalendarProps<T extends CalendarPrimitives.DateValue> extends C
 /**
  * A range calendar displays one or more date grids and allows users to select a contiguous range of dates.
  */
-export interface RangeCalendarProps<T extends CalendarPrimitives.DateValue> extends RangeCalendarPrimitives.RangeCalendarProps<T> {}
+export interface RangeCalendarProps<T extends CalendarPrimitives.DateValue>
+	extends RangeCalendarPrimitives.RangeCalendarProps<T> {}
 
 /**
  * Missing description.

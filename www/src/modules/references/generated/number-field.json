@@ -249,6 +249,25 @@
 			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
 			"default": "'react-aria-NumberField'"
 		},
+		"commitBehavior": {
+			"type": "\"snap\" | \"validate\"",
+			"detailedType": "'snap' | 'validate' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "snap"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "validate"
+					}
+				]
+			},
+			"description": "Controls the behavior of the number field when the user blurs the field after editing.\n'snap' will clamp the value to the min/max values, and snap to the nearest step value.\n'validate' will not clamp the value, and will validate that the value is within the min/max range and on a valid step.",
+			"default": "'snap'"
+		},
 		"decrementAriaLabel": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -657,7 +676,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:NumberFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps",
 								"name": "NumberFieldRenderProps"
 							}
 						]
@@ -817,64 +836,16 @@
 			"selector": "[data-invalid]",
 			"description": "Whether the number field is invalid."
 		},
+		"isReadOnly": {
+			"selector": "[data-readonly]",
+			"description": "Whether the number field is read only."
+		},
 		"isRequired": {
 			"selector": "[data-required]",
 			"description": "Whether the number field is required."
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:NumberFieldRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:NumberFieldRenderProps",
-			"name": "NumberFieldRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the number field is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the number field is invalid."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the number field is required."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+numberfield@3.11.0_react@19.2.1/node_modules/@react-stately/numberfield/dist/types.d.ts:NumberField.State",
-						"name": "NumberField.State"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the number field."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
@@ -1478,6 +1449,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -1830,15 +1810,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
 												}
 											]
 										},
@@ -16517,6 +16488,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -16869,15 +16849,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
 												}
 											]
 										},
@@ -18797,6 +18768,68 @@
 			"typeParameters": [],
 			"description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
 		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps",
+			"name": "NumberFieldRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is disabled."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is invalid."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is required."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/numberfield/useNumberFieldState.d.ts:NumberField.State",
+						"name": "NumberField.State"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the number field."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"NumberFieldRenderProps": {
 			"type": "interface",
 			"name": "NumberFieldRenderProps",
@@ -18820,6 +18853,16 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the number field is invalid."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is read only."
 				},
 				"isRequired": {
 					"type": "property",

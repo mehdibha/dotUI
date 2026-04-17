@@ -1,5 +1,5 @@
-import * as ButtonPrimitives from "react-aria-components/Button";
-import * as LinkPrimitives from "react-aria-components/Link";
+import type * as ButtonPrimitives from "react-aria-components/Button";
+import type * as LinkPrimitives from "react-aria-components/Link";
 
 /**
  * A clickable element that triggers an action. Buttons communicate actions users can take

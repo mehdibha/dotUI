@@ -1,4 +1,4 @@
-import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
+import type * as ComboBoxPrimitives from "react-aria-components/ComboBox";
 
 import type { InputGroupProps } from "@/registry/ui/input";
 import type { ListBoxProps } from "@/registry/ui/list-box";

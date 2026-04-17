@@ -2,7 +2,7 @@
 
 import React from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import * as CalendarPrimitives from "react-aria-components/Calendar";
+import type * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { PlusIcon, Trash2Icon } from "@/registry/__generated__/icons";
 import { Badge } from "@/registry/ui/badge";
@@ -172,7 +172,7 @@ export default function Demo() {
 						}}
 					>
 						<div className="flex items-center gap-2">
-							<TextField aria-label="Event title" value={newTitle} onChange={setNewTitle} className="flex-1 w-auto">
+							<TextField aria-label="Event title" value={newTitle} onChange={setNewTitle} className="w-auto flex-1">
 								<InputGroup>
 									<InputAddon>
 										<ColorPicker>

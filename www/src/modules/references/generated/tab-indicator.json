@@ -966,7 +966,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SharedElementRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/SharedElementTransition.d.ts:SharedElementRenderProps",
 								"name": "SharedElementRenderProps"
 							}
 						]
@@ -1012,9 +1012,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SharedElementRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/SharedElementTransition.d.ts:SharedElementRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SharedElementRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/SharedElementTransition.d.ts:SharedElementRenderProps",
 			"name": "SharedElementRenderProps",
 			"extends": [],
 			"properties": {

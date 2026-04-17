@@ -34,12 +34,7 @@ interface DesignSystemProviderProps {
 	children: React.ReactNode;
 }
 
-function DesignSystemProvider({
-	styles,
-	params = {},
-	density,
-	children,
-}: DesignSystemProviderProps) {
+function DesignSystemProvider({ styles, params = {}, density, children }: DesignSystemProviderProps) {
 	const value = React.useMemo(() => ({ styles, params }), [styles, params]);
 
 	// Apply density class to the document body when inside an iframe
@@ -77,11 +72,7 @@ function DesignSystemProvider({
 		};
 	}, [cssVars]);
 
-	return (
-		<DesignSystemContext.Provider value={value}>
-			{children}
-		</DesignSystemContext.Provider>
-	);
+	return <DesignSystemContext.Provider value={value}>{children}</DesignSystemContext.Provider>;
 }
 
 /* ------------------------------ createStyles ----------------------------- */

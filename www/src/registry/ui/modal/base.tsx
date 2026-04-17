@@ -41,7 +41,11 @@ interface ModalContentProps extends React.ComponentProps<typeof ModalPrimitives.
 const ModalContent = ({ children, className, ...props }: ModalContentProps) => {
 	const { modal } = useStyles()();
 	return (
-		<ModalPrimitives.Modal data-modal="" className={composeRenderProps(className, (className) => modal({ className }))} {...props}>
+		<ModalPrimitives.Modal
+			data-modal=""
+			className={composeRenderProps(className, (className) => modal({ className }))}
+			{...props}
+		>
 			{children}
 		</ModalPrimitives.Modal>
 	);

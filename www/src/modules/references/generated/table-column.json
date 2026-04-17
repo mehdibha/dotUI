@@ -263,7 +263,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColumnRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:ColumnRenderProps",
 								"name": "ColumnRenderProps"
 							}
 						]
@@ -368,9 +368,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColumnRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:ColumnRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColumnRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:ColumnRenderProps",
 			"name": "ColumnRenderProps",
 			"extends": [],
 			"properties": {

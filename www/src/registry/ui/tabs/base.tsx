@@ -56,7 +56,11 @@ interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 const Tab = ({ className, ...props }: TabProps) => {
 	const { tab } = useStyles()();
 	return (
-		<TabsPrimitives.Tab data-tab="" className={composeRenderProps(className, (cn) => tab({ className: cn }))} {...props}>
+		<TabsPrimitives.Tab
+			data-tab=""
+			className={composeRenderProps(className, (cn) => tab({ className: cn }))}
+			{...props}
+		>
 			{composeRenderProps(props.children, (children) => (
 				<>
 					{children}

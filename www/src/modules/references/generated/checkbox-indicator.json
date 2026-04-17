@@ -1,6 +1,6 @@
 {
 	"name": "CheckboxIndicatorProps",
-	"description": "Missing description.",
-	"extendsElement": "div",
+	"description": "The visual indicator of a checkbox (the box with check/minus icon).",
+	"extendsElement": "span",
 	"props": {}
 }

@@ -1,23 +1,18 @@
 import { deflateRaw, inflateRaw } from "pako";
 
 import { DEFAULTS } from "./defaults";
-import type { DesignSystem, DesignSystemState } from "./types";
 import { fromCompact } from "./types";
+import type { DesignSystem, DesignSystemState } from "./types";
 
 /* ----------------------------- base64url helpers ----------------------------- */
 
 function toBase64Url(bytes: Uint8Array): string {
 	const binary = String.fromCharCode(...bytes);
-	return btoa(binary)
-		.replace(/\+/g, "-")
-		.replace(/\//g, "_")
-		.replace(/=+$/, "");
+	return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
 function fromBase64Url(str: string): Uint8Array {
-	const padded =
-		str.replace(/-/g, "+").replace(/_/g, "/") +
-		"==".slice(0, (4 - (str.length % 4)) % 4);
+	const padded = str.replace(/-/g, "+").replace(/_/g, "/") + "==".slice(0, (4 - (str.length % 4)) % 4);
 	const binary = atob(padded);
 	return Uint8Array.from(binary, (c) => c.charCodeAt(0));
 }

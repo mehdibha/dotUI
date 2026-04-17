@@ -25,7 +25,10 @@ interface ProgressBarProps extends React.ComponentProps<typeof ProgressBarPrimit
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
 	const { root } = useStyles()();
 	return (
-		<ProgressBarPrimitives.ProgressBar className={composeRenderProps(className, (className) => root({ className }))} {...props}>
+		<ProgressBarPrimitives.ProgressBar
+			className={composeRenderProps(className, (className) => root({ className }))}
+			{...props}
+		>
 			{composeRenderProps(children, (children, { isIndeterminate, valueText, percentage }) => (
 				<ProgressBarProvider isIndeterminate={isIndeterminate} valueText={valueText} percentage={percentage}>
 					{children ?? <ProgressBarControl />}

@@ -1,22 +1,18 @@
 import { ChevronDownIcon, ChevronRightIcon, SlidersHorizontalIcon } from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
-import { registryUi } from "@/registry/ui/registry";
-import type { RegistryItem } from "@/registry/types";
 import { Button } from "@/registry/ui/button";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
+import { registryUi } from "@/registry/ui/registry";
 import { Select, SelectValue } from "@/registry/ui/select";
+import type { RegistryItem } from "@/registry/types";
 
 /* ----------------------------- Data helpers ----------------------------- */
 
-const allComponents = registryUi
-	.filter((item) => item.group)
-	.sort((a, b) => a.name.localeCompare(b.name));
+const allComponents = registryUi.filter((item) => item.group).sort((a, b) => a.name.localeCompare(b.name));
 
-const componentMetaMap = new Map<string, RegistryItem>(
-	registryUi.map((item) => [item.name, item]),
-);
+const componentMetaMap = new Map<string, RegistryItem>(registryUi.map((item) => [item.name, item]));
 
 function toTitleCase(slug: string): string {
 	return slug
@@ -47,20 +43,14 @@ export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
 				const styleCount = comp.styles ? Object.keys(comp.styles).length : 0;
 				const paramCount = comp.params ? Object.keys(comp.params).length : 0;
 				return (
-					<ButtonPrimitives.Button
-						key={comp.name}
-						onPress={() => onSelect(comp.name)}
-						className={cardClass}
-					>
+					<ButtonPrimitives.Button key={comp.name} onPress={() => onSelect(comp.name)} className={cardClass}>
 						<div className="flex items-center justify-between">
 							<span>{toTitleCase(comp.name)}</span>
 							<ChevronRightIcon className="size-4 text-fg-muted" />
 						</div>
 						{(styleCount > 1 || paramCount > 0) && (
-							<div className="flex items-center gap-2 text-xs text-fg-muted/60">
-								{styleCount > 1 && (
-									<span>{styleCount} styles</span>
-								)}
+							<div className="flex items-center gap-2 text-fg-muted/60 text-xs">
+								{styleCount > 1 && <span>{styleCount} styles</span>}
 								{paramCount > 0 && (
 									<span className="flex items-center gap-1">
 										<SlidersHorizontalIcon className="size-3" />
@@ -103,7 +93,7 @@ export function ComponentDetailView({
 }: ComponentDetailViewProps) {
 	const meta = componentMetaMap.get(componentName);
 	if (!meta) {
-		return <p className="text-sm text-fg-muted">Component not found.</p>;
+		return <p className="text-fg-muted text-sm">Component not found.</p>;
 	}
 
 	const styles = meta.styles ? Object.keys(meta.styles) : [];
@@ -135,9 +125,7 @@ export function ComponentDetailView({
 							</ListBox>
 						</Popover>
 					</Select>
-					{defaultStyleDescription && (
-						<p className="text-xs text-fg-muted/60">{defaultStyleDescription}</p>
-					)}
+					{defaultStyleDescription && <p className="text-fg-muted/60 text-xs">{defaultStyleDescription}</p>}
 				</div>
 			)}
 
@@ -168,20 +156,12 @@ export function ComponentDetailView({
 				</div>
 			))}
 
-			{!hasConfig && (
-				<p className="text-sm text-fg-muted">
-					No customization options available for this component.
-				</p>
-			)}
+			{!hasConfig && <p className="text-fg-muted text-sm">No customization options available for this component.</p>}
 		</div>
 	);
 }
 
 function formatParamName(name: string): string {
 	// "--badge-radius" → "Radius"
-	return toTitleCase(
-		name
-			.replace(/^--/, "")
-			.replace(/^[a-z]+-/, ""),
-	);
+	return toTitleCase(name.replace(/^--/, "").replace(/^[a-z]+-/, ""));
 }

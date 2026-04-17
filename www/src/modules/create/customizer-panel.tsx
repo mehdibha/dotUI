@@ -1,13 +1,6 @@
 import { type ReactNode, useMemo } from "react";
 import { getRouteApi } from "@tanstack/react-router";
-import {
-	ChevronDownIcon,
-	ChevronLeftIcon,
-	MoonIcon,
-	MousePointer2Icon,
-	ShuffleIcon,
-	Undo2Icon,
-} from "lucide-react";
+import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, MousePointer2Icon, ShuffleIcon, Undo2Icon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
@@ -31,12 +24,7 @@ import {
 	DEFAULT_CURSOR_INTERACTIVE,
 } from "./cursor-config";
 import { IconographyConfig } from "./iconography-config";
-import {
-	DEFAULT_RADIUS_FACTOR,
-	DensityConfig,
-	RADIUS_FACTOR_VAR,
-	RadiusConfig,
-} from "./layout-config";
+import { DEFAULT_RADIUS_FACTOR, DensityConfig, RADIUS_FACTOR_VAR, RadiusConfig } from "./layout-config";
 import { useDesignSystem } from "./preset";
 import { TypographyConfig } from "./typography-config";
 
@@ -172,14 +160,11 @@ export function CustomizerPanel() {
 
 	// Resolve param values with fallbacks to their defaults
 	const radiusFactor = designSystem.componentParams[RADIUS_FACTOR_VAR] ?? DEFAULT_RADIUS_FACTOR;
-	const cursorInteractive =
-		designSystem.componentParams[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE;
-	const cursorDisabled =
-		designSystem.componentParams[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED;
+	const cursorInteractive = designSystem.componentParams[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE;
+	const cursorDisabled = designSystem.componentParams[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED;
 
 	// When viewing a component (navStack is a single, non-menu id), lock the preview
-	const activeComponent =
-		navStack.length === 1 && !menuIds.has(navStack[0]!) ? navStack[0]! : null;
+	const activeComponent = navStack.length === 1 && !menuIds.has(navStack[0]!) ? navStack[0]! : null;
 	const effectivePreview = activeComponent ?? preview;
 
 	function renderDynamicPreview(id: string): ReactNode {
@@ -192,20 +177,12 @@ export function CustomizerPanel() {
 						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Factor</span>
 						<p className="font-medium tabular-nums">{numeric.toFixed(2)}x</p>
 					</div>
-					<div
-						className="size-7 border"
-						style={{ borderRadius: `calc(0.5rem * ${numeric})` }}
-					/>
+					<div className="size-7 border" style={{ borderRadius: `calc(0.5rem * ${numeric})` }} />
 				</div>
 			);
 		}
 		if (id === "density") {
-			const gapPx =
-				designSystem.density === "compact"
-					? 2
-					: designSystem.density === "default"
-						? 4
-						: 7;
+			const gapPx = designSystem.density === "compact" ? 2 : designSystem.density === "default" ? 4 : 7;
 			return (
 				<div className="-mt-1 flex items-center justify-between">
 					<div className="flex flex-col items-start gap-1">
@@ -225,9 +202,7 @@ export function CustomizerPanel() {
 				<div className="flex flex-col gap-1.5 text-left">
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col items-start gap-1">
-							<span className="text-[10px] text-fg-muted uppercase tracking-widest">
-								Interactive
-							</span>
+							<span className="text-[10px] text-fg-muted uppercase tracking-widest">Interactive</span>
 							<p className="font-medium">{cursorInteractive}</p>
 						</div>
 						<div
@@ -239,9 +214,7 @@ export function CustomizerPanel() {
 					</div>
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col items-start gap-1">
-							<span className="text-[10px] text-fg-muted uppercase tracking-widest">
-								Disabled
-							</span>
+							<span className="text-[10px] text-fg-muted uppercase tracking-widest">Disabled</span>
 							<p className="font-medium">{cursorDisabled}</p>
 						</div>
 						<div
@@ -259,24 +232,13 @@ export function CustomizerPanel() {
 
 	function renderDynamicConfig(id: string): ReactNode {
 		if (id === "radius") {
-			return (
-				<RadiusConfig
-					value={radiusFactor}
-					onChange={(v) => setComponentParam(RADIUS_FACTOR_VAR, v)}
-				/>
-			);
+			return <RadiusConfig value={radiusFactor} onChange={(v) => setComponentParam(RADIUS_FACTOR_VAR, v)} />;
 		}
 		if (id === "density") {
 			return <DensityConfig value={designSystem.density} onChange={setDensity} />;
 		}
 		if (id === "cursor") {
-			return (
-				<CursorConfig
-					interactive={cursorInteractive}
-					disabled={cursorDisabled}
-					onChange={setComponentParam}
-				/>
-			);
+			return <CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setComponentParam} />;
 		}
 		return null;
 	}
@@ -385,9 +347,7 @@ export function CustomizerPanel() {
 
 						{/* All components directly accessible from home */}
 						<div className="mt-2 flex flex-col gap-2">
-							<div className="px-1 text-[10px] text-fg-muted uppercase tracking-widest">
-								Components
-							</div>
+							<div className="px-1 text-[10px] text-fg-muted uppercase tracking-widest">Components</div>
 							<AllComponentsView onSelect={(comp) => push(comp)} />
 						</div>
 					</div>

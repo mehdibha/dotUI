@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import * as MenuPrimitives from "react-aria-components/Menu";
+import type * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Button } from "@/registry/ui/button";
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";

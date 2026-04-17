@@ -3,9 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { DesignSystemProvider } from "@/modules/core/styles";
-import { decodePreset, DEFAULTS, useIframeMessageListener } from "@/modules/create/preset";
-import type { DesignSystem } from "@/modules/create/preset";
+import { DEFAULTS, decodePreset, useIframeMessageListener } from "@/modules/create/preset";
 import { ExamplesIndex } from "@/registry/__generated__/examples";
+import type { DesignSystem } from "@/modules/create/preset";
 
 const promiseCache = new Map<string, Promise<{ default: React.ComponentType }>>();
 
@@ -32,13 +32,9 @@ export const Route = createFileRoute("/preview/$slug")({
 function PreviewPage() {
 	const { slug } = Route.useParams();
 	const { preset } = Route.useSearch();
-	const [designSystem, setDesignSystem] = useState<DesignSystem>(
-		() => (preset ? decodePreset(preset) : DEFAULTS),
-	);
+	const [designSystem, setDesignSystem] = useState<DesignSystem>(() => (preset ? decodePreset(preset) : DEFAULTS));
 
-	useIframeMessageListener(
-		useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
-	);
+	useIframeMessageListener(useCallback((ds: DesignSystem) => setDesignSystem(ds), []));
 
 	const promise = getExamplesPromise(slug);
 

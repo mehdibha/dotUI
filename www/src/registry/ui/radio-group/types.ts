@@ -1,4 +1,4 @@
-import * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
+import type * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
 
 /**
  * A radio group allows a user to select a single item from a list of mutually exclusive options.

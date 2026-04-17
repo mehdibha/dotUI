@@ -4,14 +4,13 @@ import React, { useCallback } from "react";
 import { chain, mergeProps } from "react-aria";
 import { mergeRefs } from "react-aria/mergeRefs";
 import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
-import { useControlledState } from "react-stately/useControlledState";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DateFieldPrimitives from "react-aria-components/DateField";
 import * as GroupPrimitives from "react-aria-components/Group";
 import * as InputPrimitives from "react-aria-components/Input";
 import { Provider, useContextProps } from "react-aria-components/slots";
 import * as TextAreaPrimitives from "react-aria-components/TextArea";
-
+import { useControlledState } from "react-stately/useControlledState";
 import type { VariantProps } from "tailwind-variants";
 
 import { createContext } from "@/registry/lib/context";
@@ -30,7 +29,9 @@ const [InputGroupContext, useInputGroupContext] = createContext<boolean>({
 
 // MARK: InputGroup
 
-interface InputGroupProps extends React.ComponentProps<typeof GroupPrimitives.Group>, Pick<VariantProps<InputStyles>, "size"> {}
+interface InputGroupProps
+	extends React.ComponentProps<typeof GroupPrimitives.Group>,
+		Pick<VariantProps<InputStyles>, "size"> {}
 
 const InputGroup = ({ className, children, size = "md", ...props }: InputGroupProps) => {
 	const { group } = useStyles()();
@@ -166,7 +167,9 @@ function InputAddon({ className, ...props }: InputAddonProps) {
 
 // MARK: DateInput
 
-interface DateInputProps extends Omit<DateFieldPrimitives.DateInputProps, "children">, Pick<VariantProps<InputStyles>, "size"> {
+interface DateInputProps
+	extends Omit<DateFieldPrimitives.DateInputProps, "children">,
+		Pick<VariantProps<InputStyles>, "size"> {
 	children?: DateFieldPrimitives.DateInputProps["children"];
 }
 
@@ -193,7 +196,10 @@ interface DateSegmentProps extends React.ComponentProps<typeof DateFieldPrimitiv
 const DateSegment = ({ className, ...props }: DateSegmentProps) => {
 	const { dateSegment } = dateInputStyles();
 	return (
-		<DateFieldPrimitives.DateSegment className={composeRenderProps(className, (className) => dateSegment({ className }))} {...props} />
+		<DateFieldPrimitives.DateSegment
+			className={composeRenderProps(className, (className) => dateSegment({ className }))}
+			{...props}
+		/>
 	);
 };
 

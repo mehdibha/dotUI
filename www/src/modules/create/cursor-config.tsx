@@ -34,34 +34,19 @@ export function CursorConfig({ interactive, disabled, onChange }: CursorConfigPr
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-col gap-2">
 				<span className="font-medium text-fg-muted text-xs">Interactive</span>
-				<CursorSelect
-					value={interactive}
-					onChange={(v) => onChange(CURSOR_INTERACTIVE_VAR, v)}
-				/>
+				<CursorSelect value={interactive} onChange={(v) => onChange(CURSOR_INTERACTIVE_VAR, v)} />
 			</div>
 			<div className="flex flex-col gap-2">
 				<span className="font-medium text-fg-muted text-xs">Disabled</span>
-				<CursorSelect
-					value={disabled}
-					onChange={(v) => onChange(CURSOR_DISABLED_VAR, v)}
-				/>
+				<CursorSelect value={disabled} onChange={(v) => onChange(CURSOR_DISABLED_VAR, v)} />
 			</div>
 		</div>
 	);
 }
 
-function CursorSelect({
-	value,
-	onChange,
-}: {
-	value: string;
-	onChange: (v: string) => void;
-}) {
+function CursorSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
 	return (
-		<Select
-			selectedKey={value}
-			onSelectionChange={(key) => onChange(key as string)}
-		>
+		<Select selectedKey={value} onSelectionChange={(key) => onChange(key as string)}>
 			<Button size="sm" className="w-full">
 				<SelectValue />
 				<ChevronDownIcon data-icon-end="" />

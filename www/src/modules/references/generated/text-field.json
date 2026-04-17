@@ -885,7 +885,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TextFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/TextField.d.ts:TextFieldRenderProps",
 								"name": "TextFieldRenderProps"
 							}
 						]
@@ -1135,56 +1135,6 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TextFieldRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TextFieldRenderProps",
-			"name": "TextFieldRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the text field is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the value is invalid."
-				},
-				"isReadOnly": {
-					"type": "property",
-					"name": "isReadOnly",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the text field is read only."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the text field is required."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
@@ -1788,6 +1738,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -2140,15 +2099,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
 												}
 											]
 										},
@@ -16827,6 +16777,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -17179,15 +17138,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
 												}
 											]
 										},
@@ -19106,6 +19056,56 @@
 			},
 			"typeParameters": [],
 			"description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/TextField.d.ts:TextFieldRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/TextField.d.ts:TextFieldRenderProps",
+			"name": "TextFieldRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the text field is disabled."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the value is invalid."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the text field is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the text field is required."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
 		},
 		"TextFieldRenderProps": {
 			"type": "interface",

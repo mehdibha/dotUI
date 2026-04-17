@@ -1,4 +1,4 @@
-import * as TagGroupPrimitives from "react-aria-components/TagGroup";
+import type * as TagGroupPrimitives from "react-aria-components/TagGroup";
 
 /**
  * A tag group is a focusable list of labels, categories, keywords, filters, or other items,

@@ -1,4 +1,4 @@
-import * as ModalPrimitives from "react-aria-components/Modal";
+import type * as ModalPrimitives from "react-aria-components/Modal";
 
 /**
  * Missing description.

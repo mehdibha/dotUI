@@ -1,9 +1,8 @@
 "use client";
 
-import * as CalendarPrimitives from "react-aria-components/Calendar";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DateFieldPrimitives from "react-aria-components/DateField";
-
+import type * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { useStyles } from "./styles";
 

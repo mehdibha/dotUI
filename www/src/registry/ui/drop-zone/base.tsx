@@ -14,7 +14,12 @@ import { useStyles } from "./styles";
 interface DropZoneProps extends React.ComponentProps<typeof DropZonePrimitives.DropZone> {}
 const DropZone = ({ className, ...props }: DropZoneProps) => {
 	const { dropzone } = useStyles()();
-	return <DropZonePrimitives.DropZone className={composeRenderProps(className, (className) => dropzone({ className }))} {...props} />;
+	return (
+		<DropZonePrimitives.DropZone
+			className={composeRenderProps(className, (className) => dropzone({ className }))}
+			{...props}
+		/>
+	);
 };
 
 // MARK: seperator

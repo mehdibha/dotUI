@@ -1,5 +1,5 @@
-import * as FieldErrorPrimitives from "react-aria-components/FieldError";
-import * as LabelPrimitives from "react-aria-components/Label";
+import type * as FieldErrorPrimitives from "react-aria-components/FieldError";
+import type * as LabelPrimitives from "react-aria-components/Label";
 
 import type { Text } from "@/registry/ui/text";
 

@@ -57,7 +57,10 @@ interface ColorSliderOutputProps extends React.ComponentProps<typeof SliderPrimi
 const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
 	const { output } = useStyles()();
 	return (
-		<SliderPrimitives.SliderOutput className={composeRenderProps(className, (className) => output({ className }))} {...props} />
+		<SliderPrimitives.SliderOutput
+			className={composeRenderProps(className, (className) => output({ className }))}
+			{...props}
+		/>
 	);
 };
 

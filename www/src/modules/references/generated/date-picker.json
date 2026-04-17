@@ -462,17 +462,17 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
 						"name": "CalendarDate"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
 						"name": "CalendarDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
 						"name": "ZonedDateTime"
 					}
 				]
@@ -493,17 +493,17 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
 						"name": "CalendarDate"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
 						"name": "CalendarDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
 						"name": "ZonedDateTime"
 					}
 				]
@@ -659,7 +659,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DatePickerRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps",
 								"name": "DatePickerRenderProps"
 							}
 						]
@@ -898,9 +898,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DatePickerRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DatePickerRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps",
 			"name": "DatePickerRenderProps",
 			"extends": [],
 			"properties": {
@@ -979,7 +979,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.16.1_react@19.2.1/node_modules/@react-stately/datepicker/dist/types.d.ts:DatePicker.State",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/datepicker/useDatePickerState.d.ts:DatePicker.State",
 						"name": "DatePicker.State"
 					},
 					"optional": false,

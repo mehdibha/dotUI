@@ -1,5 +1,5 @@
-import * as HeaderPrimitives from "react-aria-components/Header";
-import * as MenuPrimitives from "react-aria-components/Menu";
+import type * as HeaderPrimitives from "react-aria-components/Header";
+import type * as MenuPrimitives from "react-aria-components/Menu";
 
 /**
  * Missing description.

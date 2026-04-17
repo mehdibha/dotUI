@@ -2,7 +2,7 @@
 
 import React from "react";
 import { parseDate } from "@internationalized/date";
-import * as CalendarPrimitives from "react-aria-components/Calendar";
+import type * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { CalendarIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";

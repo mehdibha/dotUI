@@ -47,7 +47,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Toast.d.ts:ToastRenderProps",
 							"name": "ToastRenderProps"
 						},
 						"typeParameters": [
@@ -87,7 +87,7 @@
 											"type": "application",
 											"base": {
 												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps",
+												"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Toast.d.ts:ToastRenderProps",
 												"name": "ToastRenderProps"
 											},
 											"typeParameters": [
@@ -168,7 +168,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps",
+									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Toast.d.ts:ToastRenderProps",
 									"name": "ToastRenderProps"
 								},
 								"typeParameters": [
@@ -211,7 +211,7 @@
 											"type": "application",
 											"base": {
 												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps",
+												"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Toast.d.ts:ToastRenderProps",
 												"name": "ToastRenderProps"
 											},
 											"typeParameters": [
@@ -268,7 +268,7 @@
 				"type": "application",
 				"base": {
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.3_react@19.2.1/node_modules/@react-stately/toast/dist/types.d.ts:QueuedToast",
+					"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toast/useToastState.d.ts:QueuedToast",
 					"name": "QueuedToast"
 				},
 				"typeParameters": [
@@ -294,158 +294,6 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.3_react@19.2.1/node_modules/@react-stately/toast/dist/types.d.ts:QueuedToast": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.3_react@19.2.1/node_modules/@react-stately/toast/dist/types.d.ts:QueuedToast",
-			"name": "QueuedToast",
-			"extends": [
-				{
-					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.3_react@19.2.1/node_modules/@react-stately/toast/dist/types.d.ts:ToastOptions",
-					"name": "ToastOptions"
-				}
-			],
-			"properties": {
-				"content": {
-					"type": "property",
-					"name": "content",
-					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
-						"name": "Toast"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The content of the toast."
-				},
-				"key": {
-					"type": "property",
-					"name": "key",
-					"value": {
-						"type": "string"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "A unique key for the toast."
-				},
-				"onClose": {
-					"type": "property",
-					"name": "onClose",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "function",
-								"parameters": [],
-								"return": {
-									"type": "identifier",
-									"name": "void"
-								},
-								"typeParameters": []
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "Handler that is called when the toast is closed, either by the user or after a timeout."
-				},
-				"timeout": {
-					"type": "property",
-					"name": "timeout",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "A timeout to automatically close the toast after, in milliseconds."
-				},
-				"timer": {
-					"type": "property",
-					"name": "timer",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.3_react@19.2.1/node_modules/@react-stately/toast/dist/types.d.ts:Timer",
-								"name": "Timer"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "A timer for the toast, if a timeout was set."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToastRenderProps",
-			"name": "ToastRenderProps",
-			"extends": [],
-			"properties": {
-				"isFocused": {
-					"type": "property",
-					"name": "isFocused",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the toast is currently focused."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the toast is keyboard focused."
-				},
-				"toast": {
-					"type": "property",
-					"name": "toast",
-					"value": {
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toast@3.1.3_react@19.2.1/node_modules/@react-stately/toast/dist/types.d.ts:QueuedToast",
-							"name": "QueuedToast"
-						},
-						"typeParameters": [
-							{
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
-								"name": "Toast"
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The toast object to display."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
@@ -552,6 +400,158 @@
 			},
 			"typeParameters": [],
 			"description": "Missing description."
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Toast.d.ts:ToastRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Toast.d.ts:ToastRenderProps",
+			"name": "ToastRenderProps",
+			"extends": [],
+			"properties": {
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the toast is currently focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the toast is keyboard focused."
+				},
+				"toast": {
+					"type": "property",
+					"name": "toast",
+					"value": {
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toast/useToastState.d.ts:QueuedToast",
+							"name": "QueuedToast"
+						},
+						"typeParameters": [
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
+								"name": "Toast"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The toast object to display."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toast/useToastState.d.ts:QueuedToast": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toast/useToastState.d.ts:QueuedToast",
+			"name": "QueuedToast",
+			"extends": [
+				{
+					"type": "link",
+					"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toast/useToastState.d.ts:ToastOptions",
+					"name": "ToastOptions"
+				}
+			],
+			"properties": {
+				"content": {
+					"type": "property",
+					"name": "content",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/toast/types.ts:Toast",
+						"name": "Toast"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The content of the toast."
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "A unique key for the toast."
+				},
+				"onClose": {
+					"type": "property",
+					"name": "onClose",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "function",
+								"parameters": [],
+								"return": {
+									"type": "identifier",
+									"name": "void"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Handler that is called when the toast is closed, either by the user or after a timeout."
+				},
+				"timeout": {
+					"type": "property",
+					"name": "timeout",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "A timeout to automatically close the toast after, in milliseconds."
+				},
+				"timer": {
+					"type": "property",
+					"name": "timer",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toast/useToastState.d.ts:Timer",
+								"name": "Timer"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "A timer for the toast, if a timeout was set."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
 		}
 	}
 }

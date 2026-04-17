@@ -843,7 +843,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps",
 								"name": "ToggleButtonRenderProps"
 							}
 						]
@@ -934,9 +934,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps",
 			"name": "ToggleButtonRenderProps",
 			"extends": [
 				{
@@ -948,7 +948,7 @@
 					"typeParameters": [
 						{
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps",
 							"name": "ButtonRenderProps"
 						},
 						{
@@ -1029,7 +1029,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.5_react@19.2.1/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toggle/useToggleState.d.ts:ToggleState",
 						"name": "ToggleState"
 					},
 					"optional": false,
@@ -1172,7 +1172,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
 					},
 					"optional": false,
 					"readonly": false,

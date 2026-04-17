@@ -1,5 +1,5 @@
-import * as ButtonPrimitives from "react-aria-components/Button";
-import * as DisclosurePrimitives from "react-aria-components/Disclosure";
+import type * as ButtonPrimitives from "react-aria-components/Button";
+import type * as DisclosurePrimitives from "react-aria-components/Disclosure";
 
 /**
  * A disclosure is a collapsible section of content. It is composed of a header

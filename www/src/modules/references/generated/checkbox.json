@@ -307,81 +307,6 @@
 			},
 			"description": "Handler that is called when a key is released."
 		},
-		"onHoverStart": {
-			"type": "((e: HoverEvent) => void)",
-			"detailedType": "((e: HoverEvent) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "e",
-						"value": {
-							"type": "link",
-							"id": "HoverEvent",
-							"name": "HoverEvent"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when a hover interaction starts."
-		},
-		"onHoverEnd": {
-			"type": "((e: HoverEvent) => void)",
-			"detailedType": "((e: HoverEvent) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "e",
-						"value": {
-							"type": "link",
-							"id": "HoverEvent",
-							"name": "HoverEvent"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when a hover interaction ends."
-		},
-		"onHoverChange": {
-			"type": "((isHovering: boolean) => void)",
-			"detailedType": "((isHovering: boolean) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "isHovering",
-						"value": {
-							"type": "link",
-							"id": "boolean",
-							"name": "boolean"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the hover state changes."
-		},
 		"aria-controls": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -439,7 +364,7 @@
 			"description": "Whether the element should receive focus on render."
 		},
 		"children": {
-			"type": "ReactNode | (values: CheckboxRenderProps) => ReactNode",
+			"type": "ReactNode | (values: CheckboxFieldRenderProps) => ReactNode",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -455,8 +380,8 @@
 								"name": "values",
 								"value": {
 									"type": "link",
-									"id": "CheckboxRenderProps",
-									"name": "CheckboxRenderProps"
+									"id": "CheckboxFieldRenderProps",
+									"name": "CheckboxFieldRenderProps"
 								},
 								"optional": false,
 								"rest": false
@@ -473,8 +398,8 @@
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
 		"className": {
-			"type": "string | (values: CheckboxRenderProps) => string",
-			"detailedType": "string | (values: CheckboxRenderProps) => string | undefined",
+			"type": "string | (values: CheckboxFieldRenderProps) => string",
+			"detailedType": "string | (values: CheckboxFieldRenderProps) => string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -489,8 +414,8 @@
 								"name": "values",
 								"value": {
 									"type": "link",
-									"id": "CheckboxRenderProps",
-									"name": "CheckboxRenderProps"
+									"id": "CheckboxFieldRenderProps",
+									"name": "CheckboxFieldRenderProps"
 								},
 								"optional": false,
 								"rest": false
@@ -504,7 +429,7 @@
 				]
 			},
 			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-Checkbox'"
+			"default": "'react-aria-CheckboxField'"
 		},
 		"defaultSelected": {
 			"type": "boolean",
@@ -655,8 +580,8 @@
 			"description": "Handler that is called when the element's selection state changes."
 		},
 		"render": {
-			"type": "DOMRenderFunction<\"label\", CheckboxRenderProps>",
-			"detailedType": "| DOMRenderFunction<'label', CheckboxRenderProps>\n| undefined",
+			"type": "DOMRenderFunction<\"div\", CheckboxFieldRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', CheckboxFieldRenderProps>\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -675,14 +600,14 @@
 								"elements": [
 									{
 										"type": "stringLiteral",
-										"value": "label"
+										"value": "div"
 									}
 								]
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxRenderProps",
-								"name": "CheckboxRenderProps"
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
+								"name": "CheckboxFieldRenderProps"
 							}
 						]
 					}
@@ -710,8 +635,8 @@
 			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
 		},
 		"style": {
-			"type": "CSSProperties | (values: CheckboxRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: CheckboxRenderProps) => CSSProperties | undefined",
+			"type": "CSSProperties | (values: CheckboxFieldRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: CheckboxFieldRenderProps) => CSSProperties | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -727,8 +652,8 @@
 								"name": "values",
 								"value": {
 									"type": "link",
-									"id": "CheckboxRenderProps",
-									"name": "CheckboxRenderProps"
+									"id": "CheckboxFieldRenderProps",
+									"name": "CheckboxFieldRenderProps"
 								},
 								"optional": false,
 								"rest": false
@@ -867,10 +792,10 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CheckboxRenderProps",
-			"name": "CheckboxRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
+			"name": "CheckboxFieldRenderProps",
 			"extends": [],
 			"properties": {
 				"isDisabled": {
@@ -882,36 +807,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the checkbox is disabled."
-				},
-				"isFocused": {
-					"type": "property",
-					"name": "isFocused",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is focused, either via a mouse or keyboard."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is keyboard focused."
-				},
-				"isHovered": {
-					"type": "property",
-					"name": "isHovered",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is currently hovered with a mouse."
 				},
 				"isIndeterminate": {
 					"type": "property",
@@ -932,16 +827,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the checkbox invalid."
-				},
-				"isPressed": {
-					"type": "property",
-					"name": "isPressed",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is currently in a pressed state."
 				},
 				"isReadOnly": {
 					"type": "property",
@@ -977,9 +862,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"CheckboxRenderProps": {
+		"CheckboxFieldRenderProps": {
 			"type": "interface",
-			"name": "CheckboxRenderProps",
+			"name": "CheckboxFieldRenderProps",
 			"properties": {
 				"isDisabled": {
 					"type": "property",
@@ -990,36 +875,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the checkbox is disabled."
-				},
-				"isFocused": {
-					"type": "property",
-					"name": "isFocused",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is focused, either via a mouse or keyboard."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is keyboard focused."
-				},
-				"isHovered": {
-					"type": "property",
-					"name": "isHovered",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is currently hovered with a mouse."
 				},
 				"isIndeterminate": {
 					"type": "property",
@@ -1040,16 +895,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the checkbox invalid."
-				},
-				"isPressed": {
-					"type": "property",
-					"name": "isPressed",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is currently in a pressed state."
 				},
 				"isReadOnly": {
 					"type": "property",
@@ -1080,45 +925,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the checkbox is selected."
-				}
-			}
-		},
-		"HoverEvent": {
-			"type": "interface",
-			"name": "HoverEvent",
-			"properties": {
-				"pointerType": {
-					"type": "property",
-					"name": "pointerType",
-					"value": {
-						"type": "identifier",
-						"name": "\"mouse\" | \"pen\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The pointer type that triggered the hover event."
-				},
-				"target": {
-					"type": "property",
-					"name": "target",
-					"value": {
-						"type": "identifier",
-						"name": "HTMLElement"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The target element of the hover event."
-				},
-				"type": {
-					"type": "property",
-					"name": "type",
-					"value": {
-						"type": "identifier",
-						"name": "\"hoverstart\" | \"hoverend\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of hover event being fired."
 				}
 			}
 		},
@@ -1215,7 +1021,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
 					},
 					"optional": false,
 					"readonly": false,

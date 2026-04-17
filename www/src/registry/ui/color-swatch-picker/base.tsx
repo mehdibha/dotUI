@@ -17,13 +17,17 @@ interface ColorSwatchPickerProps extends React.ComponentProps<typeof ColorSwatch
 const ColorSwatchPicker = ({ className, ...props }: ColorSwatchPickerProps) => {
 	const { root } = useStyles()();
 	return (
-		<ColorSwatchPickerPrimitives.ColorSwatchPicker className={composeRenderProps(className, (className) => root({ className }))} {...props} />
+		<ColorSwatchPickerPrimitives.ColorSwatchPicker
+			className={composeRenderProps(className, (className) => root({ className }))}
+			{...props}
+		/>
 	);
 };
 
 // MARK: seperator
 
-interface ColorSwatchPickerItemProps extends React.ComponentProps<typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem> {}
+interface ColorSwatchPickerItemProps
+	extends React.ComponentProps<typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem> {}
 const ColorSwatchPickerItem = ({ className, style, ...props }: ColorSwatchPickerItemProps) => {
 	const { item } = useStyles()();
 	return (

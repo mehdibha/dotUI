@@ -1,4 +1,4 @@
-import * as DisclosureGroupPrimitives from "react-aria-components/DisclosureGroup";
+import type * as DisclosureGroupPrimitives from "react-aria-components/DisclosureGroup";
 
 /**
  * A DisclosureGroup is a grouping of related disclosures, sometimes called an accordion.

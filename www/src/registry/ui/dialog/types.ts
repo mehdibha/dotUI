@@ -1,6 +1,6 @@
-import * as DialogPrimitives from "react-aria-components/Dialog";
-import * as HeadingPrimitives from "react-aria-components/Heading";
-import * as TextPrimitives from "react-aria-components/Text";
+import type * as DialogPrimitives from "react-aria-components/Dialog";
+import type * as HeadingPrimitives from "react-aria-components/Heading";
+import type * as TextPrimitives from "react-aria-components/Text";
 
 /**
  * A DialogTrigger opens a dialog when a trigger element is pressed.

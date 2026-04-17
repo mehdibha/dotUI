@@ -1,4 +1,4 @@
-import * as ColorThumbPrimitives from "react-aria-components/ColorThumb";
+import type * as ColorThumbPrimitives from "react-aria-components/ColorThumb";
 
 /**
  * A color thumb appears within a ColorArea, ColorSlider, or ColorWheel

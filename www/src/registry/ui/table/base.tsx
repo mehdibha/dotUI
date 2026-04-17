@@ -6,7 +6,6 @@ import * as CollectionPrimitives from "react-aria-components/Collection";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TablePrimitives from "react-aria-components/Table";
 
-
 import { cn } from "@/registry/lib/utils";
 import { Checkbox } from "@/registry/ui/checkbox";
 import { Loader } from "@/registry/ui/loader";

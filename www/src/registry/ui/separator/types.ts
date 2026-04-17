@@ -1,4 +1,4 @@
-import * as SeparatorPrimitives from "react-aria-components/Separator";
+import type * as SeparatorPrimitives from "react-aria-components/Separator";
 
 /**
  * Missing description.

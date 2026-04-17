@@ -6,8 +6,7 @@ export default function Demo() {
 		<Card size="sm" className="w-full max-w-sm">
 			<CardContent>
 				<p>
-					The footer has a border-t class applied, creating a visual separation between the content and footer
-					sections.
+					The footer has a border-t class applied, creating a visual separation between the content and footer sections.
 				</p>
 			</CardContent>
 			<CardFooter className="border-t">

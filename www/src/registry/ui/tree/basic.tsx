@@ -3,7 +3,6 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TreePrimitives from "react-aria-components/Tree";
 import { tv } from "tailwind-variants";
 
-
 import { Button } from "@/registry/ui/button";
 import { Checkbox } from "@/registry/ui/checkbox";
 
@@ -30,7 +29,9 @@ const Tree = <T extends object>({ className, ...props }: TreeProps<T>) => {
 interface TreeItemProps extends TreePrimitives.TreeItemProps {}
 
 const TreeItem = ({ className, ...props }: TreeItemProps) => {
-	return <TreePrimitives.TreeItem className={composeRenderProps(className, (cn) => item({ className: cn }))} {...props} />;
+	return (
+		<TreePrimitives.TreeItem className={composeRenderProps(className, (cn) => item({ className: cn }))} {...props} />
+	);
 };
 
 /* -----------------------------------------------------------------------------------------------*/

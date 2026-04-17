@@ -1,4 +1,4 @@
-import * as ToastPrimitives from "react-aria-components/Toast";
+import type * as ToastPrimitives from "react-aria-components/Toast";
 
 /**
  * Missing description.

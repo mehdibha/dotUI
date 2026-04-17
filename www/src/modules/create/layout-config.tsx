@@ -1,28 +1,19 @@
-import type { Density } from "@/modules/create/preset";
-
 import { Description, FieldContent, FieldGroup, Label } from "@/registry/ui/field";
 import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { Slider, SliderControl } from "@/registry/ui/slider";
+import type { Density } from "@/modules/create/preset";
 
 export const RADIUS_FACTOR_VAR = "--radius-factor";
 export const DEFAULT_RADIUS_FACTOR = "1";
 
-export function RadiusConfig({
-	value,
-	onChange,
-}: {
-	value: string;
-	onChange: (value: string) => void;
-}) {
+export function RadiusConfig({ value, onChange }: { value: string; onChange: (value: string) => void }) {
 	const parsed = Number.parseFloat(value || DEFAULT_RADIUS_FACTOR);
 	const numeric = Number.isFinite(parsed) ? parsed : 1;
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
 				<span className="font-medium text-fg-muted text-xs">Radius factor</span>
-				<span className="font-medium text-fg text-xs tabular-nums">
-					{numeric.toFixed(2)}x
-				</span>
+				<span className="font-medium text-fg text-xs tabular-nums">{numeric.toFixed(2)}x</span>
 			</div>
 			<Slider
 				aria-label="Radius factor"
@@ -44,19 +35,9 @@ const densityOptions: { id: Density; label: string; description: string }[] = [
 	{ id: "comfortable", label: "Comfortable", description: "Generous breathing room" },
 ];
 
-export function DensityConfig({
-	value,
-	onChange,
-}: {
-	value: Density;
-	onChange: (density: Density) => void;
-}) {
+export function DensityConfig({ value, onChange }: { value: Density; onChange: (density: Density) => void }) {
 	return (
-		<RadioGroup
-			value={value}
-			onChange={(v) => onChange(v as Density)}
-			aria-label="Density"
-		>
+		<RadioGroup value={value} onChange={(v) => onChange(v as Density)} aria-label="Density">
 			<FieldGroup>
 				{densityOptions.map((opt) => (
 					<Radio key={opt.id} value={opt.id}>

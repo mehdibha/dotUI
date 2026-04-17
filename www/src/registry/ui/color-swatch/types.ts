@@ -1,4 +1,4 @@
-import * as ColorSwatchPrimitives from "react-aria-components/ColorSwatch";
+import type * as ColorSwatchPrimitives from "react-aria-components/ColorSwatch";
 
 /**
  * A ColorSwatch displays a preview of a selected color.

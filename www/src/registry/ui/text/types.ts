@@ -1,4 +1,4 @@
-import * as TextPrimitives from "react-aria-components/Text";
+import type * as TextPrimitives from "react-aria-components/Text";
 
 /**
  * Missing description.

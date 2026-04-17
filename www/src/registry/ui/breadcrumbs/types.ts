@@ -1,5 +1,5 @@
-import * as BreadcrumbsPrimitives from "react-aria-components/Breadcrumbs";
-import * as LinkPrimitives from "react-aria-components/Link";
+import type * as BreadcrumbsPrimitives from "react-aria-components/Breadcrumbs";
+import type * as LinkPrimitives from "react-aria-components/Link";
 
 /**
  * Breadcrumbs display a hierarchy of links to the current page or resource in an application.

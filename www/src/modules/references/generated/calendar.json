@@ -176,17 +176,17 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
 						"name": "CalendarDate"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
 						"name": "CalendarDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
 						"name": "ZonedDateTime"
 					}
 				]
@@ -270,17 +270,17 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
 						"name": "CalendarDate"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
 						"name": "CalendarDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
 						"name": "ZonedDateTime"
 					}
 				]
@@ -360,17 +360,17 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
 						"name": "CalendarDate"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
 						"name": "CalendarDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
 						"name": "ZonedDateTime"
 					}
 				]
@@ -391,17 +391,17 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDate",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
 						"name": "CalendarDate"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:CalendarDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
 						"name": "CalendarDateTime"
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.0/node_modules/@internationalized/date/dist/types.d.ts:ZonedDateTime",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
 						"name": "ZonedDateTime"
 					}
 				]
@@ -491,7 +491,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CalendarRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
 								"name": "CalendarRenderProps"
 							}
 						]
@@ -624,9 +624,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CalendarRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CalendarRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
 			"name": "CalendarRenderProps",
 			"extends": [],
 			"properties": {
@@ -655,7 +655,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+calendar@3.9.3_react@19.2.1/node_modules/@react-stately/calendar/dist/types.d.ts:Calendar.State",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/calendar/types.d.ts:Calendar.State",
 						"name": "Calendar.State"
 					},
 					"optional": false,

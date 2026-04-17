@@ -931,7 +931,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps",
 								"name": "SearchFieldRenderProps"
 							}
 						]
@@ -1185,78 +1185,6 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SearchFieldRenderProps",
-			"name": "SearchFieldRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the search field is disabled."
-				},
-				"isEmpty": {
-					"type": "property",
-					"name": "isEmpty",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the search field is empty."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the search field is invalid."
-				},
-				"isReadOnly": {
-					"type": "property",
-					"name": "isReadOnly",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the search field is read only."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the search field is required."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+searchfield@3.5.19_react@19.2.1/node_modules/@react-stately/searchfield/dist/types.d.ts:SearchField.State",
-						"name": "SearchField.State"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the search field."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
@@ -1860,6 +1788,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -2212,15 +2149,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
 												}
 											]
 										},
@@ -16899,6 +16827,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -17251,15 +17188,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
 												}
 											]
 										},
@@ -19178,6 +19106,78 @@
 			},
 			"typeParameters": [],
 			"description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps",
+			"name": "SearchFieldRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the search field is disabled."
+				},
+				"isEmpty": {
+					"type": "property",
+					"name": "isEmpty",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the search field is empty."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the search field is invalid."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the search field is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the search field is required."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/searchfield/useSearchFieldState.d.ts:SearchField.State",
+						"name": "SearchField.State"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the search field."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
 		},
 		"SearchFieldRenderProps": {
 			"type": "interface",

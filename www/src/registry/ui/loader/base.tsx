@@ -3,7 +3,6 @@
 import { Loader2Icon } from "lucide-react";
 import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
 
-
 import { cn } from "@/registry/lib/utils";
 
 interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}

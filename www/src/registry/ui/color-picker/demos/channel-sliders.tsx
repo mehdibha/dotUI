@@ -3,7 +3,6 @@
 import React from "react";
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 
-
 import { Button } from "@/registry/ui/button";
 import { ColorPicker } from "@/registry/ui/color-picker";
 import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider";
@@ -22,7 +21,11 @@ export default function Demo() {
 			</Button>
 			<Popover>
 				<DialogContent>
-					<Select aria-label="Color format" defaultValue={space} onChange={(key) => setSpace(key as ColorAreaPrimitives.ColorSpace)}>
+					<Select
+						aria-label="Color format"
+						defaultValue={space}
+						onChange={(key) => setSpace(key as ColorAreaPrimitives.ColorSpace)}
+					>
 						<SelectTrigger size="sm" />
 						<SelectContent>
 							<SelectItem id="rgb">RGB</SelectItem>

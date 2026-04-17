@@ -676,7 +676,7 @@
 								"name": "renderProps",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ListBoxItemRenderProps",
+									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps",
 									"name": "ListBoxItemRenderProps"
 								},
 								"optional": false,
@@ -805,14 +805,14 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ListBoxItemRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ListBoxItemRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps",
 			"name": "ListBoxItemRenderProps",
 			"extends": [
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ItemRenderProps",
+					"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Collection.d.ts:ItemRenderProps",
 					"name": "ItemRenderProps"
 				}
 			],
@@ -1210,7 +1210,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
 					},
 					"optional": false,
 					"readonly": false,

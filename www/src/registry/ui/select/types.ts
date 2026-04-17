@@ -1,4 +1,4 @@
-import * as SelectPrimitives from "react-aria-components/Select";
+import type * as SelectPrimitives from "react-aria-components/Select";
 
 import type { ListBoxProps } from "@/registry/ui/list-box";
 import type { PopoverProps } from "@/registry/ui/popover";

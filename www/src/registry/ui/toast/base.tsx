@@ -4,7 +4,6 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TextPrimitives from "react-aria-components/Text";
 import * as ToastPrimitives from "react-aria-components/Toast";
 
-
 import { useStyles } from "./styles";
 
 // MARK: toastStyles

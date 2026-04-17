@@ -29,8 +29,7 @@ function CreatePage() {
 	// When viewing a specific component detail, preview that component.
 	// Component detail = a single, non-menu id as the top-level panel entry.
 	const firstPanelSegment = panel?.split(".")[0];
-	const activeComponent =
-		firstPanelSegment && !MENU_IDS.has(firstPanelSegment) ? firstPanelSegment : null;
+	const activeComponent = firstPanelSegment && !MENU_IDS.has(firstPanelSegment) ? firstPanelSegment : null;
 	const effectivePreview = activeComponent ?? preview;
 
 	// Bake the preset into the iframe src so the initial render has the right state.
@@ -58,7 +57,13 @@ function CreatePage() {
 	return (
 		<div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-row gap-6 p-6 pt-2">
 			<CustomizerPanel />
-			<iframe ref={iframeRef} key={effectivePreview} src={iframeSrc} title="preview" className="flex-1 rounded-xl border" />
+			<iframe
+				ref={iframeRef}
+				key={effectivePreview}
+				src={iframeSrc}
+				title="preview"
+				className="flex-1 rounded-xl border"
+			/>
 		</div>
 	);
 }

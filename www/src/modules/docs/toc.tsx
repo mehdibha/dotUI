@@ -1,5 +1,4 @@
 import React from "react";
-import { mergeRefs } from "react-aria/mergeRefs";
 import {
 	AnchorProvider,
 	TOCItem as PrimitiveTOCItem,
@@ -7,6 +6,7 @@ import {
 	type TOCItemType,
 	useActiveAnchors,
 } from "fumadocs-core/toc";
+import { mergeRefs } from "react-aria/mergeRefs";
 
 import { cn } from "@/registry/lib/utils";
 

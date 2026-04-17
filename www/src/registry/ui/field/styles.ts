@@ -8,8 +8,7 @@ const baseStyles = tv({
 	slots: {
 		fieldset: "cn-fieldset",
 		legend: "cn-legend",
-		fieldGroup:
-			"cn-field-group group/field-group @container/field-group flex w-full flex-col has-[[data-checkbox]_[data-label]]:gap-2 has-data-checkbox:gap-3",
+		fieldGroup: "cn-field-group group/field-group @container/field-group flex w-full flex-col",
 		field: "cn-label",
 		fieldContent: "cn-field flex flex-col gap-1",
 		label: "cn-label",

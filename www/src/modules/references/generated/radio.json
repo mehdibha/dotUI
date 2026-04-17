@@ -568,7 +568,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RadioRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioRenderProps",
 								"name": "RadioRenderProps"
 							}
 						]
@@ -679,9 +679,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RadioRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RadioRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioRenderProps",
 			"name": "RadioRenderProps",
 			"extends": [],
 			"properties": {
@@ -911,7 +911,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
 					},
 					"optional": false,
 					"readonly": false,

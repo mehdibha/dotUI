@@ -8,6 +8,12 @@ const colorAreaMeta = {
 	styles: {
 		default: {},
 	},
+	params: {
+		"--color-area-radius": {
+			type: "radius",
+			default: "--radius-md",
+		},
+	},
 	files: [
 		{
 			type: "registry:ui",

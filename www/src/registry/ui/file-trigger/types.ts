@@ -1,4 +1,4 @@
-import * as FileTriggerPrimitives from "react-aria-components/FileTrigger";
+import type * as FileTriggerPrimitives from "react-aria-components/FileTrigger";
 
 /**
  * A FileTrigger allows a user to access the file system with any pressable React Aria

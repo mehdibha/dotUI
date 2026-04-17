@@ -1,4 +1,4 @@
-import * as LinkPrimitives from "react-aria-components/Link";
+import type * as LinkPrimitives from "react-aria-components/Link";
 
 /**
  * A link allows a user to navigate to another page or resource within a web page or application.

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Time } from "@internationalized/date";
-import * as TimeFieldPrimitives from "react-aria-components/TimeField";
+import type * as TimeFieldPrimitives from "react-aria-components/TimeField";
 
 import { DateInput } from "@/registry/ui/input";
 import { TimeField } from "@/registry/ui/time-field";

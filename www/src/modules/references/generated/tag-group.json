@@ -149,6 +149,31 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
+		"onAction": {
+			"type": "((key: Key) => void)",
+			"detailedType": "((key: Key) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "key",
+						"value": {
+							"type": "link",
+							"id": "Key",
+							"name": "Key"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a user performs an action on an item. The exact user event depends on\nthe collection's `selectionBehavior` prop and the interaction modality."
+		},
 		"onRemove": {
 			"type": "((keys: Set<Key>) => void)",
 			"detailedType": "((keys: Set<Key>) => void) | undefined",
@@ -293,7 +318,8 @@
 				"type": "identifier",
 				"name": "SelectionBehavior"
 			},
-			"description": "How multiple selection should behave in the collection."
+			"description": "How multiple selection should behave in the collection.",
+			"default": "'toggle'"
 		},
 		"selectionMode": {
 			"type": "SelectionMode",
@@ -348,9 +374,9 @@
 			"name": "Set",
 			"extends": [],
 			"properties": {
-				"__@iterator@89": {
+				"__@iterator@142": {
 					"type": "method",
-					"name": "__@iterator@89",
+					"name": "__@iterator@142",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -373,9 +399,9 @@
 					"optional": false,
 					"description": "Iterates over values in the set."
 				},
-				"__@toStringTag@92": {
+				"__@toStringTag@348": {
 					"type": "property",
-					"name": "__@toStringTag@92",
+					"name": "__@toStringTag@348",
 					"value": {
 						"type": "string"
 					},
@@ -666,9 +692,9 @@
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@89": {
+				"__@iterator@142": {
 					"type": "method",
-					"name": "__@iterator@89",
+					"name": "__@iterator@142",
 					"value": {
 						"type": "function",
 						"parameters": [],

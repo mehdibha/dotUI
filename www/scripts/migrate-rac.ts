@@ -43,7 +43,11 @@ for (const f of readdirSync(TYPES_DIR).filter(
 	const types = new Set<string>();
 	for (const m of content.matchAll(/export\s+type\s*\{([^}]+)\}/g)) {
 		for (const raw of m[1].split(",")) {
-			const name = raw.trim().replace(/^type\s+/, "").split(/\s+as\s+/)[0].trim();
+			const name = raw
+				.trim()
+				.replace(/^type\s+/, "")
+				.split(/\s+as\s+/)[0]
+				.trim();
 			if (name) types.add(name);
 		}
 	}
@@ -51,7 +55,10 @@ for (const f of readdirSync(TYPES_DIR).filter(
 		for (const raw of m[1].split(",")) {
 			const trimmed = raw.trim();
 			if (trimmed.startsWith("type ")) {
-				const name = trimmed.slice(5).split(/\s+as\s+/)[0].trim();
+				const name = trimmed
+					.slice(5)
+					.split(/\s+as\s+/)[0]
+					.trim();
 				if (name) types.add(name);
 			}
 		}
@@ -99,9 +106,7 @@ function resolveHome(sym: string): string | null {
 	}
 
 	// Rule 3: longest prefix.
-	const prefixes = candidates
-		.filter((c) => sym.startsWith(c) && c !== sym)
-		.sort((a, b) => b.length - a.length);
+	const prefixes = candidates.filter((c) => sym.startsWith(c) && c !== sym).sort((a, b) => b.length - a.length);
 	if (prefixes.length > 0) return prefixes[0];
 
 	// Rule 4: shortest fallback.
@@ -120,9 +125,9 @@ function solveCover(symbols: string[]): Map<string, string> {
 // ---------- Parse flat rac imports in a file ----------
 
 type ImportEntry = {
-	name: string;        // the exported identifier, e.g. "Menu"
-	alias: string;       // local binding, e.g. "AriaMenu" (equals name if unaliased)
-	isType: boolean;     // true if declared via `import type` or `type Name`
+	name: string; // the exported identifier, e.g. "Menu"
+	alias: string; // local binding, e.g. "AriaMenu" (equals name if unaliased)
+	isType: boolean; // true if declared via `import type` or `type Name`
 };
 
 type ParsedImport = {
@@ -231,9 +236,7 @@ function processFile(filePath: string): boolean {
 		} else {
 			const allType = g.items.every((i) => i.isType);
 			const specifiers = g.items.map((i) => (!allType && i.isType ? `type ${i.name}` : i.name)).join(", ");
-			importLines.push(
-				`import ${allType ? "type " : ""}{ ${specifiers} } from "react-aria-components/${g.subpath}";`,
-			);
+			importLines.push(`import ${allType ? "type " : ""}{ ${specifiers} } from "react-aria-components/${g.subpath}";`);
 		}
 	}
 	if (unresolved.length > 0) {
@@ -298,7 +301,10 @@ function fixBrokenReexports(src: string): string {
 	while ((m = re.exec(src)) !== null) {
 		const isType = !!m[1];
 		const body = m[2];
-		const specifiers = body.split(",").map((s) => s.trim()).filter(Boolean);
+		const specifiers = body
+			.split(",")
+			.map((s) => s.trim())
+			.filter(Boolean);
 
 		const aliases: string[] = [];
 		const newSpecifiers: string[] = [];

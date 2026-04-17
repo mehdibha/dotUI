@@ -1,6 +1,6 @@
 {
-	"name": "ColorThumbProps",
-	"description": "A color thumb appears within a ColorArea, ColorSlider, or ColorWheel\nand allows a user to drag to adjust the color value.",
+	"name": "CheckboxControlProps",
+	"description": "The control element of a checkbox.",
 	"props": {
 		"onHoverStart": {
 			"type": "((e: HoverEvent) => void)",
@@ -78,7 +78,7 @@
 			"description": "Handler that is called when the hover state changes."
 		},
 		"children": {
-			"type": "ReactNode | (values: ColorThumbRenderProps) => ReactNode",
+			"type": "ReactNode | (values: CheckboxButtonRenderProps) => ReactNode",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -94,8 +94,8 @@
 								"name": "values",
 								"value": {
 									"type": "link",
-									"id": "ColorThumbRenderProps",
-									"name": "ColorThumbRenderProps"
+									"id": "CheckboxButtonRenderProps",
+									"name": "CheckboxButtonRenderProps"
 								},
 								"optional": false,
 								"rest": false
@@ -111,9 +111,43 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
+		"className": {
+			"type": "string | (values: CheckboxButtonRenderProps) => string",
+			"detailedType": "string | (values: CheckboxButtonRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "CheckboxButtonRenderProps",
+									"name": "CheckboxButtonRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-CheckboxButton'"
+		},
 		"render": {
-			"type": "DOMRenderFunction<\"div\", ColorThumbRenderProps>",
-			"detailedType": "| DOMRenderFunction<'div', ColorThumbRenderProps>\n| undefined",
+			"type": "DOMRenderFunction<\"label\", CheckboxButtonRenderProps>",
+			"detailedType": "| DOMRenderFunction<'label', CheckboxButtonRenderProps>\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -132,14 +166,14 @@
 								"elements": [
 									{
 										"type": "stringLiteral",
-										"value": "div"
+										"value": "label"
 									}
 								]
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorThumb.d.ts:ColorThumbRenderProps",
-								"name": "ColorThumbRenderProps"
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxButtonRenderProps",
+								"name": "CheckboxButtonRenderProps"
 							}
 						]
 					}
@@ -147,9 +181,28 @@
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
+		"slot": {
+			"type": "null | string",
+			"detailedType": "null | string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "null"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		},
 		"style": {
-			"type": "CSSProperties | (values: ColorThumbRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: ColorThumbRenderProps) => CSSProperties | undefined",
+			"type": "CSSProperties | (values: CheckboxButtonRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: CheckboxButtonRenderProps) => CSSProperties | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -165,8 +218,8 @@
 								"name": "values",
 								"value": {
 									"type": "link",
-									"id": "ColorThumbRenderProps",
-									"name": "ColorThumbRenderProps"
+									"id": "CheckboxButtonRenderProps",
+									"name": "CheckboxButtonRenderProps"
 								},
 								"optional": false,
 								"rest": false
@@ -183,47 +236,19 @@
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		}
 	},
-	"renderProps": {
-		"isDisabled": {
-			"selector": "[data-disabled]",
-			"description": "Whether the thumb is disabled."
-		},
-		"isDragging": {
-			"selector": "[data-dragging]",
-			"description": "Whether this thumb is currently being dragged."
-		},
-		"isFocused": {
-			"selector": "[data-focused]",
-			"description": "Whether the thumb is currently focused."
-		},
-		"isFocusVisible": {
-			"selector": "[data-focus-visible]",
-			"description": "Whether the thumb is keyboard focused."
-		},
-		"isHovered": {
-			"selector": "[data-hovered]",
-			"description": "Whether the thumb is currently hovered with a mouse."
-		}
-	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorThumb.d.ts:ColorThumbRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxButtonRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorThumb.d.ts:ColorThumbRenderProps",
-			"name": "ColorThumbRenderProps",
-			"extends": [],
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxButtonRenderProps",
+			"name": "CheckboxButtonRenderProps",
+			"extends": [
+				{
+					"type": "link",
+					"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxRenderProps",
+					"name": "CheckboxRenderProps"
+				}
+			],
 			"properties": {
-				"color": {
-					"type": "property",
-					"name": "color",
-					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
-						"name": "Color"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The selected color, excluding the alpha channel."
-				},
 				"isDisabled": {
 					"type": "property",
 					"name": "isDisabled",
@@ -232,17 +257,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the thumb is disabled."
-				},
-				"isDragging": {
-					"type": "property",
-					"name": "isDragging",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether this thumb is currently being dragged."
+					"description": "Whether the checkbox is disabled."
 				},
 				"isFocused": {
 					"type": "property",
@@ -252,7 +267,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the thumb is currently focused."
+					"description": "Whether the checkbox is focused, either via a mouse or keyboard."
 				},
 				"isFocusVisible": {
 					"type": "property",
@@ -262,7 +277,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the thumb is keyboard focused."
+					"description": "Whether the checkbox is keyboard focused."
 				},
 				"isHovered": {
 					"type": "property",
@@ -272,27 +287,76 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the thumb is currently hovered with a mouse."
+					"description": "Whether the checkbox is currently hovered with a mouse."
+				},
+				"isIndeterminate": {
+					"type": "property",
+					"name": "isIndeterminate",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is indeterminate."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox invalid."
+				},
+				"isPressed": {
+					"type": "property",
+					"name": "isPressed",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is currently in a pressed state."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is required."
+				},
+				"isSelected": {
+					"type": "property",
+					"name": "isSelected",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is selected."
 				}
 			},
 			"typeParameters": [],
 			"description": ""
 		},
-		"ColorThumbRenderProps": {
+		"CheckboxButtonRenderProps": {
 			"type": "interface",
-			"name": "ColorThumbRenderProps",
+			"name": "CheckboxButtonRenderProps",
 			"properties": {
-				"color": {
-					"type": "property",
-					"name": "color",
-					"value": {
-						"type": "identifier",
-						"name": "Color"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The selected color, excluding the alpha channel."
-				},
 				"isDisabled": {
 					"type": "property",
 					"name": "isDisabled",
@@ -301,17 +365,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the thumb is disabled."
-				},
-				"isDragging": {
-					"type": "property",
-					"name": "isDragging",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether this thumb is currently being dragged."
+					"description": "Whether the checkbox is disabled."
 				},
 				"isFocused": {
 					"type": "property",
@@ -321,7 +375,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the thumb is currently focused."
+					"description": "Whether the checkbox is focused, either via a mouse or keyboard."
 				},
 				"isFocusVisible": {
 					"type": "property",
@@ -331,7 +385,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the thumb is keyboard focused."
+					"description": "Whether the checkbox is keyboard focused."
 				},
 				"isHovered": {
 					"type": "property",
@@ -341,7 +395,67 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the thumb is currently hovered with a mouse."
+					"description": "Whether the checkbox is currently hovered with a mouse."
+				},
+				"isIndeterminate": {
+					"type": "property",
+					"name": "isIndeterminate",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is indeterminate."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox invalid."
+				},
+				"isPressed": {
+					"type": "property",
+					"name": "isPressed",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is currently in a pressed state."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is required."
+				},
+				"isSelected": {
+					"type": "property",
+					"name": "isSelected",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the checkbox is selected."
 				}
 			}
 		},

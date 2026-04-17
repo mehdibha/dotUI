@@ -1,4 +1,4 @@
-import * as TablePrimitives from "react-aria-components/Table";
+import type * as TablePrimitives from "react-aria-components/Table";
 
 /**
  * Missing description.

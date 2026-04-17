@@ -172,7 +172,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DateField.d.ts:DateSegmentRenderProps",
 								"name": "DateSegmentRenderProps"
 							}
 						]
@@ -252,9 +252,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DateField.d.ts:DateSegmentRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:DateSegmentRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DateField.d.ts:DateSegmentRenderProps",
 			"name": "DateSegmentRenderProps",
 			"extends": [
 				{
@@ -266,7 +266,7 @@
 					"typeParameters": [
 						{
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+datepicker@3.16.1_react@19.2.1/node_modules/@react-stately/datepicker/dist/types.d.ts:DateSegment",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/datepicker/useDateFieldState.d.ts:DateSegment",
 							"name": "DateSegment"
 						},
 						{
@@ -413,7 +413,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "SegmentType"
+						"name": "DateSegmentType"
 					},
 					"optional": false,
 					"readonly": false,
@@ -565,7 +565,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "SegmentType"
+						"name": "DateSegmentType"
 					},
 					"optional": false,
 					"readonly": false,

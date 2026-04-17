@@ -25,7 +25,9 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
 			{...props}
 		>
 			{composeRenderProps(children, (children) => (
-				<Provider values={[[TextPrimitives.TextContext, { slot: "description", id: descriptionId }]]}>{children}</Provider>
+				<Provider values={[[TextPrimitives.TextContext, { slot: "description", id: descriptionId }]]}>
+					{children}
+				</Provider>
 			))}
 		</SliderPrimitives.Slider>
 	);

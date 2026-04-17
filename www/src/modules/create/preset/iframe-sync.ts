@@ -13,15 +13,9 @@ type ParentToIframeMessage = {
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
-export function sendToIframe(
-	iframe: HTMLIFrameElement | null,
-	data: DesignSystem,
-) {
+export function sendToIframe(iframe: HTMLIFrameElement | null, data: DesignSystem) {
 	if (!iframe?.contentWindow) return;
-	iframe.contentWindow.postMessage(
-		{ type: "design-system", data } satisfies ParentToIframeMessage,
-		"*",
-	);
+	iframe.contentWindow.postMessage({ type: "design-system", data } satisfies ParentToIframeMessage, "*");
 }
 
 /* ----------------------------- Listen (iframe) ----------------------------- */
@@ -34,9 +28,7 @@ function isInIframe(): boolean {
 	}
 }
 
-export function useIframeMessageListener(
-	onMessage: (data: DesignSystem) => void,
-) {
+export function useIframeMessageListener(onMessage: (data: DesignSystem) => void) {
 	const onMessageRef = React.useRef(onMessage);
 
 	React.useEffect(() => {

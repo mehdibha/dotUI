@@ -1,5 +1,5 @@
-import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator";
-import * as TabsPrimitives from "react-aria-components/Tabs";
+import type * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator";
+import type * as TabsPrimitives from "react-aria-components/Tabs";
 
 /**
  * Tabs organize content into multiple sections and allow users to navigate between them.
@@ -24,4 +24,5 @@ export interface TabPanelProps extends React.ComponentProps<typeof TabsPrimitive
 /**
  * An animated indicator of selection state within a group of items.
  */
-export interface TabIndicatorProps extends React.ComponentProps<typeof SelectionIndicatorPrimitives.SelectionIndicator> {}
+export interface TabIndicatorProps
+	extends React.ComponentProps<typeof SelectionIndicatorPrimitives.SelectionIndicator> {}

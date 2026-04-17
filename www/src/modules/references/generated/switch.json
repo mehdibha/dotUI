@@ -40,6 +40,172 @@
 			"description": "The size of the switch.",
 			"default": "'md'"
 		},
+		"onPress": {
+			"type": "((e: PressEvent) => void)",
+			"detailedType": "((e: PressEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "PressEvent",
+							"name": "PressEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the press is released over the target."
+		},
+		"onPressStart": {
+			"type": "((e: PressEvent) => void)",
+			"detailedType": "((e: PressEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "PressEvent",
+							"name": "PressEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a press interaction starts."
+		},
+		"onPressEnd": {
+			"type": "((e: PressEvent) => void)",
+			"detailedType": "((e: PressEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "PressEvent",
+							"name": "PressEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
+		},
+		"onPressChange": {
+			"type": "((isPressed: boolean) => void)",
+			"detailedType": "((isPressed: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isPressed",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the press state changes."
+		},
+		"onPressUp": {
+			"type": "((e: PressEvent) => void)",
+			"detailedType": "((e: PressEvent) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "e",
+						"value": {
+							"type": "link",
+							"id": "PressEvent",
+							"name": "PressEvent"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
+		},
+		"onClick": {
+			"type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
+			"detailedType": "| ((e: MouseEvent<FocusableElement, MouseEvent>) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "e",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "identifier",
+										"name": "MouseEvent"
+									},
+									"typeParameters": [
+										{
+											"type": "identifier",
+											"name": "FocusableElement"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
+		},
 		"onFocus": {
 			"type": "((e: FocusEvent<Element, Element>) => void)",
 			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
@@ -278,6 +444,14 @@
 			},
 			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		},
+		"aria-errormessage": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element that provides an error message for the object."
+		},
 		"aria-label": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -376,7 +550,7 @@
 			"typeAst": {
 				"type": "boolean"
 			},
-			"description": "Whether the Switch should be selected (uncontrolled)."
+			"description": "Whether the element should be selected (uncontrolled)."
 		},
 		"excludeFromTabOrder": {
 			"type": "boolean",
@@ -459,7 +633,7 @@
 			"typeAst": {
 				"type": "boolean"
 			},
-			"description": "Whether the Switch should be selected (controlled)."
+			"description": "Whether the element should be selected (controlled)."
 		},
 		"name": {
 			"type": "string",
@@ -492,7 +666,7 @@
 				},
 				"typeParameters": []
 			},
-			"description": "Handler that is called when the Switch's selection state changes."
+			"description": "Handler that is called when the element's selection state changes."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"label\", SwitchRenderProps>",
@@ -521,7 +695,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Switch.d.ts:SwitchRenderProps",
 								"name": "SwitchRenderProps"
 							}
 						]
@@ -624,9 +798,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Switch.d.ts:SwitchRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SwitchRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Switch.d.ts:SwitchRenderProps",
 			"name": "SwitchRenderProps",
 			"extends": [],
 			"properties": {
@@ -705,7 +879,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.5_react@19.2.1/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toggle/useToggleState.d.ts:ToggleState",
 						"name": "ToggleState"
 					},
 					"optional": false,
@@ -752,6 +926,127 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The type of hover event being fired."
+				}
+			}
+		},
+		"PressEvent": {
+			"type": "interface",
+			"name": "PressEvent",
+			"properties": {
+				"altKey": {
+					"type": "property",
+					"name": "altKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the alt keyboard modifier was held during the press event."
+				},
+				"continuePropagation": {
+					"type": "property",
+					"name": "continuePropagation",
+					"value": {
+						"type": "identifier",
+						"name": "() => void"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
+				},
+				"ctrlKey": {
+					"type": "property",
+					"name": "ctrlKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the ctrl keyboard modifier was held during the press event."
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "identifier",
+						"name": "string | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
+				},
+				"metaKey": {
+					"type": "property",
+					"name": "metaKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the meta keyboard modifier was held during the press event."
+				},
+				"pointerType": {
+					"type": "property",
+					"name": "pointerType",
+					"value": {
+						"type": "identifier",
+						"name": "PointerType"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The pointer type that triggered the press event."
+				},
+				"shiftKey": {
+					"type": "property",
+					"name": "shiftKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the shift keyboard modifier was held during the press event."
+				},
+				"target": {
+					"type": "property",
+					"name": "target",
+					"value": {
+						"type": "identifier",
+						"name": "Element"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The target element of the press event."
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of press event being fired."
+				},
+				"x": {
+					"type": "property",
+					"name": "x",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "X position relative to the target."
+				},
+				"y": {
+					"type": "property",
+					"name": "y",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Y position relative to the target."
 				}
 			}
 		},

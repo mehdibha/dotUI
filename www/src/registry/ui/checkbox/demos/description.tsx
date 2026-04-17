@@ -7,9 +7,7 @@ export default function Demo() {
 			<CheckboxControl />
 			<div className="flex flex-col gap-1">
 				<Label>Accept terms and conditions</Label>
-				<Description>
-					By clicking this checkbox, you agree to the terms and conditions.
-				</Description>
+				<Description>By clicking this checkbox, you agree to the terms and conditions.</Description>
 			</div>
 		</Checkbox>
 	);

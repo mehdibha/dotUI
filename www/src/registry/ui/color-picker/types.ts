@@ -1,4 +1,4 @@
-import * as ColorPickerPrimitives from "react-aria-components/ColorPicker";
+import type * as ColorPickerPrimitives from "react-aria-components/ColorPicker";
 
 import type { ButtonProps } from "@/registry/ui/button";
 import type { DialogContentProps, DialogProps } from "@/registry/ui/dialog";

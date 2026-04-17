@@ -1,15 +1,14 @@
 "use client";
 
 import React from "react";
-import { useResizeObserver } from "react-aria/private/utils/useResizeObserver";
 import { ChevronDownIcon } from "lucide-react";
 import { mergeProps } from "react-aria";
+import { useResizeObserver } from "react-aria/private/utils/useResizeObserver";
 import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as GroupPrimitives from "react-aria-components/Group";
 import * as PopoverPrimitives from "react-aria-components/Popover";
 import { Provider } from "react-aria-components/slots";
-
 
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";

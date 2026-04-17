@@ -1,4 +1,4 @@
-import * as ModalPrimitives from "react-aria-components/Modal";
+import type * as ModalPrimitives from "react-aria-components/Modal";
 
 /**
  * A modal is an overlay element which blocks interaction with elements outside it.

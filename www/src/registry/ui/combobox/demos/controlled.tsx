@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import * as MenuPrimitives from "react-aria-components/Menu";
+import type * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/registry/ui/combobox";
 

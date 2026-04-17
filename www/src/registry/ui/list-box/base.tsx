@@ -6,10 +6,9 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as HeaderPrimitives from "react-aria-components/Header";
 import * as LabelPrimitives from "react-aria-components/Label";
 import * as ListBoxPrimitives from "react-aria-components/ListBox";
-import { Provider, useSlottedContext, type ContextValue } from "react-aria-components/slots";
+import { type ContextValue, Provider, useSlottedContext } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
 import * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
-
 import type { VariantProps } from "tailwind-variants";
 
 import { useStyles } from "./styles";
@@ -71,7 +70,14 @@ const ListBoxItem = <T extends object>({
 const ListBoxItemInner = ({ children }: { children: React.ReactNode }) => {
 	const labelProps = useSlottedContext(TextPrimitives.TextContext, "label")!;
 	return (
-		<Provider values={[[LabelPrimitives.LabelContext as React.Context<ContextValue<LabelPrimitives.LabelProps, HTMLElement>>, labelProps]]}>
+		<Provider
+			values={[
+				[
+					LabelPrimitives.LabelContext as React.Context<ContextValue<LabelPrimitives.LabelProps, HTMLElement>>,
+					labelProps,
+				],
+			]}
+		>
 			{children}
 		</Provider>
 	);

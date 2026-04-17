@@ -9,8 +9,7 @@ export default function Demo() {
 			</CardHeader>
 			<CardContent>
 				<p>
-					The header has a border-b class applied, creating a visual separation between the header and content
-					sections.
+					The header has a border-b class applied, creating a visual separation between the header and content sections.
 				</p>
 			</CardContent>
 		</Card>

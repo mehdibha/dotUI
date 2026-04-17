@@ -4,7 +4,6 @@ import { XIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TagGroupPrimitives from "react-aria-components/TagGroup";
 
-
 import { Button } from "@/registry/ui/button";
 
 import { useStyles } from "./styles";
@@ -26,7 +25,12 @@ interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
 function TagList<T extends object>(props: TagListProps<T>) {
 	const { list } = useStyles()();
-	return <TagGroupPrimitives.TagList {...props} className={composeRenderProps(props.className, (className) => list({ className }))} />;
+	return (
+		<TagGroupPrimitives.TagList
+			{...props}
+			className={composeRenderProps(props.className, (className) => list({ className }))}
+		/>
+	);
 }
 
 // MARK: seperator

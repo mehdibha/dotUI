@@ -2,7 +2,7 @@
 
 import React from "react";
 import { parseDate } from "@internationalized/date";
-import * as CalendarPrimitives from "react-aria-components/Calendar";
+import type * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { DateField } from "@/registry/ui/date-field";
 import { DateInput } from "@/registry/ui/input";

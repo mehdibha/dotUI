@@ -84,6 +84,33 @@
 			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
 			"default": "'react-aria-Table'"
 		},
+		"defaultExpandedKeys": {
+			"type": "Iterable<Key>",
+			"detailedType": "Iterable<Key> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					}
+				]
+			},
+			"description": "The initial expanded keys in the collection (uncontrolled)."
+		},
 		"defaultSelectedKeys": {
 			"type": "Iterable<Key> | \"all\"",
 			"detailedType": "Iterable<Key> | 'all' | undefined",
@@ -166,19 +193,11 @@
 			"description": "Whether the collection allows empty selection."
 		},
 		"dragAndDropHooks": {
-			"type": "DragAndDropHooks<object>",
-			"detailedType": "DragAndDropHooks<object> | undefined",
+			"type": "DragAndDropHooks",
+			"detailedType": "DragAndDropHooks | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "identifier",
-						"name": "DragAndDropHooks"
-					}
-				]
+				"type": "identifier",
+				"name": "DragAndDropHooks"
 			},
 			"description": "The drag and drop hooks returned by `useDragAndDrop` used to enable drag and drop behavior for the Table."
 		},
@@ -200,6 +219,75 @@
 			},
 			"description": "Whether pressing the escape key should clear selection in the table or not.\n\nMost experiences should not modify this option as it eliminates a keyboard user's ability to\neasily clear selection. Only use if the escape key is being handled externally or should not\ntrigger selection clearing contextually.",
 			"default": "'clearSelection'"
+		},
+		"expandedKeys": {
+			"type": "Iterable<Key>",
+			"detailedType": "Iterable<Key> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					}
+				]
+			},
+			"description": "The currently expanded keys in the collection (controlled)."
+		},
+		"onExpandedChange": {
+			"type": "((keys: Set<Key>) => any)",
+			"detailedType": "((keys: Set<Key>) => any) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "keys",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "link",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+										"name": "Set"
+									},
+									"typeParameters": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "any"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when items are expanded or collapsed."
 		},
 		"onRowAction": {
 			"type": "((key: Key) => void)",
@@ -307,7 +395,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:TableRenderProps",
 								"name": "TableRenderProps"
 							}
 						]
@@ -441,6 +529,15 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"treeColumn": {
+			"type": "Key",
+			"detailedType": "Key | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Key"
+			},
+			"description": "The id of the column that displays hierarchical data."
 		}
 	},
 	"renderProps": {
@@ -458,61 +555,319 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:TableRenderProps",
-			"name": "TableRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+			"name": "Set",
 			"extends": [],
 			"properties": {
-				"isDropTarget": {
-					"type": "property",
-					"name": "isDropTarget",
+				"__@iterator@142": {
+					"type": "method",
+					"name": "__@iterator@142",
 					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the table is currently the active drop target."
-				},
-				"isFocused": {
-					"type": "property",
-					"name": "isFocused",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the table is currently focused."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the table is currently keyboard focused."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+table@3.15.4_react@19.2.1/node_modules/@react-stately/table/dist/types.d.ts:Table.State",
-							"name": "Table.State"
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:SetIterator",
+								"name": "SetIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
 						},
-						"typeParameters": [
-							{
-								"type": "unknown"
-							}
-						]
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Iterates over values in the set."
+				},
+				"__@toStringTag@348": {
+					"type": "property",
+					"name": "__@toStringTag@348",
+					"value": {
+						"type": "string"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "State of the table."
+					"description": ""
+				},
+				"add": {
+					"type": "method",
+					"name": "add",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+								"name": "Set"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Appends a new element with a specified value to the end of the Set."
+				},
+				"clear": {
+					"type": "method",
+					"name": "clear",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"delete": {
+					"type": "method",
+					"name": "delete",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "boolean"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Removes a specified value from the Set."
+				},
+				"entries": {
+					"type": "method",
+					"name": "entries",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:SetIterator",
+								"name": "SetIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "tuple",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "Key"
+										},
+										{
+											"type": "identifier",
+											"name": "Key"
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of [v,v] pairs for every value `v` in the set."
+				},
+				"forEach": {
+					"type": "method",
+					"name": "forEach",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "callbackfn",
+								"value": {
+									"type": "function",
+									"parameters": [
+										{
+											"type": "parameter",
+											"name": "value",
+											"value": {
+												"type": "identifier",
+												"name": "Key"
+											},
+											"optional": false,
+											"rest": false
+										},
+										{
+											"type": "parameter",
+											"name": "value2",
+											"value": {
+												"type": "identifier",
+												"name": "Key"
+											},
+											"optional": false,
+											"rest": false
+										},
+										{
+											"type": "parameter",
+											"name": "set",
+											"value": {
+												"type": "application",
+												"base": {
+													"type": "link",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+													"name": "Set"
+												},
+												"typeParameters": [
+													{
+														"type": "identifier",
+														"name": "Key"
+													}
+												]
+											},
+											"optional": false,
+											"rest": false
+										}
+									],
+									"return": {
+										"type": "void"
+									},
+									"typeParameters": []
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "thisArg",
+								"value": {
+									"type": "any"
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Executes a provided function once per each value in the Set object, in insertion order."
+				},
+				"has": {
+					"type": "method",
+					"name": "has",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "identifier",
+									"name": "Key"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "boolean"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				},
+				"keys": {
+					"type": "method",
+					"name": "keys",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:SetIterator",
+								"name": "SetIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Despite its name, returns an iterable of the values in the set."
+				},
+				"size": {
+					"type": "property",
+					"name": "size",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"values": {
+					"type": "method",
+					"name": "values",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:SetIterator",
+								"name": "SetIterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "Key"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an iterable of values in the set."
 				}
 			},
 			"typeParameters": [],
@@ -524,9 +879,9 @@
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@89": {
+				"__@iterator@142": {
 					"type": "method",
-					"name": "__@iterator@89",
+					"name": "__@iterator@142",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -677,6 +1032,66 @@
 					"optional": true,
 					"readonly": false,
 					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:TableRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:TableRenderProps",
+			"name": "TableRenderProps",
+			"extends": [],
+			"properties": {
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the table is currently the active drop target."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the table is currently focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the table is currently keyboard focused."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/table/useTableState.d.ts:Table.State",
+							"name": "Table.State"
+						},
+						"typeParameters": [
+							{
+								"type": "unknown"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the table."
 				}
 			},
 			"typeParameters": [],

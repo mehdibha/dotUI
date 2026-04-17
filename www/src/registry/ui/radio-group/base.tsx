@@ -3,7 +3,6 @@
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
 
-
 import { createContext } from "@/registry/lib/context";
 import { cn } from "@/registry/lib/utils";
 import { fieldStyles } from "@/registry/ui/field";
@@ -15,7 +14,12 @@ import { useStyles } from "./styles";
 const { field } = fieldStyles();
 
 const RadioGroup = ({ className, ...props }: RadioGroupPrimitives.RadioGroupProps) => {
-	return <RadioGroupPrimitives.RadioGroup className={composeRenderProps(className, (className) => field({ className }))} {...props} />;
+	return (
+		<RadioGroupPrimitives.RadioGroup
+			className={composeRenderProps(className, (className) => field({ className }))}
+			{...props}
+		/>
+	);
 };
 
 // MARK: seperator
@@ -76,5 +80,6 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 // MARK: seperator
 
 type RadioGroupProps = RadioGroupPrimitives.RadioGroupProps;
+
 export type { RadioGroupProps, RadioIndicatorProps, RadioProps };
 export { Radio, RadioGroup, RadioIndicator };

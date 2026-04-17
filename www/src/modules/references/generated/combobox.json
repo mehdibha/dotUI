@@ -733,7 +733,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
 								"name": "ComboBoxRenderProps"
 							}
 						]
@@ -858,7 +858,7 @@
 								"name": "value",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.14.0_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue",
+									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
 									"name": "ComboBoxValidationValue"
 								},
 								"optional": false,
@@ -938,117 +938,15 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.14.0_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+combobox@3.14.0_react@19.2.1/node_modules/@react-types/combobox/src/index.d.ts:ComboBoxValidationValue",
-			"name": "ComboBoxValidationValue",
-			"extends": [],
-			"properties": {
-				"inputValue": {
-					"type": "property",
-					"name": "inputValue",
-					"value": {
-						"type": "string"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The value of the ComboBox input."
-				},
-				"selectedKey": {
-					"type": "property",
-					"name": "selectedKey",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "null"
-							},
-							{
-								"type": "number"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The selected key in the ComboBox."
-				},
-				"value": {
-					"type": "property",
-					"name": "value",
-					"value": {
-						"type": "identifier",
-						"name": "Key"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The keys of the currently selected items."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ComboBoxRenderProps",
-			"name": "ComboBoxRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is invalid."
-				},
-				"isOpen": {
-					"type": "property",
-					"name": "isOpen",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is currently open."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is required."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@89": {
+				"__@iterator@142": {
 					"type": "method",
-					"name": "__@iterator@89",
+					"name": "__@iterator@142",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -1213,6 +1111,128 @@
 			"typeParameters": [],
 			"description": ""
 		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
+			"name": "ComboBoxRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is disabled."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is invalid."
+				},
+				"isOpen": {
+					"type": "property",
+					"name": "isOpen",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is currently open."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is required."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
+			"name": "ComboBoxValidationValue",
+			"extends": [],
+			"properties": {
+				"inputValue": {
+					"type": "property",
+					"name": "inputValue",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The value of the ComboBox input."
+				},
+				"selectedKey": {
+					"type": "property",
+					"name": "selectedKey",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "number"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The selected key in the ComboBox."
+				},
+				"value": {
+					"type": "property",
+					"name": "value",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "number"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The keys of the currently selected items."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"ComboBoxRenderProps": {
 			"type": "interface",
 			"name": "ComboBoxRenderProps",
@@ -1246,6 +1266,16 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the combobox is currently open."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is read only."
 				},
 				"isRequired": {
 					"type": "property",

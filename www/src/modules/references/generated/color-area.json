@@ -1,9 +1,41 @@
 {
-	"name": "ColorPickerProps",
-	"description": "A ColorPicker synchronizes a color value between multiple React Aria color components.\nIt simplifies building color pickers with customizable layouts via composition.",
+	"name": "ColorAreaProps",
+	"description": "A color area allows users to adjust two channels of an RGB, HSL or HSB color value\nagainst a two-dimensional gradient background.",
 	"props": {
+		"aria-describedby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that describes the object."
+		},
+		"aria-details": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+		},
+		"aria-label": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
+		},
 		"children": {
-			"type": "ReactNode | (values: ColorPickerRenderProps) => ReactNode",
+			"type": "ReactNode | (values: ColorAreaRenderProps) => ReactNode",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -19,8 +51,8 @@
 								"name": "values",
 								"value": {
 									"type": "link",
-									"id": "ColorPickerRenderProps",
-									"name": "ColorPickerRenderProps"
+									"id": "ColorAreaRenderProps",
+									"name": "ColorAreaRenderProps"
 								},
 								"optional": false,
 								"rest": false
@@ -34,16 +66,50 @@
 					}
 				]
 			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state.",
-			"required": true
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
-		"defaultOpen": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
+		"className": {
+			"type": "string | (values: ColorAreaRenderProps) => string",
+			"detailedType": "string | (values: ColorAreaRenderProps) => string | undefined",
 			"typeAst": {
-				"type": "boolean"
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ColorAreaRenderProps",
+									"name": "ColorAreaRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
 			},
-			"description": "Whether the overlay is open by default (uncontrolled)."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-ColorArea'"
+		},
+		"colorSpace": {
+			"type": "ColorSpace",
+			"detailedType": "ColorSpace | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ColorSpace"
+			},
+			"description": "The color space that the color area operates in. The `xChannel` and `yChannel` must be in this color space.\nIf not provided, this defaults to the color space of the `color` or `defaultColor` value."
 		},
 		"defaultValue": {
 			"type": "Color | string",
@@ -66,13 +132,29 @@
 			},
 			"description": "The default value (uncontrolled)."
 		},
-		"isOpen": {
+		"form": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The `<form>` element to associate the ColorArea with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+		},
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+		},
+		"isDisabled": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
 			"typeAst": {
 				"type": "boolean"
 			},
-			"description": "Whether the overlay is open by default (controlled)."
+			"description": "Whether the ColorArea is disabled."
 		},
 		"onChange": {
 			"type": "((value: Color) => void)",
@@ -97,21 +179,21 @@
 				},
 				"typeParameters": []
 			},
-			"description": "Handler that is called when the value changes."
+			"description": "Handler that is called when the value changes, as the user drags."
 		},
-		"onOpenChange": {
-			"type": "((isOpen: boolean) => void)",
-			"detailedType": "((isOpen: boolean) => void) | undefined",
+		"onChangeEnd": {
+			"type": "((value: Color) => void)",
+			"detailedType": "((value: Color) => void) | undefined",
 			"typeAst": {
 				"type": "function",
 				"parameters": [
 					{
 						"type": "parameter",
-						"name": "isOpen",
+						"name": "value",
 						"value": {
 							"type": "link",
-							"id": "boolean",
-							"name": "boolean"
+							"id": "Color",
+							"name": "Color"
 						},
 						"optional": false,
 						"rest": false
@@ -122,7 +204,43 @@
 				},
 				"typeParameters": []
 			},
-			"description": "Handler that is called when the overlay's open state changes."
+			"description": "Handler that is called when the user stops dragging."
+		},
+		"render": {
+			"type": "DOMRenderFunction<\"div\", ColorAreaRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div', ColorAreaRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps",
+								"name": "ColorAreaRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
 		"slot": {
 			"type": "null | string",
@@ -142,6 +260,41 @@
 				]
 			},
 			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		},
+		"style": {
+			"type": "CSSProperties | (values: ColorAreaRenderProps) => CSSProperties",
+			"detailedType": "CSSProperties | (values: ColorAreaRenderProps) => CSSProperties | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "CSSProperties"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ColorAreaRenderProps",
+									"name": "ColorAreaRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "CSSProperties"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
 		"value": {
 			"type": "Color | string",
@@ -163,6 +316,46 @@
 				]
 			},
 			"description": "The current value (controlled)."
+		},
+		"xChannel": {
+			"type": "ColorChannel",
+			"detailedType": "ColorChannel | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ColorChannel"
+			},
+			"description": "Color channel for the horizontal axis."
+		},
+		"xName": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The name of the x channel input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+		},
+		"yChannel": {
+			"type": "ColorChannel",
+			"detailedType": "ColorChannel | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ColorChannel"
+			},
+			"description": "Color channel for the vertical axis."
+		},
+		"yName": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The name of the y channel input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+		}
+	},
+	"renderProps": {
+		"isDisabled": {
+			"selector": "[data-disabled]",
+			"description": "Whether the color area is disabled."
 		}
 	},
 	"typeLinks": {
@@ -678,6 +871,38 @@
 					"optional": true,
 					"readonly": false,
 					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps",
+			"name": "ColorAreaRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the color area is disabled."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/useColorAreaState.d.ts:ColorArea.State",
+						"name": "ColorArea.State"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the color area."
 				}
 			},
 			"typeParameters": [],
@@ -1385,20 +1610,30 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"ColorPickerRenderProps": {
+		"ColorAreaRenderProps": {
 			"type": "interface",
-			"name": "ColorPickerRenderProps",
+			"name": "ColorAreaRenderProps",
 			"properties": {
-				"color": {
+				"isDisabled": {
 					"type": "property",
-					"name": "color",
+					"name": "isDisabled",
 					"value": {
-						"type": "identifier",
-						"name": "Color"
+						"type": "boolean"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The currently selected color."
+					"description": "Whether the color area is disabled."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "identifier",
+						"name": "ColorArea.State"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the color area."
 				}
 			}
 		}

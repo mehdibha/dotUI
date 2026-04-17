@@ -336,7 +336,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RadioGroupRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioGroupRenderProps",
 								"name": "RadioGroupRenderProps"
 							}
 						]
@@ -513,9 +513,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RadioGroupRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioGroupRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RadioGroupRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioGroupRenderProps",
 			"name": "RadioGroupRenderProps",
 			"extends": [],
 			"properties": {
@@ -575,7 +575,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+radio@3.11.5_react@19.2.1/node_modules/@react-stately/radio/dist/types.d.ts:RadioGroup.State",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/radio/useRadioGroupState.d.ts:RadioGroup.State",
 						"name": "RadioGroup.State"
 					},
 					"optional": false,

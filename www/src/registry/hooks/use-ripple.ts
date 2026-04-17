@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import type React from "react";
-import * as ButtonPrimitives from "react-aria-components/Button";
+import type * as ButtonPrimitives from "react-aria-components/Button";
 
 function getUniqueID(prefix: string) {
 	return `${prefix}-${Math.floor(Math.random() * 1000000)}`;

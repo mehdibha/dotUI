@@ -118,7 +118,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CellRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:CellRenderProps",
 								"name": "CellRenderProps"
 							}
 						]
@@ -172,9 +172,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CellRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:CellRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:CellRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Table.d.ts:CellRenderProps",
 			"name": "CellRenderProps",
 			"extends": [],
 			"properties": {
@@ -199,6 +199,16 @@
 					"readonly": false,
 					"description": "The index of the column that this cell belongs to. Respects col spanning."
 				},
+				"hasChildItems": {
+					"type": "property",
+					"name": "hasChildItems",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the parent row has child rows."
+				},
 				"id": {
 					"type": "property",
 					"name": "id",
@@ -220,6 +230,26 @@
 					"readonly": false,
 					"description": "The unique id of the cell."
 				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the parent row is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+				},
+				"isExpanded": {
+					"type": "property",
+					"name": "isExpanded",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the parent row is expanded."
+				},
 				"isFocused": {
 					"type": "property",
 					"name": "isFocused",
@@ -269,6 +299,26 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the parent row is currently selected."
+				},
+				"isTreeColumn": {
+					"type": "property",
+					"name": "isTreeColumn",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the column displays hierarchical data."
+				},
+				"level": {
+					"type": "property",
+					"name": "level",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "What level the parent row has within the table."
 				}
 			},
 			"typeParameters": [],
@@ -289,6 +339,16 @@
 					"readonly": false,
 					"description": "The index of the column that this cell belongs to. Respects col spanning."
 				},
+				"hasChildItems": {
+					"type": "property",
+					"name": "hasChildItems",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the parent row has child rows."
+				},
 				"id": {
 					"type": "property",
 					"name": "id",
@@ -299,6 +359,26 @@
 					"optional": true,
 					"readonly": false,
 					"description": "The unique id of the cell."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the parent row is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+				},
+				"isExpanded": {
+					"type": "property",
+					"name": "isExpanded",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the parent row is expanded."
 				},
 				"isFocused": {
 					"type": "property",
@@ -349,6 +429,26 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the parent row is currently selected."
+				},
+				"isTreeColumn": {
+					"type": "property",
+					"name": "isTreeColumn",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the column displays hierarchical data."
+				},
+				"level": {
+					"type": "property",
+					"name": "level",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "What level the parent row has within the table."
 				}
 			}
 		}

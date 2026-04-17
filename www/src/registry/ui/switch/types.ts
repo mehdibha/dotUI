@@ -1,4 +1,4 @@
-import * as SwitchPrimitives from "react-aria-components/Switch";
+import type * as SwitchPrimitives from "react-aria-components/Switch";
 
 /**
  * A switch allows a user to turn a setting on or off.

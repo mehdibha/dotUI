@@ -1,11 +1,11 @@
 {
-  "version": "0.0.1",
-  "configurations": [
-    {
-      "name": "dotui-www",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["dev"],
-      "port": 3000
-    }
-  ]
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "dotui-www",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["dev"],
+			"port": 3000
+		}
+	]
 }

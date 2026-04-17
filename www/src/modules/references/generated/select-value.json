@@ -826,7 +826,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectValueRenderProps",
 							"name": "SelectValueRenderProps"
 						},
 						"typeParameters": [
@@ -869,7 +869,7 @@
 											"type": "application",
 											"base": {
 												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+												"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectValueRenderProps",
 												"name": "SelectValueRenderProps"
 											},
 											"typeParameters": [
@@ -1004,7 +1004,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectValueRenderProps",
 									"name": "SelectValueRenderProps"
 								},
 								"typeParameters": [
@@ -1050,7 +1050,7 @@
 											"type": "application",
 											"base": {
 												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
+												"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectValueRenderProps",
 												"name": "SelectValueRenderProps"
 											},
 											"typeParameters": [
@@ -1113,16 +1113,134 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:SelectState": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectValueRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectValueRenderProps",
+			"name": "SelectValueRenderProps",
+			"extends": [],
+			"properties": {
+				"isPlaceholder": {
+					"type": "property",
+					"name": "isPlaceholder",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the value is a placeholder."
+				},
+				"selectedItem": {
+					"type": "property",
+					"name": "selectedItem",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": {
+									"type": "object"
+								},
+								"default": null
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The object value of the first selected item."
+				},
+				"selectedItems": {
+					"type": "property",
+					"name": "selectedItems",
+					"value": {
+						"type": "array",
+						"elementType": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "null"
+								},
+								{
+									"type": "typeParameter",
+									"name": "T",
+									"constraint": {
+										"type": "identifier",
+										"name": "object"
+									},
+									"default": null
+								}
+							]
+						}
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The object values of the currently selected items."
+				},
+				"selectedText": {
+					"type": "property",
+					"name": "selectedText",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The textValue of the currently selected items."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/select/useSelectState.d.ts:Select.State",
+							"name": "Select.State"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": {
+									"type": "object"
+								},
+								"default": null
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "multiple"
+									},
+									{
+										"type": "stringLiteral",
+										"value": "single"
+									}
+								]
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The state of the select."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/select/useSelectState.d.ts:SelectState": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/select/useSelectState.d.ts:Select.State",
 			"name": "Select.State",
 			"extends": [
 				{
 					"type": "application",
 					"base": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+list@3.13.4_react@19.2.1/node_modules/@react-stately/list/dist/types.d.ts:ListState",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/list/useListState.d.ts:ListState",
 						"name": "ListState"
 					},
 					"typeParameters": [
@@ -1136,12 +1254,12 @@
 				},
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+overlays@3.6.23_react@19.2.1/node_modules/@react-stately/overlays/dist/types.d.ts:OverlayTriggerState",
+					"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/overlays/useOverlayTriggerState.d.ts:OverlayTriggerState",
 					"name": "OverlayTriggerState"
 				},
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+form@3.2.4_react@19.2.1/node_modules/@react-stately/form/dist/types.d.ts:FormValidationState",
+					"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/form/useFormValidationState.d.ts:FormValidationState",
 					"name": "FormValidationState"
 				}
 			],
@@ -1167,7 +1285,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Collection",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/collections.d.ts:Collection",
 							"name": "Collection"
 						},
 						"typeParameters": [
@@ -1175,7 +1293,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/collections.d.ts:Node",
 									"name": "Node"
 								},
 								"typeParameters": [
@@ -1280,7 +1398,7 @@
 					"name": "displayValidation",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/inputs.d.ts:ValidationResult",
 						"name": "ValidationResult"
 					},
 					"optional": false,
@@ -1395,7 +1513,7 @@
 					"name": "realtimeValidation",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/inputs.d.ts:ValidationResult",
 						"name": "ValidationResult"
 					},
 					"optional": false,
@@ -1429,7 +1547,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/collections.d.ts:Node",
 									"name": "Node"
 								},
 								"typeParameters": [
@@ -1454,7 +1572,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/collections.d.ts:Node",
 								"name": "Node"
 							},
 							"typeParameters": [
@@ -1495,7 +1613,7 @@
 					"name": "selectionManager",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+selection@3.20.9_react@19.2.1/node_modules/@react-stately/selection/dist/types.d.ts:SelectionManager",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/selection/SelectionManager.d.ts:SelectionManager",
 						"name": "SelectionManager"
 					},
 					"optional": false,
@@ -1688,7 +1806,7 @@
 								"name": "result",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.33.1_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/inputs.d.ts:ValidationResult",
 									"name": "ValidationResult"
 								},
 								"optional": false,
@@ -1730,124 +1848,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The current select value."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:SelectValueRenderProps",
-			"name": "SelectValueRenderProps",
-			"extends": [],
-			"properties": {
-				"isPlaceholder": {
-					"type": "property",
-					"name": "isPlaceholder",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the value is a placeholder."
-				},
-				"selectedItem": {
-					"type": "property",
-					"name": "selectedItem",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "null"
-							},
-							{
-								"type": "typeParameter",
-								"name": "T",
-								"constraint": {
-									"type": "object"
-								},
-								"default": null
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The object value of the first selected item."
-				},
-				"selectedItems": {
-					"type": "property",
-					"name": "selectedItems",
-					"value": {
-						"type": "array",
-						"elementType": {
-							"type": "union",
-							"elements": [
-								{
-									"type": "null"
-								},
-								{
-									"type": "typeParameter",
-									"name": "T",
-									"constraint": {
-										"type": "identifier",
-										"name": "object"
-									},
-									"default": null
-								}
-							]
-						}
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The object values of the currently selected items."
-				},
-				"selectedText": {
-					"type": "property",
-					"name": "selectedText",
-					"value": {
-						"type": "string"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The textValue of the currently selected items."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+select@3.9.2_react@19.2.1/node_modules/@react-stately/select/dist/types.d.ts:Select.State",
-							"name": "Select.State"
-						},
-						"typeParameters": [
-							{
-								"type": "typeParameter",
-								"name": "T",
-								"constraint": {
-									"type": "object"
-								},
-								"default": null
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "multiple"
-									},
-									{
-										"type": "stringLiteral",
-										"value": "single"
-									}
-								]
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The state of the select."
 				}
 			},
 			"typeParameters": [],

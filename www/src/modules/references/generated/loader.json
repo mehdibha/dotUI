@@ -46,24 +46,6 @@
 			},
 			"description": "Whether presentation is indeterminate when progress isn't known."
 		},
-		"formatOptions": {
-			"type": "NumberFormatOptions",
-			"detailedType": "NumberFormatOptions | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "NumberFormatOptions"
-			},
-			"description": "The display format of the value label.",
-			"default": "{style: 'percent'}"
-		},
-		"valueLabel": {
-			"type": "ReactNode",
-			"typeAst": {
-				"type": "identifier",
-				"name": "ReactNode"
-			},
-			"description": "The content to display as the value's label (e.g. 1 of 4)."
-		},
 		"value": {
 			"type": "number",
 			"detailedType": "number | undefined",
@@ -90,6 +72,24 @@
 			},
 			"description": "The largest value allowed for the input.",
 			"default": "100"
+		},
+		"formatOptions": {
+			"type": "NumberFormatOptions",
+			"detailedType": "NumberFormatOptions | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "NumberFormatOptions"
+			},
+			"description": "The display format of the value label.",
+			"default": "{style: 'percent'}"
+		},
+		"valueLabel": {
+			"type": "ReactNode",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ReactNode"
+			},
+			"description": "The content to display as the value's label (e.g. 1 of 4)."
 		},
 		"aria-describedby": {
 			"type": "string",
@@ -226,7 +226,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ProgressBar.d.ts:ProgressBarRenderProps",
 								"name": "ProgressBarRenderProps"
 							}
 						]
@@ -291,9 +291,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ProgressBar.d.ts:ProgressBarRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ProgressBarRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ProgressBar.d.ts:ProgressBarRenderProps",
 			"name": "ProgressBarRenderProps",
 			"extends": [],
 			"properties": {

@@ -1,11 +1,11 @@
 "use client";
 
 import { createFormHook, createFormHookContexts, useStore } from "@tanstack/react-form";
-import * as CalendarPrimitives from "react-aria-components/Calendar";
-import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as MenuPrimitives from "react-aria-components/Menu";
-import * as TimeFieldPrimitives from "react-aria-components/TimeField";
+import type * as CalendarPrimitives from "react-aria-components/Calendar";
+import type * as ColorAreaPrimitives from "react-aria-components/ColorArea";
+import type * as MenuPrimitives from "react-aria-components/Menu";
+import type * as TimeFieldPrimitives from "react-aria-components/TimeField";
 
 import { Button } from "@/registry/ui/button";
 import { Checkbox } from "@/registry/ui/checkbox";

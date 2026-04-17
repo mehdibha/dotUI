@@ -1,7 +1,7 @@
-import * as DateFieldPrimitives from "react-aria-components/DateField";
-import * as GroupPrimitives from "react-aria-components/Group";
-import * as InputPrimitives from "react-aria-components/Input";
-import * as TextAreaPrimitives from "react-aria-components/TextArea";
+import type * as DateFieldPrimitives from "react-aria-components/DateField";
+import type * as GroupPrimitives from "react-aria-components/Group";
+import type * as InputPrimitives from "react-aria-components/Input";
+import type * as TextAreaPrimitives from "react-aria-components/TextArea";
 
 /**
  * Missing description.

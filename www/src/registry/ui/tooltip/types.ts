@@ -1,4 +1,4 @@
-import * as TooltipPrimitives from "react-aria-components/Tooltip";
+import type * as TooltipPrimitives from "react-aria-components/Tooltip";
 
 /**
  * TooltipTrigger wraps around a trigger element and a Tooltip. It handles opening and closing

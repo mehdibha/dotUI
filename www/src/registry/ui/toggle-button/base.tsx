@@ -23,17 +23,13 @@ const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 
 // MARK: seperator
 
-interface ToggleButtonProps extends React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>, ToggleButtonVariants {}
+interface ToggleButtonProps
+	extends React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
+		ToggleButtonVariants {}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
 	const styles = useStyles();
-	const {
-		variant = "default",
-		size = "md",
-		className,
-		children,
-		...props
-	} = useContextProps(localProps);
+	const { variant = "default", size = "md", className, children, ...props } = useContextProps(localProps);
 
 	return (
 		<ToggleButtonPrimitives.ToggleButton

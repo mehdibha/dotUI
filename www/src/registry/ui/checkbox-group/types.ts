@@ -1,4 +1,4 @@
-import * as CheckboxGroupPrimitives from "react-aria-components/CheckboxGroup";
+import type * as CheckboxGroupPrimitives from "react-aria-components/CheckboxGroup";
 
 /**
  * A checkbox group allows a user to select multiple items from a list of options.

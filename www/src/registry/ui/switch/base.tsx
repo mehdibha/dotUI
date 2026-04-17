@@ -3,7 +3,6 @@
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SwitchPrimitives from "react-aria-components/Switch";
 import type * as React from "react";
-
 import type { VariantProps } from "tailwind-variants";
 
 import { createContext } from "@/registry/lib/context";
@@ -28,7 +27,10 @@ interface SwitchProps extends React.ComponentProps<typeof SwitchPrimitives.Switc
 const Switch = ({ children, variant, size, className, ...props }: SwitchProps) => {
 	const { root } = useStyles()();
 	return (
-		<SwitchPrimitives.Switch className={composeRenderProps(className, (className) => root({ variant, size, className }))} {...props}>
+		<SwitchPrimitives.Switch
+			className={composeRenderProps(className, (className) => root({ variant, size, className }))}
+			{...props}
+		>
 			{composeRenderProps(children, (children, renderProps) => {
 				return (
 					<InternalSwitchProvider value={{ ...renderProps, variant, size }}>

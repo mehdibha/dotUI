@@ -3,8 +3,7 @@
 import React from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ListBoxPrimitives from "react-aria-components/ListBox";
-import * as MenuPrimitives from "react-aria-components/Menu";
-
+import type * as MenuPrimitives from "react-aria-components/Menu";
 
 // --------------------------------------------------------------------------
 // Global CSS (scrollbar hiding) — injected once per document.
@@ -27,8 +26,7 @@ function useInjectedStyles() {
 	}, []);
 }
 
-const FADE_MASK =
-	"linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%)";
+const FADE_MASK = "linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%)";
 
 // --------------------------------------------------------------------------
 // Context (so WheelPickerItem picks up itemHeight automatically)
@@ -92,9 +90,7 @@ function WheelPicker<T extends object>({
 	const suppressScrollSyncUntil = React.useRef(0);
 
 	const isControlled = valueProp !== undefined;
-	const [uncontrolled, setUncontrolled] = React.useState<MenuPrimitives.Key | undefined>(
-		defaultValue,
-	);
+	const [uncontrolled, setUncontrolled] = React.useState<MenuPrimitives.Key | undefined>(defaultValue);
 	const value = isControlled ? valueProp : uncontrolled;
 
 	// ----- Ordered key list (for scroll-to-index math) ---------------------
@@ -276,12 +272,7 @@ function WheelPicker<T extends object>({
 
 interface WheelPickerItemProps<T> extends ListBoxPrimitives.ListBoxItemProps<T> {}
 
-function WheelPickerItem<T extends object>({
-	className,
-	style,
-	children,
-	...props
-}: WheelPickerItemProps<T>) {
+function WheelPickerItem<T extends object>({ className, style, children, ...props }: WheelPickerItemProps<T>) {
 	const { itemHeight } = useWheelPickerContext();
 
 	return (
@@ -289,7 +280,7 @@ function WheelPickerItem<T extends object>({
 			{...props}
 			className={composeRenderProps(className, (cn) =>
 				[
-					"flex cursor-pointer items-center justify-center font-medium text-sm tabular-nums outline-hidden select-none",
+					"flex cursor-pointer select-none items-center justify-center font-medium text-sm tabular-nums outline-hidden",
 					"text-fg-muted transition-colors data-[selected]:text-fg",
 					cn,
 				]

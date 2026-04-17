@@ -5,7 +5,6 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as HeaderPrimitives from "react-aria-components/Header";
 import * as MenuPrimitives from "react-aria-components/Menu";
 import type * as React from "react";
-
 import type { VariantProps } from "tailwind-variants";
 
 import { cn } from "@/registry/lib/utils";
@@ -28,7 +27,9 @@ const Menu = (props: MenuProps) => {
 interface MenuContentProps<T> extends MenuPrimitives.MenuProps<T> {}
 const MenuContent = <T extends object>({ className, ...props }: MenuContentProps<T>) => {
 	const { root } = useStyles()();
-	return <MenuPrimitives.Menu className={composeRenderProps(className, (className) => root({ className }))} {...props} />;
+	return (
+		<MenuPrimitives.Menu className={composeRenderProps(className, (className) => root({ className }))} {...props} />
+	);
 };
 
 // MARK: seperator

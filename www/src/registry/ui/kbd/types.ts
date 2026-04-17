@@ -1,4 +1,4 @@
-import * as KeyboardPrimitives from "react-aria-components/Keyboard";
+import type * as KeyboardPrimitives from "react-aria-components/Keyboard";
 
 /**
  * Missing description.

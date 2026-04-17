@@ -1,4 +1,4 @@
-import * as GroupPrimitives from "react-aria-components/Group";
+import type * as GroupPrimitives from "react-aria-components/Group";
 
 /**
  * A group represents a set of related UI controls, and supports interactive states for styling.

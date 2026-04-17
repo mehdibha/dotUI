@@ -3,7 +3,6 @@
 import React from "react";
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 
-
 import { ColorField } from "@/registry/ui/color-field";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";

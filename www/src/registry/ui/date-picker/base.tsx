@@ -1,10 +1,9 @@
 "use client";
 
-import * as CalendarPrimitives from "react-aria-components/Calendar";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DatePickerPrimitives from "react-aria-components/DatePicker";
 import * as DateRangePickerPrimitives from "react-aria-components/DateRangePicker";
-
+import type * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { useStyles } from "./styles";
 
@@ -24,7 +23,8 @@ const DatePicker = <T extends CalendarPrimitives.DateValue>({ className, ...prop
 
 // MARK: DateRangePicker
 
-interface DateRangePickerProps<T extends CalendarPrimitives.DateValue> extends DateRangePickerPrimitives.DateRangePickerProps<T> {}
+interface DateRangePickerProps<T extends CalendarPrimitives.DateValue>
+	extends DateRangePickerPrimitives.DateRangePickerProps<T> {}
 
 const DateRangePicker = <T extends CalendarPrimitives.DateValue>({ className, ...props }: DateRangePickerProps<T>) => {
 	const datePickerStyles = useStyles();

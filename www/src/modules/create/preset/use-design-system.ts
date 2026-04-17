@@ -20,8 +20,7 @@ export function useDesignSystem() {
 
 	const setDesignSystem = useCallback(
 		(updater: DesignSystem | ((prev: DesignSystem) => DesignSystem)) => {
-			const next =
-				typeof updater === "function" ? updater(designSystem) : updater;
+			const next = typeof updater === "function" ? updater(designSystem) : updater;
 			const encoded = encodePreset(next);
 			navigate({
 				search: (prev) => ({ ...prev, preset: encoded }),

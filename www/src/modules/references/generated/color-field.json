@@ -292,7 +292,7 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
 						"name": "Color"
 					}
 				]
@@ -421,7 +421,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+											"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
 											"name": "Color"
 										}
 									]
@@ -682,7 +682,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorField.d.ts:ColorFieldRenderProps",
 								"name": "ColorFieldRenderProps"
 							}
 						]
@@ -768,7 +768,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+											"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
 											"name": "Color"
 										}
 									]
@@ -843,7 +843,7 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
 						"name": "Color"
 					}
 				]
@@ -874,863 +874,6 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-			"name": "Color",
-			"extends": [],
-			"properties": {
-				"clone": {
-					"type": "method",
-					"name": "clone",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-							"name": "Color"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns a duplicate of the color value."
-				},
-				"formatChannelValue": {
-					"type": "method",
-					"name": "formatChannelValue",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "channel",
-								"value": {
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								"optional": false,
-								"rest": false
-							},
-							{
-								"type": "parameter",
-								"name": "locale",
-								"value": {
-									"type": "string"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Formats the numeric value for a given channel for display according to the provided locale."
-				},
-				"getChannelFormatOptions": {
-					"type": "method",
-					"name": "getChannelFormatOptions",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "channel",
-								"value": {
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-							"name": "NumberFormatOptions"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns the number formatting options for the given channel."
-				},
-				"getChannelName": {
-					"type": "method",
-					"name": "getChannelName",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "channel",
-								"value": {
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								"optional": false,
-								"rest": false
-							},
-							{
-								"type": "parameter",
-								"name": "locale",
-								"value": {
-									"type": "string"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns a localized color channel name for a given channel and locale,\nfor use in visual or accessibility labels."
-				},
-				"getChannelRange": {
-					"type": "method",
-					"name": "getChannelRange",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "channel",
-								"value": {
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
-							"name": "ColorChannelRange"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns the minimum, maximum, and step values for a given channel."
-				},
-				"getChannelValue": {
-					"type": "method",
-					"name": "getChannelValue",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "channel",
-								"value": {
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "number"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns the numeric value for a given channel.\nThrows an error if the channel is unsupported in the current color format."
-				},
-				"getColorChannels": {
-					"type": "method",
-					"name": "getColorChannels",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "tuple",
-							"elements": [
-								{
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								{
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								{
-									"type": "identifier",
-									"name": "ColorChannel"
-								}
-							]
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns an array of the color channels within the current color space space."
-				},
-				"getColorName": {
-					"type": "method",
-					"name": "getColorName",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "locale",
-								"value": {
-									"type": "string"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns a localized name for the color, for use in visual or accessibility labels."
-				},
-				"getColorSpace": {
-					"type": "method",
-					"name": "getColorSpace",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "identifier",
-							"name": "ColorSpace"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns the color space, 'rgb', 'hsb' or 'hsl', for the current color."
-				},
-				"getColorSpaceAxes": {
-					"type": "method",
-					"name": "getColorSpaceAxes",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "xyChannels",
-								"value": {
-									"type": "objectLiteral",
-									"properties": {
-										"xChannel": {
-											"type": "property",
-											"name": "xChannel",
-											"value": {
-												"type": "union",
-												"elements": [
-													{
-														"type": "undefined"
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "hue"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "saturation"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "brightness"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "lightness"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "red"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "green"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "blue"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "alpha"
-															}
-														]
-													}
-												]
-											},
-											"optional": true,
-											"readonly": false,
-											"description": ""
-										},
-										"yChannel": {
-											"type": "property",
-											"name": "yChannel",
-											"value": {
-												"type": "union",
-												"elements": [
-													{
-														"type": "undefined"
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "hue"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "saturation"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "brightness"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "lightness"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "red"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "green"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "blue"
-															}
-														]
-													},
-													{
-														"type": "union",
-														"elements": [
-															{
-																"type": "stringLiteral",
-																"value": "alpha"
-															}
-														]
-													}
-												]
-											},
-											"optional": true,
-											"readonly": false,
-											"description": ""
-										}
-									}
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ColorAxes"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns the color space axes, xChannel, yChannel, zChannel."
-				},
-				"getHueName": {
-					"type": "method",
-					"name": "getHueName",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "locale",
-								"value": {
-									"type": "string"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Returns a localized name for the hue, for use in visual or accessibility labels."
-				},
-				"toFormat": {
-					"type": "method",
-					"name": "toFormat",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "format",
-								"value": {
-									"type": "identifier",
-									"name": "ColorFormat"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-							"name": "Color"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Converts the color to the given color format, and returns a new Color object."
-				},
-				"toHexInt": {
-					"type": "method",
-					"name": "toHexInt",
-					"value": {
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "number"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Converts the color to hex, and returns an integer representation."
-				},
-				"toString": {
-					"type": "method",
-					"name": "toString",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "format",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "undefined"
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hex"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "rgb"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hsl"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hsb"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hexa"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "rgba"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hsla"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "hsba"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "css"
-												}
-											]
-										}
-									]
-								},
-								"optional": true,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Converts the color to a string in the given format."
-				},
-				"withChannelValue": {
-					"type": "method",
-					"name": "withChannelValue",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "channel",
-								"value": {
-									"type": "identifier",
-									"name": "ColorChannel"
-								},
-								"optional": false,
-								"rest": false
-							},
-							{
-								"type": "parameter",
-								"name": "value",
-								"value": {
-									"type": "number"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:Color",
-							"name": "Color"
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Sets the numeric value for a given channel, and returns a new Color object.\nThrows an error if the channel is unsupported in the current color format."
-				}
-			},
-			"typeParameters": [],
-			"description": "Represents a color value."
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+color@3.1.4_react@19.2.1/node_modules/@react-types/color/src/index.d.ts:ColorChannelRange",
-			"name": "ColorChannelRange",
-			"extends": [],
-			"properties": {
-				"maxValue": {
-					"type": "property",
-					"name": "maxValue",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The maximum value of the color channel."
-				},
-				"minValue": {
-					"type": "property",
-					"name": "minValue",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The minimum value of the color channel."
-				},
-				"pageSize": {
-					"type": "property",
-					"name": "pageSize",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The page step value of the color channel, used when incrementing and decrementing."
-				},
-				"step": {
-					"type": "property",
-					"name": "step",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The step value of the color channel, used when incrementing and decrementing."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ColorFieldRenderProps",
-			"name": "ColorFieldRenderProps",
-			"extends": [],
-			"properties": {
-				"channel": {
-					"type": "property",
-					"name": "channel",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "hex"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "hue"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "saturation"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "brightness"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "lightness"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "red"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "green"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "blue"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "alpha"
-									}
-								]
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The color channel that this field edits, or \"hex\" if no `channel` prop is set."
-				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the color field is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the color field is invalid."
-				},
-				"isReadOnly": {
-					"type": "property",
-					"name": "isReadOnly",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the color field is read only."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the color field is required."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+color@3.9.5_react@19.2.1/node_modules/@react-stately/color/dist/types.d.ts:ColorField.State",
-						"name": "ColorField.State"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the color field."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
@@ -2334,6 +1477,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -2686,15 +1838,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
 												}
 											]
 										},
@@ -17373,6 +16516,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -17725,15 +16877,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
 												}
 											]
 										},
@@ -20165,6 +19308,863 @@
 					"optional": true,
 					"readonly": false,
 					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorField.d.ts:ColorFieldRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ColorField.d.ts:ColorFieldRenderProps",
+			"name": "ColorFieldRenderProps",
+			"extends": [],
+			"properties": {
+				"channel": {
+					"type": "property",
+					"name": "channel",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "hex"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "hue"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "saturation"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "brightness"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "lightness"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "red"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "green"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "blue"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "alpha"
+									}
+								]
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The color channel that this field edits, or \"hex\" if no `channel` prop is set."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the color field is disabled."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the color field is invalid."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the color field is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the color field is required."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/useColorFieldState.d.ts:ColorField.State",
+						"name": "ColorField.State"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the color field."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+			"name": "Color",
+			"extends": [],
+			"properties": {
+				"clone": {
+					"type": "method",
+					"name": "clone",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+							"name": "Color"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns a duplicate of the color value."
+				},
+				"formatChannelValue": {
+					"type": "method",
+					"name": "formatChannelValue",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "channel",
+								"value": {
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "locale",
+								"value": {
+									"type": "string"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Formats the numeric value for a given channel for display according to the provided locale."
+				},
+				"getChannelFormatOptions": {
+					"type": "method",
+					"name": "getChannelFormatOptions",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "channel",
+								"value": {
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+							"name": "NumberFormatOptions"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns the number formatting options for the given channel."
+				},
+				"getChannelName": {
+					"type": "method",
+					"name": "getChannelName",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "channel",
+								"value": {
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "locale",
+								"value": {
+									"type": "string"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns a localized color channel name for a given channel and locale,\nfor use in visual or accessibility labels."
+				},
+				"getChannelRange": {
+					"type": "method",
+					"name": "getChannelRange",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "channel",
+								"value": {
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
+							"name": "ColorChannelRange"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns the minimum, maximum, and step values for a given channel."
+				},
+				"getChannelValue": {
+					"type": "method",
+					"name": "getChannelValue",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "channel",
+								"value": {
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "number"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns the numeric value for a given channel.\nThrows an error if the channel is unsupported in the current color format."
+				},
+				"getColorChannels": {
+					"type": "method",
+					"name": "getColorChannels",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "tuple",
+							"elements": [
+								{
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								{
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								{
+									"type": "identifier",
+									"name": "ColorChannel"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns an array of the color channels within the current color space space."
+				},
+				"getColorName": {
+					"type": "method",
+					"name": "getColorName",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "locale",
+								"value": {
+									"type": "string"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns a localized name for the color, for use in visual or accessibility labels."
+				},
+				"getColorSpace": {
+					"type": "method",
+					"name": "getColorSpace",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "identifier",
+							"name": "ColorSpace"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns the color space, 'rgb', 'hsb' or 'hsl', for the current color."
+				},
+				"getColorSpaceAxes": {
+					"type": "method",
+					"name": "getColorSpaceAxes",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "xyChannels",
+								"value": {
+									"type": "objectLiteral",
+									"properties": {
+										"xChannel": {
+											"type": "property",
+											"name": "xChannel",
+											"value": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "undefined"
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "hue"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "saturation"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "brightness"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "lightness"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "red"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "green"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "blue"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "alpha"
+															}
+														]
+													}
+												]
+											},
+											"optional": true,
+											"readonly": false,
+											"description": ""
+										},
+										"yChannel": {
+											"type": "property",
+											"name": "yChannel",
+											"value": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "undefined"
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "hue"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "saturation"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "brightness"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "lightness"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "red"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "green"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "blue"
+															}
+														]
+													},
+													{
+														"type": "union",
+														"elements": [
+															{
+																"type": "stringLiteral",
+																"value": "alpha"
+															}
+														]
+													}
+												]
+											},
+											"optional": true,
+											"readonly": false,
+											"description": ""
+										}
+									}
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ColorAxes"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns the color space axes, xChannel, yChannel, zChannel."
+				},
+				"getHueName": {
+					"type": "method",
+					"name": "getHueName",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "locale",
+								"value": {
+									"type": "string"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Returns a localized name for the hue, for use in visual or accessibility labels."
+				},
+				"toFormat": {
+					"type": "method",
+					"name": "toFormat",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "format",
+								"value": {
+									"type": "identifier",
+									"name": "ColorFormat"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+							"name": "Color"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Converts the color to the given color format, and returns a new Color object."
+				},
+				"toHexInt": {
+					"type": "method",
+					"name": "toHexInt",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "number"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Converts the color to hex, and returns an integer representation."
+				},
+				"toString": {
+					"type": "method",
+					"name": "toString",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "format",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hex"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "rgb"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hsl"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hsb"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hexa"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "rgba"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hsla"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hsba"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "css"
+												}
+											]
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Converts the color to a string in the given format."
+				},
+				"withChannelValue": {
+					"type": "method",
+					"name": "withChannelValue",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "channel",
+								"value": {
+									"type": "identifier",
+									"name": "ColorChannel"
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "number"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+							"name": "Color"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "Sets the numeric value for a given channel, and returns a new Color object.\nThrows an error if the channel is unsupported in the current color format."
+				}
+			},
+			"typeParameters": [],
+			"description": "Represents a color value."
+		},
+		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
+			"name": "ColorChannelRange",
+			"extends": [],
+			"properties": {
+				"maxValue": {
+					"type": "property",
+					"name": "maxValue",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The maximum value of the color channel."
+				},
+				"minValue": {
+					"type": "property",
+					"name": "minValue",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The minimum value of the color channel."
+				},
+				"pageSize": {
+					"type": "property",
+					"name": "pageSize",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The page step value of the color channel, used when incrementing and decrementing."
+				},
+				"step": {
+					"type": "property",
+					"name": "step",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The step value of the color channel, used when incrementing and decrementing."
 				}
 			},
 			"typeParameters": [],

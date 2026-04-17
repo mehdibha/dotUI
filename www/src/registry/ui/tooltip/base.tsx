@@ -20,7 +20,9 @@ const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
 
 // MARK: seperator
 
-interface TooltipContentProps extends React.ComponentProps<typeof TooltipPrimitives.Tooltip>, VariantProps<TooltipStyles> {
+interface TooltipContentProps
+	extends React.ComponentProps<typeof TooltipPrimitives.Tooltip>,
+		VariantProps<TooltipStyles> {
 	hideArrow?: boolean;
 }
 

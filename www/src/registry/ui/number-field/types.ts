@@ -1,4 +1,4 @@
-import * as NumberFieldPrimitives from "react-aria-components/NumberField";
+import type * as NumberFieldPrimitives from "react-aria-components/NumberField";
 
 /**
  * A number field allows a user to enter a number, and increment or decrement the value using stepper buttons.
