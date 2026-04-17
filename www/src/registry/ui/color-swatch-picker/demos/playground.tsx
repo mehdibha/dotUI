@@ -2,15 +2,19 @@
 
 import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/registry/ui/color-swatch-picker";
 
-export function ColorSwatchPickerPlayground() {
+interface ColorSwatchPickerPlaygroundProps {
+	isDisabled?: boolean;
+}
+
+export function ColorSwatchPickerPlayground({ isDisabled = false }: ColorSwatchPickerPlaygroundProps) {
 	return (
-		<ColorSwatchPicker>
-			<ColorSwatchPickerItem color="#ff0000" />
-			<ColorSwatchPickerItem color="#00ff00" />
-			<ColorSwatchPickerItem color="#0000ff" />
-			<ColorSwatchPickerItem color="#ffff00" />
-			<ColorSwatchPickerItem color="#ff00ff" />
-			<ColorSwatchPickerItem color="#00ffff" />
+		<ColorSwatchPicker defaultValue="#ff0000">
+			<ColorSwatchPickerItem color="#ff0000" isDisabled={isDisabled} />
+			<ColorSwatchPickerItem color="#00ff00" isDisabled={isDisabled} />
+			<ColorSwatchPickerItem color="#0000ff" isDisabled={isDisabled} />
+			<ColorSwatchPickerItem color="#ffff00" isDisabled={isDisabled} />
+			<ColorSwatchPickerItem color="#ff00ff" isDisabled={isDisabled} />
+			<ColorSwatchPickerItem color="#00ffff" isDisabled={isDisabled} />
 		</ColorSwatchPicker>
 	);
 }

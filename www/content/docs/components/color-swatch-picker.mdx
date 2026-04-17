@@ -35,18 +35,23 @@ import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/components/ui/color-
 
 Use the controls below to experiment with different color swatch picker props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="color-swatch-picker" 
-  controls={[]}
+<InteractiveDemo
+  name="color-swatch-picker"
+  controls={[
+    {
+      type: "boolean",
+      name: "isDisabled",
+      defaultValue: false,
+    },
+  ]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="color-swatch-picker/demos/basic" />
-  <Example name="color-swatch-picker/demos/disabled" />
-  <Example name="color-swatch-picker/demos/controlled" />
+  <Example name="color-swatch-picker/demos/basic" title="Basic" />
+  <Example name="color-swatch-picker/demos/disabled" title="Disabled" />
+  <Example name="color-swatch-picker/demos/controlled" title="Controlled" />
 </Examples>
 
 ## API Reference

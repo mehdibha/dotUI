@@ -8,6 +8,12 @@ const colorSwatchMeta = {
 	styles: {
 		default: {},
 	},
+	params: {
+		"--color-swatch-radius": {
+			type: "radius",
+			default: "--radius-sm",
+		},
+	},
 	files: [
 		{
 			type: "registry:ui",

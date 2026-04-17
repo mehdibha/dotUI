@@ -12,6 +12,7 @@ export interface SerializedItem {
 	type: "page";
 	name: string;
 	url: string;
+	wip?: boolean;
 }
 
 export interface SerializedFolder {
