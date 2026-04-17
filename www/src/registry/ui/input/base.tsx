@@ -18,8 +18,6 @@ import { createContext } from "@/registry/lib/context";
 import { dateInputStyles, useStyles } from "./styles";
 import type { InputStyles } from "./styles";
 
-// MARK: inputStyles
-
 // MARK: InputGroupContext
 
 const [InputGroupContext, useInputGroupContext] = createContext<boolean>({

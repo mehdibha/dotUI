@@ -1,8 +1,12 @@
 ---
 title: Input
 description: A basic input component for text entry.
-wip: true
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/TextField.html
 ---
+
+<Demo name="input/demos/default" />
 
 ## Installation
 
@@ -12,6 +16,8 @@ npx shadcn@latest add @dotui/input
 
 ## Usage
 
+Use `Input` to allow users to enter text. Combine with `InputGroup` and `InputAddon` to add icons, buttons, or labels alongside the input.
+
 ```tsx
 import { Input } from "@/components/ui/input";
 ```
@@ -20,11 +26,39 @@ import { Input } from "@/components/ui/input";
 <Input placeholder="Enter text..." />
 ```
 
+## Sizes
+
+Use the `size` prop to control the input height. Available sizes are `sm`, `md` (default), and `lg`.
+
+```tsx
+<Input size="sm" />
+<Input size="md" />
+<Input size="lg" />
+```
+
+## Playground
+
+Use the controls below to experiment with different input props and see the live preview and code update.
+
+<InteractiveDemo
+  name="input"
+  fallback={`<Input placeholder="Enter text..." />`}
+  controls={[
+    { name: "placeholder", type: "string", defaultValue: "Enter text..." },
+    "size",
+    { name: "disabled", type: "boolean", defaultValue: false },
+    { name: "readOnly", type: "boolean", defaultValue: false },
+  ]}
+/>
 
 ## Examples
 
 <Examples>
-  <p className="text-fg-muted col-span-full">No examples yet.</p>
+  <Example name="input/demos/default" title="Default" />
+  <Example name="input/demos/sizes" title="Sizes" />
+  <Example name="input/demos/disabled" title="Disabled" />
+  <Example name="input/demos/input-group" title="Input Group" />
+  <Example name="input/demos/textarea" title="Textarea" />
 </Examples>
 
 ## API Reference

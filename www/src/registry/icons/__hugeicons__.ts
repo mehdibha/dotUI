@@ -1,142 +1,140 @@
 // AUTO-GENERATED - DO NOT EDIT
 // Only exports the 138 icons we actually use (not the entire library)
-export {
-	AiCloud01Icon,
-	Alert01Icon,
-	Alert02Icon,
-	Analytics01Icon,
-	Archive02Icon,
-	ArrowDown01Icon,
-	ArrowLeft01Icon,
-	ArrowRight01Icon,
-	ArrowRight02Icon,
-	ArrowUp01Icon,
-	ArrowUpRight01Icon,
-	AttachmentIcon,
-	BankIcon,
-	BluetoothIcon,
-	Bookmark01Icon,
-	BookOpen01Icon,
-	BookOpen02Icon,
-	BulbIcon,
-	CalculatorIcon,
-	Calendar01Icon,
-	CalendarAdd01Icon,
-	Camera01Icon,
-	Cancel01Icon,
-	Cardiogram01Icon,
-	ChartColumnIcon,
-	ChartLineData01Icon,
-	ChartRingIcon,
-	CheckmarkBadge01Icon,
-	CheckmarkBadge02Icon,
-	CheckmarkCircle02Icon,
-	CircleArrowLeft02Icon,
-	CircleArrowRight02Icon,
-	CircleIcon,
-	ClipboardIcon,
-	Clock01Icon,
-	Clock03Icon,
-	ClosedCaptionIcon,
-	CodeIcon,
-	ComputerIcon,
-	Copy01Icon,
-	CreditCardIcon,
-	CropIcon,
-	CubeIcon,
-	Cursor01Icon,
-	CursorInWindowIcon,
-	DatabaseIcon,
-	Delete01Icon,
-	Delete02Icon,
-	DollarCircleIcon,
-	Download01Icon,
-	Edit01Icon,
-	Edit02Icon,
-	EyeIcon,
-	FavouriteIcon,
-	File01Icon,
-	FilterIcon,
-	FlipHorizontalIcon,
-	FlipVerticalIcon,
-	FloppyDiskIcon,
-	Folder01Icon,
-	FolderAddIcon,
-	FolderOpenIcon,
-	GitBranchIcon,
-	GlobalIcon,
-	GridIcon,
-	HelpCircleIcon,
-	Home01Icon,
-	Image01Icon,
-	InformationCircleIcon,
-	KeyboardIcon,
-	LanguageCircleIcon,
-	Layout01Icon,
-	LayoutLeftIcon,
-	Link01Icon,
-	LinkSquare02Icon,
-	Loading01Icon,
-	Loading03Icon,
-	Login01Icon,
-	Logout01Icon,
-	MagicWand01Icon,
-	Mail01Icon,
-	MailValidation01Icon,
-	MapsIcon,
-	Menu05Icon,
-	Menu09Icon,
-	Message01Icon,
-	Mic01Icon,
-	MinusSignIcon,
-	MoonIcon,
-	MoreHorizontalCircle01Icon,
-	MoreVerticalCircle01Icon,
-	MultiplicationSignCircleIcon,
-	Notification01Icon,
-	PaintBoardIcon,
-	PieChartIcon,
-	PinIcon,
-	PlusSignIcon,
-	PlusSignSquareIcon,
-	QuillWrite01Icon,
-	RecordIcon,
-	RefreshIcon,
-	RoboticIcon,
-	Rotate01Icon,
-	ScissorIcon,
-	Search01Icon,
-	SecurityIcon,
-	SentIcon,
-	Settings01Icon,
-	Settings05Icon,
-	Share03Icon,
-	ShoppingBag01Icon,
-	ShoppingCart01Icon,
-	SmileIcon,
-	SourceCodeIcon,
-	SourceCodeSquareIcon,
-	SparklesIcon,
-	StarIcon,
-	Sun01Icon,
-	Table01Icon,
-	Tag01Icon,
-	TextBoldIcon,
-	TextItalicIcon,
-	TextUnderlineIcon,
-	Tick02Icon,
-	Time01Icon,
-	UnfoldMoreIcon,
-	Upload01Icon,
-	UserIcon,
-	UserRemove01Icon,
-	ViewOffIcon,
-	VoiceIcon,
-	VolumeHighIcon,
-	VolumeLowIcon,
-	VolumeOffIcon,
-	Wallet01Icon,
-	ZapIcon,
-	ZoomInAreaIcon,
-	ZoomOutAreaIcon,
-} from "@hugeicons/core-free-icons";
+export { AiCloud01Icon } from "@hugeicons/core-free-icons";
+export { Alert01Icon } from "@hugeicons/core-free-icons";
+export { Alert02Icon } from "@hugeicons/core-free-icons";
+export { Analytics01Icon } from "@hugeicons/core-free-icons";
+export { Archive02Icon } from "@hugeicons/core-free-icons";
+export { ArrowDown01Icon } from "@hugeicons/core-free-icons";
+export { ArrowLeft01Icon } from "@hugeicons/core-free-icons";
+export { ArrowRight01Icon } from "@hugeicons/core-free-icons";
+export { ArrowRight02Icon } from "@hugeicons/core-free-icons";
+export { ArrowUp01Icon } from "@hugeicons/core-free-icons";
+export { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
+export { AttachmentIcon } from "@hugeicons/core-free-icons";
+export { BankIcon } from "@hugeicons/core-free-icons";
+export { BluetoothIcon } from "@hugeicons/core-free-icons";
+export { BookOpen01Icon } from "@hugeicons/core-free-icons";
+export { BookOpen02Icon } from "@hugeicons/core-free-icons";
+export { Bookmark01Icon } from "@hugeicons/core-free-icons";
+export { BulbIcon } from "@hugeicons/core-free-icons";
+export { CalculatorIcon } from "@hugeicons/core-free-icons";
+export { Calendar01Icon } from "@hugeicons/core-free-icons";
+export { CalendarAdd01Icon } from "@hugeicons/core-free-icons";
+export { Camera01Icon } from "@hugeicons/core-free-icons";
+export { Cancel01Icon } from "@hugeicons/core-free-icons";
+export { Cardiogram01Icon } from "@hugeicons/core-free-icons";
+export { ChartColumnIcon } from "@hugeicons/core-free-icons";
+export { ChartLineData01Icon } from "@hugeicons/core-free-icons";
+export { ChartRingIcon } from "@hugeicons/core-free-icons";
+export { CheckmarkBadge01Icon } from "@hugeicons/core-free-icons";
+export { CheckmarkBadge02Icon } from "@hugeicons/core-free-icons";
+export { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+export { CircleArrowLeft02Icon } from "@hugeicons/core-free-icons";
+export { CircleArrowRight02Icon } from "@hugeicons/core-free-icons";
+export { CircleIcon } from "@hugeicons/core-free-icons";
+export { ClipboardIcon } from "@hugeicons/core-free-icons";
+export { Clock01Icon } from "@hugeicons/core-free-icons";
+export { Clock03Icon } from "@hugeicons/core-free-icons";
+export { ClosedCaptionIcon } from "@hugeicons/core-free-icons";
+export { CodeIcon } from "@hugeicons/core-free-icons";
+export { ComputerIcon } from "@hugeicons/core-free-icons";
+export { Copy01Icon } from "@hugeicons/core-free-icons";
+export { CreditCardIcon } from "@hugeicons/core-free-icons";
+export { CropIcon } from "@hugeicons/core-free-icons";
+export { CubeIcon } from "@hugeicons/core-free-icons";
+export { Cursor01Icon } from "@hugeicons/core-free-icons";
+export { CursorInWindowIcon } from "@hugeicons/core-free-icons";
+export { DatabaseIcon } from "@hugeicons/core-free-icons";
+export { Delete01Icon } from "@hugeicons/core-free-icons";
+export { Delete02Icon } from "@hugeicons/core-free-icons";
+export { DollarCircleIcon } from "@hugeicons/core-free-icons";
+export { Download01Icon } from "@hugeicons/core-free-icons";
+export { Edit01Icon } from "@hugeicons/core-free-icons";
+export { Edit02Icon } from "@hugeicons/core-free-icons";
+export { EyeIcon } from "@hugeicons/core-free-icons";
+export { FavouriteIcon } from "@hugeicons/core-free-icons";
+export { File01Icon } from "@hugeicons/core-free-icons";
+export { FilterIcon } from "@hugeicons/core-free-icons";
+export { FlipHorizontalIcon } from "@hugeicons/core-free-icons";
+export { FlipVerticalIcon } from "@hugeicons/core-free-icons";
+export { FloppyDiskIcon } from "@hugeicons/core-free-icons";
+export { Folder01Icon } from "@hugeicons/core-free-icons";
+export { FolderAddIcon } from "@hugeicons/core-free-icons";
+export { FolderOpenIcon } from "@hugeicons/core-free-icons";
+export { GitBranchIcon } from "@hugeicons/core-free-icons";
+export { GlobalIcon } from "@hugeicons/core-free-icons";
+export { GridIcon } from "@hugeicons/core-free-icons";
+export { HelpCircleIcon } from "@hugeicons/core-free-icons";
+export { Home01Icon } from "@hugeicons/core-free-icons";
+export { Image01Icon } from "@hugeicons/core-free-icons";
+export { InformationCircleIcon } from "@hugeicons/core-free-icons";
+export { KeyboardIcon } from "@hugeicons/core-free-icons";
+export { LanguageCircleIcon } from "@hugeicons/core-free-icons";
+export { Layout01Icon } from "@hugeicons/core-free-icons";
+export { LayoutLeftIcon } from "@hugeicons/core-free-icons";
+export { Link01Icon } from "@hugeicons/core-free-icons";
+export { LinkSquare02Icon } from "@hugeicons/core-free-icons";
+export { Loading01Icon } from "@hugeicons/core-free-icons";
+export { Loading03Icon } from "@hugeicons/core-free-icons";
+export { Login01Icon } from "@hugeicons/core-free-icons";
+export { Logout01Icon } from "@hugeicons/core-free-icons";
+export { MagicWand01Icon } from "@hugeicons/core-free-icons";
+export { Mail01Icon } from "@hugeicons/core-free-icons";
+export { MailValidation01Icon } from "@hugeicons/core-free-icons";
+export { MapsIcon } from "@hugeicons/core-free-icons";
+export { Menu05Icon } from "@hugeicons/core-free-icons";
+export { Menu09Icon } from "@hugeicons/core-free-icons";
+export { Message01Icon } from "@hugeicons/core-free-icons";
+export { Mic01Icon } from "@hugeicons/core-free-icons";
+export { MinusSignIcon } from "@hugeicons/core-free-icons";
+export { MoonIcon } from "@hugeicons/core-free-icons";
+export { MoreHorizontalCircle01Icon } from "@hugeicons/core-free-icons";
+export { MoreVerticalCircle01Icon } from "@hugeicons/core-free-icons";
+export { MultiplicationSignCircleIcon } from "@hugeicons/core-free-icons";
+export { Notification01Icon } from "@hugeicons/core-free-icons";
+export { PaintBoardIcon } from "@hugeicons/core-free-icons";
+export { PieChartIcon } from "@hugeicons/core-free-icons";
+export { PinIcon } from "@hugeicons/core-free-icons";
+export { PlusSignIcon } from "@hugeicons/core-free-icons";
+export { PlusSignSquareIcon } from "@hugeicons/core-free-icons";
+export { QuillWrite01Icon } from "@hugeicons/core-free-icons";
+export { RecordIcon } from "@hugeicons/core-free-icons";
+export { RefreshIcon } from "@hugeicons/core-free-icons";
+export { RoboticIcon } from "@hugeicons/core-free-icons";
+export { Rotate01Icon } from "@hugeicons/core-free-icons";
+export { ScissorIcon } from "@hugeicons/core-free-icons";
+export { Search01Icon } from "@hugeicons/core-free-icons";
+export { SecurityIcon } from "@hugeicons/core-free-icons";
+export { SentIcon } from "@hugeicons/core-free-icons";
+export { Settings01Icon } from "@hugeicons/core-free-icons";
+export { Settings05Icon } from "@hugeicons/core-free-icons";
+export { Share03Icon } from "@hugeicons/core-free-icons";
+export { ShoppingBag01Icon } from "@hugeicons/core-free-icons";
+export { ShoppingCart01Icon } from "@hugeicons/core-free-icons";
+export { SmileIcon } from "@hugeicons/core-free-icons";
+export { SourceCodeIcon } from "@hugeicons/core-free-icons";
+export { SourceCodeSquareIcon } from "@hugeicons/core-free-icons";
+export { SparklesIcon } from "@hugeicons/core-free-icons";
+export { StarIcon } from "@hugeicons/core-free-icons";
+export { Sun01Icon } from "@hugeicons/core-free-icons";
+export { Table01Icon } from "@hugeicons/core-free-icons";
+export { Tag01Icon } from "@hugeicons/core-free-icons";
+export { TextBoldIcon } from "@hugeicons/core-free-icons";
+export { TextItalicIcon } from "@hugeicons/core-free-icons";
+export { TextUnderlineIcon } from "@hugeicons/core-free-icons";
+export { Tick02Icon } from "@hugeicons/core-free-icons";
+export { Time01Icon } from "@hugeicons/core-free-icons";
+export { UnfoldMoreIcon } from "@hugeicons/core-free-icons";
+export { Upload01Icon } from "@hugeicons/core-free-icons";
+export { UserIcon } from "@hugeicons/core-free-icons";
+export { UserRemove01Icon } from "@hugeicons/core-free-icons";
+export { ViewOffIcon } from "@hugeicons/core-free-icons";
+export { VoiceIcon } from "@hugeicons/core-free-icons";
+export { VolumeHighIcon } from "@hugeicons/core-free-icons";
+export { VolumeLowIcon } from "@hugeicons/core-free-icons";
+export { VolumeOffIcon } from "@hugeicons/core-free-icons";
+export { Wallet01Icon } from "@hugeicons/core-free-icons";
+export { ZapIcon } from "@hugeicons/core-free-icons";
+export { ZoomInAreaIcon } from "@hugeicons/core-free-icons";
+export { ZoomOutAreaIcon } from "@hugeicons/core-free-icons";
