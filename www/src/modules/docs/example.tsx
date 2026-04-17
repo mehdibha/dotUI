@@ -10,7 +10,7 @@ import { Modal } from "@/registry/ui/modal";
 export interface ExampleProps extends React.ComponentProps<"div"> {
 	component: React.ComponentType;
 	title?: string;
-	children: React.ReactNode;
+	children?: React.ReactNode;
 }
 
 export function Example({ component: Component, title, children, className, ...props }: ExampleProps) {
@@ -18,8 +18,15 @@ export function Example({ component: Component, title, children, className, ...p
 	// const previewContent = getSlotContent(children, DemoCodePreview);
 
 	return (
-		<div className={cn("flex flex-col gap-1", className)} {...props}>
-			<h3 className="px-1.5 py-2 font-normal text-fg-muted text-sm capitalize">{title}</h3>
+		<div
+			className={cn(
+				"flex flex-col gap-1",
+				"[&_h3]:mt-0 [&_h3]:px-1.5 [&_h3]:py-2 [&_h3]:font-normal [&_h3]:text-fg-muted [&_h3]:text-sm [&_h3]:capitalize [&_h3]:tracking-normal",
+				className,
+			)}
+			{...props}
+		>
+			{children ?? (title ? <h3>{title}</h3> : null)}
 			<div className="relative flex flex-1 flex-col">
 				<div
 					data-example-preview=""

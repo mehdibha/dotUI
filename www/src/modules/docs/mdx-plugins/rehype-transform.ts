@@ -46,6 +46,8 @@ interface DemoNodeInfo {
 	node: MdxJsxFlowElementHast;
 	name: string;
 	type: "Demo" | "Example";
+	title?: string;
+	titleId?: string;
 }
 
 interface ProcessedDemo {
@@ -84,17 +86,43 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (options = {}) 
 		const demoNodes: DemoNodeInfo[] = [];
 		const referenceNodes: ReferenceNodeInfo[] = [];
 		const interactiveDemoNodes: InteractiveDemoNodeInfo[] = [];
+		// Per-file slug dedupe so ids stay deterministic and collisions get suffixed
+		const usedSlugs = new Set<string>();
+		const slugify = (text: string): string => {
+			const base =
+				text
+					.toLowerCase()
+					.trim()
+					.replace(/[^a-z0-9]+/g, "-")
+					.replace(/^-+|-+$/g, "") || "example";
+			let candidate = base;
+			let i = 1;
+			while (usedSlugs.has(candidate)) {
+				i += 1;
+				candidate = `${base}-${i}`;
+			}
+			usedSlugs.add(candidate);
+			return candidate;
+		};
 
 		// Step 1: Collect all Demo/Example/Reference/InteractiveDemo nodes
 		visit(tree, "mdxJsxFlowElement", (node: MdxJsxFlowElementHast) => {
 			if (node.name === "Demo" || node.name === "Example") {
 				const name = extractNameAttribute(node);
 				if (name) {
-					demoNodes.push({
+					const info: DemoNodeInfo = {
 						node,
 						name,
 						type: node.name as "Demo" | "Example",
-					});
+					};
+					if (node.name === "Example") {
+						const title = extractStringAttribute(node, "title");
+						if (title) {
+							info.title = title;
+							info.titleId = slugify(title);
+						}
+					}
+					demoNodes.push(info);
 				}
 			} else if (node.name === "Reference") {
 				const name = extractNameAttribute(node);
@@ -274,12 +302,16 @@ function generateImportName(demoName: string): string {
 // ============================================================================
 
 function extractNameAttribute(node: MdxJsxFlowElementHast): string | null {
-	const nameAttr = node.attributes.find(
-		(attr): attr is MdxJsxAttribute => attr.type === "mdxJsxAttribute" && attr.name === "name",
+	return extractStringAttribute(node, "name");
+}
+
+function extractStringAttribute(node: MdxJsxFlowElementHast, attrName: string): string | null {
+	const attr = node.attributes.find(
+		(a): a is MdxJsxAttribute => a.type === "mdxJsxAttribute" && a.name === attrName,
 	);
 
-	if (nameAttr && typeof nameAttr.value === "string") {
-		return nameAttr.value;
+	if (attr && typeof attr.value === "string") {
+		return attr.value;
 	}
 
 	return null;
@@ -489,6 +521,30 @@ function transformDemoNode(processed: ProcessedDemo): void {
 	};
 	node.attributes.push(componentAttr);
 
+	// Example doesn't consume the code slots — only Demo does. Inject a real
+	// <h3 id="{slug}">{title}</h3> from the `title` prop so it shows up in the
+	// TOC, then strip the prop from the JSX.
+	if (processed.nodeInfo.type === "Example") {
+		const { title, titleId } = processed.nodeInfo;
+		const existing = (node.children ?? []) as ElementContent[];
+
+		if (title && titleId) {
+			node.attributes = node.attributes.filter(
+				(attr) => !(attr.type === "mdxJsxAttribute" && attr.name === "title"),
+			);
+			const heading: Element = {
+				type: "element",
+				tagName: "h3",
+				properties: { id: titleId },
+				children: [{ type: "text", value: title }],
+			};
+			node.children = [heading, ...existing];
+		} else {
+			node.children = existing;
+		}
+		return;
+	}
+
 	// Create DemoCode wrapper with highlighted code HAST
 	// sourceHast.children contains the <pre><code>...</code></pre> structure
 	const demoCodeElement: MdxJsxFlowElementHast = {
@@ -506,8 +562,8 @@ function transformDemoNode(processed: ProcessedDemo): void {
 		children: processed.previewHast.children as ElementContent[],
 	};
 
-	// Set children to the code elements
-	node.children = [demoCodeElement, demoCodePreviewElement] as ElementContent[];
+	// Preserve existing children (e.g. MDX-authored headings) and append the code elements
+	node.children = [...(node.children ?? []), demoCodeElement, demoCodePreviewElement] as ElementContent[];
 }
 
 // ============================================================================
