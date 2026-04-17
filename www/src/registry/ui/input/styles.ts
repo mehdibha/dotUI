@@ -4,6 +4,41 @@ import { createStyles } from "@/modules/core/styles";
 
 import inputMeta from "./meta";
 
+const baseStyles = tv({
+	slots: {
+		inputGroup: "group/input-group cn-input-group",
+		inputGroupAddon: "cn-input-group-addon",
+		input: "cn-input",
+		textArea: "cn-text-area",
+		dateInput: "cn-date-input",
+		dateInputSegment: "cn-date-input-segment",
+	},
+	variants: {
+		size: {
+			sm: {
+				inputGroup: "cn-input-group-size-sm",
+				input: "cn-input-size-sm",
+				textArea: "cn-text-area-size-sm",
+			},
+			md: {
+				inputGroup: "cn-input-group-size-md",
+				input: "cn-input-size-md",
+				textArea: "cn-text-area-size-md",
+			},
+			lg: {
+				inputGroup: "cn-input-group-size-lg",
+				input: "cn-input-size-lg",
+				textArea: "cn-text-area-size-lg",
+			},
+		},
+	},
+	defaultVariants: {
+		size: "md",
+	},
+});
+
+const sousseStyles = tv({});
+
 const defaultStyles = tv({
 	slots: {
 		group: [
