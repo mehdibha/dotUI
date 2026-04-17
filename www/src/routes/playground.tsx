@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Checkbox } from "react-aria-components/Checkbox";
 
-import { Label } from "@/registry/ui/field";
+import { TextArea } from "@/registry/ui/input";
 
 export const Route = createFileRoute("/playground")({
 	component: RouteComponent,
@@ -9,11 +8,8 @@ export const Route = createFileRoute("/playground")({
 
 function RouteComponent() {
 	return (
-		<div className="flex h-svh items-center justify-center gap-2">
-			<Checkbox className="size-10 border">
-				<span></span>
-				{/* <Label>Accept terms and conditions</Label> */}
-			</Checkbox>
+		<div>
+			<TextArea className="w-40" />
 		</div>
 	);
 }
