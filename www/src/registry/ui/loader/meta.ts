@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const loaderMeta = {
 	name: "loader",
 	type: "registry:ui",
-	group: "feedback",
+	group: "progress",
 	defaultStyle: "default",
 	styles: {
 		default: {},

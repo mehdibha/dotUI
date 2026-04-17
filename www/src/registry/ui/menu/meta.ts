@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const menuMeta = {
 	name: "menu",
 	type: "registry:ui",
-	group: "overlays",
+	group: "menus-lists",
 	defaultStyle: "default",
 	styles: {
 		default: {},

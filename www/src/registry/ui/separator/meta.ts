@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const separatorMeta = {
 	name: "separator",
 	type: "registry:ui",
-	group: "layout",
+	group: "containers",
 	defaultStyle: "default",
 	styles: {
 		default: {},

@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const disclosureMeta = {
 	name: "disclosure",
 	type: "registry:ui",
-	group: "data-display",
+	group: "disclosure",
 	defaultStyle: "default",
 	styles: {
 		default: {},

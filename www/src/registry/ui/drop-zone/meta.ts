@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const dropZoneMeta = {
 	name: "drop-zone",
 	type: "registry:ui",
-	group: "forms",
+	group: "drop-zone",
 	defaultStyle: "default",
 	styles: {
 		default: {},

@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const groupMeta = {
 	name: "group",
 	type: "registry:ui",
-	group: "forms",
+	group: "containers",
 	defaultStyle: "default",
 	styles: {
 		default: {},

@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const avatarMeta = {
 	name: "avatar",
 	type: "registry:ui",
-	group: "data-display",
+	group: "containers",
 	files: [
 		{
 			type: "registry:ui",

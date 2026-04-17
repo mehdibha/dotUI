@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const skeletonMeta = {
 	name: "skeleton",
 	type: "registry:ui",
-	group: "feedback",
+	group: "progress",
 	defaultStyle: "default",
 	styles: {
 		default: {},

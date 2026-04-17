@@ -14,6 +14,13 @@ const allComponents = registryUi.filter((item) => item.group).sort((a, b) => a.n
 
 const componentMetaMap = new Map<string, RegistryItem>(registryUi.map((item) => [item.name, item]));
 
+// Derive the unique groups used across the registry (sorted alphabetically)
+const allGroups = Array.from(
+	new Set(registryUi.map((item) => item.group).filter((g): g is NonNullable<typeof g> => !!g)),
+).sort((a, b) => a.localeCompare(b));
+
+export const GROUP_IDS = new Set<string>(allGroups);
+
 function toTitleCase(slug: string): string {
 	return slug
 		.split("-")
@@ -23,6 +30,18 @@ function toTitleCase(slug: string): string {
 
 export function getComponentDisplayName(slug: string): string {
 	return toTitleCase(slug);
+}
+
+export function getGroupDisplayName(slug: string): string {
+	return toTitleCase(slug);
+}
+
+export function isGroupId(id: string): boolean {
+	return GROUP_IDS.has(id);
+}
+
+function getComponentsInGroup(group: string): RegistryItem[] {
+	return registryUi.filter((item) => item.group === group).sort((a, b) => a.name.localeCompare(b.name));
 }
 
 /* ----------------------- Card (shared card style) ----------------------- */
@@ -164,4 +183,70 @@ export function ComponentDetailView({
 function formatParamName(name: string): string {
 	// "--badge-radius" → "Radius"
 	return toTitleCase(name.replace(/^--/, "").replace(/^[a-z]+-/, ""));
+}
+
+/* ---------------------- Grouped components flat view ---------------------- */
+
+interface GroupedComponentsViewProps {
+	onSelect: (groupName: string) => void;
+}
+
+export function GroupedComponentsView({ onSelect }: GroupedComponentsViewProps) {
+	return (
+		<div className="mt-4 flex flex-col gap-3">
+			{allGroups.map((group) => {
+				const componentsInGroup = getComponentsInGroup(group);
+				return (
+					<ButtonPrimitives.Button key={group} onPress={() => onSelect(group)} className={cardClass}>
+						<div className="flex items-center justify-between">
+							<span>{toTitleCase(group)}</span>
+							<ChevronRightIcon className="size-4 text-fg-muted" />
+						</div>
+						<div className="flex items-center gap-2 text-fg-muted/60 text-xs">
+							<span>
+								{componentsInGroup.length} {componentsInGroup.length === 1 ? "component" : "components"}
+							</span>
+						</div>
+					</ButtonPrimitives.Button>
+				);
+			})}
+		</div>
+	);
+}
+
+/* -------------------- Group detail view -------------------- */
+
+interface GroupDetailViewProps {
+	groupName: string;
+	onSelectComponent: (componentName: string) => void;
+}
+
+export function GroupDetailView({ groupName, onSelectComponent }: GroupDetailViewProps) {
+	const componentsInGroup = getComponentsInGroup(groupName);
+
+	if (componentsInGroup.length === 0) {
+		return <p className="text-fg-muted text-sm">No components in this group.</p>;
+	}
+
+	return (
+		<div className="mt-4 flex flex-col gap-3">
+			<p className="text-fg-muted/80 text-xs">
+				Components in this group share the same visual style. Pick a component below to configure it.
+			</p>
+			<div className="flex flex-col gap-2">
+				{componentsInGroup.map((comp) => {
+					const styleCount = comp.styles ? Object.keys(comp.styles).length : 0;
+					return (
+						<ButtonPrimitives.Button key={comp.name} onPress={() => onSelectComponent(comp.name)} className={cardClass}>
+							<div className="flex items-center justify-between">
+								<span>{toTitleCase(comp.name)}</span>
+								<ChevronRightIcon className="size-4 text-fg-muted" />
+							</div>
+							{styleCount > 1 && <span className="text-fg-muted/60 text-xs">{styleCount} styles</span>}
+						</ButtonPrimitives.Button>
+					);
+				})}
+			</div>
+		</div>
+	);
 }

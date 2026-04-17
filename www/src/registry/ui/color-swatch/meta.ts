@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const colorSwatchMeta = {
 	name: "color-swatch",
 	type: "registry:ui",
-	group: "color",
+	group: "color-swatches",
 	defaultStyle: "default",
 	styles: {
 		default: {},

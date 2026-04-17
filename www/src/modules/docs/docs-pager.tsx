@@ -17,7 +17,7 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 			<Tooltip>
 				<LinkButton
 					aria-label="Go to previous page"
-					size="icon-xs"
+					size="icon-sm"
 					isDisabled={!previous}
 					href={previous ? { to: "/docs/$", params: { _splat: previous.path } } : undefined}
 				>
@@ -28,7 +28,7 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 			<Tooltip>
 				<LinkButton
 					aria-label="Go to next page"
-					size="icon-xs"
+					size="icon-sm"
 					isDisabled={!next}
 					href={next ? { to: "/docs/$", params: { _splat: next.path } } : undefined}
 				>

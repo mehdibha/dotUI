@@ -26,10 +26,10 @@ function CreatePage() {
 	const { designSystem } = useDesignSystem();
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 
-	// When viewing a specific component detail, preview that component.
-	// Component detail = a single, non-menu id as the top-level panel entry.
-	const firstPanelSegment = panel?.split(".")[0];
-	const activeComponent = firstPanelSegment && !MENU_IDS.has(firstPanelSegment) ? firstPanelSegment : null;
+	// When viewing a component or group detail, preview that entity.
+	// Pick the deepest non-menu segment so nested (group → component) navigation works too.
+	const segments = panel?.split(".") ?? [];
+	const activeComponent = [...segments].reverse().find((s) => !MENU_IDS.has(s)) ?? null;
 	const effectivePreview = activeComponent ?? preview;
 
 	// Bake the preset into the iframe src so the initial render has the right state.

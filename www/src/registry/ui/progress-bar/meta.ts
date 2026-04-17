@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const progressBarMeta = {
 	name: "progress-bar",
 	type: "registry:ui",
-	group: "feedback",
+	group: "progress",
 	defaultStyle: "default",
 	styles: {
 		default: {},

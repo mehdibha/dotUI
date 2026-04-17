@@ -38,8 +38,8 @@ export function Header({ className, items = [] }: HeaderProps) {
 			</div>
 			<div className="flex items-center gap-2">
 				<SearchCommand keyboardShortcut items={items}>
-					<Button variant="default" size="sm" className="gap-2 pr-1 pl-3 max-md:size-8 max-md:px-0 md:text-fg-muted">
-						<SearchIcon className="md:hidden" />
+					<Button variant="default" className="max-md:size-8 max-md:px-0 md:text-fg-muted">
+						<SearchIcon data-icon-start="" className="md:hidden" />
 						<span className="mr-6 flex-1 max-md:hidden">Search docs...</span>
 						<Kbd className="max-md:hidden">⌘ K</Kbd>
 					</Button>
@@ -49,11 +49,11 @@ export function Header({ className, items = [] }: HeaderProps) {
 					href={siteConfig.links.github}
 					target="_blank"
 					rel="noopener noreferrer"
-					className={buttonStyles({ variant: "default", size: "icon-sm" })}
+					className={buttonStyles({ variant: "default", size: "icon" })}
 				>
 					<GitHubIcon />
 				</a>
-				<ThemeToggle size="icon-sm" />
+				<ThemeToggle size="icon" />
 			</div>
 		</header>
 	);

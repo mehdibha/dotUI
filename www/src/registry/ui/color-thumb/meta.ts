@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const colorThumbMeta = {
 	name: "color-thumb",
 	type: "registry:ui",
-	group: "color",
+	group: "sliders",
 	defaultStyle: "default",
 	styles: {
 		default: {},

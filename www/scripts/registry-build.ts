@@ -254,6 +254,7 @@ ${iconExports}
 async function buildInternalExamples() {
 	const targetPath = path.join(GENERATED_DIR, "examples.tsx");
 	const uiDir = path.join(REGISTRY_DIR, "ui");
+	const groupExamplesDir = path.join(REGISTRY_DIR, "examples");
 
 	const componentFolders = await fs.readdir(uiDir);
 	const entries: string[] = [];
@@ -262,6 +263,16 @@ async function buildInternalExamples() {
 		const examplesPath = path.join(uiDir, folder, "examples.tsx");
 		if (existsSync(examplesPath)) {
 			entries.push(`  "${folder}": () => import("@/registry/ui/${folder}/examples"),`);
+		}
+	}
+
+	const groupEntries: string[] = [];
+	if (existsSync(groupExamplesDir)) {
+		const groupFiles = await fs.readdir(groupExamplesDir);
+		for (const file of groupFiles.sort()) {
+			if (!file.endsWith(".tsx")) continue;
+			const name = file.replace(/\.tsx$/, "");
+			groupEntries.push(`  "${name}": () => import("@/registry/examples/${name}"),`);
 		}
 	}
 
@@ -274,10 +285,19 @@ export const ExamplesIndex: Record<
 > = {
 ${entries.join("\n")}
 };
+
+export const GroupExamplesIndex: Record<
+  string,
+  () => Promise<{ default: React.ComponentType }>
+> = {
+${groupEntries.join("\n")}
+};
 `;
 
 	await fs.writeFile(targetPath, content, "utf8");
-	console.log(`  ✓ __generated__/examples.tsx (${entries.length} components)`);
+	console.log(
+		`  ✓ __generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`,
+	);
 }
 
 // ============================================================================

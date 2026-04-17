@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const cardMeta = {
 	name: "card",
 	type: "registry:ui",
-	group: "data-display",
+	group: "containers",
 	defaultStyle: "default",
 	styles: {
 		default: {},

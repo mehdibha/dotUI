@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { DesignSystemProvider } from "@/modules/core/styles";
 import { DEFAULTS, decodePreset, useIframeMessageListener } from "@/modules/create/preset";
-import { ExamplesIndex } from "@/registry/__generated__/examples";
+import { ExamplesIndex, GroupExamplesIndex } from "@/registry/__generated__/examples";
 import type { DesignSystem } from "@/modules/create/preset";
 
 const promiseCache = new Map<string, Promise<{ default: React.ComponentType }>>();
@@ -12,7 +12,7 @@ const promiseCache = new Map<string, Promise<{ default: React.ComponentType }>>(
 function getExamplesPromise(slug: string) {
 	let promise = promiseCache.get(slug);
 	if (!promise) {
-		const load = ExamplesIndex[slug];
+		const load = GroupExamplesIndex[slug] ?? ExamplesIndex[slug];
 		if (!load) return null;
 		promise = load();
 		promiseCache.set(slug, promise);

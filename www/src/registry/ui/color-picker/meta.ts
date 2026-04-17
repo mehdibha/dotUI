@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const colorPickerMeta = {
 	name: "color-picker",
 	type: "registry:ui",
-	group: "color",
+	group: "pickers",
 	defaultStyle: "default",
 	styles: {
 		default: {},

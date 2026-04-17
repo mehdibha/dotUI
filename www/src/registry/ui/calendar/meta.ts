@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const calendarMeta = {
 	name: "calendar",
 	type: "registry:ui",
-	group: "date-time",
+	group: "calendar",
 	defaultStyle: "default",
 	styles: {
 		default: {},

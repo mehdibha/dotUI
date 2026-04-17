@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const colorEditorMeta = {
 	name: "color-editor",
 	type: "registry:ui",
-	group: "color",
+	group: "color-swatches",
 	defaultStyle: "default",
 	styles: {
 		default: {},

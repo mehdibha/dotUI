@@ -15,7 +15,15 @@ import { SearchField } from "@/registry/ui/search-field";
 import { Select, SelectValue } from "@/registry/ui/select";
 
 import { ColorsConfig } from "./colors-config";
-import { AllComponentsView, ComponentDetailView, getComponentDisplayName } from "./components-config";
+import {
+	AllComponentsView,
+	ComponentDetailView,
+	GroupDetailView,
+	GroupedComponentsView,
+	getComponentDisplayName,
+	getGroupDisplayName,
+	isGroupId,
+} from "./components-config";
 import {
 	CURSOR_DISABLED_VAR,
 	CURSOR_INTERACTIVE_VAR,
@@ -163,9 +171,11 @@ export function CustomizerPanel() {
 	const cursorInteractive = designSystem.componentParams[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE;
 	const cursorDisabled = designSystem.componentParams[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED;
 
-	// When viewing a component (navStack is a single, non-menu id), lock the preview
-	const activeComponent = navStack.length === 1 && !menuIds.has(navStack[0]!) ? navStack[0]! : null;
-	const effectivePreview = activeComponent ?? preview;
+	// When viewing a component or group, lock the preview to the deepest non-menu id in the stack.
+	// Supports both single-level navigation (component/group) and nested (group → component).
+	const activePreviewId = [...navStack].reverse().find((id) => !menuIds.has(id)) ?? null;
+	const activeComponent = activePreviewId;
+	const effectivePreview = activePreviewId ?? preview;
 
 	function renderDynamicPreview(id: string): ReactNode {
 		if (id === "radius") {
@@ -244,18 +254,26 @@ export function CustomizerPanel() {
 	}
 
 	function renderStackedView(index: number) {
-		const topLevel = navStack[0]!;
+		const id = navStack[index]!;
 
-		if (index !== 0) return null;
-
-		// Component detail view (top-level component slug)
-		if (!menuIds.has(topLevel)) {
+		// Group detail view (group id anywhere in the stack)
+		if (isGroupId(id)) {
 			return (
 				<>
-					<ViewHeader title={getComponentDisplayName(topLevel)} onBack={pop} />
+					<ViewHeader title={getGroupDisplayName(id)} onBack={pop} />
+					<GroupDetailView groupName={id} onSelectComponent={(comp) => push(comp)} />
+				</>
+			);
+		}
+
+		// Component detail view (non-menu id)
+		if (!menuIds.has(id)) {
+			return (
+				<>
+					<ViewHeader title={getComponentDisplayName(id)} onBack={pop} />
 					<ComponentDetailView
-						componentName={topLevel}
-						selectedStyle={designSystem.componentStyles[topLevel]}
+						componentName={id}
+						selectedStyle={designSystem.componentStyles[id]}
 						onStyleChange={setComponentStyle}
 						selectedParams={designSystem.componentParams}
 						onParamChange={setComponentParam}
@@ -264,10 +282,10 @@ export function CustomizerPanel() {
 			);
 		}
 
-		const menuItem = menu.find((m) => m.id === topLevel);
+		const menuItem = menu.find((m) => m.id === id);
 		if (!menuItem) return null;
 
-		const configNode = menuItem.config === "dynamic" ? renderDynamicConfig(topLevel) : menuItem.config;
+		const configNode = menuItem.config === "dynamic" ? renderDynamicConfig(id) : menuItem.config;
 
 		return (
 			<>
@@ -344,6 +362,12 @@ export function CustomizerPanel() {
 								</div>
 							</ButtonPrimitives.Button>
 						))}
+
+						{/* Grouped components — shared style across visually related components */}
+						<div className="mt-2 flex flex-col gap-2">
+							<div className="px-1 text-[10px] text-fg-muted uppercase tracking-widest">Grouped components</div>
+							<GroupedComponentsView onSelect={(group) => push(group)} />
+						</div>
 
 						{/* All components directly accessible from home */}
 						<div className="mt-2 flex flex-col gap-2">

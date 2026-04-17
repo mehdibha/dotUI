@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const checkboxGroupMeta = {
 	name: "checkbox-group",
 	type: "registry:ui",
-	group: "selections",
+	group: "selection-controls",
 	defaultStyle: "default",
 	styles: {
 		default: {},

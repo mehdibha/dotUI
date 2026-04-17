@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const fieldMeta = {
 	name: "field",
 	type: "registry:ui",
-	group: "forms",
+	group: "inputs",
 	defaultStyle: "default",
 	styles: {
 		default: {},

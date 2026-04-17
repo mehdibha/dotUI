@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const kbdMeta = {
 	name: "kbd",
 	type: "registry:ui",
-	group: "data-display",
+	group: "tags",
 	defaultStyle: "default",
 	styles: {
 		default: {},

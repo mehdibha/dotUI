@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const tagGroupMeta = {
 	name: "tag-group",
 	type: "registry:ui",
-	group: "selections",
+	group: "tags",
 	defaultStyle: "default",
 	styles: {
 		default: {},

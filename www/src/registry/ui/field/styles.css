@@ -9,7 +9,7 @@
 		@apply text-xs;
 	}
 	.cn-field-group {
-		@apply has-[[data-checkbox]_[data-label]]:gap-1.5 has-data-checkbox:gap-2;
+		@apply has-[[data-checkbox]_[data-label]]:gap-1.5 has-data-checkbox:gap-2 gap-4;
 	}
 }
 
@@ -24,7 +24,7 @@
 		@apply text-sm;
 	}
 	.cn-field-group {
-		@apply has-[[data-checkbox]_[data-label]]:gap-2 has-data-checkbox:gap-3;
+		@apply has-[[data-checkbox]_[data-label]]:gap-2 has-data-checkbox:gap-3 gap-5;
 	}
 }
 
@@ -39,6 +39,6 @@
 		@apply text-sm;
 	}
 	.cn-field-group {
-		@apply has-[[data-checkbox]_[data-label]]:gap-2.5 has-data-checkbox:gap-3;
+		@apply has-[[data-checkbox]_[data-label]]:gap-2.5 has-data-checkbox:gap-3 gap-7;
 	}
 }

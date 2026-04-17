@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const selectMeta = {
 	name: "select",
 	type: "registry:ui",
-	group: "selections",
+	group: "pickers",
 	defaultStyle: "default",
 	styles: {
 		default: {},

@@ -3,7 +3,6 @@ import type { RegistryItem } from "@/registry/types";
 const formMeta = {
 	name: "form",
 	type: "registry:ui",
-	group: "forms",
 	defaultStyle: "default",
 	styles: {
 		default: {},

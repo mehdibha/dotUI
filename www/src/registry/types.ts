@@ -1,20 +1,27 @@
 import type { Registry as ShadcnRegistry, RegistryItem as ShadcnRegistryItem } from "shadcn/schema";
 
 /**
- * Component groups for style editor UI organization
+ * Component groups for style editor UI organization.
+ * Components in the same group share the same visual style.
  */
 export type ComponentGroup =
 	| "buttons"
 	| "inputs"
-	| "selections"
+	| "pickers"
+	| "selection-controls"
 	| "overlays"
+	| "menus-lists"
 	| "feedback"
+	| "progress"
+	| "tags"
 	| "navigation"
-	| "data-display"
-	| "date-time"
-	| "color"
-	| "forms"
-	| "layout";
+	| "disclosure"
+	| "containers"
+	| "sliders"
+	| "color-swatches"
+	| "calendar"
+	| "drop-zone"
+	| "typography";
 
 export type StyleMeta = {
 	description?: string;

@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const tableMeta = {
 	name: "table",
 	type: "registry:ui",
-	group: "data-display",
+	group: "containers",
 	defaultStyle: "default",
 	styles: {
 		default: {},

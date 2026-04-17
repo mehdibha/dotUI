@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const badgeMeta = {
 	name: "badge",
 	type: "registry:ui",
-	group: "data-display",
+	group: "tags",
 	defaultStyle: "default",
 	styles: {
 		default: {},

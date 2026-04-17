@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const switchMeta = {
 	name: "switch",
 	type: "registry:ui",
-	group: "selections",
+	group: "selection-controls",
 	defaultStyle: "default",
 	styles: {
 		default: {},

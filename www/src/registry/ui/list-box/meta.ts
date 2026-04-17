@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const listBoxMeta = {
 	name: "list-box",
 	type: "registry:ui",
-	group: "selections",
+	group: "menus-lists",
 	defaultStyle: "default",
 	styles: {
 		default: {},

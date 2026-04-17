@@ -60,3 +60,26 @@ export const ExamplesIndex: Record<
   "toggle-button-group": () => import("@/registry/ui/toggle-button-group/examples"),
   "tooltip": () => import("@/registry/ui/tooltip/examples"),
 };
+
+export const GroupExamplesIndex: Record<
+  string,
+  () => Promise<{ default: React.ComponentType }>
+> = {
+  "buttons": () => import("@/registry/examples/buttons"),
+  "calendar": () => import("@/registry/examples/calendar"),
+  "color-swatches": () => import("@/registry/examples/color-swatches"),
+  "containers": () => import("@/registry/examples/containers"),
+  "disclosure": () => import("@/registry/examples/disclosure"),
+  "drop-zone": () => import("@/registry/examples/drop-zone"),
+  "feedback": () => import("@/registry/examples/feedback"),
+  "inputs": () => import("@/registry/examples/inputs"),
+  "menus-lists": () => import("@/registry/examples/menus-lists"),
+  "navigation": () => import("@/registry/examples/navigation"),
+  "overlays": () => import("@/registry/examples/overlays"),
+  "pickers": () => import("@/registry/examples/pickers"),
+  "progress": () => import("@/registry/examples/progress"),
+  "selection-controls": () => import("@/registry/examples/selection-controls"),
+  "sliders": () => import("@/registry/examples/sliders"),
+  "tags": () => import("@/registry/examples/tags"),
+  "typography": () => import("@/registry/examples/typography"),
+};

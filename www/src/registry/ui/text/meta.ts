@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const textMeta = {
 	name: "text",
 	type: "registry:ui",
-	group: "data-display",
+	group: "typography",
 	defaultStyle: "default",
 	styles: {
 		default: {},

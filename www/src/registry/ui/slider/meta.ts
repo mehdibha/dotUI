@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const sliderMeta = {
 	name: "slider",
 	type: "registry:ui",
-	group: "inputs",
+	group: "sliders",
 	defaultStyle: "default",
 	styles: {
 		default: {},

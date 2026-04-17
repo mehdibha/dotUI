@@ -3,7 +3,7 @@ import type { RegistryItem } from "@/registry/types";
 const accordionMeta = {
 	name: "accordion",
 	type: "registry:ui",
-	group: "data-display",
+	group: "disclosure",
 	defaultStyle: "default",
 	styles: {
 		default: {},
