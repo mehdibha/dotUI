@@ -13,16 +13,16 @@ const baseStyles = tv({
 		field: "cn-label",
 		fieldContent: "cn-field flex flex-col gap-1",
 		label: "cn-label",
-		description: "cn-description",
-		fieldError: "cn-field-error",
+		description: "cn-description nth-last-2:-mt-1 in-data-disabled:text-fg-disabled text-fg-muted last:mt-0",
+		fieldError: "cn-field-error text-fg-danger",
 	},
 });
 
 const defaultStyles = tv({
 	extend: baseStyles,
 	slots: {
-		fieldset: ["flex flex-col gap-6", "has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3"],
-		legend: ["mb-3 font-medium text-base"],
+		// fieldset: ["flex flex-col gap-6", "has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3"],
+		// legend: ["mb-3 font-medium text-base"],
 		fieldGroup: "",
 		// fieldGroup: "group/field-group @container/field-group flex w-full flex-col gap-7 has-data-[slot=checkbox]:gap-1.5 has-data-[slot=radio]:gap-1.5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
 		field: "flex gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
@@ -36,8 +36,8 @@ const defaultStyles = tv({
 			// Invalid state
 			"in-data-invalid:text-fg-danger",
 		],
-		description: ["text-fg-muted text-xs", "in-data-disabled:text-fg-disabled"],
-		fieldError: "text-fg-danger text-xs",
+		// description: ["text-fg-muted text-xs", "in-data-disabled:text-fg-disabled"],
+		// fieldError: "text-fg-danger text-xs",
 	},
 	variants: {
 		orientation: {
