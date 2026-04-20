@@ -6,6 +6,10 @@ import { Examples } from "@/modules/create/preview/examples";
 import Addons from "./demos/addons";
 import Basic from "./demos/basic";
 import Buttons from "./demos/buttons";
+import InCard from "./demos/in-card";
+import KbdDemo from "./demos/kbd";
+import TextareaDemo from "./demos/textarea";
+import TooltipDropdownPopover from "./demos/tooltip-dropdown-popover";
 
 export default function InputGroupExamples() {
 	return (
@@ -18,6 +22,18 @@ export default function InputGroupExamples() {
 			</Example>
 			<Example title="With buttons">
 				<Buttons />
+			</Example>
+			<Example title="With tooltip, dropdown, popover">
+				<TooltipDropdownPopover />
+			</Example>
+			<Example title="With kbd">
+				<KbdDemo />
+			</Example>
+			<Example title="In card">
+				<InCard />
+			</Example>
+			<Example title="Textarea">
+				<TextareaDemo />
 			</Example>
 		</Examples>
 	);
