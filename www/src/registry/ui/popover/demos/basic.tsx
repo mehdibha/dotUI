@@ -6,7 +6,7 @@ import { Popover } from "@/registry/ui/popover";
 export default function Demo() {
 	return (
 		<Dialog>
-			<Button aria-label="Help" size="icon">
+			<Button aria-label="Help" isIconOnly>
 				<InfoIcon />
 			</Button>
 			<Popover>

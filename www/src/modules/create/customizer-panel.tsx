@@ -328,13 +328,13 @@ export function CustomizerPanel() {
 							</Command>
 						</Popover>
 					</Select>
-					<Button size="icon-sm">
+					<Button size="sm" isIconOnly>
 						<ShuffleIcon />
 					</Button>
-					<Button size="icon-sm">
+					<Button size="sm" isIconOnly>
 						<MoonIcon />
 					</Button>
-					<Button size="icon-sm">
+					<Button size="sm" isIconOnly>
 						<Undo2Icon />
 					</Button>
 				</div>
@@ -413,7 +413,7 @@ export function CustomizerPanel() {
 function ViewHeader({ title, onBack }: { title: string; onBack: () => void }) {
 	return (
 		<div className="mb-3 -ml-1 flex items-center gap-2">
-			<Button variant="quiet" size="icon-sm" onPress={onBack} aria-label="Back" className="size-6">
+			<Button variant="quiet" size="sm" isIconOnly onPress={onBack} aria-label="Back" className="size-6">
 				<ChevronLeftIcon />
 			</Button>
 			<h2 className="font-medium text-sm">{title}</h2>

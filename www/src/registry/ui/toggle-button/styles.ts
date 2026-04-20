@@ -29,12 +29,9 @@ const defaultStyles = tv({
 			quiet: "bg-transparent pressed:bg-inverse/20 text-fg hover:bg-inverse/10",
 		},
 		size: {
-			sm: "h-8 px-3 [&_svg]:size-4",
-			md: "h-9 px-4 [&_svg]:size-4",
-			lg: "h-10 px-5 [&_svg]:size-5",
-			"icon-sm": "h-8 w-8 px-0 [&_svg]:size-4",
-			icon: "h-9 w-9 px-0 [&_svg]:size-4",
-			"icon-lg": "h-10 w-10 px-0 [&_svg]:size-5",
+			sm: "h-8 px-3 [&_svg]:size-4 data-icon-only:w-8 data-icon-only:p-0",
+			md: "h-9 px-4 [&_svg]:size-4 data-icon-only:w-9 data-icon-only:p-0",
+			lg: "h-10 px-5 [&_svg]:size-5 data-icon-only:w-10 data-icon-only:p-0",
 		},
 	},
 });

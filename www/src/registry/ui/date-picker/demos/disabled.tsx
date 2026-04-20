@@ -12,7 +12,7 @@ export default function Demo() {
 			<InputGroup>
 				<DateInput />
 				<InputGroupAddon>
-					<Button variant="default" size="icon-sm">
+					<Button variant="default" size="sm" isIconOnly>
 						<CalendarIcon />
 					</Button>
 				</InputGroupAddon>

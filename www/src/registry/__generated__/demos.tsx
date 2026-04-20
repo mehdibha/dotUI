@@ -893,10 +893,6 @@ export const DemosIndex: Record<
     files: ["ui/input/demos/disabled.tsx"],
     component: React.lazy(() => import("@/registry/ui/input/demos/disabled")),
   },
-  "input/demos/input-group": {
-    files: ["ui/input/demos/input-group.tsx"],
-    component: React.lazy(() => import("@/registry/ui/input/demos/input-group")),
-  },
   "input/demos/sizes": {
     files: ["ui/input/demos/sizes.tsx"],
     component: React.lazy(() => import("@/registry/ui/input/demos/sizes")),
@@ -904,6 +900,14 @@ export const DemosIndex: Record<
   "input/demos/textarea": {
     files: ["ui/input/demos/textarea.tsx"],
     component: React.lazy(() => import("@/registry/ui/input/demos/textarea")),
+  },
+  "input-group/demos/input-group": {
+    files: ["ui/input-group/demos/input-group.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/input-group")),
+  },
+  "input-group/demos/vertical-group": {
+    files: ["ui/input-group/demos/vertical-group.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/vertical-group")),
   },
   "list-box/demos/async-loading": {
     files: ["ui/list-box/demos/async-loading.tsx"],

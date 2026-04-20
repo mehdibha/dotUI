@@ -49,11 +49,12 @@ export function Header({ className, items = [] }: HeaderProps) {
 					href={siteConfig.links.github}
 					target="_blank"
 					rel="noopener noreferrer"
-					className={buttonStyles({ variant: "default", size: "icon" })}
+					data-icon-only=""
+					className={buttonStyles({ variant: "default" })}
 				>
 					<GitHubIcon />
 				</a>
-				<ThemeToggle size="icon" />
+				<ThemeToggle isIconOnly />
 			</div>
 		</header>
 	);

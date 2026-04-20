@@ -19,7 +19,7 @@ export function BlockCard({ block }: BlockCardProps) {
 			<div className="flex items-center justify-between px-2">
 				<h2 className="truncate font-medium text-lg tracking-tight">{block.description}</h2>
 				<div className="flex items-center gap-2">
-					<ToggleButton size="icon-sm" aria-label="Toggle theme">
+					<ToggleButton size="sm" isIconOnly aria-label="Toggle theme">
 						<SunIcon />
 					</ToggleButton>
 					{/* <Button

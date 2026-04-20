@@ -86,7 +86,7 @@ export function DocsCopyPage({ content, url }: { content: string; url: string })
 				{isCopied ? <CheckIcon /> : <CopyIcon />} Copy page
 			</Button>
 			<Menu>
-				<Button size="icon-sm">
+				<Button size="sm" isIconOnly>
 					<ChevronDownIcon />
 				</Button>
 				<Popover placement="bottom end">

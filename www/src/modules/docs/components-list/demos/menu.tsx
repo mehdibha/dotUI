@@ -8,7 +8,7 @@ export function MenuDemo() {
 	return (
 		<div className="flex h-46 w-36 items-start justify-end">
 			<Menu>
-				<Button size="icon">
+				<Button isIconOnly>
 					<MenuIcon />
 				</Button>
 				<Popover placement="bottom end">

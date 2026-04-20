@@ -10,7 +10,7 @@ export function ComboboxDemo() {
 			<InputGroup>
 				<Input placeholder="Select country..." />
 				<InputGroupAddon>
-					<Button variant="quiet" size="icon">
+					<Button variant="quiet" isIconOnly>
 						<ChevronDownIcon />
 					</Button>
 				</InputGroupAddon>

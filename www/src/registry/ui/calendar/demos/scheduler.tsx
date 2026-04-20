@@ -154,7 +154,7 @@ export default function Demo() {
 									<span className="flex-1 truncate text-sm">{e.title}</span>
 									<Button
 										variant="quiet"
-										size="icon-sm"
+										size="sm" isIconOnly
 										aria-label={`Remove ${e.title}`}
 										onPress={() => setEvents((prev) => prev.filter((ev) => ev.id !== e.id))}
 									>

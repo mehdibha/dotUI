@@ -13,11 +13,11 @@ export default function Demo() {
 			<CardContent>
 				<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())}>
 					<CalendarHeader>
-						<Button slot="previous" variant="default" size="icon-sm">
+						<Button slot="previous" variant="default" size="sm" isIconOnly>
 							<ChevronLeftIcon />
 						</Button>
 						<div className="flex flex-1 gap-1.5">dropdowns</div>
-						<Button slot="next" variant="default" size="icon-sm">
+						<Button slot="next" variant="default" size="sm" isIconOnly>
 							<ChevronRightIcon />
 						</Button>
 					</CalendarHeader>

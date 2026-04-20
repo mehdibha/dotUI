@@ -12,7 +12,7 @@ export function SearchFieldDemo() {
 				</InputGroupAddon>
 				<Input placeholder="Search..." />
 				<InputGroupAddon>
-					<Button variant="quiet" size="icon" className="rounded-full">
+					<Button variant="quiet" isIconOnly className="rounded-full">
 						<XIcon />
 					</Button>
 				</InputGroupAddon>

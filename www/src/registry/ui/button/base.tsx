@@ -17,15 +17,18 @@ type ButtonVariants = VariantProps<ButtonStyles>;
 
 // MARK: seperator
 
-interface ButtonProps extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {}
+interface ButtonProps extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {
+	isIconOnly?: boolean;
+}
 
-const Button = ({ variant, size, className, children, ...props }: ButtonProps) => {
+const Button = ({ variant, size, isIconOnly, className, children, ...props }: ButtonProps) => {
 	const styles = useStyles();
 
 	return (
 		<ButtonPrimitive.Button
 			data-button=""
-			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
+			data-icon-only={isIconOnly ? "" : undefined}
+			className={composeRenderProps(className, (cn) => styles({ variant, size, isIconOnly, className: cn }))}
 			{...props}
 		>
 			{composeRenderProps(children, (children, { isPending }) => (
@@ -46,16 +49,18 @@ const Button = ({ variant, size, className, children, ...props }: ButtonProps) =
 
 // MARK: seperator
 
-interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitive.Link>, VariantProps<ButtonStyles> {}
+interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitive.Link>, VariantProps<ButtonStyles> {
+	isIconOnly?: boolean;
+}
 
-const LinkButton = ({ variant, size, className, children, ...props }: LinkButtonProps) => {
+const LinkButton = ({ variant, size, isIconOnly, className, children, ...props }: LinkButtonProps) => {
 	const styles = useStyles();
 
 	return (
 		<LinkPrimitive.Link
-			data-slot="button"
 			data-button=""
-			className={composeRenderProps(className, (cn) => styles({ variant, size, className: cn }))}
+			data-icon-only={isIconOnly ? "" : undefined}
+			className={composeRenderProps(className, (cn) => styles({ variant, size, isIconOnly, className: cn }))}
 			{...props}
 		>
 			{composeRenderProps(children, (children) => (

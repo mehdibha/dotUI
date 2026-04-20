@@ -10,13 +10,13 @@ export function GroupDemo() {
 		<div className="flex flex-col items-center gap-4">
 			<Group orientation="horizontal">
 				<Button>Button</Button>
-				<Button size="icon">
+				<Button isIconOnly>
 					<EllipsisIcon />
 				</Button>
 			</Group>
 			<Group orientation="horizontal">
 				<Input className="w-32" />
-				<Button size="icon">
+				<Button isIconOnly>
 					<SearchIcon />
 				</Button>
 			</Group>

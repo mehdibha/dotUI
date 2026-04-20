@@ -49,7 +49,7 @@ const TreeItemContent = (_props: TreeItemContentProps) => {
 						</Button>
 					)}
 					{selectionBehavior === "toggle" && selectionMode !== "none" && <Checkbox slot="selection" />}
-					<Button slot="chevron" variant="quiet" size="icon-sm">
+					<Button slot="chevron" variant="quiet" size="sm" isIconOnly>
 						<ChevronRightIcon />
 					</Button>
 				</>

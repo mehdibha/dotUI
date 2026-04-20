@@ -8,7 +8,7 @@ export function PopoverDemo() {
 	return (
 		<div className="flex h-40 items-end justify-center">
 			<Dialog>
-				<Button aria-label="Help" size="icon">
+				<Button aria-label="Help" isIconOnly>
 					<InfoIcon />
 				</Button>
 				<Popover>

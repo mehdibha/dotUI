@@ -13,7 +13,7 @@ export default function Demo() {
 			</BreadcrumbItem>
 			<BreadcrumbItem>
 				<Menu>
-					<Button variant="quiet" size="icon-xs" aria-label="More pages">
+					<Button variant="quiet" size="xs" isIconOnly aria-label="More pages">
 						<MoreHorizontalIcon />
 					</Button>
 					<Popover placement="bottom">

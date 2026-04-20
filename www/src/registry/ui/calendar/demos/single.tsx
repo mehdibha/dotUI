@@ -19,11 +19,11 @@ export default function Demo() {
 	return (
 		<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())}>
 			<CalendarHeader>
-				<Button slot="previous" variant="quiet" size="icon">
+				<Button slot="previous" variant="quiet" isIconOnly>
 					<ChevronLeftIcon />
 				</Button>
 				<CalendarHeading />
-				<Button slot="next" variant="quiet" size="icon">
+				<Button slot="next" variant="quiet" isIconOnly>
 					<ChevronRightIcon />
 				</Button>
 			</CalendarHeader>

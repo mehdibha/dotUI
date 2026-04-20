@@ -16,7 +16,6 @@ export default function ButtonExamples() {
 }
 
 const sizes = ["xs", "sm", "md", "lg"] as const;
-const iconSizes = ["icon-xs", "icon-sm", "icon", "icon-lg"] as const;
 const variants = ["primary", "default", "link", "danger", "quiet"] as const;
 
 const ButtonVariantsAndSizes = () => {
@@ -72,10 +71,10 @@ const ButtonIconLeft = () => {
 const ButtonIconOnly = () => {
 	return (
 		<Example title="Icon only">
-			{iconSizes.map((size) => (
+			{sizes.map((size) => (
 				<div key={size} className="flex w-full items-center gap-3">
 					{variants.map((variant) => (
-						<Button key={variant} size={size} variant={variant}>
+						<Button key={variant} size={size} variant={variant} isIconOnly>
 							<ArrowRightIcon />
 						</Button>
 					))}

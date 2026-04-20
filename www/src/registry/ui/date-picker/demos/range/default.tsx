@@ -22,7 +22,7 @@ export default function Demo() {
 				<span>–</span>
 				<DateInput slot="end" />
 				<InputGroupAddon>
-					<Button variant="default" size="icon-sm">
+					<Button variant="default" size="sm" isIconOnly>
 						<CalendarIcon />
 					</Button>
 				</InputGroupAddon>

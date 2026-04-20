@@ -30,10 +30,9 @@ const baseStyles = tv({
 			sm: "cn-button-size-sm",
 			md: "cn-button-size-md",
 			lg: "cn-button-size-lg",
-			"icon-xs": "cn-button-size-icon-xs",
-			"icon-sm": "cn-button-size-icon-sm",
-			icon: "cn-button-size-icon",
-			"icon-lg": "cn-button-size-icon-lg",
+		},
+		isIconOnly: {
+			true: "p-0",
 		},
 	},
 	defaultVariants: {

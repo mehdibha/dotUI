@@ -34,7 +34,7 @@ export default function Demo() {
 					<InputPrimitives.Input />
 					<InputGroupAddon>
 						<Tooltip>
-							<Button variant="quiet" size="icon">
+							<Button variant="quiet" isIconOnly>
 								<XCircleIcon />
 							</Button>
 							<TooltipContent placement="bottom">

@@ -12,7 +12,7 @@ export default function Demo() {
 	return (
 		<div className="flex flex-col items-center gap-10">
 			<Tooltip>
-				<Button size="icon">
+				<Button isIconOnly>
 					<PenSquareIcon />
 				</Button>
 				<TooltipContent shouldFlip={shouldFlip}>Create new issue</TooltipContent>

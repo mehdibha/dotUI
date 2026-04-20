@@ -6,7 +6,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 export default function Demo() {
 	return (
 		<Tooltip>
-			<Button size="icon">
+			<Button isIconOnly>
 				<SquarePenIcon />
 			</Button>
 			<TooltipContent>

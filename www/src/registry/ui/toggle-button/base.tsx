@@ -25,17 +25,27 @@ const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 
 interface ToggleButtonProps
 	extends React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
-		ToggleButtonVariants {}
+		ToggleButtonVariants {
+	isIconOnly?: boolean;
+}
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
 	const styles = useStyles();
-	const { variant = "default", size = "md", className, children, ...props } = useContextProps(localProps);
+	const {
+		variant = "default",
+		size = "md",
+		isIconOnly,
+		className,
+		children,
+		...props
+	} = useContextProps(localProps);
 
 	return (
 		<ToggleButtonPrimitives.ToggleButton
 			data-slot="button"
 			data-variant={variant}
 			data-size={size}
+			data-icon-only={isIconOnly ? "" : undefined}
 			className={composeRenderProps(className, (cn) =>
 				styles({
 					variant,

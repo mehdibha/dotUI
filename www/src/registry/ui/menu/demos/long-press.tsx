@@ -6,7 +6,7 @@ import { Popover } from "@/registry/ui/popover";
 export default function Demo() {
 	return (
 		<Menu trigger="longPress">
-			<Button variant="default" size="icon">
+			<Button variant="default" isIconOnly>
 				<MenuIcon />
 			</Button>
 			<Popover>

@@ -28,11 +28,11 @@ const Calendar = <T extends CalendarPrimitive.DateValue>({ className, ...props }
 					{children ?? (
 						<>
 							<CalendarHeader>
-								<Button slot="previous" variant="quiet" size="icon">
+								<Button slot="previous" variant="quiet" isIconOnly>
 									<ChevronLeftIcon />
 								</Button>
 								<CalendarHeading />
-								<Button slot="next" variant="quiet" size="icon">
+								<Button slot="next" variant="quiet" isIconOnly>
 									<ChevronRightIcon />
 								</Button>
 							</CalendarHeader>
@@ -62,11 +62,11 @@ const RangeCalendar = <T extends CalendarPrimitive.DateValue>({ className, ...pr
 					{children ?? (
 						<>
 							<CalendarHeader>
-								<Button slot="previous" variant="quiet" size="icon">
+								<Button slot="previous" variant="quiet" isIconOnly>
 									<ChevronLeftIcon />
 								</Button>
 								<CalendarHeading />
-								<Button slot="next" variant="quiet" size="icon">
+								<Button slot="next" variant="quiet" isIconOnly>
 									<ChevronRightIcon />
 								</Button>
 							</CalendarHeader>
@@ -88,11 +88,11 @@ const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
 		<header data-calendar-header="" className={header({ className })} {...props}>
 			{props.children ?? (
 				<>
-					<Button slot="previous" variant="quiet" size="icon">
+					<Button slot="previous" variant="quiet" isIconOnly>
 						<ChevronLeftIcon />
 					</Button>
 					<CalendarHeading />
-					<Button slot="next" variant="quiet" size="icon">
+					<Button slot="next" variant="quiet" isIconOnly>
 						<ChevronRightIcon />
 					</Button>
 				</>
