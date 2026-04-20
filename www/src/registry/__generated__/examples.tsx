@@ -34,6 +34,7 @@ export const ExamplesIndex: Record<
   "file-trigger": () => import("@/registry/ui/file-trigger/examples"),
   "form": () => import("@/registry/ui/form/examples"),
   "group": () => import("@/registry/ui/group/examples"),
+  "input": () => import("@/registry/ui/input/examples"),
   "input-group": () => import("@/registry/ui/input-group/examples"),
   "list-box": () => import("@/registry/ui/list-box/examples"),
   "menu": () => import("@/registry/ui/menu/examples"),
