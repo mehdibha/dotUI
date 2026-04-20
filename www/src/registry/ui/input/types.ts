@@ -11,7 +11,7 @@ export interface InputGroupProps extends React.ComponentProps<typeof GroupPrimit
 	 * The size of the input group.
 	 * @default 'md'
 	 */
-	size?: "xs" | "sm" | "md" | "lg";
+	size?: "sm" | "md" | "lg";
 	/**
 	 * The orientation of the input group. Use `vertical` to stack addons above or
 	 * below the input (useful with `TextArea`).
@@ -28,7 +28,7 @@ export interface InputProps extends Omit<React.ComponentProps<typeof InputPrimit
 	 * The size of the input.
 	 * @default 'md'
 	 */
-	size?: "xs" | "sm" | "md" | "lg";
+	size?: "sm" | "md" | "lg";
 }
 
 /**
@@ -39,7 +39,7 @@ export interface TextAreaProps extends Omit<React.ComponentProps<typeof TextArea
 	 * The size of the textarea.
 	 * @default 'md'
 	 */
-	size?: "xs" | "sm" | "md" | "lg";
+	size?: "sm" | "md" | "lg";
 }
 
 /**
@@ -55,7 +55,7 @@ export interface DateInputProps extends Omit<DateFieldPrimitives.DateInputProps,
 	 * The size of the date input.
 	 * @default 'md'
 	 */
-	size?: "xs" | "sm" | "md" | "lg";
+	size?: "sm" | "md" | "lg";
 
 	children?: DateFieldPrimitives.DateInputProps["children"];
 }
