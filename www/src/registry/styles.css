@@ -3,114 +3,12 @@
 @import "./base/theme.css";
 @import "./base/fonts.css";
 
+@import "./ui/avatar/styles.css";
+@import "./ui/alert/styles.css";
+@import "./ui/badge/styles.css";
+@import "./ui/button/styles.css";
+@import "./ui/calendar/styles.css";
 @import "./ui/card/styles.css";
 @import "./ui/checkbox/styles.css";
 @import "./ui/color-area/styles.css";
 @import "./ui/field/styles.css";
-
-/* dynamic styles */
-:root {
-	--alert-radius: var(--radius-lg);
-	--avatar-radius: calc(infinity * 1px);
-	--badge-radius: var(--radius-md);
-	--btn-radius: var(--radius-md);
-	--btn-font-weight: var(--font-weight-medium);
-
-	/* calendar */
-	--calendar-cell-radius: var(--radius-lg);
-	--calendar-cell-size: calc(var(--spacing) * 8);
-	--calendar-range-radius: var(--radius-sm);
-}
-
-.density-compact {
-	/* button */
-	.cn-button-base {
-		@apply gap-1 text-xs/relaxed;
-	}
-	.cn-button-size-xs {
-		@apply h-5 px-2 rounded-sm text-[0.625rem] has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-2.5;
-	}
-	.cn-button-size-sm {
-		@apply h-6 px-2 has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3;
-	}
-	.cn-button-size-md {
-		@apply h-7 px-2 has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3.5;
-	}
-	.cn-button-size-lg {
-		@apply h-8 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-4;
-	}
-	.cn-button-size-icon-xs {
-		@apply size-5 rounded-sm **:[svg]:not-with-[size]:size-2.5;
-	}
-	.cn-button-size-icon-sm {
-		@apply size-6 **:[svg]:not-with-[size]:size-3;
-	}
-	.cn-button-size-icon {
-		@apply size-7 **:[svg]:not-with-[size]:size-3.5;
-	}
-	.cn-button-size-icon-lg {
-		@apply size-8 **:[svg]:not-with-[size]:size-4;
-	}
-}
-
-.density-default {
-	/* button */
-	.cn-button-base {
-		@apply text-sm *:[svg]:not-with-[size]:size-4;
-	}
-	.cn-button-size-xs {
-		@apply h-6 gap-1 px-2 has-data-icon-end:pr-1.5 text-xs has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3;
-	}
-	.cn-button-size-sm {
-		@apply h-7 gap-1 px-2.5 text-[0.8125rem] has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5;
-	}
-	.cn-button-size-md {
-		@apply h-8 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-3.5;
-	}
-	.cn-button-size-lg {
-		@apply h-9 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-4;
-	}
-	.cn-button-size-icon-xs {
-		@apply size-6 **:[svg]:not-with-[size]:size-3;
-	}
-	.cn-button-size-icon-sm {
-		@apply size-7;
-	}
-	.cn-button-size-icon {
-		@apply size-8;
-	}
-	.cn-button-size-icon-lg {
-		@apply size-9;
-	}
-}
-
-.density-comfortable {
-	/* button */
-	.cn-button-base {
-		@apply text-sm *:[svg]:not-with-[size]:size-4;
-	}
-	.cn-button-size-xs {
-		@apply h-7 gap-1 px-2.5 text-[0.8125rem] has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-3.5;
-	}
-	.cn-button-size-sm {
-		@apply h-8 gap-1 px-2.5 has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5;
-	}
-	.cn-button-size-md {
-		@apply h-9 gap-1.5 px-2.5 has-data-icon-end:pr-2 has-data-icon-start:pl-2;
-	}
-	.cn-button-size-lg {
-		@apply h-10 gap-1.5 px-3 has-data-icon-end:pr-2 has-data-icon-start:pl-2;
-	}
-	.cn-button-size-icon-xs {
-		@apply size-7;
-	}
-	.cn-button-size-icon-sm {
-		@apply size-8;
-	}
-	.cn-button-size-icon {
-		@apply size-9;
-	}
-	.cn-button-size-icon-lg {
-		@apply size-10;
-	}
-}

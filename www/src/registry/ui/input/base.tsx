@@ -5,44 +5,35 @@ import { chain, mergeProps } from "react-aria";
 import { mergeRefs } from "react-aria/mergeRefs";
 import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as DateFieldPrimitives from "react-aria-components/DateField";
-import * as GroupPrimitives from "react-aria-components/Group";
-import * as InputPrimitives from "react-aria-components/Input";
+import * as DateFieldPrimitive from "react-aria-components/DateField";
+import * as GroupPrimitive from "react-aria-components/Group";
+import * as InputPrimitive from "react-aria-components/Input";
 import { Provider, useContextProps } from "react-aria-components/slots";
-import * as TextAreaPrimitives from "react-aria-components/TextArea";
+import * as TextAreaPrimitive from "react-aria-components/TextArea";
 import { useControlledState } from "react-stately/useControlledState";
 import type { VariantProps } from "tailwind-variants";
 
-import { createContext } from "@/registry/lib/context";
-
-import { dateInputStyles, useStyles } from "./styles";
+import { useStyles } from "./styles";
 import type { InputStyles } from "./styles";
 
-// MARK: InputGroupContext
-
-const [InputGroupContext, useInputGroupContext] = createContext<boolean>({
-	name: "InputGroupContext",
-	strict: false,
-});
-
-// MARK: InputGroup
+// MARK: Separator
 
 interface InputGroupProps
-	extends React.ComponentProps<typeof GroupPrimitives.Group>,
+	extends React.ComponentProps<typeof GroupPrimitive.Group>,
 		Pick<VariantProps<InputStyles>, "size"> {}
 
 const InputGroup = ({ className, children, size = "md", ...props }: InputGroupProps) => {
-	const { group } = useStyles()();
+	const { inputGroup } = useStyles()();
 	const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 	const [inputContextProps, mergedInputRef] = useContextProps(
 		{},
 		inputRef as React.RefObject<HTMLInputElement>,
-		InputPrimitives.InputContext,
+		InputPrimitive.InputContext,
 	);
 	const [textAreaContextProps, mergedTextAreaRef] = useContextProps(
 		{},
 		inputRef as React.RefObject<HTMLTextAreaElement>,
-		TextAreaPrimitives.TextAreaContext,
+		TextAreaPrimitive.TextAreaContext,
 	);
 	const inputProps = { ...inputContextProps, ref: mergedInputRef };
 	const textAreaProps = { ...textAreaContextProps, ref: mergedTextAreaRef };
@@ -58,59 +49,53 @@ const InputGroup = ({ className, children, size = "md", ...props }: InputGroupPr
 	};
 
 	return (
-		<GroupPrimitives.Group
-			role="presentation"
+		<GroupPrimitive.Group
+			role="group"
 			data-input-group=""
-			data-slot="input-group"
 			data-size={size}
-			className={composeRenderProps(className, (className) => group({ size, className }))}
+			className={composeRenderProps(className, (className) => inputGroup({ size, className }))}
 			{...mergeProps(props, { onPointerDown })}
 		>
 			{composeRenderProps(children, (children) => (
 				<Provider
 					values={[
-						[InputPrimitives.InputContext, inputProps],
-						[TextAreaPrimitives.TextAreaContext, textAreaProps],
-						[InputGroupContext, true],
+						[InputPrimitive.InputContext, inputProps],
+						[TextAreaPrimitive.TextAreaContext, textAreaProps],
 					]}
 				>
 					{children}
 				</Provider>
 			))}
-		</GroupPrimitives.Group>
+		</GroupPrimitive.Group>
 	);
 };
 
-// MARK: Input
+// MARK: Separator
 
 interface InputProps
-	extends Omit<React.ComponentProps<typeof InputPrimitives.Input>, "size">,
+	extends Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
 		Pick<VariantProps<InputStyles>, "size"> {}
 
 const Input = ({ size = "md", className, ...props }: InputProps) => {
 	const { input } = useStyles()();
-	const inGroup = useInputGroupContext("Input");
 	return (
-		<InputPrimitives.Input
-			data-slot="input"
+		<InputPrimitive.Input
 			data-input=""
-			data-in-group={inGroup || undefined}
 			data-size={size}
-			className={composeRenderProps(className, (className) => input({ className, inGroup, size }))}
+			className={composeRenderProps(className, (className) => input({ className, size }))}
 			{...props}
 		/>
 	);
 };
 
-// MARK: TextArea
+// MARK: Separator
 
 interface TextAreaProps
-	extends Omit<React.ComponentProps<typeof TextAreaPrimitives.TextArea>, "size">,
+	extends Omit<React.ComponentProps<typeof TextAreaPrimitive.TextArea>, "size">,
 		Pick<VariantProps<InputStyles>, "size"> {}
 
 const TextArea = ({ ref, className, onChange, size = "md", ...props }: TextAreaProps) => {
 	const { textArea } = useStyles()();
-	const inGroup = useInputGroupContext("TextArea");
 	const [inputValue, setInputValue] = useControlledState(props.value, props.defaultValue ?? "", () => {});
 	const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -143,65 +128,61 @@ const TextArea = ({ ref, className, onChange, size = "md", ...props }: TextAreaP
 	}, [onHeightChange, inputValue, inputRef]);
 
 	return (
-		<TextAreaPrimitives.TextArea
+		<TextAreaPrimitive.TextArea
 			ref={mergeRefs(inputRef, ref)}
-			data-slot="textarea"
-			data-in-group={inGroup || undefined}
+			data-text-area=""
 			onChange={chain(onChange, setInputValue)}
-			className={composeRenderProps(className, (className) => textArea({ className, inGroup }))}
+			className={composeRenderProps(className, (className) => textArea({ className }))}
 			{...props}
 		/>
 	);
 };
 
-// MARK: InputAddon
+// MARK: Separator
 
-interface InputAddonProps extends React.ComponentProps<"div"> {}
+interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
 
-function InputAddon({ className, ...props }: InputAddonProps) {
-	const { addon } = useStyles()();
-	return <div role="group" data-slot="input-addon" className={addon({ className })} {...props} />;
+function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
+	const { inputGroupAddon } = useStyles()();
+	return <div data-input-group-addon="" className={inputGroupAddon({ className })} {...props} />;
 }
 
-// MARK: DateInput
+// MARK: Separator
 
 interface DateInputProps
-	extends Omit<DateFieldPrimitives.DateInputProps, "children">,
+	extends Omit<DateFieldPrimitive.DateInputProps, "children">,
 		Pick<VariantProps<InputStyles>, "size"> {
-	children?: DateFieldPrimitives.DateInputProps["children"];
+	children?: DateFieldPrimitive.DateInputProps["children"];
 }
 
 const DateInput = ({ className, size, ...props }: DateInputProps) => {
-	const { input } = useStyles()();
-	const inGroup = useInputGroupContext("DateInput");
+	const { dateInput } = useStyles()();
 	return (
-		<DateFieldPrimitives.DateInput
-			data-slot="date-input"
+		<DateFieldPrimitive.DateInput
 			data-date-input=""
-			data-in-group={inGroup || undefined}
-			className={composeRenderProps(className, (className) => input({ className, inGroup, size }))}
+			className={composeRenderProps(className, (className) => dateInput({ className, size }))}
 			{...props}
 		>
 			{props.children ? props.children : (segment) => <DateSegment segment={segment} />}
-		</DateFieldPrimitives.DateInput>
+		</DateFieldPrimitive.DateInput>
 	);
 };
 
-// MARK: DateSegment
+// MARK: Separator
 
-interface DateSegmentProps extends React.ComponentProps<typeof DateFieldPrimitives.DateSegment> {}
+interface DateSegmentProps extends React.ComponentProps<typeof DateFieldPrimitive.DateSegment> {}
 
 const DateSegment = ({ className, ...props }: DateSegmentProps) => {
-	const { dateSegment } = dateInputStyles();
+	const { dateInputSegment } = useStyles()();
 	return (
-		<DateFieldPrimitives.DateSegment
-			className={composeRenderProps(className, (className) => dateSegment({ className }))}
+		<DateFieldPrimitive.DateSegment
+			className={composeRenderProps(className, (className) => dateInputSegment({ className }))}
 			{...props}
 		/>
 	);
 };
 
-// MARK: exports
+// MARK: Separator
 
-export type { DateInputProps, DateSegmentProps, InputAddonProps, InputGroupProps, InputProps, TextAreaProps };
-export { DateInput, DateSegment, Input, InputAddon, InputGroup, TextArea };
+export type { DateInputProps, DateSegmentProps, InputGroupAddonProps, InputGroupProps, InputProps, TextAreaProps };
+export { DateInput, DateSegment, Input, InputGroup, InputGroupAddon, TextArea };

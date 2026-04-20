@@ -1,0 +1,48 @@
+:root {
+	--input-radius: var(--radius-md);
+}
+
+.density-compact {
+	.cn-input-group-size-xs {
+		@apply h-5;
+	}
+	.cn-input-group-size-sm {
+		@apply h-6;
+	}
+	.cn-input-group-size-md {
+		@apply h-7;
+	}
+	.cn-input-group-size-lg {
+		@apply h-8;
+	}
+}
+
+.density-default {
+	.cn-input-group-size-xs {
+		@apply h-6;
+	}
+	.cn-input-group-size-sm {
+		@apply h-7;
+	}
+	.cn-input-group-size-md {
+		@apply h-8;
+	}
+	.cn-input-group-size-lg {
+		@apply h-9;
+	}
+}
+
+.density-comfortable {
+	.cn-input-group-size-xs {
+		@apply h-7;
+	}
+	.cn-input-group-size-sm {
+		@apply h-8;
+	}
+	.cn-input-group-size-md {
+		@apply h-9;
+	}
+	.cn-input-group-size-lg {
+		@apply h-10;
+	}
+}
