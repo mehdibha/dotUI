@@ -4,7 +4,7 @@ import { Calendar } from "@/registry/ui/calendar";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
@@ -13,11 +13,11 @@ export default function Demo() {
 			<Label>Event date</Label>
 			<InputGroup>
 				<DateInput />
-				<InputAddon>
+				<InputGroupAddon>
 					<Button variant="default" size="icon-sm">
 						<CalendarIcon />
 					</Button>
-				</InputAddon>
+				</InputGroupAddon>
 			</InputGroup>
 			<Overlay type="popover" mobileType="drawer">
 				<DialogContent>

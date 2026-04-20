@@ -6,7 +6,7 @@ import { BoldIcon, ItalicIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Label } from "@/registry/ui/field";
 import { Group } from "@/registry/ui/group";
-import { InputAddon, InputGroup, TextArea } from "@/registry/ui/input";
+import { InputGroupAddon, InputGroup, TextArea } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 import { ToggleButton } from "@/registry/ui/toggle-button";
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group";
@@ -20,7 +20,7 @@ export default function Demo() {
 		<TextField value={inputValue} onChange={setInputValue}>
 			<Label>Comment</Label>
 			<InputGroup>
-				<InputAddon>
+				<InputGroupAddon>
 					<Group>
 						<Button
 							variant="quiet"
@@ -39,9 +39,9 @@ export default function Demo() {
 							❤️
 						</Button>
 					</Group>
-				</InputAddon>
+				</InputGroupAddon>
 				<TextArea placeholder="type something here" />
-				<InputAddon>
+				<InputGroupAddon>
 					<Group className="justify-between">
 						<ToggleButtonGroup>
 							<ToggleButton size="icon">
@@ -53,7 +53,7 @@ export default function Demo() {
 						</ToggleButtonGroup>
 						<Button variant="primary">Comment</Button>
 					</Group>
-				</InputAddon>
+				</InputGroupAddon>
 			</InputGroup>
 		</TextField>
 	);

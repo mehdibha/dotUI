@@ -1,10 +1,10 @@
 {
 	"name": "InputGroupProps",
-	"description": "Missing description.",
+	"description": "An input group combines an input with addons like buttons, icons, or labels.",
 	"props": {
 		"size": {
-			"type": "\"lg\" | \"md\" | \"sm\"",
-			"detailedType": "'lg' | 'md' | 'sm' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
+			"detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -19,11 +19,34 @@
 					{
 						"type": "stringLiteral",
 						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "xs"
 					}
 				]
 			},
 			"description": "The size of the input group.",
 			"default": "'md'"
+		},
+		"orientation": {
+			"type": "\"horizontal\" | \"vertical\"",
+			"detailedType": "'horizontal' | 'vertical' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "horizontal"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "vertical"
+					}
+				]
+			},
+			"description": "The orientation of the input group. Use `vertical` to stack addons above or\nbelow the input (useful with `TextArea`).",
+			"default": "'horizontal'"
 		},
 		"onHoverStart": {
 			"type": "((e: HoverEvent) => void)",

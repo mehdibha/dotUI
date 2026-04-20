@@ -4,7 +4,6 @@ description: A basic input component for text entry.
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/TextField.html
-wip: true
 ---
 
 <Demo name="input/demos/default" />
@@ -17,7 +16,7 @@ npx shadcn@latest add @dotui/input
 
 ## Usage
 
-Use `Input` to allow users to enter text. Combine with `InputGroup` and `InputAddon` to add icons, buttons, or labels alongside the input.
+Use `Input` to allow users to enter text. Combine with `InputGroup` and `InputGroupAddon` to add icons, buttons, or labels alongside the input.
 
 ```tsx
 import { Input } from "@/components/ui/input";
@@ -29,9 +28,10 @@ import { Input } from "@/components/ui/input";
 
 ## Sizes
 
-Use the `size` prop to control the input height. Available sizes are `sm`, `md` (default), and `lg`.
+Use the `size` prop to control the input height. Available sizes are `xs`, `sm`, `md` (default), and `lg`.
 
 ```tsx
+<Input size="xs" />
 <Input size="sm" />
 <Input size="md" />
 <Input size="lg" />
@@ -56,9 +56,10 @@ Use the controls below to experiment with different input props and see the live
 
 <Examples>
   <Example name="input/demos/default" title="Default" />
-  <Example name="input/demos/sizes" title="Sizes" />
+  <Example name="input/demos/sizes" title="All sizes" />
   <Example name="input/demos/disabled" title="Disabled" />
   <Example name="input/demos/input-group" title="Input Group" />
+  <Example name="input/demos/vertical-group" title="Vertical Group" />
   <Example name="input/demos/textarea" title="Textarea" />
 </Examples>
 

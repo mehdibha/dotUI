@@ -21,7 +21,7 @@ import { ColorPicker } from "@/registry/ui/color-picker";
 import { ColorSwatch } from "@/registry/ui/color-swatch";
 import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/registry/ui/color-swatch-picker";
 import { DialogContent } from "@/registry/ui/dialog";
-import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { Popover } from "@/registry/ui/popover";
 import { TextField } from "@/registry/ui/text-field";
 
@@ -174,7 +174,7 @@ export default function Demo() {
 						<div className="flex items-center gap-2">
 							<TextField aria-label="Event title" value={newTitle} onChange={setNewTitle} className="w-auto flex-1">
 								<InputGroup>
-									<InputAddon>
+									<InputGroupAddon>
 										<ColorPicker>
 											<Button>
 												<ColorSwatch />
@@ -189,7 +189,7 @@ export default function Demo() {
 												</DialogContent>
 											</Popover>
 										</ColorPicker>
-									</InputAddon>
+									</InputGroupAddon>
 									<Input placeholder="New event…" className="w-auto" />
 								</InputGroup>
 							</TextField>

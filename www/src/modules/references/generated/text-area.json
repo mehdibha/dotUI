@@ -3,8 +3,8 @@
 	"description": "A textarea allows a user to input multi-line text.",
 	"props": {
 		"size": {
-			"type": "\"lg\" | \"md\" | \"sm\"",
-			"detailedType": "'lg' | 'md' | 'sm' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
+			"detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -19,6 +19,10 @@
 					{
 						"type": "stringLiteral",
 						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "xs"
 					}
 				]
 			},

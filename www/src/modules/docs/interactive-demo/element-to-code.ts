@@ -42,7 +42,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 	// Input
 	Input: "@/components/ui/input",
 	InputGroup: "@/components/ui/input",
-	InputAddon: "@/components/ui/input",
+	InputGroupAddon: "@/components/ui/input",
 	TextArea: "@/components/ui/input",
 
 	// Select

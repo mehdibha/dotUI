@@ -8,7 +8,7 @@ import type * as CalendarPrimitives from "react-aria-components/Calendar";
 import { Calendar } from "@/registry/ui/calendar";
 import { Card, CardContent, CardFooter } from "@/registry/ui/card";
 import { Label } from "@/registry/ui/field";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { TimeField } from "@/registry/ui/time-field";
 
 export default function Demo() {
@@ -22,18 +22,18 @@ export default function Demo() {
 				<TimeField className="w-full" defaultValue={new Time(11, 45)}>
 					<Label>Start time</Label>
 					<InputGroup>
-						<InputAddon>
+						<InputGroupAddon>
 							<TimerIcon />
-						</InputAddon>
+						</InputGroupAddon>
 						<DateInput />
 					</InputGroup>
 				</TimeField>
 				<TimeField className="w-full" defaultValue={new Time(13, 30)}>
 					<Label>End time</Label>
 					<InputGroup>
-						<InputAddon>
+						<InputGroupAddon>
 							<TimerIcon />
-						</InputAddon>
+						</InputGroupAddon>
 						<DateInput />
 					</InputGroup>
 				</TimeField>

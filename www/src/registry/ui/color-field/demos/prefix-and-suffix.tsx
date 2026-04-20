@@ -1,6 +1,6 @@
 import { PaletteIcon } from "@/registry/__generated__/icons";
 import { ColorField } from "@/registry/ui/color-field";
-import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 
 export default function Demo() {
 	return (
@@ -8,16 +8,16 @@ export default function Demo() {
 			<ColorField aria-label="Color field with prefix">
 				<InputGroup>
 					<Input />
-					<InputAddon>
+					<InputGroupAddon>
 						<PaletteIcon />
-					</InputAddon>
+					</InputGroupAddon>
 				</InputGroup>
 			</ColorField>
 			<ColorField aria-label="Color field with suffix">
 				<InputGroup>
-					<InputAddon>
+					<InputGroupAddon>
 						<PaletteIcon />
-					</InputAddon>
+					</InputGroupAddon>
 					<Input />
 				</InputGroup>
 			</ColorField>

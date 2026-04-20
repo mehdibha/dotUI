@@ -6,7 +6,7 @@ import { Calendar } from "@/registry/ui/calendar";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 interface DatePickerPlaygroundProps {
@@ -25,11 +25,11 @@ export function DatePickerPlayground({
 			{label && <Label>{label}</Label>}
 			<InputGroup>
 				<DateInput />
-				<InputAddon>
+				<InputGroupAddon>
 					<Button variant="default" size="icon-sm">
 						<CalendarIcon />
 					</Button>
-				</InputAddon>
+				</InputGroupAddon>
 			</InputGroup>
 			<Overlay type="popover" mobileType="drawer">
 				<DialogContent>

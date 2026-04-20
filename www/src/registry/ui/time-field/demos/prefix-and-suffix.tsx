@@ -1,5 +1,5 @@
 import { TimerIcon } from "@/registry/__generated__/icons";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { TimeField } from "@/registry/ui/time-field";
 
 export default function Demo() {
@@ -7,9 +7,9 @@ export default function Demo() {
 		<div className="space-y-2">
 			<TimeField aria-label="Event time">
 				<InputGroup>
-					<InputAddon>
+					<InputGroupAddon>
 						<TimerIcon />
-					</InputAddon>
+					</InputGroupAddon>
 					<DateInput />
 				</InputGroup>
 			</TimeField>
@@ -17,9 +17,9 @@ export default function Demo() {
 			<TimeField aria-label="Event time">
 				<InputGroup>
 					<DateInput />
-					<InputAddon>
+					<InputGroupAddon>
 						<TimerIcon />
-					</InputAddon>
+					</InputGroupAddon>
 				</InputGroup>
 			</TimeField>
 		</div>

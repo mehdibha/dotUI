@@ -3,7 +3,7 @@ import { Button } from "@/registry/ui/button";
 import { RangeCalendar } from "@/registry/ui/calendar";
 import { DateRangePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
@@ -13,11 +13,11 @@ export default function Demo() {
 				<DateInput slot="start" />
 				<span>–</span>
 				<DateInput slot="end" />
-				<InputAddon>
+				<InputGroupAddon>
 					<Button variant="default" size="icon-sm">
 						<CalendarIcon />
 					</Button>
-				</InputAddon>
+				</InputGroupAddon>
 			</InputGroup>
 			<Overlay type="popover" mobileType="drawer">
 				<DialogContent>

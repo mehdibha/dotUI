@@ -1,9 +1,9 @@
-import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 
 export function InputGroupDemo() {
 	return (
 		<InputGroup className="w-full">
-			<InputAddon>@</InputAddon>
+			<InputGroupAddon>@</InputGroupAddon>
 			<Input placeholder="username" />
 		</InputGroup>
 	);

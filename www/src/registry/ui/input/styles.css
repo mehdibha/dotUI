@@ -2,47 +2,232 @@
 	--input-radius: var(--radius-md);
 }
 
+/* ------------------------------------------------------------------------- */
+/* Inputs nested in an InputGroup shed their own chrome — the group owns it. */
+/* ------------------------------------------------------------------------- */
+
+[data-input-group] [data-input],
+[data-input-group] [data-text-area],
+[data-input-group] [data-date-input] {
+	@apply min-w-0 flex-1 border-0 bg-transparent shadow-none outline-none rounded-none;
+	@apply focus:focus-reset focus-within:focus-reset;
+	@apply disabled:bg-transparent disabled:border-0;
+}
+
+[data-input-group] [data-text-area] {
+	@apply min-h-0;
+}
+
+/* Horizontal group: inputs stretch the full height of the group */
+[data-input-group][data-orientation="horizontal"] [data-input],
+[data-input-group][data-orientation="horizontal"] [data-date-input] {
+	@apply h-full;
+}
+
+/* Vertical group: textarea fills, addons span the width */
+[data-input-group][data-orientation="vertical"] {
+	@apply h-auto;
+}
+[data-input-group][data-orientation="vertical"] [data-input-group-addon] {
+	@apply w-full justify-between;
+}
+[data-input-group][data-orientation="vertical"] [data-text-area] {
+	@apply w-full;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Addon tweaks when containing a Button: pull flush with the group edge      */
+/* so the button's padding aligns with the group padding.                     */
+/* ------------------------------------------------------------------------- */
+
+[data-input-group][data-orientation="horizontal"] [data-input-group-addon]:has(> [data-button]):first-child {
+	margin-left: calc(var(--spacing) * -1);
+}
+[data-input-group][data-orientation="horizontal"] [data-input-group-addon]:has(> [data-button]):last-child {
+	margin-right: calc(var(--spacing) * -1);
+}
+
+/* ------------------------------------------------------------------------- */
+/* Densities                                                                  */
+/* ------------------------------------------------------------------------- */
+
 .density-compact {
+	/* text size (inherits for inputs inside group) */
+	.cn-input-group,
+	.cn-input,
+	.cn-text-area,
+	.cn-date-input {
+		@apply text-xs;
+	}
+
+	/* group heights + padding (horizontal) */
 	.cn-input-group-size-xs {
-		@apply h-5;
+		@apply h-5 gap-1 px-1.5;
 	}
 	.cn-input-group-size-sm {
-		@apply h-6;
+		@apply h-6 gap-1 px-2;
 	}
 	.cn-input-group-size-md {
-		@apply h-7;
+		@apply h-7 gap-1.5 px-2;
 	}
 	.cn-input-group-size-lg {
-		@apply h-8;
+		@apply h-8 gap-1.5 px-2.5;
+	}
+
+	/* standalone input heights + padding */
+	.cn-input-size-xs,
+	.cn-date-input-size-xs {
+		@apply h-5 px-1.5;
+	}
+	.cn-input-size-sm,
+	.cn-date-input-size-sm {
+		@apply h-6 px-2;
+	}
+	.cn-input-size-md,
+	.cn-date-input-size-md {
+		@apply h-7 px-2;
+	}
+	.cn-input-size-lg,
+	.cn-date-input-size-lg {
+		@apply h-8 px-2.5;
+	}
+
+	/* textarea padding */
+	.cn-text-area-size-xs,
+	.cn-text-area-size-sm {
+		@apply px-2 py-1.5;
+	}
+	.cn-text-area-size-md,
+	.cn-text-area-size-lg {
+		@apply px-2.5 py-1.5;
 	}
 }
 
 .density-default {
+	.cn-input-group,
+	.cn-input,
+	.cn-text-area,
+	.cn-date-input {
+		@apply text-sm;
+	}
+
 	.cn-input-group-size-xs {
-		@apply h-6;
+		@apply h-6 gap-1 px-2;
 	}
 	.cn-input-group-size-sm {
-		@apply h-7;
+		@apply h-7 gap-1.5 px-2.5;
 	}
 	.cn-input-group-size-md {
-		@apply h-8;
+		@apply h-8 gap-2 px-3;
 	}
 	.cn-input-group-size-lg {
-		@apply h-9;
+		@apply h-9 gap-2 px-3;
+	}
+
+	.cn-input-size-xs,
+	.cn-date-input-size-xs {
+		@apply h-6 px-2;
+	}
+	.cn-input-size-sm,
+	.cn-date-input-size-sm {
+		@apply h-7 px-2.5;
+	}
+	.cn-input-size-md,
+	.cn-date-input-size-md {
+		@apply h-8 px-3;
+	}
+	.cn-input-size-lg,
+	.cn-date-input-size-lg {
+		@apply h-9 px-3;
+	}
+
+	.cn-text-area-size-xs,
+	.cn-text-area-size-sm {
+		@apply px-2.5 py-2;
+	}
+	.cn-text-area-size-md,
+	.cn-text-area-size-lg {
+		@apply px-3 py-2;
 	}
 }
 
 .density-comfortable {
+	.cn-input-group,
+	.cn-input,
+	.cn-text-area,
+	.cn-date-input {
+		@apply text-sm;
+	}
+
 	.cn-input-group-size-xs {
-		@apply h-7;
+		@apply h-7 gap-1.5 px-2.5;
 	}
 	.cn-input-group-size-sm {
-		@apply h-8;
+		@apply h-8 gap-2 px-3;
 	}
 	.cn-input-group-size-md {
-		@apply h-9;
+		@apply h-9 gap-2 px-3;
 	}
 	.cn-input-group-size-lg {
-		@apply h-10;
+		@apply h-10 gap-2 px-3.5;
 	}
+
+	.cn-input-size-xs,
+	.cn-date-input-size-xs {
+		@apply h-7 px-2.5;
+	}
+	.cn-input-size-sm,
+	.cn-date-input-size-sm {
+		@apply h-8 px-3;
+	}
+	.cn-input-size-md,
+	.cn-date-input-size-md {
+		@apply h-9 px-3;
+	}
+	.cn-input-size-lg,
+	.cn-date-input-size-lg {
+		@apply h-10 px-3.5;
+	}
+
+	.cn-text-area-size-xs,
+	.cn-text-area-size-sm {
+		@apply px-3 py-2;
+	}
+	.cn-text-area-size-md,
+	.cn-text-area-size-lg {
+		@apply px-3.5 py-2.5;
+	}
+}
+
+/* ------------------------------------------------------------------------- */
+/* Vertical group: reset horizontal padding + heights                         */
+/* ------------------------------------------------------------------------- */
+
+[data-input-group][data-orientation="vertical"] {
+	height: auto !important;
+	padding: 0 !important;
+}
+[data-input-group][data-orientation="vertical"] [data-input-group-addon] {
+	padding-inline: calc(var(--spacing) * 2);
+	padding-block: calc(var(--spacing) * 1.5);
+}
+
+/* ------------------------------------------------------------------------- */
+/* Addon button sizing — ensure buttons inside addons fit the group height    */
+/* ------------------------------------------------------------------------- */
+
+.cn-input-group-addon [data-button] {
+	@apply text-sm;
+}
+.cn-input-group-size-xs [data-input-group-addon] [data-button] {
+	@apply h-4;
+}
+.cn-input-group-size-sm [data-input-group-addon] [data-button] {
+	@apply h-5;
+}
+.cn-input-group-size-md [data-input-group-addon] [data-button] {
+	@apply h-6;
+}
+.cn-input-group-size-lg [data-input-group-addon] [data-button] {
+	@apply h-7;
 }

@@ -7,7 +7,7 @@ import { Button } from "@/registry/ui/button";
 import { Calendar } from "@/registry/ui/calendar";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
@@ -15,11 +15,11 @@ export default function Demo() {
 		<DatePicker aria-label="Meeting date" defaultValue={parseDate("2020-02-03")}>
 			<InputGroup>
 				<DateInput />
-				<InputAddon>
+				<InputGroupAddon>
 					<Button variant="default" size="icon-sm">
 						<CalendarIcon />
 					</Button>
-				</InputAddon>
+				</InputGroupAddon>
 			</InputGroup>
 			<Overlay type="popover" mobileType="drawer">
 				<DialogContent>

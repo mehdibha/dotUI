@@ -4,7 +4,7 @@ import { RangeCalendar } from "@/registry/ui/calendar";
 import { DateRangePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { FieldError, Label } from "@/registry/ui/field";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
@@ -15,11 +15,11 @@ export default function Demo() {
 				<DateInput slot="start" />
 				<span>–</span>
 				<DateInput slot="end" />
-				<InputAddon>
+				<InputGroupAddon>
 					<Button variant="default" size="icon-sm">
 						<CalendarIcon />
 					</Button>
-				</InputAddon>
+				</InputGroupAddon>
 			</InputGroup>
 			<FieldError>Meetings can't be scheduled in the past.</FieldError>
 			<Overlay type="popover" mobileType="drawer">

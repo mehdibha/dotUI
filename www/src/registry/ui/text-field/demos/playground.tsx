@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 
 import { Description, FieldError, Label } from "@/registry/ui/field";
-import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 
 /**
@@ -37,9 +37,9 @@ export function TextFieldPlayground({
 			{label && <Label>{label}</Label>}
 			{hasIcons ? (
 				<InputGroup>
-					{startIcon && <InputAddon>{startIcon}</InputAddon>}
+					{startIcon && <InputGroupAddon>{startIcon}</InputGroupAddon>}
 					<Input />
-					{endIcon && <InputAddon>{endIcon}</InputAddon>}
+					{endIcon && <InputGroupAddon>{endIcon}</InputGroupAddon>}
 				</InputGroup>
 			) : (
 				<Input />

@@ -2,18 +2,18 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@/registry/ui/button";
 import { Combobox, ComboboxContent, ComboboxItem } from "@/registry/ui/combobox";
-import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 
 export function ComboboxDemo() {
 	return (
 		<Combobox aria-label="Country" menuTrigger="focus">
 			<InputGroup>
 				<Input placeholder="Select country..." />
-				<InputAddon>
+				<InputGroupAddon>
 					<Button variant="quiet" size="icon">
 						<ChevronDownIcon />
 					</Button>
-				</InputAddon>
+				</InputGroupAddon>
 			</InputGroup>
 			<ComboboxContent>
 				<ComboboxItem>Canada</ComboboxItem>

@@ -4,7 +4,7 @@ import { SearchIcon } from "lucide-react";
 import * as AutocompletePrimitives from "react-aria-components/Autocomplete";
 import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
 
-import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { SearchField } from "@/registry/ui/search-field";
 import type { ListBoxProps } from "@/registry/ui/list-box";
@@ -44,9 +44,9 @@ const CommandInput = ({ placeholder, ...props }: CommandInputProps) => {
 		<SearchField {...props}>
 			{/* TODO: Remove this */}
 			<InputGroup className="w-full">
-				<InputAddon>
+				<InputGroupAddon>
 					<SearchIcon />
-				</InputAddon>
+				</InputGroupAddon>
 				<Input placeholder={placeholder} />
 			</InputGroup>
 		</SearchField>

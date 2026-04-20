@@ -13,7 +13,7 @@ import { Provider } from "react-aria-components/slots";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { fieldStyles } from "@/registry/ui/field";
-import { Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import type { InputGroupProps } from "@/registry/ui/input";
@@ -101,11 +101,11 @@ const ComboboxInput = ({ placeholder, ...props }: ComboboxInputProps) => {
 	return (
 		<InputGroup {...props}>
 			<Input placeholder={placeholder} />
-			<InputAddon>
+			<InputGroupAddon>
 				<Button variant="quiet" size="icon">
 					<ChevronDownIcon />
 				</Button>
-			</InputAddon>
+			</InputGroupAddon>
 		</InputGroup>
 	);
 };

@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useCallback } from "react";
-import { chain, mergeProps } from "react-aria";
+import { chain } from "react-aria";
 import { mergeRefs } from "react-aria/mergeRefs";
+import { getEventTarget } from "react-aria/private/utils/shadowdom/DOMFunctions";
 import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DateFieldPrimitive from "react-aria-components/DateField";
 import * as GroupPrimitive from "react-aria-components/Group";
 import * as InputPrimitive from "react-aria-components/Input";
-import { Provider, useContextProps } from "react-aria-components/slots";
 import * as TextAreaPrimitive from "react-aria-components/TextArea";
 import { useControlledState } from "react-stately/useControlledState";
 import type { VariantProps } from "tailwind-variants";
@@ -20,53 +20,49 @@ import type { InputStyles } from "./styles";
 
 interface InputGroupProps
 	extends React.ComponentProps<typeof GroupPrimitive.Group>,
-		Pick<VariantProps<InputStyles>, "size"> {}
+		Pick<VariantProps<InputStyles>, "size" | "orientation"> {}
 
-const InputGroup = ({ className, children, size = "md", ...props }: InputGroupProps) => {
+const INTERACTIVE_SELECTOR = "button,input,textarea,[role='button']";
+
+const focusInnerInput = (group: HTMLElement) => {
+	(group.querySelector("input, textarea") as HTMLElement | null)?.focus();
+};
+
+const InputGroup = ({
+	className,
+	size = "md",
+	orientation = "horizontal",
+	onPointerDown,
+	onTouchEnd,
+	...props
+}: InputGroupProps) => {
 	const { inputGroup } = useStyles()();
-	const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-	const [inputContextProps, mergedInputRef] = useContextProps(
-		{},
-		inputRef as React.RefObject<HTMLInputElement>,
-		InputPrimitive.InputContext,
-	);
-	const [textAreaContextProps, mergedTextAreaRef] = useContextProps(
-		{},
-		inputRef as React.RefObject<HTMLTextAreaElement>,
-		TextAreaPrimitive.TextAreaContext,
-	);
-	const inputProps = { ...inputContextProps, ref: mergedInputRef };
-	const textAreaProps = { ...textAreaContextProps, ref: mergedTextAreaRef };
-
-	const onPointerDown = (event: React.PointerEvent<HTMLElement>) => {
-		const target = event.target as HTMLElement;
-		if (target.closest("input, button, a")) return;
-		const input = inputRef.current;
-		if (!input) return;
-		requestAnimationFrame(() => {
-			input.focus();
-		});
-	};
-
 	return (
 		<GroupPrimitive.Group
-			role="group"
 			data-input-group=""
 			data-size={size}
-			className={composeRenderProps(className, (className) => inputGroup({ size, className }))}
-			{...mergeProps(props, { onPointerDown })}
-		>
-			{composeRenderProps(children, (children) => (
-				<Provider
-					values={[
-						[InputPrimitive.InputContext, inputProps],
-						[TextAreaPrimitive.TextAreaContext, textAreaProps],
-					]}
-				>
-					{children}
-				</Provider>
-			))}
-		</GroupPrimitive.Group>
+			data-orientation={orientation}
+			onPointerDown={(e) => {
+				onPointerDown?.(e);
+				if (e.defaultPrevented || e.pointerType !== "mouse") return;
+				const target = getEventTarget(e) as Element;
+				if (target.closest(INTERACTIVE_SELECTOR)) return;
+				e.preventDefault();
+				focusInnerInput(e.currentTarget);
+			}}
+			onTouchEnd={(e) => {
+				onTouchEnd?.(e);
+				if (e.defaultPrevented) return;
+				const target = getEventTarget(e) as HTMLElement;
+				if (target.isContentEditable || target.closest(INTERACTIVE_SELECTOR)) return;
+				e.preventDefault();
+				focusInnerInput(e.currentTarget);
+			}}
+			className={composeRenderProps(className, (className) =>
+				inputGroup({ size, orientation, className }),
+			)}
+			{...props}
+		/>
 	);
 };
 
@@ -131,8 +127,9 @@ const TextArea = ({ ref, className, onChange, size = "md", ...props }: TextAreaP
 		<TextAreaPrimitive.TextArea
 			ref={mergeRefs(inputRef, ref)}
 			data-text-area=""
+			data-size={size}
 			onChange={chain(onChange, setInputValue)}
-			className={composeRenderProps(className, (className) => textArea({ className }))}
+			className={composeRenderProps(className, (className) => textArea({ className, size }))}
 			{...props}
 		/>
 	);
@@ -155,11 +152,12 @@ interface DateInputProps
 	children?: DateFieldPrimitive.DateInputProps["children"];
 }
 
-const DateInput = ({ className, size, ...props }: DateInputProps) => {
+const DateInput = ({ className, size = "md", ...props }: DateInputProps) => {
 	const { dateInput } = useStyles()();
 	return (
 		<DateFieldPrimitive.DateInput
 			data-date-input=""
+			data-size={size}
 			className={composeRenderProps(className, (className) => dateInput({ className, size }))}
 			{...props}
 		>

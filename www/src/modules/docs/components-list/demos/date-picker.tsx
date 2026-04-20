@@ -3,7 +3,7 @@ import { Button } from "@/registry/ui/button";
 import { Calendar } from "@/registry/ui/calendar";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
-import { DateInput, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { Popover } from "@/registry/ui/popover";
 
 export function DatePickerDemo() {
@@ -12,11 +12,11 @@ export function DatePickerDemo() {
 			<DatePicker>
 				<InputGroup>
 					<DateInput />
-					<InputAddon>
+					<InputGroupAddon>
 						<Button variant="default" size="icon-sm">
 							<CalendarIcon />
 						</Button>
-					</InputAddon>
+					</InputGroupAddon>
 				</InputGroup>
 				<Popover>
 					<DialogContent className="in-popover:p-0">

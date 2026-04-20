@@ -4,7 +4,7 @@ import { Input } from "@/registry/ui/input";
 
 interface InputPlaygroundProps {
 	placeholder?: string;
-	size?: "sm" | "md" | "lg";
+	size?: "xs" | "sm" | "md" | "lg";
 	disabled?: boolean;
 	readOnly?: boolean;
 }

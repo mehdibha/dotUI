@@ -13,7 +13,7 @@ import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/regist
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { FieldGroup, Label } from "@/registry/ui/field";
-import { DateInput, Input, InputAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { FormControl } from "@/registry/ui/react-hook-form";
@@ -107,11 +107,11 @@ export default function Demo() {
 							<Label>Birth Date</Label>
 							<InputGroup>
 								<DateInput />
-								<InputAddon>
+								<InputGroupAddon>
 									<Button variant="default" size="icon-sm">
 										<CalendarIcon />
 									</Button>
-								</InputAddon>
+								</InputGroupAddon>
 							</InputGroup>
 							<Overlay type="popover" mobileType="drawer">
 								<DialogContent>
