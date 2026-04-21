@@ -18,6 +18,17 @@ import type { InputStyles } from "./styles";
 
 // MARK: Separator
 
+type InputGroupContextValue = {
+	size: NonNullable<VariantProps<InputStyles>["size"]>;
+	orientation: NonNullable<VariantProps<InputStyles>["orientation"]>;
+};
+
+const InputGroupContext = React.createContext<InputGroupContextValue | null>(null);
+
+const useInputGroupContext = () => React.useContext(InputGroupContext);
+
+// MARK: Separator
+
 interface InputGroupProps
 	extends React.ComponentProps<typeof GroupPrimitive.Group>,
 		Pick<VariantProps<InputStyles>, "size" | "orientation"> {}
@@ -37,32 +48,35 @@ const InputGroup = ({
 	...props
 }: InputGroupProps) => {
 	const { inputGroup } = useStyles()();
+	const contextValue = React.useMemo(() => ({ size, orientation }), [size, orientation]);
 	return (
-		<GroupPrimitive.Group
-			data-input-group=""
-			data-size={size}
-			data-orientation={orientation}
-			onPointerDown={(e) => {
-				onPointerDown?.(e);
-				if (e.defaultPrevented || e.pointerType !== "mouse") return;
-				const target = getEventTarget(e) as Element;
-				if (target.closest(INTERACTIVE_SELECTOR)) return;
-				e.preventDefault();
-				focusInnerInput(e.currentTarget);
-			}}
-			onTouchEnd={(e) => {
-				onTouchEnd?.(e);
-				if (e.defaultPrevented) return;
-				const target = getEventTarget(e) as HTMLElement;
-				if (target.isContentEditable || target.closest(INTERACTIVE_SELECTOR)) return;
-				e.preventDefault();
-				focusInnerInput(e.currentTarget);
-			}}
-			className={composeRenderProps(className, (className) =>
-				inputGroup({ size, orientation, className }),
-			)}
-			{...props}
-		/>
+		<InputGroupContext.Provider value={contextValue}>
+			<GroupPrimitive.Group
+				data-input-group=""
+				data-size={size}
+				data-orientation={orientation}
+				onPointerDown={(e) => {
+					onPointerDown?.(e);
+					if (e.defaultPrevented || e.pointerType !== "mouse") return;
+					const target = getEventTarget(e) as Element;
+					if (target.closest(INTERACTIVE_SELECTOR)) return;
+					e.preventDefault();
+					focusInnerInput(e.currentTarget);
+				}}
+				onTouchEnd={(e) => {
+					onTouchEnd?.(e);
+					if (e.defaultPrevented) return;
+					const target = getEventTarget(e) as HTMLElement;
+					if (target.isContentEditable || target.closest(INTERACTIVE_SELECTOR)) return;
+					e.preventDefault();
+					focusInnerInput(e.currentTarget);
+				}}
+				className={composeRenderProps(className, (className) =>
+					inputGroup({ size, orientation, className }),
+				)}
+				{...props}
+			/>
+		</InputGroupContext.Provider>
 	);
 };
 
@@ -72,7 +86,9 @@ interface InputProps
 	extends Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
 		Pick<VariantProps<InputStyles>, "size"> {}
 
-const Input = ({ size = "md", className, ...props }: InputProps) => {
+const Input = ({ size: sizeProp, className, ...props }: InputProps) => {
+	const context = useInputGroupContext();
+	const size = sizeProp ?? context?.size ?? "md";
 	const { input } = useStyles()();
 	return (
 		<InputPrimitive.Input
@@ -90,7 +106,9 @@ interface TextAreaProps
 	extends Omit<React.ComponentProps<typeof TextAreaPrimitive.TextArea>, "size">,
 		Pick<VariantProps<InputStyles>, "size"> {}
 
-const TextArea = ({ ref, className, onChange, size = "md", ...props }: TextAreaProps) => {
+const TextArea = ({ ref, className, onChange, size: sizeProp, ...props }: TextAreaProps) => {
+	const context = useInputGroupContext();
+	const size = sizeProp ?? context?.size;
 	const { textArea } = useStyles()();
 	const [inputValue, setInputValue] = useControlledState(props.value, props.defaultValue ?? "", () => {});
 	const inputRef = React.useRef<HTMLTextAreaElement>(null);
@@ -140,8 +158,21 @@ const TextArea = ({ ref, className, onChange, size = "md", ...props }: TextAreaP
 interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
 
 function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
+	const context = useInputGroupContext();
 	const { inputGroupAddon } = useStyles()();
-	return <div data-input-group-addon="" className={inputGroupAddon({ className })} {...props} />;
+	return (
+		<div
+			data-input-group-addon=""
+			data-size={context?.size}
+			data-orientation={context?.orientation}
+			className={inputGroupAddon({
+				size: context?.size,
+				orientation: context?.orientation,
+				className,
+			})}
+			{...props}
+		/>
+	);
 }
 
 // MARK: Separator
@@ -152,7 +183,9 @@ interface DateInputProps
 	children?: DateFieldPrimitive.DateInputProps["children"];
 }
 
-const DateInput = ({ className, size = "md", ...props }: DateInputProps) => {
+const DateInput = ({ className, size: sizeProp, ...props }: DateInputProps) => {
+	const context = useInputGroupContext();
+	const size = sizeProp ?? context?.size;
 	const { dateInput } = useStyles()();
 	return (
 		<DateFieldPrimitive.DateInput
@@ -182,5 +215,5 @@ const DateSegment = ({ className, ...props }: DateSegmentProps) => {
 
 // MARK: Separator
 
-export type { DateInputProps, DateSegmentProps, InputGroupAddonProps, InputGroupProps, InputProps, TextAreaProps };
-export { DateInput, DateSegment, Input, InputGroup, InputGroupAddon, TextArea };
+export type { DateInputProps, DateSegmentProps, InputGroupAddonProps, InputGroupContextValue, InputGroupProps, InputProps, TextAreaProps };
+export { DateInput, DateSegment, Input, InputGroup, InputGroupAddon, InputGroupContext, TextArea, useInputGroupContext };

@@ -12,8 +12,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				"text-fg-muted h-auto gap-1 py-2 text-xs/relaxed font-medium group-data-[disabled=true]/input-group:opacity-50  **:[svg]:not-with-[size]:size-3",
 				"",
 			],
-			input:
-				"w-full min-w-0 rounded-(--input-radius) in-data-input-group:px-0 has-[:first-child[data-input-group-addon]]:pl-1.5 transition-[color,box-shadow,border-color]",
+			input: "w-full min-w-0 rounded-(--input-radius) transition-[color,box-shadow,border-color]",
 			textArea: "w-full min-w-0 rounded-(--input-radius) transition-[color,box-shadow,border-color]",
 			dateInput:
 				"inline-flex w-full min-w-0 cursor-text items-center rounded-(--input-radius) transition-[color,box-shadow,border-color]",
@@ -24,7 +23,13 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				horizontal: { inputGroup: "flex-row" },
 				vertical: { inputGroup: "flex-col items-stretch h-auto" },
 			},
-			size: { sm: {}, md: {}, lg: {} },
+			size: {
+				sm: {
+					inputGroup: "has-[>:first-child[data-input-group-addon]]:**:data-input:pl-1.25",
+				},
+				md: { inputGroup: "has-[>:first-child[data-input-group-addon]]:**:data-input:pl-1.5" },
+				lg: { inputGroup: "has-[>:first-child[data-input-group-addon]]:**:data-input:pl-1.75" },
+			},
 		},
 		defaultVariants: { size: "md", orientation: "horizontal" },
 	},
@@ -33,8 +38,12 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			slots: {
 				input: "text-sm md:text-xs/relaxed",
 				inputGroupAddon: [
-					"group-orientation-horizontal/input-group:pl-2 first:group-orientation-horizontal/input-group:has-[>button]:ml-[-0.275rem]",
-					"group-data-[size=sm]/input-group:**:data-button:h-4 **:data-button:h-5 group-data-[size=lg]/input-group:**:data-button:h-6 ",
+					// sm
+					"group-data-[size=sm]/input-group:**:data-button:h-4 first:group-data-[size=sm]/input-group:group-orientation-horizontal/input-group:pl-1.5 last:group-data-[size=sm]/input-group:group-orientation-horizontal/input-group:pr-1.5 first:group-data-[size=sm]/input-group:group-orientation-horizontal/input-group:has-[>button]:ml-[-0.2rem]",
+					// md
+					"**:data-button:h-5 first:group-orientation-horizontal/input-group:pl-2 last:group-orientation-horizontal/input-group:pr-2 first:group-orientation-horizontal/input-group:has-[>button]:ml-[-0.275rem]",
+					// lg
+					"group-data-[size=lg]/input-group:**:data-button:h-6 first:group-data-[size=lg]/input-group:group-orientation-horizontal/input-group:pl-2.5 last:group-data-[size=lg]/input-group:group-orientation-horizontal/input-group:pr-2.5 first:group-data-[size=lg]/input-group:group-orientation-horizontal/input-group:has-[>button]:ml-[-0.35rem]",
 				],
 			},
 			variants: {
