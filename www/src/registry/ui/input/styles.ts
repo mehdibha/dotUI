@@ -6,13 +6,15 @@ const { useStyles, styles } = createStyles(inputMeta, {
 	base: {
 		slots: {
 			inputGroup:
-				"group/input-group relative flex w-full min-w-0 items-center rounded-(--input-radius) transition-[color,box-shadow,border-color]",
-			inputGroupAddon:
+				"group/input-group relative flex w-full min-w-0 items-center rounded-(--input-radius) transition-[color,box-shadow,border-color] focus-reset focus-within:focus-input",
+			inputGroupAddon: [
 				"flex shrink-0 cursor-text select-none items-center justify-center",
+				"text-fg-muted h-auto gap-1 py-2 text-xs/relaxed font-medium group-data-[disabled=true]/input-group:opacity-50  **:[svg]:not-with-[size]:size-3",
+				"",
+			],
 			input:
-				"w-full min-w-0 rounded-(--input-radius) in-data-input-group:px-0 transition-[color,box-shadow,border-color]",
-			textArea:
-				"w-full min-w-0 rounded-(--input-radius) transition-[color,box-shadow,border-color]",
+				"w-full min-w-0 rounded-(--input-radius) in-data-input-group:px-0 has-[:first-child[data-input-group-addon]]:pl-1.5 transition-[color,box-shadow,border-color]",
+			textArea: "w-full min-w-0 rounded-(--input-radius) transition-[color,box-shadow,border-color]",
 			dateInput:
 				"inline-flex w-full min-w-0 cursor-text items-center rounded-(--input-radius) transition-[color,box-shadow,border-color]",
 			dateInputSegment: "",
@@ -20,7 +22,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 		variants: {
 			orientation: {
 				horizontal: { inputGroup: "flex-row" },
-				vertical: { inputGroup: "flex-col items-stretch" },
+				vertical: { inputGroup: "flex-col items-stretch h-auto" },
 			},
 			size: { sm: {}, md: {}, lg: {} },
 		},
@@ -28,12 +30,18 @@ const { useStyles, styles } = createStyles(inputMeta, {
 	},
 	density: {
 		compact: {
-			slots: { input: "text-sm md:text-xs/relaxed" },
+			slots: {
+				input: "text-sm md:text-xs/relaxed",
+				inputGroupAddon: [
+					"group-orientation-horizontal/input-group:pl-2 first:group-orientation-horizontal/input-group:has-[>button]:ml-[-0.275rem]",
+					"group-data-[size=sm]/input-group:**:data-button:h-4 **:data-button:h-5 group-data-[size=lg]/input-group:**:data-button:h-6 ",
+				],
+			},
 			variants: {
 				size: {
-					sm: { inputGroup: "h-6 px-2", input: "h-6 px-2" },
-					md: { inputGroup: "h-7 px-2", input: "h-7 px-2" },
-					lg: { inputGroup: "h-8 px-2.5", input: "h-8 px-2.5" },
+					sm: { inputGroup: "h-6", input: "h-6 px-2" },
+					md: { inputGroup: "h-7", input: "h-7 px-2" },
+					lg: { inputGroup: "h-8", input: "h-8 px-2.5" },
 				},
 			},
 		},
@@ -41,9 +49,9 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			slots: { input: "text-base md:text-sm" },
 			variants: {
 				size: {
-					sm: { inputGroup: "h-7 px-2", input: "h-7 px-2" },
-					md: { inputGroup: "h-8 px-2.5", input: "h-8 px-2.5" },
-					lg: { inputGroup: "h-9 px-3", input: "h-9 px-3" },
+					sm: { inputGroup: "h-7", input: "h-7 px-2" },
+					md: { inputGroup: "h-8", input: "h-8 px-2.5" },
+					lg: { inputGroup: "h-9", input: "h-9 px-3" },
 				},
 			},
 		},
@@ -51,9 +59,9 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			slots: { input: "text-base md:text-sm" },
 			variants: {
 				size: {
-					sm: { inputGroup: "h-8 px-2.5", input: "h-8 px-2.5" },
-					md: { inputGroup: "h-9 px-3", input: "h-9 px-3" },
-					lg: { inputGroup: "h-10 px-3", input: "h-10 px-3" },
+					sm: { inputGroup: "h-8", input: "h-8 px-2.5" },
+					md: { inputGroup: "h-9", input: "h-9 px-3" },
+					lg: { inputGroup: "h-10", input: "h-10 px-3" },
 				},
 			},
 		},
@@ -70,4 +78,5 @@ const { useStyles, styles } = createStyles(inputMeta, {
 });
 
 export type InputStyles = typeof styles;
+
 export { useStyles };

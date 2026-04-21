@@ -8,6 +8,7 @@ import Basic from "./demos/basic";
 import Buttons from "./demos/buttons";
 import InCard from "./demos/in-card";
 import KbdDemo from "./demos/kbd";
+import Sizes from "./demos/sizes";
 import TextareaDemo from "./demos/textarea";
 import TooltipDropdownPopover from "./demos/tooltip-dropdown-popover";
 
@@ -22,6 +23,9 @@ export default function InputGroupExamples() {
 			</Example>
 			<Example title="With buttons">
 				<Buttons />
+			</Example>
+			<Example title="Sizes">
+				<Sizes />
 			</Example>
 			<Example title="With tooltip, dropdown, popover">
 				<TooltipDropdownPopover />
