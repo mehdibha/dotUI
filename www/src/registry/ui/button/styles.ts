@@ -5,7 +5,7 @@ import buttonMeta from "./meta";
 const { useStyles, styles } = createStyles(buttonMeta, {
 	base: {
 		base: [
-			"cn-button-base group/button relative inline-flex shrink-0 cursor-interactive select-none items-center justify-center whitespace-nowrap rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) transition-[background-color,border-color,color,box-shadow]",
+			"group/button relative inline-flex shrink-0 cursor-interactive select-none items-center justify-center whitespace-nowrap rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) transition-[background-color,border-color,color,box-shadow]",
 			// focus state
 			"focus-reset focus-visible:focus-ring",
 			// svg

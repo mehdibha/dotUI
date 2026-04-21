@@ -5,14 +5,14 @@ import fieldMeta from "./meta";
 const { useStyles, styles } = createStyles(fieldMeta, {
 	base: {
 		slots: {
-			fieldset: "cn-fieldset",
-			legend: "cn-legend",
-			fieldGroup: "cn-field-group group/field-group @container/field-group flex w-full flex-col",
-			field: "cn-label",
-			fieldContent: "cn-field flex flex-col gap-1",
-			label: "cn-label",
-			description: "cn-description nth-last-2:-mt-1 in-data-disabled:text-fg-disabled text-fg-muted last:mt-0",
-			fieldError: "cn-field-error text-fg-danger",
+			fieldset: "",
+			legend: "",
+			fieldGroup: "group/field-group @container/field-group flex w-full flex-col",
+			field: "",
+			fieldContent: "flex flex-col gap-1",
+			label: "",
+			description: "nth-last-2:-mt-1 in-data-disabled:text-fg-disabled text-fg-muted last:mt-0",
+			fieldError: "text-fg-danger",
 		},
 	},
 	density: {

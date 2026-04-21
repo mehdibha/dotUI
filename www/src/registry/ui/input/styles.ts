@@ -6,16 +6,16 @@ const { useStyles, styles } = createStyles(inputMeta, {
 	base: {
 		slots: {
 			inputGroup:
-				"group/input-group cn-input-group relative flex w-full min-w-0 items-center rounded-(--input-radius) transition-[color,box-shadow,border-color]",
+				"group/input-group relative flex w-full min-w-0 items-center rounded-(--input-radius) transition-[color,box-shadow,border-color]",
 			inputGroupAddon:
-				"cn-input-group-addon flex shrink-0 cursor-text select-none items-center justify-center",
+				"flex shrink-0 cursor-text select-none items-center justify-center",
 			input:
-				"cn-input w-full min-w-0 rounded-(--input-radius) in-data-input-group:px-0 transition-[color,box-shadow,border-color]",
+				"w-full min-w-0 rounded-(--input-radius) in-data-input-group:px-0 transition-[color,box-shadow,border-color]",
 			textArea:
-				"cn-text-area w-full min-w-0 rounded-(--input-radius) transition-[color,box-shadow,border-color]",
+				"w-full min-w-0 rounded-(--input-radius) transition-[color,box-shadow,border-color]",
 			dateInput:
-				"cn-date-input inline-flex w-full min-w-0 cursor-text items-center rounded-(--input-radius) transition-[color,box-shadow,border-color]",
-			dateInputSegment: "cn-date-input-segment",
+				"inline-flex w-full min-w-0 cursor-text items-center rounded-(--input-radius) transition-[color,box-shadow,border-color]",
+			dateInputSegment: "",
 		},
 		variants: {
 			orientation: {

@@ -5,9 +5,9 @@ import colorSwatchPickerMeta from "./meta";
 const { useStyles, styles } = createStyles(colorSwatchPickerMeta, {
 	base: {
 		slots: {
-			root: "cn-color-swatch-picker flex flex-wrap",
+			root: "flex flex-wrap",
 			item: [
-				"cn-color-swatch-picker-item relative rounded-(--color-swatch-picker-item-radius) transition-shadow focus:z-10 *:data-[slot=color-swatch]:size-full *:data-[slot=color-swatch]:rounded-[inherit]",
+				"relative rounded-(--color-swatch-picker-item-radius) transition-shadow focus:z-10 *:data-[slot=color-swatch]:size-full *:data-[slot=color-swatch]:rounded-[inherit]",
 				// focus state
 				"focus-reset focus-visible:focus-ring",
 				// disabled state
