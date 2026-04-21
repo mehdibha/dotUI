@@ -1,16 +1,20 @@
 "use client";
 
 import * as React from "react";
+import { tv } from "tailwind-variants";
+import type { ClassValue, TV, VariantProps } from "tailwind-variants";
+
+import type { Density } from "@/modules/create/preset/types";
 
 /* --------------------------------- Types --------------------------------- */
 
 type StyleSelections = Record<string, string>;
 type ParamSelections = Record<string, string>;
-type Density = "compact" | "default" | "comfortable";
 
 interface DesignSystemContextValue {
 	styles: StyleSelections;
 	params: ParamSelections;
+	density: Density;
 }
 
 /* -------------------------------- Context -------------------------------- */
@@ -18,6 +22,7 @@ interface DesignSystemContextValue {
 const DesignSystemContext = React.createContext<DesignSystemContextValue>({
 	styles: {},
 	params: {},
+	density: "default",
 });
 
 /* -------------------------------- Provider ------------------------------- */
@@ -34,16 +39,13 @@ interface DesignSystemProviderProps {
 	children: React.ReactNode;
 }
 
-function DesignSystemProvider({ styles, params = {}, density, children }: DesignSystemProviderProps) {
-	const value = React.useMemo(() => ({ styles, params }), [styles, params]);
-
-	// Apply density class to the document body when inside an iframe
-	React.useLayoutEffect(() => {
-		if (!density) return;
-		const body = document.body;
-		body.classList.remove("density-compact", "density-default", "density-comfortable");
-		body.classList.add(`density-${density}`);
-	}, [density]);
+function DesignSystemProvider({
+	styles,
+	params = {},
+	density = "default",
+	children,
+}: DesignSystemProviderProps) {
+	const value = React.useMemo(() => ({ styles, params, density }), [styles, params, density]);
 
 	const cssVars = React.useMemo(() => {
 		const vars: Record<string, string> = {};
@@ -77,19 +79,134 @@ function DesignSystemProvider({ styles, params = {}, density, children }: Design
 
 /* ------------------------------ createStyles ----------------------------- */
 
-function createStyles<
-	M extends { name: string; defaultStyle: string; styles: Record<string, unknown> },
-	T extends Record<keyof M["styles"] & string, unknown>,
->(meta: M, stylesMap: T) {
-	function useStyles(): T[keyof T] {
-		const { styles } = React.useContext(DesignSystemContext);
-		const selected = styles[meta.name];
-		if (selected && selected in stylesMap) {
-			return stylesMap[selected as keyof T];
+/**
+ * A tv config (base layer). Accepted keys mirror what `tv()` takes — slots,
+ * base, variants, compoundVariants, compoundSlots, defaultVariants.
+ */
+interface TvConfig {
+	slots?: Record<string, ClassValue>;
+	base?: ClassValue;
+	variants?: Record<string, Record<string, ClassValue | Record<string, ClassValue>>>;
+	compoundVariants?: Array<Record<string, unknown>>;
+	compoundSlots?: Array<Record<string, unknown>>;
+	defaultVariants?: Record<string, unknown>;
+}
+
+/**
+ * An override layered on top of `base` via tv's `extend`. Structurally a tv
+ * config — same keys, same semantics — so density entries and style entries
+ * share one shape.
+ */
+type TvOverride = TvConfig;
+
+/**
+ * Full createStyles config. `density` and `styles` entries are symmetric:
+ * both are tv overrides of `base`, composed at module init via tv's `extend`.
+ *
+ * Composition order per (density, aesthetic) pair:
+ *   base  →  density[d]  →  styles[a]
+ *
+ * Density is *not* a tv variant — it selects which precomputed tv to use at
+ * runtime. This keeps the public `VariantProps` clean and lets the CLI emit a
+ * flat tv call per user-selected (density, style) combo.
+ */
+interface CreateStylesConfig<StyleNames extends string> {
+	base: TvConfig;
+	density: Record<Density, TvOverride>;
+	styles: Record<StyleNames, TvOverride>;
+}
+
+type TvFn = ReturnType<TV>;
+
+/* ----- new-shape detection ----- */
+
+function isNewShape(config: unknown): config is CreateStylesConfig<string> {
+	if (!config || typeof config !== "object") return false;
+	const c = config as Record<string, unknown>;
+	return (
+		"base" in c &&
+		"density" in c &&
+		"styles" in c &&
+		typeof c.base === "object" &&
+		c.base !== null &&
+		typeof c.density === "object" &&
+		c.density !== null &&
+		typeof c.styles === "object" &&
+		c.styles !== null
+	);
+}
+
+/* ----- public API ----- */
+
+interface CreateStylesMeta {
+	name: string;
+	defaultStyle: string;
+	styles: Record<string, unknown>;
+}
+
+type CreateStylesReturn<S extends TvFn> = {
+	useStyles: () => S;
+	styles: S;
+};
+
+function createStyles<M extends CreateStylesMeta, T extends Record<string, TvFn>>(
+	meta: M,
+	stylesMap: T,
+): { useStyles: () => T[keyof T] };
+function createStyles<M extends CreateStylesMeta, C extends CreateStylesConfig<string>>(
+	meta: M,
+	config: C,
+): CreateStylesReturn<TvFn>;
+function createStyles(meta: CreateStylesMeta, config: unknown) {
+	if (isNewShape(config)) {
+		const { base, density, styles } = config;
+
+		const baseTv = tv(base as never);
+
+		// Precompute (density × aesthetic) — e.g. 3 densities × N presets.
+		const composed: Record<string, Record<string, TvFn>> = {};
+		for (const d of Object.keys(density) as Density[]) {
+			const densityTv = tv({ extend: baseTv as never, ...(density[d] as TvOverride) } as never);
+			composed[d] = {};
+			for (const [aestheticName, aestheticOverride] of Object.entries(styles)) {
+				composed[d]![aestheticName] = tv({
+					extend: densityTv as never,
+					...(aestheticOverride as TvOverride),
+				} as never);
+			}
 		}
-		return stylesMap[meta.defaultStyle as keyof T];
+
+		function pick(density: Density, aesthetic: string): TvFn {
+			const byAesthetic = composed[density] ?? composed.default!;
+			return byAesthetic[aesthetic] ?? byAesthetic[meta.defaultStyle]!;
+		}
+
+		function useStyles() {
+			const { styles: selections, density } = React.useContext(DesignSystemContext);
+			const aesthetic = selections[meta.name] ?? meta.defaultStyle;
+			return pick(density, aesthetic);
+		}
+
+		return {
+			useStyles,
+			// Expose the (default density, default aesthetic) tv for
+			// `typeof styles → VariantProps<...>` type derivation.
+			styles: pick("default", meta.defaultStyle),
+		};
+	}
+
+	// Legacy shape: { [styleName]: TvFn }
+	const stylesMap = config as Record<string, TvFn>;
+	function useStyles() {
+		const { styles: selections } = React.useContext(DesignSystemContext);
+		const selected = selections[meta.name];
+		if (selected && selected in stylesMap) {
+			return stylesMap[selected]!;
+		}
+		return stylesMap[meta.defaultStyle]!;
 	}
 	return { useStyles };
 }
 
+export type { VariantProps };
 export { createStyles, DesignSystemContext, DesignSystemProvider };

@@ -2,20 +2,18 @@
 
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import { tv } from "tailwind-variants";
 
 import { ColorThumb } from "@/registry/ui/color-thumb";
 
-const colorAreaStyles = tv({
-	base: "cn-color-area block min-w-20 rounded-(--color-area-radius) disabled:[background:var(--color-disabled)]!",
-});
+import { useStyles } from "./styles";
 
 type ColorAreaProps = React.ComponentProps<typeof ColorAreaPrimitives.ColorArea>;
 
 const ColorArea = ({ className, ...props }: ColorAreaProps) => {
+	const styles = useStyles();
 	return (
 		<ColorAreaPrimitives.ColorArea
-			className={composeRenderProps(className, (className) => colorAreaStyles({ className }))}
+			className={composeRenderProps(className, (className) => styles({ className }))}
 			{...props}
 		>
 			{props.children || <ColorThumb />}
