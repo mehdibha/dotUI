@@ -31,7 +31,7 @@
 					"level": "warn",
 					"options": {
 						"attributes": ["classList"],
-						"functions": ["cn", "clsx", "cva", "tw", "tv"]
+						"functions": ["cn", "clsx", "cva", "tw", "tv", "createStyles"]
 					}
 				}
 			},

@@ -3,7 +3,7 @@
 import { ArrowUpIcon, CodeIcon, CopyIcon, InfoIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Description, Label } from "@/registry/ui/field";
-import { Input, InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input";
+import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 
 export default function Demo() {
@@ -39,9 +39,7 @@ export default function Demo() {
 				<InputGroup orientation="vertical">
 					<InputGroupAddon>
 						<span>Ask, Search or Chat...</span>
-						<InputGroupAddon className="ml-auto">
-							<InfoIcon />
-						</InputGroupAddon>
+						<InfoIcon  className="ml-auto"/>
 					</InputGroupAddon>
 					<TextArea />
 				</InputGroup>
@@ -78,7 +76,7 @@ export default function Demo() {
 				<Label>Code Editor</Label>
 				<InputGroup orientation="vertical">
 					<InputGroupAddon className="border-b">
-						<span className="inline-flex items-center gap-2 font-mono font-medium">
+						<span className="inline-flex items-center gap-2 font-medium font-mono">
 							<CodeIcon />
 							script.js
 						</span>
@@ -86,10 +84,7 @@ export default function Demo() {
 							<CopyIcon />
 						</Button>
 					</InputGroupAddon>
-					<TextArea
-						placeholder="console.log('Hello, world!');"
-						className="min-h-[240px] py-3"
-					/>
+					<TextArea placeholder="console.log('Hello, world!');" className="min-h-[240px] py-3" />
 					<InputGroupAddon className="border-t">
 						<span>Line 1, Column 1</span>
 						<span className="ml-auto">JavaScript</span>

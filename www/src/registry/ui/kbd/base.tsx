@@ -12,7 +12,7 @@ interface KbdGroupProps extends React.HTMLAttributes<HTMLElement> {}
 
 const KbdGroup = ({ className, ...props }: KbdGroupProps) => {
 	const { group } = useStyles()();
-	return <kbd className={group({ className })} {...props} />;
+	return <kbd data-kbd-group="" className={group({ className })} {...props} />;
 };
 
 // MARK: Kbd
@@ -21,7 +21,7 @@ interface KbdProps extends React.ComponentProps<typeof KeyboardPrimitives.Keyboa
 
 const Kbd = ({ className, ...props }: KbdProps) => {
 	const { kbd } = useStyles()();
-	return <KeyboardPrimitives.Keyboard className={kbd({ className })} {...props} />;
+	return <KeyboardPrimitives.Keyboard data-kbd="" className={kbd({ className })} {...props} />;
 };
 
 // MARK: separator

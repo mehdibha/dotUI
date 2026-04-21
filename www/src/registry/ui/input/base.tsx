@@ -71,9 +71,7 @@ const InputGroup = ({
 					e.preventDefault();
 					focusInnerInput(e.currentTarget);
 				}}
-				className={composeRenderProps(className, (className) =>
-					inputGroup({ size, orientation, className }),
-				)}
+				className={composeRenderProps(className, (className) => inputGroup({ size, orientation, className }))}
 				{...props}
 			/>
 		</InputGroupContext.Provider>
@@ -94,7 +92,9 @@ const Input = ({ size: sizeProp, className, ...props }: InputProps) => {
 		<InputPrimitive.Input
 			data-input=""
 			data-size={size}
-			className={composeRenderProps(className, (className) => input({ className, size }))}
+			className={composeRenderProps(className, (className) =>
+				input({ className, size, orientation: context?.orientation }),
+			)}
 			{...props}
 		/>
 	);
@@ -144,7 +144,7 @@ const TextArea = ({ ref, className, onChange, size: sizeProp, ...props }: TextAr
 	return (
 		<TextAreaPrimitive.TextArea
 			ref={mergeRefs(inputRef, ref as React.RefObject<HTMLTextAreaElement | null>)}
-			data-text-area=""
+			data-textarea=""
 			data-size={size}
 			onChange={chain(onChange, setInputValue)}
 			className={composeRenderProps(className, (className) => textArea({ className, size }))}
@@ -215,5 +215,22 @@ const DateSegment = ({ className, ...props }: DateSegmentProps) => {
 
 // MARK: Separator
 
-export type { DateInputProps, DateSegmentProps, InputGroupAddonProps, InputGroupContextValue, InputGroupProps, InputProps, TextAreaProps };
-export { DateInput, DateSegment, Input, InputGroup, InputGroupAddon, InputGroupContext, TextArea, useInputGroupContext };
+export type {
+	DateInputProps,
+	DateSegmentProps,
+	InputGroupAddonProps,
+	InputGroupContextValue,
+	InputGroupProps,
+	InputProps,
+	TextAreaProps,
+};
+export {
+	DateInput,
+	DateSegment,
+	Input,
+	InputGroup,
+	InputGroupAddon,
+	InputGroupContext,
+	TextArea,
+	useInputGroupContext,
+};

@@ -29,7 +29,7 @@ export default function Demo() {
 			<TextField aria-label="Search for Apps">
 				<InputGroup>
 					<Input placeholder="Search for Apps..." />
-					<InputGroupAddon>
+					<InputGroupAddon className="gap-2">
 						<span>Ask AI</span>
 						<Kbd>Tab</Kbd>
 					</InputGroupAddon>

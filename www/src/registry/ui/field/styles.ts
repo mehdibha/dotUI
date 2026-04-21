@@ -46,7 +46,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 			slots: {
 				field: "flex gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
 				label: [
-					"inline-flex select-none items-center gap-px text-fg leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+					"inline-flex select-none items-center gap-px leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
 					// Required state
 					"in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
 					// Disabled state
@@ -74,4 +74,4 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 
 export type FieldStyles = typeof styles;
 
-export { useStyles, styles as fieldStyles };
+export { styles as fieldStyles, useStyles };
