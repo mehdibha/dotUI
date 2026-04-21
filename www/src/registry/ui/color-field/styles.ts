@@ -1,21 +1,20 @@
-import { tv } from "tailwind-variants";
-
 import { createStyles } from "@/modules/core/styles";
 import { fieldStyles } from "@/registry/ui/field";
 
 import colorFieldMeta from "./meta";
 
-const baseStyles = tv({
-	base: "",
+const { useStyles, styles } = createStyles(colorFieldMeta, {
+	base: {
+		base: "",
+	},
+	density: { compact: {}, default: {}, comfortable: {} },
+	styles: {
+		default: {
+			base: [fieldStyles().field({ orientation: "vertical" })],
+		},
+	},
 });
 
-const defaultStyles = tv({
-	extend: baseStyles,
-	base: [fieldStyles().field({ orientation: "vertical" })],
-});
+export type ColorFieldStyles = typeof styles;
 
-export type ColorFieldStyles = typeof defaultStyles;
-
-export const { useStyles } = createStyles(colorFieldMeta, {
-	default: defaultStyles,
-});
+export { useStyles };

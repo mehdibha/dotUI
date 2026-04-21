@@ -1,24 +1,26 @@
-import { tv } from "tailwind-variants";
-
 import { createStyles } from "@/modules/core/styles";
 
 import accordionMeta from "./meta";
 
-const baseStyles = tv({
-	base: "flex w-full flex-col",
+const { useStyles, styles } = createStyles(accordionMeta, {
+	base: {
+		base: "flex w-full flex-col",
+	},
+	density: {
+		compact: {},
+		default: {},
+		comfortable: {},
+	},
+	styles: {
+		default: {
+			base: "**:data-disclosure:not-last:border-b",
+		},
+		hammamet: {
+			base: "border **:data-disclosure:not-last:border-b",
+		},
+	},
 });
 
-const defaultStyles = tv({
-	extend: baseStyles,
-	base: "**:data-disclosure:not-last:border-b",
-});
+export type AccordionStyles = typeof styles;
 
-const hammametStyles = tv({
-	extend: baseStyles,
-	base: "border **:data-disclosure:not-last:border-b",
-});
-
-export const { useStyles } = createStyles(accordionMeta, {
-	default: defaultStyles,
-	hammamet: hammametStyles,
-});
+export { useStyles };

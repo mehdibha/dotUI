@@ -1,20 +1,19 @@
-import { tv } from "tailwind-variants";
-
 import { createStyles } from "@/modules/core/styles";
 
 import datePickerMeta from "./meta";
 
-const baseStyles = tv({
-	base: "",
+const { useStyles, styles } = createStyles(datePickerMeta, {
+	base: {
+		base: "",
+	},
+	density: { compact: {}, default: {}, comfortable: {} },
+	styles: {
+		default: {
+			base: "flex flex-col items-start gap-2",
+		},
+	},
 });
 
-const defaultStyles = tv({
-	extend: baseStyles,
-	base: "flex flex-col items-start gap-2",
-});
+export type DatePickerStyles = typeof styles;
 
-export type DatePickerStyles = typeof defaultStyles;
-
-export const { useStyles } = createStyles(datePickerMeta, {
-	default: defaultStyles,
-});
+export { useStyles };

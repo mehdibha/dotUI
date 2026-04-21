@@ -125,7 +125,7 @@ const TextArea = ({ ref, className, onChange, size = "md", ...props }: TextAreaP
 
 	return (
 		<TextAreaPrimitive.TextArea
-			ref={mergeRefs(inputRef, ref)}
+			ref={mergeRefs(inputRef, ref as React.RefObject<HTMLTextAreaElement | null>)}
 			data-text-area=""
 			data-size={size}
 			onChange={chain(onChange, setInputValue)}

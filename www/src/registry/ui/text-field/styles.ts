@@ -1,24 +1,23 @@
-import { tv } from "tailwind-variants";
-
 import { createStyles } from "@/modules/core/styles";
 import { fieldStyles } from "@/registry/ui/field";
 
 import textFieldMeta from "./meta";
 
-const baseStyles = tv({
-	base: "",
+const { useStyles, styles } = createStyles(textFieldMeta, {
+	base: {
+		base: "",
+	},
+	density: { compact: {}, default: {}, comfortable: {} },
+	styles: {
+		default: {
+			base: [
+				"[&.flex-1]:*:data-input:w-full [&.w-full]:*:data-input:w-full",
+				fieldStyles().field({ orientation: "vertical" }),
+			],
+		},
+	},
 });
 
-const defaultStyles = tv({
-	extend: baseStyles,
-	base: [
-		"[&.flex-1]:*:data-input:w-full [&.w-full]:*:data-input:w-full",
-		fieldStyles().field({ orientation: "vertical" }),
-	],
-});
+export type TextFieldStyles = typeof styles;
 
-export type TextFieldStyles = typeof defaultStyles;
-
-export const { useStyles } = createStyles(textFieldMeta, {
-	default: defaultStyles,
-});
+export { useStyles };
