@@ -171,11 +171,7 @@ export function CustomizerPanel() {
 	const cursorInteractive = designSystem.componentParams[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE;
 	const cursorDisabled = designSystem.componentParams[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED;
 
-	// When viewing a component or group, lock the preview to the deepest non-menu id in the stack.
-	// Supports both single-level navigation (component/group) and nested (group → component).
-	const activePreviewId = [...navStack].reverse().find((id) => !menuIds.has(id)) ?? null;
-	const activeComponent = activePreviewId;
-	const effectivePreview = activePreviewId ?? preview;
+	const effectivePreview = preview;
 
 	function renderDynamicPreview(id: string): ReactNode {
 		if (id === "radius") {
@@ -303,7 +299,6 @@ export function CustomizerPanel() {
 					<Select
 						value={effectivePreview}
 						onChange={(v) => navigate({ search: (prev) => ({ ...prev, preview: v as string }) })}
-						isDisabled={!!activeComponent}
 						className="min-w-0 flex-1"
 					>
 						<Button size="sm" className="w-full">

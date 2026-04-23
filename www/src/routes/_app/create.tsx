@@ -22,15 +22,11 @@ export const Route = createFileRoute("/_app/create")({
 });
 
 function CreatePage() {
-	const { panel, preview, preset } = Route.useSearch();
+	const { preview, preset } = Route.useSearch();
 	const { designSystem } = useDesignSystem();
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 
-	// When viewing a component or group detail, preview that entity.
-	// Pick the deepest non-menu segment so nested (group → component) navigation works too.
-	const segments = panel?.split(".") ?? [];
-	const activeComponent = [...segments].reverse().find((s) => !MENU_IDS.has(s)) ?? null;
-	const effectivePreview = activeComponent ?? preview;
+	const effectivePreview = preview;
 
 	// Bake the preset into the iframe src so the initial render has the right state.
 	// Only recompute when the previewed component changes (not on every param change)
