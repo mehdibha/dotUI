@@ -12,16 +12,25 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				// with date input
 				"**:data-input:flex-1",
 				// disabled
-				"has-disabled:cursor-disabled",
+				"disabled:text-fg-disabled has-disabled:cursor-disabled",
 			],
 			inputGroupAddon: [
 				"flex cursor-text select-none items-center justify-center",
+				"text-fg-muted",
 				// with textarea
 				"group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
 			],
-			input: ["outline-none", "h-(--input-h) in-data-input-group:h-auto", "disabled:cursor-disabled"],
-			textArea: ["resize-none outline-none"],
-			dateInput: [],
+			input: [
+				"w-full outline-none",
+				"h-(--input-h) in-data-input-group:h-auto",
+				// disabled
+				"disabled:cursor-disabled disabled:text-fg-disabled",
+			],
+			textArea: [
+				"min-h-16 w-full resize-none outline-none",
+				// disabled
+				"disabled:cursor-disabled disabled:text-fg-disabled",
+			],
 			dateInputSegment: "",
 		},
 		variants: {
@@ -36,11 +45,14 @@ const { useStyles, styles } = createStyles(inputMeta, {
 		},
 	},
 
+	/* -------------------- Density -------------------- */
+
 	density: {
 		compact: {
 			slots: {
 				inputGroup: "text-sm sm:text-xs/relaxed",
 				input: "text-sm sm:text-xs/relaxed",
+				textArea: "text-sm sm:text-xs/relaxed",
 			},
 			variants: {
 				size: {
@@ -63,6 +75,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			slots: {
 				inputGroup: "text-base sm:text-sm",
 				input: "text-base sm:text-sm",
+				textArea: "text-base sm:text-sm",
 			},
 			variants: {
 				size: {
@@ -85,6 +98,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			slots: {
 				inputGroup: "text-base sm:text-sm",
 				input: "text-base sm:text-sm",
+				textArea: "text-base sm:text-sm",
 			},
 			variants: {
 				size: {
@@ -105,25 +119,47 @@ const { useStyles, styles } = createStyles(inputMeta, {
 		},
 	},
 
+	/* -------------------- Styles -------------------- */
+
 	styles: {
 		// Bordered — neutral default.
 		outline: {
 			slots: {
 				inputGroup: [
 					"rounded-(--input-radius) border border-border-field bg-field",
-					// unstyle input
-					"**:data-input:rounded-none **:data-input:border-none **:data-input:bg-transparent",
+					// unstyle input, textarea, and date input
+					"**:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
 					"has-[[data-input-control][data-focused]]:border-border-focus has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:ring-border-focus-muted",
 					// disabled
-					"has-disabled:border-border-disabled has-disabled:bg-disabled has-disabled:text-fg-disabled",
+					"has-disabled:border-border-disabled has-disabled:bg-disabled",
 					// invalid
-					"has-invalid:border-border-danger has-invalid:text-fg-onMutedDanger",
+					"has-invalid:border-border-danger has-invalid:text-fg-danger",
 				],
-				input: "rounded-(--input-radius) border border-border-field bg-field",
-				textArea: "",
+				input: [
+					"rounded-(--input-radius) border border-border-field bg-field",
+					// transition
+					"transition-[box-shadow,border-color,color]",
+					// focused
+					"focus:border-border-focus focus:ring-2 focus:ring-border-focus-muted",
+					// disabled
+					"disabled:border-border-disabled disabled:bg-disabled",
+					// invalid
+					"aria-invalid:border-border-danger aria-invalid:text-fg-danger aria-invalid:ring-danger-muted",
+				],
+				textArea: [
+					"rounded-(--input-radius) border border-border-field bg-field",
+					// transition
+					"transition-[box-shadow,border-color,color]",
+					// focused
+					"focus:border-border-focus focus:ring-2 focus:ring-border-focus-muted",
+					// disabled
+					"disabled:border-border-disabled disabled:bg-disabled",
+					// invalid
+					"aria-invalid:border-border-danger aria-invalid:text-fg-danger aria-invalid:ring-danger-muted",
+				],
 				dateInput: "",
 				inputGroupAddon: "",
 			},
@@ -135,7 +171,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				inputGroup: [
 					"border-border-field border-b bg-field",
 					// unstyle input
-					"**:data-input:rounded-none **:data-input:border-none **:data-input:bg-transparent",
+					"**:data-input-control:rounded-none **:data-input-control:border-none **:data-input-control:bg-transparent",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
@@ -158,7 +194,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				inputGroup: [
 					"rounded-t-(--input-radius) border-border-field border-b bg-field",
 					// unstyle input
-					"**:data-input:border-none **:data-input:bg-transparent",
+					"**:data-input-control:border-none **:data-input-control:bg-transparent",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
@@ -179,9 +215,9 @@ const { useStyles, styles } = createStyles(inputMeta, {
 		filled: {
 			slots: {
 				inputGroup: [
-					"rounded-(--input-radius) bg-field",
+					"rounded-(--input-radius) border border-transparent bg-field",
 					// unstyle input
-					"**:data-input:rounded-none **:data-input:border-none **:data-input:bg-transparent",
+					"**:data-input-control:rounded-none **:data-input-control:border-none **:data-input-control:bg-transparent",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused

@@ -1,50 +1,69 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
-
-import Controlled from "./demos/controlled";
-import Default from "./demos/default";
-import Description from "./demos/description";
-import Disabled from "./demos/disabled";
-import ErrorMessage from "./demos/error-message";
-import Label from "./demos/label";
-import PrefixAndSuffix from "./demos/prefix-and-suffix";
-import ReadOnly from "./demos/read-only";
-import Required from "./demos/required";
-import Uncontrolled from "./demos/uncontrolled";
+import { Description, Label } from "@/registry/ui/field";
+import { TextArea } from "@/registry/ui/input";
+import { TextField } from "@/registry/ui/text-field";
 
 export default function TextAreaExamples() {
 	return (
-		<Examples>
-			<Example title="controlled">
-				<Controlled />
-			</Example>
-			<Example title="default">
-				<Default />
-			</Example>
-			<Example title="description">
-				<Description />
-			</Example>
-			<Example title="disabled">
-				<Disabled />
-			</Example>
-			<Example title="error message">
-				<ErrorMessage />
-			</Example>
-			<Example title="label">
-				<Label />
-			</Example>
-			<Example title="prefix and suffix">
-				<PrefixAndSuffix />
-			</Example>
-			<Example title="read only">
-				<ReadOnly />
-			</Example>
-			<Example title="required">
-				<Required />
-			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
-			</Example>
+		<Examples className="md:grid-cols-2">
+			<TextAreaBasic />
+			<TextAreaInvalid />
+			<TextAreaWithLabel />
+			<TextAreaWithDescription />
+			<TextAreaDisabled />
 		</Examples>
+	);
+}
+
+function TextAreaBasic() {
+	return (
+		<Example title="Basic">
+			<TextArea placeholder="Type your message here." />
+		</Example>
+	);
+}
+
+function TextAreaInvalid() {
+	return (
+		<Example title="Invalid">
+			<TextField isInvalid>
+				<TextArea placeholder="Type your message here." />
+			</TextField>
+		</Example>
+	);
+}
+
+function TextAreaWithLabel() {
+	return (
+		<Example title="With Label">
+			<TextField>
+				<Label>Message</Label>
+				<TextArea placeholder="Type your message here." />
+			</TextField>
+		</Example>
+	);
+}
+
+function TextAreaWithDescription() {
+	return (
+		<Example title="With Description">
+			<TextField>
+				<Label>Message</Label>
+				<TextArea placeholder="Type your message here." />
+				<Description>Type your message and press enter to send.</Description>
+			</TextField>
+		</Example>
+	);
+}
+
+function TextAreaDisabled() {
+	return (
+		<Example title="Disabled">
+			<TextField isDisabled>
+				<Label>Message</Label>
+				<TextArea placeholder="Type your message here." />
+			</TextField>
+		</Example>
 	);
 }

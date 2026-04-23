@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(textFieldMeta, {
 	styles: {
 		default: {
 			base: [
-				"[&.flex-1]:*:data-input:w-full [&.w-full]:*:data-input:w-full",
+				"w-full",
 				fieldStyles().field({ orientation: "vertical" }),
 			],
 		},

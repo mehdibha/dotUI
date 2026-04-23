@@ -364,10 +364,10 @@ export function CustomizerPanel() {
 						))}
 
 						{/* Grouped components — shared style across visually related components */}
-						<div className="mt-2 flex flex-col gap-2">
+						{/* <div className="mt-2 flex flex-col gap-2">
 							<div className="px-1 text-[10px] text-fg-muted uppercase tracking-widest">Grouped components</div>
 							<GroupedComponentsView onSelect={(group) => push(group)} />
-						</div>
+						</div> */}
 
 						{/* All components directly accessible from home */}
 						<div className="mt-2 flex flex-col gap-2">

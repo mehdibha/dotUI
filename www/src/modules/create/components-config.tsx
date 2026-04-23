@@ -56,9 +56,14 @@ interface AllComponentsViewProps {
 }
 
 export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
+	const visibleComponents = allComponents.filter((comp) => {
+		const styleCount = comp.styles ? Object.keys(comp.styles).length : 0;
+		const paramCount = comp.params ? Object.keys(comp.params).length : 0;
+		return styleCount > 1 || paramCount >= 1;
+	});
 	return (
 		<div className="mt-4 flex flex-col gap-3">
-			{allComponents.map((comp) => {
+			{visibleComponents.map((comp) => {
 				const styleCount = comp.styles ? Object.keys(comp.styles).length : 0;
 				const paramCount = comp.params ? Object.keys(comp.params).length : 0;
 				return (
