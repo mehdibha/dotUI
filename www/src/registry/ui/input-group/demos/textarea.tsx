@@ -36,7 +36,7 @@ export default function Demo() {
 			</TextField>
 			<TextField>
 				<Label>Addon (block-start)</Label>
-				<InputGroup orientation="vertical">
+				<InputGroup>
 					<InputGroupAddon>
 						<span>Ask, Search or Chat...</span>
 						<InfoIcon  className="ml-auto"/>
@@ -47,7 +47,7 @@ export default function Demo() {
 			</TextField>
 			<TextField>
 				<Label>Addon (block-end)</Label>
-				<InputGroup orientation="vertical">
+				<InputGroup>
 					<TextArea placeholder="Enter your text here..." />
 					<InputGroupAddon>
 						<span>0/280 characters</span>
@@ -60,7 +60,7 @@ export default function Demo() {
 			</TextField>
 			<TextField>
 				<Label>Addon (Buttons)</Label>
-				<InputGroup orientation="vertical">
+				<InputGroup>
 					<TextArea placeholder="Share your thoughts..." className="min-h-[120px]" />
 					<InputGroupAddon>
 						<Button variant="quiet" size="sm" className="ml-auto">
@@ -74,7 +74,7 @@ export default function Demo() {
 			</TextField>
 			<TextField>
 				<Label>Code Editor</Label>
-				<InputGroup orientation="vertical">
+				<InputGroup>
 					<InputGroupAddon className="border-b">
 						<span className="inline-flex items-center gap-2 font-medium font-mono">
 							<CodeIcon />

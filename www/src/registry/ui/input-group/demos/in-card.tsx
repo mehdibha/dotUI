@@ -38,7 +38,7 @@ export default function Demo() {
 				</TextField>
 				<TextField>
 					<Label>Feedback &amp; Comments</Label>
-					<InputGroup orientation="vertical">
+					<InputGroup>
 						<TextArea placeholder="Share your thoughts..." className="min-h-[100px]" />
 						<InputGroupAddon>
 							<span>0/500 characters</span>

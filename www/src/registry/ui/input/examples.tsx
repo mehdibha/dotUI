@@ -6,21 +6,25 @@ import Disabled from "./demos/disabled";
 import Sizes from "./demos/sizes";
 import Textarea from "./demos/textarea";
 
-export default function InputExamples() {
-	return (
-		<Examples className="md:grid-cols-2">
-			<Example title="default">
-				<Default />
-			</Example>
-			<Example title="disabled">
-				<Disabled />
-			</Example>
-			<Example title="sizes">
-				<Sizes />
-			</Example>
-			<Example title="textarea">
-				<Textarea />
-			</Example>
-		</Examples>
-	);
-}
+import InputGroupExamples from "../input-group/examples";
+
+export default InputGroupExamples;
+
+// export default function InputExamples() {
+// 	return (
+// 		<Examples className="md:grid-cols-2">
+// 			<Example title="default">
+// 				<Default />
+// 			</Example>
+// 			<Example title="disabled">
+// 				<Disabled />
+// 			</Example>
+// 			<Example title="sizes">
+// 				<Sizes />
+// 			</Example>
+// 			<Example title="textarea">
+// 				<Textarea />
+// 			</Example>
+// 		</Examples>
+// 	);
+// }

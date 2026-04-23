@@ -83,18 +83,17 @@ function DesignSystemProvider({
 type TvConfig = Parameters<TV>[0];
 
 /**
- * Full createStyles config. `density` and `styles` entries are symmetric:
- * both are tv overrides of `base`, composed at module init via tv's `extend`.
- *
- * Composition order per (density, aesthetic) pair:
+ * Full createStyles config. Composition order per (density, aesthetic):
  *   base  →  density[d]  →  styles[a]
  *
- * Density is *not* a tv variant — it selects which precomputed tv to use at
- * runtime. This keeps the public `VariantProps` clean.
+ * `density` is optional — when a component doesn't need density variation,
+ * omit it and the aesthetic extends `base` directly. When present, density
+ * is *not* a tv variant; it selects which precomputed tv to use at runtime,
+ * keeping the public `VariantProps` clean.
  */
 interface CreateStylesConfig<Base extends TvConfig, StyleNames extends string> {
 	base: Base;
-	density: Record<Density, TvConfig>;
+	density?: Record<Density, TvConfig>;
 	styles: Record<StyleNames, TvConfig>;
 }
 
@@ -105,12 +104,9 @@ function isNewShape(config: unknown): config is CreateStylesConfig<TvConfig, str
 	const c = config as Record<string, unknown>;
 	return (
 		"base" in c &&
-		"density" in c &&
 		"styles" in c &&
 		typeof c.base === "object" &&
 		c.base !== null &&
-		typeof c.density === "object" &&
-		c.density !== null &&
 		typeof c.styles === "object" &&
 		c.styles !== null
 	);
@@ -162,7 +158,7 @@ function createStyles<M extends CreateStylesMeta, T extends Record<string, TvFn>
 	meta: M,
 	stylesMap: T,
 ): { useStyles: () => T[keyof T] };
-// New shape: { base, density, styles }. Return type flows from merging
+// New shape: { base, density?, styles }. Return type flows from merging
 // tv(config.base) with the default style override, so consumers see the real
 // slot / variant keys.
 function createStyles<
@@ -171,7 +167,7 @@ function createStyles<
 	const Styles extends Record<string, unknown>,
 >(
 	meta: M,
-	config: { base: Base; density: Record<Density, TvConfig>; styles: Styles },
+	config: { base: Base; density?: Record<Density, TvConfig>; styles: Styles },
 ): {
 	useStyles: () => InferTv<Base, Styles[M["defaultStyle"] & keyof Styles]>;
 	styles: InferTv<Base, Styles[M["defaultStyle"] & keyof Styles]>;
@@ -182,10 +178,15 @@ function createStyles(meta: CreateStylesMeta, config: any): any {
 
 		const baseTv = tv(base as never);
 
-		// Precompute (density × aesthetic) — e.g. 3 densities × N presets.
+		// When density is defined, precompute (density × aesthetic).
+		// When absent, aesthetic extends base directly and is reused for any
+		// density read from context.
+		const densities = density ? (Object.keys(density) as Density[]) : (["default"] as Density[]);
 		const composed: Record<string, Record<string, TvFn>> = {};
-		for (const d of Object.keys(density) as Density[]) {
-			const densityTv = tv({ extend: baseTv as never, ...(density[d] as TvConfig) } as never);
+		for (const d of densities) {
+			const densityTv = density
+				? tv({ extend: baseTv as never, ...(density[d] as TvConfig) } as never)
+				: baseTv;
 			composed[d] = {};
 			for (const [aestheticName, aestheticOverride] of Object.entries(styles)) {
 				composed[d]![aestheticName] = tv({

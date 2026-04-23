@@ -4,9 +4,12 @@ const inputMeta = {
 	name: "input",
 	type: "registry:ui",
 	group: "inputs",
-	defaultStyle: "default",
+	defaultStyle: "outline",
 	styles: {
-		default: {},
+		outline: {},
+		line: {},
+		"filled-line-bottom": {},
+		filled: {},
 	},
 	files: [
 		{

@@ -901,13 +901,33 @@ export const DemosIndex: Record<
     files: ["ui/input/demos/textarea.tsx"],
     component: React.lazy(() => import("@/registry/ui/input/demos/textarea")),
   },
-  "input-group/demos/input-group": {
-    files: ["ui/input-group/demos/input-group.tsx"],
-    component: React.lazy(() => import("@/registry/ui/input-group/demos/input-group")),
+  "input-group/demos/addons": {
+    files: ["ui/input-group/demos/addons.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/addons")),
   },
-  "input-group/demos/vertical-group": {
-    files: ["ui/input-group/demos/vertical-group.tsx"],
-    component: React.lazy(() => import("@/registry/ui/input-group/demos/vertical-group")),
+  "input-group/demos/basic": {
+    files: ["ui/input-group/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/basic")),
+  },
+  "input-group/demos/buttons": {
+    files: ["ui/input-group/demos/buttons.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/buttons")),
+  },
+  "input-group/demos/in-card": {
+    files: ["ui/input-group/demos/in-card.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/in-card")),
+  },
+  "input-group/demos/kbd": {
+    files: ["ui/input-group/demos/kbd.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/kbd")),
+  },
+  "input-group/demos/textarea": {
+    files: ["ui/input-group/demos/textarea.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/textarea")),
+  },
+  "input-group/demos/tooltip-dropdown-popover": {
+    files: ["ui/input-group/demos/tooltip-dropdown-popover.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/tooltip-dropdown-popover")),
   },
   "list-box/demos/async-loading": {
     files: ["ui/list-box/demos/async-loading.tsx"],

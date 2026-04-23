@@ -38,25 +38,6 @@ export default function Demo() {
 				</InputGroup>
 			</TextField>
 			<TextField>
-				<InputGroup orientation="vertical">
-					<InputGroupAddon>
-						<Label>First Name</Label>
-						<InfoIcon />
-					</InputGroupAddon>
-					<Input />
-				</InputGroup>
-			</TextField>
-			<TextField>
-				<Label>label</Label>
-				<InputGroup orientation="vertical">
-					<Input />
-					<InputGroupAddon>
-						<span>20/240 characters</span>
-						<InfoIcon />
-					</InputGroupAddon>
-				</InputGroup>
-			</TextField>
-			<TextField>
 				<Label>label</Label>
 				<InputGroup>
 					<InputGroupAddon>
