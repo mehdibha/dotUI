@@ -8,6 +8,11 @@ overrides:
   '@types/react': 19.1.8
   '@types/react-dom': 19.1.6
 
+patchedDependencies:
+  tailwindcss-react-aria-components@2.0.1:
+    hash: 32d3e66f29fde34c04715ead1ef1f50c64b880de438c83289f8027159b686dcb
+    path: patches/tailwindcss-react-aria-components@2.0.1.patch
+
 importers:
 
   .:
@@ -268,7 +273,7 @@ importers:
         version: link:../packages/tailwindcss-autocontrast
       tailwindcss-react-aria-components:
         specifier: ^2.0.1
-        version: 2.0.1(tailwindcss@4.1.17)
+        version: 2.0.1(patch_hash=32d3e66f29fde34c04715ead1ef1f50c64b880de438c83289f8027159b686dcb)(tailwindcss@4.1.17)
       tailwindcss-with:
         specifier: workspace:*
         version: link:../packages/tailwindcss-with
@@ -12141,7 +12146,7 @@ snapshots:
     optionalDependencies:
       tailwind-merge: 3.4.0
 
-  tailwindcss-react-aria-components@2.0.1(tailwindcss@4.1.17):
+  tailwindcss-react-aria-components@2.0.1(patch_hash=32d3e66f29fde34c04715ead1ef1f50c64b880de438c83289f8027159b686dcb)(tailwindcss@4.1.17):
     dependencies:
       tailwindcss: 4.1.17
 
