@@ -7,14 +7,12 @@ const { useStyles, styles } = createStyles(inputMeta, {
 		slots: {
 			inputGroup: [
 				"group/input-group relative flex h-(--input-h) w-full min-w-0 items-center",
-				// unstyle input, textarea, and date input
-				"**:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
+				// unstyle any input-control, make it fill the parent
+				"**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
 				// with textarea
-				"has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full **:data-input:flex-1",
-				// with date input
-				"**:data-input:flex-1",
+				"has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
 				// disabled
-				"disabled:text-fg-disabled has-disabled:cursor-disabled",
+				"disabled:cursor-disabled disabled:text-fg-disabled",
 			],
 			inputGroupAddon: [
 				"flex cursor-text select-none items-center justify-center",
@@ -132,35 +130,24 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
-					"has-[[data-input-control][data-focused]:not([data-invalid])]:border-border-focus has-[[data-input-control][data-focused]:not([data-invalid])]:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
+					"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
 					// disabled
-					"has-disabled:border-border-disabled has-disabled:bg-disabled",
+					"disabled:border-border-disabled disabled:bg-disabled",
 					// invalid
-					"has-invalid:border-border-danger has-invalid:text-fg-danger has-invalid:ring-danger-muted",
+					"invalid:border-border-danger invalid:ring-danger-muted",
 				],
 				input: [
 					"rounded-(--input-radius) border border-border-field bg-field",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
-					"focus:not-data-invalid:border-border-focus focus:not-data-invalid:ring-border-focus-muted focus:ring-2",
+					"focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
 					// disabled
 					"disabled:border-border-disabled disabled:bg-disabled",
 					// invalid
-					"invalid:border-border-danger invalid:text-fg-danger invalid:ring-danger-muted",
+					"invalid:border-border-danger invalid:ring-danger-muted",
 				],
-				textArea: [
-					"rounded-(--input-radius) border border-border-field bg-field",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-data-invalid:border-border-focus focus:not-data-invalid:ring-border-focus-muted focus:ring-2",
-					// disabled
-					"disabled:border-border-disabled disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:text-fg-danger invalid:ring-danger-muted",
-				],
-				dateInput: "",
+				textArea: [],
 				inputGroupAddon: "",
 			},
 		},
@@ -173,22 +160,22 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
-					"has-[[data-input-control][data-focused]:not([data-invalid])]:border-border-focus",
+					"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
 					// disabled
-					"has-disabled:border-border-disabled has-disabled:text-fg-disabled",
+					"disabled:border-border-disabled",
 					// invalid
-					"has-invalid:border-border-danger has-invalid:text-fg-danger",
+					"invalid:border-border-danger invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
 				],
 				input: [
 					"border-border-field border-b",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
-					"focus:not-data-invalid:border-border-focus",
+					"focus:not-invalid:border-border-focus",
 					// disabled
 					"disabled:border-border-disabled",
 					// invalid
-					"invalid:border-border-danger invalid:text-fg-danger",
+					"invalid:border-border-danger invalid:focus:border-fg-danger",
 				],
 				textArea: [],
 				inputGroupAddon: "",
@@ -203,22 +190,22 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
-					"has-[[data-input-control][data-focused]]:border-border-focus",
+					"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
 					// disabled
-					"has-disabled:border-border-disabled has-disabled:bg-disabled has-disabled:text-fg-disabled",
+					"disabled:border-border-disabled disabled:bg-disabled",
 					// invalid
-					"has-invalid:border-border-danger has-invalid:text-fg-onMutedDanger",
+					"invalid:border-border-danger",
 				],
 				input: [
 					"rounded-t-(--input-radius) border-border-field border-b bg-field",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
-					"focus:border-border-focus",
+					"focus:not-invalid:border-border-focus",
 					// disabled
 					"disabled:border-border-disabled disabled:bg-disabled",
 					// invalid
-					"aria-invalid:border-border-danger aria-invalid:text-fg-onMutedDanger",
+					"invalid:border-border-danger",
 				],
 				textArea: [],
 				inputGroupAddon: "",
@@ -233,22 +220,22 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
-					"has-[[data-input-control][data-focused]]:border-border-focus has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:ring-border-focus-muted",
+					"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
 					// disabled
-					"has-disabled:border-border-disabled has-disabled:bg-disabled has-disabled:text-fg-disabled",
+					"disabled:bg-disabled",
 					// invalid
-					"has-invalid:border-border-danger has-invalid:text-fg-onMutedDanger",
+					"invalid:border-border-danger invalid:ring-danger-muted",
 				],
 				input: [
 					"rounded-(--input-radius) border border-transparent bg-field",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
-					"focus:border-border-focus focus:ring-2 focus:ring-border-focus-muted",
+					"focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
 					// disabled
-					"disabled:border-border-disabled disabled:bg-disabled",
+					"disabled:bg-disabled",
 					// invalid
-					"aria-invalid:border-border-danger aria-invalid:text-fg-onMutedDanger aria-invalid:ring-danger-muted",
+					"invalid:border-border-danger invalid:ring-danger-muted",
 				],
 				textArea: [],
 				inputGroupAddon: "",

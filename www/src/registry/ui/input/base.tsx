@@ -136,12 +136,12 @@ interface DateInputProps extends Omit<DateFieldPrimitive.DateInputProps, "childr
 }
 
 const DateInput = ({ className, ...props }: DateInputProps) => {
-	const { dateInput } = useStyles()();
+	const { input } = useStyles()();
 	return (
 		<DateFieldPrimitive.DateInput
 			data-date-input=""
 			data-input-control=""
-			className={composeRenderProps(className, (className) => dateInput({ className }))}
+			className={composeRenderProps(className, (className) => input({ className }))}
 			{...props}
 		>
 			{props.children ? props.children : (segment) => <DateSegment segment={segment} />}
