@@ -8,15 +8,17 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			inputGroup: [
 				"group/input-group relative flex h-(--input-h) w-full min-w-0 items-center",
 				// unstyle any input-control, make it fill the parent
-				"**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
+				"**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:px-0 **:data-input-control:ring-0",
 				// with textarea
 				"has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
 				// disabled
 				"disabled:cursor-disabled disabled:text-fg-disabled",
+				// temp: declare css vars here
+				"[--addon-button-inset:var(--spacing)] [--addon-gap:calc(var(--spacing)*1)] [--edge-to-text:calc(var(--spacing)*3)] [--edge-to-visual:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*3.5)] [--text-to-visual:calc(var(--spacing)*1.5)]",
 			],
 			inputGroupAddon: [
-				"flex cursor-text select-none items-center justify-center",
-				"text-fg-muted",
+				"flex cursor-text select-none items-center justify-center gap-(--addon-gap)",
+				"text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size)",
 				// with textarea
 				"group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
 			],
@@ -25,6 +27,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				"h-(--input-h) in-data-input-group:h-auto",
 				// disabled
 				"disabled:cursor-disabled disabled:text-fg-disabled",
+				// temp: declare css vars here
+				"[--edge-to-text:calc(var(--spacing)*3)]",
 			],
 			textArea: [
 				"min-h-16 w-full resize-none outline-none",
@@ -57,15 +61,15 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			variants: {
 				size: {
 					sm: {
-						inputGroup: "[--input-h:calc(var(--spacing)*6)] **:[svg]:not-with-[size]:size-3",
+						inputGroup: "[--input-h:calc(var(--spacing)*6)]",
 						input: "[--input-h:calc(var(--spacing)*6)]",
 					},
 					md: {
-						inputGroup: "[--input-h:calc(var(--spacing)*7)] **:[svg]:not-with-[size]:size-3.5",
+						inputGroup: "[--input-h:calc(var(--spacing)*7)]",
 						input: "[--input-h:calc(var(--spacing)*7)]",
 					},
 					lg: {
-						inputGroup: "[--input-h:calc(var(--spacing)*8)] **:[svg]:not-with-[size]:size-4",
+						inputGroup: "[--input-h:calc(var(--spacing)*8)]",
 						input: "[--input-h:calc(var(--spacing)*8)]",
 					},
 				},
@@ -80,15 +84,15 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			variants: {
 				size: {
 					sm: {
-						inputGroup: "[--input-h:calc(var(--spacing)*7)] **:[svg]:not-with-[size]:size-3.5",
+						inputGroup: "[--input-h:calc(var(--spacing)*7)]",
 						input: "[--input-h:calc(var(--spacing)*7)]",
 					},
 					md: {
-						inputGroup: "[--input-h:calc(var(--spacing)*8)] **:[svg]:not-with-[size]:size-4",
+						inputGroup: "[--input-h:calc(var(--spacing)*8)]",
 						input: "[--input-h:calc(var(--spacing)*8)]",
 					},
 					lg: {
-						inputGroup: "[--input-h:calc(var(--spacing)*9)] **:[svg]:not-with-[size]:size-4",
+						inputGroup: "[--input-h:calc(var(--spacing)*9)]",
 						input: "[--input-h:calc(var(--spacing)*9)]",
 					},
 				},
@@ -103,11 +107,11 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			variants: {
 				size: {
 					sm: {
-						inputGroup: "[--input-h:calc(var(--spacing)*8)] **:[svg]:not-with-[size]:size-4",
+						inputGroup: "[--input-h:calc(var(--spacing)*8)]",
 						input: "[--input-h:calc(var(--spacing)*8)]",
 					},
 					md: {
-						inputGroup: "[--input-h:calc(var(--spacing)*9)] **:[svg]:not-with-[size]:size-4",
+						inputGroup: "[--input-h:calc(var(--spacing)*9)]",
 						input: "[--input-h:calc(var(--spacing)*9)]",
 					},
 					lg: {
@@ -126,7 +130,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 		outline: {
 			slots: {
 				inputGroup: [
-					"rounded-(--input-radius) border border-border-field bg-field",
+					"rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text)",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
@@ -135,9 +139,11 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					"disabled:border-border-disabled disabled:bg-disabled",
 					// invalid
 					"invalid:border-border-danger invalid:ring-danger-muted",
+					// with addons and input
+					"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
 				],
 				input: [
-					"rounded-(--input-radius) border border-border-field bg-field",
+					"rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text)",
 					// transition
 					"transition-[box-shadow,border-color,color]",
 					// focused
@@ -148,7 +154,12 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					"invalid:border-border-danger invalid:ring-danger-muted",
 				],
 				textArea: [],
-				inputGroupAddon: "",
+				inputGroupAddon: [
+					// with input
+					"group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)]",
+					// nested button, with input
+					"group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)] **:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
+				],
 			},
 		},
 

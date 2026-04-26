@@ -139,6 +139,7 @@ const DateInput = ({ className, ...props }: DateInputProps) => {
 	const { input } = useStyles()();
 	return (
 		<DateFieldPrimitive.DateInput
+			data-input=""
 			data-date-input=""
 			data-input-control=""
 			className={composeRenderProps(className, (className) => input({ className }))}
