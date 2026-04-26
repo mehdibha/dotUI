@@ -34,6 +34,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				"min-h-16 w-full resize-none outline-none",
 				// disabled
 				"disabled:cursor-disabled disabled:text-fg-disabled",
+				// temp: declare css vars here
+				"[--edge-to-text:calc(var(--spacing)*3)]",
 			],
 			dateInputSegment: "",
 		},
@@ -153,7 +155,17 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					// invalid
 					"invalid:border-border-danger invalid:ring-danger-muted",
 				],
-				textArea: [],
+				textArea: [
+					"rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text)",
+					// transition
+					"transition-[box-shadow,border-color,color]",
+					// focused
+					"focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
+					// disabled
+					"disabled:border-border-disabled disabled:bg-disabled",
+					// invalid
+					"invalid:border-border-danger invalid:ring-danger-muted",
+				],
 				inputGroupAddon: [
 					// with input
 					"group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)]",
@@ -176,6 +188,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					"disabled:border-border-disabled",
 					// invalid
 					"invalid:border-border-danger invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
+					// with addons and input
+					"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
 				],
 				input: [
 					"border-border-field border-b",
@@ -189,7 +203,12 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					"invalid:border-border-danger invalid:focus:border-fg-danger",
 				],
 				textArea: [],
-				inputGroupAddon: "",
+				inputGroupAddon: [
+					// with input
+					"group-has-data-input/input-group:last:pl-(--text-to-visual) group-has-data-input/input-group:first:pr-(--text-to-visual)",
+					// nested button, with input
+					"**:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
+				],
 			},
 		},
 
@@ -206,6 +225,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					"disabled:border-border-disabled disabled:bg-disabled",
 					// invalid
 					"invalid:border-border-danger",
+					// with addons and input
+					"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
 				],
 				input: [
 					"rounded-t-(--input-radius) border-border-field border-b bg-field",
@@ -219,7 +240,12 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					"invalid:border-border-danger",
 				],
 				textArea: [],
-				inputGroupAddon: "",
+				inputGroupAddon: [
+					// with input
+					"group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)]",
+					// nested button, with input
+					"group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)] **:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
+				],
 			},
 		},
 
@@ -236,6 +262,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					"disabled:bg-disabled",
 					// invalid
 					"invalid:border-border-danger invalid:ring-danger-muted",
+					// with addons and input
+					"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
 				],
 				input: [
 					"rounded-(--input-radius) border border-transparent bg-field",
@@ -249,7 +277,12 @@ const { useStyles, styles } = createStyles(inputMeta, {
 					"invalid:border-border-danger invalid:ring-danger-muted",
 				],
 				textArea: [],
-				inputGroupAddon: "",
+				inputGroupAddon: [
+					// with input
+					"group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)]",
+					// nested button, with input
+					"group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)] **:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
+				],
 			},
 		},
 	},
