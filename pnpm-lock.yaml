@@ -7,6 +7,9 @@ settings:
 overrides:
   '@types/react': 19.1.8
   '@types/react-dom': 19.1.6
+  react-aria: file:./www/vendor/react-aria-3.48.0.tgz
+  react-aria-components: file:./www/vendor/react-aria-components-1.17.0.tgz
+  react-stately: file:./www/vendor/react-stately-3.46.0.tgz
 
 patchedDependencies:
   tailwindcss-react-aria-components@2.0.1:
@@ -236,11 +239,11 @@ importers:
         specifier: ^19.2.1
         version: 19.2.1
       react-aria:
-        specifier: ^3.48.0
-        version: 3.48.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+        specifier: file:vendor/react-aria-3.48.0.tgz
+        version: file:www/vendor/react-aria-3.48.0.tgz(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react-aria-components:
-        specifier: link:../../react-spectrum/packages/react-aria-components
-        version: link:../../react-spectrum/packages/react-aria-components
+        specifier: file:vendor/react-aria-components-1.17.0.tgz
+        version: file:www/vendor/react-aria-components-1.17.0.tgz(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       react-dom:
         specifier: ^19.2.1
         version: 19.2.1(react@19.2.1)
@@ -251,8 +254,8 @@ importers:
         specifier: ^7.54.2
         version: 7.68.0(react@19.2.1)
       react-stately:
-        specifier: ^3.46.0
-        version: 3.46.0(react@19.2.1)
+        specifier: file:vendor/react-stately-3.46.0.tgz
+        version: file:www/vendor/react-stately-3.46.0.tgz(react@19.2.1)
       shiki:
         specifier: ^3.15.0
         version: 3.19.0
@@ -5191,8 +5194,16 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
-  react-aria@3.48.0:
-    resolution: {integrity: sha512-jQjd4rBEIMqecBaAKYJbVGK6EqIHLa5znVQ7jwFyK5vCyljoj6KhgtiahmcIPsG5vG5vEDLw+ba+bEWn6A2P4w==}
+  react-aria-components@file:www/vendor/react-aria-components-1.17.0.tgz:
+    resolution: {integrity: sha512-jMaEKWo1uDYmOiD/uaZJU4X8J+5WHyYfjmgh3cyw4Y39q3lgs137FZ+u+RytvYdO0vlOIX7fQzgARyVMowBZeQ==, tarball: file:www/vendor/react-aria-components-1.17.0.tgz}
+    version: 1.17.0
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+      react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  react-aria@file:www/vendor/react-aria-3.48.0.tgz:
+    resolution: {integrity: sha512-iS8XUj5P1AcAYxWAF2RsXa29ev+QTUYDafaH8sK+GDFjHmALfljH2sYdCK7TR0HPcwc3fXpeND6XvNKHvQPrTQ==, tarball: file:www/vendor/react-aria-3.48.0.tgz}
+    version: 3.48.0
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
@@ -5220,8 +5231,9 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  react-stately@3.46.0:
-    resolution: {integrity: sha512-OdxhWvHgs2L4OJGIs7hnuTr5WjjMM6enhNEAMRqiekhF8+ITvA2LRwNftOZwcogaoCslGYq5S2VQTQwnm0GbCA==}
+  react-stately@file:www/vendor/react-stately-3.46.0.tgz:
+    resolution: {integrity: sha512-K7Ko7/u2jgQAoG9tiX26dJdG78yBJXyTtHj6vct5iPCuDKfY9A56y3yu78QI9sfPD+UypAG6hmOBysEoSC38og==, tarball: file:www/vendor/react-stately-3.46.0.tgz}
+    version: 3.46.0
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
@@ -8980,8 +8992,7 @@ snapshots:
 
   cli-width@4.1.0: {}
 
-  client-only@0.0.1:
-    optional: true
+  client-only@0.0.1: {}
 
   cliui@5.0.0:
     dependencies:
@@ -11462,7 +11473,18 @@ snapshots:
       iconv-lite: 0.7.0
       unpipe: 1.0.0
 
-  react-aria@3.48.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
+  react-aria-components@file:www/vendor/react-aria-components-1.17.0.tgz(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
+    dependencies:
+      '@internationalized/date': 3.12.1
+      '@react-types/shared': 3.34.0(react@19.2.1)
+      '@swc/helpers': 0.5.21
+      client-only: 0.0.1
+      react: 19.2.1
+      react-aria: file:www/vendor/react-aria-3.48.0.tgz(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      react-dom: 19.2.1(react@19.2.1)
+      react-stately: file:www/vendor/react-stately-3.46.0.tgz(react@19.2.1)
+
+  react-aria@file:www/vendor/react-aria-3.48.0.tgz(react-dom@19.2.1(react@19.2.1))(react@19.2.1):
     dependencies:
       '@internationalized/date': 3.12.1
       '@internationalized/number': 3.6.6
@@ -11473,7 +11495,7 @@ snapshots:
       clsx: 2.1.1
       react: 19.2.1
       react-dom: 19.2.1(react@19.2.1)
-      react-stately: 3.46.0(react@19.2.1)
+      react-stately: file:www/vendor/react-stately-3.46.0.tgz(react@19.2.1)
       use-sync-external-store: 1.6.0(react@19.2.1)
 
   react-dom@19.2.1(react@19.2.1):
@@ -11513,7 +11535,7 @@ snapshots:
       - rollup
       - supports-color
 
-  react-stately@3.46.0(react@19.2.1):
+  react-stately@file:www/vendor/react-stately-3.46.0.tgz(react@19.2.1):
     dependencies:
       '@internationalized/date': 3.12.1
       '@internationalized/number': 3.6.6
