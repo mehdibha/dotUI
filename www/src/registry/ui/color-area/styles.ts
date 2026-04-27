@@ -4,12 +4,12 @@ import colorAreaMeta from "./meta";
 
 const { useStyles, styles } = createStyles(colorAreaMeta, {
 	base: {
-		base: "block min-w-20 rounded-(--color-area-radius) disabled:[background:var(--color-disabled)]!",
+		base: "block aspect-square in-data-dialog:w-full min-w-20 rounded-(--color-area-radius) disabled:[background:var(--color-disabled)]!",
 	},
 	density: {
-		compact: { base: "size-40" },
-		default: { base: "size-48" },
-		comfortable: { base: "size-56" },
+		compact: { base: "w-40" },
+		default: { base: "w-48" },
+		comfortable: { base: "w-56" },
 	},
 	styles: {
 		default: {

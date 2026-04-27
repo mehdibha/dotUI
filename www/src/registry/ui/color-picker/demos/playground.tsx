@@ -1,15 +1,20 @@
 "use client";
 
+import { Button } from "@/registry/ui/button";
 import { ColorEditor } from "@/registry/ui/color-editor";
-import { ColorPicker, ColorPickerContent, ColorPickerTrigger } from "@/registry/ui/color-picker";
+import { ColorPicker } from "@/registry/ui/color-picker";
+import { DialogContent } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 export function ColorPickerPlayground() {
 	return (
 		<ColorPicker defaultValue="#ff0000">
-			<ColorPickerTrigger />
-			<ColorPickerContent>
-				<ColorEditor />
-			</ColorPickerContent>
+			<Button />
+			<Popover>
+				<DialogContent>
+					<ColorEditor />
+				</DialogContent>
+			</Popover>
 		</ColorPicker>
 	);
 }

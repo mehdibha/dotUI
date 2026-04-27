@@ -3,8 +3,11 @@
 import React from "react";
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 
+import { Button } from "@/registry/ui/button";
 import { ColorEditor } from "@/registry/ui/color-editor";
-import { ColorPicker, ColorPickerContent, ColorPickerTrigger } from "@/registry/ui/color-picker";
+import { ColorPicker } from "@/registry/ui/color-picker";
+import { DialogContent } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	const [value, setValue] = React.useState<ColorAreaPrimitives.Color>(
@@ -13,10 +16,12 @@ export default function Demo() {
 
 	return (
 		<ColorPicker value={value} onChange={setValue}>
-			<ColorPickerTrigger />
-			<ColorPickerContent>
-				<ColorEditor />
-			</ColorPickerContent>
+			<Button />
+			<Popover>
+				<DialogContent>
+					<ColorEditor />
+				</DialogContent>
+			</Popover>
 		</ColorPicker>
 	);
 }

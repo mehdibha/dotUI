@@ -180,8 +180,6 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// ColorPicker
 	ColorPicker: "@/components/ui/color-picker",
-	ColorPickerTrigger: "@/components/ui/color-picker",
-	ColorPickerContent: "@/components/ui/color-picker",
 	ColorEditor: "@/components/ui/color-editor",
 
 	// Slider

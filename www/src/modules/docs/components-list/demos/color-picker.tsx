@@ -1,13 +1,18 @@
+import { Button } from "@/registry/ui/button";
 import { ColorEditor } from "@/registry/ui/color-editor";
-import { ColorPicker, ColorPickerContent, ColorPickerTrigger } from "@/registry/ui/color-picker";
+import { ColorPicker } from "@/registry/ui/color-picker";
+import { DialogContent } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 export function ColorPickerDemo() {
 	return (
 		<ColorPicker defaultValue="#EBEBEB">
-			<ColorPickerTrigger size="lg" />
-			<ColorPickerContent>
-				<ColorEditor />
-			</ColorPickerContent>
+			<Button size="lg" />
+			<Popover>
+				<DialogContent>
+					<ColorEditor />
+				</DialogContent>
+			</Popover>
 		</ColorPicker>
 	);
 }

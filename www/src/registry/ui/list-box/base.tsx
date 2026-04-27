@@ -5,7 +5,7 @@ import { CheckIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as HeaderPrimitives from "react-aria-components/Header";
 import * as LabelPrimitives from "react-aria-components/Label";
-import * as ListBoxPrimitives from "react-aria-components/ListBox";
+import * as ListBoxPrimitive from "react-aria-components/ListBox";
 import { type ContextValue, Provider, useSlottedContext } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
 import * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
@@ -18,15 +18,15 @@ import type { ListBoxStyles } from "./styles";
 
 // MARK: seperator
 
-interface ListBoxProps<T> extends ListBoxPrimitives.ListBoxProps<T> {
+interface ListBoxProps<T> extends ListBoxPrimitive.ListBoxProps<T> {
 	isLoading?: boolean;
 }
 
 const ListBox = <T extends object>({ className, isLoading, ...props }: ListBoxProps<T>) => {
 	const { root } = useStyles()();
-	const standalone = !React.use(ListBoxPrimitives.ListStateContext);
+	const standalone = !React.use(ListBoxPrimitive.ListStateContext);
 	return (
-		<ListBoxPrimitives.ListBox
+		<ListBoxPrimitive.ListBox
 			data-standalone={standalone || undefined}
 			className={composeRenderProps(className, (cn) => root({ className: cn }))}
 			{...props}
@@ -36,7 +36,7 @@ const ListBox = <T extends object>({ className, isLoading, ...props }: ListBoxPr
 
 // MARK: seperator
 
-interface ListBoxItemProps<T> extends ListBoxPrimitives.ListBoxItemProps<T>, VariantProps<ListBoxStyles> {}
+interface ListBoxItemProps<T> extends ListBoxPrimitive.ListBoxItemProps<T>, VariantProps<ListBoxStyles> {}
 
 const ListBoxItem = <T extends object>({
 	className,
@@ -48,7 +48,7 @@ const ListBoxItem = <T extends object>({
 	const textValue = textValueProp || (typeof props.children === "string" ? props.children : undefined);
 
 	return (
-		<ListBoxPrimitives.ListBoxItem
+		<ListBoxPrimitive.ListBoxItem
 			textValue={textValue}
 			className={composeRenderProps(className, (cn) => item({ className: cn, variant }))}
 			{...props}
@@ -63,7 +63,7 @@ const ListBoxItem = <T extends object>({
 					)}
 				</ListBoxItemInner>
 			))}
-		</ListBoxPrimitives.ListBoxItem>
+		</ListBoxPrimitive.ListBoxItem>
 	);
 };
 
@@ -85,11 +85,11 @@ const ListBoxItemInner = ({ children }: { children: React.ReactNode }) => {
 
 // MARK: seperator
 
-interface ListBoxSectionProps<T> extends ListBoxPrimitives.ListBoxSectionProps<T> {}
+interface ListBoxSectionProps<T> extends ListBoxPrimitive.ListBoxSectionProps<T> {}
 
 const ListBoxSection = <T extends object>({ className, ...props }: ListBoxSectionProps<T>) => {
 	const { section } = useStyles()();
-	return <ListBoxPrimitives.ListBoxSection data-slot="listbox-section" className={section({ className })} {...props} />;
+	return <ListBoxPrimitive.ListBoxSection data-slot="listbox-section" className={section({ className })} {...props} />;
 };
 
 // MARK: seperator
