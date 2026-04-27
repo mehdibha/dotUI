@@ -39,7 +39,7 @@ export default function Demo() {
 				<InputGroup>
 					<InputGroupAddon>
 						<span>Ask, Search or Chat...</span>
-						<InfoIcon  className="ml-auto"/>
+						<InfoIcon className="ml-auto" />
 					</InputGroupAddon>
 					<TextArea />
 				</InputGroup>
@@ -51,7 +51,7 @@ export default function Demo() {
 					<TextArea placeholder="Enter your text here..." />
 					<InputGroupAddon>
 						<span>0/280 characters</span>
-						<Button variant="primary" isIconOnly size="sm" className="ml-auto rounded-full">
+						<Button variant="primary" isIconOnly size="xs" className="ml-auto rounded-full">
 							<ArrowUpIcon />
 							<span className="sr-only">Send</span>
 						</Button>
@@ -63,10 +63,10 @@ export default function Demo() {
 				<InputGroup>
 					<TextArea placeholder="Share your thoughts..." className="min-h-[120px]" />
 					<InputGroupAddon>
-						<Button variant="quiet" size="sm" className="ml-auto">
+						<Button variant="quiet" size="xs" className="ml-auto">
 							Cancel
 						</Button>
-						<Button variant="primary" size="sm">
+						<Button variant="primary" size="xs">
 							Post Comment
 						</Button>
 					</InputGroupAddon>
@@ -76,15 +76,13 @@ export default function Demo() {
 				<Label>Code Editor</Label>
 				<InputGroup>
 					<InputGroupAddon className="border-b">
-						<span className="inline-flex items-center gap-2 font-medium font-mono">
-							<CodeIcon />
-							script.js
-						</span>
-						<Button variant="quiet" isIconOnly size="sm" className="ml-auto">
+						<CodeIcon />
+						<span>script.js</span>
+						<Button variant="quiet" isIconOnly size="xs" className="ml-auto">
 							<CopyIcon />
 						</Button>
 					</InputGroupAddon>
-					<TextArea placeholder="console.log('Hello, world!');" className="min-h-[240px] py-3" />
+					<TextArea placeholder="console.log('Hello, world!');" className="min-h-[240px]" />
 					<InputGroupAddon className="border-t">
 						<span>Line 1, Column 1</span>
 						<span className="ml-auto">JavaScript</span>

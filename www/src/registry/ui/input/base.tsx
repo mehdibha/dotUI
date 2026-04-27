@@ -145,7 +145,7 @@ const DateInput = ({ className, ...props }: DateInputProps) => {
 			className={composeRenderProps(className, (className) => input({ className }))}
 			{...props}
 		>
-			{props.children ? props.children : (segment) => <DateSegment segment={segment} />}
+			{props.children ?? ((segment) => <DateSegment segment={segment} />)}
 		</DateFieldPrimitive.DateInput>
 	);
 };
