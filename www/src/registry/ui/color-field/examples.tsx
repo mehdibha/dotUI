@@ -1,45 +1,35 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
+import WithAddons from "./demos/addons";
+import Basic from "./demos/basic";
 import ColorChannel from "./demos/color-channel";
 import Controlled from "./demos/controlled";
-import Default from "./demos/default";
 import Description from "./demos/description";
 import Disabled from "./demos/disabled";
-import ErrorMessage from "./demos/error-message";
+import Invalid from "./demos/invalid";
 import Label from "./demos/label";
-import PrefixAndSuffix from "./demos/prefix-and-suffix";
 import ReadOnly from "./demos/read-only";
 import Required from "./demos/required";
 import Sizes from "./demos/sizes";
-import Uncontrolled from "./demos/uncontrolled";
 
 export default function ColorFieldExamples() {
 	return (
-		<Examples>
-			<Example title="color channel">
-				<ColorChannel />
+		<Examples className="md:grid-cols-2">
+			<Example title="Basic">
+				<Basic />
 			</Example>
-			<Example title="controlled">
-				<Controlled />
+			<Example title="With label">
+				<Label />
 			</Example>
-			<Example title="default">
-				<Default />
-			</Example>
-			<Example title="description">
+			<Example title="With description">
 				<Description />
 			</Example>
 			<Example title="disabled">
 				<Disabled />
 			</Example>
-			<Example title="error message">
-				<ErrorMessage />
-			</Example>
-			<Example title="label">
-				<Label />
-			</Example>
-			<Example title="prefix and suffix">
-				<PrefixAndSuffix />
+			<Example title="Invalid">
+				<Invalid />
 			</Example>
 			<Example title="read only">
 				<ReadOnly />
@@ -50,8 +40,14 @@ export default function ColorFieldExamples() {
 			<Example title="sizes">
 				<Sizes />
 			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
+			<Example title="color channel">
+				<ColorChannel />
+			</Example>
+			<Example title="controlled">
+				<Controlled />
+			</Example>
+			<Example title="With addons">
+				<WithAddons />
 			</Example>
 		</Examples>
 	);

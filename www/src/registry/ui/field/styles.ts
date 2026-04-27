@@ -21,7 +21,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 				label: "text-xs",
 				description: "text-xs",
 				fieldError: "text-xs",
-				fieldGroup: "gap-4 has-data-checkbox:gap-2 has-[[data-checkbox]_[data-label]]:gap-1.5",
+				fieldGroup: "gap-4 has-[[data-checkbox]_[data-label]]:gap-1.5 has-data-checkbox:gap-2",
 			},
 		},
 		default: {
@@ -29,7 +29,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 				label: "text-sm",
 				description: "text-sm",
 				fieldError: "text-sm",
-				fieldGroup: "gap-5 has-data-checkbox:gap-3 has-[[data-checkbox]_[data-label]]:gap-2",
+				fieldGroup: "gap-5 has-[[data-checkbox]_[data-label]]:gap-2 has-data-checkbox:gap-3",
 			},
 		},
 		comfortable: {
@@ -37,7 +37,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 				label: "text-sm",
 				description: "text-sm",
 				fieldError: "text-sm",
-				fieldGroup: "gap-7 has-data-checkbox:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5",
+				fieldGroup: "gap-7 has-[[data-checkbox]_[data-label]]:gap-2.5 has-data-checkbox:gap-3",
 			},
 		},
 	},
@@ -61,7 +61,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 						field: "flex-row items-center gap-2 has-data-[slot=description]:items-start",
 					},
 					vertical: {
-						field: "flex-col gap-2",
+						field: "w-full flex-col gap-2",
 					},
 				},
 			},

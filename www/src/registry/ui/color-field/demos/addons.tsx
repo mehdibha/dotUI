@@ -1,10 +1,11 @@
-import { PaletteIcon } from "@/registry/__generated__/icons";
+import { PaletteIcon } from "lucide-react";
+
 import { ColorField } from "@/registry/ui/color-field";
-import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 
 export default function Demo() {
 	return (
-		<div className="flex flex-col items-center gap-4">
+		<div className="flex w-full flex-col items-center gap-4">
 			<ColorField aria-label="Color field with prefix">
 				<InputGroup>
 					<Input />

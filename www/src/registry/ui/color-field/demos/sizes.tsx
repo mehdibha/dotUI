@@ -3,19 +3,19 @@ import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 export default function Demo() {
 	return (
-		<div className="flex items-center gap-4">
+		<>
 			<ColorField>
 				<Label>small</Label>
-				<Input />
+				<Input size="sm" />
 			</ColorField>
 			<ColorField>
 				<Label>medium</Label>
-				<Input />
+				<Input size="md" />
 			</ColorField>
 			<ColorField>
 				<Label>large</Label>
-				<Input />
+				<Input size="lg" />
 			</ColorField>
-		</div>
+		</>
 	);
 }

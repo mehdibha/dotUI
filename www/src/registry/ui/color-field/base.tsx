@@ -4,7 +4,7 @@ import * as ColorFieldPrimitives from "react-aria-components/ColorField";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import type * as React from "react";
 
-import { useStyles } from "./styles";
+import { useStyles } from "@/registry/ui/field/styles";
 
 // MARK: colorFieldStyles
 
@@ -13,10 +13,12 @@ import { useStyles } from "./styles";
 interface ColorFieldProps extends React.ComponentProps<typeof ColorFieldPrimitives.ColorField> {}
 
 const ColorField = ({ className, ...props }: ColorFieldProps) => {
-	const colorFieldStyles = useStyles();
+	const fieldStyles = useStyles();
 	return (
 		<ColorFieldPrimitives.ColorField
-			className={composeRenderProps(className, (className) => colorFieldStyles({ className }))}
+			className={composeRenderProps(className, (className) =>
+				fieldStyles().field({ orientation: "vertical", className }),
+			)}
 			{...props}
 		/>
 	);
