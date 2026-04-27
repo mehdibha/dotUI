@@ -1,18 +1,89 @@
+import { tv } from "tailwind-variants";
+
 import { createStyles } from "@/modules/core/styles";
 
 import inputMeta from "./meta";
 
-// Per-height token sets (tuned from shadcn mira/nova/vega + extrapolation for h-6/h-10)
-const h6 =
-	"[--edge-to-text:calc(var(--spacing)*2)] [--edge-to-visual:calc(var(--spacing)*1.5)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*3)] [--addon-gap:var(--spacing)] [--addon-button-inset:var(--spacing)]";
-const h7 =
-	"[--edge-to-text:calc(var(--spacing)*2)] [--edge-to-visual:calc(var(--spacing)*1.5)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*3.5)] [--addon-gap:var(--spacing)] [--addon-button-inset:var(--spacing)]";
-const h8 =
-	"[--edge-to-text:calc(var(--spacing)*2.5)] [--edge-to-visual:calc(var(--spacing)*2)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*4)] [--addon-gap:calc(var(--spacing)*2)] [--addon-button-inset:calc(var(--spacing)*1.5)]";
-const h9 =
-	"[--edge-to-text:calc(var(--spacing)*2.5)] [--edge-to-visual:calc(var(--spacing)*2)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*4)] [--addon-gap:calc(var(--spacing)*2)] [--addon-button-inset:calc(var(--spacing)*1.5)]";
-const h10 =
-	"[--edge-to-text:calc(var(--spacing)*3)] [--edge-to-visual:calc(var(--spacing)*2.5)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*4.5)] [--addon-gap:calc(var(--spacing)*2)] [--addon-button-inset:calc(var(--spacing)*1.5)]";
+/* -------------------------------- Tokens -------------------------------- */
+
+// Per-height token sets (tuned from shadcn mira/nova/vega + extrapolation for h-6/h-10).
+const tokens = tv({
+	variants: {
+		h: {
+			6: "[--addon-button-inset:var(--spacing)] [--addon-gap:var(--spacing)] [--edge-to-text:calc(var(--spacing)*2)] [--edge-to-visual:calc(var(--spacing)*1.5)] [--icon-size:calc(var(--spacing)*3)] [--input-h:calc(var(--spacing)*6)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
+			7: "[--addon-button-inset:var(--spacing)] [--addon-gap:var(--spacing)] [--edge-to-text:calc(var(--spacing)*2)] [--edge-to-visual:calc(var(--spacing)*1.5)] [--icon-size:calc(var(--spacing)*3.5)] [--input-h:calc(var(--spacing)*7)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
+			8: "[--addon-button-inset:calc(var(--spacing)*1.5)] [--addon-gap:calc(var(--spacing)*2)] [--edge-to-text:calc(var(--spacing)*2.5)] [--edge-to-visual:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*4)] [--input-h:calc(var(--spacing)*8)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
+			9: "[--addon-button-inset:calc(var(--spacing)*1.5)] [--addon-gap:calc(var(--spacing)*2)] [--edge-to-text:calc(var(--spacing)*2.5)] [--edge-to-visual:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*4)] [--input-h:calc(var(--spacing)*9)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
+			10: "[--addon-button-inset:calc(var(--spacing)*1.5)] [--addon-gap:calc(var(--spacing)*2)] [--edge-to-text:calc(var(--spacing)*3)] [--edge-to-visual:calc(var(--spacing)*2.5)] [--icon-size:calc(var(--spacing)*4.5)] [--input-h:calc(var(--spacing)*10)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
+		},
+	},
+});
+
+const compactText = "text-sm sm:text-xs/relaxed";
+const defaultText = "text-base sm:text-sm";
+
+/* ----------------------------- Field shells ----------------------------- */
+
+// Each field tv exposes `focus: self | group` because input/textarea react to
+// their own `:focus` while inputGroup must react to `[data-focused]` on the
+// nested input-control.
+
+const outlineField = tv({
+	base: "rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border-disabled disabled:bg-disabled",
+	variants: {
+		focus: {
+			self: "focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
+			group:
+				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
+		},
+	},
+});
+
+const lineField = tv({
+	base: "border-border-field border-b transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border-disabled",
+	variants: {
+		focus: {
+			self: "focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
+			group:
+				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
+		},
+	},
+});
+
+const filledLineBottomField = tv({
+	base: "rounded-t-(--input-radius) border-border-field border-b bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border-disabled disabled:bg-disabled",
+	variants: {
+		focus: {
+			self: "focus:not-invalid:border-border-focus",
+			group: "has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
+		},
+	},
+});
+
+const filledField = tv({
+	base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled",
+	variants: {
+		focus: {
+			self: "focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
+			group:
+				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
+		},
+	},
+});
+
+/* ----------------------------- Addon helpers ----------------------------- */
+// Per-style addon helpers (style-specific). Cross-style addon rules live in
+// `base.inputGroupAddon` / `base.inputGroup` below.
+
+// Paradigm B (outline / filled / filled-line-bottom) — addon owns asymmetric inline padding.
+const addonInputModeParadigmB =
+	"group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)] group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]";
+
+// Line style — symmetric inline padding (no bg/border to "yield to").
+const addonInputModeLine =
+	"group-has-data-input/input-group:last:pl-(--text-to-visual) group-has-data-input/input-group:first:pr-(--text-to-visual)";
+
+/* -------------------------------------------------------------------------- */
 
 const { useStyles, styles } = createStyles(inputMeta, {
 	base: {
@@ -25,6 +96,10 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				"**:data-date-input:px-0 **:data-input:px-0",
 				// with textarea
 				"has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
+				// container yields horizontal padding when an addon is adjacent (paradigm B)
+				"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
+				// container drops horizontal padding entirely in textarea mode (addon spans width)
+				"has-data-textarea:px-0",
 				// disabled
 				"disabled:cursor-disabled disabled:text-fg-disabled",
 			],
@@ -33,6 +108,18 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				"text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size)",
 				// with textarea
 				"group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
+				// nested button: shared radius across modes; h/w only in input mode (textarea uses natural h/w)
+				"**:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
+				// textarea-mode addon strip: full-width with symmetric padding
+				"group-has-data-textarea/input-group:px-(--edge-to-text)",
+				"group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text)",
+				// pt/pb only when user adds a separator border
+				"group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",
+				// nested button: textarea-mode inline inset (first/last position in addon)
+				"group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text)",
+				// nested button: textarea-mode block inset (addon at block-end/start)
+				"group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text)",
+				"group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text)",
 			],
 			input: [
 				"inline-flex w-full cursor-text items-center outline-none",
@@ -65,78 +152,46 @@ const { useStyles, styles } = createStyles(inputMeta, {
 	density: {
 		compact: {
 			slots: {
-				inputGroup: "text-sm sm:text-xs/relaxed",
-				input: "text-sm sm:text-xs/relaxed",
-				textArea: "text-sm sm:text-xs/relaxed",
+				inputGroup: compactText,
+				input: compactText,
+				textArea: compactText,
 			},
 			variants: {
 				size: {
-					sm: {
-						inputGroup: `[--input-h:calc(var(--spacing)*6)] ${h6}`,
-						input: `[--input-h:calc(var(--spacing)*6)] ${h6}`,
-						textArea: h6,
-					},
-					md: {
-						inputGroup: `[--input-h:calc(var(--spacing)*7)] ${h7}`,
-						input: `[--input-h:calc(var(--spacing)*7)] ${h7}`,
-						textArea: h7,
-					},
-					lg: {
-						inputGroup: `[--input-h:calc(var(--spacing)*8)] ${h8}`,
-						input: `[--input-h:calc(var(--spacing)*8)] ${h8}`,
-						textArea: h8,
-					},
+					sm: { inputGroup: tokens({ h: 6 }), input: tokens({ h: 6 }), textArea: tokens({ h: 6 }) },
+					md: { inputGroup: tokens({ h: 7 }), input: tokens({ h: 7 }), textArea: tokens({ h: 7 }) },
+					lg: { inputGroup: tokens({ h: 8 }), input: tokens({ h: 8 }), textArea: tokens({ h: 8 }) },
 				},
 			},
 		},
 		default: {
 			slots: {
-				inputGroup: "text-base sm:text-sm",
-				input: "text-base sm:text-sm",
-				textArea: "text-base sm:text-sm",
+				inputGroup: defaultText,
+				input: defaultText,
+				textArea: defaultText,
 			},
 			variants: {
 				size: {
-					sm: {
-						inputGroup: `[--input-h:calc(var(--spacing)*7)] ${h7}`,
-						input: `[--input-h:calc(var(--spacing)*7)] ${h7}`,
-						textArea: h7,
-					},
-					md: {
-						inputGroup: `[--input-h:calc(var(--spacing)*8)] ${h8}`,
-						input: `[--input-h:calc(var(--spacing)*8)] ${h8}`,
-						textArea: h8,
-					},
-					lg: {
-						inputGroup: `[--input-h:calc(var(--spacing)*9)] ${h9}`,
-						input: `[--input-h:calc(var(--spacing)*9)] ${h9}`,
-						textArea: h9,
-					},
+					sm: { inputGroup: tokens({ h: 7 }), input: tokens({ h: 7 }), textArea: tokens({ h: 7 }) },
+					md: { inputGroup: tokens({ h: 8 }), input: tokens({ h: 8 }), textArea: tokens({ h: 8 }) },
+					lg: { inputGroup: tokens({ h: 9 }), input: tokens({ h: 9 }), textArea: tokens({ h: 9 }) },
 				},
 			},
 		},
 		comfortable: {
 			slots: {
-				inputGroup: "text-base sm:text-sm",
-				input: "text-base sm:text-sm",
-				textArea: "text-base sm:text-sm",
+				inputGroup: defaultText,
+				input: defaultText,
+				textArea: defaultText,
 			},
 			variants: {
 				size: {
-					sm: {
-						inputGroup: `[--input-h:calc(var(--spacing)*8)] ${h8}`,
-						input: `[--input-h:calc(var(--spacing)*8)] ${h8}`,
-						textArea: h8,
-					},
-					md: {
-						inputGroup: `[--input-h:calc(var(--spacing)*9)] ${h9}`,
-						input: `[--input-h:calc(var(--spacing)*9)] ${h9}`,
-						textArea: h9,
-					},
+					sm: { inputGroup: tokens({ h: 8 }), input: tokens({ h: 8 }), textArea: tokens({ h: 8 }) },
+					md: { inputGroup: tokens({ h: 9 }), input: tokens({ h: 9 }), textArea: tokens({ h: 9 }) },
 					lg: {
-						inputGroup: `[--input-h:calc(var(--spacing)*10)] ${h10}`,
-						input: `[--input-h:calc(var(--spacing)*10)] ${h10}`,
-						textArea: h10,
+						inputGroup: tokens({ h: 10 }),
+						input: tokens({ h: 10 }),
+						textArea: tokens({ h: 10 }),
 					},
 				},
 			},
@@ -149,240 +204,40 @@ const { useStyles, styles } = createStyles(inputMeta, {
 		// Bordered — neutral default.
 		outline: {
 			slots: {
-				inputGroup: [
-					"rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
-					// disabled
-					"disabled:border-border-disabled disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:ring-danger-muted",
-					// with addons and input
-					"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
-					// with textarea — addon spans edge-to-edge
-					"has-data-textarea:px-0",
-				],
-				input: [
-					"rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
-					// disabled
-					"disabled:border-border-disabled disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:ring-danger-muted",
-				],
-				textArea: [
-					"rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
-					// disabled
-					"disabled:border-border-disabled disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:ring-danger-muted",
-				],
-				inputGroupAddon: [
-					// with input
-					"group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)]",
-					// nested button: input-mode first/last inset
-					"group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]",
-					// nested button: shared radius across modes; h/w only in input mode (textarea uses natural h/w)
-					"**:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
-					// with textarea — addon strip spans full width
-					"group-has-data-textarea/input-group:px-(--edge-to-text)",
-					"group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text)",
-					// pt/pb only when user adds a separator border
-					"group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",
-					// nested button: textarea-mode inline inset (first/last position in addon)
-					"group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text)",
-					// nested button: textarea-mode block inset (addon at block-end/start)
-					"group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text)",
-					"group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text)",
-				],
+				inputGroup: outlineField({ focus: "group" }),
+				input: outlineField({ focus: "self" }),
+				textArea: outlineField({ focus: "self" }),
+				inputGroupAddon: addonInputModeParadigmB,
 			},
 		},
 
 		// Bottom-border only — flush to edge, no horizontal padding.
 		line: {
 			slots: {
-				inputGroup: [
-					"border-border-field border-b",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
-					// disabled
-					"disabled:border-border-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
-					// with addons and input
-					"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
-				],
-				input: [
-					"border-border-field border-b",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-invalid:border-border-focus",
-					// disabled
-					"disabled:border-border-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:focus:border-fg-danger",
-				],
-				textArea: [
-					"border-border-field border-b",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-invalid:border-border-focus",
-					// disabled
-					"disabled:border-border-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:focus:border-fg-danger",
-				],
-				inputGroupAddon: [
-					// with input
-					"group-has-data-input/input-group:last:pl-(--text-to-visual) group-has-data-input/input-group:first:pr-(--text-to-visual)",
-					// nested button: shared radius across modes; h/w only in input mode (textarea uses natural h/w)
-					"**:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
-					// with textarea — addon strip spans full width
-					"group-has-data-textarea/input-group:px-(--edge-to-text)",
-					"group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text)",
-					// pt/pb only when user adds a separator border
-					"group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",
-					// nested button: textarea-mode inline inset (first/last position in addon)
-					"group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text)",
-					// nested button: textarea-mode block inset (addon at block-end/start)
-					"group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text)",
-					"group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text)",
-				],
+				inputGroup: lineField({ focus: "group" }),
+				input: lineField({ focus: "self" }),
+				textArea: lineField({ focus: "self" }),
+				inputGroupAddon: addonInputModeLine,
 			},
 		},
 
 		// Soft tinted fill, bottom border only.
 		"filled-line-bottom": {
 			slots: {
-				inputGroup: [
-					"rounded-t-(--input-radius) border-border-field border-b bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
-					// disabled
-					"disabled:border-border-disabled disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger",
-					// with addons and input
-					"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
-					// with textarea — addon spans edge-to-edge
-					"has-data-textarea:px-0",
-				],
-				input: [
-					"rounded-t-(--input-radius) border-border-field border-b bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-invalid:border-border-focus",
-					// disabled
-					"disabled:border-border-disabled disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger",
-				],
-				textArea: [
-					"rounded-t-(--input-radius) border-border-field border-b bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-invalid:border-border-focus",
-					// disabled
-					"disabled:border-border-disabled disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger",
-				],
-				inputGroupAddon: [
-					// with input
-					"group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)]",
-					// nested button: input-mode first/last inset
-					"group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]",
-					// nested button: shared radius across modes; h/w only in input mode (textarea uses natural h/w)
-					"**:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
-					// with textarea — addon strip spans full width
-					"group-has-data-textarea/input-group:px-(--edge-to-text)",
-					"group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text)",
-					// pt/pb only when user adds a separator border
-					"group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",
-					// nested button: textarea-mode inline inset (first/last position in addon)
-					"group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text)",
-					// nested button: textarea-mode block inset (addon at block-end/start)
-					"group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text)",
-					"group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text)",
-				],
+				inputGroup: filledLineBottomField({ focus: "group" }),
+				input: filledLineBottomField({ focus: "self" }),
+				textArea: filledLineBottomField({ focus: "self" }),
+				inputGroupAddon: addonInputModeParadigmB,
 			},
 		},
 
 		// Soft tinted fill, no visible border until focus.
 		filled: {
 			slots: {
-				inputGroup: [
-					"rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
-					// disabled
-					"disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:ring-danger-muted",
-					// with addons and input
-					"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
-					// with textarea — addon spans edge-to-edge
-					"has-data-textarea:px-0",
-				],
-				input: [
-					"rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
-					// disabled
-					"disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:ring-danger-muted",
-				],
-				textArea: [
-					"rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text)",
-					// transition
-					"transition-[box-shadow,border-color,color]",
-					// focused
-					"focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
-					// disabled
-					"disabled:bg-disabled",
-					// invalid
-					"invalid:border-border-danger invalid:ring-danger-muted",
-				],
-				inputGroupAddon: [
-					// with input
-					"group-has-data-input/input-group:last:px-[var(--text-to-visual)_var(--edge-to-visual)] group-has-data-input/input-group:first:px-[var(--edge-to-visual)_var(--text-to-visual)]",
-					// nested button: input-mode first/last inset
-					"group-has-data-input/input-group:has-data-button:last:pr-[calc(var(--addon-button-inset)-1px)] group-has-data-input/input-group:has-data-button:first:pl-[calc(var(--addon-button-inset)-1px)]",
-					// nested button: shared radius across modes; h/w only in input mode (textarea uses natural h/w)
-					"**:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
-					// with textarea — addon strip spans full width
-					"group-has-data-textarea/input-group:px-(--edge-to-text)",
-					"group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text)",
-					// pt/pb only when user adds a separator border
-					"group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",
-					// nested button: textarea-mode inline inset (first/last position in addon)
-					"group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text)",
-					// nested button: textarea-mode block inset (addon at block-end/start)
-					"group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text)",
-					"group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text)",
-				],
+				inputGroup: filledField({ focus: "group" }),
+				input: filledField({ focus: "self" }),
+				textArea: filledField({ focus: "self" }),
+				inputGroupAddon: addonInputModeParadigmB,
 			},
 		},
 	},

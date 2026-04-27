@@ -893,13 +893,13 @@ export const DemosIndex: Record<
     files: ["ui/input/demos/disabled.tsx"],
     component: React.lazy(() => import("@/registry/ui/input/demos/disabled")),
   },
+  "input/demos/invalid": {
+    files: ["ui/input/demos/invalid.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input/demos/invalid")),
+  },
   "input/demos/sizes": {
     files: ["ui/input/demos/sizes.tsx"],
     component: React.lazy(() => import("@/registry/ui/input/demos/sizes")),
-  },
-  "input/demos/textarea": {
-    files: ["ui/input/demos/textarea.tsx"],
-    component: React.lazy(() => import("@/registry/ui/input/demos/textarea")),
   },
   "input-group/demos/addons": {
     files: ["ui/input-group/demos/addons.tsx"],
@@ -913,6 +913,10 @@ export const DemosIndex: Record<
     files: ["ui/input-group/demos/buttons.tsx"],
     component: React.lazy(() => import("@/registry/ui/input-group/demos/buttons")),
   },
+  "input-group/demos/date": {
+    files: ["ui/input-group/demos/date.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/date")),
+  },
   "input-group/demos/in-card": {
     files: ["ui/input-group/demos/in-card.tsx"],
     component: React.lazy(() => import("@/registry/ui/input-group/demos/in-card")),
@@ -920,6 +924,10 @@ export const DemosIndex: Record<
   "input-group/demos/kbd": {
     files: ["ui/input-group/demos/kbd.tsx"],
     component: React.lazy(() => import("@/registry/ui/input-group/demos/kbd")),
+  },
+  "input-group/demos/sizes": {
+    files: ["ui/input-group/demos/sizes.tsx"],
+    component: React.lazy(() => import("@/registry/ui/input-group/demos/sizes")),
   },
   "input-group/demos/textarea": {
     files: ["ui/input-group/demos/textarea.tsx"],
