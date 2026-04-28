@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 
 // MARK: disclosureStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface DisclosureProps extends React.ComponentProps<typeof DisclosurePrimitives.Disclosure> {}
 
@@ -25,7 +25,7 @@ function Disclosure({ className, ...props }: DisclosureProps) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface DisclosurePanelProps extends React.ComponentProps<typeof DisclosurePrimitives.DisclosurePanel> {}
 
@@ -42,7 +42,7 @@ function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface DisclosureTriggerProps extends React.ComponentProps<typeof ButtonPrimitives.Button> {}
 
@@ -62,7 +62,7 @@ function DisclosureTrigger(props: DisclosureTriggerProps) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 export type { DisclosurePanelProps, DisclosureProps, DisclosureTriggerProps };
 export { Disclosure, DisclosurePanel, DisclosureTrigger };

@@ -5,7 +5,7 @@ import { Button } from "@/registry/ui/button";
 import { RangeCalendar } from "@/registry/ui/calendar";
 import { DateRangePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
-import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {

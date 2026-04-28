@@ -43,4 +43,5 @@ const { useStyles, styles } = createStyles(colorSliderMeta, {
 });
 
 export type ColorSliderStyles = typeof styles;
+
 export { useStyles };

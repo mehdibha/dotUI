@@ -47,4 +47,5 @@ const { useStyles, styles } = createStyles(tabsMeta, {
 });
 
 export type TabsStyles = typeof styles;
+
 export { useStyles };

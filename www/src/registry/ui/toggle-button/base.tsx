@@ -14,14 +14,14 @@ import type { ToggleButtonStyles } from "./styles";
 
 type ToggleButtonVariants = VariantProps<ToggleButtonStyles>;
 
-// MARK: seperator
+// MARK: Separator
 
 const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 	ToggleButtonVariants,
 	React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>
 >(ToggleButtonPrimitives.ToggleButtonContext);
 
-// MARK: seperator
+// MARK: Separator
 
 interface ToggleButtonProps
 	extends React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
@@ -31,14 +31,7 @@ interface ToggleButtonProps
 
 const ToggleButton = (localProps: ToggleButtonProps) => {
 	const styles = useStyles();
-	const {
-		variant = "default",
-		size = "md",
-		isIconOnly,
-		className,
-		children,
-		...props
-	} = useContextProps(localProps);
+	const { variant = "default", size = "md", isIconOnly, className, children, ...props } = useContextProps(localProps);
 
 	return (
 		<ToggleButtonPrimitives.ToggleButton
@@ -62,7 +55,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { ToggleButtonProps };
 export { ToggleButton, ToggleButtonProvider, toggleButtonStyles };

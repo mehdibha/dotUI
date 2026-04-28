@@ -15,7 +15,7 @@ import type { ButtonStyles } from "./styles";
 
 type ButtonVariants = VariantProps<ButtonStyles>;
 
-// MARK: seperator
+// MARK: Separator
 
 interface ButtonProps extends React.ComponentProps<typeof ButtonPrimitive.Button>, ButtonVariants {
 	isIconOnly?: boolean;
@@ -47,7 +47,7 @@ const Button = ({ variant, size, isIconOnly, className, children, ...props }: Bu
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitive.Link>, VariantProps<ButtonStyles> {
 	isIconOnly?: boolean;
@@ -70,7 +70,7 @@ const LinkButton = ({ variant, size, isIconOnly, className, children, ...props }
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { ButtonProps, LinkButtonProps };
 export { Button, buttonStyles, LinkButton };

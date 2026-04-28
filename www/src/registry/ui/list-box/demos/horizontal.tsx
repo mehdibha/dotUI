@@ -1,21 +1,24 @@
-import { Description, Label } from "@/registry/ui/field";
+import { LayoutGridIcon, ListIcon, RowsIcon } from "lucide-react";
+
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 
 export default function Demo() {
 	return (
-		<ListBox aria-label="Options" orientation="horizontal" selectionMode="single">
-			<ListBoxItem>
-				<Label>Read</Label>
-				<Description>Read Only</Description>
-			</ListBoxItem>
-			<ListBoxItem>
-				<Label>Write</Label>
-				<Description>Read and Write Only</Description>
-			</ListBoxItem>
-			<ListBoxItem>
-				<Label>Admin</Label>
-				<Description>Full access</Description>
-			</ListBoxItem>
-		</ListBox>
+		<div className="w-fit rounded-md border bg-popover p-1 shadow-sm">
+			<ListBox aria-label="View" orientation="horizontal" selectionMode="single" defaultSelectedKeys={["grid"]}>
+				<ListBoxItem id="list">
+					<ListIcon />
+					List
+				</ListBoxItem>
+				<ListBoxItem id="rows">
+					<RowsIcon />
+					Rows
+				</ListBoxItem>
+				<ListBoxItem id="grid">
+					<LayoutGridIcon />
+					Grid
+				</ListBoxItem>
+			</ListBox>
+		</div>
 	);
 }

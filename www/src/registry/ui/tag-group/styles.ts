@@ -30,4 +30,5 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
 });
 
 export type TagGroupStyles = typeof styles;
+
 export { useStyles };

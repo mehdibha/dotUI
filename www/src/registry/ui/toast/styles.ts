@@ -62,4 +62,5 @@ const { useStyles, styles } = createStyles(toastMeta, {
 });
 
 export type ToastStyles = typeof styles;
+
 export { useStyles };

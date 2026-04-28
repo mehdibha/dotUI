@@ -50,9 +50,9 @@ export default function Demo() {
 				{sizes.map((size) => (
 					<TextField key={size} aria-label={`Size ${size}`}>
 						<InputGroup size={size}>
-						<InputGroupAddon>
-							<Kbd>⌘K</Kbd>
-						</InputGroupAddon>
+							<InputGroupAddon>
+								<Kbd>⌘K</Kbd>
+							</InputGroupAddon>
 							<Input />
 						</InputGroup>
 					</TextField>

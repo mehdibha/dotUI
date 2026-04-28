@@ -55,4 +55,4 @@ const { useStyles, styles } = createStyles(calendarMeta, {
 
 export type CalendarStyles = typeof styles;
 
-export { useStyles, styles as calendarStyles };
+export { styles as calendarStyles, useStyles };

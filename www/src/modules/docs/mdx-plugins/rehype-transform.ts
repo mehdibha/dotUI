@@ -306,9 +306,7 @@ function extractNameAttribute(node: MdxJsxFlowElementHast): string | null {
 }
 
 function extractStringAttribute(node: MdxJsxFlowElementHast, attrName: string): string | null {
-	const attr = node.attributes.find(
-		(a): a is MdxJsxAttribute => a.type === "mdxJsxAttribute" && a.name === attrName,
-	);
+	const attr = node.attributes.find((a): a is MdxJsxAttribute => a.type === "mdxJsxAttribute" && a.name === attrName);
 
 	if (attr && typeof attr.value === "string") {
 		return attr.value;
@@ -529,9 +527,7 @@ function transformDemoNode(processed: ProcessedDemo): void {
 		const existing = (node.children ?? []) as ElementContent[];
 
 		if (title && titleId) {
-			node.attributes = node.attributes.filter(
-				(attr) => !(attr.type === "mdxJsxAttribute" && attr.name === "title"),
-			);
+			node.attributes = node.attributes.filter((attr) => !(attr.type === "mdxJsxAttribute" && attr.name === "title"));
 			const heading: Element = {
 				type: "element",
 				tagName: "h3",

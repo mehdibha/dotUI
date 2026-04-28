@@ -6,7 +6,7 @@ import { RangeCalendar } from "@/registry/ui/calendar";
 import { DateRangePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
-import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 interface DateRangePickerPlaygroundProps {

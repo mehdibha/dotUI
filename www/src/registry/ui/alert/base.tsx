@@ -6,7 +6,7 @@ import type { AlertStyles } from "./styles";
 
 // MARK: alertStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface AlertProps extends React.ComponentProps<"div">, VariantProps<AlertStyles> {}
 
@@ -15,7 +15,7 @@ function Alert({ className, variant, ...props }: AlertProps) {
 	return <div data-alert="" role="alert" className={root({ variant, className })} {...props} />;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
@@ -24,7 +24,7 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
 	return <div data-alert-title="" className={title({ className })} {...props} />;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
@@ -33,7 +33,7 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
 	return <div data-alert-description="" className={description({ className })} {...props} />;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface AlertActionProps extends React.ComponentProps<"div"> {}
 
@@ -42,7 +42,7 @@ function AlertAction({ className, ...props }: AlertActionProps) {
 	return <div data-alert-action="" className={action({ className })} {...props} />;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 export type { AlertActionProps, AlertDescriptionProps, AlertProps, AlertTitleProps };
 export { Alert, AlertAction, AlertDescription, AlertTitle };

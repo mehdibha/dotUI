@@ -6,7 +6,7 @@ import type { EmptyStyles } from "./styles";
 
 // MARK: emptyStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface EmptyProps extends React.ComponentProps<"div"> {}
 
@@ -15,7 +15,7 @@ const Empty = ({ className, ...props }: EmptyProps) => {
 	return <div data-slot="empty" className={base({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface EmptyHeaderProps extends React.ComponentProps<"div"> {}
 
@@ -24,7 +24,7 @@ const EmptyHeader = ({ className, ...props }: EmptyHeaderProps) => {
 	return <div data-slot="empty-header" className={header({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface EmptyTitleProps extends React.ComponentProps<"div"> {}
 
@@ -33,7 +33,7 @@ const EmptyTitle = ({ className, ...props }: EmptyTitleProps) => {
 	return <div data-slot="empty-title" className={title({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface EmptyDescriptionProps extends React.ComponentProps<"div"> {}
 
@@ -42,7 +42,7 @@ const EmptyDescription = ({ className, ...props }: EmptyDescriptionProps) => {
 	return <div data-slot="empty-description" className={description({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface EmptyContentProps extends React.ComponentProps<"div"> {}
 
@@ -51,7 +51,7 @@ const EmptyContent = ({ className, ...props }: EmptyContentProps) => {
 	return <div data-slot="empty-content" className={content({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface EmptyMediaProps extends React.ComponentProps<"div">, VariantProps<EmptyStyles> {}
 const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
@@ -59,7 +59,7 @@ const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
 	return <div data-slot="empty-media" className={media({ variant, className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type {
 	EmptyContentProps,

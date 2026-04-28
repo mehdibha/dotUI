@@ -56,4 +56,5 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
 });
 
 export type SidebarStyles = typeof styles;
+
 export { useStyles };

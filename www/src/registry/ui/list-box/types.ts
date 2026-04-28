@@ -7,7 +7,8 @@ import type * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
  */
 export interface ListBoxProps<T> extends ListBoxPrimitives.ListBoxProps<T> {
 	/**
-	 * Whether the list box is in a loading state.
+	 * Whether the list box is in a loading state. Renders a `ListBoxLoader` strip
+	 * directly after the items.
 	 */
 	isLoading?: boolean;
 }
@@ -17,10 +18,10 @@ export interface ListBoxProps<T> extends ListBoxPrimitives.ListBoxProps<T> {
  */
 export interface ListBoxItemProps<T> extends ListBoxPrimitives.ListBoxItemProps<T> {
 	/**
-	 * The color variant of the list box item.
+	 * The color treatment of the list box item.
 	 * @default 'default'
 	 */
-	variant?: "default" | "success" | "warning" | "danger";
+	variant?: "default" | "danger";
 }
 
 /**
@@ -29,9 +30,14 @@ export interface ListBoxItemProps<T> extends ListBoxPrimitives.ListBoxItemProps<
 export interface ListBoxSectionProps<T> extends ListBoxPrimitives.ListBoxSectionProps<T> {}
 
 /**
- * Missing description.
+ * Header rendered at the top of a ListBoxSection.
  */
 export interface ListBoxSectionHeaderProps extends React.ComponentProps<typeof HeaderPrimitives.Header> {}
+
+/**
+ * Loader strip rendered below the items collection.
+ */
+export interface ListBoxLoaderProps extends React.ComponentProps<"div"> {}
 
 /**
  * A Virtualizer renders a scrollable collection of data using customizable layouts.

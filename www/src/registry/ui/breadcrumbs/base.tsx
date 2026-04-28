@@ -15,7 +15,7 @@ const Breadcrumbs = <T extends object>({ className, ...props }: BreadcrumbsProps
 	return <BreadcrumbsPrimitive.Breadcrumbs data-breadcrumbs="" className={root({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface BreadcrumbItemProps extends React.ComponentProps<typeof BreadcrumbsPrimitive.Breadcrumb> {}
 const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
@@ -29,7 +29,7 @@ const BreadcrumbItem = ({ className, ...props }: BreadcrumbItemProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface BreadcrumbLinkProps extends React.ComponentProps<typeof BreadcrumbsPrimitive.Link> {}
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
@@ -43,7 +43,7 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface BreadcrumbSeparatorProps extends React.ComponentProps<"span"> {}
 const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => {
@@ -55,7 +55,7 @@ const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSepara
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { BreadcrumbItemProps, BreadcrumbLinkProps, BreadcrumbSeparatorProps, BreadcrumbsProps };
 export { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs };

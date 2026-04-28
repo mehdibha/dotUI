@@ -6,7 +6,7 @@ import * as InputPrimitives from "react-aria-components/Input";
 import { XCircleIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Label } from "@/registry/ui/field";
-import { InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 

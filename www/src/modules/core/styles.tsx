@@ -39,12 +39,7 @@ interface DesignSystemProviderProps {
 	children: React.ReactNode;
 }
 
-function DesignSystemProvider({
-	styles,
-	params = {},
-	density = "default",
-	children,
-}: DesignSystemProviderProps) {
+function DesignSystemProvider({ styles, params = {}, density = "default", children }: DesignSystemProviderProps) {
 	const value = React.useMemo(() => ({ styles, params, density }), [styles, params, density]);
 
 	const cssVars = React.useMemo(() => {
@@ -86,38 +81,25 @@ type TvConfig = Parameters<TV>[0];
  * Full createStyles config. Composition order per (density, aesthetic):
  *   base  →  density[d]  →  styles[a]
  *
- * `density` is optional — when a component doesn't need density variation,
- * omit it and the aesthetic extends `base` directly. When present, density
- * is *not* a tv variant; it selects which precomputed tv to use at runtime,
- * keeping the public `VariantProps` clean.
+ * `density` and `styles` are optional. When `styles` is omitted, an implicit
+ * `{ default: {} }` aesthetic is used and `meta.defaultStyle` is not required.
  */
 interface CreateStylesConfig<Base extends TvConfig, StyleNames extends string> {
 	base: Base;
 	density?: Record<Density, TvConfig>;
-	styles: Record<StyleNames, TvConfig>;
+	styles?: Record<StyleNames, TvConfig>;
 }
-
-/* ----- new-shape detection ----- */
 
 function isNewShape(config: unknown): config is CreateStylesConfig<TvConfig, string> {
 	if (!config || typeof config !== "object") return false;
 	const c = config as Record<string, unknown>;
-	return (
-		"base" in c &&
-		"styles" in c &&
-		typeof c.base === "object" &&
-		c.base !== null &&
-		typeof c.styles === "object" &&
-		c.styles !== null
-	);
+	return "base" in c && typeof c.base === "object" && c.base !== null;
 }
-
-/* ----- public API ----- */
 
 interface CreateStylesMeta {
 	name: string;
-	defaultStyle: string;
-	styles: Record<string, unknown>;
+	defaultStyle?: string;
+	styles?: Record<string, unknown>;
 }
 
 // Generic TvFn for the legacy code path / runtime maps.
@@ -158,35 +140,37 @@ function createStyles<M extends CreateStylesMeta, T extends Record<string, TvFn>
 	meta: M,
 	stylesMap: T,
 ): { useStyles: () => T[keyof T] };
-// New shape: { base, density?, styles }. Return type flows from merging
-// tv(config.base) with the default style override, so consumers see the real
-// slot / variant keys.
-function createStyles<
-	const M extends CreateStylesMeta,
-	const Base,
-	const Styles extends Record<string, unknown>,
->(
+// New shape with `styles`. Return type flows from merging base + the default
+// style override so consumers see the real slot / variant keys.
+function createStyles<const M extends CreateStylesMeta, const Base, const Styles extends Record<string, unknown>>(
 	meta: M,
 	config: { base: Base; density?: Record<Density, TvConfig>; styles: Styles },
 ): {
 	useStyles: () => InferTv<Base, Styles[M["defaultStyle"] & keyof Styles]>;
 	styles: InferTv<Base, Styles[M["defaultStyle"] & keyof Styles]>;
 };
+// New shape without `styles`. An implicit `{ default: {} }` aesthetic is used.
+function createStyles<const M extends CreateStylesMeta, const Base>(
+	meta: M,
+	config: { base: Base; density?: Record<Density, TvConfig>; styles?: undefined },
+): {
+	useStyles: () => InferTv<Base, undefined>;
+	styles: InferTv<Base, undefined>;
+};
 function createStyles(meta: CreateStylesMeta, config: any): any {
 	if (isNewShape(config)) {
-		const { base, density, styles } = config;
+		const { base, density } = config;
+		const styles: Record<string, TvConfig> = (config.styles as Record<string, TvConfig> | undefined) ?? {
+			default: {},
+		};
+		const defaultStyleName = meta.defaultStyle ?? Object.keys(styles)[0]!;
 
 		const baseTv = tv(base as never);
 
-		// When density is defined, precompute (density × aesthetic).
-		// When absent, aesthetic extends base directly and is reused for any
-		// density read from context.
 		const densities = density ? (Object.keys(density) as Density[]) : (["default"] as Density[]);
 		const composed: Record<string, Record<string, TvFn>> = {};
 		for (const d of densities) {
-			const densityTv = density
-				? tv({ extend: baseTv as never, ...(density[d] as TvConfig) } as never)
-				: baseTv;
+			const densityTv = density ? tv({ extend: baseTv as never, ...(density[d] as TvConfig) } as never) : baseTv;
 			composed[d] = {};
 			for (const [aestheticName, aestheticOverride] of Object.entries(styles)) {
 				composed[d]![aestheticName] = tv({
@@ -198,32 +182,30 @@ function createStyles(meta: CreateStylesMeta, config: any): any {
 
 		function pick(density: Density, aesthetic: string): TvFn {
 			const byAesthetic = composed[density] ?? composed.default!;
-			return byAesthetic[aesthetic] ?? byAesthetic[meta.defaultStyle]!;
+			return byAesthetic[aesthetic] ?? byAesthetic[defaultStyleName]!;
 		}
 
 		function useStyles() {
 			const { styles: selections, density } = React.useContext(DesignSystemContext);
-			const aesthetic = selections[meta.name] ?? meta.defaultStyle;
+			const aesthetic = selections[meta.name] ?? defaultStyleName;
 			return pick(density, aesthetic);
 		}
 
 		return {
 			useStyles,
-			// Expose the (default density, default aesthetic) tv for
-			// `typeof styles → VariantProps<...>` type derivation.
-			styles: pick("default", meta.defaultStyle),
+			styles: pick("default", defaultStyleName),
 		};
 	}
 
-	// Legacy shape: { [styleName]: TvFn }
 	const stylesMap = config as Record<string, TvFn>;
+	const fallback = meta.defaultStyle ?? Object.keys(stylesMap)[0]!;
 	function useStyles() {
 		const { styles: selections } = React.useContext(DesignSystemContext);
 		const selected = selections[meta.name];
 		if (selected && selected in stylesMap) {
 			return stylesMap[selected]!;
 		}
-		return stylesMap[meta.defaultStyle]!;
+		return stylesMap[fallback]!;
 	}
 	return { useStyles };
 }

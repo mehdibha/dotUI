@@ -1,114 +1,116 @@
 "use client";
 
-import React from "react";
+import { use } from "react";
 import { CheckIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as HeaderPrimitives from "react-aria-components/Header";
-import * as LabelPrimitives from "react-aria-components/Label";
 import * as ListBoxPrimitive from "react-aria-components/ListBox";
-import { type ContextValue, Provider, useSlottedContext } from "react-aria-components/slots";
-import * as TextPrimitives from "react-aria-components/Text";
-import * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
+import * as VirtualizerPrimitive from "react-aria-components/Virtualizer";
+import type React from "react";
+import type * as TextPrimitive from "react-aria-components/Text";
 import type { VariantProps } from "tailwind-variants";
+
+import { Loader } from "@/registry/ui/loader";
 
 import { useStyles } from "./styles";
 import type { ListBoxStyles } from "./styles";
 
-// MARK: listBoxStyles
-
-// MARK: seperator
-
 interface ListBoxProps<T> extends ListBoxPrimitive.ListBoxProps<T> {
-	isLoading?: boolean;
+	isLoading?: ListBoxPrimitive.ListBoxLoadMoreItemProps["isLoading"];
+	onLoadMore?: ListBoxPrimitive.ListBoxLoadMoreItemProps["onLoadMore"];
 }
+const ListBox = <T extends object>({ className, isLoading, onLoadMore, ...props }: ListBoxProps<T>) => {
+	const { root, loadMore } = useStyles()();
+	const standalone = !use(ListBoxPrimitive.ListBoxContext);
 
-const ListBox = <T extends object>({ className, isLoading, ...props }: ListBoxProps<T>) => {
-	const { root } = useStyles()();
-	const standalone = !React.use(ListBoxPrimitive.ListStateContext);
 	return (
 		<ListBoxPrimitive.ListBox
-			data-standalone={standalone || undefined}
+			data-listbox=""
 			className={composeRenderProps(className, (cn) => root({ className: cn }))}
+			data-standalone={standalone ?? undefined}
 			{...props}
-		/>
+		>
+			<ListBoxPrimitive.Collection>{props.children}</ListBoxPrimitive.Collection>
+			<ListBoxPrimitive.ListBoxLoadMoreItem className={loadMore()} isLoading={isLoading} onLoadMore={onLoadMore}>
+				<Loader />
+			</ListBoxPrimitive.ListBoxLoadMoreItem>
+		</ListBoxPrimitive.ListBox>
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface ListBoxItemProps<T> extends ListBoxPrimitive.ListBoxItemProps<T>, VariantProps<ListBoxStyles> {}
-
 const ListBoxItem = <T extends object>({
 	className,
 	variant,
 	textValue: textValueProp,
 	...props
 }: ListBoxItemProps<T>) => {
-	const { item } = useStyles()();
+	const { item, indicator } = useStyles()();
 	const textValue = textValueProp || (typeof props.children === "string" ? props.children : undefined);
 
 	return (
 		<ListBoxPrimitive.ListBoxItem
+			data-listbox-item=""
 			textValue={textValue}
 			className={composeRenderProps(className, (cn) => item({ className: cn, variant }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children, { selectionMode, isSelected }) => (
-				<ListBoxItemInner>
+				<>
 					{children}
 					{selectionMode !== "none" && (
-						<span className="pointer-events-none absolute right-2 flex size-3.5 items-center justify-center">
-							{isSelected && <CheckIcon className="size-4" />}
+						<span data-listbox-item-indicator="" className={indicator()}>
+							{isSelected && <CheckIcon />}
 						</span>
 					)}
-				</ListBoxItemInner>
+				</>
 			))}
 		</ListBoxPrimitive.ListBoxItem>
 	);
 };
 
-const ListBoxItemInner = ({ children }: { children: React.ReactNode }) => {
-	const labelProps = useSlottedContext(TextPrimitives.TextContext, "label")!;
+// MARK: Separator
+
+interface ListBoxSectionProps<T> extends ListBoxPrimitive.ListBoxSectionProps<T> {}
+const ListBoxSection = <T extends object>({ className, ...props }: ListBoxSectionProps<T>) => {
+	const { section } = useStyles()();
+	return <ListBoxPrimitive.ListBoxSection data-listbox-section="" className={section({ className })} {...props} />;
+};
+
+// MARK: Separator
+
+interface ListBoxSectionHeaderProps extends React.ComponentProps<typeof ListBoxPrimitive.Header> {}
+const ListBoxSectionHeader = ({ className, ...props }: ListBoxSectionHeaderProps) => {
+	const { sectionTitle } = useStyles()();
+	return <ListBoxPrimitive.Header data-listbox-section-header="" className={sectionTitle({ className })} {...props} />;
+};
+
+// MARK: Separator
+
+interface ListBoxItemLabelProps extends React.ComponentProps<typeof TextPrimitive.Text> {}
+const ListBoxItemLabel = ({ className, ...props }: ListBoxItemLabelProps) => {
+	const { itemLabel } = useStyles()();
+	return <ListBoxPrimitive.Text data-listbox-item-label="" className={itemLabel({ className })} {...props} />;
+};
+
+// MARK: Separator
+
+interface ListBoxItemDescriptionProps extends React.ComponentProps<typeof TextPrimitive.Text> {}
+const ListBoxItemDescription = ({ className, ...props }: ListBoxItemDescriptionProps) => {
+	const { itemDescription } = useStyles()();
 	return (
-		<Provider
-			values={[
-				[
-					LabelPrimitives.LabelContext as React.Context<ContextValue<LabelPrimitives.LabelProps, HTMLElement>>,
-					labelProps,
-				],
-			]}
-		>
-			{children}
-		</Provider>
+		<ListBoxPrimitive.Text data-listbox-item-description="" className={itemDescription({ className })} {...props} />
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
-interface ListBoxSectionProps<T> extends ListBoxPrimitive.ListBoxSectionProps<T> {}
-
-const ListBoxSection = <T extends object>({ className, ...props }: ListBoxSectionProps<T>) => {
-	const { section } = useStyles()();
-	return <ListBoxPrimitive.ListBoxSection data-slot="listbox-section" className={section({ className })} {...props} />;
-};
-
-// MARK: seperator
-
-interface ListBoxSectionHeaderProps extends React.ComponentProps<typeof HeaderPrimitives.Header> {}
-
-const ListBoxSectionHeader = ({ className, ...props }: ListBoxSectionHeaderProps) => {
-	const { sectionTitle } = useStyles()();
-	return <HeaderPrimitives.Header className={sectionTitle({ className })} {...props} />;
-};
-
-// MARK: seperator
-
-interface ListBoxVirtualizerProps<T> extends Omit<VirtualizerPrimitives.VirtualizerProps<T>, "layout"> {}
-
+interface ListBoxVirtualizerProps<T> extends Omit<VirtualizerPrimitive.VirtualizerProps<T>, "layout"> {}
 const ListBoxVirtualizer = <T extends object>({ ...props }: ListBoxVirtualizerProps<T>) => {
 	return (
-		<VirtualizerPrimitives.Virtualizer
-			layout={VirtualizerPrimitives.ListLayout}
+		<VirtualizerPrimitive.Virtualizer
+			layout={VirtualizerPrimitive.ListLayout}
 			layoutOptions={{
 				rowHeight: 32,
 				padding: 4,
@@ -119,7 +121,21 @@ const ListBoxVirtualizer = <T extends object>({ ...props }: ListBoxVirtualizerPr
 	);
 };
 
-// MARK: seperator
-
-export type { ListBoxItemProps, ListBoxProps, ListBoxSectionHeaderProps, ListBoxSectionProps, ListBoxVirtualizerProps };
-export { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer };
+export type {
+	ListBoxItemDescriptionProps,
+	ListBoxItemLabelProps,
+	ListBoxItemProps,
+	ListBoxProps,
+	ListBoxSectionHeaderProps,
+	ListBoxSectionProps,
+	ListBoxVirtualizerProps,
+};
+export {
+	ListBox,
+	ListBoxItem,
+	ListBoxItemDescription,
+	ListBoxItemLabel,
+	ListBoxSection,
+	ListBoxSectionHeader,
+	ListBoxVirtualizer,
+};

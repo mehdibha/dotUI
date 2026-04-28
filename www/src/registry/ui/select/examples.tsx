@@ -3,7 +3,6 @@ import { Examples } from "@/modules/create/preview/examples";
 
 import AsyncLoading from "./demos/async-loading";
 import Basic from "./demos/basic";
-import Composition from "./demos/composition";
 import Controlled from "./demos/controlled";
 import Description from "./demos/description";
 import Disabled from "./demos/disabled";
@@ -18,15 +17,9 @@ import Validation from "./demos/validation";
 
 export default function SelectExamples() {
 	return (
-		<Examples>
-			<Example title="async loading">
-				<AsyncLoading />
-			</Example>
+		<Examples className="md:grid-cols-2">
 			<Example title="basic">
 				<Basic />
-			</Example>
-			<Example title="composition">
-				<Composition />
 			</Example>
 			<Example title="controlled">
 				<Controlled />
@@ -60,6 +53,9 @@ export default function SelectExamples() {
 			</Example>
 			<Example title="validation">
 				<Validation />
+			</Example>
+			<Example title="async loading">
+				<AsyncLoading />
 			</Example>
 		</Examples>
 	);

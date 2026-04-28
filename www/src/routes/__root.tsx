@@ -1,16 +1,7 @@
 /// <reference types="vite/client" />
 
-import {
-	createRootRoute,
-	HeadContent,
-	type NavigateOptions,
-	Outlet,
-	Scripts,
-	type ToOptions,
-	useRouter,
-} from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Outlet, Scripts, useRouter } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { RouterProvider } from "react-aria-components";
 import { ThemeProvider } from "starter-themes";
 
 import { siteConfig } from "@/config/site";
@@ -65,7 +56,7 @@ export const Route = createRootRoute({
 // }
 
 function RootComponent() {
-	const router = useRouter();
+	const _router = useRouter();
 	return (
 		// <RouterProvider
 		// 	navigate={(href, opts) => {

@@ -10,7 +10,7 @@ import { useStyles } from "./styles";
 
 // MARK: tagGroupStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {}
 
@@ -19,7 +19,7 @@ function TagGroup({ className, ...props }: TagGroupProps) {
 	return <TagGroupPrimitives.TagGroup {...props} className={group({ className })} />;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
@@ -33,7 +33,7 @@ function TagList<T extends object>(props: TagListProps<T>) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface TagProps extends TagGroupPrimitives.TagProps {}
 
@@ -61,7 +61,7 @@ function Tag({ className, ...props }: TagProps) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 export type { TagGroupProps, TagListProps, TagProps };
 export { Tag, TagGroup, TagList };

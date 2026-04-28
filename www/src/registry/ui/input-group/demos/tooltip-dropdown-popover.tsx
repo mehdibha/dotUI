@@ -64,9 +64,7 @@ export default function Demo() {
 							<Popover>
 								<DialogContent className="w-64 space-y-1">
 									<DialogHeading>Your connection is not secure.</DialogHeading>
-									<p className="text-fg-muted text-sm">
-										You should not enter any sensitive information on this site.
-									</p>
+									<p className="text-fg-muted text-sm">You should not enter any sensitive information on this site.</p>
 								</DialogContent>
 							</Popover>
 						</Dialog>

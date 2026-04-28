@@ -2,7 +2,7 @@ import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
 import Basic from "./demos/basic";
-import Composition from "./demos/custom-seperator";
+import Composition from "./demos/custom-Separator";
 import Disabled from "./demos/disabled";
 import Icon from "./demos/icon";
 import MenuDemo from "./demos/menu";

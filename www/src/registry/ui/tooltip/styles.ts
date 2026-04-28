@@ -36,4 +36,5 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
 });
 
 export type TooltipStyles = typeof styles;
+
 export { useStyles };

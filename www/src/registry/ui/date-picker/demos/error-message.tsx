@@ -4,7 +4,7 @@ import { Calendar } from "@/registry/ui/calendar";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { FieldError, Label } from "@/registry/ui/field";
-import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {

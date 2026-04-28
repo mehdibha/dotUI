@@ -6,7 +6,7 @@ import { BoldIcon, ItalicIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Label } from "@/registry/ui/field";
 import { Group } from "@/registry/ui/group";
-import { InputGroupAddon, InputGroup, TextArea } from "@/registry/ui/input";
+import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 import { ToggleButton } from "@/registry/ui/toggle-button";
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group";

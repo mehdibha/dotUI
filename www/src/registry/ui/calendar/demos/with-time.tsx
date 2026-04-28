@@ -8,7 +8,7 @@ import type * as CalendarPrimitives from "react-aria-components/Calendar";
 import { Calendar } from "@/registry/ui/calendar";
 import { Card, CardContent, CardFooter } from "@/registry/ui/card";
 import { Label } from "@/registry/ui/field";
-import { DateInput, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { TimeField } from "@/registry/ui/time-field";
 
 export default function Demo() {

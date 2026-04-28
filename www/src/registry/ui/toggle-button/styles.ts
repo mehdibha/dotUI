@@ -28,9 +28,9 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
 					quiet: "bg-transparent pressed:bg-inverse/20 text-fg hover:bg-inverse/10",
 				},
 				size: {
-					sm: "h-8 px-3 [&_svg]:size-4 data-icon-only:w-8 data-icon-only:p-0",
-					md: "h-9 px-4 [&_svg]:size-4 data-icon-only:w-9 data-icon-only:p-0",
-					lg: "h-10 px-5 [&_svg]:size-5 data-icon-only:w-10 data-icon-only:p-0",
+					sm: "h-8 px-3 data-icon-only:w-8 data-icon-only:p-0 [&_svg]:size-4",
+					md: "h-9 px-4 data-icon-only:w-9 data-icon-only:p-0 [&_svg]:size-4",
+					lg: "h-10 px-5 data-icon-only:w-10 data-icon-only:p-0 [&_svg]:size-5",
 				},
 			},
 		},
@@ -39,6 +39,4 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
 
 export type ToggleButtonStyles = typeof styles;
 
-export { styles as toggleButtonStyles };
-
-export { useStyles };
+export { styles as toggleButtonStyles, useStyles };

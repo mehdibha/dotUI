@@ -18,10 +18,9 @@ const { useStyles, styles } = createStyles(cardMeta, {
 	density: {
 		compact: {
 			slots: {
-				root: "gap-4 py-4 text-xs/relaxed data-[size=sm]:gap-3 data-[size=sm]:py-3 has-data-card-footer:pb-0 data-[size=sm]:has-data-card-footer:pb-0",
-				header:
-					"gap-1 px-4 group-data-[size=sm]/card:px-3 [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
-				title: "text-sm font-medium",
+				root: "gap-4 py-4 text-xs/relaxed has-data-card-footer:pb-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-card-footer:pb-0",
+				header: "gap-1 px-4 group-data-[size=sm]/card:px-3 [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
+				title: "font-medium text-sm",
 				description: "text-xs/relaxed",
 				content: "px-4 group-data-[size=sm]/card:px-3",
 				footer:
@@ -30,10 +29,9 @@ const { useStyles, styles } = createStyles(cardMeta, {
 		},
 		default: {
 			slots: {
-				root: "gap-4 py-4 text-xs/relaxed data-[size=sm]:gap-3 data-[size=sm]:py-3 has-data-card-footer:pb-0 data-[size=sm]:has-data-card-footer:pb-0",
-				header:
-					"gap-1 px-4 group-data-[size=sm]/card:px-3 [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
-				title: "text-base leading-snug font-medium",
+				root: "gap-4 py-4 text-xs/relaxed has-data-card-footer:pb-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-card-footer:pb-0",
+				header: "gap-1 px-4 group-data-[size=sm]/card:px-3 [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
+				title: "font-medium text-base leading-snug",
 				description: "text-sm",
 				content: "px-4 group-data-[size=sm]/card:px-3",
 				footer:
@@ -42,10 +40,9 @@ const { useStyles, styles } = createStyles(cardMeta, {
 		},
 		comfortable: {
 			slots: {
-				root: "gap-6 py-6 text-sm data-[size=sm]:gap-4 data-[size=sm]:py-4 has-data-card-footer:pb-0 data-[size=sm]:has-data-card-footer:pb-0",
-				header:
-					"gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
-				title: "text-base leading-normal font-medium group-data-[size=sm]/card:text-sm",
+				root: "gap-6 py-6 text-sm has-data-card-footer:pb-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 data-[size=sm]:has-data-card-footer:pb-0",
+				header: "gap-1 px-6 group-data-[size=sm]/card:px-4 [.border-b]:pb-6 group-data-[size=sm]/card:[.border-b]:pb-4",
+				title: "font-medium text-base leading-normal group-data-[size=sm]/card:text-sm",
 				description: "text-sm",
 				content: "px-6 group-data-[size=sm]/card:px-4",
 				footer:

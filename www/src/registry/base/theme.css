@@ -24,6 +24,9 @@
 	--color-disabled: var(--neutral-200);
 	--color-field: var(--neutral-100);
 
+	--color-highlight: var(--neutral-300);
+	--color-fg-on-highlight: var(--on-neutral-300);
+
 	--color-selected: var(--neutral-300);
 	--color-selected-hover: var(--neutral-400);
 	--color-selected-active: var(--neutral-500);

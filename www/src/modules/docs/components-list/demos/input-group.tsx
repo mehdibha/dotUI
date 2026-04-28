@@ -1,4 +1,4 @@
-import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 
 export function InputGroupDemo() {
 	return (

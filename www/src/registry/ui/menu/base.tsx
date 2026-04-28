@@ -14,7 +14,7 @@ import type { MenuStyles } from "./styles";
 
 // MARK: menuStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface MenuProps extends MenuPrimitives.MenuTriggerProps {}
 
@@ -22,7 +22,7 @@ const Menu = (props: MenuProps) => {
 	return <MenuPrimitives.MenuTrigger {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface MenuContentProps<T> extends MenuPrimitives.MenuProps<T> {}
 const MenuContent = <T extends object>({ className, ...props }: MenuContentProps<T>) => {
@@ -32,7 +32,7 @@ const MenuContent = <T extends object>({ className, ...props }: MenuContentProps
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface MenuSubProps extends MenuPrimitives.SubmenuTriggerProps {}
 
@@ -40,7 +40,7 @@ const MenuSub = (props: MenuSubProps) => {
 	return <MenuPrimitives.SubmenuTrigger {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface MenuItemProps<T> extends MenuPrimitives.MenuItemProps<T>, VariantProps<MenuStyles> {}
 
@@ -67,7 +67,7 @@ const MenuItem = <T extends object>({ className, variant, ...props }: MenuItemPr
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface MenuSectionProps<T> extends MenuPrimitives.MenuSectionProps<T> {}
 const MenuSection = <T extends object>({ children, className, ...props }: MenuSectionProps<T>) => {
@@ -79,7 +79,7 @@ const MenuSection = <T extends object>({ children, className, ...props }: MenuSe
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface MenuSectionHeaderProps extends React.ComponentProps<typeof HeaderPrimitives.Header> {}
 
@@ -87,7 +87,7 @@ const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
 	return <HeaderPrimitives.Header className={cn("font-medium text-fg-muted text-sm", className)} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { MenuContentProps, MenuItemProps, MenuProps, MenuSectionHeaderProps, MenuSectionProps, MenuSubProps };
 export { Menu, MenuContent, MenuItem, MenuSection, MenuSectionHeader, MenuSub };

@@ -1,19 +1,12 @@
 "use client";
 
-import React from "react";
 import { ChevronDownIcon } from "lucide-react";
-import { mergeProps } from "react-aria";
-import { useResizeObserver } from "react-aria/private/utils/useResizeObserver";
 import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
-import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as GroupPrimitives from "react-aria-components/Group";
-import * as PopoverPrimitives from "react-aria-components/Popover";
-import { Provider } from "react-aria-components/slots";
 
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { fieldStyles } from "@/registry/ui/field";
-import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import type { InputGroupProps } from "@/registry/ui/input";
@@ -33,61 +26,7 @@ const Combobox = <T extends object>({ menuTrigger = "focus", className, ...props
 				className: cn(className),
 			})}
 			{...props}
-		>
-			{composeRenderProps(props.children, (children) => (
-				<ComboboxInner>{children}</ComboboxInner>
-			))}
-		</ComboBoxPrimitives.ComboBox>
-	);
-};
-
-/* -----------------------------------------------------------------------------------------------*/
-
-/**
- *  This abstraction allows the Combobox to work with InputGroup and
- *  sync the trigger width with the popover dropdown.
- */
-
-const ComboboxInner = ({ children }: { children: React.ReactNode }) => {
-	const [menuWidth, setMenuWidth] = React.useState<string | undefined>(undefined);
-
-	const groupProps = React.use(GroupPrimitives.GroupContext);
-	const popoverProps = React.use(PopoverPrimitives.PopoverContext);
-	const triggerRef = React.useRef<HTMLDivElement>(null);
-
-	const onResize = React.useCallback(() => {
-		if (triggerRef.current) {
-			const triggerWidth = triggerRef.current.getBoundingClientRect().width;
-			setMenuWidth(`${triggerWidth}px`);
-		}
-	}, []);
-
-	useResizeObserver({
-		ref: triggerRef,
-		onResize: onResize,
-	});
-
-	return (
-		<Provider
-			values={[
-				[GroupPrimitives.GroupContext, mergeProps(groupProps, { ref: triggerRef })],
-				[
-					PopoverPrimitives.PopoverContext,
-					triggerRef.current
-						? {
-								...mergeProps(popoverProps, {
-									style: {
-										"--trigger-width": menuWidth,
-									} as React.CSSProperties,
-								}),
-								triggerRef,
-							}
-						: popoverProps,
-				],
-			]}
-		>
-			{children}
-		</Provider>
+		/>
 	);
 };
 

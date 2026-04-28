@@ -4,10 +4,6 @@ const listBoxMeta = {
 	name: "list-box",
 	type: "registry:ui",
 	group: "menus-lists",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -15,13 +11,8 @@ const listBoxMeta = {
 			target: "ui/list-box.tsx",
 		},
 	],
-	registryDependencies: ["text", "focus-styles"],
+	registryDependencies: ["text", "loader", "focus-styles"],
+	dependencies: ["react-aria-components"],
 } satisfies RegistryItem;
 
 export default listBoxMeta;
-
-export type ListBoxStyle = keyof typeof listBoxMeta.styles;
-
-export const listBoxStyleNames = Object.keys(listBoxMeta.styles) as ListBoxStyle[];
-
-export const defaultListBoxStyle = listBoxMeta.defaultStyle;

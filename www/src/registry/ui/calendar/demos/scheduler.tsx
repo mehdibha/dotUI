@@ -21,7 +21,7 @@ import { ColorPicker } from "@/registry/ui/color-picker";
 import { ColorSwatch } from "@/registry/ui/color-swatch";
 import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/registry/ui/color-swatch-picker";
 import { DialogContent } from "@/registry/ui/dialog";
-import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { Popover } from "@/registry/ui/popover";
 import { TextField } from "@/registry/ui/text-field";
 
@@ -154,7 +154,8 @@ export default function Demo() {
 									<span className="flex-1 truncate text-sm">{e.title}</span>
 									<Button
 										variant="quiet"
-										size="sm" isIconOnly
+										size="sm"
+										isIconOnly
 										aria-label={`Remove ${e.title}`}
 										onPress={() => setEvents((prev) => prev.filter((ev) => ev.id !== e.id))}
 									>

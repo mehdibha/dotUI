@@ -14,7 +14,7 @@ import { useStyles } from "./styles";
 
 const InternalCheckboxContext = createContext<CheckboxPrimitive.CheckboxButtonRenderProps | null>(null);
 
-// MARK: seperator
+// MARK: Separator
 
 interface CheckboxProps extends React.ComponentProps<typeof CheckboxPrimitive.CheckboxField> {}
 
@@ -93,7 +93,7 @@ const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { CheckboxControlProps, CheckboxIndicatorProps, CheckboxProps };
 export { Checkbox, CheckboxControl, CheckboxIndicator };

@@ -18,7 +18,8 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 		default: {
 			slots: {
 				root: fieldStyles().field(),
-				track: "relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-not-allowed disabled:bg-disabled",
+				track:
+					"relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-not-allowed disabled:bg-disabled",
 				filler: "pointer-events-none absolute rounded-full bg-accent disabled:bg-disabled",
 				thumb: [
 					"size-4 rounded-full bg-white shadow-md ring-primary/30 transition-[width,height,box-shadow]",

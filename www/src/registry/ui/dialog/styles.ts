@@ -35,4 +35,5 @@ const { useStyles, styles } = createStyles(dialogMeta, {
 });
 
 export type DialogStyles = typeof styles;
+
 export { useStyles };

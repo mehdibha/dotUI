@@ -1,12 +1,9 @@
 import { Button } from "@/registry/ui/button";
 import { ColorArea } from "@/registry/ui/color-area";
-import { ColorField } from "@/registry/ui/color-field";
 import { ColorPicker } from "@/registry/ui/color-picker";
-import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider";
+import { ColorSlider } from "@/registry/ui/color-slider";
 import { ColorSwatch } from "@/registry/ui/color-swatch";
 import { DialogContent } from "@/registry/ui/dialog";
-import { Label } from "@/registry/ui/field";
-import { Input } from "@/registry/ui/input";
 import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {

@@ -11,14 +11,14 @@ import type { TooltipStyles } from "./styles";
 
 // MARK: tooltipStyles
 
-// MARK: seperator
+// MARK: Separator
 interface TooltipProps extends React.ComponentProps<typeof TooltipPrimitives.TooltipTrigger> {}
 
 const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
 	<TooltipPrimitives.TooltipTrigger delay={delay} closeDelay={closeDelay} {...props} />
 );
 
-// MARK: seperator
+// MARK: Separator
 
 interface TooltipContentProps
 	extends React.ComponentProps<typeof TooltipPrimitives.Tooltip>,
@@ -45,7 +45,7 @@ function TooltipContent({ offset = 10, hideArrow = false, className, ...props }:
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
@@ -60,7 +60,7 @@ function TooltipArrow({ className }: TooltipArrowProps) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 export type { TooltipContentProps, TooltipProps };
 export { Tooltip, TooltipContent };

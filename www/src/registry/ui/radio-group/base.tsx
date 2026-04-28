@@ -22,7 +22,7 @@ const RadioGroup = ({ className, ...props }: RadioGroupPrimitives.RadioGroupProp
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 const [InternalRadioProvider, useInternalRadio] = createContext<RadioGroupPrimitives.RadioRenderProps>({
 	strict: true,
@@ -77,7 +77,7 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 type RadioGroupProps = RadioGroupPrimitives.RadioGroupProps;
 

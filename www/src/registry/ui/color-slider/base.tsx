@@ -13,7 +13,7 @@ import { useStyles } from "./styles";
 
 // MARK: colorSliderStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface ColorSliderProps extends React.ComponentProps<typeof ColorSliderPrimitives.ColorSlider> {}
 
@@ -33,7 +33,7 @@ const ColorSlider = ({ className, ...props }: ColorSliderProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface ColorSliderControlProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
 
@@ -50,7 +50,7 @@ const ColorSliderControl = ({ className, ...props }: ColorSliderControlProps) =>
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface ColorSliderOutputProps extends React.ComponentProps<typeof SliderPrimitives.SliderOutput> {}
 
@@ -64,7 +64,7 @@ const ColorSliderOutput = ({ className, ...props }: ColorSliderOutputProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { ColorSliderControlProps, ColorSliderOutputProps, ColorSliderProps };
 export { ColorSlider, ColorSliderControl, ColorSliderOutput };

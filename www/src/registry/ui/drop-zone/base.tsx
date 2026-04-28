@@ -9,7 +9,7 @@ import { useStyles } from "./styles";
 
 // MARK: dropZoneStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface DropZoneProps extends React.ComponentProps<typeof DropZonePrimitives.DropZone> {}
 const DropZone = ({ className, ...props }: DropZoneProps) => {
@@ -22,7 +22,7 @@ const DropZone = ({ className, ...props }: DropZoneProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface DropZoneLabelProps extends Omit<React.ComponentProps<typeof TextPrimitives.Text>, "slot"> {}
 const DropZoneLabel = ({ className, ...props }: DropZoneLabelProps) => {
@@ -30,7 +30,7 @@ const DropZoneLabel = ({ className, ...props }: DropZoneLabelProps) => {
 	return <TextPrimitives.Text slot="label" className={label({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { DropZoneLabelProps, DropZoneProps };
 export { DropZone, DropZoneLabel };

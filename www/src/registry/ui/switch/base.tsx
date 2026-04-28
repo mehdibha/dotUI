@@ -12,7 +12,7 @@ import type { SwitchStyles } from "./styles";
 
 // MARK: switchStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface InternalSwitchContextValue extends SwitchPrimitives.SwitchRenderProps, VariantProps<SwitchStyles> {}
 
@@ -20,7 +20,7 @@ const [InternalSwitchProvider, useInternalSwitch] = createContext<InternalSwitch
 	strict: true,
 });
 
-// MARK: seperator
+// MARK: Separator
 
 interface SwitchProps extends React.ComponentProps<typeof SwitchPrimitives.Switch>, VariantProps<SwitchStyles> {}
 
@@ -48,7 +48,7 @@ const Switch = ({ children, variant, size, className, ...props }: SwitchProps) =
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface SwitchIndicatorProps extends React.ComponentProps<"span"> {}
 
@@ -71,7 +71,7 @@ const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface SwitchThumbProps extends React.ComponentProps<"span"> {}
 
@@ -81,7 +81,7 @@ const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
 	return <span className={thumb({ variant: ctx.variant, size: ctx.size, className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { SwitchIndicatorProps, SwitchProps, SwitchThumbProps };
 export { Switch, SwitchIndicator, SwitchThumb };

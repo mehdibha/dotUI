@@ -11,13 +11,13 @@ import { useStyles } from "./styles";
 
 // MARK: tabsStyles
 
-// MARK: seperator
+// MARK: Separator
 
 const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
 	name: "TabsContext",
 });
 
-// MARK: seperator
+// MARK: Separator
 
 interface TabsProps extends React.ComponentProps<typeof TabsPrimitives.Tabs> {}
 
@@ -35,7 +35,7 @@ const Tabs = ({ className, ...props }: TabsProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TabListProps extends React.ComponentProps<typeof TabsPrimitives.TabList> {}
 
@@ -49,7 +49,7 @@ const TabList = ({ className, ...props }: TabListProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 
@@ -71,7 +71,7 @@ const Tab = ({ className, ...props }: TabProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TabIndicatorProps extends React.ComponentProps<typeof SelectionIndicatorPrimitives.SelectionIndicator> {}
 
@@ -87,7 +87,7 @@ const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TabPanelProps extends React.ComponentProps<typeof TabsPrimitives.TabPanel> {}
 
@@ -102,7 +102,7 @@ const TabPanel = ({ className, ...props }: TabPanelProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { TabIndicatorProps, TabListProps, TabPanelProps, TabProps, TabsProps };
 export { Tab, TabIndicator, TabList, TabPanel, Tabs };

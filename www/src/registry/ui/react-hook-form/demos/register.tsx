@@ -13,7 +13,7 @@ import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/regist
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { FieldGroup, Label } from "@/registry/ui/field";
-import { DateInput, Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { DateInput, Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
 import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { FormControl } from "@/registry/ui/react-hook-form";

@@ -46,7 +46,7 @@ const [AvatarContext, useAvatarContext] = createContext<{
 	strict: true,
 });
 
-// MARK: seperator
+// MARK: Separator
 
 interface AvatarProps extends React.ComponentProps<"span">, VariantProps<typeof avatarStyles> {}
 
@@ -60,7 +60,7 @@ function Avatar({ className, size = "md", ...props }: AvatarProps) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface AvatarImageProps extends Omit<React.ComponentProps<"img">, "src"> {
 	src?: string;
@@ -80,7 +80,7 @@ function AvatarImage({ src, alt, className, referrerPolicy, crossOrigin, ...prop
 	return null;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface AvatarFallbackProps extends React.ComponentProps<"span"> {}
 
@@ -90,7 +90,7 @@ const AvatarFallback = ({ className, ...props }: AvatarFallbackProps) => {
 	return null;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface AvatarBadgeProps extends React.ComponentProps<"span"> {}
 
@@ -98,7 +98,7 @@ const AvatarBadge = ({ className, ...props }: AvatarBadgeProps) => {
 	return <span data-avatar-badge="" className={badge({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface AvatarGroupProps extends React.ComponentProps<"div">, VariantProps<typeof avatarStyles> {}
 
@@ -106,7 +106,7 @@ const AvatarGroup = ({ className, size = "md", ...props }: AvatarGroupProps) => 
 	return <div data-avatar-group="" data-size={size} className={group({ className, size })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface AvatarGroupCountProps extends React.ComponentProps<"span"> {}
 
@@ -114,7 +114,7 @@ const AvatarGroupCount = ({ className, ...props }: AvatarGroupCountProps) => {
 	return <span data-avatar-group-count="" className={groupCount({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type {
 	AvatarBadgeProps,

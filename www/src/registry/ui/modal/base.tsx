@@ -8,7 +8,7 @@ import { useStyles } from "./styles";
 
 // MARK: modalStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface ModalProps extends ModalOverlayProps {}
 
@@ -19,7 +19,7 @@ const Modal = ({ children, className, ...props }: ModalProps) => (
 	</ModalOverlay>
 );
 
-// MARK: seperator
+// MARK: Separator
 
 interface ModalOverlayProps extends React.ComponentProps<typeof ModalPrimitives.ModalOverlay> {}
 const ModalOverlay = ({ children, className, isDismissable = true, ...props }: ModalOverlayProps) => {
@@ -35,7 +35,7 @@ const ModalOverlay = ({ children, className, isDismissable = true, ...props }: M
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface ModalContentProps extends React.ComponentProps<typeof ModalPrimitives.Modal> {}
 const ModalContent = ({ children, className, ...props }: ModalContentProps) => {

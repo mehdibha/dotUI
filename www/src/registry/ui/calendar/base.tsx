@@ -12,7 +12,7 @@ import { useStyles } from "./styles";
 
 // MARK: calendarStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface CalendarProps<T extends CalendarPrimitive.DateValue> extends CalendarPrimitive.CalendarProps<T> {}
 const Calendar = <T extends CalendarPrimitive.DateValue>({ className, ...props }: CalendarProps<T>) => {
@@ -45,7 +45,7 @@ const Calendar = <T extends CalendarPrimitive.DateValue>({ className, ...props }
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface RangeCalendarProps<T extends CalendarPrimitive.DateValue>
 	extends RangeCalendarPrimitive.RangeCalendarProps<T> {}
@@ -79,7 +79,7 @@ const RangeCalendar = <T extends CalendarPrimitive.DateValue>({ className, ...pr
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface CalendarHeaderProps extends React.ComponentProps<"header"> {}
 const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
@@ -101,7 +101,7 @@ const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface CalendarHeadingProps extends React.ComponentProps<typeof CalendarPrimitive.Heading> {}
 const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
@@ -109,7 +109,7 @@ const CalendarHeading = ({ className, ...props }: CalendarHeadingProps) => {
 	return <CalendarPrimitive.Heading data-calendar-heading="" className={heading({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface CalendarGridProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarGrid> {}
 const CalendarGrid = ({ className, children, ...props }: CalendarGridProps) => {
@@ -126,7 +126,7 @@ const CalendarGrid = ({ className, children, ...props }: CalendarGridProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface CalendarGridHeaderProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarGridHeader> {}
 const CalendarGridHeader = ({ className, ...props }: CalendarGridHeaderProps) => {
@@ -140,7 +140,7 @@ const CalendarGridHeader = ({ className, ...props }: CalendarGridHeaderProps) =>
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface CalendarHeaderCellProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarHeaderCell> {}
 const CalendarHeaderCell = ({ className, ...props }: CalendarHeaderCellProps) => {
@@ -154,7 +154,7 @@ const CalendarHeaderCell = ({ className, ...props }: CalendarHeaderCellProps) =>
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface CalendarGridBodyProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarGridBody> {}
 const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
@@ -164,7 +164,7 @@ const CalendarGridBody = ({ className, ...props }: CalendarGridBodyProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface CalendarCellProps extends React.ComponentProps<typeof CalendarPrimitive.CalendarCell> {}
 const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
@@ -188,7 +188,7 @@ const CalendarCell = ({ className, ...props }: CalendarCellProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type {
 	CalendarCellProps,

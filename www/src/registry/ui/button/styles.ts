@@ -86,4 +86,4 @@ const { useStyles, styles } = createStyles(buttonMeta, {
 
 export type ButtonStyles = typeof styles;
 
-export { useStyles, styles as buttonStyles };
+export { styles as buttonStyles, useStyles };

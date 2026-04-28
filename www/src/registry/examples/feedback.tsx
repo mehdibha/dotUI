@@ -5,7 +5,7 @@ import { Examples } from "@/modules/create/preview/examples";
 import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert";
 import { Button } from "@/registry/ui/button";
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/registry/ui/empty";
-import { toast, Toaster } from "@/registry/ui/toast";
+import { Toaster, toast } from "@/registry/ui/toast";
 
 export default function FeedbackGroupExamples() {
 	return (

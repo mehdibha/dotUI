@@ -1,81 +1,73 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import AsyncLoading from "./demos/async-loading";
+import Async from "./demos/async";
 import Basic from "./demos/basic";
-import Composition from "./demos/composition";
-import Controlled from "./demos/controlled";
-import DisabledItems from "./demos/disabled-items";
-import EmptyState from "./demos/empty-state";
+import Danger from "./demos/danger";
+import Disabled from "./demos/disabled";
+import Empty from "./demos/empty";
+import FileActions from "./demos/file-actions";
 import Grid from "./demos/grid";
 import Horizontal from "./demos/horizontal";
-import ItemVariant from "./demos/item-variant";
-import LabelAndDescription from "./demos/label-and-description";
-import Links from "./demos/links";
-import Loading from "./demos/loading";
-import PrefixAndSuffix from "./demos/prefix-and-suffix";
+import InCombobox from "./demos/in-combobox";
+import InCommand from "./demos/in-command";
+import InSelect from "./demos/in-select";
+import Selection from "./demos/multiple-selection";
 import Sections from "./demos/sections";
-import SelectionBehavior from "./demos/selection-behavior";
-import SelectionMode from "./demos/selection-mode";
-import Separator from "./demos/separator";
-import Uncontrolled from "./demos/uncontrolled";
+import UserMenu from "./demos/user-menu";
+import WithDescription from "./demos/with-description";
+import WithIcons from "./demos/with-icons";
 
 export default function ListBoxExamples() {
 	return (
-		<Examples>
-			<Example title="async loading">
-				<AsyncLoading />
-			</Example>
-			<Example title="basic">
+		<Examples className="md:grid-cols-2">
+			<Example title="Basic">
 				<Basic />
 			</Example>
-			<Example title="composition">
-				<Composition />
+			<Example title="With icons">
+				<WithIcons />
 			</Example>
-			<Example title="controlled">
-				<Controlled />
+			<Example title="With description">
+				<WithDescription />
 			</Example>
-			<Example title="disabled items">
-				<DisabledItems />
+			<Example title="Selection">
+				<Selection />
 			</Example>
-			<Example title="empty state">
-				<EmptyState />
+			<Example title="Disabled items">
+				<Disabled />
 			</Example>
-			<Example title="grid">
-				<Grid />
+			<Example title="Danger action">
+				<Danger />
 			</Example>
-			<Example title="horizontal">
-				<Horizontal />
-			</Example>
-			<Example title="item variant">
-				<ItemVariant />
-			</Example>
-			<Example title="label and description">
-				<LabelAndDescription />
-			</Example>
-			<Example title="links">
-				<Links />
-			</Example>
-			<Example title="loading">
-				<Loading />
-			</Example>
-			<Example title="prefix and suffix">
-				<PrefixAndSuffix />
-			</Example>
-			<Example title="sections">
+			<Example title="Sections">
 				<Sections />
 			</Example>
-			<Example title="selection behavior">
-				<SelectionBehavior />
+			<Example title="Empty state">
+				<Empty />
 			</Example>
-			<Example title="selection mode">
-				<SelectionMode />
+			<Example title="Horizontal">
+				<Horizontal />
 			</Example>
-			<Example title="separator">
-				<Separator />
+			<Example title="Grid">
+				<Grid />
 			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
+			<Example title="Async loading">
+				<Async />
+			</Example>
+			<Example title="User menu">
+				<UserMenu />
+			</Example>
+			<Example title="File actions with shortcuts">
+				<FileActions />
+			</Example>
+			<Example title="Inside a Select">
+				<InSelect />
+			</Example>
+			<Example title="Inside a Combobox">
+				<InCombobox />
+			</Example>
+			<Example title="Inside a Command palette">
+				<InCommand />
 			</Example>
 		</Examples>
 	);

@@ -1,6 +1,6 @@
 import { SearchIcon, XIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
-import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { SearchField } from "@/registry/ui/search-field";
 
 export function SearchFieldDemo() {

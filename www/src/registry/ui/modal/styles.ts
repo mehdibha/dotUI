@@ -35,4 +35,5 @@ const { useStyles, styles } = createStyles(modalMeta, {
 });
 
 export type ModalStyles = typeof styles;
+
 export { useStyles };

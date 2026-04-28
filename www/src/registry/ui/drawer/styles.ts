@@ -50,4 +50,5 @@ const { useStyles, styles } = createStyles(drawerMeta, {
 });
 
 export type DrawerStyles = typeof styles;
+
 export { useStyles };

@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@/registry/ui/button";
 import { Combobox, ComboboxContent, ComboboxItem } from "@/registry/ui/combobox";
-import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 
 export function ComboboxDemo() {
 	return (

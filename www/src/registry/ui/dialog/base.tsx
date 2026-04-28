@@ -9,7 +9,7 @@ import { useStyles } from "./styles";
 
 // MARK: dialogStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface DialogProps extends React.ComponentProps<typeof DialogPrimitives.DialogTrigger> {}
 
@@ -17,7 +17,7 @@ const Dialog = (props: DialogProps) => {
 	return <DialogPrimitives.DialogTrigger {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface DialogContentProps extends React.ComponentProps<typeof DialogPrimitives.Dialog> {}
 
@@ -26,7 +26,7 @@ const DialogContent = ({ className, ...props }: DialogContentProps) => {
 	return <DialogPrimitives.Dialog data-slot="dialog-content" className={content({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface DialogHeaderProps extends React.ComponentProps<"header"> {}
 
@@ -35,7 +35,7 @@ const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
 	return <header className={header({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface DialogHeadingProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
 
@@ -44,7 +44,7 @@ const DialogHeading = ({ className, ...props }: DialogHeadingProps) => {
 	return <HeadingPrimitives.Heading className={heading({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface DialogDescriptionProps extends Omit<React.ComponentProps<typeof TextPrimitives.Text>, "slot"> {}
 
@@ -53,7 +53,7 @@ const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
 	return <TextPrimitives.Text slot="description" className={description({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface DialogBodyProps extends React.ComponentProps<"div"> {}
 
@@ -62,7 +62,7 @@ const DialogBody = ({ className, ...props }: DialogBodyProps) => {
 	return <div className={body({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 type DialogFooterProps = React.ComponentProps<"footer">;
 
@@ -71,7 +71,7 @@ const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
 	return <footer className={footer({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 type DialogInsetProps = React.ComponentProps<"div">;
 
@@ -80,7 +80,7 @@ const DialogInset = ({ className, ...props }: DialogInsetProps) => {
 	return <div className={inset({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type {
 	DialogBodyProps,

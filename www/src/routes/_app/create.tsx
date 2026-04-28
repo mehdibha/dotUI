@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { CustomizerPanel, MENU_IDS } from "@/modules/create/customizer-panel";
+import { CustomizerPanel } from "@/modules/create/customizer-panel";
 import { sendToIframe, useDesignSystem } from "@/modules/create/preset";
 
 export const createSearchSchema = z.object({
@@ -35,7 +35,7 @@ function CreatePage() {
 		const base = `/preview/${effectivePreview}`;
 		return preset ? `${base}?preset=${encodeURIComponent(preset)}` : base;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [effectivePreview]);
+	}, [effectivePreview, preset]);
 
 	// Send design system to iframe on changes + iframe load
 	useEffect(() => {

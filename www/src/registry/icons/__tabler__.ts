@@ -1,144 +1,146 @@
 // AUTO-GENERATED - DO NOT EDIT
 // Only exports the 142 icons we actually use (not the entire library)
-export { IconActivity } from "@tabler/icons-react";
-export { IconAlarm } from "@tabler/icons-react";
-export { IconAlertCircle } from "@tabler/icons-react";
-export { IconAlertOctagon } from "@tabler/icons-react";
-export { IconAlertTriangle } from "@tabler/icons-react";
-export { IconAppWindow } from "@tabler/icons-react";
-export { IconArchive } from "@tabler/icons-react";
-export { IconArrowDown } from "@tabler/icons-react";
-export { IconArrowLeft } from "@tabler/icons-react";
-export { IconArrowRight } from "@tabler/icons-react";
-export { IconArrowUp } from "@tabler/icons-react";
-export { IconArrowUpRight } from "@tabler/icons-react";
-export { IconBell } from "@tabler/icons-react";
-export { IconBluetooth } from "@tabler/icons-react";
-export { IconBold } from "@tabler/icons-react";
-export { IconBolt } from "@tabler/icons-react";
-export { IconBook } from "@tabler/icons-react";
-export { IconBookmark } from "@tabler/icons-react";
-export { IconBox } from "@tabler/icons-react";
-export { IconBuildingBank } from "@tabler/icons-react";
-export { IconBulb } from "@tabler/icons-react";
-export { IconCalculator } from "@tabler/icons-react";
-export { IconCalendar } from "@tabler/icons-react";
-export { IconCalendarPlus } from "@tabler/icons-react";
-export { IconCamera } from "@tabler/icons-react";
-export { IconChartBar } from "@tabler/icons-react";
-export { IconChartLine } from "@tabler/icons-react";
-export { IconChartPie } from "@tabler/icons-react";
-export { IconCheck } from "@tabler/icons-react";
-export { IconChevronDown } from "@tabler/icons-react";
-export { IconChevronLeft } from "@tabler/icons-react";
-export { IconChevronRight } from "@tabler/icons-react";
-export { IconChevronUp } from "@tabler/icons-react";
-export { IconCircle } from "@tabler/icons-react";
-export { IconCircleArrowLeft } from "@tabler/icons-react";
-export { IconCircleArrowRight } from "@tabler/icons-react";
-export { IconCircleCheck } from "@tabler/icons-react";
-export { IconCircleCheckFilled } from "@tabler/icons-react";
-export { IconCircleDashed } from "@tabler/icons-react";
-export { IconCircleX } from "@tabler/icons-react";
-export { IconClipboard } from "@tabler/icons-react";
-export { IconClock } from "@tabler/icons-react";
-export { IconClockHour2 } from "@tabler/icons-react";
-export { IconCloudCog } from "@tabler/icons-react";
-export { IconCode } from "@tabler/icons-react";
-export { IconCoin } from "@tabler/icons-react";
-export { IconCopy } from "@tabler/icons-react";
-export { IconCreditCard } from "@tabler/icons-react";
-export { IconCut } from "@tabler/icons-react";
-export { IconDeviceDesktop } from "@tabler/icons-react";
-export { IconDeviceFloppy } from "@tabler/icons-react";
-export { IconDots } from "@tabler/icons-react";
-export { IconDotsVertical } from "@tabler/icons-react";
-export { IconDownload } from "@tabler/icons-react";
-export { IconEdit } from "@tabler/icons-react";
-export { IconExclamationCircle } from "@tabler/icons-react";
-export { IconExternalLink } from "@tabler/icons-react";
-export { IconEye } from "@tabler/icons-react";
-export { IconEyeClosed } from "@tabler/icons-react";
-export { IconFile } from "@tabler/icons-react";
-export { IconFileCode } from "@tabler/icons-react";
-export { IconFileText } from "@tabler/icons-react";
-export { IconFilterPlus } from "@tabler/icons-react";
-export { IconFlipHorizontal } from "@tabler/icons-react";
-export { IconFlipVertical } from "@tabler/icons-react";
-export { IconFolder } from "@tabler/icons-react";
-export { IconFolderOpen } from "@tabler/icons-react";
-export { IconFolderPlus } from "@tabler/icons-react";
-export { IconFolderSearch } from "@tabler/icons-react";
-export { IconFrame } from "@tabler/icons-react";
-export { IconGitBranch } from "@tabler/icons-react";
-export { IconHeart } from "@tabler/icons-react";
-export { IconHelpCircle } from "@tabler/icons-react";
-export { IconHome } from "@tabler/icons-react";
-export { IconInfoCircle } from "@tabler/icons-react";
-export { IconItalic } from "@tabler/icons-react";
-export { IconKeyboard } from "@tabler/icons-react";
-export { IconLanguage } from "@tabler/icons-react";
-export { IconLayout } from "@tabler/icons-react";
-export { IconLayoutGrid } from "@tabler/icons-react";
-export { IconLayoutSidebar } from "@tabler/icons-react";
-export { IconLifebuoy } from "@tabler/icons-react";
-export { IconLink } from "@tabler/icons-react";
-export { IconList } from "@tabler/icons-react";
-export { IconLoader } from "@tabler/icons-react";
-export { IconLogin } from "@tabler/icons-react";
-export { IconLogout } from "@tabler/icons-react";
-export { IconMail } from "@tabler/icons-react";
-export { IconMailCheck } from "@tabler/icons-react";
-export { IconMap } from "@tabler/icons-react";
-export { IconMaximize } from "@tabler/icons-react";
-export { IconMenu } from "@tabler/icons-react";
-export { IconMessage } from "@tabler/icons-react";
-export { IconMicrophone } from "@tabler/icons-react";
-export { IconMinimize } from "@tabler/icons-react";
-export { IconMinus } from "@tabler/icons-react";
-export { IconMoodSmile } from "@tabler/icons-react";
-export { IconMoon } from "@tabler/icons-react";
-export { IconPalette } from "@tabler/icons-react";
-export { IconPaperclip } from "@tabler/icons-react";
-export { IconPencil } from "@tabler/icons-react";
-export { IconPhoto } from "@tabler/icons-react";
-export { IconPinned } from "@tabler/icons-react";
-export { IconPlayerRecordFilled } from "@tabler/icons-react";
-export { IconPlus } from "@tabler/icons-react";
-export { IconPointer } from "@tabler/icons-react";
-export { IconRefresh } from "@tabler/icons-react";
-export { IconRobot } from "@tabler/icons-react";
-export { IconRosetteDiscountCheck } from "@tabler/icons-react";
-export { IconRotateClockwise2 } from "@tabler/icons-react";
-export { IconSearch } from "@tabler/icons-react";
-export { IconSelector } from "@tabler/icons-react";
-export { IconSend } from "@tabler/icons-react";
-export { IconServer } from "@tabler/icons-react";
-export { IconSettings } from "@tabler/icons-react";
-export { IconShare } from "@tabler/icons-react";
-export { IconShield } from "@tabler/icons-react";
-export { IconShoppingBag } from "@tabler/icons-react";
-export { IconShoppingCart } from "@tabler/icons-react";
-export { IconSparkles } from "@tabler/icons-react";
-export { IconSquarePlus } from "@tabler/icons-react";
-export { IconStar } from "@tabler/icons-react";
-export { IconSun } from "@tabler/icons-react";
-export { IconTable } from "@tabler/icons-react";
-export { IconTag } from "@tabler/icons-react";
-export { IconTerminal } from "@tabler/icons-react";
-export { IconTerminal2 } from "@tabler/icons-react";
-export { IconTextCaption } from "@tabler/icons-react";
-export { IconTrash } from "@tabler/icons-react";
-export { IconTrendingUp } from "@tabler/icons-react";
-export { IconUnderline } from "@tabler/icons-react";
-export { IconUpload } from "@tabler/icons-react";
-export { IconUser } from "@tabler/icons-react";
-export { IconUserX } from "@tabler/icons-react";
-export { IconVolume } from "@tabler/icons-react";
-export { IconVolume2 } from "@tabler/icons-react";
-export { IconWallet } from "@tabler/icons-react";
-export { IconWand } from "@tabler/icons-react";
-export { IconWorld } from "@tabler/icons-react";
-export { IconX } from "@tabler/icons-react";
-export { IconZoomIn } from "@tabler/icons-react";
-export { IconZoomOut } from "@tabler/icons-react";
+export {
+	IconActivity,
+	IconAlarm,
+	IconAlertCircle,
+	IconAlertOctagon,
+	IconAlertTriangle,
+	IconAppWindow,
+	IconArchive,
+	IconArrowDown,
+	IconArrowLeft,
+	IconArrowRight,
+	IconArrowUp,
+	IconArrowUpRight,
+	IconBell,
+	IconBluetooth,
+	IconBold,
+	IconBolt,
+	IconBook,
+	IconBookmark,
+	IconBox,
+	IconBuildingBank,
+	IconBulb,
+	IconCalculator,
+	IconCalendar,
+	IconCalendarPlus,
+	IconCamera,
+	IconChartBar,
+	IconChartLine,
+	IconChartPie,
+	IconCheck,
+	IconChevronDown,
+	IconChevronLeft,
+	IconChevronRight,
+	IconChevronUp,
+	IconCircle,
+	IconCircleArrowLeft,
+	IconCircleArrowRight,
+	IconCircleCheck,
+	IconCircleCheckFilled,
+	IconCircleDashed,
+	IconCircleX,
+	IconClipboard,
+	IconClock,
+	IconClockHour2,
+	IconCloudCog,
+	IconCode,
+	IconCoin,
+	IconCopy,
+	IconCreditCard,
+	IconCut,
+	IconDeviceDesktop,
+	IconDeviceFloppy,
+	IconDots,
+	IconDotsVertical,
+	IconDownload,
+	IconEdit,
+	IconExclamationCircle,
+	IconExternalLink,
+	IconEye,
+	IconEyeClosed,
+	IconFile,
+	IconFileCode,
+	IconFileText,
+	IconFilterPlus,
+	IconFlipHorizontal,
+	IconFlipVertical,
+	IconFolder,
+	IconFolderOpen,
+	IconFolderPlus,
+	IconFolderSearch,
+	IconFrame,
+	IconGitBranch,
+	IconHeart,
+	IconHelpCircle,
+	IconHome,
+	IconInfoCircle,
+	IconItalic,
+	IconKeyboard,
+	IconLanguage,
+	IconLayout,
+	IconLayoutGrid,
+	IconLayoutSidebar,
+	IconLifebuoy,
+	IconLink,
+	IconList,
+	IconLoader,
+	IconLogin,
+	IconLogout,
+	IconMail,
+	IconMailCheck,
+	IconMap,
+	IconMaximize,
+	IconMenu,
+	IconMessage,
+	IconMicrophone,
+	IconMinimize,
+	IconMinus,
+	IconMoodSmile,
+	IconMoon,
+	IconPalette,
+	IconPaperclip,
+	IconPencil,
+	IconPhoto,
+	IconPinned,
+	IconPlayerRecordFilled,
+	IconPlus,
+	IconPointer,
+	IconRefresh,
+	IconRobot,
+	IconRosetteDiscountCheck,
+	IconRotateClockwise2,
+	IconSearch,
+	IconSelector,
+	IconSend,
+	IconServer,
+	IconSettings,
+	IconShare,
+	IconShield,
+	IconShoppingBag,
+	IconShoppingCart,
+	IconSparkles,
+	IconSquarePlus,
+	IconStar,
+	IconSun,
+	IconTable,
+	IconTag,
+	IconTerminal,
+	IconTerminal2,
+	IconTextCaption,
+	IconTrash,
+	IconTrendingUp,
+	IconUnderline,
+	IconUpload,
+	IconUser,
+	IconUserX,
+	IconVolume,
+	IconVolume2,
+	IconWallet,
+	IconWand,
+	IconWorld,
+	IconX,
+	IconZoomIn,
+	IconZoomOut,
+} from "@tabler/icons-react";

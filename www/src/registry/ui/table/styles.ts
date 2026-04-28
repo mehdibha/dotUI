@@ -42,4 +42,5 @@ const { useStyles, styles } = createStyles(tableMeta, {
 });
 
 export type TableStyles = typeof styles;
+
 export { useStyles };

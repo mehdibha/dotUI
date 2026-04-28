@@ -295,9 +295,7 @@ ${groupEntries.join("\n")}
 `;
 
 	await fs.writeFile(targetPath, content, "utf8");
-	console.log(
-		`  ✓ __generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`,
-	);
+	console.log(`  ✓ __generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`);
 }
 
 // ============================================================================

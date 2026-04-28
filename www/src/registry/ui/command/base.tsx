@@ -4,7 +4,7 @@ import { SearchIcon } from "lucide-react";
 import * as AutocompletePrimitives from "react-aria-components/Autocomplete";
 import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
 
-import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { SearchField } from "@/registry/ui/search-field";
 import type { ListBoxProps } from "@/registry/ui/list-box";
@@ -15,7 +15,7 @@ import { useStyles } from "./styles";
 
 // MARK: commandStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface CommandProps extends React.ComponentProps<"div"> {}
 
@@ -33,7 +33,7 @@ function Command({ className, ...props }: CommandProps) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface CommandInputProps extends SearchFieldProps {
 	placeholder?: string;
@@ -53,7 +53,7 @@ const CommandInput = ({ placeholder, ...props }: CommandInputProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface CommandContentProps<T extends object> extends ListBoxProps<T> {
 	placement?: PopoverProps["placement"];
@@ -72,7 +72,7 @@ const CommandContent = <T extends object>({ virtulized, placement, ...props }: C
 	return <ListBox {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { CommandContentProps, CommandInputProps, CommandProps };
 export {

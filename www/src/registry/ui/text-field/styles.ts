@@ -10,10 +10,7 @@ const { useStyles, styles } = createStyles(textFieldMeta, {
 	density: { compact: {}, default: {}, comfortable: {} },
 	styles: {
 		default: {
-			base: [
-				"w-full",
-				fieldStyles().field({ orientation: "vertical" }),
-			],
+			base: ["w-full", fieldStyles().field({ orientation: "vertical" })],
 		},
 	},
 });

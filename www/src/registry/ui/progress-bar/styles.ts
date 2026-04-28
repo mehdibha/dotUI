@@ -71,4 +71,5 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
 });
 
 export type ProgressBarStyles = typeof styles;
+
 export { useStyles };

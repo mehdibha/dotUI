@@ -19,7 +19,6 @@ import {
 	AllComponentsView,
 	ComponentDetailView,
 	GroupDetailView,
-	GroupedComponentsView,
 	getComponentDisplayName,
 	getGroupDisplayName,
 	isGroupId,

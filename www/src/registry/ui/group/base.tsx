@@ -13,7 +13,7 @@ import type { GroupStyles } from "./styles";
 
 // MARK: groupStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface GroupProps extends React.ComponentProps<typeof GroupPrimitives.Group>, VariantProps<GroupStyles> {}
 
@@ -41,7 +41,7 @@ const Group = ({ orientation = "horizontal", className, ...props }: GroupProps) 
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { GroupProps };
 export { Group };

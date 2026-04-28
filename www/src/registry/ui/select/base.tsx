@@ -15,7 +15,7 @@ import { useStyles } from "./styles";
 
 // MARK: selectStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface SelectProps<T extends object> extends SelectPrimitives.SelectProps<T> {}
 
@@ -32,7 +32,7 @@ const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 const SelectTrigger = (props: ButtonProps) => {
 	return (
@@ -49,7 +49,7 @@ const SelectTrigger = (props: ButtonProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface SelectValueProps<T extends object> extends SelectPrimitives.SelectValueProps<T> {}
 
@@ -68,7 +68,7 @@ const SelectValue = <T extends object>({ className, ...props }: SelectValueProps
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface SelectContentProps<T extends object>
 	extends ListBoxProps<T>,
@@ -79,7 +79,7 @@ interface SelectContentProps<T extends object>
 
 const SelectContent = <T extends object>({
 	virtulized,
-	placement,
+	placement = "bottom",
 	defaultOpen,
 	isOpen,
 	onOpenChange,

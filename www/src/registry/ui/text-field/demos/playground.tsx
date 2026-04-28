@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 
 import { Description, FieldError, Label } from "@/registry/ui/field";
-import { Input, InputGroupAddon, InputGroup } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 
 /**

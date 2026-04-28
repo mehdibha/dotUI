@@ -14,7 +14,7 @@ import { useStyles } from "./styles";
 
 // MARK: tableStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface TableContainerProps extends React.ComponentProps<typeof TablePrimitives.ResizableTableContainer> {
 	resizable?: boolean;
@@ -28,7 +28,7 @@ const TableContainer = ({ resizable, className, ...props }: TableContainerProps)
 	return <div className={container({ className })} {...props} />;
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TableProps extends React.ComponentProps<typeof TablePrimitives.Table> {
 	resizable?: boolean;
@@ -43,7 +43,7 @@ const Table = ({ className, resizable, ...props }: TableProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TableHeaderProps<T extends object> extends TablePrimitives.TableHeaderProps<T> {}
 
@@ -65,7 +65,7 @@ const TableHeader = <T extends object>({ className, columns, children, ...props 
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TableColumnProps extends React.ComponentProps<typeof TablePrimitives.Column> {
 	allowsResizing?: boolean;
@@ -95,7 +95,7 @@ const TableColumn = ({ allowsResizing, children, className, ...props }: TableCol
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TableBodyProps<T extends object> extends TablePrimitives.TableBodyProps<T> {
 	isLoading?: boolean;
@@ -124,7 +124,7 @@ const TableBody = <T extends object>({
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TableRowProps<T extends object> extends TablePrimitives.RowProps<T> {}
 
@@ -157,7 +157,7 @@ function TableRow<T extends object>({ columns, children, className, ...props }: 
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 interface TableCellProps extends React.ComponentProps<typeof TablePrimitives.Cell> {}
 
@@ -172,7 +172,7 @@ const TableCell = ({ className, ...props }: TableCellProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface TableLoadMoreProps extends React.ComponentProps<typeof TablePrimitives.TableLoadMoreItem> {}
 
@@ -185,7 +185,7 @@ const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type {
 	TableBodyProps,

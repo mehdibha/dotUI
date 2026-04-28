@@ -11,7 +11,7 @@ import { useStyles } from "./styles";
 
 // MARK: sliderStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface SliderProps extends React.ComponentProps<typeof SliderPrimitives.Slider> {}
 
@@ -33,7 +33,7 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface SliderControlProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
 
@@ -63,7 +63,7 @@ const SliderControl = ({ className, ...props }: SliderControlProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface SliderFillerProps extends React.ComponentProps<"div"> {}
 
@@ -100,7 +100,7 @@ const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface SliderThumbProps extends React.ComponentProps<typeof SliderPrimitives.SliderThumb> {}
 
@@ -117,7 +117,7 @@ const SliderThumb = ({ className, ...props }: SliderThumbProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface SliderOutputProps extends React.ComponentProps<typeof SliderPrimitives.SliderOutput> {}
 
@@ -137,7 +137,7 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { SliderControlProps, SliderFillerProps, SliderOutputProps, SliderProps, SliderThumbProps };
 export { Slider, SliderControl, SliderFiller, SliderOutput, SliderThumb };

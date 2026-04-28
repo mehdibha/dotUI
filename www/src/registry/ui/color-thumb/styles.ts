@@ -23,4 +23,5 @@ const { useStyles, styles } = createStyles(colorThumbMeta, {
 });
 
 export type ColorThumbStyles = typeof styles;
+
 export { useStyles };

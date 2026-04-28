@@ -1,7 +1,6 @@
-import { CopyIcon, DeleteIcon, EyeOffIcon, InfoIcon, MicIcon, RadioIcon, SearchIcon, StarIcon, TrashIcon } from "lucide-react";
+import { CopyIcon, TrashIcon } from "lucide-react";
 
 import { Button } from "@/registry/ui/button";
-import { Description, Label } from "@/registry/ui/field";
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 

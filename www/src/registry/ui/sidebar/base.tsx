@@ -84,7 +84,7 @@ function SidebarProvider({
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function Sidebar({
 	className,
@@ -127,14 +127,14 @@ function Sidebar({
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
 	const { header } = useStyles()();
 	return <HeaderPrimitives.Header data-slot="sidebar-header" className={header({ className })} {...props} />;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
 	const { content } = useStyles()();
@@ -145,7 +145,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
 	const { footer } = useStyles()();
@@ -156,7 +156,7 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function SidebarSection({ className, ...props }: React.ComponentProps<"section">) {
 	const { section } = useStyles()();
@@ -168,21 +168,21 @@ function SidebarSection({ className, ...props }: React.ComponentProps<"section">
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function SidebarSectionHeading({ className, ...props }: React.ComponentProps<"div">) {
 	const { heading } = useStyles()();
 	return <HeadingPrimitives.Heading data-slot="sidebar-group-label" className={heading({ className })} {...props} />;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function SidebarList({ className, ...props }: React.ComponentProps<"ul">) {
 	const { list } = useStyles()();
 	return <ul data-slot="sidebar-list" className={list({ className })} {...props} />;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function SidebarItem({
 	tooltip,
@@ -208,7 +208,7 @@ function SidebarItem({
 	return comp;
 }
 
-// MARK: seperator
+// MARK: Separator
 
 function SidebarTooltip({ content, children }: { content: React.ReactNode; children: React.ReactNode }) {
 	const { isOpen } = useSidebarContext("SidebarTooltip");
@@ -223,7 +223,7 @@ function SidebarTooltip({ content, children }: { content: React.ReactNode; child
 	);
 }
 
-// MARK: seperator
+// MARK: Separator
 
 export {
 	Sidebar,

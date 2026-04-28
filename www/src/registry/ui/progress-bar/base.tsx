@@ -38,7 +38,7 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface ProgressBarControlProps extends React.ComponentProps<"div">, VariantProps<ProgressBarStyles> {
 	duration?: `${number}s` | `${number}ms`;
@@ -65,7 +65,7 @@ const ProgressBarControl = ({ className, variant, size, duration, ...props }: Pr
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 interface ProgressBarValueLabelProps extends React.ComponentProps<"span"> {}
 const ProgressBarValueLabel = ({ className, ...props }: ProgressBarValueLabelProps) => {
@@ -79,7 +79,7 @@ const ProgressBarValueLabel = ({ className, ...props }: ProgressBarValueLabelPro
 	);
 };
 
-// MARK: seperator
+// MARK: Separator
 
 export type { ProgressBarControlProps, ProgressBarProps, ProgressBarValueLabelProps };
 export { ProgressBar, ProgressBarControl, ProgressBarValueLabel };

@@ -18,7 +18,7 @@ const { useStyles, styles } = createStyles(popoverMeta, {
 		default: {
 			slots: {
 				popover: [
-					"popover z-50 min-w-(--trigger-width) max-w-72 origin-(--trigger-anchor-point) overflow-y-auto rounded-md border bg-popover shadow-md forced-color-adjust-none",
+					"popover z-50 min-w-(--trigger-width) max-w-72 origin-(--trigger-anchor-point) overflow-y-auto rounded-(--popover-radius) border bg-popover shadow-md forced-color-adjust-none",
 
 					"transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:calc(var(--spacing)*0.5)]",
 
@@ -36,4 +36,5 @@ const { useStyles, styles } = createStyles(popoverMeta, {
 });
 
 export type PopoverStyles = typeof styles;
+
 export { useStyles };

@@ -11,7 +11,7 @@ import { useStyles } from "./styles";
 
 // MARK: toggleGroupStyles
 
-// MARK: seperator
+// MARK: Separator
 
 interface ToggleButtonGroupProps
 	extends React.ComponentProps<typeof ToggleButtonGroupPrimitives.ToggleButtonGroup>,
