@@ -1,25 +1,24 @@
 import { LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar";
-import { Description, FieldContent, Label } from "@/registry/ui/field";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Separator } from "@/registry/ui/separator";
 
 export default function Demo() {
 	return (
 		<div className="rounded-md border bg-card shadow-sm">
-			<ListBox aria-label="Account">
-				<ListBoxItem id="account" textValue="Junior Garcia">
-					<Avatar>
-						<AvatarImage src="https://i.pravatar.cc/150?u=jrgarciadev" />
-						<AvatarFallback>JG</AvatarFallback>
-					</Avatar>
-					<FieldContent>
-						<Label>Junior Garcia</Label>
-						<Description>jrgarcia@example.com</Description>
-					</FieldContent>
-				</ListBoxItem>
-				<Separator />
+			<div className="flex items-start gap-2 p-2">
+				<Avatar size="sm" className="mt-1">
+					<AvatarImage src="https://i.pravatar.cc/150?u=jrgarciadev" />
+					<AvatarFallback>JG</AvatarFallback>
+				</Avatar>
+				<div className="flex flex-col text-sm">
+					<p>Junior Garcia</p>
+					<p className="text-fg-muted text-xs">jrgarcia@example.com</p>
+				</div>
+			</div>
+			<Separator />
+			<ListBox aria-label="Account" onAction={() => console.log("action")}>
 				<ListBoxItem id="profile">
 					<UserIcon />
 					Profile

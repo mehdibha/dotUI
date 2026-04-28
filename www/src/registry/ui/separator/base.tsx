@@ -16,6 +16,7 @@ const Separator = ({ orientation, className, ...props }: SeparatorProps) => {
 
 	return (
 		<SeparatorPrimitives.Separator
+			data-separator=""
 			orientation={orientation}
 			className={separatorStyles({
 				orientation: orientation ?? ctx?.orientation,

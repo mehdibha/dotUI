@@ -1,4 +1,5 @@
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/registry/ui/list-box";
+import { Separator } from "@/registry/ui/separator";
 
 export default function Demo() {
 	return (
@@ -10,12 +11,14 @@ export default function Demo() {
 					<ListBoxItem id="bbq">BBQ sauce</ListBoxItem>
 					<ListBoxItem id="honey-mustard">Honey mustard</ListBoxItem>
 				</ListBoxSection>
+				<Separator />
 				<ListBoxSection>
 					<ListBoxSectionHeader>Cheese</ListBoxSectionHeader>
 					<ListBoxItem id="pepperjack">Pepperjack</ListBoxItem>
 					<ListBoxItem id="mozzarella">Mozzarella</ListBoxItem>
 					<ListBoxItem id="blue-cheese">Blue cheese</ListBoxItem>
 				</ListBoxSection>
+				<Separator />
 				<ListBoxSection>
 					<ListBoxSectionHeader>Extras</ListBoxSectionHeader>
 					<ListBoxItem id="bacon">Bacon</ListBoxItem>

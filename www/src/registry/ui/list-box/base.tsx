@@ -30,9 +30,11 @@ const ListBox = <T extends object>({ className, isLoading, onLoadMore, ...props 
 			{...props}
 		>
 			<ListBoxPrimitive.Collection>{props.children}</ListBoxPrimitive.Collection>
-			<ListBoxPrimitive.ListBoxLoadMoreItem className={loadMore()} isLoading={isLoading} onLoadMore={onLoadMore}>
-				<Loader />
-			</ListBoxPrimitive.ListBoxLoadMoreItem>
+			{onLoadMore && (
+				<ListBoxPrimitive.ListBoxLoadMoreItem className={loadMore()} isLoading={isLoading} onLoadMore={onLoadMore}>
+					<Loader />
+				</ListBoxPrimitive.ListBoxLoadMoreItem>
+			)}
 		</ListBoxPrimitive.ListBox>
 	);
 };
