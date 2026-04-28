@@ -3,7 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/
 
 export default function Demo() {
 	return (
-		<Select className="w-60" placeholder="Pick one…">
+		<Select placeholder="Pick one…">
 			<Label>Framework</Label>
 			<SelectTrigger />
 			<SelectContent>

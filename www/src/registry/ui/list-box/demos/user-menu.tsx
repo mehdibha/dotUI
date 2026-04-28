@@ -7,7 +7,7 @@ import { Separator } from "@/registry/ui/separator";
 
 export default function Demo() {
 	return (
-		<div className="w-72 rounded-md border bg-popover p-1 shadow-sm">
+		<div className="rounded-md border bg-card shadow-sm">
 			<ListBox aria-label="Account">
 				<ListBoxItem id="account" textValue="Junior Garcia">
 					<Avatar>

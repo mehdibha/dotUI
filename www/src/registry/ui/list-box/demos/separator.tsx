@@ -5,7 +5,7 @@ import { Separator } from "@/registry/ui/separator";
 
 export default function Demo() {
 	return (
-		<div className="w-60 rounded-md border bg-popover p-1 shadow-sm">
+		<div className="rounded-md border bg-card shadow-sm">
 			<ListBox aria-label="File">
 				<ListBoxItem id="new">
 					<FileIcon />

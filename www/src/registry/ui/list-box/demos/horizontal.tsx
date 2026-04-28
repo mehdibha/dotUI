@@ -4,7 +4,7 @@ import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 
 export default function Demo() {
 	return (
-		<div className="w-fit rounded-md border bg-popover p-1 shadow-sm">
+		<div className="rounded-md border bg-card shadow-sm">
 			<ListBox aria-label="View" orientation="horizontal" selectionMode="single" defaultSelectedKeys={["grid"]}>
 				<ListBoxItem id="list">
 					<ListIcon />

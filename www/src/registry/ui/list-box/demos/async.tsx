@@ -18,7 +18,7 @@ export default function Demo() {
 	});
 
 	return (
-		<div className="max-h-72 w-60 rounded-md border bg-card shadow-sm">
+		<div className="rounded-md border bg-card shadow-sm">
 			<ListBox aria-label="Pick a Pokemon" items={list.items} isLoading={list.isLoading} selectionMode="single">
 				{(item) => (
 					<ListBoxItem id={item.name} className="capitalize">

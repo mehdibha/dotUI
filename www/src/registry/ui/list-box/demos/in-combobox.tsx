@@ -3,7 +3,7 @@ import { Label } from "@/registry/ui/field";
 
 export default function Demo() {
 	return (
-		<Combobox className="w-60">
+		<Combobox>
 			<Label>Country</Label>
 			<ComboboxInput placeholder="Search…" />
 			<ComboboxContent>

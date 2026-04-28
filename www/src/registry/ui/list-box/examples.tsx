@@ -20,7 +20,7 @@ import WithIcons from "./demos/with-icons";
 
 export default function ListBoxExamples() {
 	return (
-		<Examples className="md:grid-cols-2">
+		<Examples className="md:grid-cols-2 **:[div]:has-[>[data-listbox]]:w-full">
 			<Example title="Basic">
 				<Basic />
 			</Example>

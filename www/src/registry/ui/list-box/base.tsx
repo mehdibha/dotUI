@@ -58,7 +58,7 @@ const ListBoxItem = <T extends object>({
 		>
 			{composeRenderProps(props.children, (children, { selectionMode, isSelected }) => (
 				<>
-					{children}
+					{typeof children === "string" ? <ListBoxItemLabel>{children}</ListBoxItemLabel> : children}
 					{selectionMode !== "none" && (
 						<span data-listbox-item-indicator="" className={indicator()}>
 							{isSelected && <CheckIcon />}
@@ -68,22 +68,6 @@ const ListBoxItem = <T extends object>({
 			))}
 		</ListBoxPrimitive.ListBoxItem>
 	);
-};
-
-// MARK: Separator
-
-interface ListBoxSectionProps<T> extends ListBoxPrimitive.ListBoxSectionProps<T> {}
-const ListBoxSection = <T extends object>({ className, ...props }: ListBoxSectionProps<T>) => {
-	const { section } = useStyles()();
-	return <ListBoxPrimitive.ListBoxSection data-listbox-section="" className={section({ className })} {...props} />;
-};
-
-// MARK: Separator
-
-interface ListBoxSectionHeaderProps extends React.ComponentProps<typeof ListBoxPrimitive.Header> {}
-const ListBoxSectionHeader = ({ className, ...props }: ListBoxSectionHeaderProps) => {
-	const { sectionTitle } = useStyles()();
-	return <ListBoxPrimitive.Header data-listbox-section-header="" className={sectionTitle({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -102,6 +86,22 @@ const ListBoxItemDescription = ({ className, ...props }: ListBoxItemDescriptionP
 	return (
 		<ListBoxPrimitive.Text data-listbox-item-description="" className={itemDescription({ className })} {...props} />
 	);
+};
+
+// MARK: Separator
+
+interface ListBoxSectionProps<T> extends ListBoxPrimitive.ListBoxSectionProps<T> {}
+const ListBoxSection = <T extends object>({ className, ...props }: ListBoxSectionProps<T>) => {
+	const { section } = useStyles()();
+	return <ListBoxPrimitive.ListBoxSection data-listbox-section="" className={section({ className })} {...props} />;
+};
+
+// MARK: Separator
+
+interface ListBoxSectionHeaderProps extends React.ComponentProps<typeof ListBoxPrimitive.Header> {}
+const ListBoxSectionHeader = ({ className, ...props }: ListBoxSectionHeaderProps) => {
+	const { sectionTitle } = useStyles()();
+	return <ListBoxPrimitive.Header data-listbox-section-header="" className={sectionTitle({ className })} {...props} />;
 };
 
 // MARK: Separator
