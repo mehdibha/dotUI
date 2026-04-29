@@ -51,6 +51,7 @@ function PreviewPage() {
 	return (
 		<DesignSystemProvider
 			styles={designSystem.componentStyles}
+			tokens={designSystem.componentTokens}
 			params={designSystem.componentParams}
 			density={designSystem.density}
 		>

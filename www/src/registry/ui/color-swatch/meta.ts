@@ -8,7 +8,7 @@ const colorSwatchMeta = {
 	styles: {
 		default: {},
 	},
-	params: {
+	tokens: {
 		"--color-swatch-radius": {
 			type: "radius",
 			default: "--radius-sm",

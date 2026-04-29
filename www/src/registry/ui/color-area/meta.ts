@@ -8,7 +8,7 @@ const colorAreaMeta = {
 	styles: {
 		default: {},
 	},
-	params: {
+	tokens: {
 		"--color-area-radius": {
 			type: "radius",
 			default: "--radius-md",

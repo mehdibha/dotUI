@@ -16,7 +16,7 @@ const alertMeta = {
 		default: {},
 		sousse: {},
 	},
-	params: {
+	tokens: {
 		"--alert-radius": {
 			type: "radius",
 			default: "--radius-lg",

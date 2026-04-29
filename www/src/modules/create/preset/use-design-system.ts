@@ -40,11 +40,24 @@ export function useDesignSystem() {
 		[setDesignSystem],
 	);
 
-	const setComponentParam = useCallback(
-		(paramName: string, value: string) => {
+	const setComponentToken = useCallback(
+		(tokenName: string, value: string) => {
 			setDesignSystem((prev) => ({
 				...prev,
-				componentParams: { ...prev.componentParams, [paramName]: value },
+				componentTokens: { ...prev.componentTokens, [tokenName]: value },
+			}));
+		},
+		[setDesignSystem],
+	);
+
+	const setComponentParam = useCallback(
+		(componentName: string, paramName: string, value: string) => {
+			setDesignSystem((prev) => ({
+				...prev,
+				componentParams: {
+					...prev.componentParams,
+					[componentName]: { ...(prev.componentParams[componentName] ?? {}), [paramName]: value },
+				},
 			}));
 		},
 		[setDesignSystem],
@@ -57,5 +70,5 @@ export function useDesignSystem() {
 		[setDesignSystem],
 	);
 
-	return { designSystem, setDesignSystem, setComponentStyle, setComponentParam, setDensity };
+	return { designSystem, setDesignSystem, setComponentStyle, setComponentToken, setComponentParam, setDensity };
 }

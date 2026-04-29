@@ -35,6 +35,34 @@ function diffRecords(
 	return hasEntries ? result : undefined;
 }
 
+function diffNestedRecords(
+	current: Record<string, Record<string, string>>,
+	defaults: Record<string, Record<string, string>>,
+): Record<string, Record<string, string>> | undefined {
+	const result: Record<string, Record<string, string>> = {};
+	let hasEntries = false;
+	for (const [outer, inner] of Object.entries(current)) {
+		const innerDiff = diffRecords(inner, defaults[outer] ?? {});
+		if (innerDiff) {
+			result[outer] = innerDiff;
+			hasEntries = true;
+		}
+	}
+	return hasEntries ? result : undefined;
+}
+
+function mergeNested(
+	defaults: Record<string, Record<string, string>>,
+	overrides: Record<string, Record<string, string>>,
+): Record<string, Record<string, string>> {
+	const merged: Record<string, Record<string, string>> = {};
+	const keys = new Set([...Object.keys(defaults), ...Object.keys(overrides)]);
+	for (const key of keys) {
+		merged[key] = { ...(defaults[key] ?? {}), ...(overrides[key] ?? {}) };
+	}
+	return merged;
+}
+
 /* --------------------------------- encode --------------------------------- */
 
 /**
@@ -47,12 +75,15 @@ export function encodePreset(ds: DesignSystem): string | undefined {
 	const styleDiff = diffRecords(ds.componentStyles, DEFAULTS.componentStyles);
 	if (styleDiff) compact.s = styleDiff;
 
-	const paramDiff = diffRecords(ds.componentParams, DEFAULTS.componentParams);
+	const tokenDiff = diffRecords(ds.componentTokens, DEFAULTS.componentTokens);
+	if (tokenDiff) compact.t = tokenDiff;
+
+	const paramDiff = diffNestedRecords(ds.componentParams, DEFAULTS.componentParams);
 	if (paramDiff) compact.p = paramDiff;
 
 	if (ds.density !== DEFAULTS.density) compact.d = ds.density;
 
-	if (!compact.s && !compact.p && !compact.d) return undefined;
+	if (!compact.s && !compact.t && !compact.p && !compact.d) return undefined;
 
 	const json = JSON.stringify(compact);
 	const compressed = deflateRaw(json, { level: 9 });
@@ -73,7 +104,8 @@ export function decodePreset(encoded: string): DesignSystem {
 		const ds = fromCompact(partial);
 		return {
 			componentStyles: { ...DEFAULTS.componentStyles, ...ds.componentStyles },
-			componentParams: { ...DEFAULTS.componentParams, ...ds.componentParams },
+			componentTokens: { ...DEFAULTS.componentTokens, ...ds.componentTokens },
+			componentParams: mergeNested(DEFAULTS.componentParams, ds.componentParams),
 			density: ds.density,
 		};
 	} catch {

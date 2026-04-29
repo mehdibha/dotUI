@@ -58,27 +58,30 @@ interface AllComponentsViewProps {
 export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
 	const visibleComponents = allComponents.filter((comp) => {
 		const styleCount = comp.styles ? Object.keys(comp.styles).length : 0;
+		const tokenCount = comp.tokens ? Object.keys(comp.tokens).length : 0;
 		const paramCount = comp.params ? Object.keys(comp.params).length : 0;
-		return styleCount > 1 || paramCount >= 1;
+		return styleCount > 1 || tokenCount >= 1 || paramCount >= 1;
 	});
 	return (
 		<div className="mt-4 flex flex-col gap-3">
 			{visibleComponents.map((comp) => {
 				const styleCount = comp.styles ? Object.keys(comp.styles).length : 0;
+				const tokenCount = comp.tokens ? Object.keys(comp.tokens).length : 0;
 				const paramCount = comp.params ? Object.keys(comp.params).length : 0;
+				const customizableCount = tokenCount + paramCount;
 				return (
 					<ButtonPrimitives.Button key={comp.name} onPress={() => onSelect(comp.name)} className={cardClass}>
 						<div className="flex items-center justify-between">
 							<span>{toTitleCase(comp.name)}</span>
 							<ChevronRightIcon className="size-4 text-fg-muted" />
 						</div>
-						{(styleCount > 1 || paramCount > 0) && (
+						{(styleCount > 1 || customizableCount > 0) && (
 							<div className="flex items-center gap-2 text-fg-muted/60 text-xs">
 								{styleCount > 1 && <span>{styleCount} styles</span>}
-								{paramCount > 0 && (
+								{customizableCount > 0 && (
 									<span className="flex items-center gap-1">
 										<SlidersHorizontalIcon className="size-3" />
-										{paramCount} {paramCount === 1 ? "param" : "params"}
+										{customizableCount} {customizableCount === 1 ? "param" : "params"}
 									</span>
 								)}
 							</div>
@@ -104,6 +107,8 @@ interface ComponentDetailViewProps {
 	componentName: string;
 	selectedStyle?: string;
 	onStyleChange?: (componentName: string, style: string) => void;
+	selectedTokens?: Record<string, string>;
+	onTokenChange?: (tokenName: string, value: string) => void;
 	selectedParams?: Record<string, string>;
 	onParamChange?: (paramName: string, value: string) => void;
 }
@@ -112,6 +117,8 @@ export function ComponentDetailView({
 	componentName,
 	selectedStyle,
 	onStyleChange,
+	selectedTokens,
+	onTokenChange,
 	selectedParams,
 	onParamChange,
 }: ComponentDetailViewProps) {
@@ -121,8 +128,9 @@ export function ComponentDetailView({
 	}
 
 	const styles = meta.styles ? Object.keys(meta.styles) : [];
+	const tokens = meta.tokens ? Object.entries(meta.tokens) : [];
 	const params = meta.params ? Object.entries(meta.params) : [];
-	const hasConfig = styles.length > 0 || params.length > 0;
+	const hasConfig = styles.length > 0 || tokens.length > 0 || params.length > 0;
 	const defaultStyleDescription = meta.styles?.[meta.defaultStyle ?? ""]?.description;
 
 	return (
@@ -153,14 +161,14 @@ export function ComponentDetailView({
 				</div>
 			)}
 
-			{/* Param editors */}
-			{params.map(([paramName, paramDef]) => (
-				<div key={paramName} className="flex flex-col gap-2">
-					<span className="font-medium text-fg-muted text-xs">{formatParamName(paramName)}</span>
-					{paramDef.type === "radius" && (
+			{/* Token editors (CSS variables) */}
+			{tokens.map(([tokenName, tokenDef]) => (
+				<div key={tokenName} className="flex flex-col gap-2">
+					<span className="font-medium text-fg-muted text-xs">{formatTokenName(tokenName)}</span>
+					{tokenDef.type === "radius" && (
 						<Select
-							selectedKey={selectedParams?.[paramName] ?? paramDef.default}
-							onSelectionChange={(key) => onParamChange?.(paramName, key as string)}
+							selectedKey={selectedTokens?.[tokenName] ?? tokenDef.default}
+							onSelectionChange={(key) => onTokenChange?.(tokenName, key as string)}
 						>
 							<Button size="sm" className="w-full">
 								<SelectValue />
@@ -180,12 +188,38 @@ export function ComponentDetailView({
 				</div>
 			))}
 
+			{/* Param editors (component-internal variants) */}
+			{params.map(([paramName, paramDef]) => (
+				<div key={paramName} className="flex flex-col gap-2">
+					<span className="font-medium text-fg-muted text-xs">{toTitleCase(paramName)}</span>
+					<Select
+						selectedKey={selectedParams?.[paramName] ?? paramDef.default}
+						onSelectionChange={(key) => onParamChange?.(paramName, key as string)}
+					>
+						<Button size="sm" className="w-full">
+							<SelectValue />
+							<ChevronDownIcon />
+						</Button>
+						<Popover>
+							<ListBox>
+								{paramDef.values.map((value) => (
+									<ListBoxItem key={value} id={value}>
+										{toTitleCase(value)}
+									</ListBoxItem>
+								))}
+							</ListBox>
+						</Popover>
+					</Select>
+					{paramDef.description && <p className="text-fg-muted/60 text-xs">{paramDef.description}</p>}
+				</div>
+			))}
+
 			{!hasConfig && <p className="text-fg-muted text-sm">No customization options available for this component.</p>}
 		</div>
 	);
 }
 
-function formatParamName(name: string): string {
+function formatTokenName(name: string): string {
 	// "--badge-radius" → "Radius"
 	return toTitleCase(name.replace(/^--/, "").replace(/^[a-z]+-/, ""));
 }

@@ -8,7 +8,7 @@ const checkboxMeta = {
 	styles: {
 		default: {},
 	},
-	params: {
+	tokens: {
 		"--checkbox-radius": {
 			type: "radius",
 			default: "--radius-sm",

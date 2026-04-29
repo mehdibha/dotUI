@@ -27,11 +27,27 @@ export type StyleMeta = {
 	description?: string;
 };
 
-export type ParamType = "radius" | "color" | "spacing" | "font-size";
+/* ----------------------------- Tokens (CSS vars) ----------------------------- */
 
-export type ParamDef = {
-	type: ParamType;
+export type TokenType = "radius" | "color" | "spacing" | "font-size";
+
+export type TokenDef = {
+	type: TokenType;
 	default: string;
+};
+
+/* ------------------------- Params (internal variants) ------------------------ */
+/**
+ * Per-component variant-style params, scoped to a single component and only
+ * shown in the create page customizer. The selected value resolves to a tv
+ * config slice that gets layered between density and styles. At CLI install
+ * time these are baked into the exported `tv` definition.
+ */
+export type ParamDef = {
+	type: "select";
+	default: string;
+	values: string[];
+	description?: string;
 };
 
 export type RegistryItem = ShadcnRegistryItem &
@@ -44,7 +60,9 @@ export type RegistryItem = ShadcnRegistryItem &
 	) & {
 		/** Component group for style editor UI organization */
 		group?: ComponentGroup | null;
-		/** Configurable style parameters (e.g. radius, spacing) resolved at install time */
+		/** Configurable design tokens (CSS variables) resolved at install time */
+		tokens?: Record<string, TokenDef>;
+		/** Per-component variant params shown in the customizer panel */
 		params?: Record<string, ParamDef>;
 	};
 

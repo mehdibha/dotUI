@@ -152,7 +152,7 @@ const routeApi = getRouteApi("/_app/create");
 export function CustomizerPanel() {
 	const { panel, preview } = routeApi.useSearch();
 	const navigate = routeApi.useNavigate();
-	const { designSystem, setComponentStyle, setComponentParam, setDensity } = useDesignSystem();
+	const { designSystem, setComponentStyle, setComponentToken, setComponentParam, setDensity } = useDesignSystem();
 
 	const navStack = useMemo(() => (panel ? panel.split(".") : []), [panel]);
 
@@ -165,10 +165,10 @@ export function CustomizerPanel() {
 		navigate({ search: (prev) => ({ ...prev, panel: next.length > 0 ? next.join(".") : undefined }) });
 	}
 
-	// Resolve param values with fallbacks to their defaults
-	const radiusFactor = designSystem.componentParams[RADIUS_FACTOR_VAR] ?? DEFAULT_RADIUS_FACTOR;
-	const cursorInteractive = designSystem.componentParams[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE;
-	const cursorDisabled = designSystem.componentParams[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED;
+	// Resolve token values with fallbacks to their defaults
+	const radiusFactor = designSystem.componentTokens[RADIUS_FACTOR_VAR] ?? DEFAULT_RADIUS_FACTOR;
+	const cursorInteractive = designSystem.componentTokens[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE;
+	const cursorDisabled = designSystem.componentTokens[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED;
 
 	const effectivePreview = preview;
 
@@ -237,13 +237,13 @@ export function CustomizerPanel() {
 
 	function renderDynamicConfig(id: string): ReactNode {
 		if (id === "radius") {
-			return <RadiusConfig value={radiusFactor} onChange={(v) => setComponentParam(RADIUS_FACTOR_VAR, v)} />;
+			return <RadiusConfig value={radiusFactor} onChange={(v) => setComponentToken(RADIUS_FACTOR_VAR, v)} />;
 		}
 		if (id === "density") {
 			return <DensityConfig value={designSystem.density} onChange={setDensity} />;
 		}
 		if (id === "cursor") {
-			return <CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setComponentParam} />;
+			return <CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setComponentToken} />;
 		}
 		return null;
 	}
@@ -270,8 +270,10 @@ export function CustomizerPanel() {
 						componentName={id}
 						selectedStyle={designSystem.componentStyles[id]}
 						onStyleChange={setComponentStyle}
-						selectedParams={designSystem.componentParams}
-						onParamChange={setComponentParam}
+						selectedTokens={designSystem.componentTokens}
+						onTokenChange={setComponentToken}
+						selectedParams={designSystem.componentParams[id] ?? {}}
+						onParamChange={(paramName, value) => setComponentParam(id, paramName, value)}
 					/>
 				</>
 			);

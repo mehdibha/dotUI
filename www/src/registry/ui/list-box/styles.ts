@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 	base: {
 		slots: {
 			root: [
-				"not-has-data-listbox-section:scroll-my-1 not-has-data-listbox-section:p-1 outline-hidden",
+				"scroll-my-1 p-1 outline-hidden",
 				// stack + horizontal
 				"layout-stack:orientation-horizontal:flex layout-stack:orientation-horizontal:flex-row",
 				// grid
@@ -21,7 +21,8 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 				"hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight",
 				// focus
 				"focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",
-				"overflow-hidden focus-visible:bg-highlight focus-visible:before:absolute focus-visible:before:inset-y-0 focus-visible:before:left-0 focus-visible:before:w-0.5 focus-visible:before:rounded-[inherit] focus-visible:before:bg-accent",
+				// focus-visible bg (highlight color provided by the `highlight` param)
+				"focus-visible:bg-highlight",
 				// disabled
 				"disabled:text-fg-disabled",
 				// with description
@@ -33,7 +34,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 			itemLabel: ["in-[[data-listbox-item][data-disabled]]:text-fg-disabled"],
 			itemDescription: ["in-[[data-listbox-item][data-disabled]]:text-fg-disabled text-fg-muted"],
 			loadMore: ["flex w-full items-center justify-center py-1 text-fg-muted"],
-			section: ["scroll-my-1 p-1"],
+			section: ["scroll-my-1"],
 			sectionTitle: ["px-2 py-1.5 text-fg-muted text-xs"],
 		},
 		variants: {
@@ -57,6 +58,28 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 		},
 		comfortable: {
 			slots: {},
+		},
+	},
+
+	params: {
+		highlight: {
+			subtle: {
+				vars: {
+					"--color-highlight": "var(--neutral-300)",
+					"--color-fg-on-highlight": "var(--on-neutral-300)",
+				},
+				tv: {
+					slots: {
+						item: "overflow-hidden focus-visible:before:absolute focus-visible:before:inset-y-0 focus-visible:before:left-0 focus-visible:before:w-0.5 focus-visible:before:rounded-[inherit] focus-visible:before:bg-accent",
+					},
+				},
+			},
+			accent: {
+				vars: {
+					"--color-highlight": "var(--accent-500)",
+					"--color-fg-on-highlight": "var(--on-accent-500)",
+				},
+			},
 		},
 	},
 });

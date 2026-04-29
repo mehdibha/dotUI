@@ -8,7 +8,7 @@ const badgeMeta = {
 	styles: {
 		default: {},
 	},
-	params: {
+	tokens: {
 		"--badge-radius": {
 			type: "radius",
 			default: "--radius-md",

@@ -13,6 +13,14 @@ const listBoxMeta = {
 	],
 	registryDependencies: ["text", "loader", "focus-styles"],
 	dependencies: ["react-aria-components"],
+	params: {
+		highlight: {
+			type: "select",
+			default: "subtle",
+			values: ["subtle", "accent"],
+			description: "How focused/active items are highlighted.",
+		},
+	},
 } satisfies RegistryItem;
 
 export default listBoxMeta;

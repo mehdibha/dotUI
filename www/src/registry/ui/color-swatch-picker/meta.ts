@@ -8,7 +8,7 @@ const colorSwatchPickerMeta = {
 	styles: {
 		default: {},
 	},
-	params: {
+	tokens: {
 		"--color-swatch-picker-item-radius": {
 			type: "radius",
 			default: "--radius-md",
