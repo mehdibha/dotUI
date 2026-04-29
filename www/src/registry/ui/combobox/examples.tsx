@@ -17,13 +17,10 @@ import Validation from "./demos/validation";
 export default function ComboboxExamples() {
 	return (
 		<Examples>
-			<Example title="async loading">
-				<AsyncLoading />
-			</Example>
 			<Example title="basic">
 				<Basic />
 			</Example>
-			<Example title="controlled">
+			{/* <Example title="controlled">
 				<Controlled />
 			</Example>
 			<Example title="custom value">
@@ -53,6 +50,9 @@ export default function ComboboxExamples() {
 			<Example title="validation">
 				<Validation />
 			</Example>
+			<Example title="async loading">
+				<AsyncLoading />
+			</Example> */}
 		</Examples>
 	);
 }
