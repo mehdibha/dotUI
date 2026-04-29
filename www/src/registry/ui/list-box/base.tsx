@@ -18,7 +18,14 @@ interface ListBoxProps<T> extends ListBoxPrimitive.ListBoxProps<T> {
 	isLoading?: ListBoxPrimitive.ListBoxLoadMoreItemProps["isLoading"];
 	onLoadMore?: ListBoxPrimitive.ListBoxLoadMoreItemProps["onLoadMore"];
 }
-const ListBox = <T extends object>({ className, isLoading, onLoadMore, ...props }: ListBoxProps<T>) => {
+const ListBox = <T extends object>({
+	className,
+	isLoading,
+	onLoadMore,
+	items,
+	children,
+	...props
+}: ListBoxProps<T>) => {
 	const { root, loadMore } = useStyles()();
 	const standalone = !use(ListBoxPrimitive.ListBoxContext);
 
@@ -29,7 +36,7 @@ const ListBox = <T extends object>({ className, isLoading, onLoadMore, ...props 
 			data-standalone={standalone ?? undefined}
 			{...props}
 		>
-			<ListBoxPrimitive.Collection>{props.children}</ListBoxPrimitive.Collection>
+			<ListBoxPrimitive.Collection items={items}>{children}</ListBoxPrimitive.Collection>
 			{onLoadMore && (
 				<ListBoxPrimitive.ListBoxLoadMoreItem className={loadMore()} isLoading={isLoading} onLoadMore={onLoadMore}>
 					<Loader />

@@ -2,6 +2,7 @@
 
 import { useAsyncList } from "react-stately";
 
+import { Loader } from "@/registry/ui/loader";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 
 interface Pokemon {
@@ -10,16 +11,32 @@ interface Pokemon {
 
 export default function Demo() {
 	const list = useAsyncList<Pokemon>({
-		async load({ signal }) {
-			const res = await fetch(`https://pokeapi.co/api/v2/pokemon`, { signal });
-			const json = (await res.json()) as { results: Pokemon[] };
-			return { items: json.results };
+		async load({ signal, cursor }) {
+			const res = await fetch(cursor || `https://pokeapi.co/api/v2/pokemon`, { signal });
+			const json = await res.json();
+
+			return {
+				items: json.results,
+				cursor: json.next,
+			};
 		},
 	});
 
 	return (
 		<div className="rounded-md border bg-card shadow-sm">
-			<ListBox aria-label="Pick a Pokemon" items={list.items} isLoading={list.isLoading} selectionMode="single">
+			<ListBox
+				aria-label="Pick a Pokemon"
+				className="max-h-64 overflow-auto overscroll-none"
+				items={list.items}
+				isLoading={list.loadingState === "loadingMore"}
+				onLoadMore={list.loadMore}
+				renderEmptyState={() => (
+					<div className="flex items-center justify-center py-4">
+						<Loader />
+					</div>
+				)}
+				selectionMode="single"
+			>
 				{(item) => (
 					<ListBoxItem id={item.name} className="capitalize">
 						{item.name}
