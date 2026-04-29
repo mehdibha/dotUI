@@ -24,15 +24,15 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 				// focus-visible bg (highlight color provided by the `highlight` param)
 				"focus-visible:bg-highlight",
 				// disabled
-				"disabled:text-fg-disabled",
+				"disabled:text-fg-disabled disabled:**:text-current",
 				// with description
 				"has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2",
 				// kbd
 				"*:[kbd]:ml-auto *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
 			],
 			indicator: ["pointer-events-none absolute right-2 flex items-center justify-center"],
-			itemLabel: ["in-[[data-listbox-item][data-disabled]]:text-fg-disabled"],
-			itemDescription: ["in-[[data-listbox-item][data-disabled]]:text-fg-disabled text-fg-muted"],
+			itemLabel: [""],
+			itemDescription: ["text-fg-muted"],
 			loadMore: ["flex w-full items-center justify-center py-1 text-fg-muted"],
 			section: ["scroll-my-1"],
 			sectionTitle: ["px-2 py-1.5 text-fg-muted text-xs"],
@@ -54,10 +54,17 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 			},
 		},
 		default: {
-			slots: {},
+			slots: {
+				root: "text-sm",
+				item: "gap-1.5 px-1.5 py-1 text-sm data-selection-mode:pr-8 **:[svg]:not-with-[size]:size-4",
+				sectionTitle: "px-1.5 py-1",
+			},
 		},
 		comfortable: {
-			slots: {},
+			slots: {
+				root: "text-sm",
+				item: "gap-2 px-2 py-1.5 text-sm data-selection-mode:pr-8 **:[svg]:not-with-[size]:size-4",
+			},
 		},
 	},
 
@@ -78,6 +85,11 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 				vars: {
 					"--color-highlight": "var(--accent-500)",
 					"--color-fg-on-highlight": "var(--on-accent-500)",
+				},
+				tv: {
+					slots: {
+						item: "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:**:text-current focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:**:text-current",
+					},
 				},
 			},
 		},
