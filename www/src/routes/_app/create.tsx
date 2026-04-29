@@ -35,7 +35,7 @@ function CreatePage() {
 		const base = `/preview/${effectivePreview}`;
 		return preset ? `${base}?preset=${encodeURIComponent(preset)}` : base;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [effectivePreview, preset]);
+	}, [effectivePreview]);
 
 	// Send design system to iframe on changes + iframe load
 	useEffect(() => {
