@@ -9,11 +9,13 @@ import MultipleSelection from "./demos/multiple-selection";
 import Removable from "./demos/removable";
 import SingleSelection from "./demos/single-selection";
 import Sizes from "./demos/sizes";
+import WithCombobox from "./demos/with-combobox";
+import WithCombobox2 from "./demos/with-combobox-2";
 import WithIcon from "./demos/with-icon";
 
 export default function TagGroupExamples() {
 	return (
-		<Examples>
+		<Examples className="md:grid-cols-2">
 			<Example title="Default">
 				<Default />
 			</Example>
@@ -40,6 +42,12 @@ export default function TagGroupExamples() {
 			</Example>
 			<Example title="Empty state">
 				<Empty />
+			</Example>
+			<Example title="With combobox">
+				<WithCombobox />
+			</Example>
+			<Example title="With combobox 2">
+				<WithCombobox2 />
 			</Example>
 		</Examples>
 	);

@@ -3,14 +3,12 @@
 import { XIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TagGroupPrimitives from "react-aria-components/TagGroup";
-import type { VariantProps } from "tailwind-variants";
 
 import { Button } from "@/registry/ui/button";
 
 import { useStyles } from "./styles";
-import type { TagGroupStyles } from "./styles";
 
-// MARK: TagGroup
+// MARK: Separator
 
 interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {}
 
@@ -19,7 +17,7 @@ function TagGroup({ className, ...props }: TagGroupProps) {
 	return <TagGroupPrimitives.TagGroup data-tag-group="" className={tagGroup({ className })} {...props} />;
 }
 
-// MARK: TagList
+// MARK: Separator
 
 interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
@@ -34,13 +32,11 @@ function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
 	);
 }
 
-// MARK: Tag
+// MARK: Separator
 
-type TagVariants = VariantProps<TagGroupStyles>;
+interface TagProps extends TagGroupPrimitives.TagProps {}
 
-interface TagProps extends TagGroupPrimitives.TagProps, TagVariants {}
-
-function Tag({ className, variant, color, size, ...props }: TagProps) {
+function Tag({ className, ...props }: TagProps) {
 	const { tag } = useStyles()();
 	const textValue = typeof props.children === "string" ? props.children : undefined;
 
@@ -48,14 +44,14 @@ function Tag({ className, variant, color, size, ...props }: TagProps) {
 		<TagGroupPrimitives.Tag
 			data-tag=""
 			textValue={textValue}
-			className={composeRenderProps(className, (className) => tag({ className, variant, color, size }))}
+			className={composeRenderProps(className, (className) => tag({ className }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children, { allowsRemoving }) => (
 				<>
 					{children}
 					{allowsRemoving && (
-						<Button variant="quiet" isIconOnly slot="remove" size="xs">
+						<Button slot="remove" variant="quiet" isIconOnly size="xs">
 							<XIcon />
 						</Button>
 					)}

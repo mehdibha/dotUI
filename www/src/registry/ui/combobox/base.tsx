@@ -1,7 +1,8 @@
 "use client";
 
 import { ChevronDownIcon } from "lucide-react";
-import * as ComboBoxPrimitives from "react-aria-components/ComboBox";
+import * as ComboBoxPrimitive from "react-aria-components/ComboBox";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
@@ -15,16 +16,21 @@ import type { PopoverProps } from "@/registry/ui/popover";
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface ComboboxProps<T extends object> extends Omit<ComboBoxPrimitives.ComboBoxProps<T>, "className"> {
-	className?: string;
-}
-const Combobox = <T extends object>({ menuTrigger = "focus", className, ...props }: ComboboxProps<T>) => {
+interface ComboboxProps<T extends object, M extends "single" | "multiple" = "single">
+	extends ComboBoxPrimitive.ComboBoxProps<T, M> {}
+const Combobox = <T extends object, M extends "single" | "multiple" = "single">({
+	menuTrigger = "focus",
+	className,
+	...props
+}: ComboboxProps<T, M>) => {
 	return (
-		<ComboBoxPrimitives.ComboBox
+		<ComboBoxPrimitive.ComboBox
 			menuTrigger={menuTrigger}
-			className={fieldStyles().field({
-				className: cn(className),
-			})}
+			className={composeRenderProps(className, (cn) =>
+				fieldStyles().field({
+					className: cn,
+				}),
+			)}
 			{...props}
 		/>
 	);
@@ -90,11 +96,23 @@ const ComboboxContent = <T extends object>({
 
 /* -----------------------------------------------------------------------------------------------*/
 
+interface ComboboxValueProps<T extends object> extends ComboBoxPrimitive.ComboBoxValueProps<T> {}
+const ComboboxValue = <T extends object>({ className, ...props }: ComboboxValueProps<T>) => {
+	return (
+		<ComboBoxPrimitive.ComboBoxValue
+			data-combobox-value=""
+			className={composeRenderProps(className, (c) => cn("flex items-center gap-1", c))}
+			{...props}
+		/>
+	);
+};
+
 export type { ComboboxContentProps, ComboboxInputProps, ComboboxProps };
 export {
 	Combobox,
 	ComboboxContent,
 	ComboboxInput,
+	ComboboxValue,
 	ListBoxItem as ComboboxItem,
 	ListBoxSection as ComboboxSection,
 	ListBoxSectionHeader as ComboboxSectionHeader,

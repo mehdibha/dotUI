@@ -102,6 +102,8 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				"has-data-textarea:px-0",
 				// disabled
 				"disabled:cursor-disabled disabled:text-fg-disabled",
+				// combobox
+				"has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents **:data-tag-group:contents **:data-tag-list:contents **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text)",
 			],
 			inputGroupAddon: [
 				"flex cursor-text select-none items-center justify-center gap-(--addon-gap)",
