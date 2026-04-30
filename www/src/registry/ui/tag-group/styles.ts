@@ -37,7 +37,21 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
 	},
 
 	density: {
-		compact: {},
+		compact: {
+			variants: {
+				size: {
+					sm: {
+						tag: "group-data-[size=sm]/tag-group:h-4",
+					},
+					md: {
+						tag: "",
+					},
+					lg: {
+						tag: "",
+					},
+				},
+			},
+		},
 		default: {},
 		comfortable: {},
 	},
