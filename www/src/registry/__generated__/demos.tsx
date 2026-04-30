@@ -1535,7 +1535,7 @@ export const DemosIndex: Record<
 	},
 	"tag-group/demos/default": {
 		files: ["ui/tag-group/demos/default.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tag-group/demos/default")),
+		component: React.lazy(() => import("@/registry/ui/tag-group/demos/basic")),
 	},
 	"text-area/demos/controlled": {
 		files: ["ui/text-area/demos/controlled.tsx"],

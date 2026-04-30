@@ -1,7 +1,7 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import Default from "./demos/default";
+import Basic from "./demos/basic";
 import Disabled from "./demos/disabled";
 import Empty from "./demos/empty";
 import Links from "./demos/links";
@@ -16,8 +16,8 @@ import WithIcon from "./demos/with-icon";
 export default function TagGroupExamples() {
 	return (
 		<Examples className="md:grid-cols-2">
-			<Example title="Default">
-				<Default />
+			<Example title="Basic">
+				<Basic />
 			</Example>
 			<Example title="Removable">
 				<Removable />
