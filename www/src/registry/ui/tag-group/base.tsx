@@ -3,55 +3,59 @@
 import { XIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TagGroupPrimitives from "react-aria-components/TagGroup";
+import type { VariantProps } from "tailwind-variants";
 
 import { Button } from "@/registry/ui/button";
 
 import { useStyles } from "./styles";
+import type { TagGroupStyles } from "./styles";
 
-// MARK: tagGroupStyles
-
-// MARK: Separator
+// MARK: TagGroup
 
 interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {}
 
 function TagGroup({ className, ...props }: TagGroupProps) {
-	const { group } = useStyles()();
-	return <TagGroupPrimitives.TagGroup {...props} className={group({ className })} />;
+	const { tagGroup } = useStyles()();
+	return <TagGroupPrimitives.TagGroup data-tag-group="" className={tagGroup({ className })} {...props} />;
 }
 
-// MARK: Separator
+// MARK: TagList
 
 interface TagListProps<T> extends TagGroupPrimitives.TagListProps<T> {}
 
-function TagList<T extends object>(props: TagListProps<T>) {
-	const { list } = useStyles()();
+function TagList<T extends object>({ className, ...props }: TagListProps<T>) {
+	const { tagList } = useStyles()();
 	return (
 		<TagGroupPrimitives.TagList
+			data-tag-list=""
+			className={composeRenderProps(className, (cn) => tagList({ className: cn }))}
 			{...props}
-			className={composeRenderProps(props.className, (className) => list({ className }))}
 		/>
 	);
 }
 
-// MARK: Separator
+// MARK: Tag
 
-interface TagProps extends TagGroupPrimitives.TagProps {}
+type TagVariants = VariantProps<TagGroupStyles>;
 
-function Tag({ className, ...props }: TagProps) {
+interface TagProps extends TagGroupPrimitives.TagProps, TagVariants {}
+
+function Tag({ className, variant, color, size, ...props }: TagProps) {
 	const { tag } = useStyles()();
 	const textValue = typeof props.children === "string" ? props.children : undefined;
 
 	return (
 		<TagGroupPrimitives.Tag
+			data-tag=""
 			textValue={textValue}
-			className={composeRenderProps(className, (className) => tag({ className }))}
+			className={composeRenderProps(className, (className) => tag({ className, variant, color, size }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children, { allowsRemoving }) => (
 				<>
 					{children}
 					{allowsRemoving && (
-						<Button variant="quiet" isIconOnly slot="remove">
+						<Button variant="quiet" isIconOnly slot="remove" size="xs">
 							<XIcon />
 						</Button>
 					)}
@@ -61,7 +65,7 @@ function Tag({ className, ...props }: TagProps) {
 	);
 }
 
-// MARK: Separator
+// MARK: exports
 
 export type { TagGroupProps, TagListProps, TagProps };
 export { Tag, TagGroup, TagList };

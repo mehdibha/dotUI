@@ -8,6 +8,12 @@ const tagGroupMeta = {
 	styles: {
 		default: {},
 	},
+	tokens: {
+		"--tag-radius": {
+			type: "radius",
+			default: "--radius-sm",
+		},
+	},
 	files: [
 		{
 			type: "registry:ui",
@@ -16,6 +22,7 @@ const tagGroupMeta = {
 		},
 	],
 	registryDependencies: ["field", "button", "focus-styles"],
+	dependencies: ["react-aria-components"],
 } satisfies RegistryItem;
 
 export default tagGroupMeta;

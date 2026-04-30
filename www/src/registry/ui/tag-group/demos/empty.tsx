@@ -4,12 +4,12 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group";
 export default function Demo() {
 	return (
 		<TagGroup>
-			<Label>Categories</Label>
-			<TagList>
-				<Tag>News</Tag>
-				<Tag>Travel</Tag>
-				<Tag>Gaming</Tag>
-				<Tag>Shopping</Tag>
+			<Label>Filters</Label>
+			<TagList<{ id: string; name: string }>
+				items={[]}
+				renderEmptyState={() => "No filters applied."}
+			>
+				{(item) => <Tag>{item.name}</Tag>}
 			</TagList>
 		</TagGroup>
 	);
