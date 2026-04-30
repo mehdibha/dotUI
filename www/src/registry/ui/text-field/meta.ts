@@ -4,10 +4,6 @@ const textFieldMeta = {
 	name: "text-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const textFieldMeta = {
 
 export default textFieldMeta;
 
-export type TextFieldStyle = keyof typeof textFieldMeta.styles;
-
-export const textFieldStyleNames = Object.keys(textFieldMeta.styles) as TextFieldStyle[];
-
-export const defaultTextFieldStyle = textFieldMeta.defaultStyle;

@@ -90,52 +90,36 @@ const { useStyles, styles } = createStyles(inputMeta, {
 		slots: {
 			inputGroup: [
 				"group/input-group relative flex h-(--input-h) w-full min-w-0 items-center",
-				// unstyle any input-control, make it fill the parent
 				"**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
-				// strip horizontal padding only for inline controls; textarea owns its own
 				"**:data-date-input:px-0 **:data-input:px-0",
-				// with textarea
 				"has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
-				// container yields horizontal padding when an addon is adjacent (paradigm B)
 				"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
-				// container drops horizontal padding entirely in textarea mode (addon spans width)
 				"has-data-textarea:px-0",
-				// disabled
 				"disabled:cursor-disabled disabled:text-fg-disabled",
-				// combobox
 				"has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents **:data-tag-group:contents **:data-tag-list:contents **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text)",
 			],
 			inputGroupAddon: [
 				"flex cursor-text select-none items-center justify-center gap-(--addon-gap)",
 				"text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size)",
-				// with textarea
 				"group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
-				// nested button: shared radius across modes; h/w only in input mode (textarea uses natural h/w)
 				"**:data-button:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
-				// textarea-mode addon strip: full-width with symmetric padding
 				"group-has-data-textarea/input-group:px-(--edge-to-text)",
 				"group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text)",
-				// pt/pb only when user adds a separator border
 				"group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",
-				// nested button: textarea-mode inline inset (first/last position in addon)
 				"group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text)",
-				// nested button: textarea-mode block inset (addon at block-end/start)
 				"group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text)",
 				"group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text)",
 			],
 			input: [
 				"inline-flex w-full cursor-text items-center outline-none",
 				"h-(--input-h) in-data-input-group:h-auto",
-				// disabled
 				"disabled:cursor-disabled disabled:text-fg-disabled",
 			],
 			textArea: [
 				"min-h-16 w-full resize-none py-(--top-to-text) outline-none",
-				// disabled
 				"disabled:cursor-disabled disabled:text-fg-disabled",
 			],
-			dateInputSegment:
-				"select-none rounded px-0.5 type-literal:px-0 outline-hidden placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled",
+			dateInputSegment: "select-none rounded px-0.5 type-literal:px-0 outline-hidden placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled",
 		},
 		variants: {
 			size: {
@@ -148,9 +132,6 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			size: "md",
 		},
 	},
-
-	/* -------------------- Density -------------------- */
-
 	density: {
 		compact: {
 			slots: {
@@ -160,9 +141,21 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			},
 			variants: {
 				size: {
-					sm: { inputGroup: tokens({ h: 6 }), input: tokens({ h: 6 }), textArea: tokens({ h: 6 }) },
-					md: { inputGroup: tokens({ h: 7 }), input: tokens({ h: 7 }), textArea: tokens({ h: 7 }) },
-					lg: { inputGroup: tokens({ h: 8 }), input: tokens({ h: 8 }), textArea: tokens({ h: 8 }) },
+					sm: {
+						inputGroup: tokens({ h: 6 }),
+						input: tokens({ h: 6 }),
+						textArea: tokens({ h: 6 }),
+					},
+					md: {
+						inputGroup: tokens({ h: 7 }),
+						input: tokens({ h: 7 }),
+						textArea: tokens({ h: 7 }),
+					},
+					lg: {
+						inputGroup: tokens({ h: 8 }),
+						input: tokens({ h: 8 }),
+						textArea: tokens({ h: 8 }),
+					},
 				},
 			},
 		},
@@ -174,9 +167,21 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			},
 			variants: {
 				size: {
-					sm: { inputGroup: tokens({ h: 7 }), input: tokens({ h: 7 }), textArea: tokens({ h: 7 }) },
-					md: { inputGroup: tokens({ h: 8 }), input: tokens({ h: 8 }), textArea: tokens({ h: 8 }) },
-					lg: { inputGroup: tokens({ h: 9 }), input: tokens({ h: 9 }), textArea: tokens({ h: 9 }) },
+					sm: {
+						inputGroup: tokens({ h: 7 }),
+						input: tokens({ h: 7 }),
+						textArea: tokens({ h: 7 }),
+					},
+					md: {
+						inputGroup: tokens({ h: 8 }),
+						input: tokens({ h: 8 }),
+						textArea: tokens({ h: 8 }),
+					},
+					lg: {
+						inputGroup: tokens({ h: 9 }),
+						input: tokens({ h: 9 }),
+						textArea: tokens({ h: 9 }),
+					},
 				},
 			},
 		},
@@ -188,8 +193,16 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			},
 			variants: {
 				size: {
-					sm: { inputGroup: tokens({ h: 8 }), input: tokens({ h: 8 }), textArea: tokens({ h: 8 }) },
-					md: { inputGroup: tokens({ h: 9 }), input: tokens({ h: 9 }), textArea: tokens({ h: 9 }) },
+					sm: {
+						inputGroup: tokens({ h: 8 }),
+						input: tokens({ h: 8 }),
+						textArea: tokens({ h: 8 }),
+					},
+					md: {
+						inputGroup: tokens({ h: 9 }),
+						input: tokens({ h: 9 }),
+						textArea: tokens({ h: 9 }),
+					},
 					lg: {
 						inputGroup: tokens({ h: 10 }),
 						input: tokens({ h: 10 }),
@@ -199,47 +212,39 @@ const { useStyles, styles } = createStyles(inputMeta, {
 			},
 		},
 	},
-
-	/* -------------------- Styles -------------------- */
-
-	styles: {
-		// Bordered — neutral default.
-		outline: {
-			slots: {
-				inputGroup: outlineField({ focus: "group" }),
-				input: outlineField({ focus: "self" }),
-				textArea: outlineField({ focus: "self" }),
-				inputGroupAddon: addonInputModeParadigmB,
+	params: {
+		style: {
+			outline: {
+				slots: {
+					inputGroup: outlineField({ focus: "group" }),
+					input: outlineField({ focus: "self" }),
+					textArea: outlineField({ focus: "self" }),
+					inputGroupAddon: addonInputModeParadigmB,
+				},
 			},
-		},
-
-		// Bottom-border only — flush to edge, no horizontal padding.
-		line: {
-			slots: {
-				inputGroup: lineField({ focus: "group" }),
-				input: lineField({ focus: "self" }),
-				textArea: lineField({ focus: "self" }),
-				inputGroupAddon: addonInputModeLine,
+			line: {
+				slots: {
+					inputGroup: lineField({ focus: "group" }),
+					input: lineField({ focus: "self" }),
+					textArea: lineField({ focus: "self" }),
+					inputGroupAddon: addonInputModeLine,
+				},
 			},
-		},
-
-		// Soft tinted fill, bottom border only.
-		"filled-line-bottom": {
-			slots: {
-				inputGroup: filledLineBottomField({ focus: "group" }),
-				input: filledLineBottomField({ focus: "self" }),
-				textArea: filledLineBottomField({ focus: "self" }),
-				inputGroupAddon: addonInputModeParadigmB,
+			"filled-line-bottom": {
+				slots: {
+					inputGroup: filledLineBottomField({ focus: "group" }),
+					input: filledLineBottomField({ focus: "self" }),
+					textArea: filledLineBottomField({ focus: "self" }),
+					inputGroupAddon: addonInputModeParadigmB,
+				},
 			},
-		},
-
-		// Soft tinted fill, no visible border until focus.
-		filled: {
-			slots: {
-				inputGroup: filledField({ focus: "group" }),
-				input: filledField({ focus: "self" }),
-				textArea: filledField({ focus: "self" }),
-				inputGroupAddon: addonInputModeParadigmB,
+			filled: {
+				slots: {
+					inputGroup: filledField({ focus: "group" }),
+					input: filledField({ focus: "self" }),
+					textArea: filledField({ focus: "self" }),
+					inputGroupAddon: addonInputModeParadigmB,
+				},
 			},
 		},
 	},

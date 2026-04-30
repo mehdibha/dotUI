@@ -4,10 +4,6 @@ const popoverMeta = {
 	name: "popover",
 	type: "registry:ui",
 	group: "overlays",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -19,8 +15,3 @@ const popoverMeta = {
 
 export default popoverMeta;
 
-export type PopoverStyle = keyof typeof popoverMeta.styles;
-
-export const popoverStyleNames = Object.keys(popoverMeta.styles) as PopoverStyle[];
-
-export const defaultPopoverStyle = popoverMeta.defaultStyle;

@@ -4,10 +4,6 @@ const linkMeta = {
 	name: "link",
 	type: "registry:ui",
 	group: "buttons",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const linkMeta = {
 
 export default linkMeta;
 
-export type LinkStyle = keyof typeof linkMeta.styles;
-
-export const linkStyleNames = Object.keys(linkMeta.styles) as LinkStyle[];
-
-export const defaultLinkStyle = linkMeta.defaultStyle;

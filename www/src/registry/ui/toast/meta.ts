@@ -4,10 +4,6 @@ const toastMeta = {
 	name: "toast",
 	type: "registry:ui",
 	group: "feedback",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -19,8 +15,3 @@ const toastMeta = {
 
 export default toastMeta;
 
-export type ToastStyle = keyof typeof toastMeta.styles;
-
-export const toastStyleNames = Object.keys(toastMeta.styles) as ToastStyle[];
-
-export const defaultToastStyle = toastMeta.defaultStyle;

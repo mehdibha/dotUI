@@ -5,16 +5,15 @@ import timeFieldMeta from "./meta";
 
 const { useStyles, styles } = createStyles(timeFieldMeta, {
 	base: {
-		base: "",
+		base: [
+			"[.flex-1]:*:data-date-input:w-full [.w-full]:*:data-date-input:w-full [.w-full]:*:data-input-group:w-full",
+			fieldStyles().field({ orientation: "vertical" }),
+		],
 	},
-	density: { compact: {}, default: {}, comfortable: {} },
-	styles: {
-		default: {
-			base: [
-				"[.flex-1]:*:data-date-input:w-full [.w-full]:*:data-date-input:w-full [.w-full]:*:data-input-group:w-full",
-				fieldStyles().field({ orientation: "vertical" }),
-			],
-		},
+	density: {
+		compact: {},
+		default: {},
+		comfortable: {},
 	},
 });
 

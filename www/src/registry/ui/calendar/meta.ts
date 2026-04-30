@@ -4,10 +4,6 @@ const calendarMeta = {
 	name: "calendar",
 	type: "registry:ui",
 	group: "calendar",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const calendarMeta = {
 
 export default calendarMeta;
 
-export type CalendarStyle = keyof typeof calendarMeta.styles;
-
-export const calendarStyleNames = Object.keys(calendarMeta.styles) as CalendarStyle[];
-
-export const defaultCalendarStyle = calendarMeta.defaultStyle;

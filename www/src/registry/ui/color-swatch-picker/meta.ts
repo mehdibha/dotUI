@@ -4,16 +4,6 @@ const colorSwatchPickerMeta = {
 	name: "color-swatch-picker",
 	type: "registry:ui",
 	group: "color-swatches",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
-	tokens: {
-		"--color-swatch-picker-item-radius": {
-			type: "radius",
-			default: "--radius-md",
-		},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -22,12 +12,15 @@ const colorSwatchPickerMeta = {
 		},
 	],
 	registryDependencies: ["focus-styles", "color-swatch"],
+	params: {
+		itemRadius: {
+			kind: "scalar",
+			type: "radius",
+			cssVar: "--color-swatch-picker-item-radius",
+			default: "--radius-md",
+		},
+	},
 } satisfies RegistryItem;
 
 export default colorSwatchPickerMeta;
 
-export type ColorSwatchPickerStyle = keyof typeof colorSwatchPickerMeta.styles;
-
-export const colorSwatchPickerStyleNames = Object.keys(colorSwatchPickerMeta.styles) as ColorSwatchPickerStyle[];
-
-export const defaultColorSwatchPickerStyle = colorSwatchPickerMeta.defaultStyle;

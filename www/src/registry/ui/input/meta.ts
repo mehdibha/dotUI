@@ -4,13 +4,6 @@ const inputMeta = {
 	name: "input",
 	type: "registry:ui",
 	group: "inputs",
-	defaultStyle: "outline",
-	styles: {
-		outline: {},
-		line: {},
-		"filled-line-bottom": {},
-		filled: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,12 +13,14 @@ const inputMeta = {
 	],
 	registryDependencies: ["focus-styles"],
 	dependencies: ["react-aria", "react-stately"],
+	params: {
+		style: {
+			kind: "enum",
+			default: "outline",
+			values: ["outline", "line", "filled-line-bottom", "filled"] as const,
+		},
+	},
 } satisfies RegistryItem;
 
 export default inputMeta;
 
-export type InputStyle = keyof typeof inputMeta.styles;
-
-export const inputStyleNames = Object.keys(inputMeta.styles) as InputStyle[];
-
-export const defaultInputStyle = inputMeta.defaultStyle;

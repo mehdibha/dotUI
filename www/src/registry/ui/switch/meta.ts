@@ -4,10 +4,6 @@ const switchMeta = {
 	name: "switch",
 	type: "registry:ui",
 	group: "selection-controls",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const switchMeta = {
 
 export default switchMeta;
 
-export type SwitchStyle = keyof typeof switchMeta.styles;
-
-export const switchStyleNames = Object.keys(switchMeta.styles) as SwitchStyle[];
-
-export const defaultSwitchStyle = switchMeta.defaultStyle;

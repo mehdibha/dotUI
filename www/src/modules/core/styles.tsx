@@ -2,31 +2,41 @@
 
 import * as React from "react";
 import { tv } from "tailwind-variants";
-import type { TV, TVReturnType, VariantProps } from "tailwind-variants";
+import type { ClassValue, TVReturnType, VariantProps } from "tailwind-variants";
 
+import type { EnumParamDef, ParamDef, RegistryItem } from "@/registry/types";
 import type { Density } from "@/modules/create/preset/types";
 
 /* --------------------------------- Types --------------------------------- */
 
-type StyleSelections = Record<string, string>;
-type TokenSelections = Record<string, string>;
 type ParamSelections = Record<string, Record<string, string>>;
+type GlobalTokenSelections = Record<string, string>;
 
 interface DesignSystemContextValue {
-	styles: StyleSelections;
-	tokens: TokenSelections;
 	params: ParamSelections;
+	tokens: GlobalTokenSelections;
 	density: Density;
 }
 
 /* -------------------------------- Context -------------------------------- */
 
 const DesignSystemContext = React.createContext<DesignSystemContextValue>({
-	styles: {},
-	tokens: {},
 	params: {},
+	tokens: {},
 	density: "default",
 });
+
+/* ----------------------------- Param registry ----------------------------- */
+
+/**
+ * Module-scoped registry populated by `createStyles` at module load. The
+ * provider reads it to resolve the user's per-component selections into CSS
+ * vars on `:root`. Two kinds:
+ *   - enum vars: `{ [component]: { [paramName]: { [valueName]: vars } } }`
+ *   - scalar bindings: `{ [component]: { [paramName]: cssVar } }`
+ */
+const enumVarsRegistry = new Map<string, Record<string, Record<string, Record<string, string>>>>();
+const scalarVarsRegistry = new Map<string, Record<string, string>>();
 
 /* -------------------------------- Provider ------------------------------- */
 
@@ -35,58 +45,57 @@ function resolveCssValue(value: string): string {
 	return value.startsWith("--") ? `var(${value})` : value;
 }
 
-/**
- * Module-scoped registry of CSS-var declarations carried by component params.
- * Populated by `createStyles` at module load so the provider can look up
- * `vars` for any (component, paramName, paramValue) selection without each
- * component having to forward its config. Mirrors the install-time export:
- * the same vars get baked into globals.css when the CLI installs the component.
- */
-const paramVarsRegistry = new Map<string, Record<string, Record<string, Record<string, string>>>>();
-
 interface DesignSystemProviderProps {
-	styles: StyleSelections;
-	tokens?: TokenSelections;
 	params?: ParamSelections;
+	tokens?: GlobalTokenSelections;
 	density?: Density;
 	children: React.ReactNode;
 }
 
 function DesignSystemProvider({
-	styles,
-	tokens = {},
 	params = {},
+	tokens = {},
 	density = "default",
 	children,
 }: DesignSystemProviderProps) {
-	const value = React.useMemo(() => ({ styles, tokens, params, density }), [styles, tokens, params, density]);
+	const value = React.useMemo(() => ({ params, tokens, density }), [params, tokens, density]);
 
 	const cssVars = React.useMemo(() => {
 		const vars: Record<string, string> = {};
+
+		// Layer 1: global theme tokens (palette, radius factor, cursors, etc.).
 		for (const [prop, val] of Object.entries(tokens)) {
 			vars[prop] = resolveCssValue(val);
 		}
-		// Layer param-driven vars on top of tokens so they can override theme defaults.
-		for (const [componentName, componentParams] of Object.entries(params)) {
-			const componentVars = paramVarsRegistry.get(componentName);
-			if (!componentVars) continue;
-			for (const [paramName, paramValue] of Object.entries(componentParams)) {
-				const valueVars = componentVars[paramName]?.[paramValue];
-				if (!valueVars) continue;
-				for (const [k, v] of Object.entries(valueVars)) {
-					vars[k] = v;
+
+		// Layer 2: per-component param selections.
+		// Enum params write a value's `vars` block; scalar params write a single
+		// CSS var resolved from the selected token reference.
+		for (const [componentName, componentSelections] of Object.entries(params)) {
+			const enumVars = enumVarsRegistry.get(componentName);
+			const scalarBindings = scalarVarsRegistry.get(componentName);
+			for (const [paramName, paramValue] of Object.entries(componentSelections)) {
+				const enumValueVars = enumVars?.[paramName]?.[paramValue];
+				if (enumValueVars) {
+					for (const [k, v] of Object.entries(enumValueVars)) {
+						vars[k] = v;
+					}
+					continue;
+				}
+				const scalarCssVar = scalarBindings?.[paramName];
+				if (scalarCssVar) {
+					vars[scalarCssVar] = resolveCssValue(paramValue);
 				}
 			}
 		}
+
 		return vars;
 	}, [tokens, params]);
 
-	// Apply CSS custom properties to :root.
-	// Using a wrapper <div> doesn't work for tokens that reference each other
-	// via calc() + var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor)))
-	// because the inner var() is substituted at declaration time at :root and
-	// the resolved value is inherited. Setting the overrides on :root forces
-	// those dependent tokens to recompute with the new values.
+	// Apply CSS custom properties to :root so values that reference each
+	// other via calc() + var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor)))
+	// recompute correctly. Setting on a wrapper <div> would freeze them at
+	// declaration time at :root.
 	React.useLayoutEffect(() => {
 		const root = document.documentElement;
 		const applied = Object.keys(cssVars);
@@ -105,205 +114,220 @@ function DesignSystemProvider({
 
 /* ------------------------------ createStyles ----------------------------- */
 
-/** tv's config object — the argument type of the exported `tv` function. */
-type TvConfig = Parameters<TV>[0];
-
 /**
- * A single param value: an optional tv slice layered into the composition,
- * and/or an optional `vars` map written to `:root` by the provider (and
- * exported into globals.css at CLI install time).
+ * Strict tv-config override type. Any layer above `base` (density, param values)
+ * must match base's shape exactly:
+ *   - same slot keys (no new slots)
+ *   - same variant keys (no new variants)
+ *   - same variant value keys per variant
+ *   - variant values may be ClassValue, or — when base has slots — a partial
+ *     slot map keyed by base's slots.
  */
-interface ParamValueConfig {
-	tv?: TvConfig;
-	vars?: Record<string, string>;
+type SlotKeys<Base> = Base extends { slots: infer S }
+	? S extends Record<string, unknown>
+		? Extract<keyof S, string>
+		: never
+	: never;
+
+type VariantKeys<Base> = Base extends { variants: infer V }
+	? V extends Record<string, unknown>
+		? Extract<keyof V, string>
+		: never
+	: never;
+
+type VariantValueKeys<Base, K extends PropertyKey> = Base extends {
+	variants: { [P in K]: infer VV };
 }
+	? VV extends Record<string, unknown>
+		? Extract<keyof VV, string>
+		: never
+	: never;
 
-/**
- * Full createStyles config. Composition order per (density, params, aesthetic):
- *   base  →  density[d]  →  params[p1][v1].tv → … → params[pN][vN].tv  →  styles[a]
- *
- * `density`, `params`, and `styles` are optional. When `styles` is omitted,
- * an implicit `{ default: {} }` aesthetic is used and `meta.defaultStyle`
- * is not required. `params` are per-component variants whose values are
- * picked by the user in the customizer panel; their `vars` are injected
- * globally via the design system provider.
- */
-interface CreateStylesConfig<Base extends TvConfig, StyleNames extends string> {
-	base: Base;
-	density?: Record<Density, TvConfig>;
-	params?: Record<string, Record<string, ParamValueConfig>>;
-	styles?: Record<StyleNames, TvConfig>;
+type HasSlots<Base> = [SlotKeys<Base>] extends [never] ? false : true;
+type HasVariants<Base> = [VariantKeys<Base>] extends [never] ? false : true;
+
+type SlotsOverride<Base> = HasSlots<Base> extends true
+	? { slots?: { [K in SlotKeys<Base>]?: ClassValue } }
+	: { slots?: never };
+
+type VariantValueOverride<Base> = HasSlots<Base> extends true
+	? ClassValue | { [S in SlotKeys<Base>]?: ClassValue }
+	: ClassValue;
+
+type VariantsOverride<Base> = HasVariants<Base> extends true
+	? {
+			variants?: {
+				[K in VariantKeys<Base>]?: {
+					[V in VariantValueKeys<Base, K>]?: VariantValueOverride<Base>;
+				};
+			};
+			defaultVariants?: { [K in VariantKeys<Base>]?: VariantValueKeys<Base, K> };
+		}
+	: { variants?: never; defaultVariants?: never };
+
+type CompoundVariantsOverride<Base> = HasVariants<Base> extends true
+	? {
+			compoundVariants?: Array<
+				{
+					[K in VariantKeys<Base>]?: VariantValueKeys<Base, K> | VariantValueKeys<Base, K>[];
+				} & {
+					class?: ClassValue;
+					className?: ClassValue;
+				}
+			>;
+		}
+	: { compoundVariants?: never };
+
+export type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
+	VariantsOverride<Base> &
+	CompoundVariantsOverride<Base>;
+
+/* ----- Meta-driven param shape inference ----- */
+
+type EnumParamNamesOf<M> = M extends { params: infer P }
+	? P extends Record<string, ParamDef>
+		? { [K in keyof P]: P[K] extends EnumParamDef ? K : never }[keyof P]
+		: never
+	: never;
+
+type EnumParamValuesOf<M, K extends PropertyKey> = M extends {
+	params: { [P in K]: infer Def };
 }
+	? Def extends EnumParamDef
+		? Def["values"][number]
+		: never
+	: never;
 
-function isNewShape(config: unknown): config is CreateStylesConfig<TvConfig, string> {
-	if (!config || typeof config !== "object") return false;
-	const c = config as Record<string, unknown>;
-	return "base" in c && typeof c.base === "object" && c.base !== null;
-}
+type EnumParamsConfig<M, Base> =
+	[EnumParamNamesOf<M>] extends [never]
+		? { params?: never }
+		: {
+				params?: {
+					[K in EnumParamNamesOf<M>]?: {
+						[V in EnumParamValuesOf<M, K> & string]?: ExtendingTv<Base> & {
+							vars?: Record<string, string>;
+						};
+					};
+				};
+			};
 
-interface CreateStylesMeta {
-	name: string;
-	defaultStyle?: string;
-	styles?: Record<string, unknown>;
-	params?: Record<string, { default: string; values: string[] }>;
-}
+/* ----- useStyles return type ----- */
 
-// Generic TvFn for the legacy code path / runtime maps.
-type TvFn = ReturnType<TV>;
+type ExtractVariants<Base> = Base extends { variants: infer V } ? V : {};
+type ExtractSlots<Base> = Base extends { slots: infer S } ? S : undefined;
+type ExtractBase<Base> = Base extends { base: infer B } ? B : undefined;
 
-// Helpers for extracting typed pieces of a tv config. We don't re-check the
-// shape against tv's type constraints here — tv itself enforces them at the
-// call site; we only need the keys.
-type ExtractVariants<C> = C extends { variants: infer V } ? V : {};
-type ExtractSlots<C> = C extends { slots: infer S } ? S : undefined;
-type ExtractBase<C> = C extends { base: infer B } ? B : undefined;
-
-// Merge slot key-sets. We only care about the KEY names downstream (TVReturnType
-// maps `keyof S`), so values are collapsed to `any` — intersecting distinct
-// string literal values would otherwise collapse the value type to `never`.
-type MergeSlots<A, B> = [A] extends [undefined]
-	? [B] extends [undefined]
-		? undefined
-		: { [K in keyof B]: any }
-	: [B] extends [undefined]
-		? { [K in keyof A]: any }
-		: { [K in keyof A | keyof B]: any };
-
-// Extract typed tv return from merged base + default-style-override configs,
-// so callers see real slot/variant keys (including variants/slots declared in
-// the per-style override, not just in `base`).
-type InferTv<Base, Style> = TVReturnType<
-	// @ts-expect-error — intersection of variants may not exactly match constraint
-	ExtractVariants<Base> & ExtractVariants<Style>,
-	MergeSlots<ExtractSlots<Base>, ExtractSlots<Style>>,
-	ExtractBase<Style> extends undefined ? ExtractBase<Base> : ExtractBase<Style>,
+type InferTv<Base> = TVReturnType<
+	// @ts-expect-error — ExtractVariants<Base> may not exactly match the constrained TVVariants shape
+	ExtractVariants<Base>,
+	ExtractSlots<Base>,
+	ExtractBase<Base>,
 	{},
 	undefined
 >;
 
-// Legacy shape: { [styleName]: TvFn }.
-function createStyles<M extends CreateStylesMeta, T extends Record<string, TvFn>>(
+/* ----- createStyles ----- */
+
+type CreateStylesConfig<M, Base> = {
+	base: Base;
+	density?: Record<Density, ExtendingTv<Base>>;
+} & EnumParamsConfig<M, Base>;
+
+function createStyles<const M extends RegistryItem, const Base>(
 	meta: M,
-	stylesMap: T,
-): { useStyles: () => T[keyof T] };
-// New shape with `styles`. Return type flows from merging base + the default
-// style override so consumers see the real slot / variant keys.
-function createStyles<const M extends CreateStylesMeta, const Base, const Styles extends Record<string, unknown>>(
-	meta: M,
-	config: {
-		base: Base;
-		density?: Record<Density, TvConfig>;
-		params?: Record<string, Record<string, ParamValueConfig>>;
-		styles: Styles;
-	},
+	config: CreateStylesConfig<M, Base>,
 ): {
-	useStyles: () => InferTv<Base, Styles[M["defaultStyle"] & keyof Styles]>;
-	styles: InferTv<Base, Styles[M["defaultStyle"] & keyof Styles]>;
-};
-// New shape without `styles`. An implicit `{ default: {} }` aesthetic is used.
-function createStyles<const M extends CreateStylesMeta, const Base>(
-	meta: M,
-	config: {
+	useStyles: () => InferTv<Base>;
+	styles: InferTv<Base>;
+} {
+	const { base, density, params } = config as {
 		base: Base;
-		density?: Record<Density, TvConfig>;
-		params?: Record<string, Record<string, ParamValueConfig>>;
-		styles?: undefined;
-	},
-): {
-	useStyles: () => InferTv<Base, undefined>;
-	styles: InferTv<Base, undefined>;
-};
-function createStyles(meta: CreateStylesMeta, config: any): any {
-	if (isNewShape(config)) {
-		const { base, density, params } = config;
-		const styles: Record<string, TvConfig> = (config.styles as Record<string, TvConfig> | undefined) ?? {
-			default: {},
-		};
-		const defaultStyleName = meta.defaultStyle ?? Object.keys(styles)[0]!;
+		density?: Record<Density, Record<string, unknown>>;
+		params?: Record<string, Record<string, Record<string, unknown> & { vars?: Record<string, string> }>>;
+	};
 
-		const paramNames = params ? Object.keys(params) : [];
-		const paramDefaults: Record<string, string> = {};
-		if (params) {
-			for (const paramName of paramNames) {
-				const fromMeta = meta.params?.[paramName]?.default;
-				const firstValue = Object.keys(params[paramName] ?? {})[0];
-				paramDefaults[paramName] = fromMeta ?? firstValue ?? "";
-			}
+	/* ----- Register param vars / scalar bindings into runtime registry ----- */
+	const metaParams = (meta.params ?? {}) as Record<string, ParamDef>;
+	const enumParamNames: string[] = [];
+	const paramDefaults: Record<string, string> = {};
 
-			// Register CSS vars for every param value so the provider can
-			// look them up when this component's selection changes.
-			const componentVarsRegistry: Record<string, Record<string, Record<string, string>>> = {};
-			for (const [paramName, paramValues] of Object.entries(params)) {
-				const valueVars: Record<string, Record<string, string>> = {};
-				let hasAny = false;
-				for (const [valueName, valueConfig] of Object.entries(paramValues)) {
-					if (valueConfig.vars && Object.keys(valueConfig.vars).length > 0) {
-						valueVars[valueName] = valueConfig.vars;
-						hasAny = true;
-					}
-				}
-				if (hasAny) componentVarsRegistry[paramName] = valueVars;
-			}
-			if (Object.keys(componentVarsRegistry).length > 0) {
-				paramVarsRegistry.set(meta.name, componentVarsRegistry);
-			}
-		}
+	const enumVarsForComponent: Record<string, Record<string, Record<string, string>>> = {};
+	const scalarBindingsForComponent: Record<string, string> = {};
 
-		const baseTv = tv(base as never);
-
-		// Precompute base→density per density (no params, no aesthetic) — used as
-		// the foundation for runtime composition.
-		const densities: Density[] = density ? (Object.keys(density) as Density[]) : ["default"];
-		const densityTvs: Record<string, TvFn> = {};
-		for (const d of densities) {
-			densityTvs[d] = density ? tv({ extend: baseTv as never, ...(density[d] as TvConfig) } as never) : baseTv;
-		}
-
-		// Layered composition: base → density → params(in declared order) → styles
-		function compose(d: Density, paramSelection: Record<string, string>, aesthetic: string): TvFn {
-			let current: TvFn = densityTvs[d] ?? densityTvs.default!;
-			if (params) {
-				for (const paramName of paramNames) {
-					const selectedValue = paramSelection[paramName] ?? paramDefaults[paramName]!;
-					const valueConfig = params[paramName]?.[selectedValue];
-					if (valueConfig?.tv) {
-						current = tv({ extend: current as never, ...(valueConfig.tv as TvConfig) } as never);
-					}
+	for (const [paramName, def] of Object.entries(metaParams)) {
+		paramDefaults[paramName] = def.default;
+		if (def.kind === "enum") {
+			enumParamNames.push(paramName);
+			const valueVarsByValue: Record<string, Record<string, string>> = {};
+			const valuesConfig = (params?.[paramName] ?? {}) as Record<string, { vars?: Record<string, string> }>;
+			let hasAny = false;
+			for (const [valueName, valueConfig] of Object.entries(valuesConfig)) {
+				if (valueConfig?.vars && Object.keys(valueConfig.vars).length > 0) {
+					valueVarsByValue[valueName] = valueConfig.vars;
+					hasAny = true;
 				}
 			}
-			const aestheticOverride = styles[aesthetic] ?? styles[defaultStyleName]!;
-			return tv({ extend: current as never, ...(aestheticOverride as TvConfig) } as never);
+			if (hasAny) enumVarsForComponent[paramName] = valueVarsByValue;
+		} else if (def.kind === "scalar") {
+			scalarBindingsForComponent[paramName] = def.cssVar;
 		}
-
-		function useStyles() {
-			const { styles: selections, params: paramSelections, density } = React.useContext(DesignSystemContext);
-			const aesthetic = selections[meta.name] ?? defaultStyleName;
-			const componentParams = paramSelections[meta.name] ?? {};
-			const paramSig = paramNames.map((k) => componentParams[k] ?? paramDefaults[k]).join("|");
-			return React.useMemo(
-				() => compose(density, componentParams, aesthetic),
-				// eslint-disable-next-line react-hooks/exhaustive-deps
-				[density, paramSig, aesthetic],
-			);
-		}
-
-		return {
-			useStyles,
-			styles: compose("default", paramDefaults, defaultStyleName),
-		};
 	}
 
-	const stylesMap = config as Record<string, TvFn>;
-	const fallback = meta.defaultStyle ?? Object.keys(stylesMap)[0]!;
+	if (Object.keys(enumVarsForComponent).length > 0) {
+		enumVarsRegistry.set(meta.name, enumVarsForComponent);
+	}
+	if (Object.keys(scalarBindingsForComponent).length > 0) {
+		scalarVarsRegistry.set(meta.name, scalarBindingsForComponent);
+	}
+
+	/* ----- Build per-density tv functions ----- */
+	type AnyTv = ReturnType<typeof tv>;
+	const baseTv = tv(base as Parameters<typeof tv>[0]) as unknown as AnyTv;
+
+	const densities: Density[] = ["compact", "default", "comfortable"];
+	const densityTvs: Record<string, AnyTv> = {};
+	for (const d of densities) {
+		const densityConfig = density?.[d];
+		densityTvs[d] = densityConfig
+			? (tv({ extend: baseTv as never, ...(densityConfig as Parameters<typeof tv>[0]) } as never) as AnyTv)
+			: baseTv;
+	}
+
+	/* ----- Composition: base → density → params(in declared order) ----- */
+	function stripVars<T extends { vars?: unknown }>(input: T): Omit<T, "vars"> {
+		// tv() can't see the `vars` key, so drop it before passing through.
+		const { vars: _vars, ...rest } = input;
+		return rest as Omit<T, "vars">;
+	}
+
+	function compose(d: Density, paramSelection: Record<string, string>): ReturnType<typeof tv> {
+		let current: ReturnType<typeof tv> = densityTvs[d] ?? densityTvs.default!;
+		for (const paramName of enumParamNames) {
+			const selectedValue = paramSelection[paramName] ?? paramDefaults[paramName]!;
+			const valueConfig = params?.[paramName]?.[selectedValue];
+			if (!valueConfig) continue;
+			const tvOverride = stripVars(valueConfig);
+			if (Object.keys(tvOverride).length === 0) continue;
+			current = tv({ extend: current as never, ...(tvOverride as Parameters<typeof tv>[0]) } as never);
+		}
+		return current;
+	}
+
 	function useStyles() {
-		const { styles: selections } = React.useContext(DesignSystemContext);
-		const selected = selections[meta.name];
-		if (selected && selected in stylesMap) {
-			return stylesMap[selected]!;
-		}
-		return stylesMap[fallback]!;
+		const { params: paramSelections, density } = React.useContext(DesignSystemContext);
+		const componentParams = paramSelections[meta.name] ?? {};
+		const paramSig = enumParamNames.map((k) => componentParams[k] ?? paramDefaults[k]).join("|");
+		return React.useMemo(
+			() => compose(density, componentParams) as InferTv<Base>,
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			[density, paramSig],
+		);
 	}
-	return { useStyles };
+
+	return {
+		useStyles,
+		styles: compose("default", paramDefaults) as InferTv<Base>,
+	};
 }
 
 export type { VariantProps };

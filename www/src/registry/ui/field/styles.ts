@@ -8,11 +8,29 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 			fieldset: "",
 			legend: "",
 			fieldGroup: "group/field-group @container/field-group flex w-full flex-col",
-			field: "",
+			field: "flex gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
 			fieldContent: "flex flex-col gap-1",
-			label: "",
+			label: [
+				"inline-flex select-none items-center gap-px leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+				"in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
+				"in-disabled:cursor-not-allowed in-disabled:text-fg-disabled",
+				"in-data-invalid:text-fg-danger",
+			],
 			description: "nth-last-2:-mt-1 in-data-disabled:text-fg-disabled text-fg-muted last:mt-0",
 			fieldError: "text-fg-danger",
+		},
+		variants: {
+			orientation: {
+				horizontal: {
+					field: "flex-row items-center gap-2 has-data-[slot=description]:items-start",
+				},
+				vertical: {
+					field: "w-full flex-col gap-2",
+				},
+			},
+		},
+		defaultVariants: {
+			orientation: "vertical",
 		},
 	},
 	density: {
@@ -38,35 +56,6 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 				description: "text-sm",
 				fieldError: "text-sm",
 				fieldGroup: "gap-7 has-[[data-checkbox]_[data-label]]:gap-2.5 has-data-checkbox:gap-3",
-			},
-		},
-	},
-	styles: {
-		default: {
-			slots: {
-				field: "flex gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
-				label: [
-					"inline-flex select-none items-center gap-px leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
-					// Required state
-					"in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
-					// Disabled state
-					"in-disabled:cursor-not-allowed in-disabled:text-fg-disabled",
-					// Invalid state
-					"in-data-invalid:text-fg-danger",
-				],
-			},
-			variants: {
-				orientation: {
-					horizontal: {
-						field: "flex-row items-center gap-2 has-data-[slot=description]:items-start",
-					},
-					vertical: {
-						field: "w-full flex-col gap-2",
-					},
-				},
-			},
-			defaultVariants: {
-				orientation: "vertical",
 			},
 		},
 	},

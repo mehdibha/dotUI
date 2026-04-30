@@ -4,10 +4,6 @@ const searchFieldMeta = {
 	name: "search-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const searchFieldMeta = {
 
 export default searchFieldMeta;
 
-export type SearchFieldStyle = keyof typeof searchFieldMeta.styles;
-
-export const searchFieldStyleNames = Object.keys(searchFieldMeta.styles) as SearchFieldStyle[];
-
-export const defaultSearchFieldStyle = searchFieldMeta.defaultStyle;

@@ -4,10 +4,6 @@ const tooltipMeta = {
 	name: "tooltip",
 	type: "registry:ui",
 	group: "overlays",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -19,8 +15,3 @@ const tooltipMeta = {
 
 export default tooltipMeta;
 
-export type TooltipStyle = keyof typeof tooltipMeta.styles;
-
-export const tooltipStyleNames = Object.keys(tooltipMeta.styles) as TooltipStyle[];
-
-export const defaultTooltipStyle = tooltipMeta.defaultStyle;

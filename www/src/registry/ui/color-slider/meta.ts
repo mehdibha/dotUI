@@ -4,10 +4,6 @@ const colorSliderMeta = {
 	name: "color-slider",
 	type: "registry:ui",
 	group: "sliders",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const colorSliderMeta = {
 
 export default colorSliderMeta;
 
-export type ColorSliderStyle = keyof typeof colorSliderMeta.styles;
-
-export const colorSliderStyleNames = Object.keys(colorSliderMeta.styles) as ColorSliderStyle[];
-
-export const defaultColorSliderStyle = colorSliderMeta.defaultStyle;

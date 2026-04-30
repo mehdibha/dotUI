@@ -11,9 +11,11 @@ const avatarMeta = {
 			target: "ui/avatar.tsx",
 		},
 	],
-	tokens: {
-		"--avatar-radius": {
+	params: {
+		radius: {
+			kind: "scalar",
 			type: "radius",
+			cssVar: "--avatar-radius",
 			default: "--radius-full",
 		},
 	},

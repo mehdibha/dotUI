@@ -4,10 +4,6 @@ const timeFieldMeta = {
 	name: "time-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const timeFieldMeta = {
 
 export default timeFieldMeta;
 
-export type TimeFieldStyle = keyof typeof timeFieldMeta.styles;
-
-export const timeFieldStyleNames = Object.keys(timeFieldMeta.styles) as TimeFieldStyle[];
-
-export const defaultTimeFieldStyle = timeFieldMeta.defaultStyle;

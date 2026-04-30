@@ -4,10 +4,6 @@ const sliderMeta = {
 	name: "slider",
 	type: "registry:ui",
 	group: "sliders",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -21,8 +17,3 @@ const sliderMeta = {
 
 export default sliderMeta;
 
-export type SliderStyle = keyof typeof sliderMeta.styles;
-
-export const sliderStyleNames = Object.keys(sliderMeta.styles) as SliderStyle[];
-
-export const defaultSliderStyle = sliderMeta.defaultStyle;

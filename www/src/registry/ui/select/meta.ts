@@ -4,10 +4,6 @@ const selectMeta = {
 	name: "select",
 	type: "registry:ui",
 	group: "pickers",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const selectMeta = {
 
 export default selectMeta;
 
-export type SelectStyle = keyof typeof selectMeta.styles;
-
-export const selectStyleNames = Object.keys(selectMeta.styles) as SelectStyle[];
-
-export const defaultSelectStyle = selectMeta.defaultStyle;

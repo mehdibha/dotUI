@@ -23,48 +23,48 @@ export type ComponentGroup =
 	| "drop-zone"
 	| "typography";
 
-export type StyleMeta = {
-	description?: string;
-};
-
-/* ----------------------------- Tokens (CSS vars) ----------------------------- */
+/* ------------------------------- Params ------------------------------- */
 
 export type TokenType = "radius" | "color" | "spacing" | "font-size";
 
-export type TokenDef = {
-	type: TokenType;
-	default: string;
-};
-
-/* ------------------------- Params (internal variants) ------------------------ */
 /**
- * Per-component variant-style params, scoped to a single component and only
- * shown in the create page customizer. The selected value resolves to a tv
- * config slice that gets layered between density and styles. At CLI install
- * time these are baked into the exported `tv` definition.
+ * An "enum" param: user picks one of a fixed set of named values.
+ * Each value can carry tv slices and/or CSS vars in `createStyles`.
+ * Covers what was previously `meta.styles` (aesthetic) and `meta.params`
+ * (per-component variants).
  */
-export type ParamDef = {
-	type: "select";
+export type EnumParamDef = {
+	kind: "enum";
 	default: string;
-	values: string[];
+	values: readonly string[];
 	description?: string;
 };
 
-export type RegistryItem = ShadcnRegistryItem &
-	(
-		| {
-				styles: Record<string, StyleMeta>;
-				defaultStyle: string;
-		  }
-		| { styles?: never; defaultStyle?: never }
-	) & {
-		/** Component group for style editor UI organization */
-		group?: ComponentGroup | null;
-		/** Configurable design tokens (CSS variables) resolved at install time */
-		tokens?: Record<string, TokenDef>;
-		/** Per-component variant params shown in the customizer panel */
-		params?: Record<string, ParamDef>;
-	};
+/**
+ * A "scalar" param: user picks any value from a typed pool (a token type).
+ * The selected value is written to `cssVar` on `:root`. No tv slice.
+ * Covers what was previously `meta.tokens`.
+ */
+export type ScalarParamDef = {
+	kind: "scalar";
+	type: TokenType;
+	cssVar: `--${string}`;
+	default: string;
+	description?: string;
+};
+
+export type ParamDef = EnumParamDef | ScalarParamDef;
+
+export type RegistryItem = ShadcnRegistryItem & {
+	/** Component group for style editor UI organization */
+	group?: ComponentGroup | null;
+	/**
+	 * Customization knobs surfaced in the create-page customizer.
+	 * Two kinds: `enum` (1-of-N named values, may carry tv + vars) and
+	 * `scalar` (a single CSS var resolved from a typed token pool).
+	 */
+	params?: Record<string, ParamDef>;
+};
 
 export type Registry = Omit<ShadcnRegistry, "items"> & {
 	items: RegistryItem[];

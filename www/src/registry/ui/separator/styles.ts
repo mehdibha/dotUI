@@ -4,26 +4,21 @@ import separatorMeta from "./meta";
 
 const { useStyles, styles } = createStyles(separatorMeta, {
 	base: {
-		base: "",
+		base: "separator shrink-0 border-0 bg-border",
+		variants: {
+			orientation: {
+				horizontal: "h-px w-full",
+				vertical: "h-full w-px",
+			},
+		},
+		defaultVariants: {
+			orientation: "horizontal",
+		},
 	},
 	density: {
 		compact: {},
 		default: {},
 		comfortable: {},
-	},
-	styles: {
-		default: {
-			base: "separator shrink-0 border-0 bg-border",
-			variants: {
-				orientation: {
-					horizontal: "h-px w-full",
-					vertical: "h-full w-px",
-				},
-			},
-			defaultVariants: {
-				orientation: "horizontal",
-			},
-		},
 	},
 });
 

@@ -6,8 +6,7 @@ const { useStyles, styles } = createStyles(cardMeta, {
 	base: {
 		slots: {
 			root: "group/card flex flex-col rounded-(--card-radius) border bg-card has-[>img:first-child]:pt-0 *:[img]:first:rounded-t-(--card-radius) *:[img]:last:rounded-b-(--card-radius)",
-			header:
-				"group/card-header @container/card-header grid auto-rows-min items-start rounded-t-(--card-radius) has-data-card-action:grid-cols-[1fr_auto] has-data-card-description:grid-rows-[auto_auto]",
+			header: "group/card-header @container/card-header grid auto-rows-min items-start rounded-t-(--card-radius) has-data-card-action:grid-cols-[1fr_auto] has-data-card-description:grid-rows-[auto_auto]",
 			title: "font-heading",
 			description: "text-fg-muted",
 			action: "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
@@ -23,8 +22,7 @@ const { useStyles, styles } = createStyles(cardMeta, {
 				title: "font-medium text-sm",
 				description: "text-xs/relaxed",
 				content: "px-4 group-data-[size=sm]/card:px-3",
-				footer:
-					"px-4 pb-4 group-data-[size=sm]/card:px-3 group-data-[size=sm]/card:pb-3 [.border-t]:pt-4 group-data-[size=sm]/card:[.border-t]:pt-3",
+				footer: "px-4 pb-4 group-data-[size=sm]/card:px-3 group-data-[size=sm]/card:pb-3 [.border-t]:pt-4 group-data-[size=sm]/card:[.border-t]:pt-3",
 			},
 		},
 		default: {
@@ -34,8 +32,7 @@ const { useStyles, styles } = createStyles(cardMeta, {
 				title: "font-medium text-base leading-snug",
 				description: "text-sm",
 				content: "px-4 group-data-[size=sm]/card:px-3",
-				footer:
-					"px-4 pb-4 group-data-[size=sm]/card:px-3 group-data-[size=sm]/card:pb-3 [.border-t]:pt-4 group-data-[size=sm]/card:[.border-t]:pt-3",
+				footer: "px-4 pb-4 group-data-[size=sm]/card:px-3 group-data-[size=sm]/card:pb-3 [.border-t]:pt-4 group-data-[size=sm]/card:[.border-t]:pt-3",
 			},
 		},
 		comfortable: {
@@ -45,32 +42,33 @@ const { useStyles, styles } = createStyles(cardMeta, {
 				title: "font-medium text-base leading-normal group-data-[size=sm]/card:text-sm",
 				description: "text-sm",
 				content: "px-6 group-data-[size=sm]/card:px-4",
-				footer:
-					"px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
+				footer: "px-6 pb-6 group-data-[size=sm]/card:px-4 group-data-[size=sm]/card:pb-4 [.border-t]:pt-6 group-data-[size=sm]/card:[.border-t]:pt-4",
 			},
 		},
 	},
-	styles: {
-		default: {
-			slots: {
-				root: "",
-				header: "",
-				title: "",
-				description: "",
-				action: "",
-				content: "",
-				footer: "",
+	params: {
+		style: {
+			default: {
+				slots: {
+					root: "",
+					header: "",
+					title: "",
+					description: "",
+					action: "",
+					content: "",
+					footer: "",
+				},
 			},
-		},
-		tasnim: {
-			slots: {
-				root: "",
-				header: "",
-				title: "",
-				description: "",
-				action: "",
-				content: "",
-				footer: "border-t bg-neutral-900/50",
+			tasnim: {
+				slots: {
+					root: "",
+					header: "",
+					title: "",
+					description: "",
+					action: "",
+					content: "",
+					footer: "border-t bg-neutral-900/50",
+				},
 			},
 		},
 	},

@@ -4,11 +4,6 @@ const cardMeta = {
 	name: "card",
 	type: "registry:ui",
 	group: "containers",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-		tasnim: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -17,12 +12,14 @@ const cardMeta = {
 		},
 	],
 	registryDependencies: ["button", "text", "focus-styles"],
+	params: {
+		style: {
+			kind: "enum",
+			default: "default",
+			values: ["default", "tasnim"] as const,
+		},
+	},
 } satisfies RegistryItem;
 
 export default cardMeta;
 
-export type CardStyle = keyof typeof cardMeta.styles;
-
-export const cardStyleNames = Object.keys(cardMeta.styles) as CardStyle[];
-
-export const defaultCardStyle = cardMeta.defaultStyle;

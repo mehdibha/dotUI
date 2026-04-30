@@ -11,12 +11,14 @@ const { useStyles, styles } = createStyles(accordionMeta, {
 		default: {},
 		comfortable: {},
 	},
-	styles: {
-		default: {
-			base: "**:data-disclosure:not-last:border-b",
-		},
-		hammamet: {
-			base: "border **:data-disclosure:not-last:border-b",
+	params: {
+		style: {
+			default: {
+				base: "**:data-disclosure:not-last:border-b",
+			},
+			hammamet: {
+				base: "border **:data-disclosure:not-last:border-b",
+			},
 		},
 	},
 });

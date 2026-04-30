@@ -4,10 +4,6 @@ const dropZoneMeta = {
 	name: "drop-zone",
 	type: "registry:ui",
 	group: "drop-zone",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -19,8 +15,3 @@ const dropZoneMeta = {
 
 export default dropZoneMeta;
 
-export type DropZoneStyle = keyof typeof dropZoneMeta.styles;
-
-export const dropZoneStyleNames = Object.keys(dropZoneMeta.styles) as DropZoneStyle[];
-
-export const defaultDropZoneStyle = dropZoneMeta.defaultStyle;

@@ -4,10 +4,6 @@ const overlayMeta = {
 	name: "overlay",
 	type: "registry:ui",
 	group: "overlays",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const overlayMeta = {
 
 export default overlayMeta;
 
-export type OverlayStyle = keyof typeof overlayMeta.styles;
-
-export const overlayStyleNames = Object.keys(overlayMeta.styles) as OverlayStyle[];
-
-export const defaultOverlayStyle = overlayMeta.defaultStyle;

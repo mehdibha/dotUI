@@ -5,13 +5,15 @@ import textFieldMeta from "./meta";
 
 const { useStyles, styles } = createStyles(textFieldMeta, {
 	base: {
-		base: "",
+		base: [
+			"w-full",
+			fieldStyles().field({ orientation: "vertical" }),
+		],
 	},
-	density: { compact: {}, default: {}, comfortable: {} },
-	styles: {
-		default: {
-			base: ["w-full", fieldStyles().field({ orientation: "vertical" })],
-		},
+	density: {
+		compact: {},
+		default: {},
+		comfortable: {},
 	},
 });
 

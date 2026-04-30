@@ -4,10 +4,6 @@ const colorPickerMeta = {
 	name: "color-picker",
 	type: "registry:ui",
 	group: "pickers",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const colorPickerMeta = {
 
 export default colorPickerMeta;
 
-export type ColorPickerStyle = keyof typeof colorPickerMeta.styles;
-
-export const colorPickerStyleNames = Object.keys(colorPickerMeta.styles) as ColorPickerStyle[];
-
-export const defaultColorPickerStyle = colorPickerMeta.defaultStyle;

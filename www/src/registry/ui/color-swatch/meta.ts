@@ -4,16 +4,6 @@ const colorSwatchMeta = {
 	name: "color-swatch",
 	type: "registry:ui",
 	group: "color-swatches",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
-	tokens: {
-		"--color-swatch-radius": {
-			type: "radius",
-			default: "--radius-sm",
-		},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -21,12 +11,15 @@ const colorSwatchMeta = {
 			target: "ui/color-swatch.tsx",
 		},
 	],
+	params: {
+		radius: {
+			kind: "scalar",
+			type: "radius",
+			cssVar: "--color-swatch-radius",
+			default: "--radius-sm",
+		},
+	},
 } satisfies RegistryItem;
 
 export default colorSwatchMeta;
 
-export type ColorSwatchStyle = keyof typeof colorSwatchMeta.styles;
-
-export const colorSwatchStyleNames = Object.keys(colorSwatchMeta.styles) as ColorSwatchStyle[];
-
-export const defaultColorSwatchStyle = colorSwatchMeta.defaultStyle;

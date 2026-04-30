@@ -4,10 +4,6 @@ const dialogMeta = {
 	name: "dialog",
 	type: "registry:ui",
 	group: "overlays",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const dialogMeta = {
 
 export default dialogMeta;
 
-export type DialogStyle = keyof typeof dialogMeta.styles;
-
-export const dialogStyleNames = Object.keys(dialogMeta.styles) as DialogStyle[];
-
-export const defaultDialogStyle = dialogMeta.defaultStyle;

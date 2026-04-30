@@ -15,9 +15,9 @@ const listBoxMeta = {
 	dependencies: ["react-aria-components"],
 	params: {
 		highlight: {
-			type: "select",
+			kind: "enum",
 			default: "subtle",
-			values: ["subtle", "accent"],
+			values: ["subtle", "accent"] as const,
 			description: "How focused/active items are highlighted.",
 		},
 	},

@@ -72,18 +72,15 @@ function mergeNested(
 export function encodePreset(ds: DesignSystem): string | undefined {
 	const compact: DesignSystemState = {};
 
-	const styleDiff = diffRecords(ds.componentStyles, DEFAULTS.componentStyles);
-	if (styleDiff) compact.s = styleDiff;
-
-	const tokenDiff = diffRecords(ds.componentTokens, DEFAULTS.componentTokens);
-	if (tokenDiff) compact.t = tokenDiff;
-
 	const paramDiff = diffNestedRecords(ds.componentParams, DEFAULTS.componentParams);
 	if (paramDiff) compact.p = paramDiff;
 
+	const tokenDiff = diffRecords(ds.tokens, DEFAULTS.tokens);
+	if (tokenDiff) compact.t = tokenDiff;
+
 	if (ds.density !== DEFAULTS.density) compact.d = ds.density;
 
-	if (!compact.s && !compact.t && !compact.p && !compact.d) return undefined;
+	if (!compact.p && !compact.t && !compact.d) return undefined;
 
 	const json = JSON.stringify(compact);
 	const compressed = deflateRaw(json, { level: 9 });
@@ -103,9 +100,8 @@ export function decodePreset(encoded: string): DesignSystem {
 		const partial: DesignSystemState = JSON.parse(json);
 		const ds = fromCompact(partial);
 		return {
-			componentStyles: { ...DEFAULTS.componentStyles, ...ds.componentStyles },
-			componentTokens: { ...DEFAULTS.componentTokens, ...ds.componentTokens },
 			componentParams: mergeNested(DEFAULTS.componentParams, ds.componentParams),
+			tokens: { ...DEFAULTS.tokens, ...ds.tokens },
 			density: ds.density,
 		};
 	} catch {

@@ -4,10 +4,6 @@ const toggleButtonMeta = {
 	name: "toggle-button",
 	type: "registry:ui",
 	group: "buttons",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const toggleButtonMeta = {
 
 export default toggleButtonMeta;
 
-export type ToggleButtonStyle = keyof typeof toggleButtonMeta.styles;
-
-export const toggleButtonStyleNames = Object.keys(toggleButtonMeta.styles) as ToggleButtonStyle[];
-
-export const defaultToggleButtonStyle = toggleButtonMeta.defaultStyle;

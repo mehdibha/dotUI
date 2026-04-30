@@ -4,11 +4,6 @@ const accordionMeta = {
 	name: "accordion",
 	type: "registry:ui",
 	group: "disclosure",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-		hammamet: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -16,12 +11,14 @@ const accordionMeta = {
 			target: "ui/accordion.tsx",
 		},
 	],
+	params: {
+		style: {
+			kind: "enum",
+			default: "default",
+			values: ["default", "hammamet"] as const,
+		},
+	},
 } satisfies RegistryItem;
 
 export default accordionMeta;
 
-export type AccordionStyle = keyof typeof accordionMeta.styles;
-
-export const accordionStyleNames = Object.keys(accordionMeta.styles) as AccordionStyle[];
-
-export const defaultAccordionStyle = accordionMeta.defaultStyle;

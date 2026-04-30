@@ -4,10 +4,6 @@ const loaderMeta = {
 	name: "loader",
 	type: "registry:ui",
 	group: "progress",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -19,8 +15,3 @@ const loaderMeta = {
 
 export default loaderMeta;
 
-export type LoaderStyle = keyof typeof loaderMeta.styles;
-
-export const loaderStyleNames = Object.keys(loaderMeta.styles) as LoaderStyle[];
-
-export const defaultLoaderStyle = loaderMeta.defaultStyle;

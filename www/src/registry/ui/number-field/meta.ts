@@ -4,10 +4,6 @@ const numberFieldMeta = {
 	name: "number-field",
 	type: "registry:ui",
 	group: "inputs",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const numberFieldMeta = {
 
 export default numberFieldMeta;
 
-export type NumberFieldStyle = keyof typeof numberFieldMeta.styles;
-
-export const numberFieldStyleNames = Object.keys(numberFieldMeta.styles) as NumberFieldStyle[];
-
-export const defaultNumberFieldStyle = numberFieldMeta.defaultStyle;

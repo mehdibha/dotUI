@@ -3,10 +3,6 @@ import type { RegistryItem } from "@/registry/types";
 const focusStylesMeta = {
 	name: "focus-styles",
 	type: "registry:lib",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			path: "lib/focus-styles/basic.ts",
@@ -17,9 +13,3 @@ const focusStylesMeta = {
 } satisfies RegistryItem;
 
 export default focusStylesMeta;
-
-export type FocusStylesStyle = keyof typeof focusStylesMeta.styles;
-
-export const focusStylesStyleNames = Object.keys(focusStylesMeta.styles) as FocusStylesStyle[];
-
-export const defaultFocusStylesStyle = focusStylesMeta.defaultStyle;

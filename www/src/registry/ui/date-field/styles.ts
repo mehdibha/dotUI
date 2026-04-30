@@ -5,13 +5,14 @@ import dateFieldMeta from "./meta";
 
 const { useStyles, styles } = createStyles(dateFieldMeta, {
 	base: {
-		base: "",
+		base: [
+			fieldStyles().field({ orientation: "vertical" }),
+		],
 	},
-	density: { compact: {}, default: {}, comfortable: {} },
-	styles: {
-		default: {
-			base: [fieldStyles().field({ orientation: "vertical" })],
-		},
+	density: {
+		compact: {},
+		default: {},
+		comfortable: {},
 	},
 });
 

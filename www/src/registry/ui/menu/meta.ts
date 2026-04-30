@@ -4,10 +4,6 @@ const menuMeta = {
 	name: "menu",
 	type: "registry:ui",
 	group: "menus-lists",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const menuMeta = {
 
 export default menuMeta;
 
-export type MenuStyle = keyof typeof menuMeta.styles;
-
-export const menuStyleNames = Object.keys(menuMeta.styles) as MenuStyle[];
-
-export const defaultMenuStyle = menuMeta.defaultStyle;

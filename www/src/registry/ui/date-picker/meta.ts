@@ -4,10 +4,6 @@ const datePickerMeta = {
 	name: "date-picker",
 	type: "registry:ui",
 	group: "pickers",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const datePickerMeta = {
 
 export default datePickerMeta;
 
-export type DatePickerStyle = keyof typeof datePickerMeta.styles;
-
-export const datePickerStyleNames = Object.keys(datePickerMeta.styles) as DatePickerStyle[];
-
-export const defaultDatePickerStyle = datePickerMeta.defaultStyle;

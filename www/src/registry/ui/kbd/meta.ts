@@ -4,10 +4,6 @@ const kbdMeta = {
 	name: "kbd",
 	type: "registry:ui",
 	group: "tags",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -19,8 +15,3 @@ const kbdMeta = {
 
 export default kbdMeta;
 
-export type KbdStyle = keyof typeof kbdMeta.styles;
-
-export const kbdStyleNames = Object.keys(kbdMeta.styles) as KbdStyle[];
-
-export const defaultKbdStyle = kbdMeta.defaultStyle;

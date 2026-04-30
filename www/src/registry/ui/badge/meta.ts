@@ -4,16 +4,6 @@ const badgeMeta = {
 	name: "badge",
 	type: "registry:ui",
 	group: "tags",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
-	tokens: {
-		"--badge-radius": {
-			type: "radius",
-			default: "--radius-md",
-		},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -21,12 +11,15 @@ const badgeMeta = {
 			target: "ui/badge.tsx",
 		},
 	],
+	params: {
+		radius: {
+			kind: "scalar",
+			type: "radius",
+			cssVar: "--badge-radius",
+			default: "--radius-md",
+		},
+	},
 } satisfies RegistryItem;
 
 export default badgeMeta;
 
-export type BadgeStyle = keyof typeof badgeMeta.styles;
-
-export const badgeStyleNames = Object.keys(badgeMeta.styles) as BadgeStyle[];
-
-export const defaultBadgeStyle = badgeMeta.defaultStyle;

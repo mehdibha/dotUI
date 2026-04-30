@@ -4,10 +4,6 @@ const colorEditorMeta = {
 	name: "color-editor",
 	type: "registry:ui",
 	group: "color-swatches",
-	defaultStyle: "default",
-	styles: {
-		default: {},
-	},
 	files: [
 		{
 			type: "registry:ui",
@@ -20,8 +16,3 @@ const colorEditorMeta = {
 
 export default colorEditorMeta;
 
-export type ColorEditorStyle = keyof typeof colorEditorMeta.styles;
-
-export const colorEditorStyleNames = Object.keys(colorEditorMeta.styles) as ColorEditorStyle[];
-
-export const defaultColorEditorStyle = colorEditorMeta.defaultStyle;

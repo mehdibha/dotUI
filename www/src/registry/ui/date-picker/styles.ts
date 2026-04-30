@@ -4,13 +4,12 @@ import datePickerMeta from "./meta";
 
 const { useStyles, styles } = createStyles(datePickerMeta, {
 	base: {
-		base: "",
+		base: "flex flex-col items-start gap-2",
 	},
-	density: { compact: {}, default: {}, comfortable: {} },
-	styles: {
-		default: {
-			base: "flex flex-col items-start gap-2",
-		},
+	density: {
+		compact: {},
+		default: {},
+		comfortable: {},
 	},
 });
 

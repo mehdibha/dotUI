@@ -20,16 +20,19 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
 		},
 	},
 	density: {
-		compact: { slots: { root: "gap-2" } },
-		default: { slots: { root: "gap-2" } },
-		comfortable: { slots: { root: "gap-3" } },
-	},
-	styles: {
+		compact: {
+			slots: {
+				root: "gap-2",
+			},
+		},
 		default: {
 			slots: {
-				root: "",
-				control: "",
-				indicator: "",
+				root: "gap-2",
+			},
+		},
+		comfortable: {
+			slots: {
+				root: "gap-3",
 			},
 		},
 	},
