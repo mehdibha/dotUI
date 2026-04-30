@@ -3,19 +3,22 @@
 import { XIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as TagGroupPrimitives from "react-aria-components/TagGroup";
-import type { VariantProps } from "tailwind-variants";
 
 import { Button } from "@/registry/ui/button";
 
-import { type TagGroupStyles, useStyles } from "./styles";
+import { useStyles } from "./styles";
 
 // MARK: Separator
 
-interface TagGroupProps extends TagGroupPrimitives.TagGroupProps, VariantProps<TagGroupStyles> {}
+interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
+	size?: "sm" | "md" | "lg";
+}
 
-function TagGroup({ className, size, ...props }: TagGroupProps) {
+function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
 	const { tagGroup } = useStyles()();
-	return <TagGroupPrimitives.TagGroup data-tag-group="" className={tagGroup({ className })} {...props} />;
+	return (
+		<TagGroupPrimitives.TagGroup data-tag-group="" data-size={size} className={tagGroup({ className })} {...props} />
+	);
 }
 
 // MARK: Separator

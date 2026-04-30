@@ -19,7 +19,7 @@ function Drawer({ isDismissable = true, className, style, placement, ...props }:
 			<ModalPrimitives.Modal
 				className={composeRenderProps(className, (className) => overlay({ placement, className }))}
 				style={composeRenderProps(style, (style) => ({
-					"--drawer-margin": "calc(var(--spacing)*24)",
+					"--drawer-margin": "--spacing(24)",
 					...style,
 				}))}
 				{...props}

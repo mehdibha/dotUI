@@ -36,7 +36,7 @@ export default function Demo() {
 					aria-label="Stay"
 					value={range}
 					onChange={setRange}
-					className="[--cell-size:calc(var(--spacing)*12)]"
+					className="[--cell-size:--spacing(12)]"
 				>
 					<CalendarHeader />
 					<CalendarGrid>

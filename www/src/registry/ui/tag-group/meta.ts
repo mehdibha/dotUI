@@ -11,7 +11,7 @@ const tagGroupMeta = {
 	tokens: {
 		"--tag-radius": {
 			type: "radius",
-			default: "--radius-sm",
+			default: "--radius-md",
 		},
 	},
 	files: [

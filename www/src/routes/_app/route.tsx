@@ -26,7 +26,7 @@ function AppLayout() {
 	const items = pageTree.children as PageTree.Node[];
 
 	return (
-		<div className="[--header-height:calc(var(--spacing)*14)]">
+		<div className="[--header-height:--spacing(14)]">
 			<Header items={items} />
 			<Outlet />
 		</div>

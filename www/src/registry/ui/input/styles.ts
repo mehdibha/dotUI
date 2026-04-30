@@ -10,11 +10,11 @@ import inputMeta from "./meta";
 const tokens = tv({
 	variants: {
 		h: {
-			6: "[--addon-button-inset:var(--spacing)] [--addon-gap:var(--spacing)] [--edge-to-text:calc(var(--spacing)*2)] [--edge-to-visual:calc(var(--spacing)*1.5)] [--icon-size:calc(var(--spacing)*3)] [--input-h:calc(var(--spacing)*6)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
-			7: "[--addon-button-inset:var(--spacing)] [--addon-gap:var(--spacing)] [--edge-to-text:calc(var(--spacing)*2)] [--edge-to-visual:calc(var(--spacing)*1.5)] [--icon-size:calc(var(--spacing)*3.5)] [--input-h:calc(var(--spacing)*7)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
-			8: "[--addon-button-inset:calc(var(--spacing)*1.5)] [--addon-gap:calc(var(--spacing)*2)] [--edge-to-text:calc(var(--spacing)*2.5)] [--edge-to-visual:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*4)] [--input-h:calc(var(--spacing)*8)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
-			9: "[--addon-button-inset:calc(var(--spacing)*1.5)] [--addon-gap:calc(var(--spacing)*2)] [--edge-to-text:calc(var(--spacing)*2.5)] [--edge-to-visual:calc(var(--spacing)*2)] [--icon-size:calc(var(--spacing)*4)] [--input-h:calc(var(--spacing)*9)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
-			10: "[--addon-button-inset:calc(var(--spacing)*1.5)] [--addon-gap:calc(var(--spacing)*2)] [--edge-to-text:calc(var(--spacing)*3)] [--edge-to-visual:calc(var(--spacing)*2.5)] [--icon-size:calc(var(--spacing)*4.5)] [--input-h:calc(var(--spacing)*10)] [--text-to-visual:calc(var(--spacing)*1.5)] [--top-to-text:calc(var(--spacing)*2)]",
+			6: "[--addon-button-inset:--spacing(1)] [--addon-gap:--spacing(1)] [--edge-to-text:--spacing(2)] [--edge-to-visual:--spacing(1.5)] [--icon-size:--spacing(3)] [--input-h:--spacing(6)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+			7: "[--addon-button-inset:--spacing(1)] [--addon-gap:--spacing(1)] [--edge-to-text:--spacing(2)] [--edge-to-visual:--spacing(1.5)] [--icon-size:--spacing(3.5)] [--input-h:--spacing(7)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+			8: "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(2.5)] [--edge-to-visual:--spacing(2)] [--icon-size:--spacing(4)] [--input-h:--spacing(8)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+			9: "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(2.5)] [--edge-to-visual:--spacing(2)] [--icon-size:--spacing(4)] [--input-h:--spacing(9)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
+			10: "[--addon-button-inset:--spacing(1.5)] [--addon-gap:--spacing(2)] [--edge-to-text:--spacing(3)] [--edge-to-visual:--spacing(2.5)] [--icon-size:--spacing(4.5)] [--input-h:--spacing(10)] [--text-to-visual:--spacing(1.5)] [--top-to-text:--spacing(2)]",
 		},
 	},
 });

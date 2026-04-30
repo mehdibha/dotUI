@@ -5,10 +5,10 @@ import tagGroupMeta from "./meta";
 const { useStyles, styles } = createStyles(tagGroupMeta, {
 	base: {
 		slots: {
-			tagGroup: ["flex flex-col gap-2"],
+			tagGroup: ["group/tag-group flex flex-col gap-2"],
 			tagList: ["flex flex-wrap items-center outline-hidden", "empty:text-fg-muted", "gap-1"],
 			tag: [
-				"group/tag relative inline-flex w-fit shrink-0 cursor-default select-none items-center justify-center whitespace-nowrap rounded-(--tag-radius) font-medium outline-hidden transition-colors data-react-aria-pressable:cursor-interactive",
+				"group/tag relative inline-flex w-fit shrink-0 cursor-default select-none items-center justify-center gap-1 whitespace-nowrap rounded-(--tag-radius) font-medium outline-hidden transition-colors data-react-aria-pressable:cursor-interactive",
 				"bg-(--neutral-300) selected:bg-accent-muted selected:text-fg-accent text-fg-on-neutral",
 				// svg
 				"**:[svg]:pointer-events-none **:[svg]:shrink-0",
@@ -19,41 +19,41 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
 				// disabled
 				"disabled:bg-disabled disabled:text-fg-disabled data-selection-mode:disabled:cursor-disabled",
 
-				"h-5 gap-1 px-1.5 text-xs/relaxed **:[svg]:not-with-[size]:size-3",
+				"text-xs/relaxed **:[svg]:not-with-[size]:size-3",
 				// remove button
 				"has-[button[slot=remove]]:pr-0 **:[button[slot=remove]]:-ml-1 **:[button[slot=remove]]:size-5 **:[button[slot=remove]]:rounded-none **:[button[slot=remove]]:bg-transparent **:[button[slot=remove]]:text-fg-muted **:[button[slot=remove]]:hover:text-fg",
 			],
-		},
-		variants: {
-			size: {
-				sm: {},
-				md: {},
-				lg: {},
-			},
-		},
-		defaultVariants: {
-			size: "md",
 		},
 	},
 
 	density: {
 		compact: {
-			variants: {
-				size: {
-					sm: {
-						tag: "group-data-[size=sm]/tag-group:h-4",
-					},
-					md: {
-						tag: "",
-					},
-					lg: {
-						tag: "",
-					},
-				},
+			slots: {
+				tag: [
+					"group-data-[size=sm]/tag-group:h-4.25 group-data-[size=sm]/tag-group:px-1.25",
+					"h-4.75 px-1.5",
+					"group-data-[size=lg]/tag-group:h-5.75 group-data-[size=lg]/tag-group:px-2 group-data-[size=lg]/tag-group:text-sm",
+				],
 			},
 		},
-		default: {},
-		comfortable: {},
+		default: {
+			slots: {
+				tag: [
+					"group-data-[size=sm]/tag-group:h-4.25",
+					"h-5.25 px-1.5",
+					"group-data-[size=lg]/tag-group:h-6.25 group-data-[size=lg]/tag-group:text-sm",
+				],
+			},
+		},
+		comfortable: {
+			slots: {
+				tag: [
+					"group-data-[size=sm]/tag-group:h-4.75",
+					"h-5.5 px-1.5",
+					"group-data-[size=lg]/tag-group:h-6.5 group-data-[size=lg]/tag-group:px-2 group-data-[size=lg]/tag-group:text-sm",
+				],
+			},
+		},
 	},
 });
 
