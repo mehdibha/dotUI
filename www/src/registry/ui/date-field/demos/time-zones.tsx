@@ -10,7 +10,6 @@ export default function Demo() {
 		<DateField
 			aria-label="Meeting time"
 			defaultValue={parseZonedDateTime("2022-11-07T00:45[America/Los_Angeles]")}
-			className="w-auto"
 		>
 			<DateInput />
 		</DateField>

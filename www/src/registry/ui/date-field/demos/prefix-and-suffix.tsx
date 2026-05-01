@@ -4,7 +4,7 @@ import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 
 export default function Demo() {
 	return (
-		<div className="space-y-2">
+		<>
 			<DateField aria-label="Meeting date">
 				<InputGroup>
 					<InputGroupAddon>
@@ -21,6 +21,6 @@ export default function Demo() {
 					</InputGroupAddon>
 				</InputGroup>
 			</DateField>
-		</div>
+		</>
 	);
 }

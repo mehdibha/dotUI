@@ -137,23 +137,27 @@ interface DateInputProps extends Omit<DateFieldPrimitive.DateInputProps, "childr
 
 const DateInput = ({ className, size, ...props }: DateInputProps) => {
 	const { input } = useStyles()();
+	// Wrapped in table/td to stop Chromium walking up to focus a segment when
+	// clicking outside the field. See adobe/react-spectrum#3164.
 	return (
-		<DateFieldPrimitive.DateInput
-			data-input=""
-			data-date-input=""
-			data-input-control=""
-			data-size={size}
-			className={composeRenderProps(className, (className) => input({ className, size }))}
-			{...props}
-		>
-			{(segment) => (
-				<>
-					<>{"\u200B"}</>
-					<DateSegment segment={segment} />
-					<>{"\u200B"}</>
-				</>
-			)}
-		</DateFieldPrimitive.DateInput>
+		<table role="presentation" className="table! w-full border-collapse [all:unset]">
+			<tbody className="table-row-group! [all:unset]">
+				<tr className="table-row! [all:unset]">
+					<td className="table-cell! w-full [all:unset]">
+						<DateFieldPrimitive.DateInput
+							data-input=""
+							data-date-input=""
+							data-input-control=""
+							data-size={size}
+							className={composeRenderProps(className, (className) => input({ className, size }))}
+							{...props}
+						>
+							{(segment) => <DateSegment segment={segment} />}
+						</DateFieldPrimitive.DateInput>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	);
 };
 
