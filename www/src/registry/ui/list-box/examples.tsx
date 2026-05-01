@@ -9,9 +9,8 @@ import Empty from "./demos/empty";
 import FileActions from "./demos/file-actions";
 import Grid from "./demos/grid";
 import Horizontal from "./demos/horizontal";
-import InCombobox from "./demos/in-combobox";
-import InCommand from "./demos/in-command";
-import InSelect from "./demos/in-select";
+// import InCombobox from "./demos/in-combobox";
+// import InSelect from "./demos/in-select";
 import Selection from "./demos/multiple-selection";
 import Sections from "./demos/sections";
 import UserMenu from "./demos/user-menu";
@@ -60,15 +59,15 @@ export default function ListBoxExamples() {
 			<Example title="File actions with shortcuts">
 				<FileActions />
 			</Example>
-			<Example title="Inside a Select">
+			{/* <Example title="Inside a Select">
 				<InSelect />
 			</Example>
 			<Example title="Inside a Combobox">
 				<InCombobox />
-			</Example>
-			<Example title="Inside a Command palette">
+			</Example> */}
+			{/* <Example title="Inside a Command palette">
 				<InCommand />
-			</Example>
+			</Example> */}
 		</Examples>
 	);
 }

@@ -5,7 +5,7 @@ import dialogMeta from "./meta";
 const { useStyles, styles } = createStyles(dialogMeta, {
 	base: {
 		slots: {
-			content: "relative flex flex-col gap-4 in-data-popover:p-4 p-6 outline-none",
+			content: "relative flex flex-col gap-4 in-data-popover:p-4 p-6 outline-none has-data-command:p-0!",
 			header: "flex flex-col gap-2 text-left",
 			heading: "font-semibold in-popover:font-medium in-popover:text-base text-lg leading-none",
 			description: "text-fg-muted text-sm",

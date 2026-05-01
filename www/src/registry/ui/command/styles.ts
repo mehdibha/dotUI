@@ -4,19 +4,34 @@ import commandMeta from "./meta";
 
 const { useStyles, styles } = createStyles(commandMeta, {
 	base: {
-		slots: {
-			base: [
-				"in-drawer:rounded-[inherit] in-modal:rounded-[inherit] in-popover:rounded-[inherit] rounded-lg not-in-popover:not-in-modal:not-in-drawer:border not-in-popover:not-in-modal:not-in-drawer:bg-card",
-				"**:data-[slot=list-box]:w-full **:data-[slot=list-box]:border-0 **:data-[slot=list-box]:bg-transparent",
-				"**:data-[slot=search-field]:w-full **:data-[slot=search-field]:outline-none [&_[data-slot=search-field]_[data-slot=input-group]]:rounded-b-none [&_[data-slot=search-field]_[data-slot=input-group]]:border-0 [&_[data-slot=search-field]_[data-slot=input-group]]:border-b [&_[data-slot=search-field]_[data-slot=input-group]]:bg-transparent",
-				"in-modal:w-full",
-			],
-		},
+		base: [
+			"group/command flex w-full flex-col gap-1 text-fg",
+
+			// ListBox — frameless, scrollable
+			// "**:data-listbox:max-h-72 **:data-listbox:scroll-py-1 **:data-listbox:overflow-y-auto **:data-listbox:p-0 **:data-listbox:outline-hidden",
+		],
 	},
 	density: {
 		compact: {},
 		default: {},
 		comfortable: {},
+	},
+	params: {
+		style: {
+			1: {
+				base: [
+					"p-1.5 **:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5 **:data-listbox:p-0 **:data-search-field:pb-0 **:[[data-search-field]>[data-input-group]]:rounded-sm",
+				],
+			},
+			2: {
+				base: [
+					"**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0",
+					"**:data-search-field:border-b",
+					"in-data-modal:**:data-search-field:p-0.5"
+				],
+			},
+			3: {},
+		},
 	},
 });
 

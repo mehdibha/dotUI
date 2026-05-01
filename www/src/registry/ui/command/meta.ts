@@ -11,7 +11,13 @@ const commandMeta = {
 			target: "ui/command.tsx",
 		},
 	],
+	params: {
+		style: {
+			kind: "enum",
+			default: "1",
+			values: ["1", "2", "3"],
+		},
+	},
 } satisfies RegistryItem;
 
 export default commandMeta;
-
