@@ -16,7 +16,6 @@ import WithCustomItems from "./demos/with-custom-items";
 import WithForm from "./demos/with-form";
 import WithGroupsAndSeparator from "./demos/with-groups-and-separator";
 import WithIcon from "./demos/with-icon";
-import WithOtherInputs from "./demos/with-other-inputs";
 
 export default function ComboboxExamples() {
 	return (

@@ -11,7 +11,7 @@ const comboboxMeta = {
 			target: "ui/combobox.tsx",
 		},
 	],
-	registryDependencies: ["field", "button", "input", "list-box", "overlay"],
+	registryDependencies: ["field", "button", "input", "list-box", "popover"],
 } satisfies RegistryItem;
 
 export default comboboxMeta;

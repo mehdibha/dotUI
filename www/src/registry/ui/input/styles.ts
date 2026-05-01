@@ -90,7 +90,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 	base: {
 		slots: {
 			inputGroup: [
-				"group/input-group relative flex h-(--input-h) w-full min-w-0 items-center",
+				"group/input-group relative flex h-(--input-h) w-full min-w-0 cursor-text items-center",
 				"**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
 				"**:data-date-input:px-0 **:data-input:px-0",
 				"has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",

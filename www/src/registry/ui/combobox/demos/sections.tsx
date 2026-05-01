@@ -10,7 +10,7 @@ export default function Demo() {
 	return (
 		<Combobox aria-label="Country">
 			<InputGroup>
-				<Input />
+				<Input placeholder="Select a country..." />
 				<InputGroupAddon>
 					<Button variant="quiet" isIconOnly>
 						<ChevronDownIcon />
