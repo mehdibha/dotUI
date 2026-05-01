@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 			fieldset: "",
 			legend: "",
 			fieldGroup: "group/field-group @container/field-group flex w-full flex-col",
-			field: "flex gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
+			field: "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
 			fieldContent: "flex flex-col gap-1",
 			label: [
 				"inline-flex select-none items-center gap-px leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",

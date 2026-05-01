@@ -7,7 +7,7 @@ export default function Demo() {
 		<div className="flex items-center gap-4">
 			<DateField>
 				<Label>small (sm)</Label>
-				<DateInput size="sm" />
+				<DateInput />
 			</DateField>
 			<DateField>
 				<Label>medium (md)</Label>

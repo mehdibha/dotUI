@@ -1,7 +1,7 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 import ColorFieldDemo from "@/registry/ui/color-field/demos/basic";
-import DateFieldDemo from "@/registry/ui/date-field/demos/default";
+import DateFieldDemo from "@/registry/ui/date-field/demos/basic";
 import { Description, Field, Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 import InputDemo from "@/registry/ui/input/demos/default";

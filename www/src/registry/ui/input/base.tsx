@@ -131,21 +131,28 @@ function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
 
 // MARK: Separator
 
-interface DateInputProps extends Omit<DateFieldPrimitive.DateInputProps, "children"> {
+interface DateInputProps extends Omit<DateFieldPrimitive.DateInputProps, "children">, VariantProps<InputStyles> {
 	children?: DateFieldPrimitive.DateInputProps["children"];
 }
 
-const DateInput = ({ className, ...props }: DateInputProps) => {
+const DateInput = ({ className, size, ...props }: DateInputProps) => {
 	const { input } = useStyles()();
 	return (
 		<DateFieldPrimitive.DateInput
 			data-input=""
 			data-date-input=""
 			data-input-control=""
-			className={composeRenderProps(className, (className) => input({ className }))}
+			data-size={size}
+			className={composeRenderProps(className, (className) => input({ className, size }))}
 			{...props}
 		>
-			{props.children ?? ((segment) => <DateSegment segment={segment} />)}
+			{(segment) => (
+				<>
+					<>{"\u200B"}</>
+					<DateSegment segment={segment} />
+					<>{"\u200B"}</>
+				</>
+			)}
 		</DateFieldPrimitive.DateInput>
 	);
 };

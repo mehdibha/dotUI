@@ -4,7 +4,8 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DateFieldPrimitives from "react-aria-components/DateField";
 import type * as CalendarPrimitives from "react-aria-components/Calendar";
 
-import { useStyles } from "./styles";
+import { cn } from "@/registry/lib/utils";
+import { useStyles } from "@/registry/ui/field/styles";
 
 // MARK: dateFieldStyles
 
@@ -13,10 +14,13 @@ import { useStyles } from "./styles";
 interface DateFieldProps<T extends CalendarPrimitives.DateValue> extends DateFieldPrimitives.DateFieldProps<T> {}
 
 const DateField = <T extends CalendarPrimitives.DateValue>({ className, ...props }: DateFieldProps<T>) => {
-	const dateFieldStyles = useStyles();
+	const fieldStyles = useStyles();
 	return (
 		<DateFieldPrimitives.DateField
-			className={composeRenderProps(className, (className) => dateFieldStyles({ className }))}
+			date-date-field=""
+			className={composeRenderProps(className, (className) =>
+				fieldStyles().field({ className: cn("group/date-field", className) }),
+			)}
 			{...props}
 		/>
 	);
