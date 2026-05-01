@@ -1,7 +1,6 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import AutoHighlight from "./demos/auto-highlight";
 import Basic from "./demos/basic";
 import Disabled from "./demos/disabled";
 import DisabledItems from "./demos/disabled-items";
@@ -11,10 +10,8 @@ import LargeList from "./demos/large-list";
 import Multiple from "./demos/multiple";
 import MultipleDisabled from "./demos/multiple-disabled";
 import MultipleInvalid from "./demos/multiple-invalid";
-import MultipleNoRemove from "./demos/multiple-no-remove";
 import Sections from "./demos/sections";
 import Sides from "./demos/sides";
-import WithClear from "./demos/with-clear";
 import WithCustomItems from "./demos/with-custom-items";
 import WithForm from "./demos/with-form";
 import WithGroupsAndSeparator from "./demos/with-groups-and-separator";
@@ -32,12 +29,6 @@ export default function ComboboxExamples() {
 			</Example>
 			<Example title="Invalid">
 				<Invalid />
-			</Example>
-			<Example title="With Clear Button">
-				<WithClear />
-			</Example>
-			<Example title="With Auto Highlight">
-				<AutoHighlight />
 			</Example>
 			<Example title="With Groups">
 				<Sections />
@@ -63,17 +54,11 @@ export default function ComboboxExamples() {
 			<Example title="Combobox Multiple Invalid">
 				<MultipleInvalid />
 			</Example>
-			<Example title="Combobox Multiple (No Remove)">
-				<MultipleNoRemove />
-			</Example>
-			<Example title="With Custom Item Rendering">
+			<Example title="Items with description">
 				<WithCustomItems />
 			</Example>
 			<Example title="Combobox in Dialog">
 				<InDialog />
-			</Example>
-			<Example title="With Other Inputs">
-				<WithOtherInputs />
 			</Example>
 			<Example title="Disabled Items">
 				<DisabledItems />
