@@ -5,16 +5,18 @@ import { parseDate } from "@internationalized/date";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { CalendarIcon } from "@/registry/__generated__/icons";
+import { CalendarIcon, ChevronDownIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Calendar } from "@/registry/ui/calendar";
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
-import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/registry/ui/combobox";
+import { Combobox } from "@/registry/ui/combobox";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { FieldGroup, Label } from "@/registry/ui/field";
 import { DateInput, Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Overlay } from "@/registry/ui/overlay";
+import { Popover } from "@/registry/ui/popover";
 import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { FormControl } from "@/registry/ui/react-hook-form";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
@@ -127,14 +129,23 @@ export default function Demo() {
 					render={({ value, onChange, ...props }) => (
 						<Combobox inputValue={value} onSelectionChange={onChange} className="w-full" {...props}>
 							<Label>Preferred language</Label>
-							<ComboboxInput />
-							<ComboboxContent items={languages}>
-								{(item) => (
-									<ComboboxItem key={item.value} id={item.value}>
-										{item.label}
-									</ComboboxItem>
-								)}
-							</ComboboxContent>
+							<InputGroup>
+								<Input />
+								<InputGroupAddon>
+									<Button variant="quiet" isIconOnly>
+										<ChevronDownIcon />
+									</Button>
+								</InputGroupAddon>
+							</InputGroup>
+							<Popover>
+								<ListBox items={languages}>
+									{(item) => (
+										<ListBoxItem key={item.value} id={item.value}>
+											{item.label}
+										</ListBoxItem>
+									)}
+								</ListBox>
+							</Popover>
 						</Combobox>
 					)}
 				/>

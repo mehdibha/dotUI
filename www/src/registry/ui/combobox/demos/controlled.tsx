@@ -1,25 +1,39 @@
 "use client";
 
+import { ChevronDownIcon } from "lucide-react";
 import React from "react";
 import type * as MenuPrimitives from "react-aria-components/Menu";
 
-import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/registry/ui/combobox";
+import { Button } from "@/registry/ui/button";
+import { Combobox } from "@/registry/ui/combobox";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	const [country, setCountry] = React.useState<MenuPrimitives.Key | null>("tn");
 	return (
 		<div className="flex flex-col items-center gap-6">
 			<Combobox aria-label="country" selectedKey={country} onSelectionChange={setCountry}>
-				<ComboboxInput />
-				<ComboboxContent>
-					<ComboboxItem id="ca">Canada</ComboboxItem>
-					<ComboboxItem id="fr">France</ComboboxItem>
-					<ComboboxItem id="de">Germany</ComboboxItem>
-					<ComboboxItem id="es">Spain</ComboboxItem>
-					<ComboboxItem id="tn">Tunisia</ComboboxItem>
-					<ComboboxItem id="us">United States</ComboboxItem>
-					<ComboboxItem id="uk">United Kingdom</ComboboxItem>
-				</ComboboxContent>
+				<InputGroup>
+					<Input />
+					<InputGroupAddon>
+						<Button variant="quiet" isIconOnly>
+							<ChevronDownIcon />
+						</Button>
+					</InputGroupAddon>
+				</InputGroup>
+				<Popover>
+					<ListBox>
+						<ListBoxItem id="ca">Canada</ListBoxItem>
+						<ListBoxItem id="fr">France</ListBoxItem>
+						<ListBoxItem id="de">Germany</ListBoxItem>
+						<ListBoxItem id="es">Spain</ListBoxItem>
+						<ListBoxItem id="tn">Tunisia</ListBoxItem>
+						<ListBoxItem id="us">United States</ListBoxItem>
+						<ListBoxItem id="uk">United Kingdom</ListBoxItem>
+					</ListBox>
+				</Popover>
 			</Combobox>
 			<p className="text-fg-muted text-sm">
 				{country ? (

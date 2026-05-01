@@ -8,21 +8,18 @@ import { Popover } from "@/registry/ui/popover";
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group";
 
 const frameworks = [
-	{ id: "react", name: "React" },
-	{ id: "vue", name: "Vue" },
-	{ id: "svelte", name: "Svelte" },
-	{ id: "solid", name: "Solid" },
-	{ id: "angular", name: "Angular" },
-	{ id: "qwik", name: "Qwik" },
-	{ id: "preact", name: "Preact" },
-	{ id: "ember", name: "Ember" },
+	{ id: "next", name: "Next.js" },
+	{ id: "sveltekit", name: "SvelteKit" },
+	{ id: "nuxt", name: "Nuxt.js" },
+	{ id: "remix", name: "Remix" },
+	{ id: "astro", name: "Astro" },
 ];
 
 type Framework = (typeof frameworks)[number];
 
 export default function Demo() {
 	return (
-		<Combobox<Framework, "multiple"> selectionMode="multiple" defaultValue={["react", "vue"]}>
+		<Combobox<Framework, "multiple"> selectionMode="multiple" defaultValue={["next"]}>
 			<Label>Frameworks</Label>
 			<InputGroup>
 				<ComboboxValue<Framework>>
@@ -39,7 +36,7 @@ export default function Demo() {
 						</TagGroup>
 					)}
 				</ComboboxValue>
-				<Input />
+				<Input placeholder="Select frameworks" />
 			</InputGroup>
 			<Popover>
 				<ListBox items={frameworks}>{(item) => <ListBoxItem id={item.id}>{item.name}</ListBoxItem>}</ListBox>

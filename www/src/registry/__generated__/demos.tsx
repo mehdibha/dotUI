@@ -551,7 +551,7 @@ export const DemosIndex: Record<
 	},
 	"combobox/demos/validation": {
 		files: ["ui/combobox/demos/validation.tsx"],
-		component: React.lazy(() => import("@/registry/ui/combobox/demos/validation")),
+		component: React.lazy(() => import("@/registry/ui/combobox/demos/invalid")),
 	},
 	"command/demos/basic": {
 		files: ["ui/command/demos/basic.tsx"],

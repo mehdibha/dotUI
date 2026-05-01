@@ -1,7 +1,13 @@
 "use client";
 
-import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/registry/ui/combobox";
+import { ChevronDownIcon } from "lucide-react";
+
+import { Button } from "@/registry/ui/button";
+import { Combobox } from "@/registry/ui/combobox";
 import { Label } from "@/registry/ui/field";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Popover } from "@/registry/ui/popover";
 
 interface ComboboxPlaygroundProps {
 	label?: string;
@@ -18,14 +24,23 @@ export function ComboboxPlayground({
 	return (
 		<Combobox {...props}>
 			{label && <Label>{label}</Label>}
-			<ComboboxInput placeholder={placeholder} />
-			<ComboboxContent>
-				<ComboboxItem id="us">United States</ComboboxItem>
-				<ComboboxItem id="uk">United Kingdom</ComboboxItem>
-				<ComboboxItem id="fr">France</ComboboxItem>
-				<ComboboxItem id="de">Germany</ComboboxItem>
-				<ComboboxItem id="jp">Japan</ComboboxItem>
-			</ComboboxContent>
+			<InputGroup>
+				<Input placeholder={placeholder} />
+				<InputGroupAddon>
+					<Button variant="quiet" isIconOnly>
+						<ChevronDownIcon />
+					</Button>
+				</InputGroupAddon>
+			</InputGroup>
+			<Popover>
+				<ListBox>
+					<ListBoxItem id="us">United States</ListBoxItem>
+					<ListBoxItem id="uk">United Kingdom</ListBoxItem>
+					<ListBoxItem id="fr">France</ListBoxItem>
+					<ListBoxItem id="de">Germany</ListBoxItem>
+					<ListBoxItem id="jp">Japan</ListBoxItem>
+				</ListBox>
+			</Popover>
 		</Combobox>
 	);
 }

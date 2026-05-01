@@ -1,8 +1,10 @@
 import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@/registry/ui/button";
-import { Combobox, ComboboxContent, ComboboxItem } from "@/registry/ui/combobox";
+import { Combobox } from "@/registry/ui/combobox";
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Popover } from "@/registry/ui/popover";
 
 export function ComboboxDemo() {
 	return (
@@ -15,14 +17,16 @@ export function ComboboxDemo() {
 					</Button>
 				</InputGroupAddon>
 			</InputGroup>
-			<ComboboxContent>
-				<ComboboxItem>Canada</ComboboxItem>
-				<ComboboxItem>France</ComboboxItem>
-				<ComboboxItem>Germany</ComboboxItem>
-				<ComboboxItem>Japan</ComboboxItem>
-				<ComboboxItem>United Kingdom</ComboboxItem>
-				<ComboboxItem>United States</ComboboxItem>
-			</ComboboxContent>
+			<Popover>
+				<ListBox>
+					<ListBoxItem>Canada</ListBoxItem>
+					<ListBoxItem>France</ListBoxItem>
+					<ListBoxItem>Germany</ListBoxItem>
+					<ListBoxItem>Japan</ListBoxItem>
+					<ListBoxItem>United Kingdom</ListBoxItem>
+					<ListBoxItem>United States</ListBoxItem>
+				</ListBox>
+			</Popover>
 		</Combobox>
 	);
 }

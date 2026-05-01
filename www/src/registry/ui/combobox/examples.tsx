@@ -1,58 +1,86 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import AsyncLoading from "./demos/async-loading";
+import AutoHighlight from "./demos/auto-highlight";
 import Basic from "./demos/basic";
-import Controlled from "./demos/controlled";
-import CustomValue from "./demos/custom-value";
-import Description from "./demos/description";
 import Disabled from "./demos/disabled";
-import Label from "./demos/label";
-import Loading from "./demos/loading";
-import Required from "./demos/required";
+import DisabledItems from "./demos/disabled-items";
+import InDialog from "./demos/in-dialog";
+import Invalid from "./demos/invalid";
+import LargeList from "./demos/large-list";
+import Multiple from "./demos/multiple";
+import MultipleDisabled from "./demos/multiple-disabled";
+import MultipleInvalid from "./demos/multiple-invalid";
+import MultipleNoRemove from "./demos/multiple-no-remove";
 import Sections from "./demos/sections";
-import Uncontrolled from "./demos/uncontrolled";
-import Validation from "./demos/validation";
+import Sides from "./demos/sides";
+import WithClear from "./demos/with-clear";
+import WithCustomItems from "./demos/with-custom-items";
+import WithForm from "./demos/with-form";
+import WithGroupsAndSeparator from "./demos/with-groups-and-separator";
+import WithIcon from "./demos/with-icon";
+import WithOtherInputs from "./demos/with-other-inputs";
 
 export default function ComboboxExamples() {
 	return (
-		<Examples>
-			<Example title="basic">
+		<Examples className="md:grid-cols-2">
+			<Example title="Basic">
 				<Basic />
 			</Example>
-			{/* <Example title="controlled">
-				<Controlled />
-			</Example>
-			<Example title="custom value">
-				<CustomValue />
-			</Example>
-			<Example title="description">
-				<Description />
-			</Example>
-			<Example title="disabled">
+			<Example title="Disabled">
 				<Disabled />
 			</Example>
-			<Example title="label">
-				<Label />
+			<Example title="Invalid">
+				<Invalid />
 			</Example>
-			<Example title="loading">
-				<Loading />
+			<Example title="With Clear Button">
+				<WithClear />
 			</Example>
-			<Example title="required">
-				<Required />
+			<Example title="With Auto Highlight">
+				<AutoHighlight />
 			</Example>
-			<Example title="sections">
+			<Example title="With Groups">
 				<Sections />
 			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
+			<Example title="With Groups and Separator">
+				<WithGroupsAndSeparator />
 			</Example>
-			<Example title="validation">
-				<Validation />
+			<Example title="Large List (1000 items)">
+				<LargeList />
 			</Example>
-			<Example title="async loading">
-				<AsyncLoading />
-			</Example> */}
+			<Example title="With Icon Addon">
+				<WithIcon />
+			</Example>
+			<Example title="Form with Combobox">
+				<WithForm />
+			</Example>
+			<Example title="Combobox Multiple">
+				<Multiple />
+			</Example>
+			<Example title="Combobox Multiple Disabled">
+				<MultipleDisabled />
+			</Example>
+			<Example title="Combobox Multiple Invalid">
+				<MultipleInvalid />
+			</Example>
+			<Example title="Combobox Multiple (No Remove)">
+				<MultipleNoRemove />
+			</Example>
+			<Example title="With Custom Item Rendering">
+				<WithCustomItems />
+			</Example>
+			<Example title="Combobox in Dialog">
+				<InDialog />
+			</Example>
+			<Example title="With Other Inputs">
+				<WithOtherInputs />
+			</Example>
+			<Example title="Disabled Items">
+				<DisabledItems />
+			</Example>
+			<Example title="Sides" className="md:col-span-2">
+				<Sides />
+			</Example>
 		</Examples>
 	);
 }

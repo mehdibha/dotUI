@@ -211,9 +211,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Combobox
 	Combobox: "@/components/ui/combobox",
-	ComboboxInput: "@/components/ui/combobox",
-	ComboboxContent: "@/components/ui/combobox",
-	ComboboxItem: "@/components/ui/combobox",
+	ComboboxValue: "@/components/ui/combobox",
 
 	// NumberField
 	NumberField: "@/components/ui/number-field",
