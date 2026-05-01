@@ -7,7 +7,7 @@ import { DateRangePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Description, FieldError, Label } from "@/registry/ui/field";
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
+import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	return (
@@ -25,11 +25,11 @@ export default function Demo() {
 			</InputGroup>
 			<Description>Please select a date.</Description>
 			<FieldError />
-			<Overlay type="popover" mobileType="drawer">
+			<Popover>
 				<DialogContent>
 					<RangeCalendar />
 				</DialogContent>
-			</Overlay>
+			</Popover>
 		</DateRangePicker>
 	);
 }

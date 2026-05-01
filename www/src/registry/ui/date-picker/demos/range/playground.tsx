@@ -7,7 +7,7 @@ import { DateRangePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
+import { Popover } from "@/registry/ui/popover";
 
 interface DateRangePickerPlaygroundProps {
 	label?: string;
@@ -33,11 +33,11 @@ export function DateRangePickerPlayground({
 					</Button>
 				</InputGroupAddon>
 			</InputGroup>
-			<Overlay type="popover" mobileType="drawer">
+			<Popover>
 				<DialogContent>
 					<RangeCalendar />
 				</DialogContent>
-			</Overlay>
+			</Popover>
 		</DateRangePicker>
 	);
 }

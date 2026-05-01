@@ -8,7 +8,7 @@ import { RangeCalendar } from "@/registry/ui/calendar";
 import { DateRangePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
+import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	return (
@@ -29,11 +29,11 @@ export default function Demo() {
 					</Button>
 				</InputGroupAddon>
 			</InputGroup>
-			<Overlay type="popover" mobileType="drawer">
+			<Popover>
 				<DialogContent>
 					<RangeCalendar />
 				</DialogContent>
-			</Overlay>
+			</Popover>
 		</DateRangePicker>
 	);
 }

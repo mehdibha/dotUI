@@ -5,7 +5,7 @@ import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { FieldError, Label } from "@/registry/ui/field";
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
+import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	return (
@@ -20,11 +20,11 @@ export default function Demo() {
 				</InputGroupAddon>
 			</InputGroup>
 			<FieldError>Meetings can't be scheduled in the past.</FieldError>
-			<Overlay type="popover" mobileType="drawer">
+			<Popover>
 				<DialogContent>
 					<Calendar />
 				</DialogContent>
-			</Overlay>
+			</Popover>
 		</DatePicker>
 	);
 }

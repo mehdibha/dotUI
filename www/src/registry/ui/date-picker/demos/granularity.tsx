@@ -9,11 +9,11 @@ import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
+import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	return (
-		<div className="flex flex-col items-center gap-4">
+		<>
 			<DatePicker granularity="hour" defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}>
 				<Label>Hour</Label>
 				<InputGroup>
@@ -24,11 +24,11 @@ export default function Demo() {
 						</Button>
 					</InputGroupAddon>
 				</InputGroup>
-				<Overlay type="popover" mobileType="drawer">
+				<Popover>
 					<DialogContent>
 						<Calendar />
 					</DialogContent>
-				</Overlay>
+				</Popover>
 			</DatePicker>
 
 			<DatePicker granularity="minute" defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}>
@@ -41,11 +41,11 @@ export default function Demo() {
 						</Button>
 					</InputGroupAddon>
 				</InputGroup>
-				<Overlay type="popover" mobileType="drawer">
+				<Popover>
 					<DialogContent>
 						<Calendar />
 					</DialogContent>
-				</Overlay>
+				</Popover>
 			</DatePicker>
 
 			<DatePicker granularity="second" defaultValue={parseAbsoluteToLocal("2021-04-07T18:45:22Z")}>
@@ -58,12 +58,12 @@ export default function Demo() {
 						</Button>
 					</InputGroupAddon>
 				</InputGroup>
-				<Overlay type="popover" mobileType="drawer">
+				<Popover>
 					<DialogContent>
 						<Calendar />
 					</DialogContent>
-				</Overlay>
+				</Popover>
 			</DatePicker>
-		</div>
+		</>
 	);
 }

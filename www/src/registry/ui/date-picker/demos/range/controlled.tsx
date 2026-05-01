@@ -12,7 +12,7 @@ import { DateRangePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
+import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	const [value, setValue] = React.useState<RangeCalendarPrimitives.DateRange | null>({
@@ -22,7 +22,7 @@ export default function Demo() {
 	const formatter = useDateFormatter({ dateStyle: "long" });
 
 	return (
-		<div className="flex flex-col items-center gap-4">
+		<>
 			<DateRangePicker value={value} onChange={setValue}>
 				<Label>Meeting date</Label>
 				<InputGroup>
@@ -35,11 +35,11 @@ export default function Demo() {
 						</Button>
 					</InputGroupAddon>
 				</InputGroup>
-				<Overlay type="popover" mobileType="drawer">
+				<Popover>
 					<DialogContent>
 						<RangeCalendar />
 					</DialogContent>
-				</Overlay>
+				</Popover>
 			</DateRangePicker>
 			<p className="text-fg-muted text-sm">
 				selected range:{" "}
@@ -47,6 +47,6 @@ export default function Demo() {
 					? formatter.formatRange(value.start.toDate(getLocalTimeZone()), value.end.toDate(getLocalTimeZone()))
 					: "--"}
 			</p>
-		</div>
+		</>
 	);
 }

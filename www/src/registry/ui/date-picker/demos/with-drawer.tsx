@@ -1,16 +1,14 @@
-import { parseDate } from "@internationalized/date";
-
 import { CalendarIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Calendar } from "@/registry/ui/calendar";
 import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
+import { Drawer } from "@/registry/ui/drawer";
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
 	return (
-		<DatePicker aria-label="Meeting date" defaultValue={parseDate("2020-02-03")}>
+		<DatePicker aria-label="Meeting date">
 			<InputGroup>
 				<DateInput />
 				<InputGroupAddon>
@@ -19,11 +17,11 @@ export default function Demo() {
 					</Button>
 				</InputGroupAddon>
 			</InputGroup>
-			<Overlay type="popover" mobileType="drawer">
+			<Drawer placement="bottom">
 				<DialogContent>
 					<Calendar />
 				</DialogContent>
-			</Overlay>
+			</Drawer>
 		</DatePicker>
 	);
 }

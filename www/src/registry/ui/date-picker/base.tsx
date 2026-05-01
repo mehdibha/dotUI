@@ -1,21 +1,20 @@
 "use client";
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as DatePickerPrimitives from "react-aria-components/DatePicker";
-import * as DateRangePickerPrimitives from "react-aria-components/DateRangePicker";
-import type * as CalendarPrimitives from "react-aria-components/Calendar";
+import * as DatePickerPrimitive from "react-aria-components/DatePicker";
+import * as DateRangePickerPrimitive from "react-aria-components/DateRangePicker";
 
-import { useStyles } from "./styles";
+import { useStyles } from "@/registry/ui/field/styles";
 
 // MARK: DatePicker
 
-interface DatePickerProps<T extends CalendarPrimitives.DateValue> extends DatePickerPrimitives.DatePickerProps<T> {}
+interface DatePickerProps<T extends DatePickerPrimitive.DateValue> extends DatePickerPrimitive.DatePickerProps<T> {}
 
-const DatePicker = <T extends CalendarPrimitives.DateValue>({ className, ...props }: DatePickerProps<T>) => {
-	const datePickerStyles = useStyles();
+const DatePicker = <T extends DatePickerPrimitive.DateValue>({ className, ...props }: DatePickerProps<T>) => {
+	const fieldStyles = useStyles();
 	return (
-		<DatePickerPrimitives.DatePicker
-			className={composeRenderProps(className, (className) => datePickerStyles({ className }))}
+		<DatePickerPrimitive.DatePicker
+			className={composeRenderProps(className, (className) => fieldStyles().field({ className }))}
 			{...props}
 		/>
 	);
@@ -23,14 +22,17 @@ const DatePicker = <T extends CalendarPrimitives.DateValue>({ className, ...prop
 
 // MARK: DateRangePicker
 
-interface DateRangePickerProps<T extends CalendarPrimitives.DateValue>
-	extends DateRangePickerPrimitives.DateRangePickerProps<T> {}
+interface DateRangePickerProps<T extends DateRangePickerPrimitive.DateValue>
+	extends DateRangePickerPrimitive.DateRangePickerProps<T> {}
 
-const DateRangePicker = <T extends CalendarPrimitives.DateValue>({ className, ...props }: DateRangePickerProps<T>) => {
-	const datePickerStyles = useStyles();
+const DateRangePicker = <T extends DateRangePickerPrimitive.DateValue>({
+	className,
+	...props
+}: DateRangePickerProps<T>) => {
+	const fieldStyles = useStyles();
 	return (
-		<DateRangePickerPrimitives.DateRangePicker
-			className={composeRenderProps(className, (className) => datePickerStyles({ className }))}
+		<DateRangePickerPrimitive.DateRangePicker
+			className={composeRenderProps(className, (className) => fieldStyles().field({ className }))}
 			{...props}
 		/>
 	);

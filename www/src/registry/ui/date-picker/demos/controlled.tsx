@@ -11,12 +11,12 @@ import { DatePicker } from "@/registry/ui/date-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Overlay } from "@/registry/ui/overlay";
+import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	const [value, setValue] = React.useState<CalendarPrimitives.DateValue | null>(parseDate("2020-02-03"));
 	return (
-		<div className="flex flex-col items-center gap-4">
+		<>
 			<DatePicker value={value} onChange={setValue}>
 				<Label>Meeting date</Label>
 				<InputGroup>
@@ -27,13 +27,13 @@ export default function Demo() {
 						</Button>
 					</InputGroupAddon>
 				</InputGroup>
-				<Overlay type="popover" mobileType="drawer">
+				<Popover>
 					<DialogContent>
 						<Calendar />
 					</DialogContent>
-				</Overlay>
+				</Popover>
 			</DatePicker>
 			<p className="text-fg-muted text-sm">selected date: {value?.toString()}</p>
-		</div>
+		</>
 	);
 }

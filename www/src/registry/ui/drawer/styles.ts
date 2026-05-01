@@ -5,8 +5,12 @@ import drawerMeta from "./meta";
 const { useStyles, styles } = createStyles(drawerMeta, {
 	base: {
 		slots: {
-			underlay: "group/overlay fixed inset-0 z-50 before:fixed before:inset-0 before:bg-bg/40 before:opacity-100 entering:before:opacity-0 exiting:before:opacity-0 before:transition-opacity before:duration-500 before:ease-fluid-out before:content-['']",
-			overlay: "fixed z-50 flex flex-col border bg-bg transition-[translate] duration-500 ease-fluid-out will-change-[translate]",
+			underlay:
+				"group/overlay fixed inset-0 z-50 before:fixed before:inset-0 before:bg-bg/40 before:opacity-100 entering:before:opacity-0 exiting:before:opacity-0 before:transition-opacity before:duration-500 before:ease-fluid-out before:content-['']",
+			overlay:
+				"fixed z-50 flex flex-col border bg-bg transition-[translate] duration-500 ease-fluid-out will-change-[translate] data-[swiping=true]:transition-none data-[swiping=true]:select-none",
+			handle:
+				"mx-auto my-2 shrink-0 cursor-grab touch-none select-none rounded-full bg-fg/20 active:cursor-grabbing data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-12 data-[orientation=vertical]:h-12 data-[orientation=vertical]:w-1.5",
 		},
 		variants: {
 			placement: {
