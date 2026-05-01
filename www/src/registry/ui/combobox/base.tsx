@@ -18,9 +18,9 @@ const Combobox = <T extends object, M extends "single" | "multiple" = "single">(
 	return (
 		<ComboBoxPrimitive.ComboBox
 			menuTrigger={menuTrigger}
-			className={composeRenderProps(className, (cn) =>
+			className={composeRenderProps(className, (className) =>
 				fieldStyles().field({
-					className: cn,
+					className: cn("group/combobox", className),
 				}),
 			)}
 			{...props}

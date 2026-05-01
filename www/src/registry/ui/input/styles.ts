@@ -34,7 +34,7 @@ const outlineField = tv({
 		focus: {
 			self: "focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
 			group:
-				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
+				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted group-focus/combobox:ring-2",
 		},
 	},
 });
@@ -45,7 +45,7 @@ const lineField = tv({
 		focus: {
 			self: "focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
 			group:
-				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus invalid:has-[[data-input-control][data-focused]]:border-fg-danger",
+				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus invalid:has-[[data-input-control][data-focused]]:border-fg-danger group-focus/combobox:not-invalid:border-border-focus invalid:group-focus/combobox:border-fg-danger",
 		},
 	},
 });
@@ -55,7 +55,7 @@ const filledLineBottomField = tv({
 	variants: {
 		focus: {
 			self: "focus:not-invalid:border-border-focus",
-			group: "has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
+			group: "has-[[data-input-control][data-focused]]:not-invalid:border-border-focus group-focus/combobox:not-invalid:border-border-focus",
 		},
 	},
 });
@@ -66,7 +66,7 @@ const filledField = tv({
 		focus: {
 			self: "focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
 			group:
-				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
+				"has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted group-focus/combobox:ring-2",
 		},
 	},
 });
