@@ -1,32 +1,93 @@
 "use client";
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as ModalPrimitives from "react-aria-components/Modal";
-import type React from "react";
 
+import * as DrawerPrimitives from "./internal";
 import { useStyles } from "./styles";
 
 // MARK: drawerStyles
 
-interface DrawerProps extends React.ComponentProps<typeof ModalPrimitives.Modal> {
-	placement?: "top" | "bottom" | "left" | "right";
-}
+// MARK: Separator
 
-function Drawer({ isDismissable = true, className, style, placement, ...props }: DrawerProps) {
+interface DrawerProps extends DrawerPrimitives.DrawerProps {}
+
+function Drawer({ className, style, overlayProps, placement = "bottom", ...props }: DrawerProps) {
 	const { overlay, underlay } = useStyles()();
 	return (
-		<ModalPrimitives.ModalOverlay className={underlay()} isDismissable={isDismissable} data-slot="drawer" {...props}>
-			<ModalPrimitives.Modal
-				className={composeRenderProps(className, (className) => overlay({ placement, className }))}
-				style={composeRenderProps(style, (style) => ({
-					"--drawer-margin": "--spacing(24)",
-					...style,
-				}))}
-				{...props}
-			/>
-		</ModalPrimitives.ModalOverlay>
+		<DrawerPrimitives.Drawer
+			placement={placement}
+			overlayProps={{
+				...overlayProps,
+				className: composeRenderProps(overlayProps?.className, (cn) => underlay({ className: cn })),
+			}}
+			className={composeRenderProps(className, (cn) => overlay({ placement, className: cn }))}
+			style={composeRenderProps(style, (s) => ({
+				"--drawer-margin": "--spacing(24)",
+				...s,
+			}))}
+			{...props}
+		/>
 	);
 }
 
-export type { DrawerProps };
-export { Drawer };
+// MARK: Separator
+
+interface DrawerHandleProps extends DrawerPrimitives.DrawerHandleProps {}
+
+function DrawerHandle({ className, ...props }: DrawerHandleProps) {
+	const { handle } = useStyles()();
+	return <DrawerPrimitives.DrawerHandle className={handle({ className })} {...props} />;
+}
+
+// MARK: Separator
+
+interface DrawerSwipeAreaProps extends DrawerPrimitives.DrawerSwipeAreaProps {}
+
+function DrawerSwipeArea({ className, ...props }: DrawerSwipeAreaProps) {
+	return <DrawerPrimitives.DrawerSwipeArea className={className} {...props} />;
+}
+
+// MARK: Separator
+
+interface DrawerProviderProps extends DrawerPrimitives.DrawerProviderProps {}
+
+function DrawerProvider(props: DrawerProviderProps) {
+	return <DrawerPrimitives.DrawerProvider {...props} />;
+}
+
+// MARK: Separator
+
+interface DrawerIndentProps extends DrawerPrimitives.DrawerIndentProps {}
+
+function DrawerIndent({ className, ...props }: DrawerIndentProps) {
+	const { indent } = useStyles()();
+	return <DrawerPrimitives.DrawerIndent className={indent({ className })} {...props} />;
+}
+
+// MARK: Separator
+
+interface DrawerIndentBackgroundProps extends DrawerPrimitives.DrawerIndentBackgroundProps {}
+
+function DrawerIndentBackground({ className, ...props }: DrawerIndentBackgroundProps) {
+	const { indentBackground } = useStyles()();
+	return (
+		<DrawerPrimitives.DrawerIndentBackground className={indentBackground({ className })} {...props} />
+	);
+}
+
+export type {
+	DrawerHandleProps,
+	DrawerIndentBackgroundProps,
+	DrawerIndentProps,
+	DrawerProps,
+	DrawerProviderProps,
+	DrawerSwipeAreaProps,
+};
+export {
+	Drawer,
+	DrawerHandle,
+	DrawerIndent,
+	DrawerIndentBackground,
+	DrawerProvider,
+	DrawerSwipeArea,
+};

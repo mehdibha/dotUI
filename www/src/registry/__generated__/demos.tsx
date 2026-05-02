@@ -893,9 +893,37 @@ export const DemosIndex: Record<
     files: ["ui/drawer/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/drawer/demos/basic")),
   },
+  "drawer/demos/controlled": {
+    files: ["ui/drawer/demos/controlled.tsx"],
+    component: React.lazy(() => import("@/registry/ui/drawer/demos/controlled")),
+  },
+  "drawer/demos/handle-only": {
+    files: ["ui/drawer/demos/handle-only.tsx"],
+    component: React.lazy(() => import("@/registry/ui/drawer/demos/handle-only")),
+  },
+  "drawer/demos/indent": {
+    files: ["ui/drawer/demos/indent.tsx"],
+    component: React.lazy(() => import("@/registry/ui/drawer/demos/indent")),
+  },
+  "drawer/demos/nested": {
+    files: ["ui/drawer/demos/nested.tsx"],
+    component: React.lazy(() => import("@/registry/ui/drawer/demos/nested")),
+  },
+  "drawer/demos/non-dismissable": {
+    files: ["ui/drawer/demos/non-dismissable.tsx"],
+    component: React.lazy(() => import("@/registry/ui/drawer/demos/non-dismissable")),
+  },
   "drawer/demos/placement": {
     files: ["ui/drawer/demos/placement.tsx"],
     component: React.lazy(() => import("@/registry/ui/drawer/demos/placement")),
+  },
+  "drawer/demos/scrollable": {
+    files: ["ui/drawer/demos/scrollable.tsx"],
+    component: React.lazy(() => import("@/registry/ui/drawer/demos/scrollable")),
+  },
+  "drawer/demos/with-form": {
+    files: ["ui/drawer/demos/with-form.tsx"],
+    component: React.lazy(() => import("@/registry/ui/drawer/demos/with-form")),
   },
   "drop-zone/demos/basic": {
     files: ["ui/drop-zone/demos/basic.tsx"],

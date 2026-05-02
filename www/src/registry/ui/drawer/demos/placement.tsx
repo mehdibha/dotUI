@@ -6,7 +6,7 @@ import { Button } from "@/registry/ui/button";
 import { Dialog, DialogContent } from "@/registry/ui/dialog";
 import { Drawer } from "@/registry/ui/drawer";
 import { FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioGroup } from "@/registry/ui/radio-group";
+import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 
 export default function Demo() {
 	const [placement, setPlacement] = React.useState("bottom");
@@ -20,11 +20,23 @@ export default function Demo() {
 			</Dialog>
 			<RadioGroup value={placement} onChange={setPlacement}>
 				<Label>Placement</Label>
-				<FieldGroup>
-					<Radio value="top">Top</Radio>
-					<Radio value="left">Left</Radio>
-					<Radio value="bottom">Bottom</Radio>
-					<Radio value="right">Right</Radio>
+				<FieldGroup className="gap-1">
+					<Radio value="top">
+						<RadioIndicator />
+						Top
+					</Radio>
+					<Radio value="left">
+						<RadioIndicator />
+						Left
+					</Radio>
+					<Radio value="bottom">
+						<RadioIndicator />
+						Bottom
+					</Radio>
+					<Radio value="right">
+						<RadioIndicator />
+						Right
+					</Radio>
 				</FieldGroup>
 			</RadioGroup>
 		</div>

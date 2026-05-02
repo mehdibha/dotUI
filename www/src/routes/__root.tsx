@@ -1,11 +1,12 @@
 /// <reference types="vite/client" />
 
 import { createRootRoute, HeadContent, Outlet, Scripts, useRouter } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+// import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ThemeProvider } from "starter-themes";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
+import { DrawerIndent, DrawerIndentBackground, DrawerProvider } from "@/registry/ui/drawer";
 import appCss from "@/styles.css?url";
 
 export const Route = createRootRoute({
@@ -56,24 +57,17 @@ export const Route = createRootRoute({
 // }
 
 function RootComponent() {
-	const _router = useRouter();
 	return (
-		// <RouterProvider
-		// 	navigate={(href, opts) => {
-		// 		if (typeof href === "string") return;
-		// 		return router.navigate({ ...href, ...opts });
-		// 	}}
-		// 	useHref={(href) => {
-		// 		if (typeof href === "string") return href;
-		// 		return router.buildLocation(href).href;
-		// 	}}
-		// >
 		<ThemeProvider>
-			<RootDocument>
-				<Outlet />
-			</RootDocument>
+			<DrawerProvider>
+				<RootDocument>
+					<DrawerIndentBackground />
+					<DrawerIndent>
+						<Outlet />
+					</DrawerIndent>
+				</RootDocument>
+			</DrawerProvider>
 		</ThemeProvider>
-		// </RouterProvider>
 	);
 }
 
@@ -86,7 +80,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body className="min-h-screen bg-bg font-sans text-fg antialiased">
 				{children}
-				<TanStackRouterDevtools position="bottom-right" />
+				{/* <TanStackRouterDevtools position="bottom-right" /> */}
 				<Scripts />
 			</body>
 		</html>
