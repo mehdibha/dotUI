@@ -15,6 +15,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 			],
 			item: [
 				"relative flex w-full cursor-interactive select-none items-center gap-2 rounded-(--list-box-item-radius) outline-hidden disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
+				"data-selection-mode:pr-8",
 				"hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight",
 				"focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",
 				"focus-visible:bg-highlight",
@@ -55,20 +56,20 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 		compact: {
 			slots: {
 				root: "text-xs/relaxed",
-				item: "min-h-7 gap-2 px-2 py-1 text-xs/relaxed data-selection-mode:pr-8 **:[svg]:not-with-[size]:size-3.5",
+				item: "min-h-7 gap-2 px-2 py-1 text-xs/relaxed **:[svg]:not-with-[size]:size-3.5",
 			},
 		},
 		default: {
 			slots: {
 				root: "text-sm",
-				item: "gap-1.5 px-1.5 py-1 text-sm data-selection-mode:pr-8 **:[svg]:not-with-[size]:size-4",
+				item: "gap-1.5 px-1.5 py-1 text-sm **:[svg]:not-with-[size]:size-4",
 				sectionTitle: "px-1.5 py-1",
 			},
 		},
 		comfortable: {
 			slots: {
 				root: "text-sm",
-				item: "gap-2 px-2 py-1.5 text-sm data-selection-mode:pr-8 **:[svg]:not-with-[size]:size-4",
+				item: "gap-2 px-2 py-1.5 text-sm **:[svg]:not-with-[size]:size-4",
 			},
 		},
 	},

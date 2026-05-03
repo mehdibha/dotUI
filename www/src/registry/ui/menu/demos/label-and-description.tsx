@@ -1,7 +1,6 @@
 import { MenuIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
-import { Description, Label } from "@/registry/ui/field";
-import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
+import { Menu, MenuContent, MenuItem, MenuItemDescription, MenuItemLabel } from "@/registry/ui/menu";
 import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
@@ -13,16 +12,16 @@ export default function Demo() {
 			<Popover>
 				<MenuContent>
 					<MenuItem>
-						<Label>New file</Label>
-						<Description>Create a new file</Description>
+						<MenuItemLabel>New file</MenuItemLabel>
+						<MenuItemDescription>Create a new file</MenuItemDescription>
 					</MenuItem>
 					<MenuItem>
-						<Label>Copy link</Label>
-						<Description>Copy the file link</Description>
+						<MenuItemLabel>Copy link</MenuItemLabel>
+						<MenuItemDescription>Copy the file link</MenuItemDescription>
 					</MenuItem>
 					<MenuItem>
-						<Label>Edit file</Label>
-						<Description>Allows you to edit the file</Description>
+						<MenuItemLabel>Edit file</MenuItemLabel>
+						<MenuItemDescription>Allows you to edit the file</MenuItemDescription>
 					</MenuItem>
 				</MenuContent>
 			</Popover>

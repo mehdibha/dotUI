@@ -9,8 +9,6 @@ import Empty from "./demos/empty";
 import FileActions from "./demos/file-actions";
 import Grid from "./demos/grid";
 import Horizontal from "./demos/horizontal";
-// import InCombobox from "./demos/in-combobox";
-// import InSelect from "./demos/in-select";
 import Selection from "./demos/multiple-selection";
 import Sections from "./demos/sections";
 import UserMenu from "./demos/user-menu";

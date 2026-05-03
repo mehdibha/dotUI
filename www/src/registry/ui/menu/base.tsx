@@ -5,9 +5,8 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as HeaderPrimitives from "react-aria-components/Header";
 import * as MenuPrimitives from "react-aria-components/Menu";
 import type * as React from "react";
+import type * as TextPrimitives from "react-aria-components/Text";
 import type { VariantProps } from "tailwind-variants";
-
-import { cn } from "@/registry/lib/utils";
 
 import { useStyles } from "./styles";
 import type { MenuStyles } from "./styles";
@@ -46,29 +45,62 @@ const MenuSub = (props: MenuSubProps) => {
 
 // MARK: Separator
 
-interface MenuItemProps<T> extends MenuPrimitives.MenuItemProps<T>, VariantProps<MenuStyles> {}
+interface MenuItemProps<T> extends MenuPrimitives.MenuItemProps<T> {
+	variant?: "default" | "danger";
+}
 
-const MenuItem = <T extends object>({ className, variant, ...props }: MenuItemProps<T>) => {
-	const { item } = useStyles()();
+const MenuItem = <T extends object>({ className, variant, textValue: textValueProp, ...props }: MenuItemProps<T>) => {
+	const { item, indicator } = useStyles()();
+	const textValue = textValueProp || (typeof props.children === "string" ? props.children : undefined);
+
 	return (
 		<MenuPrimitives.MenuItem
 			data-slot="menu-item"
 			data-menu-item=""
-			className={composeRenderProps(className, (className) => item({ className, variant }))}
+			data-variant={variant}
+			textValue={textValue}
+			className={composeRenderProps(className, (className) => item({ className }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children, { selectionMode, isSelected, hasSubmenu }) => (
 				<>
 					{selectionMode !== "none" && (
-						<span className="flex w-8 items-center justify-center">
+						<span data-menu-item-indicator="" className={indicator()}>
 							{isSelected && <CheckIcon aria-hidden className="size-4 text-fg-accent" />}
 						</span>
 					)}
-					{children}
-					{hasSubmenu && <ChevronRightIcon aria-hidden className="size-4" />}
+					{typeof children === "string" ? <MenuItemLabel>{children}</MenuItemLabel> : children}
+					{hasSubmenu && (
+						<span data-menu-item-indicator="" className={indicator()}>
+							<ChevronRightIcon aria-hidden className="size-4" />
+						</span>
+					)}
 				</>
 			))}
 		</MenuPrimitives.MenuItem>
+	);
+};
+
+// MARK: Separator
+
+interface MenuItemLabelProps extends React.ComponentProps<typeof TextPrimitives.Text> {}
+const MenuItemLabel = ({ className, ...props }: MenuItemLabelProps) => {
+	const { itemLabel } = useStyles()();
+	return <MenuPrimitives.Text data-menu-item-label="" slot="label" className={itemLabel({ className })} {...props} />;
+};
+
+// MARK: Separator
+
+interface MenuItemDescriptionProps extends React.ComponentProps<typeof TextPrimitives.Text> {}
+const MenuItemDescription = ({ className, ...props }: MenuItemDescriptionProps) => {
+	const { itemDescription } = useStyles()();
+	return (
+		<MenuPrimitives.Text
+			data-menu-item-description=""
+			slot="description"
+			className={itemDescription({ className })}
+			{...props}
+		/>
 	);
 };
 
@@ -89,16 +121,20 @@ const MenuSection = <T extends object>({ children, className, ...props }: MenuSe
 interface MenuSectionHeaderProps extends React.ComponentProps<typeof HeaderPrimitives.Header> {}
 
 const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
-	return (
-		<HeaderPrimitives.Header
-			data-menu-section-header=""
-			className={cn("font-medium text-fg-muted text-sm", className)}
-			{...props}
-		/>
-	);
+	const { sectionTitle } = useStyles()();
+	return <HeaderPrimitives.Header data-menu-section-header="" className={sectionTitle({ className })} {...props} />;
 };
 
 // MARK: Separator
 
-export type { MenuContentProps, MenuItemProps, MenuProps, MenuSectionHeaderProps, MenuSectionProps, MenuSubProps };
-export { Menu, MenuContent, MenuItem, MenuSection, MenuSectionHeader, MenuSub };
+export type {
+	MenuContentProps,
+	MenuItemDescriptionProps,
+	MenuItemLabelProps,
+	MenuItemProps,
+	MenuProps,
+	MenuSectionHeaderProps,
+	MenuSectionProps,
+	MenuSubProps,
+};
+export { Menu, MenuContent, MenuItem, MenuItemDescription, MenuItemLabel, MenuSection, MenuSectionHeader, MenuSub };

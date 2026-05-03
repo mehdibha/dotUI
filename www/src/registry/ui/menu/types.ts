@@ -1,5 +1,6 @@
 import type * as HeaderPrimitives from "react-aria-components/Header";
 import type * as MenuPrimitives from "react-aria-components/Menu";
+import type * as TextPrimitives from "react-aria-components/Text";
 
 /**
  * Missing description.
@@ -26,6 +27,16 @@ export interface MenuItemProps<T> extends MenuPrimitives.MenuItemProps<T> {
 	 */
 	variant?: "default" | "success" | "warning" | "accent" | "danger";
 }
+
+/**
+ * A MenuItemLabel represents the primary text content of a MenuItem.
+ */
+export interface MenuItemLabelProps extends React.ComponentProps<typeof TextPrimitives.Text> {}
+
+/**
+ * A MenuItemDescription represents secondary text content within a MenuItem.
+ */
+export interface MenuItemDescriptionProps extends React.ComponentProps<typeof TextPrimitives.Text> {}
 
 /**
  * A MenuSection represents a section within a Menu.

@@ -2,29 +2,29 @@ import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
 import Account from "./demos/account";
-import CheckboxesWithIcons from "./demos/checkboxes-with-icons";
+import SingleSelectionWithIcons from "./demos/checkboxes-with-icons";
 import Complex from "./demos/complex";
 import InDialog from "./demos/in-dialog";
+import MultipleSelection from "./demos/multiple-selection";
 import RadioWithIcons from "./demos/radio-with-icons";
 import Sides from "./demos/sides";
+import SingleSelection from "./demos/single-selection";
 import WithAvatar from "./demos/with-avatar";
-import WithCheckboxes from "./demos/with-checkboxes";
 import WithDestructive from "./demos/with-destructive";
 import WithIcons from "./demos/with-icons";
-import WithRadio from "./demos/with-radio";
 import WithShortcuts from "./demos/with-shortcuts";
 import WithSubmenu from "./demos/with-submenu";
 
 export default function MenuExamples() {
 	return (
-		<Examples>
+		<Examples className="md:grid-cols-2">
 			<Example title="Basic">
 				<Account />
 			</Example>
 			<Example title="Complex">
 				<Complex />
 			</Example>
-			<Example title="Sides" className="lg:col-span-2">
+			<Example title="Sides" className="md:col-span-2">
 				<Sides />
 			</Example>
 			<Example title="With Icons">
@@ -36,14 +36,14 @@ export default function MenuExamples() {
 			<Example title="With Submenu">
 				<WithSubmenu />
 			</Example>
-			<Example title="With Checkboxes">
-				<WithCheckboxes />
+			<Example title="Multiple selection">
+				<MultipleSelection />
 			</Example>
-			<Example title="Checkboxes with Icons">
-				<CheckboxesWithIcons />
+			<Example title="Single selection with Icons">
+				<SingleSelectionWithIcons />
 			</Example>
-			<Example title="With Radio Group">
-				<WithRadio />
+			<Example title="Single selection">
+				<SingleSelection />
 			</Example>
 			<Example title="Radio with Icons">
 				<RadioWithIcons />
