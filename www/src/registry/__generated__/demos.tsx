@@ -1321,6 +1321,26 @@ export const DemosIndex: Record<
     files: ["ui/modal/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/modal/demos/basic")),
   },
+  "modal/demos/chat-settings": {
+    files: ["ui/modal/demos/chat-settings.tsx"],
+    component: React.lazy(() => import("@/registry/ui/modal/demos/chat-settings")),
+  },
+  "modal/demos/no-close-button": {
+    files: ["ui/modal/demos/no-close-button.tsx"],
+    component: React.lazy(() => import("@/registry/ui/modal/demos/no-close-button")),
+  },
+  "modal/demos/scrollable-content": {
+    files: ["ui/modal/demos/scrollable-content.tsx"],
+    component: React.lazy(() => import("@/registry/ui/modal/demos/scrollable-content")),
+  },
+  "modal/demos/sticky-footer": {
+    files: ["ui/modal/demos/sticky-footer.tsx"],
+    component: React.lazy(() => import("@/registry/ui/modal/demos/sticky-footer")),
+  },
+  "modal/demos/with-form": {
+    files: ["ui/modal/demos/with-form.tsx"],
+    component: React.lazy(() => import("@/registry/ui/modal/demos/with-form")),
+  },
   "number-field/demos/controlled": {
     files: ["ui/number-field/demos/controlled.tsx"],
     component: React.lazy(() => import("@/registry/ui/number-field/demos/controlled")),

@@ -32,7 +32,7 @@ interface DialogHeaderProps extends React.ComponentProps<"header"> {}
 
 const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
 	const { header } = useStyles()();
-	return <header className={header({ className })} {...props} />;
+	return <header data-slot="dialog-header" className={header({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -41,7 +41,7 @@ interface DialogHeadingProps extends React.ComponentProps<typeof HeadingPrimitiv
 
 const DialogHeading = ({ className, ...props }: DialogHeadingProps) => {
 	const { heading } = useStyles()();
-	return <HeadingPrimitives.Heading className={heading({ className })} {...props} />;
+	return <HeadingPrimitives.Heading data-slot="dialog-heading" className={heading({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -50,7 +50,7 @@ interface DialogDescriptionProps extends Omit<React.ComponentProps<typeof TextPr
 
 const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
 	const { description } = useStyles()();
-	return <TextPrimitives.Text slot="description" className={description({ className })} {...props} />;
+	return <TextPrimitives.Text data-slot="dialog-description" className={description({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -59,7 +59,7 @@ interface DialogBodyProps extends React.ComponentProps<"div"> {}
 
 const DialogBody = ({ className, ...props }: DialogBodyProps) => {
 	const { body } = useStyles()();
-	return <div className={body({ className })} {...props} />;
+	return <div data-slot="dialog-body" className={body({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -68,7 +68,7 @@ type DialogFooterProps = React.ComponentProps<"footer">;
 
 const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
 	const { footer } = useStyles()();
-	return <footer className={footer({ className })} {...props} />;
+	return <footer data-slot="dialog-footer" className={footer({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -77,7 +77,7 @@ type DialogInsetProps = React.ComponentProps<"div">;
 
 const DialogInset = ({ className, ...props }: DialogInsetProps) => {
 	const { inset } = useStyles()();
-	return <div className={inset({ className })} {...props} />;
+	return <div data-slot="dialog-inset" className={inset({ className })} {...props} />;
 };
 
 // MARK: Separator
