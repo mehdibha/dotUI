@@ -1,7 +1,5 @@
 "use client";
 
-import { composeRenderProps } from "react-aria-components/composeRenderProps";
-
 import * as DrawerPrimitives from "./internal";
 import { useStyles } from "./styles";
 
@@ -18,13 +16,13 @@ function Drawer({ className, style, overlayProps, placement = "bottom", ...props
 			placement={placement}
 			overlayProps={{
 				...overlayProps,
-				className: composeRenderProps(overlayProps?.className, (cn) => underlay({ className: cn })),
+				className: underlay({ className: overlayProps?.className }),
 			}}
-			className={composeRenderProps(className, (cn) => overlay({ placement, className: cn }))}
-			style={composeRenderProps(style, (s) => ({
+			className={overlay({ placement, className })}
+			style={{
 				"--drawer-margin": "--spacing(24)",
-				...s,
-			}))}
+				...style,
+			} as React.CSSProperties}
 			{...props}
 		/>
 	);

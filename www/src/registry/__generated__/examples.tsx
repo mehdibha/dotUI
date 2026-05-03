@@ -31,6 +31,7 @@ export const ExamplesIndex: Record<
   "drawer": () => import("@/registry/ui/drawer/examples"),
   "drop-zone": () => import("@/registry/ui/drop-zone/examples"),
   "empty": () => import("@/registry/ui/empty/examples"),
+  "field": () => import("@/registry/ui/field/examples"),
   "file-trigger": () => import("@/registry/ui/file-trigger/examples"),
   "form": () => import("@/registry/ui/form/examples"),
   "group": () => import("@/registry/ui/group/examples"),

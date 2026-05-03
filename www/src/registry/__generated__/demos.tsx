@@ -793,6 +793,14 @@ export const DemosIndex: Record<
     files: ["ui/date-picker/demos/range/uncontrolled.tsx"],
     component: React.lazy(() => import("@/registry/ui/date-picker/demos/range/uncontrolled")),
   },
+  "date-picker/demos/range/with-drawer": {
+    files: ["ui/date-picker/demos/range/with-drawer.tsx"],
+    component: React.lazy(() => import("@/registry/ui/date-picker/demos/range/with-drawer")),
+  },
+  "date-picker/demos/range/with-modal": {
+    files: ["ui/date-picker/demos/range/with-modal.tsx"],
+    component: React.lazy(() => import("@/registry/ui/date-picker/demos/range/with-modal")),
+  },
   "date-picker/demos/read-only": {
     files: ["ui/date-picker/demos/read-only.tsx"],
     component: React.lazy(() => import("@/registry/ui/date-picker/demos/read-only")),
@@ -949,9 +957,33 @@ export const DemosIndex: Record<
     files: ["ui/drop-zone/demos/visual-feedback.tsx"],
     component: React.lazy(() => import("@/registry/ui/drop-zone/demos/visual-feedback")),
   },
+  "empty/demos/basic": {
+    files: ["ui/empty/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/empty/demos/basic")),
+  },
   "empty/demos/empty-projects": {
     files: ["ui/empty/demos/empty-projects.tsx"],
     component: React.lazy(() => import("@/registry/ui/empty/demos/empty-projects")),
+  },
+  "empty/demos/in-card": {
+    files: ["ui/empty/demos/in-card.tsx"],
+    component: React.lazy(() => import("@/registry/ui/empty/demos/in-card")),
+  },
+  "empty/demos/with-border": {
+    files: ["ui/empty/demos/with-border.tsx"],
+    component: React.lazy(() => import("@/registry/ui/empty/demos/with-border")),
+  },
+  "empty/demos/with-icon": {
+    files: ["ui/empty/demos/with-icon.tsx"],
+    component: React.lazy(() => import("@/registry/ui/empty/demos/with-icon")),
+  },
+  "empty/demos/with-muted-background-alt": {
+    files: ["ui/empty/demos/with-muted-background-alt.tsx"],
+    component: React.lazy(() => import("@/registry/ui/empty/demos/with-muted-background-alt")),
+  },
+  "empty/demos/with-muted-background": {
+    files: ["ui/empty/demos/with-muted-background.tsx"],
+    component: React.lazy(() => import("@/registry/ui/empty/demos/with-muted-background")),
   },
   "file-trigger/demos/default": {
     files: ["ui/file-trigger/demos/default.tsx"],

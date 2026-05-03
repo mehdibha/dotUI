@@ -296,15 +296,15 @@ export function CustomizerPanel() {
 					<Select
 						value={effectivePreview}
 						onChange={(v) => navigate({ search: (prev) => ({ ...prev, preview: v as string }) })}
-						className="min-w-0 flex-1"
+						className="flex-1"
 					>
 						<Button size="sm" className="w-full">
 							<SelectValue className="truncate" />
 							<ChevronDownIcon data-icon-end="" />
 						</Button>
-						<Popover>
+						<Popover className="max-h-72!">
 							<Command>
-								<SearchField autoFocus className="m-2">
+								<SearchField autoFocus>
 									<Input />
 								</SearchField>
 								<ListBox>

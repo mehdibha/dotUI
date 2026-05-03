@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { OverlayTriggerStateContext } from "react-aria-components/Dialog";
-import * as ModalPrimitives from "react-aria-components/Modal";
 
 import {
 	DrawerContext,
@@ -10,12 +8,13 @@ import {
 	useDrawerContext,
 	useVisualStateStore,
 } from "./context";
-import { useSwipeDismiss } from "./use-swipe-dismiss";
+import { DrawerOverlay } from "./overlay/overlay";
+import { useDrawerState } from "./overlay/use-drawer-state";
+import type { DrawerPlacement } from "./types";
+import { type SwipeThreshold, useDrawerGesture } from "./use-drawer-gesture";
 import { createVisualStateStore, type VisualStateStore } from "./visual-state-store";
 
 // MARK: drawerPrimitives — unstyled, drawer-aware primitives. Style with `base.tsx`.
-
-type DrawerPlacement = "top" | "bottom" | "left" | "right";
 
 // Register high-frequency CSS vars with inherits:false to cut style-recalc cost.
 // Mirrors the perf trick Base UI cites from motion.dev.
@@ -62,36 +61,53 @@ function registerCustomProps() {
 
 // MARK: Separator
 
-interface DrawerProps extends React.ComponentProps<typeof ModalPrimitives.Modal> {
+interface DrawerProps extends Omit<React.ComponentProps<"div">, "children" | "onDrag"> {
 	placement?: DrawerPlacement;
 	swipeToDismiss?: boolean;
 	swipeFromHandleOnly?: boolean;
-	swipeThreshold?: number;
-	/** Props forwarded to the underlying `<ModalOverlay>` (for backdrop styling). */
-	overlayProps?: Omit<React.ComponentProps<typeof ModalPrimitives.ModalOverlay>, "children">;
+	swipeThreshold?: SwipeThreshold;
+	/** Selector for descendants where pointerdown should NOT start a drag. Merged with built-ins. */
+	ignoreSelector?: string;
+	isDismissable?: boolean;
+	isKeyboardDismissDisabled?: boolean;
+	/** Props forwarded to the underlay (backdrop) element. */
+	overlayProps?: React.HTMLAttributes<HTMLDivElement>;
+	/** Fires once per gesture, on the first activated move. */
+	onSwipeStart?: (e: PointerEvent) => void;
+	/** Fires on every drag frame after activation. */
+	onSwipeMove?: (info: { progress: number; movement: number }) => void;
+	/** Fires once per gesture on release. */
+	onSwipeEnd?: (info: { dismissed: boolean; velocity: number }) => void;
+	children?: React.ReactNode;
 }
 
 /**
- * Root drawer primitive. Renders RAC's `ModalOverlay` + `Modal` together,
- * provides `<DrawerContext>`, syncs with the visual store, and binds the
- * pointer gesture for swipe-to-dismiss. Pass `overlayProps` to style the
- * underlay/backdrop and `className`/`style` for the modal panel itself.
+ * Root drawer primitive. Owns the overlay (no RAC `<Modal>`/`<ModalOverlay>`):
+ * portals via react-aria's `<Overlay>`, runs the four-phase animation machine
+ * in `useDrawerState`, composes `useModalOverlay` + `useDialog` +
+ * `usePreventScroll`, registers in the visual store, and binds the
+ * pointer gesture for swipe-to-dismiss.
+ *
+ * `className`/`style` go on the panel; `overlayProps` style the backdrop.
  */
 function Drawer({
 	isDismissable = true,
+	isKeyboardDismissDisabled,
 	className,
 	style,
 	placement = "bottom",
 	swipeToDismiss = true,
 	swipeFromHandleOnly = false,
 	swipeThreshold,
+	ignoreSelector,
+	onSwipeStart,
+	onSwipeMove,
+	onSwipeEnd,
 	children,
 	overlayProps,
-	...props
 }: DrawerProps) {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const underlayRef = React.useRef<HTMLDivElement>(null);
-	const overlayState = React.useContext(OverlayTriggerStateContext);
 	const store = useVisualStateStore();
 	const handleSources = React.useRef(new Set<HTMLElement>());
 	const id = React.useId();
@@ -99,6 +115,8 @@ function Drawer({
 	React.useEffect(() => {
 		registerCustomProps();
 	}, []);
+
+	const { state, phase, isMounted } = useDrawerState({ panelRef: modalRef });
 
 	const registerDragSource = React.useCallback((el: HTMLElement | null) => {
 		const set = handleSources.current;
@@ -109,15 +127,13 @@ function Drawer({
 		};
 	}, []);
 
-	const isOpen = overlayState?.isOpen ?? false;
-
-	// Unregister immediately on close. The parent's un-scale CSS transition is
-	// the same 500ms duration as RAC's exit animation, so they run in parallel
-	// and finish together (Base UI's behavior).
+	// Register in the visual store while mounted (covers entering + open + ending
+	// phases) so `--drawer-frontmost-height` and `--nested-drawers` don't snap
+	// during the exit animation.
 	React.useEffect(() => {
-		if (!isOpen) return;
+		if (!isMounted) return;
 		return store.registerOpen(id, placement);
-	}, [isOpen, placement, store, id]);
+	}, [isMounted, placement, store, id]);
 
 	// Set CSS vars + data-attrs consumed by Base UI's nested-drawer pattern:
 	//   --nested-drawers              integer count of drawers stacked ABOVE this one
@@ -127,7 +143,7 @@ function Drawer({
 	// Direct DOM mutation so high-frequency child swipe updates don't re-render
 	// the parent's React subtree.
 	React.useEffect(() => {
-		if (!isOpen) return;
+		if (!isMounted) return;
 		const apply = () => {
 			const modal = modalRef.current;
 			if (!modal) return;
@@ -135,10 +151,6 @@ function Drawer({
 			const myIdx = s.stack.indexOf(id);
 			const depthAbove = myIdx >= 0 ? s.stack.length - 1 - myIdx : 0;
 			const topmostId = s.stack[s.stack.length - 1];
-			// On the initial render, the ResizeObserver hasn't populated heights
-			// yet — fall back to a synchronous measure of self when self is the
-			// topmost. Avoids a 1-frame flicker where transform briefly translates
-			// by self-height (because frontmost-height defaults to 0).
 			let frontmostHeight = 0;
 			if (topmostId) {
 				const stored = s.heights[topmostId];
@@ -155,13 +167,11 @@ function Drawer({
 		};
 		apply();
 		return store.subscribe(apply);
-	}, [isOpen, store, id]);
+	}, [isMounted, store, id]);
 
-	// Measure own height (`--drawer-height`, Base UI's name) and publish to the
-	// store via ResizeObserver. Parents read this (as `--drawer-frontmost-height`)
-	// to size themselves to the topmost drawer's height while nested.
+	// Measure own height (`--drawer-height`) and publish via ResizeObserver.
 	React.useEffect(() => {
-		if (!isOpen) return;
+		if (!isMounted) return;
 		const modal = modalRef.current;
 		if (!modal) return;
 		const update = (h: number) => {
@@ -174,25 +184,29 @@ function Drawer({
 		});
 		ro.observe(modal);
 		return () => ro.disconnect();
-	}, [isOpen, store, id]);
+	}, [isMounted, store, id]);
 
 	const onProgress = React.useCallback(
 		(progress: number, isSwiping: boolean) => store.setProgress(id, progress, isSwiping),
 		[store, id],
 	);
-	const onDismiss = React.useCallback(() => overlayState?.close(), [overlayState]);
+	const onDismiss = React.useCallback(() => state.close(), [state]);
 
-	const { attachRef } = useSwipeDismiss({
+	const { attachRef } = useDrawerGesture({
 		modalRef,
 		underlayRef,
-		enabled: isOpen && swipeToDismiss,
+		enabled: phase === "open" && swipeToDismiss,
 		isDismissable,
 		placement,
 		swipeFromHandleOnly,
 		handleSources,
+		swipeThreshold,
+		ignoreSelector,
 		onDismiss,
 		onProgress,
-		thresholdPx: swipeThreshold,
+		onSwipeStart,
+		onSwipeMove,
+		onSwipeEnd,
 	});
 
 	// Combined ref: keep modalRef.current in sync AND bind the native pointerdown
@@ -218,25 +232,25 @@ function Drawer({
 		[placement, swipeToDismiss, registerDragSource],
 	);
 
+	if (!isMounted) return null;
+
 	return (
 		<DrawerContext.Provider value={ctxValue}>
-			<ModalPrimitives.ModalOverlay
-				ref={underlayRef}
+			<DrawerOverlay
+				state={state}
+				phase={phase}
 				isDismissable={isDismissable}
-				data-slot="drawer"
-				data-placement={placement}
-				{...overlayProps}
+				isKeyboardDismissDisabled={isKeyboardDismissDisabled}
+				placement={placement}
+				panelRef={modalRef}
+				setPanelRef={setModalRef}
+				underlayRef={underlayRef}
+				className={className}
+				style={style}
+				underlayProps={overlayProps}
 			>
-				<ModalPrimitives.Modal
-					ref={setModalRef}
-					data-placement={placement}
-					className={className}
-					style={style}
-					{...props}
-				>
-					{children}
-				</ModalPrimitives.Modal>
-			</ModalPrimitives.ModalOverlay>
+				{children}
+			</DrawerOverlay>
 		</DrawerContext.Provider>
 	);
 }

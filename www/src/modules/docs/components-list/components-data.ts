@@ -45,7 +45,7 @@ export const componentsData: ComponentCategory[] = [
 			{ name: "Switch", slug: "switch", href: "/docs/components/switch" },
 			{ name: "Slider", slug: "slider", href: "/docs/components/slider" },
 			{ name: "Field", slug: "field", href: "/docs/components/field" },
-			{ name: "Form", slug: "form", href: "/docs/components/form" },
+			// { name: "Form", slug: "form", href: "/docs/components/form" },
 		],
 	},
 	{
@@ -125,7 +125,7 @@ export const componentsData: ComponentCategory[] = [
 		title: "Overlays",
 		slug: "overlays",
 		components: [
-			{ name: "Dialog", slug: "dialog", href: "/docs/components/dialog", iframe: true },
+			// { name: "Dialog", slug: "dialog", href: "/docs/components/dialog", iframe: true },
 			{ name: "Modal", slug: "modal", href: "/docs/components/modal", scale: 0.6, iframe: true },
 			{ name: "Popover", slug: "popover", href: "/docs/components/popover", iframe: true },
 			{ name: "Drawer", slug: "drawer", href: "/docs/components/drawer", iframe: true },

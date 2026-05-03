@@ -9,7 +9,7 @@ import MultipleFiles from "./demos/multiple-files";
 
 export default function FileTriggerExamples() {
 	return (
-		<Examples>
+		<Examples className="md:grid-cols-2">
 			<Example title="default">
 				<Default />
 			</Example>

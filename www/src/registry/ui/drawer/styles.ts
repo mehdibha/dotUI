@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
 	base: {
 		slots: {
 			underlay:
-				"group/overlay fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/70 before:opacity-100 entering:before:opacity-0 exiting:before:opacity-0 before:transition-opacity before:duration-500 before:ease-fluid-out before:content-['']",
+				"group/overlay fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/70 before:opacity-100 data-[starting-style]:before:opacity-0 data-[ending-style]:before:opacity-0 before:transition-opacity before:duration-500 before:ease-fluid-out before:content-['']",
 			overlay:
 				// Base UI nested-drawer pattern (verbatim variable names + height-collapse):
 				//   --drawer-height            own measured height
@@ -40,19 +40,19 @@ const { useStyles, styles } = createStyles(drawerMeta, {
 			placement: {
 				top: {
 					overlay:
-						"top-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen entering:-translate-y-full exiting:-translate-y-full translate-y-0 rounded-b-xl border-t-0",
+						"top-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen data-[starting-style]:-translate-y-full data-[ending-style]:-translate-y-full translate-y-0 rounded-b-xl border-t-0",
 				},
 				bottom: {
 					overlay:
-						"bottom-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen entering:translate-y-full exiting:translate-y-full translate-y-0 rounded-t-xl border-b-0",
+						"bottom-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen data-[starting-style]:translate-y-full data-[ending-style]:translate-y-full translate-y-0 rounded-t-xl border-b-0",
 				},
 				left: {
 					overlay:
-						"top-0 left-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] entering:-translate-x-full exiting:-translate-x-full translate-x-0 rounded-r-xl border-l-0",
+						"top-0 left-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] data-[starting-style]:-translate-x-full data-[ending-style]:-translate-x-full translate-x-0 rounded-r-xl border-l-0",
 				},
 				right: {
 					overlay:
-						"top-0 right-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] entering:translate-x-full exiting:translate-x-full translate-x-0 rounded-l-xl border-r-0",
+						"top-0 right-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] data-[starting-style]:translate-x-full data-[ending-style]:translate-x-full translate-x-0 rounded-l-xl border-r-0",
 				},
 			},
 		},
