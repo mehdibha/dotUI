@@ -1309,6 +1309,14 @@ export const DemosIndex: Record<
     files: ["ui/menu/demos/submenus.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/submenus")),
   },
+  "menu/demos/with-drawer": {
+    files: ["ui/menu/demos/with-drawer.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/with-drawer")),
+  },
+  "menu/demos/with-modal": {
+    files: ["ui/menu/demos/with-modal.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/with-modal")),
+  },
   "modal/demos/basic": {
     files: ["ui/modal/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/modal/demos/basic")),
