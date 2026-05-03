@@ -312,8 +312,8 @@ export function CustomizerPanel() {
 										.flatMap((category) => category.components)
 										.sort((a, b) => a.name.localeCompare(b.name))
 										.map((comp) => (
-											<ListBoxItem key={comp.slug} id={comp.slug}>
-												{comp.name}
+											<ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name}>
+												{comp.name} {comp.done ? <span className="size-2 rounded-full bg-accent"/> : null}
 											</ListBoxItem>
 										))}
 								</ListBox>
