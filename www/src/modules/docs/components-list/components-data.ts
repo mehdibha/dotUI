@@ -27,7 +27,7 @@ export const componentsData: ComponentCategory[] = [
 				scale: 1,
 			},
 			{ name: "FileTrigger", slug: "file-trigger", href: "/docs/components/file-trigger", scale: 1, done: true },
-			{ name: "Group", slug: "group", href: "/docs/components/group", scale: 0.9 },
+			{ name: "Group", slug: "group", href: "/docs/components/group", scale: 0.9, done: true },
 		],
 	},
 	{
@@ -103,7 +103,7 @@ export const componentsData: ComponentCategory[] = [
 		components: [
 			{ name: "Accordion", slug: "accordion", href: "/docs/components/accordion", scale: 0.6, done: true },
 			{ name: "Avatar", slug: "avatar", href: "/docs/components/avatar", scale: 0.7, done: true },
-			{ name: "Kbd", slug: "kbd", href: "/docs/components/kbd", scale: 1 },
+			{ name: "Kbd", slug: "kbd", href: "/docs/components/kbd", scale: 1, done: true },
 			{ name: "Badge", slug: "badge", href: "/docs/components/badge", done: true },
 			{ name: "Table", slug: "table", href: "/docs/components/table", scale: 0.25 },
 			{ name: "Card", slug: "card", href: "/docs/components/card", scale: 0.3, done: true },

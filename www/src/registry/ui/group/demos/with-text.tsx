@@ -2,15 +2,14 @@
 
 import { Button } from "@/registry/ui/button";
 import { Label } from "@/registry/ui/field";
-import { Group } from "@/registry/ui/group";
+import { Group, GroupText } from "@/registry/ui/group";
 import { Input, InputGroup } from "@/registry/ui/input";
-import { Text } from "@/registry/ui/text";
 
 export default function Demo() {
 	return (
 		<div className="flex flex-col gap-4">
 			<Group>
-				<Text>Text</Text>
+				<GroupText>Text</GroupText>
 				<Button>Another Button</Button>
 			</Group>
 			<Group>

@@ -302,7 +302,7 @@ export function CustomizerPanel() {
 							<SelectValue className="truncate" />
 							<ChevronDownIcon data-icon-end="" />
 						</Button>
-						<Popover className="max-h-72!">
+						<Popover>
 							<Command>
 								<SearchField autoFocus>
 									<Input />

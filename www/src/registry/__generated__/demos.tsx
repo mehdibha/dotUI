@@ -1013,9 +1013,69 @@ export const DemosIndex: Record<
     files: ["ui/form/demos/react-aria.tsx"],
     component: React.lazy(() => import("@/registry/ui/form/demos/react-aria")),
   },
-  "group/demos/default": {
-    files: ["ui/group/demos/default.tsx"],
-    component: React.lazy(() => import("@/registry/ui/group/demos/default")),
+  "group/demos/basic": {
+    files: ["ui/group/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/basic")),
+  },
+  "group/demos/navigation": {
+    files: ["ui/group/demos/navigation.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/navigation")),
+  },
+  "group/demos/nested": {
+    files: ["ui/group/demos/nested.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/nested")),
+  },
+  "group/demos/pagination-split": {
+    files: ["ui/group/demos/pagination-split.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/pagination-split")),
+  },
+  "group/demos/pagination": {
+    files: ["ui/group/demos/pagination.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/pagination")),
+  },
+  "group/demos/text-alignment": {
+    files: ["ui/group/demos/text-alignment.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/text-alignment")),
+  },
+  "group/demos/vertical-nested": {
+    files: ["ui/group/demos/vertical-nested.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/vertical-nested")),
+  },
+  "group/demos/vertical": {
+    files: ["ui/group/demos/vertical.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/vertical")),
+  },
+  "group/demos/with-dropdown": {
+    files: ["ui/group/demos/with-dropdown.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/with-dropdown")),
+  },
+  "group/demos/with-fields": {
+    files: ["ui/group/demos/with-fields.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/with-fields")),
+  },
+  "group/demos/with-icons": {
+    files: ["ui/group/demos/with-icons.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/with-icons")),
+  },
+  "group/demos/with-input": {
+    files: ["ui/group/demos/with-input.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/with-input")),
+  },
+  "group/demos/with-like": {
+    files: ["ui/group/demos/with-like.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/with-like")),
+  },
+  "group/demos/with-select-and-input": {
+    files: ["ui/group/demos/with-select-and-input.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/with-select-and-input")),
+  },
+  "group/demos/with-select": {
+    files: ["ui/group/demos/with-select.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/with-select")),
+  },
+  "group/demos/with-text": {
+    files: ["ui/group/demos/with-text.tsx"],
+    component: React.lazy(() => import("@/registry/ui/group/demos/with-text")),
   },
   "input/demos/default": {
     files: ["ui/input/demos/default.tsx"],
@@ -1080,6 +1140,42 @@ export const DemosIndex: Record<
   "input-group/demos/vertical-group": {
     files: ["ui/input-group/demos/vertical-group.tsx"],
     component: React.lazy(() => import("@/registry/ui/input-group/demos/vertical-group")),
+  },
+  "kbd/demos/arrow-keys": {
+    files: ["ui/kbd/demos/arrow-keys.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/arrow-keys")),
+  },
+  "kbd/demos/basic": {
+    files: ["ui/kbd/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/basic")),
+  },
+  "kbd/demos/group": {
+    files: ["ui/kbd/demos/group.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/group")),
+  },
+  "kbd/demos/in-input-group": {
+    files: ["ui/kbd/demos/in-input-group.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/in-input-group")),
+  },
+  "kbd/demos/in-tooltip": {
+    files: ["ui/kbd/demos/in-tooltip.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/in-tooltip")),
+  },
+  "kbd/demos/modifier-keys": {
+    files: ["ui/kbd/demos/modifier-keys.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/modifier-keys")),
+  },
+  "kbd/demos/with-icons-and-text": {
+    files: ["ui/kbd/demos/with-icons-and-text.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/with-icons-and-text")),
+  },
+  "kbd/demos/with-icons": {
+    files: ["ui/kbd/demos/with-icons.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/with-icons")),
+  },
+  "kbd/demos/with-samp": {
+    files: ["ui/kbd/demos/with-samp.tsx"],
+    component: React.lazy(() => import("@/registry/ui/kbd/demos/with-samp")),
   },
   "list-box/demos/async": {
     files: ["ui/list-box/demos/async.tsx"],

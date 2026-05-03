@@ -25,7 +25,7 @@ interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
 function Fieldset({ className, ...props }: FieldsetProps) {
 	const { fieldset } = useStyles()();
-	return <fieldset data-slot="fieldset" className={fieldset({ className })} {...props} />;
+	return <fieldset data-slot="fieldset"  className={fieldset({ className })} {...props} />;
 }
 
 // MARK: Legend
