@@ -1,6 +1,6 @@
 "use client";
 
-import * as KeyboardPrimitives from "react-aria-components/Keyboard";
+import * as KeyboardPrimitive from "react-aria-components/Keyboard";
 
 import { useStyles } from "./styles";
 
@@ -17,11 +17,11 @@ const KbdGroup = ({ className, ...props }: KbdGroupProps) => {
 
 // MARK: Kbd
 
-interface KbdProps extends React.ComponentProps<typeof KeyboardPrimitives.Keyboard> {}
+interface KbdProps extends React.ComponentProps<typeof KeyboardPrimitive.Keyboard> {}
 
 const Kbd = ({ className, ...props }: KbdProps) => {
 	const { kbd } = useStyles()();
-	return <KeyboardPrimitives.Keyboard data-kbd="" className={kbd({ className })} {...props} />;
+	return <KeyboardPrimitive.Keyboard data-kbd="" className={kbd({ className })} {...props} />;
 };
 
 // MARK: separator

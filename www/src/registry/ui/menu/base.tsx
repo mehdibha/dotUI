@@ -28,7 +28,11 @@ interface MenuContentProps<T> extends MenuPrimitives.MenuProps<T> {}
 const MenuContent = <T extends object>({ className, ...props }: MenuContentProps<T>) => {
 	const { root } = useStyles()();
 	return (
-		<MenuPrimitives.Menu className={composeRenderProps(className, (className) => root({ className }))} {...props} />
+		<MenuPrimitives.Menu
+			data-menu-content=""
+			className={composeRenderProps(className, (className) => root({ className }))}
+			{...props}
+		/>
 	);
 };
 
@@ -49,6 +53,7 @@ const MenuItem = <T extends object>({ className, variant, ...props }: MenuItemPr
 	return (
 		<MenuPrimitives.MenuItem
 			data-slot="menu-item"
+			data-menu-item=""
 			className={composeRenderProps(className, (className) => item({ className, variant }))}
 			{...props}
 		>
@@ -73,7 +78,7 @@ interface MenuSectionProps<T> extends MenuPrimitives.MenuSectionProps<T> {}
 const MenuSection = <T extends object>({ children, className, ...props }: MenuSectionProps<T>) => {
 	const { section } = useStyles()();
 	return (
-		<MenuPrimitives.MenuSection className={section({ className })} {...props}>
+		<MenuPrimitives.MenuSection data-menu-section="" className={section({ className })} {...props}>
 			{children}
 		</MenuPrimitives.MenuSection>
 	);
@@ -84,7 +89,13 @@ const MenuSection = <T extends object>({ children, className, ...props }: MenuSe
 interface MenuSectionHeaderProps extends React.ComponentProps<typeof HeaderPrimitives.Header> {}
 
 const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
-	return <HeaderPrimitives.Header className={cn("font-medium text-fg-muted text-sm", className)} {...props} />;
+	return (
+		<HeaderPrimitives.Header
+			data-menu-section-header=""
+			className={cn("font-medium text-fg-muted text-sm", className)}
+			{...props}
+		/>
+	);
 };
 
 // MARK: Separator

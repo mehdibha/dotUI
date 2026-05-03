@@ -1,73 +1,61 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import Basic from "./demos/basic";
-import Controlled from "./demos/controlled";
-import DisabledItems from "./demos/disabled-items";
-import ItemVariant from "./demos/item-variant";
-import LabelAndDescription from "./demos/label-and-description";
-import LinkItems from "./demos/link-items";
-import LongPress from "./demos/long-press";
-import MultipleSelection from "./demos/multiple-selection";
-import OverlayType from "./demos/overlay-type";
-import Placement from "./demos/placement";
-import PrefixAndSuffix from "./demos/prefix-and-suffix";
-import Section from "./demos/section";
-import Separator from "./demos/separator";
-import Shortcut from "./demos/shortcut";
-import SingleSelection from "./demos/single-selection";
-import Submenus from "./demos/submenus";
+import Account from "./demos/account";
+import CheckboxesWithIcons from "./demos/checkboxes-with-icons";
+import Complex from "./demos/complex";
+import InDialog from "./demos/in-dialog";
+import RadioWithIcons from "./demos/radio-with-icons";
+import Sides from "./demos/sides";
+import WithAvatar from "./demos/with-avatar";
+import WithCheckboxes from "./demos/with-checkboxes";
+import WithDestructive from "./demos/with-destructive";
+import WithIcons from "./demos/with-icons";
+import WithRadio from "./demos/with-radio";
+import WithShortcuts from "./demos/with-shortcuts";
+import WithSubmenu from "./demos/with-submenu";
 
 export default function MenuExamples() {
 	return (
 		<Examples>
-			<Example title="basic">
-				<Basic />
+			<Example title="Basic">
+				<Account />
 			</Example>
-			<Example title="controlled">
-				<Controlled />
+			<Example title="Complex">
+				<Complex />
 			</Example>
-			<Example title="disabled items">
-				<DisabledItems />
+			<Example title="Sides" className="lg:col-span-2">
+				<Sides />
 			</Example>
-			<Example title="item variant">
-				<ItemVariant />
+			<Example title="With Icons">
+				<WithIcons />
 			</Example>
-			<Example title="label and description">
-				<LabelAndDescription />
+			<Example title="With Shortcuts">
+				<WithShortcuts />
 			</Example>
-			<Example title="link items">
-				<LinkItems />
+			<Example title="With Submenu">
+				<WithSubmenu />
 			</Example>
-			<Example title="long press">
-				<LongPress />
+			<Example title="With Checkboxes">
+				<WithCheckboxes />
 			</Example>
-			<Example title="multiple selection">
-				<MultipleSelection />
+			<Example title="Checkboxes with Icons">
+				<CheckboxesWithIcons />
 			</Example>
-			<Example title="overlay type">
-				<OverlayType />
+			<Example title="With Radio Group">
+				<WithRadio />
 			</Example>
-			<Example title="placement">
-				<Placement />
+			<Example title="Radio with Icons">
+				<RadioWithIcons />
 			</Example>
-			<Example title="prefix and suffix">
-				<PrefixAndSuffix />
+			<Example title="With Destructive Items">
+				<WithDestructive />
 			</Example>
-			<Example title="section">
-				<Section />
+			<Example title="With Avatar">
+				<WithAvatar />
 			</Example>
-			<Example title="separator">
-				<Separator />
-			</Example>
-			<Example title="shortcut">
-				<Shortcut />
-			</Example>
-			<Example title="single selection">
-				<SingleSelection />
-			</Example>
-			<Example title="submenus">
-				<Submenus />
+			<Example title="In Dialog">
+				<InDialog />
 			</Example>
 		</Examples>
 	);
