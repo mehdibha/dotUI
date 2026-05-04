@@ -34,6 +34,109 @@ export default function Demo() {
 							<Label>Username</Label>
 							<Input name="username" />
 						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
+						<TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField><TextField defaultValue="Pedro Duarte">
+							<Label>Name</Label>
+							<Input name="name" />
+						</TextField>
+						<TextField defaultValue="@peduarte">
+							<Label>Username</Label>
+							<Input name="username" />
+						</TextField>
 					</DialogBody>
 					<DialogFooter>
 						<Button slot="close" type="button">

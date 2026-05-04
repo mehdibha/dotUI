@@ -98,9 +98,11 @@ const radiusOptions = [
 
 const blurOptions = [
 	{ label: "None", value: "0px" },
-	{ label: "Small", value: "4px" },
-	{ label: "Medium", value: "8px" },
-	{ label: "Large", value: "12px" },
+	{ label: "Extra Small", value: "--blur-xs" },
+	{ label: "Small", value: "--blur-sm" },
+	{ label: "Medium", value: "--blur-md" },
+	{ label: "Large", value: "--blur-lg" },
+	{ label: "Extra Large", value: "--blur-xl" },
 ];
 
 const opacityOptions = [
