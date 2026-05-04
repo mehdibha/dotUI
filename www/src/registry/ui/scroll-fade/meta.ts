@@ -10,6 +10,11 @@ const scrollFadeMeta = {
 			path: "ui/scroll-fade/base.tsx",
 			target: "ui/scroll-fade.tsx",
 		},
+		{
+			type: "registry:ui",
+			path: "ui/scroll-fade/use-scroll-fade.ts",
+			target: "ui/use-scroll-fade.ts",
+		},
 	],
 } satisfies RegistryItem;
 

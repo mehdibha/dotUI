@@ -19,3 +19,8 @@ export interface ModalContentProps extends React.ComponentProps<typeof ModalPrim
  * Missing description.
  */
 export interface ModalBackdropProps extends React.ComponentProps<"div"> {}
+
+/**
+ * Missing description.
+ */
+export interface ModalViewportProps extends React.ComponentProps<"div"> {}

@@ -15,7 +15,9 @@ interface ModalProps extends ModalOverlayProps {}
 const Modal = ({ children, className, ...props }: ModalProps) => (
 	<ModalOverlay {...props}>
 		<ModalBackdrop />
-		<ModalContent className={className}>{children}</ModalContent>
+		<ModalViewport>
+			<ModalContent className={className}>{children}</ModalContent>
+		</ModalViewport>
 	</ModalOverlay>
 );
 
@@ -57,5 +59,11 @@ const ModalBackdrop = ({ className, ...props }: ModalBackdropProps) => {
 	return <div className={backdrop({ className })} {...props} />;
 };
 
-export type { ModalBackdropProps, ModalContentProps, ModalOverlayProps, ModalProps };
-export { Modal, ModalBackdrop, ModalContent, ModalOverlay };
+interface ModalViewportProps extends React.ComponentProps<"div"> {}
+const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
+	const { viewport } = useStyles()();
+	return <div data-slot="modal-viewport" className={viewport({ className })} {...props} />;
+};
+
+export type { ModalBackdropProps, ModalContentProps, ModalOverlayProps, ModalProps, ModalViewportProps };
+export { Modal, ModalBackdrop, ModalContent, ModalOverlay, ModalViewport };
