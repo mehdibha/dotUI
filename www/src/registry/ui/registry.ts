@@ -42,6 +42,7 @@ import Overlay from "./overlay/meta";
 import Popover from "./popover/meta";
 import ProgressBar from "./progress-bar/meta";
 import RadioGroup from "./radio-group/meta";
+import ScrollFade from "./scroll-fade/meta";
 import SearchField from "./search-field/meta";
 import Select from "./select/meta";
 import Separator from "./separator/meta";
@@ -107,6 +108,7 @@ export const registryUi: RegistryItem[] = [
 	Separator,
 	Skeleton,
 	Slider,
+	ScrollFade,
 	Switch,
 	Table,
 	Tabs,

@@ -107,6 +107,7 @@ export const componentsData: ComponentCategory[] = [
 			{ name: "Badge", slug: "badge", href: "/docs/components/badge", done: true },
 			{ name: "Table", slug: "table", href: "/docs/components/table", scale: 0.25 },
 			{ name: "Card", slug: "card", href: "/docs/components/card", scale: 0.3, done: true },
+			{ name: "ScrollFade", slug: "scroll-fade", href: "/docs/components/scroll-fade", scale: 0.7 },
 			{ name: "Separator", slug: "separator", href: "/docs/components/separator" },
 			{ name: "Empty", slug: "empty", href: "/docs/components/empty", scale: 0.5, done: true },
 		],
