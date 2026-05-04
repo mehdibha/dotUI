@@ -5,7 +5,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Modal } from "@/registry/ui/modal";
 
@@ -16,7 +16,7 @@ export default function Demo() {
 			<Modal>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>No Close Button</DialogHeading>
+						<DialogTitle>No Close Button</DialogTitle>
 						<DialogDescription>This dialog doesn&apos;t have a close button in the top-right corner.</DialogDescription>
 					</DialogHeader>
 					<DialogFooter>

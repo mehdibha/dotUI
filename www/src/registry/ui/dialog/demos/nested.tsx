@@ -3,7 +3,7 @@
 import React from "react";
 
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { FieldGroup, Label } from "@/registry/ui/field";
 import { Overlay } from "@/registry/ui/overlay";
 import { Radio, RadioGroup } from "@/registry/ui/radio-group";
@@ -19,14 +19,14 @@ export default function Demo() {
 				<Overlay type={type} mobileType={null}>
 					<DialogContent>
 						<DialogHeader>
-							<DialogHeading>Dialog</DialogHeading>
+							<DialogTitle>Dialog</DialogTitle>
 						</DialogHeader>
 						<Dialog>
 							<Button variant="default">Nested dialog</Button>
 							<Overlay type={type} mobileType={null}>
 								<DialogContent>
 									<DialogHeader>
-										<DialogHeading>Nested dialog</DialogHeading>
+										<DialogTitle>Nested dialog</DialogTitle>
 									</DialogHeader>
 								</DialogContent>
 							</Overlay>

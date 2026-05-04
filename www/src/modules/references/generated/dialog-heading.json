@@ -1,5 +1,5 @@
 {
-	"name": "DialogHeadingProps",
+	"name": "DialogTitleProps",
 	"description": "Missing description.",
 	"props": {
 		"aria-activedescendant": {

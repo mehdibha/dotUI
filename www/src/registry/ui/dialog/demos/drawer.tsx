@@ -4,7 +4,7 @@ import React from "react";
 import type * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { Overlay } from "@/registry/ui/overlay";
 import { Select, SelectContent, SelectItem } from "@/registry/ui/select";
@@ -21,7 +21,7 @@ export default function Demo() {
 					<Overlay type="drawer">
 						<DialogContent>
 							<DialogHeader>
-								<DialogHeading>Help</DialogHeading>
+								<DialogTitle>Help</DialogTitle>
 								<DialogDescription>For help accessing your account, please contact support.</DialogDescription>
 							</DialogHeader>
 						</DialogContent>

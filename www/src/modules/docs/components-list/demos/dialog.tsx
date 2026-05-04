@@ -6,7 +6,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Overlay } from "@/registry/ui/overlay";
 
@@ -17,7 +17,7 @@ export function DialogDemo() {
 			<Overlay>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Dialog Title</DialogHeading>
+						<DialogTitle>Dialog Title</DialogTitle>
 						<DialogDescription>This is a dialog description.</DialogDescription>
 					</DialogHeader>
 					<DialogBody>

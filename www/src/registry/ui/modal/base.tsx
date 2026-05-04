@@ -16,7 +16,9 @@ const Modal = ({ children, className, ...props }: ModalProps) => (
 	<ModalOverlay {...props}>
 		<ModalBackdrop />
 		<ModalViewport>
-			<ModalContent className={className}>{children}</ModalContent>
+			<ModalPanel className={className}>
+						{children}
+			</ModalPanel>
 		</ModalViewport>
 	</ModalOverlay>
 );
@@ -39,8 +41,8 @@ const ModalOverlay = ({ children, className, isDismissable = true, ...props }: M
 
 // MARK: Separator
 
-interface ModalContentProps extends React.ComponentProps<typeof ModalPrimitives.Modal> {}
-const ModalContent = ({ children, className, ...props }: ModalContentProps) => {
+interface ModalPanelProps extends React.ComponentProps<typeof ModalPrimitives.Modal> {}
+const ModalPanel = ({ children, className, ...props }: ModalPanelProps) => {
 	const { modal } = useStyles()();
 	return (
 		<ModalPrimitives.Modal
@@ -65,5 +67,5 @@ const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
 	return <div data-slot="modal-viewport" className={viewport({ className })} {...props} />;
 };
 
-export type { ModalBackdropProps, ModalContentProps, ModalOverlayProps, ModalProps, ModalViewportProps };
-export { Modal, ModalBackdrop, ModalContent, ModalOverlay, ModalViewport };
+export type { ModalBackdropProps, ModalOverlayProps, ModalPanelProps, ModalProps, ModalViewportProps };
+export { Modal, ModalBackdrop, ModalOverlay, ModalPanel, ModalViewport };

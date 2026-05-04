@@ -8,7 +8,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Drawer } from "@/registry/ui/drawer";
 
@@ -23,7 +23,7 @@ export function DrawerPlayground({ placement = "bottom" }: DrawerPlaygroundProps
 			<Drawer placement={placement}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Drawer Title</DialogHeading>
+						<DialogTitle>Drawer Title</DialogTitle>
 						<DialogDescription>This is a drawer description.</DialogDescription>
 					</DialogHeader>
 					<DialogBody>

@@ -20,7 +20,7 @@ export interface DialogHeaderProps extends React.ComponentProps<"header"> {}
 /**
  * Missing description.
  */
-export interface DialogHeadingProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
+export interface DialogTitleProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
 
 /**
  * Missing description.
@@ -30,14 +30,14 @@ export interface DialogDescriptionProps extends Omit<React.ComponentProps<typeof
 /**
  * Missing description.
  */
-export interface DialogBodyProps extends React.ComponentProps<"div"> {}
+export interface DialogBodyProps extends React.ComponentProps<"div"> {
+	/**
+	 * Whether to render the body with scroll edge fade masks.
+	 */
+	scrollFade?: boolean;
+}
 
 /**
  * Missing description.
  */
 export interface DialogFooterProps extends React.ComponentProps<"footer"> {}
-
-/**
- * Missing description.
- */
-export interface DialogInsetProps extends React.ComponentProps<"div"> {}

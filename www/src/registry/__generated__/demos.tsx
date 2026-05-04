@@ -1249,9 +1249,21 @@ export const DemosIndex: Record<
     files: ["ui/loader/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/loader/demos/basic")),
   },
+  "menu/demos/account": {
+    files: ["ui/menu/demos/account.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/account")),
+  },
   "menu/demos/basic": {
     files: ["ui/menu/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/basic")),
+  },
+  "menu/demos/checkboxes-with-icons": {
+    files: ["ui/menu/demos/checkboxes-with-icons.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/checkboxes-with-icons")),
+  },
+  "menu/demos/complex": {
+    files: ["ui/menu/demos/complex.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/complex")),
   },
   "menu/demos/controlled": {
     files: ["ui/menu/demos/controlled.tsx"],
@@ -1260,6 +1272,10 @@ export const DemosIndex: Record<
   "menu/demos/disabled-items": {
     files: ["ui/menu/demos/disabled-items.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/disabled-items")),
+  },
+  "menu/demos/in-dialog": {
+    files: ["ui/menu/demos/in-dialog.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/in-dialog")),
   },
   "menu/demos/item-variant": {
     files: ["ui/menu/demos/item-variant.tsx"],
@@ -1293,6 +1309,10 @@ export const DemosIndex: Record<
     files: ["ui/menu/demos/prefix-and-suffix.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/prefix-and-suffix")),
   },
+  "menu/demos/radio-with-icons": {
+    files: ["ui/menu/demos/radio-with-icons.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/radio-with-icons")),
+  },
   "menu/demos/section": {
     files: ["ui/menu/demos/section.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/section")),
@@ -1305,6 +1325,10 @@ export const DemosIndex: Record<
     files: ["ui/menu/demos/shortcut.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/shortcut")),
   },
+  "menu/demos/sides": {
+    files: ["ui/menu/demos/sides.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/sides")),
+  },
   "menu/demos/single-selection": {
     files: ["ui/menu/demos/single-selection.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/single-selection")),
@@ -1313,13 +1337,33 @@ export const DemosIndex: Record<
     files: ["ui/menu/demos/submenus.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/submenus")),
   },
+  "menu/demos/with-avatar": {
+    files: ["ui/menu/demos/with-avatar.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/with-avatar")),
+  },
+  "menu/demos/with-destructive": {
+    files: ["ui/menu/demos/with-destructive.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/with-destructive")),
+  },
   "menu/demos/with-drawer": {
     files: ["ui/menu/demos/with-drawer.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/with-drawer")),
   },
+  "menu/demos/with-icons": {
+    files: ["ui/menu/demos/with-icons.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/with-icons")),
+  },
   "menu/demos/with-modal": {
     files: ["ui/menu/demos/with-modal.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/with-modal")),
+  },
+  "menu/demos/with-shortcuts": {
+    files: ["ui/menu/demos/with-shortcuts.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/with-shortcuts")),
+  },
+  "menu/demos/with-submenu": {
+    files: ["ui/menu/demos/with-submenu.tsx"],
+    component: React.lazy(() => import("@/registry/ui/menu/demos/with-submenu")),
   },
   "modal/demos/basic": {
     files: ["ui/modal/demos/basic.tsx"],
@@ -1336,10 +1380,6 @@ export const DemosIndex: Record<
   "modal/demos/scrollable-content": {
     files: ["ui/modal/demos/scrollable-content.tsx"],
     component: React.lazy(() => import("@/registry/ui/modal/demos/scrollable-content")),
-  },
-  "modal/demos/sticky-footer": {
-    files: ["ui/modal/demos/sticky-footer.tsx"],
-    component: React.lazy(() => import("@/registry/ui/modal/demos/sticky-footer")),
   },
   "modal/demos/with-form": {
     files: ["ui/modal/demos/with-form.tsx"],

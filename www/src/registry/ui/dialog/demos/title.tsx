@@ -1,5 +1,5 @@
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 import { Overlay } from "@/registry/ui/overlay";
@@ -12,7 +12,7 @@ export default function Demo() {
 			<Overlay>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Edit username</DialogHeading>
+						<DialogTitle>Edit username</DialogTitle>
 					</DialogHeader>
 					<TextField defaultValue="@mehdibha" className="w-full">
 						<Label>Username</Label>

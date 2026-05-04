@@ -5,7 +5,7 @@ import type * as MenuPrimitives from "react-aria-components/Menu";
 
 import { InfoIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { Group } from "@/registry/ui/group";
 import { Input } from "@/registry/ui/input";
@@ -30,7 +30,7 @@ export default function Demo() {
 					<Overlay type="popover">
 						<DialogContent>
 							<DialogHeader>
-								<DialogHeading>Help</DialogHeading>
+								<DialogTitle>Help</DialogTitle>
 								<DialogDescription>For help accessing your account, please contact support.</DialogDescription>
 							</DialogHeader>
 						</DialogContent>

@@ -11,7 +11,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { FieldGroup, Label } from "@/registry/ui/field";
 import { Input, TextArea } from "@/registry/ui/input";
@@ -33,7 +33,7 @@ export default function Demo() {
 				<Overlay type={type} mobileType={mobileType}>
 					<DialogContent>
 						<DialogHeader>
-							<DialogHeading>Create a new issue</DialogHeading>
+							<DialogTitle>Create a new issue</DialogTitle>
 							<DialogDescription>Report an issue or create a feature request.</DialogDescription>
 						</DialogHeader>
 						<DialogBody>

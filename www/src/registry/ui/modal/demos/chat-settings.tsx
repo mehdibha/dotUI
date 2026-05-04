@@ -13,7 +13,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Description, Field, FieldContent, FieldGroup, Fieldset, Label, Legend } from "@/registry/ui/field";
 import { Input, InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input";
@@ -81,7 +81,7 @@ export default function Demo() {
 			<Modal>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Chat Settings</DialogHeading>
+						<DialogTitle>Chat Settings</DialogTitle>
 						<DialogDescription>
 							Customize your chat settings: theme, accent color, spoken language, voice, personality, and custom
 							instructions.

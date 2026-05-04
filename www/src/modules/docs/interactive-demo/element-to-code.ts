@@ -72,7 +72,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 	DialogHeader: "@/components/ui/dialog",
 	DialogBody: "@/components/ui/dialog",
 	DialogFooter: "@/components/ui/dialog",
-	DialogHeading: "@/components/ui/dialog",
+	DialogTitle: "@/components/ui/dialog",
 	DialogDescription: "@/components/ui/dialog",
 
 	// Card

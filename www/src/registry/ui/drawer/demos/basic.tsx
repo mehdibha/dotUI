@@ -1,5 +1,5 @@
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 
 export default function Demo() {
@@ -10,7 +10,7 @@ export default function Demo() {
 				<DialogContent>
 					<DrawerHandle />
 					<DialogHeader>
-						<DialogHeading>Drag me down</DialogHeading>
+						<DialogTitle>Drag me down</DialogTitle>
 					</DialogHeader>
 					<DialogBody>Or click outside to dismiss.</DialogBody>
 				</DialogContent>

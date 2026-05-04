@@ -3,7 +3,7 @@
 import React from "react";
 
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 
 /**
@@ -24,11 +24,10 @@ export default function Demo() {
 					<DialogContent>
 						<DrawerHandle />
 						<DialogHeader>
-							<DialogHeading>Controlled</DialogHeading>
+							<DialogTitle>Controlled</DialogTitle>
 						</DialogHeader>
 						<DialogBody>
-							Drag to dismiss, click outside, or press Escape — `onOpenChange(false)` fires
-							in all cases.
+							Drag to dismiss, click outside, or press Escape — `onOpenChange(false)` fires in all cases.
 						</DialogBody>
 					</DialogContent>
 				</Drawer>

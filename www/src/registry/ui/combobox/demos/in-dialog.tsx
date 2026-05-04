@@ -2,7 +2,15 @@ import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@/registry/ui/button";
 import { Combobox } from "@/registry/ui/combobox";
-import { Dialog, DialogBody, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import {
+	Dialog,
+	DialogBody,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
@@ -16,7 +24,7 @@ export default function Demo() {
 			<Overlay>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Select Framework</DialogHeading>
+						<DialogTitle>Select Framework</DialogTitle>
 						<DialogDescription>Choose your preferred framework from the list below.</DialogDescription>
 					</DialogHeader>
 					<DialogBody>

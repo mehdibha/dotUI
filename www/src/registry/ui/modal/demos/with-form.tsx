@@ -8,7 +8,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
@@ -22,114 +22,13 @@ export default function Demo() {
 			<Modal>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Edit profile</DialogHeading>
-						<DialogDescription>Make changes to your profile here. Click save when you&apos;re done.</DialogDescription>
+						<DialogTitle>Edit profile</DialogTitle>
+						<DialogDescription>
+							Make changes to your profile here. Click save when you're done. Your profile will be updated immediately.
+						</DialogDescription>
 					</DialogHeader>
-					<DialogBody>
+					<DialogBody scrollFade={false}>
 						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField>
-						<TextField defaultValue="Pedro Duarte">
-							<Label>Name</Label>
-							<Input name="name" />
-						</TextField>
-						<TextField defaultValue="@peduarte">
-							<Label>Username</Label>
-							<Input name="username" />
-						</TextField><TextField defaultValue="Pedro Duarte">
 							<Label>Name</Label>
 							<Input name="name" />
 						</TextField>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 
 /**
@@ -17,7 +17,7 @@ export default function Demo() {
 				<DialogContent>
 					<DrawerHandle />
 					<DialogHeader>
-						<DialogHeading>Parent drawer</DialogHeading>
+						<DialogTitle>Parent drawer</DialogTitle>
 					</DialogHeader>
 					<DialogBody>
 						<p>Open the child drawer below — this one should scale back.</p>
@@ -29,13 +29,11 @@ export default function Demo() {
 								<DialogContent>
 									<DrawerHandle />
 									<DialogHeader>
-										<DialogHeading>Child drawer</DialogHeading>
+										<DialogTitle>Child drawer</DialogTitle>
 									</DialogHeader>
 									<DialogBody>
 										<p>Drag me down or click outside to close just this one.</p>
-										<p className="mt-2 text-fg-muted text-sm">
-											The parent stays open underneath.
-										</p>
+										<p className="mt-2 text-fg-muted text-sm">The parent stays open underneath.</p>
 									</DialogBody>
 									<DialogFooter>
 										<Dialog>
@@ -44,7 +42,7 @@ export default function Demo() {
 												<DialogContent>
 													<DrawerHandle />
 													<DialogHeader>
-														<DialogHeading>Grandchild</DialogHeading>
+														<DialogTitle>Grandchild</DialogTitle>
 													</DialogHeader>
 													<DialogBody>
 														<p>Three levels deep. Each parent scales further back.</p>

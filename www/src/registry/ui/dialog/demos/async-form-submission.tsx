@@ -11,7 +11,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
@@ -36,7 +36,7 @@ export default function Demo() {
 					{({ close }) => (
 						<>
 							<DialogHeader>
-								<DialogHeading>Edit username</DialogHeading>
+								<DialogTitle>Edit username</DialogTitle>
 								<DialogDescription>Make changes to your profile.</DialogDescription>
 							</DialogHeader>
 							<DialogBody>

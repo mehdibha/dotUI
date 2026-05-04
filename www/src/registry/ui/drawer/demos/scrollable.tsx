@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 
 /**
@@ -17,7 +17,7 @@ export default function Demo() {
 				<DialogContent>
 					<DrawerHandle />
 					<DialogHeader>
-						<DialogHeading>Scrollable content</DialogHeading>
+						<DialogTitle>Scrollable content</DialogTitle>
 					</DialogHeader>
 					<DialogBody className="max-h-80 overflow-y-auto">
 						{Array.from({ length: 30 }).map((_, i) => (

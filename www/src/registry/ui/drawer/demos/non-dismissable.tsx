@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 
 /**
@@ -17,11 +17,9 @@ export default function Demo() {
 				<DialogContent>
 					<DrawerHandle />
 					<DialogHeader>
-						<DialogHeading>Confirm action</DialogHeading>
+						<DialogTitle>Confirm action</DialogTitle>
 					</DialogHeader>
-					<DialogBody>
-						Try dragging or clicking outside — nothing dismisses. Use the button below.
-					</DialogBody>
+					<DialogBody>Try dragging or clicking outside — nothing dismisses. Use the button below.</DialogBody>
 					<DialogFooter>
 						<Button slot="close">Acknowledge</Button>
 					</DialogFooter>

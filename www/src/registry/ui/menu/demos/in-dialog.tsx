@@ -1,6 +1,6 @@
 import { ClipboardPasteIcon, CopyIcon, ScissorsIcon, TrashIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogDescription, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Menu, MenuContent, MenuItem, MenuSub } from "@/registry/ui/menu";
 import { Overlay } from "@/registry/ui/overlay";
 import { Popover } from "@/registry/ui/popover";
@@ -13,7 +13,7 @@ export default function Demo() {
 			<Overlay>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Dropdown Menu Example</DialogHeading>
+						<DialogTitle>Dropdown Menu Example</DialogTitle>
 						<DialogDescription>Click the button below to see the menu.</DialogDescription>
 					</DialogHeader>
 					<DialogBody>

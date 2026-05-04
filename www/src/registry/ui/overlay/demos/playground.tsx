@@ -8,7 +8,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Overlay } from "@/registry/ui/overlay";
 
@@ -24,7 +24,7 @@ export function OverlayPlayground({ type = "modal", mobileType = "drawer" }: Ove
 			<Overlay type={type} mobileType={mobileType}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Overlay Title</DialogHeading>
+						<DialogTitle>Overlay Title</DialogTitle>
 						<DialogDescription>This overlay adapts based on screen size.</DialogDescription>
 					</DialogHeader>
 					<DialogBody>

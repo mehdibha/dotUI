@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { ChevronDownIcon, InfoIcon, StarIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogContent, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/registry/ui/dialog";
 import { Description, Label } from "@/registry/ui/field";
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
@@ -63,7 +63,7 @@ export default function Demo() {
 							</Button>
 							<Popover>
 								<DialogContent className="w-64 space-y-1">
-									<DialogHeading>Your connection is not secure.</DialogHeading>
+									<DialogTitle>Your connection is not secure.</DialogTitle>
 									<p className="text-fg-muted text-sm">You should not enter any sensitive information on this site.</p>
 								</DialogContent>
 							</Popover>

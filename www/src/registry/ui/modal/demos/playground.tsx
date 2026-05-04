@@ -8,7 +8,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Modal } from "@/registry/ui/modal";
 
@@ -23,7 +23,7 @@ export function ModalPlayground({ isDismissable = true }: ModalPlaygroundProps) 
 			<Modal isDismissable={isDismissable}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Modal Title</DialogHeading>
+						<DialogTitle>Modal Title</DialogTitle>
 						<DialogDescription>This is a modal description.</DialogDescription>
 					</DialogHeader>
 					<DialogBody>

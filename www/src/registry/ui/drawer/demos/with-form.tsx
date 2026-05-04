@@ -8,7 +8,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 import { Label } from "@/registry/ui/field";
@@ -28,7 +28,7 @@ export default function Demo() {
 				<DialogContent>
 					<DrawerHandle />
 					<DialogHeader>
-						<DialogHeading>Edit profile</DialogHeading>
+						<DialogTitle>Edit profile</DialogTitle>
 						<DialogDescription>Inputs don't trigger drag.</DialogDescription>
 					</DialogHeader>
 					<DialogBody className="flex flex-col gap-3">

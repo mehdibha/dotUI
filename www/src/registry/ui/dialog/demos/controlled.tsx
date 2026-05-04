@@ -3,7 +3,7 @@
 import React from "react";
 
 import { Button } from "@/registry/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogHeading } from "@/registry/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Overlay } from "@/registry/ui/overlay";
 
 export default function Demo() {
@@ -14,7 +14,7 @@ export default function Demo() {
 			<Overlay>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>This is a heading</DialogHeading>
+						<DialogTitle>This is a heading</DialogTitle>
 						<DialogDescription>this is a description</DialogDescription>
 					</DialogHeader>
 					content here

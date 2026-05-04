@@ -7,7 +7,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Overlay } from "@/registry/ui/overlay";
 
@@ -18,7 +18,7 @@ export default function Demo() {
 			<Overlay>
 				<DialogContent role="alertdialog">
 					<DialogHeader>
-						<DialogHeading>Delete project</DialogHeading>
+						<DialogTitle>Delete project</DialogTitle>
 						<DialogDescription>
 							Are you sure you want to delete this project? This action is permanent and cannot be undone.
 						</DialogDescription>

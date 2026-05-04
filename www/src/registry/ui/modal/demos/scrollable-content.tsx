@@ -6,7 +6,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Modal } from "@/registry/ui/modal";
 
@@ -22,7 +22,7 @@ export default function Demo() {
 			<Modal>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Scrollable Content</DialogHeading>
+						<DialogTitle>Scrollable Content</DialogTitle>
 						<DialogDescription>This is a dialog with scrollable content.</DialogDescription>
 					</DialogHeader>
 					<DialogBody>

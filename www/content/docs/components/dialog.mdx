@@ -28,7 +28,7 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogHeading,
+  DialogTitle,
 } from "@/components/ui/dialog";
 import { Overlay } from "@/components/ui/overlay";
 ```
@@ -39,7 +39,7 @@ import { Overlay } from "@/components/ui/overlay";
   <Overlay>
     <DialogContent>
       <DialogHeader>
-        <DialogHeading>Dialog Title</DialogHeading>
+        <DialogTitle>Dialog Title</DialogTitle>
         <DialogDescription>Dialog description</DialogDescription>
       </DialogHeader>
       <DialogBody>Content</DialogBody>
@@ -55,8 +55,8 @@ import { Overlay } from "@/components/ui/overlay";
 
 Use the controls below to experiment with different dialog props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="dialog" 
+<InteractiveDemo
+  name="dialog"
   controls={[
     {
       type: "string",
@@ -75,7 +75,6 @@ Use the controls below to experiment with different dialog props and see the liv
     },
   ]}
 />
-
 
 ## Examples
 
@@ -107,7 +106,7 @@ Use the controls below to experiment with different dialog props and see the liv
 
 <Reference name="dialog-header" />
 
-### DialogHeading
+### DialogTitle
 
 <Reference name="dialog-heading" />
 

@@ -8,7 +8,7 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
+	DialogTitle,
 } from "@/registry/ui/dialog";
 import { Overlay } from "@/registry/ui/overlay";
 
@@ -29,7 +29,7 @@ export function DialogPlayground({
 			<Overlay isDismissable={props.isDismissable}>
 				<DialogContent>
 					<DialogHeader>
-						{title && <DialogHeading>{title}</DialogHeading>}
+						{title && <DialogTitle>{title}</DialogTitle>}
 						{description && <DialogDescription>{description}</DialogDescription>}
 					</DialogHeader>
 					<DialogBody>

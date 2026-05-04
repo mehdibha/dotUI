@@ -1,10 +1,13 @@
 "use client";
 
+import { XIcon } from "lucide-react";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DialogPrimitives from "react-aria-components/Dialog";
 import * as HeadingPrimitives from "react-aria-components/Heading";
 import * as TextPrimitives from "react-aria-components/Text";
 import type * as React from "react";
 
+import { Button } from "@/registry/ui/button";
 import { ScrollFade } from "@/registry/ui/scroll-fade";
 
 import { useStyles } from "./styles";
@@ -23,9 +26,20 @@ const Dialog = (props: DialogProps) => {
 
 interface DialogContentProps extends React.ComponentProps<typeof DialogPrimitives.Dialog> {}
 
-const DialogContent = ({ className, ...props }: DialogContentProps) => {
-	const { content } = useStyles()();
-	return <DialogPrimitives.Dialog data-slot="dialog-content" className={content({ className })} {...props} />;
+const DialogContent = ({ className, children, ...props }: DialogContentProps) => {
+	const { content, closeButton } = useStyles()();
+	return (
+		<DialogPrimitives.Dialog data-slot="dialog-content" className={content({ className })} {...props}>
+			{composeRenderProps(children, (children) => (
+				<>
+					{children}
+					<Button slot="close" variant="quiet" size="sm" isIconOnly className={closeButton()}>
+						<XIcon />
+					</Button>
+				</>
+			))}
+		</DialogPrimitives.Dialog>
+	);
 };
 
 // MARK: Separator
@@ -39,11 +53,11 @@ const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
 
 // MARK: Separator
 
-interface DialogHeadingProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
+interface DialogTitleProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
 
-const DialogHeading = ({ className, ...props }: DialogHeadingProps) => {
-	const { heading } = useStyles()();
-	return <HeadingPrimitives.Heading data-slot="dialog-heading" className={heading({ className })} {...props} />;
+const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
+	const { title } = useStyles()();
+	return <HeadingPrimitives.Heading data-slot="dialog-heading" className={title({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -57,11 +71,15 @@ const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
 
 // MARK: Separator
 
-interface DialogBodyProps extends React.ComponentProps<"div"> {}
+interface DialogBodyProps extends React.ComponentProps<"div"> {
+	scrollFade?: boolean;
+}
 
-const DialogBody = ({ className, ...props }: DialogBodyProps) => {
+const DialogBody = ({ className, scrollFade = true, ...props }: DialogBodyProps) => {
 	const { body } = useStyles()();
-	return <ScrollFade data-slot="dialog-body" className={body({ className })} {...props} />;
+	const ElementType = scrollFade ? ScrollFade : "div";
+
+	return <ElementType data-slot="dialog-body" className={body({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -75,23 +93,13 @@ const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
 
 // MARK: Separator
 
-type DialogInsetProps = React.ComponentProps<"div">;
-
-const DialogInset = ({ className, ...props }: DialogInsetProps) => {
-	const { inset } = useStyles()();
-	return <div data-slot="dialog-inset" className={inset({ className })} {...props} />;
-};
-
-// MARK: Separator
-
 export type {
 	DialogBodyProps,
 	DialogContentProps,
 	DialogDescriptionProps,
 	DialogFooterProps,
 	DialogHeaderProps,
-	DialogHeadingProps,
-	DialogInsetProps,
 	DialogProps,
+	DialogTitleProps,
 };
-export { Dialog, DialogBody, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogHeading, DialogInset };
+export { Dialog, DialogBody, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle };

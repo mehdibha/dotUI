@@ -40,7 +40,7 @@ export function Example({ component: Component, title, children, className, ...p
 					<Modal>
 						<DialogContent>
 							{/* <DialogHeader>
-								<DialogHeading>{title}</DialogHeading>
+								<DialogTitle>{title}</DialogTitle>
 							</DialogHeader> */}
 							<DialogBody>
 								<Component />
