@@ -6,7 +6,7 @@ import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import { registryUi } from "@/registry/ui/registry";
 import { Select, SelectValue } from "@/registry/ui/select";
-import type { ParamDef, RegistryItem } from "@/registry/types";
+import type { ParamDef, RegistryItem, TokenType } from "@/registry/types";
 
 /* ----------------------------- Data helpers ----------------------------- */
 
@@ -95,17 +95,27 @@ const radiusOptions = [
 	{ label: "Full", value: "--radius-full" },
 ];
 
+const blurOptions = [
+	{ label: "None", value: "0px" },
+	{ label: "Small", value: "4px" },
+	{ label: "Medium", value: "8px" },
+	{ label: "Large", value: "12px" },
+];
+
+const opacityOptions = [
+	{ label: "20%", value: "20%" },
+	{ label: "40%", value: "40%" },
+	{ label: "60%", value: "60%" },
+	{ label: "80%", value: "80%" },
+];
+
 interface ComponentDetailViewProps {
 	componentName: string;
 	selectedParams?: Record<string, string>;
 	onParamChange?: (paramName: string, value: string) => void;
 }
 
-export function ComponentDetailView({
-	componentName,
-	selectedParams,
-	onParamChange,
-}: ComponentDetailViewProps) {
+export function ComponentDetailView({ componentName, selectedParams, onParamChange }: ComponentDetailViewProps) {
 	const meta = componentMetaMap.get(componentName);
 	if (!meta) {
 		return <p className="text-fg-muted text-sm">Component not found.</p>;
@@ -144,10 +154,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 		return (
 			<div className="flex flex-col gap-2">
 				<span className="font-medium text-fg-muted text-xs">{toTitleCase(paramName)}</span>
-				<Select
-					selectedKey={selected ?? def.default}
-					onSelectionChange={(key) => onChange(key as string)}
-				>
+				<Select selectedKey={selected ?? def.default} onSelectionChange={(key) => onChange(key as string)}>
 					<Button size="sm" className="w-full">
 						<SelectValue />
 						<ChevronDownIcon />
@@ -167,16 +174,20 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 		);
 	}
 
-	// scalar — currently only `radius` is wired up; extend as more types appear.
-	const options = def.type === "radius" ? radiusOptions : [];
+	const optionsByType = {
+		blur: blurOptions,
+		color: [],
+		"font-size": [],
+		opacity: opacityOptions,
+		radius: radiusOptions,
+		spacing: [],
+	} satisfies Record<TokenType, { label: string; value: string }[]>;
+	const options = optionsByType[def.type];
 
 	return (
 		<div className="flex flex-col gap-2">
 			<span className="font-medium text-fg-muted text-xs">{toTitleCase(paramName)}</span>
-			<Select
-				selectedKey={selected ?? def.default}
-				onSelectionChange={(key) => onChange(key as string)}
-			>
+			<Select selectedKey={selected ?? def.default} onSelectionChange={(key) => onChange(key as string)}>
 				<Button size="sm" className="w-full">
 					<SelectValue />
 					<ChevronDownIcon />

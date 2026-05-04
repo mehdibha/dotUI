@@ -25,7 +25,7 @@ export type ComponentGroup =
 
 /* ------------------------------- Params ------------------------------- */
 
-export type TokenType = "radius" | "color" | "spacing" | "font-size";
+export type TokenType = "radius" | "color" | "spacing" | "font-size" | "blur" | "opacity";
 
 /**
  * An "enum" param: user picks one of a fixed set of named values.
