@@ -8,6 +8,7 @@ import { Button } from "@/registry/ui/button";
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import {
 	Dialog,
+	DialogBody,
 	DialogContent,
 	DialogDescription,
 	DialogFooter,
@@ -73,15 +74,11 @@ const accents = [
 
 export default function Demo() {
 	const [tab, setTab] = React.useState<MenuPrimitives.Key>("general");
-	const [theme, setTheme] = React.useState<MenuPrimitives.Key>("system");
-	const [accentColor, setAccentColor] = React.useState<MenuPrimitives.Key>("default");
-	const [spokenLanguage, setSpokenLanguage] = React.useState<MenuPrimitives.Key>("en");
-	const [voice, setVoice] = React.useState<MenuPrimitives.Key>("samantha");
 
 	return (
 		<Dialog>
 			<Button>Chat Settings</Button>
-			<Modal className="sm:max-w-2xl">
+			<Modal>
 				<DialogContent>
 					<DialogHeader>
 						<DialogHeading>Chat Settings</DialogHeading>
@@ -90,221 +87,191 @@ export default function Demo() {
 							instructions.
 						</DialogDescription>
 					</DialogHeader>
-					<div className="flex flex-col gap-4">
-						<select
+					<DialogBody>
+						<Select
 							aria-label="Settings section"
-							value={String(tab)}
-							onChange={(event) => setTab(event.target.value)}
-							className="h-9 rounded-md border bg-bg px-3 text-sm md:hidden"
+							value={tab}
+							onChange={(value) => {
+								if (value != null) setTab(value);
+							}}
+							className="md:hidden"
 						>
-							<option value="general">General</option>
-							<option value="notifications">Notifications</option>
-							<option value="personalization">Personalization</option>
-							<option value="security">Security</option>
-						</select>
-						<Tabs selectedKey={tab} onSelectionChange={setTab}>
-							<TabList className="hidden w-full md:flex">
+							<SelectTrigger />
+							<SelectContent>
+								<SelectItem id="general">General</SelectItem>
+								<SelectItem id="notifications">Notifications</SelectItem>
+								<SelectItem id="personalization">Personalization</SelectItem>
+								<SelectItem id="security">Security</SelectItem>
+							</SelectContent>
+						</Select>
+						<Tabs selectedKey={tab} onSelectionChange={setTab} className="gap-4 **:data-tab-panel:min-h-[300px]">
+							<TabList className="hidden w-full gap-4 **:data-tab:px-0 md:flex">
 								<Tab id="general">General</Tab>
 								<Tab id="notifications">Notifications</Tab>
 								<Tab id="personalization">Personalization</Tab>
 								<Tab id="security">Security</Tab>
 							</TabList>
-							<div className="min-h-[450px] rounded-lg border p-4">
-								<TabPanel id="general">
+							<TabPanel id="general">
+								<Fieldset>
+									<FieldGroup>
+										<Select className="flex-row" defaultValue="system">
+											<Label className="flex-1">Theme</Label>
+											<SelectTrigger className="min-w-32" />
+											<SelectContent>
+												{themes.map((item) => (
+													<SelectItem key={item.value} id={item.value}>
+														{item.label}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+										<Select className="flex-row" defaultValue="default">
+											<Label className="flex-1">Accent Color</Label>
+											<SelectTrigger className="min-w-32" />
+											<SelectContent>
+												{accents.map((item) => (
+													<SelectItem key={item.value} id={item.value}>
+														{item.label}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+										<Select className="flex-row" defaultValue="en">
+											<FieldContent>
+												<Label>Spoken Language</Label>
+												<Description>
+													For best results, select the language you mainly speak. If it&apos;s not listed, it may still
+													be supported via auto-detection.
+												</Description>
+											</FieldContent>
+											<SelectTrigger className="min-w-32" />
+											<SelectContent>
+												{spokenLanguages.map((item) => (
+													<SelectItem key={item.value} id={item.value}>
+														{item.label}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+										<Select defaultValue="samantha" className="flex-row">
+											<Label className="flex-1">Voice</Label>
+											<SelectTrigger className="min-w-32" />
+											<SelectContent>
+												{voices.map((item) => (
+													<SelectItem key={item.value} id={item.value}>
+														{item.label}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+									</FieldGroup>
+								</Fieldset>
+							</TabPanel>
+							<TabPanel id="notifications">
+								<FieldGroup>
 									<Fieldset>
+										<Legend>Responses</Legend>
+										<Description>
+											Get notified when ChatGPT responds to requests that take time, like research or image generation.
+										</Description>
 										<FieldGroup>
-											<Field orientation="horizontal" className="items-center justify-between">
-												<Label>Theme</Label>
-												<Select
-													aria-label="Theme"
-													value={theme}
-													onChange={(value) => {
-														if (value != null) setTheme(value);
-													}}
-												>
-													<SelectTrigger className="min-w-32" />
-													<SelectContent>
-														{themes.map((item) => (
-															<SelectItem key={item.value} id={item.value}>
-																{item.label}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-											</Field>
-											<Field orientation="horizontal" className="items-center justify-between">
-												<Label>Accent Color</Label>
-												<Select
-													aria-label="Accent color"
-													value={accentColor}
-													onChange={(value) => {
-														if (value != null) setAccentColor(value);
-													}}
-												>
-													<SelectTrigger className="min-w-32" />
-													<SelectContent>
-														{accents.map((item) => (
-															<SelectItem key={item.value} id={item.value}>
-																{item.label}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-											</Field>
-											<Field orientation="horizontal" className="items-start justify-between">
-												<FieldContent>
-													<Label>Spoken Language</Label>
-													<Description>
-														For best results, select the language you mainly speak. If it&apos;s not listed, it may
-														still be supported via auto-detection.
-													</Description>
-												</FieldContent>
-												<Select
-													aria-label="Spoken language"
-													value={spokenLanguage}
-													onChange={(value) => {
-														if (value != null) setSpokenLanguage(value);
-													}}
-												>
-													<SelectTrigger className="min-w-32" />
-													<SelectContent>
-														{spokenLanguages.map((item) => (
-															<SelectItem key={item.value} id={item.value}>
-																{item.label}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-											</Field>
-											<Field orientation="horizontal" className="items-center justify-between">
-												<Label>Voice</Label>
-												<Select
-													aria-label="Voice"
-													value={voice}
-													onChange={(value) => {
-														if (value != null) setVoice(value);
-													}}
-												>
-													<SelectTrigger className="min-w-32" />
-													<SelectContent>
-														{voices.map((item) => (
-															<SelectItem key={item.value} id={item.value}>
-																{item.label}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-											</Field>
+											<Checkbox defaultSelected isDisabled>
+												<CheckboxControl />
+												<Label>Push notifications</Label>
+											</Checkbox>
 										</FieldGroup>
 									</Fieldset>
-								</TabPanel>
-								<TabPanel id="notifications">
-									<FieldGroup>
-										<Fieldset>
-											<Legend>Responses</Legend>
+									<Fieldset>
+										<Legend>Tasks</Legend>
+										<Description>Get notified when tasks you&apos;ve created have updates.</Description>
+										<FieldGroup>
+											<Checkbox>
+												<CheckboxControl />
+												<Label>Push notifications</Label>
+											</Checkbox>
+											<Checkbox>
+												<CheckboxControl />
+												<Label>Email notifications</Label>
+											</Checkbox>
+										</FieldGroup>
+									</Fieldset>
+								</FieldGroup>
+							</TabPanel>
+							<TabPanel id="personalization">
+								<FieldGroup>
+									<TextField>
+										<Label>Nickname</Label>
+										<InputGroup>
+											<Input placeholder="Broski" />
+											<InputGroupAddon>
+												<Tooltip>
+													<Button aria-label="Nickname info" isIconOnly size="xs" variant="quiet">
+														<InfoIcon />
+													</Button>
+													<TooltipContent>
+														Used to identify you in the chat. <Kbd>N</Kbd>
+													</TooltipContent>
+												</Tooltip>
+											</InputGroupAddon>
+										</InputGroup>
+									</TextField>
+									<TextField>
+										<Label>More about you</Label>
+										<Description>
+											Tell us more about yourself. This will be used to help us personalize your experience.
+										</Description>
+										<TextArea placeholder="I'm a software engineer..." className="min-h-28" />
+									</TextField>
+									<Field orientation="horizontal" className="items-center justify-between">
+										<FieldContent>
+											<Label>Enable customizations</Label>
+											<Description>Enable customizations to make ChatGPT more personalized.</Description>
+										</FieldContent>
+										<Switch defaultSelected aria-label="Enable customizations">
+											<SwitchIndicator>
+												<SwitchThumb />
+											</SwitchIndicator>
+										</Switch>
+									</Field>
+								</FieldGroup>
+							</TabPanel>
+							<TabPanel id="security">
+								<FieldGroup>
+									<Field orientation="horizontal" className="items-center justify-between">
+										<FieldContent>
+											<Label>Multi-factor authentication</Label>
 											<Description>
-												Get notified when ChatGPT responds to requests that take time, like research or image
-												generation.
+												Enable multi-factor authentication to secure your account. If you do not have a two-factor
+												authentication device, you can use a one-time code sent to your email.
 											</Description>
-											<FieldGroup className="mt-4 gap-3">
-												<Checkbox defaultSelected isDisabled>
-													<CheckboxControl />
-													<Label>Push notifications</Label>
-												</Checkbox>
-											</FieldGroup>
-										</Fieldset>
-										<Fieldset>
-											<Legend>Tasks</Legend>
-											<Description>Get notified when tasks you&apos;ve created have updates.</Description>
-											<FieldGroup className="mt-4 gap-3">
-												<Checkbox>
-													<CheckboxControl />
-													<Label>Push notifications</Label>
-												</Checkbox>
-												<Checkbox>
-													<CheckboxControl />
-													<Label>Email notifications</Label>
-												</Checkbox>
-											</FieldGroup>
-										</Fieldset>
-									</FieldGroup>
-								</TabPanel>
-								<TabPanel id="personalization">
-									<FieldGroup>
-										<TextField>
-											<Label>Nickname</Label>
-											<InputGroup>
-												<Input placeholder="Broski" />
-												<InputGroupAddon>
-													<Tooltip>
-														<Button aria-label="Nickname info" isIconOnly size="xs" variant="quiet">
-															<InfoIcon />
-														</Button>
-														<TooltipContent>
-															Used to identify you in the chat. <Kbd>N</Kbd>
-														</TooltipContent>
-													</Tooltip>
-												</InputGroupAddon>
-											</InputGroup>
-										</TextField>
-										<TextField>
-											<Label>More about you</Label>
+										</FieldContent>
+										<Switch aria-label="Multi-factor authentication">
+											<SwitchIndicator>
+												<SwitchThumb />
+											</SwitchIndicator>
+										</Switch>
+									</Field>
+									<Field orientation="horizontal" className="items-center justify-between">
+										<FieldContent>
+											<p className="font-medium text-sm">Log out</p>
+											<Description>Log out of your account on this device.</Description>
+										</FieldContent>
+										<Button size="sm">Log Out</Button>
+									</Field>
+									<Field orientation="horizontal" className="items-center justify-between">
+										<FieldContent>
+											<p className="font-medium text-sm">Log out of all devices</p>
 											<Description>
-												Tell us more about yourself. This will be used to help us personalize your experience.
+												This will log you out of all devices, including the current session. It may take up to 30
+												minutes for the changes to take effect.
 											</Description>
-											<TextArea placeholder="I'm a software engineer..." className="min-h-28" />
-										</TextField>
-										<Field orientation="horizontal" className="items-center justify-between">
-											<FieldContent>
-												<Label>Enable customizations</Label>
-												<Description>Enable customizations to make ChatGPT more personalized.</Description>
-											</FieldContent>
-											<Switch defaultSelected aria-label="Enable customizations">
-												<SwitchIndicator>
-													<SwitchThumb />
-												</SwitchIndicator>
-											</Switch>
-										</Field>
-									</FieldGroup>
-								</TabPanel>
-								<TabPanel id="security">
-									<FieldGroup>
-										<Field orientation="horizontal" className="items-center justify-between">
-											<FieldContent>
-												<Label>Multi-factor authentication</Label>
-												<Description>
-													Enable multi-factor authentication to secure your account. If you do not have a two-factor
-													authentication device, you can use a one-time code sent to your email.
-												</Description>
-											</FieldContent>
-											<Switch aria-label="Multi-factor authentication">
-												<SwitchIndicator>
-													<SwitchThumb />
-												</SwitchIndicator>
-											</Switch>
-										</Field>
-										<Field orientation="horizontal" className="items-center justify-between">
-											<FieldContent>
-												<p className="font-medium text-sm">Log out</p>
-												<Description>Log out of your account on this device.</Description>
-											</FieldContent>
-											<Button size="sm">Log Out</Button>
-										</Field>
-										<Field orientation="horizontal" className="items-center justify-between">
-											<FieldContent>
-												<p className="font-medium text-sm">Log out of all devices</p>
-												<Description>
-													This will log you out of all devices, including the current session. It may take up to 30
-													minutes for the changes to take effect.
-												</Description>
-											</FieldContent>
-											<Button size="sm">Log Out All</Button>
-										</Field>
-									</FieldGroup>
-								</TabPanel>
-							</div>
+										</FieldContent>
+										<Button size="sm">Log Out All</Button>
+									</Field>
+								</FieldGroup>
+							</TabPanel>
 						</Tabs>
-					</div>
+					</DialogBody>
 					<DialogFooter>
 						<Button slot="close">Done</Button>
 					</DialogFooter>

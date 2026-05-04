@@ -31,6 +31,13 @@ const modalMeta = {
 			default: "40%",
 			description: "Opacity of the black backdrop.",
 		},
+		background: {
+			kind: "scalar",
+			type: "color",
+			cssVar: "--modal-background",
+			default: "--color-bg",
+			description: "Background color of the modal surface.",
+		},
 		radius: {
 			kind: "scalar",
 			type: "radius",

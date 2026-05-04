@@ -7,11 +7,11 @@ const { useStyles, styles } = createStyles(modalMeta, {
 		slots: {
 			overlay: "group/modal absolute top-0 left-0 isolate z-100 h-(--page-height) w-full",
 			backdrop: [
-				"size-full duration-200 [backdrop-filter:blur(var(--modal-backdrop-blur))] [background-color:rgb(0_0_0/var(--modal-backdrop-opacity))] group-exiting/modal:duration-150",
+				"size-full bg-black/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur) duration-200 group-exiting/modal:duration-150",
 				"transition-opacity group-entering/modal:opacity-0 group-exiting/modal:opacity-0",
 			],
 			modal: [
-				"fixed top-[calc(var(--visual-viewport-height)/2)] left-1/2 max-h-[calc(var(--visual-viewport-height)*.9)] w-full max-w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-(--modal-radius) border bg-bg shadow-lg sm:max-w-lg",
+				"fixed top-[calc(var(--visual-viewport-height)/2)] left-1/2 max-h-[calc(var(--visual-viewport-height)*.9)] w-full max-w-[calc(100vw-2rem)] -translate-x-1/2 -translate-y-1/2 rounded-(--modal-radius) border bg-(--modal-background) shadow-lg sm:max-w-lg",
 				"transition-[opacity,scale] ease-[cubic-bezier(0.165,0.84,0.44,1)]",
 				"entering:scale-95 entering:opacity-0 duration-200",
 				"exiting:scale-95 exiting:opacity-0 exiting:duration-150",

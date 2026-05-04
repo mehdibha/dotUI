@@ -4,14 +4,14 @@ import { ChevronDownIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectPrimitives from "react-aria-components/Select";
 
+import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
+import { useStyles } from "@/registry/ui/field/styles";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import type { ButtonProps } from "@/registry/ui/button";
 import type { ListBoxProps } from "@/registry/ui/list-box";
 import type { PopoverProps } from "@/registry/ui/popover";
-
-import { useStyles } from "./styles";
 
 // MARK: selectStyles
 
@@ -20,13 +20,13 @@ import { useStyles } from "./styles";
 interface SelectProps<T extends object> extends SelectPrimitives.SelectProps<T> {}
 
 const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
-	const { root } = useStyles()();
+	const fieldStyles = useStyles();
 	return (
 		<SelectPrimitives.Select
 			data-field=""
 			data-select=""
 			data-slot="select"
-			className={composeRenderProps(className, (cn) => root({ className: cn }))}
+			className={composeRenderProps(className, (cn) => fieldStyles().field({ className: cn }))}
 			{...props}
 		/>
 	);
@@ -54,11 +54,12 @@ const SelectTrigger = (props: ButtonProps) => {
 interface SelectValueProps<T extends object> extends SelectPrimitives.SelectValueProps<T> {}
 
 const SelectValue = <T extends object>({ className, ...props }: SelectValueProps<T>) => {
-	const { selectValue } = useStyles()();
 	return (
 		<SelectPrimitives.SelectValue
 			data-slot="select-value"
-			className={composeRenderProps(className, (className) => selectValue({ className }))}
+			className={composeRenderProps(className, (className) =>
+				cn("flex-1 truncate text-left placeholder-shown:text-fg-muted", className),
+			)}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children, { selectedText, defaultChildren }) => {

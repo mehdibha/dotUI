@@ -25,7 +25,7 @@ export default function Demo() {
 						<DialogHeading>Scrollable Content</DialogHeading>
 						<DialogDescription>This is a dialog with scrollable content.</DialogDescription>
 					</DialogHeader>
-					<DialogBody className="max-h-[70vh]">
+					<DialogBody>
 						{paragraphs.map((paragraph) => (
 							<p key={paragraph.id} className="text-sm leading-relaxed">
 								{paragraph.text}

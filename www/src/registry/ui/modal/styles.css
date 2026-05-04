@@ -1,5 +1,6 @@
 :root {
 	--modal-backdrop-blur: 0px;
 	--modal-backdrop-opacity: 40%;
+	--modal-background: var(--color-bg);
 	--modal-radius: var(--radius-lg);
 }

@@ -1,6 +1,7 @@
 import { ChevronDownIcon, ChevronRightIcon, SlidersHorizontalIcon } from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
+import { COLOR_TOKENS } from "@/registry/base/tokens";
 import { Button } from "@/registry/ui/button";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
@@ -109,6 +110,13 @@ const opacityOptions = [
 	{ label: "80%", value: "80%" },
 ];
 
+const colorOptions = Object.entries(COLOR_TOKENS)
+	.filter(([, token]) => token.categories?.includes("background"))
+	.map(([name]) => ({
+		label: toTitleCase(name.replace(/^color-/, "")),
+		value: `--${name}`,
+	}));
+
 interface ComponentDetailViewProps {
 	componentName: string;
 	selectedParams?: Record<string, string>;
@@ -176,7 +184,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 
 	const optionsByType = {
 		blur: blurOptions,
-		color: [],
+		color: colorOptions,
 		"font-size": [],
 		opacity: opacityOptions,
 		radius: radiusOptions,
