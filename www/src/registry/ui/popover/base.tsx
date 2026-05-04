@@ -11,12 +11,13 @@ import { useStyles } from "./styles";
 interface PopoverProps extends React.ComponentProps<typeof PopoverPrimitives.Popover> {
 	showArrow?: boolean;
 }
-function Popover({ className, showArrow = false, ...props }: PopoverProps) {
+function Popover({ className, showArrow = false, placement = "bottom start", ...props }: PopoverProps) {
 	const { popover } = useStyles()();
 	return (
 		<PopoverPrimitives.Popover
 			data-popover=""
 			className={composeRenderProps(className, (className) => popover({ className }))}
+			placement={placement}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children) => (

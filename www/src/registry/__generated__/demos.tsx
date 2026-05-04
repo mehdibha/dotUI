@@ -1437,9 +1437,25 @@ export const DemosIndex: Record<
 		files: ["ui/overlay/demos/type.tsx"],
 		component: React.lazy(() => import("@/registry/ui/overlay/demos/type")),
 	},
+	"popover/demos/alignments": {
+		files: ["ui/popover/demos/alignments.tsx"],
+		component: React.lazy(() => import("@/registry/ui/popover/demos/placement")),
+	},
 	"popover/demos/basic": {
 		files: ["ui/popover/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/popover/demos/basic")),
+	},
+	"popover/demos/in-dialog": {
+		files: ["ui/popover/demos/in-dialog.tsx"],
+		component: React.lazy(() => import("@/registry/ui/popover/demos/in-dialog")),
+	},
+	"popover/demos/sides": {
+		files: ["ui/popover/demos/sides.tsx"],
+		component: React.lazy(() => import("@/registry/ui/popover/demos/sides")),
+	},
+	"popover/demos/with-form": {
+		files: ["ui/popover/demos/with-form.tsx"],
+		component: React.lazy(() => import("@/registry/ui/popover/demos/with-form")),
 	},
 	"progress-bar/demos/custom-value-label": {
 		files: ["ui/progress-bar/demos/custom-value-label.tsx"],

@@ -2,7 +2,7 @@
 
 import { XIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as DialogPrimitives from "react-aria-components/Dialog";
+import * as DialogPrimitive from "react-aria-components/Dialog";
 import * as HeadingPrimitives from "react-aria-components/Heading";
 import * as TextPrimitives from "react-aria-components/Text";
 import type * as React from "react";
@@ -16,29 +16,33 @@ import { useStyles } from "./styles";
 
 // MARK: Separator
 
-interface DialogProps extends React.ComponentProps<typeof DialogPrimitives.DialogTrigger> {}
+interface DialogProps extends React.ComponentProps<typeof DialogPrimitive.DialogTrigger> {}
 
 const Dialog = (props: DialogProps) => {
-	return <DialogPrimitives.DialogTrigger {...props} />;
+	return <DialogPrimitive.DialogTrigger {...props} />;
 };
 
 // MARK: Separator
 
-interface DialogContentProps extends React.ComponentProps<typeof DialogPrimitives.Dialog> {}
+interface DialogContentProps extends React.ComponentProps<typeof DialogPrimitive.Dialog> {
+	showCloseButton?: boolean;
+}
 
-const DialogContent = ({ className, children, ...props }: DialogContentProps) => {
+const DialogContent = ({ className, children, showCloseButton = false, ...props }: DialogContentProps) => {
 	const { content, closeButton } = useStyles()();
 	return (
-		<DialogPrimitives.Dialog data-slot="dialog-content" className={content({ className })} {...props}>
+		<DialogPrimitive.Dialog data-slot="dialog-content" className={content({ className })} {...props}>
 			{composeRenderProps(children, (children) => (
 				<>
 					{children}
-					<Button slot="close" variant="quiet" size="sm" isIconOnly className={closeButton()}>
-						<XIcon />
-					</Button>
+					{showCloseButton && (
+						<Button slot="close" variant="quiet" size="sm" isIconOnly className={closeButton()}>
+							<XIcon />
+						</Button>
+					)}
 				</>
 			))}
-		</DialogPrimitives.Dialog>
+		</DialogPrimitive.Dialog>
 	);
 };
 
@@ -53,11 +57,11 @@ const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
 
 // MARK: Separator
 
-interface DialogTitleProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
+interface DialogTitleProps extends React.ComponentProps<typeof DialogPrimitive.Heading> {}
 
 const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
 	const { title } = useStyles()();
-	return <HeadingPrimitives.Heading data-slot="dialog-heading" className={title({ className })} {...props} />;
+	return <DialogPrimitive.Heading data-slot="dialog-heading" className={title({ className })} {...props} />;
 };
 
 // MARK: Separator
@@ -75,7 +79,7 @@ interface DialogBodyProps extends React.ComponentProps<"div"> {
 	scrollFade?: boolean;
 }
 
-const DialogBody = ({ className, scrollFade = true, ...props }: DialogBodyProps) => {
+const DialogBody = ({ className, scrollFade = false, ...props }: DialogBodyProps) => {
 	const { body } = useStyles()();
 	const ElementType = scrollFade ? ScrollFade : "div";
 
