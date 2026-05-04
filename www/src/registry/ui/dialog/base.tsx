@@ -5,6 +5,8 @@ import * as HeadingPrimitives from "react-aria-components/Heading";
 import * as TextPrimitives from "react-aria-components/Text";
 import type * as React from "react";
 
+import { ScrollFade } from "@/registry/ui/scroll-fade";
+
 import { useStyles } from "./styles";
 
 // MARK: dialogStyles
@@ -59,7 +61,7 @@ interface DialogBodyProps extends React.ComponentProps<"div"> {}
 
 const DialogBody = ({ className, ...props }: DialogBodyProps) => {
 	const { body } = useStyles()();
-	return <div data-slot="dialog-body" className={body({ className })} {...props} />;
+	return <ScrollFade data-slot="dialog-body" className={body({ className })} {...props} />;
 };
 
 // MARK: Separator
