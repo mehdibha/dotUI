@@ -21,7 +21,7 @@ const modalMeta = {
 			kind: "scalar",
 			type: "blur",
 			cssVar: "--modal-backdrop-blur",
-			default: "0px",
+			default: "--blur-sm",
 			description: "Amount of blur applied behind the modal.",
 		},
 		"backdrop-opacity": {
