@@ -1,8 +1,7 @@
-import { Button } from "@/registry/ui/button";
 import { Label } from "@/registry/ui/field";
 import { Group } from "@/registry/ui/group";
 import { Input } from "@/registry/ui/input";
-import { NumberField } from "@/registry/ui/number-field";
+import { NumberField, NumberFieldDecrement, NumberFieldIncrement } from "@/registry/ui/number-field";
 
 export default function Demo() {
 	return (
@@ -17,9 +16,9 @@ export default function Demo() {
 			>
 				<Label>Decimal</Label>
 				<Group>
-					<Button slot="decrement" />
+					<NumberFieldDecrement />
 					<Input />
-					<Button slot="increment" />
+					<NumberFieldIncrement />
 				</Group>
 			</NumberField>
 
@@ -31,9 +30,9 @@ export default function Demo() {
 			>
 				<Label>Percentage</Label>
 				<Group>
-					<Button slot="decrement" />
+					<NumberFieldDecrement />
 					<Input />
-					<Button slot="increment" />
+					<NumberFieldIncrement />
 				</Group>
 			</NumberField>
 
@@ -48,9 +47,9 @@ export default function Demo() {
 			>
 				<Label>Currency</Label>
 				<Group>
-					<Button slot="decrement" />
+					<NumberFieldDecrement />
 					<Input />
-					<Button slot="increment" />
+					<NumberFieldIncrement />
 				</Group>
 			</NumberField>
 
@@ -64,9 +63,9 @@ export default function Demo() {
 			>
 				<Label>Unit</Label>
 				<Group>
-					<Button slot="decrement" />
+					<NumberFieldDecrement />
 					<Input />
-					<Button slot="increment" />
+					<NumberFieldIncrement />
 				</Group>
 			</NumberField>
 		</div>

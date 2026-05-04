@@ -1,13 +1,14 @@
 "use client";
 
 import { MinusIcon, PlusIcon } from "lucide-react";
-import * as ButtonPrimitives from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as NumberFieldPrimitives from "react-aria-components/NumberField";
-import { Provider, useSlottedContext } from "react-aria-components/slots";
 import type * as React from "react";
 
+import { Button, type ButtonProps } from "@/registry/ui/button";
 import { fieldStyles } from "@/registry/ui/field";
+import { Group } from "@/registry/ui/group";
+import { Input } from "@/registry/ui/input";
 
 interface NumberFieldProps extends React.ComponentProps<typeof NumberFieldPrimitives.NumberField> {}
 const NumberField = ({ className, ...props }: NumberFieldProps) => {
@@ -17,34 +18,40 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
 			className={composeRenderProps(className, (className) => fieldStyles().field({ className }))}
 			{...props}
 		>
-			{composeRenderProps(props.children, (children) => (
-				<NumberFieldInner>{children}</NumberFieldInner>
-			))}
+			{composeRenderProps(
+				props.children,
+				(children) =>
+					children ?? (
+						<Group>
+							<Input />
+							<Button slot="decrement">
+								<MinusIcon />
+							</Button>
+							<Button slot="increment">
+								<PlusIcon />
+							</Button>
+						</Group>
+					),
+			)}
 		</NumberFieldPrimitives.NumberField>
 	);
 };
 
-const NumberFieldInner = ({ children }: { children: React.ReactNode }) => {
-	const incrementBtnCtx = useSlottedContext(ButtonPrimitives.ButtonContext, "increment");
-	const decrementBtnCtx = useSlottedContext(ButtonPrimitives.ButtonContext, "decrement");
+const NumberFieldDecrement = ({ children, ...props }: ButtonProps) => {
 	return (
-		<Provider
-			values={[
-				[
-					ButtonPrimitives.ButtonContext,
-					{
-						slots: {
-							increment: { ...incrementBtnCtx, children: <PlusIcon /> },
-							decrement: { ...decrementBtnCtx, children: <MinusIcon /> },
-						},
-					},
-				],
-			]}
-		>
-			{children}
-		</Provider>
+		<Button slot="decrement" isIconOnly {...props}>
+			{children ?? <MinusIcon />}
+		</Button>
+	);
+};
+
+const NumberFieldIncrement = ({ children, ...props }: ButtonProps) => {
+	return (
+		<Button slot="increment" isIconOnly {...props}>
+			{children ?? <PlusIcon />}
+		</Button>
 	);
 };
 
 export type { NumberFieldProps };
-export { NumberField };
+export { Group as NumberFieldGroup, NumberField, NumberFieldDecrement, NumberFieldIncrement };

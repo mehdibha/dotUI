@@ -39,7 +39,7 @@ export const componentsData: ComponentCategory[] = [
 			{ name: "InputGroup", slug: "input-group", href: "/docs/components/input-group", done: true },
 			{ name: "TextField", slug: "text-field", href: "/docs/components/text-field" },
 			{ name: "SearchField", slug: "search-field", href: "/docs/components/search-field" },
-			{ name: "NumberField", slug: "number-field", href: "/docs/components/number-field" },
+			{ name: "NumberField", slug: "number-field", href: "/docs/components/number-field", done: true },
 			{ name: "Checkbox", slug: "checkbox", href: "/docs/components/checkbox", done: true },
 			{ name: "CheckboxGroup", slug: "checkbox-group", href: "/docs/components/checkbox-group", done: true },
 			{ name: "RadioGroup", slug: "radio-group", href: "/docs/components/radio-group" },
@@ -128,7 +128,7 @@ export const componentsData: ComponentCategory[] = [
 		slug: "overlays",
 		components: [
 			// { name: "Dialog", slug: "dialog", href: "/docs/components/dialog", iframe: true },
-			{ name: "Modal", slug: "modal", href: "/docs/components/modal", scale: 0.6, iframe: true },
+			{ name: "Modal", slug: "modal", href: "/docs/components/modal", scale: 0.6, iframe: true, done: true },
 			{ name: "Popover", slug: "popover", href: "/docs/components/popover", iframe: true },
 			{ name: "Drawer", slug: "drawer", href: "/docs/components/drawer", iframe: true },
 			{ name: "Tooltip", slug: "tooltip", href: "/docs/components/tooltip", iframe: true },

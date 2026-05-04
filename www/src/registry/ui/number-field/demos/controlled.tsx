@@ -2,10 +2,9 @@
 
 import React from "react";
 
-import { Button } from "@/registry/ui/button";
 import { Group } from "@/registry/ui/group";
 import { Input } from "@/registry/ui/input";
-import { NumberField } from "@/registry/ui/number-field";
+import { NumberField, NumberFieldDecrement, NumberFieldIncrement } from "@/registry/ui/number-field";
 
 export default function Demo() {
 	const [inputValue, setInputValue] = React.useState(69);
@@ -19,9 +18,9 @@ export default function Demo() {
 				}}
 			>
 				<Group>
-					<Button slot="decrement" />
+					<NumberFieldDecrement />
 					<Input />
-					<Button slot="increment" />
+					<NumberFieldIncrement />
 				</Group>
 			</NumberField>
 			<p className="text-fg-muted text-sm">mirrored number: {inputValue}</p>

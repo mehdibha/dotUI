@@ -5,7 +5,7 @@ import DateFieldDemo from "@/registry/ui/date-field/demos/basic";
 import { Description, Field, Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 import InputDemo from "@/registry/ui/input/demos/default";
-import NumberFieldDemo from "@/registry/ui/number-field/demos/default";
+import NumberFieldDemo from "@/registry/ui/number-field/demos/basic";
 import SearchFieldDemo from "@/registry/ui/search-field/demos/default";
 import TextAreaDemo from "@/registry/ui/text-area/demos/default";
 import { TextField } from "@/registry/ui/text-field";

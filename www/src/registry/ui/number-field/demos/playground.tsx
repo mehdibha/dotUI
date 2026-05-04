@@ -1,8 +1,7 @@
-"use client";
-
 import { Label } from "@/registry/ui/field";
+import { Group } from "@/registry/ui/group";
 import { Input } from "@/registry/ui/input";
-import { NumberField } from "@/registry/ui/number-field";
+import { NumberField, NumberFieldDecrement, NumberFieldIncrement } from "@/registry/ui/number-field";
 
 interface NumberFieldPlaygroundProps {
 	label?: string;
@@ -15,7 +14,11 @@ export function NumberFieldPlayground({ label = "Quantity", ...props }: NumberFi
 	return (
 		<NumberField defaultValue={1} {...props}>
 			{label && <Label>{label}</Label>}
-			<Input />
+			<Group>
+				<NumberFieldDecrement />
+				<Input />
+				<NumberFieldIncrement />
+			</Group>
 		</NumberField>
 	);
 }

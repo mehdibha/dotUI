@@ -1,30 +1,29 @@
-import { Button } from "@/registry/ui/button";
 import { Group } from "@/registry/ui/group";
 import { Input } from "@/registry/ui/input";
-import { NumberField } from "@/registry/ui/number-field";
+import { NumberField, NumberFieldDecrement, NumberFieldIncrement } from "@/registry/ui/number-field";
 
 export default function Demo() {
 	return (
 		<div className="flex items-center gap-4">
 			<NumberField aria-label="small (sm)" defaultValue={1024}>
 				<Group>
-					<Button slot="decrement" />
+					<NumberFieldDecrement size="sm" />
 					<Input placeholder="small (sm)" size="sm" />
-					<Button slot="increment" />
+					<NumberFieldIncrement size="sm" />
 				</Group>
 			</NumberField>
 			<NumberField aria-label="medium (md)" defaultValue={1024}>
 				<Group>
-					<Button slot="decrement" />
-					<Input placeholder="medium (md)" size="md" />
-					<Button slot="increment" />
+					<NumberFieldDecrement/>
+					<Input placeholder="medium (md)" />
+					<NumberFieldIncrement/>
 				</Group>
 			</NumberField>
 			<NumberField aria-label="large (lg)" defaultValue={1024}>
 				<Group>
-					<Button slot="decrement" />
+					<NumberFieldDecrement size="lg" />
 					<Input placeholder="large (lg)" size="lg" />
-					<Button slot="increment" />
+					<NumberFieldIncrement size="lg" />
 				</Group>
 			</NumberField>
 		</div>
