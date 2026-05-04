@@ -39,6 +39,7 @@ export const ExamplesIndex: Record<
   "input-group": () => import("@/registry/ui/input-group/examples"),
   "kbd": () => import("@/registry/ui/kbd/examples"),
   "list-box": () => import("@/registry/ui/list-box/examples"),
+  "loader": () => import("@/registry/ui/loader/examples"),
   "menu": () => import("@/registry/ui/menu/examples"),
   "modal": () => import("@/registry/ui/modal/examples"),
   "number-field": () => import("@/registry/ui/number-field/examples"),

@@ -112,6 +112,42 @@ function DesignSystemProvider({
 	return <DesignSystemContext.Provider value={value}>{children}</DesignSystemContext.Provider>;
 }
 
+function useComponentParams(componentName: string): Record<string, string> {
+	const { params } = React.useContext(DesignSystemContext);
+	return params[componentName] ?? {};
+}
+
+interface DynamicComponentConfig<Props extends object, Value extends string> {
+	componentName: string;
+	paramName: string;
+	defaultValue: Value;
+	components: Record<Value, React.ComponentType<Props>>;
+	displayName?: string;
+}
+
+function createDynamicComponent<Props extends object, const Value extends string>({
+	componentName,
+	paramName,
+	defaultValue,
+	components,
+	displayName,
+}: DynamicComponentConfig<Props, Value>) {
+	function DynamicComponent(props: Props) {
+		const componentParams = useComponentParams(componentName);
+		const selectedValue = componentParams[paramName];
+		const Component =
+			selectedValue && Object.prototype.hasOwnProperty.call(components, selectedValue)
+				? components[selectedValue as Value]
+				: components[defaultValue];
+
+		return React.createElement(Component, props);
+	}
+
+	DynamicComponent.displayName = displayName ?? `Dynamic(${componentName}.${paramName})`;
+
+	return DynamicComponent;
+}
+
 /* ------------------------------ createStyles ----------------------------- */
 
 /**
@@ -331,4 +367,4 @@ function createStyles<const M extends RegistryItem, const Base>(
 }
 
 export type { VariantProps };
-export { createStyles, DesignSystemContext, DesignSystemProvider };
+export { createDynamicComponent, createStyles, DesignSystemContext, DesignSystemProvider, useComponentParams };

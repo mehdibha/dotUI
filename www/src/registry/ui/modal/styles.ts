@@ -5,7 +5,7 @@ import modalMeta from "./meta";
 const { useStyles, styles } = createStyles(modalMeta, {
 	base: {
 		slots: {
-			overlay: "group/modal absolute top-0 left-0 z-100 h-(--page-height) w-full",
+			overlay: "group/modal absolute top-0 left-0 isolate z-100 h-(--page-height) w-full",
 			backdrop: [
 				"size-full duration-200 [backdrop-filter:blur(var(--modal-backdrop-blur))] [background-color:rgb(0_0_0/var(--modal-backdrop-opacity))] group-exiting/modal:duration-150",
 				"transition-opacity group-entering/modal:opacity-0 group-exiting/modal:opacity-0",

@@ -26,6 +26,7 @@ export type ComponentGroup =
 /* ------------------------------- Params ------------------------------- */
 
 export type TokenType = "radius" | "color" | "spacing" | "font-size" | "blur" | "opacity";
+export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number];
 
 /**
  * An "enum" param: user picks one of a fixed set of named values.
@@ -37,6 +38,7 @@ export type EnumParamDef = {
 	kind: "enum";
 	default: string;
 	values: readonly string[];
+	files?: Record<string, readonly RegistryItemFile[]>;
 	description?: string;
 };
 

@@ -1245,6 +1245,10 @@ export const DemosIndex: Record<
     files: ["ui/list-box/demos/with-icons.tsx"],
     component: React.lazy(() => import("@/registry/ui/list-box/demos/with-icons")),
   },
+  "loader/demos/basic": {
+    files: ["ui/loader/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/loader/demos/basic")),
+  },
   "menu/demos/basic": {
     files: ["ui/menu/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/menu/demos/basic")),
