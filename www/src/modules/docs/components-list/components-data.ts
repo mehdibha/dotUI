@@ -129,7 +129,7 @@ export const componentsData: ComponentCategory[] = [
 		components: [
 			// { name: "Dialog", slug: "dialog", href: "/docs/components/dialog", iframe: true },
 			{ name: "Modal", slug: "modal", href: "/docs/components/modal", scale: 0.6, iframe: true, done: true },
-			{ name: "Popover", slug: "popover", href: "/docs/components/popover", iframe: true },
+			{ name: "Popover", slug: "popover", href: "/docs/components/popover", iframe: true, done: true },
 			{ name: "Drawer", slug: "drawer", href: "/docs/components/drawer", iframe: true },
 			{ name: "Tooltip", slug: "tooltip", href: "/docs/components/tooltip", iframe: true },
 		],
