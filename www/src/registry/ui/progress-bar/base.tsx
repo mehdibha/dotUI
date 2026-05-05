@@ -1,79 +1,81 @@
 "use client";
 
+import { type ComponentProps, createContext, use } from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
-import type * as React from "react";
-import type { VariantProps } from "tailwind-variants";
-
-import { createScopedContext } from "@/registry/lib/context";
+import * as ProgressBarPrimitive from "react-aria-components/ProgressBar";
 
 import { useStyles } from "./styles";
-import type { ProgressBarStyles } from "./styles";
 
-// MARK: progressBarStyles
-
-const [ProgressBarProvider, useProgressBarContext] = createScopedContext<
-	VariantProps<ProgressBarStyles> & {
-		isIndeterminate: boolean;
-		valueText?: string;
-		percentage?: number;
+const ProgressBarContext = createContext<ProgressBarPrimitive.ProgressBarRenderProps | null>(null);
+const useProgressBarContext = (componentName: string) => {
+	const context = use(ProgressBarContext);
+	if (!context) {
+		throw new Error(`${componentName} must be used within a ProgressBar`);
 	}
->("ProgressRoot");
+	return context;
+};
 
-interface ProgressBarProps extends React.ComponentProps<typeof ProgressBarPrimitives.ProgressBar> {}
+// MARK: Separator
 
+interface ProgressBarProps extends ComponentProps<typeof ProgressBarPrimitive.ProgressBar> {}
 const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
 	const { root } = useStyles()();
 	return (
-		<ProgressBarPrimitives.ProgressBar
+		<ProgressBarPrimitive.ProgressBar
 			className={composeRenderProps(className, (className) => root({ className }))}
 			{...props}
 		>
-			{composeRenderProps(children, (children, { isIndeterminate, valueText, percentage }) => (
-				<ProgressBarProvider isIndeterminate={isIndeterminate} valueText={valueText} percentage={percentage}>
-					{children ?? <ProgressBarControl />}
-				</ProgressBarProvider>
+			{composeRenderProps(children, (children, state) => (
+				<ProgressBarContext value={state}>{children ?? <ProgressBarTrack />}</ProgressBarContext>
 			))}
-		</ProgressBarPrimitives.ProgressBar>
+		</ProgressBarPrimitive.ProgressBar>
 	);
 };
 
 // MARK: Separator
 
-interface ProgressBarControlProps extends React.ComponentProps<"div">, VariantProps<ProgressBarStyles> {
-	duration?: `${number}s` | `${number}ms`;
-}
-
-const ProgressBarControl = ({ className, variant, size, duration, ...props }: ProgressBarControlProps) => {
-	const { indicator, filler } = useStyles()();
-	const { isIndeterminate, percentage } = useProgressBarContext("ProgressBarControl");
-
+interface ProgressBarControlProps extends React.ComponentProps<"div"> {}
+const ProgressBarTrack = ({ children, className, ...props }: ProgressBarControlProps) => {
+	const { track } = useStyles()();
 	return (
-		<div className={indicator({ variant, size, className })} {...props}>
-			<div
-				data-rac=""
-				data-indeterminate={isIndeterminate || undefined}
-				className={filler({ variant, size })}
-				style={
-					{
-						"--progress-duration": duration,
-						transform: percentage ? `scaleX(${percentage / 100})` : undefined,
-					} as React.CSSProperties
-				}
-			/>
+		<div className={track({ className })} {...props}>
+			{children ?? <ProgressBarFill />}
 		</div>
 	);
 };
 
 // MARK: Separator
 
-interface ProgressBarValueLabelProps extends React.ComponentProps<"span"> {}
-const ProgressBarValueLabel = ({ className, ...props }: ProgressBarValueLabelProps) => {
-	const { valueLabel } = useStyles()();
+interface ProgressBarControlProps extends React.ComponentProps<"div"> {}
+const ProgressBarFill = ({ className, style, ...props }: ProgressBarControlProps) => {
+	const { fill } = useStyles()();
+	const { isIndeterminate, percentage } = useProgressBarContext("ProgressBarControl");
+
+	return (
+		<div
+			data-rac=""
+			data-indeterminate={isIndeterminate || undefined}
+			className={fill({ className })}
+			style={
+				{
+					transform: percentage ? `scaleX(${percentage / 100})` : undefined,
+					...style,
+				} as React.CSSProperties
+			}
+			{...props}
+		/>
+	);
+};
+
+// MARK: Separator
+
+interface ProgressBarOutputProps extends React.ComponentProps<"span"> {}
+const ProgressBarOutput = ({ className, ...props }: ProgressBarOutputProps) => {
+	const { output } = useStyles()();
 	const { valueText } = useProgressBarContext("ProgressBarValueLabel");
 
 	return (
-		<span className={valueLabel({ className })} {...props}>
+		<span className={output({ className })} {...props}>
 			{valueText}
 		</span>
 	);
@@ -81,5 +83,5 @@ const ProgressBarValueLabel = ({ className, ...props }: ProgressBarValueLabelPro
 
 // MARK: Separator
 
-export type { ProgressBarControlProps, ProgressBarProps, ProgressBarValueLabelProps };
-export { ProgressBar, ProgressBarControl, ProgressBarValueLabel };
+export type { ProgressBarControlProps, ProgressBarOutputProps, ProgressBarProps };
+export { ProgressBar, ProgressBarFill, ProgressBarOutput, ProgressBarTrack };

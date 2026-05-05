@@ -1463,7 +1463,7 @@ export const DemosIndex: Record<
 	},
 	"progress-bar/demos/default": {
 		files: ["ui/progress-bar/demos/default.tsx"],
-		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/default")),
+		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/animated")),
 	},
 	"progress-bar/demos/duration": {
 		files: ["ui/progress-bar/demos/duration.tsx"],
