@@ -1,8 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Button } from "@/registry/ui/button";
+import { Command } from "@/registry/ui/command";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 import { Label } from "@/registry/ui/field";
-import { ListBox } from "@/registry/ui/list-box";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Modal } from "@/registry/ui/modal";
+import { SearchField } from "@/registry/ui/search-field";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 
 export const Route = createFileRoute("/playground")({
@@ -55,6 +60,40 @@ function RouteComponent() {
 						</ListBox>
 					</Drawer>
 				</Select>
+
+				<Dialog>
+					<Button>Open Dialog</Button>
+					<Drawer>
+						<Command>
+							<SearchField autoFocus />
+							<ListBox>
+								{providers.map((provider) => (
+									<ListBoxItem key={provider.id} id={provider.id}>
+										{provider.name}
+									</ListBoxItem>
+								))}
+							</ListBox>
+						</Command>
+					</Drawer>
+				</Dialog>
+
+				<Dialog>
+					<Button>Open Dialog</Button>
+					<Modal>
+						<DialogContent>
+							<Command>
+								<SearchField autoFocus />
+								<ListBox>
+									{providers.map((provider) => (
+										<ListBoxItem key={provider.id} id={provider.id}>
+											{provider.name}
+										</ListBoxItem>
+									))}
+								</ListBox>
+							</Command>
+						</DialogContent>
+					</Modal>
+				</Dialog>
 			</div>
 		</div>
 	);

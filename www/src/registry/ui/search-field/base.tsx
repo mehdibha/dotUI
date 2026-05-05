@@ -1,11 +1,13 @@
 "use client";
 
+import { SearchIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SearchFieldPrimitives from "react-aria-components/SearchField";
 import type * as React from "react";
 
 import { cn } from "@/registry/lib/utils";
 import { useStyles } from "@/registry/ui/field/styles";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 
 // MARK: searchFieldStyles
 
@@ -26,7 +28,16 @@ const SearchField = ({ className, ...props }: SearchFieldProps) => {
 				),
 			)}
 			{...props}
-		/>
+		>
+			{props?.children ?? (
+				<InputGroup>
+					<InputGroupAddon>
+						<SearchIcon />
+					</InputGroupAddon>
+					<Input />
+				</InputGroup>
+			)}
+		</SearchFieldPrimitives.SearchField>
 	);
 };
 

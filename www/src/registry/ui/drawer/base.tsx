@@ -5,6 +5,8 @@ import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import { DismissButton } from "react-aria/Overlay";
 import { useIsHidden } from "react-aria/private/collections/Hidden";
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder";
+import { isScrollable } from "react-aria/private/utils/isScrollable";
+import { useViewportSize } from "react-aria/private/utils/useViewportSize";
 import { useInteractOutside } from "react-aria/useInteractOutside";
 import { OverlayTriggerStateContext } from "react-aria-components/Dialog";
 import { useOverlayTriggerState } from "react-stately";
@@ -30,6 +32,13 @@ type DrawerPopupRenderProps = React.HTMLAttributes<HTMLDivElement> & {
 	ref?: React.Ref<HTMLDivElement>;
 };
 
+type DrawerViewportStyle = React.CSSProperties & {
+	"--page-height"?: string;
+	"--page-width"?: string;
+	"--visual-viewport-height"?: string;
+	"--visual-viewport-width"?: string;
+};
+
 function resolveClassName<TState>(
 	className: string | ((state: TState) => string | undefined) | undefined,
 	state: TState,
@@ -46,6 +55,36 @@ function stripPopupDialogProps(props: DrawerPopupRenderProps) {
 	} = props;
 
 	return presentationProps;
+}
+
+function getPageSize() {
+	if (typeof document === "undefined") {
+		return {};
+	}
+
+	const scrollingElement = isScrollable(document.body)
+		? document.body
+		: document.scrollingElement || document.documentElement;
+	const rect = scrollingElement.getBoundingClientRect();
+	const fractionalWidthDifference = rect.width % 1;
+	const fractionalHeightDifference = rect.height % 1;
+
+	return {
+		pageWidth: scrollingElement.scrollWidth - fractionalWidthDifference,
+		pageHeight: scrollingElement.scrollHeight - fractionalHeightDifference,
+	};
+}
+
+function useOverlayViewportStyle(): DrawerViewportStyle {
+	const viewport = useViewportSize();
+	const { pageHeight, pageWidth } = getPageSize();
+
+	return {
+		"--visual-viewport-width": `${viewport.width}px`,
+		"--visual-viewport-height": `${viewport.height}px`,
+		"--page-width": pageWidth !== undefined ? `${pageWidth}px` : undefined,
+		"--page-height": pageHeight !== undefined ? `${pageHeight}px` : undefined,
+	};
 }
 
 function getInitialFocusTarget(popupElement: HTMLDivElement | null) {
@@ -84,6 +123,7 @@ function Drawer({
 	const isHidden = useIsHidden();
 	const { backdrop, popup, viewport } = useStyles()();
 	const popupRef = React.useRef<HTMLDivElement>(null);
+	const viewportStyle = useOverlayViewportStyle();
 	const contextState = React.useContext(OverlayTriggerStateContext);
 	const localState = useOverlayTriggerState({
 		isOpen,
@@ -124,7 +164,7 @@ function Drawer({
 				<DrawerPrimitive.Portal>
 					<ClearPressResponder>
 						<DrawerPrimitive.Backdrop className={backdrop()} />
-						<DrawerPrimitive.Viewport className={viewport({ placement })}>
+						<DrawerPrimitive.Viewport className={viewport({ placement })} style={viewportStyle}>
 							<DrawerPrimitive.Popup
 								data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ""}
 								initialFocus={() => getInitialFocusTarget(popupRef.current)}
