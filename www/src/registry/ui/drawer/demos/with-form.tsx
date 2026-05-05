@@ -42,7 +42,7 @@ export default function Demo() {
 						</TextField>
 					</DialogBody>
 					<DialogFooter>
-						<Button slot="close" variant="outline">
+						<Button slot="close" variant="quiet">
 							Cancel
 						</Button>
 						<Button slot="close">Save</Button>

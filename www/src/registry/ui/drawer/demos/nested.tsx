@@ -37,7 +37,7 @@ export default function Demo() {
 									</DialogBody>
 									<DialogFooter>
 										<Dialog>
-											<Button variant="outline">Open grandchild</Button>
+											<Button variant="quiet">Open grandchild</Button>
 											<Drawer>
 												<DialogContent>
 													<DrawerHandle />

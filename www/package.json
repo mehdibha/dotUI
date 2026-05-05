@@ -15,6 +15,7 @@
 		"build:references": "tsx scripts/api-docs-builder/src/index.ts"
 	},
 	"dependencies": {
+		"@base-ui/react": "1.4.1",
 		"@fontsource-variable/geist": "^5.2.8",
 		"@fontsource-variable/josefin-sans": "^5.2.8",
 		"@fontsource/geist-mono": "^5.2.7",

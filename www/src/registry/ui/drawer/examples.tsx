@@ -3,6 +3,7 @@ import { Examples } from "@/modules/create/preview/examples";
 
 import Basic from "./demos/basic";
 import Controlled from "./demos/controlled";
+import DialogParts from "./demos/dialog-parts";
 import HandleOnly from "./demos/handle-only";
 import Indent from "./demos/indent";
 import Nested from "./demos/nested";
@@ -16,6 +17,9 @@ export default function DrawerExamples() {
 		<Examples className="md:grid-cols-2">
 			<Example title="basic">
 				<Basic />
+			</Example>
+			<Example title="dialog parts">
+				<DialogParts />
 			</Example>
 			<Example title="placement">
 				<Placement />

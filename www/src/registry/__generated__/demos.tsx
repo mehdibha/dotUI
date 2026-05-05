@@ -905,6 +905,10 @@ export const DemosIndex: Record<
 		files: ["ui/drawer/demos/controlled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/drawer/demos/controlled")),
 	},
+	"drawer/demos/dialog-parts": {
+		files: ["ui/drawer/demos/dialog-parts.tsx"],
+		component: React.lazy(() => import("@/registry/ui/drawer/demos/dialog-parts")),
+	},
 	"drawer/demos/handle-only": {
 		files: ["ui/drawer/demos/handle-only.tsx"],
 		component: React.lazy(() => import("@/registry/ui/drawer/demos/handle-only")),

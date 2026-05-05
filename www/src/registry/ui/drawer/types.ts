@@ -1,25 +1,32 @@
+import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import type * as React from "react";
 
-import type { DrawerPlacement } from "./internal/types";
-import type { SwipeThreshold } from "./internal/use-drawer-gesture";
+export type DrawerPlacement = "top" | "bottom" | "left" | "right";
 
 /**
- * A drawer overlay built on react-aria hooks, with drag-to-dismiss gesture
- * ported from Base UI's `<Drawer>` (velocity-aware release, sqrt
- * rubber-banding, pointer capture, scroll-edge detection, axis lock,
- * cross-axis scroll preservation, reverse-cancel, selection veto).
+ * A React Aria compatible drawer overlay powered by Base UI's Drawer overlay
+ * primitives.
  */
-export interface DrawerProps extends Omit<React.ComponentProps<"div">, "children" | "onDrag"> {
+export interface DrawerProps
+	extends Omit<
+		DrawerPrimitive.Root.Props,
+		"children" | "defaultOpen" | "disablePointerDismissal" | "onOpenChange" | "open" | "swipeDirection"
+	> {
 	/**
 	 * The side of the screen where the drawer appears.
 	 * @default 'bottom'
 	 */
 	placement?: DrawerPlacement;
+	open?: boolean;
+	isOpen?: boolean;
+	defaultOpen?: boolean;
+	onOpenChange?: (open: boolean) => void;
 	/**
 	 * Whether the user can drag the drawer to dismiss it.
 	 * @default true
 	 */
 	swipeToDismiss?: boolean;
+	swipeDirection?: DrawerPrimitive.Root.Props["swipeDirection"];
 	/**
 	 * If true, only `<DrawerHandle>` / `<DrawerDragArea>` initiate a drag.
 	 * Otherwise pointerdown anywhere on the drawer (except interactive elements
@@ -32,7 +39,7 @@ export interface DrawerProps extends Omit<React.ComponentProps<"div">, "children
 	 * velocity. Accepts a function form for size-aware thresholds.
 	 * @default 40
 	 */
-	swipeThreshold?: SwipeThreshold;
+	swipeThreshold?: number;
 	/**
 	 * Selector for descendants where pointerdown should NOT start a drag.
 	 * Merged with the built-in interactive-elements selector. Use this to
@@ -45,7 +52,10 @@ export interface DrawerProps extends Omit<React.ComponentProps<"div">, "children
 	/** Whether pressing Escape is suppressed. @default false */
 	isKeyboardDismissDisabled?: boolean;
 	/** Props forwarded to the underlay (backdrop) element. */
-	overlayProps?: React.HTMLAttributes<HTMLDivElement>;
+	overlayProps?: DrawerPrimitive.Backdrop.Props;
+	portalProps?: DrawerPrimitive.Portal.Props;
+	viewportProps?: DrawerPrimitive.Viewport.Props;
+	popupProps?: DrawerPrimitive.Popup.Props;
 
 	/** Fires once per gesture, on the first activated move. */
 	onSwipeStart?: (e: PointerEvent) => void;
@@ -60,16 +70,14 @@ export interface DrawerProps extends Omit<React.ComponentProps<"div">, "children
 /** A visible drag affordance. Registers itself as a drag source. */
 export interface DrawerHandleProps extends React.ComponentProps<"div"> {}
 
-/** Invisible drag region for opting in custom areas under `swipeFromHandleOnly`. */
-export interface DrawerSwipeAreaProps extends React.ComponentProps<"div"> {}
+/** An edge region that can open the drawer by swiping. */
+export interface DrawerSwipeAreaProps extends DrawerPrimitive.SwipeArea.Props {}
 
 /** Optional explicit visual-state scope. Most apps don't need this. */
-export interface DrawerProviderProps {
-	children?: React.ReactNode;
-}
+export interface DrawerProviderProps extends DrawerPrimitive.Provider.Props {}
 
 /** Wraps page content; scales/translates while a drawer is open. */
-export interface DrawerIndentProps extends React.ComponentProps<"div"> {}
+export interface DrawerIndentProps extends DrawerPrimitive.Indent.Props {}
 
 /** The dark layer behind the indented content. */
-export interface DrawerIndentBackgroundProps extends React.ComponentProps<"div"> {}
+export interface DrawerIndentBackgroundProps extends DrawerPrimitive.IndentBackground.Props {}

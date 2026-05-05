@@ -3,7 +3,6 @@
 import { XIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DialogPrimitive from "react-aria-components/Dialog";
-import * as HeadingPrimitives from "react-aria-components/Heading";
 import * as TextPrimitives from "react-aria-components/Text";
 import type * as React from "react";
 
@@ -36,7 +35,7 @@ const DialogContent = ({ className, children, showCloseButton = false, ...props 
 				<>
 					{children}
 					{showCloseButton && (
-						<Button slot="close" variant="quiet" size="sm" isIconOnly className={closeButton()}>
+						<Button slot="close" variant="quiet" size="sm" isIconOnly aria-label="Close" className={closeButton()}>
 							<XIcon />
 						</Button>
 					)}
@@ -61,7 +60,9 @@ interface DialogTitleProps extends React.ComponentProps<typeof DialogPrimitive.H
 
 const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
 	const { title } = useStyles()();
-	return <DialogPrimitive.Heading data-slot="dialog-heading" className={title({ className })} {...props} />;
+	return (
+		<DialogPrimitive.Heading slot="title" data-slot="dialog-heading" className={title({ className })} {...props} />
+	);
 };
 
 // MARK: Separator

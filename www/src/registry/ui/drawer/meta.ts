@@ -4,6 +4,7 @@ const drawerMeta = {
 	name: "drawer",
 	type: "registry:ui",
 	group: "overlays",
+	dependencies: ["@base-ui/react"],
 	files: [
 		{
 			type: "registry:ui",
@@ -14,4 +15,3 @@ const drawerMeta = {
 } satisfies RegistryItem;
 
 export default drawerMeta;
-

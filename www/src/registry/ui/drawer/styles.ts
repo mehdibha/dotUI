@@ -5,54 +5,44 @@ import drawerMeta from "./meta";
 const { useStyles, styles } = createStyles(drawerMeta, {
 	base: {
 		slots: {
-			underlay:
-				"group/overlay fixed inset-0 z-50 before:fixed before:inset-0 before:bg-black/70 before:opacity-100 data-[starting-style]:before:opacity-0 data-[ending-style]:before:opacity-0 before:transition-opacity before:duration-500 before:ease-fluid-out before:content-['']",
-			overlay:
-				// Base UI nested-drawer pattern (verbatim variable names + height-collapse):
-				//   --drawer-height            own measured height
-				//   --drawer-frontmost-height  topmost drawer's measured height
-				//   --nested-drawers           integer count of drawers above this one
-				//   --bleed                    overhang past viewport bottom (3rem)
-				// When NOT nested: drawer at its natural height, transform = 0.
-				// When nested: parent's height collapses to (frontmost-height + bleed)
-				// with overflow-hidden so a tall parent shrinks to align with the topmost.
-				// Translate clamps to min(0,...) so parents never move DOWN — they only lift
-				// up to peek 24px above the topmost when needed.
-				// `[interpolate-size:allow-keywords]` lets the `height` transition between
-				// `auto` (natural) and `calc(var(--drawer-frontmost-height,0px))` (collapsed)
-				// — without it, browsers snap discretely on close.
-				"fixed bottom-0 z-50 flex flex-col border bg-bg shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.35)] [--bleed:3rem] [interpolate-size:allow-keywords] [transition-property:translate,height,--nested-drawers,--drawer-frontmost-height] [transition-duration:calc(500ms*var(--drawer-swipe-strength,1)),500ms,500ms,500ms] [transition-timing-function:cubic-bezier(0.32,0.72,0,1),cubic-bezier(0.32,0.72,0,1),cubic-bezier(0.32,0.72,0,1),cubic-bezier(0.32,0.72,0,1)] will-change-[translate,transform,height] [transform:translate3d(0,min(0px,calc(var(--drawer-height,0px)-var(--drawer-frontmost-height,0px)-var(--nested-drawers,0)*24px)),0)] data-[nested-drawer-open=true]:overflow-hidden data-[nested-drawer-open=true]:[height:calc(var(--drawer-frontmost-height,0px))] data-[swiping=true]:select-none data-[swiping=true]:transition-none data-[nested-drawer-swiping=true]:transition-none",
+			backdrop:
+				"fixed inset-0 z-50 bg-black/70 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity duration-500 ease-fluid-out data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[swiping]:duration-0",
+			viewport: "fixed inset-0 z-50 touch-none [--drawer-inset:0px] [--drawer-peek:24px]",
+			popup:
+				"relative flex max-h-full min-h-0 w-full min-w-0 flex-col border bg-bg text-fg shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.35)] outline-none will-change-[transform,height] [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [interpolate-size:allow-keywords] [transition-duration:calc(500ms*var(--drawer-swipe-strength,1))] [transition-property:transform,box-shadow,height,background-color,margin,padding] [transition-timing-function:cubic-bezier(0.32,0.72,0,1)] data-[swiping]:select-none data-[nested-drawer-open]:overflow-hidden data-[ending-style]:shadow-none data-[starting-style]:shadow-none data-[nested-drawer-swiping]:transition-none data-[swiping]:transition-none",
 			handle:
 				"mx-auto my-2 shrink-0 cursor-grab touch-none select-none rounded-full bg-fg/20 active:cursor-grabbing data-[orientation=horizontal]:h-1.5 data-[orientation=vertical]:h-12 data-[orientation=horizontal]:w-12 data-[orientation=vertical]:w-1.5",
+			swipeArea: "fixed z-50 touch-none",
 			indent:
-				// scale + translate driven by --drawer-progress (0 at rest, 1 fully open).
-				// `relative z-1 bg-bg` keeps it stacked above the fixed IndentBackground
-				// and ensures the scaled-away edges reveal the dark layer beneath.
-				// Transition is on while idle/opening; suppressed during active swipe so the
-				// page tracks the finger 1:1.
-				"relative z-1 min-h-screen bg-bg [border-radius:calc(var(--drawer-progress,0)*16px)] [transform-origin:50%_0] [transform:translate3d(0,calc(var(--drawer-progress,0)*8px),0)_scale(calc(1-0.04*var(--drawer-progress,0)))] [transition:transform_500ms_cubic-bezier(0.32,0.72,0,1),border-radius_500ms_cubic-bezier(0.32,0.72,0,1)] data-[swiping=true]:transition-none",
+				"relative z-1 min-h-screen bg-bg transition-[transform,border-radius] duration-500 ease-fluid-out data-[active]:rounded-2xl data-[inactive]:rounded-none data-[active]:[transform:translate3d(0,calc(8px*(1-var(--drawer-swipe-progress,0))),0)_scale(calc(0.96+0.04*var(--drawer-swipe-progress,0)))] data-[inactive]:[transform:translate3d(0,0,0)_scale(1)]",
 			indentBackground:
-				// opacity driven by --drawer-progress directly; transition only when not swiping.
-				// z-index 0 + DOM-first render keeps it behind the indented content.
-				"pointer-events-none fixed inset-0 z-0 bg-black [opacity:var(--drawer-progress,0)] [transition:opacity_500ms_cubic-bezier(0.32,0.72,0,1)] data-[swiping=true]:transition-none",
+				"pointer-events-none fixed inset-0 z-0 bg-black transition-opacity duration-500 ease-fluid-out data-[active]:opacity-100 data-[inactive]:opacity-0",
 		},
 		variants: {
 			placement: {
 				top: {
-					overlay:
-						"top-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen data-[starting-style]:-translate-y-full data-[ending-style]:-translate-y-full translate-y-0 rounded-b-xl border-t-0",
+					viewport: "grid grid-rows-[auto_1fr] pb-12",
+					popup:
+						"row-start-1 max-h-[80dvh] min-h-20 w-full rounded-b-xl border-t-0 [transform-origin:50%_0] [transform:translateY(var(--drawer-swipe-movement-y,0px))] data-[ending-style]:[transform:translateY(-100%)] data-[nested-drawer-open]:[height:var(--drawer-frontmost-height,var(--drawer-height,auto))] data-[nested-drawer-open]:[transform:translateY(calc(var(--drawer-swipe-movement-y,0px)+var(--drawer-stack-offset)+(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateY(-100%)]",
+					swipeArea: "inset-x-0 top-0 h-8",
 				},
 				bottom: {
-					overlay:
-						"bottom-0 max-h-[calc(var(--visual-viewport-height)*0.8)] min-h-20 w-screen data-[starting-style]:translate-y-full data-[ending-style]:translate-y-full translate-y-0 rounded-t-xl border-b-0",
+					viewport: "grid grid-rows-[1fr_auto] pt-12",
+					popup:
+						"row-start-2 max-h-[80dvh] min-h-20 w-full rounded-t-xl border-b-0 [transform-origin:50%_100%] [transform:translateY(var(--drawer-swipe-movement-y,0px))] data-[ending-style]:[transform:translateY(100%)] data-[nested-drawer-open]:[height:var(--drawer-frontmost-height,var(--drawer-height,auto))] data-[nested-drawer-open]:[transform:translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateY(100%)]",
+					swipeArea: "inset-x-0 bottom-0 h-8",
 				},
 				left: {
-					overlay:
-						"top-0 left-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] data-[starting-style]:-translate-x-full data-[ending-style]:-translate-x-full translate-x-0 rounded-r-xl border-l-0",
+					viewport: "flex justify-start pe-12",
+					popup:
+						"h-full min-w-20 max-w-[80vw] origin-right rounded-r-xl border-l-0 [transform:translateX(var(--drawer-swipe-movement-x,0px))] data-[ending-style]:[transform:translateX(-100%)] data-[nested-drawer-open]:[transform:translateX(calc(var(--drawer-swipe-movement-x,0px)+var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateX(-100%)]",
+					swipeArea: "inset-y-0 left-0 w-8",
 				},
 				right: {
-					overlay:
-						"top-0 right-0 h-(--visual-viewport-height) min-w-20 max-w-[80vw] data-[starting-style]:translate-x-full data-[ending-style]:translate-x-full translate-x-0 rounded-l-xl border-r-0",
+					viewport: "flex justify-end ps-12",
+					popup:
+						"h-full min-w-20 max-w-[80vw] origin-left rounded-l-xl border-r-0 [transform:translateX(var(--drawer-swipe-movement-x,0px))] data-[ending-style]:[transform:translateX(100%)] data-[nested-drawer-open]:[transform:translateX(calc(var(--drawer-swipe-movement-x,0px)-var(--drawer-stack-offset)))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateX(100%)]",
+					swipeArea: "inset-y-0 right-0 w-8",
 				},
 			},
 		},
