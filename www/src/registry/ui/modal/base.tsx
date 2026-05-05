@@ -1,8 +1,9 @@
 "use client";
 
+import { useIsHidden } from "react-aria/private/collections/Hidden";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ModalPrimitives from "react-aria-components/Modal";
-import type React from "react";
+import type * as React from "react";
 
 import { useStyles } from "./styles";
 
@@ -12,16 +13,22 @@ import { useStyles } from "./styles";
 
 interface ModalProps extends ModalOverlayProps {}
 
-const Modal = ({ children, className, ...props }: ModalProps) => (
-	<ModalOverlay {...props}>
-		<ModalBackdrop />
-		<ModalViewport>
-			<ModalPanel className={className}>
-						{children}
-			</ModalPanel>
-		</ModalViewport>
-	</ModalOverlay>
-);
+const Modal = ({ children, className, ...props }: ModalProps) => {
+	const isHidden = useIsHidden();
+
+	if (isHidden) {
+		return <>{children}</>;
+	}
+
+	return (
+		<ModalOverlay {...props}>
+			<ModalBackdrop />
+			<ModalViewport>
+				<ModalPanel className={className}>{children}</ModalPanel>
+			</ModalViewport>
+		</ModalOverlay>
+	);
+};
 
 // MARK: Separator
 
