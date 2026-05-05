@@ -2,7 +2,10 @@
 
 import * as React from "react";
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
+import { DismissButton } from "react-aria/Overlay";
+import { useIsHidden } from "react-aria/private/collections/Hidden";
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder";
+import { useInteractOutside } from "react-aria/useInteractOutside";
 import { OverlayTriggerStateContext } from "react-aria-components/Dialog";
 import { useOverlayTriggerState } from "react-stately";
 
@@ -34,18 +37,6 @@ function resolveClassName<TState>(
 	return typeof className === "function" ? className(state) : className;
 }
 
-function mergeClassNames<TState>(
-	state: TState,
-	...classNames: Array<string | ((state: TState) => string | undefined) | undefined>
-) {
-	return (
-		classNames
-			.map((className) => resolveClassName(className, state))
-			.filter(Boolean)
-			.join(" ") || undefined
-	);
-}
-
 function stripPopupDialogProps(props: DrawerPopupRenderProps) {
 	const {
 		"aria-describedby": _ariaDescribedBy,
@@ -65,30 +56,14 @@ function getInitialFocusTarget(popupElement: HTMLDivElement | null) {
 	);
 }
 
-interface DrawerProps
-	extends Omit<
-		DrawerPrimitive.Root.Props,
-		"children" | "defaultOpen" | "disablePointerDismissal" | "onOpenChange" | "open" | "swipeDirection"
-	> {
+interface DrawerProps {
 	placement?: DrawerPlacement;
-	open?: boolean;
 	isOpen?: boolean;
 	defaultOpen?: boolean;
 	onOpenChange?: (open: boolean) => void;
 	isDismissable?: boolean;
 	isKeyboardDismissDisabled?: boolean;
 	swipeToDismiss?: boolean;
-	swipeFromHandleOnly?: boolean;
-	swipeDirection?: DrawerPrimitive.Root.Props["swipeDirection"];
-	swipeThreshold?: number;
-	ignoreSelector?: string;
-	onSwipeStart?: (event: PointerEvent) => void;
-	onSwipeMove?: (info: { progress: number; movement: number }) => void;
-	onSwipeEnd?: (info: { dismissed: boolean; velocity: number }) => void;
-	overlayProps?: DrawerPrimitive.Backdrop.Props;
-	portalProps?: DrawerPrimitive.Portal.Props;
-	viewportProps?: DrawerPrimitive.Viewport.Props;
-	popupProps?: DrawerPrimitive.Popup.Props;
 	className?: DrawerPrimitive.Popup.Props["className"];
 	style?: DrawerPrimitive.Popup.Props["style"];
 	children?: React.ReactNode;
@@ -102,40 +77,36 @@ function Drawer({
 	isKeyboardDismissDisabled = false,
 	isOpen,
 	onOpenChange,
-	open,
-	overlayProps,
 	placement = "bottom",
-	popupProps,
-	portalProps,
-	ignoreSelector: _ignoreSelector,
-	swipeDirection,
-	swipeFromHandleOnly: _swipeFromHandleOnly,
-	swipeThreshold: _swipeThreshold,
 	swipeToDismiss = true,
-	onSwipeEnd: _onSwipeEnd,
-	onSwipeMove: _onSwipeMove,
-	onSwipeStart: _onSwipeStart,
 	style,
-	viewportProps,
-	...props
 }: DrawerProps) {
+	const isHidden = useIsHidden();
 	const { backdrop, popup, viewport } = useStyles()();
-	const popupRender = popupProps?.render;
 	const popupRef = React.useRef<HTMLDivElement>(null);
 	const contextState = React.useContext(OverlayTriggerStateContext);
-	const controlledOpen = isOpen ?? open;
 	const localState = useOverlayTriggerState({
-		isOpen: controlledOpen,
+		isOpen,
 		defaultOpen,
 		onOpenChange,
 	});
-	const state = controlledOpen !== undefined || defaultOpen !== undefined || !contextState ? localState : contextState;
+	const state = isOpen !== undefined || defaultOpen !== undefined || !contextState ? localState : contextState;
+
+	useInteractOutside({
+		ref: popupRef,
+		isDisabled: !state.isOpen || !isDismissable,
+		onInteractOutside: () => state.close(),
+	});
+
+	if (isHidden) {
+		return <>{children}</>;
+	}
 
 	return (
 		<DrawerPlacementContext.Provider value={placement}>
 			<DrawerPrimitive.Root
 				open={state.isOpen}
-				disablePointerDismissal={!isDismissable}
+				disablePointerDismissal
 				onOpenChange={(nextOpen, eventDetails) => {
 					if (!nextOpen && isKeyboardDismissDisabled && eventDetails.reason === "escape-key") {
 						eventDetails.cancel();
@@ -148,48 +119,34 @@ function Drawer({
 					if (nextOpen) state.open();
 					else state.close();
 				}}
-				swipeDirection={swipeDirection ?? swipeDirectionMap[placement]}
-				{...props}
+				swipeDirection={swipeDirectionMap[placement]}
 			>
-				<DrawerPrimitive.Portal {...portalProps}>
+				<DrawerPrimitive.Portal>
 					<ClearPressResponder>
-						<DrawerPrimitive.Backdrop
-							{...overlayProps}
-							className={(state) => backdrop({ className: resolveClassName(overlayProps?.className, state) })}
-						/>
-						<DrawerPrimitive.Viewport
-							{...viewportProps}
-							className={(state) =>
-								viewport({ placement, className: resolveClassName(viewportProps?.className, state) })
-							}
-						>
+						<DrawerPrimitive.Backdrop className={backdrop()} />
+						<DrawerPrimitive.Viewport className={viewport({ placement })}>
 							<DrawerPrimitive.Popup
-								{...popupProps}
-								data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ""}
-								initialFocus={popupProps?.initialFocus ?? (() => getInitialFocusTarget(popupRef.current))}
+								// data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ""}
+								initialFocus={() => getInitialFocusTarget(popupRef.current)}
 								className={(state) =>
 									popup({
 										placement,
-										className: mergeClassNames(state, className, popupProps?.className),
+										className: resolveClassName(className, state),
 									})
 								}
-								render={(renderProps, renderState) => {
+								render={(renderProps) => {
 									const presentationProps = stripPopupDialogProps(renderProps);
-
-									if (typeof popupRender === "function") {
-										return popupRender(presentationProps, renderState);
-									}
-
-									if (React.isValidElement(popupRender)) {
-										return React.cloneElement(popupRender, presentationProps);
-									}
 
 									return <div {...presentationProps} />;
 								}}
 								ref={popupRef}
-								style={{ ...style, ...popupProps?.style }}
+								style={style}
 							>
-								{children}
+								<OverlayTriggerStateContext.Provider value={state}>
+									{isDismissable && <DismissButton onDismiss={state.close} />}
+									{children}
+									{isDismissable && <DismissButton onDismiss={state.close} />}
+								</OverlayTriggerStateContext.Provider>
 							</DrawerPrimitive.Popup>
 						</DrawerPrimitive.Viewport>
 					</ClearPressResponder>

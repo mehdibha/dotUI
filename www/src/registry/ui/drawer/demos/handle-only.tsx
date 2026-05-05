@@ -5,23 +5,22 @@ import { Dialog, DialogBody, DialogContent, DialogHeader, DialogTitle } from "@/
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 
 /**
- * `swipeFromHandleOnly` — only the `<DrawerHandle>` (and `<DrawerSwipeArea>`)
- * starts a drag. Pointerdown on the body does nothing. Useful when the body has
- * complex content you don't want gesture-eligible.
+ * The handle is a visible affordance only. Swipe behavior is intentionally
+ * owned by the drawer implementation rather than exposed as a public option.
  */
 export default function Demo() {
 	return (
 		<Dialog>
-			<Button>Open handle-only drawer</Button>
-			<Drawer swipeFromHandleOnly>
+			<Button>Open drawer with handle</Button>
+			<Drawer>
 				<DialogContent>
 					<DrawerHandle />
 					<DialogHeader>
-						<DialogTitle>Drag the pill, not the body</DialogTitle>
+						<DialogTitle>Drawer with a handle</DialogTitle>
 					</DialogHeader>
 					<DialogBody>
-						<p>Try dragging this paragraph — nothing happens.</p>
-						<p className="mt-2 text-fg-muted text-sm">Then drag the pill above to dismiss.</p>
+						<p>The handle gives the drawer a clear drag affordance.</p>
+						<p className="mt-2 text-fg-muted text-sm">Swipe or press Escape to dismiss.</p>
 					</DialogBody>
 				</DialogContent>
 			</Drawer>

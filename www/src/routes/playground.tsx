@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 import { Label } from "@/registry/ui/field";
 import { ListBox } from "@/registry/ui/list-box";
-import { Modal } from "@/registry/ui/modal";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 
 export const Route = createFileRoute("/playground")({
@@ -24,7 +24,7 @@ function RouteComponent() {
 			<div className="space-y-2">
 				<h1 className="font-semibold text-2xl">Select Overlay Test</h1>
 				<p className="text-fg-muted text-sm">
-					The first select is the existing popover path. The second swaps SelectContent for a Modal child.
+					The first select is the existing popover path. The second swaps SelectContent for a Drawer child.
 				</p>
 			</div>
 
@@ -42,9 +42,10 @@ function RouteComponent() {
 				</Select>
 
 				<Select defaultSelectedKey="together-ai">
-					<Label>Modal</Label>
+					<Label>Drawer</Label>
 					<SelectTrigger />
-					<Modal className="p-1">
+					<Drawer placement="bottom" className="p-1">
+						<DrawerHandle />
 						<ListBox>
 							{providers.map((provider) => (
 								<SelectItem key={provider.id} id={provider.id}>
@@ -52,7 +53,7 @@ function RouteComponent() {
 								</SelectItem>
 							))}
 						</ListBox>
-					</Modal>
+					</Drawer>
 				</Select>
 			</div>
 		</div>

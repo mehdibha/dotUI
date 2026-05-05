@@ -5,15 +5,14 @@ import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTi
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 
 /**
- * `swipeToDismiss={false}` — gesture is disabled entirely. Backdrop click is
- * also disabled via `isDismissable={false}`. Only the explicit close button
- * works. Useful for confirmation drawers.
+ * `swipeToDismiss={false}` disables gesture dismissal, `isDismissable={false}`
+ * disables outside dismissal, and `isKeyboardDismissDisabled` suppresses Escape.
  */
 export default function Demo() {
 	return (
 		<Dialog>
 			<Button>Open non-dismissable</Button>
-			<Drawer swipeToDismiss={false} isDismissable={false}>
+			<Drawer swipeToDismiss={false} isDismissable={false} isKeyboardDismissDisabled>
 				<DialogContent>
 					<DrawerHandle />
 					<DialogHeader>
