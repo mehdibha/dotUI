@@ -62,7 +62,12 @@ function ContextMenu({
 				],
 			]}
 		>
-			<div data-context-menu="" {...contextMenu.triggerProps} ref={contextMenu.triggerRef}>
+			<div
+				{...contextMenu.triggerProps}
+				data-context-menu=""
+				data-disabled={isDisabled ? "" : undefined}
+				ref={contextMenu.triggerRef}
+			>
 				{children}
 			</div>
 			<span

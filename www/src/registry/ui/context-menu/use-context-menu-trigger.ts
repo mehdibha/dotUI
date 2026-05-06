@@ -5,6 +5,7 @@ import { mergeProps } from "react-aria/mergeProps";
 
 const LONG_PRESS_DELAY = 500;
 const TOUCH_MOVE_THRESHOLD = 10;
+const CONTEXT_MENU_OPEN_EVENT = "dotui-context-menu-open";
 
 interface ContextMenuTriggerState {
 	isOpen: boolean;
@@ -26,6 +27,12 @@ interface UseContextMenuTriggerProps {
 	triggerProps?: Omit<React.ComponentProps<"div">, "onContextMenu">;
 }
 
+interface ContextMenuOpenEventDetail {
+	x: number;
+	y: number;
+	size?: number;
+}
+
 function isNode(value: EventTarget | null): value is Node {
 	return value instanceof Node;
 }
@@ -33,6 +40,18 @@ function isNode(value: EventTarget | null): value is Node {
 function containsPoint(element: HTMLElement, x: number, y: number) {
 	const rect = element.getBoundingClientRect();
 	return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+}
+
+function findContextMenuTriggerAtPoint(doc: Document, x: number, y: number) {
+	const triggers = Array.from(doc.querySelectorAll<HTMLElement>("[data-context-menu]")).filter((trigger) =>
+		containsPoint(trigger, x, y),
+	);
+
+	return triggers.sort((a, b) => {
+		const aRect = a.getBoundingClientRect();
+		const bRect = b.getBoundingClientRect();
+		return aRect.width * aRect.height - bRect.width * bRect.height;
+	})[0];
 }
 
 function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, triggerProps }: UseContextMenuTriggerProps) {
@@ -82,6 +101,24 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 	}, []);
 
 	React.useEffect(() => {
+		const trigger = triggerRef.current;
+		if (!trigger || isDisabled) {
+			return;
+		}
+
+		function handleContextMenuOpen(event: Event) {
+			const { x, y, size = 0 } = (event as CustomEvent<ContextMenuOpenEventDetail>).detail;
+			openAtPoint(x, y, size);
+		}
+
+		trigger.addEventListener(CONTEXT_MENU_OPEN_EVENT, handleContextMenuOpen);
+
+		return () => {
+			trigger.removeEventListener(CONTEXT_MENU_OPEN_EVENT, handleContextMenuOpen);
+		};
+	}, [isDisabled, openAtPoint]);
+
+	React.useEffect(() => {
 		if (isDisabled) {
 			return;
 		}
@@ -105,10 +142,28 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 			}
 
 			if (state.isOpen) {
+				const contextMenuTrigger = findContextMenuTriggerAtPoint(doc, event.clientX, event.clientY);
+
+				if (contextMenuTrigger?.hasAttribute("data-disabled")) {
+					state.close();
+					return;
+				}
+
 				event.preventDefault();
 
-				if (triggerRef.current && containsPoint(triggerRef.current, event.clientX, event.clientY)) {
+				if (contextMenuTrigger === triggerRef.current) {
 					openAtPoint(event.clientX, event.clientY);
+					return;
+				}
+
+				if (contextMenuTrigger) {
+					state.close();
+					contextMenuTrigger.dispatchEvent(
+						new CustomEvent<ContextMenuOpenEventDetail>(CONTEXT_MENU_OPEN_EVENT, {
+							bubbles: false,
+							detail: { x: event.clientX, y: event.clientY },
+						}),
+					);
 				}
 			}
 		}
@@ -118,7 +173,7 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 		return () => {
 			doc.removeEventListener("contextmenu", handleDocumentContextMenu, true);
 		};
-	}, [isDisabled, openAtPoint, state.isOpen]);
+	}, [isDisabled, openAtPoint, state.close, state.isOpen]);
 
 	React.useEffect(() => {
 		return () => {
