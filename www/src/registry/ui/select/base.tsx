@@ -17,9 +17,15 @@ import type { PopoverProps } from "@/registry/ui/popover";
 
 // MARK: Separator
 
-interface SelectProps<T extends object> extends SelectPrimitives.SelectProps<T> {}
+type SelectSelectionMode = "single" | "multiple";
 
-const Select = <T extends object>({ className, ...props }: SelectProps<T>) => {
+interface SelectProps<T extends object, M extends SelectSelectionMode = "single">
+	extends SelectPrimitives.SelectProps<T, M> {}
+
+const Select = <T extends object, M extends SelectSelectionMode = "single">({
+	className,
+	...props
+}: SelectProps<T, M>) => {
 	const fieldStyles = useStyles();
 	return (
 		<SelectPrimitives.Select

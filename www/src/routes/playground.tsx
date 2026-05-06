@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Button } from "@/registry/ui/button";
 import { Command } from "@/registry/ui/command";
-import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { DialogContent } from "@/registry/ui/dialog";
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
 import { Label } from "@/registry/ui/field";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
@@ -34,8 +33,8 @@ function RouteComponent() {
 			</div>
 
 			<div className="grid gap-6 sm:grid-cols-2">
-				<Select defaultSelectedKey="perplexity">
-					<Label>Popover</Label>
+				<Select defaultValue={["perplexity"]} selectionMode="multiple">
+					<Label>select in popover</Label>
 					<SelectTrigger />
 					<SelectContent>
 						{providers.map((provider) => (
@@ -46,8 +45,8 @@ function RouteComponent() {
 					</SelectContent>
 				</Select>
 
-				<Select defaultSelectedKey="together-ai">
-					<Label>Drawer</Label>
+				<Select defaultValue="together-ai">
+					<Label>select in drawer</Label>
 					<SelectTrigger />
 					<Drawer placement="bottom" className="p-1">
 						<DrawerHandle />
@@ -61,29 +60,14 @@ function RouteComponent() {
 					</Drawer>
 				</Select>
 
-				<Dialog>
-					<Button>Open Dialog</Button>
-					<Drawer>
-						<Command>
-							<SearchField autoFocus />
-							<ListBox>
-								{providers.map((provider) => (
-									<ListBoxItem key={provider.id} id={provider.id}>
-										{provider.name}
-									</ListBoxItem>
-								))}
-							</ListBox>
-						</Command>
-					</Drawer>
-				</Dialog>
-
-				<Dialog>
-					<Button>Open Dialog</Button>
+				<Select defaultValue="together-ai">
+					<Label>select in modal</Label>
+					<SelectTrigger />
 					<Modal>
 						<DialogContent>
 							<Command>
 								<SearchField autoFocus />
-								<ListBox>
+								<ListBox selectionMode="single">
 									{providers.map((provider) => (
 										<ListBoxItem key={provider.id} id={provider.id}>
 											{provider.name}
@@ -93,7 +77,7 @@ function RouteComponent() {
 							</Command>
 						</DialogContent>
 					</Modal>
-				</Dialog>
+				</Select>
 			</div>
 		</div>
 	);
