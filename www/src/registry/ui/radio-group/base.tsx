@@ -1,12 +1,15 @@
 "use client";
 
 import { createContext, useContext, useId } from "react";
+import { useSlotId } from "react-aria/private/utils/useId";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { LabelContext } from "react-aria-components/Label";
 import * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
-import { Provider } from "react-aria-components/slots";
+import { Provider, useSlottedContext } from "react-aria-components/slots";
 import { tv } from "tailwind-variants";
 import type * as React from "react";
+
+import { Label } from "@/registry/ui/field";
 
 import { useStyles } from "./styles";
 
@@ -35,25 +38,31 @@ const Radio = ({ id: idProp, className, ...props }: RadioProps) => {
 	const { root } = useStyles()();
 	const autoId = useId();
 	const id = idProp ?? autoId;
+	const labelId = useSlotId();
 	return (
 		<RadioGroupPrimitives.RadioField
-			id={id}
 			data-slot="radio"
 			data-radio=""
+			id={id}
+			aria-labelledby={labelId}
 			className={composeRenderProps(className, (className) => root({ className }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children) => {
-				const content =
-					typeof children === "string" || typeof children === "number" ? (
-						<RadioControl>
-							<RadioIndicator />
-							{children}
-						</RadioControl>
-					) : (
-						(children ?? <RadioControl />)
-					);
-				return <Provider values={[[LabelContext, { htmlFor: id }]]}>{content}</Provider>;
+				return children ? (
+					<Provider values={[[LabelContext, { htmlFor: id, id: labelId }]]}>
+						{typeof children === "string" ? (
+							<>
+								<RadioControl />
+								<Label>{children}</Label>
+							</>
+						) : (
+							children
+						)}
+					</Provider>
+				) : (
+					<RadioControl />
+				);
 			})}
 		</RadioGroupPrimitives.RadioField>
 	);
@@ -63,6 +72,8 @@ interface RadioControlProps extends React.ComponentProps<typeof RadioGroupPrimit
 
 const RadioControl = ({ className, ...props }: RadioControlProps) => {
 	const { control } = useStyles()();
+	const labelContext = useSlottedContext(LabelContext);
+	const { id: labelId } = labelContext ?? {};
 	return (
 		<RadioGroupPrimitives.RadioButton
 			data-radio-control=""
@@ -74,7 +85,7 @@ const RadioControl = ({ className, ...props }: RadioControlProps) => {
 					<Provider
 						values={[
 							[InternalRadioContext, renderProps],
-							[LabelContext, { elementType: "span" }],
+							[LabelContext, { id: labelId, elementType: "span" }],
 						]}
 					>
 						{children ?? <RadioIndicator />}
