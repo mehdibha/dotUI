@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(popoverMeta, {
 	base: {
 		slots: {
 			popover: [
-				"popover z-50 w-72 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) overflow-y-auto rounded-(--popover-radius) border bg-popover shadow-md forced-color-adjust-none",
+				"popover z-50 w-72 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) overflow-y-auto rounded-(--popover-radius) border bg-popover shadow-md outline-none forced-color-adjust-none",
 				"transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:--spacing(0.5)]",
 				"entering:transform-(--origin) entering:scale-95 entering:opacity-0",
 				"exiting:transform-(--origin) exiting:scale-95 exiting:opacity-0 exiting:duration-150",

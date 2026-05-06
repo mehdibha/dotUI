@@ -24,6 +24,7 @@ export const ExamplesIndex: Record<
   "color-swatch-picker": () => import("@/registry/ui/color-swatch-picker/examples"),
   "combobox": () => import("@/registry/ui/combobox/examples"),
   "command": () => import("@/registry/ui/command/examples"),
+  "context-menu": () => import("@/registry/ui/context-menu/examples"),
   "date-field": () => import("@/registry/ui/date-field/examples"),
   "date-picker": () => import("@/registry/ui/date-picker/examples"),
   "dialog": () => import("@/registry/ui/dialog/examples"),

@@ -10,7 +10,6 @@ import { useMenuTriggerState } from "react-stately/useMenuTriggerState";
 
 interface ContextMenuProps extends Omit<React.ComponentProps<"div">, "onContextMenu"> {
 	children: React.ReactNode;
-	overlay: React.ReactNode;
 	isOpen?: boolean;
 	defaultOpen?: boolean;
 	onOpenChange?: (isOpen: boolean) => void;
@@ -21,7 +20,6 @@ interface ContextMenuProps extends Omit<React.ComponentProps<"div">, "onContextM
 
 function ContextMenu({
 	children,
-	overlay,
 	defaultOpen,
 	isOpen,
 	isDisabled = false,
@@ -31,23 +29,52 @@ function ContextMenu({
 	...triggerProps
 }: ContextMenuProps) {
 	const state = useMenuTriggerState({ defaultOpen, isOpen, onOpenChange });
+	const triggerRef = React.useRef<HTMLDivElement>(null);
 	const anchorRef = React.useRef<HTMLSpanElement>(null);
 	const menuRef = React.useRef<HTMLDivElement>(null);
 	const [anchor, setAnchor] = React.useState({ x: 0, y: 0 });
 
+	React.useEffect(() => {
+		if (isDisabled) {
+			return;
+		}
+
+		const doc = triggerRef.current?.ownerDocument ?? document;
+
+		function handleDocumentContextMenu(event: MouseEvent) {
+			const target = event.target;
+
+			if (!(target instanceof Node)) {
+				return;
+			}
+
+			if (triggerRef.current?.contains(target)) {
+				return;
+			}
+
+			if (state.isOpen) {
+				event.preventDefault();
+			}
+		}
+
+		doc.addEventListener("contextmenu", handleDocumentContextMenu, true);
+
+		return () => {
+			doc.removeEventListener("contextmenu", handleDocumentContextMenu, true);
+		};
+	}, [isDisabled, state.isOpen]);
+
 	const contextMenuProps = mergeProps(triggerProps, {
 		onContextMenu(event: React.MouseEvent<HTMLDivElement>) {
 			onContextMenu?.(event);
-
 			if (event.defaultPrevented) {
 				return;
 			}
-
 			if (isDisabled) {
 				return;
 			}
-
 			event.preventDefault();
+			event.stopPropagation();
 			setAnchor({ x: event.clientX, y: event.clientY });
 			state.open("first");
 		},
@@ -56,7 +83,15 @@ function ContextMenu({
 	return (
 		<Provider
 			values={[
-				[MenuContext, { "aria-label": ariaLabel, ref: menuRef }],
+				[
+					MenuContext,
+					{
+						"aria-label": ariaLabel,
+						autoFocus: state.focusStrategy || true,
+						onClose: state.close,
+						ref: menuRef,
+					},
+				],
 				[OverlayTriggerStateContext, state],
 				[RootMenuTriggerStateContext, state],
 				[
@@ -70,7 +105,7 @@ function ContextMenu({
 				],
 			]}
 		>
-			<div data-context-menu="" {...contextMenuProps}>
+			<div data-context-menu="" {...contextMenuProps} ref={triggerRef}>
 				{children}
 			</div>
 			<span
@@ -85,7 +120,6 @@ function ContextMenu({
 					pointerEvents: "none",
 				}}
 			/>
-			{overlay}
 		</Provider>
 	);
 }

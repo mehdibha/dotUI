@@ -10,11 +10,6 @@ export interface ContextMenuProps extends Omit<React.ComponentProps<"div">, "onC
 	children: React.ReactNode;
 
 	/**
-	 * The overlay to display. This is usually a Popover containing MenuContent.
-	 */
-	overlay: React.ReactNode;
-
-	/**
 	 * Whether the menu is open.
 	 */
 	isOpen?: boolean;
