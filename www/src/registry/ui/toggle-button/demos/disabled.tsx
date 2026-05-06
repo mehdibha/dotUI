@@ -3,8 +3,9 @@ import { ToggleButton } from "@/registry/ui/toggle-button";
 
 export default function Demo() {
 	return (
-		<ToggleButton isIconOnly isDisabled aria-label="Toggle pin">
-			<PinIcon className="rotate-45" />
+		<ToggleButton isDisabled>
+			<PinIcon data-icon-start="" className="rotate-45" />
+			Pin
 		</ToggleButton>
 	);
 }

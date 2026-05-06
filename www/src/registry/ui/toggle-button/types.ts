@@ -8,12 +8,16 @@ export interface ToggleButtonProps extends React.ComponentProps<typeof ToggleBut
 	 * The visual style of the toggle button.
 	 * @default 'default'
 	 */
-	variant?: "default" | "quiet";
+	variant?: "default" | "primary" | "quiet";
 
 	/**
 	 * The size of the toggle button.
-	 * Use `icon-sm`, `icon`, or `icon-lg` for icon-only buttons.
 	 * @default 'md'
 	 */
-	size?: "sm" | "md" | "lg" | "icon-sm" | "icon" | "icon-lg";
+	size?: "xs" | "sm" | "md" | "lg";
+
+	/**
+	 * Whether the toggle button only contains an icon.
+	 */
+	isIconOnly?: boolean;
 }

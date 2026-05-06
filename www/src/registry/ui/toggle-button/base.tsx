@@ -1,7 +1,7 @@
 "use client";
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton";
+import * as ToggleButtonPrimitive from "react-aria-components/ToggleButton";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
@@ -18,13 +18,13 @@ type ToggleButtonVariants = VariantProps<ToggleButtonStyles>;
 
 const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 	ToggleButtonVariants,
-	React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>
->(ToggleButtonPrimitives.ToggleButtonContext);
+	React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>
+>(ToggleButtonPrimitive.ToggleButtonContext);
 
 // MARK: Separator
 
 interface ToggleButtonProps
-	extends React.ComponentProps<typeof ToggleButtonPrimitives.ToggleButton>,
+	extends React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
 		ToggleButtonVariants {
 	isIconOnly?: boolean;
 }
@@ -34,8 +34,9 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 	const { variant = "default", size = "md", isIconOnly, className, children, ...props } = useContextProps(localProps);
 
 	return (
-		<ToggleButtonPrimitives.ToggleButton
-			data-slot="button"
+		<ToggleButtonPrimitive.ToggleButton
+			data-button=""
+			data-toggle-button=""
 			data-variant={variant}
 			data-size={size}
 			data-icon-only={isIconOnly ? "" : undefined}
@@ -43,6 +44,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 				styles({
 					variant,
 					size,
+					isIconOnly,
 					className: cn,
 				}),
 			)}
@@ -51,7 +53,7 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 			{composeRenderProps(children, (children) => (
 				<>{typeof children === "string" ? <span className="truncate">{children}</span> : children}</>
 			))}
-		</ToggleButtonPrimitives.ToggleButton>
+		</ToggleButtonPrimitive.ToggleButton>
 	);
 };
 

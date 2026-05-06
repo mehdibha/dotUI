@@ -2109,6 +2109,10 @@ export const DemosIndex: Record<
     files: ["ui/toggle-button/demos/disabled.tsx"],
     component: React.lazy(() => import("@/registry/ui/toggle-button/demos/disabled")),
   },
+  "toggle-button/demos/prefix-and-suffix": {
+    files: ["ui/toggle-button/demos/prefix-and-suffix.tsx"],
+    component: React.lazy(() => import("@/registry/ui/toggle-button/demos/prefix-and-suffix")),
+  },
   "toggle-button/demos/shapes": {
     files: ["ui/toggle-button/demos/shapes.tsx"],
     component: React.lazy(() => import("@/registry/ui/toggle-button/demos/shapes")),

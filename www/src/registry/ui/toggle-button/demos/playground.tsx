@@ -6,20 +6,27 @@ import type { ReactNode } from "react";
 import { ToggleButton } from "@/registry/ui/toggle-button";
 
 interface ToggleButtonPlaygroundProps {
-	variant?: "default" | "quiet";
-	size?: "sm" | "md" | "lg" | "icon-sm" | "icon" | "icon-lg";
+	children?: string;
+	variant?: "default" | "primary" | "quiet";
+	size?: "xs" | "sm" | "md" | "lg";
 	isDisabled?: boolean;
-	children?: ReactNode;
+	isIconOnly?: boolean;
+	prefix?: ReactNode;
+	suffix?: ReactNode;
 }
 
 export function ToggleButtonPlayground({
-	variant = "default",
-	size = "md",
-	isDisabled = false,
+	children = "Pin",
+	prefix = <PinIcon data-icon-start="" className="rotate-45" />,
+	suffix,
+	isIconOnly,
+	...props
 }: ToggleButtonPlaygroundProps) {
 	return (
-		<ToggleButton aria-label="Toggle pin" variant={variant} size={size} isDisabled={isDisabled}>
-			<PinIcon className="rotate-45" />
+		<ToggleButton aria-label={isIconOnly ? "Toggle pin" : undefined} isIconOnly={isIconOnly} {...props}>
+			{prefix}
+			{!isIconOnly && children}
+			{suffix}
 		</ToggleButton>
 	);
 }

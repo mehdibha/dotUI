@@ -14,11 +14,11 @@ const { useStyles, styles } = createStyles(toggleButtonGroupMeta, {
 			orientation: {
 				horizontal: {
 					root: "flex-row has-data-[variant=default]:-space-x-px",
-					item: "first:rounded-l-md last:rounded-r-md",
+					item: "first:rounded-l-(--btn-radius) last:rounded-r-(--btn-radius)",
 				},
 				vertical: {
 					root: "flex-col has-data-[variant=default]:-space-y-px",
-					item: "first:rounded-t-md last:rounded-b-md",
+					item: "first:rounded-t-(--btn-radius) last:rounded-b-(--btn-radius)",
 				},
 			},
 		},
