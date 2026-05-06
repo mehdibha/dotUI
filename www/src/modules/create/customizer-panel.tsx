@@ -1,11 +1,24 @@
 import { type ReactNode, useMemo } from "react";
 import { getRouteApi } from "@tanstack/react-router";
-import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, MousePointer2Icon, ShuffleIcon, Undo2Icon } from "lucide-react";
+import {
+	CheckIcon,
+	ChevronDownIcon,
+	ChevronLeftIcon,
+	Clock3Icon,
+	type LucideIcon,
+	MoonIcon,
+	MousePointer2Icon,
+	ShuffleIcon,
+	TimerIcon,
+	Undo2Icon,
+} from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
-import { componentsData } from "@/modules/docs/components-list/components-data";
+import { type ComponentStatus, componentsData } from "@/modules/docs/components-list/components-data";
 import * as icons from "@/registry/__generated__/icons";
+import { cn } from "@/registry/lib/utils";
+import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
 import { Command } from "@/registry/ui/command";
 import { Input } from "@/registry/ui/input";
@@ -312,8 +325,14 @@ export function CustomizerPanel() {
 										.flatMap((category) => category.components)
 										.sort((a, b) => a.name.localeCompare(b.name))
 										.map((comp) => (
-											<ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name}>
-												{comp.name} {comp.done ? <span className="size-2 rounded-full bg-accent"/> : null}
+											<ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name} className="gap-2">
+												<span className="truncate">{comp.name}</span>
+												<span
+													className={cn(
+														"size-2 rounded-full",
+														comp.status === "done" ? "bg-accent" : comp.status === "in review" ? "bg-warning" : "bg-danger",
+													)}
+												/>
 											</ListBoxItem>
 										))}
 								</ListBox>
