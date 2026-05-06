@@ -1,7 +1,6 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import Controlled from "./demos/controlled";
 import Default from "./demos/default";
 import Description from "./demos/description";
 import Disabled from "./demos/disabled";
@@ -10,22 +9,18 @@ import Label from "./demos/label";
 import ReadOnly from "./demos/read-only";
 import Required from "./demos/required";
 import Sizes from "./demos/sizes";
-import Uncontrolled from "./demos/uncontrolled";
 
 export default function SearchFieldExamples() {
 	return (
-		<Examples>
-			<Example title="controlled">
-				<Controlled />
-			</Example>
+		<Examples className="md:grid-cols-2">
 			<Example title="default">
 				<Default />
 			</Example>
-			<Example title="description">
-				<Description />
-			</Example>
 			<Example title="disabled">
 				<Disabled />
+			</Example>
+			<Example title="description">
+				<Description />
 			</Example>
 			<Example title="error message">
 				<ErrorMessage />
@@ -41,9 +36,6 @@ export default function SearchFieldExamples() {
 			</Example>
 			<Example title="sizes">
 				<Sizes />
-			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
 			</Example>
 		</Examples>
 	);
