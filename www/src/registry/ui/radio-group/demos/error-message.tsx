@@ -4,22 +4,22 @@ import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 export default function Demo() {
 	return (
 		<RadioGroup defaultValue={null} isInvalid>
-			<Label>Size</Label>
+			<Label>React frameworks</Label>
 			<FieldGroup>
-				<Radio value="sm">
+				<Radio value="nextjs">
 					<RadioControl />
-					<Label>Small</Label>
+					<Label>Next.js</Label>
 				</Radio>
-				<Radio value="md">
+				<Radio value="remix">
 					<RadioControl />
-					<Label>Medium</Label>
+					<Label>Remix</Label>
 				</Radio>
-				<Radio value="lg">
+				<Radio value="gatsby">
 					<RadioControl />
-					<Label>Large</Label>
+					<Label>Gatsby</Label>
 				</Radio>
 			</FieldGroup>
-			<FieldError>Please select a product size.</FieldError>
+			<FieldError>Please select a framework.</FieldError>
 		</RadioGroup>
 	);
 }

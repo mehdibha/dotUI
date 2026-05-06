@@ -3,37 +3,29 @@ import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 
 export default function Demo() {
 	return (
-		<div className="flex items-center gap-10">
-			<RadioGroup defaultValue="sm">
-				<Label>Size</Label>
+		<div className="flex items-start gap-10">
+			<RadioGroup defaultValue="nextjs">
+				<Label>React frameworks</Label>
 				<FieldGroup>
-					<Radio value="sm">
+					<Radio value="nextjs">
 						<RadioControl />
-						<Label>Small</Label>
+						<Label>Next.js</Label>
 					</Radio>
-					<Radio value="md">
+					<Radio value="remix">
 						<RadioControl />
-						<Label>Medium</Label>
-					</Radio>
-					<Radio value="lg">
-						<RadioControl />
-						<Label>Large</Label>
+						<Label>Remix</Label>
 					</Radio>
 				</FieldGroup>
 			</RadioGroup>
-			<RadioGroup defaultValue="sm" aria-label="Size">
+			<RadioGroup defaultValue="nextjs" aria-label="React frameworks">
 				<FieldGroup>
-					<Radio value="sm">
+					<Radio value="nextjs">
 						<RadioControl />
-						<Label>Small</Label>
+						<Label>Next.js</Label>
 					</Radio>
-					<Radio value="md">
+					<Radio value="remix">
 						<RadioControl />
-						<Label>Medium</Label>
-					</Radio>
-					<Radio value="lg">
-						<RadioControl />
-						<Label>Large</Label>
+						<Label>Remix</Label>
 					</Radio>
 				</FieldGroup>
 			</RadioGroup>

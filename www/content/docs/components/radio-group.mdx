@@ -25,16 +25,16 @@ import { FieldGroup, Label } from "@/components/ui/field";
 ```
 
 ```tsx
-<RadioGroup defaultValue="sm">
-  <Label>Size</Label>
+<RadioGroup defaultValue="nextjs">
+  <Label>React frameworks</Label>
   <FieldGroup>
-    <Radio value="sm">
+    <Radio value="nextjs">
       <RadioControl />
-      <Label>Small</Label>
+      <Label>Next.js</Label>
     </Radio>
-    <Radio value="md">
+    <Radio value="remix">
       <RadioControl />
-      <Label>Medium</Label>
+      <Label>Remix</Label>
     </Radio>
   </FieldGroup>
 </RadioGroup>
@@ -50,7 +50,7 @@ Use the controls below to experiment with different radio group props and see th
     {
       type: "string",
       name: "label",
-      defaultValue: "Select size",
+      defaultValue: "Select frameworks",
     },
     {
       type: "enum",
@@ -79,18 +79,14 @@ Use the controls below to experiment with different radio group props and see th
 
 ## Examples
 
-<Examples>
-  <Example name="radio-group/demos/default" />
-  <Example name="radio-group/demos/orientation" />
-  <Example name="radio-group/demos/cards" />
-  <Example name="radio-group/demos/label" />
-  <Example name="radio-group/demos/description" />
-  <Example name="radio-group/demos/error-message" />
-  <Example name="radio-group/demos/disabled" />
-  <Example name="radio-group/demos/read-only" />
-  <Example name="radio-group/demos/required" />
-  <Example name="radio-group/demos/uncontrolled" />
-  <Example name="radio-group/demos/controlled" />
+<Examples className="lg:grid-cols-3">
+  <Example name="radio-group/demos/default" title="Default" />
+  <Example name="radio-group/demos/description" title="With Description" />
+  <Example name="radio-group/demos/error-message" title="Invalid" />
+  <Example name="radio-group/demos/disabled" title="Disabled" />
+  <Example name="radio-group/demos/read-only" title="ReadOnly" />
+  <Example name="radio-group/demos/required" title="Required" />
+  <Example name="radio-group/demos/cards" title="Cards" className="lg:col-span-3" />
 </Examples>
 
 ## API Reference

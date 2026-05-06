@@ -1533,10 +1533,6 @@ export const DemosIndex: Record<
 		files: ["ui/radio-group/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/radio-group/demos/label")),
 	},
-	"radio-group/demos/orientation": {
-		files: ["ui/radio-group/demos/orientation.tsx"],
-		component: React.lazy(() => import("@/registry/ui/radio-group/demos/orientation")),
-	},
 	"radio-group/demos/read-only": {
 		files: ["ui/radio-group/demos/read-only.tsx"],
 		component: React.lazy(() => import("@/registry/ui/radio-group/demos/read-only")),

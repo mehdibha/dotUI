@@ -2,52 +2,36 @@ import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
 import Cards from "./demos/cards";
-import Controlled from "./demos/controlled";
 import Default from "./demos/default";
 import Description from "./demos/description";
 import Disabled from "./demos/disabled";
 import ErrorMessage from "./demos/error-message";
-import Label from "./demos/label";
-import Orientation from "./demos/orientation";
 import ReadOnly from "./demos/read-only";
 import Required from "./demos/required";
-import Uncontrolled from "./demos/uncontrolled";
 
 export default function RadioGroupExamples() {
 	return (
-		<Examples>
-			<Example title="cards">
-				<Cards />
-			</Example>
-			<Example title="controlled">
-				<Controlled />
-			</Example>
-			<Example title="default">
+		<Examples className="lg:grid-cols-2">
+			<Example title="Default">
 				<Default />
 			</Example>
-			<Example title="description">
+			<Example title="With Description">
 				<Description />
 			</Example>
-			<Example title="disabled">
-				<Disabled />
-			</Example>
-			<Example title="error message">
+			<Example title="Error message">
 				<ErrorMessage />
 			</Example>
-			<Example title="label">
-				<Label />
+			<Example title="Disabled">
+				<Disabled />
 			</Example>
-			<Example title="orientation">
-				<Orientation />
-			</Example>
-			<Example title="read only">
+			<Example title="Read only">
 				<ReadOnly />
 			</Example>
-			<Example title="required">
+			<Example title="Required">
 				<Required />
 			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
+			<Example title="Cards">
+				<Cards />
 			</Example>
 		</Examples>
 	);

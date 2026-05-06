@@ -1,83 +1,128 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { CheckIcon } from "lucide-react";
+import type * as React from "react";
 
-import { Command } from "@/registry/ui/command";
-import { DialogContent } from "@/registry/ui/dialog";
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
-import { Label } from "@/registry/ui/field";
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
-import { Modal } from "@/registry/ui/modal";
-import { SearchField } from "@/registry/ui/search-field";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
+import { Checkbox, CheckboxControl, CheckboxIndicator } from "@/registry/ui/checkbox";
+import { CheckboxGroup } from "@/registry/ui/checkbox-group";
+import { Description, FieldContent, FieldError, FieldGroup, Label } from "@/registry/ui/field";
 
 export const Route = createFileRoute("/playground")({
 	component: RouteComponent,
 });
 
-const providers = [
-	{ id: "perplexity", name: "Perplexity" },
-	{ id: "replicate", name: "Replicate" },
-	{ id: "together-ai", name: "Together AI" },
-	{ id: "eleven-labs", name: "ElevenLabs" },
-	{ id: "openai", name: "OpenAI" },
-	{ id: "anthropic", name: "Anthropic" },
-];
+function ExampleSection({ title, children }: { title: string; children: React.ReactNode }) {
+	return (
+		<section className="flex flex-col gap-3 rounded-lg border border-border p-4">
+			<h2 className="font-medium text-fg text-sm">{title}</h2>
+			<div className="flex flex-col items-start gap-3">{children}</div>
+		</section>
+	);
+}
 
 function RouteComponent() {
 	return (
-		<div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col gap-8 p-8">
+		<div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col gap-6 p-8">
 			<div className="space-y-2">
-				<h1 className="font-semibold text-2xl">Select Overlay Test</h1>
-				<p className="text-fg-muted text-sm">
-					The first select is the existing popover path. The second swaps SelectContent for a Drawer child.
-				</p>
+				<h1 className="font-semibold text-2xl">Checkbox Composition Playground</h1>
+				<p className="text-fg-muted text-sm">Each example maps to one supported checkbox DOM shape.</p>
 			</div>
 
-			<div className="grid gap-6 sm:grid-cols-2">
-				<Select defaultValue={["perplexity"]} selectionMode="multiple">
-					<Label>select in popover</Label>
-					<SelectTrigger />
-					<SelectContent>
-						{providers.map((provider) => (
-							<SelectItem key={provider.id} id={provider.id}>
-								{provider.name}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
+			<div className="grid gap-4 lg:grid-cols-2">
+				<ExampleSection title="Standalone">
+					<Checkbox aria-label="Enable notifications" defaultSelected />
+				</ExampleSection>
 
-				<Select defaultValue="together-ai">
-					<Label>select in drawer</Label>
-					<SelectTrigger />
-					<Drawer placement="bottom" className="p-1">
-						<DrawerHandle />
-						<ListBox>
-							{providers.map((provider) => (
-								<SelectItem key={provider.id} id={provider.id}>
-									{provider.name}
-								</SelectItem>
-							))}
-						</ListBox>
-					</Drawer>
-				</Select>
+				<ExampleSection title="Shorthand">
+					<Checkbox>Enable notifications</Checkbox>
+				</ExampleSection>
 
-				<Select defaultValue="together-ai">
-					<Label>select in modal</Label>
-					<SelectTrigger />
-					<Modal>
-						<DialogContent>
-							<Command>
-								<SearchField autoFocus />
-								<ListBox selectionMode="single">
-									{providers.map((provider) => (
-										<ListBoxItem key={provider.id} id={provider.id}>
-											{provider.name}
-										</ListBoxItem>
-									))}
-								</ListBox>
-							</Command>
-						</DialogContent>
-					</Modal>
-				</Select>
+				<ExampleSection title="Inline label">
+					<Checkbox>
+						<CheckboxControl />
+						<Label>Enable notifications</Label>
+					</Checkbox>
+				</ExampleSection>
+
+				<ExampleSection title="Inline with description">
+					<Checkbox defaultSelected>
+						<CheckboxControl />
+						<FieldContent>
+							<Label>Enable notifications</Label>
+							<Description>You can disable them later.</Description>
+						</FieldContent>
+					</Checkbox>
+				</ExampleSection>
+
+				<ExampleSection title="Card checkbox">
+					<Checkbox className="w-full">
+						<CheckboxControl>
+							<CheckboxIndicator />
+							<FieldContent>
+								<Label>Enable notifications</Label>
+								<Description>You can disable them later.</Description>
+							</FieldContent>
+						</CheckboxControl>
+					</Checkbox>
+				</ExampleSection>
+
+				<ExampleSection title="Custom indicator">
+					<Checkbox>
+						<CheckboxControl>
+							<CheckboxIndicator>
+								<CheckIcon aria-hidden />
+							</CheckboxIndicator>
+						</CheckboxControl>
+						<Label>Enable notifications</Label>
+					</Checkbox>
+				</ExampleSection>
+
+				<ExampleSection title="Checkbox group">
+					<CheckboxGroup defaultValue={["nextjs"]} isInvalid className="w-full">
+						<Label>React frameworks</Label>
+						<Description>Pick any frameworks.</Description>
+						<FieldGroup>
+							<Checkbox value="nextjs">
+								<CheckboxControl />
+								<Label>Next.js</Label>
+							</Checkbox>
+							<Checkbox value="remix">
+								<CheckboxControl />
+								<Label>Remix</Label>
+							</Checkbox>
+							<Checkbox value="gatsby">
+								<CheckboxControl />
+								<Label>Gatsby</Label>
+							</Checkbox>
+						</FieldGroup>
+						<FieldError>Please select a framework.</FieldError>
+					</CheckboxGroup>
+				</ExampleSection>
+
+				<ExampleSection title="Card checkbox group">
+					<CheckboxGroup defaultValue={["nextjs"]} className="w-full">
+						<Label>React frameworks</Label>
+						<FieldGroup>
+							<Checkbox value="nextjs">
+								<CheckboxControl>
+									<CheckboxIndicator />
+									<FieldContent>
+										<Label>Next.js</Label>
+										<Description>The React framework for the web.</Description>
+									</FieldContent>
+								</CheckboxControl>
+							</Checkbox>
+							<Checkbox value="remix">
+								<CheckboxControl>
+									<CheckboxIndicator />
+									<FieldContent>
+										<Label>Remix</Label>
+										<Description>Full stack web framework.</Description>
+									</FieldContent>
+								</CheckboxControl>
+							</Checkbox>
+						</FieldGroup>
+					</CheckboxGroup>
+				</ExampleSection>
 			</div>
 		</div>
 	);

@@ -6,27 +6,27 @@ import { FieldGroup, Label } from "@/registry/ui/field";
 import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 
 export default function Demo() {
-	const [size, setSize] = React.useState("sm");
+	const [framework, setFramework] = React.useState("nextjs");
 	return (
 		<div className="flex flex-col items-center gap-4">
-			<RadioGroup value={size} onChange={(value) => setSize(value)}>
-				<Label>Size</Label>
+			<RadioGroup value={framework} onChange={setFramework}>
+				<Label>React frameworks</Label>
 				<FieldGroup>
-					<Radio value="sm">
+					<Radio value="nextjs">
 						<RadioControl />
-						<Label>Small</Label>
+						<Label>Next.js</Label>
 					</Radio>
-					<Radio value="md">
+					<Radio value="remix">
 						<RadioControl />
-						<Label>Medium</Label>
+						<Label>Remix</Label>
 					</Radio>
-					<Radio value="lg">
+					<Radio value="gatsby">
 						<RadioControl />
-						<Label>Large</Label>
+						<Label>Gatsby</Label>
 					</Radio>
 				</FieldGroup>
 			</RadioGroup>
-			<p className="text-fg-muted text-xs">{`You selected: ${size}`}</p>
+			<p className="text-fg-muted text-xs">{`You selected ${framework}.`}</p>
 		</div>
 	);
 }

@@ -3,20 +3,20 @@ import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 
 export function RadioGroupDemo() {
 	return (
-		<RadioGroup defaultValue="sm">
-			<Label>Size</Label>
+		<RadioGroup defaultValue="nextjs">
+			<Label>React frameworks</Label>
 			<FieldGroup>
-				<Radio value="sm">
+				<Radio value="nextjs">
 					<RadioControl />
-					<Label>Small</Label>
+					<Label>Next.js</Label>
 				</Radio>
-				<Radio value="md">
+				<Radio value="remix">
 					<RadioControl />
-					<Label>Medium</Label>
+					<Label>Remix</Label>
 				</Radio>
-				<Radio value="lg">
+				<Radio value="gatsby">
 					<RadioControl />
-					<Label>Large</Label>
+					<Label>Gatsby</Label>
 				</Radio>
 			</FieldGroup>
 		</RadioGroup>

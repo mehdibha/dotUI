@@ -11,22 +11,22 @@ interface RadioGroupPlaygroundProps {
 	orientation?: "horizontal" | "vertical";
 }
 
-export function RadioGroupPlayground({ label = "Select size", ...props }: RadioGroupPlaygroundProps) {
+export function RadioGroupPlayground({ label = "Select frameworks", ...props }: RadioGroupPlaygroundProps) {
 	return (
-		<RadioGroup defaultValue="md" {...props}>
+		<RadioGroup defaultValue="react" {...props}>
 			{label && <Label>{label}</Label>}
 			<FieldGroup>
-				<Radio value="sm">
+				<Radio value="react">
 					<RadioControl />
-					<Label>Small</Label>
+					<Label>React</Label>
 				</Radio>
-				<Radio value="md">
+				<Radio value="vue">
 					<RadioControl />
-					<Label>Medium</Label>
+					<Label>Vue</Label>
 				</Radio>
-				<Radio value="lg">
+				<Radio value="angular">
 					<RadioControl />
-					<Label>Large</Label>
+					<Label>Angular</Label>
 				</Radio>
 			</FieldGroup>
 		</RadioGroup>

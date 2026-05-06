@@ -3,33 +3,33 @@ import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/r
 
 export default function Demo() {
 	return (
-		<RadioGroup defaultValue="sm" orientation="horizontal">
-			<Label>Size</Label>
+		<RadioGroup defaultValue="nextjs" className="w-full max-w-xs">
+			<Label>React frameworks</Label>
 			<FieldGroup>
-				<Radio value="sm">
+				<Radio value="nextjs">
 					<RadioControl>
 						<RadioIndicator />
 						<FieldContent>
-							<Label>Small</Label>
-							<Description>Dimension: 128 x 128</Description>
+							<Label>Next.js</Label>
+							<Description>The React framework for the web</Description>
 						</FieldContent>
 					</RadioControl>
 				</Radio>
-				<Radio value="md">
+				<Radio value="remix">
 					<RadioControl>
 						<RadioIndicator />
 						<FieldContent>
-							<Label>Medium</Label>
-							<Description>Dimension: 256 x 256</Description>
+							<Label>Remix</Label>
+							<Description>Full stack web framework</Description>
 						</FieldContent>
 					</RadioControl>
 				</Radio>
-				<Radio value="lg">
+				<Radio value="gatsby">
 					<RadioControl>
 						<RadioIndicator />
 						<FieldContent>
-							<Label>Large</Label>
-							<Description>Dimension: 512 x 512</Description>
+							<Label>Gatsby</Label>
+							<Description>Build fast, modern websites</Description>
 						</FieldContent>
 					</RadioControl>
 				</Radio>
