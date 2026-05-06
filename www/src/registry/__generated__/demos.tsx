@@ -629,9 +629,21 @@ export const DemosIndex: Record<
     files: ["ui/context-menu/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/context-menu/demos/basic")),
   },
+  "context-menu/demos/controlled": {
+    files: ["ui/context-menu/demos/controlled.tsx"],
+    component: React.lazy(() => import("@/registry/ui/context-menu/demos/controlled")),
+  },
   "context-menu/demos/disabled": {
     files: ["ui/context-menu/demos/disabled.tsx"],
     component: React.lazy(() => import("@/registry/ui/context-menu/demos/disabled")),
+  },
+  "context-menu/demos/nested": {
+    files: ["ui/context-menu/demos/nested.tsx"],
+    component: React.lazy(() => import("@/registry/ui/context-menu/demos/nested")),
+  },
+  "context-menu/demos/with-submenu": {
+    files: ["ui/context-menu/demos/with-submenu.tsx"],
+    component: React.lazy(() => import("@/registry/ui/context-menu/demos/with-submenu")),
   },
   "date-field/demos/basic": {
     files: ["ui/date-field/demos/basic.tsx"],

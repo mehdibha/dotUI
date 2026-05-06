@@ -5,6 +5,7 @@ import { Popover } from "@/registry/ui/popover";
 export default function Demo() {
 	return (
 		<ContextMenu
+			data-testid="context-menu-disabled"
 			isDisabled
 			className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed bg-bg-muted text-fg-disabled text-sm"
 		>

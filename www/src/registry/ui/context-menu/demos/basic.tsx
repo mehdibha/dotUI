@@ -4,7 +4,10 @@ import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	return (
-		<ContextMenu className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed bg-bg-muted text-fg-muted text-sm">
+		<ContextMenu
+			data-testid="context-menu-basic"
+			className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed bg-bg-muted text-fg-muted text-sm"
+		>
 			Right click me
 			<Popover>
 				<MenuContent>
