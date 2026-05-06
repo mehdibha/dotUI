@@ -1,8 +1,7 @@
 "use client";
 
-import * as FormPrimitives from "react-aria-components/Form";
-
 import { ChevronDownIcon } from "lucide-react";
+import * as FormPrimitives from "react-aria-components/Form";
 
 import { Button } from "@/registry/ui/button";
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
@@ -12,7 +11,7 @@ import { FieldGroup, Label } from "@/registry/ui/field";
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
-import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 import { TextField } from "@/registry/ui/text-field";
 
@@ -40,15 +39,15 @@ export default function Demo() {
 					<Label>Gender</Label>
 					<FieldGroup>
 						<Radio value="male">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Male</Label>
 						</Radio>
 						<Radio value="female">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Female</Label>
 						</Radio>
 						<Radio value="other">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Other</Label>
 						</Radio>
 					</FieldGroup>

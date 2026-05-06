@@ -1,5 +1,5 @@
 import { Description, FieldContent, FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 
 export default function Demo() {
 	return (
@@ -7,25 +7,31 @@ export default function Demo() {
 			<Label>Size</Label>
 			<FieldGroup>
 				<Radio value="sm">
-					<RadioIndicator />
-					<FieldContent>
-						<Label>Small</Label>
-						<Description>Dimension: 128 x 128</Description>
-					</FieldContent>
+					<RadioControl>
+						<RadioIndicator />
+						<FieldContent>
+							<Label>Small</Label>
+							<Description>Dimension: 128 x 128</Description>
+						</FieldContent>
+					</RadioControl>
 				</Radio>
 				<Radio value="md">
-					<RadioIndicator />
-					<FieldContent>
-						<Label>Medium</Label>
-						<Description>Dimension: 256 x 256</Description>
-					</FieldContent>
+					<RadioControl>
+						<RadioIndicator />
+						<FieldContent>
+							<Label>Medium</Label>
+							<Description>Dimension: 256 x 256</Description>
+						</FieldContent>
+					</RadioControl>
 				</Radio>
 				<Radio value="lg">
-					<RadioIndicator />
-					<FieldContent>
-						<Label>Large</Label>
-						<Description>Dimension: 512 x 512</Description>
-					</FieldContent>
+					<RadioControl>
+						<RadioIndicator />
+						<FieldContent>
+							<Label>Large</Label>
+							<Description>Dimension: 512 x 512</Description>
+						</FieldContent>
+					</RadioControl>
 				</Radio>
 			</FieldGroup>
 		</RadioGroup>

@@ -5,24 +5,36 @@ import radioGroupMeta from "./meta";
 const { useStyles, styles } = createStyles(radioGroupMeta, {
 	base: {
 		slots: {
-			root: [
-				"flex items-center gap-2 has-data-[slot=description]:items-start",
+			root: ["flex items-center has-data-description:items-start"],
+			control: [
+				"focus-reset focus-visible:focus-ring relative flex items-center gap-2 rounded-(--radio-radius) not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--radio-card-radius)",
+				"transition-colors duration-75 has-data-label:w-full has-data-label:border has-data-label:selected:border-[color-mix(in_srgb,var(--color-primary)_25%,var(--color-bg))] has-data-label:selected:bg-[color-mix(in_srgb,var(--color-primary)_10%,var(--color-bg))] has-data-label:p-2.5",
 			],
 			indicator: [
-				"flex size-4 shrink-0 items-center justify-center rounded-full border border-border-control bg-transparent text-transparent",
+				"grid size-4 shrink-0 place-content-center rounded-full border border-border-control bg-transparent text-transparent before:size-1.5 before:rounded-full before:bg-current before:content-['']",
 				"transition-[background-color,border-color,box-shadow,color] duration-75",
 				"selected:border-transparent selected:bg-primary selected:text-fg-on-primary",
-				"read-only:cursor-default",
-				"disabled:cursor-default disabled:border-border-disabled selected:disabled:bg-disabled selected:disabled:text-fg-disabled indeterminate:disabled:bg-disabled",
+				"disabled:border-border-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled",
 				"invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-onMutedDanger",
-				"indeterminate:border-transparent indeterminate:bg-primary indeterminate:text-fg-on-primary",
 			],
 		},
 	},
 	density: {
-		compact: {},
-		default: {},
-		comfortable: {},
+		compact: {
+			slots: {
+				root: "gap-2",
+			},
+		},
+		default: {
+			slots: {
+				root: "gap-2",
+			},
+		},
+		comfortable: {
+			slots: {
+				root: "gap-3",
+			},
+		},
 	},
 });
 

@@ -63,6 +63,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Radio
 	Radio: "@/components/ui/radio-group",
+	RadioControl: "@/components/ui/radio-group",
 	RadioGroup: "@/components/ui/radio-group",
 	RadioIndicator: "@/components/ui/radio-group",
 

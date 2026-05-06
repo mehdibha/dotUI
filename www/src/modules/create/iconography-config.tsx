@@ -1,5 +1,5 @@
 import { FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 
 const iconLibraries = [
 	{ name: "Lucide", value: "lucide", description: "Clean & consistent" },
@@ -12,15 +12,13 @@ export function IconographyConfig() {
 	return (
 		<div>
 			<RadioGroup aria-label="icon library" defaultValue="lucide">
-				<FieldGroup className="gap-1 **:data-radio:border">
+				<FieldGroup className="gap-1">
 					{iconLibraries.map((lib) => (
-						<Radio
-							key={lib.value}
-							value={lib.value}
-							className="justify-between rounded-lg border selected:border-border-control selected:bg-neutral-hover/80 p-4 selected:text-fg hover:bg-neutral"
-						>
-							<Label className="text-fg!">{lib.name}</Label>
-							<RadioIndicator />
+						<Radio key={lib.value} value={lib.value}>
+							<RadioControl className="justify-between rounded-lg border selected:border-border-control selected:bg-neutral-hover/80 p-4 selected:text-fg hover:bg-neutral">
+								<Label className="text-fg!">{lib.name}</Label>
+								<RadioIndicator />
+							</RadioControl>
 						</Radio>
 					))}
 				</FieldGroup>

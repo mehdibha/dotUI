@@ -12,7 +12,14 @@ const radioGroupMeta = {
 		},
 	],
 	registryDependencies: ["focus-styles", "field"],
+	params: {
+		radius: {
+			kind: "scalar",
+			type: "radius",
+			cssVar: "--radio-radius",
+			default: "--radius-full",
+		},
+	},
 } satisfies RegistryItem;
 
 export default radioGroupMeta;
-

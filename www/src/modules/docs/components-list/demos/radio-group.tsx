@@ -1,5 +1,5 @@
 import { FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 
 export function RadioGroupDemo() {
 	return (
@@ -7,15 +7,15 @@ export function RadioGroupDemo() {
 			<Label>Size</Label>
 			<FieldGroup>
 				<Radio value="sm">
-					<RadioIndicator />
+					<RadioControl />
 					<Label>Small</Label>
 				</Radio>
 				<Radio value="md">
-					<RadioIndicator />
+					<RadioControl />
 					<Label>Medium</Label>
 				</Radio>
 				<Radio value="lg">
-					<RadioIndicator />
+					<RadioControl />
 					<Label>Large</Label>
 				</Radio>
 			</FieldGroup>

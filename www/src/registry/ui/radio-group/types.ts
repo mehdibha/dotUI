@@ -8,9 +8,14 @@ export interface RadioGroupProps extends RadioGroupPrimitives.RadioGroupProps {}
 /**
  * A radio represents an individual option within a radio group.
  */
-export interface RadioProps extends React.ComponentProps<typeof RadioGroupPrimitives.Radio> {}
+export interface RadioProps extends React.ComponentProps<typeof RadioGroupPrimitives.RadioField> {}
 
 /**
- * Missing description.
+ * The clickable radio control, including the indicator and optional label content.
  */
-export interface RadioIndicatorProps extends React.ComponentProps<"div"> {}
+export interface RadioControlProps extends React.ComponentProps<typeof RadioGroupPrimitives.RadioButton> {}
+
+/**
+ * The visual selected state indicator for a radio control.
+ */
+export interface RadioIndicatorProps extends React.ComponentProps<"span"> {}

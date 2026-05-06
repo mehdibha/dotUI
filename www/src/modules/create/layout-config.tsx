@@ -1,5 +1,5 @@
 import { Description, FieldContent, FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { Slider, SliderControl } from "@/registry/ui/slider";
 import type { Density } from "@/modules/create/preset";
 
@@ -41,11 +41,13 @@ export function DensityConfig({ value, onChange }: { value: Density; onChange: (
 			<FieldGroup>
 				{densityOptions.map((opt) => (
 					<Radio key={opt.id} value={opt.id}>
-						<RadioIndicator />
-						<FieldContent>
-							<Label>{opt.label}</Label>
-							<Description>{opt.description}</Description>
-						</FieldContent>
+						<RadioControl>
+							<RadioIndicator />
+							<FieldContent>
+								<Label>{opt.label}</Label>
+								<Description>{opt.description}</Description>
+							</FieldContent>
+						</RadioControl>
 					</Radio>
 				))}
 			</FieldGroup>

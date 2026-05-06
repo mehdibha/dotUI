@@ -17,7 +17,7 @@ import { DateInput, Input, InputGroup, InputGroupAddon } from "@/registry/ui/inp
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Overlay } from "@/registry/ui/overlay";
 import { Popover } from "@/registry/ui/popover";
-import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 import { FormControl } from "@/registry/ui/react-hook-form";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 import { TextField } from "@/registry/ui/text-field";
@@ -81,15 +81,15 @@ export default function Demo() {
 							<Label>Gender</Label>
 							<FieldGroup>
 								<Radio value="male">
-									<RadioIndicator />
+									<RadioControl />
 									<Label>Male</Label>
 								</Radio>
 								<Radio value="female">
-									<RadioIndicator />
+									<RadioControl />
 									<Label>Female</Label>
 								</Radio>
 								<Radio value="other">
-									<RadioIndicator />
+									<RadioControl />
 									<Label>Other</Label>
 								</Radio>
 							</FieldGroup>

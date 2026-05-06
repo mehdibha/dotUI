@@ -1,22 +1,25 @@
 "use client";
 
+import { createContext, useContext, useId } from "react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import { LabelContext } from "react-aria-components/Label";
 import * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
-
-import { createContext } from "@/registry/lib/context";
-import { cn } from "@/registry/lib/utils";
-import { fieldStyles } from "@/registry/ui/field";
+import { Provider } from "react-aria-components/slots";
+import { tv } from "tailwind-variants";
+import type * as React from "react";
 
 import { useStyles } from "./styles";
 
 // MARK: radioGroupStyles
 
-const { field } = fieldStyles();
+const radioGroupStyles = tv({
+	base: "flex flex-col gap-3",
+});
 
 const RadioGroup = ({ className, ...props }: RadioGroupPrimitives.RadioGroupProps) => {
 	return (
 		<RadioGroupPrimitives.RadioGroup
-			className={composeRenderProps(className, (className) => field({ className }))}
+			className={composeRenderProps(className, (className) => radioGroupStyles({ className }))}
 			{...props}
 		/>
 	);
@@ -24,56 +27,86 @@ const RadioGroup = ({ className, ...props }: RadioGroupPrimitives.RadioGroupProp
 
 // MARK: Separator
 
-const [InternalRadioProvider, useInternalRadio] = createContext<RadioGroupPrimitives.RadioRenderProps>({
-	strict: true,
-});
+const InternalRadioContext = createContext<RadioGroupPrimitives.RadioButtonRenderProps | null>(null);
 
-interface RadioProps extends React.ComponentProps<typeof RadioGroupPrimitives.Radio> {}
+interface RadioProps extends React.ComponentProps<typeof RadioGroupPrimitives.RadioField> {}
 
-const Radio = ({ className, ...props }: RadioProps) => {
-	const { root, indicator } = useStyles()();
+const Radio = ({ id: idProp, className, ...props }: RadioProps) => {
+	const { root } = useStyles()();
+	const autoId = useId();
+	const id = idProp ?? autoId;
 	return (
-		<RadioGroupPrimitives.Radio
+		<RadioGroupPrimitives.RadioField
+			id={id}
 			data-slot="radio"
 			data-radio=""
-			className={composeRenderProps(className, (className) =>
-				props.children
-					? root({ className })
-					: indicator({
-							className: cn(className, "focus-reset focus-visible:focus-ring"),
-						}),
-			)}
+			className={composeRenderProps(className, (className) => root({ className }))}
 			{...props}
 		>
-			{composeRenderProps(props.children, (children, renderProps) => {
-				return children ? <InternalRadioProvider value={renderProps}>{children}</InternalRadioProvider> : <span />;
+			{composeRenderProps(props.children, (children) => {
+				const content =
+					typeof children === "string" || typeof children === "number" ? (
+						<RadioControl>
+							<RadioIndicator />
+							{children}
+						</RadioControl>
+					) : (
+						(children ?? <RadioControl />)
+					);
+				return <Provider values={[[LabelContext, { htmlFor: id }]]}>{content}</Provider>;
 			})}
-		</RadioGroupPrimitives.Radio>
+		</RadioGroupPrimitives.RadioField>
 	);
 };
 
-interface RadioIndicatorProps extends React.ComponentProps<"div"> {}
+interface RadioControlProps extends React.ComponentProps<typeof RadioGroupPrimitives.RadioButton> {}
+
+const RadioControl = ({ className, ...props }: RadioControlProps) => {
+	const { control } = useStyles()();
+	return (
+		<RadioGroupPrimitives.RadioButton
+			data-radio-control=""
+			className={composeRenderProps(className, (className) => control({ className }))}
+			{...props}
+		>
+			{composeRenderProps(props.children, (children, renderProps) => {
+				return (
+					<Provider
+						values={[
+							[InternalRadioContext, renderProps],
+							[LabelContext, { elementType: "span" }],
+						]}
+					>
+						{children ?? <RadioIndicator />}
+					</Provider>
+				);
+			})}
+		</RadioGroupPrimitives.RadioButton>
+	);
+};
+
+interface RadioIndicatorProps extends React.ComponentProps<"span"> {}
 
 const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 	const { indicator } = useStyles()();
-	const ctx = useInternalRadio("RadioIndicator");
+	const ctx = useContext(InternalRadioContext);
 	return (
-		<div
+		<span
 			data-rac=""
-			data-selected={ctx.isSelected || undefined}
-			data-pressed={ctx.isPressed || undefined}
-			data-hovered={ctx.isHovered || undefined}
-			data-focused={ctx.isFocused || undefined}
-			data-focus-visible={ctx.isFocusVisible || undefined}
-			data-disabled={ctx.isDisabled || undefined}
-			data-readonly={ctx.isReadOnly || undefined}
-			data-invalid={ctx.isInvalid || undefined}
-			data-required={ctx.isRequired || undefined}
+			data-selected={ctx?.isSelected || undefined}
+			data-pressed={ctx?.isPressed || undefined}
+			data-hovered={ctx?.isHovered || undefined}
+			data-focused={ctx?.isFocused || undefined}
+			data-focus-visible={ctx?.isFocusVisible || undefined}
+			data-disabled={ctx?.isDisabled || undefined}
+			data-readonly={ctx?.isReadOnly || undefined}
+			data-invalid={ctx?.isInvalid || undefined}
+			data-required={ctx?.isRequired || undefined}
 			className={indicator({ className })}
 			{...props}
 		>
 			<span />
-		</div>
+		</span>
 	);
 };
 
@@ -81,5 +114,5 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
 
 type RadioGroupProps = RadioGroupPrimitives.RadioGroupProps;
 
-export type { RadioGroupProps, RadioIndicatorProps, RadioProps };
-export { Radio, RadioGroup, RadioIndicator };
+export type { RadioControlProps, RadioGroupProps, RadioIndicatorProps, RadioProps };
+export { Radio, RadioControl, RadioGroup, RadioIndicator };

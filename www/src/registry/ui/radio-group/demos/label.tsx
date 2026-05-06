@@ -1,5 +1,5 @@
 import { FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioGroup } from "@/registry/ui/radio-group";
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 
 export default function Demo() {
 	return (
@@ -7,16 +7,34 @@ export default function Demo() {
 			<RadioGroup defaultValue="sm">
 				<Label>Size</Label>
 				<FieldGroup>
-					<Radio value="sm">Small</Radio>
-					<Radio value="md">Medium</Radio>
-					<Radio value="lg">Large</Radio>
+					<Radio value="sm">
+						<RadioControl />
+						<Label>Small</Label>
+					</Radio>
+					<Radio value="md">
+						<RadioControl />
+						<Label>Medium</Label>
+					</Radio>
+					<Radio value="lg">
+						<RadioControl />
+						<Label>Large</Label>
+					</Radio>
 				</FieldGroup>
 			</RadioGroup>
 			<RadioGroup defaultValue="sm" aria-label="Size">
 				<FieldGroup>
-					<Radio value="sm">Small</Radio>
-					<Radio value="md">Medium</Radio>
-					<Radio value="lg">Large</Radio>
+					<Radio value="sm">
+						<RadioControl />
+						<Label>Small</Label>
+					</Radio>
+					<Radio value="md">
+						<RadioControl />
+						<Label>Medium</Label>
+					</Radio>
+					<Radio value="lg">
+						<RadioControl />
+						<Label>Large</Label>
+					</Radio>
 				</FieldGroup>
 			</RadioGroup>
 		</div>

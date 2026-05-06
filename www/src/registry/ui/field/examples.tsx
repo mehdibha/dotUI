@@ -4,24 +4,10 @@ import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 import { Badge } from "@/registry/ui/badge";
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
-import {
-	Description,
-	Field,
-	FieldContent,
-	FieldError,
-	FieldGroup,
-	Fieldset,
-	Label,
-	Legend,
-} from "@/registry/ui/field";
+import { Description, Field, FieldContent, FieldError, FieldGroup, Fieldset, Label, Legend } from "@/registry/ui/field";
 import { Input, TextArea } from "@/registry/ui/input";
-import { Radio, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-} from "@/registry/ui/select";
+import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 import { Slider, SliderControl } from "@/registry/ui/slider";
 import { Switch, SwitchIndicator } from "@/registry/ui/switch";
 import { TextField } from "@/registry/ui/text-field";
@@ -240,15 +226,15 @@ function RadioFields() {
 					<Label>Subscription Plan</Label>
 					<FieldGroup>
 						<Radio value="free">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Free Plan</Label>
 						</Radio>
 						<Radio value="pro">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Pro Plan</Label>
 						</Radio>
 						<Radio value="enterprise">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Enterprise</Label>
 						</Radio>
 					</FieldGroup>
@@ -258,15 +244,15 @@ function RadioFields() {
 					<Description>Choose your preferred battery level.</Description>
 					<FieldGroup>
 						<Radio value="high">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>High</Label>
 						</Radio>
 						<Radio value="medium">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Medium</Label>
 						</Radio>
 						<Radio value="low">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Low</Label>
 						</Radio>
 					</FieldGroup>
@@ -274,11 +260,13 @@ function RadioFields() {
 				<RadioGroup>
 					<FieldGroup className="gap-6">
 						<Radio value="touch-id">
-							<RadioIndicator />
-							<FieldContent>
-								<Label>Enable Touch ID</Label>
-								<Description>Enable Touch ID to quickly unlock your device.</Description>
-							</FieldContent>
+							<RadioControl>
+								<RadioIndicator />
+								<FieldContent>
+									<Label>Enable Touch ID</Label>
+									<Description>Enable Touch ID to quickly unlock your device.</Description>
+								</FieldContent>
+							</RadioControl>
 						</Radio>
 					</FieldGroup>
 				</RadioGroup>
@@ -286,11 +274,11 @@ function RadioFields() {
 					<Label>Invalid Radio Group</Label>
 					<FieldGroup>
 						<Radio value="invalid1">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Invalid Option 1</Label>
 						</Radio>
 						<Radio value="invalid2">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Invalid Option 2</Label>
 						</Radio>
 					</FieldGroup>
@@ -300,11 +288,11 @@ function RadioFields() {
 					<Label>Disabled Radio Group</Label>
 					<FieldGroup>
 						<Radio value="disabled1">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Disabled Option 1</Label>
 						</Radio>
 						<Radio value="disabled2">
-							<RadioIndicator />
+							<RadioControl />
 							<Label>Disabled Option 2</Label>
 						</Radio>
 					</FieldGroup>

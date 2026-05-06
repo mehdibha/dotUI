@@ -1,6 +1,6 @@
 {
 	"name": "RadioIndicatorProps",
-	"description": "Missing description.",
-	"extendsElement": "div",
+	"description": "The visual selected state indicator for a radio control.",
+	"extendsElement": "span",
 	"props": {}
 }

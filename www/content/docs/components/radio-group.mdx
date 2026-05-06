@@ -20,19 +20,23 @@ npx shadcn@latest add @dotui/radio-group
 Use radio group to allow users to select a single option from a short list of related options.
 
 ```tsx
-import { Radio, RadioGroup, RadioIndicator } from "@/components/ui/radio-group";
+import { Radio, RadioControl, RadioGroup } from "@/components/ui/radio-group";
+import { FieldGroup, Label } from "@/components/ui/field";
 ```
 
 ```tsx
 <RadioGroup defaultValue="sm">
-  <Radio value="sm">
-    <RadioIndicator />
-    <Label>Small</Label>
-  </Radio>
-  <Radio value="md">
-    <RadioIndicator />
-    <Label>Medium</Label>
-  </Radio>
+  <Label>Size</Label>
+  <FieldGroup>
+    <Radio value="sm">
+      <RadioControl />
+      <Label>Small</Label>
+    </Radio>
+    <Radio value="md">
+      <RadioControl />
+      <Label>Medium</Label>
+    </Radio>
+  </FieldGroup>
 </RadioGroup>
 ```
 
@@ -98,3 +102,7 @@ Use the controls below to experiment with different radio group props and see th
 ### Radio
 
 <Reference name="radio" />
+
+### RadioControl
+
+<Reference name="radio-control" />
