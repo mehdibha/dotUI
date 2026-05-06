@@ -76,8 +76,8 @@ function ContextMenu({
 				aria-hidden="true"
 				style={{
 					position: "fixed",
-					left: contextMenu.anchor.x,
-					top: contextMenu.anchor.y,
+					left: 0,
+					top: 0,
 					width: contextMenu.anchor.size,
 					height: contextMenu.anchor.size,
 					pointerEvents: "none",

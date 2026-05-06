@@ -20,7 +20,7 @@ import { Input, InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/inpu
 import { Kbd } from "@/registry/ui/kbd";
 import { Modal } from "@/registry/ui/modal";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
-import { Switch, SwitchIndicator, SwitchThumb } from "@/registry/ui/switch";
+import { Switch, SwitchControl } from "@/registry/ui/switch";
 import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
 import { TextField } from "@/registry/ui/text-field";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
@@ -228,9 +228,7 @@ export default function Demo() {
 											<Description>Enable customizations to make ChatGPT more personalized.</Description>
 										</FieldContent>
 										<Switch defaultSelected aria-label="Enable customizations">
-											<SwitchIndicator>
-												<SwitchThumb />
-											</SwitchIndicator>
+											<SwitchControl />
 										</Switch>
 									</Field>
 								</FieldGroup>
@@ -246,9 +244,7 @@ export default function Demo() {
 											</Description>
 										</FieldContent>
 										<Switch aria-label="Multi-factor authentication">
-											<SwitchIndicator>
-												<SwitchThumb />
-											</SwitchIndicator>
+											<SwitchControl />
 										</Switch>
 									</Field>
 									<Field orientation="horizontal" className="items-center justify-between">

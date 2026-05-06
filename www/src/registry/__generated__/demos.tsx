@@ -1761,6 +1761,10 @@ export const DemosIndex: Record<
     files: ["ui/slider/demos/vertical.tsx"],
     component: React.lazy(() => import("@/registry/ui/slider/demos/vertical")),
   },
+  "switch/demos/basic": {
+    files: ["ui/switch/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/switch/demos/basic")),
+  },
   "switch/demos/card": {
     files: ["ui/switch/demos/card.tsx"],
     component: React.lazy(() => import("@/registry/ui/switch/demos/card")),
@@ -1777,6 +1781,10 @@ export const DemosIndex: Record<
     files: ["ui/switch/demos/default.tsx"],
     component: React.lazy(() => import("@/registry/ui/switch/demos/default")),
   },
+  "switch/demos/description": {
+    files: ["ui/switch/demos/description.tsx"],
+    component: React.lazy(() => import("@/registry/ui/switch/demos/description")),
+  },
   "switch/demos/disabled": {
     files: ["ui/switch/demos/disabled.tsx"],
     component: React.lazy(() => import("@/registry/ui/switch/demos/disabled")),
@@ -1785,9 +1793,17 @@ export const DemosIndex: Record<
     files: ["ui/switch/demos/label.tsx"],
     component: React.lazy(() => import("@/registry/ui/switch/demos/label")),
   },
+  "switch/demos/read-only": {
+    files: ["ui/switch/demos/read-only.tsx"],
+    component: React.lazy(() => import("@/registry/ui/switch/demos/read-only")),
+  },
   "switch/demos/sizes": {
     files: ["ui/switch/demos/sizes.tsx"],
     component: React.lazy(() => import("@/registry/ui/switch/demos/sizes")),
+  },
+  "switch/demos/standalone": {
+    files: ["ui/switch/demos/standalone.tsx"],
+    component: React.lazy(() => import("@/registry/ui/switch/demos/standalone")),
   },
   "switch/demos/uncontrolled": {
     files: ["ui/switch/demos/uncontrolled.tsx"],

@@ -57,6 +57,7 @@ function findContextMenuTriggerAtPoint(doc: Document, x: number, y: number) {
 function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, triggerProps }: UseContextMenuTriggerProps) {
 	const triggerRef = React.useRef<HTMLDivElement>(null);
 	const anchorRef = React.useRef<HTMLSpanElement>(null);
+	const anchorPositionRef = React.useRef<ContextMenuAnchor>({ x: 0, y: 0, size: 0, key: 0 });
 	const menuRef = React.useRef<HTMLDivElement>(null);
 	const [, rerenderAfterAnchorMount] = React.useState(0);
 	const touchPositionRef = React.useRef<{ x: number; y: number } | null>(null);
@@ -81,7 +82,11 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 
 	const openAtPoint = React.useCallback(
 		(x: number, y: number, size = 0) => {
-			setAnchor((anchor) => ({ x, y, size, key: anchor.key + 1 }));
+			setAnchor((anchor) => {
+				const nextAnchor = { x, y, size, key: anchor.key + 1 };
+				anchorPositionRef.current = nextAnchor;
+				return nextAnchor;
+			});
 			allowMouseUpRef.current = false;
 			state.open("first");
 
@@ -96,6 +101,10 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 	const anchorRefCallback = React.useCallback((element: HTMLSpanElement | null) => {
 		anchorRef.current = element;
 		if (element) {
+			element.getBoundingClientRect = () => {
+				const { x, y, size } = anchorPositionRef.current;
+				return DOMRect.fromRect({ x, y, width: size, height: size });
+			};
 			rerenderAfterAnchorMount((version) => version + 1);
 		}
 	}, []);

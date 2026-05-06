@@ -1,12 +1,14 @@
 import { Label } from "@/registry/ui/field";
-import { Switch, SwitchIndicator, SwitchThumb } from "@/registry/ui/switch";
+import { Switch, SwitchControl, SwitchIndicator, SwitchThumb } from "@/registry/ui/switch";
 
 export default function Demo() {
 	return (
 		<Switch>
-			<SwitchIndicator>
-				<SwitchThumb />
-			</SwitchIndicator>
+			<SwitchControl>
+				<SwitchIndicator>
+					<SwitchThumb />
+				</SwitchIndicator>
+			</SwitchControl>
 			<Label>Focus mode</Label>
 		</Switch>
 	);

@@ -58,6 +58,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Switch
 	Switch: "@/components/ui/switch",
+	SwitchControl: "@/components/ui/switch",
 	SwitchIndicator: "@/components/ui/switch",
 	SwitchThumb: "@/components/ui/switch",
 

@@ -3,14 +3,14 @@
 import React from "react";
 
 import { Label } from "@/registry/ui/field";
-import { Switch, SwitchIndicator } from "@/registry/ui/switch";
+import { Switch, SwitchControl } from "@/registry/ui/switch";
 
 export default function Demo() {
 	const [isSelected, setSelected] = React.useState(true);
 	return (
 		<div className="flex flex-col items-center gap-4">
 			<Switch isSelected={isSelected} onChange={setSelected}>
-				<SwitchIndicator />
+				<SwitchControl />
 				<Label>Focus mode</Label>
 			</Switch>
 			<p className="text-fg-muted text-xs">

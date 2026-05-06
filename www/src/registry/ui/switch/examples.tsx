@@ -1,41 +1,41 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import Card from "./demos/card";
-import Composition from "./demos/composition";
-import Controlled from "./demos/controlled";
-import Default from "./demos/default";
-import Disabled from "./demos/disabled";
-import Label from "./demos/label";
-import Sizes from "./demos/sizes";
-import Uncontrolled from "./demos/uncontrolled";
+import BasicDemo from "./demos/basic";
+import CardDemo from "./demos/card";
+import ControlledDemo from "./demos/controlled";
+import DescriptionDemo from "./demos/description";
+import DisabledDemo from "./demos/disabled";
+import ReadOnlyDemo from "./demos/read-only";
+import SizesDemo from "./demos/sizes";
+import StandaloneDemo from "./demos/standalone";
 
 export default function SwitchExamples() {
 	return (
-		<Examples>
-			<Example title="card">
-				<Card />
+		<Examples className="**:data-example-preview:justify-center lg:grid-cols-2">
+			<Example title="Standalone">
+				<StandaloneDemo />
 			</Example>
-			<Example title="composition">
-				<Composition />
+			<Example title="Basic">
+				<BasicDemo />
 			</Example>
-			<Example title="controlled">
-				<Controlled />
+			<Example title="With description">
+				<DescriptionDemo />
 			</Example>
-			<Example title="default">
-				<Default />
+			<Example title="Disabled">
+				<DisabledDemo />
 			</Example>
-			<Example title="disabled">
-				<Disabled />
+			<Example title="Read only">
+				<ReadOnlyDemo />
 			</Example>
-			<Example title="label">
-				<Label />
+			<Example title="Sizes">
+				<SizesDemo />
 			</Example>
-			<Example title="sizes">
-				<Sizes />
+			<Example title="Controlled">
+				<ControlledDemo />
 			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
+			<Example title="Card">
+				<CardDemo />
 			</Example>
 		</Examples>
 	);

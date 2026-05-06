@@ -6,7 +6,7 @@ import { Button } from "@/registry/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/registry/ui/card";
 import { Description, Label } from "@/registry/ui/field";
 import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider";
-import { Switch } from "@/registry/ui/switch";
+import { Switch, SwitchControl } from "@/registry/ui/switch";
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group";
 import { ToggleButton } from "@/registry/ui/toggle-button";
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group";
@@ -56,15 +56,9 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
 						<Tag>Breakfast</Tag>
 					</TagList>
 				</TagGroup>
-				<Switch
-					//  variant="card"
-					className="text-sm"
-					defaultSelected
-				>
-					<span className="flex items-center gap-2">
-						{/* <ZapIcon className="size-4" /> */}
-						Instant booking
-					</span>
+				<Switch className="text-sm" defaultSelected>
+					<SwitchControl />
+					<Label>Instant booking</Label>
 				</Switch>
 			</CardContent>
 			<CardFooter className="justify-end gap-2">

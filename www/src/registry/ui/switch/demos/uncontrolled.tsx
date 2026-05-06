@@ -1,10 +1,10 @@
 import { Label } from "@/registry/ui/field";
-import { Switch, SwitchIndicator } from "@/registry/ui/switch";
+import { Switch, SwitchControl } from "@/registry/ui/switch";
 
 export default function Demo() {
 	return (
 		<Switch defaultSelected>
-			<SwitchIndicator />
+			<SwitchControl />
 			<Label>Airplane Mode</Label>
 		</Switch>
 	);

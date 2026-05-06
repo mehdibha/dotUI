@@ -136,7 +136,12 @@ function BooleanControlRenderer({ control, value, onChange }: BooleanControlRend
 				<Label>{control.name}</Label>
 				<ContextualHelp name={control.name} reference={control.reference} />
 			</div>
-			<Switch isSelected={value} onChange={(selected) => onChange(control.name, selected)} size="sm" />
+			<Switch
+				aria-label={control.name}
+				isSelected={value}
+				onChange={(selected) => onChange(control.name, selected)}
+				size="sm"
+			/>
 		</Field>
 	);
 }

@@ -12,7 +12,7 @@ import { Input } from "@/registry/ui/input";
 import { NumberField } from "@/registry/ui/number-field";
 import { Overlay } from "@/registry/ui/overlay";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
-import { Switch, SwitchIndicator } from "@/registry/ui/switch";
+import { Switch, SwitchControl } from "@/registry/ui/switch";
 
 export default function Demo() {
 	const [placement, setPlacement] = React.useState<MenuPrimitives.Key | null>("top");
@@ -71,7 +71,7 @@ export default function Demo() {
 					</Group>
 				</NumberField>
 				<Switch isSelected={showArrow} onChange={setShowArrow}>
-					<SwitchIndicator />
+					<SwitchControl />
 					<Label>Arrow</Label>
 				</Switch>
 			</div>

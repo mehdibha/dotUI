@@ -1,6 +1,6 @@
 {
 	"name": "SwitchIndicatorProps",
-	"description": "Missing description.",
+	"description": "The visual track of a switch.",
 	"extendsElement": "span",
 	"props": {}
 }

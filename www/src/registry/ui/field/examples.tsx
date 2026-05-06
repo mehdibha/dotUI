@@ -9,7 +9,7 @@ import { Input, TextArea } from "@/registry/ui/input";
 import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 import { Slider, SliderControl } from "@/registry/ui/slider";
-import { Switch, SwitchIndicator } from "@/registry/ui/switch";
+import { Switch, SwitchControl } from "@/registry/ui/switch";
 import { TextField } from "@/registry/ui/text-field";
 
 export default function FieldExamples() {
@@ -312,15 +312,15 @@ function SwitchFields() {
 						<Description>Turn on airplane mode to disable all connections.</Description>
 					</FieldContent>
 					<Switch aria-label="Airplane Mode">
-						<SwitchIndicator />
+						<SwitchControl />
 					</Switch>
 				</Field>
 				<Switch>
-					<SwitchIndicator />
+					<SwitchControl />
 					<Label>Dark Mode</Label>
 				</Switch>
 				<Switch>
-					<SwitchIndicator />
+					<SwitchControl />
 					<FieldContent>
 						<Label>Marketing Emails</Label>
 						<Description>Receive emails about new products, features, and more.</Description>
@@ -331,11 +331,11 @@ function SwitchFields() {
 					<Description>Manage your privacy preferences.</Description>
 					<FieldGroup className="gap-3">
 						<Switch defaultSelected>
-							<SwitchIndicator />
+							<SwitchControl />
 							<Label>Make profile visible to others</Label>
 						</Switch>
 						<Switch>
-							<SwitchIndicator />
+							<SwitchControl />
 							<Label>Show email on profile</Label>
 						</Switch>
 					</FieldGroup>
@@ -346,7 +346,7 @@ function SwitchFields() {
 						<Description>This switch has validation errors.</Description>
 					</FieldContent>
 					<Switch isInvalid aria-label="Invalid Switch">
-						<SwitchIndicator />
+						<SwitchControl />
 					</Switch>
 				</Field>
 				<Field orientation="horizontal">
@@ -355,7 +355,7 @@ function SwitchFields() {
 						<Description>This switch is currently disabled.</Description>
 					</FieldContent>
 					<Switch isDisabled aria-label="Disabled Switch">
-						<SwitchIndicator />
+						<SwitchControl />
 					</Switch>
 				</Field>
 			</FieldGroup>
@@ -429,7 +429,7 @@ function HorizontalFields() {
 						<Description>Receive email updates about your account.</Description>
 					</FieldContent>
 					<Switch aria-label="Email Notifications">
-						<SwitchIndicator />
+						<SwitchControl />
 					</Switch>
 				</Field>
 				<Field orientation="horizontal">

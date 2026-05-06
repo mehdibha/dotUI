@@ -3,7 +3,7 @@ import { Switch, SwitchControl } from "@/registry/ui/switch";
 
 export default function Demo() {
 	return (
-		<Switch>
+		<Switch defaultSelected isReadOnly>
 			<SwitchControl />
 			<Label>Focus mode</Label>
 		</Switch>

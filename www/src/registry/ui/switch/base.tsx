@@ -1,50 +1,95 @@
 "use client";
 
+import { createContext, useContext, useId } from "react";
+import { useSlotId } from "react-aria/private/utils/useId";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as SwitchPrimitives from "react-aria-components/Switch";
+import { LabelContext } from "react-aria-components/Label";
+import * as SwitchPrimitive from "react-aria-components/Switch";
+import { Provider, useSlottedContext } from "react-aria-components/slots";
 import type * as React from "react";
 import type { VariantProps } from "tailwind-variants";
 
-import { createContext } from "@/registry/lib/context";
+import { Label } from "@/registry/ui/field";
 
 import { useStyles } from "./styles";
 import type { SwitchStyles } from "./styles";
 
 // MARK: switchStyles
 
-// MARK: Separator
-
-interface InternalSwitchContextValue extends SwitchPrimitives.SwitchRenderProps, VariantProps<SwitchStyles> {}
-
-const [InternalSwitchProvider, useInternalSwitch] = createContext<InternalSwitchContextValue>({
-	strict: true,
-});
+const SwitchStyleContext = createContext<VariantProps<SwitchStyles>>({});
+const InternalSwitchContext = createContext<
+	(SwitchPrimitive.SwitchButtonRenderProps & VariantProps<SwitchStyles>) | null
+>(null);
 
 // MARK: Separator
 
-interface SwitchProps extends React.ComponentProps<typeof SwitchPrimitives.Switch>, VariantProps<SwitchStyles> {}
+interface SwitchProps extends React.ComponentProps<typeof SwitchPrimitive.SwitchField>, VariantProps<SwitchStyles> {}
 
-const Switch = ({ children, variant, size, className, ...props }: SwitchProps) => {
+const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
 	const { root } = useStyles()();
+	const autoId = useId();
+	const id = idProp ?? autoId;
+	const labelId = useSlotId();
+
 	return (
-		<SwitchPrimitives.Switch
-			className={composeRenderProps(className, (className) => root({ variant, size, className }))}
+		<SwitchStyleContext.Provider value={{ size }}>
+			<SwitchPrimitive.SwitchField
+				data-switch=""
+				id={id}
+				aria-labelledby={labelId}
+				className={composeRenderProps(className, (className) => root({ className }))}
+				{...props}
+			>
+				{composeRenderProps(props.children, (children) => {
+					return children ? (
+						<Provider values={[[LabelContext, { htmlFor: id, id: labelId }]]}>
+							{typeof children === "string" ? (
+								<>
+									<SwitchControl />
+									<Label>{children}</Label>
+								</>
+							) : (
+								children
+							)}
+						</Provider>
+					) : (
+						<SwitchControl />
+					);
+				})}
+			</SwitchPrimitive.SwitchField>
+		</SwitchStyleContext.Provider>
+	);
+};
+
+// MARK: Separator
+
+interface SwitchControlProps
+	extends React.ComponentProps<typeof SwitchPrimitive.SwitchButton>,
+		VariantProps<SwitchStyles> {}
+
+const SwitchControl = ({ className, size: sizeProp, ...props }: SwitchControlProps) => {
+	const { control } = useStyles()();
+	const labelContext = useSlottedContext(LabelContext);
+	const styleContext = useContext(SwitchStyleContext);
+	const { id: labelId } = labelContext ?? {};
+	const size = sizeProp ?? styleContext.size;
+
+	return (
+		<SwitchPrimitive.SwitchButton
+			data-switch-control=""
+			className={composeRenderProps(className, (className) => control({ size, className }))}
 			{...props}
 		>
-			{composeRenderProps(children, (children, renderProps) => {
+			{composeRenderProps(props.children, (children, renderProps) => {
 				return (
-					<InternalSwitchProvider value={{ ...renderProps, variant, size }}>
-						{children ? (
-							children
-						) : (
-							<SwitchIndicator>
-								<SwitchThumb />
-							</SwitchIndicator>
-						)}
-					</InternalSwitchProvider>
+					<InternalSwitchContext.Provider value={{ ...renderProps, size }}>
+						<Provider values={[[LabelContext, { id: labelId, elementType: "span" }]]}>
+							{children ?? <SwitchIndicator />}
+						</Provider>
+					</InternalSwitchContext.Provider>
 				);
 			})}
-		</SwitchPrimitives.Switch>
+		</SwitchPrimitive.SwitchButton>
 	);
 };
 
@@ -54,7 +99,16 @@ interface SwitchIndicatorProps extends React.ComponentProps<"span"> {}
 
 const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
 	const { indicator } = useStyles()();
-	const ctx = useInternalSwitch("SwitchIndicator");
+	const ctx = useContext(InternalSwitchContext);
+
+	if (!ctx) {
+		return (
+			<SwitchControl>
+				<SwitchIndicator className={className} {...props} />
+			</SwitchControl>
+		);
+	}
+
 	return (
 		<span
 			data-rac=""
@@ -65,9 +119,13 @@ const SwitchIndicator = ({ className, ...props }: SwitchIndicatorProps) => {
 			data-focus-visible={ctx.isFocusVisible || undefined}
 			data-disabled={ctx.isDisabled || undefined}
 			data-readonly={ctx.isReadOnly || undefined}
-			className={indicator({ variant: ctx.variant, size: ctx.size, className })}
+			data-invalid={ctx.isInvalid || undefined}
+			data-required={ctx.isRequired || undefined}
+			className={indicator({ size: ctx.size, className })}
 			{...props}
-		/>
+		>
+			{props.children ?? <SwitchThumb />}
+		</span>
 	);
 };
 
@@ -77,11 +135,27 @@ interface SwitchThumbProps extends React.ComponentProps<"span"> {}
 
 const SwitchThumb = ({ className, ...props }: SwitchThumbProps) => {
 	const { thumb } = useStyles()();
-	const ctx = useInternalSwitch("SwitchThumb");
-	return <span className={thumb({ variant: ctx.variant, size: ctx.size, className })} {...props} />;
+	const ctx = useContext(InternalSwitchContext);
+
+	return (
+		<span
+			data-rac=""
+			data-selected={ctx?.isSelected || undefined}
+			data-pressed={ctx?.isPressed || undefined}
+			data-hovered={ctx?.isHovered || undefined}
+			data-focused={ctx?.isFocused || undefined}
+			data-focus-visible={ctx?.isFocusVisible || undefined}
+			data-disabled={ctx?.isDisabled || undefined}
+			data-readonly={ctx?.isReadOnly || undefined}
+			data-invalid={ctx?.isInvalid || undefined}
+			data-required={ctx?.isRequired || undefined}
+			className={thumb({ size: ctx?.size, className })}
+			{...props}
+		/>
+	);
 };
 
 // MARK: Separator
 
-export type { SwitchIndicatorProps, SwitchProps, SwitchThumbProps };
-export { Switch, SwitchIndicator, SwitchThumb };
+export type { SwitchControlProps, SwitchIndicatorProps, SwitchProps, SwitchThumbProps };
+export { Switch, SwitchControl, SwitchIndicator, SwitchThumb };
