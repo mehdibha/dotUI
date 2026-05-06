@@ -2,10 +2,11 @@
 
 import { createContext, useContext, useId } from "react";
 import { CheckIcon, MinusIcon } from "lucide-react";
+import { useSlotId } from "react-aria/private/utils/useId";
 import * as CheckboxPrimitive from "react-aria-components/Checkbox";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { LabelContext } from "react-aria-components/Label";
-import { Provider } from "react-aria-components/slots";
+import { Provider, useSlottedContext } from "react-aria-components/slots";
 import type * as React from "react";
 
 import { Label } from "@/registry/ui/field";
@@ -15,7 +16,6 @@ import { useStyles } from "./styles";
 // MARK: checkboxStyles
 
 const InternalCheckboxContext = createContext<CheckboxPrimitive.CheckboxButtonRenderProps | null>(null);
-const InternalCheckboxLabelIdContext = createContext<string | undefined>(undefined);
 
 // MARK: Separator
 
@@ -25,32 +25,28 @@ const Checkbox = ({ id: idProp, className, ...props }: CheckboxProps) => {
 	const { root } = useStyles()();
 	const autoId = useId();
 	const id = idProp ?? autoId;
-	const labelId = `${id}-label`;
-	const hasAriaLabel = props["aria-label"] || props["aria-labelledby"];
-	const hasChildren = props.children != null && props.children !== false;
+	const labelId = useSlotId();
 
 	return (
 		<CheckboxPrimitive.CheckboxField
-			id={id}
-			aria-labelledby={hasAriaLabel || !hasChildren ? props["aria-labelledby"] : labelId}
 			data-checkbox=""
+			id={id}
+			aria-labelledby={labelId}
 			className={composeRenderProps(className, (className) => root({ className }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children) => {
-				const content =
-					typeof children === "string" || typeof children === "number" ? (
-						<>
-							<CheckboxControl />
-							<Label>{children}</Label>
-						</>
-					) : (
-						children
-					);
-				return content ? (
-					<InternalCheckboxLabelIdContext.Provider value={labelId}>
-						<Provider values={[[LabelContext, { htmlFor: id, id: labelId }]]}>{content}</Provider>
-					</InternalCheckboxLabelIdContext.Provider>
+				return children ? (
+					<Provider values={[[LabelContext, { htmlFor: id, id: labelId }]]}>
+						{typeof children === "string" ? (
+							<>
+								<CheckboxControl />
+								<Label>{children}</Label>
+							</>
+						) : (
+							children
+						)}
+					</Provider>
 				) : (
 					<CheckboxControl />
 				);
@@ -63,7 +59,8 @@ interface CheckboxControlProps extends React.ComponentProps<typeof CheckboxPrimi
 
 const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
 	const { control } = useStyles()();
-	const labelId = useContext(InternalCheckboxLabelIdContext);
+	const labelContext = useSlottedContext(LabelContext);
+	const { id: labelId } = labelContext ?? {};
 	return (
 		<CheckboxPrimitive.CheckboxButton
 			data-checkbox-control=""
@@ -75,7 +72,7 @@ const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
 					<Provider
 						values={[
 							[InternalCheckboxContext, renderProps],
-							[LabelContext, { elementType: "span", id: labelId }],
+							[LabelContext, { id: labelId, elementType: "span" }],
 						]}
 					>
 						{children ?? <CheckboxIndicator />}
