@@ -629,6 +629,10 @@ export const DemosIndex: Record<
     files: ["ui/context-menu/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/context-menu/demos/basic")),
   },
+  "context-menu/demos/disabled": {
+    files: ["ui/context-menu/demos/disabled.tsx"],
+    component: React.lazy(() => import("@/registry/ui/context-menu/demos/disabled")),
+  },
   "date-field/demos/basic": {
     files: ["ui/date-field/demos/basic.tsx"],
     component: React.lazy(() => import("@/registry/ui/date-field/demos/basic")),

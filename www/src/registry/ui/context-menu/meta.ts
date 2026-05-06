@@ -10,6 +10,11 @@ const contextMenuMeta = {
 			path: "ui/context-menu/base.tsx",
 			target: "ui/context-menu.tsx",
 		},
+		{
+			type: "registry:ui",
+			path: "ui/context-menu/use-context-menu-trigger.ts",
+			target: "ui/use-context-menu-trigger.ts",
+		},
 	],
 	registryDependencies: ["menu", "popover"],
 } satisfies RegistryItem;
