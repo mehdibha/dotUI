@@ -2029,6 +2029,10 @@ export const DemosIndex: Record<
     files: ["ui/text-field/demos/uncontrolled.tsx"],
     component: React.lazy(() => import("@/registry/ui/text-field/demos/uncontrolled")),
   },
+  "time-field/demos/basic": {
+    files: ["ui/time-field/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/time-field/demos/basic")),
+  },
   "time-field/demos/controlled": {
     files: ["ui/time-field/demos/controlled.tsx"],
     component: React.lazy(() => import("@/registry/ui/time-field/demos/controlled")),

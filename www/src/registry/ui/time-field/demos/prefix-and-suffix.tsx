@@ -4,7 +4,7 @@ import { TimeField } from "@/registry/ui/time-field";
 
 export default function Demo() {
 	return (
-		<div className="space-y-2">
+		<>
 			<TimeField aria-label="Event time">
 				<InputGroup>
 					<InputGroupAddon>
@@ -13,7 +13,6 @@ export default function Demo() {
 					<DateInput />
 				</InputGroup>
 			</TimeField>
-
 			<TimeField aria-label="Event time">
 				<InputGroup>
 					<DateInput />
@@ -22,6 +21,6 @@ export default function Demo() {
 					</InputGroupAddon>
 				</InputGroup>
 			</TimeField>
-		</div>
+		</>
 	);
 }
