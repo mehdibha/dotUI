@@ -66,7 +66,8 @@ function ContextMenu({
 				{children}
 			</div>
 			<span
-				ref={contextMenu.anchorRef}
+				key={contextMenu.anchor.key}
+				ref={contextMenu.anchorRefCallback}
 				aria-hidden="true"
 				style={{
 					position: "fixed",

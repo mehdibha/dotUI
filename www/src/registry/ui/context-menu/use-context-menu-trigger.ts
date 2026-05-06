@@ -16,6 +16,7 @@ interface ContextMenuAnchor {
 	x: number;
 	y: number;
 	size: number;
+	key: number;
 }
 
 interface UseContextMenuTriggerProps {
@@ -29,15 +30,21 @@ function isNode(value: EventTarget | null): value is Node {
 	return value instanceof Node;
 }
 
+function containsPoint(element: HTMLElement, x: number, y: number) {
+	const rect = element.getBoundingClientRect();
+	return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+}
+
 function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, triggerProps }: UseContextMenuTriggerProps) {
 	const triggerRef = React.useRef<HTMLDivElement>(null);
 	const anchorRef = React.useRef<HTMLSpanElement>(null);
 	const menuRef = React.useRef<HTMLDivElement>(null);
+	const [, rerenderAfterAnchorMount] = React.useState(0);
 	const touchPositionRef = React.useRef<{ x: number; y: number } | null>(null);
 	const longPressTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 	const allowMouseUpTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 	const allowMouseUpRef = React.useRef(false);
-	const [anchor, setAnchor] = React.useState<ContextMenuAnchor>({ x: 0, y: 0, size: 0 });
+	const [anchor, setAnchor] = React.useState<ContextMenuAnchor>({ x: 0, y: 0, size: 0, key: 0 });
 
 	const clearLongPressTimeout = React.useCallback(() => {
 		if (longPressTimeoutRef.current) {
@@ -55,7 +62,7 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 
 	const openAtPoint = React.useCallback(
 		(x: number, y: number, size = 0) => {
-			setAnchor({ x, y, size });
+			setAnchor((anchor) => ({ x, y, size, key: anchor.key + 1 }));
 			allowMouseUpRef.current = false;
 			state.open("first");
 
@@ -66,6 +73,13 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 		},
 		[clearAllowMouseUpTimeout, state],
 	);
+
+	const anchorRefCallback = React.useCallback((element: HTMLSpanElement | null) => {
+		anchorRef.current = element;
+		if (element) {
+			rerenderAfterAnchorMount((version) => version + 1);
+		}
+	}, []);
 
 	React.useEffect(() => {
 		if (isDisabled) {
@@ -85,8 +99,17 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 				return;
 			}
 
-			if (state.isOpen || menuRef.current?.contains(target)) {
+			if (target instanceof Element && target.closest("[data-popover]")) {
 				event.preventDefault();
+				return;
+			}
+
+			if (state.isOpen) {
+				event.preventDefault();
+
+				if (triggerRef.current && containsPoint(triggerRef.current, event.clientX, event.clientY)) {
+					openAtPoint(event.clientX, event.clientY);
+				}
 			}
 		}
 
@@ -95,7 +118,7 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 		return () => {
 			doc.removeEventListener("contextmenu", handleDocumentContextMenu, true);
 		};
-	}, [isDisabled, state.isOpen]);
+	}, [isDisabled, openAtPoint, state.isOpen]);
 
 	React.useEffect(() => {
 		return () => {
@@ -196,6 +219,7 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 	return {
 		anchor,
 		anchorRef,
+		anchorRefCallback,
 		menuRef,
 		triggerProps: mergedTriggerProps,
 		triggerRef,
