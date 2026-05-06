@@ -6,7 +6,7 @@ import { TextField } from "@/registry/ui/text-field";
 
 export default function Demo() {
 	return (
-		<TextField isReadOnly defaultValue="hello@copyui.dev">
+		<TextField isReadOnly defaultValue="hello@example.com">
 			<Label>Email</Label>
 			<Input />
 		</TextField>

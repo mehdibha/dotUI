@@ -4,7 +4,7 @@ import { TextField } from "@/registry/ui/text-field";
 
 export default function Demo() {
 	return (
-		<div className="flex items-center gap-4">
+		<>
 			<TextField>
 				<Label>small (sm)</Label>
 				<Input size="sm" />
@@ -17,6 +17,6 @@ export default function Demo() {
 				<Label>large (lg)</Label>
 				<Input size="lg" />
 			</TextField>
-		</div>
+		</>
 	);
 }

@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import * as InputPrimitives from "react-aria-components/Input";
 
 import { XCircleIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Label } from "@/registry/ui/field";
-import { InputGroup, InputGroupAddon } from "@/registry/ui/input";
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
@@ -19,22 +18,29 @@ export default function Demo() {
 				<Label>Website</Label>
 				<InputGroup>
 					<InputGroupAddon>https://</InputGroupAddon>
-					<InputPrimitives.Input />
+					<Input />
 				</InputGroup>
 			</TextField>
 			<TextField>
 				<Label>Email</Label>
 				<InputGroup>
-					<InputPrimitives.Input />
-					<InputGroupAddon>@dotui.org</InputGroupAddon>
+					<Input />
+					<InputGroupAddon>@example.com</InputGroupAddon>
 				</InputGroup>
 			</TextField>
-			<TextField aria-label="Textfield with clear input" ref={inputRef} value={inputValue} onChange={setInputValue}>
+			<TextField aria-label="Textfield with clear input" value={inputValue} onChange={setInputValue}>
 				<InputGroup>
-					<InputPrimitives.Input />
+					<Input ref={inputRef} />
 					<InputGroupAddon>
 						<Tooltip>
-							<Button variant="quiet" isIconOnly>
+							<Button
+								variant="quiet"
+								isIconOnly
+								onPress={() => {
+									setInputValue("");
+									inputRef.current?.focus();
+								}}
+							>
 								<XCircleIcon />
 							</Button>
 							<TooltipContent placement="bottom">
@@ -42,7 +48,6 @@ export default function Demo() {
 							</TooltipContent>
 						</Tooltip>
 					</InputGroupAddon>
-					<InputPrimitives.Input />
 				</InputGroup>
 			</TextField>
 		</div>

@@ -3,7 +3,7 @@ import { TextField } from "@/registry/ui/text-field";
 
 export default function Demo() {
 	return (
-		<TextField aria-label="Email" value="hello@dotui.org" isDisabled>
+		<TextField aria-label="Email" value="hello@example.com" isDisabled>
 			<Input />
 		</TextField>
 	);

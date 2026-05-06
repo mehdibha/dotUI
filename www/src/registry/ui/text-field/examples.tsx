@@ -1,8 +1,8 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
+import Basic from "./demos/basic";
 import Controlled from "./demos/controlled";
-import Default from "./demos/default";
 import Description from "./demos/description";
 import Disabled from "./demos/disabled";
 import ErrorMessage from "./demos/error-message";
@@ -15,12 +15,9 @@ import Uncontrolled from "./demos/uncontrolled";
 
 export default function TextFieldExamples() {
 	return (
-		<Examples>
-			<Example title="controlled">
-				<Controlled />
-			</Example>
-			<Example title="default">
-				<Default />
+		<Examples className="md:grid-cols-2">
+			<Example title="basic">
+				<Basic />
 			</Example>
 			<Example title="description">
 				<Description />
@@ -48,6 +45,9 @@ export default function TextFieldExamples() {
 			</Example>
 			<Example title="uncontrolled">
 				<Uncontrolled />
+			</Example>
+			<Example title="controlled">
+				<Controlled />
 			</Example>
 		</Examples>
 	);

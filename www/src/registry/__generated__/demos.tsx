@@ -1981,6 +1981,10 @@ export const DemosIndex: Record<
     files: ["ui/text-area/demos/uncontrolled.tsx"],
     component: React.lazy(() => import("@/registry/ui/text-area/demos/uncontrolled")),
   },
+  "text-field/demos/basic": {
+    files: ["ui/text-field/demos/basic.tsx"],
+    component: React.lazy(() => import("@/registry/ui/text-field/demos/basic")),
+  },
   "text-field/demos/controlled": {
     files: ["ui/text-field/demos/controlled.tsx"],
     component: React.lazy(() => import("@/registry/ui/text-field/demos/controlled")),

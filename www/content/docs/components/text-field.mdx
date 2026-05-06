@@ -7,7 +7,7 @@ links:
 wip: true
 ---
 
-<Demo name="text-field/demos/default" />
+<Demo name="text-field/demos/basic" />
 
 ## Installation
 
@@ -36,8 +36,8 @@ import { Label } from "@/components/ui/field";
 
 Use the controls below to experiment with different TextField props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="text-field" 
+<InteractiveDemo
+  name="text-field"
   controls={[
     {
       type: "string",
@@ -81,20 +81,18 @@ Use the controls below to experiment with different TextField props and see the 
     },
   ]}
 />
-
-
 ## Examples
 
-<Examples>
-  <Example name="text-field/demos/default" />
-  <Example name="text-field/demos/label" />
+<Examples className="md:grid-cols-2">
+  <Example name="text-field/demos/basic" />
   <Example name="text-field/demos/description" />
-  <Example name="text-field/demos/error-message" />
-  <Example name="text-field/demos/sizes" />
-  <Example name="text-field/demos/prefix-and-suffix" />
   <Example name="text-field/demos/disabled" />
+  <Example name="text-field/demos/error-message" />
+  <Example name="text-field/demos/label" />
+  <Example name="text-field/demos/prefix-and-suffix" />
   <Example name="text-field/demos/read-only" />
   <Example name="text-field/demos/required" />
+  <Example name="text-field/demos/sizes" />
   <Example name="text-field/demos/uncontrolled" />
   <Example name="text-field/demos/controlled" />
 </Examples>

@@ -6,10 +6,10 @@ import { TextField } from "@/registry/ui/text-field";
 
 export default function Demo() {
 	return (
-		<TextField defaultValue="support@copyui.dev" isInvalid>
+		<TextField defaultValue="hello@example.com" isInvalid>
 			<Label>Email</Label>
 			<Input />
-			<FieldError>This email is already taken.</FieldError>
+			<FieldError>Enter a valid email address.</FieldError>
 		</TextField>
 	);
 }

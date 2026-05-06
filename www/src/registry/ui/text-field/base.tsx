@@ -1,25 +1,27 @@
 "use client";
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as TextFieldPrimitives from "react-aria-components/TextField";
-import type * as React from "react";
+import * as TextFieldPrimitive from "react-aria-components/TextField";
 
-import { useStyles } from "./styles";
+import { cn } from "@/registry/lib/utils";
+import { useStyles } from "@/registry/ui/field/styles";
 
 // MARK: textFieldStyles
 
 // MARK: TextField
 
-interface TextFieldProps extends React.ComponentProps<typeof TextFieldPrimitives.TextField> {}
+interface TextFieldProps extends TextFieldPrimitive.TextFieldProps {}
 
 const TextField = ({ className, ...props }: TextFieldProps) => {
-	const textFieldStyles = useStyles();
+	const fieldStyles = useStyles();
 	return (
-		<TextFieldPrimitives.TextField
+		<TextFieldPrimitive.TextField
 			data-field=""
 			data-textfield=""
 			data-slot="text-field"
-			className={composeRenderProps(className, (className) => textFieldStyles({ className }))}
+			className={composeRenderProps(className, (className) =>
+				fieldStyles().field({ className: cn("group/text-field", className) }),
+			)}
 			{...props}
 		/>
 	);
