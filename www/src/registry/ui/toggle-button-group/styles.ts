@@ -5,20 +5,19 @@ import toggleButtonGroupMeta from "./meta";
 const { useStyles, styles } = createStyles(toggleButtonGroupMeta, {
 	base: {
 		slots: {
-			root: "flex w-fit items-center",
-			item: [
-				"selected:z-11 min-w-0 shrink-0 rounded-none shadow-none hover:z-10 focus:z-10 focus-visible:z-12 selected:focus-visible:z-12",
+			root: [
+				"flex w-fit items-stretch",
+				"*:data-button:min-w-0 *:data-button:shrink-0 *:data-button:shadow-none",
+				"*:data-button:selected:z-10 *:data-button:focus-visible:z-20 *:data-button:selected:focus-visible:z-20 *:data-button:hover:z-10",
 			],
 		},
 		variants: {
 			orientation: {
 				horizontal: {
-					root: "flex-row has-data-[variant=default]:-space-x-px",
-					item: "first:rounded-l-(--btn-radius) last:rounded-r-(--btn-radius)",
+					root: "flex-row has-data-[variant=default]:-space-x-px *:not-last:data-button:rounded-r-none *:not-first:data-button:rounded-l-none",
 				},
 				vertical: {
-					root: "flex-col has-data-[variant=default]:-space-y-px",
-					item: "first:rounded-t-(--btn-radius) last:rounded-b-(--btn-radius)",
+					root: "flex-col has-data-[variant=default]:-space-y-px *:not-first:data-button:rounded-t-none *:not-last:data-button:rounded-b-none",
 				},
 			},
 		},

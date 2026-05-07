@@ -92,19 +92,35 @@ const SelectContent = <T extends object>({
 	onOpenChange,
 	...props
 }: SelectContentProps<T>) => {
+	const listBoxClassName = composeRenderProps(props.className, (className) =>
+		cn("max-h-[inherit] overflow-auto overscroll-contain", className),
+	);
+
 	if (virtulized) {
 		return (
-			<Popover placement={placement} defaultOpen={defaultOpen} isOpen={isOpen} onOpenChange={onOpenChange}>
+			<Popover
+				className="overflow-hidden"
+				placement={placement}
+				defaultOpen={defaultOpen}
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
+			>
 				<ListBoxVirtualizer>
-					<ListBox {...props} />
+					<ListBox {...props} className={listBoxClassName} />
 				</ListBoxVirtualizer>
 			</Popover>
 		);
 	}
 
 	return (
-		<Popover placement={placement} defaultOpen={defaultOpen} isOpen={isOpen} onOpenChange={onOpenChange}>
-			<ListBox {...props} />
+		<Popover
+			className="overflow-hidden"
+			placement={placement}
+			defaultOpen={defaultOpen}
+			isOpen={isOpen}
+			onOpenChange={onOpenChange}
+		>
+			<ListBox {...props} className={listBoxClassName} />
 		</Popover>
 	);
 };

@@ -9,11 +9,16 @@ export interface ToggleButtonGroupProps
 	 * The visual style of the toggle buttons.
 	 * @default 'default'
 	 */
-	variant?: "default" | "quiet";
+	variant?: "default" | "primary" | "quiet";
 
 	/**
 	 * The size of the toggle buttons.
 	 * @default 'md'
 	 */
-	size?: "sm" | "md" | "lg";
+	size?: "xs" | "sm" | "md" | "lg";
+
+	/**
+	 * Whether the toggle buttons only contain icons.
+	 */
+	isIconOnly?: boolean;
 }

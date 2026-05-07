@@ -20,14 +20,18 @@ interface ToggleButtonGroupProps
 const ToggleButtonGroup = ({
 	variant,
 	size,
+	isIconOnly,
 	orientation = "horizontal",
 	className,
 	...props
 }: ToggleButtonGroupProps) => {
-	const { root, item } = useStyles()();
+	const { root } = useStyles()();
 	return (
-		<ToggleButtonProvider variant={variant} size={size} className={item({ orientation })}>
+		<ToggleButtonProvider variant={variant} size={size} isIconOnly={isIconOnly}>
 			<ToggleButtonGroupPrimitives.ToggleButtonGroup
+				data-slot="toggle-button-group"
+				data-toggle-button-group=""
+				data-orientation={orientation}
 				orientation={orientation}
 				className={composeRenderProps(className, (className) =>
 					root({

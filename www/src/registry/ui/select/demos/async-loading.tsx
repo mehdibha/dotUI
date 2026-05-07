@@ -2,19 +2,22 @@
 
 import { useAsyncList } from "react-stately";
 
+import { Loader } from "@/registry/ui/loader";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 
-interface Character {
+interface Pokemon {
 	name: string;
 }
 
 export default function Demo() {
-	const list = useAsyncList<Character>({
-		async load({ signal }) {
-			const res = await fetch(`https://pokeapi.co/api/v2/pokemon`, { signal });
-			const json = (await res.json()) as { results: Character[] };
+	const list = useAsyncList<Pokemon>({
+		async load({ signal, cursor }) {
+			const res = await fetch(cursor || `https://pokeapi.co/api/v2/pokemon`, { signal });
+			const json = await res.json();
+
 			return {
 				items: json.results,
+				cursor: json.next,
 			};
 		},
 	});
@@ -22,8 +25,22 @@ export default function Demo() {
 	return (
 		<Select aria-label="Pokemon">
 			<SelectTrigger />
-			<SelectContent isLoading={list.isLoading} items={list.items}>
-				{(item) => <SelectItem id={item.name}>{item.name}</SelectItem>}
+			<SelectContent
+				className="max-h-64 overflow-auto overscroll-none"
+				items={list.items}
+				isLoading={list.loadingState === "loadingMore"}
+				onLoadMore={list.loadMore}
+				renderEmptyState={() => (
+					<div className="flex items-center justify-center py-4">
+						<Loader />
+					</div>
+				)}
+			>
+				{(item) => (
+					<SelectItem id={item.name} className="capitalize">
+						{item.name}
+					</SelectItem>
+				)}
 			</SelectContent>
 		</Select>
 	);

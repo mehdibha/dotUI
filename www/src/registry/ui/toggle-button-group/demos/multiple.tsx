@@ -4,7 +4,11 @@ import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group";
 
 export default function Demo() {
 	return (
-		<ToggleButtonGroup aria-label="Text formatting">
+		<ToggleButtonGroup
+			selectionMode="multiple"
+			defaultSelectedKeys={["bold", "underline"]}
+			aria-label="Text formatting"
+		>
 			<ToggleButton id="bold" isIconOnly aria-label="Bold">
 				<BoldIcon />
 			</ToggleButton>

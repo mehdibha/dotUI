@@ -2133,6 +2133,26 @@ export const DemosIndex: Record<
     files: ["ui/toggle-button-group/demos/default.tsx"],
     component: React.lazy(() => import("@/registry/ui/toggle-button-group/demos/default")),
   },
+  "toggle-button-group/demos/multiple": {
+    files: ["ui/toggle-button-group/demos/multiple.tsx"],
+    component: React.lazy(() => import("@/registry/ui/toggle-button-group/demos/multiple")),
+  },
+  "toggle-button-group/demos/sizes": {
+    files: ["ui/toggle-button-group/demos/sizes.tsx"],
+    component: React.lazy(() => import("@/registry/ui/toggle-button-group/demos/sizes")),
+  },
+  "toggle-button-group/demos/variants": {
+    files: ["ui/toggle-button-group/demos/variants.tsx"],
+    component: React.lazy(() => import("@/registry/ui/toggle-button-group/demos/variants")),
+  },
+  "toggle-button-group/demos/vertical": {
+    files: ["ui/toggle-button-group/demos/vertical.tsx"],
+    component: React.lazy(() => import("@/registry/ui/toggle-button-group/demos/vertical")),
+  },
+  "toggle-button-group/demos/with-text": {
+    files: ["ui/toggle-button-group/demos/with-text.tsx"],
+    component: React.lazy(() => import("@/registry/ui/toggle-button-group/demos/with-text")),
+  },
   "tooltip/demos/arrow": {
     files: ["ui/tooltip/demos/arrow.tsx"],
     component: React.lazy(() => import("@/registry/ui/tooltip/demos/arrow")),
