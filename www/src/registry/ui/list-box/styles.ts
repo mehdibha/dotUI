@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 	base: {
 		slots: {
 			root: [
-				"scroll-my-1 p-1 outline-hidden",
+				"max-h-[inherit] scroll-my-1 overflow-y-auto p-1 outline-hidden",
 				"layout-stack:orientation-horizontal:flex layout-stack:orientation-horizontal:flex-row",
 				"layout-grid:grid layout-grid:gap-1",
 				"layout-grid:orientation-vertical:grid-cols-2",

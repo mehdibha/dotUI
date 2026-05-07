@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(menuMeta, {
 	base: {
 		slots: {
 			root: [
-				"max-h-[inherit] scroll-my-1 rounded-[inherit] p-1 outline-hidden",
+				"max-h-[inherit] scroll-my-1 overflow-y-auto rounded-[inherit] p-1 outline-hidden",
 				"**:data-separator:-mx-1 **:data-separator:my-1 **:data-separator:w-auto",
 			],
 			item: [

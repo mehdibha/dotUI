@@ -22,9 +22,9 @@ export default function Demo() {
 					</Button>
 				</InputGroupAddon>
 			</InputGroup>
-			<Popover className="w-auto overflow-hidden p-0">
+			<Popover className="w-auto p-0">
 				<ListBoxVirtualizer>
-					<ListBox items={items} className="h-80 w-48 overflow-y-auto p-0">
+					<ListBox items={items} className="h-80 w-48 p-0">
 						{(item) => <ListBoxItem id={item.id}>{item.name}</ListBoxItem>}
 					</ListBox>
 				</ListBoxVirtualizer>
