@@ -3,10 +3,22 @@
 import React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { MicIcon, SearchIcon, XIcon } from "lucide-react";
+import {
+	Autocomplete as AriaAutocomplete,
+	Input as AriaInput,
+	SearchField as AriaSearchField,
+	useFilter,
+} from "react-aria-components";
 
 import { Button } from "@dotui/registry/ui/button";
 import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
 import { Drawer } from "@dotui/registry/ui/drawer";
+import {
+	ListBox,
+	ListBoxItem,
+	ListBoxSection,
+	ListBoxSectionHeader,
+} from "@dotui/registry/ui/list-box";
 
 export const Route = createFileRoute("/playground")({
 	component: PlaygroundPage,
@@ -284,7 +296,7 @@ function PlaygroundPage() {
 					className="!max-h-[92vh] !min-h-[92vh] overflow-hidden rounded-t-[14px] border-0 bg-[#1c1c1e]"
 				>
 					<DialogContent className="m-0 min-h-0 flex-1 gap-0 p-0 text-white outline-none">
-						<CityPicker />
+						{({ close }) => <CityPicker close={close} />}
 					</DialogContent>
 				</Drawer>
 			</Dialog>
@@ -292,33 +304,43 @@ function PlaygroundPage() {
 	);
 }
 
-function CityPicker() {
+const SECTIONS = groupCities(CITIES);
+
+function CityPicker({ close }: { close: () => void }) {
 	const [search, setSearch] = React.useState("");
 	const [selected, setSelected] = React.useState<string | null>(null);
-	const listRef = React.useRef<HTMLDivElement>(null);
+	const scrollerRef = React.useRef<HTMLDivElement>(null);
+	const { contains } = useFilter({ sensitivity: "base", ignorePunctuation: true });
 
-	const filteredSections = React.useMemo(() => {
+	const presentLetters = React.useMemo(() => {
 		const q = stripDiacritics(search.trim().toLowerCase());
-		if (!q) return groupCities(CITIES);
-		return groupCities(CITIES.filter((c) => stripDiacritics(c.toLowerCase()).includes(q)));
+		if (!q) return new Set(SECTIONS.map((s) => s.letter));
+		return new Set(
+			SECTIONS.filter((s) =>
+				s.items.some((c) => stripDiacritics(c.toLowerCase()).includes(q)),
+			).map((s) => s.letter),
+		);
 	}, [search]);
-
-	const presentLetters = React.useMemo(
-		() => new Set(filteredSections.map((s) => s.letter)),
-		[filteredSections],
-	);
 
 	const scrollToLetter = React.useCallback(
 		(letter: string) => {
 			if (!presentLetters.has(letter)) return;
-			const el = listRef.current?.querySelector<HTMLElement>(`[data-section-letter="${letter}"]`);
+			const el = scrollerRef.current?.querySelector<HTMLElement>(
+				`[data-section-letter="${letter}"]`,
+			);
 			el?.scrollIntoView({ block: "start", behavior: "auto" });
 		},
 		[presentLetters],
 	);
 
+	const handleAction = (key: React.Key) => {
+		setSelected(String(key));
+		// Defer close so any pending state updates flush before the dialog unmounts.
+		queueMicrotask(close);
+	};
+
 	return (
-		<>
+		<AriaAutocomplete inputValue={search} onInputChange={setSearch} filter={contains}>
 			<header className="relative flex h-14 shrink-0 items-center justify-center px-4">
 				<Button
 					slot="close"
@@ -331,58 +353,61 @@ function CityPicker() {
 			</header>
 
 			<div className="relative min-h-0 flex-1">
-				<div ref={listRef} className="absolute inset-0 overflow-y-auto pr-3">
-					{filteredSections.length === 0 ? (
-						<p className="px-4 py-10 text-center text-sm text-white/50">No results</p>
-					) : (
-						filteredSections.map((section) => (
-							<section key={section.letter} data-section-letter={section.letter}>
-								<h3 className="px-4 pt-3 pb-0.5 font-normal text-[15px] text-white/40">
+				<div ref={scrollerRef} className="absolute inset-0 overflow-y-auto pr-3">
+					<ListBox
+						aria-label="Cities"
+						items={SECTIONS}
+						selectionMode="single"
+						onAction={handleAction}
+						className="data-standalone:!w-full data-standalone:!max-h-none data-standalone:!rounded-none data-standalone:!border-0 data-standalone:!bg-transparent data-standalone:!shadow-none p-0"
+						renderEmptyState={() => (
+							<p className="px-4 py-10 text-center text-sm text-white/50">No results</p>
+						)}
+					>
+						{(section) => (
+							<ListBoxSection id={section.letter} className="border-0">
+								<ListBoxSectionHeader
+									data-section-letter={section.letter}
+									className="block px-4 pt-3 pb-0.5 font-normal text-[15px] text-white/40"
+								>
 									{section.letter}
-								</h3>
-								<ul>
-									{section.items.map((city, idx) => (
-										<li key={city}>
-											<button
-												type="button"
-												onClick={() => setSelected(city)}
-												className="block w-full cursor-pointer px-4 py-3 text-left text-[17px] text-white active:bg-white/10"
-											>
-												{city}
-											</button>
-											{idx < section.items.length - 1 && (
-												<div className="ml-4 h-px bg-white/[0.08]" />
-											)}
-										</li>
-									))}
-								</ul>
-							</section>
-						))
-					)}
+								</ListBoxSectionHeader>
+								{section.items.map((city) => (
+									<ListBoxItem
+										key={city}
+										id={city}
+										textValue={city}
+										className="cursor-pointer rounded-none border-b border-white/[0.08] px-4 py-3 text-[17px] text-white last:border-b-0 focus:bg-white/10 active:bg-white/10"
+									>
+										{city}
+									</ListBoxItem>
+								))}
+							</ListBoxSection>
+						)}
+					</ListBox>
 				</div>
 				<AlphabetIndex activeLetters={presentLetters} onSelect={scrollToLetter} />
 			</div>
 
 			<div className="shrink-0 px-2.5 pt-2 pb-[max(env(safe-area-inset-bottom),0.625rem)]">
-				<div className="flex h-9 items-center gap-2 rounded-[10px] bg-white/10 px-2.5">
+				<AriaSearchField
+					aria-label="Search cities"
+					className="flex h-9 items-center gap-2 rounded-[10px] bg-white/10 px-2.5"
+				>
 					<SearchIcon className="size-4 text-white/60" />
-					<input
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
+					<AriaInput
 						placeholder="Search"
 						className="flex-1 bg-transparent text-[17px] text-white outline-none placeholder:text-white/60"
 					/>
-					<button type="button" className="text-white/60" aria-label="Voice search">
-						<MicIcon className="size-4" />
-					</button>
-				</div>
+					<MicIcon className="size-4 text-white/60" aria-hidden />
+				</AriaSearchField>
 				{selected && (
 					<p className="pt-2 text-center text-[13px] text-white/50">
 						Selected: <span className="text-white/80">{selected}</span>
 					</p>
 				)}
 			</div>
-		</>
+		</AriaAutocomplete>
 	);
 }
 
