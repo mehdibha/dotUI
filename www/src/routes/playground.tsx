@@ -10,15 +10,10 @@ import {
 	useFilter,
 } from "react-aria-components";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Drawer } from "@dotui/registry/ui/drawer";
-import {
-	ListBox,
-	ListBoxItem,
-	ListBoxSection,
-	ListBoxSectionHeader,
-} from "@dotui/registry/ui/list-box";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Drawer } from "@/registry/ui/drawer";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/registry/ui/list-box";
 
 export const Route = createFileRoute("/playground")({
 	component: PlaygroundPage,
@@ -316,18 +311,14 @@ function CityPicker({ close }: { close: () => void }) {
 		const q = stripDiacritics(search.trim().toLowerCase());
 		if (!q) return new Set(SECTIONS.map((s) => s.letter));
 		return new Set(
-			SECTIONS.filter((s) =>
-				s.items.some((c) => stripDiacritics(c.toLowerCase()).includes(q)),
-			).map((s) => s.letter),
+			SECTIONS.filter((s) => s.items.some((c) => stripDiacritics(c.toLowerCase()).includes(q))).map((s) => s.letter),
 		);
 	}, [search]);
 
 	const scrollToLetter = React.useCallback(
 		(letter: string) => {
 			if (!presentLetters.has(letter)) return;
-			const el = scrollerRef.current?.querySelector<HTMLElement>(
-				`[data-section-letter="${letter}"]`,
-			);
+			const el = scrollerRef.current?.querySelector<HTMLElement>(`[data-section-letter="${letter}"]`);
 			el?.scrollIntoView({ block: "start", behavior: "auto" });
 		},
 		[presentLetters],
@@ -360,9 +351,7 @@ function CityPicker({ close }: { close: () => void }) {
 						selectionMode="single"
 						onAction={handleAction}
 						className="data-standalone:!w-full data-standalone:!max-h-none data-standalone:!rounded-none data-standalone:!border-0 data-standalone:!bg-transparent data-standalone:!shadow-none p-0"
-						renderEmptyState={() => (
-							<p className="px-4 py-10 text-center text-sm text-white/50">No results</p>
-						)}
+						renderEmptyState={() => <p className="px-4 py-10 text-center text-sm text-white/50">No results</p>}
 					>
 						{(section) => (
 							<ListBoxSection id={section.letter} className="border-0">
@@ -377,7 +366,7 @@ function CityPicker({ close }: { close: () => void }) {
 										key={city}
 										id={city}
 										textValue={city}
-										className="cursor-pointer rounded-none border-b border-white/[0.08] px-4 py-3 text-[17px] text-white last:border-b-0 focus:bg-white/10 active:bg-white/10"
+										className="cursor-pointer rounded-none border-white/[0.08] border-b px-4 py-3 text-[17px] text-white last:border-b-0 focus:bg-white/10 active:bg-white/10"
 									>
 										{city}
 									</ListBoxItem>
@@ -440,7 +429,7 @@ function AlphabetIndex({ activeLetters, onSelect }: AlphabetIndexProps) {
 				selectFromPoint(e.clientX, e.clientY);
 			}}
 			onPointerMove={handlePointerMove}
-			className="-translate-y-1/2 absolute top-1/2 right-0 flex touch-none select-none flex-col items-center pr-1.5"
+			className="absolute top-1/2 right-0 flex -translate-y-1/2 touch-none select-none flex-col items-center pr-1.5"
 		>
 			{ALPHA.map((letter) => (
 				<button
