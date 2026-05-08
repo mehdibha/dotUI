@@ -5,7 +5,7 @@ import DrawerDemo from "@/registry/ui/drawer/demos/basic";
 import ModalDemo from "@/registry/ui/modal/demos/basic";
 import OverlayDemo from "@/registry/ui/overlay/demos/basic";
 import PopoverDemo from "@/registry/ui/popover/demos/basic";
-import TooltipDemo from "@/registry/ui/tooltip/demos/default";
+import TooltipDemo from "@/registry/ui/tooltip/demos/basic";
 
 export default function OverlaysGroupExamples() {
 	return (

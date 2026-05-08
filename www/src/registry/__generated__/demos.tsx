@@ -2153,40 +2153,32 @@ export const DemosIndex: Record<
 		files: ["ui/toggle-button-group/demos/with-text.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button-group/demos/with-text")),
 	},
-	"tooltip/demos/arrow": {
-		files: ["ui/tooltip/demos/arrow.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tooltip/demos/arrow")),
+	"tooltip/demos/basic": {
+		files: ["ui/tooltip/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tooltip/demos/basic")),
 	},
-	"tooltip/demos/container-padding": {
-		files: ["ui/tooltip/demos/container-padding.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tooltip/demos/container-padding")),
+	"tooltip/demos/formatted": {
+		files: ["ui/tooltip/demos/formatted.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tooltip/demos/formatted")),
 	},
-	"tooltip/demos/default": {
-		files: ["ui/tooltip/demos/default.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tooltip/demos/default")),
+	"tooltip/demos/long-content": {
+		files: ["ui/tooltip/demos/long-content.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tooltip/demos/long-content")),
 	},
-	"tooltip/demos/delay": {
-		files: ["ui/tooltip/demos/delay.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tooltip/demos/delay")),
-	},
-	"tooltip/demos/flip": {
-		files: ["ui/tooltip/demos/flip.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tooltip/demos/flip")),
-	},
-	"tooltip/demos/offset": {
-		files: ["ui/tooltip/demos/offset.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tooltip/demos/offset")),
+	"tooltip/demos/on-link": {
+		files: ["ui/tooltip/demos/on-link.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tooltip/demos/on-link")),
 	},
 	"tooltip/demos/placement": {
 		files: ["ui/tooltip/demos/placement.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tooltip/demos/placement")),
 	},
-	"tooltip/demos/variant": {
-		files: ["ui/tooltip/demos/variant.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tooltip/demos/variant")),
+	"tooltip/demos/with-icon": {
+		files: ["ui/tooltip/demos/with-icon.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tooltip/demos/with-icon")),
 	},
-	"tooltip/demos/with-arrow": {
-		files: ["ui/tooltip/demos/with-arrow.tsx"],
-		component: React.lazy(() => import("@/registry/ui/tooltip/demos/with-arrow")),
+	"tooltip/demos/with-keyboard": {
+		files: ["ui/tooltip/demos/with-keyboard.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tooltip/demos/with-keyboard")),
 	},
 };

@@ -1,45 +1,37 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import Arrow from "./demos/arrow";
-import ContainerPadding from "./demos/container-padding";
-import Default from "./demos/default";
-import Delay from "./demos/delay";
-import Flip from "./demos/flip";
-import Offset from "./demos/offset";
+import Basic from "./demos/basic";
+import Formatted from "./demos/formatted";
+import LongContent from "./demos/long-content";
+import OnLink from "./demos/on-link";
 import Placement from "./demos/placement";
-import Variant from "./demos/variant";
-import WithArrow from "./demos/with-arrow";
+import WithIcon from "./demos/with-icon";
+import WithKeyboard from "./demos/with-keyboard";
 
 export default function TooltipExamples() {
 	return (
-		<Examples>
-			<Example title="arrow">
-				<Arrow />
+		<Examples className="md:grid-cols-2">
+			<Example title="basic">
+				<Basic />
 			</Example>
-			<Example title="container padding">
-				<ContainerPadding />
+			<Example title="with icon">
+				<WithIcon />
 			</Example>
-			<Example title="default">
-				<Default />
+			<Example title="with keyboard">
+				<WithKeyboard />
 			</Example>
-			<Example title="delay">
-				<Delay />
+			<Example title="on link">
+				<OnLink />
 			</Example>
-			<Example title="flip">
-				<Flip />
+			<Example title="long content">
+				<LongContent />
 			</Example>
-			<Example title="offset">
-				<Offset />
+			<Example title="formatted">
+				<Formatted />
 			</Example>
 			<Example title="placement">
 				<Placement />
-			</Example>
-			<Example title="variant">
-				<Variant />
-			</Example>
-			<Example title="with arrow">
-				<WithArrow />
 			</Example>
 		</Examples>
 	);
