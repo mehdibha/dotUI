@@ -6,7 +6,6 @@ import Disabled from "./demos/disabled";
 import DisabledItems from "./demos/disabled-items";
 import InDialog from "./demos/in-dialog";
 import Invalid from "./demos/invalid";
-import IosCityPicker from "./demos/ios-city-picker";
 import LargeList from "./demos/large-list";
 import Multiple from "./demos/multiple";
 import MultipleDisabled from "./demos/multiple-disabled";
@@ -38,9 +37,6 @@ export default function ComboboxExamples() {
 			</Example>
 			<Example title="Large List (1000 items)">
 				<LargeList />
-			</Example>
-			<Example title="iOS City Picker" className="md:col-span-2">
-				<IosCityPicker />
 			</Example>
 			<Example title="With Icon Addon">
 				<WithIcon />
