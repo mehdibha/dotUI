@@ -6,6 +6,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
 	base: {
 		base: [
 			"group/command flex w-full flex-col gap-1 text-fg",
+			"max-h-[inherit] overflow-y-auto",
 
 			// ListBox — frameless, scrollable
 			// "**:data-listbox:max-h-72 **:data-listbox:scroll-py-1 **:data-listbox:overflow-y-auto **:data-listbox:p-0 **:data-listbox:outline-hidden",
