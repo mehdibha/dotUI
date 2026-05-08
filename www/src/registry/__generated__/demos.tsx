@@ -541,6 +541,10 @@ export const DemosIndex: Record<
     files: ["ui/combobox/demos/invalid.tsx"],
     component: React.lazy(() => import("@/registry/ui/combobox/demos/invalid")),
   },
+  "combobox/demos/ios-city-picker": {
+    files: ["ui/combobox/demos/ios-city-picker.tsx"],
+    component: React.lazy(() => import("@/registry/ui/combobox/demos/ios-city-picker")),
+  },
   "combobox/demos/label": {
     files: ["ui/combobox/demos/label.tsx"],
     component: React.lazy(() => import("@/registry/ui/combobox/demos/label")),
