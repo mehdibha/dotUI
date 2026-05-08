@@ -27,13 +27,13 @@ export default function Demo() {
 				}}
 				className="space-y-4"
 			>
-				<TextField name="name" minLength={2} isRequired>
+				<TextField isRequired>
 					<Label>Name</Label>
-					<Input placeholder="Name" />
+					<Input name="name" minLength={2} placeholder="Name" />
 				</TextField>
-				<TextField name="email" type="email" isRequired>
+				<TextField isRequired>
 					<Label>Email</Label>
-					<Input placeholder="Email" />
+					<Input name="email" type="email" placeholder="Email" />
 				</TextField>
 				<RadioGroup name="gender" isRequired orientation="horizontal">
 					<Label>Gender</Label>

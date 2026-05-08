@@ -8,7 +8,8 @@ const { useStyles, styles } = createStyles(badgeMeta, {
 		variants: {
 			appearance: {
 				solid: "bg-(--color) text-(--fg)",
-				subtle: "bg-[color-mix(in_srgb,var(--color)_30%,var(--color-bg))] text-[color-mix(in_srgb,var(--color)_60%,var(--color-fg))]",
+				subtle:
+					"bg-[color-mix(in_srgb,var(--color)_30%,var(--color-bg))] text-[color-mix(in_srgb,var(--color)_60%,var(--color-fg))]",
 			},
 			variant: {
 				neutral: "bg-neutral text-fg-on-neutral",

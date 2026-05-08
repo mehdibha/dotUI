@@ -14,4 +14,3 @@ const dropZoneMeta = {
 } satisfies RegistryItem;
 
 export default dropZoneMeta;
-

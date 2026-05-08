@@ -15,4 +15,3 @@ const linkMeta = {
 } satisfies RegistryItem;
 
 export default linkMeta;
-

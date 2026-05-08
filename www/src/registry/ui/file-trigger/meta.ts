@@ -14,4 +14,3 @@ const fileTriggerMeta = {
 } satisfies RegistryItem;
 
 export default fileTriggerMeta;
-

@@ -15,4 +15,3 @@ const colorEditorMeta = {
 } satisfies RegistryItem;
 
 export default colorEditorMeta;
-

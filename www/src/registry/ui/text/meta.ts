@@ -14,4 +14,3 @@ const textMeta = {
 } satisfies RegistryItem;
 
 export default textMeta;
-

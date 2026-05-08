@@ -659,7 +659,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps",
 								"name": "DatePickerRenderProps"
 							}
 						]
@@ -898,9 +898,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/DatePicker.d.ts:DatePickerRenderProps",
 			"name": "DatePickerRenderProps",
 			"extends": [],
 			"properties": {
@@ -979,7 +979,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/datepicker/useDatePickerState.d.ts:DatePicker.State",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/datepicker/useDatePickerState.d.ts:DatePicker.State",
 						"name": "DatePicker.State"
 					},
 					"optional": false,

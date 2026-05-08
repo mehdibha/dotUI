@@ -2,6 +2,9 @@
 
 import * as AutocompletePrimitive from "react-aria-components/Autocomplete";
 
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/registry/ui/list-box";
+import { SearchField } from "@/registry/ui/search-field";
+
 import { useStyles } from "./styles";
 
 // MARK: commandStyles
@@ -32,4 +35,11 @@ function Command<T extends object>({ className, slot, filter, ...props }: Comman
 // MARK: Separator
 
 export type { CommandProps };
-export { Command };
+export {
+	Command,
+	ListBox as CommandContent,
+	ListBoxItem as CommandItem,
+	ListBoxSection as CommandSection,
+	ListBoxSectionHeader as CommandSectionHeader,
+	SearchField as CommandInput,
+};

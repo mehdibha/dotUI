@@ -1,11 +1,5 @@
 import { CircleDashedIcon } from "@/registry/__generated__/icons";
-import {
-	Empty,
-	EmptyContent,
-	EmptyDescription,
-	EmptyHeader,
-	EmptyTitle,
-} from "@/registry/ui/empty";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@/registry/ui/empty";
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { Kbd } from "@/registry/ui/kbd";
 import { TextField } from "@/registry/ui/text-field";

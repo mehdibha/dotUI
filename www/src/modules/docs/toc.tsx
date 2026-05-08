@@ -84,24 +84,24 @@ export function TocThumb({ containerRef, ...props }: React.ComponentProps<"div">
 
 function Updater({ containerRef, thumbRef }: RefProps & { thumbRef: React.RefObject<HTMLElement | null> }) {
 	const active = useActiveAnchors();
-	const onPrint = React.useEffectEvent(() => {
+	const updateThumb = React.useCallback(() => {
 		if (!containerRef.current || !thumbRef.current) return;
 		update(thumbRef.current, calc(containerRef.current, active));
-	});
+	}, [active, containerRef, thumbRef]);
 
 	React.useEffect(() => {
 		if (!containerRef.current) return;
 		const container = containerRef.current;
 
-		const observer = new ResizeObserver(onPrint);
+		const observer = new ResizeObserver(updateThumb);
 		observer.observe(container);
 
 		return () => observer.disconnect();
-	}, [containerRef]);
+	}, [containerRef, updateThumb]);
 
-	if (containerRef.current && thumbRef.current) {
-		update(thumbRef.current, calc(containerRef.current, active));
-	}
+	React.useEffect(() => {
+		updateThumb();
+	}, [updateThumb]);
 
 	return null;
 }

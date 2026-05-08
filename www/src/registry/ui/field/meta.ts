@@ -14,4 +14,3 @@ const fieldMeta = {
 } satisfies RegistryItem;
 
 export default fieldMeta;
-

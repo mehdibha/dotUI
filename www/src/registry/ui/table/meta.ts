@@ -15,4 +15,3 @@ const tableMeta = {
 } satisfies RegistryItem;
 
 export default tableMeta;
-

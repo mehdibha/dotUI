@@ -14,4 +14,3 @@ const separatorMeta = {
 } satisfies RegistryItem;
 
 export default separatorMeta;
-

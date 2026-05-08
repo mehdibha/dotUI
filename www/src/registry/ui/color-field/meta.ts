@@ -15,4 +15,3 @@ const colorFieldMeta = {
 } satisfies RegistryItem;
 
 export default colorFieldMeta;
-

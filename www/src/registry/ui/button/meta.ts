@@ -15,4 +15,3 @@ const buttonMeta = {
 } satisfies RegistryItem;
 
 export default buttonMeta;
-

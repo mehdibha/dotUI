@@ -89,6 +89,14 @@ const DialogBody = ({ className, scrollFade = false, ...props }: DialogBodyProps
 
 // MARK: Separator
 
+type DialogInsetProps = React.ComponentProps<"div">;
+
+const DialogInset = (props: DialogInsetProps) => {
+	return <div data-slot="dialog-inset" {...props} />;
+};
+
+// MARK: Separator
+
 type DialogFooterProps = React.ComponentProps<"footer">;
 
 const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
@@ -104,7 +112,8 @@ export type {
 	DialogDescriptionProps,
 	DialogFooterProps,
 	DialogHeaderProps,
+	DialogInsetProps,
 	DialogProps,
 	DialogTitleProps,
 };
-export { Dialog, DialogBody, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle };
+export { Dialog, DialogBody, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogInset, DialogTitle };

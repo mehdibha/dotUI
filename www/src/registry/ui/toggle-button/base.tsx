@@ -18,7 +18,8 @@ type ToggleButtonVariants = VariantProps<ToggleButtonStyles>;
 
 const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 	ToggleButtonVariants,
-	React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>
+	React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
+	HTMLButtonElement
 >(ToggleButtonPrimitive.ToggleButtonContext);
 
 // MARK: Separator

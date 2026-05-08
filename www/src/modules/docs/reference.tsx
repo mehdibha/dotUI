@@ -123,6 +123,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 				<td className="overflow-hidden px-3 py-2.5">
 					<code
 						className="whitespace-nowrap break-keep font-mono text-[0.8125rem] text-fg-muted **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+						// biome-ignore lint/security/noDangerouslySetInnerHtml: highlighted type HTML is generated from local API metadata.
 						dangerouslySetInnerHTML={{ __html: prop.shortTypeHighlighted }}
 					/>
 				</td>
@@ -131,6 +132,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 					{prop.default !== undefined ? (
 						<code
 							className="whitespace-nowrap font-mono text-[0.8125rem] text-fg-muted **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+							// biome-ignore lint/security/noDangerouslySetInnerHtml: highlighted default HTML is generated from local API metadata.
 							dangerouslySetInnerHTML={{
 								__html: prop.defaultHighlighted ?? prop.default,
 							}}
@@ -173,6 +175,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 								<DescriptionItem label="Default" hasSeparator>
 									<code
 										className="font-mono text-[0.8125rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+										// biome-ignore lint/security/noDangerouslySetInnerHtml: highlighted default HTML is generated from local API metadata.
 										dangerouslySetInnerHTML={{
 											__html: prop.defaultHighlighted ?? prop.default,
 										}}

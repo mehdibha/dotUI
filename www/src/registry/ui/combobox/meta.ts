@@ -15,4 +15,3 @@ const comboboxMeta = {
 } satisfies RegistryItem;
 
 export default comboboxMeta;
-

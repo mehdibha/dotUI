@@ -6,18 +6,18 @@ import { MenuIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Label } from "@/registry/ui/field";
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
-import { Popover } from "@/registry/ui/popover";
+import { Popover, type PopoverProps } from "@/registry/ui/popover";
 import { Select, SelectContent, SelectItem } from "@/registry/ui/select";
 
 export default function Demo() {
-	const [placement, setPlacement] = React.useState("top");
+	const [placement, setPlacement] = React.useState<PopoverProps["placement"]>("top");
 	return (
 		<div className="flex items-center gap-10">
 			<Menu>
 				<Button variant="default" size="sm" isIconOnly>
 					<MenuIcon />
 				</Button>
-				<Popover placement={placement as any}>
+				<Popover placement={placement}>
 					<MenuContent>
 						<MenuItem>Account settings</MenuItem>
 						<MenuItem>Create team</MenuItem>
@@ -25,7 +25,7 @@ export default function Demo() {
 					</MenuContent>
 				</Popover>
 			</Menu>
-			<Select defaultValue={placement} onChange={(key) => setPlacement(key as string)}>
+			<Select defaultValue={placement} onChange={(key) => setPlacement(key as PopoverProps["placement"])}>
 				<Label>Placement</Label>
 				<SelectContent items={placements}>{(item) => <SelectItem id={item.id}>{item.label}</SelectItem>}</SelectContent>
 			</Select>

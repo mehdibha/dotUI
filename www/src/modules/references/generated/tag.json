@@ -525,7 +525,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps",
 								"name": "TagRenderProps"
 							}
 						]
@@ -629,9 +629,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps",
 			"name": "TagRenderProps",
 			"extends": [
 				{
@@ -643,7 +643,7 @@
 					"typeParameters": [
 						{
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Collection.d.ts:ItemRenderProps",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Collection.d.ts:ItemRenderProps",
 							"name": "ItemRenderProps"
 						},
 						{
@@ -895,7 +895,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
+						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
 					},
 					"optional": false,
 					"readonly": false,

@@ -15,4 +15,3 @@ const colorThumbMeta = {
 } satisfies RegistryItem;
 
 export default colorThumbMeta;
-

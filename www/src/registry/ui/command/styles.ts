@@ -27,7 +27,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
 				base: [
 					"**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0",
 					"**:data-search-field:border-b",
-					"in-data-modal:**:data-search-field:p-0.5"
+					"in-data-modal:**:data-search-field:p-0.5",
 				],
 			},
 			3: {},

@@ -697,18 +697,24 @@ function KeyofType({ keyof }: { keyof: TType }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function TemplateType({ elements }: { elements: TType[] }) {
+	const keyCounts = new Map<string, number>();
+
 	return (
 		<>
 			<span className={styles.string}>`</span>
 			{elements.map((el, i) => {
+				const keyBase = typeKey(el, i);
+				const count = keyCounts.get(keyBase) ?? 0;
+				keyCounts.set(keyBase, count + 1);
+				const key = count === 0 ? keyBase : `${keyBase}-${count}`;
+
 				if (el.type === "stringLiteral") {
 					return (
-						<span key={`${el.value}-${i}`} className={styles.string}>
+						<span key={key} className={styles.string}>
 							{el.value}
 						</span>
 					);
 				}
-				const key = typeKey(el, i);
 				return (
 					<React.Fragment key={key}>
 						<span className={styles.punctuation}>{"${"}</span>

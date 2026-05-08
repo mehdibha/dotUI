@@ -25,7 +25,8 @@ const { useStyles, styles } = createStyles(calendarMeta, {
 				"outside-month:pointer-events-none",
 				"in-data-calendar:not-outside-month:invalid:selected:bg-danger in-data-calendar:not-outside-month:invalid:selected:text-fg-on-danger",
 			],
-			cellInner: "focus-reset in-focus-visible:focus-ring flex in-data-calendar:contents size-full items-center justify-center rounded-(--cell-radius) in-selection-end:not-in-outside-month:bg-accent in-selection-start:not-in-outside-month:bg-accent in-selection-end:not-in-outside-month:text-fg-on-accent in-selection-start:not-in-outside-month:text-fg-on-accent transition-shadow not-in-selection-start:not-in-selection-end:hover:bg-[color-mix(in_srgb,var(--color-accent)_20%,var(--color-bg))]",
+			cellInner:
+				"focus-reset in-focus-visible:focus-ring flex in-data-calendar:contents size-full items-center justify-center rounded-(--cell-radius) in-selection-end:not-in-outside-month:bg-accent in-selection-start:not-in-outside-month:bg-accent in-selection-end:not-in-outside-month:text-fg-on-accent in-selection-start:not-in-outside-month:text-fg-on-accent transition-shadow not-in-selection-start:not-in-selection-end:hover:bg-[color-mix(in_srgb,var(--color-accent)_20%,var(--color-bg))]",
 		},
 	},
 	density: {

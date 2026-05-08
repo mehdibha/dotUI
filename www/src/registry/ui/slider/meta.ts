@@ -16,4 +16,3 @@ const sliderMeta = {
 } satisfies RegistryItem;
 
 export default sliderMeta;
-

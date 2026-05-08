@@ -39,11 +39,18 @@ function Placeholder({ code, components = {} }: { code: string; components: High
 		);
 	}
 
+	const lineCounts = new Map<string, number>();
+	const lines = code.split("\n").map((line) => {
+		const count = lineCounts.get(line) ?? 0;
+		lineCounts.set(line, count + 1);
+		return { key: `${line}-${count}`, line };
+	});
+
 	return (
 		<PreComponent>
 			<Code>
-				{code.split("\n").map((line, i) => (
-					<span key={i} className="line">
+				{lines.map(({ key, line }) => (
+					<span key={key} className="line">
 						{line}
 					</span>
 				))}

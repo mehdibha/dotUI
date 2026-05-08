@@ -3,14 +3,18 @@
 	"description": "A toggle button group allows a user to toggle multiple options, with single or multiple selection.",
 	"props": {
 		"variant": {
-			"type": "\"default\" | \"quiet\"",
-			"detailedType": "'default' | 'quiet' | undefined",
+			"type": "\"default\" | \"primary\" | \"quiet\"",
+			"detailedType": "'default' | 'primary' | 'quiet' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
 						"value": "default"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "primary"
 					},
 					{
 						"type": "stringLiteral",
@@ -22,8 +26,8 @@
 			"default": "'default'"
 		},
 		"size": {
-			"type": "\"lg\" | \"md\" | \"sm\"",
-			"detailedType": "'lg' | 'md' | 'sm' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
+			"detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -38,11 +42,23 @@
 					{
 						"type": "stringLiteral",
 						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "xs"
 					}
 				]
 			},
 			"description": "The size of the toggle buttons.",
 			"default": "'md'"
+		},
+		"isIconOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the toggle buttons only contain icons."
 		},
 		"aria-describedby": {
 			"type": "string",
@@ -266,7 +282,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButtonGroup.d.ts:ToggleButtonGroupRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButtonGroup.d.ts:ToggleButtonGroupRenderProps",
 								"name": "ToggleButtonGroupRenderProps"
 							}
 						]
@@ -387,15 +403,58 @@
 		}
 	},
 	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButtonGroup.d.ts:ToggleButtonGroupRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButtonGroup.d.ts:ToggleButtonGroupRenderProps",
+			"name": "ToggleButtonGroupRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the toggle button group is disabled."
+				},
+				"orientation": {
+					"type": "property",
+					"name": "orientation",
+					"value": {
+						"type": "identifier",
+						"name": "Orientation"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The orientation of the toggle button group."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/toggle/useToggleGroupState.d.ts:ToggleGroupState",
+						"name": "ToggleGroupState"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the toggle button group."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
 			"name": "Set",
 			"extends": [],
 			"properties": {
-				"__@iterator@142": {
+				"__@iterator@126": {
 					"type": "method",
-					"name": "__@iterator@142",
+					"name": "__@iterator@126",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -418,9 +477,9 @@
 					"optional": false,
 					"description": "Iterates over values in the set."
 				},
-				"__@toStringTag@348": {
+				"__@toStringTag@129": {
 					"type": "property",
-					"name": "__@toStringTag@348",
+					"name": "__@toStringTag@129",
 					"value": {
 						"type": "string"
 					},
@@ -711,9 +770,9 @@
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@142": {
+				"__@iterator@126": {
 					"type": "method",
-					"name": "__@iterator@142",
+					"name": "__@iterator@126",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -864,49 +923,6 @@
 					"optional": true,
 					"readonly": false,
 					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButtonGroup.d.ts:ToggleButtonGroupRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButtonGroup.d.ts:ToggleButtonGroupRenderProps",
-			"name": "ToggleButtonGroupRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the toggle button group is disabled."
-				},
-				"orientation": {
-					"type": "property",
-					"name": "orientation",
-					"value": {
-						"type": "identifier",
-						"name": "Orientation"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The orientation of the toggle button group."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toggle/useToggleGroupState.d.ts:ToggleGroupState",
-						"name": "ToggleGroupState"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the toggle button group."
 				}
 			},
 			"typeParameters": [],

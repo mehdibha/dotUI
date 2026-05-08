@@ -1,0 +1,5 @@
+{
+	"name": "DrawerProviderProps",
+	"description": "Optional explicit visual-state scope. Most apps don't need this.",
+	"props": {}
+}

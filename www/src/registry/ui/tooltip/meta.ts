@@ -14,4 +14,3 @@ const tooltipMeta = {
 } satisfies RegistryItem;
 
 export default tooltipMeta;
-

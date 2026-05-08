@@ -14,4 +14,3 @@ const emptyMeta = {
 } satisfies RegistryItem;
 
 export default emptyMeta;
-

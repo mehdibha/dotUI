@@ -1,7 +1,7 @@
 "use client";
 
-import { ChevronDownIcon } from "lucide-react";
 import React from "react";
+import { ChevronDownIcon } from "lucide-react";
 import type * as MenuPrimitives from "react-aria-components/Menu";
 
 import { Button } from "@/registry/ui/button";

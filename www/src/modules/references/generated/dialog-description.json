@@ -170,6 +170,15 @@
 						"elements": [
 							{
 								"type": "stringLiteral",
+								"value": "step"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
 								"value": "true"
 							}
 						]
@@ -180,15 +189,6 @@
 							{
 								"type": "stringLiteral",
 								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "step"
 							}
 						]
 					},

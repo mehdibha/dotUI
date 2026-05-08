@@ -11,7 +11,8 @@ const { useStyles, styles } = createStyles(disclosureMeta, {
 				"focus-reset focus-visible:focus-ring",
 				"flex flex-1 cursor-interactive items-start justify-between gap-4 rounded-md py-3 text-left font-medium text-sm transition-shadow disabled:pointer-events-none",
 			],
-			panel: "h-(--disclosure-panel-height) overflow-clip text-fg-muted text-sm opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
+			panel:
+				"h-(--disclosure-panel-height) overflow-clip text-fg-muted text-sm opacity-0 duration-300 ease-fluid-out group-expanded/disclosure:opacity-100 motion-safe:transition-[height,opacity]",
 		},
 	},
 	density: {

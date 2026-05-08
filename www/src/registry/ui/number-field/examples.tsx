@@ -12,7 +12,6 @@ import Required from "./demos/required";
 import Sizes from "./demos/sizes";
 import WithInputGroup from "./demos/with-input-group";
 
-
 export default function NumberFieldExamples() {
 	return (
 		<Examples className="md:grid-cols-2">

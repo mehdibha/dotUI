@@ -23,24 +23,12 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 				"has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2",
 				"*:[kbd]:ml-auto *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
 			],
-			indicator: [
-				"pointer-events-none absolute right-2 flex items-center justify-center",
-			],
-			itemLabel: [
-				"",
-			],
-			itemDescription: [
-				"text-fg-muted",
-			],
-			loadMore: [
-				"flex w-full items-center justify-center py-1 text-fg-muted",
-			],
-			section: [
-				"scroll-my-1",
-			],
-			sectionTitle: [
-				"px-2 py-1.5 text-fg-muted text-xs",
-			],
+			indicator: ["pointer-events-none absolute right-2 flex items-center justify-center"],
+			itemLabel: [""],
+			itemDescription: ["text-fg-muted"],
+			loadMore: ["flex w-full items-center justify-center py-1 text-fg-muted"],
+			section: ["scroll-my-1"],
+			sectionTitle: ["px-2 py-1.5 text-fg-muted text-xs"],
 		},
 		variants: {
 			variant: {

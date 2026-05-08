@@ -17,9 +17,9 @@ export default function Demo() {
 
 	return (
 		<FormPrimitives.Form onSubmit={handleSubmit} className="w-xs space-y-4">
-			<TextField name="name" minLength={2} isRequired>
+			<TextField isRequired>
 				<Label>Name</Label>
-				<Input placeholder="Name" />
+				<Input name="name" minLength={2} placeholder="Name" />
 				<Description>Please enter your full name.</Description>
 			</TextField>
 			<Button variant="primary" type="submit">

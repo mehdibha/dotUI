@@ -14,4 +14,3 @@ const kbdMeta = {
 } satisfies RegistryItem;
 
 export default kbdMeta;
-

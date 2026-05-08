@@ -2,7 +2,7 @@ import type { SVGProps } from "react";
 
 export function ShadcnIcon(props: SVGProps<SVGSVGElement>) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" {...props}>
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" {...props}>
 			<rect fill="none" width="256" height="256" />
 			<line
 				fill="none"

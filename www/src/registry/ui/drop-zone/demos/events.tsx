@@ -41,15 +41,14 @@ const Draggable = ({ text }: { text: string }) => {
 
 	return (
 		<div className="flex flex-col items-center gap-1">
-			<div
+			<button
 				{...dragProps}
-				role="button"
+				type="button"
 				data-dragging={isDragging || undefined}
-				tabIndex={0}
 				className="rounded-sm border bg-muted p-2 transition-all hover:scale-105 data-dragging:opacity-50"
 			>
 				{text}
-			</div>
+			</button>
 			<span className="text-fg-muted text-xs">Drag me</span>
 		</div>
 	);

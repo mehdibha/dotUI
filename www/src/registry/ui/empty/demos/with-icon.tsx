@@ -1,13 +1,6 @@
 import { FolderIcon, PlusIcon } from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
-import {
-	Empty,
-	EmptyContent,
-	EmptyDescription,
-	EmptyHeader,
-	EmptyMedia,
-	EmptyTitle,
-} from "@/registry/ui/empty";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/registry/ui/empty";
 
 export default function Demo() {
 	return (

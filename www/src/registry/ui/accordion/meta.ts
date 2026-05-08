@@ -21,4 +21,3 @@ const accordionMeta = {
 } satisfies RegistryItem;
 
 export default accordionMeta;
-

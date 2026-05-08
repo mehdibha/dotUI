@@ -15,4 +15,3 @@ const selectMeta = {
 } satisfies RegistryItem;
 
 export default selectMeta;
-

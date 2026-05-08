@@ -15,4 +15,3 @@ const textFieldMeta = {
 } satisfies RegistryItem;
 
 export default textFieldMeta;
-

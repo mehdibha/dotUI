@@ -3,8 +3,8 @@
 	"description": "A ListBoxItem represents an individual option in a ListBox.",
 	"props": {
 		"variant": {
-			"type": "\"danger\" | \"default\" | \"success\" | \"warning\"",
-			"detailedType": "| 'danger'\n| 'default'\n| 'success'\n| 'warning'\n| undefined",
+			"type": "\"danger\" | \"default\"",
+			"detailedType": "'danger' | 'default' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -15,18 +15,10 @@
 					{
 						"type": "stringLiteral",
 						"value": "default"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "success"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "warning"
 					}
 				]
 			},
-			"description": "The color variant of the list box item.",
+			"description": "The color treatment of the list box item.",
 			"default": "'default'"
 		},
 		"onPress": {
@@ -676,7 +668,7 @@
 								"name": "renderProps",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps",
 									"name": "ListBoxItemRenderProps"
 								},
 								"optional": false,
@@ -805,14 +797,14 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ListBox.d.ts:ListBoxItemRenderProps",
 			"name": "ListBoxItemRenderProps",
 			"extends": [
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Collection.d.ts:ItemRenderProps",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Collection.d.ts:ItemRenderProps",
 					"name": "ItemRenderProps"
 				}
 			],
@@ -1210,7 +1202,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
+						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
 					},
 					"optional": false,
 					"readonly": false,

@@ -13,8 +13,10 @@ const { useStyles, styles } = createStyles(buttonMeta, {
 		],
 		variants: {
 			variant: {
-				default: "border pressed:border-border-active bg-neutral pressed:bg-neutral-active text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover",
-				primary: "pending:border-0 bg-primary pressed:bg-primary-active text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0",
+				default:
+					"border pressed:border-border-active bg-neutral pressed:bg-neutral-active text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover",
+				primary:
+					"pending:border-0 bg-primary pressed:bg-primary-active text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0",
 				quiet: "bg-transparent pressed:bg-inverse/20 text-fg hover:bg-inverse/10",
 				link: "text-fg underline-offset-4 hover:underline",
 				warning: "bg-warning pressed:bg-warning-active text-fg-on-warning hover:bg-warning-hover",

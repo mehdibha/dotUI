@@ -2,5 +2,14 @@
 	"name": "DialogBodyProps",
 	"description": "Missing description.",
 	"extendsElement": "div",
-	"props": {}
+	"props": {
+		"scrollFade": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether to render the body with scroll edge fade masks."
+		}
+	}
 }

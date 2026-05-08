@@ -3,8 +3,8 @@
 	"description": "An input group combines an input with addons like buttons, icons, or labels.",
 	"props": {
 		"size": {
-			"type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
-			"detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\"",
+			"detailedType": "'lg' | 'md' | 'sm' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -19,34 +19,11 @@
 					{
 						"type": "stringLiteral",
 						"value": "sm"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "xs"
 					}
 				]
 			},
 			"description": "The size of the input group.",
-			"default": "'md'"
-		},
-		"orientation": {
-			"type": "\"horizontal\" | \"vertical\"",
-			"detailedType": "'horizontal' | 'vertical' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "horizontal"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "vertical"
-					}
-				]
-			},
-			"description": "The orientation of the input group. Use `vertical` to stack addons above or\nbelow the input (useful with `TextArea`).",
-			"default": "'horizontal'"
+			"default": "\"md\""
 		},
 		"onHoverStart": {
 			"type": "((e: HoverEvent) => void)",
@@ -291,6 +268,15 @@
 						"elements": [
 							{
 								"type": "stringLiteral",
+								"value": "step"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
 								"value": "true"
 							}
 						]
@@ -301,15 +287,6 @@
 							{
 								"type": "stringLiteral",
 								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "step"
 							}
 						]
 					},
@@ -1103,7 +1080,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Group.d.ts:GroupRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Group.d.ts:GroupRenderProps",
 								"name": "GroupRenderProps"
 							}
 						]
@@ -1191,9 +1168,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Group.d.ts:GroupRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Group.d.ts:GroupRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Group.d.ts:GroupRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Group.d.ts:GroupRenderProps",
 			"name": "GroupRenderProps",
 			"extends": [],
 			"properties": {

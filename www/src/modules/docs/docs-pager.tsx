@@ -11,6 +11,7 @@ type Neighbours = {
 
 export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 	const { previous, next } = neighbours;
+	const hrefFor = (path: string) => `/docs/${path}`;
 
 	return (
 		<Group>
@@ -20,7 +21,7 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 					size="sm"
 					isIconOnly
 					isDisabled={!previous}
-					href={previous ? { to: "/docs/$", params: { _splat: previous.path } } : undefined}
+					href={previous ? hrefFor(previous.path) : undefined}
 				>
 					<ChevronLeftIcon />
 				</LinkButton>
@@ -32,7 +33,7 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 					size="sm"
 					isIconOnly
 					isDisabled={!next}
-					href={next ? { to: "/docs/$", params: { _splat: next.path } } : undefined}
+					href={next ? hrefFor(next.path) : undefined}
 				>
 					<ChevronRightIcon />
 				</LinkButton>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { mergeProps } from "react-aria";
 import { useSlottedContext } from "react-aria-components/slots";
+import type { ContextValue, SlotProps } from "react-aria-components/slots";
 
 export interface CreateContextOptions {
 	strict?: boolean;
@@ -80,9 +81,10 @@ export function createScopedContext<ContextValueType extends object | null>(
  * ```
  */
 export function createVariantsContext<
-	TVariants extends Record<string, any>,
-	TAriaProps extends Record<string, any> = Record<string, any>,
->(ariaContext: React.Context<any>) {
+	TVariants extends object,
+	TAriaProps extends SlotProps,
+	TAriaElement extends Element = Element,
+>(ariaContext: React.Context<ContextValue<TAriaProps, TAriaElement>>) {
 	// Create a context for our custom variant props
 	const VariantsContext = React.createContext<Partial<TVariants>>({});
 
@@ -101,11 +103,11 @@ export function createVariantsContext<
 		});
 
 		const variantProps: Partial<TVariants> = {};
-		const ariaProps: Record<string, any> = {};
+		const ariaProps: Record<string, unknown> = {};
 
 		Object.entries(props).forEach(([key, value]) => {
 			if (variantKeys.includes(key)) {
-				variantProps[key as keyof TVariants] = value;
+				variantProps[key as keyof TVariants] = value as TVariants[keyof TVariants];
 			} else {
 				ariaProps[key] = value;
 			}
@@ -113,13 +115,15 @@ export function createVariantsContext<
 
 		return (
 			<VariantsContext.Provider value={variantProps}>
-				<ariaContext.Provider value={ariaProps}>{children}</ariaContext.Provider>
+				<ariaContext.Provider value={ariaProps as ContextValue<TAriaProps, TAriaElement>}>
+					{children}
+				</ariaContext.Provider>
 			</VariantsContext.Provider>
 		);
 	};
 
 	// Hook to merge context variants with local props
-	function useContextProps<TProps extends Partial<TVariants>>(localProps: TProps): TProps {
+	function useContextProps<TProps extends Partial<TVariants> & SlotProps>(localProps: TProps): TProps {
 		const contextVariants = React.useContext(VariantsContext);
 		const ariaProps = useSlottedContext(ariaContext, localProps.slot) || {};
 

@@ -22,4 +22,3 @@ const badgeMeta = {
 } satisfies RegistryItem;
 
 export default badgeMeta;
-

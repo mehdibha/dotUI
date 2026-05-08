@@ -27,4 +27,3 @@ const alertMeta = {
 } satisfies RegistryItem;
 
 export default alertMeta;
-

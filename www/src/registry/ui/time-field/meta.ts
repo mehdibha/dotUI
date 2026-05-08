@@ -15,4 +15,3 @@ const timeFieldMeta = {
 } satisfies RegistryItem;
 
 export default timeFieldMeta;
-

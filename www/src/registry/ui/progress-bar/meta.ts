@@ -15,4 +15,3 @@ const progressBarMeta = {
 } satisfies RegistryItem;
 
 export default progressBarMeta;
-

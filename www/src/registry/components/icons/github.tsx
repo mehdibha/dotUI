@@ -2,7 +2,7 @@ import type { SVGProps } from "react";
 
 export function GitHubIcon(props: SVGProps<SVGSVGElement>) {
 	return (
-		<svg {...props} viewBox="0 0 1024 1024" fill="none">
+		<svg aria-hidden="true" {...props} viewBox="0 0 1024 1024" fill="none">
 			<path
 				fillRule="evenodd"
 				clipRule="evenodd"

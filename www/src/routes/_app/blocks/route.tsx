@@ -23,7 +23,7 @@ function BlocksLayout() {
 							<Tab
 								key={item.slug}
 								id={item.slug}
-								href={{ to: "/blocks/{-$category}", params: { category: item.path } }}
+								href={item.path ? `/blocks/${item.path}` : "/blocks"}
 								className="flex items-center gap-2 rounded-full px-4 py-3 text-sm"
 							>
 								{item.name}

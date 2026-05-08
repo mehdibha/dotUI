@@ -26,8 +26,8 @@ export default function Demo() {
 			</FileTrigger>
 			{files && (
 				<ul>
-					{files.map((file, index) => (
-						<li key={index}>{file}</li>
+					{files.map((file) => (
+						<li key={file}>{file}</li>
 					))}
 				</ul>
 			)}

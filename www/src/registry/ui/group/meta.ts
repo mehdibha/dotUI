@@ -15,4 +15,3 @@ const groupMeta = {
 } satisfies RegistryItem;
 
 export default groupMeta;
-

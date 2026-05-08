@@ -15,4 +15,3 @@ const toggleButtonMeta = {
 } satisfies RegistryItem;
 
 export default toggleButtonMeta;
-

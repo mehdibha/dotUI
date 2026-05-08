@@ -14,4 +14,3 @@ const sidebarMeta = {
 } satisfies RegistryItem;
 
 export default sidebarMeta;
-

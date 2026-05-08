@@ -15,4 +15,3 @@ const checkboxGroupMeta = {
 } satisfies RegistryItem;
 
 export default checkboxGroupMeta;
-

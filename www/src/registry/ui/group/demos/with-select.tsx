@@ -20,7 +20,9 @@ export default function Demo() {
 			<Group>
 				<Select defaultSelectedKey="$">
 					<SelectTrigger />
-					<SelectContent items={currencyItems}>{(item) => <SelectItem id={item.id}>{item.label}</SelectItem>}</SelectContent>
+					<SelectContent items={currencyItems}>
+						{(item) => <SelectItem id={item.id}>{item.label}</SelectItem>}
+					</SelectContent>
 				</Select>
 				<InputGroup>
 					<Input placeholder="Enter amount to send" />

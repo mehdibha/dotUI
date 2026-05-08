@@ -15,4 +15,3 @@ const dateFieldMeta = {
 } satisfies RegistryItem;
 
 export default dateFieldMeta;
-

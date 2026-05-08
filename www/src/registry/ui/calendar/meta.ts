@@ -15,4 +15,3 @@ const calendarMeta = {
 } satisfies RegistryItem;
 
 export default calendarMeta;
-

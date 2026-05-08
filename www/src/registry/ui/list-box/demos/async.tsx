@@ -2,8 +2,8 @@
 
 import { useAsyncList } from "react-stately";
 
-import { Loader } from "@/registry/ui/loader";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Loader } from "@/registry/ui/loader";
 
 interface Pokemon {
 	name: string;

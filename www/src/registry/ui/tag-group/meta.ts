@@ -24,4 +24,3 @@ const tagGroupMeta = {
 } satisfies RegistryItem;
 
 export default tagGroupMeta;
-

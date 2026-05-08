@@ -240,7 +240,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/inputs.d.ts:RangeValue",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:RangeValue",
 							"name": "RangeValue"
 						},
 						"typeParameters": [
@@ -337,29 +337,55 @@
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
 		"isDateUnavailable": {
-			"type": "((date: DateValue) => boolean)",
-			"detailedType": "((date: DateValue) => boolean) | undefined",
+			"type": "((date: DateValue, anchorDate: CalendarDate | null) => boolean)",
+			"detailedType": "| ((\n    date: DateValue,\n    anchorDate: CalendarDate | null,\n  ) => boolean)\n| undefined",
 			"typeAst": {
-				"type": "function",
-				"parameters": [
+				"type": "union",
+				"elements": [
 					{
-						"type": "parameter",
-						"name": "date",
-						"value": {
-							"type": "link",
-							"id": "DateValue",
-							"name": "DateValue"
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "date",
+								"value": {
+									"type": "identifier",
+									"name": "DateValue"
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "anchorDate",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+											"name": "CalendarDate"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "boolean"
 						},
-						"optional": false,
-						"rest": false
+						"typeParameters": []
 					}
-				],
-				"return": {
-					"type": "boolean"
-				},
-				"typeParameters": []
+				]
 			},
-			"description": "Callback that is called for each date of the calendar. If it returns true, then the date is unavailable."
+			"description": "Callback that is called for each date of the calendar. If it returns true, then the date is unavailable.\nThe second argument provides the current selection anchor date, if any. This can be used to adjust the available\ndates based on the user's first selected date."
 		},
 		"isDisabled": {
 			"type": "boolean",
@@ -468,7 +494,7 @@
 									"type": "application",
 									"base": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/inputs.d.ts:RangeValue",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:RangeValue",
 										"name": "RangeValue"
 									},
 									"typeParameters": [
@@ -542,7 +568,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Calendar.d.ts:RangeCalendarRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:RangeCalendarRenderProps",
 								"name": "RangeCalendarRenderProps"
 							}
 						]
@@ -644,7 +670,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/inputs.d.ts:RangeValue",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:RangeValue",
 							"name": "RangeValue"
 						},
 						"typeParameters": [
@@ -672,6 +698,14 @@
 			},
 			"description": "The amount of days that will be displayed at once. This affects how pagination works.",
 			"default": "{months: 1}"
+		},
+		"weeksInMonth": {
+			"type": "number",
+			"detailedType": "number | undefined",
+			"typeAst": {
+				"type": "number"
+			},
+			"description": "The number of weeks in a month. This overrides the default set by the locale."
 		}
 	},
 	"renderProps": {
@@ -685,9 +719,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/inputs.d.ts:RangeValue": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:RangeValue": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/@react-types/shared/src/inputs.d.ts:RangeValue",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:RangeValue",
 			"name": "RangeValue",
 			"extends": [],
 			"properties": {
@@ -727,9 +761,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Calendar.d.ts:RangeCalendarRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:RangeCalendarRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Calendar.d.ts:RangeCalendarRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:RangeCalendarRenderProps",
 			"name": "RangeCalendarRenderProps",
 			"extends": [
 				{
@@ -741,7 +775,7 @@
 					"typeParameters": [
 						{
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
 							"name": "CalendarRenderProps"
 						},
 						{
@@ -782,7 +816,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/calendar/types.d.ts:RangeCalendarState",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/calendar/types.d.ts:RangeCalendarState",
 						"name": "RangeCalendarState"
 					},
 					"optional": false,

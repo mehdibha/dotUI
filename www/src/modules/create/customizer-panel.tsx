@@ -1,24 +1,12 @@
 import { type ReactNode, useMemo } from "react";
 import { getRouteApi } from "@tanstack/react-router";
-import {
-	CheckIcon,
-	ChevronDownIcon,
-	ChevronLeftIcon,
-	Clock3Icon,
-	type LucideIcon,
-	MoonIcon,
-	MousePointer2Icon,
-	ShuffleIcon,
-	TimerIcon,
-	Undo2Icon,
-} from "lucide-react";
+import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, MousePointer2Icon, ShuffleIcon, Undo2Icon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
-import { type ComponentStatus, componentsData } from "@/modules/docs/components-list/components-data";
+import { componentsData } from "@/modules/docs/components-list/components-data";
 import * as icons from "@/registry/__generated__/icons";
 import { cn } from "@/registry/lib/utils";
-import { Badge } from "@/registry/ui/badge";
 import { Button } from "@/registry/ui/button";
 import { Command } from "@/registry/ui/command";
 import { Input } from "@/registry/ui/input";
@@ -262,7 +250,8 @@ export function CustomizerPanel() {
 	}
 
 	function renderStackedView(index: number) {
-		const id = navStack[index]!;
+		const id = navStack[index];
+		if (!id) return null;
 
 		// Group detail view (group id anywhere in the stack)
 		if (isGroupId(id)) {
@@ -330,7 +319,11 @@ export function CustomizerPanel() {
 												<span
 													className={cn(
 														"size-2 rounded-full",
-														comp.status === "done" ? "bg-accent" : comp.status === "in review" ? "bg-warning" : "bg-danger",
+														comp.status === "done"
+															? "bg-accent"
+															: comp.status === "in review"
+																? "bg-warning"
+																: "bg-danger",
 													)}
 												/>
 											</ListBoxItem>

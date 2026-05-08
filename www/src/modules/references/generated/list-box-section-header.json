@@ -1,6 +1,6 @@
 {
 	"name": "ListBoxSectionHeaderProps",
-	"description": "Missing description.",
+	"description": "Header rendered at the top of a ListBoxSection.",
 	"props": {
 		"aria-activedescendant": {
 			"type": "string",
@@ -170,6 +170,15 @@
 						"elements": [
 							{
 								"type": "stringLiteral",
+								"value": "step"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
 								"value": "true"
 							}
 						]
@@ -180,15 +189,6 @@
 							{
 								"type": "stringLiteral",
 								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "step"
 							}
 						]
 					},

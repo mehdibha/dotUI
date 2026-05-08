@@ -14,9 +14,9 @@ export default function Demo() {
 			</NumberField>
 			<NumberField aria-label="medium (md)" defaultValue={1024}>
 				<Group>
-					<NumberFieldDecrement/>
+					<NumberFieldDecrement />
 					<Input placeholder="medium (md)" />
-					<NumberFieldIncrement/>
+					<NumberFieldIncrement />
 				</Group>
 			</NumberField>
 			<NumberField aria-label="large (lg)" defaultValue={1024}>

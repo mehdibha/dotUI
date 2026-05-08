@@ -13,4 +13,3 @@ const formMeta = {
 } satisfies RegistryItem;
 
 export default formMeta;
-

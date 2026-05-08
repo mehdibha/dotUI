@@ -3,14 +3,18 @@
 	"description": "A toggle button allows a user to toggle a selection on or off, for example switching between two states or modes.",
 	"props": {
 		"variant": {
-			"type": "\"default\" | \"quiet\"",
-			"detailedType": "'default' | 'quiet' | undefined",
+			"type": "\"default\" | \"primary\" | \"quiet\"",
+			"detailedType": "'default' | 'primary' | 'quiet' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
 						"value": "default"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "primary"
 					},
 					{
 						"type": "stringLiteral",
@@ -22,23 +26,11 @@
 			"default": "'default'"
 		},
 		"size": {
-			"type": "\"icon\" | \"icon-lg\" | \"icon-sm\" | \"lg\" | \"md\" | \"sm\"",
-			"detailedType": "| 'icon'\n| 'icon-lg'\n| 'icon-sm'\n| 'lg'\n| 'md'\n| 'sm'\n| undefined",
+			"type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
+			"detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "icon"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "icon-lg"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "icon-sm"
-					},
 					{
 						"type": "stringLiteral",
 						"value": "lg"
@@ -50,11 +42,23 @@
 					{
 						"type": "stringLiteral",
 						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "xs"
 					}
 				]
 			},
-			"description": "The size of the toggle button.\nUse `icon-sm`, `icon`, or `icon-lg` for icon-only buttons.",
+			"description": "The size of the toggle button.",
 			"default": "'md'"
+		},
+		"isIconOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the toggle button only contains an icon."
 		},
 		"onPress": {
 			"type": "((e: PressEvent) => void)",
@@ -843,7 +847,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps",
 								"name": "ToggleButtonRenderProps"
 							}
 						]
@@ -934,9 +938,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps",
 			"name": "ToggleButtonRenderProps",
 			"extends": [
 				{
@@ -948,7 +952,7 @@
 					"typeParameters": [
 						{
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps",
 							"name": "ButtonRenderProps"
 						},
 						{
@@ -1029,7 +1033,7 @@
 					"name": "state",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/toggle/useToggleState.d.ts:ToggleState",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/toggle/useToggleState.d.ts:ToggleState",
 						"name": "ToggleState"
 					},
 					"optional": false,
@@ -1172,7 +1176,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
+						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
 					},
 					"optional": false,
 					"readonly": false,

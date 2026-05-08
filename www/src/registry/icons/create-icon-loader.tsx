@@ -15,10 +15,12 @@ const libraryImporters: Record<string, LibraryImporter> = {
 const iconPromiseCaches = new Map<string, Map<string, Promise<unknown>>>();
 
 function getCache(libraryName: string) {
-	if (!iconPromiseCaches.has(libraryName)) {
-		iconPromiseCaches.set(libraryName, new Map());
+	let cache = iconPromiseCaches.get(libraryName);
+	if (!cache) {
+		cache = new Map();
+		iconPromiseCaches.set(libraryName, cache);
 	}
-	return iconPromiseCaches.get(libraryName)!;
+	return cache;
 }
 
 function isIconData(data: unknown): data is IconSvgElement {
@@ -39,14 +41,15 @@ export function createIconLoader(libraryName: string) {
 	}: {
 		name: string;
 	} & Record<string, unknown>) {
-		if (!cache.has(name)) {
-			const promise = importFn().then((mod) => {
+		let promise = cache.get(name);
+		if (!promise) {
+			promise = importFn().then((mod) => {
 				return mod[name] || null;
 			});
 			cache.set(name, promise);
 		}
 
-		const iconData = use(cache.get(name)!);
+		const iconData = use(promise);
 
 		if (!iconData) {
 			return null;

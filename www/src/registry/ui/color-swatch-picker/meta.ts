@@ -23,4 +23,3 @@ const colorSwatchPickerMeta = {
 } satisfies RegistryItem;
 
 export default colorSwatchPickerMeta;
-

@@ -23,4 +23,3 @@ const inputMeta = {
 } satisfies RegistryItem;
 
 export default inputMeta;
-

@@ -15,4 +15,3 @@ const overlayMeta = {
 } satisfies RegistryItem;
 
 export default overlayMeta;
-

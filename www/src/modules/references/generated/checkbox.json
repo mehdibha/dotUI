@@ -606,7 +606,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
 								"name": "CheckboxFieldRenderProps"
 							}
 						]
@@ -792,9 +792,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
 			"name": "CheckboxFieldRenderProps",
 			"extends": [],
 			"properties": {
@@ -1021,7 +1021,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
+						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
 					},
 					"optional": false,
 					"readonly": false,

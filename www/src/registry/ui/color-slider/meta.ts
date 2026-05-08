@@ -15,4 +15,3 @@ const colorSliderMeta = {
 } satisfies RegistryItem;
 
 export default colorSliderMeta;
-

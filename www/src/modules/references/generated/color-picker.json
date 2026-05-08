@@ -59,7 +59,7 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
 						"name": "Color"
 					}
 				]
@@ -157,7 +157,7 @@
 					},
 					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
 						"name": "Color"
 					}
 				]
@@ -166,526 +166,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-			"name": "NumberFormatOptions",
-			"extends": [],
-			"properties": {
-				"compactDisplay": {
-					"type": "property",
-					"name": "compactDisplay",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "short"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "long"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"currency": {
-					"type": "property",
-					"name": "currency",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"currencyDisplay": {
-					"type": "property",
-					"name": "currencyDisplay",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "symbol"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "code"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "name"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "narrowSymbol"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"currencySign": {
-					"type": "property",
-					"name": "currencySign",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "standard"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "accounting"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"localeMatcher": {
-					"type": "property",
-					"name": "localeMatcher",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "lookup"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "best fit"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"maximumFractionDigits": {
-					"type": "property",
-					"name": "maximumFractionDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"maximumSignificantDigits": {
-					"type": "property",
-					"name": "maximumSignificantDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"minimumFractionDigits": {
-					"type": "property",
-					"name": "minimumFractionDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"minimumIntegerDigits": {
-					"type": "property",
-					"name": "minimumIntegerDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"minimumSignificantDigits": {
-					"type": "property",
-					"name": "minimumSignificantDigits",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"notation": {
-					"type": "property",
-					"name": "notation",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "standard"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "scientific"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "engineering"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "compact"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"numberingSystem": {
-					"type": "property",
-					"name": "numberingSystem",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"signDisplay": {
-					"type": "property",
-					"name": "signDisplay",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "auto"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "never"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "always"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "exceptZero"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"style": {
-					"type": "property",
-					"name": "style",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "decimal"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "percent"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "currency"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "unit"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"unit": {
-					"type": "property",
-					"name": "unit",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"unitDisplay": {
-					"type": "property",
-					"name": "unitDisplay",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "narrow"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "short"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "long"
-									}
-								]
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				},
-				"useGrouping": {
-					"type": "property",
-					"name": "useGrouping",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "boolean"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
 			"name": "Color",
 			"extends": [],
 			"properties": {
@@ -697,7 +180,7 @@
 						"parameters": [],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -819,7 +302,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
 							"name": "ColorChannelRange"
 						},
 						"typeParameters": []
@@ -1163,7 +646,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -1323,7 +806,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:Color",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
 							"name": "Color"
 						},
 						"typeParameters": []
@@ -1335,9 +818,9 @@
 			"typeParameters": [],
 			"description": "Represents a color value."
 		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
 			"name": "ColorChannelRange",
 			"extends": [],
 			"properties": {
@@ -1380,6 +863,523 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The step value of the color channel, used when incrementing and decrementing."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+			"name": "NumberFormatOptions",
+			"extends": [],
+			"properties": {
+				"compactDisplay": {
+					"type": "property",
+					"name": "compactDisplay",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "short"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "long"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"currency": {
+					"type": "property",
+					"name": "currency",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"currencyDisplay": {
+					"type": "property",
+					"name": "currencyDisplay",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "symbol"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "code"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "name"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "narrowSymbol"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"currencySign": {
+					"type": "property",
+					"name": "currencySign",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "standard"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "accounting"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"localeMatcher": {
+					"type": "property",
+					"name": "localeMatcher",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "lookup"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "best fit"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"maximumFractionDigits": {
+					"type": "property",
+					"name": "maximumFractionDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"maximumSignificantDigits": {
+					"type": "property",
+					"name": "maximumSignificantDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"minimumFractionDigits": {
+					"type": "property",
+					"name": "minimumFractionDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"minimumIntegerDigits": {
+					"type": "property",
+					"name": "minimumIntegerDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"minimumSignificantDigits": {
+					"type": "property",
+					"name": "minimumSignificantDigits",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"notation": {
+					"type": "property",
+					"name": "notation",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "compact"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "standard"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "scientific"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "engineering"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"numberingSystem": {
+					"type": "property",
+					"name": "numberingSystem",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"signDisplay": {
+					"type": "property",
+					"name": "signDisplay",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "auto"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "never"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "always"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "exceptZero"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"style": {
+					"type": "property",
+					"name": "style",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "decimal"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "percent"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "currency"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "unit"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"unit": {
+					"type": "property",
+					"name": "unit",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"unitDisplay": {
+					"type": "property",
+					"name": "unitDisplay",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "narrow"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "short"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "long"
+									}
+								]
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
+				},
+				"useGrouping": {
+					"type": "property",
+					"name": "useGrouping",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "boolean"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": ""
 				}
 			},
 			"typeParameters": [],

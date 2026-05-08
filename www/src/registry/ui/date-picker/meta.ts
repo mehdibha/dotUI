@@ -15,4 +15,3 @@ const datePickerMeta = {
 } satisfies RegistryItem;
 
 export default datePickerMeta;
-

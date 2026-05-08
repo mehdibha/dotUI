@@ -32,12 +32,7 @@ export default function Demo() {
 	return (
 		<Card className="mx-auto!">
 			<CardContent>
-				<RangeCalendar
-					aria-label="Stay"
-					value={range}
-					onChange={setRange}
-					className="[--cell-size:--spacing(12)]"
-				>
+				<RangeCalendar aria-label="Stay" value={range} onChange={setRange} className="[--cell-size:--spacing(12)]">
 					<CalendarHeader />
 					<CalendarGrid>
 						<CalendarGridHeader>{(day) => <CalendarHeaderCell>{day}</CalendarHeaderCell>}</CalendarGridHeader>

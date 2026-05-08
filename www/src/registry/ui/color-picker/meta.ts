@@ -15,4 +15,3 @@ const colorPickerMeta = {
 } satisfies RegistryItem;
 
 export default colorPickerMeta;
-

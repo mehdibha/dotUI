@@ -296,22 +296,48 @@
 			"description": "The initial selected key in the collection (uncontrolled)."
 		},
 		"defaultValue": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
+			"type": "ValueType<M>",
+			"detailedType": "ValueType<M> | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "null"
-					},
-					{
 						"type": "undefined"
 					},
 					{
-						"type": "number"
-					},
-					{
-						"type": "string"
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "ValueType"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "M",
+								"constraint": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "stringLiteral",
+											"value": "multiple"
+										},
+										{
+											"type": "stringLiteral",
+											"value": "single"
+										}
+									]
+								},
+								"default": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "stringLiteral",
+											"value": "single"
+										}
+									]
+								}
+							}
+						]
 					}
 				]
 			},
@@ -409,8 +435,8 @@
 			"description": "The name of the input, used when submitting an HTML form."
 		},
 		"onChange": {
-			"type": "((value: Key | null) => void)",
-			"detailedType": "((value: Key | null) => void) | undefined",
+			"type": "((value: ChangeValueType<M>) => void)",
+			"detailedType": "((value: ChangeValueType<M>) => void) | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -424,16 +450,37 @@
 								"type": "parameter",
 								"name": "value",
 								"value": {
-									"type": "union",
-									"elements": [
+									"type": "application",
+									"base": {
+										"type": "identifier",
+										"name": "ChangeValueType"
+									},
+									"typeParameters": [
 										{
-											"type": "null"
-										},
-										{
-											"type": "number"
-										},
-										{
-											"type": "string"
+											"type": "typeParameter",
+											"name": "M",
+											"constraint": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "stringLiteral",
+														"value": "multiple"
+													},
+													{
+														"type": "stringLiteral",
+														"value": "single"
+													}
+												]
+											},
+											"default": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "stringLiteral",
+														"value": "single"
+													}
+												]
+											}
 										}
 									]
 								},
@@ -553,7 +600,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Select.d.ts:SelectRenderProps",
 								"name": "SelectRenderProps"
 							}
 						]
@@ -585,16 +632,11 @@
 			"description": "The currently selected key in the collection (controlled)."
 		},
 		"selectionMode": {
-			"type": "\"single\"",
-			"detailedType": "'single' | undefined",
+			"type": "M",
+			"detailedType": "M | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "single"
-					}
-				]
+				"type": "identifier",
+				"name": "M"
 			},
 			"description": "Whether single or multiple selection is enabled.",
 			"default": "'single'"
@@ -662,8 +704,8 @@
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
 		"validate": {
-			"type": "((value: Key) => true | ValidationError | null | undefined)",
-			"detailedType": "| ((\n    value: Key,\n  ) => true | ValidationError | null | undefined)\n| undefined",
+			"type": "((value: ValidationType<M>) => true | ValidationError | null | undefined)",
+			"detailedType": "| ((\n    value: ValidationType<M>,\n  ) => true | ValidationError | null | undefined)\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -677,8 +719,39 @@
 								"type": "parameter",
 								"name": "value",
 								"value": {
-									"type": "identifier",
-									"name": "Key"
+									"type": "application",
+									"base": {
+										"type": "identifier",
+										"name": "ValidationType"
+									},
+									"typeParameters": [
+										{
+											"type": "typeParameter",
+											"name": "M",
+											"constraint": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "stringLiteral",
+														"value": "multiple"
+													},
+													{
+														"type": "stringLiteral",
+														"value": "single"
+													}
+												]
+											},
+											"default": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "stringLiteral",
+														"value": "single"
+													}
+												]
+											}
+										}
+									]
 								},
 								"optional": false,
 								"rest": false
@@ -734,22 +807,48 @@
 			"default": "'native'"
 		},
 		"value": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
+			"type": "ValueType<M>",
+			"detailedType": "ValueType<M> | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "null"
-					},
-					{
 						"type": "undefined"
 					},
 					{
-						"type": "number"
-					},
-					{
-						"type": "string"
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "ValueType"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "M",
+								"constraint": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "stringLiteral",
+											"value": "multiple"
+										},
+										{
+											"type": "stringLiteral",
+											"value": "single"
+										}
+									]
+								},
+								"default": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "stringLiteral",
+											"value": "single"
+										}
+									]
+								}
+							}
+						]
 					}
 				]
 			},
@@ -783,15 +882,85 @@
 		}
 	},
 	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Select.d.ts:SelectRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Select.d.ts:SelectRenderProps",
+			"name": "SelectRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the select is disabled."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the select is focused, either via a mouse or keyboard."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the select is keyboard focused."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the select is invalid."
+				},
+				"isOpen": {
+					"type": "property",
+					"name": "isOpen",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the select is currently open."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the select is required."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@142": {
+				"__@iterator@126": {
 					"type": "method",
-					"name": "__@iterator@142",
+					"name": "__@iterator@126",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -942,76 +1111,6 @@
 					"optional": true,
 					"readonly": false,
 					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Select.d.ts:SelectRenderProps",
-			"name": "SelectRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the select is disabled."
-				},
-				"isFocused": {
-					"type": "property",
-					"name": "isFocused",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the select is focused, either via a mouse or keyboard."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the select is keyboard focused."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the select is invalid."
-				},
-				"isOpen": {
-					"type": "property",
-					"name": "isOpen",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the select is currently open."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the select is required."
 				}
 			},
 			"typeParameters": [],

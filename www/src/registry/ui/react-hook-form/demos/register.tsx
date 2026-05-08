@@ -40,7 +40,7 @@ const FormSchema = z.object({
 
 export default function Demo() {
 	const { handleSubmit, control } = useForm<z.infer<typeof FormSchema>>({
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		// biome-ignore lint/suspicious/noExplicitAny: zodResolver's overloads lag this bundled Zod v4 build.
 		resolver: zodResolver(FormSchema as any),
 	});
 

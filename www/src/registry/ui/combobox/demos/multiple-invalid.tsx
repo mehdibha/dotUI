@@ -37,7 +37,9 @@ export default function Demo() {
 									}
 								}}
 							>
-								<TagList items={selectedItems.filter((item) => item != null)}>{(item) => <Tag>{item.name}</Tag>}</TagList>
+								<TagList items={selectedItems.filter((item) => item != null)}>
+									{(item) => <Tag>{item.name}</Tag>}
+								</TagList>
 							</TagGroup>
 						)}
 					</ComboboxValue>
@@ -47,11 +49,7 @@ export default function Demo() {
 					<ListBox items={frameworks}>{(item) => <ListBoxItem id={item.id}>{item.name}</ListBoxItem>}</ListBox>
 				</Popover>
 			</Combobox>
-			<Combobox<Framework, "multiple">
-				selectionMode="multiple"
-				defaultValue={["next", "sveltekit", "nuxt"]}
-				isInvalid
-			>
+			<Combobox<Framework, "multiple"> selectionMode="multiple" defaultValue={["next", "sveltekit", "nuxt"]} isInvalid>
 				<Label>Frameworks</Label>
 				<InputGroup>
 					<ComboboxValue<Framework>>
@@ -64,7 +62,9 @@ export default function Demo() {
 									}
 								}}
 							>
-								<TagList items={selectedItems.filter((item) => item != null)}>{(item) => <Tag>{item.name}</Tag>}</TagList>
+								<TagList items={selectedItems.filter((item) => item != null)}>
+									{(item) => <Tag>{item.name}</Tag>}
+								</TagList>
 							</TagGroup>
 						)}
 					</ComboboxValue>

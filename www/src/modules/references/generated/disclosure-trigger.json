@@ -416,6 +416,15 @@
 						"elements": [
 							{
 								"type": "stringLiteral",
+								"value": "step"
+							}
+						]
+					},
+					{
+						"type": "union",
+						"elements": [
+							{
+								"type": "stringLiteral",
 								"value": "true"
 							}
 						]
@@ -426,15 +435,6 @@
 							{
 								"type": "stringLiteral",
 								"value": "false"
-							}
-						]
-					},
-					{
-						"type": "union",
-						"elements": [
-							{
-								"type": "stringLiteral",
-								"value": "step"
 							}
 						]
 					},
@@ -936,7 +936,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps",
 								"name": "ButtonRenderProps"
 							}
 						]
@@ -1032,15 +1032,85 @@
 		}
 	},
 	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps",
+			"name": "ButtonRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the button is disabled."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the button is focused, either via a mouse or keyboard."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the button is keyboard focused."
+				},
+				"isHovered": {
+					"type": "property",
+					"name": "isHovered",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the button is currently hovered with a mouse."
+				},
+				"isPending": {
+					"type": "property",
+					"name": "isPending",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the button is currently in a pending state."
+				},
+				"isPressed": {
+					"type": "property",
+					"name": "isPressed",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the button is currently in a pressed state."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FormData": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FormData",
 			"name": "FormData",
 			"extends": [],
 			"properties": {
-				"__@iterator@142": {
+				"__@iterator@126": {
 					"type": "method",
-					"name": "__@iterator@142",
+					"name": "__@iterator@126",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -1427,76 +1497,6 @@
 			"typeParameters": [],
 			"description": "The **`FormData`** interface provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using the Window/fetch, XMLHttpRequest.send() or navigator.sendBeacon() methods.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData)"
 		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps",
-			"name": "ButtonRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the button is disabled."
-				},
-				"isFocused": {
-					"type": "property",
-					"name": "isFocused",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the button is focused, either via a mouse or keyboard."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the button is keyboard focused."
-				},
-				"isHovered": {
-					"type": "property",
-					"name": "isHovered",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the button is currently hovered with a mouse."
-				},
-				"isPending": {
-					"type": "property",
-					"name": "isPending",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the button is currently in a pending state."
-				},
-				"isPressed": {
-					"type": "property",
-					"name": "isPressed",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the button is currently in a pressed state."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
 		"ButtonRenderProps": {
 			"type": "interface",
 			"name": "ButtonRenderProps",
@@ -1695,7 +1695,7 @@
 					"name": "type",
 					"value": {
 						"type": "identifier",
-						"name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
+						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
 					},
 					"optional": false,
 					"readonly": false,

@@ -23,4 +23,3 @@ const colorAreaMeta = {
 } satisfies RegistryItem;
 
 export default colorAreaMeta;
-

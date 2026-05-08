@@ -15,4 +15,3 @@ const dialogMeta = {
 } satisfies RegistryItem;
 
 export default dialogMeta;
-

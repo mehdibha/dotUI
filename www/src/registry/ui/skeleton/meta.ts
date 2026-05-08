@@ -14,4 +14,3 @@ const skeletonMeta = {
 } satisfies RegistryItem;
 
 export default skeletonMeta;
-

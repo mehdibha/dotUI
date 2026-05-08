@@ -2,6 +2,659 @@
 	"name": "ComboboxProps",
 	"description": "A combo box combines a text input with a listbox, allowing users to filter\na list of options to items matching a query.",
 	"props": {
+		"defaultItems": {
+			"type": "Iterable<T>",
+			"detailedType": "Iterable<T> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": {
+									"type": "object"
+								},
+								"default": null
+							}
+						]
+					}
+				]
+			},
+			"description": "The list of ComboBox items (uncontrolled)."
+		},
+		"items": {
+			"type": "Iterable<T>",
+			"detailedType": "Iterable<T> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": {
+									"type": "object"
+								},
+								"default": null
+							}
+						]
+					}
+				]
+			},
+			"description": "The list of ComboBox items (controlled)."
+		},
+		"onOpenChange": {
+			"type": "((isOpen: boolean, menuTrigger?: MenuTriggerAction | undefined) => void)",
+			"detailedType": "| ((\n    isOpen: boolean,\n    menuTrigger?: MenuTriggerAction | undefined,\n  ) => void)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "isOpen",
+								"value": {
+									"type": "boolean"
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "menuTrigger",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "input"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "manual"
+												}
+											]
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Method that is called when the open state of the menu changes. Returns the new open state and the action that caused the opening of the menu."
+		},
+		"selectionMode": {
+			"type": "M",
+			"detailedType": "M | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "M"
+			},
+			"description": "Whether single or multiple selection is enabled.",
+			"default": "'single'"
+		},
+		"selectedKey": {
+			"type": "Key | null",
+			"detailedType": "Key | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "null"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "number"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "The currently selected key in the collection (controlled)."
+		},
+		"defaultSelectedKey": {
+			"type": "Key | null",
+			"detailedType": "Key | null | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "null"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "number"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "The initial selected key in the collection (uncontrolled)."
+		},
+		"onSelectionChange": {
+			"type": "((key: Key | null) => void)",
+			"detailedType": "((key: Key | null) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "key",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "number"
+										},
+										{
+											"type": "string"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the selection changes."
+		},
+		"inputValue": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The value of the ComboBox input (controlled)."
+		},
+		"defaultInputValue": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "The default value of the ComboBox input (uncontrolled)."
+		},
+		"onInputChange": {
+			"type": "((value: string) => void)",
+			"detailedType": "((value: string) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "value",
+						"value": {
+							"type": "link",
+							"id": "string",
+							"name": "string"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the ComboBox input value changes."
+		},
+		"allowsCustomValue": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the ComboBox allows a non-item matching input value to be set."
+		},
+		"menuTrigger": {
+			"type": "MenuTriggerAction",
+			"detailedType": "MenuTriggerAction | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "MenuTriggerAction"
+			},
+			"description": "The interaction required to display the ComboBox menu.",
+			"default": "'input'"
+		},
+		"children": {
+			"type": "ReactNode | (values: ComboBoxRenderProps) => ReactNode",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ComboBoxRenderProps",
+									"name": "ComboBoxRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "identifier",
+							"name": "ReactNode"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The children of the component. A function may be provided to alter the children based on component state."
+		},
+		"disabledKeys": {
+			"type": "Iterable<Key>",
+			"detailedType": "Iterable<Key> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "Key"
+							}
+						]
+					}
+				]
+			},
+			"description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input is disabled."
+		},
+		"isReadOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input can be selected but not changed by the user."
+		},
+		"value": {
+			"type": "ValueType<M>",
+			"detailedType": "ValueType<M> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "ValueType"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "M",
+								"constraint": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "stringLiteral",
+											"value": "multiple"
+										},
+										{
+											"type": "stringLiteral",
+											"value": "single"
+										}
+									]
+								},
+								"default": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "stringLiteral",
+											"value": "single"
+										}
+									]
+								}
+							}
+						]
+					}
+				]
+			},
+			"description": "The current value (controlled)."
+		},
+		"defaultValue": {
+			"type": "ValueType<M>",
+			"detailedType": "ValueType<M> | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "ValueType"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "M",
+								"constraint": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "stringLiteral",
+											"value": "multiple"
+										},
+										{
+											"type": "stringLiteral",
+											"value": "single"
+										}
+									]
+								},
+								"default": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "stringLiteral",
+											"value": "single"
+										}
+									]
+								}
+							}
+						]
+					}
+				]
+			},
+			"description": "The default value (uncontrolled)."
+		},
+		"onChange": {
+			"type": "((value: ChangeValueType<M>) => void)",
+			"detailedType": "((value: ChangeValueType<M>) => void) | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "identifier",
+										"name": "ChangeValueType"
+									},
+									"typeParameters": [
+										{
+											"type": "typeParameter",
+											"name": "M",
+											"constraint": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "stringLiteral",
+														"value": "multiple"
+													},
+													{
+														"type": "stringLiteral",
+														"value": "single"
+													}
+												]
+											},
+											"default": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "stringLiteral",
+														"value": "single"
+													}
+												]
+											}
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "Handler that is called when the value changes."
+		},
+		"isRequired": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether user input is required on the input before form submission."
+		},
+		"isInvalid": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the input value is invalid."
+		},
+		"validationBehavior": {
+			"type": "\"aria\" | \"native\"",
+			"detailedType": "'aria' | 'native' | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "aria"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "native"
+					}
+				]
+			},
+			"description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
+			"default": "'native'"
+		},
+		"validate": {
+			"type": "((value: ComboBoxValidationValue<M>) => true | ValidationError | null | undefined)",
+			"detailedType": "| ((\n    value: ComboBoxValidationValue<M>,\n  ) => true | ValidationError | null | undefined)\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "value",
+								"value": {
+									"type": "application",
+									"base": {
+										"type": "link",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
+										"name": "ComboBoxValidationValue"
+									},
+									"typeParameters": [
+										{
+											"type": "typeParameter",
+											"name": "M",
+											"constraint": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "stringLiteral",
+														"value": "multiple"
+													},
+													{
+														"type": "stringLiteral",
+														"value": "single"
+													}
+												]
+											},
+											"default": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "stringLiteral",
+														"value": "single"
+													}
+												]
+											}
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "union",
+							"elements": [
+								{
+									"type": "booleanLiteral",
+									"value": true
+								},
+								{
+									"type": "null"
+								},
+								{
+									"type": "undefined"
+								},
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"elementType": {
+										"type": "string"
+									}
+								}
+							]
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
+		},
+		"autoFocus": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the element should receive focus on render."
+		},
 		"onFocus": {
 			"type": "((e: FocusEvent<HTMLInputElement, Element>) => void)",
 			"detailedType": "| ((e: FocusEvent<HTMLInputElement, Element>) => void)\n| undefined",
@@ -161,14 +814,6 @@
 			},
 			"description": "Handler that is called when a key is released."
 		},
-		"allowsCustomValue": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the ComboBox allows a non-item matching input value to be set."
-		},
 		"allowsEmptyCollection": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
@@ -209,22 +854,14 @@
 			},
 			"description": "Identifies the element (or elements) that labels the current element."
 		},
-		"autoFocus": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element should receive focus on render."
-		},
-		"children": {
-			"type": "ReactNode | (values: ComboBoxRenderProps) => ReactNode",
+		"className": {
+			"type": "string | (values: ComboBoxRenderProps) => string",
+			"detailedType": "string | (values: ComboBoxRenderProps) => string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "identifier",
-						"name": "ReactNode"
+						"type": "string"
 					},
 					{
 						"type": "function",
@@ -242,14 +879,14 @@
 							}
 						],
 						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
+							"type": "string"
 						},
 						"typeParameters": []
 					}
 				]
 			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-ComboBox'"
 		},
 		"defaultFilter": {
 			"type": "((textValue: string, inputValue: string) => boolean)",
@@ -291,116 +928,6 @@
 			},
 			"description": "The filter function used to determine if a option should be included in the combo box list."
 		},
-		"defaultInputValue": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The default value of the ComboBox input (uncontrolled)."
-		},
-		"defaultItems": {
-			"type": "Iterable<T>",
-			"detailedType": "Iterable<T> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-							"name": "Iterable"
-						},
-						"typeParameters": [
-							{
-								"type": "typeParameter",
-								"name": "T",
-								"constraint": {
-									"type": "object"
-								},
-								"default": null
-							}
-						]
-					}
-				]
-			},
-			"description": "The list of ComboBox items (uncontrolled)."
-		},
-		"defaultSelectedKey": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "The initial selected key in the collection (uncontrolled)."
-		},
-		"defaultValue": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "The default value (uncontrolled)."
-		},
-		"disabledKeys": {
-			"type": "Iterable<Key>",
-			"detailedType": "Iterable<Key> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-							"name": "Iterable"
-						},
-						"typeParameters": [
-							{
-								"type": "identifier",
-								"name": "Key"
-							}
-						]
-					}
-				]
-			},
-			"description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
-		},
 		"form": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -436,87 +963,6 @@
 			},
 			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
 		},
-		"inputValue": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The value of the ComboBox input (controlled)."
-		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input is disabled."
-		},
-		"isInvalid": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input value is invalid."
-		},
-		"isReadOnly": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the input can be selected but not changed by the user."
-		},
-		"isRequired": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether user input is required on the input before form submission."
-		},
-		"items": {
-			"type": "Iterable<T>",
-			"detailedType": "Iterable<T> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-							"name": "Iterable"
-						},
-						"typeParameters": [
-							{
-								"type": "typeParameter",
-								"name": "T",
-								"constraint": {
-									"type": "object"
-								},
-								"default": null
-							}
-						]
-					}
-				]
-			},
-			"description": "The list of ComboBox items (controlled)."
-		},
-		"menuTrigger": {
-			"type": "MenuTriggerAction",
-			"detailedType": "MenuTriggerAction | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "MenuTriggerAction"
-			},
-			"description": "The interaction required to display the ComboBox menu.",
-			"default": "'input'"
-		},
 		"name": {
 			"type": "string",
 			"detailedType": "string | undefined",
@@ -524,187 +970,6 @@
 				"type": "string"
 			},
 			"description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
-		},
-		"onChange": {
-			"type": "((value: Key | null) => void)",
-			"detailedType": "((value: Key | null) => void) | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "value",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "null"
-										},
-										{
-											"type": "number"
-										},
-										{
-											"type": "string"
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "Handler that is called when the value changes."
-		},
-		"onInputChange": {
-			"type": "((value: string) => void)",
-			"detailedType": "((value: string) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "value",
-						"value": {
-							"type": "link",
-							"id": "string",
-							"name": "string"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the ComboBox input value changes."
-		},
-		"onOpenChange": {
-			"type": "((isOpen: boolean, menuTrigger?: MenuTriggerAction | undefined) => void)",
-			"detailedType": "| ((\n    isOpen: boolean,\n    menuTrigger?: MenuTriggerAction | undefined,\n  ) => void)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "isOpen",
-								"value": {
-									"type": "boolean"
-								},
-								"optional": false,
-								"rest": false
-							},
-							{
-								"type": "parameter",
-								"name": "menuTrigger",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "undefined"
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "input"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "focus"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "manual"
-												}
-											]
-										}
-									]
-								},
-								"optional": true,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "Method that is called when the open state of the menu changes. Returns the new open state and the action that caused the opening of the menu."
-		},
-		"onSelectionChange": {
-			"type": "((key: Key | null) => void)",
-			"detailedType": "((key: Key | null) => void) | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "key",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "null"
-										},
-										{
-											"type": "number"
-										},
-										{
-											"type": "string"
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "Handler that is called when the selection changes."
 		},
 		"render": {
 			"type": "DOMRenderFunction<\"div\", ComboBoxRenderProps>",
@@ -733,7 +998,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
 								"name": "ComboBoxRenderProps"
 							}
 						]
@@ -741,43 +1006,6 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
-		},
-		"selectedKey": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "The currently selected key in the collection (controlled)."
-		},
-		"selectionMode": {
-			"type": "\"single\"",
-			"detailedType": "'single' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "single"
-					}
-				]
-			},
-			"description": "Whether single or multiple selection is enabled.",
-			"default": "'single'"
 		},
 		"shouldFocusWrap": {
 			"type": "boolean",
@@ -840,113 +1068,147 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-		},
-		"validate": {
-			"type": "((value: ComboBoxValidationValue<\"single\">) => true | ValidationError | null | undefined)",
-			"detailedType": "| ((\n    value: ComboBoxValidationValue<'single'>,\n  ) => true | ValidationError | null | undefined)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "value",
-								"value": {
-									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
-									"name": "ComboBoxValidationValue"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "union",
-							"elements": [
-								{
-									"type": "booleanLiteral",
-									"value": true
-								},
-								{
-									"type": "null"
-								},
-								{
-									"type": "undefined"
-								},
-								{
-									"type": "string"
-								},
-								{
-									"type": "array",
-									"elementType": {
-										"type": "string"
-									}
-								}
-							]
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "A function that returns an error message if a given value is invalid.\nValidation errors are displayed to the user when the form is submitted\nif `validationBehavior=\"native\"`. For realtime validation, use the `isInvalid`\nprop instead."
-		},
-		"validationBehavior": {
-			"type": "\"aria\" | \"native\"",
-			"detailedType": "'aria' | 'native' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "aria"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "native"
-					}
-				]
-			},
-			"description": "Whether to use native HTML form validation to prevent form submission\nwhen the value is missing or invalid, or mark the field as required\nor invalid via ARIA.",
-			"default": "'native'"
-		},
-		"value": {
-			"type": "Key | null",
-			"detailedType": "Key | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "The current value (controlled)."
 		}
 	},
 	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
+			"name": "ComboBoxRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is disabled."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is invalid."
+				},
+				"isOpen": {
+					"type": "property",
+					"name": "isOpen",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is currently open."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the combobox is required."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
+			"name": "ComboBoxValidationValue",
+			"extends": [],
+			"properties": {
+				"inputValue": {
+					"type": "property",
+					"name": "inputValue",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The value of the ComboBox input."
+				},
+				"selectedKey": {
+					"type": "property",
+					"name": "selectedKey",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "number"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The selected key in the ComboBox."
+				},
+				"value": {
+					"type": "property",
+					"name": "value",
+					"value": {
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "ValidationType"
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "M",
+								"constraint": {
+									"type": "identifier",
+									"name": "\"single\" | \"multiple\""
+								},
+								"default": {
+									"type": "identifier",
+									"name": "\"single\""
+								}
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The keys of the currently selected items."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@142": {
+				"__@iterator@126": {
 					"type": "method",
-					"name": "__@iterator@142",
+					"name": "__@iterator@126",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -1106,128 +1368,6 @@
 					"optional": true,
 					"readonly": false,
 					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
-			"name": "ComboBoxRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is invalid."
-				},
-				"isOpen": {
-					"type": "property",
-					"name": "isOpen",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is currently open."
-				},
-				"isReadOnly": {
-					"type": "property",
-					"name": "isReadOnly",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is read only."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the combobox is required."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
-			"name": "ComboBoxValidationValue",
-			"extends": [],
-			"properties": {
-				"inputValue": {
-					"type": "property",
-					"name": "inputValue",
-					"value": {
-						"type": "string"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The value of the ComboBox input."
-				},
-				"selectedKey": {
-					"type": "property",
-					"name": "selectedKey",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "null"
-							},
-							{
-								"type": "number"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The selected key in the ComboBox."
-				},
-				"value": {
-					"type": "property",
-					"name": "value",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "null"
-							},
-							{
-								"type": "number"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The keys of the currently selected items."
 				}
 			},
 			"typeParameters": [],

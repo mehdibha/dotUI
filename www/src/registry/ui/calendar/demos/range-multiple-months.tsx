@@ -7,8 +7,8 @@ export default function Demo() {
 		<RangeCalendar aria-label="Trip dates" visibleDuration={{ months: 2 }}>
 			<CalendarHeader />
 			<div className="flex items-start gap-4">
-				{Array.from({ length: 2 }).map((_, index) => (
-					<CalendarGrid key={index} offset={{ months: index }} />
+				{[0, 1].map((monthOffset) => (
+					<CalendarGrid key={`month-${monthOffset}`} offset={{ months: monthOffset }} />
 				))}
 			</div>
 		</RangeCalendar>

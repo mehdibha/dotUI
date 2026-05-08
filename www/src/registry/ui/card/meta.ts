@@ -22,4 +22,3 @@ const cardMeta = {
 } satisfies RegistryItem;
 
 export default cardMeta;
-

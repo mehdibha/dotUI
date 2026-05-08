@@ -13,9 +13,11 @@ import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 
 // MARK: Separator
 
-interface SearchFieldProps extends React.ComponentProps<typeof SearchFieldPrimitives.SearchField> {}
+interface SearchFieldProps extends React.ComponentProps<typeof SearchFieldPrimitives.SearchField> {
+	placeholder?: string;
+}
 
-const SearchField = ({ className, ...props }: SearchFieldProps) => {
+const SearchField = ({ className, placeholder, ...props }: SearchFieldProps) => {
 	const fieldStyles = useStyles()();
 	return (
 		<SearchFieldPrimitives.SearchField
@@ -34,7 +36,7 @@ const SearchField = ({ className, ...props }: SearchFieldProps) => {
 					<InputGroupAddon>
 						<SearchIcon />
 					</InputGroupAddon>
-					<Input />
+					<Input placeholder={placeholder} />
 				</InputGroup>
 			)}
 		</SearchFieldPrimitives.SearchField>

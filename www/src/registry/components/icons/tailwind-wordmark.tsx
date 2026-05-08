@@ -2,7 +2,7 @@ import type { SVGProps } from "react";
 
 export function TailwindWordmark(props: SVGProps<SVGSVGElement>) {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" role="img" fill="none" viewBox="0 0 262 33" {...props}>
+		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 262 33" {...props}>
 			<path
 				fill="#38BDF8"
 				fillRule="evenodd"

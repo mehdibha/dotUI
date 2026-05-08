@@ -14,4 +14,3 @@ const popoverMeta = {
 } satisfies RegistryItem;
 
 export default popoverMeta;
-

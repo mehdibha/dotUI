@@ -15,4 +15,3 @@ const searchFieldMeta = {
 } satisfies RegistryItem;
 
 export default searchFieldMeta;
-

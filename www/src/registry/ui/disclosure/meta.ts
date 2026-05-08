@@ -14,4 +14,3 @@ const disclosureMeta = {
 } satisfies RegistryItem;
 
 export default disclosureMeta;
-

@@ -15,4 +15,3 @@ const breadcrumbsMeta = {
 } satisfies RegistryItem;
 
 export default breadcrumbsMeta;
-

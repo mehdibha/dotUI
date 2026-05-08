@@ -10,6 +10,7 @@
 
 import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
+import * as prettier from "prettier";
 import { rimraf } from "rimraf";
 
 import { registryBlocks } from "../src/registry/blocks/registry";
@@ -26,6 +27,16 @@ const GENERATED_DIR = path.join(REGISTRY_DIR, "__generated__");
 async function ensureDir(dir: string) {
 	await rimraf(dir);
 	await fs.mkdir(dir, { recursive: true });
+}
+
+async function writeGeneratedFile(targetPath: string, content: string) {
+	const formatted = await prettier.format(content, {
+		parser: "typescript",
+		printWidth: 120,
+		useTabs: true,
+	});
+
+	await fs.writeFile(targetPath, formatted, "utf8");
 }
 
 // ============================================================================
@@ -74,7 +85,7 @@ export const BlocksIndex: Record<
 	content += `};
 `;
 
-	await fs.writeFile(targetPath, content, "utf8");
+	await writeGeneratedFile(targetPath, content);
 	console.log("  ✓ __generated__/blocks.tsx");
 }
 
@@ -139,7 +150,7 @@ export const DemosIndex: Record<
 	content += `};
 `;
 
-	await fs.writeFile(targetPath, content, "utf8");
+	await writeGeneratedFile(targetPath, content);
 	console.log("  ✓ __generated__/demos.tsx");
 }
 
@@ -177,9 +188,9 @@ async function buildIconLibraryExports() {
 	// Generate a file for each library
 	for (const [library, icons] of Object.entries(libraryIcons)) {
 		const packageName = getLibraryPackage(library);
-		const sortedIcons = [...icons].sort();
+		const sortedIcons = [...icons].sort((a, b) => a.localeCompare(b));
 
-		const exports = sortedIcons.map((icon) => `export { ${icon} } from "${packageName}";`).join("\n");
+		const exports = sortedIcons.length > 0 ? `export { ${sortedIcons.join(", ")} } from "${packageName}";` : "";
 
 		const content = `// AUTO-GENERATED - DO NOT EDIT
 // Only exports the ${sortedIcons.length} icons we actually use (not the entire library)
@@ -187,7 +198,7 @@ ${exports}
 `;
 
 		const targetPath = path.join(iconsDir, `__${library}__.ts`);
-		await fs.writeFile(targetPath, content, "utf8");
+		await writeGeneratedFile(targetPath, content);
 		console.log(`  ✓ icons/__${library}__.ts (${sortedIcons.length} icons)`);
 	}
 }
@@ -208,7 +219,7 @@ async function buildInternalIcons() {
 
 	// Generate individual imports with aliases to avoid naming collisions (tree-shakeable)
 	const lucideImports = Array.from(lucideIconNames)
-		.sort()
+		.sort((a, b) => a.localeCompare(b))
 		.map((name) => `  ${name} as Lucide${name},`)
 		.join("\n");
 
@@ -242,12 +253,13 @@ ${names}
 import {
 ${lucideImports}
 } from "lucide-react";
+
 import { createIcon } from "@/registry/icons/create-icon";
 
 ${iconExports}
 `;
 
-	await fs.writeFile(targetPath, content, "utf8");
+	await writeGeneratedFile(targetPath, content);
 	console.log(`  ✓ __generated__/icons.tsx (${lucideIconNames.size} lucide icons)`);
 }
 
@@ -294,7 +306,7 @@ ${groupEntries.join("\n")}
 };
 `;
 
-	await fs.writeFile(targetPath, content, "utf8");
+	await writeGeneratedFile(targetPath, content);
 	console.log(`  ✓ __generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`);
 }
 

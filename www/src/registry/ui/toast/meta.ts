@@ -14,4 +14,3 @@ const toastMeta = {
 } satisfies RegistryItem;
 
 export default toastMeta;
-

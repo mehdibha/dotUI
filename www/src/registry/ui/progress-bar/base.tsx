@@ -34,11 +34,35 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
 
 // MARK: Separator
 
-interface ProgressBarControlProps extends React.ComponentProps<"div"> {}
-const ProgressBarTrack = ({ children, className, ...props }: ProgressBarControlProps) => {
+interface ProgressBarControlProps extends React.ComponentProps<"div"> {
+	duration?: string;
+	size?: "sm" | "md" | "lg";
+	variant?: "primary" | "success" | "accent" | "danger" | "warning";
+}
+const ProgressBarTrack = ({
+	children,
+	className,
+	duration,
+	size,
+	style,
+	variant,
+	...props
+}: ProgressBarControlProps) => {
 	const { track } = useStyles()();
 	return (
-		<div className={track({ className })} {...props}>
+		<div
+			data-duration={duration}
+			data-size={size}
+			data-variant={variant}
+			className={track({ className })}
+			style={
+				{
+					"--progress-duration": duration,
+					...style,
+				} as React.CSSProperties
+			}
+			{...props}
+		>
 			{children ?? <ProgressBarFill />}
 		</div>
 	);
@@ -46,8 +70,8 @@ const ProgressBarTrack = ({ children, className, ...props }: ProgressBarControlP
 
 // MARK: Separator
 
-interface ProgressBarControlProps extends React.ComponentProps<"div"> {}
-const ProgressBarFill = ({ className, style, ...props }: ProgressBarControlProps) => {
+interface ProgressBarFillProps extends React.ComponentProps<"div"> {}
+const ProgressBarFill = ({ className, style, ...props }: ProgressBarFillProps) => {
 	const { fill } = useStyles()();
 	const { isIndeterminate, percentage } = useProgressBarContext("ProgressBarControl");
 
@@ -83,5 +107,10 @@ const ProgressBarOutput = ({ className, ...props }: ProgressBarOutputProps) => {
 
 // MARK: Separator
 
-export type { ProgressBarControlProps, ProgressBarOutputProps, ProgressBarProps };
-export { ProgressBar, ProgressBarFill, ProgressBarOutput, ProgressBarTrack };
+const ProgressBarControl = ProgressBarTrack;
+const ProgressBarValueLabel = ProgressBarOutput;
+
+// MARK: Separator
+
+export type { ProgressBarControlProps, ProgressBarFillProps, ProgressBarOutputProps, ProgressBarProps };
+export { ProgressBar, ProgressBarControl, ProgressBarFill, ProgressBarOutput, ProgressBarTrack, ProgressBarValueLabel };

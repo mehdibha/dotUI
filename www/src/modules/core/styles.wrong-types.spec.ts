@@ -9,8 +9,11 @@
  * Run: `npx tsc --noEmit` (this file is included via the project's TS glob).
  */
 
-import { createStyles } from "./styles";
+import { expect, test } from "vitest";
+
 import type { RegistryItem } from "@/registry/types";
+
+import { createStyles } from "./styles";
 
 /* -------------------------------------------------------------------------- *
  * Fixture: a meta with both enum and scalar params, plus base with slots
@@ -42,6 +45,10 @@ const baseConfig = {
 		defaultVariants: { variant: "default", size: "md" },
 	},
 } as const;
+
+test("loads createStyles compile-time fixtures", () => {
+	expect(fixtureMeta.name).toBe("fixture");
+});
 
 /* -------------------------------------------------------------------------- *
  * Happy path — should COMPILE.

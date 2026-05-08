@@ -2,14 +2,10 @@
 
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as HeaderPrimitives from "react-aria-components/Header";
 import * as MenuPrimitives from "react-aria-components/Menu";
 import type * as React from "react";
-import type * as TextPrimitives from "react-aria-components/Text";
-import type { VariantProps } from "tailwind-variants";
 
 import { useStyles } from "./styles";
-import type { MenuStyles } from "./styles";
 
 // MARK: menuStyles
 
@@ -83,7 +79,7 @@ const MenuItem = <T extends object>({ className, variant, textValue: textValuePr
 
 // MARK: Separator
 
-interface MenuItemLabelProps extends React.ComponentProps<typeof TextPrimitives.Text> {}
+interface MenuItemLabelProps extends React.ComponentProps<typeof MenuPrimitives.Text> {}
 const MenuItemLabel = ({ className, ...props }: MenuItemLabelProps) => {
 	const { itemLabel } = useStyles()();
 	return <MenuPrimitives.Text data-menu-item-label="" slot="label" className={itemLabel({ className })} {...props} />;
@@ -91,7 +87,7 @@ const MenuItemLabel = ({ className, ...props }: MenuItemLabelProps) => {
 
 // MARK: Separator
 
-interface MenuItemDescriptionProps extends React.ComponentProps<typeof TextPrimitives.Text> {}
+interface MenuItemDescriptionProps extends React.ComponentProps<typeof MenuPrimitives.Text> {}
 const MenuItemDescription = ({ className, ...props }: MenuItemDescriptionProps) => {
 	const { itemDescription } = useStyles()();
 	return (
@@ -118,11 +114,11 @@ const MenuSection = <T extends object>({ children, className, ...props }: MenuSe
 
 // MARK: Separator
 
-interface MenuSectionHeaderProps extends React.ComponentProps<typeof HeaderPrimitives.Header> {}
+interface MenuSectionHeaderProps extends React.ComponentProps<typeof MenuPrimitives.Header> {}
 
 const MenuSectionHeader = ({ className, ...props }: MenuSectionHeaderProps) => {
 	const { sectionTitle } = useStyles()();
-	return <HeaderPrimitives.Header data-menu-section-header="" className={sectionTitle({ className })} {...props} />;
+	return <MenuPrimitives.Header data-menu-section-header="" className={sectionTitle({ className })} {...props} />;
 };
 
 // MARK: Separator

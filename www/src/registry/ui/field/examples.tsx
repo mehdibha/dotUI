@@ -386,7 +386,7 @@ function SliderFields() {
 					<SliderControl />
 					<Description>Pick a minimum and maximum value.</Description>
 				</Slider>
-				<Slider defaultValue={30} isInvalid>
+				<Slider defaultValue={30} aria-invalid="true">
 					<Label>Invalid Slider</Label>
 					<SliderControl />
 					<FieldError>This slider has validation errors.</FieldError>

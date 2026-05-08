@@ -22,4 +22,3 @@ const colorSwatchMeta = {
 } satisfies RegistryItem;
 
 export default colorSwatchMeta;
-

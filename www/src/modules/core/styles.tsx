@@ -4,8 +4,8 @@ import * as React from "react";
 import { tv } from "tailwind-variants";
 import type { ClassValue, TVReturnType, VariantProps } from "tailwind-variants";
 
-import type { EnumParamDef, ParamDef, RegistryItem } from "@/registry/types";
 import type { Density } from "@/modules/create/preset/types";
+import type { EnumParamDef, ParamDef, RegistryItem } from "@/registry/types";
 
 /* --------------------------------- Types --------------------------------- */
 
@@ -37,6 +37,7 @@ const DesignSystemContext = React.createContext<DesignSystemContextValue>({
  */
 const enumVarsRegistry = new Map<string, Record<string, Record<string, Record<string, string>>>>();
 const scalarVarsRegistry = new Map<string, Record<string, string>>();
+const emptyParamSelections: Record<string, string> = {};
 
 /* -------------------------------- Provider ------------------------------- */
 
@@ -52,12 +53,7 @@ interface DesignSystemProviderProps {
 	children: React.ReactNode;
 }
 
-function DesignSystemProvider({
-	params = {},
-	tokens = {},
-	density = "default",
-	children,
-}: DesignSystemProviderProps) {
+function DesignSystemProvider({ params = {}, tokens = {}, density = "default", children }: DesignSystemProviderProps) {
 	const value = React.useMemo(() => ({ params, tokens, density }), [params, tokens, density]);
 
 	const cssVars = React.useMemo(() => {
@@ -98,12 +94,12 @@ function DesignSystemProvider({
 	// declaration time at :root.
 	React.useLayoutEffect(() => {
 		const root = document.documentElement;
-		const applied = Object.keys(cssVars);
-		for (const key of applied) {
-			root.style.setProperty(key, cssVars[key]!);
+		const applied = Object.entries(cssVars);
+		for (const [key, value] of applied) {
+			root.style.setProperty(key, value);
 		}
 		return () => {
-			for (const key of applied) {
+			for (const [key] of applied) {
 				root.style.removeProperty(key);
 			}
 		};
@@ -136,7 +132,7 @@ function createDynamicComponent<Props extends object, const Value extends string
 		const componentParams = useComponentParams(componentName);
 		const selectedValue = componentParams[paramName];
 		const Component =
-			selectedValue && Object.prototype.hasOwnProperty.call(components, selectedValue)
+			selectedValue && Object.hasOwn(components, selectedValue)
 				? components[selectedValue as Value]
 				: components[defaultValue];
 
@@ -182,37 +178,37 @@ type VariantValueKeys<Base, K extends PropertyKey> = Base extends {
 type HasSlots<Base> = [SlotKeys<Base>] extends [never] ? false : true;
 type HasVariants<Base> = [VariantKeys<Base>] extends [never] ? false : true;
 
-type SlotsOverride<Base> = HasSlots<Base> extends true
-	? { slots?: { [K in SlotKeys<Base>]?: ClassValue } }
-	: { slots?: never };
+type SlotsOverride<Base> =
+	HasSlots<Base> extends true ? { slots?: { [K in SlotKeys<Base>]?: ClassValue } } : { slots?: never };
 
-type VariantValueOverride<Base> = HasSlots<Base> extends true
-	? ClassValue | { [S in SlotKeys<Base>]?: ClassValue }
-	: ClassValue;
+type VariantValueOverride<Base> =
+	HasSlots<Base> extends true ? ClassValue | { [S in SlotKeys<Base>]?: ClassValue } : ClassValue;
 
-type VariantsOverride<Base> = HasVariants<Base> extends true
-	? {
-			variants?: {
-				[K in VariantKeys<Base>]?: {
-					[V in VariantValueKeys<Base, K>]?: VariantValueOverride<Base>;
+type VariantsOverride<Base> =
+	HasVariants<Base> extends true
+		? {
+				variants?: {
+					[K in VariantKeys<Base>]?: {
+						[V in VariantValueKeys<Base, K>]?: VariantValueOverride<Base>;
+					};
 				};
-			};
-			defaultVariants?: { [K in VariantKeys<Base>]?: VariantValueKeys<Base, K> };
-		}
-	: { variants?: never; defaultVariants?: never };
+				defaultVariants?: { [K in VariantKeys<Base>]?: VariantValueKeys<Base, K> };
+			}
+		: { variants?: never; defaultVariants?: never };
 
-type CompoundVariantsOverride<Base> = HasVariants<Base> extends true
-	? {
-			compoundVariants?: Array<
-				{
-					[K in VariantKeys<Base>]?: VariantValueKeys<Base, K> | VariantValueKeys<Base, K>[];
-				} & {
-					class?: ClassValue;
-					className?: ClassValue;
-				}
-			>;
-		}
-	: { compoundVariants?: never };
+type CompoundVariantsOverride<Base> =
+	HasVariants<Base> extends true
+		? {
+				compoundVariants?: Array<
+					{
+						[K in VariantKeys<Base>]?: VariantValueKeys<Base, K> | VariantValueKeys<Base, K>[];
+					} & {
+						class?: ClassValue;
+						className?: ClassValue;
+					}
+				>;
+			}
+		: { compoundVariants?: never };
 
 export type ExtendingTv<Base> = { base?: ClassValue } & SlotsOverride<Base> &
 	VariantsOverride<Base> &
@@ -234,22 +230,22 @@ type EnumParamValuesOf<M, K extends PropertyKey> = M extends {
 		: never
 	: never;
 
-type EnumParamsConfig<M, Base> =
-	[EnumParamNamesOf<M>] extends [never]
-		? { params?: never }
-		: {
-				params?: {
-					[K in EnumParamNamesOf<M>]?: {
-						[V in EnumParamValuesOf<M, K> & string]?: ExtendingTv<Base> & {
-							vars?: Record<string, string>;
-						};
+type EnumParamsConfig<M, Base> = [EnumParamNamesOf<M>] extends [never]
+	? { params?: never }
+	: {
+			params?: {
+				[K in EnumParamNamesOf<M>]?: {
+					[V in EnumParamValuesOf<M, K> & string]?: ExtendingTv<Base> & {
+						vars?: Record<string, string>;
 					};
 				};
 			};
+		};
 
 /* ----- useStyles return type ----- */
 
-type ExtractVariants<Base> = Base extends { variants: infer V } ? V : {};
+type EmptyVariants = Record<never, never>;
+type ExtractVariants<Base> = Base extends { variants: infer V } ? V : EmptyVariants;
 type ExtractSlots<Base> = Base extends { slots: infer S } ? S : undefined;
 type ExtractBase<Base> = Base extends { base: infer B } ? B : undefined;
 
@@ -258,7 +254,7 @@ type InferTv<Base> = TVReturnType<
 	ExtractVariants<Base>,
 	ExtractSlots<Base>,
 	ExtractBase<Base>,
-	{},
+	EmptyVariants,
 	undefined
 >;
 
@@ -337,9 +333,11 @@ function createStyles<const M extends RegistryItem, const Base>(
 	}
 
 	function compose(d: Density, paramSelection: Record<string, string>): ReturnType<typeof tv> {
-		let current: ReturnType<typeof tv> = densityTvs[d] ?? densityTvs.default!;
+		const defaultTv = densityTvs.default ?? baseTv;
+		let current: ReturnType<typeof tv> = densityTvs[d] ?? defaultTv;
 		for (const paramName of enumParamNames) {
-			const selectedValue = paramSelection[paramName] ?? paramDefaults[paramName]!;
+			const selectedValue = paramSelection[paramName] ?? paramDefaults[paramName];
+			if (!selectedValue) continue;
 			const valueConfig = params?.[paramName]?.[selectedValue];
 			if (!valueConfig) continue;
 			const tvOverride = stripVars(valueConfig);
@@ -351,13 +349,8 @@ function createStyles<const M extends RegistryItem, const Base>(
 
 	function useStyles() {
 		const { params: paramSelections, density } = React.useContext(DesignSystemContext);
-		const componentParams = paramSelections[meta.name] ?? {};
-		const paramSig = enumParamNames.map((k) => componentParams[k] ?? paramDefaults[k]).join("|");
-		return React.useMemo(
-			() => compose(density, componentParams) as InferTv<Base>,
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			[density, paramSig],
-		);
+		const componentParams = paramSelections[meta.name] ?? emptyParamSelections;
+		return React.useMemo(() => compose(density, componentParams) as InferTv<Base>, [density, componentParams]);
 	}
 
 	return {

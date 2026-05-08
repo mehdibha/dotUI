@@ -14,9 +14,7 @@ export default function Demo() {
 	]);
 
 	return (
-		<TagGroup
-			onRemove={(keys) => setItems((prev) => prev.filter((item) => !keys.has(item.id)))}
-		>
+		<TagGroup onRemove={(keys) => setItems((prev) => prev.filter((item) => !keys.has(item.id)))}>
 			<Label>Categories</Label>
 			<TagList items={items}>{(item) => <Tag>{item.name}</Tag>}</TagList>
 		</TagGroup>

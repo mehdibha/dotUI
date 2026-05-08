@@ -15,4 +15,3 @@ const tabsMeta = {
 } satisfies RegistryItem;
 
 export default tabsMeta;
-

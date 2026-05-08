@@ -54,6 +54,7 @@ const SliderControl = ({ className, ...props }: SliderControlProps) => {
 						<>
 							{state.values.length < 3 && <SliderFiller />}
 							{state.values.map((_, i) => (
+								// biome-ignore lint/suspicious/noArrayIndexKey: React Aria identifies slider thumbs by index.
 								<SliderThumb key={i} index={i} />
 							))}
 						</>
@@ -69,7 +70,10 @@ interface SliderFillerProps extends React.ComponentProps<"div"> {}
 
 const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
 	const { filler } = useStyles()();
-	const { orientation, getThumbPercent, values, isDisabled } = use(SliderPrimitives.SliderStateContext)!;
+	const sliderState = use(SliderPrimitives.SliderStateContext);
+	if (!sliderState) return null;
+
+	const { orientation, getThumbPercent, values, isDisabled } = sliderState;
 
 	const getFillerDimensions = (): React.CSSProperties => {
 		if (values.length === 1 && orientation === "horizontal") return { width: `${getThumbPercent(0) * 100}%` };

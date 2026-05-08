@@ -6,12 +6,24 @@ import type * as TextAreaPrimitives from "react-aria-components/TextArea";
 /**
  * An input group combines an input with addons like buttons, icons, or labels.
  */
-export interface InputGroupProps extends React.ComponentProps<typeof GroupPrimitives.Group> {}
+export interface InputGroupProps extends React.ComponentProps<typeof GroupPrimitives.Group> {
+	/**
+	 * The size of the input group.
+	 * @default "md"
+	 */
+	size?: "sm" | "md" | "lg";
+}
 
 /**
  * An input allows a user to input text.
  */
-export interface InputProps extends React.ComponentProps<typeof InputPrimitives.Input> {}
+export interface InputProps extends Omit<React.ComponentProps<typeof InputPrimitives.Input>, "size"> {
+	/**
+	 * The size of the input.
+	 * @default "md"
+	 */
+	size?: "sm" | "md" | "lg";
+}
 
 /**
  * A textarea allows a user to input multi-line text.
@@ -28,6 +40,12 @@ export interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
  */
 export interface DateInputProps extends Omit<DateFieldPrimitives.DateInputProps, "children"> {
 	children?: DateFieldPrimitives.DateInputProps["children"];
+
+	/**
+	 * The size of the date input.
+	 * @default "md"
+	 */
+	size?: "sm" | "md" | "lg";
 }
 
 /**

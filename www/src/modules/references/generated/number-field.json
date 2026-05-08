@@ -676,7 +676,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps",
 								"name": "NumberFieldRenderProps"
 							}
 						]
@@ -846,6 +846,68 @@
 		}
 	},
 	"typeLinks": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps",
+			"name": "NumberFieldRenderProps",
+			"extends": [],
+			"properties": {
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is disabled."
+				},
+				"isInvalid": {
+					"type": "property",
+					"name": "isInvalid",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is invalid."
+				},
+				"isReadOnly": {
+					"type": "property",
+					"name": "isReadOnly",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is read only."
+				},
+				"isRequired": {
+					"type": "property",
+					"name": "isRequired",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the number field is required."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/numberfield/useNumberFieldState.d.ts:NumberField.State",
+						"name": "NumberField.State"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the number field."
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
 		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement": {
 			"type": "interface",
 			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
@@ -1440,6 +1502,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "blur"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "error"
 												}
 											]
@@ -1449,16 +1520,7 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "focus"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "submit"
+													"value": "invalid"
 												}
 											]
 										},
@@ -1468,6 +1530,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "reset"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "submit"
 												}
 											]
 										},
@@ -1567,15 +1638,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "beforetoggle"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "blur"
 												}
 											]
 										},
@@ -1818,6 +1880,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "focusin"
 												}
 											]
@@ -1846,15 +1917,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "gotpointercapture"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "invalid"
 												}
 											]
 										},
@@ -16479,6 +16541,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "blur"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "error"
 												}
 											]
@@ -16488,16 +16559,7 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "focus"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "submit"
+													"value": "invalid"
 												}
 											]
 										},
@@ -16507,6 +16569,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "reset"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "submit"
 												}
 											]
 										},
@@ -16606,15 +16677,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "beforetoggle"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "blur"
 												}
 											]
 										},
@@ -16857,6 +16919,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "focus"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "focusin"
 												}
 											]
@@ -16885,15 +16956,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "gotpointercapture"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "invalid"
 												}
 											]
 										},
@@ -18767,68 +18829,6 @@
 			},
 			"typeParameters": [],
 			"description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
-		},
-		"/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-aria-components/dist/types/src/NumberField.d.ts:NumberFieldRenderProps",
-			"name": "NumberFieldRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the number field is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the number field is invalid."
-				},
-				"isReadOnly": {
-					"type": "property",
-					"name": "isReadOnly",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the number field is read only."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the number field is required."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/react-spectrum/packages/react-stately/dist/types/src/numberfield/useNumberFieldState.d.ts:NumberField.State",
-						"name": "NumberField.State"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the number field."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
 		},
 		"NumberFieldRenderProps": {
 			"type": "interface",

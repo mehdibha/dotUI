@@ -23,4 +23,3 @@ const checkboxMeta = {
 } satisfies RegistryItem;
 
 export default checkboxMeta;
-

@@ -15,4 +15,3 @@ const numberFieldMeta = {
 } satisfies RegistryItem;
 
 export default numberFieldMeta;
-

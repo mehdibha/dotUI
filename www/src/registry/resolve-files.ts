@@ -10,10 +10,7 @@ function setFiles(filesByKey: Map<string, RegistryItemFile>, files: readonly Reg
 	}
 }
 
-function resolveRegistryItemFiles(
-	item: RegistryItem,
-	selectedParams: Record<string, string> = {},
-): RegistryItemFile[] {
+function resolveRegistryItemFiles(item: RegistryItem, selectedParams: Record<string, string> = {}): RegistryItemFile[] {
 	const filesByKey = new Map<string, RegistryItemFile>();
 	setFiles(filesByKey, item.files);
 

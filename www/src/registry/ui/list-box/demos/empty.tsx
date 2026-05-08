@@ -1,5 +1,3 @@
-import { SearchXIcon } from "lucide-react";
-
 import { ListBox } from "@/registry/ui/list-box";
 
 export default function Demo() {

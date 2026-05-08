@@ -43,8 +43,8 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 										if (tab === "read") return notification.read;
 										return false;
 									})
-									.map((notification, index) => (
-										<React.Fragment key={index}>
+									.map((notification) => (
+										<React.Fragment key={`${notification.user.name}-${notification.timestamp}-${notification.text}`}>
 											<Separator />
 											<ListBoxItem textValue={notification.text}>
 												<div className="flex items-start gap-3 py-2">
