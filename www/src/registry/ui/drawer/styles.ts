@@ -28,9 +28,10 @@ const { useStyles, styles } = createStyles(drawerMeta, {
 					swipeArea: "inset-x-0 top-0 h-8",
 				},
 				bottom: {
-					viewport: "grid grid-rows-[1fr_auto] pt-12",
+					viewport:
+						"absolute top-(--visual-viewport-page-top) left-(--visual-viewport-page-left) grid h-(--screen-height) grid-rows-[1fr_auto] overflow-visible pt-12",
 					popup:
-						"row-start-2 max-h-[calc(var(--visual-viewport-height)-3rem)] min-h-20 w-full rounded-t-xl border-b-0 [transform-origin:50%_100%] [transform:translateY(var(--drawer-swipe-movement-y,0px))] data-[ending-style]:[transform:translateY(100%)] data-[nested-drawer-open]:[height:var(--drawer-frontmost-height,var(--drawer-height,auto))] data-[nested-drawer-open]:[transform:translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateY(100%)]",
+						"absolute inset-x-0 bottom-(--screen-top-offset) max-h-[calc(var(--visual-viewport-height)_-_3rem_+_var(--screen-bottom-offset))] min-h-20 w-full rounded-t-xl border-b-0 pb-(--screen-bottom-offset) [transform-origin:50%_100%] [transform:translateY(var(--drawer-swipe-movement-y,0px))] data-[ending-style]:[transform:translateY(100%)] data-[nested-drawer-open]:[height:var(--drawer-frontmost-height,var(--drawer-height,auto))] data-[nested-drawer-open]:[transform:translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateY(100%)]",
 					swipeArea: "inset-x-0 bottom-0 h-8",
 				},
 				left: {

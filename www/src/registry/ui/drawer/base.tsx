@@ -27,6 +27,7 @@ const swipeDirectionMap = {
 } satisfies Record<DrawerPlacement, DrawerPrimitive.Root.Props["swipeDirection"]>;
 
 const DrawerPlacementContext = React.createContext<DrawerPlacement>("bottom");
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
 
 type DrawerPopupRenderProps = React.HTMLAttributes<HTMLDivElement> & {
 	ref?: React.Ref<HTMLDivElement>;
@@ -35,7 +36,12 @@ type DrawerPopupRenderProps = React.HTMLAttributes<HTMLDivElement> & {
 type DrawerViewportStyle = React.CSSProperties & {
 	"--page-height"?: string;
 	"--page-width"?: string;
+	"--screen-bottom-offset"?: string;
+	"--screen-height"?: string;
+	"--screen-top-offset"?: string;
 	"--visual-viewport-height"?: string;
+	"--visual-viewport-page-left"?: string;
+	"--visual-viewport-page-top"?: string;
 	"--visual-viewport-width"?: string;
 };
 
@@ -75,15 +81,123 @@ function getPageSize() {
 	};
 }
 
+function getScreenHeight() {
+	if (typeof window === "undefined") return 0;
+
+	return window.screen?.height ?? window.innerHeight;
+}
+
+function canUseScreenViewportHeight() {
+	if (typeof navigator === "undefined") return false;
+
+	return (
+		/iP(ad|hone|od)/.test(navigator.platform) ||
+		(navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+	);
+}
+
+function measureViewportUnitHeight(unit: "lvh") {
+	if (typeof document === "undefined") return 0;
+
+	const probe = document.createElement("div");
+
+	probe.style.cssText = [
+		"position:fixed",
+		"top:0",
+		"left:0",
+		"width:0",
+		`height:100${unit}`,
+		"visibility:hidden",
+		"pointer-events:none",
+	].join(";");
+
+	document.documentElement.appendChild(probe);
+	const height = probe.getBoundingClientRect().height;
+	probe.remove();
+
+	return height;
+}
+
+function useViewportUnitHeight(unit: "lvh") {
+	const [height, setHeight] = React.useState(0);
+
+	useIsomorphicLayoutEffect(() => {
+		const updateHeight = () => {
+			setHeight(measureViewportUnitHeight(unit));
+		};
+
+		updateHeight();
+
+		window.addEventListener("resize", updateHeight);
+		window.visualViewport?.addEventListener("resize", updateHeight);
+
+		return () => {
+			window.removeEventListener("resize", updateHeight);
+			window.visualViewport?.removeEventListener("resize", updateHeight);
+		};
+	}, [unit]);
+
+	return height;
+}
+
+function getVisualViewportPagePosition() {
+	if (typeof window === "undefined") {
+		return { pageLeft: 0, pageTop: 0 };
+	}
+
+	return {
+		pageLeft: window.visualViewport?.pageLeft ?? window.scrollX,
+		pageTop: window.visualViewport?.pageTop ?? window.scrollY,
+	};
+}
+
+function useVisualViewportPagePosition() {
+	const [position, setPosition] = React.useState(getVisualViewportPagePosition);
+
+	useIsomorphicLayoutEffect(() => {
+		const updatePosition = () => {
+			setPosition(getVisualViewportPagePosition());
+		};
+
+		updatePosition();
+
+		window.addEventListener("scroll", updatePosition, { passive: true });
+		window.addEventListener("resize", updatePosition);
+		window.visualViewport?.addEventListener("scroll", updatePosition);
+		window.visualViewport?.addEventListener("resize", updatePosition);
+
+		return () => {
+			window.removeEventListener("scroll", updatePosition);
+			window.removeEventListener("resize", updatePosition);
+			window.visualViewport?.removeEventListener("scroll", updatePosition);
+			window.visualViewport?.removeEventListener("resize", updatePosition);
+		};
+	}, []);
+
+	return position;
+}
+
 function useOverlayViewportStyle(): DrawerViewportStyle {
 	const viewport = useViewportSize();
+	const viewportPagePosition = useVisualViewportPagePosition();
+	const largeViewportHeight = useViewportUnitHeight("lvh");
 	const { pageHeight, pageWidth } = getPageSize();
+	const screenHeight = canUseScreenViewportHeight() ? getScreenHeight() : viewport.height;
+	// Mobile Safari starts the document below top chrome, while screen.height includes it.
+	// This correction lets the bottom drawer align with the physical screen bottom.
+	const screenTopOffset = largeViewportHeight ? Math.max(0, (screenHeight - largeViewportHeight) / 2) : 0;
+	const screenBottomOffset = Math.max(0, screenHeight - viewport.height - screenTopOffset);
 
 	return {
 		"--visual-viewport-width": `${viewport.width}px`,
 		"--visual-viewport-height": `${viewport.height}px`,
+		"--visual-viewport-page-left": `${viewportPagePosition.pageLeft}px`,
+		"--visual-viewport-page-top": `${viewportPagePosition.pageTop}px`,
 		"--page-width": pageWidth !== undefined ? `${pageWidth}px` : undefined,
 		"--page-height": pageHeight !== undefined ? `${pageHeight}px` : undefined,
+		"--screen-height": `${screenHeight}px`,
+		"--screen-top-offset": `${screenTopOffset}px`,
+		"--screen-bottom-offset": `${screenBottomOffset}px`,
 	};
 }
 

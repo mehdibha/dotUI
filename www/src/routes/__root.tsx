@@ -59,14 +59,14 @@ export const Route = createRootRoute({
 function RootComponent() {
 	return (
 		<ThemeProvider>
-			<DrawerProvider>
+			{/* <DrawerProvider> */}
 				<RootDocument>
-					<DrawerIndentBackground />
-					<DrawerIndent>
+					{/* <DrawerIndentBackground /> */}
+					{/* <DrawerIndent> */}
 						<Outlet />
-					</DrawerIndent>
+					{/* </DrawerIndent> */}
 				</RootDocument>
-			</DrawerProvider>
+			{/* </DrawerProvider> */}
 		</ThemeProvider>
 	);
 }
