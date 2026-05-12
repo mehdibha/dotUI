@@ -19,7 +19,7 @@ const tokens = tv({
 	},
 });
 
-const compactText = "text-sm sm:text-xs/relaxed";
+const compactText = "text-base sm:text-xs/relaxed";
 const defaultText = "text-base sm:text-sm";
 
 /* ----------------------------- Field shells ----------------------------- */

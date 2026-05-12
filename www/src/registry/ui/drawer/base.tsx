@@ -6,7 +6,6 @@ import { DismissButton } from "react-aria/Overlay";
 import { useIsHidden } from "react-aria/private/collections/Hidden";
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder";
 import { isScrollable } from "react-aria/private/utils/isScrollable";
-import { useViewportSize } from "react-aria/private/utils/useViewportSize";
 import { useInteractOutside } from "react-aria/useInteractOutside";
 import { OverlayTriggerStateContext } from "react-aria-components/Dialog";
 import { useOverlayTriggerState } from "react-stately";
@@ -34,6 +33,7 @@ type DrawerPopupRenderProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 type DrawerViewportStyle = React.CSSProperties & {
+	"--drawer-viewport-height"?: string;
 	"--page-height"?: string;
 	"--page-width"?: string;
 	"--screen-bottom-offset"?: string;
@@ -43,6 +43,15 @@ type DrawerViewportStyle = React.CSSProperties & {
 	"--visual-viewport-page-left"?: string;
 	"--visual-viewport-page-top"?: string;
 	"--visual-viewport-width"?: string;
+};
+
+type VisualViewportSnapshot = {
+	height: number;
+	offsetTop: number;
+	pageLeft: number;
+	pageTop: number;
+	scale: number;
+	width: number;
 };
 
 function resolveClassName<TState>(
@@ -91,8 +100,7 @@ function canUseScreenViewportHeight() {
 	if (typeof navigator === "undefined") return false;
 
 	return (
-		/iP(ad|hone|od)/.test(navigator.platform) ||
-		(navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+		/iP(ad|hone|od)/.test(navigator.platform) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
 	);
 }
 
@@ -140,59 +148,112 @@ function useViewportUnitHeight(unit: "lvh") {
 	return height;
 }
 
-function getVisualViewportPagePosition() {
+function getVisualViewportSnapshot(): VisualViewportSnapshot {
 	if (typeof window === "undefined") {
-		return { pageLeft: 0, pageTop: 0 };
+		return {
+			height: 0,
+			offsetTop: 0,
+			pageLeft: 0,
+			pageTop: 0,
+			scale: 1,
+			width: 0,
+		};
 	}
 
+	const visualViewport = window.visualViewport;
+
 	return {
-		pageLeft: window.visualViewport?.pageLeft ?? window.scrollX,
-		pageTop: window.visualViewport?.pageTop ?? window.scrollY,
+		height: visualViewport?.height ?? document.documentElement.clientHeight,
+		offsetTop: visualViewport?.offsetTop ?? 0,
+		pageLeft: visualViewport?.pageLeft ?? window.scrollX,
+		pageTop: visualViewport?.pageTop ?? window.scrollY,
+		scale: visualViewport?.scale ?? 1,
+		width: visualViewport?.width ?? document.documentElement.clientWidth,
 	};
 }
 
-function useVisualViewportPagePosition() {
-	const [position, setPosition] = React.useState(getVisualViewportPagePosition);
+function areVisualViewportSnapshotsEqual(a: VisualViewportSnapshot, b: VisualViewportSnapshot) {
+	return (
+		a.height === b.height &&
+		a.offsetTop === b.offsetTop &&
+		a.pageLeft === b.pageLeft &&
+		a.pageTop === b.pageTop &&
+		a.scale === b.scale &&
+		a.width === b.width
+	);
+}
+
+function useVisualViewportSnapshot() {
+	const [snapshot, setSnapshot] = React.useState(getVisualViewportSnapshot);
 
 	useIsomorphicLayoutEffect(() => {
-		const updatePosition = () => {
-			setPosition(getVisualViewportPagePosition());
+		let animationFrame: number | undefined;
+		let focusUpdateTimer: number | undefined;
+		const updateSnapshot = () => {
+			setSnapshot((currentSnapshot) => {
+				const nextSnapshot = getVisualViewportSnapshot();
+
+				return areVisualViewportSnapshotsEqual(currentSnapshot, nextSnapshot) ? currentSnapshot : nextSnapshot;
+			});
+		};
+		const updateAfterFocusChange = () => {
+			updateSnapshot();
+			if (animationFrame !== undefined) cancelAnimationFrame(animationFrame);
+			if (focusUpdateTimer !== undefined) window.clearTimeout(focusUpdateTimer);
+			animationFrame = requestAnimationFrame(updateSnapshot);
+			focusUpdateTimer = window.setTimeout(updateSnapshot, 250);
 		};
 
-		updatePosition();
+		updateSnapshot();
 
-		window.addEventListener("scroll", updatePosition, { passive: true });
-		window.addEventListener("resize", updatePosition);
-		window.visualViewport?.addEventListener("scroll", updatePosition);
-		window.visualViewport?.addEventListener("resize", updatePosition);
+		window.addEventListener("focusin", updateAfterFocusChange);
+		window.addEventListener("focusout", updateAfterFocusChange);
+		window.addEventListener("scroll", updateSnapshot, { passive: true });
+		window.addEventListener("resize", updateSnapshot);
+		window.visualViewport?.addEventListener("scroll", updateSnapshot);
+		window.visualViewport?.addEventListener("resize", updateSnapshot);
 
 		return () => {
-			window.removeEventListener("scroll", updatePosition);
-			window.removeEventListener("resize", updatePosition);
-			window.visualViewport?.removeEventListener("scroll", updatePosition);
-			window.visualViewport?.removeEventListener("resize", updatePosition);
+			if (animationFrame !== undefined) cancelAnimationFrame(animationFrame);
+			if (focusUpdateTimer !== undefined) window.clearTimeout(focusUpdateTimer);
+			window.removeEventListener("focusin", updateAfterFocusChange);
+			window.removeEventListener("focusout", updateAfterFocusChange);
+			window.removeEventListener("scroll", updateSnapshot);
+			window.removeEventListener("resize", updateSnapshot);
+			window.visualViewport?.removeEventListener("scroll", updateSnapshot);
+			window.visualViewport?.removeEventListener("resize", updateSnapshot);
 		};
 	}, []);
 
-	return position;
+	return snapshot;
 }
 
 function useOverlayViewportStyle(): DrawerViewportStyle {
-	const viewport = useViewportSize();
-	const viewportPagePosition = useVisualViewportPagePosition();
+	const viewport = useVisualViewportSnapshot();
 	const largeViewportHeight = useViewportUnitHeight("lvh");
 	const { pageHeight, pageWidth } = getPageSize();
-	const screenHeight = canUseScreenViewportHeight() ? getScreenHeight() : viewport.height;
+	const canUseScreenHeight = canUseScreenViewportHeight();
+	const screenHeight = canUseScreenHeight ? getScreenHeight() : viewport.height;
+	const isVisualViewportReduced =
+		canUseScreenHeight &&
+		((largeViewportHeight > 0 && largeViewportHeight - viewport.height > 120) ||
+			viewport.offsetTop > 0 ||
+			(pageWidth !== undefined && viewport.width < pageWidth - 1));
+	const drawerViewportHeight = isVisualViewportReduced ? viewport.height : screenHeight;
 	// Mobile Safari starts the document below top chrome, while screen.height includes it.
 	// This correction lets the bottom drawer align with the physical screen bottom.
-	const screenTopOffset = largeViewportHeight ? Math.max(0, (screenHeight - largeViewportHeight) / 2) : 0;
-	const screenBottomOffset = Math.max(0, screenHeight - viewport.height - screenTopOffset);
+	const screenTopOffset =
+		!isVisualViewportReduced && largeViewportHeight ? Math.max(0, (screenHeight - largeViewportHeight) / 2) : 0;
+	const screenBottomOffset = isVisualViewportReduced
+		? 0
+		: Math.max(0, screenHeight - viewport.height - screenTopOffset);
 
 	return {
+		"--drawer-viewport-height": `${drawerViewportHeight}px`,
 		"--visual-viewport-width": `${viewport.width}px`,
 		"--visual-viewport-height": `${viewport.height}px`,
-		"--visual-viewport-page-left": `${viewportPagePosition.pageLeft}px`,
-		"--visual-viewport-page-top": `${viewportPagePosition.pageTop}px`,
+		"--visual-viewport-page-left": `${viewport.pageLeft}px`,
+		"--visual-viewport-page-top": `${viewport.pageTop}px`,
 		"--page-width": pageWidth !== undefined ? `${pageWidth}px` : undefined,
 		"--page-height": pageHeight !== undefined ? `${pageHeight}px` : undefined,
 		"--screen-height": `${screenHeight}px`,
