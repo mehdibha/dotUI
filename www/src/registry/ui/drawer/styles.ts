@@ -5,7 +5,8 @@ import drawerMeta from "./meta";
 const { useStyles, styles } = createStyles(drawerMeta, {
 	base: {
 		slots: {
-			overlay: "absolute top-0 left-0 isolate z-50 h-(--page-height) w-full [--drawer-inset:0px] [--drawer-peek:24px]",
+			overlay:
+				"absolute top-0 left-0 isolate z-50 h-(--page-height) w-full [--drawer-bleed:--spacing(40)] [--drawer-inset:0px] [--drawer-peek:24px]",
 			backdrop:
 				"absolute inset-0 bg-black/70 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity duration-500 ease-fluid-out data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[swiping]:duration-0",
 			viewport: "@container-[size] sticky top-0 left-0 h-(--visual-viewport-height) w-full touch-none",
@@ -31,7 +32,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
 					viewport:
 						"absolute top-(--visual-viewport-page-top) left-(--visual-viewport-page-left) grid h-(--drawer-viewport-height) w-(--visual-viewport-width) grid-rows-[1fr_auto] overflow-visible pt-12",
 					popup:
-						"absolute inset-x-0 bottom-(--screen-top-offset) max-h-[calc(var(--visual-viewport-height)_-_3rem_+_var(--screen-bottom-offset))] min-h-20 w-full rounded-t-xl border-b-0 pb-(--screen-bottom-offset) [transform-origin:50%_100%] [transform:translateY(var(--drawer-swipe-movement-y,0px))] data-[ending-style]:[transform:translateY(100%)] data-[nested-drawer-open]:[height:var(--drawer-frontmost-height,var(--drawer-height,auto))] data-[nested-drawer-open]:[transform:translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateY(100%)]",
+						"absolute inset-x-0 bottom-(--screen-top-offset) max-h-[calc(var(--visual-viewport-height)_-_3rem_+_var(--screen-bottom-offset)_+_var(--drawer-bleed))] min-h-20 w-full rounded-t-xl border-b-0 pb-[calc(var(--screen-bottom-offset)_+_var(--drawer-bleed))] [margin-bottom:calc(var(--drawer-bleed)*-1)] [transform-origin:50%_100%] [transform:translateY(var(--drawer-swipe-movement-y,0px))] data-[ending-style]:[transform:translateY(100%)] data-[nested-drawer-open]:[height:var(--drawer-frontmost-height,var(--drawer-height,auto))] data-[nested-drawer-open]:[transform:translateY(calc(var(--drawer-swipe-movement-y,0px)-var(--drawer-stack-offset)-(var(--drawer-shrink)*var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateY(100%)]",
 					swipeArea: "inset-x-0 bottom-0 h-8",
 				},
 				left: {
