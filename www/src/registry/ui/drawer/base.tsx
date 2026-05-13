@@ -27,6 +27,20 @@ const swipeDirectionMap = {
 
 const DrawerPlacementContext = React.createContext<DrawerPlacement>("bottom");
 const useIsomorphicLayoutEffect = typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
+const VISUAL_VIEWPORT_OFFSET_THRESHOLD = 8;
+const VISUAL_VIEWPORT_REDUCTION_THRESHOLD = 120;
+const NON_TEXT_INPUT_TYPES = new Set([
+	"button",
+	"checkbox",
+	"color",
+	"file",
+	"hidden",
+	"image",
+	"radio",
+	"range",
+	"reset",
+	"submit",
+]);
 
 type DrawerPopupRenderProps = React.HTMLAttributes<HTMLDivElement> & {
 	ref?: React.Ref<HTMLDivElement>;
@@ -47,12 +61,18 @@ type DrawerViewportStyle = React.CSSProperties & {
 
 type VisualViewportSnapshot = {
 	height: number;
+	offsetLeft: number;
 	offsetTop: number;
 	pageLeft: number;
 	pageTop: number;
 	scale: number;
 	width: number;
 };
+
+type LockedPageScroll = {
+	left: number;
+	top: number;
+} | null;
 
 function resolveClassName<TState>(
 	className: string | ((state: TState) => string | undefined) | undefined,
@@ -152,6 +172,7 @@ function getVisualViewportSnapshot(): VisualViewportSnapshot {
 	if (typeof window === "undefined") {
 		return {
 			height: 0,
+			offsetLeft: 0,
 			offsetTop: 0,
 			pageLeft: 0,
 			pageTop: 0,
@@ -164,9 +185,10 @@ function getVisualViewportSnapshot(): VisualViewportSnapshot {
 
 	return {
 		height: visualViewport?.height ?? document.documentElement.clientHeight,
+		offsetLeft: visualViewport?.offsetLeft ?? 0,
 		offsetTop: visualViewport?.offsetTop ?? 0,
-		pageLeft: visualViewport?.pageLeft ?? window.scrollX,
-		pageTop: visualViewport?.pageTop ?? window.scrollY,
+		pageLeft: window.scrollX + (visualViewport?.offsetLeft ?? 0),
+		pageTop: window.scrollY + (visualViewport?.offsetTop ?? 0),
 		scale: visualViewport?.scale ?? 1,
 		width: visualViewport?.width ?? document.documentElement.clientWidth,
 	};
@@ -175,6 +197,7 @@ function getVisualViewportSnapshot(): VisualViewportSnapshot {
 function areVisualViewportSnapshotsEqual(a: VisualViewportSnapshot, b: VisualViewportSnapshot) {
 	return (
 		a.height === b.height &&
+		a.offsetLeft === b.offsetLeft &&
 		a.offsetTop === b.offsetTop &&
 		a.pageLeft === b.pageLeft &&
 		a.pageTop === b.pageTop &&
@@ -228,17 +251,77 @@ function useVisualViewportSnapshot() {
 	return snapshot;
 }
 
-function useOverlayViewportStyle(): DrawerViewportStyle {
+function useLockedPageScroll(isEnabled: boolean): LockedPageScroll {
+	const [lockedPageScroll, setLockedPageScroll] = React.useState<LockedPageScroll>(null);
+
+	useIsomorphicLayoutEffect(() => {
+		if (!isEnabled || typeof window === "undefined" || !canUseScreenViewportHeight()) {
+			setLockedPageScroll(null);
+			return undefined;
+		}
+
+		const lockedScrollLeft = window.scrollX;
+		const lockedScrollTop = window.scrollY;
+		let animationFrame: number | undefined;
+
+		setLockedPageScroll({
+			left: lockedScrollLeft,
+			top: lockedScrollTop,
+		});
+
+		const restoreScroll = () => {
+			if (window.scrollX === lockedScrollLeft && window.scrollY === lockedScrollTop) {
+				return;
+			}
+
+			window.scrollTo(lockedScrollLeft, lockedScrollTop);
+		};
+
+		const queueRestoreScroll = () => {
+			restoreScroll();
+
+			if (animationFrame !== undefined) {
+				return;
+			}
+
+			animationFrame = requestAnimationFrame(() => {
+				animationFrame = undefined;
+				restoreScroll();
+			});
+		};
+
+		// iOS Safari can scroll the layout viewport when focusing controls, even
+		// while the drawer's modal scroll lock has overflow hidden on the page.
+		const scrollListenerOptions = { capture: true, passive: true };
+		const focusListenerOptions = { capture: true };
+		window.addEventListener("scroll", queueRestoreScroll, scrollListenerOptions);
+		window.addEventListener("focusin", queueRestoreScroll, focusListenerOptions);
+		window.addEventListener("focusout", queueRestoreScroll, focusListenerOptions);
+
+		return () => {
+			if (animationFrame !== undefined) cancelAnimationFrame(animationFrame);
+			window.removeEventListener("scroll", queueRestoreScroll, scrollListenerOptions);
+			window.removeEventListener("focusin", queueRestoreScroll, focusListenerOptions);
+			window.removeEventListener("focusout", queueRestoreScroll, focusListenerOptions);
+			restoreScroll();
+		};
+	}, [isEnabled]);
+
+	return lockedPageScroll;
+}
+
+function useOverlayViewportStyle(lockedPageScroll: LockedPageScroll): DrawerViewportStyle {
 	const viewport = useVisualViewportSnapshot();
 	const largeViewportHeight = useViewportUnitHeight("lvh");
 	const { pageHeight, pageWidth } = getPageSize();
 	const canUseScreenHeight = canUseScreenViewportHeight();
 	const screenHeight = canUseScreenHeight ? getScreenHeight() : viewport.height;
+	const hasReducedViewportHeight =
+		largeViewportHeight > 0 && largeViewportHeight - viewport.height > VISUAL_VIEWPORT_REDUCTION_THRESHOLD;
+	const hasViewportPageOffset = viewport.offsetTop > VISUAL_VIEWPORT_OFFSET_THRESHOLD;
 	const isVisualViewportReduced =
 		canUseScreenHeight &&
-		((largeViewportHeight > 0 && largeViewportHeight - viewport.height > 120) ||
-			viewport.offsetTop > 0 ||
-			(pageWidth !== undefined && viewport.width < pageWidth - 1));
+		(hasReducedViewportHeight || hasViewportPageOffset || (pageWidth !== undefined && viewport.width < pageWidth - 1));
 	const drawerViewportHeight = isVisualViewportReduced ? viewport.height : screenHeight;
 	// Mobile Safari starts the document below top chrome, while screen.height includes it.
 	// This correction lets the bottom drawer align with the physical screen bottom.
@@ -247,13 +330,15 @@ function useOverlayViewportStyle(): DrawerViewportStyle {
 	const screenBottomOffset = isVisualViewportReduced
 		? 0
 		: Math.max(0, screenHeight - viewport.height - screenTopOffset);
+	const viewportPageLeft = lockedPageScroll ? lockedPageScroll.left + viewport.offsetLeft : viewport.pageLeft;
+	const viewportPageTop = lockedPageScroll ? lockedPageScroll.top + viewport.offsetTop : viewport.pageTop;
 
 	return {
 		"--drawer-viewport-height": `${drawerViewportHeight}px`,
 		"--visual-viewport-width": `${viewport.width}px`,
 		"--visual-viewport-height": `${viewport.height}px`,
-		"--visual-viewport-page-left": `${viewport.pageLeft}px`,
-		"--visual-viewport-page-top": `${viewport.pageTop}px`,
+		"--visual-viewport-page-left": `${viewportPageLeft}px`,
+		"--visual-viewport-page-top": `${viewportPageTop}px`,
 		"--page-width": pageWidth !== undefined ? `${pageWidth}px` : undefined,
 		"--page-height": pageHeight !== undefined ? `${pageHeight}px` : undefined,
 		"--screen-height": `${screenHeight}px`,
@@ -268,6 +353,32 @@ function getInitialFocusTarget(popupElement: HTMLDivElement | null) {
 			'[role="dialog"], [role="menu"], [role="listbox"], [role="tree"], [tabindex]',
 		) ?? true
 	);
+}
+
+function getTextControlFromEventTarget(target: EventTarget | null) {
+	if (!(target instanceof Element)) return null;
+
+	const control = target.closest("input, textarea");
+
+	if (control instanceof HTMLTextAreaElement) return control;
+	if (!(control instanceof HTMLInputElement)) return null;
+	if (NON_TEXT_INPUT_TYPES.has(control.type)) return null;
+
+	return control;
+}
+
+function focusTextControlWithoutPageScroll(event: React.PointerEvent<HTMLElement> | React.TouchEvent<HTMLElement>) {
+	if (!canUseScreenViewportHeight() || event.defaultPrevented) return;
+	if ("pointerType" in event && event.pointerType === "mouse") return;
+
+	const control = getTextControlFromEventTarget(event.target);
+
+	if (!control || !event.currentTarget.contains(control) || control.disabled || control === document.activeElement) {
+		return;
+	}
+
+	event.preventDefault();
+	control.focus({ preventScroll: true });
 }
 
 interface DrawerProps {
@@ -298,7 +409,6 @@ function Drawer({
 	const isHidden = useIsHidden();
 	const { backdrop, overlay, popup, viewport } = useStyles()();
 	const popupRef = React.useRef<HTMLDivElement>(null);
-	const overlayStyle = useOverlayViewportStyle();
 	const contextState = React.useContext(OverlayTriggerStateContext);
 	const localState = useOverlayTriggerState({
 		isOpen,
@@ -306,6 +416,8 @@ function Drawer({
 		onOpenChange,
 	});
 	const state = isOpen !== undefined || defaultOpen !== undefined || !contextState ? localState : contextState;
+	const lockedPageScroll = useLockedPageScroll(state.isOpen);
+	const overlayStyle = useOverlayViewportStyle(lockedPageScroll);
 
 	useInteractOutside({
 		ref: popupRef,
@@ -344,6 +456,8 @@ function Drawer({
 								<DrawerPrimitive.Popup
 									data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ""}
 									initialFocus={() => getInitialFocusTarget(popupRef.current)}
+									onPointerDownCapture={focusTextControlWithoutPageScroll}
+									onTouchStartCapture={focusTextControlWithoutPageScroll}
 									className={(state) =>
 										popup({
 											placement,
