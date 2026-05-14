@@ -240,6 +240,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 	CommandItem: "@/components/ui/command",
 
 	// Toast
+	ToastProvider: "@/components/ui/toast",
 	Toaster: "@/components/ui/toast",
 
 	// Form

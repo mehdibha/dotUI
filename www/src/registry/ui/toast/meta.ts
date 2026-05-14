@@ -4,6 +4,7 @@ const toastMeta = {
 	name: "toast",
 	type: "registry:ui",
 	group: "feedback",
+	dependencies: ["@base-ui/react"],
 	files: [
 		{
 			type: "registry:ui",
@@ -11,6 +12,7 @@ const toastMeta = {
 			target: "ui/toast.tsx",
 		},
 	],
+	registryDependencies: ["focus-styles"],
 } satisfies RegistryItem;
 
 export default toastMeta;

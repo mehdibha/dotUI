@@ -59,6 +59,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"text-area": () => import("@/registry/ui/text-area/examples"),
 	"text-field": () => import("@/registry/ui/text-field/examples"),
 	"time-field": () => import("@/registry/ui/time-field/examples"),
+	toast: () => import("@/registry/ui/toast/examples"),
 	"toggle-button": () => import("@/registry/ui/toggle-button/examples"),
 	"toggle-button-group": () => import("@/registry/ui/toggle-button-group/examples"),
 	tooltip: () => import("@/registry/ui/tooltip/examples"),

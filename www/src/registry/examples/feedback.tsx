@@ -5,12 +5,12 @@ import { Examples } from "@/modules/create/preview/examples";
 import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert";
 import { Button } from "@/registry/ui/button";
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/registry/ui/empty";
-import { Toaster, toast } from "@/registry/ui/toast";
+import { ToastProvider, toastManager } from "@/registry/ui/toast";
 
 export default function FeedbackGroupExamples() {
 	return (
 		<Examples>
-			<Toaster />
+			<ToastProvider />
 			<Example title="Alert">
 				<Alert>
 					<CircleAlertIcon />
@@ -19,7 +19,15 @@ export default function FeedbackGroupExamples() {
 				</Alert>
 			</Example>
 			<Example title="Toast">
-				<Button onPress={() => toast.add({ title: "Changes saved", description: "Your update is live." })}>
+				<Button
+					onPress={() =>
+						toastManager.add({
+							title: "Changes saved",
+							description: "Your update is live.",
+							type: "success",
+						})
+					}
+				>
 					Show toast
 				</Button>
 			</Example>

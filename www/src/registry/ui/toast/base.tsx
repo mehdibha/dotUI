@@ -1,68 +1,127 @@
 "use client";
 
-import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as TextPrimitives from "react-aria-components/Text";
-import * as ToastPrimitives from "react-aria-components/Toast";
+import { Toast as ToastPrimitive } from "@base-ui/react/toast";
+import { CircleAlertIcon, CircleCheckIcon, InfoIcon, LoaderCircleIcon, TriangleAlertIcon } from "lucide-react";
 
 import { useStyles } from "./styles";
+import type { ToastData, ToastPosition, ToastVariant } from "./types";
 
-// MARK: toastStyles
+type ToastObject = ToastPrimitive.Root.ToastObject<ToastData>;
 
-interface Toast {
-	title: string;
-	description?: string;
-	variant?: "success" | "error" | "warning" | "info" | "neutral" | "danger";
+const toastIcons = {
+	danger: CircleAlertIcon,
+	error: CircleAlertIcon,
+	info: InfoIcon,
+	loading: LoaderCircleIcon,
+	success: CircleCheckIcon,
+	warning: TriangleAlertIcon,
+} as const;
+
+const defaultToastManager = ToastPrimitive.createToastManager<ToastData>();
+
+function getToastVariant(type: string | undefined): ToastVariant {
+	return type && type in toastIcons ? (type as ToastVariant) : "neutral";
 }
 
-const queue = new ToastPrimitives.UNSTABLE_ToastQueue<Toast>();
+function getSwipeDirection(position: ToastPosition): ToastPrimitive.Root.Props["swipeDirection"] {
+	const verticalDirection = position.startsWith("top") ? "up" : "down";
 
-const Toaster = () => {
-	const { region } = useStyles()();
+	if (position.endsWith("center")) {
+		return [verticalDirection];
+	}
+
+	if (position.endsWith("left")) {
+		return ["left", verticalDirection];
+	}
+
+	return ["right", verticalDirection];
+}
+
+interface ToastProviderProps extends ToastPrimitive.Provider.Props {
+	position?: ToastPosition;
+	portalProps?: ToastPrimitive.Portal.Props;
+}
+
+function ToastProvider({
+	children,
+	limit = 3,
+	position = "bottom-right",
+	portalProps,
+	timeout = 5000,
+	toastManager = defaultToastManager,
+	...props
+}: ToastProviderProps) {
 	return (
-		<ToastPrimitives.UNSTABLE_ToastRegion queue={queue} className={region()}>
-			{({ toast }) => <ToastItem toast={toast} />}
-		</ToastPrimitives.UNSTABLE_ToastRegion>
+		<ToastPrimitive.Provider limit={limit} timeout={timeout} toastManager={toastManager} {...props}>
+			{children}
+			<ToastList position={position} portalProps={portalProps} />
+		</ToastPrimitive.Provider>
 	);
-};
+}
 
-interface ToastProps extends ToastPrimitives.ToastProps<Toast> {}
+interface ToastListProps {
+	position: ToastPosition;
+	portalProps?: ToastPrimitive.Portal.Props;
+}
 
-function ToastItem({ className, ...props }: ToastProps) {
-	const { toast: toastStyle, content, title, description, actions } = useStyles()();
+function ToastList({ position, portalProps }: ToastListProps) {
+	const { toasts } = ToastPrimitive.useToastManager<ToastData>();
+	const { viewport } = useStyles()();
+
 	return (
-		<ToastPrimitives.UNSTABLE_Toast
-			className={composeRenderProps(className, (className) =>
-				toastStyle({ className, variant: props.toast.content.variant }),
-			)}
-			{...props}
+		<ToastPrimitive.Portal {...portalProps}>
+			<ToastPrimitive.Viewport data-slot="toast-viewport" data-position={position} className={viewport({ position })}>
+				{toasts.map((toastItem) => (
+					<ToastItem key={toastItem.id} position={position} toast={toastItem} />
+				))}
+			</ToastPrimitive.Viewport>
+		</ToastPrimitive.Portal>
+	);
+}
+
+interface ToastItemProps {
+	position: ToastPosition;
+	toast: ToastObject;
+}
+
+function ToastItem({ position, toast: toastItem }: ToastItemProps) {
+	const data = toastItem.data;
+	const variant = getToastVariant(toastItem.type);
+	const Icon = variant === "neutral" ? null : toastIcons[variant];
+	const { action, actions, body, content, description, icon, message, title, toast: toastStyle } = useStyles()();
+
+	return (
+		<ToastPrimitive.Root
+			{...data?.rootProps}
+			data-position={position}
+			data-slot="toast"
+			swipeDirection={getSwipeDirection(position)}
+			toast={toastItem}
+			className={toastStyle({ position, variant })}
 		>
-			{({ toast }) => (
-				<>
-					<ToastPrimitives.UNSTABLE_ToastContent className={content()}>
-						<TextPrimitives.Text slot="title" className={title()}>
-							{toast.content.title}
-						</TextPrimitives.Text>
-						{toast.content.description ? (
-							<TextPrimitives.Text slot="description" className={description()}>
-								{toast.content.description}
-							</TextPrimitives.Text>
-						) : null}
-					</ToastPrimitives.UNSTABLE_ToastContent>
-					<div className={actions()}>
-						{/* <Button
-              variant="quiet"
-              size="sm"
-              slot="close"
-              className={close()}
-              aria-label="Close"
-            >
-              <XIcon className="size-4" />
-            </Button> */}
+			<ToastPrimitive.Content className={content()}>
+				<div className={body()}>
+					{Icon ? (
+						<div data-slot="toast-icon" className={icon({ variant })}>
+							<Icon aria-hidden="true" />
+						</div>
+					) : null}
+					<div data-slot="toast-message" className={message()}>
+						<ToastPrimitive.Title data-slot="toast-title" className={title({ variant })} />
+						<ToastPrimitive.Description data-slot="toast-description" className={description({ variant })} />
 					</div>
-				</>
-			)}
-		</ToastPrimitives.UNSTABLE_Toast>
+				</div>
+				{toastItem.actionProps ? (
+					<div data-slot="toast-actions" className={actions()}>
+						<ToastPrimitive.Action data-slot="toast-action" className={action()} />
+					</div>
+				) : null}
+			</ToastPrimitive.Content>
+		</ToastPrimitive.Root>
 	);
 }
 
-export { queue as toast, Toaster };
+const Toaster = ToastProvider;
+
+export type { ToastProviderProps };
+export { defaultToastManager as toastManager, Toaster, ToastPrimitive, ToastProvider };
