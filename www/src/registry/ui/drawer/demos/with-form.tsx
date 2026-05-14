@@ -32,7 +32,7 @@ export default function Demo() {
 						<DialogDescription>Inputs don't trigger drag.</DialogDescription>
 					</DialogHeader>
 					<DialogBody className="flex flex-col gap-3">
-						<TextField className="flex flex-col gap-1.5" autoFocus>
+						<TextField className="flex flex-col gap-1.5">
 							<Label>Name</Label>
 							<Input defaultValue="Jane Doe" />
 						</TextField>
