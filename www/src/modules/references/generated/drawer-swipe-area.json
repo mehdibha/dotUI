@@ -833,7 +833,7 @@
 								"name": "state",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.1.8_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
 									"name": "DrawerSwipeAreaState"
 								},
 								"optional": false,
@@ -942,7 +942,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.1.8_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
 								"name": "DrawerSwipeAreaState"
 							}
 						]
@@ -972,7 +972,7 @@
 								"name": "state",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.1.8_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
 									"name": "DrawerSwipeAreaState"
 								},
 								"optional": false,
@@ -1008,9 +1008,9 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.1.8_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.1.8_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
 			"name": "DrawerSwipeAreaState",
 			"extends": [],
 			"properties": {

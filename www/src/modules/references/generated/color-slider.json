@@ -1568,6 +1568,15 @@
 								"elements": [
 									{
 										"type": "stringLiteral",
+										"value": "narrow"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
 										"value": "short"
 									}
 								]
@@ -1578,15 +1587,6 @@
 									{
 										"type": "stringLiteral",
 										"value": "long"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "narrow"
 									}
 								]
 							}

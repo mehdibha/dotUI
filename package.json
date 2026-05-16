@@ -52,7 +52,7 @@
 		"chokidar-cli": "^3.0.0",
 		"oxfmt": "^0.50.0",
 		"oxlint": "^1.65.0",
-		"puppeteer": "^24.26.0",
+		"puppeteer": "^25.0.2",
 		"sherif": "1.11.1",
 		"syncpack": "15.1.2",
 		"tsx": "^4.21.0",
