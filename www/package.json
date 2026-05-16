@@ -48,7 +48,7 @@
 		"react-error-boundary": "^6.0.0",
 		"react-hook-form": "^7.54.2",
 		"react-stately": "file:./vendor/react-stately-3.46.0.tgz",
-		"shiki": "^3.15.0",
+		"shiki": "^4.0.2",
 		"starter-themes": "workspace:*",
 		"tailwind-merge": "^3.0.2",
 		"tailwind-variants": "^3.1.1",
