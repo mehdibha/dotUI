@@ -80,7 +80,7 @@
 		"nitro": "^3.0.260429-beta",
 		"react-scan": "^0.5.3",
 		"rimraf": "^6.0.1",
-		"shadcn": "^3.6.1",
+		"shadcn": "^4.7.0",
 		"tsx": "^4.21.0",
 		"typescript": "catalog:",
 		"typescript-api-extractor": "1.0.0-alpha.10",
