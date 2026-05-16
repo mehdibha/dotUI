@@ -1,5 +1,6 @@
 import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins";
-import { defineConfig, defineDocs, frontmatterSchema, metaSchema } from "fumadocs-mdx/config";
+import { metaSchema, pageSchema } from "fumadocs-core/source/schema";
+import { defineConfig, defineDocs } from "fumadocs-mdx/config";
 import lastModified from "fumadocs-mdx/plugins/last-modified";
 import { z } from "zod";
 
@@ -9,7 +10,7 @@ export const docs = defineDocs({
 	dir: "content/docs",
 	docs: {
 		async: true, // Load files asynchronously to avoid bundling all at once
-		schema: frontmatterSchema.extend({
+		schema: pageSchema.extend({
 			links: z
 				.array(
 					z.object({
@@ -35,7 +36,7 @@ export const legal = defineDocs({
 	dir: "content/legal",
 	docs: {
 		async: true,
-		schema: frontmatterSchema.extend({
+		schema: pageSchema.extend({
 			links: z
 				.array(
 					z.object({

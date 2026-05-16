@@ -63,5 +63,5 @@ export const legalSource = loader({
 export async function getSerializedPageTree(): Promise<SerializedPageTree> {
 	const pageTree = docsSource.getPageTree();
 	const serialized = await docsSource.serializePageTree(pageTree);
-	return serialized as SerializedPageTree;
+	return serialized.data as SerializedPageTree;
 }

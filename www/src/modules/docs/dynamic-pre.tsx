@@ -2,14 +2,14 @@ import { Suspense, useDeferredValue, useId } from "react";
 
 import { useShiki } from "fumadocs-core/highlight/client";
 
-import type { HighlightOptions, HighlightOptionsCommon, HighlightOptionsThemes } from "fumadocs-core/highlight";
+import type { HighlightOptions } from "fumadocs-core/highlight";
 
 import { Pre } from "./code-block";
 
 export interface DynamicPreProps {
 	lang: string;
 	children: string;
-	options?: Omit<HighlightOptionsCommon, "lang"> & HighlightOptionsThemes;
+	options?: Omit<HighlightOptions, "lang">;
 }
 
 export function DynamicPre({ lang, children: code, options }: DynamicPreProps) {
