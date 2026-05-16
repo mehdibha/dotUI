@@ -25,7 +25,7 @@
 		"@internationalized/date": "^3.12.1",
 		"@remixicon/react": "^4.2.0",
 		"@tabler/icons-react": "^3.35.0",
-		"@tailwindcss/vite": "^4.2.2",
+		"@tailwindcss/vite": "^4.3.0",
 		"@tanstack/react-devtools": "^0.10.5",
 		"@tanstack/react-form": "^1.32.0",
 		"@tanstack/react-router": "catalog:",

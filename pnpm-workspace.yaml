@@ -10,7 +10,7 @@ catalog:
   "@types/react-dom": ^19.2.1
   react: ^19.2.1
   react-dom: ^19.2.1
-  tailwindcss: ^4.1.14
+  tailwindcss: ^4.3.0
   typescript: ^6.0.3
 
 onlyBuiltDependencies:
