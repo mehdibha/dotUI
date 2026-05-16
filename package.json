@@ -58,7 +58,6 @@
 		"tsx": "^4.21.0",
 		"turbo": "^2.5.8",
 		"typescript": "catalog:",
-		"vite-tsconfig-paths": "^6.0.3",
 		"vitest": "^4.0.16"
 	},
 	"packageManager": "pnpm@10.24.0",
