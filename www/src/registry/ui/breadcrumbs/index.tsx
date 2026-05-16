@@ -2,18 +2,11 @@ import { Link as RouterLink } from "@tanstack/react-router";
 import type { ToOptions } from "@tanstack/react-router";
 
 import { BreadcrumbLink as BreadcrumbLinkPrimitive } from "./base";
+
 import type { BreadcrumbLinkProps } from "./base";
 
-export {
-	BreadcrumbItem,
-	BreadcrumbSeparator,
-	Breadcrumbs,
-} from "./base";
-export type {
-	BreadcrumbItemProps,
-	BreadcrumbSeparatorProps,
-	BreadcrumbsProps,
-} from "./base";
+export { BreadcrumbItem, BreadcrumbSeparator, Breadcrumbs } from "./base";
+export type { BreadcrumbItemProps, BreadcrumbSeparatorProps, BreadcrumbsProps } from "./base";
 
 export function BreadcrumbLink({ href, ...props }: Omit<BreadcrumbLinkProps, "href"> & { href?: string | ToOptions }) {
 	return (

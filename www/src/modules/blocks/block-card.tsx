@@ -1,10 +1,12 @@
 "use client";
 
 import { Link as RouterLink } from "@tanstack/react-router";
+
 import { ExternalLinkIcon, SunIcon } from "lucide-react";
 
 import { buttonStyles } from "@/registry/ui/button";
 import { ToggleButton } from "@/registry/ui/toggle-button";
+
 import type { RegistryItem } from "@/registry/types";
 
 interface BlockCardProps {

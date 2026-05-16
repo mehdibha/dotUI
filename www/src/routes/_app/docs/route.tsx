@@ -1,4 +1,5 @@
 import { createFileRoute, getRouteApi, Outlet } from "@tanstack/react-router";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { DocsSidebar } from "@/modules/docs/docs-sidebar";

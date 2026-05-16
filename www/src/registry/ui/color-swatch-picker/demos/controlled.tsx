@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 
 import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/registry/ui/color-swatch-picker";

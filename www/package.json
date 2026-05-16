@@ -62,7 +62,6 @@
 		"zod": "^4.2.1"
 	},
 	"devDependencies": {
-		"@dotui/biome-config": "workspace:*",
 		"@dotui/ts-config": "workspace:*",
 		"@tanstack/devtools-vite": "^0.6.0",
 		"@types/hast": "^3.0.4",
@@ -79,7 +78,7 @@
 		"globby": "^14.0.2",
 		"mdast-util-mdx-jsx": "^3.2.0",
 		"nitro": "^3.0.260311-beta",
-		"prettier": "^3.7.4",
+		"oxfmt": "^0.50.0",
 		"react-scan": "^0.5.3",
 		"rimraf": "^6.0.1",
 		"shadcn": "^3.6.1",

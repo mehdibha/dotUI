@@ -9,8 +9,9 @@ export interface CalendarProps<T extends CalendarPrimitives.DateValue> extends C
 /**
  * A range calendar displays one or more date grids and allows users to select a contiguous range of dates.
  */
-export interface RangeCalendarProps<T extends CalendarPrimitives.DateValue>
-	extends RangeCalendarPrimitives.RangeCalendarProps<T> {}
+export interface RangeCalendarProps<
+	T extends CalendarPrimitives.DateValue,
+> extends RangeCalendarPrimitives.RangeCalendarProps<T> {}
 
 /**
  * Missing description.

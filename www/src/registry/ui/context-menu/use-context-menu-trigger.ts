@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import { mergeProps } from "react-aria/mergeProps";
 
 const LONG_PRESS_DELAY = 500;
@@ -182,6 +183,7 @@ function useContextMenuTrigger({ state, isDisabled = false, onContextMenu, trigg
 		return () => {
 			doc.removeEventListener("contextmenu", handleDocumentContextMenu, true);
 		};
+		// oxlint-disable-next-line react/exhaustive-deps -- state members are listed explicitly
 	}, [isDisabled, openAtPoint, state.close, state.isOpen]);
 
 	React.useEffect(() => {

@@ -27,10 +27,10 @@ import { Drawer } from "@/components/ui/drawer";
 
 ```tsx
 <Dialog>
-  <Button>Open Drawer</Button>
-  <Drawer placement="bottom">
-    <DialogContent>Drawer content</DialogContent>
-  </Drawer>
+	<Button>Open Drawer</Button>
+	<Drawer placement="bottom">
+		<DialogContent>Drawer content</DialogContent>
+	</Drawer>
 </Dialog>
 ```
 
@@ -38,25 +38,24 @@ import { Drawer } from "@/components/ui/drawer";
 
 Use the controls below to experiment with different drawer props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="drawer" 
-  controls={[
-    {
-      type: "enum",
-      name: "placement",
-      options: ["bottom", "top", "left", "right"],
-      defaultValue: "bottom",
-    },
-  ]}
+<InteractiveDemo
+	name="drawer"
+	controls={[
+		{
+			type: "enum",
+			name: "placement",
+			options: ["bottom", "top", "left", "right"],
+			defaultValue: "bottom",
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="drawer/demos/basic" />
-  <Example name="drawer/demos/dialog-parts" />
-  <Example name="drawer/demos/placement" />
+	<Example name="drawer/demos/basic" />
+	<Example name="drawer/demos/dialog-parts" />
+	<Example name="drawer/demos/placement" />
 </Examples>
 
 ## API Reference

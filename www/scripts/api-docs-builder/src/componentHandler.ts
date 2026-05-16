@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import * as prettier from "prettier";
+
+import { format } from "oxfmt";
 import ts from "typescript";
 import * as tae from "typescript-api-extractor";
 
@@ -755,7 +756,7 @@ async function getPropsWithTypeChecker(
 	for (const propName of Object.keys(result)) {
 		const prop = result[propName];
 		if (prop?.detailedType) {
-			prop.detailedType = await formatTypeWithPrettier(prop.detailedType);
+			prop.detailedType = await formatTypeWithOxfmt(prop.detailedType);
 		}
 	}
 
@@ -862,21 +863,20 @@ export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
 }
 
 /**
- * Format a type string with Prettier for better readability.
+ * Format a type string with Oxfmt for better readability.
  * Long union types will be split across multiple lines.
  */
-async function formatTypeWithPrettier(type: string): Promise<string> {
+async function formatTypeWithOxfmt(type: string): Promise<string> {
 	try {
-		const formatted = await prettier.format(`type _ = ${type}`, {
-			parser: "typescript",
+		const { code } = await format("type.ts", `type _ = ${type}`, {
 			singleQuote: true,
 			semi: false,
 			printWidth: 60,
 		});
 
-		const lines = formatted.trimEnd().split("\n");
+		const lines = code.trimEnd().split("\n");
 		if (lines.length === 1) {
-			// biome-ignore lint/style/noNonNullAssertion: length check guarantees existence
+			// oxlint-disable-next-line typescript/no-non-null-assertion -- length check guarantees existence
 			return lines[0]!.replace(/^type _ = /, "");
 		}
 

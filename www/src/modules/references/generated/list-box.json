@@ -1007,9 +1007,9 @@
 			"name": "Iterable",
 			"extends": [],
 			"properties": {
-				"__@iterator@126": {
+				"__@iterator@39": {
 					"type": "method",
-					"name": "__@iterator@126",
+					"name": "__@iterator@39",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -1171,9 +1171,9 @@
 			"name": "Promise",
 			"extends": [],
 			"properties": {
-				"__@toStringTag@129": {
+				"__@toStringTag@737": {
 					"type": "property",
-					"name": "__@toStringTag@129",
+					"name": "__@toStringTag@737",
 					"value": {
 						"type": "string"
 					},

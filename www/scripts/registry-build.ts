@@ -10,7 +10,8 @@
 
 import { existsSync, promises as fs } from "node:fs";
 import path from "node:path";
-import * as prettier from "prettier";
+
+import { format } from "oxfmt";
 import { rimraf } from "rimraf";
 
 import { registryBlocks } from "../src/registry/blocks/registry";
@@ -30,13 +31,12 @@ async function ensureDir(dir: string) {
 }
 
 async function writeGeneratedFile(targetPath: string, content: string) {
-	const formatted = await prettier.format(content, {
-		parser: "typescript",
+	const { code } = await format(targetPath, content, {
 		printWidth: 120,
 		useTabs: true,
 	});
 
-	await fs.writeFile(targetPath, formatted, "utf8");
+	await fs.writeFile(targetPath, code, "utf8");
 }
 
 // ============================================================================

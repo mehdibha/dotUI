@@ -29,40 +29,39 @@ import { Input } from "@/components/ui/input";
 
 ```tsx
 <Form onSubmit={handleSubmit}>
-  <TextField name="email" isRequired>
-    <Label>Email</Label>
-    <Input />
-  </TextField>
-  <Button type="submit" variant="primary">
-    Submit
-  </Button>
+	<TextField name="email" isRequired>
+		<Label>Email</Label>
+		<Input />
+	</TextField>
+	<Button type="submit" variant="primary">
+		Submit
+	</Button>
 </Form>
 ```
-
 
 ## Examples
 
 <Examples>
-  <Example name="form/demos/basic" />
-  <Example name="form/demos/react-aria" />
+	<Example name="form/demos/basic" />
+	<Example name="form/demos/react-aria" />
 </Examples>
 
 ## API Reference
 
-| Prop                 | Type                   | Default    | Description                                      |
-| -------------------- | ---------------------- | ---------- | ------------------------------------------------ |
-| `validationBehavior` | `'native' \| 'aria'`   | `'native'` | Whether to use native HTML form validation or ARIA. |
-| `validationErrors`   | `ValidationErrors`     | -          | Validation errors to display on form fields.     |
-| `action`             | `string \| FormHTMLAttributes<HTMLFormElement>['action']` | - | The URL to submit the form to. |
-| `encType`            | `string`               | -          | The encoding type to use for form submission.    |
-| `method`             | `string`               | -          | The HTTP method to use for form submission.      |
-| `target`             | `string`               | -          | The target window for form submission.           |
-| `autoComplete`       | `string`               | -          | Whether the browser should autocomplete the form. |
-| `autoCapitalize`     | `string`               | -          | Whether text should be auto-capitalized.         |
-| `children`           | `ReactNode`            | -          | The form content.                                |
+| Prop                 | Type                                                      | Default    | Description                                         |
+| -------------------- | --------------------------------------------------------- | ---------- | --------------------------------------------------- |
+| `validationBehavior` | `'native' \| 'aria'`                                      | `'native'` | Whether to use native HTML form validation or ARIA. |
+| `validationErrors`   | `ValidationErrors`                                        | -          | Validation errors to display on form fields.        |
+| `action`             | `string \| FormHTMLAttributes<HTMLFormElement>['action']` | -          | The URL to submit the form to.                      |
+| `encType`            | `string`                                                  | -          | The encoding type to use for form submission.       |
+| `method`             | `string`                                                  | -          | The HTTP method to use for form submission.         |
+| `target`             | `string`                                                  | -          | The target window for form submission.              |
+| `autoComplete`       | `string`                                                  | -          | Whether the browser should autocomplete the form.   |
+| `autoCapitalize`     | `string`                                                  | -          | Whether text should be auto-capitalized.            |
+| `children`           | `ReactNode`                                               | -          | The form content.                                   |
 
-| Event          | Type                                      | Description                                      |
-| -------------- | ----------------------------------------- | ------------------------------------------------ |
-| `onSubmit`     | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is submitted. |
-| `onReset`      | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is reset.   |
-| `onInvalid`    | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when validation fails.    |
+| Event       | Type                                      | Description                                        |
+| ----------- | ----------------------------------------- | -------------------------------------------------- |
+| `onSubmit`  | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is submitted. |
+| `onReset`   | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is reset.     |
+| `onInvalid` | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when validation fails.      |

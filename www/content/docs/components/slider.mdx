@@ -25,7 +25,7 @@ import { Slider, SliderControl } from "@/components/ui/slider";
 
 ```tsx
 <Slider defaultValue={50}>
-  <SliderControl />
+	<SliderControl />
 </Slider>
 ```
 
@@ -33,46 +33,45 @@ import { Slider, SliderControl } from "@/components/ui/slider";
 
 Use the controls below to experiment with different slider props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="slider" 
-  controls={[
-    {
-      type: "string",
-      name: "label",
-      defaultValue: "Volume",
-    },
-    {
-      type: "enum",
-      name: "orientation",
-      options: ["horizontal", "vertical"],
-      defaultValue: "horizontal",
-    },
-    {
-      type: "boolean",
-      name: "isDisabled",
-      defaultValue: false,
-    },
-  ]}
+<InteractiveDemo
+	name="slider"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Volume",
+		},
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "horizontal",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="slider/demos/default" />
-  <Example name="slider/demos/sizes" />
-  <Example name="slider/demos/vertical" />
-  <Example name="slider/demos/label" />
-  <Example name="slider/demos/description" />
-  <Example name="slider/demos/value-label" />
-  <Example name="slider/demos/value-scale" />
-  <Example name="slider/demos/step" />
-  <Example name="slider/demos/format-options" />
-  <Example name="slider/demos/range" />
-  <Example name="slider/demos/disabled" />
-  <Example name="slider/demos/composition" />
-  <Example name="slider/demos/uncontrolled" />
-  <Example name="slider/demos/controlled" />
+	<Example name="slider/demos/default" />
+	<Example name="slider/demos/sizes" />
+	<Example name="slider/demos/vertical" />
+	<Example name="slider/demos/label" />
+	<Example name="slider/demos/description" />
+	<Example name="slider/demos/value-label" />
+	<Example name="slider/demos/value-scale" />
+	<Example name="slider/demos/step" />
+	<Example name="slider/demos/format-options" />
+	<Example name="slider/demos/range" />
+	<Example name="slider/demos/disabled" />
+	<Example name="slider/demos/composition" />
+	<Example name="slider/demos/uncontrolled" />
+	<Example name="slider/demos/controlled" />
 </Examples>
 
 ## API Reference

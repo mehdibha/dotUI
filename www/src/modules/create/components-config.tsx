@@ -7,6 +7,7 @@ import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import { registryUi } from "@/registry/ui/registry";
 import { Select, SelectValue } from "@/registry/ui/select";
+
 import type { ParamDef, RegistryItem, TokenType } from "@/registry/types";
 
 /* ----------------------------- Data helpers ----------------------------- */

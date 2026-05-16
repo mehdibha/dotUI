@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
+
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router";
+
 import { z } from "zod";
 
 import { CustomizerPanel } from "@/modules/create/customizer-panel";

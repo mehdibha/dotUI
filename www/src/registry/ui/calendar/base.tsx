@@ -1,10 +1,11 @@
 "use client";
 
+import type React from "react";
+
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import * as CalendarPrimitive from "react-aria-components/Calendar";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as RangeCalendarPrimitive from "react-aria-components/RangeCalendar";
-import type React from "react";
 
 import { Button } from "@/registry/ui/button";
 
@@ -47,8 +48,9 @@ const Calendar = <T extends CalendarPrimitive.DateValue>({ className, ...props }
 
 // MARK: Separator
 
-interface RangeCalendarProps<T extends CalendarPrimitive.DateValue>
-	extends RangeCalendarPrimitive.RangeCalendarProps<T> {}
+interface RangeCalendarProps<
+	T extends CalendarPrimitive.DateValue,
+> extends RangeCalendarPrimitive.RangeCalendarProps<T> {}
 const RangeCalendar = <T extends CalendarPrimitive.DateValue>({ className, ...props }: RangeCalendarProps<T>) => {
 	const { root } = useStyles()();
 	return (

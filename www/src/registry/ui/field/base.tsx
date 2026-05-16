@@ -1,19 +1,22 @@
 "use client";
 
-import { useSlotId } from "react-aria/private/utils/useId";
+import type React from "react";
+
 import * as CheckboxPrimitives from "react-aria-components/Checkbox";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as FieldErrorPrimitives from "react-aria-components/FieldError";
 import * as LabelPrimitives from "react-aria-components/Label";
 import { Provider } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
-import type React from "react";
+import { useSlotId } from "react-aria/private/utils/useId";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { useSkeletonText } from "@/registry/ui/skeleton";
 import { Text } from "@/registry/ui/text";
 
 import { useStyles } from "./styles";
+
 import type { FieldStyles } from "./styles";
 
 // MARK: fieldStyles

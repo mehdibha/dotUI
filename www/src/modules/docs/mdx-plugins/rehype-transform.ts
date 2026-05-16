@@ -1,7 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+
 import { createHighlighter, type HighlighterGeneric } from "shiki";
 import { visit } from "unist-util-visit";
+
 import type { Element, ElementContent, Root, RootContent } from "hast";
 import type { MdxJsxAttribute, MdxJsxAttributeValueExpression, MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 import type { Plugin } from "unified";
@@ -14,13 +16,14 @@ import {
 	toPascalCase,
 } from "../interactive-demo/process-controls";
 import { transformDemo } from "./transformer";
+
 import type { ControlInput, InteractiveDemoNodeInfo, ProcessedInteractiveDemo } from "../interactive-demo/types";
 
 // ============================================================================
 // Cached Highlighter (singleton)
 // ============================================================================
 
-// biome-ignore lint/suspicious/noExplicitAny: shiki generic types are complex
+// oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
 let highlighterPromise: Promise<HighlighterGeneric<any, any>> | null = null;
 
 async function getHighlighter() {
@@ -218,7 +221,7 @@ export default rehypeTransform;
 async function processDemoNode(
 	info: DemoNodeInfo,
 	registryBasePath: string,
-	// biome-ignore lint/suspicious/noExplicitAny: shiki generic types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): Promise<ProcessedDemo | null> {
 	try {
@@ -568,7 +571,7 @@ function transformDemoNode(processed: ProcessedDemo): void {
 
 async function processReferenceNode(
 	info: ReferenceNodeInfo,
-	// biome-ignore lint/suspicious/noExplicitAny: shiki generic types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): Promise<ProcessedReference | null> {
 	try {
@@ -647,7 +650,7 @@ function transformReferenceNode(processed: ProcessedReference): void {
 
 async function processInteractiveDemoNode(
 	info: InteractiveDemoNodeInfo,
-	// biome-ignore lint/suspicious/noExplicitAny: shiki generic types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): Promise<ProcessedInteractiveDemo | null> {
 	try {

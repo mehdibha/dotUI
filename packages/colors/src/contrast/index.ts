@@ -31,6 +31,7 @@ import ColorJS from "colorjs.io";
 
 import { generateTheme } from "./generate";
 import { SCALE_STEPS } from "./types";
+
 import type { Colorspace, ContrastFormula } from "./types";
 
 export interface ColorInput {

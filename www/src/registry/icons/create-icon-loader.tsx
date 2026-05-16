@@ -1,6 +1,7 @@
 "use client";
 
 import { use } from "react";
+
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 
 type IconModule = Record<string, unknown>;

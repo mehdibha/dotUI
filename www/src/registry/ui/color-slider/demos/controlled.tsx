@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import * as ColorAreaPrimitives from "react-aria-components/ColorArea";
 
 import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider";

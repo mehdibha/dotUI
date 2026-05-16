@@ -26,8 +26,8 @@ import { Label } from "@/components/ui/field";
 
 ```tsx
 <ColorSlider defaultValue="#ff0000" channel="hue">
-  <Label>Hue</Label>
-  <ColorSliderControl />
+	<Label>Hue</Label>
+	<ColorSliderControl />
 </ColorSlider>
 ```
 
@@ -35,40 +35,39 @@ import { Label } from "@/components/ui/field";
 
 Use the controls below to experiment with different color slider props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="color-slider" 
-  controls={[
-    {
-      type: "enum",
-      name: "channel",
-      options: ["hue", "saturation", "lightness", "alpha"],
-      defaultValue: "hue",
-    },
-    {
-      type: "enum",
-      name: "orientation",
-      options: ["horizontal", "vertical"],
-      defaultValue: "horizontal",
-    },
-    {
-      type: "boolean",
-      name: "isDisabled",
-      defaultValue: false,
-    },
-  ]}
+<InteractiveDemo
+	name="color-slider"
+	controls={[
+		{
+			type: "enum",
+			name: "channel",
+			options: ["hue", "saturation", "lightness", "alpha"],
+			defaultValue: "hue",
+		},
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "horizontal",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="color-slider/demos/default" />
-  <Example name="color-slider/demos/label" />
-  <Example name="color-slider/demos/channel" />
-  <Example name="color-slider/demos/vertical" />
-  <Example name="color-slider/demos/disabled" />
-  <Example name="color-slider/demos/uncontrolled" />
-  <Example name="color-slider/demos/controlled" />
+	<Example name="color-slider/demos/default" />
+	<Example name="color-slider/demos/label" />
+	<Example name="color-slider/demos/channel" />
+	<Example name="color-slider/demos/vertical" />
+	<Example name="color-slider/demos/disabled" />
+	<Example name="color-slider/demos/uncontrolled" />
+	<Example name="color-slider/demos/controlled" />
 </Examples>
 
 ## API Reference

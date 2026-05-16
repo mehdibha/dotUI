@@ -1,8 +1,9 @@
 "use client";
 
+import type * as React from "react";
+
 import * as ColorFieldPrimitives from "react-aria-components/ColorField";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import type * as React from "react";
 
 import { useStyles } from "@/registry/ui/field/styles";
 

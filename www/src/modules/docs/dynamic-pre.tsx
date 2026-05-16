@@ -1,5 +1,7 @@
 import { Suspense, useDeferredValue, useId } from "react";
+
 import { useShiki } from "fumadocs-core/highlight/client";
+
 import type { HighlightOptions, HighlightOptionsCommon, HighlightOptionsThemes } from "fumadocs-core/highlight";
 
 import { Pre } from "./code-block";

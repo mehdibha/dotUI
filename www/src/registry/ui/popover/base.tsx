@@ -1,8 +1,9 @@
 "use client";
 
+import type React from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as PopoverPrimitives from "react-aria-components/Popover";
-import type React from "react";
 
 import { useStyles } from "./styles";
 

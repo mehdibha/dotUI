@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
+
 import { findNeighbour } from "fumadocs-core/page-tree";
 
 import browserCollections from "@/.source/browser";

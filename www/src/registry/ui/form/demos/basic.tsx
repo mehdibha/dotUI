@@ -1,7 +1,8 @@
 "use client";
 
-import * as FormPrimitives from "react-aria-components/Form";
 import type React from "react";
+
+import * as FormPrimitives from "react-aria-components/Form";
 
 import { Button } from "@/registry/ui/button";
 import { Description, Label } from "@/registry/ui/field";

@@ -4,7 +4,7 @@ packages:
   - config/*
 
 onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
+  - "@tailwindcss/oxide"
   - bufferutil
   - core-js-pure
   - esbuild

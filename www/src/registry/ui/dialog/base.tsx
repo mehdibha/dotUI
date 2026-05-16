@@ -1,10 +1,11 @@
 "use client";
 
+import type * as React from "react";
+
 import { XIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DialogPrimitive from "react-aria-components/Dialog";
 import * as TextPrimitives from "react-aria-components/Text";
-import type * as React from "react";
 
 import { Button } from "@/registry/ui/button";
 import { ScrollFade } from "@/registry/ui/scroll-fade";

@@ -1,6 +1,8 @@
 import * as React from "react";
+
 import { mergeProps } from "react-aria";
 import { useSlottedContext } from "react-aria-components/slots";
+
 import type { ContextValue, SlotProps } from "react-aria-components/slots";
 
 export interface CreateContextOptions {
@@ -49,7 +51,7 @@ export function createScopedContext<ContextValueType extends object | null>(
 		const { children, ...context } = props;
 		const value = React.useMemo(
 			() => context,
-			// biome-ignore lint/correctness/useExhaustiveDependencies: TODO: fix later
+			// oxlint-disable-next-line react/exhaustive-deps -- TODO: fix later
 			Object.values(context),
 		) as ContextValueType;
 		return <Context.Provider value={value}>{children}</Context.Provider>;

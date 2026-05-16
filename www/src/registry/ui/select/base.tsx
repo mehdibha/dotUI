@@ -9,6 +9,7 @@ import { Button } from "@/registry/ui/button";
 import { useStyles } from "@/registry/ui/field/styles";
 import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader, ListBoxVirtualizer } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
+
 import type { ButtonProps } from "@/registry/ui/button";
 import type { ListBoxProps } from "@/registry/ui/list-box";
 import type { PopoverProps } from "@/registry/ui/popover";
@@ -19,8 +20,10 @@ import type { PopoverProps } from "@/registry/ui/popover";
 
 type SelectSelectionMode = "single" | "multiple";
 
-interface SelectProps<T extends object, M extends SelectSelectionMode = "single">
-	extends SelectPrimitives.SelectProps<T, M> {}
+interface SelectProps<T extends object, M extends SelectSelectionMode = "single"> extends SelectPrimitives.SelectProps<
+	T,
+	M
+> {}
 
 const Select = <T extends object, M extends SelectSelectionMode = "single">({
 	className,
@@ -78,8 +81,7 @@ const SelectValue = <T extends object>({ className, ...props }: SelectValueProps
 // MARK: Separator
 
 interface SelectContentProps<T extends object>
-	extends ListBoxProps<T>,
-		Pick<PopoverProps, "placement" | "defaultOpen" | "isOpen" | "onOpenChange"> {
+	extends ListBoxProps<T>, Pick<PopoverProps, "placement" | "defaultOpen" | "isOpen" | "onOpenChange"> {
 	placement?: PopoverProps["placement"];
 	virtulized?: boolean;
 }

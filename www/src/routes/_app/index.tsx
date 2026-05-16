@@ -112,7 +112,7 @@ function HomePage() {
 				</section>
 
 				{/* Call to action */}
-				{/* 
+				{/*
 				<section className="container max-w-2xl py-20 sm:py-32">
 					<h2 className="text-pretty font-medium text-2xl tracking-tighter lg:text-3xl xl:text-4xl">
 						Fueled by your <span className="">stars</span>.

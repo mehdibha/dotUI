@@ -1,9 +1,10 @@
 "use client";
 
+import type * as React from "react";
+
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as MenuPrimitives from "react-aria-components/Menu";
-import type * as React from "react";
 
 import { useStyles } from "./styles";
 

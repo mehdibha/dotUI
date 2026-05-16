@@ -1,17 +1,20 @@
 "use client";
 
 import { createContext, useContext, useId } from "react";
-import { useSlotId } from "react-aria/private/utils/useId";
+import type * as React from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { LabelContext } from "react-aria-components/Label";
-import * as SwitchPrimitive from "react-aria-components/Switch";
 import { Provider, useSlottedContext } from "react-aria-components/slots";
-import type * as React from "react";
+import * as SwitchPrimitive from "react-aria-components/Switch";
+import { useSlotId } from "react-aria/private/utils/useId";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { Label } from "@/registry/ui/field";
 
 import { useStyles } from "./styles";
+
 import type { SwitchStyles } from "./styles";
 
 // MARK: switchStyles
@@ -64,8 +67,7 @@ const Switch = ({ id: idProp, size, className, ...props }: SwitchProps) => {
 // MARK: Separator
 
 interface SwitchControlProps
-	extends React.ComponentProps<typeof SwitchPrimitive.SwitchButton>,
-		VariantProps<SwitchStyles> {}
+	extends React.ComponentProps<typeof SwitchPrimitive.SwitchButton>, VariantProps<SwitchStyles> {}
 
 const SwitchControl = ({ className, size: sizeProp, ...props }: SwitchControlProps) => {
 	const { control } = useStyles()();

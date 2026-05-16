@@ -22,32 +22,32 @@ Use dialog to grab the user's attention for critical tasks, like confirming acti
 ```tsx
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+	Dialog,
+	DialogBody,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
 } from "@/components/ui/dialog";
 import { Overlay } from "@/components/ui/overlay";
 ```
 
 ```tsx
 <Dialog>
-  <Button>Open dialog</Button>
-  <Overlay>
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Dialog Title</DialogTitle>
-        <DialogDescription>Dialog description</DialogDescription>
-      </DialogHeader>
-      <DialogBody>Content</DialogBody>
-      <DialogFooter>
-        <Button slot="close">Close</Button>
-      </DialogFooter>
-    </DialogContent>
-  </Overlay>
+	<Button>Open dialog</Button>
+	<Overlay>
+		<DialogContent>
+			<DialogHeader>
+				<DialogTitle>Dialog Title</DialogTitle>
+				<DialogDescription>Dialog description</DialogDescription>
+			</DialogHeader>
+			<DialogBody>Content</DialogBody>
+			<DialogFooter>
+				<Button slot="close">Close</Button>
+			</DialogFooter>
+		</DialogContent>
+	</Overlay>
 </Dialog>
 ```
 
@@ -56,40 +56,40 @@ import { Overlay } from "@/components/ui/overlay";
 Use the controls below to experiment with different dialog props and see the live preview and code update.
 
 <InteractiveDemo
-  name="dialog"
-  controls={[
-    {
-      type: "string",
-      name: "title",
-      defaultValue: "Dialog Title",
-    },
-    {
-      type: "string",
-      name: "description",
-      defaultValue: "This is a dialog description.",
-    },
-    {
-      type: "boolean",
-      name: "isDismissable",
-      defaultValue: true,
-    },
-  ]}
+	name="dialog"
+	controls={[
+		{
+			type: "string",
+			name: "title",
+			defaultValue: "Dialog Title",
+		},
+		{
+			type: "string",
+			name: "description",
+			defaultValue: "This is a dialog description.",
+		},
+		{
+			type: "boolean",
+			name: "isDismissable",
+			defaultValue: true,
+		},
+	]}
 />
 
 ## Examples
 
 <Examples>
-  <Example name="dialog/demos/basic" />
-  <Example name="dialog/demos/title" />
-  <Example name="dialog/demos/description" />
-  <Example name="dialog/demos/types" />
-  <Example name="dialog/demos/dismissable" />
-  <Example name="dialog/demos/alert-dialog" />
-  <Example name="dialog/demos/composition" />
-  <Example name="dialog/demos/controlled" />
-  <Example name="dialog/demos/nested" />
-  <Example name="dialog/demos/inset-content" />
-  <Example name="dialog/demos/async-form-submission" />
+	<Example name="dialog/demos/basic" />
+	<Example name="dialog/demos/title" />
+	<Example name="dialog/demos/description" />
+	<Example name="dialog/demos/types" />
+	<Example name="dialog/demos/dismissable" />
+	<Example name="dialog/demos/alert-dialog" />
+	<Example name="dialog/demos/composition" />
+	<Example name="dialog/demos/controlled" />
+	<Example name="dialog/demos/nested" />
+	<Example name="dialog/demos/inset-content" />
+	<Example name="dialog/demos/async-form-submission" />
 </Examples>
 
 ## API Reference

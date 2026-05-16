@@ -1,5 +1,7 @@
 import { Link as RouterLink } from "@tanstack/react-router";
+
 import { SearchIcon } from "lucide-react";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { Logo } from "@/components/layout/logo";

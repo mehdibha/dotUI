@@ -1,7 +1,9 @@
 import type * as React from "react";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { useStyles } from "./styles";
+
 import type { BadgeStyles } from "./styles";
 
 // MARK: badgeStyles

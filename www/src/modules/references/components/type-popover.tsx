@@ -4,6 +4,7 @@
  */
 
 import * as React from "react";
+
 import { ChevronRightIcon } from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 import * as DialogPrimitives from "react-aria-components/Dialog";
@@ -13,6 +14,7 @@ import { DialogContent } from "@/registry/ui/dialog";
 import { Popover } from "@/registry/ui/popover";
 
 import { Type, useTypeLinks } from "./type-renderer";
+
 import type { TType } from "../types/type-ast";
 
 /* -----------------------------------------------------------------------------------------------

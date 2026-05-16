@@ -6,6 +6,7 @@
 import Color from "colorjs.io";
 
 import { catmullRom2bezier, prepareCurve } from "./curve";
+
 import type { Colorspace, ContrastFormula } from "./types";
 
 // Colorspace mapping from Leonardo names to Color.js space names

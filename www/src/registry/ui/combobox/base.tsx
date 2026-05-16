@@ -8,8 +8,10 @@ import { fieldStyles } from "@/registry/ui/field";
 
 /* -----------------------------------------------------------------------------------------------*/
 
-interface ComboboxProps<T extends object, M extends "single" | "multiple" = "single">
-	extends ComboBoxPrimitive.ComboBoxProps<T, M> {}
+interface ComboboxProps<
+	T extends object,
+	M extends "single" | "multiple" = "single",
+> extends ComboBoxPrimitive.ComboBoxProps<T, M> {}
 const Combobox = <T extends object, M extends "single" | "multiple" = "single">({
 	menuTrigger = "focus",
 	className,

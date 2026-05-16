@@ -2,6 +2,7 @@ import { deflateRaw, inflateRaw } from "pako";
 
 import { DEFAULTS } from "./defaults";
 import { fromCompact } from "./types";
+
 import type { DesignSystem, DesignSystemState } from "./types";
 
 /* ----------------------------- base64url helpers ----------------------------- */

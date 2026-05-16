@@ -1,14 +1,17 @@
 "use client";
 
+import type * as React from "react";
+
 import * as ButtonPrimitive from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as LinkPrimitive from "react-aria-components/Link";
-import type * as React from "react";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { Loader } from "@/registry/ui/loader";
 
 import { buttonStyles, useStyles } from "./styles";
+
 import type { ButtonStyles } from "./styles";
 
 // MARK: buttonStyles

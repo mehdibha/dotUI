@@ -22,8 +22,9 @@ const DatePicker = <T extends DatePickerPrimitive.DateValue>({ className, ...pro
 
 // MARK: DateRangePicker
 
-interface DateRangePickerProps<T extends DateRangePickerPrimitive.DateValue>
-	extends DateRangePickerPrimitive.DateRangePickerProps<T> {}
+interface DateRangePickerProps<
+	T extends DateRangePickerPrimitive.DateValue,
+> extends DateRangePickerPrimitive.DateRangePickerProps<T> {}
 
 const DateRangePicker = <T extends DateRangePickerPrimitive.DateValue>({
 	className,

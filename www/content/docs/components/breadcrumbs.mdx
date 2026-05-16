@@ -24,17 +24,17 @@ import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from
 
 ```tsx
 <Breadcrumbs>
-  <BreadcrumbItem>
-    <BreadcrumbLink href="#">Home</BreadcrumbLink>
-    <BreadcrumbSeparator />
-  </BreadcrumbItem>
-  <BreadcrumbItem>
-    <BreadcrumbLink href="#">Components</BreadcrumbLink>
-    <BreadcrumbSeparator />
-  </BreadcrumbItem>
-  <BreadcrumbItem>
-    <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
-  </BreadcrumbItem>
+	<BreadcrumbItem>
+		<BreadcrumbLink href="#">Home</BreadcrumbLink>
+		<BreadcrumbSeparator />
+	</BreadcrumbItem>
+	<BreadcrumbItem>
+		<BreadcrumbLink href="#">Components</BreadcrumbLink>
+		<BreadcrumbSeparator />
+	</BreadcrumbItem>
+	<BreadcrumbItem>
+		<BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
+	</BreadcrumbItem>
 </Breadcrumbs>
 ```
 
@@ -43,14 +43,14 @@ import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from
 Use the controls below to experiment with different breadcrumbs props and see the live preview and code update.
 
 <InteractiveDemo
-  name="breadcrumbs"
-  controls={[
-    {
-      type: "boolean",
-      name: "isDisabled",
-      defaultValue: false,
-    },
-  ]}
+	name="breadcrumbs"
+	controls={[
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
 />
 
 ## Framework Setup
@@ -98,34 +98,34 @@ import type { ToOptions } from "@tanstack/react-router";
 // ..
 
 interface BreadcrumbLinkProps extends Omit<React.ComponentProps<typeof AriaLink>, "href"> {
-  href?: string | ToOptions; // [!code highlight]
+	href?: string | ToOptions; // [!code highlight]
 }
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
-  return (
-    <AriaLink
-      // [!code highlight:10]
-      href={typeof href === "object" ? href.to : href}
-      render={({ ref, ...domProps }) => {
-        if (typeof href === "object") {
-          return <RouterLink ref={ref as React.Ref<HTMLAnchorElement>} {...href} {...domProps} />;
-        }
-        if (typeof href === "string") {
-          return <a ref={ref as React.Ref<HTMLAnchorElement>} href={href} {...domProps} />;
-        }
-        return <span ref={ref} {...domProps} />;
-      }}
-      className={composeRenderProps(className, (className) => link({ className }))}
-      {...props}
-    />
-  );
+	return (
+		<AriaLink
+			// [!code highlight:10]
+			href={typeof href === "object" ? href.to : href}
+			render={({ ref, ...domProps }) => {
+				if (typeof href === "object") {
+					return <RouterLink ref={ref as React.Ref<HTMLAnchorElement>} {...href} {...domProps} />;
+				}
+				if (typeof href === "string") {
+					return <a ref={ref as React.Ref<HTMLAnchorElement>} href={href} {...domProps} />;
+				}
+				return <span ref={ref} {...domProps} />;
+			}}
+			className={composeRenderProps(className, (className) => link({ className }))}
+			{...props}
+		/>
+	);
 };
 ```
 
 ## Examples
 
 <Examples className="sm:grid-cols-2">
-  <Example title="With Menu" name="breadcrumbs/demos/menu" />
-  <Example title="Custom Separator" name="breadcrumbs/demos/custom-Separator" />
+	<Example title="With Menu" name="breadcrumbs/demos/menu" />
+	<Example title="Custom Separator" name="breadcrumbs/demos/custom-Separator" />
 </Examples>
 
 ## API Reference

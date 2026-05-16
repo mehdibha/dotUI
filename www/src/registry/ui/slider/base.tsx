@@ -1,11 +1,12 @@
 "use client";
 
 import { use } from "react";
-import { useSlotId } from "react-aria/private/utils/useId";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SliderPrimitives from "react-aria-components/Slider";
 import { Provider } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
+import { useSlotId } from "react-aria/private/utils/useId";
 
 import { useStyles } from "./styles";
 
@@ -54,7 +55,7 @@ const SliderControl = ({ className, ...props }: SliderControlProps) => {
 						<>
 							{state.values.length < 3 && <SliderFiller />}
 							{state.values.map((_, i) => (
-								// biome-ignore lint/suspicious/noArrayIndexKey: React Aria identifies slider thumbs by index.
+								// oxlint-disable-next-line react/no-array-index-key -- React Aria identifies slider thumbs by index.
 								<SliderThumb key={i} index={i} />
 							))}
 						</>

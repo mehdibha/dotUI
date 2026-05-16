@@ -2,13 +2,14 @@
 "use client";
 
 import * as React from "react";
+
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
+import { OverlayTriggerStateContext } from "react-aria-components/Dialog";
 import { DismissButton } from "react-aria/Overlay";
 import { useIsHidden } from "react-aria/private/collections/Hidden";
 import { ClearPressResponder } from "react-aria/private/interactions/PressResponder";
 import { isScrollable } from "react-aria/private/utils/isScrollable";
 import { useInteractOutside } from "react-aria/useInteractOutside";
-import { OverlayTriggerStateContext } from "react-aria-components/Dialog";
 import { useOverlayTriggerState } from "react-stately";
 
 import { useStyles } from "./styles.legacy";

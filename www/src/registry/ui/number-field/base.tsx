@@ -1,9 +1,10 @@
 "use client";
 
+import type * as React from "react";
+
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as NumberFieldPrimitives from "react-aria-components/NumberField";
-import type * as React from "react";
 
 import { Button, type ButtonProps } from "@/registry/ui/button";
 import { fieldStyles } from "@/registry/ui/field";

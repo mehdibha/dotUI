@@ -1,8 +1,9 @@
 "use client";
 
+import type React from "react";
+
 import * as ColorSwatchPickerPrimitives from "react-aria-components/ColorSwatchPicker";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import type React from "react";
 
 import { ColorSwatch } from "@/registry/ui/color-swatch";
 
@@ -20,8 +21,9 @@ const ColorSwatchPicker = ({ className, ...props }: ColorSwatchPickerProps) => {
 	);
 };
 
-interface ColorSwatchPickerItemProps
-	extends React.ComponentProps<typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem> {}
+interface ColorSwatchPickerItemProps extends React.ComponentProps<
+	typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem
+> {}
 const ColorSwatchPickerItem = ({ className, style, ...props }: ColorSwatchPickerItemProps) => {
 	const { item } = useStyles()();
 	return (

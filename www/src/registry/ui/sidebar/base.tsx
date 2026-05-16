@@ -1,12 +1,13 @@
 "use client";
 
 import * as React from "react";
+
 import { PanelLeftIcon } from "lucide-react";
-import { useSlotId } from "react-aria/private/utils/useId";
 import * as ButtonPrimitives from "react-aria-components/Button";
 import * as HeaderPrimitives from "react-aria-components/Header";
 import * as HeadingPrimitives from "react-aria-components/Heading";
 import { DEFAULT_SLOT, Provider } from "react-aria-components/slots";
+import { useSlotId } from "react-aria/private/utils/useId";
 import { useControlledState } from "react-stately/useControlledState";
 
 import { useKeyboardShortcut } from "@/registry/hooks/use-keyboard-shortcut";

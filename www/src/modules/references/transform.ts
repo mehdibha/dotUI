@@ -6,6 +6,7 @@
 import type { HighlighterGeneric } from "shiki";
 
 import { DEFAULT_EXPANDED, groupProps } from "./groups";
+
 import type { ComponentApiReference, PropDefinition, TypeLinksRegistry } from "./types";
 import type { TType } from "./types/type-ast";
 
@@ -73,7 +74,7 @@ function getShortType(name: string, type: string | undefined): string {
  */
 function highlightCode(
 	code: string,
-	// biome-ignore lint/suspicious/noExplicitAny: shiki types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): string {
 	if (!code) return "";
@@ -97,7 +98,7 @@ function highlightCode(
 function transformProp(
 	propName: string,
 	prop: PropDefinition,
-	// biome-ignore lint/suspicious/noExplicitAny: shiki types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): TransformedProp {
 	const shortType = getShortType(propName, prop.type);
@@ -122,7 +123,7 @@ function transformProp(
  */
 function transformProps(
 	props: Record<string, PropDefinition>,
-	// biome-ignore lint/suspicious/noExplicitAny: shiki types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): TransformedProp[] {
 	return Object.entries(props).map(([name, prop]) => transformProp(name, prop, highlighter));
@@ -133,7 +134,7 @@ function transformProps(
  */
 export function transformReference(
 	data: ComponentApiReference,
-	// biome-ignore lint/suspicious/noExplicitAny: shiki types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): TransformedReference {
 	// Group the props

@@ -1,11 +1,12 @@
 "use client";
 
+import type * as React from "react";
+
 import { OverlayTriggerStateContext } from "react-aria-components/Dialog";
 import { MenuContext, RootMenuTriggerStateContext } from "react-aria-components/Menu";
 import { PopoverContext } from "react-aria-components/Popover";
 import { Provider } from "react-aria-components/slots";
 import { useMenuTriggerState } from "react-stately/useMenuTriggerState";
-import type * as React from "react";
 
 import { useContextMenuTrigger } from "./use-context-menu-trigger";
 

@@ -2,7 +2,7 @@
 
 @plugin "tailwindcss-react-aria-components";
 @plugin "tailwindcss-autocontrast" {
-	cssFile: "./src/registry/base/colors.css";
+	cssfile: "./src/registry/base/colors.css";
 }
 @plugin "tailwindcss-with";
 

@@ -1,5 +1,6 @@
-import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import type * as React from "react";
+
+import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 
 export type DrawerPlacement = "top" | "bottom" | "left" | "right";
 

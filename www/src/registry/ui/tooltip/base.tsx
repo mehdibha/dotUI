@@ -1,12 +1,15 @@
 "use client";
 
+import type * as React from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as PopoverPrimitives from "react-aria-components/Popover";
 import * as TooltipPrimitives from "react-aria-components/Tooltip";
-import type * as React from "react";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { useStyles } from "./styles";
+
 import type { TooltipStyles } from "./styles";
 
 // MARK: tooltipStyles
@@ -21,8 +24,7 @@ const Tooltip = ({ delay = 700, closeDelay = 0, ...props }: TooltipProps) => (
 // MARK: Separator
 
 interface TooltipContentProps
-	extends React.ComponentProps<typeof TooltipPrimitives.Tooltip>,
-		VariantProps<TooltipStyles> {
+	extends React.ComponentProps<typeof TooltipPrimitives.Tooltip>, VariantProps<TooltipStyles> {
 	hideArrow?: boolean;
 }
 

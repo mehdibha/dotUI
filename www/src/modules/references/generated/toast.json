@@ -1,36 +1,13 @@
 {
 	"name": "ToastProps",
-	"description": "Options used when creating a toast.",
 	"props": {
-		"onClose": {
-			"type": "(() => void)",
-			"detailedType": "(() => void) | undefined",
+		"id": {
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
+				"type": "string"
 			},
-			"description": "Callback function to be called when the toast is closed."
-		},
-		"timeout": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The amount of time (in ms) before the toast is auto dismissed.\nA value of `0` will prevent the toast from being dismissed automatically.",
-			"default": "5000"
+			"description": "The unique identifier for the toast. Adding a toast with an existing ID\nupdates it in place and refreshes its auto-dismiss timer."
 		},
 		"actionProps": {
 			"type": "Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, \"ref\">",
@@ -99,7 +76,7 @@
 				"type": "identifier",
 				"name": "ToastData"
 			},
-			"description": "Custom data used by the dotUI toast renderer."
+			"description": "Custom data for the toast."
 		},
 		"description": {
 			"type": "ReactNode",
@@ -109,13 +86,26 @@
 			},
 			"description": "The description of the toast."
 		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
+		"onClose": {
+			"type": "(() => void)",
+			"detailedType": "(() => void) | undefined",
 			"typeAst": {
-				"type": "string"
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					}
+				]
 			},
-			"description": "The unique identifier for the toast. Adding a toast with an existing ID\nupdates it in place and refreshes its auto-dismiss timer."
+			"description": "Callback function to be called when the toast is closed."
 		},
 		"onRemove": {
 			"type": "(() => void)",
@@ -138,6 +128,15 @@
 			},
 			"description": "Callback function to be called when the toast is removed from the list after any animations are complete when closed."
 		},
+		"positionerProps": {
+			"type": "ToastManagerPositionerProps",
+			"detailedType": "ToastManagerPositionerProps | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "ToastManagerPositionerProps"
+			},
+			"description": "The props forwarded to the toast positioner element when rendering anchored toasts."
+		},
 		"priority": {
 			"type": "\"high\" | \"low\"",
 			"detailedType": "'high' | 'low' | undefined",
@@ -156,6 +155,15 @@
 			},
 			"description": "The priority of the toast.\n- `low` - The toast will be announced politely.\n- `high` - The toast will be announced urgently.",
 			"default": "'low'"
+		},
+		"timeout": {
+			"type": "number",
+			"detailedType": "number | undefined",
+			"typeAst": {
+				"type": "number"
+			},
+			"description": "The amount of time (in ms) before the toast is auto dismissed.\nA value of `0` will prevent the toast from being dismissed automatically.",
+			"default": "5000"
 		},
 		"title": {
 			"type": "ReactNode",
@@ -184,23 +192,12 @@
 			"description": "The transition status of the toast."
 		},
 		"type": {
-			"type": "ToastVariant",
-			"detailedType": "ToastVariant | undefined",
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "identifier",
-				"name": "ToastVariant"
+				"type": "string"
 			},
-			"description": "Base UI toast type. Prefer `variant` for dotUI styling."
-		},
-		"variant": {
-			"type": "ToastVariant",
-			"detailedType": "ToastVariant | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "ToastVariant"
-			},
-			"description": "The visual style of the toast.",
-			"default": "\"neutral\""
+			"description": "The type of the toast. Used to conditionally style the toast,\nincluding conditionally rendering elements based on the type."
 		}
 	}
 }

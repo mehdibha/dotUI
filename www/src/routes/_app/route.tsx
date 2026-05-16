@@ -1,9 +1,11 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { Header } from "@/components/layout/header";
+
 import type { SerializedPageTree } from "@/lib/source";
 
 const getPageTree = createServerFn({ method: "GET" })

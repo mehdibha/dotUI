@@ -25,8 +25,8 @@ import { Label } from "@/components/ui/field";
 
 ```tsx
 <Checkbox>
-  <CheckboxControl />
-  <Label>I accept the terms and conditions</Label>
+	<CheckboxControl />
+	<Label>I accept the terms and conditions</Label>
 </Checkbox>
 ```
 
@@ -49,47 +49,47 @@ const [isSelected, setIsSelected] = useState(false);
 Use the controls below to experiment with different checkbox props and see the live preview and code update.
 
 <InteractiveDemo
-  name="checkbox"
-  controls={[
-    {
-      type: "string",
-      name: "label",
-      defaultValue: "Accept terms",
-    },
-    {
-      type: "boolean",
-      name: "isDisabled",
-      defaultValue: false,
-    },
-    {
-      type: "boolean",
-      name: "isReadOnly",
-      defaultValue: false,
-    },
-    {
-      type: "boolean",
-      name: "isInvalid",
-      defaultValue: false,
-    },
-    {
-      type: "boolean",
-      name: "isIndeterminate",
-      defaultValue: false,
-    },
-  ]}
+	name="checkbox"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Accept terms",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isReadOnly",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isIndeterminate",
+			defaultValue: false,
+		},
+	]}
 />
 
 ## Examples
 
 <Examples className="lg:grid-cols-2">
-  <Example name="checkbox/demos/standalone" title="Standalone" />
-  <Example name="checkbox/demos/basic" title="Basic" />
-  <Example name="checkbox/demos/description" title="With Description" />
-  <Example name="checkbox/demos/invalid" title="Invalid" />
-  <Example name="checkbox/demos/indeterminate" title="Indeterminate" />
-  <Example name="checkbox/demos/disabled" title="Disabled" />
-  <Example name="checkbox/demos/read-only" title="Read Only" />
-  <Example name="checkbox/demos/card" title="Card" />
+	<Example name="checkbox/demos/standalone" title="Standalone" />
+	<Example name="checkbox/demos/basic" title="Basic" />
+	<Example name="checkbox/demos/description" title="With Description" />
+	<Example name="checkbox/demos/invalid" title="Invalid" />
+	<Example name="checkbox/demos/indeterminate" title="Indeterminate" />
+	<Example name="checkbox/demos/disabled" title="Disabled" />
+	<Example name="checkbox/demos/read-only" title="Read Only" />
+	<Example name="checkbox/demos/card" title="Card" />
 </Examples>
 
 ## API Reference

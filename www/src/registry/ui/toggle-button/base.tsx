@@ -1,13 +1,16 @@
 "use client";
 
+import type * as React from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ToggleButtonPrimitive from "react-aria-components/ToggleButton";
-import type * as React from "react";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { createVariantsContext } from "@/registry/lib/context";
 
 import { toggleButtonStyles, useStyles } from "./styles";
+
 import type { ToggleButtonStyles } from "./styles";
 
 // MARK: toggleButtonStyles
@@ -25,8 +28,7 @@ const [ToggleButtonProvider, useContextProps] = createVariantsContext<
 // MARK: Separator
 
 interface ToggleButtonProps
-	extends React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>,
-		ToggleButtonVariants {
+	extends React.ComponentProps<typeof ToggleButtonPrimitive.ToggleButton>, ToggleButtonVariants {
 	isIconOnly?: boolean;
 }
 

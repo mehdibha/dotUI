@@ -1,6 +1,7 @@
 import { Description, FieldContent, FieldGroup, Label } from "@/registry/ui/field";
 import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { Slider, SliderControl } from "@/registry/ui/slider";
+
 import type { Density } from "@/modules/create/preset";
 
 export const RADIUS_FACTOR_VAR = "--radius-factor";

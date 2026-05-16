@@ -1,7 +1,8 @@
 "use client";
 
-import { PinIcon } from "lucide-react";
 import type { ReactNode } from "react";
+
+import { PinIcon } from "lucide-react";
 
 import { ToggleButton } from "@/registry/ui/toggle-button";
 

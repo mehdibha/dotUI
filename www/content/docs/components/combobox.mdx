@@ -25,11 +25,11 @@ import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/compon
 
 ```tsx
 <Combobox>
-  <ComboboxInput />
-  <ComboboxContent>
-    <ComboboxItem>Option 1</ComboboxItem>
-    <ComboboxItem>Option 2</ComboboxItem>
-  </ComboboxContent>
+	<ComboboxInput />
+	<ComboboxContent>
+		<ComboboxItem>Option 1</ComboboxItem>
+		<ComboboxItem>Option 2</ComboboxItem>
+	</ComboboxContent>
 </Combobox>
 ```
 
@@ -37,48 +37,47 @@ import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/compon
 
 Use the controls below to experiment with different combobox props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="combobox" 
-  controls={[
-    {
-      type: "string",
-      name: "label",
-      defaultValue: "Country",
-    },
-    {
-      type: "string",
-      name: "placeholder",
-      defaultValue: "Search countries...",
-    },
-    {
-      type: "boolean",
-      name: "isDisabled",
-      defaultValue: false,
-    },
-    {
-      type: "boolean",
-      name: "isInvalid",
-      defaultValue: false,
-    },
-  ]}
+<InteractiveDemo
+	name="combobox"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Country",
+		},
+		{
+			type: "string",
+			name: "placeholder",
+			defaultValue: "Search countries...",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="combobox/demos/basic" />
-  <Example name="combobox/demos/label" />
-  <Example name="combobox/demos/description" />
-  <Example name="combobox/demos/invalid" />
-  <Example name="combobox/demos/custom-value" />
-  <Example name="combobox/demos/disabled" />
-  <Example name="combobox/demos/loading" />
-  <Example name="combobox/demos/sections" />
-  <Example name="combobox/demos/required" />
-  <Example name="combobox/demos/uncontrolled" />
-  <Example name="combobox/demos/controlled" />
-  <Example name="combobox/demos/async-loading" />
+	<Example name="combobox/demos/basic" />
+	<Example name="combobox/demos/label" />
+	<Example name="combobox/demos/description" />
+	<Example name="combobox/demos/invalid" />
+	<Example name="combobox/demos/custom-value" />
+	<Example name="combobox/demos/disabled" />
+	<Example name="combobox/demos/loading" />
+	<Example name="combobox/demos/sections" />
+	<Example name="combobox/demos/required" />
+	<Example name="combobox/demos/uncontrolled" />
+	<Example name="combobox/demos/controlled" />
+	<Example name="combobox/demos/async-loading" />
 </Examples>
 
 ## API Reference

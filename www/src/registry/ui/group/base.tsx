@@ -1,12 +1,15 @@
 "use client";
 
+import type * as React from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as GroupPrimitive from "react-aria-components/Group";
 import * as TextPrimitive from "react-aria-components/Text";
-import type * as React from "react";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { useStyles } from "./styles";
+
 import type { GroupStyles } from "./styles";
 
 // MARK: groupStyles

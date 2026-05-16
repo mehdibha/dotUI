@@ -1,12 +1,12 @@
 /// <reference types="vite/client" />
 
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ThemeProvider } from "starter-themes";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
-import { DrawerIndent, DrawerIndentBackground, DrawerProvider } from "@/registry/ui/drawer";
 import { ToastProvider } from "@/registry/ui/toast";
 import appCss from "@/styles.css?url";
 

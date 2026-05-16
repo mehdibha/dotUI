@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import type * as TablePrimitives from "react-aria-components/Table";
 
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";

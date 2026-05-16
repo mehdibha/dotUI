@@ -1,9 +1,10 @@
 "use client";
 
-import { useIsHidden } from "react-aria/private/collections/Hidden";
+import type * as React from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ModalPrimitives from "react-aria-components/Modal";
-import type * as React from "react";
+import { useIsHidden } from "react-aria/private/collections/Hidden";
 
 import { useStyles } from "./styles";
 

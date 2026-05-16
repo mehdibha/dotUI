@@ -1,6 +1,7 @@
 "use client";
 
 import * as Default from "./base";
+
 import type { SkeletonProps, SkeletonProviderProps } from "./types";
 
 export const Skeleton = Default.Skeleton;

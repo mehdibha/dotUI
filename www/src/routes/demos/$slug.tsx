@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import { createFileRoute } from "@tanstack/react-router";
 
 import { DemosIndex } from "@/registry/__generated__/demos";

@@ -27,10 +27,10 @@ import { Overlay } from "@/components/ui/overlay";
 
 ```tsx
 <Dialog>
-  <Button>Open Overlay</Button>
-  <Overlay type="modal" mobileType="drawer">
-    <DialogContent>Overlay content</DialogContent>
-  </Overlay>
+	<Button>Open Overlay</Button>
+	<Overlay type="modal" mobileType="drawer">
+		<DialogContent>Overlay content</DialogContent>
+	</Overlay>
 </Dialog>
 ```
 
@@ -38,30 +38,29 @@ import { Overlay } from "@/components/ui/overlay";
 
 Use the controls below to experiment with different overlay props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="overlay" 
-  controls={[
-    {
-      type: "enum",
-      name: "type",
-      options: ["modal", "popover", "drawer"],
-      defaultValue: "modal",
-    },
-    {
-      type: "enum",
-      name: "mobileType",
-      options: ["modal", "drawer"],
-      defaultValue: "drawer",
-    },
-  ]}
+<InteractiveDemo
+	name="overlay"
+	controls={[
+		{
+			type: "enum",
+			name: "type",
+			options: ["modal", "popover", "drawer"],
+			defaultValue: "modal",
+		},
+		{
+			type: "enum",
+			name: "mobileType",
+			options: ["modal", "drawer"],
+			defaultValue: "drawer",
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="overlay/demos/basic" />
-  <Example name="overlay/demos/type" />
+	<Example name="overlay/demos/basic" />
+	<Example name="overlay/demos/type" />
 </Examples>
 
 ## API Reference

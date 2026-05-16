@@ -2,9 +2,11 @@
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as LinkPrimitives from "react-aria-components/Link";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { useStyles } from "./styles";
+
 import type { LinkStyles } from "./styles";
 
 // MARK: linkStyles

@@ -25,14 +25,14 @@ import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 
 ```tsx
 <Tabs>
-  <TabList>
-    <Tab id="overview">Overview</Tab>
-    <Tab id="usage">Usage</Tab>
-    <Tab id="settings">Settings</Tab>
-  </TabList>
-  <TabPanel id="overview">Overview content</TabPanel>
-  <TabPanel id="usage">Usage content</TabPanel>
-  <TabPanel id="settings">Settings content</TabPanel>
+	<TabList>
+		<Tab id="overview">Overview</Tab>
+		<Tab id="usage">Usage</Tab>
+		<Tab id="settings">Settings</Tab>
+	</TabList>
+	<TabPanel id="overview">Overview content</TabPanel>
+	<TabPanel id="usage">Usage content</TabPanel>
+	<TabPanel id="settings">Settings content</TabPanel>
 </Tabs>
 ```
 
@@ -40,33 +40,32 @@ import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 
 Use the controls below to experiment with different tabs props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="tabs" 
-  controls={[
-    {
-      type: "enum",
-      name: "orientation",
-      options: ["horizontal", "vertical"],
-      defaultValue: "horizontal",
-    },
-    {
-      type: "boolean",
-      name: "isDisabled",
-      defaultValue: false,
-    },
-  ]}
+<InteractiveDemo
+	name="tabs"
+	controls={[
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "horizontal",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="tabs/demos/basic" />
-  <Example name="tabs/demos/variant" />
-  <Example name="tabs/demos/vertical" />
-  <Example name="tabs/demos/disabled" />
-  <Example name="tabs/demos/keyboard-activation" />
-  <Example name="tabs/demos/controlled" />
+	<Example name="tabs/demos/basic" />
+	<Example name="tabs/demos/variant" />
+	<Example name="tabs/demos/vertical" />
+	<Example name="tabs/demos/disabled" />
+	<Example name="tabs/demos/keyboard-activation" />
+	<Example name="tabs/demos/controlled" />
 </Examples>
 
 ## API Reference

@@ -26,8 +26,8 @@ import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 
 ```tsx
 <Tooltip>
-  <Button>Hover me</Button>
-  <TooltipContent>Tooltip content</TooltipContent>
+	<Button>Hover me</Button>
+	<TooltipContent>Tooltip content</TooltipContent>
 </Tooltip>
 ```
 
@@ -35,39 +35,38 @@ import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
 
 Use the controls below to experiment with different tooltip props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="tooltip" 
-  controls={[
-    {
-      type: "string",
-      name: "content",
-      defaultValue: "Tooltip content",
-    },
-    {
-      type: "enum",
-      name: "placement",
-      options: ["top", "bottom", "left", "right"],
-      defaultValue: "top",
-    },
-    {
-      type: "boolean",
-      name: "hideArrow",
-      defaultValue: false,
-    },
-  ]}
+<InteractiveDemo
+	name="tooltip"
+	controls={[
+		{
+			type: "string",
+			name: "content",
+			defaultValue: "Tooltip content",
+		},
+		{
+			type: "enum",
+			name: "placement",
+			options: ["top", "bottom", "left", "right"],
+			defaultValue: "top",
+		},
+		{
+			type: "boolean",
+			name: "hideArrow",
+			defaultValue: false,
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="tooltip/demos/basic" />
-  <Example name="tooltip/demos/with-icon" />
-  <Example name="tooltip/demos/with-keyboard" />
-  <Example name="tooltip/demos/on-link" />
-  <Example name="tooltip/demos/long-content" />
-  <Example name="tooltip/demos/formatted" />
-  <Example name="tooltip/demos/placement" />
+	<Example name="tooltip/demos/basic" />
+	<Example name="tooltip/demos/with-icon" />
+	<Example name="tooltip/demos/with-keyboard" />
+	<Example name="tooltip/demos/on-link" />
+	<Example name="tooltip/demos/long-content" />
+	<Example name="tooltip/demos/formatted" />
+	<Example name="tooltip/demos/placement" />
 </Examples>
 
 ## API Reference

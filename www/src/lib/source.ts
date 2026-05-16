@@ -1,4 +1,5 @@
 import { loader } from "fumadocs-core/source";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { docs, legal } from "@/.source/server";

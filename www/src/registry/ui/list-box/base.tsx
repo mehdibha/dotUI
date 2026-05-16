@@ -1,17 +1,20 @@
 "use client";
 
 import { use } from "react";
+import type React from "react";
+
 import { CheckIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ListBoxPrimitive from "react-aria-components/ListBox";
 import * as VirtualizerPrimitive from "react-aria-components/Virtualizer";
-import type React from "react";
+
 import type * as TextPrimitive from "react-aria-components/Text";
 import type { VariantProps } from "tailwind-variants";
 
 import { Loader } from "@/registry/ui/loader";
 
 import { useStyles } from "./styles";
+
 import type { ListBoxStyles } from "./styles";
 
 interface ListBoxProps<T> extends ListBoxPrimitive.ListBoxProps<T> {

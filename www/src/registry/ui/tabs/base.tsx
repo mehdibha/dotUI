@@ -1,9 +1,10 @@
 "use client";
 
+import type * as React from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator";
 import * as TabsPrimitives from "react-aria-components/Tabs";
-import type * as React from "react";
 
 import { createContext } from "@/registry/lib/context";
 

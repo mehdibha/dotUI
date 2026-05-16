@@ -1,10 +1,12 @@
 "use client";
 
 import * as React from "react";
+
 import { tv, type VariantProps } from "tailwind-variants";
 
 import { useImageLoadingStatus } from "@/registry/hooks/use-image-loading-status";
 import { createContext } from "@/registry/lib/context";
+
 import type { ImageLoadingStatus } from "@/registry/hooks/use-image-loading-status";
 
 const avatarStyles = tv({

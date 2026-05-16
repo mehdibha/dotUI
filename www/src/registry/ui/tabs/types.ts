@@ -33,5 +33,6 @@ export interface TabPanelProps extends React.ComponentProps<typeof TabsPrimitive
 /**
  * An animated indicator of selection state within a group of items.
  */
-export interface TabIndicatorProps
-	extends React.ComponentProps<typeof SelectionIndicatorPrimitives.SelectionIndicator> {}
+export interface TabIndicatorProps extends React.ComponentProps<
+	typeof SelectionIndicatorPrimitives.SelectionIndicator
+> {}

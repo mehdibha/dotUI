@@ -25,7 +25,7 @@ import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
 
 ```tsx
 <DropZone>
-  <DropZoneLabel>Drop files here</DropZoneLabel>
+	<DropZoneLabel>Drop files here</DropZoneLabel>
 </DropZone>
 ```
 
@@ -33,32 +33,31 @@ import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
 
 Use the controls below to experiment with different drop zone props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="drop-zone" 
-  controls={[
-    {
-      type: "string",
-      name: "label",
-      defaultValue: "Drop files here",
-    },
-    {
-      type: "boolean",
-      name: "isDisabled",
-      defaultValue: false,
-    },
-  ]}
+<InteractiveDemo
+	name="drop-zone"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Drop files here",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="drop-zone/demos/basic" />
-  <Example name="drop-zone/demos/label" />
-  <Example name="drop-zone/demos/visual-feedback" />
-  <Example name="drop-zone/demos/file-trigger" />
-  <Example name="drop-zone/demos/events" />
-  <Example name="drop-zone/demos/disabled" />
+	<Example name="drop-zone/demos/basic" />
+	<Example name="drop-zone/demos/label" />
+	<Example name="drop-zone/demos/visual-feedback" />
+	<Example name="drop-zone/demos/file-trigger" />
+	<Example name="drop-zone/demos/events" />
+	<Example name="drop-zone/demos/disabled" />
 </Examples>
 
 ## API Reference

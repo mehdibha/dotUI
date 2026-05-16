@@ -28,9 +28,9 @@ Define your color scales in CSS:
 
 ```css
 :root {
-  --accent-50: oklch(0.8706 0.0701 241.56);
-  --accent-500: oklch(0.5 0.15 241);
-  --accent-900: oklch(0.3 0.1 241);
+	--accent-50: oklch(0.8706 0.0701 241.56);
+	--accent-500: oklch(0.5 0.15 241);
+	--accent-900: oklch(0.3 0.1 241);
 }
 ```
 
@@ -38,15 +38,15 @@ The plugin automatically generates contrast colors:
 
 ```css
 :root {
-  /* Your colors */
-  --accent-50: oklch(0.8706 0.0701 241.56);
-  --accent-500: oklch(0.5 0.15 241);
-  --accent-900: oklch(0.3 0.1 241);
+	/* Your colors */
+	--accent-50: oklch(0.8706 0.0701 241.56);
+	--accent-500: oklch(0.5 0.15 241);
+	--accent-900: oklch(0.3 0.1 241);
 
-  /* Auto-generated */
-  --on-accent-50: black;
-  --on-accent-500: white;
-  --on-accent-900: white;
+	/* Auto-generated */
+	--on-accent-50: black;
+	--on-accent-500: white;
+	--on-accent-900: white;
 }
 ```
 

@@ -1,11 +1,11 @@
 "use client";
 
-import { useSlotId } from "react-aria/private/utils/useId";
 import * as ColorSliderPrimitives from "react-aria-components/ColorSlider";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SliderPrimitives from "react-aria-components/Slider";
 import { Provider } from "react-aria-components/slots";
 import * as TextPrimitives from "react-aria-components/Text";
+import { useSlotId } from "react-aria/private/utils/useId";
 
 import { ColorThumb } from "@/registry/ui/color-thumb";
 

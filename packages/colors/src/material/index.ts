@@ -9,6 +9,7 @@ import {
 	DEFAULT_VARIANT,
 	NEUTRAL_CHROMA,
 } from "./constants";
+
 import type { ColorScale, Theme } from "../shared/types";
 import type { CreateThemeOptions, Mode, ResolvedModeConfig } from "./types";
 

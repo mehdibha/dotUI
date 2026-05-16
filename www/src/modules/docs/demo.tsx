@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { flushSync } from "react-dom";
+
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 import { Button } from "@/registry/ui/button";

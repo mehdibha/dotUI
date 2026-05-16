@@ -1,7 +1,7 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
-import CheckboxDemo from "@/registry/ui/checkbox/demos/basic";
 import CheckboxGroupDemo from "@/registry/ui/checkbox-group/demos/default";
+import CheckboxDemo from "@/registry/ui/checkbox/demos/basic";
 import RadioGroupDemo from "@/registry/ui/radio-group/demos/default";
 import SwitchDemo from "@/registry/ui/switch/demos/basic";
 

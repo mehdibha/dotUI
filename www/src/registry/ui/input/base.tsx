@@ -1,16 +1,18 @@
 "use client";
 
 import React, { useCallback } from "react";
+
 import { chain } from "react-aria";
-import { mergeRefs } from "react-aria/mergeRefs";
-import { getEventTarget } from "react-aria/private/utils/shadowdom/DOMFunctions";
-import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as DateFieldPrimitive from "react-aria-components/DateField";
 import * as GroupPrimitive from "react-aria-components/Group";
 import * as InputPrimitive from "react-aria-components/Input";
 import * as TextAreaPrimitive from "react-aria-components/TextArea";
+import { mergeRefs } from "react-aria/mergeRefs";
+import { getEventTarget } from "react-aria/private/utils/shadowdom/DOMFunctions";
+import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect";
 import { useControlledState } from "react-stately/useControlledState";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { type InputStyles, useStyles } from "./styles";
@@ -56,8 +58,7 @@ const InputGroup = ({ className, size, onPointerDown, onTouchEnd, ...props }: In
 // MARK: Separator
 
 interface InputProps
-	extends Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
-		VariantProps<InputStyles> {}
+	extends Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">, VariantProps<InputStyles> {}
 
 const Input = ({ className, size, ...props }: InputProps) => {
 	const { input } = useStyles()();

@@ -22,7 +22,7 @@ export default function Demo() {
 					<DialogBody className="max-h-80 overflow-y-auto">
 						{Array.from({ length: 30 }).map((_, i) => (
 							<p
-								// biome-ignore lint/suspicious/noArrayIndexKey: demo
+								// oxlint-disable-next-line react/no-array-index-key -- demo
 								key={i}
 								className="border-b py-3"
 							>

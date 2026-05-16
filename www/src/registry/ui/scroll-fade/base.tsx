@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { mergeRefs } from "react-aria/mergeRefs";
 import type * as React from "react";
+
+import { mergeRefs } from "react-aria/mergeRefs";
 
 import { useStyles } from "./styles";
 import { useScrollFade } from "./use-scroll-fade";

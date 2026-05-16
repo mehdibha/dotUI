@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import type { Key } from "react-aria-components/Menu";
 
 import { Building2Icon, CreditCardIcon, WalletIcon } from "@/registry/__generated__/icons";

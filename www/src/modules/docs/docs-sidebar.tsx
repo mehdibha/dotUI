@@ -1,7 +1,9 @@
 import { Link, useLocation } from "@tanstack/react-router";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { cn } from "@/registry/lib/utils";
+
 import type { DocsPageItem } from "@/lib/source";
 
 export function DocsSidebar({ items }: { items: PageTree.Node[] }) {

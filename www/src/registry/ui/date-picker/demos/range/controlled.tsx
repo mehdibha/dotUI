@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+
 import { getLocalTimeZone, parseDate } from "@internationalized/date";
 import { useDateFormatter } from "react-aria";
+
 import type * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar";
 
 import { CalendarIcon } from "@/registry/__generated__/icons";

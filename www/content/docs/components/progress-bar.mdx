@@ -25,7 +25,7 @@ import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
 
 ```tsx
 <ProgressBar value={60}>
-  <ProgressBarControl />
+	<ProgressBarControl />
 </ProgressBar>
 ```
 
@@ -33,44 +33,43 @@ import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
 
 Use the controls below to experiment with different progress bar props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="progress-bar" 
-  controls={[
-    {
-      type: "string",
-      name: "label",
-      defaultValue: "Loading...",
-    },
-    {
-      type: "number",
-      name: "value",
-      defaultValue: 60,
-      min: 0,
-      max: 100,
-    },
-    {
-      type: "boolean",
-      name: "isIndeterminate",
-      defaultValue: false,
-    },
-  ]}
+<InteractiveDemo
+	name="progress-bar"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Loading...",
+		},
+		{
+			type: "number",
+			name: "value",
+			defaultValue: 60,
+			min: 0,
+			max: 100,
+		},
+		{
+			type: "boolean",
+			name: "isIndeterminate",
+			defaultValue: false,
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="progress-bar/demos/animated" />
-  <Example name="progress-bar/demos/sizes" />
-  <Example name="progress-bar/demos/variants" />
-  <Example name="progress-bar/demos/shape" />
-  <Example name="progress-bar/demos/label" />
-  <Example name="progress-bar/demos/value-label" />
-  <Example name="progress-bar/demos/custom-value-label" />
-  <Example name="progress-bar/demos/format-options" />
-  <Example name="progress-bar/demos/min-max-values" />
-  <Example name="progress-bar/demos/indeterminate" />
-  <Example name="progress-bar/demos/duration" />
+	<Example name="progress-bar/demos/animated" />
+	<Example name="progress-bar/demos/sizes" />
+	<Example name="progress-bar/demos/variants" />
+	<Example name="progress-bar/demos/shape" />
+	<Example name="progress-bar/demos/label" />
+	<Example name="progress-bar/demos/value-label" />
+	<Example name="progress-bar/demos/custom-value-label" />
+	<Example name="progress-bar/demos/format-options" />
+	<Example name="progress-bar/demos/min-max-values" />
+	<Example name="progress-bar/demos/indeterminate" />
+	<Example name="progress-bar/demos/duration" />
 </Examples>
 
 ## API Reference

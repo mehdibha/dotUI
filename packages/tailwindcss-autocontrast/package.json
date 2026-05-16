@@ -30,9 +30,6 @@
 		"postcss": "^8.0.0",
 		"tailwindcss": "^4.0.0"
 	},
-	"devDependencies": {
-		"@dotui/biome-config": "workspace:*"
-	},
 	"publishConfig": {
 		"access": "public"
 	}

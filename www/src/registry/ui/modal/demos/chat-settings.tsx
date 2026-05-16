@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import type * as MenuPrimitives from "react-aria-components/Menu";
 
 import { InfoIcon } from "@/registry/__generated__/icons";

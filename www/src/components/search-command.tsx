@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
 	ArrowRightIcon,
 	ChevronsUpDownIcon,
@@ -8,6 +9,7 @@ import {
 	SearchIcon,
 } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { Button } from "@/registry/ui/button";
@@ -60,7 +62,7 @@ export function SearchCommand({ items, keyboardShortcut, children, onAction }: S
 					{items.map((group, index) => {
 						if (group.type === "folder") {
 							return (
-								// biome-ignore lint/suspicious/noArrayIndexKey: items is static navigation data
+								// oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
 								<MenuSection key={index}>
 									<MenuSectionHeader>{group.name}</MenuSectionHeader>
 									{group.children.map((item) => {

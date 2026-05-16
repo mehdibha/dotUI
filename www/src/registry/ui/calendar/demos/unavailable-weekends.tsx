@@ -1,6 +1,7 @@
 "use client";
 
 import { getLocalTimeZone, today } from "@internationalized/date";
+
 import type * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { Calendar } from "@/registry/ui/calendar";

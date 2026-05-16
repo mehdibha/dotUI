@@ -6,8 +6,10 @@ import type { PopoverProps } from "@/registry/ui/popover";
 /**
  * A select displays a collapsible list of options and allows a user to select one of them.
  */
-export interface SelectProps<T extends object, M extends "single" | "multiple" = "single">
-	extends SelectPrimitives.SelectProps<T, M> {}
+export interface SelectProps<
+	T extends object,
+	M extends "single" | "multiple" = "single",
+> extends SelectPrimitives.SelectProps<T, M> {}
 
 /**
  * SelectValue renders the current value of a Select, or a placeholder if no value is selected.
@@ -19,8 +21,7 @@ export interface SelectValueProps<T extends object> extends SelectPrimitives.Sel
  * Missing description.
  */
 export interface SelectContentProps<T extends object>
-	extends ListBoxProps<T>,
-		Pick<PopoverProps, "placement" | "defaultOpen" | "isOpen" | "onOpenChange"> {
+	extends ListBoxProps<T>, Pick<PopoverProps, "placement" | "defaultOpen" | "isOpen" | "onOpenChange"> {
 	placement?: PopoverProps["placement"];
 
 	/**

@@ -1,9 +1,11 @@
+import type * as React from "react";
+
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { tv } from "tailwind-variants";
-import type * as React from "react";
 
 import { LinkButton } from "@/registry/ui/button";
+
 import type { LinkButtonProps } from "@/registry/ui/button";
 
 const paginationStyles = tv({

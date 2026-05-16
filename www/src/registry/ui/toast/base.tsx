@@ -4,6 +4,7 @@ import { Toast as ToastPrimitive } from "@base-ui/react/toast";
 import { CircleAlertIcon, CircleCheckIcon, InfoIcon, LoaderCircleIcon, TriangleAlertIcon } from "lucide-react";
 
 import { useStyles } from "./styles";
+
 import type { ToastData, ToastPosition, ToastVariant } from "./types";
 
 type ToastObject = ToastPrimitive.Root.ToastObject<ToastData>;

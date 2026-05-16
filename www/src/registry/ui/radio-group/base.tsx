@@ -1,13 +1,14 @@
 "use client";
 
 import { createContext, useContext, useId } from "react";
-import { useSlotId } from "react-aria/private/utils/useId";
+import type * as React from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import { LabelContext } from "react-aria-components/Label";
 import * as RadioGroupPrimitives from "react-aria-components/RadioGroup";
 import { Provider, useSlottedContext } from "react-aria-components/slots";
+import { useSlotId } from "react-aria/private/utils/useId";
 import { tv } from "tailwind-variants";
-import type * as React from "react";
 
 import { Label } from "@/registry/ui/field";
 

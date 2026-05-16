@@ -12,7 +12,8 @@ import { useStyles } from "./styles";
 // MARK: Separator
 
 interface CommandProps<T extends object>
-	extends Omit<AutocompletePrimitive.AutocompleteProps<T>, "children" | "filter">,
+	extends
+		Omit<AutocompletePrimitive.AutocompleteProps<T>, "children" | "filter">,
 		Omit<React.ComponentProps<"div">, "slot"> {
 	filter?: Intl.CollatorOptions;
 }

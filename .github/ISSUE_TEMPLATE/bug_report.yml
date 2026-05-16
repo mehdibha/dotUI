@@ -1,8 +1,8 @@
 name: "Bug report"
 description: Report an issue
-title: '[bug] '
+title: "[bug] "
 labels: ["bug"]
-body: 
+body:
   - type: textarea
     id: bug-description
     attributes:
@@ -25,7 +25,7 @@ body:
     id: reproduction
     attributes:
       label: How to reproduce
-      description:  A step-by-step description of how to reproduce the bug.
+      description: A step-by-step description of how to reproduce the bug.
       placeholder: |
         1. Go to '...'
         2. Click on '....'
@@ -37,7 +37,7 @@ body:
     id: codesandbox
     attributes:
       label: Codesandbox link
-      description: | 
+      description: |
         A link to a CodeSandbox that includes a minimal reproduction of the problem. [CodeSandbox Template](https://codesandbox.io/s/ymgwf5)
     validations:
       required: false

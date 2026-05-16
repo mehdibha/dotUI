@@ -224,9 +224,9 @@
 			"name": "Map",
 			"extends": [],
 			"properties": {
-				"__@iterator@126": {
+				"__@iterator@39": {
 					"type": "method",
-					"name": "__@iterator@126",
+					"name": "__@iterator@39",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -258,9 +258,9 @@
 					"optional": false,
 					"description": "Returns an iterable of entries in the map."
 				},
-				"__@toStringTag@129": {
+				"__@toStringTag@737": {
 					"type": "property",
-					"name": "__@toStringTag@129",
+					"name": "__@toStringTag@737",
 					"value": {
 						"type": "string"
 					},

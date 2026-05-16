@@ -1,5 +1,6 @@
 import React, { type ComponentType, createElement, useCallback, useMemo, useState } from "react";
 import { flushSync } from "react-dom";
+
 import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-react";
 
 import { CodeBlock } from "@/modules/docs/code-block";
@@ -10,6 +11,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 import { availableIcons, Controls } from "./controls";
 import { elementToCode, elementToPreviewCode } from "./element-to-code";
+
 import type { ControlValues, SerializableControl } from "./types";
 
 /**

@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Link } from "@tanstack/react-router";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { navItems } from "@/config/site";
@@ -48,7 +50,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 							{items?.map((group, index) => {
 								if (group.type === "folder") {
 									return (
-										// biome-ignore lint/suspicious/noArrayIndexKey: items is static navigation data
+										// oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
 										<div key={index} className="flex flex-col gap-3">
 											<div className="font-medium text-fg-muted text-lg">{group.name}</div>
 											<div className="flex flex-col gap-3">

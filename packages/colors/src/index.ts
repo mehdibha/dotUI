@@ -1,11 +1,7 @@
 // Unified API
 
 // Algorithm-specific exports
-export {
-	type CreateContrastThemeOptions,
-	createContrastTheme,
-	createContrastThemeOptionsSchema,
-} from "./contrast";
+export { type CreateContrastThemeOptions, createContrastTheme, createContrastThemeOptionsSchema } from "./contrast";
 export {
 	type CreateThemeOptions as CreateMaterialThemeOptions,
 	createMaterialTheme,

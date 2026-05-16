@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
+
 import { parseDate } from "@internationalized/date";
+
 import type * as CalendarPrimitives from "react-aria-components/Calendar";
 
 import { CalendarIcon } from "@/registry/__generated__/icons";

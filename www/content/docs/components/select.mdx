@@ -25,11 +25,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/u
 
 ```tsx
 <Select>
-  <SelectTrigger />
-  <SelectContent>
-    <SelectItem>Option 1</SelectItem>
-    <SelectItem>Option 2</SelectItem>
-  </SelectContent>
+	<SelectTrigger />
+	<SelectContent>
+		<SelectItem>Option 1</SelectItem>
+		<SelectItem>Option 2</SelectItem>
+	</SelectContent>
 </Select>
 ```
 
@@ -52,23 +52,24 @@ import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/co
 
 ```tsx
 <Select>
-  <Button variant="outline">
-    <SelectValue placeholder="Select provider" />
-    <ChevronDownIcon />
-  </Button>
-  <Popover placement="bottom-start">
-    <ListBox>
-      <ListBoxSection>
-        <ListBoxSectionHeader>AI Providers</ListBoxSectionHeader>
-        <ListBoxItem id="openai">OpenAI</ListBoxItem>
-        <ListBoxItem id="anthropic">Anthropic</ListBoxItem>
-      </ListBoxSection>
-    </ListBox>
-  </Popover>
+	<Button variant="outline">
+		<SelectValue placeholder="Select provider" />
+		<ChevronDownIcon />
+	</Button>
+	<Popover placement="bottom-start">
+		<ListBox>
+			<ListBoxSection>
+				<ListBoxSectionHeader>AI Providers</ListBoxSectionHeader>
+				<ListBoxItem id="openai">OpenAI</ListBoxItem>
+				<ListBoxItem id="anthropic">Anthropic</ListBoxItem>
+			</ListBoxSection>
+		</ListBox>
+	</Popover>
 </Select>
 ```
 
 This approach lets you:
+
 - Use any `Button` variant or custom trigger
 - Control `Popover` placement and behavior
 - Add sections, headers, and custom `ListBoxItem` content
@@ -78,50 +79,49 @@ This approach lets you:
 
 Use the controls below to experiment with different select props and see the live preview and code update.
 
-<InteractiveDemo 
-  name="select" 
-  controls={[
-    {
-      type: "string",
-      name: "label",
-      defaultValue: "Country",
-    },
-    {
-      type: "string",
-      name: "placeholder",
-      defaultValue: "Select a country",
-    },
-    {
-      type: "boolean",
-      name: "isDisabled",
-      defaultValue: false,
-    },
-    {
-      type: "boolean",
-      name: "isInvalid",
-      defaultValue: false,
-    },
-  ]}
+<InteractiveDemo
+	name="select"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Country",
+		},
+		{
+			type: "string",
+			name: "placeholder",
+			defaultValue: "Select a country",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+	]}
 />
-
 
 ## Examples
 
 <Examples>
-  <Example name="select/demos/basic" />
-  <Example name="select/demos/placeholder" />
-  <Example name="select/demos/label" />
-  <Example name="select/demos/description" />
-  <Example name="select/demos/validation" />
-  <Example name="select/demos/sections" />
-  <Example name="select/demos/links" />
-  <Example name="select/demos/disabled" />
-  <Example name="select/demos/loading" />
-  <Example name="select/demos/required" />
-  <Example name="select/demos/uncontrolled" />
-  <Example name="select/demos/controlled" />
-  <Example name="select/demos/composition" />
-  <Example name="select/demos/async-loading" />
+	<Example name="select/demos/basic" />
+	<Example name="select/demos/placeholder" />
+	<Example name="select/demos/label" />
+	<Example name="select/demos/description" />
+	<Example name="select/demos/validation" />
+	<Example name="select/demos/sections" />
+	<Example name="select/demos/links" />
+	<Example name="select/demos/disabled" />
+	<Example name="select/demos/loading" />
+	<Example name="select/demos/required" />
+	<Example name="select/demos/uncontrolled" />
+	<Example name="select/demos/controlled" />
+	<Example name="select/demos/composition" />
+	<Example name="select/demos/async-loading" />
 </Examples>
 
 ## API Reference

@@ -1,4 +1,5 @@
 import { ArrowUpRightIcon } from "lucide-react";
+
 import type { MDXComponents } from "mdx/types";
 
 import { CodeBlock, Pre } from "@/modules/docs/code-block";

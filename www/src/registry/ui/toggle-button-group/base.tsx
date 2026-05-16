@@ -2,9 +2,11 @@
 
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup";
+
 import type { VariantProps } from "tailwind-variants";
 
 import { ToggleButtonProvider } from "@/registry/ui/toggle-button";
+
 import type { toggleButtonStyles } from "@/registry/ui/toggle-button";
 
 import { useStyles } from "./styles";
@@ -14,7 +16,8 @@ import { useStyles } from "./styles";
 // MARK: Separator
 
 interface ToggleButtonGroupProps
-	extends React.ComponentProps<typeof ToggleButtonGroupPrimitives.ToggleButtonGroup>,
+	extends
+		React.ComponentProps<typeof ToggleButtonGroupPrimitives.ToggleButtonGroup>,
 		VariantProps<typeof toggleButtonStyles> {}
 
 const ToggleButtonGroup = ({
