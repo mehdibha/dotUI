@@ -11,10 +11,16 @@ import { useStyles } from "./styles";
 
 // MARK: tabsStyles
 
+type TabsVariant = "default" | "line";
+
 // MARK: Separator
 
 const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
 	name: "TabsContext",
+});
+
+const [TabListProvider, useTabListContext] = createContext<TabsVariant>({
+	name: "TabListContext",
 });
 
 // MARK: Separator
@@ -37,15 +43,21 @@ const Tabs = ({ className, ...props }: TabsProps) => {
 
 // MARK: Separator
 
-interface TabListProps extends React.ComponentProps<typeof TabsPrimitives.TabList> {}
+interface TabListProps extends React.ComponentProps<typeof TabsPrimitives.TabList> {
+	variant?: TabsVariant;
+}
 
-const TabList = ({ className, ...props }: TabListProps) => {
+const TabList = ({ className, variant = "default", ...props }: TabListProps) => {
 	const { list } = useStyles()();
 	return (
-		<TabsPrimitives.TabList
-			className={composeRenderProps(className, (cn, { orientation }) => list({ orientation, className: cn }))}
-			{...props}
-		/>
+		<TabListProvider value={variant}>
+			<TabsPrimitives.TabList
+				className={composeRenderProps(className, (cn, { orientation }) =>
+					list({ orientation, variant, className: cn }),
+				)}
+				{...props}
+			/>
+		</TabListProvider>
 	);
 };
 
@@ -55,16 +67,20 @@ interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 
 const Tab = ({ className, ...props }: TabProps) => {
 	const { tab } = useStyles()();
+	const orientation = useTabsContext("Tab");
+	const variant = useTabListContext("Tab");
 	return (
 		<TabsPrimitives.Tab
 			data-tab=""
-			className={composeRenderProps(className, (cn) => tab({ className: cn }))}
+			className={composeRenderProps(className, (cn) => tab({ orientation, variant, className: cn }))}
 			{...props}
 		>
 			{composeRenderProps(props.children, (children) => (
 				<>
-					{children}
 					<TabIndicator />
+					<span data-tab-content="" className="relative z-10 inline-flex items-center [gap:inherit]">
+						{children}
+					</span>
 				</>
 			))}
 		</TabsPrimitives.Tab>
@@ -78,10 +94,12 @@ interface TabIndicatorProps extends React.ComponentProps<typeof SelectionIndicat
 const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
 	const { selectionIndicator } = useStyles()();
 	const orientation = useTabsContext("TabIndicator");
+	const variant = useTabListContext("TabIndicator");
 	return (
 		<SelectionIndicatorPrimitives.SelectionIndicator
 			data-tab-indicator=""
-			className={composeRenderProps(className, (cn) => selectionIndicator({ orientation, className: cn }))}
+			data-orientation={orientation}
+			className={composeRenderProps(className, (cn) => selectionIndicator({ orientation, variant, className: cn }))}
 			{...props}
 		/>
 	);

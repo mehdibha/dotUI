@@ -266,6 +266,25 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+		},
+		"variant": {
+			"type": "\"default\" | \"line\"",
+			"detailedType": "\"default\" | \"line\" | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "default"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "line"
+					}
+				]
+			},
+			"description": "The visual style of the tab list.",
+			"default": "\"default\""
 		}
 	},
 	"renderProps": {

@@ -5,33 +5,72 @@ import tabsMeta from "./meta";
 const { useStyles, styles } = createStyles(tabsMeta, {
 	base: {
 		slots: {
-			root: "flex flex-col gap-2",
-			list: "flex",
-			tab: "relative cursor-default p-2 selected:text-fg text-fg-muted text-sm transition-colors hover:text-fg [&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
-			selectionIndicator: [
-				"absolute rounded-full bg-accent duration-150 ease-out motion-safe:transition-[translate,width,height]",
+			root: "flex gap-2",
+			list: "inline-flex w-fit items-center justify-center text-fg-muted",
+			tab: [
+				"focus-reset focus-visible:focus-ring relative isolate inline-flex flex-1 cursor-default select-none items-center justify-center whitespace-nowrap border border-transparent font-medium transition-[background-color,border-color,color,box-shadow]",
+				"text-fg-muted hover:text-fg disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
+				"**:[svg]:pointer-events-none **:[svg]:shrink-0",
+				"[&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
 			],
-			panel: "",
+			selectionIndicator: [
+				"pointer-events-none absolute rounded-md duration-150 ease-out motion-safe:transition-[translate,width,height]",
+			],
+			panel: "flex-1 outline-none data-[inert=true]:hidden",
 		},
 		variants: {
 			orientation: {
 				horizontal: {
 					root: "flex-col",
-					list: "flex-row border-b",
-					selectionIndicator: "bottom-0 left-0 h-0.5 w-full translate-y-px",
+					list: "h-(--tabs-list-height) flex-row",
+					tab: "h-[calc(100%-1px)]",
 				},
 				vertical: {
 					root: "flex-row",
-					list: "flex-col border-r",
-					selectionIndicator: "right-0 bottom-0 h-full w-0.5",
+					list: "h-fit flex-col",
+					tab: "w-full justify-start",
+				},
+			},
+			variant: {
+				default: {
+					list: "rounded-lg bg-muted p-[3px]",
+					tab: "rounded-md selected:text-fg-on-selected",
+					selectionIndicator: "inset-0 bg-selected shadow-sm",
+				},
+				line: {
+					list: "gap-1 rounded-none bg-transparent p-[3px]",
+					tab: "rounded-md selected:text-fg",
+					selectionIndicator:
+						"orientation-vertical:top-0 orientation-vertical:-right-1 orientation-horizontal:bottom-[-5px] orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-vertical:h-full orientation-horizontal:w-full orientation-vertical:w-0.5 rounded-full bg-fg",
 				},
 			},
 		},
+		defaultVariants: {
+			variant: "default",
+		},
 	},
 	density: {
-		compact: {},
-		default: {},
-		comfortable: {},
+		compact: {
+			slots: {
+				root: "[--tabs-list-height:2rem]",
+				tab: "gap-1.5 px-1.5 py-0.5 text-xs has-data-icon-end:pr-1 has-data-icon-start:pl-1 **:[svg]:not-with-[size]:size-3.5",
+				panel: "text-xs/relaxed",
+			},
+		},
+		default: {
+			slots: {
+				root: "[--tabs-list-height:2rem]",
+				tab: "gap-1.5 px-1.5 py-0.5 text-sm has-data-icon-end:pr-1 has-data-icon-start:pl-1 **:[svg]:not-with-[size]:size-4",
+				panel: "text-sm",
+			},
+		},
+		comfortable: {
+			slots: {
+				root: "[--tabs-list-height:2.25rem]",
+				tab: "gap-1.5 px-2 py-1 text-sm has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-4",
+				panel: "text-sm",
+			},
+		},
 	},
 });
 

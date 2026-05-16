@@ -3,7 +3,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
 export default function Demo() {
 	return (
 		<Tabs>
-			<TabList>
+			<TabList variant="line">
 				<Tab id="overview">Overview</Tab>
 				<Tab id="usage">Usage</Tab>
 				<Tab id="settings">Settings</Tab>
