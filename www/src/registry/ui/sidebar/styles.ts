@@ -24,7 +24,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
 			content: "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
 			section: "relative flex w-full min-w-0 flex-col p-2",
 			heading: [
-				"flex h-8 shrink-0 items-center whitespace-nowrap rounded-md px-2 font-medium text-fg-muted text-xs outline-hidden [&>svg]:size-4 [&>svg]:shrink-0",
+				"flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium whitespace-nowrap text-fg-muted outline-hidden [&>svg]:size-4 [&>svg]:shrink-0",
 			],
 			list: "flex w-full min-w-0 flex-col gap-1",
 			item: "whitespace-nowrap *:data-button:w-full *:data-button:justify-start *:data-button:overflow-hidden *:data-button:p-1.75 *:data-button:text-left *:data-button:[&>svg]:shrink-0",

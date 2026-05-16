@@ -40,7 +40,7 @@ export default function Demo() {
 					</Avatar>
 					<div className="grid flex-1 text-left text-sm leading-tight">
 						<span className="truncate font-semibold">shadcn</span>
-						<span className="truncate text-fg-muted text-xs">shadcn@example.com</span>
+						<span className="truncate text-xs text-fg-muted">shadcn@example.com</span>
 					</div>
 					<ChevronsUpDownIcon className="ml-auto text-fg-muted" />
 				</Button>

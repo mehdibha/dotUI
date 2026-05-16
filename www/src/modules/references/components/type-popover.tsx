@@ -99,7 +99,7 @@ function TypePopover({ name, type }: TypePopoverProps) {
 
 	return (
 		<DialogPrimitives.DialogTrigger onOpenChange={handleOpenChange}>
-			<ButtonPrimitives.Button className="focus-visible:focus-ring cursor-pointer rounded-sm font-mono text-fg-accent underline underline-offset-2 outline-none">
+			<ButtonPrimitives.Button className="cursor-pointer rounded-sm font-mono text-fg-accent underline underline-offset-2 outline-none focus-visible:focus-ring">
 				{name}
 			</ButtonPrimitives.Button>
 			<Popover placement="bottom" showArrow className="max-w-md p-3">
@@ -154,7 +154,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 
 		return (
 			<div className="space-y-3">
-				{description && <p className="text-fg-muted text-sm leading-relaxed">{description}</p>}
+				{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
 
 				{type.extends && type.extends.length > 0 && (
 					<p className="text-xs">
@@ -178,15 +178,15 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 						{properties.map((prop) => (
 							<div key={prop.name} className="py-2 first:pt-0 last:pb-0">
 								<div className="flex items-baseline justify-between gap-3">
-									<code className="font-mono text-fg text-xs">
+									<code className="font-mono text-xs text-fg">
 										{prop.name}
 										{prop.optional && <span className="text-fg-muted">?</span>}
 									</code>
-									<code className="font-mono text-fg-muted text-xs">
+									<code className="font-mono text-xs text-fg-muted">
 										<Type type={prop.type === "method" ? prop.value : prop.value} />
 									</code>
 								</div>
-								{prop.description && <p className="mt-1 text-fg-muted text-xs leading-relaxed">{prop.description}</p>}
+								{prop.description && <p className="mt-1 text-xs leading-relaxed text-fg-muted">{prop.description}</p>}
 							</div>
 						))}
 					</div>
@@ -199,7 +199,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 	if (type.type === "alias") {
 		return (
 			<div className="space-y-3">
-				{description && <p className="text-fg-muted text-sm leading-relaxed">{description}</p>}
+				{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
 				<div className="overflow-x-auto">
 					<Type type={type.value} />
 				</div>
@@ -210,7 +210,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 	// For other types, just render them
 	return (
 		<div className="space-y-3">
-			{description && <p className="text-fg-muted text-sm leading-relaxed">{description}</p>}
+			{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
 			<div className="overflow-x-auto">
 				<Type type={type} />
 			</div>

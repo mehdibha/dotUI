@@ -10,12 +10,12 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
 	const { pathname } = useLocation();
 
 	return (
-		<nav className="no-scrollbar flex h-full flex-col gap-6 overflow-y-auto scroll-smooth rounded-2xl py-6 pr-3 pl-4 [mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)] [webkit-mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)]">
+		<nav className="no-scrollbar flex h-full flex-col gap-6 overflow-y-auto scroll-smooth rounded-2xl [mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)] py-6 pr-3 pl-4 [webkit-mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)]">
 			{items.map((item) => {
 				if (item.type === "folder") {
 					return (
 						<div key={item.$id} className="flex flex-col">
-							<h4 className="mb-1 px-2 font-medium text-fg text-sm">{item.name}</h4>
+							<h4 className="mb-1 px-2 text-sm font-medium text-fg">{item.name}</h4>
 							{item.children.map((child) => {
 								if (child.type !== "page") return null;
 								return (

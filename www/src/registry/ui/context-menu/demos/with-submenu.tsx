@@ -8,7 +8,7 @@ export default function Demo() {
 	return (
 		<ContextMenu
 			data-testid="context-menu-submenu"
-			className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed bg-bg-muted text-fg-muted text-sm"
+			className="bg-bg-muted flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm text-fg-muted"
 		>
 			Right click for submenu
 			<Popover>

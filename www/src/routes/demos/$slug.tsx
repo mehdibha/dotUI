@@ -31,15 +31,15 @@ function DemoPage() {
 	}
 
 	return (
-		<div className="mx-auto grid min-h-screen w-full min-w-0 max-w-5xl content-center items-start gap-8 p-4 pt-2 sm:gap-12 sm:p-6 md:grid-cols-2 md:gap-8 lg:grid-cols-1 lg:p-12 2xl:max-w-6xl 2xl:grid-cols-1">
+		<div className="mx-auto grid min-h-screen w-full max-w-5xl min-w-0 content-center items-start gap-8 p-4 pt-2 sm:gap-12 sm:p-6 md:grid-cols-2 md:gap-8 lg:grid-cols-1 lg:p-12 2xl:max-w-6xl 2xl:grid-cols-1">
 			{demos.map((demo) => {
 				const Component = demo.component;
 				return (
 					<div
 						key={demo.name}
-						className="mx-auto flex w-full min-w-0 max-w-lg flex-col gap-1 self-stretch lg:max-w-none"
+						className="mx-auto flex w-full max-w-lg min-w-0 flex-col gap-1 self-stretch lg:max-w-none"
 					>
-						<h3 className="px-1.5 py-2 font-medium text-fg-muted text-xs">{demo.name.replace(/-/g, " ")}</h3>
+						<h3 className="px-1.5 py-2 text-xs font-medium text-fg-muted">{demo.name.replace(/-/g, " ")}</h3>
 						<div className="flex min-w-0 flex-1 flex-col items-start gap-6 rounded-xl bg-card p-12 text-fg *:[div:not([class*='w-'])]:w-full">
 							<Suspense fallback={null}>
 								<Component />

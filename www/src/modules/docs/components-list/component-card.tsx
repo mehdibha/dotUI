@@ -51,7 +51,7 @@ export function ComponentCard({ name, slug, href, scale = 0.8, iframe = false, p
 			) : (
 				<ComponentPreview className={previewClassName}>
 					<div className="flex items-center justify-center" style={{ transform: `scale(${scale})` }}>
-						{Demo ? <Demo /> : <span className="text-fg-muted text-sm">{name}</span>}
+						{Demo ? <Demo /> : <span className="text-sm text-fg-muted">{name}</span>}
 					</div>
 				</ComponentPreview>
 			)}

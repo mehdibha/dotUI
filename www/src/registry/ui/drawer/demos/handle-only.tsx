@@ -20,7 +20,7 @@ export default function Demo() {
 					</DialogHeader>
 					<DialogBody>
 						<p>The handle gives the drawer a clear drag affordance.</p>
-						<p className="mt-2 text-fg-muted text-sm">Swipe or press Escape to dismiss.</p>
+						<p className="mt-2 text-sm text-fg-muted">Swipe or press Escape to dismiss.</p>
 					</DialogBody>
 				</DialogContent>
 			</Drawer>

@@ -12,7 +12,7 @@ export default function Demo() {
 			<TextField aria-label="Controlled text field" value={inputValue} onChange={setInputValue}>
 				<Input />
 			</TextField>
-			<p className="text-fg-muted text-sm">mirrored text: {inputValue}</p>
+			<p className="text-sm text-fg-muted">mirrored text: {inputValue}</p>
 		</>
 	);
 }

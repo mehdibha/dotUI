@@ -18,7 +18,7 @@ export default function Demo() {
 			<Button variant="quiet" onPress={() => setOpen(false)}>
 				Close
 			</Button>
-			<span className="text-fg-muted text-sm">Drawer is {open ? "open" : "closed"}</span>
+			<span className="text-sm text-fg-muted">Drawer is {open ? "open" : "closed"}</span>
 			<Drawer isOpen={open} onOpenChange={setOpen}>
 				<DialogContent>
 					<DrawerHandle />

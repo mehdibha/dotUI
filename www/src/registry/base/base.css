@@ -2,7 +2,7 @@
 
 @plugin "tailwindcss-react-aria-components";
 @plugin "tailwindcss-autocontrast" {
-	cssfile: "./src/registry/base/colors.css";
+	cssfile: "./src/styles.css";
 }
 @plugin "tailwindcss-with";
 
@@ -42,7 +42,7 @@
 		@apply border-border;
 	}
 	body {
-		@apply font-sans bg-bg text-fg;
+		@apply bg-bg font-sans text-fg;
 	}
 	html {
 		@apply font-sans;

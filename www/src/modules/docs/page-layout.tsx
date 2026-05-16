@@ -15,14 +15,14 @@ export function PageHeader({ className, children, ...props }: React.ComponentPro
 export function PageHeaderHeading({ className, ...props }: React.ComponentProps<"h1">) {
 	return (
 		<h1
-			className={cn("max-w-2xl text-balance font-semibold text-3xl leading-tighter xl:text-3xl", className)}
+			className={cn("leading-tighter max-w-2xl text-3xl font-semibold text-balance xl:text-3xl", className)}
 			{...props}
 		/>
 	);
 }
 
 export function PageHeaderDescription({ className, ...props }: React.ComponentProps<"p">) {
-	return <p className={cn("mt-1 max-w-3xl text-balance text-base text-fg-muted sm:text-md", className)} {...props} />;
+	return <p className={cn("sm:text-md mt-1 max-w-3xl text-base text-balance text-fg-muted", className)} {...props} />;
 }
 
 export function PageActions({ className, ...props }: React.ComponentProps<"div">) {

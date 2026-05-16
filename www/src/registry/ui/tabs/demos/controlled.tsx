@@ -20,7 +20,7 @@ export default function Demo() {
 				<TabPanel id="usage">Usage content</TabPanel>
 				<TabPanel id="settings">Settings content</TabPanel>
 			</Tabs>
-			<p className="text-fg-muted text-sm">
+			<p className="text-sm text-fg-muted">
 				Selected tab: <span className="font-bold text-fg">{selectedTab}</span>
 			</p>
 		</div>

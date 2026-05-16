@@ -14,13 +14,13 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 				"**:data-separator:-mx-1 **:data-separator:my-1 **:data-separator:w-auto",
 			],
 			item: [
-				"relative flex w-full cursor-interactive select-none items-center gap-2 rounded-(--list-box-item-radius) outline-hidden disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
+				"relative flex w-full cursor-interactive items-center gap-2 rounded-(--list-box-item-radius) outline-hidden select-none disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
 				"data-selection-mode:pr-8",
 				"hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight",
 				"focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",
 				"focus-visible:bg-highlight",
 				"disabled:text-fg-disabled disabled:**:text-current",
-				"has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2",
+				"has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2",
 				"*:[kbd]:ml-auto *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
 			],
 			indicator: ["pointer-events-none absolute right-2 flex items-center justify-center"],
@@ -28,7 +28,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
 			itemDescription: ["text-fg-muted"],
 			loadMore: ["flex w-full items-center justify-center py-1 text-fg-muted"],
 			section: ["scroll-my-1"],
-			sectionTitle: ["px-2 py-1.5 text-fg-muted text-xs"],
+			sectionTitle: ["px-2 py-1.5 text-xs text-fg-muted"],
 		},
 		variants: {
 			variant: {

@@ -15,7 +15,7 @@ export default function Demo() {
 				data-testid="context-menu-controlled"
 				isOpen={isOpen}
 				onOpenChange={setOpen}
-				className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed bg-bg-muted text-fg-muted text-sm"
+				className="bg-bg-muted flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm text-fg-muted"
 			>
 				Right click me
 				<Popover>
@@ -26,7 +26,7 @@ export default function Demo() {
 					</MenuContent>
 				</Popover>
 			</ContextMenu>
-			<p data-testid="context-menu-controlled-state" className="text-fg-muted text-sm">
+			<p data-testid="context-menu-controlled-state" className="text-sm text-fg-muted">
 				state: {isOpen ? "open" : "closed"}
 			</p>
 		</div>

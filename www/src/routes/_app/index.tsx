@@ -24,10 +24,10 @@ function HomePage() {
 				<section className="container flex flex-col pt-6 sm:pt-10 md:pt-18">
 					<div className="flex max-w-5xl flex-col items-start gap-2 md:gap-3">
 						<Announcement />
-						<h1 className="text-balance text-3xl tracking-tighter max-lg:font-medium md:text-4xl lg:text-5xl">
+						<h1 className="text-3xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
 							Build your design system with a <span className="font-bold italic">unique</span> look.
 						</h1>
-						<p className="max-w-2xl text-balance text-base text-fg-muted sm:text-lg">
+						<p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
 							Beautiful components, accessibility out of the box, composition, and more, all powered by{" "}
 							<AdobeIcon className="inline-flex size-4" />{" "}
 							<span className="font-medium text-fg">react-aria-components</span> and{" "}
@@ -47,7 +47,7 @@ function HomePage() {
 
 				<section className="container mt-24">
 					<Tabs className="gap-3">
-						<TabList className="gap-2 border-b-0 font-medium **:data-tab-indicator:hidden **:data-tab:text-base">
+						<TabList className="gap-2 border-b-0 font-medium **:data-tab:text-base **:data-tab-indicator:hidden">
 							<Tab id="cards">Cards</Tab>
 							<Tab id="dashboard">Dashboard</Tab>
 							<Tab id="tasks">Tasks</Tab>
@@ -63,7 +63,7 @@ function HomePage() {
 				{/* Built on modern tools */}
 				<section className="mt-10 py-12 shadow-xs">
 					<div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
-						<h2 className="text-pretty font-mono text-fg-muted text-sm xs:text-base tracking-wide lg:text-base">
+						<h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
 							Built on modern tools
 						</h2>
 						<div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">

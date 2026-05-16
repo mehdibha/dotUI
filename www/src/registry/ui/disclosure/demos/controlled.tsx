@@ -19,7 +19,7 @@ export default function Demo() {
 			<Button size="sm" onPress={() => setExpanded(!isExpanded)}>
 				{isExpanded ? "Collapse" : "Expand"}
 			</Button>
-			<p className="text-fg-muted text-sm">Expanded: {isExpanded ? "true" : "false"} </p>
+			<p className="text-sm text-fg-muted">Expanded: {isExpanded ? "true" : "false"} </p>
 		</div>
 	);
 }

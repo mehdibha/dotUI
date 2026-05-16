@@ -7,7 +7,7 @@ export default function Demo() {
 		<ContextMenu
 			data-testid="context-menu-disabled"
 			isDisabled
-			className="flex h-32 w-64 items-center justify-center rounded-md border border-dashed bg-bg-muted text-fg-disabled text-sm"
+			className="bg-bg-muted flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm text-fg-disabled"
 		>
 			Right click me
 			<Popover>

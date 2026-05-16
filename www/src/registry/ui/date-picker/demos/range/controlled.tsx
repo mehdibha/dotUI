@@ -43,7 +43,7 @@ export default function Demo() {
 					</DialogContent>
 				</Popover>
 			</DateRangePicker>
-			<p className="text-fg-muted text-sm">
+			<p className="text-sm text-fg-muted">
 				selected range:{" "}
 				{value
 					? formatter.formatRange(value.start.toDate(getLocalTimeZone()), value.end.toDate(getLocalTimeZone()))

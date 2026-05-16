@@ -12,12 +12,12 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 			filler: "pointer-events-none absolute rounded-full bg-accent disabled:bg-disabled",
 			thumb: [
 				"size-4 rounded-full bg-white shadow-md ring-primary/30 transition-[width,height,box-shadow]",
-				"dragging:size-5 dragging:ring-0 ring-accent/30 hover:ring-4",
+				"ring-accent/30 hover:ring-4 dragging:size-5 dragging:ring-0",
 				"top-[50%] left-[50%]",
 				"focus-visible:focus-ring",
 				"disabled:border disabled:border-bg disabled:bg-disabled",
 			],
-			output: "text-fg-muted text-sm disabled:text-fg-disabled",
+			output: "text-sm text-fg-muted disabled:text-fg-disabled",
 		},
 		variants: {
 			orientation: {

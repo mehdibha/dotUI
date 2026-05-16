@@ -33,11 +33,11 @@ export function CursorConfig({ interactive, disabled, onChange }: CursorConfigPr
 	return (
 		<div className="flex flex-col gap-5">
 			<div className="flex flex-col gap-2">
-				<span className="font-medium text-fg-muted text-xs">Interactive</span>
+				<span className="text-xs font-medium text-fg-muted">Interactive</span>
 				<CursorSelect value={interactive} onChange={(v) => onChange(CURSOR_INTERACTIVE_VAR, v)} />
 			</div>
 			<div className="flex flex-col gap-2">
-				<span className="font-medium text-fg-muted text-xs">Disabled</span>
+				<span className="text-xs font-medium text-fg-muted">Disabled</span>
 				<CursorSelect value={disabled} onChange={(v) => onChange(CURSOR_DISABLED_VAR, v)} />
 			</div>
 		</div>

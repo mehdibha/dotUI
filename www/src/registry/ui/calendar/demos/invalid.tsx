@@ -10,7 +10,7 @@ export default function Demo() {
 		<Card className="mx-auto w-fit">
 			<CardContent>
 				<Calendar aria-label="Date" defaultValue={today(getLocalTimeZone())} isInvalid />
-				<p className="mt-2 text-fg-danger text-sm">We are closed on weekends</p>
+				<p className="mt-2 text-sm text-fg-danger">We are closed on weekends</p>
 			</CardContent>
 		</Card>
 	);

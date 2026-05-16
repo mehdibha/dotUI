@@ -37,7 +37,7 @@ export default function Demo() {
 					</ListBox>
 				</Popover>
 			</Combobox>
-			<p className="text-fg-muted text-sm">
+			<p className="text-sm text-fg-muted">
 				{country ? (
 					<>
 						You selected: <span className="font-bold text-fg">{country}</span>

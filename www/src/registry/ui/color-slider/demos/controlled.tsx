@@ -14,7 +14,7 @@ export default function Demo() {
 			<ColorSlider aria-label="Hue" value={value} onChange={setValue} channel="hue">
 				<ColorSliderControl />
 			</ColorSlider>
-			<p className="text-fg-muted text-xs">Value: {value.toString("hex")}</p>
+			<p className="text-xs text-fg-muted">Value: {value.toString("hex")}</p>
 		</div>
 	);
 }

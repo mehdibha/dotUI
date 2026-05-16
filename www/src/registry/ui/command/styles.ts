@@ -21,7 +21,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
 		style: {
 			1: {
 				base: [
-					"p-1.5 **:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5 **:data-listbox:p-0 **:data-search-field:pb-0 **:[[data-search-field]>[data-input-group]]:rounded-sm",
+					"p-1.5 **:data-listbox:p-0 **:data-search-field:pb-0 **:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5 **:[[data-search-field]>[data-input-group]]:rounded-sm",
 				],
 			},
 			2: {

@@ -35,7 +35,7 @@ export default function Demo() {
 					</DialogContent>
 				</Popover>
 			</DatePicker>
-			<p className="text-fg-muted text-sm">selected date: {value?.toString()}</p>
+			<p className="text-sm text-fg-muted">selected date: {value?.toString()}</p>
 		</>
 	);
 }

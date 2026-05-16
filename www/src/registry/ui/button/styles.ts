@@ -5,7 +5,7 @@ import buttonMeta from "./meta";
 const { useStyles, styles } = createStyles(buttonMeta, {
 	base: {
 		base: [
-			"group/button relative inline-flex shrink-0 cursor-interactive select-none items-center justify-center whitespace-nowrap rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) transition-[background-color,border-color,color,box-shadow]",
+			"group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) whitespace-nowrap transition-[background-color,border-color,color,box-shadow] select-none",
 			"focus-reset focus-visible:focus-ring",
 			"**:[svg]:pointer-events-none **:[svg]:shrink-0",
 			"pending:cursor-default pending:border-border-disabled pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
@@ -14,13 +14,13 @@ const { useStyles, styles } = createStyles(buttonMeta, {
 		variants: {
 			variant: {
 				default:
-					"border pressed:border-border-active bg-neutral pressed:bg-neutral-active text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover",
+					"border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active",
 				primary:
-					"pending:border-0 bg-primary pressed:bg-primary-active text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0",
-				quiet: "bg-transparent pressed:bg-inverse/20 text-fg hover:bg-inverse/10",
+					"bg-primary text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0 pressed:bg-primary-active",
+				quiet: "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
 				link: "text-fg underline-offset-4 hover:underline",
-				warning: "bg-warning pressed:bg-warning-active text-fg-on-warning hover:bg-warning-hover",
-				danger: "bg-danger pressed:bg-danger-active text-fg-on-danger hover:bg-danger-hover",
+				warning: "bg-warning text-fg-on-warning hover:bg-warning-hover pressed:bg-warning-active",
+				danger: "bg-danger text-fg-on-danger hover:bg-danger-hover pressed:bg-danger-active",
 			},
 			size: {
 				xs: "",

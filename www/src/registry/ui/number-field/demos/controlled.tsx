@@ -23,7 +23,7 @@ export default function Demo() {
 					<NumberFieldIncrement />
 				</Group>
 			</NumberField>
-			<p className="text-fg-muted text-sm">mirrored number: {inputValue}</p>
+			<p className="text-sm text-fg-muted">mirrored number: {inputValue}</p>
 		</div>
 	);
 }

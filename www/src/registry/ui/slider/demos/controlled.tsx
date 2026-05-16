@@ -13,7 +13,7 @@ export default function Demo() {
 				<Label>Opacity</Label>
 				<SliderControl />
 			</Slider>
-			<span className="text-fg-muted text-sm">
+			<span className="text-sm text-fg-muted">
 				Value: <span className="font-semibold text-fg">{value}</span>
 			</span>
 		</div>

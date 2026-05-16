@@ -10,7 +10,7 @@ const { useStyles, styles } = createStyles(colorSwatchPickerMeta, {
 				"relative rounded-(--color-swatch-picker-item-radius) transition-shadow focus:z-10 *:data-[slot=color-swatch]:size-full *:data-[slot=color-swatch]:rounded-[inherit]",
 				"focus-reset focus-visible:focus-ring",
 				"disabled:cursor-not-allowed disabled:*:data-[slot=color-swatch]:[background:color-mix(in_oklab,var(--color-disabled)_90%,var(--color))]!",
-				"before:absolute before:inset-0 before:scale-90 selected:before:scale-100 before:rounded-[inherit] before:bg-bg before:opacity-0 selected:before:opacity-100 before:outline-2 before:outline-inverse before:transition-[opacity,scale] before:duration-100 before:content-['']",
+				"before:absolute before:inset-0 before:scale-90 before:rounded-[inherit] before:bg-bg before:opacity-0 before:outline-2 before:outline-inverse before:transition-[opacity,scale] before:duration-100 before:content-[''] selected:before:scale-100 selected:before:opacity-100",
 			],
 		},
 	},

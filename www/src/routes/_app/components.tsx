@@ -41,7 +41,7 @@ function ComponentsPage() {
 					<PageHeaderHeading>{title}</PageHeaderHeading>
 					<PageHeaderDescription>{description}</PageHeaderDescription>
 				</PageHeader>
-				<div className="container relative xl:grid xl:grid-cols-[1fr_150px] xl:gap-12">
+				<div className="relative container xl:grid xl:grid-cols-[1fr_150px] xl:gap-12">
 					<ComponentsList data={componentsData} />
 					<TOC />
 				</div>

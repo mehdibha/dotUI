@@ -26,7 +26,7 @@ export default function Demo() {
 					</Radio>
 				</FieldGroup>
 			</RadioGroup>
-			<p className="text-fg-muted text-xs">{`You selected ${framework}.`}</p>
+			<p className="text-xs text-fg-muted">{`You selected ${framework}.`}</p>
 		</div>
 	);
 }

@@ -15,7 +15,7 @@ import TooltipDropdownPopover from "./demos/tooltip-dropdown-popover";
 
 export default function InputGroupExamples() {
 	return (
-		<Examples className="**:data-input-group:w-full **:data-input:w-full **:data-textfield:w-full lg:grid-cols-2">
+		<Examples className="**:data-input:w-full **:data-input-group:w-full **:data-textfield:w-full lg:grid-cols-2">
 			<Example title="basic">
 				<Basic />
 			</Example>

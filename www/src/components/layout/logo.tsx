@@ -14,7 +14,7 @@ export function Logo({ className, type = "link" }: { className?: string; type?: 
 			<Heading
 				data-wordmark
 				level={2}
-				className="mt-1.5 font-bold font-josefin text-base leading-normal tracking-tighter"
+				className="mt-1.5 font-josefin text-base leading-normal font-bold tracking-tighter"
 			>
 				{siteConfig.name}
 			</Heading>

@@ -10,6 +10,7 @@
 	},
 	"tailwindCSS.experimental.classRegex": [["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]],
 	"oxc.fmt.configPath": ".oxfmtrc.jsonc",
+	"editor.defaultFormatter": "oxc.oxc-vscode",
 	"[javascript]": {
 		"editor.defaultFormatter": "oxc.oxc-vscode"
 	},

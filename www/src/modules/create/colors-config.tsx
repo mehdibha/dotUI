@@ -43,7 +43,7 @@ export function ColorsConfig() {
 					variant="quiet"
 					size="xs"
 					onClick={() => setIsAdvanced(!isAdvanced)}
-					className="flex cursor-pointer items-center gap-1.5 self-start rounded-md px-1 py-0.5 text-fg-muted text-xs transition-colors hover:text-fg"
+					className="flex cursor-pointer items-center gap-1.5 self-start rounded-md px-1 py-0.5 text-xs text-fg-muted transition-colors hover:text-fg"
 				>
 					<SlidersHorizontalIcon className="size-3" />
 					{isAdvanced ? "Advanced" : "Simple"}
@@ -64,7 +64,7 @@ export function ColorsConfig() {
 					<>
 						{/* Base color presets */}
 						<div className="flex flex-col gap-2">
-							<span className="pl-1 font-medium text-fg-muted text-xs">Base color</span>
+							<span className="pl-1 text-xs font-medium text-fg-muted">Base color</span>
 							<div className="grid grid-cols-2 gap-1.5">
 								{colorPresets.map((preset) => (
 									<button
@@ -89,7 +89,7 @@ export function ColorsConfig() {
 
 						{/* Accent color presets */}
 						<div className="flex flex-col gap-2">
-							<span className="pl-1 font-medium text-fg-muted text-xs">Accent color</span>
+							<span className="pl-1 text-xs font-medium text-fg-muted">Accent color</span>
 							<div className="flex flex-wrap gap-1.5">
 								{accentPresets.map((preset) => (
 									<button
@@ -108,7 +108,7 @@ export function ColorsConfig() {
 
 						{/* Semantic colors */}
 						<div className="flex flex-col gap-2">
-							<span className="pl-1 font-medium text-fg-muted text-xs">Semantic colors</span>
+							<span className="pl-1 text-xs font-medium text-fg-muted">Semantic colors</span>
 							<div className="grid grid-cols-3 gap-1.5">
 								{[
 									{ name: "Success", value: "#22c55e" },

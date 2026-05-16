@@ -11,12 +11,12 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 			field: "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
 			fieldContent: "flex flex-col gap-1",
 			label: [
-				"inline-flex select-none items-center gap-px leading-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+				"inline-flex items-center gap-px leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
 				"in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
 				"in-disabled:cursor-not-allowed in-disabled:text-fg-disabled",
 				"in-data-invalid:text-fg-danger",
 			],
-			description: "nth-last-2:-mt-1 in-data-disabled:text-fg-disabled text-fg-muted last:mt-0",
+			description: "text-fg-muted last:mt-0 in-data-disabled:text-fg-disabled nth-last-2:-mt-1",
 			fieldError: "text-fg-danger",
 		},
 		variants: {
@@ -40,7 +40,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 				description: "text-xs",
 				fieldError: "text-xs",
 				fieldGroup:
-					"gap-4 has-[[data-checkbox]_[data-label]]:gap-1.5 has-[[data-radio]_[data-label]]:gap-1.5 has-data-checkbox:gap-2 has-data-radio:gap-2",
+					"gap-4 has-data-checkbox:gap-2 has-data-radio:gap-2 has-[[data-checkbox]_[data-label]]:gap-1.5 has-[[data-radio]_[data-label]]:gap-1.5",
 			},
 		},
 		default: {
@@ -49,7 +49,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 				description: "text-sm",
 				fieldError: "text-sm",
 				fieldGroup:
-					"gap-5 has-[[data-checkbox]_[data-label]]:gap-2 has-[[data-radio]_[data-label]]:gap-2 has-data-checkbox:gap-3 has-data-radio:gap-3",
+					"gap-5 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2 has-[[data-radio]_[data-label]]:gap-2",
 			},
 		},
 		comfortable: {
@@ -58,7 +58,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
 				description: "text-sm",
 				fieldError: "text-sm",
 				fieldGroup:
-					"gap-7 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5 has-data-checkbox:gap-3 has-data-radio:gap-3",
+					"gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
 			},
 		},
 	},

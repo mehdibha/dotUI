@@ -6,13 +6,13 @@ const { useStyles, styles } = createStyles(emptyMeta, {
 	base: {
 		slots: {
 			base: [
-				"flex w-full min-w-0 flex-1 flex-col items-center justify-center text-balance text-center",
+				"flex w-full min-w-0 flex-1 flex-col items-center justify-center text-center text-balance",
 				"border-dashed",
 			],
 			header: "flex max-w-sm flex-col items-center",
-			title: "font-medium text-lg tracking-tight",
-			description: "text-fg-muted text-sm/relaxed [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
-			content: "flex w-full min-w-0 max-w-sm flex-col items-center text-balance",
+			title: "text-lg font-medium tracking-tight",
+			description: "text-sm/relaxed text-fg-muted [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
+			content: "flex w-full max-w-sm min-w-0 flex-col items-center text-balance",
 			media: "flex shrink-0 items-center justify-center **:[svg]:pointer-events-none **:[svg]:shrink-0",
 		},
 		variants: {

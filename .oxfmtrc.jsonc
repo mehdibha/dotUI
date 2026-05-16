@@ -38,18 +38,10 @@
 		],
 	},
 	"sortTailwindcss": {
-		"stylesheet": ".oxfmt-tailwind.css",
+		"stylesheet": "www/src/styles.css",
 		"attributes": ["classList"],
 		"functions": ["cn", "clsx", "cva", "tw", "tv", "createStyles"],
 	},
-	"overrides": [
-		{
-			"files": ["**/*.css"],
-			"options": {
-				"sortTailwindcss": false,
-			},
-		},
-	],
 	"ignorePatterns": [
 		"**/node_modules/**",
 		"**/.pnpm-store/**",

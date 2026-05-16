@@ -86,7 +86,7 @@ export function SearchCommand({ items, keyboardShortcut, children, onAction }: S
 						return null;
 					})}
 				</MenuContent>
-				<div className="flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-fg-muted text-xs [&_svg]:size-4">
+				<div className="flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs text-fg-muted [&_svg]:size-4">
 					<div className="flex items-center gap-1">
 						<ChevronsUpDownIcon />
 						<span>Navigate</span>
@@ -151,7 +151,7 @@ function SearchCommandDialog({
 								slot="close"
 								variant="default"
 								size="sm"
-								className="absolute top-2 right-2 h-7 px-2 font-normal text-xs"
+								className="absolute top-2 right-2 h-7 px-2 text-xs font-normal"
 							>
 								Esc
 							</Button>

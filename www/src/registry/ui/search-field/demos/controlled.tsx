@@ -12,7 +12,7 @@ export default function Demo() {
 			<SearchField aria-label="Search" value={inputValue} onChange={setInputValue}>
 				<Input />
 			</SearchField>
-			<p className="text-fg-muted text-sm">mirrored search text: {inputValue}</p>
+			<p className="text-sm text-fg-muted">mirrored search text: {inputValue}</p>
 		</div>
 	);
 }

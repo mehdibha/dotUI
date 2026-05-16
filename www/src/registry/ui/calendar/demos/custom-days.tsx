@@ -45,7 +45,7 @@ export default function Demo() {
 										<span className="flex flex-col">
 											<span>{formattedDate}</span>
 											{!isOutsideMonth && (
-												<span className="in-selection-end:text-fg-on-accent/60 in-selection-start:text-fg-on-accent/60 text-fg-muted text-xs">
+												<span className="text-xs text-fg-muted in-selection-start:text-fg-on-accent/60 in-selection-end:text-fg-on-accent/60">
 													{getPrice(date)}
 												</span>
 											)}

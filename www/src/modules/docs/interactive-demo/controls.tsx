@@ -81,9 +81,9 @@ function ContextualHelp({ name, reference }: { name: string; reference?: Seriali
 				</Button>
 				<Popover placement="top" className="max-w-xs">
 					<DialogContent className="gap-2">
-						<h3 className="font-medium font-mono text-base">{name}</h3>
+						<h3 className="font-mono text-base font-medium">{name}</h3>
 
-						{reference.description && <p className="text-fg-muted text-sm">{reference.description}</p>}
+						{reference.description && <p className="text-sm text-fg-muted">{reference.description}</p>}
 
 						<code
 							className="font-mono text-[0.8125rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"

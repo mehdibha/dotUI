@@ -10,10 +10,10 @@ const { useStyles, styles } = createStyles(menuMeta, {
 				"**:data-separator:-mx-1 **:data-separator:my-1 **:data-separator:w-auto",
 			],
 			item: [
-				"relative flex w-full cursor-interactive select-none items-center gap-2 rounded-sm outline-hidden disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
+				"relative flex w-full cursor-interactive items-center gap-2 rounded-sm outline-hidden select-none disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
 				"focus:bg-highlight focus:text-fg-on-highlight",
 				"disabled:text-fg-disabled disabled:**:text-current",
-				"has-data-menu-item-description:has-[>svg]:pl-8 has-data-menu-item-description:flex-col has-data-menu-item-description:items-start has-data-menu-item-description:gap-0 has-data-menu-item-description:*:[svg]:absolute has-data-menu-item-description:*:[svg]:top-2 has-data-menu-item-description:*:[svg]:left-2",
+				"has-data-menu-item-description:flex-col has-data-menu-item-description:items-start has-data-menu-item-description:gap-0 has-data-menu-item-description:has-[>svg]:pl-8 has-data-menu-item-description:*:[svg]:absolute has-data-menu-item-description:*:[svg]:top-2 has-data-menu-item-description:*:[svg]:left-2",
 				"data-selection-mode:pr-8",
 				"*:[kbd]:ml-auto *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
 				// danger
@@ -23,7 +23,7 @@ const { useStyles, styles } = createStyles(menuMeta, {
 			itemLabel: [""],
 			itemDescription: ["text-fg-muted"],
 			section: ["scroll-my-1"],
-			sectionTitle: ["px-2 py-1.5 text-fg-muted text-xs"],
+			sectionTitle: ["px-2 py-1.5 text-xs text-fg-muted"],
 		},
 	},
 	density: {

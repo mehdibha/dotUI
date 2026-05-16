@@ -15,7 +15,7 @@ export function IconographyConfig() {
 				<FieldGroup className="gap-1">
 					{iconLibraries.map((lib) => (
 						<Radio key={lib.value} value={lib.value}>
-							<RadioControl className="justify-between rounded-lg border selected:border-border-control selected:bg-neutral-hover/80 p-4 selected:text-fg hover:bg-neutral">
+							<RadioControl className="justify-between rounded-lg border p-4 hover:bg-neutral selected:border-border-control selected:bg-neutral-hover/80 selected:text-fg">
 								<Label className="text-fg!">{lib.name}</Label>
 								<RadioIndicator />
 							</RadioControl>

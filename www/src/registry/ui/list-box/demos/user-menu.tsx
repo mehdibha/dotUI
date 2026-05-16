@@ -14,7 +14,7 @@ export default function Demo() {
 				</Avatar>
 				<div className="flex flex-col text-sm">
 					<p>Junior Garcia</p>
-					<p className="text-fg-muted text-xs">jrgarcia@example.com</p>
+					<p className="text-xs text-fg-muted">jrgarcia@example.com</p>
 				</div>
 			</div>
 			<Separator />

@@ -56,7 +56,7 @@ export function TOCScrollArea({ ref, className, ...props }: React.ComponentProps
 		<div
 			ref={mergeRefs(viewRef, ref)}
 			className={cn(
-				"mask-[linear-gradient(to_bottom,transparent,white_16px,white_calc(100%-16px),transparent)] relative ms-px min-h-0 overflow-auto py-3 text-sm [scrollbar-width:none]",
+				"relative ms-px min-h-0 overflow-auto mask-[linear-gradient(to_bottom,transparent,white_16px,white_calc(100%-16px),transparent)] py-3 text-sm [scrollbar-width:none]",
 				className,
 			)}
 			{...props}
@@ -158,7 +158,7 @@ function TOCItem({ item }: { item: TOCItemType }) {
 		<PrimitiveTOCItem
 			href={item.url}
 			className={cn(
-				"wrap-anywhere py-1 text-fg-muted text-sm transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
+				"py-1 text-sm wrap-anywhere text-fg-muted transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
 				item.depth <= 2 && "pl-3",
 				item.depth === 3 && "pl-6",
 				item.depth >= 4 && "pl-8",

@@ -18,7 +18,7 @@ import { TextField } from "@/registry/ui/text-field";
 export default function Demo() {
 	return (
 		<div className="w-sm space-y-4 rounded-lg border bg-muted p-8">
-			<h1 className="font-bold text-xl">Register</h1>
+			<h1 className="text-xl font-bold">Register</h1>
 			<FormPrimitives.Form
 				onSubmit={(e) => {
 					e.preventDefault();

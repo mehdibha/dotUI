@@ -35,7 +35,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 					{({ close }) => (
 						<div className="flex flex-col gap-12">
 							<div className="space-y-2">
-								<div className="font-medium text-fg-muted text-lg">Menu</div>
+								<div className="text-lg font-medium text-fg-muted">Menu</div>
 								<div className="flex flex-col gap-3">
 									<MobileLink to="/" onOpenChange={close}>
 										Home
@@ -52,7 +52,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 									return (
 										// oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
 										<div key={index} className="flex flex-col gap-3">
-											<div className="font-medium text-fg-muted text-lg">{group.name}</div>
+											<div className="text-lg font-medium text-fg-muted">{group.name}</div>
 											<div className="flex flex-col gap-3">
 												{group.children.map((item) => {
 													if (item.type === "page") {
@@ -90,7 +90,7 @@ function MobileLink({
 	className?: string;
 }) {
 	return (
-		<Link to={to} onClick={() => onOpenChange?.(false)} className={cn("font-medium text-2xl", className)}>
+		<Link to={to} onClick={() => onOpenChange?.(false)} className={cn("text-2xl font-medium", className)}>
 			{children}
 		</Link>
 	);

@@ -19,7 +19,7 @@ export default function Demo() {
 				</InputGroup>
 			</SearchField>
 			<TagGroup aria-label="Interest tags" selectionMode="multiple">
-				<TagList renderEmptyState={() => <p className="text-fg-muted text-xs">No results.</p>}>
+				<TagList renderEmptyState={() => <p className="text-xs text-fg-muted">No results.</p>}>
 					<Tag>News</Tag>
 					<Tag>Travel</Tag>
 					<Tag>Shopping</Tag>

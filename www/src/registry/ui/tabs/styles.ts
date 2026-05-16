@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
 			root: "flex gap-2",
 			list: "inline-flex w-fit items-center justify-center text-fg-muted",
 			tab: [
-				"focus-reset focus-visible:focus-ring relative isolate inline-flex flex-1 cursor-default select-none items-center justify-center whitespace-nowrap border border-transparent font-medium transition-[background-color,border-color,color,box-shadow]",
+				"relative isolate inline-flex flex-1 cursor-default items-center justify-center border border-transparent font-medium whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-none focus-visible:focus-ring",
 				"text-fg-muted hover:text-fg disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
 				"**:[svg]:pointer-events-none **:[svg]:shrink-0",
 				"[&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
@@ -41,7 +41,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
 					list: "gap-1 rounded-none bg-transparent p-[3px]",
 					tab: "rounded-md selected:text-fg",
 					selectionIndicator:
-						"orientation-vertical:top-0 orientation-vertical:-right-1 orientation-horizontal:bottom-[-5px] orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-vertical:h-full orientation-horizontal:w-full orientation-vertical:w-0.5 rounded-full bg-fg",
+						"rounded-full bg-fg orientation-horizontal:bottom-[-5px] orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-1 orientation-vertical:h-full orientation-vertical:w-0.5",
 				},
 			},
 		},

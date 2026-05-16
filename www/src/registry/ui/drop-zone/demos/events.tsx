@@ -50,7 +50,7 @@ const Draggable = ({ text }: { text: string }) => {
 			>
 				{text}
 			</button>
-			<span className="text-fg-muted text-xs">Drag me</span>
+			<span className="text-xs text-fg-muted">Drag me</span>
 		</div>
 	);
 };

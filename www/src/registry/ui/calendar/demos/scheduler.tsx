@@ -106,7 +106,7 @@ export default function Demo() {
 							{(date) => (
 								<CalendarCell
 									date={date}
-									className="focus-visible:focus-ring flex aspect-auto h-20 w-full cursor-pointer flex-col items-stretch justify-start gap-0.5 overflow-hidden rounded-md selected:bg-accent/15! p-2 text-left outside-month:text-fg-muted/40 selected:text-fg! outline-none transition-colors hover:bg-inverse/5!"
+									className="flex aspect-auto h-20 w-full cursor-pointer flex-col items-stretch justify-start gap-0.5 overflow-hidden rounded-md p-2 text-left transition-colors outline-none hover:bg-inverse/5! focus-visible:focus-ring outside-month:text-fg-muted/40 selected:bg-accent/15! selected:text-fg!"
 								>
 									{({ formattedDate, isOutsideMonth }) => {
 										const dayEvents = getEvents(date);
@@ -114,7 +114,7 @@ export default function Demo() {
 										const overflow = dayEvents.length - visible.length;
 										return (
 											<>
-												<span className="px-1 text-center font-medium text-xs">{formattedDate}</span>
+												<span className="px-1 text-center text-xs font-medium">{formattedDate}</span>
 												{!isOutsideMonth && dayEvents.length > 0 && (
 													<div className="flex min-w-0 flex-col items-stretch gap-0.5">
 														{visible.map((e) => (
@@ -141,13 +141,13 @@ export default function Demo() {
 				</Calendar>
 				<div className="flex w-full min-w-64 flex-col gap-3 border-t pt-4 lg:w-72 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-4">
 					<div>
-						<h4 className="font-medium text-sm">{selectedLabel}</h4>
-						<p className="text-fg-muted text-xs">
+						<h4 className="text-sm font-medium">{selectedLabel}</h4>
+						<p className="text-xs text-fg-muted">
 							{selectedEvents.length} {selectedEvents.length === 1 ? "event" : "events"}
 						</p>
 					</div>
 					{selectedEvents.length === 0 ? (
-						<p className="text-fg-muted text-sm">No events yet. Add one below.</p>
+						<p className="text-sm text-fg-muted">No events yet. Add one below.</p>
 					) : (
 						<ul className="flex flex-col gap-2">
 							{selectedEvents.map((e) => (

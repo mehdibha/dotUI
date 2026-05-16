@@ -32,15 +32,15 @@ const outlineField = tv({
 	base: "rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border-disabled disabled:bg-disabled",
 	variants: {
 		focus: {
-			self: "focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
+			self: "focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
 			group:
-				"group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted group-focus/combobox:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
+				"group-focus/combobox:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted",
 		},
 	},
 });
 
 const lineField = tv({
-	base: "border-border-field border-b transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border-disabled",
+	base: "border-b border-border-field transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border-disabled",
 	variants: {
 		focus: {
 			self: "focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
@@ -51,7 +51,7 @@ const lineField = tv({
 });
 
 const filledLineBottomField = tv({
-	base: "rounded-t-(--input-radius) border-border-field border-b bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border-disabled disabled:bg-disabled",
+	base: "rounded-t-(--input-radius) border-b border-border-field bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border-disabled disabled:bg-disabled",
 	variants: {
 		focus: {
 			self: "focus:not-invalid:border-border-focus",
@@ -65,9 +65,9 @@ const filledField = tv({
 	base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled",
 	variants: {
 		focus: {
-			self: "focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted focus:ring-2",
+			self: "focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
 			group:
-				"group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted group-focus/combobox:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2",
+				"group-focus/combobox:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted",
 		},
 	},
 });
@@ -94,21 +94,21 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				"**:data-input-control:flex-1 **:data-input-control:rounded-none **:data-input-control:border-0 **:data-input-control:bg-transparent **:data-input-control:ring-0",
 				"**:data-date-input:px-0 **:data-input:px-0",
 				"has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
-				"has-data-input:has-[[data-input-group-addon]:last-child]:pr-0 has-data-input:has-[[data-input-group-addon]:first-child]:pl-0",
+				"has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0",
 				"has-data-textarea:px-0",
 				"disabled:cursor-disabled disabled:text-fg-disabled",
-				"has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents **:data-tag-group:contents **:data-tag-list:contents **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text)",
+				"has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents",
 			],
 			inputGroupAddon: [
-				"flex cursor-text select-none items-center justify-center gap-(--addon-gap)",
+				"flex cursor-text items-center justify-center gap-(--addon-gap) select-none",
 				"text-fg-muted *:[svg]:not-with-[size]:size-(--icon-size)",
 				"group-has-data-textarea/input-group:w-full group-has-data-textarea/input-group:justify-start",
 				"**:data-button:rounded-[max(var(--radius-sm),calc(var(--input-radius)-(var(--addon-button-inset)-1px)))] group-has-data-input/input-group:**:data-button:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] group-has-data-input/input-group:**:[[data-button][data-icon-only]]:w-[calc(var(--input-h)-var(--addon-button-inset)*2)]",
 				"group-has-data-textarea/input-group:px-(--edge-to-text)",
-				"group-has-data-textarea/input-group:last:pb-(--edge-to-text) group-has-data-textarea/input-group:first:pt-(--edge-to-text)",
+				"group-has-data-textarea/input-group:first:pt-(--edge-to-text) group-has-data-textarea/input-group:last:pb-(--edge-to-text)",
 				"group-has-data-textarea/input-group:first:[&.border-b]:pb-(--edge-to-text) group-has-data-textarea/input-group:last:[&.border-t]:pt-(--edge-to-text)",
-				"group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text)",
-				"group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text)",
+				"group-has-data-textarea/input-group:has-[[data-button]:first-child]:pl-(--top-to-text) group-has-data-textarea/input-group:has-[[data-button]:last-child]:pr-(--top-to-text)",
+				"group-has-data-textarea/input-group:has-data-button:first:pt-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pb-(--top-to-text)",
 				"group-has-data-textarea/input-group:has-data-button:first:[&.border-b]:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:[&.border-t]:pt-(--top-to-text)",
 			],
 			input: [
@@ -121,7 +121,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
 				"disabled:cursor-disabled disabled:text-fg-disabled",
 			],
 			dateInputSegment:
-				"select-none rounded px-0.5 type-literal:px-0 outline-hidden placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled",
+				"rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
 		},
 		variants: {
 			size: {

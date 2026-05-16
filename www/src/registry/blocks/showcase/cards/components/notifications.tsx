@@ -63,7 +63,7 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 															{notification.content ? notification.content : <span>{notification.text}</span>}
 														</p>
 														<div className="mt-1 flex items-start justify-between gap-2">
-															<p className="text-fg-muted text-xs">{notification.timestamp}</p>
+															<p className="text-xs text-fg-muted">{notification.timestamp}</p>
 															{notification.action && (
 																<div className="mt-2 flex justify-end">
 																	<Button size="sm">{notification.action.label}</Button>

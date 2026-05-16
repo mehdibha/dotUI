@@ -21,7 +21,7 @@ export function Example({ component: Component, title, children, className, ...p
 		<div
 			className={cn(
 				"flex flex-col gap-1",
-				"[&_h3]:mt-0 [&_h3]:px-1.5 [&_h3]:py-2 [&_h3]:font-normal [&_h3]:text-fg-muted [&_h3]:text-sm [&_h3]:capitalize [&_h3]:tracking-normal",
+				"[&_h3]:mt-0 [&_h3]:px-1.5 [&_h3]:py-2 [&_h3]:text-sm [&_h3]:font-normal [&_h3]:tracking-normal [&_h3]:text-fg-muted [&_h3]:capitalize",
 				className,
 			)}
 			{...props}

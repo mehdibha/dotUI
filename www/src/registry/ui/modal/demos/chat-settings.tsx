@@ -250,14 +250,14 @@ export default function Demo() {
 									</Field>
 									<Field orientation="horizontal" className="items-center justify-between">
 										<FieldContent>
-											<p className="font-medium text-sm">Log out</p>
+											<p className="text-sm font-medium">Log out</p>
 											<Description>Log out of your account on this device.</Description>
 										</FieldContent>
 										<Button size="sm">Log Out</Button>
 									</Field>
 									<Field orientation="horizontal" className="items-center justify-between">
 										<FieldContent>
-											<p className="font-medium text-sm">Log out of all devices</p>
+											<p className="text-sm font-medium">Log out of all devices</p>
 											<Description>
 												This will log you out of all devices, including the current session. It may take up to 30
 												minutes for the changes to take effect.

@@ -75,7 +75,7 @@ const menu: MenuItem[] = [
 				].map((item) => (
 					<div key={item.name} className="flex items-center justify-between">
 						<div className="flex flex-col items-start gap-1">
-							<span className="text-[10px] text-fg-muted uppercase tracking-widest">{item.name}</span>
+							<span className="text-[10px] tracking-widest text-fg-muted uppercase">{item.name}</span>
 							<p className="font-medium">{item.value}</p>
 						</div>
 						<div className={`size-7 rounded-md border ${item.className}`} />
@@ -92,14 +92,14 @@ const menu: MenuItem[] = [
 			<div className="flex flex-col gap-1.5">
 				<div className="flex items-center justify-between">
 					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Heading</span>
+						<span className="text-[10px] tracking-widest text-fg-muted uppercase">Heading</span>
 						<p className="font-medium">Geist</p>
 					</div>
 					<p className="font-heading text-2xl leading-none tracking-tight">Ag</p>
 				</div>
 				<div className="flex items-center justify-between">
 					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Body</span>
+						<span className="text-[10px] tracking-widest text-fg-muted uppercase">Body</span>
 						<p className="font-medium">Geist</p>
 					</div>
 					<p className="font-body text-base leading-none">Ag</p>
@@ -182,7 +182,7 @@ export function CustomizerPanel() {
 			return (
 				<div className="-mt-1 flex items-center justify-between">
 					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Factor</span>
+						<span className="text-[10px] tracking-widest text-fg-muted uppercase">Factor</span>
 						<p className="font-medium tabular-nums">{numeric.toFixed(2)}x</p>
 					</div>
 					<div className="size-7 border" style={{ borderRadius: `calc(0.5rem * ${numeric})` }} />
@@ -194,7 +194,7 @@ export function CustomizerPanel() {
 			return (
 				<div className="-mt-1 flex items-center justify-between">
 					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] text-fg-muted uppercase tracking-widest">Mode</span>
+						<span className="text-[10px] tracking-widest text-fg-muted uppercase">Mode</span>
 						<p className="font-medium capitalize">{designSystem.density}</p>
 					</div>
 					<div className="flex flex-col items-end" style={{ gap: `${gapPx}px` }}>
@@ -210,7 +210,7 @@ export function CustomizerPanel() {
 				<div className="flex flex-col gap-1.5 text-left">
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col items-start gap-1">
-							<span className="text-[10px] text-fg-muted uppercase tracking-widest">Interactive</span>
+							<span className="text-[10px] tracking-widest text-fg-muted uppercase">Interactive</span>
 							<p className="font-medium">{cursorInteractive}</p>
 						</div>
 						<div
@@ -222,7 +222,7 @@ export function CustomizerPanel() {
 					</div>
 					<div className="flex items-center justify-between">
 						<div className="flex flex-col items-start gap-1">
-							<span className="text-[10px] text-fg-muted uppercase tracking-widest">Disabled</span>
+							<span className="text-[10px] tracking-widest text-fg-muted uppercase">Disabled</span>
 							<p className="font-medium">{cursorDisabled}</p>
 						</div>
 						<div
@@ -377,7 +377,7 @@ export function CustomizerPanel() {
 
 						{/* All components directly accessible from home */}
 						<div className="mt-2 flex flex-col gap-2">
-							<div className="px-1 text-[10px] text-fg-muted uppercase tracking-widest">Components</div>
+							<div className="px-1 text-[10px] tracking-widest text-fg-muted uppercase">Components</div>
 							<AllComponentsView onSelect={(comp) => push(comp)} />
 						</div>
 					</div>
@@ -422,7 +422,7 @@ function ViewHeader({ title, onBack }: { title: string; onBack: () => void }) {
 			<Button variant="quiet" size="sm" isIconOnly onPress={onBack} aria-label="Back" className="size-6">
 				<ChevronLeftIcon />
 			</Button>
-			<h2 className="font-medium text-sm">{title}</h2>
+			<h2 className="text-sm font-medium">{title}</h2>
 		</div>
 	);
 }

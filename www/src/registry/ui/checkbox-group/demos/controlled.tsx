@@ -27,7 +27,7 @@ export default function Demo() {
 					</Checkbox>
 				</FieldGroup>
 			</CheckboxGroup>
-			<p className="text-fg-muted text-xs">
+			<p className="text-xs text-fg-muted">
 				{frameworks.length === 0 ? "You haven't selected any frameworks." : `You selected ${frameworks.join(", ")}.`}
 			</p>
 		</div>

@@ -13,7 +13,7 @@ export const Route = createFileRoute("/playground")({
 function RouteComponent() {
 	return (
 		<div className="mx-auto flex max-w-2xl flex-col gap-6 px-6 py-10">
-			<h1 className="font-semibold text-2xl">Playground</h1>
+			<h1 className="text-2xl font-semibold">Playground</h1>
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non neque at arcu laoreet congue. Suspendisse
 				potenti. Sed ullamcorper, ipsum vitae tincidunt bibendum, massa mi interdum justo, nec condimentum sem lacus sit
@@ -31,7 +31,7 @@ function RouteComponent() {
 			<DialogTrigger>
 				<Button>Open dialog</Button>
 				<ModalOverlay isDismissable className="absolute top-0 left-0 z-50 h-(--page-height) w-full bg-black/40">
-					<div className="sticky top-0 h-(--visual-viewport-height) bg-blue-500/40 w-full flex items-end">
+					<div className="sticky top-0 flex h-(--visual-viewport-height) w-full items-end bg-blue-500/40">
 						<Modal className="w-full rounded-t-xl bg-muted/40 p-4">
 							<Dialog className="flex flex-col gap-30">
 								<p>this is the dialog content</p>

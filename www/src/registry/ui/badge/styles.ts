@@ -4,7 +4,7 @@ import badgeMeta from "./meta";
 
 const { useStyles, styles } = createStyles(badgeMeta, {
 	base: {
-		base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-(--badge-radius) font-medium text-xs [&>svg]:pointer-events-none",
+		base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-(--badge-radius) text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
 		variants: {
 			appearance: {
 				solid: "bg-(--color) text-(--fg)",
@@ -20,9 +20,9 @@ const { useStyles, styles } = createStyles(badgeMeta, {
 				info: "[--color:var(--color-info)] [--fg:var(--color-fg-on-info)]",
 			},
 			size: {
-				sm: "h-4.5 min-w-4.5 px-1.5 [&>svg]:size-2.5 **:data-loader:*:[svg]:size-2.5",
-				md: "h-5 min-w-5 px-1.75 [&>svg]:size-3 **:data-loader:*:[svg]:size-3",
-				lg: "h-5.5 min-w-5.5 px-2.25 [&>svg]:size-3.5 **:data-loader:*:[svg]:size-3.5",
+				sm: "h-4.5 min-w-4.5 px-1.5 **:data-loader:*:[svg]:size-2.5 [&>svg]:size-2.5",
+				md: "h-5 min-w-5 px-1.75 **:data-loader:*:[svg]:size-3 [&>svg]:size-3",
+				lg: "h-5.5 min-w-5.5 px-2.25 **:data-loader:*:[svg]:size-3.5 [&>svg]:size-3.5",
 			},
 		},
 		defaultVariants: {

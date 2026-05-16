@@ -51,7 +51,7 @@ export function CodeBlock({ title, icon, actions: actionsProp, children, classNa
 						<div
 							className={cn(
 								"absolute top-1.75 right-1.75 gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
-								"backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))] **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))]",
+								"backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]",
 							)}
 						>
 							{actions}
@@ -81,7 +81,7 @@ export function Pre({ children, className, ...props }: React.ComponentProps<"pre
 				"**:[.diff.add]:bg-success/15 **:[.diff.add]:before:text-success **:[.diff.add]:before:content-['+']",
 				"**:[.diff.remove]:bg-danger/20 **:[.diff.remove]:before:text-danger **:[.diff.remove]:before:content-['-']",
 				// line numbers
-				"in-data-line-numbers:**:[.line]:pl-9! **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:after:content-[counter(line)] **:[.line]:[counter-increment:line]",
+				"**:[.line]:[counter-increment:line] **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:pl-9! in-data-line-numbers:**:[.line]:after:content-[counter(line)]",
 				className,
 			)}
 			{...props}

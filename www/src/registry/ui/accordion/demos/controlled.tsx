@@ -10,7 +10,7 @@ export default function Demo() {
 
 	return (
 		<div className="space-y-4">
-			<p className="text-fg-muted text-sm">Expanded: {[...expandedKeys].join(", ") || "none"}</p>
+			<p className="text-sm text-fg-muted">Expanded: {[...expandedKeys].join(", ") || "none"}</p>
 			<Accordion expandedKeys={expandedKeys} onExpandedChange={(keys) => setExpandedKeys(keys as Set<string>)}>
 				<Disclosure id="getting-started">
 					<DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>

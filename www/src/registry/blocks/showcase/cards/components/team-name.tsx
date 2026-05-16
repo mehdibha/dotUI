@@ -21,7 +21,7 @@ export function TeamName({ className, ...props }: React.ComponentProps<"div">) {
 				</TextField>
 			</CardContent>
 			<CardFooter className="flex items-center justify-between gap-4">
-				<p className="text-fg-muted text-sm">Please use 32 characters at maximum.</p>
+				<p className="text-sm text-fg-muted">Please use 32 characters at maximum.</p>
 				<Button variant="primary">Save</Button>
 			</CardFooter>
 		</Card>

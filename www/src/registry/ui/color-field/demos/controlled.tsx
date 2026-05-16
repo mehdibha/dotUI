@@ -17,7 +17,7 @@ export default function Demo() {
 				<Label>Color</Label>
 				<Input />
 			</ColorField>
-			<p className="text-fg-muted text-sm">Current color value: {color?.toString("hex")}</p>
+			<p className="text-sm text-fg-muted">Current color value: {color?.toString("hex")}</p>
 		</div>
 	);
 }

@@ -6,7 +6,7 @@ export function PageLastUpdate({ date, className, ...props }: { date: Date } & R
 	if (!date) return null;
 
 	return (
-		<p className={cn("text-fg-muted text-sm", className)} {...props}>
+		<p className={cn("text-sm text-fg-muted", className)} {...props}>
 			Last updated on {new Date(date).toLocaleDateString()}
 		</p>
 	);

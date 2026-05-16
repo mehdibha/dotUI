@@ -15,7 +15,7 @@ export function PopoverPlayground({ placement = "bottom" }: PopoverPlaygroundPro
 			<Popover placement={placement}>
 				<DialogContent className="w-56">
 					<DialogTitle>Popover Title</DialogTitle>
-					<p className="text-fg-muted text-sm">This is a popover with some content. You can put any content here.</p>
+					<p className="text-sm text-fg-muted">This is a popover with some content. You can put any content here.</p>
 				</DialogContent>
 			</Popover>
 		</Dialog>

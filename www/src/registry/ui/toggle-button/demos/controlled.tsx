@@ -12,7 +12,7 @@ export default function Demo() {
 			<ToggleButton isIconOnly isSelected={isSelected} onChange={setSelected} aria-label="Toggle pin">
 				<PinIcon className="rotate-45" />
 			</ToggleButton>
-			<span className="text-fg-muted text-sm">state: {isSelected ? "on" : "off"}</span>
+			<span className="text-sm text-fg-muted">state: {isSelected ? "on" : "off"}</span>
 		</>
 	);
 }

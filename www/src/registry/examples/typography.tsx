@@ -8,7 +8,7 @@ export default function TypographyGroupExamples() {
 			<Example title="Text">
 				<div className="flex flex-col gap-3">
 					<Text>This is body text styled by the design system.</Text>
-					<Text className="text-fg-muted text-sm">Secondary muted text, useful for captions and hints.</Text>
+					<Text className="text-sm text-fg-muted">Secondary muted text, useful for captions and hints.</Text>
 				</div>
 			</Example>
 		</Examples>

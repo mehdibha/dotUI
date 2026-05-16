@@ -73,7 +73,7 @@ export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
 							<ChevronRightIcon className="size-4 text-fg-muted" />
 						</div>
 						{count > 0 && (
-							<div className="flex items-center gap-2 text-fg-muted/60 text-xs">
+							<div className="flex items-center gap-2 text-xs text-fg-muted/60">
 								<span className="flex items-center gap-1">
 									<SlidersHorizontalIcon className="size-3" />
 									{count} {count === 1 ? "param" : "params"}
@@ -129,13 +129,13 @@ interface ComponentDetailViewProps {
 export function ComponentDetailView({ componentName, selectedParams, onParamChange }: ComponentDetailViewProps) {
 	const meta = componentMetaMap.get(componentName);
 	if (!meta) {
-		return <p className="text-fg-muted text-sm">Component not found.</p>;
+		return <p className="text-sm text-fg-muted">Component not found.</p>;
 	}
 
 	const params = meta.params ? Object.entries(meta.params) : [];
 
 	if (params.length === 0) {
-		return <p className="text-fg-muted text-sm">No customization options available for this component.</p>;
+		return <p className="text-sm text-fg-muted">No customization options available for this component.</p>;
 	}
 
 	return (
@@ -164,7 +164,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 	if (def.kind === "enum") {
 		return (
 			<div className="flex flex-col gap-2">
-				<span className="font-medium text-fg-muted text-xs">{toTitleCase(paramName)}</span>
+				<span className="text-xs font-medium text-fg-muted">{toTitleCase(paramName)}</span>
 				<Select selectedKey={selected ?? def.default} onSelectionChange={(key) => onChange(key as string)}>
 					<Button size="sm" className="w-full">
 						<SelectValue />
@@ -180,7 +180,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 						</ListBox>
 					</Popover>
 				</Select>
-				{def.description && <p className="text-fg-muted/60 text-xs">{def.description}</p>}
+				{def.description && <p className="text-xs text-fg-muted/60">{def.description}</p>}
 			</div>
 		);
 	}
@@ -197,7 +197,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 
 	return (
 		<div className="flex flex-col gap-2">
-			<span className="font-medium text-fg-muted text-xs">{toTitleCase(paramName)}</span>
+			<span className="text-xs font-medium text-fg-muted">{toTitleCase(paramName)}</span>
 			<Select selectedKey={selected ?? def.default} onSelectionChange={(key) => onChange(key as string)}>
 				<Button size="sm" className="w-full">
 					<SelectValue />
@@ -213,7 +213,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 					</ListBox>
 				</Popover>
 			</Select>
-			{def.description && <p className="text-fg-muted/60 text-xs">{def.description}</p>}
+			{def.description && <p className="text-xs text-fg-muted/60">{def.description}</p>}
 		</div>
 	);
 }
@@ -235,7 +235,7 @@ export function GroupedComponentsView({ onSelect }: GroupedComponentsViewProps) 
 							<span>{toTitleCase(group)}</span>
 							<ChevronRightIcon className="size-4 text-fg-muted" />
 						</div>
-						<div className="flex items-center gap-2 text-fg-muted/60 text-xs">
+						<div className="flex items-center gap-2 text-xs text-fg-muted/60">
 							<span>
 								{componentsInGroup.length} {componentsInGroup.length === 1 ? "component" : "components"}
 							</span>
@@ -258,12 +258,12 @@ export function GroupDetailView({ groupName, onSelectComponent }: GroupDetailVie
 	const componentsInGroup = getComponentsInGroup(groupName);
 
 	if (componentsInGroup.length === 0) {
-		return <p className="text-fg-muted text-sm">No components in this group.</p>;
+		return <p className="text-sm text-fg-muted">No components in this group.</p>;
 	}
 
 	return (
 		<div className="mt-4 flex flex-col gap-3">
-			<p className="text-fg-muted/80 text-xs">
+			<p className="text-xs text-fg-muted/80">
 				Components in this group share the same visual style. Pick a component below to configure it.
 			</p>
 			<div className="flex flex-col gap-2">
@@ -275,7 +275,7 @@ export function GroupDetailView({ groupName, onSelectComponent }: GroupDetailVie
 								<span>{toTitleCase(comp.name)}</span>
 								<ChevronRightIcon className="size-4 text-fg-muted" />
 							</div>
-							{count > 0 && <span className="text-fg-muted/60 text-xs">{count} params</span>}
+							{count > 0 && <span className="text-xs text-fg-muted/60">{count} params</span>}
 						</ButtonPrimitives.Button>
 					);
 				})}

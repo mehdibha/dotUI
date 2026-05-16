@@ -33,7 +33,7 @@ export default function Demo() {
 									</DialogHeader>
 									<DialogBody>
 										<p>Drag me down or click outside to close just this one.</p>
-										<p className="mt-2 text-fg-muted text-sm">The parent stays open underneath.</p>
+										<p className="mt-2 text-sm text-fg-muted">The parent stays open underneath.</p>
 									</DialogBody>
 									<DialogFooter>
 										<Dialog>

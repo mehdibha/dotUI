@@ -93,7 +93,7 @@ export function Type({ type, className }: TypeProps) {
 	if (!content) return null;
 
 	return (
-		<code className={cn("whitespace-pre-wrap font-mono text-[0.8125rem] leading-relaxed", className)}>{content}</code>
+		<code className={cn("font-mono text-[0.8125rem] leading-relaxed whitespace-pre-wrap", className)}>{content}</code>
 	);
 }
 
@@ -493,7 +493,7 @@ function InterfaceTypeView({ iface }: { iface: TInterface }) {
 				return (
 					<div key={key} className="pl-4">
 						{prop.type === "method" ? <MethodType method={prop} /> : <PropertyType prop={prop} />}
-						{prop.description && <div className="mt-0.5 text-fg-muted text-xs">{prop.description}</div>}
+						{prop.description && <div className="mt-0.5 text-xs text-fg-muted">{prop.description}</div>}
 					</div>
 				);
 			})}

@@ -1,7 +1,7 @@
 export function Footer() {
 	return (
 		<div className="container flex items-center justify-center py-10">
-			<p className="text-fg-muted text-sm">
+			<p className="text-sm text-fg-muted">
 				Built with passion by{" "}
 				<a
 					href="https://x.com/mehdibha"

@@ -13,8 +13,8 @@ export function RadiusConfig({ value, onChange }: { value: string; onChange: (va
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex items-center justify-between">
-				<span className="font-medium text-fg-muted text-xs">Radius factor</span>
-				<span className="font-medium text-fg text-xs tabular-nums">{numeric.toFixed(2)}x</span>
+				<span className="text-xs font-medium text-fg-muted">Radius factor</span>
+				<span className="text-xs font-medium text-fg tabular-nums">{numeric.toFixed(2)}x</span>
 			</div>
 			<Slider
 				aria-label="Radius factor"

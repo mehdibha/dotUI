@@ -8,8 +8,8 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
 			tagGroup: ["group/tag-group flex flex-col gap-2"],
 			tagList: ["flex flex-wrap items-center outline-hidden", "empty:text-fg-muted", "gap-1"],
 			tag: [
-				"group/tag relative inline-flex w-fit shrink-0 cursor-default select-none items-center justify-center gap-1 whitespace-nowrap rounded-(--tag-radius) font-medium outline-hidden transition-colors data-react-aria-pressable:cursor-interactive",
-				"bg-(--neutral-300) selected:bg-accent-muted selected:text-fg-accent text-fg-on-neutral",
+				"group/tag relative inline-flex w-fit shrink-0 cursor-default items-center justify-center gap-1 rounded-(--tag-radius) font-medium whitespace-nowrap outline-hidden transition-colors select-none data-react-aria-pressable:cursor-interactive",
+				"bg-(--neutral-300) text-fg-on-neutral selected:bg-accent-muted selected:text-fg-accent",
 				// svg
 				"**:[svg]:pointer-events-none **:[svg]:shrink-0",
 				// focus

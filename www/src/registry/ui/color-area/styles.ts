@@ -4,7 +4,7 @@ import colorAreaMeta from "./meta";
 
 const { useStyles, styles } = createStyles(colorAreaMeta, {
 	base: {
-		base: "block aspect-square in-data-dialog:w-full min-w-20 rounded-(--color-area-radius) disabled:[background:var(--color-disabled)]!",
+		base: "block aspect-square min-w-20 rounded-(--color-area-radius) disabled:[background:var(--color-disabled)]! in-data-dialog:w-full",
 	},
 	density: {
 		compact: {
