@@ -399,7 +399,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -451,7 +451,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -478,7 +478,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -505,7 +505,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -532,7 +532,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -559,7 +559,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -586,7 +586,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -613,7 +613,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -640,7 +640,7 @@
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 								"name": "HTMLInputElement"
 							}
 						]
@@ -908,20 +908,20 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
 			"name": "HTMLInputElement",
 			"extends": [
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLElement",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLElement",
 					"name": "HTMLElement"
 				},
 				{
 					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:PopoverInvokerElement",
-					"name": "PopoverInvokerElement"
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:PopoverTargetAttributes",
+					"name": "PopoverTargetAttributes"
 				}
 			],
 			"properties": {
@@ -933,7 +933,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`accept`** property of the HTMLInputElement interface reflects the input element's `accept` attribute, generally a comma-separated list of unique file type specifiers providing a hint for the expected file type for an `<input>` of type `file`.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/accept)"
+					"description": "The **`accept`** property of the HTMLInputElement interface reflects the <input> element's accept attribute, generally a comma-separated list of unique file type specifiers providing a hint for the expected file type for an <input> of type file. If the attribute is not explicitly set, the accept property is an empty string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/accept)"
 				},
 				"accessKey": {
 					"type": "property",
@@ -1033,6 +1033,10 @@
 											{
 												"type": "identifier",
 												"name": "\"close\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"command\""
 											},
 											{
 												"type": "identifier",
@@ -1451,7 +1455,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:AddEventListenerOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:AddEventListenerOptions",
 											"name": "AddEventListenerOptions"
 										}
 									]
@@ -1692,6 +1696,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "close"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "command"
 												}
 											]
 										},
@@ -2497,7 +2510,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`alt`** property of the HTMLInputElement interface defines the textual label for the button for users and user agents who cannot use the image.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/alt)"
+					"description": "The **`alt`** property of the HTMLInputElement interface defines the textual label for the button for users and user agents who cannot use the image. It reflects the <input> element's alt attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/alt)"
 				},
 				"animate": {
 					"type": "method",
@@ -2516,7 +2529,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:PropertyIndexedKeyframes",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:PropertyIndexedKeyframes",
 											"name": "PropertyIndexedKeyframes"
 										},
 										{
@@ -2545,7 +2558,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:KeyframeAnimationOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:KeyframeAnimationOptions",
 											"name": "KeyframeAnimationOptions"
 										}
 									]
@@ -2556,7 +2569,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Animation",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Animation",
 							"name": "Animation"
 						},
 						"typeParameters": []
@@ -2615,7 +2628,7 @@
 									"name": "T",
 									"constraint": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 										"name": "Node"
 									},
 									"default": null
@@ -2629,7 +2642,7 @@
 							"name": "T",
 							"constraint": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 								"name": "Node"
 							},
 							"default": null
@@ -2640,7 +2653,7 @@
 								"name": "T",
 								"constraint": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 									"name": "Node"
 								},
 								"default": null
@@ -3608,7 +3621,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLSlotElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLSlotElement",
 								"name": "HTMLSlotElement"
 							}
 						]
@@ -3625,13 +3638,13 @@
 						"parameters": [],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ElementInternals",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ElementInternals",
 							"name": "ElementInternals"
 						},
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`HTMLElement.attachInternals()`** method returns an ElementInternals object.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/attachInternals)"
+					"description": "The **`HTMLElement.attachInternals()`** method returns an ElementInternals object. This method allows a custom element to participate in HTML forms. The ElementInternals interface provides utilities for working with these elements in the same way you would work with any standard HTML form element, and also exposes the Accessibility Object Model to the element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/attachInternals)"
 				},
 				"attachShadow": {
 					"type": "method",
@@ -3644,7 +3657,7 @@
 								"name": "init",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ShadowRootInit",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ShadowRootInit",
 									"name": "ShadowRootInit"
 								},
 								"optional": false,
@@ -3653,7 +3666,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ShadowRoot",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ShadowRoot",
 							"name": "ShadowRoot"
 						},
 						"typeParameters": []
@@ -3677,19 +3690,19 @@
 					"name": "attributes",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:NamedNodeMap",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:NamedNodeMap",
 						"name": "NamedNodeMap"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`Element.attributes`** property returns a live collection of all attribute nodes registered to the specified node.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/attributes)"
+					"description": "The **`Element.attributes`** property returns a live collection of all attribute nodes registered to the specified node. It is a NamedNodeMap, not an Array, so it has no Array methods and the Attr nodes' indexes may differ among browsers. To be more specific, attributes is a key/value pair of strings that represents any information regarding that attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/attributes)"
 				},
 				"attributeStyleMap": {
 					"type": "property",
 					"name": "attributeStyleMap",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:StylePropertyMap",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:StylePropertyMap",
 						"name": "StylePropertyMap"
 					},
 					"optional": false,
@@ -3704,7 +3717,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`autocapitalize`** property of the HTMLElement interface represents the element's capitalization behavior for user input.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/autocapitalize)"
+					"description": "The **`autocapitalize`** property of the HTMLElement interface represents the element's capitalization behavior for user input. It is available on all HTML elements, though it doesn't affect all of them, including:\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/autocapitalize)"
 				},
 				"autocomplete": {
 					"type": "property",
@@ -3715,7 +3728,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`autocomplete`** property of the HTMLInputElement interface indicates whether the value of the control can be automatically completed by the browser.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/autocomplete)"
+					"description": "The **`autocomplete`** property of the HTMLInputElement interface indicates whether the value of the control can be automatically completed by the browser. It reflects the <input> element's autocomplete attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/autocomplete)"
 				},
 				"autocorrect": {
 					"type": "property",
@@ -3806,7 +3819,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`capture`** property of the HTMLInputElement interface reflects the input element's `capture` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/capture)"
+					"description": "The **`capture`** property of the HTMLInputElement interface reflects the <input> element's capture attribute. Only relevant to the <input> of type file, the property and attribute specify whether, a new file should be captured from a user-facing (user) or outward facing (environment) camera or microphone. The type of file is defined the accept attribute. If the attribute is not explicitly set, the capture property is an empty string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/capture)"
 				},
 				"CDATA_SECTION_NODE": {
 					"type": "property",
@@ -3841,7 +3854,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`checkValidity()`** method of the HTMLInputElement interface returns a boolean value which indicates if the element meets any constraint validation rules applied to it.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/checkValidity)"
+					"description": "The **`checkValidity()`** method of the HTMLInputElement interface returns a boolean value which indicates if the element meets any constraint validation rules applied to it. If false, the method also fires an invalid event on the element. Because there's no default browser behavior for checkValidity(), canceling this invalid event has no effect.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/checkValidity)"
 				},
 				"checkVisibility": {
 					"type": "method",
@@ -3860,7 +3873,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:CheckVisibilityOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:CheckVisibilityOptions",
 											"name": "CheckVisibilityOptions"
 										}
 									]
@@ -3894,27 +3907,27 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:NodeListOf",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:NodeListOf",
 							"name": "NodeListOf"
 						},
 						"typeParameters": [
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
 								"name": "ChildNode"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The read-only **`childNodes`** property of the Node interface returns a live the first child node is assigned index `0`.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/childNodes)"
+					"description": "The read-only **`childNodes`** property of the Node interface returns a live NodeList of child nodes of the given element where the first child node is assigned index 0. Child nodes include elements, text and comments.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/childNodes)"
 				},
 				"children": {
 					"type": "property",
 					"name": "children",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLCollection",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLCollection",
 						"name": "HTMLCollection"
 					},
 					"optional": false,
@@ -3926,12 +3939,12 @@
 					"name": "classList",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:DOMTokenList",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:DOMTokenList",
 						"name": "DOMTokenList"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`Element.classList`** is a read-only property that returns a live DOMTokenList collection of the `class` attributes of the element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/classList)"
+					"description": "The read-only **`classList`** property of the Element interface contains a live DOMTokenList collection representing the class attribute of the element. This can then be used to manipulate the class list.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/classList)"
 				},
 				"className": {
 					"type": "property",
@@ -3941,7 +3954,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`className`** property of the of the specified element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/className)"
+					"description": "The **`className`** property of the Element interface gets and sets the value of the class attribute of the specified element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/className)"
 				},
 				"click": {
 					"type": "method",
@@ -3955,7 +3968,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`HTMLElement.click()`** method simulates a mouse click on an element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/click)"
+					"description": "The **`HTMLElement.click()`** method simulates a mouse click on an element. When called on an element, the element's click event is fired (unless its disabled attribute is set).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/click)"
 				},
 				"clientHeight": {
 					"type": "property",
@@ -3965,7 +3978,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`clientHeight`** read-only property of the Element interface is zero for elements with no CSS or inline layout boxes; otherwise, it's the inner height of an element in pixels.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientHeight)"
+					"description": "The **`clientHeight`** read-only property of the Element interface is zero for elements with no CSS or inline layout boxes; otherwise, it's the inner height of an element in pixels. It includes padding but excludes borders, margins, and horizontal scrollbars (if present).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientHeight)"
 				},
 				"clientLeft": {
 					"type": "property",
@@ -3975,7 +3988,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`clientLeft`** read-only property of the Element interface returns the width of the left border of an element in pixels.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientLeft)"
+					"description": "The **`clientLeft`** read-only property of the Element interface returns the width of the left border of an element in pixels. It includes the width of the vertical scrollbar if the text direction of the element is right-to-left and if there is an overflow causing a left vertical scrollbar to be rendered. clientLeft does not include the left margin or the left padding.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientLeft)"
 				},
 				"clientTop": {
 					"type": "property",
@@ -3995,7 +4008,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`clientWidth`** read-only property of the Element interface is zero for inline elements and elements with no CSS; otherwise, it's the inner width of an element in pixels.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientWidth)"
+					"description": "The **`clientWidth`** read-only property of the Element interface is zero for inline elements and elements with no CSS; otherwise, it's the inner width of an element in pixels. It includes padding but excludes borders, margins, and vertical scrollbars (if present).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/clientWidth)"
 				},
 				"cloneNode": {
 					"type": "method",
@@ -4023,13 +4036,13 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 							"name": "Node"
 						},
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`cloneNode()`** method of the Node interface returns a duplicate of the node on which this method was called.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/cloneNode)"
+					"description": "The **`cloneNode()`** method of the Node interface returns a duplicate of the node on which this method was called. Its parameter controls if the subtree contained in the node is also cloned or not.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/cloneNode)"
 				},
 				"closest": {
 					"type": "method",
@@ -5567,7 +5580,7 @@
 								"name": "other",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 									"name": "Node"
 								},
 								"optional": false,
@@ -5590,7 +5603,7 @@
 						"parameters": [],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:StylePropertyMapReadOnly",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:StylePropertyMapReadOnly",
 							"name": "StylePropertyMapReadOnly"
 						},
 						"typeParameters": []
@@ -5615,7 +5628,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 											"name": "Node"
 										}
 									]
@@ -5630,7 +5643,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`contains()`** method of the Node interface returns a boolean value indicating whether a node is a descendant of a given node, that is the node itself, one of its direct children (Node.childNodes), one of the children's direct children, and so on.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/contains)"
+					"description": "The **`contains()`** method of the Node interface returns a boolean value indicating whether a node is a descendant of a given node, that is the node itself, one of its direct children (childNodes), one of the children's direct children, and so on.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/contains)"
 				},
 				"contentEditable": {
 					"type": "property",
@@ -5650,14 +5663,34 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`currentCSSZoom`** read-only property of the Element interface provides the 'effective' CSS `zoom` of an element, taking into account the zoom applied to the element and all its parent elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/currentCSSZoom)"
+					"description": "The **`currentCSSZoom`** read-only property of the Element interface provides the \"effective\" CSS zoom of an element, taking into account the zoom applied to the element and all its parent elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/currentCSSZoom)"
+				},
+				"customElementRegistry": {
+					"type": "property",
+					"name": "customElementRegistry",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:CustomElementRegistry",
+								"name": "CustomElementRegistry"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
 				},
 				"dataset": {
 					"type": "property",
 					"name": "dataset",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:DOMStringMap",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:DOMStringMap",
 						"name": "DOMStringMap"
 					},
 					"optional": false,
@@ -5672,7 +5705,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`defaultChecked`** property of the HTMLInputElement interface specifies the default checkedness state of the element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/defaultChecked)"
+					"description": "The **`defaultChecked`** property of the HTMLInputElement interface specifies the default checkedness state of the element. This property reflects the <input> element's checked attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/defaultChecked)"
 				},
 				"defaultValue": {
 					"type": "property",
@@ -5682,7 +5715,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`defaultValue`** property of the HTMLInputElement interface indicates the original (or default) value of the input element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/defaultValue)"
+					"description": "The **`defaultValue`** property of the HTMLInputElement interface indicates the original (or default) value of the <input> element. It reflects the element's value attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/defaultValue)"
 				},
 				"dir": {
 					"type": "property",
@@ -5692,7 +5725,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`HTMLElement.dir`** property indicates the text writing directionality of the content of the current element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/dir)"
+					"description": "The **`HTMLElement.dir`** property indicates the text writing directionality of the content of the current element. It reflects the element's dir attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/dir)"
 				},
 				"dirName": {
 					"type": "property",
@@ -5702,7 +5735,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`dirName`** property of the HTMLInputElement interface is the directionality of the element and enables the submission of that value.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/dirName)"
+					"description": "The **`dirName`** property of the HTMLInputElement interface is the directionality of the element and enables the submission of that value. It reflects the value of the <input> element's dirName attribute. This property can be retrieved or set.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/dirName)"
 				},
 				"disabled": {
 					"type": "property",
@@ -5712,7 +5745,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`HTMLInputElement.disabled`** property is a boolean value that reflects the `disabled` HTML attribute, which indicates whether the control is disabled.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/disabled)"
+					"description": "The **`HTMLInputElement.disabled`** property is a boolean value that reflects the disabled HTML attribute, which indicates whether the control is disabled. If it is disabled, it does not accept clicks. A disabled element is unusable and un-clickable.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/disabled)"
 				},
 				"dispatchEvent": {
 					"type": "method",
@@ -5737,7 +5770,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`dispatchEvent()`** method of the EventTarget sends an Event to the object, (synchronously) invoking the affected event listeners in the appropriate order.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/dispatchEvent)"
+					"description": "The **`dispatchEvent()`** method of the EventTarget sends an Event to the object, (synchronously) invoking the affected event listeners in the appropriate order. The normal event processing rules (including the capturing and optional bubbling phase) also apply to events dispatched manually with dispatchEvent().\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/dispatchEvent)"
 				},
 				"DOCUMENT_FRAGMENT_NODE": {
 					"type": "property",
@@ -5902,14 +5935,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FileList",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FileList",
 								"name": "FileList"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`HTMLInputElement.files`** property allows you to access the FileList selected with the `<input type='file'>` element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/files)"
+					"description": "The **`HTMLInputElement.files`** property allows you to access the FileList selected with the <input type=\"file\"> element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/files)"
 				},
 				"firstChild": {
 					"type": "property",
@@ -5922,14 +5955,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
 								"name": "ChildNode"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The read-only **`firstChild`** property of the Node interface returns the node's first child in the tree, or `null` if the node has no children.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/firstChild)"
+					"description": "The read-only **`firstChild`** property of the Node interface returns the node's first child in the tree, or null if the node has no children.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/firstChild)"
 				},
 				"firstElementChild": {
 					"type": "property",
@@ -5967,7 +6000,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FocusOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FocusOptions",
 											"name": "FocusOptions"
 										}
 									]
@@ -5995,14 +6028,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLFormElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLFormElement",
 								"name": "HTMLFormElement"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`form`** read-only property of the HTMLInputElement interface returns an HTMLFormElement object that owns this input, or `null` if this input is not owned by any form.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/form)"
+					"description": "The **`form`** read-only property of the HTMLInputElement interface returns an HTMLFormElement object that owns this <input>, or null if this input is not owned by any form.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/form)"
 				},
 				"formAction": {
 					"type": "property",
@@ -6012,7 +6045,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`formAction`** property of the HTMLInputElement interface is the URL of the program that is executed on the server when the form that owns this control is submitted.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formAction)"
+					"description": "The **`formAction`** property of the HTMLInputElement interface is the URL of the program that is executed on the server when the form that owns this control is submitted. It reflects the value of the <input>'s formaction attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formAction)"
 				},
 				"formEnctype": {
 					"type": "property",
@@ -6022,7 +6055,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`formEnctype`** property of the HTMLInputElement interface is the MIME_type of the content sent to the server when the `<input>` with the `formEnctype` is the method of form submission.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formEnctype)"
+					"description": "The **`formEnctype`** property of the HTMLInputElement interface is the MIME type of the content sent to the server when the <input> with the formEnctype is the method of form submission. It reflects the value of the <input>'s formenctype attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formEnctype)"
 				},
 				"formMethod": {
 					"type": "property",
@@ -6032,7 +6065,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`formMethod`** property of the HTMLInputElement interface is the HTTP method used to submit the form if the input element is the control that submits the form.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formMethod)"
+					"description": "The **`formMethod`** property of the HTMLInputElement interface is the HTTP method used to submit the <form> if the <input> element is the control that submits the form. It reflects the value of the <input>'s formmethod attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formMethod)"
 				},
 				"formNoValidate": {
 					"type": "property",
@@ -6042,7 +6075,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`formNoValidate`** property of the HTMLInputElement interface is a boolean value indicating if the form will bypass constraint validation when submitted via the input.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formNoValidate)"
+					"description": "The **`formNoValidate`** property of the HTMLInputElement interface is a boolean value indicating if the <form> will bypass constraint validation when submitted via the <input>. It reflects the <input> element's formnovalidate attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formNoValidate)"
 				},
 				"formTarget": {
 					"type": "property",
@@ -6052,7 +6085,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`formTarget`** property of the HTMLInputElement interface is the tab, window, or iframe where the response of the submitted form is to be displayed.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formTarget)"
+					"description": "The **`formTarget`** property of the HTMLInputElement interface is the tab, window, or iframe where the response of the submitted <form> is to be displayed. It reflects the value of the <input> element's formtarget attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/formTarget)"
 				},
 				"getAnimations": {
 					"type": "method",
@@ -6071,7 +6104,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:GetAnimationsOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:GetAnimationsOptions",
 											"name": "GetAnimationsOptions"
 										}
 									]
@@ -6084,7 +6117,7 @@
 							"type": "array",
 							"elementType": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Animation",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Animation",
 								"name": "Animation"
 							}
 						},
@@ -6123,7 +6156,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`getAttribute()`** method of the element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttribute)"
+					"description": "The **`getAttribute()`** method of the Element interface returns the value of a specified attribute on the element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttribute)"
 				},
 				"getAttributeNames": {
 					"type": "method",
@@ -6140,7 +6173,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`getAttributeNames()`** method of the array.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttributeNames)"
+					"description": "The **`getAttributeNames()`** method of the Element interface returns the attribute names of the element as an Array of strings. If the element has no attributes it returns an empty array.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttributeNames)"
 				},
 				"getAttributeNode": {
 					"type": "method",
@@ -6166,7 +6199,7 @@
 								},
 								{
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
 									"name": "Attr"
 								}
 							]
@@ -6217,7 +6250,7 @@
 								},
 								{
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
 									"name": "Attr"
 								}
 							]
@@ -6274,7 +6307,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`getAttributeNS()`** method of the Element interface returns the string value of the attribute with the specified namespace and name.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttributeNS)"
+					"description": "The **`getAttributeNS()`** method of the Element interface returns the string value of the attribute with the specified namespace and name. If the named attribute does not exist, the value returned will either be null or \"\" (the empty string); see Notes for details.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getAttributeNS)"
 				},
 				"getBoundingClientRect": {
 					"type": "method",
@@ -6284,13 +6317,13 @@
 						"parameters": [],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:DOMRect",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:DOMRect",
 							"name": "DOMRect"
 						},
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`Element.getBoundingClientRect()`** method returns a position relative to the viewport.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getBoundingClientRect)"
+					"description": "The **`Element.getBoundingClientRect()`** method returns a DOMRect object providing information about the size of an element and its position relative to the viewport.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getBoundingClientRect)"
 				},
 				"getClientRects": {
 					"type": "method",
@@ -6300,7 +6333,7 @@
 						"parameters": [],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:DOMRectList",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:DOMRectList",
 							"name": "DOMRectList"
 						},
 						"typeParameters": []
@@ -6328,7 +6361,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLCollectionOf",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLCollectionOf",
 								"name": "HTMLCollectionOf"
 							},
 							"typeParameters": [
@@ -6341,7 +6374,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The Element method **`getElementsByClassName()`** returns a live specified class name or names.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByClassName)"
+					"description": "The Element method **`getElementsByClassName()`** returns a live HTMLCollection which contains every descendant element which has the specified class name or names.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByClassName)"
 				},
 				"getElementsByTagName": {
 					"type": "method",
@@ -6818,7 +6851,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLCollectionOf",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLCollectionOf",
 								"name": "HTMLCollectionOf"
 							},
 							"typeParameters": [
@@ -7857,7 +7890,7 @@
 						]
 					},
 					"optional": false,
-					"description": "The **`Element.getElementsByTagName()`** method returns a live All descendants of the specified element are searched, but not the element itself.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByTagName)"
+					"description": "The **`Element.getElementsByTagName()`** method returns a live HTMLCollection of elements with the given tag name.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByTagName)"
 				},
 				"getElementsByTagNameNS": {
 					"type": "method",
@@ -7894,13 +7927,13 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLCollectionOf",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLCollectionOf",
 								"name": "HTMLCollectionOf"
 							},
 							"typeParameters": [
 								{
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLElement",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLElement",
 									"name": "HTMLElement"
 								}
 							]
@@ -7908,7 +7941,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`Element.getElementsByTagNameNS()`** method returns a live HTMLCollection of elements with the given tag name belonging to the given namespace.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByTagNameNS)"
+					"description": "The **`Element.getElementsByTagNameNS()`** method returns a live HTMLCollection of elements with the given tag name belonging to the given namespace. It is similar to Document.getElementsByTagNameNS, except that its search is restricted to descendants of the specified element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/getElementsByTagNameNS)"
 				},
 				"getHTML": {
 					"type": "method",
@@ -7927,7 +7960,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:GetHTMLOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:GetHTMLOptions",
 											"name": "GetHTMLOptions"
 										}
 									]
@@ -7961,7 +7994,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:GetRootNodeOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:GetRootNodeOptions",
 											"name": "GetRootNodeOptions"
 										}
 									]
@@ -7972,7 +8005,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 							"name": "Node"
 						},
 						"typeParameters": []
@@ -8002,7 +8035,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`Element.hasAttribute()`** method returns a **Boolean** value indicating whether the specified element has the specified attribute or not.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/hasAttribute)"
+					"description": "The **`Element.hasAttribute()`** method returns a Boolean value indicating whether the specified element has the specified attribute or not.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/hasAttribute)"
 				},
 				"hasAttributeNS": {
 					"type": "method",
@@ -8095,7 +8128,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`hasPointerCapture()`** method of the pointer capture for the pointer identified by the given pointer ID.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/hasPointerCapture)"
+					"description": "The **`hasPointerCapture()`** method of the Element interface checks whether the element on which it is invoked has pointer capture for the pointer identified by the given pointer ID.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/hasPointerCapture)"
 				},
 				"height": {
 					"type": "property",
@@ -8105,17 +8138,31 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`height`** property of the HTMLInputElement interface specifies the height of a control.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/height)"
+					"description": "The **`height`** property of the HTMLInputElement interface specifies the height of a control. It reflects the <input> element's height attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/height)"
 				},
 				"hidden": {
 					"type": "property",
 					"name": "hidden",
 					"value": {
-						"type": "boolean"
+						"type": "union",
+						"elements": [
+							{
+								"type": "boolean"
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "until-found"
+									}
+								]
+							}
+						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The HTMLElement property **`hidden`** reflects the value of the element's `hidden` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/hidden)"
+					"description": "The HTMLElement property **`hidden`** reflects the value of the element's hidden attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/hidden)"
 				},
 				"hidePopover": {
 					"type": "method",
@@ -8129,7 +8176,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`hidePopover()`** method of the HTMLElement interface hides a popover element (i.e., one that has a valid `popover` attribute) by removing it from the top layer and styling it with `display: none`.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/hidePopover)"
+					"description": "The **`hidePopover()`** method of the HTMLElement interface hides a popover element (i.e., one that has a valid popover attribute) by removing it from the top layer and styling it with display: none.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/hidePopover)"
 				},
 				"id": {
 					"type": "property",
@@ -8139,7 +8186,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`id`** property of the Element interface represents the element's identifier, reflecting the **`id`** global attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/id)"
+					"description": "The **`id`** property of the Element interface represents the element's identifier, reflecting the id global attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/id)"
 				},
 				"indeterminate": {
 					"type": "property",
@@ -8149,7 +8196,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`indeterminate`** property of the HTMLInputElement interface returns a boolean value that indicates whether the checkbox is in the _indeterminate_ state.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/indeterminate)"
+					"description": "The **`indeterminate`** property of the HTMLInputElement interface returns a boolean value that indicates whether the checkbox is in the indeterminate state. For example, a \"select all/deselect all\" checkbox may be in the indeterminate state when some but not all of its sub-controls are checked. The indeterminate state can only be set via JavaScript and is only relevant to checkbox controls.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/indeterminate)"
 				},
 				"inert": {
 					"type": "property",
@@ -8159,7 +8206,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The HTMLElement property **`inert`** reflects the value of the element's `inert` attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/inert)"
+					"description": "The HTMLElement property **`inert`** reflects the value of the element's inert attribute. It is a boolean value that, when present, makes the browser \"ignore\" user input events for the element, including focus events and events from assistive technologies. The browser may also ignore page search and text selection in the element. This can be useful when building UIs such as modals where you would want to \"trap\" the focus inside the modal when it's visible.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/inert)"
 				},
 				"innerHTML": {
 					"type": "property",
@@ -8169,7 +8216,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`innerHTML`** property of the Element interface gets or sets the HTML or XML markup contained within the element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/innerHTML)"
+					"description": "The **`innerHTML`** property of the Element interface gets or sets the HTML or XML markup contained within the element, omitting any shadow roots in both cases.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/innerHTML)"
 				},
 				"innerText": {
 					"type": "property",
@@ -8233,7 +8280,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`insertAdjacentElement()`** method of the relative to the element it is invoked upon.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/insertAdjacentElement)"
+					"description": "The **`insertAdjacentElement()`** method of the Element interface inserts a given element node at a given position relative to the element it is invoked upon.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/insertAdjacentElement)"
 				},
 				"insertAdjacentHTML": {
 					"type": "method",
@@ -8267,7 +8314,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`insertAdjacentHTML()`** method of the the resulting nodes into the DOM tree at a specified position.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/insertAdjacentHTML)"
+					"description": "The **`insertAdjacentHTML()`** method of the Element interface parses the specified input as HTML or XML and inserts the resulting nodes into the DOM tree at a specified position.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/insertAdjacentHTML)"
 				},
 				"insertAdjacentText": {
 					"type": "method",
@@ -8317,7 +8364,7 @@
 									"name": "T",
 									"constraint": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 										"name": "Node"
 									},
 									"default": null
@@ -8336,7 +8383,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 											"name": "Node"
 										}
 									]
@@ -8350,7 +8397,7 @@
 							"name": "T",
 							"constraint": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 								"name": "Node"
 							},
 							"default": null
@@ -8361,7 +8408,7 @@
 								"name": "T",
 								"constraint": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 									"name": "Node"
 								},
 								"default": null
@@ -8369,7 +8416,7 @@
 						]
 					},
 					"optional": false,
-					"description": "The **`insertBefore()`** method of the Node interface inserts a node before a _reference node_ as a child of a specified _parent node_.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/insertBefore)"
+					"description": "The **`insertBefore()`** method of the Node interface inserts a node before a reference node as a child of a specified parent node.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/insertBefore)"
 				},
 				"isConnected": {
 					"type": "property",
@@ -8421,7 +8468,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`isDefaultNamespace()`** method of the Node interface accepts a namespace URI as an argument.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/isDefaultNamespace)"
+					"description": "The **`isDefaultNamespace()`** method of the Node interface accepts a namespace URI as an argument. It returns a boolean value that is true if the namespace is the default namespace on the given node and false if not. The default namespace can be retrieved with Node.lookupNamespaceURI() by passing null as the argument.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/isDefaultNamespace)"
 				},
 				"isEqualNode": {
 					"type": "method",
@@ -8440,7 +8487,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 											"name": "Node"
 										}
 									]
@@ -8455,7 +8502,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`isEqualNode()`** method of the Node interface tests whether two nodes are equal.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/isEqualNode)"
+					"description": "The **`isEqualNode()`** method of the Node interface tests whether two nodes are equal. Two nodes are equal when they have the same type, defining characteristics (for elements, this would be their ID, number of children, and so forth), its attributes match, and so on. The specific set of data points that must match varies depending on the types of the nodes.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/isEqualNode)"
 				},
 				"isSameNode": {
 					"type": "method",
@@ -8474,7 +8521,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 											"name": "Node"
 										}
 									]
@@ -8489,7 +8536,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`isSameNode()`** method of the Node interface is a legacy alias the for the `===` strict equality operator.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/isSameNode)"
+					"description": "The **`isSameNode()`** method of the Node interface is a legacy alias the for the === strict equality operator. That is, it tests whether two nodes are the same (in other words, whether they reference the same object).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/isSameNode)"
 				},
 				"labels": {
 					"type": "property",
@@ -8504,7 +8551,7 @@
 								"type": "application",
 								"base": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:NodeListOf",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:NodeListOf",
 									"name": "NodeListOf"
 								},
 								"typeParameters": [
@@ -8518,7 +8565,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`HTMLInputElement.labels`** read-only property returns a type `hidden`, the property returns `null`.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/labels)"
+					"description": "The **`HTMLInputElement.labels`** read-only property returns a NodeList of the <label> elements associated with the <input> element, if the element is not hidden. If the element has the type hidden, the property returns null.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/labels)"
 				},
 				"lang": {
 					"type": "property",
@@ -8528,7 +8575,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`lang`** property of the HTMLElement interface indicates the base language of an element's attribute values and text content, in the form of a MISSING: RFC(5646, 'BCP 47 language identifier tag')].\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/lang)"
+					"description": "The **`lang`** property of the HTMLElement interface indicates the base language of an element's attribute values and text content, in the form of a BCP 47 language tag. It reflects the element's lang attribute; the xml:lang attribute does not affect this property.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/lang)"
 				},
 				"lastChild": {
 					"type": "property",
@@ -8541,14 +8588,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
 								"name": "ChildNode"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The read-only **`lastChild`** property of the Node interface returns the last child of the node, or `null` if there are no child nodes.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/lastChild)"
+					"description": "The read-only **`lastChild`** property of the Node interface returns the last child of the node, or null if there are no child nodes.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/lastChild)"
 				},
 				"lastElementChild": {
 					"type": "property",
@@ -8580,14 +8627,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLDataListElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLDataListElement",
 								"name": "HTMLDataListElement"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`list`** read-only property of the HTMLInputElement interface returns the HTMLDataListElement pointed to by the `list` attribute of the element, or `null` if the `list` attribute is not defined or the `list` attribute's value is not associated with any `<datalist>` in the same tree.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/list)"
+					"description": "The **`list`** read-only property of the HTMLInputElement interface returns the HTMLDataListElement pointed to by the list attribute of the element, or null if the list attribute is not defined or the list attribute's value is not associated with any <datalist> in the same tree.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/list)"
 				},
 				"localName": {
 					"type": "property",
@@ -8637,7 +8684,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`lookupNamespaceURI()`** method of the Node interface takes a prefix as parameter and returns the namespace URI associated with it on the given node if found (and `null` if not).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/lookupNamespaceURI)"
+					"description": "The **`lookupNamespaceURI()`** method of the Node interface takes a prefix as parameter and returns the namespace URI associated with it on the given node if found (and null if not). This method's existence allows Node objects to be passed as a namespace resolver to XPathEvaluator.createExpression() and XPathEvaluator.evaluate().\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/lookupNamespaceURI)"
 				},
 				"lookupPrefix": {
 					"type": "method",
@@ -8677,7 +8724,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`lookupPrefix()`** method of the Node interface returns a string containing the prefix for a given namespace URI, if present, and `null` if not.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/lookupPrefix)"
+					"description": "The **`lookupPrefix()`** method of the Node interface returns a string containing the prefix for a given namespace URI, if present, and null if not. When multiple prefixes are possible, the first prefix is returned.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/lookupPrefix)"
 				},
 				"matches": {
 					"type": "method",
@@ -8689,7 +8736,462 @@
 								"type": "parameter",
 								"name": "selectors",
 								"value": {
-									"type": "string"
+									"type": "typeParameter",
+									"name": "K",
+									"constraint": {
+										"type": "union",
+										"elements": [
+											{
+												"type": "identifier",
+												"name": "\"a\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"abbr\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"address\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"area\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"article\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"aside\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"audio\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"b\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"base\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"bdi\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"bdo\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"blockquote\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"body\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"br\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"button\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"canvas\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"caption\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"cite\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"code\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"col\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"colgroup\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"data\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"datalist\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"dd\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"del\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"details\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"dfn\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"dialog\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"div\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"dl\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"dt\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"em\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"embed\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"fieldset\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"figcaption\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"figure\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"footer\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"form\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"h1\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"h2\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"h3\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"h4\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"h5\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"h6\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"head\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"header\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"hgroup\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"hr\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"html\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"i\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"iframe\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"img\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"input\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"ins\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"kbd\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"label\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"legend\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"li\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"link\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"main\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"map\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"mark\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"menu\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"meta\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"meter\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"nav\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"noscript\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"object\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"ol\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"optgroup\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"option\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"output\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"p\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"picture\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"pre\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"progress\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"q\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"rp\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"rt\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"ruby\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"s\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"samp\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"script\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"search\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"section\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"select\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"slot\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"small\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"source\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"span\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"strong\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"style\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"sub\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"summary\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"sup\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"table\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"tbody\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"td\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"template\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"textarea\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"tfoot\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"th\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"thead\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"time\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"title\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"tr\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"track\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"u\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"ul\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"var\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"video\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"wbr\""
+											}
+										]
+									},
+									"default": null
 								},
 								"optional": false,
 								"rest": false
@@ -8698,7 +9200,1026 @@
 						"return": {
 							"type": "boolean"
 						},
-						"typeParameters": []
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "K",
+								"constraint": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "object"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "div"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "a"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "abbr"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "address"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "area"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "article"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "aside"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "audio"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "b"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "base"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "bdi"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "bdo"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "blockquote"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "body"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "br"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "button"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "canvas"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "caption"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "cite"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "code"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "col"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "colgroup"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "data"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "datalist"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "dd"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "del"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "details"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "dfn"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "dialog"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "dl"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "dt"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "em"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "embed"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "fieldset"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "figcaption"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "figure"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "footer"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "form"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "h1"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "h2"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "h3"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "h4"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "h5"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "h6"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "head"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "header"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hgroup"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "hr"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "html"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "i"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "iframe"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "img"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "input"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "ins"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "kbd"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "label"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "legend"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "li"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "link"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "mark"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "menu"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "meta"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "meter"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "nav"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "noscript"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "ol"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "optgroup"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "option"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "output"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "p"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "picture"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "pre"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "progress"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "q"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "rp"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "rt"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "ruby"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "s"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "samp"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "search"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "slot"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "script"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "section"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "select"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "small"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "source"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "span"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "strong"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "style"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "sub"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "summary"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "sup"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "table"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "template"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "tbody"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "td"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "textarea"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "tfoot"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "th"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "thead"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "time"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "title"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "tr"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "track"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "u"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "ul"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "var"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "video"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "wbr"
+												}
+											]
+										}
+									]
+								},
+								"default": null
+							}
+						]
 					},
 					"optional": false,
 					"description": "The **`matches()`** method of the Element interface tests whether the element would be selected by the specified CSS selector.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/matches)"
@@ -8711,7 +10232,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`max`** property of the HTMLInputElement interface reflects the input element's `max` attribute, which generally defines the maximum valid value for a numeric or date-time input.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/max)"
+					"description": "The **`max`** property of the HTMLInputElement interface reflects the <input> element's max attribute, which generally defines the maximum valid value for a numeric or date-time input. If the attribute is not explicitly set, the max property is an empty string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/max)"
 				},
 				"maxLength": {
 					"type": "property",
@@ -8721,7 +10242,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`maxLength`** property of the HTMLInputElement interface indicates the maximum number of characters (in UTF-16 code units) allowed to be entered for the value of the input element, and the maximum number of characters allowed for the value to be valid.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/maxLength)"
+					"description": "The **`maxLength`** property of the HTMLInputElement interface indicates the maximum number of characters (in UTF-16 code units) allowed to be entered for the value of the <input> element, and the maximum number of characters allowed for the value to be valid. It reflects the element's maxlength attribute. -1 means there is no limit on the length of the value.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/maxLength)"
 				},
 				"min": {
 					"type": "property",
@@ -8731,7 +10252,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`min`** property of the HTMLInputElement interface reflects the input element's `min` attribute, which generally defines the minimum valid value for a numeric or date-time input.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/min)"
+					"description": "The **`min`** property of the HTMLInputElement interface reflects the <input> element's min attribute, which generally defines the minimum valid value for a numeric or date-time input. If the attribute is not explicitly set, the min property is an empty string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/min)"
 				},
 				"minLength": {
 					"type": "property",
@@ -8741,7 +10262,52 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`minLength`** property of the HTMLInputElement interface indicates the minimum number of characters (in UTF-16 code units) required for the value of the input element to be valid.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/minLength)"
+					"description": "The **`minLength`** property of the HTMLInputElement interface indicates the minimum number of characters (in UTF-16 code units) required for the value of the <input> element to be valid. It reflects the element's minlength attribute. -1 means there is no minimum length requirement.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/minLength)"
+				},
+				"moveBefore": {
+					"type": "method",
+					"name": "moveBefore",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "node",
+								"value": {
+									"type": "link",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+									"name": "Node"
+								},
+								"optional": false,
+								"rest": false
+							},
+							{
+								"type": "parameter",
+								"name": "child",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+											"name": "Node"
+										}
+									]
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "void"
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/moveBefore)"
 				},
 				"multiple": {
 					"type": "property",
@@ -8751,7 +10317,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`HTMLInputElement.multiple`** property indicates if an input can have more than one value.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/multiple)"
+					"description": "The **`HTMLInputElement.multiple`** property indicates if an input can have more than one value. Firefox currently only supports multiple for <input type=\"file\">.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/multiple)"
 				},
 				"name": {
 					"type": "property",
@@ -8761,7 +10327,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`name`** property of the HTMLInputElement interface indicates the name of the input element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/name)"
+					"description": "The **`name`** property of the HTMLInputElement interface indicates the name of the <input> element. It reflects the element's name attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/name)"
 				},
 				"namespaceURI": {
 					"type": "property",
@@ -8779,7 +10345,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`Element.namespaceURI`** read-only property returns the namespace URI of the element, or `null` if the element is not in a namespace.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/namespaceURI)"
+					"description": "The **`Element.namespaceURI`** read-only property returns the namespace URI of the element, or null if the element is not in a namespace.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/namespaceURI)"
 				},
 				"nextElementSibling": {
 					"type": "property",
@@ -8811,14 +10377,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
 								"name": "ChildNode"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The read-only **`nextSibling`** property of the Node interface returns the node immediately following the specified one in their parent's Node.childNodes, or returns `null` if the specified node is the last child in the parent element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/nextSibling)"
+					"description": "The read-only **`nextSibling`** property of the Node interface returns the node immediately following the specified one in their parent's childNodes, or returns null if the specified node is the last child in the parent element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/nextSibling)"
 				},
 				"nodeName": {
 					"type": "property",
@@ -8838,7 +10404,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The read-only **`nodeType`** property of a Node interface is an integer that identifies what the node is.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/nodeType)"
+					"description": "The read-only **`nodeType`** property of a Node interface is an integer that identifies what the node is. It distinguishes different kinds of nodes from each other, such as elements, text, and comments.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/nodeType)"
 				},
 				"nodeValue": {
 					"type": "property",
@@ -8862,17 +10428,9 @@
 					"type": "property",
 					"name": "nonce",
 					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							}
-						]
+						"type": "string"
 					},
-					"optional": true,
+					"optional": false,
 					"readonly": false,
 					"description": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/nonce)"
 				},
@@ -8888,7 +10446,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`normalize()`** method of the Node interface puts the specified node and all of its sub-tree into a _normalized_ form.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/normalize)"
+					"description": "The **`normalize()`** method of the Node interface puts the specified node and all of its sub-tree into a normalized form. In a normalized sub-tree, no text nodes in the sub-tree are empty and there are no adjacent text nodes.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/normalize)"
 				},
 				"NOTATION_NODE": {
 					"type": "property",
@@ -8919,7 +10477,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`offsetLeft`** read-only property of the HTMLElement interface returns the number of pixels that the _upper left corner_ of the current element is offset to the left within the HTMLElement.offsetParent node.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/offsetLeft)"
+					"description": "The **`offsetLeft`** read-only property of the HTMLElement interface returns the number of pixels that the upper left corner of the current element is offset to the left within the HTMLElement.offsetParent node.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/offsetLeft)"
 				},
 				"offsetParent": {
 					"type": "property",
@@ -8948,7 +10506,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`offsetTop`** read-only property of the HTMLElement interface returns the distance from the outer border of the current element (including its margin) to the top padding edge of the HTMLelement.offsetParent, the _closest positioned_ ancestor element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/offsetTop)"
+					"description": "The **`offsetTop`** read-only property of the HTMLElement interface returns the distance from the outer border of the current element (including its margin) to the top padding edge of the offsetParent, the closest positioned ancestor element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/offsetTop)"
 				},
 				"offsetWidth": {
 					"type": "property",
@@ -9519,6 +11077,41 @@
 					"optional": false,
 					"readonly": false,
 					"description": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLDialogElement/close_event)"
+				},
+				"oncommand": {
+					"type": "property",
+					"name": "oncommand",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "ev",
+										"value": {
+											"type": "identifier",
+											"name": "Event"
+										},
+										"optional": false,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "identifier",
+									"name": "any"
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/command_event)"
 				},
 				"oncontextlost": {
 					"type": "property",
@@ -10318,7 +11911,7 @@
 										"name": "ev",
 										"value": {
 											"type": "identifier",
-											"name": "Event"
+											"name": "InputEvent"
 										},
 										"optional": false,
 										"rest": false
@@ -12526,7 +14119,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`outerHTML`** attribute of the Element DOM interface gets the serialized HTML fragment describing the element including its descendants.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/outerHTML)"
+					"description": "The **`outerHTML`** attribute of the Element interface gets or sets the HTML or XML markup of the element and its descendants, omitting any shadow roots in both cases.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/outerHTML)"
 				},
 				"outerText": {
 					"type": "property",
@@ -12536,14 +14129,14 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`outerText`** property of the HTMLElement interface returns the same value as HTMLElement.innerText.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/outerText)"
+					"description": "The **`outerText`** property of the HTMLElement interface returns the same value as HTMLElement.innerText. When used as a setter it replaces the whole current node with the given text (this differs from innerText, which replaces the content inside the current node).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/outerText)"
 				},
 				"ownerDocument": {
 					"type": "property",
 					"name": "ownerDocument",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Document",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Document",
 						"name": "Document"
 					},
 					"optional": false,
@@ -12561,14 +14154,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLElement",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLElement",
 								"name": "HTMLElement"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The read-only **`parentElement`** property of Node interface returns the DOM node's parent Element, or `null` if the node either has no parent, or its parent isn't a DOM Element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/parentElement)"
+					"description": "The read-only **`parentElement`** property of Node interface returns the DOM node's parent Element, or null if the node either has no parent, or its parent isn't a DOM Element. Node.parentNode on the other hand returns any kind of parent, regardless of its type.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/parentElement)"
 				},
 				"parentNode": {
 					"type": "property",
@@ -12581,7 +14174,7 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ParentNode",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ParentNode",
 								"name": "ParentNode"
 							}
 						]
@@ -12595,12 +14188,12 @@
 					"name": "part",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:DOMTokenList",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:DOMTokenList",
 						"name": "DOMTokenList"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`part`** property of the Element interface represents the part identifier(s) of the element (i.e., set using the `part` attribute), returned as a DOMTokenList.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/part)"
+					"description": "The read-only **`part`** property of the Element interface contains a DOMTokenList object representing the part identifier(s) of the element. It reflects the element's part content attribute. These can be used to style parts of a shadow DOM, via the ::part pseudo-element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/part)"
 				},
 				"pattern": {
 					"type": "property",
@@ -12610,7 +14203,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`pattern`** property of the HTMLInputElement interface represents a regular expression a non-null input value should match.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/pattern)"
+					"description": "The **`pattern`** property of the HTMLInputElement interface represents a regular expression a non-null <input> value should match. It reflects the <input> element's pattern attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/pattern)"
 				},
 				"placeholder": {
 					"type": "property",
@@ -12620,7 +14213,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`placeholder`** property of the HTMLInputElement interface represents a hint to the user of what can be entered in the control.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/placeholder)"
+					"description": "The **`placeholder`** property of the HTMLInputElement interface represents a hint to the user of what can be entered in the control. It reflects the <input> element's placeholder attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/placeholder)"
 				},
 				"popover": {
 					"type": "property",
@@ -12638,7 +14231,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`popover`** property of the HTMLElement interface gets and sets an element's popover state via JavaScript (`'auto'`, `'hint'`, or `'manual'`), and can be used for feature detection.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/popover)"
+					"description": "The **`popover`** property of the HTMLElement interface gets and sets an element's popover state via JavaScript (\"auto\", \"hint\", or \"manual\"), and can be used for feature detection.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/popover)"
 				},
 				"popoverTargetAction": {
 					"type": "property",
@@ -12685,7 +14278,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`Element.prefix`** read-only property returns the namespace prefix of the specified element, or `null` if no prefix is specified.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/prefix)"
+					"description": "The **`Element.prefix`** read-only property returns the namespace prefix of the specified element, or null if no prefix is specified.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/prefix)"
 				},
 				"prepend": {
 					"type": "method",
@@ -12754,14 +14347,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ChildNode",
 								"name": "ChildNode"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The read-only **`previousSibling`** property of the Node interface returns the node immediately preceding the specified one in its parent's or `null` if the specified node is the first in that list.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/previousSibling)"
+					"description": "The read-only **`previousSibling`** property of the Node interface returns the node immediately preceding the specified one in its parent's childNodes list, or null if the specified node is the first in that list.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/previousSibling)"
 				},
 				"PROCESSING_INSTRUCTION_NODE": {
 					"type": "property",
@@ -14763,7 +16356,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:NodeListOf",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:NodeListOf",
 								"name": "NodeListOf"
 							},
 							"typeParameters": [
@@ -15812,7 +17405,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`readOnly`** property of the HTMLInputElement interface indicates that the user cannot modify the value of the input.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/readOnly)"
+					"description": "The **`readOnly`** property of the HTMLInputElement interface indicates that the user cannot modify the value of the <input>. It reflects the <input> element's readonly boolean attribute; returning true if the attribute is present and false when omitted.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/readOnly)"
 				},
 				"releasePointerCapture": {
 					"type": "method",
@@ -15836,7 +17429,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`releasePointerCapture()`** method of the previously set for a specific (PointerEvent) _pointer_.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/releasePointerCapture)"
+					"description": "The **`releasePointerCapture()`** method of the Element interface releases (stops) pointer capture that was previously set for a specific (PointerEvent) pointer.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/releasePointerCapture)"
 				},
 				"remove": {
 					"type": "method",
@@ -15887,7 +17480,7 @@
 								"name": "attr",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
 									"name": "Attr"
 								},
 								"optional": false,
@@ -15896,7 +17489,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
 							"name": "Attr"
 						},
 						"typeParameters": []
@@ -15943,7 +17536,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`removeAttributeNS()`** method of the If you are working with HTML and you don't need to specify the requested attribute as being part of a specific namespace, use the Element.removeAttribute() method instead.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/removeAttributeNS)"
+					"description": "The **`removeAttributeNS()`** method of the Element interface removes the specified attribute with the specified namespace from an element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/removeAttributeNS)"
 				},
 				"removeChild": {
 					"type": "method",
@@ -15959,7 +17552,7 @@
 									"name": "T",
 									"constraint": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 										"name": "Node"
 									},
 									"default": null
@@ -15973,7 +17566,7 @@
 							"name": "T",
 							"constraint": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 								"name": "Node"
 							},
 							"default": null
@@ -15984,7 +17577,7 @@
 								"name": "T",
 								"constraint": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 									"name": "Node"
 								},
 								"default": null
@@ -16072,6 +17665,10 @@
 											{
 												"type": "identifier",
 												"name": "\"close\""
+											},
+											{
+												"type": "identifier",
+												"name": "\"command\""
 											},
 											{
 												"type": "identifier",
@@ -16490,7 +18087,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:EventListenerOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:EventListenerOptions",
 											"name": "EventListenerOptions"
 										}
 									]
@@ -16731,6 +18328,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "close"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "command"
 												}
 											]
 										},
@@ -17479,7 +19085,7 @@
 						]
 					},
 					"optional": false,
-					"description": "\nThe **`removeEventListener()`** method of the EventTarget interface removes an event listener previously registered with EventTarget.addEventListener() from the target.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/removeEventListener)"
+					"description": "\nThe **`removeEventListener()`** method of the EventTarget interface removes an event listener previously registered with EventTarget.addEventListener() from the target. The event listener to be removed is identified using a combination of the event type, the event listener function itself, and various optional options that may affect the matching process; see Matching event listeners for removal.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/EventTarget/removeEventListener)"
 				},
 				"replaceChild": {
 					"type": "method",
@@ -17492,7 +19098,7 @@
 								"name": "node",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 									"name": "Node"
 								},
 								"optional": false,
@@ -17506,7 +19112,7 @@
 									"name": "T",
 									"constraint": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 										"name": "Node"
 									},
 									"default": null
@@ -17520,7 +19126,7 @@
 							"name": "T",
 							"constraint": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 								"name": "Node"
 							},
 							"default": null
@@ -17531,7 +19137,7 @@
 								"name": "T",
 								"constraint": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Node",
 									"name": "Node"
 								},
 								"default": null
@@ -17627,7 +19233,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`reportValidity()`** method of the HTMLInputElement interface performs the same validity checking steps as the HTMLInputElement.checkValidity method.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/reportValidity)"
+					"description": "The **`reportValidity()`** method of the HTMLInputElement interface performs the same validity checking steps as the checkValidity() method. In addition, if the invalid event is not canceled, the browser displays the problem to the user.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/reportValidity)"
 				},
 				"requestFullscreen": {
 					"type": "method",
@@ -17646,7 +19252,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FullscreenOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FullscreenOptions",
 											"name": "FullscreenOptions"
 										}
 									]
@@ -17659,7 +19265,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
 								"name": "Promise"
 							},
 							"typeParameters": [
@@ -17690,7 +19296,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:PointerLockOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:PointerLockOptions",
 											"name": "PointerLockOptions"
 										}
 									]
@@ -17703,7 +19309,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
 								"name": "Promise"
 							},
 							"typeParameters": [
@@ -17725,7 +19331,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`required`** property of the HTMLInputElement interface specifies that the user must fill in a value before submitting a form.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/required)"
+					"description": "The **`required`** property of the HTMLInputElement interface specifies that the user must fill in a value before submitting a form. It reflects the <input> element's required attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/required)"
 				},
 				"role": {
 					"type": "property",
@@ -17762,7 +19368,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ScrollToOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ScrollToOptions",
 											"name": "ScrollToOptions"
 										}
 									]
@@ -17796,7 +19402,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ScrollToOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ScrollToOptions",
 											"name": "ScrollToOptions"
 										}
 									]
@@ -17843,7 +19449,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ScrollIntoViewOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ScrollIntoViewOptions",
 											"name": "ScrollIntoViewOptions"
 										}
 									]
@@ -17858,7 +19464,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The Element interface's **`scrollIntoView()`** method scrolls the element's ancestor containers such that the element on which `scrollIntoView()` is called is visible to the user.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollIntoView)"
+					"description": "The Element interface's **`scrollIntoView()`** method scrolls the element's ancestor containers such that the element on which scrollIntoView() is called is visible to the user.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollIntoView)"
 				},
 				"scrollLeft": {
 					"type": "property",
@@ -17868,7 +19474,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`scrollLeft`** property of the Element interface gets or sets the number of pixels by which an element's content is scrolled from its left edge.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollLeft)"
+					"description": "The **`scrollLeft`** property of the Element interface gets or sets the number of pixels by which an element's content is scrolled from its left edge. This value is subpixel precise in modern browsers, meaning that it isn't necessarily a whole number.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollLeft)"
 				},
 				"scrollTo": {
 					"type": "method",
@@ -17887,7 +19493,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ScrollToOptions",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ScrollToOptions",
 											"name": "ScrollToOptions"
 										}
 									]
@@ -17912,7 +19518,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`scrollTop`** property of the Element interface gets or sets the number of pixels by which an element's content is scrolled from its top edge.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollTop)"
+					"description": "The **`scrollTop`** property of the Element interface gets or sets the number of pixels by which an element's content is scrolled from its top edge. This value is subpixel precise in modern browsers, meaning that it isn't necessarily a whole number.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/scrollTop)"
 				},
 				"scrollWidth": {
 					"type": "property",
@@ -17936,7 +19542,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`HTMLInputElement.select()`** method selects all the text in a textarea element or in an input element that includes a text field.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/select)"
+					"description": "The **`HTMLInputElement.select()`** method selects all the text in a <textarea> element or in an <input> element that includes a text field.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/select)"
 				},
 				"selectionDirection": {
 					"type": "property",
@@ -17996,7 +19602,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`selectionEnd`** property of the HTMLInputElement interface is a number that represents the end index of the selected text.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/selectionEnd)"
+					"description": "The **`selectionEnd`** property of the HTMLInputElement interface is a number that represents the end index of the selected text. That is, it represents the index of the character immediately following the selection. Likewise, when there is no selection, this returns the offset of the character immediately following the current text input cursor position.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/selectionEnd)"
 				},
 				"selectionStart": {
 					"type": "property",
@@ -18014,7 +19620,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`selectionStart`** property of the HTMLInputElement interface is a number that represents the beginning index of the selected text.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/selectionStart)"
+					"description": "The **`selectionStart`** property of the HTMLInputElement interface is a number that represents the beginning index of the selected text. When nothing is selected, then returns the position of the text input cursor (caret) inside of the <input> element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/selectionStart)"
 				},
 				"setAttribute": {
 					"type": "method",
@@ -18047,7 +19653,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`setAttribute()`** method of the Element interface sets the value of an attribute on the specified element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setAttribute)"
+					"description": "The **`setAttribute()`** method of the Element interface sets the value of an attribute on the specified element. If the attribute already exists, the value is updated; otherwise a new attribute is added with the specified name and value.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setAttribute)"
 				},
 				"setAttributeNode": {
 					"type": "method",
@@ -18060,7 +19666,7 @@
 								"name": "attr",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
 									"name": "Attr"
 								},
 								"optional": false,
@@ -18075,7 +19681,7 @@
 								},
 								{
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
 									"name": "Attr"
 								}
 							]
@@ -18096,7 +19702,7 @@
 								"name": "attr",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
 									"name": "Attr"
 								},
 								"optional": false,
@@ -18111,7 +19717,7 @@
 								},
 								{
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Attr",
 									"name": "Attr"
 								}
 							]
@@ -18169,7 +19775,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "`setAttributeNS` adds a new attribute or changes the value of an attribute with the given namespace and name.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setAttributeNS)"
+					"description": "The **`setAttributeNS()`** method of the Element interface adds a new attribute or changes the value of an attribute with the given namespace and name.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setAttributeNS)"
 				},
 				"setCustomValidity": {
 					"type": "method",
@@ -18217,7 +19823,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`setHTMLUnsafe()`** method of the Element interface is used to parse a string of HTML into a DocumentFragment, optionally filtering out unwanted elements and attributes, and those that don't belong in the context, and then using it to replace the element's subtree in the DOM.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setHTMLUnsafe)"
+					"description": "The **`setHTMLUnsafe()`** method of the Element interface is used to parse HTML input into a DocumentFragment, optionally filtering out unwanted elements and attributes, and those that don't belong in the context, and then using it to replace the element's subtree in the DOM.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setHTMLUnsafe)"
 				},
 				"setPointerCapture": {
 					"type": "method",
@@ -18241,7 +19847,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`setPointerCapture()`** method of the _capture target_ of future pointer events.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setPointerCapture)"
+					"description": "The **`setPointerCapture()`** method of the Element interface is used to designate a specific element as the capture target of future pointer events. Subsequent events for the pointer will be targeted at the capture element until capture is released (via Element.releasePointerCapture() or the pointerup event is fired).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/setPointerCapture)"
 				},
 				"setRangeText": {
 					"type": "method",
@@ -18265,7 +19871,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`HTMLInputElement.setRangeText()`** method replaces a range of text in an input or textarea element with a new string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/setRangeText)"
+					"description": "The **`HTMLInputElement.setRangeText()`** method replaces a range of text in an <input> or <textarea> element with a new string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/setRangeText)"
 				},
 				"setSelectionRange": {
 					"type": "method",
@@ -18355,7 +19961,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`HTMLInputElement.setSelectionRange()`** method sets the start and end positions of the current text selection in an input or textarea element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/setSelectionRange)"
+					"description": "The **`HTMLInputElement.setSelectionRange()`** method sets the start and end positions of the current text selection in an <input> or <textarea> element. This updates the selection state immediately, though the visual highlight only appears when the element is focused.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/setSelectionRange)"
 				},
 				"shadowRoot": {
 					"type": "property",
@@ -18368,14 +19974,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ShadowRoot",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ShadowRoot",
 								"name": "ShadowRoot"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The `Element.shadowRoot` read-only property represents the shadow root hosted by the element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/shadowRoot)"
+					"description": "The **`Element.shadowRoot`** read-only property represents the shadow root hosted by the element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/shadowRoot)"
 				},
 				"showPicker": {
 					"type": "method",
@@ -18389,21 +19995,41 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`HTMLInputElement.showPicker()`** method displays the browser picker for an `input` element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/showPicker)"
+					"description": "The **`HTMLInputElement.showPicker()`** method displays the browser picker for an input element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/showPicker)"
 				},
 				"showPopover": {
 					"type": "method",
 					"name": "showPopover",
 					"value": {
 						"type": "function",
-						"parameters": [],
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "options",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ShowPopoverOptions",
+											"name": "ShowPopoverOptions"
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
 						"return": {
 							"type": "void"
 						},
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`showPopover()`** method of the HTMLElement interface shows a Popover_API element (i.e., one that has a valid `popover` attribute) by adding it to the top layer.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/showPopover)"
+					"description": "The **`showPopover()`** method of the HTMLElement interface shows a popover element (i.e., one that has a valid popover attribute) by adding it to the top layer.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/showPopover)"
 				},
 				"size": {
 					"type": "property",
@@ -18413,7 +20039,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`size`** property of the HTMLInputElement interface defines the number of visible characters displayed.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/size)"
+					"description": "The **`size`** property of the HTMLInputElement interface defines the number of visible characters displayed. It reflects the <input> element's size attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/size)"
 				},
 				"slot": {
 					"type": "property",
@@ -18433,7 +20059,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`spellcheck`** property of the HTMLElement interface represents a boolean value that controls the spell-checking hint.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/spellcheck)"
+					"description": "The **`spellcheck`** property of the HTMLElement interface represents a boolean value that controls the spell-checking hint. It is available on all HTML elements, though it doesn't affect all of them.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/spellcheck)"
 				},
 				"src": {
 					"type": "property",
@@ -18443,7 +20069,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`src`** property of the HTMLInputElement interface specifies the source of an image to display as the graphical submit button.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/src)"
+					"description": "The **`src`** property of the HTMLInputElement interface specifies the source of an image to display as the graphical submit button. It reflects the <input> element's src attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/src)"
 				},
 				"step": {
 					"type": "property",
@@ -18453,7 +20079,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`step`** property of the HTMLInputElement interface indicates the step by which numeric or date-time input elements can change.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/step)"
+					"description": "The **`step`** property of the HTMLInputElement interface indicates the step by which numeric or date-time <input> elements can change. It reflects the element's step attribute. Valid values include the string \"any\" or a string containing a positive floating point number. If the attribute is not explicitly set, the step property is an empty string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/step)"
 				},
 				"stepDown": {
 					"type": "method",
@@ -18485,7 +20111,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`HTMLInputElement.stepDown()`** method decrements the value of a numeric type of input element by the value of the `step` attribute or up to `n` multiples of the step attribute if a number is passed as the parameter.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/stepDown)"
+					"description": "The **`HTMLInputElement.stepDown()`** method decrements the value of a numeric type of <input> element by the value of the step attribute or up to n multiples of the step attribute if a number is passed as the parameter.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/stepDown)"
 				},
 				"stepUp": {
 					"type": "method",
@@ -18517,14 +20143,14 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`HTMLInputElement.stepUp()`** method increments the value of a numeric type of input element by the value of the `step` attribute, or the default `step` value if the step attribute is not explicitly set.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/stepUp)"
+					"description": "The **`HTMLInputElement.stepUp()`** method increments the value of a numeric type of <input> element by the value of the step attribute, or the default step value if the step attribute is not explicitly set. The method, when invoked, increments the value by (step * n), where n defaults to 1 if not specified, and step defaults to the default value for step if not specified.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/stepUp)"
 				},
 				"style": {
 					"type": "property",
 					"name": "style",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:CSSStyleDeclaration",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:CSSStyleDeclaration",
 						"name": "CSSStyleDeclaration"
 					},
 					"optional": false,
@@ -18570,7 +20196,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "[MDN Reference](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent)"
+					"description": "[MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/textContent)"
 				},
 				"title": {
 					"type": "property",
@@ -18621,7 +20247,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`toggleAttribute()`** method of the present and adding it if it is not present) on the given element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/toggleAttribute)"
+					"description": "The **`toggleAttribute()`** method of the Element interface toggles a Boolean attribute (removing it if it is present and adding it if it is not present) on the given element.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/toggleAttribute)"
 				},
 				"togglePopover": {
 					"type": "method",
@@ -18640,6 +20266,11 @@
 										},
 										{
 											"type": "boolean"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:TogglePopoverOptions",
+											"name": "TogglePopoverOptions"
 										}
 									]
 								},
@@ -18653,7 +20284,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`togglePopover()`** method of the HTMLElement interface toggles a Popover_API element (i.e., one that has a valid `popover` attribute) between the hidden and showing states.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/togglePopover)"
+					"description": "The **`togglePopover()`** method of the HTMLElement interface toggles a popover element (i.e., one that has a valid popover attribute) between the hidden and showing states.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/togglePopover)"
 				},
 				"translate": {
 					"type": "property",
@@ -18673,7 +20304,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`type`** property of the HTMLInputElement interface indicates the kind of data allowed in the input element, for example a number, a date, or an email.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/type)"
+					"description": "The **`type`** property of the HTMLInputElement interface indicates the kind of data allowed in the <input> element, for example a number, a date, or an email. Browsers will select the appropriate widget and behavior to help users to enter a valid value.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/type)"
 				},
 				"useMap": {
 					"type": "property",
@@ -18693,14 +20324,14 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`validationMessage`** read-only property of the HTMLInputElement interface returns a string representing a localized message that describes the validation constraints that the input control does not satisfy (if any).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/validationMessage)"
+					"description": "The **`validationMessage`** read-only property of the HTMLInputElement interface returns a string representing a localized message that describes the validation constraints that the <input> control does not satisfy (if any).\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/validationMessage)"
 				},
 				"validity": {
 					"type": "property",
 					"name": "validity",
 					"value": {
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:ValidityState",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:ValidityState",
 						"name": "ValidityState"
 					},
 					"optional": false,
@@ -18715,7 +20346,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`value`** property of the HTMLInputElement interface represents the current value of the input element as a string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/value)"
+					"description": "The **`value`** property of the HTMLInputElement interface represents the current value of the <input> element as a string.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/value)"
 				},
 				"valueAsDate": {
 					"type": "property",
@@ -18728,14 +20359,14 @@
 							},
 							{
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Date",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Date",
 								"name": "Date"
 							}
 						]
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`valueAsDate`** property of the HTMLInputElement interface represents the current value of the input element as a Date, or `null` if conversion is not possible.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/valueAsDate)"
+					"description": "The **`valueAsDate`** property of the HTMLInputElement interface represents the current value of the <input> element as a Date, or null if conversion is not possible.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/valueAsDate)"
 				},
 				"valueAsNumber": {
 					"type": "property",
@@ -18745,7 +20376,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`valueAsNumber`** property of the HTMLInputElement interface represents the current value of the input element as a number or `NaN` if converting to a numeric value is not possible.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/valueAsNumber)"
+					"description": "The **`valueAsNumber`** property of the HTMLInputElement interface represents the current value of the <input> element as a number or NaN if converting to a numeric value is not possible.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/valueAsNumber)"
 				},
 				"webkitdirectory": {
 					"type": "property",
@@ -18755,7 +20386,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`HTMLInputElement.webkitdirectory`** is a property that reflects the `webkitdirectory` HTML attribute and indicates that the input element should let the user select directories instead of files.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/webkitdirectory)"
+					"description": "The **`webkitdirectory`** property of the HTMLInputElement interface reflects the webkitdirectory HTML attribute, which indicates that <input type=\"file\"> elements can only select directories instead of files.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/webkitdirectory)"
 				},
 				"webkitEntries": {
 					"type": "property",
@@ -18764,13 +20395,13 @@
 						"type": "array",
 						"elementType": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FileSystemEntry",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FileSystemEntry",
 							"name": "FileSystemEntry"
 						}
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The read-only **`webkitEntries`** property of the HTMLInputElement interface contains an array of file system entries (as objects based on FileSystemEntry) representing files and/or directories selected by the user using an input element of type `file`, but only if that selection was made using drag-and-drop: selecting a file in the dialog will leave the property empty.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/webkitEntries)"
+					"description": "The read-only **`webkitEntries`** property of the HTMLInputElement interface contains an array of file system entries (as objects based on FileSystemEntry) representing files and/or directories selected by the user using an <input> element of type file, but only if that selection was made using drag-and-drop: selecting a file in the dialog will leave the property empty.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/webkitEntries)"
 				},
 				"webkitMatchesSelector": {
 					"type": "method",
@@ -18804,7 +20435,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`width`** property of the HTMLInputElement interface specifies the width of a control.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/width)"
+					"description": "The **`width`** property of the HTMLInputElement interface specifies the width of a control. It reflects the <input> element's width attribute.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/width)"
 				},
 				"willValidate": {
 					"type": "property",
@@ -18814,7 +20445,7 @@
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The **`willValidate`** read-only property of the HTMLInputElement interface indicates whether the input element is a candidate for constraint validation.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/willValidate)"
+					"description": "The **`willValidate`** read-only property of the HTMLInputElement interface indicates whether the <input> element is a candidate for constraint validation. It is false if any conditions bar it from constraint validation, including:\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/willValidate)"
 				},
 				"writingSuggestions": {
 					"type": "property",
@@ -18828,7 +20459,7 @@
 				}
 			},
 			"typeParameters": [],
-			"description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of input elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
+			"description": "The **`HTMLInputElement`** interface provides special properties and methods for manipulating the options, layout, and presentation of <input> elements.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement)"
 		},
 		"NumberFieldRenderProps": {
 			"type": "interface",

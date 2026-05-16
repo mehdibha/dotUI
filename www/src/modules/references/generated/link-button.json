@@ -683,7 +683,7 @@
 												},
 												{
 													"type": "link",
-													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLSpanElement",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLSpanElement",
 													"name": "HTMLSpanElement"
 												}
 											]
@@ -701,7 +701,7 @@
 												},
 												{
 													"type": "link",
-													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLAnchorElement",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLAnchorElement",
 													"name": "HTMLAnchorElement"
 												}
 											]

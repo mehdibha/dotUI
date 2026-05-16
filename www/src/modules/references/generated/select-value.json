@@ -1379,7 +1379,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
 							"name": "Set"
 						},
 						"typeParameters": [

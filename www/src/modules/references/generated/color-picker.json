@@ -241,7 +241,7 @@
 						],
 						"return": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
 							"name": "NumberFormatOptions"
 						},
 						"typeParameters": []
@@ -868,9 +868,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
 			"name": "NumberFormatOptions",
 			"extends": [],
 			"properties": {

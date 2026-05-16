@@ -803,7 +803,7 @@
 								"name": "formData",
 								"value": {
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FormData",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FormData",
 									"name": "FormData"
 								},
 								"optional": false,
@@ -820,7 +820,7 @@
 									"type": "application",
 									"base": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
 										"name": "Promise"
 									},
 									"typeParameters": [
@@ -1102,9 +1102,9 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FormData": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FormData": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FormData",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FormData",
 			"name": "FormData",
 			"extends": [],
 			"properties": {
@@ -1118,7 +1118,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.iterable.d.ts:FormDataIterator",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FormDataIterator",
 								"name": "FormDataIterator"
 							},
 							"typeParameters": [
@@ -1168,7 +1168,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Blob",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Blob",
 											"name": "Blob"
 										}
 									]
@@ -1183,7 +1183,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`append()`** method of the FormData interface appends a new value onto an existing key inside a `FormData` object, or adds the key if it does not already exist.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/append)"
+					"description": "The **`append()`** method of the FormData interface appends a new value onto an existing key inside a FormData object, or adds the key if it does not already exist.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/append)"
 				},
 				"delete": {
 					"type": "method",
@@ -1207,7 +1207,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`delete()`** method of the FormData interface deletes a key and its value(s) from a `FormData` object.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/delete)"
+					"description": "The **`delete()`** method of the FormData interface deletes a key and its value(s) from a FormData object.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/delete)"
 				},
 				"entries": {
 					"type": "method",
@@ -1219,7 +1219,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.iterable.d.ts:FormDataIterator",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FormDataIterator",
 								"name": "FormDataIterator"
 							},
 							"typeParameters": [
@@ -1279,7 +1279,7 @@
 											"name": "parent",
 											"value": {
 												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:FormData",
+												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FormData",
 												"name": "FormData"
 											},
 											"optional": false,
@@ -1339,7 +1339,7 @@
 								},
 								{
 									"type": "link",
-									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:File",
+									"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:File",
 									"name": "File"
 								}
 							]
@@ -1347,7 +1347,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`get()`** method of the FormData interface returns the first value associated with a given key from within a `FormData` object.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/get)"
+					"description": "The **`get()`** method of the FormData interface returns the first value associated with a given key from within a FormData object. If you expect multiple values and want all of them, use the getAll() method instead.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/get)"
 				},
 				"getAll": {
 					"type": "method",
@@ -1375,7 +1375,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`getAll()`** method of the FormData interface returns all the values associated with a given key from within a `FormData` object.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/getAll)"
+					"description": "The **`getAll()`** method of the FormData interface returns all the values associated with a given key from within a FormData object.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/getAll)"
 				},
 				"has": {
 					"type": "method",
@@ -1399,7 +1399,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`has()`** method of the FormData interface returns whether a `FormData` object contains a certain key.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/has)"
+					"description": "The **`has()`** method of the FormData interface returns whether a FormData object contains a certain key.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/has)"
 				},
 				"keys": {
 					"type": "method",
@@ -1411,7 +1411,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.iterable.d.ts:FormDataIterator",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FormDataIterator",
 								"name": "FormDataIterator"
 							},
 							"typeParameters": [
@@ -1451,7 +1451,7 @@
 										},
 										{
 											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.d.ts:Blob",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:Blob",
 											"name": "Blob"
 										}
 									]
@@ -1466,7 +1466,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": "The **`set()`** method of the FormData interface sets a new value for an existing key inside a `FormData` object, or adds the key/value if it does not already exist.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/set)"
+					"description": "The **`set()`** method of the FormData interface sets a new value for an existing key inside a FormData object, or adds the key/value if it does not already exist.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData/set)"
 				},
 				"values": {
 					"type": "method",
@@ -1478,7 +1478,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.dom.iterable.d.ts:FormDataIterator",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:FormDataIterator",
 								"name": "FormDataIterator"
 							},
 							"typeParameters": [
@@ -1495,7 +1495,7 @@
 				}
 			},
 			"typeParameters": [],
-			"description": "The **`FormData`** interface provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using the Window/fetch, XMLHttpRequest.send() or navigator.sendBeacon() methods.\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData)"
+			"description": "The **`FormData`** interface provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using the fetch(), XMLHttpRequest.send() or navigator.sendBeacon() methods. It uses the same format a form would use if the encoding type were set to \"multipart/form-data\".\n\n[MDN Reference](https://developer.mozilla.org/docs/Web/API/FormData)"
 		},
 		"ButtonRenderProps": {
 			"type": "interface",
