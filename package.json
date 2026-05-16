@@ -37,8 +37,8 @@
 		"lint:fix": "oxlint --fix .",
 		"format:check": "oxfmt --check .",
 		"format:fix": "oxfmt .",
-		"lint:ws": "pnpm dlx sherif@latest",
-		"postinstall": "pnpm lint:ws",
+		"lint:ws": "sherif --fail-on-warnings && syncpack lint",
+		"lint:ws:fix": "syncpack fix",
 		"typecheck": "turbo run typecheck",
 		"test": "vitest run",
 		"release": "changeset version",
@@ -53,17 +53,19 @@
 		"oxfmt": "^0.50.0",
 		"oxlint": "^1.65.0",
 		"puppeteer": "^24.26.0",
+		"sherif": "1.11.1",
+		"syncpack": "15.1.2",
 		"tsx": "^4.21.0",
 		"turbo": "^2.5.8",
-		"typescript": "^5.8.3",
+		"typescript": "catalog:",
 		"vite-tsconfig-paths": "^6.0.3",
 		"vitest": "^4.0.16"
 	},
 	"packageManager": "pnpm@10.24.0",
 	"pnpm": {
 		"overrides": {
-			"@types/react": "19.1.8",
-			"@types/react-dom": "19.1.6",
+			"@types/react": "19.2.2",
+			"@types/react-dom": "19.2.1",
 			"react-aria": "file:./www/vendor/react-aria-3.48.0.tgz",
 			"react-aria-components": "file:./www/vendor/react-aria-components-1.17.0.tgz",
 			"react-stately": "file:./www/vendor/react-stately-3.46.0.tgz"

@@ -52,6 +52,7 @@
 	],
 	"ignorePatterns": [
 		"**/node_modules/**",
+		"**/.pnpm-store/**",
 		"**/.cache/**",
 		"**/dist/**",
 		"**/build/**",

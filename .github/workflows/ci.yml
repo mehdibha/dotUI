@@ -18,6 +18,8 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
 
+      - run: pnpm lint:ws
+
       - run: pnpm check
 
   tsc:
