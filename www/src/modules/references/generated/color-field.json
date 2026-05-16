@@ -2334,6 +2334,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "error"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -2686,15 +2695,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "error"
 												}
 											]
 										},
@@ -5365,15 +5365,6 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "map"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -5906,6 +5897,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
 												}
 											]
 										},
@@ -7679,15 +7679,6 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "map"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -8220,6 +8211,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
 												}
 											]
 										},
@@ -14108,15 +14108,6 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "map"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -14649,6 +14640,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
 												}
 											]
 										},
@@ -15624,15 +15624,6 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
-													"value": "map"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -16165,6 +16156,15 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
+													"value": "map"
 												}
 											]
 										},
@@ -17373,6 +17373,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "error"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "submit"
 												}
 											]
@@ -17725,15 +17734,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "ended"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "error"
 												}
 											]
 										},
