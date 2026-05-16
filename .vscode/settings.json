@@ -40,6 +40,7 @@
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
 	"typescript.tsdk": "node_modules/typescript/lib",
+	"js/ts.experimental.useTsgo": true,
 	"editor.formatOnSave": true,
 	"editor.formatOnPaste": true,
 	"emmet.showExpandedAbbreviation": "never",
