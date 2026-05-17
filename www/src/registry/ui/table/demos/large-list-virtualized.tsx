@@ -46,7 +46,7 @@ const deployments: Deployment[] = Array.from({ length: 2500 }, (_, index) => {
 
 export default function Demo() {
 	return (
-		<TableContainer className="h-80">
+		<TableContainer className="h-80" resizable>
 			<TableVirtualizer>
 				<Table aria-label="Virtualized deployments" selectionMode="multiple">
 					<TableHeader columns={columns}>

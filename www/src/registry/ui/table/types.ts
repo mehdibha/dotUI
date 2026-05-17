@@ -73,11 +73,6 @@ export interface TableCellProps extends React.ComponentProps<typeof TablePrimiti
 export interface TableDropIndicatorProps extends DragAndDropPrimitives.DropIndicatorProps {}
 
 /**
- * A caption for a Table.
- */
-export interface TableCaptionProps extends React.ComponentProps<"caption"> {}
-
-/**
  * A loading row that can be used for infinite loading.
  */
 export interface TableLoadMoreProps extends React.ComponentProps<typeof TablePrimitives.TableLoadMoreItem> {}

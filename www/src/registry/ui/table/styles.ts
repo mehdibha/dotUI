@@ -6,8 +6,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
 	base: {
 		slots: {
 			container: "relative isolate min-h-0 w-full scroll-pt-10 overflow-auto rounded-md border border-border bg-bg",
-			table: "min-w-full caption-bottom text-sm text-fg outline-hidden select-none",
-			caption: "mt-3 text-sm text-fg-muted",
+			table: "min-w-full text-sm text-fg outline-hidden select-none",
 			header: "sticky top-0 z-10 bg-bg/95 backdrop-blur supports-[-moz-appearance:none]:bg-bg",
 			column: [
 				"box-border h-10 cursor-default border-b border-border bg-bg/95 px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden backdrop-blur supports-[-moz-appearance:none]:bg-bg",
@@ -30,8 +29,8 @@ const { useStyles, styles } = createStyles(tableMeta, {
 			body: "data-[empty]:h-24 data-[empty]:text-center data-[empty]:text-fg-muted",
 			footer: "border-t bg-muted/50 font-medium [&_[role=row]]:last:border-b-0 [&>tr]:last:border-b-0",
 			row: [
-				"group/row relative box-border cursor-default border-b border-border focus-reset transition-colors [&:is(div)]:h-full",
-				"hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted drop-target:bg-accent-muted/70 dragging:cursor-grabbing dragging:opacity-50",
+				"group/row relative box-border cursor-default border-b border-border bg-bg/70 focus-reset transition-colors [&:is(div)]:h-full",
+				"hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted drop-target:bg-accent-muted/70 dragging:cursor-grabbing dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70",
 				"focus-visible:bg-accent-muted/70 disabled:text-fg-disabled focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
 			],
 			cell: [
@@ -67,7 +66,6 @@ const { useStyles, styles } = createStyles(tableMeta, {
 		compact: {
 			slots: {
 				table: "text-xs",
-				caption: "text-xs",
 				container: "scroll-pt-8",
 				column: "h-8 px-2",
 				chromeColumn: "h-8",
@@ -83,7 +81,6 @@ const { useStyles, styles } = createStyles(tableMeta, {
 		default: {
 			slots: {
 				table: "text-sm",
-				caption: "text-sm",
 				column: "h-10 px-2.5",
 				chromeColumn: "h-10",
 				selectionColumn: "px-2.5",
@@ -95,7 +92,6 @@ const { useStyles, styles } = createStyles(tableMeta, {
 		comfortable: {
 			slots: {
 				table: "text-sm",
-				caption: "text-sm",
 				container: "scroll-pt-12",
 				column: "h-12 px-3",
 				chromeColumn: "h-12",

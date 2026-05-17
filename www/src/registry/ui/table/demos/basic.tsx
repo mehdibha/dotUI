@@ -4,7 +4,6 @@ import {
 	Table,
 	TableContainer,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableColumn,
 	TableHeader,
@@ -15,7 +14,6 @@ export default function Demo() {
 	return (
 		<TableContainer>
 			<Table aria-label="Files">
-				<TableCaption>Recently modified files.</TableCaption>
 				<TableHeader>
 					<TableColumn isRowHeader>Name</TableColumn>
 					<TableColumn>Type</TableColumn>

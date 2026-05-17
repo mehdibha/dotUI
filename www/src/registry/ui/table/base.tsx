@@ -118,36 +118,15 @@ TableContainer.displayName = "TableContainer";
 
 interface TableProps extends React.ComponentProps<typeof TablePrimitives.Table> {}
 
-const Table = ({ className, children, render, ...props }: TableProps) => {
+const Table = ({ className, ...props }: TableProps) => {
 	const { table } = useStyles()();
-	const { caption, content } = extractTableCaption(children);
-	const tableRender: TableProps["render"] | undefined =
-		caption || render
-			? (tableProps, renderProps) => {
-					const nextTableProps = caption
-						? {
-								...tableProps,
-								children: [caption, tableProps.children],
-							}
-						: tableProps;
-
-					if (render) {
-						return render(nextTableProps, renderProps);
-					}
-
-					return <table {...(nextTableProps as React.ComponentProps<"table">)} />;
-				}
-			: undefined;
 
 	return (
 		<TablePrimitives.Table
 			data-slot="table"
 			className={composeRenderProps(className, (cn) => table({ className: cn }))}
-			render={tableRender}
 			{...props}
-		>
-			{content}
-		</TablePrimitives.Table>
+		/>
 	);
 };
 
@@ -389,32 +368,6 @@ const TableDropIndicator = ({ children, className, ...props }: TableDropIndicato
 	);
 };
 
-// MARK: Separator
-
-interface TableCaptionProps extends React.ComponentProps<"caption"> {}
-
-const TableCaption = ({ className, ...props }: TableCaptionProps) => {
-	const { caption } = useStyles()();
-	return <caption data-slot="table-caption" className={caption({ className })} {...props} />;
-};
-
-function isTableCaptionElement(child: React.ReactNode): child is React.ReactElement<TableCaptionProps> {
-	return React.isValidElement(child) && child.type === TableCaption;
-}
-
-function extractTableCaption(children: React.ReactNode) {
-	let caption: React.ReactElement<TableCaptionProps> | undefined;
-	const content = React.Children.toArray(children).filter((child) => {
-		if (!isTableCaptionElement(child)) return true;
-		caption ??= child;
-		return false;
-	});
-
-	return { caption, content };
-}
-
-// MARK: Separator
-
 interface TableLoadMoreProps extends React.ComponentProps<typeof TablePrimitives.TableLoadMoreItem> {}
 
 const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
@@ -430,7 +383,6 @@ const TableLoadMore = ({ className, ...props }: TableLoadMoreProps) => {
 
 export type {
 	TableBodyProps,
-	TableCaptionProps,
 	TableCellProps,
 	TableColumnProps,
 	TableContainerProps,
@@ -445,7 +397,6 @@ export type {
 export {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableColumn,
 	TableContainer,

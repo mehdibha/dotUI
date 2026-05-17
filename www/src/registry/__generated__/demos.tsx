@@ -1853,6 +1853,10 @@ export const DemosIndex: Record<
 		files: ["ui/table/demos/invoices.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/invoices")),
 	},
+	"table/demos/issue-groups": {
+		files: ["ui/table/demos/issue-groups.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/issue-groups")),
+	},
 	"table/demos/large-list-virtualized": {
 		files: ["ui/table/demos/large-list-virtualized.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/large-list-virtualized")),

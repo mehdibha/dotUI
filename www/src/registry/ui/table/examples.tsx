@@ -11,6 +11,7 @@ import DynamicCollection from "./demos/dynamic-collection";
 import EmptyState from "./demos/empty-state";
 import ExpandableRows from "./demos/expandable-rows";
 import Invoices from "./demos/invoices";
+import IssueGroups from "./demos/issue-groups";
 import LargeListVirtualized from "./demos/large-list-virtualized";
 import Links from "./demos/links";
 import ProjectBudget from "./demos/project-budget";
@@ -50,6 +51,9 @@ export default function TableExamples() {
 			</Example>
 			<Example title="expandable rows">
 				<ExpandableRows />
+			</Example>
+			<Example title="issue groups">
+				<IssueGroups />
 			</Example>
 			<Example title="selection">
 				<Selection />

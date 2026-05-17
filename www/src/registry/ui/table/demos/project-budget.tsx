@@ -5,7 +5,6 @@ import {
 	Table,
 	TableContainer,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableColumn,
 	TableFooter,
@@ -49,7 +48,6 @@ export default function Demo() {
 	return (
 		<TableContainer>
 			<Table aria-label="Project budgets">
-				<TableCaption>Active project budgets and billing status.</TableCaption>
 				<TableHeader>
 					<TableColumn isRowHeader>Project</TableColumn>
 					<TableColumn>Status</TableColumn>

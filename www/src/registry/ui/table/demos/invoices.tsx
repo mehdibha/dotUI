@@ -5,7 +5,6 @@ import {
 	Table,
 	TableContainer,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableColumn,
 	TableFooter,
@@ -43,7 +42,6 @@ export default function Demo() {
 	return (
 		<TableContainer>
 			<Table aria-label="Invoices">
-				<TableCaption>A list of your recent invoices.</TableCaption>
 				<TableHeader>
 					<TableColumn isRowHeader>Invoice</TableColumn>
 					<TableColumn>Status</TableColumn>
