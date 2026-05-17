@@ -1809,6 +1809,10 @@ export const DemosIndex: Record<
 		files: ["ui/switch/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/switch/demos/uncontrolled")),
 	},
+	"table/demos/async-loading": {
+		files: ["ui/table/demos/async-loading.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/async-loading")),
+	},
 	"table/demos/basic": {
 		files: ["ui/table/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/basic")),
@@ -1820,6 +1824,10 @@ export const DemosIndex: Record<
 	"table/demos/controlled": {
 		files: ["ui/table/demos/controlled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/controlled")),
+	},
+	"table/demos/controls": {
+		files: ["ui/table/demos/controls.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/controls")),
 	},
 	"table/demos/disabled-rows": {
 		files: ["ui/table/demos/disabled-rows.tsx"],
@@ -1837,9 +1845,25 @@ export const DemosIndex: Record<
 		files: ["ui/table/demos/empty-state.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/empty-state")),
 	},
+	"table/demos/expandable-rows": {
+		files: ["ui/table/demos/expandable-rows.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/expandable-rows")),
+	},
+	"table/demos/invoices": {
+		files: ["ui/table/demos/invoices.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/invoices")),
+	},
+	"table/demos/large-list-virtualized": {
+		files: ["ui/table/demos/large-list-virtualized.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/large-list-virtualized")),
+	},
 	"table/demos/links": {
 		files: ["ui/table/demos/links.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/links")),
+	},
+	"table/demos/project-budget": {
+		files: ["ui/table/demos/project-budget.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/project-budget")),
 	},
 	"table/demos/reordable": {
 		files: ["ui/table/demos/reordable.tsx"],
@@ -1848,14 +1872,6 @@ export const DemosIndex: Record<
 	"table/demos/row-action": {
 		files: ["ui/table/demos/row-action.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/row-action")),
-	},
-	"table/demos/selection-behavior": {
-		files: ["ui/table/demos/selection-behavior.tsx"],
-		component: React.lazy(() => import("@/registry/ui/table/demos/selection-behavior")),
-	},
-	"table/demos/selection-mode": {
-		files: ["ui/table/demos/selection-mode.tsx"],
-		component: React.lazy(() => import("@/registry/ui/table/demos/selection-mode")),
 	},
 	"table/demos/selection": {
 		files: ["ui/table/demos/selection.tsx"],
@@ -1868,6 +1884,10 @@ export const DemosIndex: Record<
 	"table/demos/static-row-action": {
 		files: ["ui/table/demos/static-row-action.tsx"],
 		component: React.lazy(() => import("@/registry/ui/table/demos/static-row-action")),
+	},
+	"table/demos/tasks": {
+		files: ["ui/table/demos/tasks.tsx"],
+		component: React.lazy(() => import("@/registry/ui/table/demos/tasks")),
 	},
 	"table/demos/uncontrolled": {
 		files: ["ui/table/demos/uncontrolled.tsx"],

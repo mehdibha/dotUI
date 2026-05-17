@@ -1,6 +1,6 @@
 {
 	"name": "TableContainerProps",
-	"description": "Missing description.",
+	"description": "The scrollable container for a Table. Set `resizable` to opt into React Aria's resizable table layout.",
 	"props": {
 		"resizable": {
 			"type": "boolean",
@@ -8,7 +8,7 @@
 			"typeAst": {
 				"type": "boolean"
 			},
-			"description": "Whether the table columns are resizable."
+			"description": "Whether to render a React Aria `ResizableTableContainer`.\n\nWhen false, the container renders a plain div so the table can use native CSS auto layout."
 		},
 		"children": {
 			"type": "ReactNode",
@@ -54,7 +54,7 @@
 									"type": "application",
 									"base": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
 										"name": "Map"
 									},
 									"typeParameters": [
@@ -100,7 +100,7 @@
 									"type": "application",
 									"base": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
 										"name": "Map"
 									},
 									"typeParameters": [
@@ -146,7 +146,7 @@
 									"type": "application",
 									"base": {
 										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
 										"name": "Map"
 									},
 									"typeParameters": [
@@ -218,15 +218,15 @@
 		}
 	},
 	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
 			"name": "Map",
 			"extends": [],
 			"properties": {
-				"__@iterator@126": {
+				"__@iterator@114": {
 					"type": "method",
-					"name": "__@iterator@126",
+					"name": "__@iterator@114",
 					"value": {
 						"type": "function",
 						"parameters": [],
@@ -234,7 +234,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
 								"name": "MapIterator"
 							},
 							"typeParameters": [
@@ -258,9 +258,9 @@
 					"optional": false,
 					"description": "Returns an iterable of entries in the map."
 				},
-				"__@toStringTag@129": {
+				"__@toStringTag@117": {
 					"type": "property",
-					"name": "__@toStringTag@129",
+					"name": "__@toStringTag@117",
 					"value": {
 						"type": "string"
 					},
@@ -280,7 +280,7 @@
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": ""
+					"description": "Removes all elements from the Map."
 				},
 				"delete": {
 					"type": "method",
@@ -317,7 +317,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
 								"name": "MapIterator"
 							},
 							"typeParameters": [
@@ -380,7 +380,7 @@
 												"type": "application",
 												"base": {
 													"type": "link",
-													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+													"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
 													"name": "Map"
 												},
 												"typeParameters": [
@@ -527,7 +527,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
 								"name": "MapIterator"
 							},
 							"typeParameters": [
@@ -573,7 +573,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
 								"name": "Map"
 							},
 							"typeParameters": [
@@ -612,7 +612,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
 								"name": "MapIterator"
 							},
 							"typeParameters": [

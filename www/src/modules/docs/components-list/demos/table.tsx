@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
+import { Table, TableBody, TableCell, TableColumn, TableContainer, TableHeader, TableRow } from "@/registry/ui/table";
 
 const columns = [
 	{ name: "Name", id: "name", isRowHeader: true },
@@ -14,19 +14,21 @@ const data = [
 
 export function TableDemo() {
 	return (
-		<Table aria-label="Team members">
-			<TableHeader columns={columns}>
-				{(column) => <TableColumn isRowHeader={column.isRowHeader}>{column.name}</TableColumn>}
-			</TableHeader>
-			<TableBody items={data}>
-				{(item) => (
-					<TableRow columns={columns}>
-						<TableCell>{item.name}</TableCell>
-						<TableCell>{item.role}</TableCell>
-						<TableCell>{item.status}</TableCell>
-					</TableRow>
-				)}
-			</TableBody>
-		</Table>
+		<TableContainer>
+			<Table aria-label="Team members">
+				<TableHeader columns={columns}>
+					{(column) => <TableColumn isRowHeader={column.isRowHeader}>{column.name}</TableColumn>}
+				</TableHeader>
+				<TableBody items={data}>
+					{(item) => (
+						<TableRow columns={columns}>
+							<TableCell>{item.name}</TableCell>
+							<TableCell>{item.role}</TableCell>
+							<TableCell>{item.status}</TableCell>
+						</TableRow>
+					)}
+				</TableBody>
+			</Table>
+		</TableContainer>
 	);
 }

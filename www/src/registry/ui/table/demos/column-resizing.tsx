@@ -1,6 +1,6 @@
 "use client";
 
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
+import { Table, TableContainer, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
 
 const columns: Column[] = [
 	{ name: "Name", id: "name", isRowHeader: true },
@@ -17,20 +17,22 @@ const items: Item[] = [
 
 export default function Demo() {
 	return (
-		<Table aria-label="Files" resizable>
-			<TableHeader columns={columns}>
-				<TableColumn id="name" isRowHeader allowsResizing>
-					Name
-				</TableColumn>
-				<TableColumn id="type" allowsResizing>
-					Type
-				</TableColumn>
-				<TableColumn id="date">Date Modified</TableColumn>
-			</TableHeader>
-			<TableBody items={items}>
-				{(item) => <TableRow columns={columns}>{(column) => <TableCell>{item[column.id]}</TableCell>}</TableRow>}
-			</TableBody>
-		</Table>
+		<TableContainer resizable>
+			<Table aria-label="Files">
+				<TableHeader columns={columns}>
+					<TableColumn id="name" isRowHeader allowsResizing>
+						Name
+					</TableColumn>
+					<TableColumn id="type" allowsResizing>
+						Type
+					</TableColumn>
+					<TableColumn id="date">Date Modified</TableColumn>
+				</TableHeader>
+				<TableBody items={items}>
+					{(item) => <TableRow columns={columns}>{(column) => <TableCell>{item[column.id]}</TableCell>}</TableRow>}
+				</TableBody>
+			</Table>
+		</TableContainer>
 	);
 }
 

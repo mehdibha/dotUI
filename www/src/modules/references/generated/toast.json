@@ -199,5 +199,15 @@
 			},
 			"description": "The type of the toast. Used to conditionally style the toast,\nincluding conditionally rendering elements based on the type."
 		}
+	},
+	"renderProps": {
+		"isFocused": {
+			"selector": "[data-focused]",
+			"description": "Whether the toast is currently focused."
+		},
+		"isFocusVisible": {
+			"selector": "[data-focus-visible]",
+			"description": "Whether the toast is keyboard focused."
+		}
 	}
 }

@@ -31,6 +31,7 @@
 		"@tanstack/react-router": "catalog:",
 		"@tanstack/react-router-devtools": "^1.167.0",
 		"@tanstack/react-start": "catalog:",
+		"@tanstack/react-table": "^8.21.3",
 		"@tanstack/router-plugin": "^1.168.2",
 		"@tanstack/start-static-server-functions": "^1.167.1",
 		"@vercel/og": "^0.11.1",

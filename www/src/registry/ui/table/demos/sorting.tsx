@@ -4,7 +4,7 @@ import React from "react";
 
 import type * as TablePrimitives from "react-aria-components/Table";
 
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
+import { Table, TableContainer, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
 
 const columns: Column[] = [
 	{ name: "Name", id: "name", isRowHeader: true },
@@ -38,20 +38,22 @@ export default function Demo() {
 	}, [sortDescriptor]);
 
 	return (
-		<Table aria-label="Files" sortDescriptor={sortDescriptor} onSortChange={setSortDescriptor}>
-			<TableHeader columns={columns}>
-				<TableColumn id="name" isRowHeader allowsSorting>
-					Name
-				</TableColumn>
-				<TableColumn id="type" allowsSorting>
-					Type
-				</TableColumn>
-				<TableColumn id="date">Date Modified</TableColumn>
-			</TableHeader>
-			<TableBody items={sortedItems}>
-				{(item) => <TableRow columns={columns}>{(column) => <TableCell>{item[column.id]}</TableCell>}</TableRow>}
-			</TableBody>
-		</Table>
+		<TableContainer>
+			<Table aria-label="Files" sortDescriptor={sortDescriptor} onSortChange={setSortDescriptor}>
+				<TableHeader columns={columns}>
+					<TableColumn id="name" isRowHeader allowsSorting>
+						Name
+					</TableColumn>
+					<TableColumn id="type" allowsSorting>
+						Type
+					</TableColumn>
+					<TableColumn id="date">Date Modified</TableColumn>
+				</TableHeader>
+				<TableBody items={sortedItems}>
+					{(item) => <TableRow columns={columns}>{(column) => <TableCell>{item[column.id]}</TableCell>}</TableRow>}
+				</TableBody>
+			</Table>
+		</TableContainer>
 	);
 }
 

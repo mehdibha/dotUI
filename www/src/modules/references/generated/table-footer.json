@@ -1,51 +1,9 @@
 {
-	"name": "TabListProps",
-	"description": "A TabList is used within Tabs to group tabs that a user can switch between.",
+	"name": "TableFooterProps",
+	"description": "A footer within a Table, containing summary rows.",
 	"props": {
-		"variant": {
-			"type": "TabsVariant",
-			"detailedType": "TabsVariant | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "TabsVariant"
-			},
-			"description": "The visual style of the tab list.",
-			"default": "\"default\""
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
 		"children": {
-			"type": "ReactNode | ((item: object) => ReactNode)",
+			"type": "ReactNode | ((item: T) => ReactNode)",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -83,7 +41,12 @@
 								"type": "parameter",
 								"name": "item",
 								"value": {
-									"type": "object"
+									"type": "typeParameter",
+									"name": "T",
+									"constraint": {
+										"type": "object"
+									},
+									"default": null
 								},
 								"optional": false,
 								"rest": false
@@ -128,38 +91,13 @@
 			"description": "The contents of the collection."
 		},
 		"className": {
-			"type": "string | (values: TabListRenderProps) => string",
-			"detailedType": "string | (values: TabListRenderProps) => string | undefined",
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TabListRenderProps",
-									"name": "TabListRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
+				"type": "string"
 			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-TabList'"
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+			"default": "'react-aria-TableFooter'"
 		},
 		"dependencies": {
 			"type": "readonly any[]",
@@ -181,8 +119,8 @@
 			"description": "Values that should invalidate the item cache when using dynamic collections."
 		},
 		"items": {
-			"type": "Iterable<object>",
-			"detailedType": "Iterable<object> | undefined",
+			"type": "Iterable<T>",
+			"detailedType": "Iterable<T> | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
@@ -198,7 +136,12 @@
 						},
 						"typeParameters": [
 							{
-								"type": "object"
+								"type": "typeParameter",
+								"name": "T",
+								"constraint": {
+									"type": "object"
+								},
+								"default": null
 							}
 						]
 					}
@@ -206,82 +149,14 @@
 			},
 			"description": "Item objects in the collection."
 		},
-		"render": {
-			"type": "DOMRenderFunction<\"div\", TabListRenderProps>",
-			"detailedType": "| DOMRenderFunction<'div', TabListRenderProps>\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "DOMRenderFunction"
-						},
-						"typeParameters": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "div"
-									}
-								]
-							},
-							{
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps",
-								"name": "TabListRenderProps"
-							}
-						]
-					}
-				]
-			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
-		},
 		"style": {
-			"type": "CSSProperties | (values: TabListRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: TabListRenderProps) => CSSProperties | undefined",
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "TabListRenderProps",
-									"name": "TabListRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
+				"type": "identifier",
+				"name": "CSSProperties"
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-		}
-	},
-	"renderProps": {
-		"orientation": {
-			"selector": "[data-orientation=\"horizontal | vertical\"]",
-			"description": "The orientation of the tab list."
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
 		}
 	},
 	"typeLinks": {
@@ -421,47 +296,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps",
-			"name": "TabListRenderProps",
-			"extends": [],
-			"properties": {
-				"orientation": {
-					"type": "property",
-					"name": "orientation",
-					"value": {
-						"type": "identifier",
-						"name": "Orientation"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The orientation of the tab list."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/tabs/useTabListState.d.ts:TabListState",
-							"name": "TabListState"
-						},
-						"typeParameters": [
-							{
-								"type": "unknown"
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the tab list."
 				}
 			},
 			"typeParameters": [],
@@ -986,34 +820,6 @@
 			},
 			"typeParameters": [],
 			"description": "Represents the completion of an asynchronous operation"
-		},
-		"TabListRenderProps": {
-			"type": "interface",
-			"name": "TabListRenderProps",
-			"properties": {
-				"orientation": {
-					"type": "property",
-					"name": "orientation",
-					"value": {
-						"type": "identifier",
-						"name": "Orientation"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The orientation of the tab list."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "identifier",
-						"name": "TabListState<unknown>"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the tab list."
-				}
-			}
 		}
 	}
 }

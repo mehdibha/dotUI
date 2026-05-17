@@ -20,24 +20,80 @@ npx shadcn@latest add @dotui/table
 Use tables to display data in rows and columns with support for selection, sorting, and more.
 
 ```tsx
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/components/ui/table";
+import {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableColumn,
+	TableContainer,
+	TableFooter,
+	TableHeader,
+	TableRow,
+	TableVirtualizer,
+} from "@/components/ui/table";
 ```
 
 ```tsx
-<Table aria-label="Files">
-	<TableHeader>
-		<TableColumn isRowHeader>Name</TableColumn>
-		<TableColumn>Type</TableColumn>
-		<TableColumn>Date Modified</TableColumn>
-	</TableHeader>
-	<TableBody>
-		<TableRow>
-			<TableCell>Games</TableCell>
-			<TableCell>File folder</TableCell>
-			<TableCell>6/7/2020</TableCell>
-		</TableRow>
-	</TableBody>
-</Table>
+<TableContainer>
+	<Table aria-label="Files">
+		<TableCaption>Recently modified files.</TableCaption>
+		<TableHeader>
+			<TableColumn isRowHeader>Name</TableColumn>
+			<TableColumn>Type</TableColumn>
+			<TableColumn>Date Modified</TableColumn>
+		</TableHeader>
+		<TableBody>
+			<TableRow>
+				<TableCell>Games</TableCell>
+				<TableCell>File folder</TableCell>
+				<TableCell>6/7/2020</TableCell>
+			</TableRow>
+		</TableBody>
+		<TableFooter>
+			<TableRow>
+				<TableCell colSpan={2}>Total</TableCell>
+				<TableCell>1 item</TableCell>
+			</TableRow>
+		</TableFooter>
+	</Table>
+</TableContainer>
+```
+
+Use `TableContainer` to control the scroll region.
+
+```tsx
+<TableContainer className="max-h-80">
+	<Table aria-label="Files">{/* ... */}</Table>
+</TableContainer>
+```
+
+By default, `TableContainer` renders a plain `div` so the table uses native CSS auto layout. Set `resizable` to opt into React Aria's resizable table layout. In that mode, use `width`, `defaultWidth`, `minWidth`, and `maxWidth` on `TableColumn`.
+
+```tsx
+<TableContainer resizable>
+	<Table aria-label="Files">
+		<TableHeader>
+			<TableColumn allowsResizing defaultWidth={240}>
+				Name
+			</TableColumn>
+			<TableColumn allowsResizing defaultWidth={120}>
+				Type
+			</TableColumn>
+		</TableHeader>
+		<TableBody>{/* ... */}</TableBody>
+	</Table>
+</TableContainer>
+```
+
+Use `TableVirtualizer` for large collections. It uses the table layout exported by this component so row, cell, and selection column alignment stays consistent. Row and header heights default to the active density.
+
+```tsx
+<TableContainer className="h-80">
+	<TableVirtualizer>
+		<Table aria-label="Files">{/* ... */}</Table>
+	</TableVirtualizer>
+</TableContainer>
 ```
 
 ## Playground
@@ -60,10 +116,15 @@ Use the controls below to experiment with different table props and see the live
 
 <Examples>
 	<Example name="table/demos/basic" />
+	<Example name="table/demos/invoices" />
+	<Example name="table/demos/project-budget" />
+	<Example name="table/demos/tasks" />
+	<Example name="table/demos/large-list-virtualized" />
+	<Example name="table/demos/async-loading" />
+	<Example name="table/demos/controls" />
 	<Example name="table/demos/dynamic-collection" />
+	<Example name="table/demos/expandable-rows" />
 	<Example name="table/demos/selection" />
-	<Example name="table/demos/selection-mode" />
-	<Example name="table/demos/selection-behavior" />
 	<Example name="table/demos/disallow-empty-selection" />
 	<Example name="table/demos/disabled-rows" />
 	<Example name="table/demos/links" />
@@ -78,6 +139,10 @@ Use the controls below to experiment with different table props and see the live
 </Examples>
 
 ## API Reference
+
+### TableContainer
+
+<Reference name="table-container" />
 
 ### Table
 
@@ -95,6 +160,10 @@ Use the controls below to experiment with different table props and see the live
 
 <Reference name="table-body" />
 
+### TableFooter
+
+<Reference name="table-footer" />
+
 ### TableRow
 
 <Reference name="table-row" />
@@ -102,3 +171,15 @@ Use the controls below to experiment with different table props and see the live
 ### TableCell
 
 <Reference name="table-cell" />
+
+### TableDropIndicator
+
+<Reference name="table-drop-indicator" />
+
+### TableCaption
+
+<Reference name="table-caption" />
+
+### TableVirtualizer
+
+<Reference name="table-virtualizer" />

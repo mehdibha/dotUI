@@ -36,7 +36,8 @@ function CreatePage() {
 	const iframeSrc = useMemo(() => {
 		const base = `/preview/${effectivePreview}`;
 		return preset ? `${base}?preset=${encodeURIComponent(preset)}` : base;
-	}, [effectivePreview, preset]);
+		// oxlint-disable-next-line react/exhaustive-deps -- keep live preset changes on the postMessage channel to avoid iframe reloads
+	}, [effectivePreview]);
 
 	// Send design system to iframe on changes + iframe load
 	useEffect(() => {

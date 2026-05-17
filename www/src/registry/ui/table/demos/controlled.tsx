@@ -4,7 +4,7 @@ import React from "react";
 
 import type * as MenuPrimitives from "react-aria-components/Menu";
 
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
+import { Table, TableContainer, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
 
 const columns: Column[] = [
 	{ name: "Name", id: "name", isRowHeader: true },
@@ -22,14 +22,21 @@ const data: Item[] = [
 export default function Demo() {
 	const [selectedKeys, setSelectedKeys] = React.useState<MenuPrimitives.Selection>(new Set([2, 3]));
 	return (
-		<Table aria-label="Files" selectionMode="multiple" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
-			<TableHeader columns={columns}>
-				{(column) => <TableColumn isRowHeader={column.isRowHeader}>{column.name}</TableColumn>}
-			</TableHeader>
-			<TableBody items={data}>
-				{(item) => <TableRow columns={columns}>{(column) => <TableCell>{item[column.id]}</TableCell>}</TableRow>}
-			</TableBody>
-		</Table>
+		<TableContainer>
+			<Table
+				aria-label="Files"
+				selectionMode="multiple"
+				selectedKeys={selectedKeys}
+				onSelectionChange={setSelectedKeys}
+			>
+				<TableHeader columns={columns}>
+					{(column) => <TableColumn isRowHeader={column.isRowHeader}>{column.name}</TableColumn>}
+				</TableHeader>
+				<TableBody items={data}>
+					{(item) => <TableRow columns={columns}>{(column) => <TableCell>{item[column.id]}</TableCell>}</TableRow>}
+				</TableBody>
+			</Table>
+		</TableContainer>
 	);
 }
 

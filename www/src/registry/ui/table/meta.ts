@@ -11,7 +11,7 @@ const tableMeta = {
 			target: "ui/table.tsx",
 		},
 	],
-	registryDependencies: ["checkbox", "focus-styles"],
+	registryDependencies: ["checkbox", "focus-styles", "loader"],
 } satisfies RegistryItem;
 
 export default tableMeta;

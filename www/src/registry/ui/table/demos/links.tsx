@@ -1,6 +1,6 @@
 "use client";
 
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
+import { Table, TableContainer, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
 
 const columns: Column[] = [
 	{ name: "Name", id: "name", isRowHeader: true },
@@ -17,30 +17,32 @@ const data: Item[] = [
 
 export default function Demo() {
 	return (
-		<Table aria-label="Files">
-			<TableHeader columns={columns}>
-				<TableColumn isRowHeader>Name</TableColumn>
-				<TableColumn>URL</TableColumn>
-				<TableColumn>Date added</TableColumn>
-			</TableHeader>
-			<TableBody items={data}>
-				<TableRow href="https://adobe.com/" target="_blank">
-					<TableCell>Adobe</TableCell>
-					<TableCell>https://adobe.com/</TableCell>
-					<TableCell>January 28, 2023</TableCell>
-				</TableRow>
-				<TableRow href="https://google.com/" target="_blank">
-					<TableCell>Google</TableCell>
-					<TableCell>https://google.com/</TableCell>
-					<TableCell>April 5, 2023</TableCell>
-				</TableRow>
-				<TableRow href="https://nytimes.com/" target="_blank">
-					<TableCell>New York Times</TableCell>
-					<TableCell>https://nytimes.com/</TableCell>
-					<TableCell>July 12, 2023</TableCell>
-				</TableRow>
-			</TableBody>
-		</Table>
+		<TableContainer>
+			<Table aria-label="Files">
+				<TableHeader columns={columns}>
+					<TableColumn isRowHeader>Name</TableColumn>
+					<TableColumn>URL</TableColumn>
+					<TableColumn>Date added</TableColumn>
+				</TableHeader>
+				<TableBody items={data}>
+					<TableRow href="https://adobe.com/" target="_blank">
+						<TableCell>Adobe</TableCell>
+						<TableCell>https://adobe.com/</TableCell>
+						<TableCell>January 28, 2023</TableCell>
+					</TableRow>
+					<TableRow href="https://google.com/" target="_blank">
+						<TableCell>Google</TableCell>
+						<TableCell>https://google.com/</TableCell>
+						<TableCell>April 5, 2023</TableCell>
+					</TableRow>
+					<TableRow href="https://nytimes.com/" target="_blank">
+						<TableCell>New York Times</TableCell>
+						<TableCell>https://nytimes.com/</TableCell>
+						<TableCell>July 12, 2023</TableCell>
+					</TableRow>
+				</TableBody>
+			</Table>
+		</TableContainer>
 	);
 }
 

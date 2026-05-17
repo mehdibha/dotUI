@@ -3675,6 +3675,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -4207,15 +4216,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -5879,6 +5879,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -6411,15 +6420,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -8142,6 +8142,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -8674,15 +8683,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -13690,6 +13690,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -14222,15 +14231,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -15206,6 +15206,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -15738,15 +15747,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},

@@ -1,6 +1,6 @@
 {
 	"name": "TableLoadMoreProps",
-	"description": "Missing description.",
+	"description": "A loading row that can be used for infinite loading.",
 	"props": {
 		"children": {
 			"type": "ReactNode",

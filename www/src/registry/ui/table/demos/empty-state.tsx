@@ -1,10 +1,10 @@
 "use client";
 
-import { Table, TableBody, TableColumn, TableHeader } from "@/registry/ui/table";
+import { Table, TableContainer, TableBody, TableColumn, TableHeader } from "@/registry/ui/table";
 
 export default function Demo() {
 	return (
-		<div className="flex gap-8">
+		<TableContainer>
 			<Table aria-label="Files">
 				<TableHeader>
 					<TableColumn id="name" isRowHeader>
@@ -15,17 +15,6 @@ export default function Demo() {
 				</TableHeader>
 				<TableBody>{[]}</TableBody>
 			</Table>
-
-			<Table aria-label="Files">
-				<TableHeader>
-					<TableColumn id="name" isRowHeader>
-						Name
-					</TableColumn>
-					<TableColumn id="type">Type</TableColumn>
-					<TableColumn id="date">Date Modified</TableColumn>
-				</TableHeader>
-				<TableBody renderEmptyState={() => "Nothing here."}>{[]}</TableBody>
-			</Table>
-		</div>
+		</TableContainer>
 	);
 }

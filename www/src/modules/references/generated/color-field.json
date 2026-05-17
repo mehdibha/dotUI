@@ -5378,6 +5378,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -5910,15 +5919,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -7712,6 +7712,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -8244,15 +8253,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -10044,6 +10044,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -10576,15 +10585,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -15701,6 +15701,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -16233,15 +16242,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -17217,6 +17217,15 @@
 											"elements": [
 												{
 													"type": "stringLiteral",
+													"value": "map"
+												}
+											]
+										},
+										{
+											"type": "union",
+											"elements": [
+												{
+													"type": "stringLiteral",
 													"value": "div"
 												}
 											]
@@ -17749,15 +17758,6 @@
 												{
 													"type": "stringLiteral",
 													"value": "main"
-												}
-											]
-										},
-										{
-											"type": "union",
-											"elements": [
-												{
-													"type": "stringLiteral",
-													"value": "map"
 												}
 											]
 										},
@@ -21751,15 +21751,6 @@
 								"elements": [
 									{
 										"type": "stringLiteral",
-										"value": "narrow"
-									}
-								]
-							},
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
 										"value": "short"
 									}
 								]
@@ -21770,6 +21761,15 @@
 									{
 										"type": "stringLiteral",
 										"value": "long"
+									}
+								]
+							},
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "narrow"
 									}
 								]
 							}

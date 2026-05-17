@@ -10,7 +10,7 @@ import { Input } from "@/registry/ui/input";
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
 import { Overlay } from "@/registry/ui/overlay";
 import { SearchField } from "@/registry/ui/search-field";
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
+import { Table, TableBody, TableCell, TableColumn, TableContainer, TableHeader, TableRow } from "@/registry/ui/table";
 
 export const statuses = [
 	{
@@ -244,79 +244,81 @@ export function Backlog(props: React.ComponentProps<"div">) {
 						</Button>
 					</div>
 				</div>
-				<Table aria-label="Development Team Backlog" selectionMode="multiple" className="mt-4">
-					<TableHeader columns={columns}>
-						{(column) => <TableColumn isRowHeader={column.isRowHeader}>{column.name}</TableColumn>}
-					</TableHeader>
-					<TableBody items={data}>
-						{(item) => (
-							<TableRow columns={columns}>
-								<TableCell>
-									{() => {
-										const type = types.find((t) => t.value === item.type);
-										if (!type) return null;
-										return (
-											<div className="flex items-center gap-2">
-												<Badge variant="neutral">{type?.label || item.type}</Badge>
-												<span className="truncate">{item.title}</span>
-											</div>
-										);
-									}}
-								</TableCell>
-								<TableCell>
-									{(() => {
-										const priority = priorities.find((p) => p.value === item.priority);
-										if (!priority) return null;
-										return <Badge variant={priority.variant}>{priority.label}</Badge>;
-									})()}
-								</TableCell>
-								<TableCell>
-									{(() => {
-										const status = statuses.find((s) => s.value === item.status);
-										if (!status) return null;
-										const StatusIcon = status.icon || Circle;
-										return (
-											<Badge variant={status.variant}>
-												<StatusIcon />
-												<span>{status?.label || item.status}</span>
-											</Badge>
-										);
-									})()}
-								</TableCell>
-								<TableCell>
-									{(() => {
-										const user = users.find((u) => u.username === item.assignee);
-										if (!user) return null;
-										return (
-											<div className="flex items-center space-x-2">
-												<img src={user.avatar} alt={user.name} className="h-6 w-6 rounded-full object-cover" />
-												<span className="text-fg-muted">{user.name}</span>
-											</div>
-										);
-									})()}
-								</TableCell>
-								<TableCell>
-									<Badge className="bg-accent-muted px-1 text-fg-accent">{item.storyPoints}</Badge>
-								</TableCell>
-								<TableCell>
-									<Menu>
-										<Button variant="quiet" size="sm">
-											<MoreHorizontal className="h-4 w-4" />
-										</Button>
-										<Overlay type="popover">
-											<MenuContent>
-												<MenuItem>Edit</MenuItem>
-												<MenuItem>Duplicate</MenuItem>
-												<MenuItem>Archive</MenuItem>
-												<MenuItem variant="danger">Delete</MenuItem>
-											</MenuContent>
-										</Overlay>
-									</Menu>
-								</TableCell>
-							</TableRow>
-						)}
-					</TableBody>
-				</Table>
+				<TableContainer className="mt-4">
+					<Table aria-label="Development Team Backlog" selectionMode="multiple">
+						<TableHeader columns={columns}>
+							{(column) => <TableColumn isRowHeader={column.isRowHeader}>{column.name}</TableColumn>}
+						</TableHeader>
+						<TableBody items={data}>
+							{(item) => (
+								<TableRow columns={columns}>
+									<TableCell>
+										{() => {
+											const type = types.find((t) => t.value === item.type);
+											if (!type) return null;
+											return (
+												<div className="flex items-center gap-2">
+													<Badge variant="neutral">{type?.label || item.type}</Badge>
+													<span className="truncate">{item.title}</span>
+												</div>
+											);
+										}}
+									</TableCell>
+									<TableCell>
+										{(() => {
+											const priority = priorities.find((p) => p.value === item.priority);
+											if (!priority) return null;
+											return <Badge variant={priority.variant}>{priority.label}</Badge>;
+										})()}
+									</TableCell>
+									<TableCell>
+										{(() => {
+											const status = statuses.find((s) => s.value === item.status);
+											if (!status) return null;
+											const StatusIcon = status.icon || Circle;
+											return (
+												<Badge variant={status.variant}>
+													<StatusIcon />
+													<span>{status?.label || item.status}</span>
+												</Badge>
+											);
+										})()}
+									</TableCell>
+									<TableCell>
+										{(() => {
+											const user = users.find((u) => u.username === item.assignee);
+											if (!user) return null;
+											return (
+												<div className="flex items-center space-x-2">
+													<img src={user.avatar} alt={user.name} className="h-6 w-6 rounded-full object-cover" />
+													<span className="text-fg-muted">{user.name}</span>
+												</div>
+											);
+										})()}
+									</TableCell>
+									<TableCell>
+										<Badge className="bg-accent-muted px-1 text-fg-accent">{item.storyPoints}</Badge>
+									</TableCell>
+									<TableCell>
+										<Menu>
+											<Button variant="quiet" size="sm">
+												<MoreHorizontal className="h-4 w-4" />
+											</Button>
+											<Overlay type="popover">
+												<MenuContent>
+													<MenuItem>Edit</MenuItem>
+													<MenuItem>Duplicate</MenuItem>
+													<MenuItem>Archive</MenuItem>
+													<MenuItem variant="danger">Delete</MenuItem>
+												</MenuContent>
+											</Overlay>
+										</Menu>
+									</TableCell>
+								</TableRow>
+							)}
+						</TableBody>
+					</Table>
+				</TableContainer>
 			</CardContent>
 		</Card>
 	);
