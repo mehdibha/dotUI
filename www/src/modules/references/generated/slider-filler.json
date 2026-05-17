@@ -1,6 +1,6 @@
 {
 	"name": "SliderFillerProps",
-	"description": "Missing description.",
+	"description": "Alias for SliderFillProps.",
 	"extendsElement": "div",
 	"props": {}
 }

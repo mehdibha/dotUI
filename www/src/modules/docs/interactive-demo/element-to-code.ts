@@ -187,6 +187,8 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 	// Slider
 	Slider: "@/components/ui/slider",
 	SliderControl: "@/components/ui/slider",
+	SliderFill: "@/components/ui/slider",
+	SliderOutput: "@/components/ui/slider",
 	SliderTrack: "@/components/ui/slider",
 	SliderThumb: "@/components/ui/slider",
 

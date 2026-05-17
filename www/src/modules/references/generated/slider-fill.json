@@ -1,0 +1,6 @@
+{
+	"name": "SliderFillProps",
+	"description": "A slider fill displays the selected region of the track.",
+	"extendsElement": "div",
+	"props": {}
+}

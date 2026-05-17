@@ -3,7 +3,7 @@
 import React from "react";
 
 import { Label } from "@/registry/ui/field";
-import { Slider, SliderControl } from "@/registry/ui/slider";
+import { Slider, SliderTrack } from "@/registry/ui/slider";
 
 export default function Demo() {
 	const [value, setValue] = React.useState(50);
@@ -11,7 +11,7 @@ export default function Demo() {
 		<div className="flex flex-col items-center gap-4">
 			<Slider value={value} onChange={(value) => setValue(value as number)}>
 				<Label>Opacity</Label>
-				<SliderControl />
+				<SliderTrack />
 			</Slider>
 			<span className="text-sm text-fg-muted">
 				Value: <span className="font-semibold text-fg">{value}</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Label } from "@/registry/ui/field";
-import { Slider, SliderControl } from "@/registry/ui/slider";
+import { Slider, SliderTrack } from "@/registry/ui/slider";
 
 interface SliderPlaygroundProps {
 	label?: string;
@@ -13,7 +13,7 @@ export function SliderPlayground({ label = "Volume", ...props }: SliderPlaygroun
 	return (
 		<Slider defaultValue={50} {...props}>
 			{label && <Label>{label}</Label>}
-			<SliderControl />
+			<SliderTrack />
 		</Slider>
 	);
 }

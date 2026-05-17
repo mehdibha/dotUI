@@ -8,7 +8,7 @@ import { Description, Field, FieldContent, FieldError, FieldGroup, Fieldset, Lab
 import { Input, TextArea } from "@/registry/ui/input";
 import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
-import { Slider, SliderControl } from "@/registry/ui/slider";
+import { Slider, SliderTrack } from "@/registry/ui/slider";
 import { Switch, SwitchControl } from "@/registry/ui/switch";
 import { TextField } from "@/registry/ui/text-field";
 
@@ -369,31 +369,31 @@ function SliderFields() {
 			<FieldGroup>
 				<Slider defaultValue={50}>
 					<Label>Volume</Label>
-					<SliderControl />
+					<SliderTrack />
 				</Slider>
 				<Slider defaultValue={75} step={5}>
 					<Label>Screen Brightness</Label>
-					<SliderControl />
+					<SliderTrack />
 					<Description>Adjust the screen brightness.</Description>
 				</Slider>
 				<Slider defaultValue={720} minValue={360} maxValue={1080} step={360}>
 					<Label>Video Quality</Label>
 					<Description>Higher quality uses more bandwidth.</Description>
-					<SliderControl />
+					<SliderTrack />
 				</Slider>
 				<Slider defaultValue={[25, 75]} step={5}>
 					<Label>Price Range</Label>
-					<SliderControl />
+					<SliderTrack />
 					<Description>Pick a minimum and maximum value.</Description>
 				</Slider>
 				<Slider defaultValue={30} aria-invalid="true">
 					<Label>Invalid Slider</Label>
-					<SliderControl />
+					<SliderTrack />
 					<FieldError>This slider has validation errors.</FieldError>
 				</Slider>
 				<Slider defaultValue={50} isDisabled>
 					<Label>Disabled Slider</Label>
-					<SliderControl />
+					<SliderTrack />
 					<Description>This slider is currently disabled.</Description>
 				</Slider>
 			</FieldGroup>
@@ -452,7 +452,7 @@ function HorizontalFields() {
 						<Description>Adjust the volume level.</Description>
 					</FieldContent>
 					<Slider defaultValue={50} aria-label="Volume" className="w-full">
-						<SliderControl />
+						<SliderTrack />
 					</Slider>
 				</Field>
 			</FieldGroup>

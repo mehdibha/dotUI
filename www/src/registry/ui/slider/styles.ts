@@ -8,8 +8,8 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 		slots: {
 			root: fieldStyles().field(),
 			track:
-				"relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-not-allowed disabled:bg-disabled",
-			filler: "pointer-events-none absolute rounded-full bg-accent disabled:bg-disabled",
+				"relative my-1 grow cursor-pointer rounded-full bg-neutral disabled:cursor-not-allowed disabled:bg-disabled w-full",
+			fill: "pointer-events-none absolute rounded-full bg-accent disabled:bg-disabled",
 			thumb: [
 				"size-4 rounded-full bg-white shadow-md ring-primary/30 transition-[width,height,box-shadow]",
 				"ring-accent/30 hover:ring-4 dragging:size-5 dragging:ring-0",
@@ -22,13 +22,13 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 		variants: {
 			orientation: {
 				horizontal: {
-					track: "h-1.5 w-48",
-					filler: "top-0 h-full",
+					track: "h-1.5 w-full",
+					fill: "top-0 h-full",
 				},
 				vertical: {
 					root: "items-center",
 					track: "h-48 w-2",
-					filler: "bottom-0 w-full",
+					fill: "bottom-0 w-full",
 				},
 			},
 		},

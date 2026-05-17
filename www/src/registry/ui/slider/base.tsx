@@ -36,9 +36,9 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
 
 // MARK: Separator
 
-interface SliderControlProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
+interface SliderTrackProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
 
-const SliderControl = ({ className, ...props }: SliderControlProps) => {
+const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
 	const { track } = useStyles()();
 	return (
 		<SliderPrimitives.SliderTrack
@@ -53,7 +53,7 @@ const SliderControl = ({ className, ...props }: SliderControlProps) => {
 				(children, { state }) =>
 					children ?? (
 						<>
-							{state.values.length < 3 && <SliderFiller />}
+							{state.values.length < 3 && <SliderFill />}
 							{state.values.map((_, i) => (
 								// oxlint-disable-next-line react/no-array-index-key -- React Aria identifies slider thumbs by index.
 								<SliderThumb key={i} index={i} />
@@ -67,39 +67,48 @@ const SliderControl = ({ className, ...props }: SliderControlProps) => {
 
 // MARK: Separator
 
-interface SliderFillerProps extends React.ComponentProps<"div"> {}
+interface SliderFillProps extends React.ComponentProps<"div"> {}
 
-const SliderFiller = ({ className, style, ...props }: SliderFillerProps) => {
-	const { filler } = useStyles()();
+const SliderFill = ({ className, style, ...props }: SliderFillProps) => {
+	const { fill } = useStyles()();
 	const sliderState = use(SliderPrimitives.SliderStateContext);
 	if (!sliderState) return null;
 
 	const { orientation, getThumbPercent, values, isDisabled } = sliderState;
 
-	const getFillerDimensions = (): React.CSSProperties => {
-		if (values.length === 1 && orientation === "horizontal") return { width: `${getThumbPercent(0) * 100}%` };
+	const getFillDimensions = (): React.CSSProperties => {
+		if (values.length === 1 && orientation === "horizontal")
+			return { insetInlineStart: "0%", width: `${getThumbPercent(0) * 100}%` };
 
-		if (values.length === 1 && orientation === "vertical") return { height: `${getThumbPercent(0) * 100}%` };
+		if (values.length === 1 && orientation === "vertical")
+			return { bottom: "0%", height: `${getThumbPercent(0) * 100}%` };
+
+		const start = getThumbPercent(0);
+		const end = getThumbPercent(1);
+		const offset = Math.min(start, end) * 100;
+		const size = Math.abs(start - end) * 100;
 
 		if (orientation === "horizontal")
 			return {
-				left: `${getThumbPercent(0) * 100}%`,
-				width: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
+				insetInlineStart: `${offset}%`,
+				width: `${size}%`,
 			};
 
 		return {
-			bottom: `${getThumbPercent(0) * 100}%`,
-			height: `${Math.abs(getThumbPercent(0) - getThumbPercent(1)) * 100}%`,
+			bottom: `${offset}%`,
+			height: `${size}%`,
 		};
 	};
 
 	return (
 		<div
-			data-slot="slider-filler"
+			data-slot="slider-fill"
 			data-rac=""
 			data-disabled={isDisabled || undefined}
-			className={filler({ orientation, className })}
-			style={{ ...style, ...getFillerDimensions() }}
+			data-slider-fill=""
+			data-slider-filler=""
+			className={fill({ orientation, className })}
+			style={{ ...style, ...getFillDimensions() }}
 			{...props}
 		/>
 	);
@@ -144,5 +153,21 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
 
 // MARK: Separator
 
-export type { SliderControlProps, SliderFillerProps, SliderOutputProps, SliderProps, SliderThumbProps };
-export { Slider, SliderControl, SliderFiller, SliderOutput, SliderThumb };
+type SliderControlProps = SliderTrackProps;
+type SliderFillerProps = SliderFillProps;
+
+const SliderControl = SliderTrack;
+const SliderFiller = SliderFill;
+
+// MARK: Separator
+
+export type {
+	SliderControlProps,
+	SliderFillProps,
+	SliderFillerProps,
+	SliderOutputProps,
+	SliderProps,
+	SliderThumbProps,
+	SliderTrackProps,
+};
+export { Slider, SliderControl, SliderFill, SliderFiller, SliderOutput, SliderThumb, SliderTrack };

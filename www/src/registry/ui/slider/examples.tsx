@@ -1,15 +1,12 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 
-import Composition from "./demos/composition";
-import Controlled from "./demos/controlled";
 import Default from "./demos/default";
 import Description from "./demos/description";
 import Disabled from "./demos/disabled";
 import FormatOptions from "./demos/format-options";
 import Label from "./demos/label";
 import Range from "./demos/range";
-import Sizes from "./demos/sizes";
 import Step from "./demos/step";
 import Uncontrolled from "./demos/uncontrolled";
 import ValueLabel from "./demos/value-label";
@@ -18,13 +15,7 @@ import Vertical from "./demos/vertical";
 
 export default function SliderExamples() {
 	return (
-		<Examples>
-			<Example title="composition">
-				<Composition />
-			</Example>
-			<Example title="controlled">
-				<Controlled />
-			</Example>
+		<Examples className="md:grid-cols-2">
 			<Example title="default">
 				<Default />
 			</Example>
@@ -42,9 +33,6 @@ export default function SliderExamples() {
 			</Example>
 			<Example title="range">
 				<Range />
-			</Example>
-			<Example title="sizes">
-				<Sizes />
 			</Example>
 			<Example title="step">
 				<Step />
