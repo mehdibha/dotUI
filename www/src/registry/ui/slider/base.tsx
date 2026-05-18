@@ -1,5 +1,7 @@
 "use client";
 
+import { useContext } from "react";
+
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
 import * as SliderPrimitive from "react-aria-components/Slider";
 import { Provider } from "react-aria-components/slots";
@@ -38,11 +40,11 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
 interface SliderControlProps extends React.ComponentProps<typeof SliderPrimitive.SliderTrack> {}
 
 const SliderControl = ({ children, className, ...props }: SliderControlProps) => {
-	const { track } = useStyles()();
+	const { control } = useStyles()();
 	return (
 		<SliderPrimitive.SliderTrack
 			data-slider-control=""
-			className={composeRenderProps(className, (cn, { orientation }) => track({ orientation, className: cn }))}
+			className={composeRenderProps(className, (cn, { orientation }) => control({ orientation, className: cn }))}
 			{...props}
 		>
 			{composeRenderProps(
@@ -68,7 +70,19 @@ const SliderControl = ({ children, className, ...props }: SliderControlProps) =>
 interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
-	return <div data-rac="" data-slider-track="" className={className} {...props} />;
+	const { track } = useStyles()();
+	const state = useContext(SliderPrimitive.SliderStateContext);
+
+	return (
+		<div
+			{...props}
+			data-rac=""
+			data-slider-track=""
+			data-orientation={state?.orientation}
+			data-disabled={state?.isDisabled || undefined}
+			className={track({ orientation: state?.orientation, className })}
+		/>
+	);
 };
 
 // MARK: Separator
