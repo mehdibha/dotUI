@@ -29,7 +29,6 @@
 			}
 		],
 		"typescript/no-explicit-any": "warn",
-		"react/no-array-index-key": "warn",
 		"react/exhaustive-deps": "warn"
 	},
 	"overrides": [

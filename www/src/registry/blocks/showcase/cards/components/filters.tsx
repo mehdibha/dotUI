@@ -5,7 +5,7 @@ import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/registry/ui/card";
 import { Description, Label } from "@/registry/ui/field";
-import { Slider, SliderTrack, SliderOutput } from "@/registry/ui/slider";
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider";
 import { Switch, SwitchControl } from "@/registry/ui/switch";
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group";
 import { ToggleButton } from "@/registry/ui/toggle-button";
@@ -36,7 +36,7 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
 						<Label>Price Range</Label>
 						<SliderOutput />
 					</div>
-					<SliderTrack />
+					<SliderControl />
 					<Description>Trip price, includes all fees</Description>
 				</Slider>
 				<TagGroup>

@@ -1,9 +1,9 @@
-import { Slider, SliderTrack } from "@/registry/ui/slider";
+import { Slider, SliderControl } from "@/registry/ui/slider";
 
 export function SliderDemo() {
 	return (
 		<Slider aria-label="Opacity" defaultValue={50} className="w-64">
-			<SliderTrack />
+			<SliderControl />
 		</Slider>
 	);
 }

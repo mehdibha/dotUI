@@ -1,6 +1,6 @@
 import { Description, FieldContent, FieldGroup, Label } from "@/registry/ui/field";
 import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
-import { Slider, SliderTrack } from "@/registry/ui/slider";
+import { Slider, SliderControl } from "@/registry/ui/slider";
 
 import type { Density } from "@/modules/create/preset";
 
@@ -24,7 +24,7 @@ export function RadiusConfig({ value, onChange }: { value: string; onChange: (va
 				step={0.05}
 				onChange={(v) => onChange(String(v))}
 			>
-				<SliderTrack />
+				<SliderControl />
 			</Slider>
 		</div>
 	);

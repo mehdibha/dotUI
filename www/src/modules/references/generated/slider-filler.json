@@ -1,6 +1,0 @@
-{
-	"name": "SliderFillerProps",
-	"description": "Alias for SliderFillProps.",
-	"extendsElement": "div",
-	"props": {}
-}

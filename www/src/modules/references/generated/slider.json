@@ -66,7 +66,7 @@
 					}
 				]
 			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
+			"description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
 		},
 		"className": {
 			"type": "string | (values: SliderRenderProps) => string",
@@ -99,7 +99,7 @@
 					}
 				]
 			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
 			"default": "'react-aria-Slider'"
 		},
 		"defaultValue": {
@@ -295,7 +295,7 @@
 					}
 				]
 			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
 		},
 		"slot": {
 			"type": "null | string",
@@ -314,7 +314,7 @@
 					}
 				]
 			},
-			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+			"description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
 		},
 		"step": {
 			"type": "number",
@@ -358,7 +358,7 @@
 					}
 				]
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
 		},
 		"value": {
 			"type": "number | number[]",

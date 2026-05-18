@@ -1737,10 +1737,6 @@ export const DemosIndex: Record<
 		files: ["ui/slider/demos/range.tsx"],
 		component: React.lazy(() => import("@/registry/ui/slider/demos/range")),
 	},
-	"slider/demos/sizes": {
-		files: ["ui/slider/demos/sizes.tsx"],
-		component: React.lazy(() => import("@/registry/ui/slider/demos/sizes")),
-	},
 	"slider/demos/step": {
 		files: ["ui/slider/demos/step.tsx"],
 		component: React.lazy(() => import("@/registry/ui/slider/demos/step")),

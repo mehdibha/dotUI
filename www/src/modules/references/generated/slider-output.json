@@ -34,7 +34,7 @@
 					}
 				]
 			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
+			"description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
 		},
 		"className": {
 			"type": "string | (values: SliderRenderProps) => string",
@@ -67,7 +67,7 @@
 					}
 				]
 			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
 			"default": "'react-aria-SliderOutput'"
 		},
 		"render": {
@@ -104,7 +104,7 @@
 					}
 				]
 			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
 		},
 		"style": {
 			"type": "CSSProperties | (values: SliderRenderProps) => CSSProperties",
@@ -139,7 +139,7 @@
 					}
 				]
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
 		}
 	},
 	"typeLinks": {

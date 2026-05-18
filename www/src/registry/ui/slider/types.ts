@@ -6,14 +6,19 @@ import type * as SliderPrimitives from "react-aria-components/Slider";
 export interface SliderProps extends React.ComponentProps<typeof SliderPrimitives.Slider> {}
 
 /**
- * A slider track is a container for one or more slider thumbs.
+ * A slider control is the interactive surface that positions the track and thumbs.
  */
-export interface SliderTrackProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
+export interface SliderControlProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
+
+/**
+ * A slider track is the visual track that contains the selected fill.
+ */
+export interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 /**
  * A slider fill displays the selected region of the track.
  */
-export interface SliderFillProps extends React.ComponentProps<"div"> {}
+export interface SliderFillProps extends React.ComponentProps<typeof SliderPrimitives.SliderFill> {}
 
 /**
  * A slider thumb represents an individual value that the user can adjust within a slider track.
@@ -24,13 +29,3 @@ export interface SliderThumbProps extends React.ComponentProps<typeof SliderPrim
  * A slider output displays the current value of a slider as text.
  */
 export interface SliderOutputProps extends React.ComponentProps<typeof SliderPrimitives.SliderOutput> {}
-
-/**
- * Alias for SliderTrackProps.
- */
-export interface SliderControlProps extends React.ComponentProps<typeof SliderPrimitives.SliderTrack> {}
-
-/**
- * Alias for SliderFillProps.
- */
-export interface SliderFillerProps extends React.ComponentProps<"div"> {}

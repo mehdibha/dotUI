@@ -8,7 +8,6 @@ import FormatOptions from "./demos/format-options";
 import Label from "./demos/label";
 import Range from "./demos/range";
 import Step from "./demos/step";
-import Uncontrolled from "./demos/uncontrolled";
 import ValueLabel from "./demos/value-label";
 import ValueScale from "./demos/value-scale";
 import Vertical from "./demos/vertical";
@@ -36,9 +35,6 @@ export default function SliderExamples() {
 			</Example>
 			<Example title="step">
 				<Step />
-			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
 			</Example>
 			<Example title="value label">
 				<ValueLabel />
