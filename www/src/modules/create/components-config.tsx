@@ -10,7 +10,7 @@ import { registryUi } from "@/registry/ui/registry";
 import { Select, SelectValue } from "@/registry/ui/select";
 import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider";
 
-import type { ParamDef, RegistryItem, TokenType } from "@/registry/types";
+import type { ParamDef, RegistryItem, ScalarParamDef, TokenType } from "@/registry/types";
 
 /* ----------------------------- Data helpers ----------------------------- */
 
@@ -117,16 +117,23 @@ const opacityOptions = [
 	{ label: "80%", value: "80%" },
 ];
 
-const spacingOptions = [
-	{ label: "1px", value: "1px" },
-	{ label: "2px", value: "2px" },
-	{ label: "4px", value: "0.25rem" },
-	{ label: "6px", value: "0.375rem" },
-	{ label: "8px", value: "0.5rem" },
-	{ label: "12px", value: "0.75rem" },
-	{ label: "16px", value: "1rem" },
-	{ label: "20px", value: "1.25rem" },
-];
+const cursorOptions = [
+	{ label: "Interactive", value: "--cursor-interactive" },
+	{ label: "Disabled", value: "--cursor-disabled" },
+	{ label: "Default", value: "default" },
+	{ label: "Pointer", value: "pointer" },
+	{ label: "Grab", value: "grab" },
+	{ label: "Grabbing", value: "grabbing" },
+	{ label: "Not allowed", value: "not-allowed" },
+	{ label: "Wait", value: "wait" },
+	{ label: "Help", value: "help" },
+	{ label: "Crosshair", value: "crosshair" },
+	{ label: "Text", value: "text" },
+	{ label: "Move", value: "move" },
+	{ label: "Progress", value: "progress" },
+] as const;
+
+const SPACING_REM_PER_UNIT = 0.25;
 
 const colorOptions = Object.entries(COLOR_TOKENS)
 	.filter(([, token]) => token.categories?.includes("background"))
@@ -204,13 +211,17 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 		return <RadiusParamSlider paramName={paramName} def={def} selected={selected} onChange={onChange} />;
 	}
 
+	if (def.type === "spacing") {
+		return <SpacingParamSlider paramName={paramName} def={def} selected={selected} onChange={onChange} />;
+	}
+
 	const optionsByType = {
 		blur: blurOptions,
 		color: colorOptions,
+		cursor: cursorOptions,
 		"font-size": [],
 		opacity: opacityOptions,
-		spacing: spacingOptions,
-	} satisfies Record<Exclude<TokenType, "radius">, { label: string; value: string }[]>;
+	} satisfies Record<Exclude<TokenType, "radius" | "spacing">, readonly { label: string; value: string }[]>;
 	const options = optionsByType[def.type];
 
 	return (
@@ -236,7 +247,14 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 	);
 }
 
-function RadiusParamSlider({ paramName, def, selected, onChange }: ParamEditorProps) {
+interface ScalarParamEditorProps {
+	paramName: string;
+	def: ScalarParamDef;
+	selected: string | undefined;
+	onChange: (value: string) => void;
+}
+
+function RadiusParamSlider({ paramName, def, selected, onChange }: ScalarParamEditorProps) {
 	const value = selected ?? def.default;
 	const selectedIndex = radiusOptions.findIndex((opt) => opt.value === value);
 	const fallbackIndex = radiusOptions.findIndex((opt) => opt.value === def.default);
@@ -262,6 +280,60 @@ function RadiusParamSlider({ paramName, def, selected, onChange }: ParamEditorPr
 				<div className="flex items-center justify-between">
 					<Label>{toTitleCase(paramName)}</Label>
 					<SliderOutput>{current.label}</SliderOutput>
+				</div>
+				<SliderControl />
+				{def.description && <Description className="text-xs text-fg-muted/60">{def.description}</Description>}
+			</Slider>
+		</div>
+	);
+}
+
+function spacingValueToScale(value: string): number | null {
+	const numeric = Number.parseFloat(value);
+	if (!Number.isFinite(numeric)) return null;
+
+	if (value.endsWith("rem")) return numeric / SPACING_REM_PER_UNIT;
+	if (value.endsWith("px")) return numeric / 4;
+
+	return numeric;
+}
+
+function scaleToSpacingValue(value: number): string {
+	const rem = Number((value * SPACING_REM_PER_UNIT).toFixed(4));
+	return `${rem}rem`;
+}
+
+function formatSpacingScale(value: number): string {
+	return Number(value.toFixed(2)).toString();
+}
+
+function SpacingParamSlider({ paramName, def, selected, onChange }: ScalarParamEditorProps) {
+	const minValue = def.minValue ?? 0;
+	const maxValue = def.maxValue ?? 8;
+	const step = def.step ?? 0.5;
+	const value = spacingValueToScale(selected ?? def.default);
+	const fallbackValue = spacingValueToScale(def.default);
+	const currentValue = Math.min(Math.max(value ?? fallbackValue ?? minValue, minValue), maxValue);
+
+	return (
+		<div className="flex flex-col gap-2">
+			<Slider
+				aria-label={toTitleCase(paramName)}
+				value={currentValue}
+				minValue={minValue}
+				maxValue={maxValue}
+				step={step}
+				onChange={(value) => {
+					const rawValue = Array.isArray(value) ? value[0] : value;
+					if (typeof rawValue !== "number") return;
+
+					const nextValue = Math.min(Math.max(rawValue, minValue), maxValue);
+					onChange(scaleToSpacingValue(nextValue));
+				}}
+			>
+				<div className="flex items-center justify-between">
+					<Label>{toTitleCase(paramName)}</Label>
+					<SliderOutput>{formatSpacingScale(currentValue)}</SliderOutput>
 				</div>
 				<SliderControl />
 				{def.description && <Description className="text-xs text-fg-muted/60">{def.description}</Description>}

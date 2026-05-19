@@ -25,7 +25,7 @@ export type ComponentGroup =
 
 /* ------------------------------- Params ------------------------------- */
 
-export type TokenType = "radius" | "color" | "spacing" | "font-size" | "blur" | "opacity";
+export type TokenType = "radius" | "color" | "spacing" | "font-size" | "blur" | "opacity" | "cursor";
 export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number];
 
 /**
@@ -52,6 +52,9 @@ export type ScalarParamDef = {
 	type: TokenType;
 	cssVar: `--${string}`;
 	default: string;
+	minValue?: number;
+	maxValue?: number;
+	step?: number;
 	description?: string;
 };
 
