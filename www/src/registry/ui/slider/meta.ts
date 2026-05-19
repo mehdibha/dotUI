@@ -14,19 +14,6 @@ const sliderMeta = {
 	registryDependencies: ["field", "focus-styles"],
 	dependencies: ["react-aria"],
 	params: {
-		radius: {
-			kind: "scalar",
-			type: "radius",
-			cssVar: "--slider-track-radius",
-			default: "--radius-full",
-			description: "Radius of the slider track.",
-		},
-		"track-style": {
-			kind: "enum",
-			default: "line",
-			values: ["line", "filled"] as const,
-			description: "Visual style of the slider track.",
-		},
 		"thumb-style": {
 			kind: "enum",
 			default: "raised",
@@ -45,7 +32,28 @@ const sliderMeta = {
 				"ticks",
 				"faceted",
 			] as const,
-			description: "Visual style of the slider thumb.",
+			// description: "Visual style of the slider thumb.",
+		},
+		"fill-color": {
+			kind: "scalar",
+			type: "color",
+			cssVar: "--slider-fill-color",
+			default: "--color-primary",
+			// description: "Color of the slider fill.",
+		},
+		radius: {
+			kind: "scalar",
+			type: "radius",
+			cssVar: "--slider-track-radius",
+			default: "--radius-full",
+			// description: "Radius of the slider track.",
+		},
+		size: {
+			kind: "scalar",
+			type: "spacing",
+			cssVar: "--slider-size",
+			default: "0.25rem",
+			// description: "Thickness of the slider track.",
 		},
 	},
 } satisfies RegistryItem;

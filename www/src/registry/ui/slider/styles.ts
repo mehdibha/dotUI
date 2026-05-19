@@ -8,8 +8,9 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 		slots: {
 			root: fieldStyles().field(),
 			control: "relative flex grow cursor-interactive touch-none items-center select-none disabled:cursor-disabled",
-			track: "pointer-events-none relative grow overflow-hidden",
-			fill: "pointer-events-none",
+			track:
+				"pointer-events-none relative grow overflow-hidden rounded-(--slider-track-radius) bg-neutral disabled:bg-disabled",
+			fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-disabled",
 			thumb:
 				"top-1/2 left-1/2 grid cursor-grab place-items-center focus-reset disabled:cursor-disabled dragging:cursor-grabbing",
 			output: "text-fg-muted disabled:text-fg-disabled",
@@ -18,12 +19,12 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 			orientation: {
 				horizontal: {
 					control: "-my-2 w-full py-2",
-					track: "h-1 w-full",
+					track: "h-(--slider-size) w-full",
 				},
 				vertical: {
 					root: "items-center",
 					control: "-mx-2 h-48 flex-col px-2",
-					track: "h-full w-1",
+					track: "h-full w-(--slider-size)",
 				},
 			},
 		},
@@ -49,31 +50,6 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 		},
 	},
 	params: {
-		/* ----------------------------- Track styles ----------------------------- */
-		"track-style": {
-			line: {
-				slots: {
-					track: "rounded-(--slider-track-radius) bg-neutral disabled:bg-disabled",
-					fill: "bg-primary disabled:bg-disabled",
-				},
-			},
-			filled: {
-				slots: {
-					track: "rounded-(--slider-track-radius) bg-neutral disabled:bg-disabled",
-					fill: "bg-primary disabled:bg-disabled",
-				},
-				variants: {
-					orientation: {
-						horizontal: {
-							track: "h-5",
-						},
-						vertical: {
-							track: "w-5",
-						},
-					},
-				},
-			},
-		},
 		/* ----------------------------- Thumb styles ----------------------------- */
 		"thumb-style": {
 			square: {

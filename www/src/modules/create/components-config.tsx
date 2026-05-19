@@ -113,6 +113,17 @@ const opacityOptions = [
 	{ label: "80%", value: "80%" },
 ];
 
+const spacingOptions = [
+	{ label: "1px", value: "1px" },
+	{ label: "2px", value: "2px" },
+	{ label: "4px", value: "0.25rem" },
+	{ label: "6px", value: "0.375rem" },
+	{ label: "8px", value: "0.5rem" },
+	{ label: "12px", value: "0.75rem" },
+	{ label: "16px", value: "1rem" },
+	{ label: "20px", value: "1.25rem" },
+];
+
 const colorOptions = Object.entries(COLOR_TOKENS)
 	.filter(([, token]) => token.categories?.includes("background"))
 	.map(([name]) => ({
@@ -191,7 +202,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 		"font-size": [],
 		opacity: opacityOptions,
 		radius: radiusOptions,
-		spacing: [],
+		spacing: spacingOptions,
 	} satisfies Record<TokenType, { label: string; value: string }[]>;
 	const options = optionsByType[def.type];
 
