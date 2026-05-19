@@ -1,3 +1,5 @@
 :root {
-  --slider-track-radius: var(--radius-full)
+	--slider-track-radius: var(--radius-full);
+	--slider-fill-color: var(--color-primary);
+	--slider-size: 0.25rem;
 }

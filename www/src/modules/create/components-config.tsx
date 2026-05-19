@@ -3,10 +3,12 @@ import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { COLOR_TOKENS } from "@/registry/base/tokens";
 import { Button } from "@/registry/ui/button";
+import { Description, Label } from "@/registry/ui/field";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import { registryUi } from "@/registry/ui/registry";
 import { Select, SelectValue } from "@/registry/ui/select";
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider";
 
 import type { ParamDef, RegistryItem, TokenType } from "@/registry/types";
 
@@ -90,12 +92,14 @@ export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
 /* -------------------- Component detail view -------------------- */
 
 const radiusOptions = [
-	{ label: "None", value: "0" },
-	{ label: "Small", value: "--radius-sm" },
-	{ label: "Medium", value: "--radius-md" },
-	{ label: "Large", value: "--radius-lg" },
-	{ label: "Full", value: "--radius-full" },
-];
+	{ label: "none", value: "0" },
+	{ label: "sm", value: "--radius-sm" },
+	{ label: "md", value: "--radius-md" },
+	{ label: "lg", value: "--radius-lg" },
+	{ label: "xl", value: "--radius-xl" },
+	{ label: "2xl", value: "--radius-2xl" },
+	{ label: "full", value: "--radius-full" },
+] as const;
 
 const blurOptions = [
 	{ label: "None", value: "0px" },
@@ -196,14 +200,17 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 		);
 	}
 
+	if (def.type === "radius") {
+		return <RadiusParamSlider paramName={paramName} def={def} selected={selected} onChange={onChange} />;
+	}
+
 	const optionsByType = {
 		blur: blurOptions,
 		color: colorOptions,
 		"font-size": [],
 		opacity: opacityOptions,
-		radius: radiusOptions,
 		spacing: spacingOptions,
-	} satisfies Record<TokenType, { label: string; value: string }[]>;
+	} satisfies Record<Exclude<TokenType, "radius">, { label: string; value: string }[]>;
 	const options = optionsByType[def.type];
 
 	return (
@@ -225,6 +232,40 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 				</Popover>
 			</Select>
 			{def.description && <p className="text-xs text-fg-muted/60">{def.description}</p>}
+		</div>
+	);
+}
+
+function RadiusParamSlider({ paramName, def, selected, onChange }: ParamEditorProps) {
+	const value = selected ?? def.default;
+	const selectedIndex = radiusOptions.findIndex((opt) => opt.value === value);
+	const fallbackIndex = radiusOptions.findIndex((opt) => opt.value === def.default);
+	const index = selectedIndex >= 0 ? selectedIndex : fallbackIndex >= 0 ? fallbackIndex : 0;
+	const current = radiusOptions[index] ?? radiusOptions[0];
+	return (
+		<div className="flex flex-col gap-2">
+			<Slider
+				aria-label={toTitleCase(paramName)}
+				value={index}
+				minValue={0}
+				maxValue={radiusOptions.length - 1}
+				step={1}
+				onChange={(value) => {
+					const rawIndex = Array.isArray(value) ? value[0] : value;
+					if (typeof rawIndex !== "number") return;
+
+					const nextIndex = Math.min(Math.max(Math.round(rawIndex), 0), radiusOptions.length - 1);
+					const next = radiusOptions[nextIndex];
+					if (next) onChange(next.value);
+				}}
+			>
+				<div className="flex items-center justify-between">
+					<Label>{toTitleCase(paramName)}</Label>
+					<SliderOutput>{current.label}</SliderOutput>
+				</div>
+				<SliderControl />
+				{def.description && <Description className="text-xs text-fg-muted/60">{def.description}</Description>}
+			</Slider>
 		</div>
 	);
 }
