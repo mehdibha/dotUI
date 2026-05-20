@@ -1485,6 +1485,10 @@ export const DemosIndex: Record<
 		files: ["ui/progress-bar/demos/animated.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/animated")),
 	},
+	"progress-bar/demos/controlled": {
+		files: ["ui/progress-bar/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/controlled")),
+	},
 	"progress-bar/demos/custom-value-label": {
 		files: ["ui/progress-bar/demos/custom-value-label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/custom-value-label")),
@@ -1492,6 +1496,10 @@ export const DemosIndex: Record<
 	"progress-bar/demos/duration": {
 		files: ["ui/progress-bar/demos/duration.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/duration")),
+	},
+	"progress-bar/demos/file-upload-list": {
+		files: ["ui/progress-bar/demos/file-upload-list.tsx"],
+		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/file-upload-list")),
 	},
 	"progress-bar/demos/format-options": {
 		files: ["ui/progress-bar/demos/format-options.tsx"],
@@ -1509,6 +1517,10 @@ export const DemosIndex: Record<
 		files: ["ui/progress-bar/demos/min-max-values.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/min-max-values")),
 	},
+	"progress-bar/demos/progress-values": {
+		files: ["ui/progress-bar/demos/progress-values.tsx"],
+		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/progress-values")),
+	},
 	"progress-bar/demos/shape": {
 		files: ["ui/progress-bar/demos/shape.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/shape")),
@@ -1524,6 +1536,10 @@ export const DemosIndex: Record<
 	"progress-bar/demos/variants": {
 		files: ["ui/progress-bar/demos/variants.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/variants")),
+	},
+	"progress-bar/demos/with-label": {
+		files: ["ui/progress-bar/demos/with-label.tsx"],
+		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/with-label")),
 	},
 	"radio-group/demos/cards": {
 		files: ["ui/radio-group/demos/cards.tsx"],

@@ -6,28 +6,11 @@ import type * as ProgressBarPrimitives from "react-aria-components/ProgressBar";
 export interface ProgressBarProps extends React.ComponentProps<typeof ProgressBarPrimitives.ProgressBar> {}
 
 /**
- * Missing description.
+ * The visual track for the progress bar.
  */
-export interface ProgressBarControlProps extends React.ComponentProps<"div"> {
-	/**
-	 * The color variant of the progress bar.
-	 * @default 'accent'
-	 */
-	variant?: "primary" | "accent" | "warning" | "danger" | "success";
-
-	/**
-	 * The size of the progress bar.
-	 * @default 'md'
-	 */
-	size?: "sm" | "md" | "lg";
-
-	/**
-	 * Duration of the progress animation.
-	 */
-	duration?: `${number}s` | `${number}ms`;
-}
+export interface ProgressBarControlProps extends React.ComponentProps<"div"> {}
 
 /**
  * Missing description.
  */
-export interface ProgressBarValueLabelProps extends React.ComponentProps<"span"> {}
+export interface ProgressBarOutputProps extends React.ComponentProps<"span"> {}

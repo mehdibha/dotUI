@@ -1,7 +1,7 @@
 import { Example } from "@/modules/create/preview/example";
 import { Examples } from "@/modules/create/preview/examples";
 import { Loader } from "@/registry/ui/loader";
-import { ProgressBar, ProgressBarControl, ProgressBarValueLabel } from "@/registry/ui/progress-bar";
+import { ProgressBar, ProgressBarControl, ProgressBarOutput } from "@/registry/ui/progress-bar";
 import { Skeleton } from "@/registry/ui/skeleton";
 
 export default function ProgressGroupExamples() {
@@ -9,7 +9,7 @@ export default function ProgressGroupExamples() {
 		<Examples>
 			<Example title="Progress Bar">
 				<ProgressBar value={60} className="w-full max-w-sm">
-					<ProgressBarValueLabel />
+					<ProgressBarOutput />
 					<ProgressBarControl />
 				</ProgressBar>
 			</Example>

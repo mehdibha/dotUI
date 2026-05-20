@@ -35,35 +35,13 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
 
 // MARK: Separator
 
-interface ProgressBarControlProps extends React.ComponentProps<"div"> {
-	duration?: string;
-	size?: "sm" | "md" | "lg";
-	variant?: "primary" | "success" | "accent" | "danger" | "warning";
-}
-const ProgressBarTrack = ({
-	children,
-	className,
-	duration,
-	size,
-	style,
-	variant,
-	...props
-}: ProgressBarControlProps) => {
+interface ProgressBarTrackProps extends React.ComponentProps<"div"> {}
+type ProgressBarControlProps = ProgressBarTrackProps;
+
+const ProgressBarTrack = ({ children, className, ...props }: ProgressBarTrackProps) => {
 	const { track } = useStyles()();
 	return (
-		<div
-			data-duration={duration}
-			data-size={size}
-			data-variant={variant}
-			className={track({ className })}
-			style={
-				{
-					"--progress-duration": duration,
-					...style,
-				} as React.CSSProperties
-			}
-			{...props}
-		>
+		<div className={track({ className })} {...props}>
 			{children ?? <ProgressBarFill />}
 		</div>
 	);
@@ -83,7 +61,7 @@ const ProgressBarFill = ({ className, style, ...props }: ProgressBarFillProps) =
 			className={fill({ className })}
 			style={
 				{
-					transform: percentage ? `scaleX(${percentage / 100})` : undefined,
+					transform: typeof percentage === "number" ? `scaleX(${percentage / 100})` : undefined,
 					...style,
 				} as React.CSSProperties
 			}
@@ -97,7 +75,7 @@ const ProgressBarFill = ({ className, style, ...props }: ProgressBarFillProps) =
 interface ProgressBarOutputProps extends React.ComponentProps<"span"> {}
 const ProgressBarOutput = ({ className, ...props }: ProgressBarOutputProps) => {
 	const { output } = useStyles()();
-	const { valueText } = useProgressBarContext("ProgressBarValueLabel");
+	const { valueText } = useProgressBarContext("ProgressBarOutput");
 
 	return (
 		<span className={output({ className })} {...props}>
@@ -109,9 +87,8 @@ const ProgressBarOutput = ({ className, ...props }: ProgressBarOutputProps) => {
 // MARK: Separator
 
 const ProgressBarControl = ProgressBarTrack;
-const ProgressBarValueLabel = ProgressBarOutput;
 
 // MARK: Separator
 
 export type { ProgressBarControlProps, ProgressBarFillProps, ProgressBarOutputProps, ProgressBarProps };
-export { ProgressBar, ProgressBarControl, ProgressBarFill, ProgressBarOutput, ProgressBarTrack, ProgressBarValueLabel };
+export { ProgressBar, ProgressBarControl, ProgressBarFill, ProgressBarOutput, ProgressBarTrack };

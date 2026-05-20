@@ -15,8 +15,8 @@ export default function Demo() {
 				<RotateCwIcon />
 				Restart animation
 			</Button>
-			<ProgressBar aria-label="Loading">
-				<ProgressBarControl key={key} duration="30s" />
+			<ProgressBar aria-label="Loading" isIndeterminate>
+				<ProgressBarControl key={key} style={{ "--progress-duration": "30s" } as React.CSSProperties} />
 			</ProgressBar>
 		</div>
 	);
