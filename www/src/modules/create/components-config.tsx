@@ -117,6 +117,17 @@ const opacityOptions = [
 	{ label: "80%", value: "80%" },
 ];
 
+const shadowOptions = [
+	{ label: "None", value: "none" },
+	{ label: "Extra Small", value: "--shadow-xs" },
+	{ label: "Small", value: "--shadow-sm" },
+	{ label: "Medium", value: "--shadow-md" },
+	{ label: "Large", value: "--shadow-lg" },
+	{ label: "Extra Large", value: "--shadow-xl" },
+	{ label: "2XL", value: "--shadow-2xl" },
+	{ label: "Shine", value: "--shadow-shine" },
+] as const;
+
 const cursorOptions = [
 	{ label: "Interactive", value: "--cursor-interactive" },
 	{ label: "Disabled", value: "--cursor-disabled" },
@@ -221,6 +232,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 		cursor: cursorOptions,
 		"font-size": [],
 		opacity: opacityOptions,
+		shadow: shadowOptions,
 	} satisfies Record<Exclude<TokenType, "radius" | "spacing">, readonly { label: string; value: string }[]>;
 	const options = optionsByType[def.type];
 
@@ -289,18 +301,32 @@ function RadiusParamSlider({ paramName, def, selected, onChange }: ScalarParamEd
 }
 
 function spacingValueToScale(value: string): number | null {
-	const numeric = Number.parseFloat(value);
+	const normalizedValue = value.trim();
+	const spacingCalcMatch = normalizedValue.match(
+		/^calc\(\s*(?:var\(--spacing\)\s*\*\s*(?<right>-?\d*\.?\d+)|(?<left>-?\d*\.?\d+)\s*\*\s*var\(--spacing\))\s*\)$/,
+	);
+	if (spacingCalcMatch?.groups) {
+		const scale = Number.parseFloat(spacingCalcMatch.groups.right ?? spacingCalcMatch.groups.left ?? "");
+		if (Number.isFinite(scale)) return scale;
+	}
+
+	const spacingFunctionMatch = normalizedValue.match(/^(?:var\()?--spacing\(\s*(?<scale>-?\d*\.?\d+)\s*\)\)?$/);
+	if (spacingFunctionMatch?.groups?.scale) {
+		const scale = Number.parseFloat(spacingFunctionMatch.groups.scale);
+		if (Number.isFinite(scale)) return scale;
+	}
+
+	const numeric = Number.parseFloat(normalizedValue);
 	if (!Number.isFinite(numeric)) return null;
 
-	if (value.endsWith("rem")) return numeric / SPACING_REM_PER_UNIT;
-	if (value.endsWith("px")) return numeric / 4;
+	if (normalizedValue.endsWith("rem")) return numeric / SPACING_REM_PER_UNIT;
+	if (normalizedValue.endsWith("px")) return numeric / 4;
 
 	return numeric;
 }
 
 function scaleToSpacingValue(value: number): string {
-	const rem = Number((value * SPACING_REM_PER_UNIT).toFixed(4));
-	return `${rem}rem`;
+	return `calc(var(--spacing) * ${formatSpacingScale(value)})`;
 }
 
 function formatSpacingScale(value: number): string {

@@ -25,7 +25,7 @@ export type ComponentGroup =
 
 /* ------------------------------- Params ------------------------------- */
 
-export type TokenType = "radius" | "color" | "spacing" | "font-size" | "blur" | "opacity" | "cursor";
+export type TokenType = "radius" | "color" | "spacing" | "font-size" | "blur" | "opacity" | "cursor" | "shadow";
 export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number];
 
 /**
