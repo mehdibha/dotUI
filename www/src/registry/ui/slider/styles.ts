@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 				"pointer-events-none relative grow overflow-hidden rounded-(--slider-track-radius) bg-neutral disabled:bg-disabled",
 			fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-disabled",
 			thumb: [
-				"top-1/2 left-1/2 grid h-(--slider-thumb-height) w-(--slider-thumb-width) cursor-(--slider-cursor) place-items-center rounded-(--slider-thumb-radius) shadow-(--slider-thumb-shadow) focus-reset transition-shadow [--slider-thumb-height:var(--slider-thumb-size)] [--slider-thumb-shadow:var(--slider-thumb-shadow-none)] [--slider-thumb-width:var(--slider-thumb-size)] focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
+				"top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-(--slider-thumb-radius) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
 			],
 			output: "text-fg-muted disabled:text-fg-disabled",
 		},
@@ -22,12 +22,13 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 				horizontal: {
 					control: "-my-2 w-full py-2",
 					track: "h-(--slider-size) w-full",
+					thumb: "shadow-[var(--slider-thumb-shadow),calc(var(--slider-thumb-track-gap)*-1)_0_0_0_var(--color-bg),var(--slider-thumb-track-gap)_0_0_0_var(--color-bg)]",
 				},
 				vertical: {
 					root: "items-center",
 					control: "-mx-2 h-48 flex-col px-2",
 					track: "h-full w-(--slider-size)",
-					thumb: "[--slider-thumb-track-gap-shadow:var(--slider-thumb-track-gap-shadow-y)]",
+					thumb: "shadow-[var(--slider-thumb-elevation-shadow),0_calc(var(--slider-thumb-track-gap)*-1)_0_0_var(--color-bg),0_var(--slider-thumb-track-gap)_0_0_var(--color-bg)]",
 				},
 			},
 		},
@@ -55,40 +56,25 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 	params: {
 		/* ----------------------------- Thumb styles ----------------------------- */
 		"thumb-style": {
-			square: {
-				slots: {
-					thumb: "border border-fg bg-bg",
-				},
-			},
 			solid: {
 				slots: {
-					thumb: "border-0 bg-fg",
+					thumb: "size-(--slider-thumb-size) border-0 bg-fg",
 				},
 			},
 			outline: {
 				slots: {
-					thumb: "border border-border-control bg-bg",
-				},
-			},
-			subtle: {
-				slots: {
-					thumb: "border border-border/70 bg-bg [--slider-thumb-shadow:var(--slider-thumb-shadow-sm)]",
-				},
-			},
-			ring: {
-				slots: {
-					thumb: "border-2 border-fg bg-bg",
+					thumb: "size-(--slider-thumb-size) border-2 border-border-control bg-bg",
 				},
 			},
 			bar: {
 				slots: {
-					thumb: "border-0 bg-fg [--slider-thumb-width:calc(var(--slider-thumb-size)*0.2)]",
+					thumb: "h-(--slider-thumb-size) w-[calc(var(--slider-thumb-size)*0.2)] border-0 bg-fg",
 				},
 			},
 			"dots-vertical": {
 				slots: {
 					thumb: [
-						"flex flex-col items-center justify-center gap-0.5 border border-border bg-bg text-fg-muted [--slider-thumb-shadow:var(--slider-thumb-shadow-sm)] [--slider-thumb-width:calc(var(--slider-thumb-size)*0.6)]",
+						"flex h-(--slider-thumb-size) w-[calc(var(--slider-thumb-size)*0.6)] flex-col items-center justify-center gap-0.5 border border-border bg-bg text-fg-muted",
 						"before:size-0.5 before:rounded-full before:bg-current before:content-['']",
 						"after:size-0.5 after:rounded-full after:bg-current after:content-['']",
 					],
@@ -97,7 +83,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 			"dots-horizontal": {
 				slots: {
 					thumb: [
-						"flex items-center justify-center border border-border bg-bg text-fg-muted [--slider-thumb-height:calc(var(--slider-thumb-size)*0.8)] [--slider-thumb-shadow:var(--slider-thumb-shadow-sm)] [--slider-thumb-width:calc(var(--slider-thumb-size)*1.6)]",
+						"flex h-[calc(var(--slider-thumb-size)*0.8)] w-[calc(var(--slider-thumb-size)*1.6)] items-center justify-center border border-border bg-bg text-fg-muted",
 						"before:size-1 before:rounded-full before:bg-current before:shadow-[4px_0_0_currentColor,-4px_0_0_currentColor] before:content-['']",
 					],
 				},
@@ -105,28 +91,15 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 			arrows: {
 				slots: {
 					thumb: [
-						"flex items-center justify-center gap-1 border border-border bg-bg text-[0.625rem] font-medium text-fg [--slider-thumb-height:calc(var(--slider-thumb-size)*0.8)] [--slider-thumb-shadow:var(--slider-thumb-shadow-sm)] [--slider-thumb-width:calc(var(--slider-thumb-size)*1.4)]",
+						"flex h-[calc(var(--slider-thumb-size)*0.8)] w-[calc(var(--slider-thumb-size)*1.4)] items-center justify-center gap-1 border border-border bg-bg text-[0.625rem] font-medium text-fg",
 						"before:content-['‹'] after:content-['›']",
-					],
-				},
-			},
-			target: {
-				slots: {
-					thumb: "border-4 border-fg bg-bg",
-				},
-			},
-			raised: {
-				slots: {
-					thumb: [
-						"border border-border-control bg-bg [--slider-thumb-shadow:var(--slider-thumb-shadow-lg)]",
-						"hover:ring-4 hover:ring-fg/10 dragging:ring-0",
 					],
 				},
 			},
 			ticks: {
 				slots: {
 					thumb: [
-						"flex items-center justify-center border border-border bg-bg text-fg-muted [--slider-thumb-shadow:var(--slider-thumb-shadow-sm)] [--slider-thumb-width:calc(var(--slider-thumb-size)*1.2)]",
+						"flex h-(--slider-thumb-size) w-[calc(var(--slider-thumb-size)*1.2)] items-center justify-center border border-border bg-bg text-fg-muted",
 						"before:h-3 before:w-px before:rounded-full before:bg-current before:shadow-[4px_0_0_currentColor,-4px_0_0_currentColor] before:content-['']",
 					],
 				},
@@ -134,7 +107,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
 			faceted: {
 				slots: {
 					thumb: [
-						"border border-border/60 [--slider-thumb-shadow:var(--slider-thumb-shadow-sm)]",
+						"size-(--slider-thumb-size) border border-border/60",
 						"bg-[conic-gradient(from_45deg,var(--color-bg),var(--color-neutral),var(--color-fg),var(--color-bg),var(--color-fg-muted),var(--color-bg))]",
 					],
 				},

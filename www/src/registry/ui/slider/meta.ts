@@ -16,23 +16,24 @@ const sliderMeta = {
 	params: {
 		"thumb-style": {
 			kind: "enum",
-			default: "raised",
+			default: "solid",
 			values: [
-				"square",
 				"solid",
 				"outline",
-				"subtle",
-				"ring",
 				"bar",
 				"dots-vertical",
 				"dots-horizontal",
 				"arrows",
-				"target",
-				"raised",
 				"ticks",
 				"faceted",
 			] as const,
 			// description: "Visual style of the slider thumb.",
+		},
+		"thumb-shadow": {
+			kind: "enum",
+			default: "auto",
+			values: ["auto", "none", "sm", "lg"] as const,
+			// description: "Elevation shadow of the slider thumb.",
 		},
 		"fill-color": {
 			kind: "scalar",

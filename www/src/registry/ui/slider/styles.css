@@ -1,21 +1,11 @@
 :root {
 	--slider-track-radius: var(--radius-full);
 	--slider-thumb-radius: var(--radius-full);
-	--slider-thumb-size: 1.25rem;
-	--slider-thumb-track-gap: 0.25rem;
-	--slider-thumb-track-gap-shadow-x:
-		calc(var(--slider-thumb-track-gap) * -1) 0 0 0 var(--color-bg), var(--slider-thumb-track-gap) 0 0 0 var(--color-bg);
-	--slider-thumb-track-gap-shadow-y:
-		0 calc(var(--slider-thumb-track-gap) * -1) 0 0 var(--color-bg), 0 var(--slider-thumb-track-gap) 0 0 var(--color-bg);
-	--slider-thumb-track-gap-shadow: var(--slider-thumb-track-gap-shadow-x);
-	--slider-thumb-shadow-none: var(--slider-thumb-track-gap-shadow);
-	--slider-thumb-shadow-sm:
-		0 1px 2px 0 color-mix(in oklab, var(--color-fg) 10%, transparent), var(--slider-thumb-track-gap-shadow);
-	--slider-thumb-shadow-lg:
-		0 10px 15px -3px color-mix(in oklab, var(--color-fg) 10%, transparent),
-		0 4px 6px -4px color-mix(in oklab, var(--color-fg) 10%, transparent), var(--slider-thumb-track-gap-shadow);
+	--slider-thumb-size: var(--spacing(2));
+	--slider-thumb-track-gap: var(--spacing(1));
+	--slider-thumb-shadow: var(--shadow-sm);
 	--slider-fill-color: var(--color-primary);
 	--slider-cursor: var(--cursor-interactive);
 	--slider-dragging-cursor: var(--cursor-interactive);
-	--slider-size: 0.25rem;
+	--slider-size: var(--spacing(2));
 }
