@@ -140,6 +140,21 @@
 		background-size: 200% 100%;
 		animation: skeleton-background 2s linear infinite;
 	}
+
+	& :where([data-skeleton="text"], [data-text]) {
+		background-image: linear-gradient(
+			90deg,
+			var(--color-muted),
+			color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
+			var(--color-muted)
+		);
+		background-size: 200% 100%;
+		animation: skeleton-background 2s linear infinite;
+	}
+
+	& :where([data-skeleton="text"], [data-text])::before {
+		display: none;
+	}
 }
 
 @utility skeleton--pulse {

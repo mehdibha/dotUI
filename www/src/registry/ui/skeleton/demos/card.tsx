@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar";
@@ -12,10 +14,10 @@ import { Text } from "@/registry/ui/text";
 export default function Demo() {
 	const [isLoading, setLoading] = useState(true);
 	return (
-		<>
+		<div className="space-y-4">
 			<Switch isSelected={isLoading} onChange={setLoading}>
-				<Label>isLoading</Label>
 				<SwitchControl />
+				<Label>isLoading</Label>
 			</Switch>
 			<Skeleton isLoading={isLoading}>
 				<Card className="w-80">
@@ -43,6 +45,6 @@ export default function Demo() {
 					</CardFooter>
 				</Card>
 			</Skeleton>
-		</>
+		</div>
 	);
 }

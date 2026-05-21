@@ -9,14 +9,14 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
 				"group/skeleton pointer-events-none select-none",
 
 				/* Explicit skeleton intents */
-				"**:data-[skeleton=text]:inline-block **:data-[skeleton=text]:rounded-sm **:data-[skeleton=text]:text-transparent",
+				"**:data-[skeleton=text]:rounded-sm **:data-[skeleton=text]:text-transparent",
 				"**:data-[skeleton=block]:skeleton **:data-[skeleton=text]:skeleton",
 				"**:data-[skeleton=circle]:skeleton **:data-[skeleton=circle]:rounded-full",
 				"**:data-[skeleton=control]:skeleton **:data-[skeleton=control]:border-transparent **:data-[skeleton=control]:text-transparent",
 				"**:data-[skeleton=media]:skeleton",
 
 				/* Text-like dotUI anatomy */
-				"**:data-text:skeleton **:data-text:inline-block **:data-text:rounded-sm **:data-text:text-transparent",
+				"**:data-text:skeleton **:data-text:rounded-sm **:data-text:text-transparent",
 				"**:data-label:skeleton **:data-label:rounded-sm **:data-label:text-transparent",
 				"**:data-description:skeleton **:data-description:rounded-sm **:data-description:text-transparent",
 				"**:data-card-title:skeleton **:data-card-title:rounded-sm **:data-card-title:text-transparent",
