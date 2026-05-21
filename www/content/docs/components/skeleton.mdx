@@ -20,13 +20,13 @@ npx shadcn@latest add @dotui/skeleton
 Use skeleton components as placeholders while content is loading.
 
 ```tsx
-import { Skeleton, SkeletonProvider } from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 ```
 
 ```tsx
-<SkeletonProvider isLoading={true}>
+<Skeleton isLoading={true}>
 	<Skeleton className="h-4 w-32" />
-</SkeletonProvider>
+</Skeleton>
 ```
 
 ## Playground
@@ -55,10 +55,6 @@ Use the controls below to experiment with different skeleton props and see the l
 </Examples>
 
 ## API Reference
-
-### SkeletonProvider
-
-<Reference name="skeleton-provider" />
 
 ### Skeleton
 

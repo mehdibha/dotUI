@@ -1,12 +1,12 @@
 import { Button } from "@/registry/ui/button";
 import { Description, Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
-import { SkeletonProvider } from "@/registry/ui/skeleton";
+import { Skeleton } from "@/registry/ui/skeleton";
 import { TextField } from "@/registry/ui/text-field";
 
 export function SkeletonDemo() {
 	return (
-		<SkeletonProvider isLoading>
+		<Skeleton isLoading>
 			<div className="space-y-4">
 				<TextField>
 					<Label>Email</Label>
@@ -20,6 +20,6 @@ export function SkeletonDemo() {
 				</TextField>
 				<Button className="w-full">Submit</Button>
 			</div>
-		</SkeletonProvider>
+		</Skeleton>
 	);
 }

@@ -1,50 +1,30 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { cn } from "@/registry/lib/utils";
 
-import { cn } from "../../lib/utils";
-
-const SkeletonContext = createContext<boolean>(false);
-
-interface SkeletonProviderProps {
-	children: React.ReactNode;
-	isLoading?: boolean;
-}
-
-export const SkeletonProvider = ({ children, isLoading }: SkeletonProviderProps) => {
-	if (!isLoading) {
-		return children;
-	}
-	return (
-		<SkeletonContext.Provider value={true}>
-			<div inert className="skeleton-provider">
-				{children}
-			</div>
-		</SkeletonContext.Provider>
-	);
-};
-
-export const useSkeletonText = (children: React.ReactNode) => {
-	const isInSkeleton = useContext(SkeletonContext);
-	if (isInSkeleton) {
-		return <span data-slot="skeleton-text">{children}</span>;
-	}
-	return children;
-};
+import { useStyles } from "./styles";
 
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
+	isLoading?: boolean;
 	show?: boolean;
 };
-export function Skeleton({ className, show = true, ...props }: SkeletonProps) {
-	if (!show) return props.children;
+
+export function Skeleton({ className, children, isLoading, show, ...props }: SkeletonProps) {
+	const { root } = useStyles()();
+	const shouldShowSkeleton = isLoading ?? show ?? true;
+	const hasChildren = children != null;
+
+	if (!shouldShowSkeleton) return children;
+
 	return (
 		<div
-			className={cn(
-				"relative block h-6 animate-pulse rounded-md bg-muted",
-				props.children && "h-auto text-transparent *:invisible",
-				className,
-			)}
+			data-skeleton-loading=""
+			aria-busy="true"
+			inert
+			className={root({ className: cn(!hasChildren && "skeleton block h-6 rounded-md", className) })}
 			{...props}
-		/>
+		>
+			{children}
+		</div>
 	);
 }

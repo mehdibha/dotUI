@@ -11,6 +11,13 @@ const skeletonMeta = {
 			target: "ui/skeleton.tsx",
 		},
 	],
+	params: {
+		animation: {
+			kind: "enum",
+			default: "shimmer",
+			values: ["shimmer", "pulse", "none"] as const,
+		},
+	},
 } satisfies RegistryItem;
 
 export default skeletonMeta;

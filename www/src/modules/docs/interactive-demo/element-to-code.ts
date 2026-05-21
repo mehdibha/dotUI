@@ -157,7 +157,6 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Skeleton
 	Skeleton: "@/components/ui/skeleton",
-	SkeletonProvider: "@/components/ui/skeleton",
 
 	// Calendar
 	Calendar: "@/components/ui/calendar",

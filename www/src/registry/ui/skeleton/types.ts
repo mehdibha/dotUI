@@ -1,18 +1,11 @@
 /**
  * Missing description.
  */
-export interface SkeletonProviderProps {
-	children: React.ReactNode;
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
 	/**
-	 * Whether the skeleton loading state is active.
+	 * Whether to show the skeleton loading state. When false, renders children directly.
 	 */
 	isLoading?: boolean;
-}
-
-/**
- * Missing description.
- */
-export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
 	/**
 	 * Whether to show the skeleton. When false, renders children directly.
 	 * @default true

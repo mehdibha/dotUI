@@ -2,10 +2,8 @@
 
 import * as Default from "./base";
 
-import type { SkeletonProps, SkeletonProviderProps } from "./types";
+import type { SkeletonProps } from "./types";
 
 export const Skeleton = Default.Skeleton;
-export const SkeletonProvider = Default.SkeletonProvider;
-export const useSkeletonText = Default.useSkeletonText;
 
-export type { SkeletonProps, SkeletonProviderProps };
+export type { SkeletonProps };

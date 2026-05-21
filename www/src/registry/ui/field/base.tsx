@@ -12,7 +12,6 @@ import { useSlotId } from "react-aria/private/utils/useId";
 
 import type { VariantProps } from "tailwind-variants";
 
-import { useSkeletonText } from "@/registry/ui/skeleton";
 import { Text } from "@/registry/ui/text";
 
 import { useStyles } from "./styles";
@@ -93,7 +92,6 @@ interface LabelProps extends React.ComponentProps<typeof LabelPrimitives.Label> 
 
 const Label = ({ children, className, ...props }: LabelProps) => {
 	const { label } = useStyles()();
-	children = useSkeletonText(children);
 	return (
 		<LabelPrimitives.Label data-slot="label" data-label="" className={label({ className })} {...props}>
 			{children}
