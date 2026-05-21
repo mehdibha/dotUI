@@ -49,6 +49,7 @@ export const componentsData: ComponentCategory[] = [
 			{ name: "TextField", slug: "text-field", href: "/docs/components/text-field", status: "in review" },
 			{ name: "SearchField", slug: "search-field", href: "/docs/components/search-field", status: "in review" },
 			{ name: "NumberField", slug: "number-field", href: "/docs/components/number-field", status: "done" },
+			{ name: "OTPField", slug: "otp-field", href: "/docs/components/otp-field", status: "in review" },
 			{ name: "Checkbox", slug: "checkbox", href: "/docs/components/checkbox", status: "done" },
 			{ name: "CheckboxGroup", slug: "checkbox-group", href: "/docs/components/checkbox-group", status: "done" },
 			{ name: "RadioGroup", slug: "radio-group", href: "/docs/components/radio-group", status: "in review" },

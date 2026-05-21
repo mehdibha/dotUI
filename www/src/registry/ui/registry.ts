@@ -38,6 +38,7 @@ import Loader from "./loader/meta";
 import Menu from "./menu/meta";
 import Modal from "./modal/meta";
 import NumberField from "./number-field/meta";
+import OTPField from "./otp-field/meta";
 import Overlay from "./overlay/meta";
 import Popover from "./popover/meta";
 import ProgressBar from "./progress-bar/meta";
@@ -99,6 +100,7 @@ export const registryUi: RegistryItem[] = [
 	Menu,
 	Modal,
 	NumberField,
+	OTPField,
 	Overlay,
 	Popover,
 	ProgressBar,

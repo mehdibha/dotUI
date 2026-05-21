@@ -1457,6 +1457,38 @@ export const DemosIndex: Record<
 		files: ["ui/number-field/demos/with-input-group.tsx"],
 		component: React.lazy(() => import("@/registry/ui/number-field/demos/with-input-group")),
 	},
+	"otp-field/demos/alphanumeric": {
+		files: ["ui/otp-field/demos/alphanumeric.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/alphanumeric")),
+	},
+	"otp-field/demos/basic": {
+		files: ["ui/otp-field/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/basic")),
+	},
+	"otp-field/demos/controlled": {
+		files: ["ui/otp-field/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/controlled")),
+	},
+	"otp-field/demos/disabled": {
+		files: ["ui/otp-field/demos/disabled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/disabled")),
+	},
+	"otp-field/demos/error-message": {
+		files: ["ui/otp-field/demos/error-message.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/error-message")),
+	},
+	"otp-field/demos/form": {
+		files: ["ui/otp-field/demos/form.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/form")),
+	},
+	"otp-field/demos/four-digits": {
+		files: ["ui/otp-field/demos/four-digits.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/four-digits")),
+	},
+	"otp-field/demos/separator": {
+		files: ["ui/otp-field/demos/separator.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/separator")),
+	},
 	"overlay/demos/basic": {
 		files: ["ui/overlay/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/overlay/demos/basic")),
