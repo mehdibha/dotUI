@@ -6,8 +6,7 @@ import { tv } from "tailwind-variants";
 
 import type { ClassValue, TVReturnType, VariantProps } from "tailwind-variants";
 
-import type { Density } from "@/modules/create/preset/types";
-import type { EnumParamDef, ParamDef, RegistryItem } from "@/registry/types";
+import type { Density, EnumParamDef, ParamDef, RegistryItem } from "@/registry/types";
 
 /* --------------------------------- Types --------------------------------- */
 

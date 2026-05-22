@@ -1,6 +1,12 @@
 import type { Registry as ShadcnRegistry, RegistryItem as ShadcnRegistryItem } from "shadcn/schema";
 
 /**
+ * Density tiers a design system can be rendered at. Lives at the registry layer
+ * because both the runtime provider and the publish pipeline need it.
+ */
+export type Density = "compact" | "default" | "comfortable";
+
+/**
  * Component groups for style editor UI organization.
  * Components in the same group share the same visual style.
  */
