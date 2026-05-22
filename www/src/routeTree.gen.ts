@@ -16,6 +16,7 @@ import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as ViewBlockRouteImport } from './routes/view/$block'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
+import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
@@ -57,6 +58,11 @@ const DemosSlugRoute = DemosSlugRouteImport.update({
   id: '/demos/$slug',
   path: '/demos/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppPresetsRoute = AppPresetsRouteImport.update({
+  id: '/presets',
+  path: '/presets',
+  getParentRoute: () => AppRouteRoute,
 } as any)
 const AppCreateRoute = AppCreateRouteImport.update({
   id: '/create',
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
+  '/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/view/$block': typeof ViewBlockRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
+  '/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/view/$block': typeof ViewBlockRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
   '/_app/components': typeof AppComponentsRoute
   '/_app/create': typeof AppCreateRoute
+  '/_app/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/view/$block': typeof ViewBlockRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/components'
     | '/create'
+    | '/presets'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/view/$block'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/components'
     | '/create'
+    | '/presets'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/view/$block'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/_app/docs'
     | '/_app/components'
     | '/_app/create'
+    | '/_app/presets'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/view/$block'
@@ -251,6 +263,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/demos/$slug'
       preLoaderRoute: typeof DemosSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/presets': {
+      id: '/_app/presets'
+      path: '/presets'
+      fullPath: '/presets'
+      preLoaderRoute: typeof AppPresetsRouteImport
+      parentRoute: typeof AppRouteRoute
     }
     '/_app/create': {
       id: '/_app/create'
@@ -335,6 +354,7 @@ interface AppRouteRouteChildren {
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
   AppComponentsRoute: typeof AppComponentsRoute
   AppCreateRoute: typeof AppCreateRoute
+  AppPresetsRoute: typeof AppPresetsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
@@ -343,6 +363,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
   AppComponentsRoute: AppComponentsRoute,
   AppCreateRoute: AppCreateRoute,
+  AppPresetsRoute: AppPresetsRoute,
   AppIndexRoute: AppIndexRoute,
 }
 
