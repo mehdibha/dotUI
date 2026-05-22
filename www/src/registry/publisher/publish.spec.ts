@@ -190,7 +190,10 @@ describe("publish", () => {
 		// Shadcn item is shaped correctly.
 		expect(item.name).toBe("button");
 		expect(item.type).toBe("registry:ui");
-		expect(item.registryDependencies).toEqual(["loader", "focus-styles"]);
+		// `focus-styles` is bundled into the registry:base init item so it gets
+		// dropped from per-component registryDependencies. `loader` stays —
+		// without a `setKnownDotuiNames` call there's no namespace prefix.
+		expect(item.registryDependencies).toEqual(["loader"]);
 		const file = item.files?.[0];
 		expect(file?.target).toBe("ui/button.tsx");
 		expect(file?.content).toBe(rawContent);

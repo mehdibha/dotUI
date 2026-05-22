@@ -74,6 +74,13 @@ export interface TransformBaseInput {
 	baseTsxPath: string;
 	/** Component meta name, e.g. `"button"`. Drives the variant identifier name. */
 	componentName: string;
+	/**
+	 * When false, skip the `const <name>Variants = tv(__TV_CONFIG__);` injection
+	 * and the VariantProps tailwind-variants import. Use for components that
+	 * don't have a `styles.ts` (e.g. loader) — they're shipped verbatim with
+	 * only path rewrites applied.
+	 */
+	hasStylesConfig?: boolean;
 }
 
 export interface TransformBaseOutput {
@@ -105,7 +112,11 @@ function getProject(): Project {
 	return cachedProject;
 }
 
-export function transformBase({ baseTsxPath, componentName }: TransformBaseInput): TransformBaseOutput {
+export function transformBase({
+	baseTsxPath,
+	componentName,
+	hasStylesConfig = true,
+}: TransformBaseInput): TransformBaseOutput {
 	const variantIdent = `${toCamelCase(componentName)}Variants`;
 	const oldStylesIdent = `${toCamelCase(componentName)}Styles`; // e.g. "buttonStyles"
 	const oldStylesTypeIdent = `${capitalize(toCamelCase(componentName))}Styles`; // e.g. "ButtonStyles"
@@ -114,7 +125,7 @@ export function transformBase({ baseTsxPath, componentName }: TransformBaseInput
 	const sourceFile = project.addSourceFileAtPath(baseTsxPath);
 
 	try {
-		applyTransform(sourceFile, { variantIdent, oldStylesIdent, oldStylesTypeIdent });
+		applyTransform(sourceFile, { variantIdent, oldStylesIdent, oldStylesTypeIdent, hasStylesConfig });
 
 		// Replace the placeholder identifier with the runtime sentinel string.
 		const transformed = sourceFile.getFullText().replace(TS_PLACEHOLDER_IDENT, TV_CONFIG_PLACEHOLDER);
@@ -132,10 +143,21 @@ interface ApplyContext {
 	variantIdent: string;
 	oldStylesIdent: string;
 	oldStylesTypeIdent: string;
+	hasStylesConfig: boolean;
 }
 
 function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
-	const { variantIdent, oldStylesIdent, oldStylesTypeIdent } = ctx;
+	const { variantIdent, oldStylesIdent, oldStylesTypeIdent, hasStylesConfig } = ctx;
+
+	if (!hasStylesConfig) {
+		// No `styles.ts` → just rewrite registry-internal import paths and bail.
+		// Don't insert a `tv` variant; the component renders without one.
+		for (const imp of sourceFile.getImportDeclarations()) {
+			const next = rewriteImportPath(imp.getModuleSpecifierValue());
+			if (next) imp.setModuleSpecifier(next);
+		}
+		return;
+	}
 
 	// Each ts-morph structural edit can invalidate cached descendant snapshots,
 	// so we re-query before each pass and order things from leafmost rewrites

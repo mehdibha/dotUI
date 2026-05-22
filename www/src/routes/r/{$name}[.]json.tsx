@@ -15,8 +15,12 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 
 import { format } from "oxfmt";
 
-import { publishables } from "@/registry/__generated__/publishables";
-import { publish } from "@/registry/publisher/publish";
+import { publishables, PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables";
+import { publish, setKnownDotuiNames } from "@/registry/publisher/publish";
+
+// Prime the namespace prefixer with every component name we ship. Lives at
+// module scope so it runs once per route bundle load.
+setKnownDotuiNames(PUBLISHABLE_NAMES);
 
 import type { Publishable, PublishPreset } from "@/registry/publisher/types";
 

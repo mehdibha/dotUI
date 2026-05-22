@@ -26,6 +26,59 @@ import type { RegistryItem } from "@/registry/types";
 
 export const TV_CONFIG_PLACEHOLDER = "%%TV_CONFIG%%";
 
+/**
+ * Registry namespace dotui ships under. Used to prefix `registryDependencies`
+ * so consumers resolve transitive items from our registry instead of the
+ * default shadcn registry.
+ */
+export const DOTUI_NAMESPACE = "@dotui";
+
+/**
+ * Names of registry items that live in the dotui registry — i.e. anything
+ * that has a publishable. Used to decide which `registryDependencies` need
+ * the `@dotui/` prefix and which (like `utils`) flow through verbatim.
+ *
+ * Populated lazily from the generated publishables index when available,
+ * otherwise defaults to the empty set (consumer-side: dotui knows its own
+ * components).
+ */
+let knownDotuiNames: Set<string> | undefined;
+
+/**
+ * Names of registry items the consumer already has after `shadcn init`
+ * because they're baked into the registry:base bundle. These don't need
+ * to be (and shouldn't be) listed as registry dependencies on individual
+ * components — shadcn would 404 trying to fetch them from us, and they
+ * don't exist on the default shadcn registry either.
+ */
+const BUNDLED_INTO_INIT = new Set([
+	// focus-ring / focus-reset / focus-input utilities ship in base.css.
+	"focus-styles",
+	// @theme blocks ship in theme.css.
+	"theme",
+]);
+
+export function setKnownDotuiNames(names: Iterable<string>): void {
+	knownDotuiNames = new Set(names);
+}
+
+function namespaceDeps(deps: readonly string[] | undefined): string[] | undefined {
+	if (!deps || deps.length === 0) return undefined;
+	const known = knownDotuiNames;
+	const out: string[] = [];
+	for (const dep of deps) {
+		// Drop deps that the consumer already has from the init bundle.
+		if (BUNDLED_INTO_INIT.has(dep)) continue;
+		// Already namespaced or fully-qualified URL? leave alone.
+		if (dep.includes("/") || dep.includes(":")) {
+			out.push(dep);
+			continue;
+		}
+		out.push(known?.has(dep) ? `${DOTUI_NAMESPACE}/${dep}` : dep);
+	}
+	return out.length > 0 ? out : undefined;
+}
+
 export interface PublishedItem {
 	/** Shadcn-shaped registry item ready to JSON.stringify. */
 	item: RegistryItem;
@@ -70,7 +123,9 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
 		...(meta.title !== undefined ? { title: meta.title } : {}),
 		...(meta.description !== undefined ? { description: meta.description } : {}),
 		...(meta.dependencies ? { dependencies: meta.dependencies } : {}),
-		...(meta.registryDependencies ? { registryDependencies: meta.registryDependencies } : {}),
+		...(meta.registryDependencies
+			? { registryDependencies: namespaceDeps(meta.registryDependencies) ?? meta.registryDependencies }
+			: {}),
 		files,
 	};
 	const item = itemShape as unknown as RegistryItem;

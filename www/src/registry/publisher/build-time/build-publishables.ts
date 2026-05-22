@@ -151,7 +151,11 @@ async function buildOne({ meta, registryDir, outDir }: BuildOneInput): Promise<s
 	// Transform each base file to a template.
 	const templates = baseFiles.map((file) => {
 		const absPath = path.join(registryDir, file.path);
-		const { template } = transformBase({ baseTsxPath: absPath, componentName: meta.name });
+		const { template } = transformBase({
+			baseTsxPath: absPath,
+			componentName: meta.name,
+			hasStylesConfig: hasStyles,
+		});
 		return { file, template };
 	});
 
