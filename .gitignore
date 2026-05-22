@@ -44,3 +44,6 @@ shadcn-ui
 nitro-main
 router-main
 base-ui
+
+# Generated shadcn publishables — emitted by `pnpm build:registry`.
+www/src/registry/__generated__/publishables/
