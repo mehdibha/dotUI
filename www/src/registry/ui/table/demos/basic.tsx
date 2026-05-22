@@ -1,14 +1,6 @@
 "use client";
 
-import {
-	Table,
-	TableContainer,
-	TableBody,
-	TableCell,
-	TableColumn,
-	TableHeader,
-	TableRow,
-} from "@/registry/ui/table";
+import { Table, TableContainer, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
 
 export default function Demo() {
 	return (

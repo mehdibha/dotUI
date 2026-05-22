@@ -14,7 +14,6 @@ import { useSlotId } from "react-aria/private/utils/useId";
 import { Group } from "@/registry/ui/group";
 import { Input } from "@/registry/ui/input";
 
-import Disabled from "./demos/disabled";
 import { useStyles } from "./styles";
 
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>;

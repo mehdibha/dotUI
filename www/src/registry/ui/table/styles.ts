@@ -30,7 +30,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
 			footer: "border-t bg-muted/50 font-medium [&_[role=row]]:last:border-b-0 [&>tr]:last:border-b-0",
 			row: [
 				"group/row relative box-border cursor-default border-b border-border bg-bg/70 focus-reset transition-colors [&:is(div)]:h-full",
-				"hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted drop-target:bg-accent-muted/70 dragging:cursor-grabbing dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70",
+				"hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-grabbing dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
 				"focus-visible:bg-accent-muted/70 disabled:text-fg-disabled focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
 			],
 			cell: [
@@ -41,7 +41,10 @@ const { useStyles, styles } = createStyles(tableMeta, {
 				"focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:2px_solid_var(--color-border-focus)] focus-visible:before:[outline-offset:-2px] focus-visible:before:content-[''] data-[focus-visible]:z-20 data-[focus-visible]:before:pointer-events-none data-[focus-visible]:before:absolute data-[focus-visible]:before:inset-0 data-[focus-visible]:before:rounded-md data-[focus-visible]:before:[outline:2px_solid_var(--color-border-focus)] data-[focus-visible]:before:[outline-offset:-2px] data-[focus-visible]:before:content-['']",
 			],
 			selectionCell: ["w-10 min-w-10 px-2.5", "[&:is(div)]:h-[calc(100%-1px)] [&:is(div)]:justify-start"],
-			dragCell: ["w-8 min-w-8 cursor-grab px-1 text-fg-muted group-data-[dragging]/row:cursor-grabbing", "[&:is(div)]:justify-center"],
+			dragCell: [
+				"w-8 min-w-8 cursor-grab px-1 text-fg-muted group-data-[dragging]/row:cursor-grabbing",
+				"[&:is(div)]:justify-center",
+			],
 			dragButton: [
 				"inline-flex size-6 cursor-grab items-center justify-center rounded-sm text-fg-muted focus-reset transition-colors focus-visible:focus-ring",
 				"group-hover/row:text-fg group-data-[dragging]/row:cursor-grabbing focus-visible:bg-muted focus-visible:text-fg **:[svg]:size-4",

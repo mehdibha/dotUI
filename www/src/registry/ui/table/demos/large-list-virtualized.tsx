@@ -20,8 +20,8 @@ const statusVariant = {
 	Ready: "success",
 } as const;
 
-const services = ["web", "api", "worker", "cron", "admin", "storefront"];
-const regions = ["iad1", "sfo1", "fra1", "hnd1"];
+const services = ["web", "api", "worker", "cron", "admin", "storefront"] as const;
+const regions = ["iad1", "sfo1", "fra1", "hnd1"] as const;
 
 const columns: Column[] = [
 	{ id: "deployment", name: "Deployment", isRowHeader: true },
@@ -38,9 +38,9 @@ const deployments: Deployment[] = Array.from({ length: 2500 }, (_, index) => {
 		id: `deploy-${id}`,
 		deployment: `release-${String(id).padStart(4, "0")}`,
 		duration: `${(index % 9) + 1}m ${String((index * 7) % 60).padStart(2, "0")}s`,
-		region: regions[index % regions.length]!,
-		service: services[index % services.length]!,
-		status: statuses[index % statuses.length]!,
+		region: regions[index % regions.length] ?? regions[0],
+		service: services[index % services.length] ?? services[0],
+		status: statuses[index % statuses.length] ?? statuses[0],
 	};
 });
 

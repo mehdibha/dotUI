@@ -134,7 +134,12 @@ const defaultExpandedKeys = issueGroups.map((group) => group.id);
 export default function Demo() {
 	return (
 		<TableContainer className="max-h-[440px]">
-			<Table aria-label="Issue inbox" treeColumn="issue" selectionMode="multiple" defaultExpandedKeys={defaultExpandedKeys}>
+			<Table
+				aria-label="Issue inbox"
+				treeColumn="issue"
+				selectionMode="multiple"
+				defaultExpandedKeys={defaultExpandedKeys}
+			>
 				<TableHeader>
 					<TableColumn id="issue" isRowHeader>
 						Issue

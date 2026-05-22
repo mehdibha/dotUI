@@ -1,5 +1,4 @@
 import { createStyles } from "@/modules/core/styles";
-
 import { fieldStyles } from "@/registry/ui/field/styles";
 
 import otpFieldMeta from "./meta";

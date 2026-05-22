@@ -6,8 +6,8 @@ import { ArrowUpIcon, ChevronRightIcon, GripVerticalIcon } from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 import * as CollectionPrimitives from "react-aria-components/Collection";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as DragAndDropPrimitives from "react-aria-components/useDragAndDrop";
 import * as TablePrimitives from "react-aria-components/Table";
+import * as DragAndDropPrimitives from "react-aria-components/useDragAndDrop";
 import * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
 
 import type { GridNode } from "react-stately/private/grid/GridCollection";

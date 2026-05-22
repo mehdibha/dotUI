@@ -3,24 +3,6 @@
 import * as React from "react";
 
 import {
-	ArrowDownIcon,
-	ArrowRightIcon,
-	ArrowUpIcon,
-	CheckCircleIcon,
-	ChevronLeftIcon,
-	ChevronRightIcon,
-	ChevronsLeftIcon,
-	ChevronsRightIcon,
-	CircleIcon,
-	CircleOffIcon,
-	HelpCircleIcon,
-	MoreHorizontalIcon,
-	PlusCircleIcon,
-	Settings2Icon,
-	TimerIcon,
-	XIcon,
-} from "lucide-react";
-import {
 	flexRender,
 	getCoreRowModel,
 	getFacetedRowModel,
@@ -38,6 +20,25 @@ import {
 	type SortingState,
 	type VisibilityState,
 } from "@tanstack/react-table";
+
+import {
+	ArrowDownIcon,
+	ArrowRightIcon,
+	ArrowUpIcon,
+	CheckCircleIcon,
+	ChevronLeftIcon,
+	ChevronRightIcon,
+	ChevronsLeftIcon,
+	ChevronsRightIcon,
+	CircleIcon,
+	CircleOffIcon,
+	HelpCircleIcon,
+	MoreHorizontalIcon,
+	PlusCircleIcon,
+	Settings2Icon,
+	TimerIcon,
+	XIcon,
+} from "lucide-react";
 import * as AutocompletePrimitive from "react-aria-components/Autocomplete";
 
 import type { Selection } from "react-aria-components";
@@ -602,7 +603,11 @@ export default function Demo() {
 					</TableHeader>
 					<TableBody items={currentRows} dependencies={columnDependencies} renderEmptyState={() => "No results."}>
 						{(row) => (
-							<TableRow columns={row.getVisibleCells()} dependencies={columnDependencies} textValue={getTaskTextValue(row.original)}>
+							<TableRow
+								columns={row.getVisibleCells()}
+								dependencies={columnDependencies}
+								textValue={getTaskTextValue(row.original)}
+							>
 								{(cell) => (
 									<TableCell className={getColumnMeta(cell.column).cellClassName}>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -778,7 +783,11 @@ function getColumnFilterSet(column?: TanStackColumn<Task, unknown>) {
 }
 
 function rowSelectionToSelection(rowSelection: RowSelectionState): Selection {
-	return new Set(Object.entries(rowSelection).filter(([, isSelected]) => isSelected).map(([id]) => id));
+	return new Set(
+		Object.entries(rowSelection)
+			.filter(([, isSelected]) => isSelected)
+			.map(([id]) => id),
+	);
 }
 
 function selectionToRowSelection(

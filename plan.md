@@ -5,12 +5,14 @@ Goal: make the design systems built in `/create` installable into any project vi
 ## 1. Current state
 
 Per-component sources in [www/src/registry/ui/{name}/](www/src/registry/ui/):
+
 - `meta.ts` — shadcn-shaped `RegistryItem` + dotui `params` (`enum` | `scalar`).
 - `base.tsx` — JSX, reads `useStyles()` from `./styles`.
 - `styles.ts` — `createStyles(meta, { base, density, params })` returns `{ useStyles, styles }`.
 - `types.ts`, `index.tsx`, `examples.tsx`, `demos/*`.
 
 Runtime resolution in [www/src/modules/core/styles.tsx](www/src/modules/core/styles.tsx):
+
 - Module-scoped `enumVarsRegistry` / `scalarVarsRegistry` populated as a side effect of every `createStyles()` call.
 - `DesignSystemProvider` writes selections to `:root` CSS vars.
 - `useStyles()` composes `base → density[d] → params[name][value]` via `tv({ extend })`.
@@ -121,26 +123,26 @@ The preset's **per-component** values live inline in each component's classes (S
 
 ## 5. Routes to add (TanStack Start)
 
-| Route | Purpose |
-|---|---|
-| `routes/r/init[.]json.tsx` | reads `?preset=`, returns `registry:base` JSON |
-| `routes/r/$name[.]json.tsx` | reads `?preset=` + `name`, loads `publishables/<name>.ts`, runs the request-time pipeline, returns component JSON |
-| `routes/r/registry[.]json.tsx` | namespace index for shadcn discovery (optional) |
+| Route                          | Purpose                                                                                                           |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `routes/r/init[.]json.tsx`     | reads `?preset=`, returns `registry:base` JSON                                                                    |
+| `routes/r/$name[.]json.tsx`    | reads `?preset=` + `name`, loads `publishables/<name>.ts`, runs the request-time pipeline, returns component JSON |
+| `routes/r/registry[.]json.tsx` | namespace index for shadcn discovery (optional)                                                                   |
 
 TanStack server functions or route loaders returning `Response` with `application/json`. All request-time work is pure JS — no `ts-morph` import in the route bundle. Cache key = preset string; prerender for the default preset.
 
 ## 6. Required refactors
 
-| # | Refactor | Why |
-|---|---|---|
-| 1 | Split `createStyles` so its config object is exportable as a plain value (return a `flatten(preset) => flatConfig` alongside `useStyles`, or move config into `styles.config.ts` co-located with each component). | Publisher can't depend on React and can't rely on the Map-based module side effects of `createStyles` for every component on every request. Needs a pure path. |
-| 2 | Move `Density` type from `@/modules/create/preset/types` into `@/registry/types`. | Publisher should not import from create-page UI module. |
-| 3 | Move param option pools (radius/spacing/blur/shadow/cursor) out of [components-config.tsx](www/src/modules/create/components-config.tsx) lines 94–145 into `@/registry/publisher/token-map.ts`. | Customizer picker and build-time class rewriter must share one mapping. |
-| 4 | Adopt one canonical `useStyles()` call shape across base files. Today some do `const styles = useStyles()` then `styles({...})`, others `const { root } = useStyles()()`. Either standardize or make the ts-morph transform handle both. | Step C needs deterministic anchors. |
-| 5 | Extract [base.css](www/src/registry/base/base.css) utilities (`focus-ring`, `skeleton--shimmer`, etc.) into a structured source so they can be emitted into the `registry:base` `css` field. | shadcn's `css` field is keyed by selector, not free-form CSS — need an emitter. |
-| 6 | Add a `registry:theme` item (or fold into base) carrying `cssVars.theme` derived from [tokens.ts](www/src/registry/base/tokens.ts) + the preset's `tokens` map. | Consumers need the CSS var declarations or `bg-neutral` etc. won't resolve. |
-| 7 | Each component's `meta.ts` gains optional `title` / `description`. | Surfaces in `shadcn add` lists. |
-| 8 | `params: { animation: { shimmer: { slots: { root: "skeleton--shimmer" } } } }` (Skeleton) — values reference CSS utilities defined in base.css. Keep those utilities in the base item so resolved classes still have meaning. | Covered by #5. |
+| #   | Refactor                                                                                                                                                                                                                                 | Why                                                                                                                                                            |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Split `createStyles` so its config object is exportable as a plain value (return a `flatten(preset) => flatConfig` alongside `useStyles`, or move config into `styles.config.ts` co-located with each component).                        | Publisher can't depend on React and can't rely on the Map-based module side effects of `createStyles` for every component on every request. Needs a pure path. |
+| 2   | Move `Density` type from `@/modules/create/preset/types` into `@/registry/types`.                                                                                                                                                        | Publisher should not import from create-page UI module.                                                                                                        |
+| 3   | Move param option pools (radius/spacing/blur/shadow/cursor) out of [components-config.tsx](www/src/modules/create/components-config.tsx) lines 94–145 into `@/registry/publisher/token-map.ts`.                                          | Customizer picker and build-time class rewriter must share one mapping.                                                                                        |
+| 4   | Adopt one canonical `useStyles()` call shape across base files. Today some do `const styles = useStyles()` then `styles({...})`, others `const { root } = useStyles()()`. Either standardize or make the ts-morph transform handle both. | Step C needs deterministic anchors.                                                                                                                            |
+| 5   | Extract [base.css](www/src/registry/base/base.css) utilities (`focus-ring`, `skeleton--shimmer`, etc.) into a structured source so they can be emitted into the `registry:base` `css` field.                                             | shadcn's `css` field is keyed by selector, not free-form CSS — need an emitter.                                                                                |
+| 6   | Add a `registry:theme` item (or fold into base) carrying `cssVars.theme` derived from [tokens.ts](www/src/registry/base/tokens.ts) + the preset's `tokens` map.                                                                          | Consumers need the CSS var declarations or `bg-neutral` etc. won't resolve.                                                                                    |
+| 7   | Each component's `meta.ts` gains optional `title` / `description`.                                                                                                                                                                       | Surfaces in `shadcn add` lists.                                                                                                                                |
+| 8   | `params: { animation: { shimmer: { slots: { root: "skeleton--shimmer" } } } }` (Skeleton) — values reference CSS utilities defined in base.css. Keep those utilities in the base item so resolved classes still have meaning.            | Covered by #5.                                                                                                                                                 |
 
 ## 7. New modules
 
