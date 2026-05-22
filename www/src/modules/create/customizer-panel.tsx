@@ -8,7 +8,6 @@ import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { componentsData } from "@/modules/docs/components-list/components-data";
 import * as icons from "@/registry/__generated__/icons";
-import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Command } from "@/registry/ui/command";
 import { Input } from "@/registry/ui/input";
@@ -316,18 +315,8 @@ export function CustomizerPanel() {
 										.flatMap((category) => category.components)
 										.sort((a, b) => a.name.localeCompare(b.name))
 										.map((comp) => (
-											<ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name} className="gap-2">
+											<ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name}>
 												<span className="truncate">{comp.name}</span>
-												<span
-													className={cn(
-														"size-2 rounded-full",
-														comp.status === "done"
-															? "bg-accent"
-															: comp.status === "in review"
-																? "bg-warning"
-																: "bg-danger",
-													)}
-												/>
 											</ListBoxItem>
 										))}
 								</ListBox>

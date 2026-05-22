@@ -3,12 +3,7 @@
  */
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
 	/**
-	 * Whether to show the skeleton loading state. When false, renders children directly.
+	 * Whether to show the skeleton loading state.
 	 */
 	isLoading?: boolean;
-	/**
-	 * Whether to show the skeleton. When false, renders children directly.
-	 * @default true
-	 */
-	show?: boolean;
 }

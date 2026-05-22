@@ -9,19 +9,24 @@ import { Description, Field, Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 import { Skeleton } from "@/registry/ui/skeleton";
 import { Switch, SwitchControl } from "@/registry/ui/switch";
-import { Text } from "@/registry/ui/text";
 
 export default function Demo() {
 	const [isLoading, setLoading] = useState(true);
 	return (
-		<div className="space-y-4">
+		<>
 			<Switch isSelected={isLoading} onChange={setLoading}>
 				<SwitchControl />
 				<Label>isLoading</Label>
 			</Switch>
 			<Skeleton isLoading={isLoading}>
 				<Card className="w-80">
-					<CardHeader className="flex-row items-center gap-3">
+					<img
+						data-skeleton="media"
+						src="/images/thumbnail.png"
+						alt="dotUI preview"
+						className="h-28 w-full object-cover"
+					/>
+					<CardHeader className="flex flex-row items-center gap-3">
 						<Avatar size="lg">
 							<AvatarFallback>DU</AvatarFallback>
 						</Avatar>
@@ -31,8 +36,7 @@ export default function Demo() {
 						</div>
 					</CardHeader>
 					<CardContent className="space-y-4">
-						<div data-skeleton="media" className="h-28 rounded-md" />
-						<Text>Component usage is growing across product surfaces.</Text>
+						<p>Component usage is growing across product surfaces.</p>
 						<Field>
 							<Label>Workspace</Label>
 							<Input defaultValue="Acme dashboard" />
@@ -45,6 +49,6 @@ export default function Demo() {
 					</CardFooter>
 				</Card>
 			</Skeleton>
-		</div>
+		</>
 	);
 }

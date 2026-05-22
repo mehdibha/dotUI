@@ -44,10 +44,6 @@ function DocsSidebarLink({ item, isActive }: { item: DocsPageItem; isActive: boo
 				)}
 			>
 				<span>{item.name}</span>
-				<span
-					aria-hidden="true"
-					className={cn("size-1.5 shrink-0 rounded-full", item.wip ? "bg-amber-400" : "bg-blue-400")}
-				/>
 			</span>
 		</Link>
 	);

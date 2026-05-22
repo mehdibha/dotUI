@@ -1733,25 +1733,9 @@ export const DemosIndex: Record<
 		files: ["ui/separator/demos/orientation.tsx"],
 		component: React.lazy(() => import("@/registry/ui/separator/demos/orientation")),
 	},
-	"skeleton/demos/api-simulation": {
-		files: ["ui/skeleton/demos/api-simulation.tsx"],
-		component: React.lazy(() => import("@/registry/ui/skeleton/demos/api-simulation")),
-	},
 	"skeleton/demos/card": {
 		files: ["ui/skeleton/demos/card.tsx"],
 		component: React.lazy(() => import("@/registry/ui/skeleton/demos/card")),
-	},
-	"skeleton/demos/children": {
-		files: ["ui/skeleton/demos/children.tsx"],
-		component: React.lazy(() => import("@/registry/ui/skeleton/demos/children")),
-	},
-	"skeleton/demos/fixed-size-children": {
-		files: ["ui/skeleton/demos/fixed-size-children.tsx"],
-		component: React.lazy(() => import("@/registry/ui/skeleton/demos/fixed-size-children")),
-	},
-	"skeleton/demos/show": {
-		files: ["ui/skeleton/demos/show.tsx"],
-		component: React.lazy(() => import("@/registry/ui/skeleton/demos/show")),
 	},
 	"slider/demos/composition": {
 		files: ["ui/slider/demos/composition.tsx"],

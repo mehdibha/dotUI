@@ -26,6 +26,23 @@ const { useStyles, styles } = createStyles(skeletonMeta, {
 				"**:data-listbox-item-label:skeleton **:data-listbox-item-label:rounded-sm **:data-listbox-item-label:text-transparent",
 				"**:data-listbox-item-description:skeleton **:data-listbox-item-description:rounded-sm **:data-listbox-item-description:text-transparent",
 
+				/* Native typography */
+				"[&_h1]:skeleton [&_h1]:rounded-sm [&_h1]:text-transparent",
+				"[&_h2]:skeleton [&_h2]:rounded-sm [&_h2]:text-transparent",
+				"[&_h3]:skeleton [&_h3]:rounded-sm [&_h3]:text-transparent",
+				"[&_h4]:skeleton [&_h4]:rounded-sm [&_h4]:text-transparent",
+				"[&_h5]:skeleton [&_h5]:rounded-sm [&_h5]:text-transparent",
+				"[&_h6]:skeleton [&_h6]:rounded-sm [&_h6]:text-transparent",
+				"[&_p]:skeleton [&_p]:rounded-sm [&_p]:text-transparent",
+				"[&_small]:skeleton [&_small]:rounded-sm [&_small]:text-transparent",
+				"[&_strong]:skeleton [&_strong]:rounded-sm [&_strong]:text-transparent",
+				"[&_em]:skeleton [&_em]:rounded-sm [&_em]:text-transparent",
+				"[&_code]:skeleton [&_code]:rounded-sm [&_code]:text-transparent",
+				"[&_kbd]:skeleton [&_kbd]:rounded-sm [&_kbd]:text-transparent",
+				"[&_samp]:skeleton [&_samp]:rounded-sm [&_samp]:text-transparent",
+				"[&_figcaption]:skeleton [&_figcaption]:rounded-sm [&_figcaption]:text-transparent",
+				"[&_legend]:skeleton [&_legend]:rounded-sm [&_legend]:text-transparent",
+
 				/* Controls and compact UI primitives */
 				"**:data-button:skeleton **:data-button:border-transparent **:data-button:text-transparent **:data-button:shadow-none",
 				"**:data-input-control:skeleton **:data-input-control:border-transparent **:data-input-control:text-transparent **:data-input-control:placeholder:text-transparent",
