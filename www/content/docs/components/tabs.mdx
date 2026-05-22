@@ -7,88 +7,81 @@ links:
 wip: true
 ---
 
+<Demo name="tabs/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="tabs/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/tabs
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/tabs
-    ```
+Use tabs to organize content into multiple sections and allow users to navigate between them.
 
-    ## Usage
+```tsx
+import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
+```
 
-    Use tabs to organize content into multiple sections and allow users to navigate between them.
+```tsx
+<Tabs>
+	<TabList>
+		<Tab id="overview">Overview</Tab>
+		<Tab id="usage">Usage</Tab>
+		<Tab id="settings">Settings</Tab>
+	</TabList>
+	<TabPanel id="overview">Overview content</TabPanel>
+	<TabPanel id="usage">Usage content</TabPanel>
+	<TabPanel id="settings">Settings content</TabPanel>
+</Tabs>
+```
 
-    ```tsx
-    import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
-    ```
+## Playground
 
-    ```tsx
-    <Tabs>
-      <TabList>
-        <Tab id="overview">Overview</Tab>
-        <Tab id="usage">Usage</Tab>
-        <Tab id="settings">Settings</Tab>
-      </TabList>
-      <TabPanel id="overview">Overview content</TabPanel>
-      <TabPanel id="usage">Usage content</TabPanel>
-      <TabPanel id="settings">Settings content</TabPanel>
-    </Tabs>
-    ```
+Use the controls below to experiment with different tabs props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="tabs"
+	controls={[
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "horizontal",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different tabs props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="tabs" 
-      controls={[
-        {
-          type: "enum",
-          name: "orientation",
-          options: ["horizontal", "vertical"],
-          defaultValue: "horizontal",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-      ]}
-    />
+<Examples>
+	<Example name="tabs/demos/basic" />
+	<Example name="tabs/demos/variant" />
+	<Example name="tabs/demos/vertical" />
+	<Example name="tabs/demos/disabled" />
+	<Example name="tabs/demos/keyboard-activation" />
+	<Example name="tabs/demos/controlled" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    ### Tabs
+### Tabs
 
-    <Reference name="tabs" />
+<Reference name="tabs" />
 
-    ### TabList
+### TabList
 
-    <Reference name="tab-list" />
+<Reference name="tab-list" />
 
-    ### Tab
+### Tab
 
-    <Reference name="tab" />
+<Reference name="tab" />
 
-    ### TabPanel
+### TabPanel
 
-    <Reference name="tab-panel" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="tabs/demos/basic" />
-      <Example name="tabs/demos/variant" />
-      <Example name="tabs/demos/vertical" />
-      <Example name="tabs/demos/disabled" />
-      <Example name="tabs/demos/keyboard-activation" />
-      <Example name="tabs/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="tab-panel" />

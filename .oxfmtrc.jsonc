@@ -1,0 +1,57 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"printWidth": 120,
+	"tabWidth": 2,
+	"useTabs": true,
+	"singleQuote": false,
+	"sortPackageJson": false,
+	"sortImports": {
+		"customGroups": [
+			{
+				"groupName": "react-libs",
+				"elementNamePattern": ["react", "react/**", "react-dom", "react-dom/**", "react-native", "react-native/**"],
+			},
+			{
+				"groupName": "tanstack-libs",
+				"elementNamePattern": ["@tanstack/**"],
+			},
+			{
+				"groupName": "dotui-libs",
+				"elementNamePattern": ["@dotui/**"],
+			},
+		],
+		"groups": [
+			"react-libs",
+			"tanstack-libs",
+			"value-builtin",
+			"value-external",
+			"type-external",
+			{ "newlinesBetween": true },
+			"dotui-libs",
+			{ "newlinesBetween": true },
+			"value-internal",
+			"type-internal",
+			{ "newlinesBetween": true },
+			["value-parent", "value-sibling", "value-index"],
+			["type-parent", "type-sibling", "type-index"],
+			"unknown",
+		],
+	},
+	"sortTailwindcss": {
+		"stylesheet": "www/src/styles.css",
+		"attributes": ["classList"],
+		"functions": ["cn", "clsx", "cva", "tw", "tv", "createStyles"],
+	},
+	"ignorePatterns": [
+		"**/node_modules/**",
+		"**/.pnpm-store/**",
+		"**/.cache/**",
+		"**/dist/**",
+		"**/build/**",
+		"**/.turbo/**",
+		"**/.nitro/**",
+		"**/.output/**",
+		"**/.source/**",
+		"www/src/routeTree.gen.ts",
+	],
+}

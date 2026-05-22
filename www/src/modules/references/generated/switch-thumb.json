@@ -1,6 +1,6 @@
 {
 	"name": "SwitchThumbProps",
-	"description": "Missing description.",
+	"description": "The visual thumb of a switch.",
 	"extendsElement": "span",
 	"props": {}
 }

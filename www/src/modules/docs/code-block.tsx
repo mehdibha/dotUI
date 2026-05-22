@@ -1,10 +1,10 @@
 import { createContext, useContext, useRef } from "react";
+
 import { CheckIcon, CopyIcon, FileIcon } from "lucide-react";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
-
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { cn } from "@/registry/lib/utils";
+import { Button } from "@/registry/ui/button";
 
 const CodeBlockContext = createContext<React.RefObject<HTMLElement | null> | null>(null);
 
@@ -30,9 +30,9 @@ export function CodeBlock({ title, icon, actions: actionsProp, children, classNa
 		<CodeBlockContext.Provider value={containerRef}>
 			<figure ref={containerRef} className={cn("rounded-md border bg-card", className)} {...props}>
 				{title && (
-					<div className="relative flex items-center justify-between gap-2 border-b p-1.5 pl-2.5 [&_svg]:size-4 [&_svg]:text-fg-muted">
+					<div className="relative flex items-center justify-between gap-2 py-1.5 pr-1.5 pl-2.5 [&_svg]:size-3 [&_svg]:text-fg-muted">
 						{getIconForLanguageExtension(language)}
-						<figcaption className="flex-1 truncate font-mono text-fg-muted text-sm">{title}</figcaption>
+						<figcaption className="flex-1 truncate font-mono text-[0.8125rem] text-fg-muted">{title}</figcaption>
 						<div
 							className={cn("flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5")}
 						>
@@ -51,7 +51,7 @@ export function CodeBlock({ title, icon, actions: actionsProp, children, classNa
 						<div
 							className={cn(
 								"absolute top-1.75 right-1.75 gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
-								"backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))] **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))]",
+								"backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]",
 							)}
 						>
 							{actions}
@@ -67,7 +67,7 @@ export function Pre({ children, className, ...props }: React.ComponentProps<"pre
 	return (
 		<pre
 			className={cn(
-				"w-max min-w-full py-3 **:[.line]:px-3!",
+				"w-max min-w-full py-3 **:[.line]:px-4!",
 				// shiki
 				"**:[code]:text-[0.8125rem] **:[code]:**:[span]:text-(--shiki-light) dark:**:[code]:**:[span]:text-(--shiki-dark)",
 				// code
@@ -76,8 +76,12 @@ export function Pre({ children, className, ...props }: React.ComponentProps<"pre
 				"**:[.line]:relative **:[.line]:min-h-lh",
 				// highlight
 				"**:[.highlighted]:m-0! **:[.highlighted]:bg-selected/70! **:[.highlighted]:before:absolute **:[.highlighted]:before:inset-y-0 **:[.highlighted]:before:left-0 **:[.highlighted]:before:w-0.5 **:[.highlighted]:before:bg-fg/40 **:[.highlighted]:before:content-['']",
+				// diff
+				"**:[.diff]:before:absolute **:[.diff]:before:inset-y-0 **:[.diff]:before:left-0.5 **:[.diff]:before:w-0.5",
+				"**:[.diff.add]:bg-success/15 **:[.diff.add]:before:text-success **:[.diff.add]:before:content-['+']",
+				"**:[.diff.remove]:bg-danger/20 **:[.diff.remove]:before:text-danger **:[.diff.remove]:before:content-['-']",
 				// line numbers
-				"in-data-line-numbers:**:[.line]:pl-9! **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:after:content-[counter(line)] **:[.line]:[counter-increment:line]",
+				"**:[.line]:[counter-increment:line] **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:pl-9! in-data-line-numbers:**:[.line]:after:content-[counter(line)]",
 				className,
 			)}
 			{...props}
@@ -107,13 +111,7 @@ function CopyButton() {
 	};
 
 	return (
-		<Button
-			variant="quiet"
-			size="sm"
-			onPress={handleCopy}
-			className="size-7"
-			aria-label={isCopied ? "Copied!" : "Copy code"}
-		>
+		<Button variant="quiet" size="xs" onPress={handleCopy} aria-label={isCopied ? "Copied!" : "Copy code"}>
 			{isCopied ? <CheckIcon /> : <CopyIcon />}
 		</Button>
 	);

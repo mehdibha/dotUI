@@ -1,13 +1,15 @@
 import { Suspense, useDeferredValue, useId } from "react";
+
 import { useShiki } from "fumadocs-core/highlight/client";
-import type { HighlightOptions, HighlightOptionsCommon, HighlightOptionsThemes } from "fumadocs-core/highlight";
+
+import type { HighlightOptions } from "fumadocs-core/highlight";
 
 import { Pre } from "./code-block";
 
 export interface DynamicPreProps {
 	lang: string;
 	children: string;
-	options?: Omit<HighlightOptionsCommon, "lang"> & HighlightOptionsThemes;
+	options?: Omit<HighlightOptions, "lang">;
 }
 
 export function DynamicPre({ lang, children: code, options }: DynamicPreProps) {
@@ -39,11 +41,18 @@ function Placeholder({ code, components = {} }: { code: string; components: High
 		);
 	}
 
+	const lineCounts = new Map<string, number>();
+	const lines = code.split("\n").map((line) => {
+		const count = lineCounts.get(line) ?? 0;
+		lineCounts.set(line, count + 1);
+		return { key: `${line}-${count}`, line };
+	});
+
 	return (
 		<PreComponent>
 			<Code>
-				{code.split("\n").map((line, i) => (
-					<span key={i} className="line">
+				{lines.map(({ key, line }) => (
+					<span key={key} className="line">
 						{line}
 					</span>
 				))}

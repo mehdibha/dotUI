@@ -1,30 +1,16 @@
 /// <reference types="vite/client" />
 
-import {
-	createRootRouteWithContext,
-	HeadContent,
-	type NavigateOptions,
-	Outlet,
-	Scripts,
-	type ToOptions,
-	useRouter,
-} from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { RouterProvider } from "react-aria-components";
-import { ThemeProvider } from "starter-themes";
-import type { QueryClient } from "@tanstack/react-query";
-import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 
-import type { AppRouter } from "@dotui/api";
+// import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { ThemeProvider } from "starter-themes";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
+import { ToastProvider } from "@/registry/ui/toast";
 import appCss from "@/styles.css?url";
 
-export const Route = createRootRouteWithContext<{
-	queryClient: QueryClient;
-	trpc: TRPCOptionsProxy<AppRouter>;
-}>()({
+export const Route = createRootRoute({
 	head: () => {
 		const title = `${siteConfig.title} - ${siteConfig.description}`;
 		const description = truncateOnWord(siteConfig.description, 148, true);
@@ -64,32 +50,27 @@ export const Route = createRootRouteWithContext<{
 	component: RootComponent,
 });
 
-declare module "react-aria-components" {
-	interface RouterConfig {
-		href: ToOptions;
-		routerOptions: Omit<NavigateOptions, keyof ToOptions>;
-	}
-}
+// declare module "react-aria-components" {
+// 	interface RouterConfig {
+// 		href: ToOptions;
+// 		routerOptions: Omit<NavigateOptions, keyof ToOptions>;
+// 	}
+// }
 
 function RootComponent() {
-	const router = useRouter();
 	return (
-		<RouterProvider
-			navigate={(href, opts) => {
-				if (typeof href === "string") return;
-				return router.navigate({ ...href, ...opts });
-			}}
-			useHref={(href) => {
-				if (typeof href === "string") return href;
-				return router.buildLocation(href).href;
-			}}
-		>
-			<ThemeProvider>
-				<RootDocument>
+		<ThemeProvider>
+			{/* <DrawerProvider> */}
+			<RootDocument>
+				{/* <DrawerIndentBackground /> */}
+				{/* <DrawerIndent> */}
+				<ToastProvider>
 					<Outlet />
-				</RootDocument>
-			</ThemeProvider>
-		</RouterProvider>
+				</ToastProvider>
+				{/* </DrawerIndent> */}
+			</RootDocument>
+			{/* </DrawerProvider> */}
+		</ThemeProvider>
 	);
 }
 
@@ -97,11 +78,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head>
+				{/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
 				<HeadContent />
 			</head>
 			<body className="min-h-screen bg-bg font-sans text-fg antialiased">
 				{children}
-				<TanStackRouterDevtools position="bottom-right" />
+				{/* <TanStackRouterDevtools position="bottom-right" /> */}
 				<Scripts />
 			</body>
 		</html>

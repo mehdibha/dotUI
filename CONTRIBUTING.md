@@ -59,17 +59,21 @@ This project is a [Turborepo](https://turborepo.org/) monorepo:
 
 ### Useful scripts
 
-| Command              | Description                                |
-| -------------------- | ------------------------------------------ |
-| `pnpm dev`           | Starts all packages in development mode    |
-| `pnpm dev:www`       | Starts the documentation website           |
-| `pnpm build`         | Builds all packages                        |
-| `pnpm build:www`     | Builds the documentation website           |
-| `pnpm build:registry`| Builds the component registry              |
-| `pnpm check`         | Checks code for formatting and linting     |
-| `pnpm check:fix`     | Fixes formatting and linting issues        |
-| `pnpm typecheck`     | Runs TypeScript type checking              |
-| `pnpm test`          | Runs tests                                 |
+| Command               | Description                             |
+| --------------------- | --------------------------------------- |
+| `pnpm dev`            | Starts all packages in development mode |
+| `pnpm dev:www`        | Starts the documentation website        |
+| `pnpm build`          | Builds all packages                     |
+| `pnpm build:www`      | Builds the documentation website        |
+| `pnpm build:registry` | Builds the component registry           |
+| `pnpm lint:check`     | Runs Oxlint                             |
+| `pnpm lint:fix`       | Fixes Oxlint issues                     |
+| `pnpm format:check`   | Checks Oxfmt formatting                 |
+| `pnpm format:fix`     | Formats files with Oxfmt                |
+| `pnpm check`          | Runs lint and format checks             |
+| `pnpm check:fix`      | Fixes lint and format issues            |
+| `pnpm typecheck`      | Runs TypeScript type checking           |
+| `pnpm test`           | Runs tests                              |
 
 ### Before submitting
 

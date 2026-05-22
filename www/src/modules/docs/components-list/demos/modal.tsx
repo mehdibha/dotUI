@@ -1,16 +1,9 @@
-import { Button } from "@dotui/registry/ui/button";
-import {
-	Dialog,
-	DialogBody,
-	DialogContent,
-	DialogFooter,
-	DialogHeader,
-	DialogHeading,
-} from "@dotui/registry/ui/dialog";
-import { Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
-import { Modal } from "@dotui/registry/ui/modal";
-import { TextField } from "@dotui/registry/ui/text-field";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
+import { Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
+import { Modal } from "@/registry/ui/modal";
+import { TextField } from "@/registry/ui/text-field";
 
 export function ModalDemo() {
 	return (
@@ -20,7 +13,7 @@ export function ModalDemo() {
 				<Modal>
 					<DialogContent>
 						<DialogHeader>
-							<DialogHeading>Edit username</DialogHeading>
+							<DialogTitle>Edit username</DialogTitle>
 						</DialogHeader>
 						<DialogBody>
 							<TextField defaultValue="@mehdibha" className="w-full">

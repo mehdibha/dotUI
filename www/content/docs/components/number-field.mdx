@@ -7,84 +7,77 @@ links:
 wip: true
 ---
 
+<Demo name="number-field/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="number-field/demos/default" />
+```npm
+npx shadcn@latest add @dotui/number-field
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/number-field
-    ```
+Use `NumberField` to allow users to enter a numeric value with keyboard or increment/decrement buttons.
 
-    ## Usage
+```tsx
+import { NumberField } from "@/components/ui/number-field";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
 
-    Use `NumberField` to allow users to enter a numeric value with keyboard or increment/decrement buttons.
+```tsx
+<NumberField>
+	<Label>Quantity</Label>
+	<Input />
+</NumberField>
+```
 
-    ```tsx
-    import { NumberField } from "@/components/ui/number-field";
-    import { Input } from "@/components/ui/input";
-    import { Label } from "@/components/ui/field";
-    ```
+## Playground
 
-    ```tsx
-    <NumberField>
-      <Label>Quantity</Label>
-      <Input />
-    </NumberField>
-    ```
+Use the controls below to experiment with different number field props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="number-field"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Quantity",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isReadOnly",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different number field props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="number-field" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Quantity",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isReadOnly",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isInvalid",
-          defaultValue: false,
-        },
-      ]}
-    />
+<Examples>
+	<Example name="number-field/demos/basic" />
+	<Example name="number-field/demos/sizes" />
+	<Example name="number-field/demos/label" />
+	<Example name="number-field/demos/description" />
+	<Example name="number-field/demos/error-message" />
+	<Example name="number-field/demos/format-options" />
+	<Example name="number-field/demos/disabled" />
+	<Example name="number-field/demos/read-only" />
+	<Example name="number-field/demos/required" />
+	<Example name="number-field/demos/uncontrolled" />
+	<Example name="number-field/demos/controlled" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    <Reference name="number-field" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="number-field/demos/default" />
-      <Example name="number-field/demos/sizes" />
-      <Example name="number-field/demos/label" />
-      <Example name="number-field/demos/description" />
-      <Example name="number-field/demos/error-message" />
-      <Example name="number-field/demos/format-options" />
-      <Example name="number-field/demos/disabled" />
-      <Example name="number-field/demos/read-only" />
-      <Example name="number-field/demos/required" />
-      <Example name="number-field/demos/uncontrolled" />
-      <Example name="number-field/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="number-field" />

@@ -1,4 +1,4 @@
-import { Slider, SliderControl } from "@dotui/registry/ui/slider";
+import { Slider, SliderControl } from "@/registry/ui/slider";
 
 export function SliderDemo() {
 	return (

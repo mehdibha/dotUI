@@ -7,65 +7,58 @@ links:
 wip: true
 ---
 
+<Demo name="popover/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="popover/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/popover
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/popover
-    ```
+Use popovers to display rich content in a floating container that appears above other content.
 
-    ## Usage
+```tsx
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Popover } from "@/components/ui/popover";
+```
 
-    Use popovers to display rich content in a floating container that appears above other content.
+```tsx
+<Dialog>
+	<Button>Open Popover</Button>
+	<Popover>
+		<DialogContent>
+			<DialogTitle>Popover Title</DialogTitle>
+			<p>Popover content</p>
+		</DialogContent>
+	</Popover>
+</Dialog>
+```
 
-    ```tsx
-    import { Button } from "@/components/ui/button";
-    import { Dialog, DialogContent, DialogHeading } from "@/components/ui/dialog";
-    import { Popover } from "@/components/ui/popover";
-    ```
+## Playground
 
-    ```tsx
-    <Dialog>
-      <Button>Open Popover</Button>
-      <Popover>
-        <DialogContent>
-          <DialogHeading>Popover Title</DialogHeading>
-          <p>Popover content</p>
-        </DialogContent>
-      </Popover>
-    </Dialog>
-    ```
+Use the controls below to experiment with different popover props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="popover"
+	controls={[
+		{
+			type: "enum",
+			name: "placement",
+			options: ["bottom", "top", "left", "right"],
+			defaultValue: "bottom",
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different popover props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="popover" 
-      controls={[
-        {
-          type: "enum",
-          name: "placement",
-          options: ["bottom", "top", "left", "right"],
-          defaultValue: "bottom",
-        },
-      ]}
-    />
+<Examples>
+	<Example name="popover/demos/basic" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    <Reference name="popover" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="popover/demos/basic" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="popover" />

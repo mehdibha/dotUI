@@ -4,14 +4,17 @@
  */
 
 import * as React from "react";
-import { ChevronRightIcon } from "lucide-react";
-import { Button, DialogTrigger } from "react-aria-components";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { DialogContent } from "@dotui/registry/ui/dialog";
-import { Popover } from "@dotui/registry/ui/popover";
+import { ChevronRightIcon } from "lucide-react";
+import * as ButtonPrimitives from "react-aria-components/Button";
+import * as DialogPrimitives from "react-aria-components/Dialog";
+
+import { cn } from "@/registry/lib/utils";
+import { DialogContent } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 import { Type, useTypeLinks } from "./type-renderer";
+
 import type { TType } from "../types/type-ast";
 
 /* -----------------------------------------------------------------------------------------------
@@ -95,10 +98,10 @@ function TypePopover({ name, type }: TypePopoverProps) {
 	);
 
 	return (
-		<DialogTrigger onOpenChange={handleOpenChange}>
-			<Button className="focus-visible:focus-ring cursor-pointer rounded-sm font-mono text-fg-accent underline underline-offset-2 outline-none">
+		<DialogPrimitives.DialogTrigger onOpenChange={handleOpenChange}>
+			<ButtonPrimitives.Button className="cursor-pointer rounded-sm font-mono text-fg-accent underline underline-offset-2 outline-none focus-visible:focus-ring">
 				{name}
-			</Button>
+			</ButtonPrimitives.Button>
 			<Popover placement="bottom" showArrow className="max-w-md p-3">
 				<DialogContent className="outline-none">
 					{/* Breadcrumbs */}
@@ -128,7 +131,7 @@ function TypePopover({ name, type }: TypePopoverProps) {
 					</TypeNavigationContext.Provider>
 				</DialogContent>
 			</Popover>
-		</DialogTrigger>
+		</DialogPrimitives.DialogTrigger>
 	);
 }
 
@@ -151,7 +154,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 
 		return (
 			<div className="space-y-3">
-				{description && <p className="text-fg-muted text-sm leading-relaxed">{description}</p>}
+				{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
 
 				{type.extends && type.extends.length > 0 && (
 					<p className="text-xs">
@@ -175,15 +178,15 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 						{properties.map((prop) => (
 							<div key={prop.name} className="py-2 first:pt-0 last:pb-0">
 								<div className="flex items-baseline justify-between gap-3">
-									<code className="font-mono text-fg text-xs">
+									<code className="font-mono text-xs text-fg">
 										{prop.name}
 										{prop.optional && <span className="text-fg-muted">?</span>}
 									</code>
-									<code className="font-mono text-fg-muted text-xs">
+									<code className="font-mono text-xs text-fg-muted">
 										<Type type={prop.type === "method" ? prop.value : prop.value} />
 									</code>
 								</div>
-								{prop.description && <p className="mt-1 text-fg-muted text-xs leading-relaxed">{prop.description}</p>}
+								{prop.description && <p className="mt-1 text-xs leading-relaxed text-fg-muted">{prop.description}</p>}
 							</div>
 						))}
 					</div>
@@ -196,7 +199,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 	if (type.type === "alias") {
 		return (
 			<div className="space-y-3">
-				{description && <p className="text-fg-muted text-sm leading-relaxed">{description}</p>}
+				{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
 				<div className="overflow-x-auto">
 					<Type type={type.value} />
 				</div>
@@ -207,7 +210,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
 	// For other types, just render them
 	return (
 		<div className="space-y-3">
-			{description && <p className="text-fg-muted text-sm leading-relaxed">{description}</p>}
+			{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
 			<div className="overflow-x-auto">
 				<Type type={type} />
 			</div>

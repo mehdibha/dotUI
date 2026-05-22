@@ -7,66 +7,55 @@ links:
 wip: true
 ---
 
+<Demo name="skeleton/demos/card" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="skeleton/demos/card" />
+```npm
+npx shadcn@latest add @dotui/skeleton
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/skeleton
-    ```
+Use skeleton components as placeholders while content is loading.
 
-    ## Usage
+```tsx
+import { Skeleton } from "@/components/ui/skeleton";
+```
 
-    Use skeleton components as placeholders while content is loading.
+```tsx
+<Skeleton isLoading={true}>
+	<Skeleton className="h-4 w-32" />
+</Skeleton>
+```
 
-    ```tsx
-    import { Skeleton, SkeletonProvider } from "@/components/ui/skeleton";
-    ```
+## Playground
 
-    ```tsx
-    <SkeletonProvider isLoading={true}>
-      <Skeleton className="h-4 w-32" />
-    </SkeletonProvider>
-    ```
+Use the controls below to experiment with different skeleton props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="skeleton"
+	controls={[
+		{
+			type: "boolean",
+			name: "isLoading",
+			defaultValue: true,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different skeleton props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="skeleton" 
-      controls={[
-        {
-          type: "boolean",
-          name: "isLoading",
-          defaultValue: true,
-        },
-      ]}
-    />
+<Examples>
+	<Example name="skeleton/demos/card" />
+	<Example name="skeleton/demos/children" />
+	<Example name="skeleton/demos/fixed-size-children" />
+	<Example name="skeleton/demos/show" />
+	<Example name="skeleton/demos/api-simulation" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    ### SkeletonProvider
+### Skeleton
 
-    <Reference name="skeleton-provider" />
-
-    ### Skeleton
-
-    <Reference name="skeleton" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="skeleton/demos/card" />
-      <Example name="skeleton/demos/children" />
-      <Example name="skeleton/demos/fixed-size-children" />
-      <Example name="skeleton/demos/show" />
-      <Example name="skeleton/demos/api-simulation" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="skeleton" />

@@ -1,7 +1,9 @@
 import * as React from "react";
+
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 
 import { Type, TypeRendererProvider } from "@/modules/references/components/type-renderer";
+
 import type { TransformedProp, TransformedPropsData, TransformedReference } from "@/modules/references/transform";
 
 const GRID_LAYOUT = "grid grid-cols-[minmax(120px,1fr)_1fr_2.5rem] md:grid-cols-[5fr_7fr_4.5fr_2.5rem]";
@@ -62,7 +64,7 @@ function PropsTable({ data, componentName, defaultExpandedGroups }: PropsTablePr
 
 	return (
 		<div className="w-full overflow-hidden rounded-md border text-sm">
-			<table className="w-full border-collapse [&>tbody:last-child>tr:last-child>td]:border-b-0 [&>tbody:last-child>tr:last-child]:border-b-0">
+			<table className="w-full border-collapse [&>tbody:last-child>tr:last-child]:border-b-0 [&>tbody:last-child>tr:last-child>td]:border-b-0">
 				<thead className="border-b bg-card">
 					<tr className={GRID_LAYOUT}>
 						<th className="px-3 py-2 text-left font-medium text-fg-muted">Prop</th>
@@ -113,7 +115,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 			>
 				<td className="overflow-hidden px-3 py-2.5">
 					<button type="button" id={id} className="flex items-baseline gap-1 text-left" aria-expanded={isOpen}>
-						<code className="whitespace-nowrap font-mono text-[0.8125rem] text-fg">
+						<code className="font-mono text-[0.8125rem] whitespace-nowrap text-fg">
 							{prop.name}
 							{prop.required && <sup className="top-[-0.3em] ml-0.5 text-fg-danger">*</sup>}
 						</code>
@@ -122,7 +124,8 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 
 				<td className="overflow-hidden px-3 py-2.5">
 					<code
-						className="whitespace-nowrap break-keep font-mono text-[0.8125rem] text-fg-muted **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+						className="font-mono text-[0.8125rem] break-keep whitespace-nowrap text-fg-muted **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+						// oxlint-disable-next-line react/no-danger -- highlighted type HTML is generated from local API metadata.
 						dangerouslySetInnerHTML={{ __html: prop.shortTypeHighlighted }}
 					/>
 				</td>
@@ -130,7 +133,8 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 				<td className="hidden overflow-hidden px-3 py-2.5 md:table-cell">
 					{prop.default !== undefined ? (
 						<code
-							className="whitespace-nowrap font-mono text-[0.8125rem] text-fg-muted **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+							className="font-mono text-[0.8125rem] whitespace-nowrap text-fg-muted **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+							// oxlint-disable-next-line react/no-danger -- highlighted default HTML is generated from local API metadata.
 							dangerouslySetInnerHTML={{
 								__html: prop.defaultHighlighted ?? prop.default,
 							}}
@@ -159,7 +163,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 
 							{prop.description && (
 								<DescriptionItem label="Description" hasSeparator>
-									<div className="text-fg-muted leading-relaxed [&_a]:text-fg [&_a]:underline [&_code]:rounded [&_code]:bg-card [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.8125rem]">
+									<div className="leading-relaxed text-fg-muted [&_a]:text-fg [&_a]:underline [&_code]:rounded [&_code]:bg-card [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.8125rem]">
 										{prop.description}
 									</div>
 								</DescriptionItem>
@@ -173,6 +177,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 								<DescriptionItem label="Default" hasSeparator>
 									<code
 										className="font-mono text-[0.8125rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+										// oxlint-disable-next-line react/no-danger -- highlighted default HTML is generated from local API metadata.
 										dangerouslySetInnerHTML={{
 											__html: prop.defaultHighlighted ?? prop.default,
 										}}
@@ -196,7 +201,7 @@ interface DescriptionItemProps {
 function DescriptionItem({ label, children, hasSeparator }: DescriptionItemProps) {
 	return (
 		<div
-			className={`sm:col-span-2 sm:grid sm:grid-cols-subgrid ${hasSeparator ? "border-border/50 border-t pt-2 sm:border-t-0 sm:pt-0" : ""}`}
+			className={`sm:col-span-2 sm:grid sm:grid-cols-subgrid ${hasSeparator ? "border-t border-border/50 pt-2 sm:border-t-0 sm:pt-0" : ""}`}
 		>
 			<dt className="mb-1 font-medium text-fg-muted sm:mb-0 sm:py-1">{label}</dt>
 			<dd className="sm:py-1">{children}</dd>
@@ -221,7 +226,7 @@ function DisclosureGroup({ title, defaultExpanded = false, children }: Disclosur
 						type="button"
 						onClick={() => setIsExpanded(!isExpanded)}
 						aria-expanded={isExpanded}
-						className={`flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left font-medium text-sm outline-none transition-colors hover:bg-card/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${isExpanded ? "bg-card/30" : ""}`}
+						className={`focus-visible:ring-ring flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm font-medium transition-colors outline-none hover:bg-card/50 focus-visible:ring-2 focus-visible:ring-offset-1 ${isExpanded ? "bg-card/30" : ""}`}
 					>
 						<ChevronRightIcon
 							className={`size-4 text-fg-muted transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}

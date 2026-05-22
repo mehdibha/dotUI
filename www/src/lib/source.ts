@@ -1,4 +1,5 @@
 import { loader } from "fumadocs-core/source";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
 import { docs, legal } from "@/.source/server";
@@ -12,6 +13,7 @@ export interface SerializedItem {
 	type: "page";
 	name: string;
 	url: string;
+	wip?: boolean;
 }
 
 export interface SerializedFolder {
@@ -61,5 +63,5 @@ export const legalSource = loader({
 export async function getSerializedPageTree(): Promise<SerializedPageTree> {
 	const pageTree = docsSource.getPageTree();
 	const serialized = await docsSource.serializePageTree(pageTree);
-	return serialized as SerializedPageTree;
+	return serialized.data as SerializedPageTree;
 }

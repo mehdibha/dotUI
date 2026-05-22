@@ -4,34 +4,28 @@ description: A keyboard key indicator displays keyboard shortcuts.
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/kbd
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/kbd
-    ```
+## Usage
 
-    ## Usage
+```tsx
+import { Kbd } from "@/components/ui/kbd";
+```
 
-    ```tsx
-    import { Kbd } from "@/components/ui/kbd";
-    ```
+```tsx
+<Kbd>⌘</Kbd> + <Kbd>K</Kbd>;
+```
 
-    ```tsx
-    <Kbd>⌘</Kbd> + <Kbd>K</Kbd>
-    ```
+## Examples
 
-    ## API Reference
+<Examples>
+	<p className="text-fg-muted col-span-full">No examples yet.</p>
+</Examples>
 
-    <Reference name="kbd" />
+## API Reference
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <p className="text-fg-muted col-span-full">No examples yet.</p>
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="kbd" />

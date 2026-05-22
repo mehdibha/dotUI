@@ -1,7 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
+
 import { ScriptOnce } from "@tanstack/react-router";
 import { createClientOnlyFn, createIsomorphicFn } from "@tanstack/react-start";
-import type { ReactNode } from "react";
 
 // ============================================================================
 // Types
@@ -184,6 +185,12 @@ export function ThemeProvider({
 		},
 		[forcedTheme, storageKey, enableColorScheme, nonce, disableTransitionOnChange],
 	);
+
+	// Apply theme to DOM on mount (without disabling transitions)
+	// Ensures correct theme after HMR or re-mounts
+	useEffect(() => {
+		applyThemeToDOM(forcedTheme ?? theme, enableColorScheme, nonce, false);
+	}, [theme, forcedTheme, enableColorScheme, nonce]);
 
 	// Listen to system preference changes
 	useEffect(() => {

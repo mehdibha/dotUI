@@ -26,12 +26,14 @@
 		"fast-glob": "^3.3.3"
 	},
 	"peerDependencies": {
-		"@tailwindcss/postcss": "^4.0.0 ",
+		"@tailwindcss/postcss": "^4.0.0",
 		"postcss": "^8.0.0",
 		"tailwindcss": "^4.0.0"
 	},
 	"devDependencies": {
-		"@dotui/biome-config": "workspace:*"
+		"@tailwindcss/postcss": "^4.3.0",
+		"postcss": "^8.0.0",
+		"tailwindcss": "catalog:"
 	},
 	"publishConfig": {
 		"access": "public"

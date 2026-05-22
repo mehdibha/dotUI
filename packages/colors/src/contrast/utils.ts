@@ -6,6 +6,7 @@
 import Color from "colorjs.io";
 
 import { catmullRom2bezier, prepareCurve } from "./curve";
+
 import type { Colorspace, ContrastFormula } from "./types";
 
 // Colorspace mapping from Leonardo names to Color.js space names
@@ -64,10 +65,10 @@ export function hsluvArray(c: string): number[] {
 }
 
 /**
- * Filter NaN values to 0
+ * Filter null/NaN values to 0
  */
-function filterNaN(x: number): number {
-	return Number.isNaN(x) ? 0 : x;
+function filterInvalidChannel(x: number | null): number {
+	return x === null || Number.isNaN(x) ? 0 : x;
 }
 
 /**
@@ -75,7 +76,7 @@ function filterNaN(x: number): number {
  */
 function colorToSpaceArray(color: string, space: string): number[] {
 	const c = new Color(String(color)).to(space);
-	return [...c.coords];
+	return [...c.coords].map(filterInvalidChannel);
 }
 
 /**
@@ -567,7 +568,7 @@ export function convertColorValue(color: string, format: Colorspace, object = fa
 	}
 
 	const colorObject: Record<string, number> = {};
-	const newColorObj = coords.map(filterNaN);
+	const newColorObj = coords.map(filterInvalidChannel);
 
 	// Build output based on color space
 	const spaceLetters: Record<string, string[]> = {

@@ -7,88 +7,79 @@ links:
 wip: true
 ---
 
+<Demo name="list-box/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="list-box/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/list-box
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/list-box
-    ```
+Use list boxes to display a list of options and allow users to select one or more of them.
 
-    ## Usage
+```tsx
+import { ListBox, ListBoxItem } from "@/components/ui/list-box";
+```
 
-    Use list boxes to display a list of options and allow users to select one or more of them.
+```tsx
+<ListBox aria-label="Options" selectionMode="single">
+	<ListBoxItem>Option 1</ListBoxItem>
+	<ListBoxItem>Option 2</ListBoxItem>
+	<ListBoxItem>Option 3</ListBoxItem>
+</ListBox>
+```
 
-    ```tsx
-    import { ListBox, ListBoxItem } from "@/components/ui/list-box";
-    ```
+## Playground
 
-    ```tsx
-    <ListBox aria-label="Options" selectionMode="single">
-      <ListBoxItem>Option 1</ListBoxItem>
-      <ListBoxItem>Option 2</ListBoxItem>
-      <ListBoxItem>Option 3</ListBoxItem>
-    </ListBox>
-    ```
+Use the controls below to experiment with different list box props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="list-box"
+	controls={[
+		{
+			type: "enum",
+			name: "selectionMode",
+			options: ["none", "single", "multiple"],
+			defaultValue: "single",
+		},
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "vertical",
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different list box props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="list-box" 
-      controls={[
-        {
-          type: "enum",
-          name: "selectionMode",
-          options: ["none", "single", "multiple"],
-          defaultValue: "single",
-        },
-        {
-          type: "enum",
-          name: "orientation",
-          options: ["horizontal", "vertical"],
-          defaultValue: "vertical",
-        },
-      ]}
-    />
+<Examples>
+	<Example name="list-box/demos/basic" />
+	<Example name="list-box/demos/multiple-selection" />
+	<Example name="list-box/demos/with-description" />
+	<Example name="list-box/demos/with-icons" />
+	<Example name="list-box/demos/danger" />
+	<Example name="list-box/demos/sections" />
+	<Example name="list-box/demos/separator" />
+	<Example name="list-box/demos/user-menu" />
+	<Example name="list-box/demos/disabled" />
+	<Example name="list-box/demos/horizontal" />
+	<Example name="list-box/demos/grid" />
+	<Example name="list-box/demos/async" />
+	<Example name="list-box/demos/empty" />
+	<Example name="list-box/demos/in-select" />
+	<Example name="list-box/demos/in-combobox" />
+	<Example name="list-box/demos/in-command" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    ### ListBox
+### ListBox
 
-    <Reference name="list-box" />
+<Reference name="list-box" />
 
-    ### ListBoxItem
+### ListBoxItem
 
-    <Reference name="list-box-item" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="list-box/demos/basic" />
-      <Example name="list-box/demos/selection-mode" />
-      <Example name="list-box/demos/selection-behavior" />
-      <Example name="list-box/demos/label-and-description" />
-      <Example name="list-box/demos/prefix-and-suffix" />
-      <Example name="list-box/demos/item-variant" />
-      <Example name="list-box/demos/sections" />
-      <Example name="list-box/demos/separator" />
-      <Example name="list-box/demos/links" />
-      <Example name="list-box/demos/disabled-items" />
-      <Example name="list-box/demos/horizontal" />
-      <Example name="list-box/demos/grid" />
-      <Example name="list-box/demos/loading" />
-      <Example name="list-box/demos/async-loading" />
-      <Example name="list-box/demos/empty-state" />
-      <Example name="list-box/demos/composition" />
-      <Example name="list-box/demos/uncontrolled" />
-      <Example name="list-box/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="list-box-item" />

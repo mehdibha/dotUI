@@ -1,0 +1,26 @@
+import type { RegistryItem } from "@/registry/types";
+import "@/registry/base/base.css";
+
+export const registryBase = [
+	{
+		name: "base",
+		type: "registry:style",
+		extends: "none",
+		dependencies: [
+			"tailwind-variants",
+			"clsx",
+			"tailwind-merge",
+			"react-aria-components",
+			"tailwindcss-react-aria-components",
+			"tw-animate-css",
+			"tailwindcss-autocontrast",
+		],
+		css: {
+			"@plugin tailwindcss-react-aria-components": {},
+			"@plugin tailwindcss-autocontrast": {},
+		},
+
+		registryDependencies: ["utils", "focus-styles", "theme"],
+		files: [],
+	},
+] as const satisfies RegistryItem[];

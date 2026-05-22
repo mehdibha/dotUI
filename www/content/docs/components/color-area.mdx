@@ -4,43 +4,58 @@ description: A color area allows users to select a color from a two-dimensional 
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/ColorArea.html
-wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="color-area/demos/default" />
 
-    <Demo name="color-area/demos/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/color-area
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/color-area
-    ```
+## Usage
 
-    ## Usage
+Use color areas to allow users to select a color from a two-dimensional gradient.
 
-    Use color areas to allow users to select a color from a two-dimensional gradient.
+```tsx
+import { ColorArea } from "@/components/ui/color-area";
+import { ColorThumb } from "@/components/ui/color-thumb";
+```
 
-    ```tsx
-    import { ColorArea, ColorAreaThumb } from "@/components/ui/color-area";
-    ```
+```tsx
+<ColorArea>
+	<ColorThumb />
+</ColorArea>
+```
 
-    ```tsx
-    <ColorArea defaultValue="#ff0000">
-      <ColorAreaThumb />
-    </ColorArea>
-    ```
+## Playground
 
-  </PageTabPanel>
+Use the controls below to experiment with different color area props and see the live preview and code update.
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="color-area/demos/default" />
-      <Example name="color-area/demos/channels" />
-      <Example name="color-area/demos/disabled" />
-      <Example name="color-area/demos/uncontrolled" />
-      <Example name="color-area/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<InteractiveDemo
+	name="color-area"
+	controls={[
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
+/>
+
+## Examples
+
+<Examples className="lg:grid-cols-2">
+	<Example name="color-area/demos/default" title="Default" />
+	<Example name="color-area/demos/channels" title="Channels" />
+	<Example name="color-area/demos/disabled" title="Disabled" />
+	<Example name="color-area/demos/uncontrolled" title="Uncontrolled" />
+	<Example name="color-area/demos/controlled" title="Controlled" />
+</Examples>
+
+## API Reference
+
+### ColorArea
+
+<Reference name="color-area" />

@@ -6,6 +6,7 @@
 import type { HighlighterGeneric } from "shiki";
 
 import { loadApiReference } from "../../references/loader";
+
 import type { PropDefinition, TType } from "../../references/types";
 import type {
 	BooleanControl,
@@ -329,7 +330,7 @@ function parseDefaultValue(
 export async function enrichControlsForSerialization(
 	name: string,
 	controls: Control[],
-	// biome-ignore lint/suspicious/noExplicitAny: shiki generic types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): Promise<SerializableControl[]> {
 	const reference = await loadApiReference(name);
@@ -381,7 +382,7 @@ export async function enrichControlsForSerialization(
  */
 function highlightToHtml(
 	code: string,
-	// biome-ignore lint/suspicious/noExplicitAny: shiki generic types are complex
+	// oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
 	highlighter: HighlighterGeneric<any, any>,
 ): string {
 	if (!code) return "";

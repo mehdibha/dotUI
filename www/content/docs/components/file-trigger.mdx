@@ -7,61 +7,54 @@ links:
 wip: true
 ---
 
+<Demo name="file-trigger/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="file-trigger/demos/default" />
+```npm
+npx shadcn@latest add @dotui/file-trigger
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/file-trigger
-    ```
+Use file triggers to allow users to upload files using any pressable element.
 
-    ## Usage
+```tsx
+import { Button } from "@/components/ui/button";
+import { FileTrigger } from "@/components/ui/file-trigger";
+```
 
-    Use file triggers to allow users to upload files using any pressable element.
+```tsx
+<FileTrigger onSelect={(e) => console.log(e)}>
+	<Button>Upload File</Button>
+</FileTrigger>
+```
 
-    ```tsx
-    import { Button } from "@/components/ui/button";
-    import { FileTrigger } from "@/components/ui/file-trigger";
-    ```
+## Playground
 
-    ```tsx
-    <FileTrigger onSelect={(e) => console.log(e)}>
-      <Button>Upload File</Button>
-    </FileTrigger>
-    ```
+Use the controls below to experiment with different file trigger props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="file-trigger"
+	controls={[
+		{
+			type: "boolean",
+			name: "allowsMultiple",
+			defaultValue: false,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different file trigger props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="file-trigger" 
-      controls={[
-        {
-          type: "boolean",
-          name: "allowsMultiple",
-          defaultValue: false,
-        },
-      ]}
-    />
+<Examples>
+	<Example name="file-trigger/demos/default" />
+	<Example name="file-trigger/demos/multiple-files" />
+	<Example name="file-trigger/demos/file-types" />
+	<Example name="file-trigger/demos/directory-selection" />
+	<Example name="file-trigger/demos/media-capture" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    <Reference name="file-trigger" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="file-trigger/demos/default" />
-      <Example name="file-trigger/demos/multiple-files" />
-      <Example name="file-trigger/demos/file-types" />
-      <Example name="file-trigger/demos/directory-selection" />
-      <Example name="file-trigger/demos/media-capture" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="file-trigger" />

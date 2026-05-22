@@ -1,28 +1,16 @@
 "use client";
 
-import React from "react";
-
-import { Button } from "@dotui/registry/ui/button";
-import { toast } from "@dotui/registry/ui/toast";
+import { Button } from "@/registry/ui/button";
+import { ToastProvider, toastManager } from "@/registry/ui/toast";
 
 export function ToastDemo() {
-	React.useEffect(() => {
-		toast.add({
-			title: "Event has been created",
-		});
-	}, []);
-
 	return (
 		<div className="flex h-40 flex-col items-start">
-			<Button
-				onPress={() =>
-					toast.add({
-						title: "Event has been created",
-					})
-				}
-			>
-				Show Toast
-			</Button>
+			<ToastProvider>
+				<Button onPress={() => toastManager.add({ title: "Event has been created", type: "success" })}>
+					Show Toast
+				</Button>
+			</ToastProvider>
 		</div>
 	);
 }

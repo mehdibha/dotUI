@@ -1,11 +1,19 @@
-import { Breadcrumb, Breadcrumbs } from "@dotui/registry/ui/breadcrumbs";
+import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from "@/registry/ui/breadcrumbs";
 
 export function BreadcrumbsDemo() {
 	return (
 		<Breadcrumbs>
-			<Breadcrumb href="#">Home</Breadcrumb>
-			<Breadcrumb href="#">Components</Breadcrumb>
-			<Breadcrumb href="#">Breadcrumbs</Breadcrumb>
+			<BreadcrumbItem>
+				<BreadcrumbLink href="#">Home</BreadcrumbLink>
+				<BreadcrumbSeparator />
+			</BreadcrumbItem>
+			<BreadcrumbItem>
+				<BreadcrumbLink href="#">Components</BreadcrumbLink>
+				<BreadcrumbSeparator />
+			</BreadcrumbItem>
+			<BreadcrumbItem>
+				<BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
+			</BreadcrumbItem>
 		</Breadcrumbs>
 	);
 }

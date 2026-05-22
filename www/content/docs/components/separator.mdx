@@ -7,56 +7,49 @@ links:
 wip: true
 ---
 
+<Demo name="separator/demos/orientation" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="separator/demos/orientation" />
+```npm
+npx shadcn@latest add @dotui/separator
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/separator
-    ```
+Use separators to visually divide content in lists, menus, or other places.
 
-    ## Usage
+```tsx
+import { Separator } from "@/components/ui/separator";
+```
 
-    Use separators to visually divide content in lists, menus, or other places.
+```tsx
+<Separator />
+```
 
-    ```tsx
-    import { Separator } from "@/components/ui/separator";
-    ```
+## Playground
 
-    ```tsx
-    <Separator />
-    ```
+Use the controls below to experiment with different separator props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="separator"
+	controls={[
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "horizontal",
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different separator props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="separator" 
-      controls={[
-        {
-          type: "enum",
-          name: "orientation",
-          options: ["horizontal", "vertical"],
-          defaultValue: "horizontal",
-        },
-      ]}
-    />
+<Examples>
+	<Example name="separator/demos/orientation" />
+	<Example name="separator/demos/card" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    <Reference name="separator" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="separator/demos/orientation" />
-      <Example name="separator/demos/card" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="separator" />

@@ -1,10 +1,13 @@
 "use client";
 
+import { Link as RouterLink } from "@tanstack/react-router";
+
 import { ExternalLinkIcon, SunIcon } from "lucide-react";
 
-import { LinkButton } from "@dotui/registry/ui/button";
-import { ToggleButton } from "@dotui/registry/ui/toggle-button";
-import type { RegistryItem } from "@dotui/registry/types";
+import { buttonStyles } from "@/registry/ui/button";
+import { ToggleButton } from "@/registry/ui/toggle-button";
+
+import type { RegistryItem } from "@/registry/types";
 
 interface BlockCardProps {
 	block: RegistryItem;
@@ -16,9 +19,9 @@ export function BlockCard({ block }: BlockCardProps) {
 	return (
 		<div className="flex flex-col gap-2">
 			<div className="flex items-center justify-between px-2">
-				<h2 className="truncate font-medium text-lg tracking-tight">{block.description}</h2>
+				<h2 className="truncate text-lg font-medium tracking-tight">{block.description}</h2>
 				<div className="flex items-center gap-2">
-					<ToggleButton size="sm" aria-label="Toggle theme">
+					<ToggleButton size="sm" isIconOnly aria-label="Toggle theme">
 						<SunIcon />
 					</ToggleButton>
 					{/* <Button
@@ -29,10 +32,16 @@ export function BlockCard({ block }: BlockCardProps) {
 						{isCopied ? <CheckIcon className="fade-in animate-in" /> : <TerminalIcon className="fade-in animate-in" />}
 						<span className="truncate text-xs">npx shadcn@latest add @dotui/{block.name}</span>
 					</Button> */}
-					<LinkButton href={iframeUrl} variant="primary" size="sm" target="_blank" className="max-lg:hidden">
+					<RouterLink
+						to="/view/$block"
+						params={{ block: block.name }}
+						target="_blank"
+						rel="noopener noreferrer"
+						className={buttonStyles({ variant: "primary", size: "sm", className: "max-lg:hidden" })}
+					>
 						<ExternalLinkIcon />
 						Open in new tab
-					</LinkButton>
+					</RouterLink>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-lg border bg-muted">

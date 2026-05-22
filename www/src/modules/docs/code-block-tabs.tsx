@@ -1,7 +1,8 @@
 import { useCallback, useSyncExternalStore } from "react";
 
-import { Tab, TabList, TabPanel, Tabs } from "@dotui/registry/ui/tabs";
-import type { TabListProps, TabPanelProps, TabProps, TabsProps } from "@dotui/registry/ui/tabs";
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
+
+import type { TabListProps, TabPanelProps, TabProps, TabsProps } from "@/registry/ui/tabs";
 
 type PackageManager = "npm" | "yarn" | "pnpm" | "bun";
 

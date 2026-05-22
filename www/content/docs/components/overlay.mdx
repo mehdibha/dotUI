@@ -7,69 +7,62 @@ links:
 wip: true
 ---
 
+<Demo name="overlay/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="overlay/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/overlay
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/overlay
-    ```
+Use Overlay as a responsive wrapper that automatically switches between Modal, Popover, and Drawer based on screen size and configuration.
 
-    ## Usage
+```tsx
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Overlay } from "@/components/ui/overlay";
+```
 
-    Use Overlay as a responsive wrapper that automatically switches between Modal, Popover, and Drawer based on screen size and configuration.
+```tsx
+<Dialog>
+	<Button>Open Overlay</Button>
+	<Overlay type="modal" mobileType="drawer">
+		<DialogContent>Overlay content</DialogContent>
+	</Overlay>
+</Dialog>
+```
 
-    ```tsx
-    import { Button } from "@/components/ui/button";
-    import { Dialog, DialogContent } from "@/components/ui/dialog";
-    import { Overlay } from "@/components/ui/overlay";
-    ```
+## Playground
 
-    ```tsx
-    <Dialog>
-      <Button>Open Overlay</Button>
-      <Overlay type="modal" mobileType="drawer">
-        <DialogContent>Overlay content</DialogContent>
-      </Overlay>
-    </Dialog>
-    ```
+Use the controls below to experiment with different overlay props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="overlay"
+	controls={[
+		{
+			type: "enum",
+			name: "type",
+			options: ["modal", "popover", "drawer"],
+			defaultValue: "modal",
+		},
+		{
+			type: "enum",
+			name: "mobileType",
+			options: ["modal", "drawer"],
+			defaultValue: "drawer",
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different overlay props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="overlay" 
-      controls={[
-        {
-          type: "enum",
-          name: "type",
-          options: ["modal", "popover", "drawer"],
-          defaultValue: "modal",
-        },
-        {
-          type: "enum",
-          name: "mobileType",
-          options: ["modal", "drawer"],
-          defaultValue: "drawer",
-        },
-      ]}
-    />
+<Examples>
+	<Example name="overlay/demos/basic" />
+	<Example name="overlay/demos/type" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    <Reference name="overlay" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="overlay/demos/basic" />
-      <Example name="overlay/demos/type" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="overlay" />

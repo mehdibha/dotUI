@@ -42,7 +42,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 	// Input
 	Input: "@/components/ui/input",
 	InputGroup: "@/components/ui/input",
-	InputAddon: "@/components/ui/input",
+	InputGroupAddon: "@/components/ui/input",
 	TextArea: "@/components/ui/input",
 
 	// Select
@@ -54,15 +54,17 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Checkbox
 	Checkbox: "@/components/ui/checkbox",
-	CheckboxIndicator: "@/components/ui/checkbox",
+	CheckboxControl: "@/components/ui/checkbox",
 
 	// Switch
 	Switch: "@/components/ui/switch",
+	SwitchControl: "@/components/ui/switch",
 	SwitchIndicator: "@/components/ui/switch",
 	SwitchThumb: "@/components/ui/switch",
 
 	// Radio
 	Radio: "@/components/ui/radio-group",
+	RadioControl: "@/components/ui/radio-group",
 	RadioGroup: "@/components/ui/radio-group",
 	RadioIndicator: "@/components/ui/radio-group",
 
@@ -72,7 +74,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 	DialogHeader: "@/components/ui/dialog",
 	DialogBody: "@/components/ui/dialog",
 	DialogFooter: "@/components/ui/dialog",
-	DialogHeading: "@/components/ui/dialog",
+	DialogTitle: "@/components/ui/dialog",
 	DialogDescription: "@/components/ui/dialog",
 
 	// Card
@@ -145,7 +147,9 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Breadcrumbs
 	Breadcrumbs: "@/components/ui/breadcrumbs",
-	Breadcrumb: "@/components/ui/breadcrumbs",
+	BreadcrumbItem: "@/components/ui/breadcrumbs",
+	BreadcrumbLink: "@/components/ui/breadcrumbs",
+	BreadcrumbSeparator: "@/components/ui/breadcrumbs",
 
 	// Kbd
 	Kbd: "@/components/ui/kbd",
@@ -153,10 +157,10 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Skeleton
 	Skeleton: "@/components/ui/skeleton",
-	SkeletonProvider: "@/components/ui/skeleton",
 
 	// Calendar
 	Calendar: "@/components/ui/calendar",
+	RangeCalendar: "@/components/ui/calendar",
 	CalendarHeader: "@/components/ui/calendar",
 	CalendarGrid: "@/components/ui/calendar",
 	CalendarGridHeader: "@/components/ui/calendar",
@@ -166,8 +170,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// DatePicker
 	DatePicker: "@/components/ui/date-picker",
-	DatePickerInput: "@/components/ui/date-picker",
-	DatePickerContent: "@/components/ui/date-picker",
+	DateRangePicker: "@/components/ui/date-picker",
 
 	// DateField
 	DateField: "@/components/ui/date-field",
@@ -178,13 +181,13 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// ColorPicker
 	ColorPicker: "@/components/ui/color-picker",
-	ColorPickerTrigger: "@/components/ui/color-picker",
-	ColorPickerContent: "@/components/ui/color-picker",
 	ColorEditor: "@/components/ui/color-editor",
 
 	// Slider
 	Slider: "@/components/ui/slider",
 	SliderControl: "@/components/ui/slider",
+	SliderFill: "@/components/ui/slider",
+	SliderOutput: "@/components/ui/slider",
 	SliderTrack: "@/components/ui/slider",
 	SliderThumb: "@/components/ui/slider",
 
@@ -211,9 +214,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 
 	// Combobox
 	Combobox: "@/components/ui/combobox",
-	ComboboxInput: "@/components/ui/combobox",
-	ComboboxContent: "@/components/ui/combobox",
-	ComboboxItem: "@/components/ui/combobox",
+	ComboboxValue: "@/components/ui/combobox",
 
 	// NumberField
 	NumberField: "@/components/ui/number-field",
@@ -240,6 +241,7 @@ const COMPONENT_IMPORT_MAP: Record<string, string> = {
 	CommandItem: "@/components/ui/command",
 
 	// Toast
+	ToastProvider: "@/components/ui/toast",
 	Toaster: "@/components/ui/toast",
 
 	// Form

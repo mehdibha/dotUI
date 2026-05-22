@@ -7,112 +7,173 @@ links:
 wip: true
 ---
 
+<Demo name="table/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="table/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/table
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/table
-    ```
+Use tables to display data in rows and columns with support for selection, sorting, and more.
 
-    ## Usage
+```tsx
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableColumn,
+	TableContainer,
+	TableFooter,
+	TableHeader,
+	TableRow,
+	TableVirtualizer,
+} from "@/components/ui/table";
+```
 
-    Use tables to display data in rows and columns with support for selection, sorting, and more.
+```tsx
+<TableContainer>
+	<Table aria-label="Files">
+		<TableHeader>
+			<TableColumn isRowHeader>Name</TableColumn>
+			<TableColumn>Type</TableColumn>
+			<TableColumn>Date Modified</TableColumn>
+		</TableHeader>
+		<TableBody>
+			<TableRow>
+				<TableCell>Games</TableCell>
+				<TableCell>File folder</TableCell>
+				<TableCell>6/7/2020</TableCell>
+			</TableRow>
+		</TableBody>
+		<TableFooter>
+			<TableRow>
+				<TableCell colSpan={2}>Total</TableCell>
+				<TableCell>1 item</TableCell>
+			</TableRow>
+		</TableFooter>
+	</Table>
+</TableContainer>
+```
 
-    ```tsx
-    import {
-      Table,
-      TableBody,
-      TableCell,
-      TableColumn,
-      TableHeader,
-      TableRow,
-    } from "@/components/ui/table";
-    ```
+Use `TableContainer` to control the scroll region.
 
-    ```tsx
-    <Table aria-label="Files">
-      <TableHeader>
-        <TableColumn isRowHeader>Name</TableColumn>
-        <TableColumn>Type</TableColumn>
-        <TableColumn>Date Modified</TableColumn>
-      </TableHeader>
-      <TableBody>
-        <TableRow>
-          <TableCell>Games</TableCell>
-          <TableCell>File folder</TableCell>
-          <TableCell>6/7/2020</TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
-    ```
+```tsx
+<TableContainer className="max-h-80">
+	<Table aria-label="Files">{/* ... */}</Table>
+</TableContainer>
+```
 
-    ## Playground
+By default, `TableContainer` renders a plain `div` so the table uses native CSS auto layout. Set `resizable` to opt into React Aria's resizable table layout. In that mode, use `width`, `defaultWidth`, `minWidth`, and `maxWidth` on `TableColumn`.
 
-    Use the controls below to experiment with different table props and see the live preview and code update.
+```tsx
+<TableContainer resizable>
+	<Table aria-label="Files">
+		<TableHeader>
+			<TableColumn allowsResizing defaultWidth={240}>
+				Name
+			</TableColumn>
+			<TableColumn allowsResizing defaultWidth={120}>
+				Type
+			</TableColumn>
+		</TableHeader>
+		<TableBody>{/* ... */}</TableBody>
+	</Table>
+</TableContainer>
+```
 
-    <InteractiveDemo 
-      name="table" 
-      controls={[
-        {
-          type: "enum",
-          name: "selectionMode",
-          options: ["none", "single", "multiple"],
-          defaultValue: "none",
-        },
-      ]}
-    />
+Use `TableVirtualizer` for large collections. It uses the table layout exported by this component so row, cell, and selection column alignment stays consistent. Row and header heights default to the active density.
 
-    ## API Reference
+```tsx
+<TableContainer className="h-80">
+	<TableVirtualizer>
+		<Table aria-label="Files">{/* ... */}</Table>
+	</TableVirtualizer>
+</TableContainer>
+```
 
-    ### Table
+## Playground
 
-    <Reference name="table" />
+Use the controls below to experiment with different table props and see the live preview and code update.
 
-    ### TableHeader
+<InteractiveDemo
+	name="table"
+	controls={[
+		{
+			type: "enum",
+			name: "selectionMode",
+			options: ["none", "single", "multiple"],
+			defaultValue: "none",
+		},
+	]}
+/>
 
-    <Reference name="table-header" />
+## Examples
 
-    ### TableColumn
+<Examples>
+	<Example name="table/demos/basic" />
+	<Example name="table/demos/invoices" />
+	<Example name="table/demos/project-budget" />
+	<Example name="table/demos/tasks" />
+	<Example name="table/demos/large-list-virtualized" />
+	<Example name="table/demos/async-loading" />
+	<Example name="table/demos/controls" />
+	<Example name="table/demos/dynamic-collection" />
+	<Example name="table/demos/expandable-rows" />
+	<Example name="table/demos/selection" />
+	<Example name="table/demos/disallow-empty-selection" />
+	<Example name="table/demos/disabled-rows" />
+	<Example name="table/demos/links" />
+	<Example name="table/demos/sorting" />
+	<Example name="table/demos/column-resizing" />
+	<Example name="table/demos/row-action" />
+	<Example name="table/demos/static-row-action" />
+	<Example name="table/demos/reordable" />
+	<Example name="table/demos/empty-state" />
+	<Example name="table/demos/uncontrolled" />
+	<Example name="table/demos/controlled" />
+</Examples>
 
-    <Reference name="table-column" />
+## API Reference
 
-    ### TableBody
+### TableContainer
 
-    <Reference name="table-body" />
+<Reference name="table-container" />
 
-    ### TableRow
+### Table
 
-    <Reference name="table-row" />
+<Reference name="table" />
 
-    ### TableCell
+### TableHeader
 
-    <Reference name="table-cell" />
+<Reference name="table-header" />
 
-  </PageTabPanel>
+### TableColumn
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="table/demos/basic" />
-      <Example name="table/demos/dynamic-collection" />
-      <Example name="table/demos/selection" />
-      <Example name="table/demos/selection-mode" />
-      <Example name="table/demos/selection-behavior" />
-      <Example name="table/demos/disallow-empty-selection" />
-      <Example name="table/demos/disabled-rows" />
-      <Example name="table/demos/links" />
-      <Example name="table/demos/sorting" />
-      <Example name="table/demos/column-resizing" />
-      <Example name="table/demos/row-action" />
-      <Example name="table/demos/static-row-action" />
-      <Example name="table/demos/reordable" />
-      <Example name="table/demos/empty-state" />
-      <Example name="table/demos/uncontrolled" />
-      <Example name="table/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="table-column" />
+
+### TableBody
+
+<Reference name="table-body" />
+
+### TableFooter
+
+<Reference name="table-footer" />
+
+### TableRow
+
+<Reference name="table-row" />
+
+### TableCell
+
+<Reference name="table-cell" />
+
+### TableDropIndicator
+
+<Reference name="table-drop-indicator" />
+
+### TableVirtualizer
+
+<Reference name="table-virtualizer" />

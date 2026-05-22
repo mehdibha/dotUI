@@ -1,5 +1,15 @@
-import { cn } from "@dotui/registry/lib/utils";
+import type React from "react";
 
-export function Examples({ className, children }: { className?: string; children: React.ReactNode }) {
-	return <div className={cn("grid grid-cols-1 gap-4 *:data-example:mt-0 lg:grid-cols-2", className)}>{children}</div>;
+import { cn } from "@/registry/lib/utils";
+
+export interface ExamplesProps extends React.ComponentProps<"div"> {
+	children: React.ReactNode;
+}
+
+export function Examples({ className, children, ...props }: ExamplesProps) {
+	return (
+		<div className={cn("grid gap-4", className)} {...props}>
+			{children}
+		</div>
+	);
 }

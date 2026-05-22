@@ -4,14 +4,14 @@
 	"extendsElement": "div",
 	"props": {
 		"size": {
-			"type": "\"sm\" | \"md\" | \"lg\"",
-			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\"",
+			"detailedType": "'lg' | 'md' | 'sm' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "sm"
+						"value": "lg"
 					},
 					{
 						"type": "stringLiteral",
@@ -19,7 +19,7 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "lg"
+						"value": "sm"
 					}
 				]
 			},

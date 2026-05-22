@@ -1,5 +1,6 @@
 import { createContrastTheme } from "./contrast/theme";
 import { createMaterialTheme } from "./material";
+
 import type { CreateThemeOptions } from "./schema";
 import type { Theme } from "./shared/types";
 

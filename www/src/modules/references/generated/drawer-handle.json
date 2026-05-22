@@ -1,0 +1,6 @@
+{
+	"name": "DrawerHandleProps",
+	"description": "A visible drag affordance.",
+	"extendsElement": "div",
+	"props": {}
+}

@@ -1,8 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
-import { LinkButton } from "@dotui/registry/ui/button";
-import { Group } from "@dotui/registry/ui/group";
-import { Tooltip, TooltipContent } from "@dotui/registry/ui/tooltip";
+import { LinkButton } from "@/registry/ui/button";
+import { Group } from "@/registry/ui/group";
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 type Neighbours = {
 	previous?: { name: string; path: string };
@@ -11,6 +11,7 @@ type Neighbours = {
 
 export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 	const { previous, next } = neighbours;
+	const hrefFor = (path: string) => `/docs/${path}`;
 
 	return (
 		<Group>
@@ -18,8 +19,9 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 				<LinkButton
 					aria-label="Go to previous page"
 					size="sm"
+					isIconOnly
 					isDisabled={!previous}
-					href={previous ? { to: "/docs/$", params: { _splat: previous.path } } : undefined}
+					href={previous ? hrefFor(previous.path) : undefined}
 				>
 					<ChevronLeftIcon />
 				</LinkButton>
@@ -29,8 +31,9 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 				<LinkButton
 					aria-label="Go to next page"
 					size="sm"
+					isIconOnly
 					isDisabled={!next}
-					href={next ? { to: "/docs/$", params: { _splat: next.path } } : undefined}
+					href={next ? hrefFor(next.path) : undefined}
 				>
 					<ChevronRightIcon />
 				</LinkButton>

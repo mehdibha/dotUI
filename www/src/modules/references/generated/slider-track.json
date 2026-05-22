@@ -1,0 +1,20 @@
+{
+	"name": "SliderTrackProps",
+	"description": "A slider track is the visual track that contains the selected fill.",
+	"extendsElement": "div",
+	"props": {},
+	"renderProps": {
+		"isDisabled": {
+			"selector": "[data-disabled]",
+			"description": "Whether the slider is disabled."
+		},
+		"isHovered": {
+			"selector": "[data-hovered]",
+			"description": "Whether the slider track is currently hovered with a mouse."
+		},
+		"orientation": {
+			"selector": "[data-orientation=\"horizontal | vertical\"]",
+			"description": "The orientation of the slider."
+		}
+	}
+}

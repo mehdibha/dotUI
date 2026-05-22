@@ -1,49 +1,52 @@
 import type React from "react";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogHeader, DialogHeading } from "@dotui/registry/ui/dialog";
-import { Overlay } from "@dotui/registry/ui/overlay";
+import { cn } from "@/registry/lib/utils";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogBody, DialogContent } from "@/registry/ui/dialog";
+import { Modal } from "@/registry/ui/modal";
 
-import { CodeBlock, Pre } from "./code-block";
-import { DemoCode, DemoCodePreview, getSlotContent } from "./demo";
+// import { DemoCode, DemoCodePreview, getSlotContent } from "./demo";
 
 export interface ExampleProps extends React.ComponentProps<"div"> {
 	component: React.ComponentType;
-	description?: string;
-	children: React.ReactNode;
+	title?: string;
+	children?: React.ReactNode;
 }
 
-export function Example({ component: Component, description, children, className, ...props }: ExampleProps) {
-	const codeContent = getSlotContent(children, DemoCode);
-	const previewContent = getSlotContent(children, DemoCodePreview);
+export function Example({ component: Component, title, children, className, ...props }: ExampleProps) {
+	// const codeContent = getSlotContent(children, DemoCode);
+	// const previewContent = getSlotContent(children, DemoCodePreview);
 
 	return (
-		<div data-example="" className={cn("relative flex flex-col", className)} {...props}>
-			{/* Preview */}
-			<div className="flex flex-1 items-center justify-center rounded-t-md border bg-bg p-10">
-				<Component />
-			</div>
-
-			{/* Bottom bar */}
-			<div className="flex items-center justify-between gap-4 rounded-b-lg border border-t-0 bg-card/50 p-1.5 pl-3">
-				{description ? <p className="truncate text-fg-muted text-sm">{description}</p> : <span />}
+		<div
+			className={cn(
+				"flex flex-col gap-1",
+				"[&_h3]:mt-0 [&_h3]:px-1.5 [&_h3]:py-2 [&_h3]:text-sm [&_h3]:font-normal [&_h3]:tracking-normal [&_h3]:text-fg-muted [&_h3]:capitalize",
+				className,
+			)}
+			{...props}
+		>
+			{children ?? (title ? <h3>{title}</h3> : null)}
+			<div className="relative flex flex-1 flex-col">
+				<div
+					data-example-preview=""
+					tabIndex={-1}
+					className="pointer-events-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 p-10"
+				>
+					<Component />
+				</div>
 				<Dialog>
-					<Button size="sm" className="h-7">
-						View code
-					</Button>
-					<Overlay isDismissable>
-						<DialogContent className="max-w-2xl">
-							<DialogHeader>
-								<DialogHeading>Code</DialogHeading>
-							</DialogHeader>
-							<DialogBody className="p-0">
-								<CodeBlock className="max-h-96 overflow-auto rounded-none border-0">
-									<Pre>{codeContent || previewContent}</Pre>
-								</CodeBlock>
+					<Button variant="quiet" className="absolute inset-0 z-2 size-auto h-auto! border hover:border-border-hover" />
+					<Modal>
+						<DialogContent>
+							{/* <DialogHeader>
+								<DialogTitle>{title}</DialogTitle>
+							</DialogHeader> */}
+							<DialogBody>
+								<Component />
 							</DialogBody>
 						</DialogContent>
-					</Overlay>
+					</Modal>
 				</Dialog>
 			</div>
 		</div>

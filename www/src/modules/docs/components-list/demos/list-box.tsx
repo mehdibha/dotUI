@@ -1,4 +1,4 @@
-import { ListBox, ListBoxItem } from "@dotui/registry/ui/list-box";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 
 export function ListBoxDemo() {
 	return (

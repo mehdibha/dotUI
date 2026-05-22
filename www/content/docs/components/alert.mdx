@@ -1,82 +1,75 @@
 ---
 title: Alert
 description: Alerts display a short, important message in a way that attracts the user's attention.
-wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="alert/demos/default" />
 
-    <Demo name="alert/demos/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/alert
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/alert
-    ```
+## Usage
 
-    ## Usage
+Use alerts to display important messages that require user attention.
 
-    Use alerts to display important messages that require user attention.
+```tsx
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+```
 
-    ```tsx
-    import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-    ```
+```tsx
+<Alert>
+	<AlertTitle>Alert Title</AlertTitle>
+	<AlertDescription>Alert description</AlertDescription>
+</Alert>
+```
 
-    ```tsx
-    <Alert>
-      <AlertTitle>Alert Title</AlertTitle>
-      <AlertDescription>Alert description</AlertDescription>
-    </Alert>
-    ```
+## Playground
 
-    ## Playground
+Use the controls below to experiment with different alert props and see the live preview and code update.
 
-    Use the controls below to experiment with different alert props and see the live preview and code update.
-
-    <InteractiveDemo
-      name="alert"
-      fallback={`<Alert>
-    <AlertTitle>Alert Title</AlertTitle>
-    <AlertDescription>This is an alert description.</AlertDescription>
+<InteractiveDemo
+  name="alert"
+  fallback={`<Alert>
+<AlertTitle>Alert Title</AlertTitle>
+<AlertDescription>This is an alert description.</AlertDescription>
 
 </Alert>`}
-      controls={[
-        { name: "title", type: "string", defaultValue: "Alert Title", alwaysShow: true },
-        { name: "description", type: "string", defaultValue: "This is an alert description.", alwaysShow: true },
-        "variant",
-        { name: "icon", type: "icon" },
-      ]}
-    />
+  controls={[
+    { name: "title", type: "string", defaultValue: "Alert Title", alwaysShow: true },
+    { name: "description", type: "string", defaultValue: "This is an alert description.", alwaysShow: true },
+    "variant",
+    { name: "icon", type: "icon" },
+  ]}
+/>
 
-    ## API Reference
+## Examples
 
-    ### Alert
+<Examples className="grid-cols-1 lg:grid-cols-2">
+	<Example name="alert/demos/default" title="Default" />
+	<Example name="alert/demos/warning" title="Warning" />
+	<Example name="alert/demos/danger" title="Danger" />
+	<Example name="alert/demos/success" title="Success" />
+	<Example name="alert/demos/custom-icon" title="Custom Icon" />
+	<Example name="alert/demos/action" title="Action" />
+</Examples>
 
-    <Reference name="alert" />
+## API Reference
 
-    ### AlertTitle
+### Alert
 
-    <Reference name="alert-title" />
+<Reference name="alert" />
 
-    ### AlertDescription
+### AlertTitle
 
-    <Reference name="alert-description" />
+<Reference name="alert-title" />
 
-    ### AlertAction
+### AlertDescription
 
-    <Reference name="alert-action" />
+<Reference name="alert-description" />
 
-  </PageTabPanel>
+### AlertAction
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="alert/demos/default" />
-      <Example name="alert/demos/warning" />
-      <Example name="alert/demos/danger" />
-      <Example name="alert/demos/success" />
-      <Example name="alert/demos/custom-icon" />
-      <Example name="alert/demos/action" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="alert-action" />

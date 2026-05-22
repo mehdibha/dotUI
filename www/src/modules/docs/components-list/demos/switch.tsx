@@ -1,10 +1,10 @@
-import { Label } from "@dotui/registry/ui/field";
-import { Switch, SwitchIndicator } from "@dotui/registry/ui/switch";
+import { Label } from "@/registry/ui/field";
+import { Switch, SwitchControl } from "@/registry/ui/switch";
 
 export function SwitchDemo() {
 	return (
 		<Switch>
-			<SwitchIndicator />
+			<SwitchControl />
 			<Label>Focus mode</Label>
 		</Switch>
 	);

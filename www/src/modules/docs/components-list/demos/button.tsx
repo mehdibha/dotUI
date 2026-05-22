@@ -1,4 +1,4 @@
-import { Button } from "@dotui/registry/ui/button";
+import { Button } from "@/registry/ui/button";
 
 export function ButtonDemo() {
 	return <Button>Button</Button>;

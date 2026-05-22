@@ -7,42 +7,42 @@ links:
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="toggle-button-group/demos/default" />
 
-    <Demo name="toggle-button-group/demos/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/toggle-button-group
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/toggle-button-group
-    ```
+## Usage
 
-    ## Usage
+Use toggle button groups to let users toggle between multiple options.
 
-    Use toggle button groups to let users toggle between multiple options.
+```tsx
+import { ToggleButton } from "@/components/ui/toggle-button";
+import { ToggleButtonGroup } from "@/components/ui/toggle-button-group";
+```
 
-    ```tsx
-    import { ToggleButtonGroup, ToggleButton } from "@/components/ui/toggle-button-group";
-    ```
+```tsx
+<ToggleButtonGroup aria-label="Text alignment" defaultSelectedKeys={["left"]}>
+	<ToggleButton id="left">Left</ToggleButton>
+	<ToggleButton id="center">Center</ToggleButton>
+	<ToggleButton id="right">Right</ToggleButton>
+</ToggleButtonGroup>
+```
 
-    ```tsx
-    <ToggleButtonGroup>
-      <ToggleButton id="left">Left</ToggleButton>
-      <ToggleButton id="center">Center</ToggleButton>
-      <ToggleButton id="right">Right</ToggleButton>
-    </ToggleButtonGroup>
-    ```
+## Examples
 
-    ## API Reference
+<Examples className="grid-cols-2">
+	<Example name="toggle-button-group/demos/default" title="Default" />
+	<Example name="toggle-button-group/demos/with-text" title="With Text" />
+	<Example name="toggle-button-group/demos/variants" title="Variants" />
+	<Example name="toggle-button-group/demos/sizes" title="Sizes" />
+	<Example name="toggle-button-group/demos/vertical" title="Vertical" />
+	<Example name="toggle-button-group/demos/multiple" title="Multiple" />
+</Examples>
 
-    <Reference name="toggle-button-group" />
+## API Reference
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="toggle-button-group/demos/default" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="toggle-button-group" />

@@ -1,37 +1,65 @@
 ---
 title: Input
 description: A basic input component for text entry.
-wip: true
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/TextField.html
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="input/demos/default" />
 
-    ## Installation
+## Installation
 
-    ```npm
-    npx shadcn@latest add @dotui/input
-    ```
+```npm
+npx shadcn@latest add @dotui/input
+```
 
-    ## Usage
+## Usage
 
-    ```tsx
-    import { Input } from "@/components/ui/input";
-    ```
+Use `Input` to allow users to enter text. Combine with `InputGroup` and `InputGroupAddon` to add icons, buttons, or labels alongside the input.
 
-    ```tsx
-    <Input placeholder="Enter text..." />
-    ```
+```tsx
+import { Input } from "@/components/ui/input";
+```
 
-    ## API Reference
+```tsx
+<Input placeholder="Enter text..." />
+```
 
-    <Reference name="input" />
+## Sizes
 
-  </PageTabPanel>
+Use the `size` prop to control the input height. Available sizes are `sm`, `md` (default), and `lg`.
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <p className="text-fg-muted col-span-full">No examples yet.</p>
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+```tsx
+<Input size="sm" />
+<Input size="md" />
+<Input size="lg" />
+```
+
+## Playground
+
+Use the controls below to experiment with different input props and see the live preview and code update.
+
+<InteractiveDemo
+	name="input"
+	fallback={`<Input placeholder="Enter text..." />`}
+	controls={[
+		{ name: "placeholder", type: "string", defaultValue: "Enter text..." },
+		{ name: "size", type: "enum", options: ["sm", "md", "lg"], defaultValue: "md" },
+		{ name: "disabled", type: "boolean", defaultValue: false },
+		{ name: "readOnly", type: "boolean", defaultValue: false },
+	]}
+/>
+
+## Examples
+
+<Examples>
+	<Example name="input/demos/default" title="Default" />
+	<Example name="input/demos/sizes" title="All sizes" />
+	<Example name="input/demos/disabled" title="Disabled" />
+	<Example name="input/demos/textarea" title="Textarea" />
+</Examples>
+
+## API Reference
+
+<Reference name="input" />

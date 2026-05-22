@@ -7,61 +7,54 @@ links:
 wip: true
 ---
 
+<Demo name="modal/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="modal/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/modal
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/modal
-    ```
+Use modals to display content in a layer that overlays the page content.
 
-    ## Usage
+```tsx
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Modal } from "@/components/ui/modal";
+```
 
-    Use modals to display content in a layer that overlays the page content.
+```tsx
+<Dialog>
+	<Button>Open Modal</Button>
+	<Modal>
+		<DialogContent>Modal content</DialogContent>
+	</Modal>
+</Dialog>
+```
 
-    ```tsx
-    import { Button } from "@/components/ui/button";
-    import { Dialog, DialogContent } from "@/components/ui/dialog";
-    import { Modal } from "@/components/ui/modal";
-    ```
+## Playground
 
-    ```tsx
-    <Dialog>
-      <Button>Open Modal</Button>
-      <Modal>
-        <DialogContent>Modal content</DialogContent>
-      </Modal>
-    </Dialog>
-    ```
+Use the controls below to experiment with different modal props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="modal"
+	controls={[
+		{
+			type: "boolean",
+			name: "isDismissable",
+			defaultValue: true,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different modal props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="modal" 
-      controls={[
-        {
-          type: "boolean",
-          name: "isDismissable",
-          defaultValue: true,
-        },
-      ]}
-    />
+<Examples>
+	<Example name="modal/demos/basic" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    <Reference name="modal" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="modal/demos/basic" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="modal" />

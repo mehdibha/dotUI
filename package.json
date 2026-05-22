@@ -23,18 +23,22 @@
 		"build": "turbo run build",
 		"dev": "turbo run dev --parallel",
 		"dev:www": "pnpm --filter=www dev",
+		"dev:www:clean": "pnpm --filter=www dev:clean",
 		"build:www": "pnpm --filter=www build",
-		"build:registry": "pnpm --filter=@dotui/registry build",
+		"build:registry": "pnpm --filter=www build:registry",
 		"preview:www": "pnpm --filter=www preview",
-		"dev:registry": "chokidar 'packages/registry/src/ui/**/meta.ts' -c 'pnpm build:registry'",
 		"build:references": "pnpm --filter=www build:references",
 		"clean": "git clean -xdf node_modules",
 		"clean:workspaces": "turbo run clean",
-		"check": "biome check",
-		"check:fix": "biome check --write",
-		"check:ci": "biome ci",
-		"lint:ws": "pnpm dlx sherif@latest",
-		"postinstall": "pnpm lint:ws",
+		"check": "oxlint . && oxfmt --check .",
+		"check:fix": "oxlint --fix . && oxfmt .",
+		"check:ci": "oxlint . && oxfmt --check .",
+		"lint:check": "oxlint .",
+		"lint:fix": "oxlint --fix .",
+		"format:check": "oxfmt --check .",
+		"format:fix": "oxfmt .",
+		"lint:ws": "sherif --fail-on-warnings && syncpack lint",
+		"lint:ws:fix": "syncpack fix",
 		"typecheck": "turbo run typecheck",
 		"test": "vitest run",
 		"release": "changeset version",
@@ -42,23 +46,31 @@
 		"pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.8",
-		"@changesets/changelog-github": "^0.5.2",
+		"@changesets/changelog-github": "^0.7.0",
 		"@changesets/cli": "^2.29.8",
-		"@dotui/biome-config": "workspace:*",
 		"@vitest/coverage-v8": "^4.0.16",
 		"chokidar-cli": "^3.0.0",
-		"puppeteer": "^24.26.0",
+		"oxfmt": "^0.50.0",
+		"oxlint": "^1.65.0",
+		"puppeteer": "^25.0.2",
+		"sherif": "1.11.1",
+		"syncpack": "15.1.2",
 		"tsx": "^4.21.0",
 		"turbo": "^2.5.8",
-		"typescript": "^5.8.3",
-		"vite-tsconfig-paths": "^6.0.3",
+		"typescript": "catalog:",
 		"vitest": "^4.0.16"
 	},
 	"packageManager": "pnpm@10.24.0",
 	"pnpm": {
+		"overrides": {
+			"@types/react": "19.2.2",
+			"@types/react-dom": "19.2.1",
+			"react-aria": "file:./www/vendor/react-aria-3.48.0.tgz",
+			"react-aria-components": "file:./www/vendor/react-aria-components-1.17.0.tgz",
+			"react-stately": "file:./www/vendor/react-stately-3.46.0.tgz"
+		},
 		"patchedDependencies": {
-			"@tanstack/start-static-server-functions": "patches/@tanstack__start-static-server-functions.patch"
+			"tailwindcss-react-aria-components@2.0.1": "patches/tailwindcss-react-aria-components@2.0.1.patch"
 		}
 	}
 }

@@ -1,13 +1,14 @@
 import React from "react";
+
 import { Link } from "@tanstack/react-router";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Popover } from "@dotui/registry/ui/popover";
-
 import { navItems } from "@/config/site";
+import { cn } from "@/registry/lib/utils";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 export function MobileNav({ items }: { items: PageTree.Node[] }) {
 	const [isOpen, setIsOpen] = React.useState(false);
@@ -34,7 +35,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 					{({ close }) => (
 						<div className="flex flex-col gap-12">
 							<div className="space-y-2">
-								<div className="font-medium text-fg-muted text-lg">Menu</div>
+								<div className="text-lg font-medium text-fg-muted">Menu</div>
 								<div className="flex flex-col gap-3">
 									<MobileLink to="/" onOpenChange={close}>
 										Home
@@ -49,9 +50,9 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 							{items?.map((group, index) => {
 								if (group.type === "folder") {
 									return (
-										// biome-ignore lint/suspicious/noArrayIndexKey: items is static navigation data
+										// oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
 										<div key={index} className="flex flex-col gap-3">
-											<div className="font-medium text-fg-muted text-lg">{group.name}</div>
+											<div className="text-lg font-medium text-fg-muted">{group.name}</div>
 											<div className="flex flex-col gap-3">
 												{group.children.map((item) => {
 													if (item.type === "page") {
@@ -89,7 +90,7 @@ function MobileLink({
 	className?: string;
 }) {
 	return (
-		<Link to={to} onClick={() => onOpenChange?.(false)} className={cn("font-medium text-2xl", className)}>
+		<Link to={to} onClick={() => onOpenChange?.(false)} className={cn("text-2xl font-medium", className)}>
 			{children}
 		</Link>
 	);

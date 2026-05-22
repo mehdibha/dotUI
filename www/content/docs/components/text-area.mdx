@@ -7,98 +7,91 @@ links:
 wip: true
 ---
 
+<Demo name="text-area/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="text-area/demos/default" />
+```npm
+npx shadcn@latest add @dotui/text-area
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/text-area
-    ```
+Use `TextArea` to allow users to enter multi-line text content.
 
-    ## Usage
+```tsx
+import { TextField } from "@/components/ui/text-field";
+import { TextArea, InputGroup, InputGroupAddon } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
 
-    Use `TextArea` to allow users to enter multi-line text content.
+```tsx
+<TextField>
+	<Label>Description</Label>
+	<TextArea />
+</TextField>
+```
 
-    ```tsx
-    import { TextField } from "@/components/ui/text-field";
-    import { TextArea } from "@/components/ui/input";
-    import { Label } from "@/components/ui/field";
-    ```
+## Playground
 
-    ```tsx
-    <TextField>
-      <Label>Description</Label>
-      <TextArea />
-    </TextField>
-    ```
+Use the controls below to experiment with different text area props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="text-area"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Description",
+		},
+		{
+			type: "string",
+			name: "placeholder",
+			defaultValue: "Enter description...",
+		},
+		{
+			type: "string",
+			name: "description",
+			defaultValue: "",
+		},
+		{
+			type: "string",
+			name: "errorMessage",
+			defaultValue: "",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isReadOnly",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different text area props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="text-area" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Description",
-        },
-        {
-          type: "string",
-          name: "placeholder",
-          defaultValue: "Enter description...",
-        },
-        {
-          type: "string",
-          name: "description",
-          defaultValue: "",
-        },
-        {
-          type: "string",
-          name: "errorMessage",
-          defaultValue: "",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isReadOnly",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isInvalid",
-          defaultValue: false,
-        },
-      ]}
-    />
+<Examples>
+	<Example name="text-area/demos/default" />
+	<Example name="text-area/demos/label" />
+	<Example name="text-area/demos/description" />
+	<Example name="text-area/demos/error-message" />
+	<Example name="text-area/demos/prefix-and-suffix" />
+	<Example name="text-area/demos/disabled" />
+	<Example name="text-area/demos/read-only" />
+	<Example name="text-area/demos/required" />
+	<Example name="text-area/demos/uncontrolled" />
+	<Example name="text-area/demos/controlled" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    <Reference name="text-area" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="text-area/demos/default" />
-      <Example name="text-area/demos/label" />
-      <Example name="text-area/demos/description" />
-      <Example name="text-area/demos/error-message" />
-      <Example name="text-area/demos/prefix-and-suffix" />
-      <Example name="text-area/demos/disabled" />
-      <Example name="text-area/demos/read-only" />
-      <Example name="text-area/demos/required" />
-      <Example name="text-area/demos/uncontrolled" />
-      <Example name="text-area/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="text-area" />

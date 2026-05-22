@@ -8,59 +8,31 @@
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "null"
 					},
 					{
 						"type": "undefined"
 					},
 					{
-						"type": "null"
+						"type": "bigint"
 					},
 					{
-						"type": "string"
+						"type": "boolean"
 					},
 					{
 						"type": "number"
 					},
 					{
-						"type": "bigint"
+						"type": "string"
 					},
 					{
 						"type": "identifier",
 						"name": "ReactElement"
 					},
 					{
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-							"name": "Iterable"
-						},
-						"typeParameters": [
-							{
-								"type": "identifier",
-								"name": "ReactNode"
-							}
-						]
-					},
-					{
 						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.7/node_modules/@types/react/index.d.ts:ReactPortal",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
 						"name": "ReactPortal"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
-							"name": "Promise"
-						},
-						"typeParameters": [
-							{
-								"type": "identifier",
-								"name": "AwaitedReactNode"
-							}
-						]
 					},
 					{
 						"type": "function",
@@ -85,6 +57,34 @@
 							"name": "ReactElement"
 						},
 						"typeParameters": []
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"name": "Iterable"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "ReactNode"
+							}
+						]
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+							"name": "Promise"
+						},
+						"typeParameters": [
+							{
+								"type": "identifier",
+								"name": "AwaitedReactNode"
+							}
+						]
 					}
 				]
 			},
@@ -132,16 +132,16 @@
 			"description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
 		},
 		"download": {
-			"type": "string | boolean",
-			"detailedType": "string | boolean | undefined",
+			"type": "boolean | string",
+			"detailedType": "boolean | string | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "string"
@@ -462,7 +462,7 @@
 						"type": "application",
 						"base": {
 							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
 							"name": "Iterable"
 						},
 						"typeParameters": [
@@ -479,15 +479,6 @@
 				]
 			},
 			"description": "A list of columns used when dynamically rendering cells."
-		},
-		"value": {
-			"type": "T",
-			"detailedType": "T | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "T"
-			},
-			"description": "The object value that this row represents. When using dynamic collections, this is set automatically."
 		},
 		"dependencies": {
 			"type": "readonly any[]",
@@ -507,6 +498,32 @@
 				]
 			},
 			"description": "Values that should invalidate the cell cache when using dynamic collections."
+		},
+		"disabledBehavior": {
+			"type": "DisabledBehavior",
+			"detailedType": "DisabledBehavior | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "DisabledBehavior"
+			},
+			"description": "Whether `disabledKeys` applies to all interactions, or only selection."
+		},
+		"hasChildItems": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether this row has children, even if not loaded yet."
+		},
+		"id": {
+			"type": "Key",
+			"detailedType": "Key | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Key"
+			},
+			"description": "The unique id of the row."
 		},
 		"isDisabled": {
 			"type": "boolean",
@@ -537,14 +554,45 @@
 			},
 			"description": "Handler that is called when a user performs an action on the row. The exact user event depends on\nthe collection's `selectionBehavior` prop and the interaction modality."
 		},
-		"id": {
-			"type": "Key",
-			"detailedType": "Key | undefined",
+		"render": {
+			"type": "DOMRenderFunction<\"div\" | \"tr\", RowRenderProps>",
+			"detailedType": "| DOMRenderFunction<'div' | 'tr', RowRenderProps>\n| undefined",
 			"typeAst": {
-				"type": "identifier",
-				"name": "Key"
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "div"
+									},
+									{
+										"type": "stringLiteral",
+										"value": "tr"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Table.d.ts:RowRenderProps",
+								"name": "RowRenderProps"
+							}
+						]
+					}
+				]
 			},
-			"description": "The unique id of the row."
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		},
 		"style": {
 			"type": "CSSProperties | (values: RowRenderProps) => CSSProperties",
@@ -581,52 +629,295 @@
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
 		},
-		"render": {
-			"type": "DOMRenderFunction<\"div\" | \"tr\", RowRenderProps>",
-			"detailedType": "| DOMRenderFunction<'div' | 'tr', RowRenderProps>\n| undefined",
+		"value": {
+			"type": "T",
+			"detailedType": "T | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "DOMRenderFunction"
-						},
-						"typeParameters": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "div"
-									},
-									{
-										"type": "stringLiteral",
-										"value": "tr"
-									}
-								]
-							},
-							{
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RowRenderProps",
-								"name": "RowRenderProps"
-							}
-						]
-					}
-				]
+				"type": "identifier",
+				"name": "T"
 			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+			"description": "The object value that this row represents. When using dynamic collections, this is set automatically."
 		}
 	},
 	"typeLinks": {
-		"RowRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal": {
 			"type": "interface",
-			"name": "RowRenderProps",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+			"name": "ReactPortal",
+			"extends": [
+				{
+					"type": "identifier",
+					"name": "ReactElement"
+				}
+			],
 			"properties": {
+				"children": {
+					"type": "property",
+					"name": "children",
+					"value": {
+						"type": "identifier",
+						"name": "ReactNode"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "null"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"props": {
+					"type": "property",
+					"name": "props",
+					"value": {
+						"type": "unknown"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "string"
+							},
+							{
+								"type": "identifier",
+								"name": "new (props: any, context: any) => Component<any, any, any>"
+							},
+							{
+								"type": "function",
+								"parameters": [
+									{
+										"type": "parameter",
+										"name": "props",
+										"value": {
+											"type": "any"
+										},
+										"optional": false,
+										"rest": false
+									}
+								],
+								"return": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "identifier",
+											"name": "bigint"
+										},
+										{
+											"type": "identifier",
+											"name": "false"
+										},
+										{
+											"type": "identifier",
+											"name": "Iterable<ReactNode>"
+										},
+										{
+											"type": "identifier",
+											"name": "null"
+										},
+										{
+											"type": "identifier",
+											"name": "number"
+										},
+										{
+											"type": "identifier",
+											"name": "Promise<AwaitedReactNode>"
+										},
+										{
+											"type": "identifier",
+											"name": "Promise<ReactNode>"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactPortal"
+										},
+										{
+											"type": "identifier",
+											"name": "string"
+										},
+										{
+											"type": "identifier",
+											"name": "true"
+										},
+										{
+											"type": "identifier",
+											"name": "undefined"
+										}
+									]
+								},
+								"typeParameters": []
+							}
+						]
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Table.d.ts:RowRenderProps": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Table.d.ts:RowRenderProps",
+			"name": "RowRenderProps",
+			"extends": [
+				{
+					"type": "link",
+					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Collection.d.ts:ItemRenderProps",
+					"name": "ItemRenderProps"
+				}
+			],
+			"properties": {
+				"allowsDragging": {
+					"type": "property",
+					"name": "allowsDragging",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "boolean"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item allows dragging."
+				},
+				"hasChildItems": {
+					"type": "property",
+					"name": "hasChildItems",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the row has child rows."
+				},
+				"id": {
+					"type": "property",
+					"name": "id",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "number"
+							},
+							{
+								"type": "string"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The unique id of the row."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+				},
+				"isDragging": {
+					"type": "property",
+					"name": "isDragging",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "boolean"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item is currently being dragged."
+				},
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
+					"value": {
+						"type": "union",
+						"elements": [
+							{
+								"type": "undefined"
+							},
+							{
+								"type": "boolean"
+							}
+						]
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item is currently an active drop target."
+				},
+				"isExpanded": {
+					"type": "property",
+					"name": "isExpanded",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the row is expanded."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently keyboard focused."
+				},
 				"isFocusVisibleWithin": {
 					"type": "property",
 					"name": "isFocusVisibleWithin",
@@ -636,17 +927,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the row's children have keyboard focus."
-				},
-				"id": {
-					"type": "property",
-					"name": "id",
-					"value": {
-						"type": "identifier",
-						"name": "Key | undefined"
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "The unique id of the row."
 				},
 				"isHovered": {
 					"type": "property",
@@ -678,46 +958,15 @@
 					"readonly": false,
 					"description": "Whether the item is currently selected."
 				},
-				"isFocused": {
+				"level": {
 					"type": "property",
-					"name": "isFocused",
+					"name": "level",
 					"value": {
-						"type": "boolean"
+						"type": "number"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the item is currently focused."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the item is currently keyboard focused."
-				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
-				},
-				"selectionMode": {
-					"type": "property",
-					"name": "selectionMode",
-					"value": {
-						"type": "identifier",
-						"name": "SelectionMode"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of selection that is allowed in the collection."
+					"description": "What level the row has within the table."
 				},
 				"selectionBehavior": {
 					"type": "property",
@@ -730,44 +979,59 @@
 					"readonly": false,
 					"description": "The selection behavior for the collection."
 				},
-				"allowsDragging": {
+				"selectionMode": {
 					"type": "property",
-					"name": "allowsDragging",
+					"name": "selectionMode",
 					"value": {
 						"type": "identifier",
-						"name": "boolean | undefined"
+						"name": "SelectionMode"
 					},
-					"optional": true,
+					"optional": false,
 					"readonly": false,
-					"description": "Whether the item allows dragging."
-				},
-				"isDragging": {
-					"type": "property",
-					"name": "isDragging",
-					"value": {
-						"type": "identifier",
-						"name": "boolean | undefined"
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "Whether the item is currently being dragged."
-				},
-				"isDropTarget": {
-					"type": "property",
-					"name": "isDropTarget",
-					"value": {
-						"type": "identifier",
-						"name": "boolean | undefined"
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "Whether the item is currently an active drop target."
+					"description": "The type of selection that is allowed in the collection."
 				}
-			}
+			},
+			"typeParameters": [],
+			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+			"name": "Iterable",
+			"extends": [],
+			"properties": {
+				"__@iterator@37": {
+					"type": "method",
+					"name": "__@iterator@37",
+					"value": {
+						"type": "function",
+						"parameters": [],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
+								"name": "Iterator"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "ReactNode"
+								}
+							]
+						},
+						"typeParameters": []
+					},
+					"optional": false,
+					"description": ""
+				}
+			},
+			"typeParameters": [],
+			"description": ""
+		},
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
+			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
 			"name": "Iterator",
 			"extends": [],
 			"properties": {
@@ -810,13 +1074,8 @@
 							},
 							"typeParameters": [
 								{
-									"type": "typeParameter",
-									"name": "T",
-									"constraint": {
-										"type": "identifier",
-										"name": "object"
-									},
-									"default": null
+									"type": "identifier",
+									"name": "ReactNode"
 								}
 							]
 						},
@@ -850,7 +1109,7 @@
 								],
 								"return": {
 									"type": "identifier",
-									"name": "IteratorResult<T, any>"
+									"name": "IteratorResult<ReactNode, any>"
 								},
 								"typeParameters": []
 							}
@@ -885,7 +1144,7 @@
 								],
 								"return": {
 									"type": "identifier",
-									"name": "IteratorResult<T, any>"
+									"name": "IteratorResult<ReactNode, any>"
 								},
 								"typeParameters": []
 							}
@@ -899,192 +1158,204 @@
 			"typeParameters": [],
 			"description": ""
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-			"name": "Iterable",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+			"name": "Promise",
 			"extends": [],
 			"properties": {
-				"__@iterator@68": {
+				"__@toStringTag@642": {
+					"type": "property",
+					"name": "__@toStringTag@642",
+					"value": {
+						"type": "string"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": ""
+				},
+				"catch": {
 					"type": "method",
-					"name": "__@iterator@68",
+					"name": "catch",
 					"value": {
 						"type": "function",
-						"parameters": [],
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "onrejected",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "function",
+											"parameters": [
+												{
+													"type": "parameter",
+													"name": "reason",
+													"value": {
+														"type": "any"
+													},
+													"optional": false,
+													"rest": false
+												}
+											],
+											"return": {
+												"type": "union",
+												"elements": [
+													{
+														"type": "identifier",
+														"name": "PromiseLike<TResult>"
+													},
+													{
+														"type": "identifier",
+														"name": "TResult"
+													}
+												]
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
 						"return": {
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
-								"name": "Iterator"
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"name": "Promise"
 							},
 							"typeParameters": [
 								{
-									"type": "typeParameter",
-									"name": "T",
-									"constraint": {
-										"type": "object"
-									},
-									"default": null
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "bigint"
+										},
+										{
+											"type": "boolean"
+										},
+										{
+											"type": "number"
+										},
+										{
+											"type": "string"
+										},
+										{
+											"type": "identifier",
+											"name": "ReactElement"
+										},
+										{
+											"type": "link",
+											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+											"name": "ReactPortal"
+										},
+										{
+											"type": "application",
+											"base": {
+												"type": "link",
+												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+												"name": "Iterable"
+											},
+											"typeParameters": [
+												{
+													"type": "identifier",
+													"name": "ReactNode"
+												}
+											]
+										},
+										{
+											"type": "typeParameter",
+											"name": "TResult",
+											"constraint": null,
+											"default": {
+												"type": "identifier",
+												"name": "never"
+											}
+										}
+									]
+								}
+							]
+						},
+						"typeParameters": [
+							{
+								"type": "typeParameter",
+								"name": "TResult",
+								"constraint": null,
+								"default": {
+									"type": "never"
+								}
+							}
+						]
+					},
+					"optional": false,
+					"description": "Attaches a callback for only the rejection of the Promise."
+				},
+				"finally": {
+					"type": "method",
+					"name": "finally",
+					"value": {
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "onfinally",
+								"value": {
+									"type": "union",
+									"elements": [
+										{
+											"type": "null"
+										},
+										{
+											"type": "undefined"
+										},
+										{
+											"type": "function",
+											"parameters": [],
+											"return": {
+												"type": "void"
+											},
+											"typeParameters": []
+										}
+									]
+								},
+								"optional": true,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "application",
+							"base": {
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"name": "Promise"
+							},
+							"typeParameters": [
+								{
+									"type": "identifier",
+									"name": "AwaitedReactNode"
 								}
 							]
 						},
 						"typeParameters": []
 					},
 					"optional": false,
-					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.7/node_modules/@types/react/index.d.ts:ReactPortal": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.7/node_modules/@types/react/index.d.ts:ReactPortal",
-			"name": "ReactPortal",
-			"extends": [
-				{
-					"type": "identifier",
-					"name": "ReactElement"
-				}
-			],
-			"properties": {
-				"children": {
-					"type": "property",
-					"name": "children",
-					"value": {
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": ""
+					"description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
 				},
-				"type": {
-					"type": "property",
-					"name": "type",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "string"
-							},
-							{
-								"type": "function",
-								"parameters": [
-									{
-										"type": "parameter",
-										"name": "props",
-										"value": {
-											"type": "any"
-										},
-										"optional": false,
-										"rest": false
-									}
-								],
-								"return": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "identifier",
-											"name": "undefined"
-										},
-										{
-											"type": "identifier",
-											"name": "null"
-										},
-										{
-											"type": "identifier",
-											"name": "string"
-										},
-										{
-											"type": "identifier",
-											"name": "number"
-										},
-										{
-											"type": "identifier",
-											"name": "bigint"
-										},
-										{
-											"type": "identifier",
-											"name": "false"
-										},
-										{
-											"type": "identifier",
-											"name": "true"
-										},
-										{
-											"type": "identifier",
-											"name": "ReactElement<unknown, string | JSXElementConstructor<any>>"
-										},
-										{
-											"type": "identifier",
-											"name": "Iterable<ReactNode>"
-										},
-										{
-											"type": "identifier",
-											"name": "ReactPortal"
-										},
-										{
-											"type": "identifier",
-											"name": "Promise<AwaitedReactNode>"
-										},
-										{
-											"type": "identifier",
-											"name": "Promise<ReactNode>"
-										}
-									]
-								},
-								"typeParameters": []
-							},
-							{
-								"type": "identifier",
-								"name": "new (props: any, context: any) => Component<any, any, any>"
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": ""
-				},
-				"props": {
-					"type": "property",
-					"name": "props",
-					"value": {
-						"type": "unknown"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": ""
-				},
-				"key": {
-					"type": "property",
-					"name": "key",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "null"
-							},
-							{
-								"type": "string"
-							}
-						]
-					},
-					"optional": false,
-					"readonly": false,
-					"description": ""
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
-			"name": "Promise",
-			"extends": [],
-			"properties": {
 				"then": {
 					"type": "method",
 					"name": "then",
@@ -1098,10 +1369,10 @@
 									"type": "union",
 									"elements": [
 										{
-											"type": "undefined"
+											"type": "null"
 										},
 										{
-											"type": "null"
+											"type": "undefined"
 										},
 										{
 											"type": "function",
@@ -1122,11 +1393,11 @@
 												"elements": [
 													{
 														"type": "identifier",
-														"name": "TResult1"
+														"name": "PromiseLike<TResult1>"
 													},
 													{
 														"type": "identifier",
-														"name": "PromiseLike<TResult1>"
+														"name": "TResult1"
 													}
 												]
 											},
@@ -1144,10 +1415,10 @@
 									"type": "union",
 									"elements": [
 										{
-											"type": "undefined"
+											"type": "null"
 										},
 										{
-											"type": "null"
+											"type": "undefined"
 										},
 										{
 											"type": "function",
@@ -1167,11 +1438,11 @@
 												"elements": [
 													{
 														"type": "identifier",
-														"name": "TResult2"
+														"name": "PromiseLike<TResult2>"
 													},
 													{
 														"type": "identifier",
-														"name": "PromiseLike<TResult2>"
+														"name": "TResult2"
 													}
 												]
 											},
@@ -1187,7 +1458,7 @@
 							"type": "application",
 							"base": {
 								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
 								"name": "Promise"
 							},
 							"typeParameters": [
@@ -1238,215 +1509,269 @@
 					},
 					"optional": false,
 					"description": "Attaches callbacks for the resolution and/or rejection of the Promise."
-				},
-				"catch": {
-					"type": "method",
-					"name": "catch",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "onrejected",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "undefined"
-										},
-										{
-											"type": "null"
-										},
-										{
-											"type": "function",
-											"parameters": [
-												{
-													"type": "parameter",
-													"name": "reason",
-													"value": {
-														"type": "any"
-													},
-													"optional": false,
-													"rest": false
-												}
-											],
-											"return": {
-												"type": "union",
-												"elements": [
-													{
-														"type": "identifier",
-														"name": "TResult"
-													},
-													{
-														"type": "identifier",
-														"name": "PromiseLike<TResult>"
-													}
-												]
-											},
-											"typeParameters": []
-										}
-									]
-								},
-								"optional": true,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "application",
-							"base": {
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
-								"name": "Promise"
-							},
-							"typeParameters": [
-								{
-									"type": "union",
-									"elements": [
-										{
-											"type": "boolean"
-										},
-										{
-											"type": "undefined"
-										},
-										{
-											"type": "null"
-										},
-										{
-											"type": "string"
-										},
-										{
-											"type": "number"
-										},
-										{
-											"type": "bigint"
-										},
-										{
-											"type": "link",
-											"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.7/node_modules/@types/react/index.d.ts:ReactPortal",
-											"name": "ReactPortal"
-										},
-										{
-											"type": "identifier",
-											"name": "ReactElement"
-										},
-										{
-											"type": "application",
-											"base": {
-												"type": "link",
-												"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-												"name": "Iterable"
-											},
-											"typeParameters": [
-												{
-													"type": "identifier",
-													"name": "ReactNode"
-												}
-											]
-										},
-										{
-											"type": "typeParameter",
-											"name": "TResult",
-											"constraint": null,
-											"default": {
-												"type": "identifier",
-												"name": "never"
-											}
-										}
-									]
-								}
-							]
-						},
-						"typeParameters": [
-							{
-								"type": "typeParameter",
-								"name": "TResult",
-								"constraint": null,
-								"default": {
-									"type": "never"
-								}
-							}
-						]
-					},
-					"optional": false,
-					"description": "Attaches a callback for only the rejection of the Promise."
-				},
-				"finally": {
-					"type": "method",
-					"name": "finally",
-					"value": {
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "onfinally",
-								"value": {
-									"type": "union",
-									"elements": [
-										{
-											"type": "undefined"
-										},
-										{
-											"type": "null"
-										},
-										{
-											"type": "function",
-											"parameters": [],
-											"return": {
-												"type": "void"
-											},
-											"typeParameters": []
-										}
-									]
-								},
-								"optional": true,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "application",
-							"base": {
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@5.9.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
-								"name": "Promise"
-							},
-							"typeParameters": [
-								{
-									"type": "identifier",
-									"name": "AwaitedReactNode"
-								}
-							]
-						},
-						"typeParameters": []
-					},
-					"optional": false,
-					"description": "Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The\nresolved value cannot be modified from the callback."
-				},
-				"__@toStringTag@71": {
-					"type": "property",
-					"name": "__@toStringTag@71",
-					"value": {
-						"type": "string"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": ""
 				}
 			},
 			"typeParameters": [],
 			"description": "Represents the completion of an asynchronous operation"
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RowRenderProps": {
+		"HoverEvent": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:RowRenderProps",
-			"name": "RowRenderProps",
-			"extends": [
-				{
-					"type": "link",
-					"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ItemRenderProps",
-					"name": "ItemRenderProps"
-				}
-			],
+			"name": "HoverEvent",
 			"properties": {
+				"pointerType": {
+					"type": "property",
+					"name": "pointerType",
+					"value": {
+						"type": "identifier",
+						"name": "\"mouse\" | \"pen\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The pointer type that triggered the hover event."
+				},
+				"target": {
+					"type": "property",
+					"name": "target",
+					"value": {
+						"type": "identifier",
+						"name": "HTMLElement"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The target element of the hover event."
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"hoverstart\" | \"hoverend\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of hover event being fired."
+				}
+			}
+		},
+		"PressEvent": {
+			"type": "interface",
+			"name": "PressEvent",
+			"properties": {
+				"altKey": {
+					"type": "property",
+					"name": "altKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the alt keyboard modifier was held during the press event."
+				},
+				"continuePropagation": {
+					"type": "property",
+					"name": "continuePropagation",
+					"value": {
+						"type": "identifier",
+						"name": "() => void"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
+				},
+				"ctrlKey": {
+					"type": "property",
+					"name": "ctrlKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the ctrl keyboard modifier was held during the press event."
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "identifier",
+						"name": "string | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
+				},
+				"metaKey": {
+					"type": "property",
+					"name": "metaKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the meta keyboard modifier was held during the press event."
+				},
+				"pointerType": {
+					"type": "property",
+					"name": "pointerType",
+					"value": {
+						"type": "identifier",
+						"name": "PointerType"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The pointer type that triggered the press event."
+				},
+				"shiftKey": {
+					"type": "property",
+					"name": "shiftKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the shift keyboard modifier was held during the press event."
+				},
+				"target": {
+					"type": "property",
+					"name": "target",
+					"value": {
+						"type": "identifier",
+						"name": "Element"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The target element of the press event."
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of press event being fired."
+				},
+				"x": {
+					"type": "property",
+					"name": "x",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "X position relative to the target."
+				},
+				"y": {
+					"type": "property",
+					"name": "y",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Y position relative to the target."
+				}
+			}
+		},
+		"RowRenderProps": {
+			"type": "interface",
+			"name": "RowRenderProps",
+			"properties": {
+				"allowsDragging": {
+					"type": "property",
+					"name": "allowsDragging",
+					"value": {
+						"type": "identifier",
+						"name": "boolean | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item allows dragging."
+				},
+				"hasChildItems": {
+					"type": "property",
+					"name": "hasChildItems",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the row has child rows."
+				},
+				"id": {
+					"type": "property",
+					"name": "id",
+					"value": {
+						"type": "identifier",
+						"name": "Key | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The unique id of the row."
+				},
+				"isDisabled": {
+					"type": "property",
+					"name": "isDisabled",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+				},
+				"isDragging": {
+					"type": "property",
+					"name": "isDragging",
+					"value": {
+						"type": "identifier",
+						"name": "boolean | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item is currently being dragged."
+				},
+				"isDropTarget": {
+					"type": "property",
+					"name": "isDropTarget",
+					"value": {
+						"type": "identifier",
+						"name": "boolean | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "Whether the item is currently an active drop target."
+				},
+				"isExpanded": {
+					"type": "property",
+					"name": "isExpanded",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the row is expanded."
+				},
+				"isFocused": {
+					"type": "property",
+					"name": "isFocused",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently focused."
+				},
+				"isFocusVisible": {
+					"type": "property",
+					"name": "isFocusVisible",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the item is currently keyboard focused."
+				},
 				"isFocusVisibleWithin": {
 					"type": "property",
 					"name": "isFocusVisibleWithin",
@@ -1456,27 +1781,6 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the row's children have keyboard focus."
-				},
-				"id": {
-					"type": "property",
-					"name": "id",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "undefined"
-							},
-							{
-								"type": "string"
-							},
-							{
-								"type": "number"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "The unique id of the row."
 				},
 				"isHovered": {
 					"type": "property",
@@ -1508,46 +1812,15 @@
 					"readonly": false,
 					"description": "Whether the item is currently selected."
 				},
-				"isFocused": {
+				"level": {
 					"type": "property",
-					"name": "isFocused",
+					"name": "level",
 					"value": {
-						"type": "boolean"
+						"type": "number"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the item is currently focused."
-				},
-				"isFocusVisible": {
-					"type": "property",
-					"name": "isFocusVisible",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the item is currently keyboard focused."
-				},
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
-				},
-				"selectionMode": {
-					"type": "property",
-					"name": "selectionMode",
-					"value": {
-						"type": "identifier",
-						"name": "SelectionMode"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of selection that is allowed in the collection."
+					"description": "What level the row has within the table."
 				},
 				"selectionBehavior": {
 					"type": "property",
@@ -1560,221 +1833,16 @@
 					"readonly": false,
 					"description": "The selection behavior for the collection."
 				},
-				"allowsDragging": {
+				"selectionMode": {
 					"type": "property",
-					"name": "allowsDragging",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "boolean"
-							},
-							{
-								"type": "undefined"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "Whether the item allows dragging."
-				},
-				"isDragging": {
-					"type": "property",
-					"name": "isDragging",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "boolean"
-							},
-							{
-								"type": "undefined"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "Whether the item is currently being dragged."
-				},
-				"isDropTarget": {
-					"type": "property",
-					"name": "isDropTarget",
-					"value": {
-						"type": "union",
-						"elements": [
-							{
-								"type": "boolean"
-							},
-							{
-								"type": "undefined"
-							}
-						]
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "Whether the item is currently an active drop target."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"HoverEvent": {
-			"type": "interface",
-			"name": "HoverEvent",
-			"properties": {
-				"type": {
-					"type": "property",
-					"name": "type",
+					"name": "selectionMode",
 					"value": {
 						"type": "identifier",
-						"name": "\"hoverstart\" | \"hoverend\""
+						"name": "SelectionMode"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "The type of hover event being fired."
-				},
-				"pointerType": {
-					"type": "property",
-					"name": "pointerType",
-					"value": {
-						"type": "identifier",
-						"name": "\"mouse\" | \"pen\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The pointer type that triggered the hover event."
-				},
-				"target": {
-					"type": "property",
-					"name": "target",
-					"value": {
-						"type": "identifier",
-						"name": "HTMLElement"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The target element of the hover event."
-				}
-			}
-		},
-		"PressEvent": {
-			"type": "interface",
-			"name": "PressEvent",
-			"properties": {
-				"type": {
-					"type": "property",
-					"name": "type",
-					"value": {
-						"type": "identifier",
-						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of press event being fired."
-				},
-				"pointerType": {
-					"type": "property",
-					"name": "pointerType",
-					"value": {
-						"type": "identifier",
-						"name": "PointerType"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The pointer type that triggered the press event."
-				},
-				"target": {
-					"type": "property",
-					"name": "target",
-					"value": {
-						"type": "identifier",
-						"name": "Element"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The target element of the press event."
-				},
-				"shiftKey": {
-					"type": "property",
-					"name": "shiftKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the shift keyboard modifier was held during the press event."
-				},
-				"ctrlKey": {
-					"type": "property",
-					"name": "ctrlKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the ctrl keyboard modifier was held during the press event."
-				},
-				"metaKey": {
-					"type": "property",
-					"name": "metaKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the meta keyboard modifier was held during the press event."
-				},
-				"altKey": {
-					"type": "property",
-					"name": "altKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the alt keyboard modifier was held during the press event."
-				},
-				"x": {
-					"type": "property",
-					"name": "x",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "X position relative to the target."
-				},
-				"y": {
-					"type": "property",
-					"name": "y",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Y position relative to the target."
-				},
-				"key": {
-					"type": "property",
-					"name": "key",
-					"value": {
-						"type": "identifier",
-						"name": "string | undefined"
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
-				},
-				"continuePropagation": {
-					"type": "property",
-					"name": "continuePropagation",
-					"value": {
-						"type": "identifier",
-						"name": "() => void"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
+					"description": "The type of selection that is allowed in the collection."
 				}
 			}
 		}

@@ -1,0 +1,49 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["eslint", "typescript", "oxc", "react", "vitest"],
+	"env": {
+		"browser": true,
+		"builtin": true,
+		"node": true,
+		"vitest": true
+	},
+	"ignorePatterns": [
+		"**/node_modules/**",
+		"**/.cache/**",
+		"**/dist/**",
+		"**/build/**",
+		"**/.turbo/**",
+		"**/.nitro/**",
+		"**/.output/**",
+		"**/.source/**",
+		"www/src/routeTree.gen.ts"
+	],
+	"rules": {
+		"eslint/no-unused-vars": [
+			"warn",
+			{
+				"argsIgnorePattern": "^_",
+				"caughtErrorsIgnorePattern": "^_",
+				"ignoreRestSiblings": true,
+				"varsIgnorePattern": "^_"
+			}
+		],
+		"typescript/no-explicit-any": "warn",
+		"react/exhaustive-deps": "warn"
+	},
+	"overrides": [
+		{
+			"files": ["packages/colors/**"],
+			"rules": {
+				"typescript/no-non-null-assertion": "off"
+			}
+		},
+		{
+			"files": ["www/**"],
+			"rules": {
+				"react/no-danger": "warn",
+				"typescript/no-non-null-assertion": "warn"
+			}
+		}
+	]
+}

@@ -1,4 +1,5 @@
 import { Node, Project, ScriptKind, SyntaxKind } from "ts-morph";
+
 import type { FunctionDeclaration, SourceFile } from "ts-morph";
 
 // ============================================================================
@@ -146,10 +147,10 @@ function findExportFunction(sourceFile: SourceFile): FunctionDeclaration | undef
 // ============================================================================
 
 /**
- * Transform import paths from @dotui/registry to user-facing paths
+ * Transform import paths from @/registry to user-facing paths
  */
 function transformPaths(code: string): string {
-	return code.replace(/@dotui\/registry\/ui\//g, "@/components/ui/").replace(/@dotui\/registry\//g, "@/");
+	return code.replace(/@\/registry\/ui\//g, "@/components/ui/").replace(/@\/registry\//g, "@/");
 }
 
 /**

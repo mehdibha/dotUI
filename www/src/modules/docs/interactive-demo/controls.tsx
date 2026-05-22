@@ -20,16 +20,16 @@ import {
 	UserIcon,
 	XIcon,
 } from "lucide-react";
-import { ButtonContext } from "react-aria-components";
+import * as ButtonPrimitives from "react-aria-components/Button";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Field, Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
-import { Popover } from "@dotui/registry/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@dotui/registry/ui/select";
-import { Switch } from "@dotui/registry/ui/switch";
-import { TextField } from "@dotui/registry/ui/text-field";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Field, Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
+import { Popover } from "@/registry/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
+import { Switch } from "@/registry/ui/switch";
+import { TextField } from "@/registry/ui/text-field";
 
 import type {
 	ControlValues,
@@ -74,25 +74,26 @@ function ContextualHelp({ name, reference }: { name: string; reference?: Seriali
 	}
 
 	return (
-		<ButtonContext value={null}>
+		<ButtonPrimitives.ButtonContext value={null}>
 			<Dialog>
 				<Button size="sm" variant="quiet" className="size-6 [&_svg]:size-3" aria-label={`Info about ${name}`}>
 					<InfoIcon />
 				</Button>
 				<Popover placement="top" className="max-w-xs">
 					<DialogContent className="gap-2">
-						<h3 className="font-medium font-mono text-base">{name}</h3>
+						<h3 className="font-mono text-base font-medium">{name}</h3>
 
-						{reference.description && <p className="text-fg-muted text-sm">{reference.description}</p>}
+						{reference.description && <p className="text-sm text-fg-muted">{reference.description}</p>}
 
 						<code
 							className="font-mono text-[0.8125rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+							// oxlint-disable-next-line react/no-danger -- highlighted type HTML is generated from local component metadata.
 							dangerouslySetInnerHTML={{ __html: reference.typeHighlighted }}
 						/>
 					</DialogContent>
 				</Popover>
 			</Dialog>
-		</ButtonContext>
+		</ButtonPrimitives.ButtonContext>
 	);
 }
 
@@ -136,7 +137,12 @@ function BooleanControlRenderer({ control, value, onChange }: BooleanControlRend
 				<Label>{control.name}</Label>
 				<ContextualHelp name={control.name} reference={control.reference} />
 			</div>
-			<Switch isSelected={value} onChange={(selected) => onChange(control.name, selected)} size="sm" />
+			<Switch
+				aria-label={control.name}
+				isSelected={value}
+				onChange={(selected) => onChange(control.name, selected)}
+				size="sm"
+			/>
 		</Field>
 	);
 }

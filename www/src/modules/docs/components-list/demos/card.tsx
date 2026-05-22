@@ -1,9 +1,9 @@
-import { Button } from "@dotui/registry/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@dotui/registry/ui/card";
-import { Label } from "@dotui/registry/ui/field";
-import { Input } from "@dotui/registry/ui/input";
-import { Link } from "@dotui/registry/ui/link";
-import { TextField } from "@dotui/registry/ui/text-field";
+import { Button } from "@/registry/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/registry/ui/card";
+import { Label } from "@/registry/ui/field";
+import { Input } from "@/registry/ui/input";
+import { Link } from "@/registry/ui/link";
+import { TextField } from "@/registry/ui/text-field";
 
 export function CardDemo() {
 	return (
@@ -45,7 +45,7 @@ export function CardDemo() {
 				<Button variant="primary" className="mt-4 w-full" type="submit">
 					Continue with email
 				</Button>
-				<p className="mt-4 text-fg-muted text-sm">
+				<p className="mt-4 text-sm text-fg-muted">
 					Don&apos;t have an account?{" "}
 					<Link href="#" variant="quiet">
 						register

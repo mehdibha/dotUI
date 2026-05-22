@@ -1,6 +1,6 @@
-import { Label } from "@dotui/registry/ui/field";
-import { DateInput } from "@dotui/registry/ui/input";
-import { TimeField } from "@dotui/registry/ui/time-field";
+import { Label } from "@/registry/ui/field";
+import { DateInput } from "@/registry/ui/input";
+import { TimeField } from "@/registry/ui/time-field";
 
 export function TimeFieldDemo() {
 	return (

@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@dotui/registry/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 
 export function SelectDemo() {
 	return (

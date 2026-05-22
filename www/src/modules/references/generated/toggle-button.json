@@ -3,14 +3,18 @@
 	"description": "A toggle button allows a user to toggle a selection on or off, for example switching between two states or modes.",
 	"props": {
 		"variant": {
-			"type": "\"default\" | \"quiet\"",
-			"detailedType": "'default' | 'quiet' | undefined",
+			"type": "\"default\" | \"primary\" | \"quiet\"",
+			"detailedType": "'default' | 'primary' | 'quiet' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
 						"value": "default"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "primary"
 					},
 					{
 						"type": "stringLiteral",
@@ -22,14 +26,14 @@
 			"default": "'default'"
 		},
 		"size": {
-			"type": "\"sm\" | \"md\" | \"lg\"",
-			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
+			"detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "sm"
+						"value": "lg"
 					},
 					{
 						"type": "stringLiteral",
@@ -37,35 +41,24 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "lg"
+						"value": "sm"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "xs"
 					}
 				]
 			},
 			"description": "The size of the toggle button.",
 			"default": "'md'"
 		},
-		"aspect": {
-			"type": "\"default\" | \"square\" | \"auto\"",
-			"detailedType": "'default' | 'square' | 'auto' | undefined",
+		"isIconOnly": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
 			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "default"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "square"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "auto"
-					}
-				]
+				"type": "boolean"
 			},
-			"description": "Controls the button's aspect ratio behavior.\n- `\"auto\"`: Automatically detects if the button contains only an icon and applies square aspect.\n- `\"square\"`: Forces square aspect ratio.\n- `\"default\"`: Standard button sizing with padding.",
-			"default": "\"auto\""
+			"description": "Whether the toggle button only contains an icon."
 		},
 		"onPress": {
 			"type": "((e: PressEvent) => void)",
@@ -447,80 +440,13 @@
 			},
 			"description": "Handler that is called when the hover state changes."
 		},
-		"className": {
-			"type": "string | (values: ToggleButtonRenderProps) => string",
-			"detailedType": "string | (values: ToggleButtonRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "ToggleButtonRenderProps",
-									"name": "ToggleButtonRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-ToggleButton'"
-		},
-		"id": {
-			"type": "Key",
-			"detailedType": "Key | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Key"
-			},
-			"description": "When used in a ToggleButtonGroup, an identifier for the item in `selectedKeys`. When used standalone, a DOM id."
-		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the button is disabled."
-		},
-		"autoFocus": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element should receive focus on render."
-		},
-		"aria-label": {
+		"aria-controls": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
+			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
 		},
 		"aria-describedby": {
 			"type": "string",
@@ -539,16 +465,16 @@
 			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
 		},
 		"aria-disabled": {
-			"type": "boolean | \"true\" | \"false\"",
-			"detailedType": "boolean | 'true' | 'false' | undefined",
+			"type": "\"false\" | \"true\" | boolean",
+			"detailedType": "'false' | 'true' | boolean | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -573,16 +499,16 @@
 			"description": "Indicates whether the element is disabled to users of assistive technology."
 		},
 		"aria-expanded": {
-			"type": "boolean | \"true\" | \"false\"",
-			"detailedType": "boolean | 'true' | 'false' | undefined",
+			"type": "\"false\" | \"true\" | boolean",
+			"detailedType": "'false' | 'true' | boolean | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -607,16 +533,16 @@
 			"description": "Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed."
 		},
 		"aria-haspopup": {
-			"type": "boolean | \"dialog\" | \"menu\" | \"true\" | \"false\" | \"listbox\" | \"tree\" | \"grid\"",
-			"detailedType": "| boolean\n| 'dialog'\n| 'menu'\n| 'true'\n| 'false'\n| 'listbox'\n| 'tree'\n| 'grid'\n| undefined",
+			"type": "\"dialog\" | \"false\" | \"grid\" | \"listbox\" | \"menu\" | \"tree\" | \"true\" | boolean",
+			"detailedType": "| 'dialog'\n| 'false'\n| 'grid'\n| 'listbox'\n| 'menu'\n| 'tree'\n| 'true'\n| boolean\n| undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -685,25 +611,33 @@
 			},
 			"description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
 		},
-		"aria-controls": {
+		"aria-label": {
 			"type": "string",
 			"detailedType": "string | undefined",
 			"typeAst": {
 				"type": "string"
 			},
-			"description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+			"description": "Defines a string value that labels the current element."
+		},
+		"aria-labelledby": {
+			"type": "string",
+			"detailedType": "string | undefined",
+			"typeAst": {
+				"type": "string"
+			},
+			"description": "Identifies the element (or elements) that labels the current element."
 		},
 		"aria-pressed": {
-			"type": "boolean | \"true\" | \"false\" | \"mixed\"",
-			"detailedType": "boolean | 'true' | 'false' | 'mixed' | undefined",
+			"type": "\"false\" | \"mixed\" | \"true\" | boolean",
+			"detailedType": "'false' | 'mixed' | 'true' | boolean | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
-						"type": "boolean"
+						"type": "undefined"
 					},
 					{
-						"type": "undefined"
+						"type": "boolean"
 					},
 					{
 						"type": "union",
@@ -736,81 +670,13 @@
 			},
 			"description": "Indicates the current \"pressed\" state of toggle buttons."
 		},
-		"preventFocusOnPress": {
+		"autoFocus": {
 			"type": "boolean",
 			"detailedType": "boolean | undefined",
 			"typeAst": {
 				"type": "boolean"
 			},
-			"description": "Whether to prevent focus from moving to the button when pressing it.\n\nCaution, this can make the button inaccessible and should only be used when alternative keyboard interaction is provided,\nsuch as ComboBox's MenuTrigger or a NumberField's increment/decrement control."
-		},
-		"excludeFromTabOrder": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-		},
-		"defaultSelected": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element should be selected (uncontrolled)."
-		},
-		"isSelected": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element should be selected (controlled)."
-		},
-		"onChange": {
-			"type": "((isSelected: boolean) => void)",
-			"detailedType": "((isSelected: boolean) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "isSelected",
-						"value": {
-							"type": "link",
-							"id": "boolean",
-							"name": "boolean"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the element's selection state changes."
-		},
-		"slot": {
-			"type": "string | null",
-			"detailedType": "string | null | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+			"description": "Whether the element should receive focus on render."
 		},
 		"children": {
 			"type": "ReactNode | (values: ToggleButtonRenderProps) => ReactNode",
@@ -846,6 +712,169 @@
 			},
 			"description": "The children of the component. A function may be provided to alter the children based on component state."
 		},
+		"className": {
+			"type": "string | (values: ToggleButtonRenderProps) => string",
+			"detailedType": "string | (values: ToggleButtonRenderProps) => string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "string"
+					},
+					{
+						"type": "function",
+						"parameters": [
+							{
+								"type": "parameter",
+								"name": "values",
+								"value": {
+									"type": "link",
+									"id": "ToggleButtonRenderProps",
+									"name": "ToggleButtonRenderProps"
+								},
+								"optional": false,
+								"rest": false
+							}
+						],
+						"return": {
+							"type": "string"
+						},
+						"typeParameters": []
+					}
+				]
+			},
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+			"default": "'react-aria-ToggleButton'"
+		},
+		"defaultSelected": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the element should be selected (uncontrolled)."
+		},
+		"excludeFromTabOrder": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
+		},
+		"id": {
+			"type": "Key",
+			"detailedType": "Key | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "Key"
+			},
+			"description": "When used in a ToggleButtonGroup, an identifier for the item in `selectedKeys`. When used standalone, a DOM id."
+		},
+		"isDisabled": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the button is disabled."
+		},
+		"isSelected": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether the element should be selected (controlled)."
+		},
+		"onChange": {
+			"type": "((isSelected: boolean) => void)",
+			"detailedType": "((isSelected: boolean) => void) | undefined",
+			"typeAst": {
+				"type": "function",
+				"parameters": [
+					{
+						"type": "parameter",
+						"name": "isSelected",
+						"value": {
+							"type": "link",
+							"id": "boolean",
+							"name": "boolean"
+						},
+						"optional": false,
+						"rest": false
+					}
+				],
+				"return": {
+					"type": "void"
+				},
+				"typeParameters": []
+			},
+			"description": "Handler that is called when the element's selection state changes."
+		},
+		"preventFocusOnPress": {
+			"type": "boolean",
+			"detailedType": "boolean | undefined",
+			"typeAst": {
+				"type": "boolean"
+			},
+			"description": "Whether to prevent focus from moving to the button when pressing it.\n\nCaution, this can make the button inaccessible and should only be used when alternative keyboard interaction is provided,\nsuch as ComboBox's MenuTrigger or a NumberField's increment/decrement control."
+		},
+		"render": {
+			"type": "DOMRenderFunction<\"button\", ToggleButtonRenderProps>",
+			"detailedType": "| DOMRenderFunction<'button', ToggleButtonRenderProps>\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "application",
+						"base": {
+							"type": "identifier",
+							"name": "DOMRenderFunction"
+						},
+						"typeParameters": [
+							{
+								"type": "union",
+								"elements": [
+									{
+										"type": "stringLiteral",
+										"value": "button"
+									}
+								]
+							},
+							{
+								"type": "link",
+								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps",
+								"name": "ToggleButtonRenderProps"
+							}
+						]
+					}
+				]
+			},
+			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"slot": {
+			"type": "null | string",
+			"detailedType": "null | string | undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "null"
+					},
+					{
+						"type": "undefined"
+					},
+					{
+						"type": "string"
+					}
+				]
+			},
+			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+		},
 		"style": {
 			"type": "CSSProperties | (values: ToggleButtonRenderProps) => CSSProperties",
 			"detailedType": "CSSProperties | (values: ToggleButtonRenderProps) => CSSProperties | undefined",
@@ -880,49 +909,9 @@
 				]
 			},
 			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-		},
-		"render": {
-			"type": "DOMRenderFunction<\"button\", ToggleButtonRenderProps>",
-			"detailedType": "| DOMRenderFunction<'button', ToggleButtonRenderProps>\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "DOMRenderFunction"
-						},
-						"typeParameters": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "button"
-									}
-								]
-							},
-							{
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps",
-								"name": "ToggleButtonRenderProps"
-							}
-						]
-					}
-				]
-			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
 		}
 	},
 	"renderProps": {
-		"isSelected": {
-			"selector": "[data-selected]",
-			"description": "Whether the button is currently selected."
-		},
 		"isDisabled": {
 			"selector": "[data-disabled]",
 			"description": "Whether the button is disabled."
@@ -942,34 +931,43 @@
 		"isPressed": {
 			"selector": "[data-pressed]",
 			"description": "Whether the button is currently in a pressed state."
+		},
+		"isSelected": {
+			"selector": "[data-selected]",
+			"description": "Whether the button is currently selected."
 		}
 	},
 	"typeLinks": {
-		"ToggleButtonRenderProps": {
+		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps": {
 			"type": "interface",
+			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ToggleButton.d.ts:ToggleButtonRenderProps",
 			"name": "ToggleButtonRenderProps",
-			"properties": {
-				"isSelected": {
-					"type": "property",
-					"name": "isSelected",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the button is currently selected."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
+			"extends": [
+				{
+					"type": "application",
+					"base": {
 						"type": "identifier",
-						"name": "ToggleState"
+						"name": "Omit"
 					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the toggle button."
-				},
+					"typeParameters": [
+						{
+							"type": "link",
+							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Button.d.ts:ButtonRenderProps",
+							"name": "ButtonRenderProps"
+						},
+						{
+							"type": "union",
+							"elements": [
+								{
+									"type": "stringLiteral",
+									"value": "isPending"
+								}
+							]
+						}
+					]
+				}
+			],
+			"properties": {
 				"isDisabled": {
 					"type": "property",
 					"name": "isDisabled",
@@ -1019,145 +1017,37 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the button is currently in a pressed state."
+				},
+				"isSelected": {
+					"type": "property",
+					"name": "isSelected",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the button is currently selected."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "link",
+						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/toggle/useToggleState.d.ts:ToggleState",
+						"name": "ToggleState"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the toggle button."
 				}
-			}
-		},
-		"PressEvent": {
-			"type": "interface",
-			"name": "PressEvent",
-			"properties": {
-				"type": {
-					"type": "property",
-					"name": "type",
-					"value": {
-						"type": "identifier",
-						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of press event being fired."
-				},
-				"pointerType": {
-					"type": "property",
-					"name": "pointerType",
-					"value": {
-						"type": "identifier",
-						"name": "PointerType"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The pointer type that triggered the press event."
-				},
-				"target": {
-					"type": "property",
-					"name": "target",
-					"value": {
-						"type": "identifier",
-						"name": "Element"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The target element of the press event."
-				},
-				"shiftKey": {
-					"type": "property",
-					"name": "shiftKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the shift keyboard modifier was held during the press event."
-				},
-				"ctrlKey": {
-					"type": "property",
-					"name": "ctrlKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the ctrl keyboard modifier was held during the press event."
-				},
-				"metaKey": {
-					"type": "property",
-					"name": "metaKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the meta keyboard modifier was held during the press event."
-				},
-				"altKey": {
-					"type": "property",
-					"name": "altKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the alt keyboard modifier was held during the press event."
-				},
-				"x": {
-					"type": "property",
-					"name": "x",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "X position relative to the target."
-				},
-				"y": {
-					"type": "property",
-					"name": "y",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Y position relative to the target."
-				},
-				"key": {
-					"type": "property",
-					"name": "key",
-					"value": {
-						"type": "identifier",
-						"name": "string | undefined"
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
-				},
-				"continuePropagation": {
-					"type": "property",
-					"name": "continuePropagation",
-					"value": {
-						"type": "identifier",
-						"name": "() => void"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
-				}
-			}
+			},
+			"typeParameters": [],
+			"description": ""
 		},
 		"HoverEvent": {
 			"type": "interface",
 			"name": "HoverEvent",
 			"properties": {
-				"type": {
-					"type": "property",
-					"name": "type",
-					"value": {
-						"type": "identifier",
-						"name": "\"hoverstart\" | \"hoverend\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of hover event being fired."
-				},
 				"pointerType": {
 					"type": "property",
 					"name": "pointerType",
@@ -1179,61 +1069,145 @@
 					"optional": false,
 					"readonly": false,
 					"description": "The target element of the hover event."
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"hoverstart\" | \"hoverend\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of hover event being fired."
 				}
 			}
 		},
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps": {
+		"PressEvent": {
 			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ToggleButtonRenderProps",
-			"name": "ToggleButtonRenderProps",
-			"extends": [
-				{
-					"type": "application",
-					"base": {
-						"type": "identifier",
-						"name": "Omit"
-					},
-					"typeParameters": [
-						{
-							"type": "link",
-							"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@1.16.0_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types.d.ts:ButtonRenderProps",
-							"name": "ButtonRenderProps"
-						},
-						{
-							"type": "union",
-							"elements": [
-								{
-									"type": "stringLiteral",
-									"value": "isPending"
-								}
-							]
-						}
-					]
-				}
-			],
+			"name": "PressEvent",
 			"properties": {
-				"isSelected": {
+				"altKey": {
 					"type": "property",
-					"name": "isSelected",
+					"name": "altKey",
 					"value": {
 						"type": "boolean"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "Whether the button is currently selected."
+					"description": "Whether the alt keyboard modifier was held during the press event."
 				},
-				"state": {
+				"continuePropagation": {
 					"type": "property",
-					"name": "state",
+					"name": "continuePropagation",
 					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-stately+toggle@3.9.5_react@19.2.1/node_modules/@react-stately/toggle/dist/types.d.ts:ToggleState",
-						"name": "ToggleState"
+						"type": "identifier",
+						"name": "() => void"
 					},
 					"optional": false,
 					"readonly": false,
-					"description": "State of the toggle button."
+					"description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
 				},
+				"ctrlKey": {
+					"type": "property",
+					"name": "ctrlKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the ctrl keyboard modifier was held during the press event."
+				},
+				"key": {
+					"type": "property",
+					"name": "key",
+					"value": {
+						"type": "identifier",
+						"name": "string | undefined"
+					},
+					"optional": true,
+					"readonly": false,
+					"description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
+				},
+				"metaKey": {
+					"type": "property",
+					"name": "metaKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the meta keyboard modifier was held during the press event."
+				},
+				"pointerType": {
+					"type": "property",
+					"name": "pointerType",
+					"value": {
+						"type": "identifier",
+						"name": "PointerType"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The pointer type that triggered the press event."
+				},
+				"shiftKey": {
+					"type": "property",
+					"name": "shiftKey",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the shift keyboard modifier was held during the press event."
+				},
+				"target": {
+					"type": "property",
+					"name": "target",
+					"value": {
+						"type": "identifier",
+						"name": "Element"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The target element of the press event."
+				},
+				"type": {
+					"type": "property",
+					"name": "type",
+					"value": {
+						"type": "identifier",
+						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "The type of press event being fired."
+				},
+				"x": {
+					"type": "property",
+					"name": "x",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "X position relative to the target."
+				},
+				"y": {
+					"type": "property",
+					"name": "y",
+					"value": {
+						"type": "number"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Y position relative to the target."
+				}
+			}
+		},
+		"ToggleButtonRenderProps": {
+			"type": "interface",
+			"name": "ToggleButtonRenderProps",
+			"properties": {
 				"isDisabled": {
 					"type": "property",
 					"name": "isDisabled",
@@ -1283,10 +1257,29 @@
 					"optional": false,
 					"readonly": false,
 					"description": "Whether the button is currently in a pressed state."
+				},
+				"isSelected": {
+					"type": "property",
+					"name": "isSelected",
+					"value": {
+						"type": "boolean"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "Whether the button is currently selected."
+				},
+				"state": {
+					"type": "property",
+					"name": "state",
+					"value": {
+						"type": "identifier",
+						"name": "ToggleState"
+					},
+					"optional": false,
+					"readonly": false,
+					"description": "State of the toggle button."
 				}
-			},
-			"typeParameters": [],
-			"description": ""
+			}
 		}
 	}
 }

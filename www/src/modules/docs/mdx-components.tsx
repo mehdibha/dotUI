@@ -1,37 +1,38 @@
 import { ArrowUpRightIcon } from "lucide-react";
-import type { MDXComponents } from "mdx/types";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Alert, type AlertProps } from "@dotui/registry/ui/alert";
-import { Link } from "@dotui/registry/ui/link";
+import type { MDXComponents } from "mdx/types";
 
 import { CodeBlock, Pre } from "@/modules/docs/code-block";
 import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "@/modules/docs/code-block-tabs";
 import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "@/modules/docs/demo";
-import { Example, type ExampleProps } from "@/modules/docs/example";
-import { Examples } from "@/modules/docs/examples";
+import { Example } from "@/modules/docs/example";
+import { Examples, type ExamplesProps } from "@/modules/docs/examples";
 import { InteractiveDemo } from "@/modules/docs/interactive-demo";
-import { PageTabPanel, PageTabs } from "@/modules/docs/page-tabs";
 import { Reference, type ReferenceProps } from "@/modules/docs/reference";
+import { cn } from "@/registry/lib/utils";
+import { Alert, type AlertProps } from "@/registry/ui/alert";
+import { Link } from "@/registry/ui/link";
 
 export const mdxComponents: MDXComponents = {
-	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 font-bold text-4xl", className)} {...props} />,
+	h1: ({ className, ...props }) => <h1 className={cn("mt-2 scroll-m-20 text-4xl font-bold", className)} {...props} />,
 	h2: ({ className, ...props }) => (
-		<h2 className={cn("mt-12 scroll-m-20 font-semibold text-xl tracking-tight first:mt-0", className)} {...props} />
+		<h2 className={cn("mt-12 scroll-m-20 text-xl font-semibold tracking-tight first:mt-0", className)} {...props} />
 	),
 	h3: ({ className, ...props }) => (
-		<h3 className={cn("mt-8 scroll-m-20 font-semibold text-lg tracking-tight", className)} {...props} />
+		<h3 className={cn("mt-8 scroll-m-20 text-lg font-semibold tracking-tight", className)} {...props} />
 	),
 	h4: ({ className, ...props }) => (
-		<h4 className={cn("mt-8 scroll-m-20 font-medium text-base tracking-tight", className)} {...props} />
+		<h4 className={cn("mt-8 scroll-m-20 text-base font-medium tracking-tight", className)} {...props} />
 	),
 	h5: ({ className, ...props }) => (
-		<h5 className={cn("mt-8 scroll-m-20 font-medium text-base tracking-tight", className)} {...props} />
+		<h5 className={cn("mt-8 scroll-m-20 text-base font-medium tracking-tight", className)} {...props} />
 	),
 	h6: ({ className, ...props }) => (
-		<h6 className={cn("mt-8 scroll-m-20 font-medium text-base tracking-tight", className)} {...props} />
+		<h6 className={cn("mt-8 scroll-m-20 text-base font-medium tracking-tight", className)} {...props} />
 	),
-	p: ({ className, ...props }) => <p className={cn("not-first:mt-4 text-base leading-7", className)} {...props} />,
+	p: ({ className, ...props }) => (
+		<p className={cn("text-[0.9375rem] leading-7 not-first:mt-4", className)} {...props} />
+	),
 	a: ({ className, children, href, ...props }): React.ComponentProps<"a"> => {
 		const isInternal = href.startsWith("/");
 		return (
@@ -67,14 +68,12 @@ export const mdxComponents: MDXComponents = {
 	},
 	code: (props) => (
 		<code
-			className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-card not-in-[pre]:px-1.25 not-in-[pre]:py-0.75 not-in-[pre]:font-normal not-in-[pre]:text-[0.9375rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+			className="not-in-[pre]:rounded-sm not-in-[pre]:border not-in-[pre]:bg-card not-in-[pre]:px-1.25 not-in-[pre]:py-0.75 not-in-[pre]:text-[0.8rem] not-in-[pre]:font-normal **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
 			{...props}
 		/>
 	),
 	Alert: ({ className, ...props }: AlertProps) => <Alert className={cn("mt-4", className)} {...props} />,
-	Steps: (props) => <div className="[&>h3]:step ml-4 border-l pl-8 [counter-reset:step]" {...props} />,
-	PageTabs,
-	PageTabPanel,
+	Steps: (props) => <div className="ml-4 border-l pl-8 [counter-reset:step] [&>h3]:step" {...props} />,
 	CodeBlockTabs,
 	CodeBlockTabsList,
 	CodeBlockTabsTrigger,
@@ -82,10 +81,10 @@ export const mdxComponents: MDXComponents = {
 	Demo: ({ className, ...props }: DemoProps) => <Demo className={cn("not-first:mt-4", className)} {...props} />,
 	DemoCode,
 	DemoCodePreview,
-	Example: ({ className, ...props }: ExampleProps) => (
-		<Example className={cn("not-first:mt-4", className)} {...props} />
+	Examples: ({ className, ...props }: ExamplesProps) => (
+		<Examples className={cn("not-first:mt-4", className)} {...props} />
 	),
-	Examples,
+	Example,
 	InteractiveDemo: ({ className, ...props }: React.ComponentProps<typeof InteractiveDemo>) => (
 		<InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />
 	),

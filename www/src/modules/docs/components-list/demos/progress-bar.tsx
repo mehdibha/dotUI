@@ -1,4 +1,4 @@
-import { ProgressBar, ProgressBarControl } from "@dotui/registry/ui/progress-bar";
+import { ProgressBar, ProgressBarControl } from "@/registry/ui/progress-bar";
 
 export function ProgressBarDemo() {
 	return (

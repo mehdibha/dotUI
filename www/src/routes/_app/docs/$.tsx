@@ -1,14 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
-import { findNeighbour } from "fumadocs-core/page-tree";
 
-import { AdobeIcon } from "@dotui/registry/components/icons/adobe";
-import { GitHubIcon } from "@dotui/registry/components/icons/github";
-import { ShadcnIcon } from "@dotui/registry/components/icons/shadcn";
-import { ExternalLinkIcon } from "@dotui/registry/icons";
-import { cn } from "@dotui/registry/lib/utils";
-import { LinkButton } from "@dotui/registry/ui/button";
+import { findNeighbour } from "fumadocs-core/page-tree";
 
 import browserCollections from "@/.source/browser";
 import { siteConfig } from "@/config/site";
@@ -98,49 +92,28 @@ const clientLoader = browserCollections.docs.createClientLoader({
 
 		return (
 			<TOCProvider toc={toc}>
-				<PageLayout className="container max-w-3xl pt-6 has-data-page-tabs:*:data-page-header:border-b-0 md:pt-10 lg:pt-20 xl:max-w-5xl">
-					<div data-page-header="" className="space-y-3 border-b pb-8">
-						<div className="flex items-center justify-between">
-							<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
-							<div className="flex items-center gap-2">
-								<DocsPager neighbours={neighbours} />
-								<DocsCopyPage content={rawContent} url={url} />
+				<PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
+					<div className="mx-auto flex w-full max-w-3xl min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
+						<div data-page-header="" className="relative mb-2 space-y-3 pb-4">
+							<div className="flex items-start justify-between">
+								<div className="flex flex-col gap-2">
+									<PageHeaderHeading className="xl:leading-none">{frontmatter.title}</PageHeaderHeading>
+									<PageHeaderDescription>{frontmatter.description}</PageHeaderDescription>
+								</div>
+								<div className="flex items-center gap-2">
+									<DocsPager neighbours={neighbours} />
+									<DocsCopyPage content={rawContent} url={url} />
+								</div>
 							</div>
+							<div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_40%,transparent)] via-[color-mix(in_oklab,var(--color-border)_90%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
 						</div>
-						<PageHeaderDescription className="text-wrap">{frontmatter.description}</PageHeaderDescription>
-						{frontmatter.links?.length && (
-							<div className="mt-2 flex items-center gap-2">
-								{frontmatter.links.map((link) => {
-									const icon = getIcon(link.href);
-									return (
-										<LinkButton
-											key={link.href}
-											href={link.href}
-											target="_blank"
-											size="sm"
-											className="h-6 font-semibold text-fg-muted text-xs hover:text-fg [&_svg]:size-3"
-										>
-											{icon}
-											{link.label}
-											<ExternalLinkIcon />
-										</LinkButton>
-									);
-								})}
-							</div>
-						)}
-					</div>
-					<div
-						className={cn(
-							"not-has-data-page-tabs:mt-12 has-data-page-tabs:**:data-outer-toc:hidden",
-							hasToc &&
-								"not-has-data-page-tabs:xl:grid not-has-data-page-tabs:xl:grid-cols-[1fr_180px] not-has-data-page-tabs:xl:gap-10",
-						)}
-					>
-						<div className="min-w-0">
+						<div>
 							<MDX components={mdxComponents} />
-							{lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}
 						</div>
-						{hasToc && <TOC data-outer-toc="" />}
+						<div className="min-w-0">{lastModified && <PageLastUpdate date={lastModified} className="mt-12" />}</div>
+					</div>
+					<div className="sticky top-[calc(var(--header-height)+14px)] z-30 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+						{hasToc && <TOC className="pr-12" />}
 					</div>
 				</PageLayout>
 			</TOCProvider>
@@ -154,10 +127,3 @@ function DocsPage() {
 
 	return <Content url={data.url} rawContent={data.rawContent} neighbours={data.neighbours} />;
 }
-
-const getIcon = (url: string) => {
-	if (url.includes("adobe")) return <AdobeIcon />;
-	if (url.includes("github")) return <GitHubIcon />;
-	if (url.includes("shadcn")) return <ShadcnIcon />;
-	return null;
-};

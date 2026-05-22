@@ -1,8 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
-import { Index } from "@dotui/registry/blocks";
-
 import { BlockViewer } from "@/modules/blocks/block-viewer";
+import { Index } from "@/registry/blocks";
 
 export const Route = createFileRoute("/view/$block")({
 	component: BlockViewPage,

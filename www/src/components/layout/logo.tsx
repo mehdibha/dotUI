@@ -1,9 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
-import { cn } from "@dotui/registry/lib/utils";
-import { Heading } from "@dotui/registry/ui/heading";
-
 import { siteConfig } from "@/config/site";
+import { cn } from "@/registry/lib/utils";
+import { Heading } from "@/registry/ui/heading";
 
 export function Logo({ className, type = "link" }: { className?: string; type?: "link" | "span" }) {
 	const content = (
@@ -15,7 +14,7 @@ export function Logo({ className, type = "link" }: { className?: string; type?: 
 			<Heading
 				data-wordmark
 				level={2}
-				className="mt-1.5 font-bold font-josefin text-base leading-normal tracking-tighter"
+				className="mt-1.5 font-josefin text-base leading-normal font-bold tracking-tighter"
 			>
 				{siteConfig.name}
 			</Heading>

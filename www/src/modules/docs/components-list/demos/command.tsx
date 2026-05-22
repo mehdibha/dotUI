@@ -1,4 +1,4 @@
-import { Command, CommandContent, CommandInput, CommandItem } from "@dotui/registry/ui/command";
+import { Command, CommandContent, CommandInput, CommandItem } from "@/registry/ui/command";
 
 export function CommandDemo() {
 	return (

@@ -1,10 +1,10 @@
-import { Checkbox, CheckboxIndicator } from "@dotui/registry/ui/checkbox";
-import { Label } from "@dotui/registry/ui/field";
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
+import { Label } from "@/registry/ui/field";
 
 export function CheckboxDemo() {
 	return (
 		<Checkbox>
-			<CheckboxIndicator />
+			<CheckboxControl />
 			<Label>Accept terms and conditions</Label>
 		</Checkbox>
 	);

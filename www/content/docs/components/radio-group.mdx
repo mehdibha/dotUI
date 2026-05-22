@@ -7,100 +7,97 @@ links:
 wip: true
 ---
 
+<Demo name="radio-group/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="radio-group/demos/default" />
+```npm
+npx shadcn@latest add @dotui/radio-group
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/radio-group
-    ```
+Use radio group to allow users to select a single option from a short list of related options.
 
-    ## Usage
+```tsx
+import { Radio, RadioControl, RadioGroup } from "@/components/ui/radio-group";
+import { FieldGroup, Label } from "@/components/ui/field";
+```
 
-    Use radio group to allow users to select a single option from a short list of related options.
+```tsx
+<RadioGroup defaultValue="nextjs">
+	<Label>React frameworks</Label>
+	<FieldGroup>
+		<Radio value="nextjs">
+			<RadioControl />
+			<Label>Next.js</Label>
+		</Radio>
+		<Radio value="remix">
+			<RadioControl />
+			<Label>Remix</Label>
+		</Radio>
+	</FieldGroup>
+</RadioGroup>
+```
 
-    ```tsx
-    import { Radio, RadioGroup, RadioIndicator } from "@/components/ui/radio-group";
-    ```
+## Playground
 
-    ```tsx
-    <RadioGroup defaultValue="sm">
-      <Radio value="sm">
-        <RadioIndicator />
-        <Label>Small</Label>
-      </Radio>
-      <Radio value="md">
-        <RadioIndicator />
-        <Label>Medium</Label>
-      </Radio>
-    </RadioGroup>
-    ```
+Use the controls below to experiment with different radio group props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="radio-group"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Select frameworks",
+		},
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "vertical",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isReadOnly",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different radio group props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="radio-group" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Select size",
-        },
-        {
-          type: "enum",
-          name: "orientation",
-          options: ["horizontal", "vertical"],
-          defaultValue: "vertical",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isReadOnly",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isInvalid",
-          defaultValue: false,
-        },
-      ]}
-    />
+<Examples className="lg:grid-cols-3">
+	<Example name="radio-group/demos/default" title="Default" />
+	<Example name="radio-group/demos/description" title="With Description" />
+	<Example name="radio-group/demos/error-message" title="Invalid" />
+	<Example name="radio-group/demos/disabled" title="Disabled" />
+	<Example name="radio-group/demos/read-only" title="ReadOnly" />
+	<Example name="radio-group/demos/required" title="Required" />
+	<Example name="radio-group/demos/cards" title="Cards" className="lg:col-span-3" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    ### RadioGroup
+### RadioGroup
 
-    <Reference name="radio-group" />
+<Reference name="radio-group" />
 
-    ### Radio
+### Radio
 
-    <Reference name="radio" />
+<Reference name="radio" />
 
-  </PageTabPanel>
+### RadioControl
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="radio-group/demos/default" />
-      <Example name="radio-group/demos/orientation" />
-      <Example name="radio-group/demos/cards" />
-      <Example name="radio-group/demos/label" />
-      <Example name="radio-group/demos/description" />
-      <Example name="radio-group/demos/error-message" />
-      <Example name="radio-group/demos/disabled" />
-      <Example name="radio-group/demos/read-only" />
-      <Example name="radio-group/demos/required" />
-      <Example name="radio-group/demos/uncontrolled" />
-      <Example name="radio-group/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="radio-control" />

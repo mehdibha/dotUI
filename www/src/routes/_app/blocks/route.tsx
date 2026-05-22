@@ -1,9 +1,8 @@
 import { createFileRoute, Outlet, useParams } from "@tanstack/react-router";
 
-import { blocksCategories } from "@dotui/registry/blocks/registry";
-import { Tab, TabList, Tabs } from "@dotui/registry/ui/tabs";
-
 import { PageHeader, PageHeaderDescription, PageHeaderHeading, PageLayout } from "@/modules/docs/page-layout";
+import { blocksCategories } from "@/registry/blocks/registry";
+import { Tab, TabList, Tabs } from "@/registry/ui/tabs";
 
 export const Route = createFileRoute("/_app/blocks")({
 	component: BlocksLayout,
@@ -24,7 +23,7 @@ function BlocksLayout() {
 							<Tab
 								key={item.slug}
 								id={item.slug}
-								href={{ to: "/blocks/{-$category}", params: { category: item.path } }}
+								href={item.path ? `/blocks/${item.path}` : "/blocks"}
 								className="flex items-center gap-2 rounded-full px-4 py-3 text-sm"
 							>
 								{item.name}

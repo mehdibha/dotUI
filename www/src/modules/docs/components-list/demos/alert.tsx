@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertTitle } from "@dotui/registry/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert";
 
 export function AlertDemo() {
 	return (

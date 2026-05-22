@@ -1,40 +1,62 @@
 ---
 title: Input Group
-description: An input group combines an input with addons like buttons or icons.
-wip: true
+description: An input group combines an input with addons like buttons, icons, or labels.
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="input-group/demos/input-group" />
 
-    ## Installation
+## Installation
 
-    ```npm
-    npx shadcn@latest add @dotui/input
-    ```
+```npm
+npx shadcn@latest add @dotui/input
+```
 
-    ## Usage
+## Usage
 
-    ```tsx
-    import { InputGroup, InputAddon } from "@/components/ui/input";
-    ```
+```tsx
+import { Input, InputGroup, InputGroupAddon } from "@/components/ui/input";
+```
 
-    ```tsx
-    <InputGroup>
-      <InputAddon>https://</InputAddon>
-      <Input placeholder="example.com" />
-    </InputGroup>
-    ```
+```tsx
+<InputGroup>
+	<InputGroupAddon>https://</InputGroupAddon>
+	<Input placeholder="example.com" />
+</InputGroup>
+```
 
-    ## API Reference
+## Orientation
 
-    <Reference name="input" />
+Use `orientation="vertical"` to stack addons above or below the input — useful with a `TextArea`.
 
-  </PageTabPanel>
+```tsx
+<InputGroup orientation="vertical">
+	<TextArea placeholder="Write a comment..." />
+	<InputGroupAddon>
+		<Button size="sm" variant="primary">
+			Comment
+		</Button>
+	</InputGroupAddon>
+</InputGroup>
+```
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <p className="text-fg-muted col-span-full">No examples yet.</p>
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+## Sizes
+
+The `size` prop is forwarded to the wrapped input. Available sizes are `sm`, `md` (default), and `lg`.
+
+```tsx
+<InputGroup size="sm">…</InputGroup>
+<InputGroup size="md">…</InputGroup>
+<InputGroup size="lg">…</InputGroup>
+```
+
+## Examples
+
+<Examples>
+	<Example name="input-group/demos/input-group" title="Prefix" />
+	<Example name="input-group/demos/vertical-group" title="Vertical" />
+</Examples>
+
+## API Reference
+
+<Reference name="input-group" />
+<Reference name="input-group-addon" />

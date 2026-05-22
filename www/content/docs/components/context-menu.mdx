@@ -1,0 +1,55 @@
+---
+title: Context Menu
+description: A context menu displays a list of actions at the pointer position.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Menu.html
+wip: true
+---
+
+<Demo name="context-menu/demos/basic" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/context-menu
+```
+
+## Usage
+
+Use context menus to display actions when a user right clicks an element.
+
+```tsx
+import { ContextMenu } from "@/components/ui/context-menu";
+import { MenuContent, MenuItem } from "@/components/ui/menu";
+import { Popover } from "@/components/ui/popover";
+```
+
+```tsx
+<ContextMenu
+	overlay={
+		<Popover>
+			<MenuContent>
+				<MenuItem>Account settings</MenuItem>
+				<MenuItem>Create team</MenuItem>
+				<MenuItem>Command menu</MenuItem>
+				<MenuItem>Log out</MenuItem>
+			</MenuContent>
+		</Popover>
+	}
+>
+	Right click me
+</ContextMenu>
+```
+
+## Examples
+
+<Examples>
+	<Example name="context-menu/demos/basic" />
+</Examples>
+
+## API Reference
+
+### ContextMenu
+
+<Reference name="context-menu" />

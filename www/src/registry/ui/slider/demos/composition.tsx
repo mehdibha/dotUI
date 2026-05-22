@@ -1,0 +1,25 @@
+import { Volume1Icon, Volume2Icon } from "@/registry/__generated__/icons";
+import { Description, Label } from "@/registry/ui/field";
+import { Slider, SliderControl, SliderTrack, SliderFill, SliderOutput, SliderThumb } from "@/registry/ui/slider";
+
+export default function Demo() {
+	return (
+		<Slider defaultValue={50} className="flex flex-col gap-2">
+			<div className="flex items-center justify-between gap-2">
+				<Label>Volume</Label>
+				<SliderOutput />
+			</div>
+			<div className="flex items-center gap-2">
+				<Volume1Icon />
+				<SliderControl>
+					<SliderTrack>
+						<SliderFill />
+					</SliderTrack>
+					<SliderThumb />
+				</SliderControl>
+				<Volume2Icon />
+			</div>
+			<Description>Adjust the volume.</Description>
+		</Slider>
+	);
+}

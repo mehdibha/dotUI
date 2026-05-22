@@ -1,0 +1,32 @@
+"use client";
+
+import React from "react";
+
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Drawer } from "@/registry/ui/drawer";
+import { FieldGroup, Label } from "@/registry/ui/field";
+import { Radio, RadioGroup } from "@/registry/ui/radio-group";
+
+export default function Demo() {
+	const [placement, setPlacement] = React.useState("bottom");
+	return (
+		<div className="flex items-center gap-12">
+			<Dialog>
+				<Button>Open drawer</Button>
+				<Drawer placement={placement as "top" | "bottom" | "left" | "right"}>
+					<DialogContent>Drawer content</DialogContent>
+				</Drawer>
+			</Dialog>
+			<RadioGroup value={placement} onChange={setPlacement}>
+				<Label>Placement</Label>
+				<FieldGroup className="gap-1">
+					<Radio value="top">Top</Radio>
+					<Radio value="left">Left</Radio>
+					<Radio value="bottom">Bottom</Radio>
+					<Radio value="right">Right</Radio>
+				</FieldGroup>
+			</RadioGroup>
+		</div>
+	);
+}

@@ -7,124 +7,117 @@ links:
 wip: true
 ---
 
+<Demo name="dialog/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="dialog/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/dialog
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/dialog
-    ```
+Use dialog to grab the user's attention for critical tasks, like confirming actions, providing additional details, or capturing input.
 
-    ## Usage
+```tsx
+import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogBody,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
+import { Overlay } from "@/components/ui/overlay";
+```
 
-    Use dialog to grab the user's attention for critical tasks, like confirming actions, providing additional details, or capturing input.
+```tsx
+<Dialog>
+	<Button>Open dialog</Button>
+	<Overlay>
+		<DialogContent>
+			<DialogHeader>
+				<DialogTitle>Dialog Title</DialogTitle>
+				<DialogDescription>Dialog description</DialogDescription>
+			</DialogHeader>
+			<DialogBody>Content</DialogBody>
+			<DialogFooter>
+				<Button slot="close">Close</Button>
+			</DialogFooter>
+		</DialogContent>
+	</Overlay>
+</Dialog>
+```
 
-    ```tsx
-    import { Button } from "@/components/ui/button";
-    import {
-      Dialog,
-      DialogBody,
-      DialogContent,
-      DialogDescription,
-      DialogFooter,
-      DialogHeader,
-      DialogHeading,
-    } from "@/components/ui/dialog";
-    import { Overlay } from "@/components/ui/overlay";
-    ```
+## Playground
 
-    ```tsx
-    <Dialog>
-      <Button>Open dialog</Button>
-      <Overlay>
-        <DialogContent>
-          <DialogHeader>
-            <DialogHeading>Dialog Title</DialogHeading>
-            <DialogDescription>Dialog description</DialogDescription>
-          </DialogHeader>
-          <DialogBody>Content</DialogBody>
-          <DialogFooter>
-            <Button slot="close">Close</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Overlay>
-    </Dialog>
-    ```
+Use the controls below to experiment with different dialog props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="dialog"
+	controls={[
+		{
+			type: "string",
+			name: "title",
+			defaultValue: "Dialog Title",
+		},
+		{
+			type: "string",
+			name: "description",
+			defaultValue: "This is a dialog description.",
+		},
+		{
+			type: "boolean",
+			name: "isDismissable",
+			defaultValue: true,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different dialog props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="dialog" 
-      controls={[
-        {
-          type: "string",
-          name: "title",
-          defaultValue: "Dialog Title",
-        },
-        {
-          type: "string",
-          name: "description",
-          defaultValue: "This is a dialog description.",
-        },
-        {
-          type: "boolean",
-          name: "isDismissable",
-          defaultValue: true,
-        },
-      ]}
-    />
+<Examples>
+	<Example name="dialog/demos/basic" />
+	<Example name="dialog/demos/title" />
+	<Example name="dialog/demos/description" />
+	<Example name="dialog/demos/types" />
+	<Example name="dialog/demos/dismissable" />
+	<Example name="dialog/demos/alert-dialog" />
+	<Example name="dialog/demos/composition" />
+	<Example name="dialog/demos/controlled" />
+	<Example name="dialog/demos/nested" />
+	<Example name="dialog/demos/inset-content" />
+	<Example name="dialog/demos/async-form-submission" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    ### Dialog
+### Dialog
 
-    <Reference name="dialog" />
+<Reference name="dialog" />
 
-    ### DialogContent
+### DialogContent
 
-    <Reference name="dialog-content" />
+<Reference name="dialog-content" />
 
-    ### DialogHeader
+### DialogHeader
 
-    <Reference name="dialog-header" />
+<Reference name="dialog-header" />
 
-    ### DialogHeading
+### DialogTitle
 
-    <Reference name="dialog-heading" />
+<Reference name="dialog-heading" />
 
-    ### DialogDescription
+### DialogDescription
 
-    <Reference name="dialog-description" />
+<Reference name="dialog-description" />
 
-    ### DialogBody
+### DialogBody
 
-    <Reference name="dialog-body" />
+<Reference name="dialog-body" />
 
-    ### DialogFooter
+### DialogFooter
 
-    <Reference name="dialog-footer" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="dialog/demos/basic" />
-      <Example name="dialog/demos/title" />
-      <Example name="dialog/demos/description" />
-      <Example name="dialog/demos/types" />
-      <Example name="dialog/demos/dismissable" />
-      <Example name="dialog/demos/alert-dialog" />
-      <Example name="dialog/demos/composition" />
-      <Example name="dialog/demos/controlled" />
-      <Example name="dialog/demos/nested" />
-      <Example name="dialog/demos/inset-content" />
-      <Example name="dialog/demos/async-form-submission" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="dialog-footer" />

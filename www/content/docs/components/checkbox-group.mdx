@@ -4,98 +4,112 @@ description: A checkbox group allows a user to select multiple items from a list
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/CheckboxGroup.html
-wip: true
 ---
 
+<Demo name="checkbox-group/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="checkbox-group/demos/default" />
+```npm
+npx shadcn@latest add @dotui/checkbox-group
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/checkbox-group
-    ```
+Use `CheckboxGroup` to allow users to select multiple items from a list of options.
 
-    ## Usage
+```tsx
+import { CheckboxGroup } from "@/components/ui/checkbox-group";
+import { Checkbox, CheckboxControl } from "@/components/ui/checkbox";
+import { FieldGroup, Label } from "@/components/ui/field";
+```
 
-    Use `CheckboxGroup` to allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
+```tsx
+<CheckboxGroup defaultValue={["nextjs"]}>
+	<Label>React frameworks</Label>
+	<FieldGroup>
+		<Checkbox value="nextjs">
+			<CheckboxControl />
+			<Label>Next.js</Label>
+		</Checkbox>
+		<Checkbox value="remix">
+			<CheckboxControl />
+			<Label>Remix</Label>
+		</Checkbox>
+	</FieldGroup>
+</CheckboxGroup>
+```
 
-    ```tsx
-    import { Checkbox, CheckboxIndicator } from "@/components/ui/checkbox";
-    import { CheckboxGroup } from "@/components/ui/checkbox-group";
-    ```
+## Selection
 
-    ```tsx
-    <CheckboxGroup defaultValue={["react"]}>
-      <Label>Frameworks</Label>
-      <Checkbox value="react">
-        <CheckboxIndicator />
-        <Label>React</Label>
-      </Checkbox>
-      <Checkbox value="vue">
-        <CheckboxIndicator />
-        <Label>Vue</Label>
-      </Checkbox>
-    </CheckboxGroup>
-    ```
+Use `defaultValue` for uncontrolled checkbox groups, or `value` and `onChange` for controlled checkbox groups.
 
-    ## Playground
+```tsx
+<CheckboxGroup defaultValue={["nextjs"]}>{/* ... */}</CheckboxGroup>
+```
 
-    Use the controls below to experiment with different checkbox group props and see the live preview and code update.
+```tsx
+const [frameworks, setFrameworks] = useState<string[]>(["nextjs"]);
 
-    <InteractiveDemo 
-      name="checkbox-group" 
-      controls={[
-        {
-          type: "string",
-          name: "label",
-          defaultValue: "Select frameworks",
-        },
-        {
-          type: "enum",
-          name: "orientation",
-          options: ["horizontal", "vertical"],
-          defaultValue: "vertical",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isReadOnly",
-          defaultValue: false,
-        },
-        {
-          type: "boolean",
-          name: "isInvalid",
-          defaultValue: false,
-        },
-      ]}
-    />
+<CheckboxGroup value={frameworks} onChange={setFrameworks}>
+	{/* ... */}
+</CheckboxGroup>;
+```
 
-    ## API Reference
+## Playground
 
-    <Reference name="checkbox-group" />
+Use the controls below to experiment with different checkbox group props and see the live preview and code update.
 
-  </PageTabPanel>
+<InteractiveDemo
+	name="checkbox-group"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Select frameworks",
+		},
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "vertical",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isReadOnly",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+	]}
+/>
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="checkbox-group/demos/default" />
-      <Example name="checkbox-group/demos/cards" />
-      <Example name="checkbox-group/demos/label" />
-      <Example name="checkbox-group/demos/description" />
-      <Example name="checkbox-group/demos/error-message" />
-      <Example name="checkbox-group/demos/disabled" />
-      <Example name="checkbox-group/demos/read-only" />
-      <Example name="checkbox-group/demos/required" />
-      <Example name="checkbox-group/demos/uncontrolled" />
-      <Example name="checkbox-group/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+## Examples
+
+<Examples className="lg:grid-cols-3">
+	<Example name="checkbox-group/demos/default" title="Default" />
+	<Example name="checkbox-group/demos/description" title="With Description" />
+	<Example name="checkbox-group/demos/error-message" title="Invalid" />
+	<Example name="checkbox-group/demos/disabled" title="Disabled" />
+	<Example name="checkbox-group/demos/read-only" title="ReadOnly" />
+	<Example name="checkbox-group/demos/required" title="Required" />
+	<Example name="checkbox-group/demos/cards" title="Cards" className="lg:col-span-3" />
+</Examples>
+
+## API Reference
+
+### CheckboxGroup
+
+<Reference name="checkbox-group" />
+
+### Checkbox
+
+<Reference name="checkbox" />

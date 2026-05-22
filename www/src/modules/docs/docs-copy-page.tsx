@@ -1,11 +1,10 @@
-import { CheckIcon, ChevronDownIcon, CopyIcon } from "@dotui/registry/icons";
-import { Button } from "@dotui/registry/ui/button";
-import { Group } from "@dotui/registry/ui/group";
-import { Menu, MenuContent, MenuItem } from "@dotui/registry/ui/menu";
-import { Popover } from "@dotui/registry/ui/popover";
-
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { getBaseUrl } from "@/lib/url";
+import { CheckIcon, ChevronDownIcon, CopyIcon } from "@/registry/__generated__/icons";
+import { Button } from "@/registry/ui/button";
+import { Group } from "@/registry/ui/group";
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
+import { Popover } from "@/registry/ui/popover";
 
 function getPromptUrl(baseURL: string, url: string) {
 	return `${baseURL}?q=${encodeURIComponent(
@@ -87,7 +86,7 @@ export function DocsCopyPage({ content, url }: { content: string; url: string })
 				{isCopied ? <CheckIcon /> : <CopyIcon />} Copy page
 			</Button>
 			<Menu>
-				<Button size="sm">
+				<Button size="sm" isIconOnly>
 					<ChevronDownIcon />
 				</Button>
 				<Popover placement="bottom end">

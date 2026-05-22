@@ -7,66 +7,75 @@ links:
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="date-picker/demos/basic" />
 
-    <Demo name="date-picker/demos/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/date-picker
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/date-picker
-    ```
+## Usage
 
-    ## Usage
+Use date pickers to allow users to select a date using a field and a calendar popover.
 
-    Use date pickers to allow users to select a date using a field and a calendar popover.
+```tsx
+import { CalendarIcon } from "lucide-react";
 
-    ```tsx
-    import { Calendar } from "@/components/ui/calendar";
-    import { DatePicker, DatePickerContent, DatePickerInput } from "@/components/ui/date-picker";
-    import { Label } from "@/components/ui/field";
-    ```
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { DatePicker } from "@/components/ui/date-picker";
+import { DialogContent } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/field";
+import { DateInput, InputAddon, InputGroup } from "@/components/ui/input";
+import { Overlay } from "@/components/ui/overlay";
+```
 
-    ```tsx
-    <DatePicker>
-      <Label>Date</Label>
-      <DatePickerInput />
-      <DatePickerContent>
-        <Calendar />
-      </DatePickerContent>
-    </DatePicker>
-    ```
+```tsx
+<DatePicker>
+	<Label>Date</Label>
+	<InputGroup>
+		<DateInput />
+		<InputAddon>
+			<Button variant="default" size="sm" isIconOnly>
+				<CalendarIcon />
+			</Button>
+		</InputAddon>
+	</InputGroup>
+	<Overlay type="popover" mobileType="drawer">
+		<DialogContent>
+			<Calendar />
+		</DialogContent>
+	</Overlay>
+</DatePicker>
+```
 
-    ## API Reference
+## Examples
 
-    ### DatePicker
+<Examples>
+	<Example name="date-picker/demos/basic" />
+	<Example name="date-picker/demos/label" />
+	<Example name="date-picker/demos/description" />
+	<Example name="date-picker/demos/error-message" />
+	<Example name="date-picker/demos/placeholder" />
+	<Example name="date-picker/demos/granularity" />
+	<Example name="date-picker/demos/hour-cycle" />
+	<Example name="date-picker/demos/time-zones" />
+	<Example name="date-picker/demos/hide-time-zone" />
+	<Example name="date-picker/demos/disabled" />
+	<Example name="date-picker/demos/read-only" />
+	<Example name="date-picker/demos/required" />
+	<Example name="date-picker/demos/composition" />
+	<Example name="date-picker/demos/uncontrolled" />
+	<Example name="date-picker/demos/controlled" />
+</Examples>
 
-    <Reference name="date-picker-input" />
+## API Reference
 
-    ### DatePickerContent
+### DatePicker
 
-    <Reference name="date-picker-content" />
+<Reference name="date-picker" />
 
-  </PageTabPanel>
+### DateRangePicker
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="date-picker/demos/default" />
-      <Example name="date-picker/demos/label" />
-      <Example name="date-picker/demos/description" />
-      <Example name="date-picker/demos/error-message" />
-      <Example name="date-picker/demos/placeholder" />
-      <Example name="date-picker/demos/granularity" />
-      <Example name="date-picker/demos/hour-cycle" />
-      <Example name="date-picker/demos/time-zones" />
-      <Example name="date-picker/demos/hide-time-zone" />
-      <Example name="date-picker/demos/disabled" />
-      <Example name="date-picker/demos/read-only" />
-      <Example name="date-picker/demos/required" />
-      <Example name="date-picker/demos/composition" />
-      <Example name="date-picker/demos/uncontrolled" />
-      <Example name="date-picker/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="date-range-picker" />

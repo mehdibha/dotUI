@@ -1,0 +1,4 @@
+:root {
+	--btn-radius: var(--radius-md);
+	--btn-font-weight: var(--font-weight-medium);
+}

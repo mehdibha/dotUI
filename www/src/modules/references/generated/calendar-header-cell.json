@@ -2,15 +2,6 @@
 	"name": "CalendarHeaderCellProps",
 	"description": "A calendar header cell displays a week day name at the top of a column within a calendar.",
 	"props": {
-		"className": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
-			"default": "'react-aria-CalendarHeaderCell'"
-		},
 		"children": {
 			"type": "ReactNode",
 			"typeAst": {
@@ -19,14 +10,14 @@
 			},
 			"description": "The children of the component."
 		},
-		"style": {
-			"type": "CSSProperties",
-			"detailedType": "CSSProperties | undefined",
+		"className": {
+			"type": "string",
+			"detailedType": "string | undefined",
 			"typeAst": {
-				"type": "identifier",
-				"name": "CSSProperties"
+				"type": "string"
 			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+			"default": "'react-aria-CalendarHeaderCell'"
 		},
 		"id": {
 			"type": "string",
@@ -69,6 +60,15 @@
 				]
 			},
 			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+		},
+		"style": {
+			"type": "CSSProperties",
+			"detailedType": "CSSProperties | undefined",
+			"typeAst": {
+				"type": "identifier",
+				"name": "CSSProperties"
+			},
+			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
 		}
 	}
 }

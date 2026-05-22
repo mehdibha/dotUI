@@ -3,19 +3,38 @@
 	"description": "Missing description.",
 	"extendsElement": "span",
 	"props": {
-		"variant": {
-			"type": "\"danger\" | \"warning\" | \"info\" | \"success\" | \"primary\" | \"default\"",
-			"detailedType": "| 'danger'\n| 'warning'\n| 'info'\n| 'success'\n| 'primary'\n| 'default'\n| undefined",
+		"appearance": {
+			"type": "\"solid\" | \"subtle\"",
+			"detailedType": "'solid' | 'subtle' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "danger"
+						"value": "solid"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "warning"
+						"value": "subtle"
+					}
+				]
+			},
+			"description": "The visual appearance of the badge.",
+			"default": "'solid'"
+		},
+		"variant": {
+			"type": "\"accent\" | \"danger\" | \"info\" | \"neutral\" | \"success\" | \"warning\"",
+			"detailedType": "| 'accent'\n| 'danger'\n| 'info'\n| 'neutral'\n| 'success'\n| 'warning'\n| undefined",
+			"typeAst": {
+				"type": "union",
+				"elements": [
+					{
+						"type": "stringLiteral",
+						"value": "accent"
+					},
+					{
+						"type": "stringLiteral",
+						"value": "danger"
 					},
 					{
 						"type": "stringLiteral",
@@ -23,30 +42,30 @@
 					},
 					{
 						"type": "stringLiteral",
+						"value": "neutral"
+					},
+					{
+						"type": "stringLiteral",
 						"value": "success"
 					},
 					{
 						"type": "stringLiteral",
-						"value": "primary"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "default"
+						"value": "warning"
 					}
 				]
 			},
 			"description": "The visual style of the badge.",
-			"default": "'default'"
+			"default": "'neutral'"
 		},
 		"size": {
-			"type": "\"sm\" | \"md\" | \"lg\"",
-			"detailedType": "'sm' | 'md' | 'lg' | undefined",
+			"type": "\"lg\" | \"md\" | \"sm\"",
+			"detailedType": "'lg' | 'md' | 'sm' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
 					{
 						"type": "stringLiteral",
-						"value": "sm"
+						"value": "lg"
 					},
 					{
 						"type": "stringLiteral",
@@ -54,12 +73,12 @@
 					},
 					{
 						"type": "stringLiteral",
-						"value": "lg"
+						"value": "sm"
 					}
 				]
 			},
 			"description": "The size of the badge.",
-			"default": "'default'"
+			"default": "'md'"
 		}
 	}
 }

@@ -1,22 +1,22 @@
-import { FieldGroup, Label } from "@dotui/registry/ui/field";
-import { Radio, RadioGroup, RadioIndicator } from "@dotui/registry/ui/radio-group";
+import { FieldGroup, Label } from "@/registry/ui/field";
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 
 export function RadioGroupDemo() {
 	return (
-		<RadioGroup defaultValue="sm">
-			<Label>Size</Label>
+		<RadioGroup defaultValue="nextjs">
+			<Label>React frameworks</Label>
 			<FieldGroup>
-				<Radio value="sm">
-					<RadioIndicator />
-					<Label>Small</Label>
+				<Radio value="nextjs">
+					<RadioControl />
+					<Label>Next.js</Label>
 				</Radio>
-				<Radio value="md">
-					<RadioIndicator />
-					<Label>Medium</Label>
+				<Radio value="remix">
+					<RadioControl />
+					<Label>Remix</Label>
 				</Radio>
-				<Radio value="lg">
-					<RadioIndicator />
-					<Label>Large</Label>
+				<Radio value="gatsby">
+					<RadioControl />
+					<Label>Gatsby</Label>
 				</Radio>
 			</FieldGroup>
 		</RadioGroup>

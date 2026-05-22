@@ -4,62 +4,128 @@ description: A calendar allows a user to select a single date value.
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Calendar.html
-wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="calendar/demos/single" />
 
-    <Demo name="calendar/demos/calendar/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/calendar
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/calendar
-    ```
+## Usage
 
-    ## Usage
+Use `Calendar` to allow users to select a single date value.
 
-    Use calendars to allow users to select a single date value.
+```tsx
+import { Calendar } from "@/components/ui/calendar";
+```
 
-    ```tsx
-    import { Calendar } from "@/components/ui/calendar";
-    ```
+```tsx
+<Calendar aria-label="Date" />
+```
 
-    ```tsx
-    <Calendar aria-label="Date" />
-    ```
+Use `RangeCalendar` to let users select a contiguous range of dates.
 
-    ## API Reference
+```tsx
+import { RangeCalendar } from "@/components/ui/calendar";
+```
 
-    ### Calendar
+```tsx
+<RangeCalendar aria-label="Date range" />
+```
 
-    <Reference name="calendar-header" />
+## Composition
 
-    ### CalendarGrid
+For full control, compose the calendar from its parts.
 
-    <Reference name="calendar-grid" />
+```tsx
+import {
+	CalendarHeader,
+	CalendarGrid,
+	CalendarGridHeader,
+	CalendarHeaderCell,
+	CalendarGridBody,
+	CalendarCell,
+} from "@/components/ui/calendar";
+```
 
-    ### CalendarCell
+```tsx
+<Calendar>
+  <CalendarGrid>
+    <CalendarHeader>
+      <Button slot="previous"><ChevronLeftIcon /></Button>
+      <CalendarHeading />
+      <Button slot="next"><ChevronRightIcon /></Button>
+    </CalendarHeader>
+    <CalendarGridBody>
+      <CalendarGridHeader>
+      {day => <CalendarHeaderCell />}
+    </CalendarGridHeader>
+    <CalendarGridBody>
+      {date => <CalendarCell date={date} />}
+    </CalendarGridBody>
+  </CalendarGrid>
+</Calendar>
+```
 
-    <Reference name="calendar-cell" />
+## Value
 
-  </PageTabPanel>
+Calendar values use [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/) objects. Pass `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="calendar/demos/calendar/default" />
-      <Example name="calendar/demos/calendar/variant" />
-      <Example name="calendar/demos/calendar/visible-months" />
-      <Example name="calendar/demos/calendar/page-behaviour" />
-      <Example name="calendar/demos/calendar/validation" />
-      <Example name="calendar/demos/calendar/unvailable-dates" />
-      <Example name="calendar/demos/calendar/error-message" />
-      <Example name="calendar/demos/calendar/disabled" />
-      <Example name="calendar/demos/calendar/read-only" />
-      <Example name="calendar/demos/calendar/composition" />
-      <Example name="calendar/demos/calendar/uncontrolled" />
-      <Example name="calendar/demos/calendar/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+```tsx
+import { parseDate } from "@internationalized/date";
+
+<Calendar defaultValue={parseDate("2020-02-03")} />;
+```
+
+```tsx
+import { useState } from "react";
+import { parseDate } from "@internationalized/date";
+import type { DateValue } from "react-aria-components";
+
+const [value, setValue] = useState<DateValue>(parseDate("2020-02-03"));
+
+<Calendar value={value} onChange={setValue} />;
+```
+
+## Examples
+
+<Examples className="lg:grid-cols-2">
+	<Example name="calendar/demos/range" title="Range" />
+	<Example name="calendar/demos/disabled-example" title="Disabled" />
+	<Example name="calendar/demos/range-multiple-months" title="Multiple months" className="lg:col-span-2" />
+	<Example name="calendar/demos/invalid" title="Validation" />
+	<Example name="calendar/demos/min-max" title="Min and max dates" />
+	<Example name="calendar/demos/unavailable-weekends" title="Unavailable dates" />
+	<Example name="calendar/demos/today-indicator" title="Today indicator" />
+	<Example name="calendar/demos/short-weekdays" title="Short weekdays" />
+	<Example name="calendar/demos/international" title="Internationalization (arabic)" />
+	<Example name="calendar/demos/with-dropdowns" title="Month and year dropdowns" />
+	<Example name="calendar/demos/with-presets" title="With presets" />
+	<Example name="calendar/demos/custom-days" title="Custom days" className="lg:col-span-2" />
+	<Example name="calendar/demos/scheduler" title="Scheduler" className="lg:col-span-2" />
+</Examples>
+
+## API Reference
+
+### Calendar
+
+<Reference name="calendar" />
+
+### RangeCalendar
+
+<Reference name="range-calendar" />
+
+### CalendarHeader
+
+<Reference name="calendar-header" />
+
+### CalendarGrid
+
+<Reference name="calendar-grid" />
+
+### CalendarCell
+
+<Reference name="calendar-cell" />

@@ -1,4 +1,4 @@
-import { ColorSwatchPicker, ColorSwatchPickerItem } from "@dotui/registry/ui/color-swatch-picker";
+import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/registry/ui/color-swatch-picker";
 
 export function ColorSwatchPickerDemo() {
 	return (

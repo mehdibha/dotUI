@@ -1,5 +1,5 @@
 import React from "react";
-import { mergeRefs } from "@react-aria/utils";
+
 import {
 	AnchorProvider,
 	TOCItem as PrimitiveTOCItem,
@@ -7,9 +7,9 @@ import {
 	type TOCItemType,
 	useActiveAnchors,
 } from "fumadocs-core/toc";
-import { AlignLeftIcon } from "lucide-react";
+import { mergeRefs } from "react-aria/mergeRefs";
 
-import { cn } from "@dotui/registry/lib/utils";
+import { cn } from "@/registry/lib/utils";
 
 export type { TableOfContents, TOCItemType } from "fumadocs-core/toc";
 
@@ -38,10 +38,10 @@ export function TOC({ className, ...props }: React.ComponentProps<"div">) {
 			className={cn("sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden", className)}
 			{...props}
 		>
-			<h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
+			{/* <h3 className="inline-flex items-center gap-1.5 text-fg-muted text-sm">
 				<AlignLeftIcon className="size-4 text-fg-muted" />
 				On this page
-			</h3>
+			</h3> */}
 			<TOCScrollArea>
 				<TOCItems />
 			</TOCScrollArea>
@@ -56,7 +56,7 @@ export function TOCScrollArea({ ref, className, ...props }: React.ComponentProps
 		<div
 			ref={mergeRefs(viewRef, ref)}
 			className={cn(
-				"mask-[linear-gradient(to_bottom,transparent,white_16px,white_calc(100%-16px),transparent)] relative ms-px min-h-0 overflow-auto py-3 text-sm [scrollbar-width:none]",
+				"relative ms-px min-h-0 [scrollbar-width:none] overflow-auto mask-[linear-gradient(to_bottom,transparent,white_16px,white_calc(100%-16px),transparent)] py-3 text-sm",
 				className,
 			)}
 			{...props}
@@ -85,24 +85,24 @@ export function TocThumb({ containerRef, ...props }: React.ComponentProps<"div">
 
 function Updater({ containerRef, thumbRef }: RefProps & { thumbRef: React.RefObject<HTMLElement | null> }) {
 	const active = useActiveAnchors();
-	const onPrint = React.useEffectEvent(() => {
+	const updateThumb = React.useCallback(() => {
 		if (!containerRef.current || !thumbRef.current) return;
 		update(thumbRef.current, calc(containerRef.current, active));
-	});
+	}, [active, containerRef, thumbRef]);
 
 	React.useEffect(() => {
 		if (!containerRef.current) return;
 		const container = containerRef.current;
 
-		const observer = new ResizeObserver(onPrint);
+		const observer = new ResizeObserver(updateThumb);
 		observer.observe(container);
 
 		return () => observer.disconnect();
-	}, [containerRef]);
+	}, [containerRef, updateThumb]);
 
-	if (containerRef.current && thumbRef.current) {
-		update(thumbRef.current, calc(containerRef.current, active));
-	}
+	React.useEffect(() => {
+		updateThumb();
+	}, [updateThumb]);
 
 	return null;
 }
@@ -144,7 +144,7 @@ export function TOCItems({ ref, className, ...props }: React.ComponentProps<"div
 				containerRef={containerRef}
 				className="absolute top-(--toc-top) h-(--toc-height) w-px bg-primary transition-[height,top]"
 			/>
-			<nav ref={mergeRefs(ref, containerRef)} className={cn("flex flex-col border-l", className)} {...props}>
+			<nav ref={mergeRefs(ref, containerRef)} className={cn("flex flex-col", className)} {...props}>
 				{items.map((item) => (
 					<TOCItem key={item.url} item={item} />
 				))}
@@ -158,7 +158,7 @@ function TOCItem({ item }: { item: TOCItemType }) {
 		<PrimitiveTOCItem
 			href={item.url}
 			className={cn(
-				"wrap-anywhere py-1 text-fg-muted text-sm transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
+				"py-1 text-sm wrap-anywhere text-fg-muted transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg",
 				item.depth <= 2 && "pl-3",
 				item.depth === 3 && "pl-6",
 				item.depth >= 4 && "pl-8",

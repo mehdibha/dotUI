@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Drawer } from "@dotui/registry/ui/drawer";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Drawer } from "@/registry/ui/drawer";
 
 export function DrawerDemo() {
 	return (

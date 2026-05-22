@@ -49,13 +49,12 @@
 		"react": "^18 || ^19"
 	},
 	"devDependencies": {
-		"@dotui/biome-config": "workspace:*",
-		"@tanstack/react-router": "^1.150.0",
-		"@tanstack/react-start": "^1.150.0",
-		"@types/react": "^19.2.2",
-		"react": "^19.2.1",
+		"@tanstack/react-router": "catalog:",
+		"@tanstack/react-start": "catalog:",
+		"@types/react": "catalog:",
+		"react": "catalog:",
 		"tsup": "^8.5.0",
-		"typescript": "^5.8.3"
+		"typescript": "catalog:"
 	},
 	"publishConfig": {
 		"access": "public"

@@ -4,11 +4,13 @@
  */
 
 import * as React from "react";
+
 import { getDoc } from "globals-docs";
 
-import { cn } from "@dotui/registry/lib/utils";
+import { cn } from "@/registry/lib/utils";
 
 import { TypeLink } from "./type-popover";
+
 import type {
 	TAlias,
 	TConditional,
@@ -91,7 +93,7 @@ export function Type({ type, className }: TypeProps) {
 	if (!content) return null;
 
 	return (
-		<code className={cn("whitespace-pre-wrap font-mono text-[0.8125rem] leading-relaxed", className)}>{content}</code>
+		<code className={cn("font-mono text-[0.8125rem] leading-relaxed whitespace-pre-wrap", className)}>{content}</code>
 	);
 }
 
@@ -491,7 +493,7 @@ function InterfaceTypeView({ iface }: { iface: TInterface }) {
 				return (
 					<div key={key} className="pl-4">
 						{prop.type === "method" ? <MethodType method={prop} /> : <PropertyType prop={prop} />}
-						{prop.description && <div className="mt-0.5 text-fg-muted text-xs">{prop.description}</div>}
+						{prop.description && <div className="mt-0.5 text-xs text-fg-muted">{prop.description}</div>}
 					</div>
 				);
 			})}
@@ -697,18 +699,24 @@ function KeyofType({ keyof }: { keyof: TType }) {
  * ---------------------------------------------------------------------------------------------*/
 
 function TemplateType({ elements }: { elements: TType[] }) {
+	const keyCounts = new Map<string, number>();
+
 	return (
 		<>
 			<span className={styles.string}>`</span>
 			{elements.map((el, i) => {
+				const keyBase = typeKey(el, i);
+				const count = keyCounts.get(keyBase) ?? 0;
+				keyCounts.set(keyBase, count + 1);
+				const key = count === 0 ? keyBase : `${keyBase}-${count}`;
+
 				if (el.type === "stringLiteral") {
 					return (
-						<span key={`${el.value}-${i}`} className={styles.string}>
+						<span key={key} className={styles.string}>
 							{el.value}
 						</span>
 					);
 				}
-				const key = typeKey(el, i);
 				return (
 					<React.Fragment key={key}>
 						<span className={styles.punctuation}>{"${"}</span>

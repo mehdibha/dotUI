@@ -10,6 +10,7 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
+
 import { kebabCase } from "es-toolkit/string";
 import { globby } from "globby";
 import ts from "typescript";
@@ -19,7 +20,7 @@ import { hideBin } from "yargs/helpers";
 
 import { formatComponentData, isPublicPropsType, type ParserContext } from "./componentHandler";
 
-const CONFIG_PATH = path.join(process.cwd(), "../packages/registry/tsconfig.build.json");
+const CONFIG_PATH = path.join(process.cwd(), "tsconfig.references.json");
 const OUTPUT_DIR = path.join(process.cwd(), "src/modules/references/generated");
 
 interface RunOptions {
@@ -87,7 +88,7 @@ async function run(options: RunOptions) {
 	for (const exportNode of propsExports) {
 		try {
 			const componentRef = await formatComponentData(exportNode, parserContext);
-			const json = `${JSON.stringify(componentRef, null, 2)}\n`;
+			const json = `${JSON.stringify(componentRef, null, "\t")}\n`;
 
 			// Remove "Props" suffix for filename
 			const baseName = exportNode.name.replace(/Props$/, "");
@@ -125,7 +126,7 @@ async function getFilesToProcess(options: RunOptions, configDir: string): Promis
 	}
 
 	// Default: find all types.ts files in ui folder
-	const uiDir = path.join(configDir, "src/ui");
+	const uiDir = path.join(configDir, "src/registry/ui");
 	const files = await globby("**/types.ts", {
 		cwd: uiDir,
 		absolute: true,

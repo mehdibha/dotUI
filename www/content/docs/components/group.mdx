@@ -4,39 +4,33 @@ description: A group visually groups related UI elements together.
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="group/demos/basic" />
 
-    <Demo name="group/demos/default" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/group
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/group
-    ```
+## Usage
 
-    ## Usage
+```tsx
+import { Group } from "@/components/ui/group";
+```
 
-    ```tsx
-    import { Group } from "@/components/ui/group";
-    ```
+```tsx
+<Group>
+	<Button>One</Button>
+	<Button>Two</Button>
+</Group>
+```
 
-    ```tsx
-    <Group>
-      <Button>One</Button>
-      <Button>Two</Button>
-    </Group>
-    ```
+## Examples
 
-    ## API Reference
+<Examples>
+	<Example name="group/demos/basic" />
+</Examples>
 
-    <Reference name="group" />
+## API Reference
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="group/demos/default" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="group" />

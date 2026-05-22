@@ -1,0 +1,21 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "www",
+			"runtimeExecutable": "pnpm",
+			"runtimeArgs": ["--filter", "www", "dev"],
+			"port": 4444,
+			"autoPort": true
+		},
+		{
+			"name": "ios",
+			"runtimeExecutable": "npx",
+			"runtimeArgs": ["serve-sim"],
+			"port": 3200,
+			"env": {
+				"DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+			}
+		}
+	]
+}

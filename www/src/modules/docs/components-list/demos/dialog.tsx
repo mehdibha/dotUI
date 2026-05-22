@@ -1,4 +1,4 @@
-import { Button } from "@dotui/registry/ui/button";
+import { Button } from "@/registry/ui/button";
 import {
 	Dialog,
 	DialogBody,
@@ -6,9 +6,9 @@ import {
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
-	DialogHeading,
-} from "@dotui/registry/ui/dialog";
-import { Overlay } from "@dotui/registry/ui/overlay";
+	DialogTitle,
+} from "@/registry/ui/dialog";
+import { Overlay } from "@/registry/ui/overlay";
 
 export function DialogDemo() {
 	return (
@@ -17,7 +17,7 @@ export function DialogDemo() {
 			<Overlay>
 				<DialogContent>
 					<DialogHeader>
-						<DialogHeading>Dialog Title</DialogHeading>
+						<DialogTitle>Dialog Title</DialogTitle>
 						<DialogDescription>This is a dialog description.</DialogDescription>
 					</DialogHeader>
 					<DialogBody>

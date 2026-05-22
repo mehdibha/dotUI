@@ -33,6 +33,7 @@ import { LoaderDemo } from "./loader";
 import { MenuDemo } from "./menu";
 import { ModalDemo } from "./modal";
 import { NumberFieldDemo } from "./number-field";
+import { OTPFieldDemo } from "./otp-field";
 import { PopoverDemo } from "./popover";
 import { ProgressBarDemo } from "./progress-bar";
 import { RadioGroupDemo } from "./radio-group";
@@ -87,6 +88,7 @@ export const componentDemos: Record<string, ComponentType> = {
 	menu: MenuDemo,
 	modal: ModalDemo,
 	"number-field": NumberFieldDemo,
+	"otp-field": OTPFieldDemo,
 	popover: PopoverDemo,
 	"progress-bar": ProgressBarDemo,
 	"radio-group": RadioGroupDemo,

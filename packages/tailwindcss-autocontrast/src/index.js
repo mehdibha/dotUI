@@ -6,6 +6,7 @@ const postcss = require("postcss");
 const { parse: parseColor, converter } = require("culori");
 
 const DEFAULT_IGNORE = ["**/node_modules/**", ".next", "public", "dist", "build", "storybook-static", "coverage"];
+const fileResolutionCache = new Map();
 
 function toArray(maybeArray) {
 	if (!maybeArray) return [];
@@ -44,6 +45,58 @@ function readFileSafe(filePath) {
 	}
 }
 
+function resolveFilePath(cwd, filePath) {
+	const direct = path.isAbsolute(filePath) ? filePath : path.resolve(cwd, filePath);
+	if (fileExists(direct) || path.isAbsolute(filePath)) return direct;
+
+	const cacheKey = `${cwd}\0${filePath}`;
+	if (fileResolutionCache.has(cacheKey)) return fileResolutionCache.get(cacheKey);
+
+	const normalized = normalizePath(filePath).replace(/^(\.\/|\/)+/, "");
+	try {
+		const matches = fg.globSync([`**/${normalized}`], {
+			cwd,
+			deep: 8,
+			ignore: DEFAULT_IGNORE,
+			absolute: true,
+			onlyFiles: true,
+		});
+		if (matches.length > 0) {
+			fileResolutionCache.set(cacheKey, matches[0]);
+			return matches[0];
+		}
+	} catch (_e) {
+		// ignore
+	}
+
+	fileResolutionCache.set(cacheKey, direct);
+	return direct;
+}
+
+function readCssWithImports(filePath, seen = new Set()) {
+	const abs = path.resolve(filePath);
+	if (seen.has(abs)) return "";
+	seen.add(abs);
+
+	const raw = readFileSafe(abs);
+	if (raw == null) return null;
+
+	const importPattern = /@import\s+(?:url\()?["'](\.[^"']+)["']\)?[^;]*;/g;
+	const dir = path.dirname(abs);
+	let result = raw;
+	let match;
+
+	while ((match = importPattern.exec(raw)) != null) {
+		const importedPath = path.resolve(dir, match[1]);
+		const importedCss = readCssWithImports(importedPath, seen);
+		if (importedCss != null) {
+			result += `\n${importedCss}`;
+		}
+	}
+
+	return result;
+}
+
 function hasTailwindImport(rawCss) {
 	if (typeof rawCss !== "string") return false;
 	return (
@@ -72,7 +125,7 @@ function log(level, message, detail) {
 function detectRootStylesheet({ cwd, cssFile, source, logLevel }) {
 	// 1) Explicit cssFile wins
 	if (cssFile) {
-		const abs = path.isAbsolute(cssFile) ? cssFile : path.resolve(cwd, cssFile);
+		const abs = resolveFilePath(cwd, cssFile);
 		if (!fileExists(abs)) {
 			log(logLevel, "The provided cssFile does not exist:", `\n- Given: ${cssFile}\n- Resolved: ${abs}`);
 			return null;
@@ -390,18 +443,19 @@ function generateContrastColors(colorShadeVars) {
 
 const autoContrast = plugin.withOptions((options = {}) => {
 	return ({ addBase }) => {
-		const logLevel = options.logLevel === "silent" ? "silent" : "warn";
+		const cssFile = options.cssFile ?? options.cssfile;
+		const logLevel = options.logLevel === "silent" || options.loglevel === "silent" ? "silent" : "warn";
 		try {
 			const cwd = typeof options.cwd === "string" ? options.cwd : process.cwd();
 			const cssFilePath = detectRootStylesheet({
 				cwd,
-				cssFile: options.cssFile,
+				cssFile,
 				source: options.source,
 				logLevel,
 			});
 			if (!cssFilePath) return;
 
-			const rawCss = readFileSafe(cssFilePath);
+			const rawCss = readCssWithImports(cssFilePath);
 			if (rawCss == null) {
 				log(logLevel, "Failed to read the root stylesheet:", `\n- Path: ${cssFilePath}`);
 				return;

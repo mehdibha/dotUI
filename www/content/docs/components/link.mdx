@@ -7,34 +7,28 @@ links:
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/link
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/link
-    ```
+## Usage
 
-    ## Usage
+```tsx
+import { Link } from "@/components/ui/link";
+```
 
-    ```tsx
-    import { Link } from "@/components/ui/link";
-    ```
+```tsx
+<Link href="/docs">Documentation</Link>
+```
 
-    ```tsx
-    <Link href="/docs">Documentation</Link>
-    ```
+## Examples
 
-    ## API Reference
+<Examples>
+	<p className="text-fg-muted col-span-full">No examples yet.</p>
+</Examples>
 
-    <Reference name="link" />
+## API Reference
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <p className="text-fg-muted col-span-full">No examples yet.</p>
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="link" />

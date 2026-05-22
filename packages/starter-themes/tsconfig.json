@@ -11,6 +11,7 @@
 		"declarationMap": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
+		"ignoreDeprecations": "6.0",
 		"isolatedModules": true,
 		"outDir": "./dist"
 	},

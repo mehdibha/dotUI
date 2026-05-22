@@ -7,60 +7,59 @@ links:
 wip: true
 ---
 
+<Demo name="color-swatch-picker/demos/basic" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="color-swatch-picker/demos/basic" />
+```npm
+npx shadcn@latest add @dotui/color-swatch-picker
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/color-swatch-picker
-    ```
+Use color swatch pickers to allow users to select a color from a list of swatches.
 
-    ## Usage
+```tsx
+import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/components/ui/color-swatch-picker";
+```
 
-    Use color swatch pickers to allow users to select a color from a list of swatches.
+```tsx
+<ColorSwatchPicker>
+	<ColorSwatchPickerItem color="#ff0000" />
+	<ColorSwatchPickerItem color="#00ff00" />
+	<ColorSwatchPickerItem color="#0000ff" />
+</ColorSwatchPicker>
+```
 
-    ```tsx
-    import { ColorSwatchPicker, ColorSwatchPickerItem } from "@/components/ui/color-swatch-picker";
-    ```
+## Playground
 
-    ```tsx
-    <ColorSwatchPicker>
-      <ColorSwatchPickerItem color="#ff0000" />
-      <ColorSwatchPickerItem color="#00ff00" />
-      <ColorSwatchPickerItem color="#0000ff" />
-    </ColorSwatchPicker>
-    ```
+Use the controls below to experiment with different color swatch picker props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="color-swatch-picker"
+	controls={[
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different color swatch picker props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="color-swatch-picker" 
-      controls={[]}
-    />
+<Examples>
+	<Example name="color-swatch-picker/demos/basic" title="Basic" />
+	<Example name="color-swatch-picker/demos/disabled" title="Disabled" />
+	<Example name="color-swatch-picker/demos/controlled" title="Controlled" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    ### ColorSwatchPicker
+### ColorSwatchPicker
 
-    <Reference name="color-swatch-picker" />
+<Reference name="color-swatch-picker" />
 
-    ### ColorSwatchPickerItem
+### ColorSwatchPickerItem
 
-    <Reference name="color-swatch-picker-item" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="color-swatch-picker/demos/basic" />
-      <Example name="color-swatch-picker/demos/disabled" />
-      <Example name="color-swatch-picker/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="color-swatch-picker-item" />

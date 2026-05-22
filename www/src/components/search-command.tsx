@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
 	ArrowRightIcon,
 	ChevronsUpDownIcon,
@@ -7,16 +8,17 @@ import {
 	FileTextIcon,
 	SearchIcon,
 } from "lucide-react";
-import { composeRenderProps } from "react-aria-components";
+import { composeRenderProps } from "react-aria-components/composeRenderProps";
+
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Command } from "@dotui/registry/ui/command";
-import { Dialog, DialogContent } from "@dotui/registry/ui/dialog";
-import { Input, InputGroup } from "@dotui/registry/ui/input";
-import { MenuContent, MenuItem, MenuSection, MenuSectionHeader } from "@dotui/registry/ui/menu";
-import { Overlay } from "@dotui/registry/ui/overlay";
-import { SearchField } from "@dotui/registry/ui/search-field";
+import { Button } from "@/registry/ui/button";
+import { Command } from "@/registry/ui/command";
+import { Dialog, DialogContent } from "@/registry/ui/dialog";
+import { Input, InputGroup } from "@/registry/ui/input";
+import { MenuContent, MenuItem, MenuSection, MenuSectionHeader } from "@/registry/ui/menu";
+import { Overlay } from "@/registry/ui/overlay";
+import { SearchField } from "@/registry/ui/search-field";
 
 interface SearchCommandProps {
 	items: PageTree.Node[];
@@ -60,7 +62,7 @@ export function SearchCommand({ items, keyboardShortcut, children, onAction }: S
 					{items.map((group, index) => {
 						if (group.type === "folder") {
 							return (
-								// biome-ignore lint/suspicious/noArrayIndexKey: items is static navigation data
+								// oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
 								<MenuSection key={index}>
 									<MenuSectionHeader>{group.name}</MenuSectionHeader>
 									{group.children.map((item) => {
@@ -84,7 +86,7 @@ export function SearchCommand({ items, keyboardShortcut, children, onAction }: S
 						return null;
 					})}
 				</MenuContent>
-				<div className="flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-fg-muted text-xs [&_svg]:size-4">
+				<div className="flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs text-fg-muted [&_svg]:size-4">
 					<div className="flex items-center gap-1">
 						<ChevronsUpDownIcon />
 						<span>Navigate</span>
@@ -149,7 +151,7 @@ function SearchCommandDialog({
 								slot="close"
 								variant="default"
 								size="sm"
-								className="absolute top-2 right-2 h-7 px-2 font-normal text-xs"
+								className="absolute top-2 right-2 h-7 px-2 text-xs font-normal"
 							>
 								Esc
 							</Button>

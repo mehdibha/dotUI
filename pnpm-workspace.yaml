@@ -3,14 +3,21 @@ packages:
   - packages/*
   - config/*
 
+catalog:
+  "@tanstack/react-router": ^1.170.1
+  "@tanstack/react-start": ^1.168.2
+  "@types/react": ^19.2.2
+  "@types/react-dom": ^19.2.1
+  react: ^19.2.1
+  react-dom: ^19.2.1
+  tailwindcss: ^4.3.0
+  typescript: ^6.0.3
+
 onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
+  - "@tailwindcss/oxide"
   - bufferutil
   - core-js-pure
   - esbuild
   - msw
   - puppeteer
   - sharp
-
-patchedDependencies:
-  nitro-nightly@3.0.1-20260109-100347-99691fcb: patches/nitro-nightly@3.0.1-20260109-100347-99691fcb.patch

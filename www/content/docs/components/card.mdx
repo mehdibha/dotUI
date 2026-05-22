@@ -1,41 +1,79 @@
 ---
 title: Card
 description: A card groups related content and actions.
-wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="card/demos/basic" />
 
-    ## Installation
+## Installation
 
-    ```npm
-    npx shadcn@latest add @dotui/card
-    ```
+```npm
+npx shadcn@latest add @dotui/card
+```
 
-    ## Usage
+## Usage
 
-    ```tsx
-    import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
-    ```
+```tsx
+import {
+	Card,
+	CardAction,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+```
 
-    ```tsx
-    <Card>
-      <CardHeader>Title</CardHeader>
-      <CardContent>Content goes here.</CardContent>
-      <CardFooter>Footer</CardFooter>
-    </Card>
-    ```
+```tsx
+<Card>
+	<CardHeader>
+		<CardTitle>Card Title</CardTitle>
+		<CardDescription>Card Description</CardDescription>
+		<CardAction>Card Action</CardAction>
+	</CardHeader>
+	<CardContent>
+		<p>Card Content</p>
+	</CardContent>
+	<CardFooter>
+		<p>Card Footer</p>
+	</CardFooter>
+</Card>
+```
 
-    ## API Reference
+## Examples
 
-    <Reference name="card" />
+<Examples className="lg:grid-cols-2">
+	<Example name="card/demos/small" title="Size" />
+	<Example name="card/demos/with-image" title="With image" className="**:data-card:pt-0!" />
+</Examples>
 
-  </PageTabPanel>
+## API Reference
 
-  <PageTabPanel id="examples">
-    <Examples>
-      <p className="text-fg-muted col-span-full">No examples yet.</p>
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+### Card
+
+<Reference name="card" />
+
+### CardHeader
+
+<Reference name="card-header" />
+
+### CardTitle
+
+<Reference name="card-title" />
+
+### CardDescription
+
+<Reference name="card-description" />
+
+### CardAction
+
+<Reference name="card-action" />
+
+### CardContent
+
+<Reference name="card-content" />
+
+### CardFooter
+
+<Reference name="card-footer" />

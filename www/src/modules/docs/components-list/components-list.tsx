@@ -1,8 +1,9 @@
 "use client";
 
-import { cn } from "@dotui/registry/lib/utils";
+import { cn } from "@/registry/lib/utils";
 
 import { ComponentCard } from "./component-card";
+
 import type { ComponentCategory } from "./components-data";
 
 interface ComponentsListProps {
@@ -14,7 +15,7 @@ export function ComponentsList({ data }: ComponentsListProps) {
 		<div className="space-y-12">
 			{data.map((category) => (
 				<section key={category.slug} id={category.slug}>
-					<h2 className="font-medium text-2xl">{category.title}</h2>
+					<h2 className="text-2xl font-medium">{category.title}</h2>
 					<div className={cn("mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5")}>
 						{category.components.map((component) => (
 							<ComponentCard

@@ -1,20 +1,20 @@
 import { InfoIcon } from "lucide-react";
 
-import { Button } from "@dotui/registry/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogHeading } from "@dotui/registry/ui/dialog";
-import { Popover } from "@dotui/registry/ui/popover";
+import { Button } from "@/registry/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
+import { Popover } from "@/registry/ui/popover";
 
 export function PopoverDemo() {
 	return (
 		<div className="flex h-40 items-end justify-center">
 			<Dialog>
-				<Button aria-label="Help">
+				<Button aria-label="Help" isIconOnly>
 					<InfoIcon />
 				</Button>
 				<Popover>
 					<DialogContent>
 						<DialogHeader>
-							<DialogHeading>Need help?</DialogHeading>
+							<DialogTitle>Need help?</DialogTitle>
 						</DialogHeader>
 						<p>If you&apos;re having issues, contact our customer support team.</p>
 					</DialogContent>

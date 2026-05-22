@@ -69,22 +69,26 @@ const theme = createTheme({
 ## Implementation Plan
 
 ### Phase 1: Schema
+
 - [ ] `createThemeOptionsSchema` - validate input
 - [ ] `CreateThemeOptions` - TypeScript type
 - [ ] Support multiple color formats via colorjs.io
 
 ### Phase 2: Core Generation
+
 - [ ] Parse color → convert to HCT
 - [ ] Generate neutral from primary
 - [ ] Generate semantic palettes
 - [ ] Generate 11-step scales
 
 ### Phase 3: Modes
+
 - [ ] Light/dark default tones
 - [ ] Custom modes with isDark
 - [ ] Mode palette overrides
 
 ### Phase 4: Variants & Contrast
+
 - [ ] Apply variant to chroma
 - [ ] Apply contrast to tones
 

@@ -1,4 +1,4 @@
-import { Index } from "@dotui/registry/blocks";
+import { Index } from "@/registry/blocks";
 
 interface BlockViewerProps {
 	name: string;

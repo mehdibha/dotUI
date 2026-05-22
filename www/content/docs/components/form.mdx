@@ -7,67 +7,61 @@ links:
 wip: true
 ---
 
-<PageTabs>
-  <PageTabPanel id="overview">
+<Demo name="form/demos/basic" />
 
-    <Demo name="form/demos/basic" />
+## Installation
 
-    ## Installation
+```npm
+npx shadcn@latest add @dotui/form
+```
 
-    ```npm
-    npx shadcn@latest add @dotui/form
-    ```
+## Usage
 
-    ## Usage
+Use forms to wrap groups of form elements and handle form submission with validation.
 
-    Use forms to wrap groups of form elements and handle form submission with validation.
+```tsx
+import { Form } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { TextField } from "@/components/ui/text-field";
+import { Label } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+```
 
-    ```tsx
-    import { Form } from "@/components/ui/form";
-    import { Button } from "@/components/ui/button";
-    import { TextField } from "@/components/ui/text-field";
-    import { Label } from "@/components/ui/field";
-    import { Input } from "@/components/ui/input";
-    ```
+```tsx
+<Form onSubmit={handleSubmit}>
+	<TextField name="email" isRequired>
+		<Label>Email</Label>
+		<Input />
+	</TextField>
+	<Button type="submit" variant="primary">
+		Submit
+	</Button>
+</Form>
+```
 
-    ```tsx
-    <Form onSubmit={handleSubmit}>
-      <TextField name="email" isRequired>
-        <Label>Email</Label>
-        <Input />
-      </TextField>
-      <Button type="submit" variant="primary">
-        Submit
-      </Button>
-    </Form>
-    ```
+## Examples
 
-    ## API Reference
+<Examples>
+	<Example name="form/demos/basic" />
+	<Example name="form/demos/react-aria" />
+</Examples>
 
-    | Prop                 | Type                   | Default    | Description                                      |
-    | -------------------- | ---------------------- | ---------- | ------------------------------------------------ |
-    | `validationBehavior` | `'native' \| 'aria'`   | `'native'` | Whether to use native HTML form validation or ARIA. |
-    | `validationErrors`   | `ValidationErrors`     | -          | Validation errors to display on form fields.     |
-    | `action`             | `string \| FormHTMLAttributes<HTMLFormElement>['action']` | - | The URL to submit the form to. |
-    | `encType`            | `string`               | -          | The encoding type to use for form submission.    |
-    | `method`             | `string`               | -          | The HTTP method to use for form submission.      |
-    | `target`             | `string`               | -          | The target window for form submission.           |
-    | `autoComplete`       | `string`               | -          | Whether the browser should autocomplete the form. |
-    | `autoCapitalize`     | `string`               | -          | Whether text should be auto-capitalized.         |
-    | `children`           | `ReactNode`            | -          | The form content.                                |
+## API Reference
 
-    | Event          | Type                                      | Description                                      |
-    | -------------- | ----------------------------------------- | ------------------------------------------------ |
-    | `onSubmit`     | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is submitted. |
-    | `onReset`      | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is reset.   |
-    | `onInvalid`    | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when validation fails.    |
+| Prop                 | Type                                                      | Default    | Description                                         |
+| -------------------- | --------------------------------------------------------- | ---------- | --------------------------------------------------- |
+| `validationBehavior` | `'native' \| 'aria'`                                      | `'native'` | Whether to use native HTML form validation or ARIA. |
+| `validationErrors`   | `ValidationErrors`                                        | -          | Validation errors to display on form fields.        |
+| `action`             | `string \| FormHTMLAttributes<HTMLFormElement>['action']` | -          | The URL to submit the form to.                      |
+| `encType`            | `string`                                                  | -          | The encoding type to use for form submission.       |
+| `method`             | `string`                                                  | -          | The HTTP method to use for form submission.         |
+| `target`             | `string`                                                  | -          | The target window for form submission.              |
+| `autoComplete`       | `string`                                                  | -          | Whether the browser should autocomplete the form.   |
+| `autoCapitalize`     | `string`                                                  | -          | Whether text should be auto-capitalized.            |
+| `children`           | `ReactNode`                                               | -          | The form content.                                   |
 
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="form/demos/basic" />
-      <Example name="form/demos/react-aria" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+| Event       | Type                                      | Description                                        |
+| ----------- | ----------------------------------------- | -------------------------------------------------- |
+| `onSubmit`  | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is submitted. |
+| `onReset`   | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is reset.     |
+| `onInvalid` | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when validation fails.      |

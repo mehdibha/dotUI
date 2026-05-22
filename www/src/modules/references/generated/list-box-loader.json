@@ -1,0 +1,6 @@
+{
+	"name": "ListBoxLoaderProps",
+	"description": "Loader strip rendered below the items collection.",
+	"extendsElement": "div",
+	"props": {}
+}

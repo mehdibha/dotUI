@@ -7,82 +7,75 @@ links:
 wip: true
 ---
 
+<Demo name="color-slider/demos/default" />
 
-<PageTabs>
-  <PageTabPanel id="overview">
+## Installation
 
-    <Demo name="color-slider/demos/default" />
+```npm
+npx shadcn@latest add @dotui/color-slider
+```
 
-    ## Installation
+## Usage
 
-    ```npm
-    npx shadcn@latest add @dotui/color-slider
-    ```
+Use color sliders to allow users to adjust an individual channel of a color value.
 
-    ## Usage
+```tsx
+import { ColorSlider, ColorSliderControl } from "@/components/ui/color-slider";
+import { Label } from "@/components/ui/field";
+```
 
-    Use color sliders to allow users to adjust an individual channel of a color value.
+```tsx
+<ColorSlider defaultValue="#ff0000" channel="hue">
+	<Label>Hue</Label>
+	<ColorSliderControl />
+</ColorSlider>
+```
 
-    ```tsx
-    import { ColorSlider, ColorSliderControl } from "@/components/ui/color-slider";
-    import { Label } from "@/components/ui/field";
-    ```
+## Playground
 
-    ```tsx
-    <ColorSlider defaultValue="#ff0000" channel="hue">
-      <Label>Hue</Label>
-      <ColorSliderControl />
-    </ColorSlider>
-    ```
+Use the controls below to experiment with different color slider props and see the live preview and code update.
 
-    ## Playground
+<InteractiveDemo
+	name="color-slider"
+	controls={[
+		{
+			type: "enum",
+			name: "channel",
+			options: ["hue", "saturation", "lightness", "alpha"],
+			defaultValue: "hue",
+		},
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "horizontal",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
+/>
 
-    Use the controls below to experiment with different color slider props and see the live preview and code update.
+## Examples
 
-    <InteractiveDemo 
-      name="color-slider" 
-      controls={[
-        {
-          type: "enum",
-          name: "channel",
-          options: ["hue", "saturation", "lightness", "alpha"],
-          defaultValue: "hue",
-        },
-        {
-          type: "enum",
-          name: "orientation",
-          options: ["horizontal", "vertical"],
-          defaultValue: "horizontal",
-        },
-        {
-          type: "boolean",
-          name: "isDisabled",
-          defaultValue: false,
-        },
-      ]}
-    />
+<Examples>
+	<Example name="color-slider/demos/default" />
+	<Example name="color-slider/demos/label" />
+	<Example name="color-slider/demos/channel" />
+	<Example name="color-slider/demos/vertical" />
+	<Example name="color-slider/demos/disabled" />
+	<Example name="color-slider/demos/uncontrolled" />
+	<Example name="color-slider/demos/controlled" />
+</Examples>
 
-    ## API Reference
+## API Reference
 
-    ### ColorSlider
+### ColorSlider
 
-    <Reference name="color-slider" />
+<Reference name="color-slider" />
 
-    ### ColorSliderControl
+### ColorSliderControl
 
-    <Reference name="color-slider-control" />
-
-  </PageTabPanel>
-
-  <PageTabPanel id="examples">
-    <Examples>
-      <Example name="color-slider/demos/default" />
-      <Example name="color-slider/demos/label" />
-      <Example name="color-slider/demos/channel" />
-      <Example name="color-slider/demos/vertical" />
-      <Example name="color-slider/demos/disabled" />
-      <Example name="color-slider/demos/uncontrolled" />
-      <Example name="color-slider/demos/controlled" />
-    </Examples>
-  </PageTabPanel>
-</PageTabs>
+<Reference name="color-slider-control" />

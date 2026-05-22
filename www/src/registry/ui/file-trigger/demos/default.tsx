@@ -1,0 +1,34 @@
+"use client";
+
+import React from "react";
+
+import { UploadIcon } from "@/registry/__generated__/icons";
+import { Button } from "@/registry/ui/button";
+import { FileTrigger } from "@/registry/ui/file-trigger";
+
+export default function Demo() {
+	const [file, setFile] = React.useState<string | null>(null);
+	return (
+		<div className="flex flex-col items-center gap-4">
+			<FileTrigger
+				onSelect={(e) => {
+					if (e) {
+						const files = Array.from(e);
+						const fileName = files[0]?.name;
+						if (fileName) setFile(fileName);
+					}
+				}}
+				allowsMultiple
+			>
+				<Button>
+					<UploadIcon /> Upload
+				</Button>
+			</FileTrigger>
+			{file && (
+				<p>
+					You selected <span className="font-semibold">{file}</span>
+				</p>
+			)}
+		</div>
+	);
+}
