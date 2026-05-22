@@ -33,6 +33,7 @@ import {
 	DEFAULT_CURSOR_INTERACTIVE,
 } from "./cursor-config";
 import { IconographyConfig } from "./iconography-config";
+import { InstallCommand } from "./install-command";
 import { DEFAULT_RADIUS_FACTOR, DensityConfig, RADIUS_FACTOR_VAR, RadiusConfig } from "./layout-config";
 import { useDesignSystem } from "./preset";
 import { TypographyConfig } from "./typography-config";
@@ -394,9 +395,7 @@ export function CustomizerPanel() {
 
 			{/* Footer */}
 			<div className="flex flex-col gap-2 border-t p-3">
-				<Button variant="quiet" size="sm" className="w-full text-fg-muted">
-					--preset https://dotui.org/p/b2D0wqNxTs
-				</Button>
+				<InstallCommand />
 				<Button variant="primary" size="sm" className="w-full">
 					Create project
 				</Button>
