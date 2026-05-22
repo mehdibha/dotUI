@@ -56,7 +56,74 @@ export async function buildPublishables({
 		}
 	}
 
+	// Emit the runtime lookup index so the route handler can resolve a
+	// component name without dynamically constructing import paths.
+	const indexPath = path.join(outDir, "index.ts");
+	await fs.writeFile(indexPath, renderIndex(written, outDir), "utf8");
+	written.push(indexPath);
+
+	// Concatenate the base CSS sources so the init endpoint can ship them.
+	const bundlePath = path.join(registryDir, "__generated__", "base-css.ts");
+	await fs.mkdir(path.dirname(bundlePath), { recursive: true });
+	await fs.writeFile(bundlePath, await renderBaseCssBundle(registryDir), "utf8");
+	written.push(bundlePath);
+
 	return { written, skipped };
+}
+
+function renderIndex(writtenPaths: string[], outDir: string): string {
+	const names = writtenPaths
+		.filter((p) => p.endsWith(".ts") && !p.endsWith("/index.ts"))
+		.map((p) => path.basename(p, ".ts"))
+		.sort();
+
+	const lines: string[] = [];
+	lines.push(`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`);
+	lines.push(`import type { Publishable } from "@/registry/publisher/types";`);
+	lines.push(``);
+	lines.push(`type Loader = () => Promise<{ publishable: Publishable; publishableByPath?: Record<string, Publishable> }>;`);
+	lines.push(``);
+	lines.push(`export const publishables: Record<string, Loader> = {`);
+	for (const name of names) {
+		// JSON.stringify guards against weird characters even though component names are slug-shaped.
+		lines.push(`\t${JSON.stringify(name)}: () => import(${JSON.stringify(`./${name}`)}),`);
+	}
+	lines.push(`};`);
+	lines.push(``);
+	lines.push(`export const PUBLISHABLE_NAMES: readonly string[] = ${JSON.stringify(names)};`);
+	lines.push(``);
+	// Silence the unused warning for callers that only use `publishables`.
+	void outDir;
+	return lines.join("\n");
+}
+
+async function renderBaseCssBundle(registryDir: string): Promise<string> {
+	// Order matches `www/src/registry/styles.css`.
+	const candidates = [
+		path.join(registryDir, "base", "base.css"),
+		path.join(registryDir, "base", "colors.css"),
+		path.join(registryDir, "base", "theme.css"),
+		path.join(registryDir, "base", "fonts.css"),
+	];
+	const parts: string[] = [];
+	for (const file of candidates) {
+		try {
+			const css = await fs.readFile(file, "utf8");
+			parts.push(`/* ===== ${path.basename(file)} ===== */`);
+			parts.push(css.trimEnd());
+		} catch {
+			// Missing source file — skip silently.
+		}
+	}
+	const bundle = parts.join("\n\n");
+
+	const lines: string[] = [];
+	lines.push(`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`);
+	lines.push(`// Concatenation of www/src/registry/base/*.css for the registry:base init item.`);
+	lines.push(``);
+	lines.push(`export const baseCss = ${JSON.stringify(bundle)};`);
+	lines.push(``);
+	return lines.join("\n");
 }
 
 interface BuildOneInput {
