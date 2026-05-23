@@ -7,6 +7,7 @@ import { Description, Label } from "@/registry/ui/field";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import { registryUi } from "@/registry/ui/registry";
+import { BLUR_OPTIONS, CURSOR_OPTIONS, OPACITY_OPTIONS, RADIUS_OPTIONS, SHADOW_OPTIONS } from "@/registry/publisher/token-map";
 import { Select, SelectValue } from "@/registry/ui/select";
 import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider";
 
@@ -91,59 +92,6 @@ export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
 
 /* -------------------- Component detail view -------------------- */
 
-const radiusOptions = [
-	{ label: "none", value: "0" },
-	{ label: "sm", value: "--radius-sm" },
-	{ label: "md", value: "--radius-md" },
-	{ label: "lg", value: "--radius-lg" },
-	{ label: "xl", value: "--radius-xl" },
-	{ label: "2xl", value: "--radius-2xl" },
-	{ label: "full", value: "--radius-full" },
-] as const;
-
-const blurOptions = [
-	{ label: "None", value: "0px" },
-	{ label: "Extra Small", value: "--blur-xs" },
-	{ label: "Small", value: "--blur-sm" },
-	{ label: "Medium", value: "--blur-md" },
-	{ label: "Large", value: "--blur-lg" },
-	{ label: "Extra Large", value: "--blur-xl" },
-];
-
-const opacityOptions = [
-	{ label: "20%", value: "20%" },
-	{ label: "40%", value: "40%" },
-	{ label: "60%", value: "60%" },
-	{ label: "80%", value: "80%" },
-];
-
-const shadowOptions = [
-	{ label: "None", value: "none" },
-	{ label: "Extra Small", value: "--shadow-xs" },
-	{ label: "Small", value: "--shadow-sm" },
-	{ label: "Medium", value: "--shadow-md" },
-	{ label: "Large", value: "--shadow-lg" },
-	{ label: "Extra Large", value: "--shadow-xl" },
-	{ label: "2XL", value: "--shadow-2xl" },
-	{ label: "Shine", value: "--shadow-shine" },
-] as const;
-
-const cursorOptions = [
-	{ label: "Interactive", value: "--cursor-interactive" },
-	{ label: "Disabled", value: "--cursor-disabled" },
-	{ label: "Default", value: "default" },
-	{ label: "Pointer", value: "pointer" },
-	{ label: "Grab", value: "grab" },
-	{ label: "Grabbing", value: "grabbing" },
-	{ label: "Not allowed", value: "not-allowed" },
-	{ label: "Wait", value: "wait" },
-	{ label: "Help", value: "help" },
-	{ label: "Crosshair", value: "crosshair" },
-	{ label: "Text", value: "text" },
-	{ label: "Move", value: "move" },
-	{ label: "Progress", value: "progress" },
-] as const;
-
 const SPACING_REM_PER_UNIT = 0.25;
 
 const colorOptions = Object.entries(COLOR_TOKENS)
@@ -227,12 +175,12 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
 	}
 
 	const optionsByType = {
-		blur: blurOptions,
+		blur: BLUR_OPTIONS,
 		color: colorOptions,
-		cursor: cursorOptions,
+		cursor: CURSOR_OPTIONS,
 		"font-size": [],
-		opacity: opacityOptions,
-		shadow: shadowOptions,
+		opacity: OPACITY_OPTIONS,
+		shadow: SHADOW_OPTIONS,
 	} satisfies Record<Exclude<TokenType, "radius" | "spacing">, readonly { label: string; value: string }[]>;
 	const options = optionsByType[def.type];
 
@@ -268,30 +216,30 @@ interface ScalarParamEditorProps {
 
 function RadiusParamSlider({ paramName, def, selected, onChange }: ScalarParamEditorProps) {
 	const value = selected ?? def.default;
-	const selectedIndex = radiusOptions.findIndex((opt) => opt.value === value);
-	const fallbackIndex = radiusOptions.findIndex((opt) => opt.value === def.default);
+	const selectedIndex = RADIUS_OPTIONS.findIndex((opt) => opt.value === value);
+	const fallbackIndex = RADIUS_OPTIONS.findIndex((opt) => opt.value === def.default);
 	const index = selectedIndex >= 0 ? selectedIndex : fallbackIndex >= 0 ? fallbackIndex : 0;
-	const current = radiusOptions[index] ?? radiusOptions[0];
+	const current = RADIUS_OPTIONS[index] ?? RADIUS_OPTIONS[0];
 	return (
 		<div className="flex flex-col gap-2">
 			<Slider
 				aria-label={toTitleCase(paramName)}
 				value={index}
 				minValue={0}
-				maxValue={radiusOptions.length - 1}
+				maxValue={RADIUS_OPTIONS.length - 1}
 				step={1}
 				onChange={(value) => {
 					const rawIndex = Array.isArray(value) ? value[0] : value;
 					if (typeof rawIndex !== "number") return;
 
-					const nextIndex = Math.min(Math.max(Math.round(rawIndex), 0), radiusOptions.length - 1);
-					const next = radiusOptions[nextIndex];
+					const nextIndex = Math.min(Math.max(Math.round(rawIndex), 0), RADIUS_OPTIONS.length - 1);
+					const next = RADIUS_OPTIONS[nextIndex];
 					if (next) onChange(next.value);
 				}}
 			>
 				<div className="flex items-center justify-between">
 					<Label>{toTitleCase(paramName)}</Label>
-					<SliderOutput>{current.label}</SliderOutput>
+					<SliderOutput>{current?.label ?? RADIUS_OPTIONS[0]?.label}</SliderOutput>
 				</div>
 				<SliderControl />
 				{def.description && <Description className="text-xs text-fg-muted/60">{def.description}</Description>}

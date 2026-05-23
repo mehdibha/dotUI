@@ -1,4 +1,5 @@
-export type Density = "compact" | "default" | "comfortable";
+export type { Density } from "@/registry/types";
+import type { Density } from "@/registry/types";
 
 /**
  * Compact representation for URL serialization. Short keys keep the encoded
