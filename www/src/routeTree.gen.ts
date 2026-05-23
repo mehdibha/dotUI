@@ -18,6 +18,7 @@ import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
+import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
 import { Route as AppBlocksRouteRouteImport } from './routes/_app/blocks/route'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
@@ -68,6 +69,11 @@ const AppComponentsRoute = AppComponentsRouteImport.update({
   path: '/components',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppPresetsRoute = AppPresetsRouteImport.update({
+  id: '/presets',
+  path: '/presets',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
   id: '/docs',
   path: '/docs',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/components': typeof AppComponentsRoute
+  '/presets': typeof AppPresetsRoute
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/components': typeof AppComponentsRoute
+  '/presets': typeof AppPresetsRoute
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/_app/blocks': typeof AppBlocksRouteRouteWithChildren
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
   '/_app/components': typeof AppComponentsRoute
+  '/_app/presets': typeof AppPresetsRoute
   '/_app/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/blocks'
     | '/docs'
     | '/components'
+    | '/presets'
     | '/create'
     | '/demos/$slug'
     | '/preview/$slug'
@@ -166,6 +176,7 @@ export interface FileRouteTypes {
     | '/blocks'
     | '/docs'
     | '/components'
+    | '/presets'
     | '/create'
     | '/demos/$slug'
     | '/preview/$slug'
@@ -182,6 +193,7 @@ export interface FileRouteTypes {
     | '/_app/blocks'
     | '/_app/docs'
     | '/_app/components'
+    | '/_app/presets'
     | '/_app/create'
     | '/demos/$slug'
     | '/preview/$slug'
@@ -266,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppComponentsRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/presets': {
+      id: '/_app/presets'
+      path: '/presets'
+      fullPath: '/presets'
+      preLoaderRoute: typeof AppPresetsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/docs': {
       id: '/_app/docs'
       path: '/docs'
@@ -334,6 +353,7 @@ interface AppRouteRouteChildren {
   AppBlocksRouteRoute: typeof AppBlocksRouteRouteWithChildren
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
   AppComponentsRoute: typeof AppComponentsRoute
+  AppPresetsRoute: typeof AppPresetsRoute
   AppCreateRoute: typeof AppCreateRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -342,6 +362,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppBlocksRouteRoute: AppBlocksRouteRouteWithChildren,
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
   AppComponentsRoute: AppComponentsRoute,
+  AppPresetsRoute: AppPresetsRoute,
   AppCreateRoute: AppCreateRoute,
   AppIndexRoute: AppIndexRoute,
 }
