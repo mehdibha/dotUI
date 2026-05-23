@@ -10,7 +10,7 @@
 		"build": "pnpm build:registry && NODE_OPTIONS='--max-old-space-size=8192' vite build && pnpm build:postprocess",
 		"build:postprocess": "[ -n \"$VERCEL\" ] && cp -r .vercel/output/dist/client/__tsr .vercel/output/static/__tsr 2>/dev/null || true",
 		"preview": "vite preview",
-		"typecheck": "tsc --noEmit",
+		"typecheck": "pnpm build:registry && tsc --noEmit",
 		"clean": "git clean -xdf .output .nitro .cache .turbo node_modules",
 		"build:references": "tsx scripts/api-docs-builder/src/index.ts"
 	},

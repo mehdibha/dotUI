@@ -93,14 +93,20 @@ function exprToValue(expr: Expression, filePath: string): unknown {
 			if (property.isKind(SyntaxKind.SpreadAssignment)) {
 				throw new Error(`[publisher/extract] spread assignment not allowed in styles config (${filePath})`);
 			}
-			if (property.isKind(SyntaxKind.MethodDeclaration) || property.isKind(SyntaxKind.GetAccessor) || property.isKind(SyntaxKind.SetAccessor)) {
+			if (
+				property.isKind(SyntaxKind.MethodDeclaration) ||
+				property.isKind(SyntaxKind.GetAccessor) ||
+				property.isKind(SyntaxKind.SetAccessor)
+			) {
 				throw new Error(`[publisher/extract] method / accessor not allowed in styles config (${filePath})`);
 			}
 		}
 		return obj;
 	}
 
-	throw new Error(`[publisher/extract] unsupported expression kind ${node.getKindName()} in ${filePath}: "${node.getText()}"`);
+	throw new Error(
+		`[publisher/extract] unsupported expression kind ${node.getKindName()} in ${filePath}: "${node.getText()}"`,
+	);
 }
 
 function propertyKey(nameNode: Node, filePath: string): string {

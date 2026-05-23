@@ -13,12 +13,12 @@ import path from "node:path";
 
 import { format } from "oxfmt";
 
+import type { RegistryItem, RegistryItemFile } from "@/registry/types";
+
 import { extractStylesConfig } from "./extract-config";
 import { transformBase, TV_CONFIG_PLACEHOLDER } from "./transform-base";
 
 import type { StylesConfig } from "../types";
-
-import type { RegistryItem, RegistryItemFile } from "@/registry/types";
 
 interface BuildPublishablesOptions {
 	/** Absolute path to `www/src/registry`. */
@@ -81,7 +81,9 @@ function renderIndex(writtenPaths: string[], outDir: string): string {
 	lines.push(`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`);
 	lines.push(`import type { Publishable } from "@/registry/publisher/types";`);
 	lines.push(``);
-	lines.push(`type Loader = () => Promise<{ publishable: Publishable; publishableByPath?: Record<string, Publishable> }>;`);
+	lines.push(
+		`type Loader = () => Promise<{ publishable: Publishable; publishableByPath?: Record<string, Publishable> }>;`,
+	);
 	lines.push(``);
 	lines.push(`export const publishables: Record<string, Loader> = {`);
 	for (const name of names) {
@@ -117,13 +119,20 @@ async function renderBaseCssBundle(registryDir: string): Promise<string> {
 	}
 	const bundle = parts.join("\n\n");
 
-	const lines: string[] = [];
-	lines.push(`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`);
-	lines.push(`// Concatenation of www/src/registry/base/*.css for the registry:base init item.`);
-	lines.push(``);
-	lines.push(`export const baseCss = ${JSON.stringify(bundle)};`);
-	lines.push(``);
-	return lines.join("\n");
+	const raw = [
+		`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`,
+		`// Concatenation of www/src/registry/base/*.css for the registry:base init item.`,
+		``,
+		`export const baseCss = ${JSON.stringify(bundle)};`,
+		``,
+	].join("\n");
+
+	try {
+		const { code } = await format("base-css.ts", raw, { printWidth: 120, useTabs: true });
+		return code;
+	} catch {
+		return raw;
+	}
 }
 
 interface BuildOneInput {
@@ -144,9 +153,7 @@ async function buildOne({ meta, registryDir, outDir }: BuildOneInput): Promise<s
 	const componentDir = path.join(registryDir, "ui", meta.name);
 	const stylesTsPath = path.join(componentDir, "styles.ts");
 	const hasStyles = existsSync(stylesTsPath);
-	const stylesConfig: StylesConfig = hasStyles
-		? extractStylesConfig(stylesTsPath)
-		: emptyStylesConfig();
+	const stylesConfig: StylesConfig = hasStyles ? extractStylesConfig(stylesTsPath) : emptyStylesConfig();
 
 	// Transform each base file to a template.
 	const templates = baseFiles.map((file) => {
@@ -193,12 +200,7 @@ function isBaseFile(file: RegistryItemFile, componentName: string): boolean {
 	// `base` as a base file.
 	const segments = file.path.split("/");
 	const last = segments.at(-1) ?? "";
-	return (
-		segments[0] === "ui" &&
-		segments[1] === componentName &&
-		last.startsWith("base") &&
-		last.endsWith(".tsx")
-	);
+	return segments[0] === "ui" && segments[1] === componentName && last.startsWith("base") && last.endsWith(".tsx");
 }
 
 function emptyStylesConfig(): StylesConfig {
@@ -221,8 +223,7 @@ async function renderPublishableSource({ meta, stylesConfig, templates }: Render
 	// The runtime route picks the right entry based on the preset's selection of
 	// the enum param that drives file swapping (handled by resolve-files.ts).
 
-	const defaultFile =
-		(meta.files ?? []).find((f) => isBaseFile(f, meta.name)) ?? templates[0]?.file;
+	const defaultFile = (meta.files ?? []).find((f) => isBaseFile(f, meta.name)) ?? templates[0]?.file;
 	const defaultTemplate = templates.find((t) => t.file.path === defaultFile?.path) ?? templates[0];
 
 	if (!defaultTemplate || !defaultFile) {

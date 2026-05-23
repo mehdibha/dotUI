@@ -31,13 +31,7 @@
  * Build-time only. Imports ts-morph.
  */
 
-import {
-	IndentationText,
-	Node,
-	Project,
-	QuoteKind,
-	SyntaxKind,
-} from "ts-morph";
+import { IndentationText, Node, Project, QuoteKind, SyntaxKind } from "ts-morph";
 
 import type { ImportDeclaration, SourceFile } from "ts-morph";
 
@@ -136,7 +130,8 @@ export function transformBase({
 }
 
 function capitalize(s: string): string {
-	return s.length === 0 ? s : s[0]!.toUpperCase() + s.slice(1);
+	const first = s[0];
+	return first ? first.toUpperCase() + s.slice(1) : s;
 }
 
 interface ApplyContext {
@@ -211,11 +206,7 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
 	// 7. Insert the variant declaration after the last import.
 	const lastImport = sourceFile.getImportDeclarations().at(-1);
 	const insertIndex = lastImport ? lastImport.getChildIndex() + 1 : 0;
-	sourceFile.insertStatements(insertIndex, [
-		"",
-		`const ${variantIdent} = tv(${TS_PLACEHOLDER_IDENT});`,
-		"",
-	]);
+	sourceFile.insertStatements(insertIndex, ["", `const ${variantIdent} = tv(${TS_PLACEHOLDER_IDENT});`, ""]);
 }
 
 function findNextVariantProps(sourceFile: SourceFile, oldStylesTypeIdent: string) {

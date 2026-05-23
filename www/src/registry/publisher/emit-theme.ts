@@ -13,9 +13,9 @@
  * build via Vite's `?raw` import).
  */
 
-import type { PublishPreset } from "./types";
-
 import type { Density, RegistryItem } from "@/registry/types";
+
+import type { PublishPreset } from "./types";
 
 /**
  * Default css bundle. Routes get this at request time from the

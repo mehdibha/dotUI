@@ -16,13 +16,13 @@
  * content through `oxfmt.format` since that's async and route-side.
  */
 
+import type { RegistryItem } from "@/registry/types";
+
 import { flatten } from "./flatten";
 import { buildScalarVarMap, resolveClasses } from "./resolve-classes";
 import { serializeTvConfig } from "./serialize";
 
 import type { Publishable, PublishPreset } from "./types";
-
-import type { RegistryItem } from "@/registry/types";
 
 export const TV_CONFIG_PLACEHOLDER = "%%TV_CONFIG%%";
 

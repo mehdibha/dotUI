@@ -13,9 +13,9 @@
  * CSS or are shipped alongside as a separate file.
  */
 
-import { tokenValueToSuffix } from "./token-map";
-
 import type { RegistryItem, ScalarParamDef } from "@/registry/types";
+
+import { tokenValueToSuffix } from "./token-map";
 
 import type { ClassValue, TvLayer, VariantSliceValue } from "./types";
 
@@ -27,10 +27,7 @@ import type { ClassValue, TvLayer, VariantSliceValue } from "./types";
  * there are no resolvable scalar params (other types like color/spacing are
  * left to flow through unchanged for now — they're shipped as base CSS).
  */
-export function buildScalarVarMap(
-	meta: RegistryItem,
-	paramSelections: Record<string, string>,
-): Map<string, string> {
+export function buildScalarVarMap(meta: RegistryItem, paramSelections: Record<string, string>): Map<string, string> {
 	const map = new Map<string, string>();
 	const params = meta.params ?? {};
 	for (const [paramName, def] of Object.entries(params)) {
@@ -79,7 +76,10 @@ function isSlotMap(value: VariantSliceValue | undefined): value is Record<string
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function rewriteVariantSlice(value: VariantSliceValue | undefined, varMap: Map<string, string>): VariantSliceValue | undefined {
+function rewriteVariantSlice(
+	value: VariantSliceValue | undefined,
+	varMap: Map<string, string>,
+): VariantSliceValue | undefined {
 	if (value === undefined) return undefined;
 	if (isSlotMap(value)) {
 		const result: Record<string, ClassValue> = {};

@@ -84,10 +84,7 @@ function mergeSlots(
 	return Object.keys(result).length > 0 ? result : undefined;
 }
 
-function mergeVariants(
-	a: TvLayer["variants"],
-	b: TvLayer["variants"],
-): TvLayer["variants"] | undefined {
+function mergeVariants(a: TvLayer["variants"], b: TvLayer["variants"]): TvLayer["variants"] | undefined {
 	if (!a && !b) return undefined;
 	const result: NonNullable<TvLayer["variants"]> = {};
 	const variantNames = new Set<string>([...Object.keys(a ?? {}), ...Object.keys(b ?? {})]);

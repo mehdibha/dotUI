@@ -12,7 +12,6 @@ import path from "node:path";
 import { describe, expect, test } from "vitest";
 
 import { publish, TV_CONFIG_PLACEHOLDER } from "../publish";
-
 import { extractStylesConfig } from "./extract-config";
 import { transformBase } from "./transform-base";
 
@@ -129,9 +128,7 @@ describe("end-to-end (extract + transform → publish)", () => {
 				meta: {
 					name: "button",
 					type: "registry:ui",
-					files: [
-						{ type: "registry:ui", path: "ui/button/base.tsx", target: "ui/button.tsx" },
-					],
+					files: [{ type: "registry:ui", path: "ui/button/base.tsx", target: "ui/button.tsx" }],
 					registryDependencies: ["loader", "focus-styles"],
 				},
 			},

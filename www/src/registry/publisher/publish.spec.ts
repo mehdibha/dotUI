@@ -10,15 +10,14 @@
 
 import { describe, expect, test } from "vitest";
 
+import { alertPublishable } from "./__fixtures__/alert-publishable";
+import { buttonPublishable } from "./__fixtures__/button-publishable";
 import { flatten } from "./flatten";
 import { publish, TV_CONFIG_PLACEHOLDER } from "./publish";
 import { buildScalarVarMap, resolveClasses, rewriteClassString } from "./resolve-classes";
 import { serializeTvConfig } from "./serialize";
 
 import type { ClassValue, TvLayer } from "./types";
-
-import { alertPublishable } from "./__fixtures__/alert-publishable";
-import { buttonPublishable } from "./__fixtures__/button-publishable";
 
 /* ============================================================ */
 /* flatten                                                       */

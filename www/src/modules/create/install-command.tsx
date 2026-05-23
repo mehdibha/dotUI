@@ -11,8 +11,8 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
-import { encodePreset } from "./preset/codec";
 import { useDesignSystem } from "./preset";
+import { encodePreset } from "./preset/codec";
 
 const DEFAULT_REGISTRY_HOST = "https://dotui.com";
 
