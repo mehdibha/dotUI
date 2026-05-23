@@ -43,7 +43,11 @@ const DEFAULT_DEPENDENCIES = [
 	"tailwindcss-autocontrast",
 ];
 
-const DEFAULT_REGISTRY_DEPENDENCIES = ["utils", "focus-styles"];
+// shadcn ships `utils` (the `cn` helper) as a first-party item, so we list it
+// as a registry dependency. `focus-styles` and `theme` are intentionally
+// omitted: their utilities live in the bundled base CSS file we already ship
+// in `files[]`, and neither exists at any external registry.
+const DEFAULT_REGISTRY_DEPENDENCIES = ["utils"];
 
 /**
  * Map the preset's compact density key to a `:root` declaration. dotui's
