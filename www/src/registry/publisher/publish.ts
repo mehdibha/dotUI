@@ -27,54 +27,79 @@ import type { Publishable, PublishPreset } from "./types";
 export const TV_CONFIG_PLACEHOLDER = "%%TV_CONFIG%%";
 
 /**
- * Registry namespace dotui ships under. Used to prefix `registryDependencies`
- * so consumers resolve transitive items from our registry instead of the
- * default shadcn registry.
- */
-export const DOTUI_NAMESPACE = "@dotui";
-
-/**
  * Names of registry items that live in the dotui registry — i.e. anything
  * that has a publishable. Used to decide which `registryDependencies` need
- * the `@dotui/` prefix and which (like `utils`) flow through verbatim.
+ * to be rewritten into absolute URLs (so `shadcn add` can follow them
+ * without the consumer setting up a registry mapping) and which (like a
+ * bundled `focus-styles`) should be dropped because they're already
+ * available locally after install.
  *
- * Populated lazily from the generated publishables index when available,
- * otherwise defaults to the empty set (consumer-side: dotui knows its own
- * components).
+ * Seeded from the generated `PUBLISHABLE_NAMES` list in the route module.
  */
 let knownDotuiNames: Set<string> | undefined;
 
+/** Origin used to construct absolute dep URLs, e.g. `https://dotui.com`. */
+let dotuiOrigin: string | undefined;
+
+/** Query string (including leading `?`) appended to dep URLs, e.g. `?preset=…`. */
+let dotuiDepQuery = "";
+
 /**
- * Names of registry items the consumer already has after `shadcn init`
- * because they're baked into the registry:base bundle. These don't need
- * to be (and shouldn't be) listed as registry dependencies on individual
- * components — shadcn would 404 trying to fetch them from us, and they
- * don't exist on the default shadcn registry either.
+ * Names of registry items the consumer already has from the init bundle.
+ * They're not separately fetchable URLs — drop them from per-component
+ * `registryDependencies` so shadcn doesn't 404 looking for them.
  */
 const BUNDLED_INTO_INIT = new Set([
 	// focus-ring / focus-reset / focus-input utilities ship in base.css.
 	"focus-styles",
 	// @theme blocks ship in theme.css.
 	"theme",
+	// cn() helper ships as `src/lib/utils.ts` in the init item.
+	"utils",
 ]);
 
 export function setKnownDotuiNames(names: Iterable<string>): void {
 	knownDotuiNames = new Set(names);
 }
 
-function namespaceDeps(deps: readonly string[] | undefined): string[] | undefined {
+/**
+ * Configure how transitive dotui-component deps are emitted. When called with
+ * an origin (e.g. `https://dotui.com`) and an optional query string, the
+ * publisher rewrites bare dep names (`"loader"`) to absolute URLs
+ * (`https://dotui.com/r/loader.json?preset=…`) so `shadcn add` can follow
+ * the transitive deps without needing a registry mapping in components.json.
+ *
+ * Called once per request from the route handler.
+ */
+export function setDotuiDepResolver(origin: string, depQuery = ""): void {
+	dotuiOrigin = origin.replace(/\/$/, "");
+	dotuiDepQuery = depQuery;
+}
+
+function rewriteDeps(deps: readonly string[] | undefined): string[] | undefined {
 	if (!deps || deps.length === 0) return undefined;
 	const known = knownDotuiNames;
 	const out: string[] = [];
 	for (const dep of deps) {
 		// Drop deps that the consumer already has from the init bundle.
 		if (BUNDLED_INTO_INIT.has(dep)) continue;
-		// Already namespaced or fully-qualified URL? leave alone.
-		if (dep.includes("/") || dep.includes(":")) {
+		// Already a fully-qualified URL? leave alone.
+		if (dep.includes("://")) {
 			out.push(dep);
 			continue;
 		}
-		out.push(known?.has(dep) ? `${DOTUI_NAMESPACE}/${dep}` : dep);
+		// Already namespaced (e.g. `@dotui/loader`)? leave alone.
+		if (dep.startsWith("@")) {
+			out.push(dep);
+			continue;
+		}
+		// Known dotui component + we have an origin → emit as absolute URL.
+		if (known?.has(dep) && dotuiOrigin) {
+			out.push(`${dotuiOrigin}/r/${dep}.json${dotuiDepQuery}`);
+			continue;
+		}
+		// Otherwise pass through — let shadcn resolve via the default registry.
+		out.push(dep);
 	}
 	return out.length > 0 ? out : undefined;
 }
@@ -124,7 +149,7 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
 		...(meta.description !== undefined ? { description: meta.description } : {}),
 		...(meta.dependencies ? { dependencies: meta.dependencies } : {}),
 		...(meta.registryDependencies
-			? { registryDependencies: namespaceDeps(meta.registryDependencies) ?? meta.registryDependencies }
+			? { registryDependencies: rewriteDeps(meta.registryDependencies) ?? meta.registryDependencies }
 			: {}),
 		files,
 	};

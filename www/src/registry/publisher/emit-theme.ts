@@ -43,11 +43,18 @@ const DEFAULT_DEPENDENCIES = [
 	"tailwindcss-autocontrast",
 ];
 
-// shadcn ships `utils` (the `cn` helper) as a first-party item, so we list it
-// as a registry dependency. `focus-styles` and `theme` are intentionally
-// omitted: their utilities live in the bundled base CSS file we already ship
-// in `files[]`, and neither exists at any external registry.
-const DEFAULT_REGISTRY_DEPENDENCIES = ["utils"];
+// shadcn's `utils` (the `cn` helper) lives in a 4xx-gated path on the default
+// registry under v4 Tailwind, so we ship our own copy inside this item's
+// `files[]` instead of declaring it as a `registryDependencies` entry.
+const DEFAULT_REGISTRY_DEPENDENCIES: string[] = [];
+
+const CN_UTILS_TS = `import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+\treturn twMerge(clsx(inputs));
+}
+`;
 
 /**
  * Map the preset's compact density key to a `:root` declaration. dotui's
@@ -77,12 +84,23 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
 
 	const bundle = `${bundledBaseCss}\n${emitPresetRoot(preset)}`;
 
+	// Intentionally minimal `config` block:
+	// - No `tailwind.css` or `tailwind.baseColor` — shadcn detects these from
+	//   the project (e.g. src/app/globals.css for a Next.js app dir). Hard-
+	//   coding `src/styles/globals.css` here would override a correct
+	//   detection and cause ENOENT when shadcn tries to merge cssVars into a
+	//   file that doesn't exist.
+	// - `cssVariables: false` because our bundled CSS already declares every
+	//   theme var; we don't want shadcn injecting an extra `:root { … }`
+	//   block sourced from `colors/<name>.json` (which 401s under v4 anyway).
+	// - The `@dotui` registries mapping is preserved as a convenience for
+	//   shadcn versions that DO merge a `registry:base`'s config block, but
+	//   we don't rely on it: per-component `registryDependencies` are emitted
+	//   as absolute URLs by the per-component publisher.
 	const config = {
 		style: "default",
 		tailwind: {
-			css: "src/styles/globals.css",
-			baseColor: "neutral",
-			cssVariables: true,
+			cssVariables: false,
 		},
 		aliases: {
 			components: "@/components",
@@ -101,7 +119,11 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
 
 	const item = {
 		name: "dotui",
-		type: "registry:base",
+		// `registry:style` + `extends: "none"` tells shadcn this IS the project
+		// style — don't reach for the default `styles/index.json` from
+		// ui.shadcn.com during init/add.
+		type: "registry:style",
+		extends: "none",
 		dependencies: DEFAULT_DEPENDENCIES,
 		registryDependencies: DEFAULT_REGISTRY_DEPENDENCIES,
 		files: [
@@ -110,6 +132,12 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
 				path: "styles/dotui-base.css",
 				target: "src/styles/dotui-base.css",
 				content: bundle,
+			},
+			{
+				type: "registry:lib",
+				path: "lib/utils.ts",
+				target: "src/lib/utils.ts",
+				content: CN_UTILS_TS,
 			},
 		],
 		config,

@@ -39,7 +39,12 @@ export function InstallCommand() {
 	const command = useMemo(() => {
 		const encoded = encodePreset(designSystem);
 		const url = encoded ? `${host}/r/init.json?preset=${encoded}` : `${host}/r/init.json`;
-		return `npx shadcn init ${url}`;
+		// `shadcn add <url>` (not `init`) is the working invocation:
+		//  - it works on any project that already has a components.json (from a
+		//    prior `npx shadcn init`),
+		//  - it installs `src/styles/dotui-base.css` and `src/lib/utils.ts`,
+		//  - per-component `add` follows transitive deps as absolute URLs.
+		return `npx shadcn add ${url}`;
 	}, [designSystem, host]);
 
 	async function copy() {

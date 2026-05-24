@@ -16,9 +16,9 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { format } from "oxfmt";
 
 import { publishables, PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables";
-import { publish, setKnownDotuiNames } from "@/registry/publisher/publish";
+import { publish, setDotuiDepResolver, setKnownDotuiNames } from "@/registry/publisher/publish";
 
-// Prime the namespace prefixer with every component name we ship. Lives at
+// Prime the dep rewriter with every component name we ship. Lives at
 // module scope so it runs once per route bundle load.
 setKnownDotuiNames(PUBLISHABLE_NAMES);
 
@@ -40,6 +40,14 @@ export const Route = createFileRoute("/r/{$name}.json")({
 				const url = new URL(request.url);
 				const encodedPreset = url.searchParams.get("preset") ?? undefined;
 				const preset = encodedPreset ? await decodePresetForRoute(encodedPreset) : defaultPreset();
+
+				// Configure how transitive deps get rewritten — they become absolute
+				// URLs back at this same origin (with the preset preserved) so
+				// `shadcn add` can follow them without a registry mapping in the
+				// consumer's components.json.
+				const origin = `${url.protocol}//${url.host}`;
+				const depQuery = encodedPreset ? `?preset=${encodedPreset}` : "";
+				setDotuiDepResolver(origin, depQuery);
 
 				const mod = await loader();
 				const publishable = selectPublishable(mod, preset);

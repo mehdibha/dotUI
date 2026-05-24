@@ -190,8 +190,9 @@ describe("publish", () => {
 		expect(item.name).toBe("button");
 		expect(item.type).toBe("registry:ui");
 		// `focus-styles` is bundled into the registry:base init item so it gets
-		// dropped from per-component registryDependencies. `loader` stays —
-		// without a `setKnownDotuiNames` call there's no namespace prefix.
+		// dropped from per-component registryDependencies. `loader` stays as a
+		// bare name — without a `setKnownDotuiNames` + `setDotuiDepResolver`
+		// call there's no URL rewrite.
 		expect(item.registryDependencies).toEqual(["loader"]);
 		const file = item.files?.[0];
 		expect(file?.target).toBe("ui/button.tsx");
