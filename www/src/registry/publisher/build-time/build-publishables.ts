@@ -15,10 +15,13 @@ import { format } from "oxfmt";
 
 import type { RegistryItem, RegistryItemFile } from "@/registry/types";
 
+import { cssToRegistryFields } from "./css-to-registry-fields";
 import { extractStylesConfig } from "./extract-config";
 import { transformBase, TV_CONFIG_PLACEHOLDER } from "./transform-base";
 
 import type { StylesConfig } from "../types";
+
+type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">;
 
 interface BuildPublishablesOptions {
 	/** Absolute path to `www/src/registry`. */
@@ -62,10 +65,11 @@ export async function buildPublishables({
 	await fs.writeFile(indexPath, renderIndex(written, outDir), "utf8");
 	written.push(indexPath);
 
-	// Concatenate the base CSS sources so the init endpoint can ship them.
+	// Convert the base CSS sources into shadcn registry fields so the init
+	// endpoint can update the consumer's CSS file without shipping an extra file.
 	const bundlePath = path.join(registryDir, "__generated__", "base-css.ts");
 	await fs.mkdir(path.dirname(bundlePath), { recursive: true });
-	await fs.writeFile(bundlePath, await renderBaseCssBundle(registryDir), "utf8");
+	await fs.writeFile(bundlePath, await renderBaseRegistryCss(registryDir), "utf8");
 	written.push(bundlePath);
 
 	return { written, skipped };
@@ -99,7 +103,7 @@ function renderIndex(writtenPaths: string[], outDir: string): string {
 	return lines.join("\n");
 }
 
-async function renderBaseCssBundle(registryDir: string): Promise<string> {
+async function renderBaseRegistryCss(registryDir: string): Promise<string> {
 	// Order matches `www/src/registry/styles.css`.
 	const candidates = [
 		path.join(registryDir, "base", "base.css"),
@@ -118,12 +122,15 @@ async function renderBaseCssBundle(registryDir: string): Promise<string> {
 		}
 	}
 	const bundle = parts.join("\n\n");
+	const fields = cssToRegistryFields(bundle);
 
 	const raw = [
 		`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`,
-		`// Concatenation of www/src/registry/base/*.css for the registry:base init item.`,
+		`// Structured shadcn registry CSS fields generated from www/src/registry/base/*.css.`,
 		``,
-		`export const baseCss = ${JSON.stringify(bundle)};`,
+		`import type { RegistryItem } from "@/registry/types";`,
+		``,
+		`export const baseRegistryCss = ${JSON.stringify(fields, null, 2)} as const satisfies Pick<RegistryItem, "css" | "cssVars">;`,
 		``,
 	].join("\n");
 
@@ -154,6 +161,7 @@ async function buildOne({ meta, registryDir, outDir }: BuildOneInput): Promise<s
 	const stylesTsPath = path.join(componentDir, "styles.ts");
 	const hasStyles = existsSync(stylesTsPath);
 	const stylesConfig: StylesConfig = hasStyles ? extractStylesConfig(stylesTsPath) : emptyStylesConfig();
+	const runtimeMeta = withComponentCssFields(meta, await readComponentCssFields(componentDir));
 
 	// Transform each base file to a template.
 	const templates = baseFiles.map((file) => {
@@ -167,9 +175,48 @@ async function buildOne({ meta, registryDir, outDir }: BuildOneInput): Promise<s
 	});
 
 	const outPath = path.join(outDir, `${meta.name}.ts`);
-	const source = await renderPublishableSource({ meta, stylesConfig, templates });
+	const source = await renderPublishableSource({ meta: runtimeMeta, stylesConfig, templates });
 	await fs.writeFile(outPath, source, "utf8");
 	return outPath;
+}
+
+async function readComponentCssFields(componentDir: string): Promise<RegistryCssFields> {
+	const stylesCssPath = path.join(componentDir, "styles.css");
+	if (!existsSync(stylesCssPath)) return {};
+
+	return cssToRegistryFields(await fs.readFile(stylesCssPath, "utf8"));
+}
+
+function withComponentCssFields(meta: RegistryItem, fields: RegistryCssFields): RegistryItem {
+	const css = mergeCss(meta.css, fields.css);
+	const cssVars = mergeCssVars(meta.cssVars, fields.cssVars);
+
+	return {
+		...meta,
+		...(css ? { css } : {}),
+		...(cssVars ? { cssVars } : {}),
+	};
+}
+
+function mergeCss(
+	base: RegistryCssFields["css"],
+	extra: RegistryCssFields["css"],
+): RegistryCssFields["css"] | undefined {
+	const merged = { ...(base ?? {}), ...(extra ?? {}) };
+	return Object.keys(merged).length > 0 ? merged : undefined;
+}
+
+function mergeCssVars(
+	base: RegistryCssFields["cssVars"],
+	extra: RegistryCssFields["cssVars"],
+): RegistryCssFields["cssVars"] | undefined {
+	const merged = {
+		...(base?.theme || extra?.theme ? { theme: { ...(base?.theme ?? {}), ...(extra?.theme ?? {}) } } : {}),
+		...(base?.light || extra?.light ? { light: { ...(base?.light ?? {}), ...(extra?.light ?? {}) } } : {}),
+		...(base?.dark || extra?.dark ? { dark: { ...(base?.dark ?? {}), ...(extra?.dark ?? {}) } } : {}),
+	};
+
+	return Object.keys(merged).length > 0 ? merged : undefined;
 }
 
 /**

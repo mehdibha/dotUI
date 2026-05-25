@@ -14,8 +14,8 @@ import { Route as OgRouteImport } from './routes/og'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as ViewBlockRouteImport } from './routes/view/$block'
-import { Route as RChar123nameChar125DotjsonRouteImport } from './routes/r/{$name}[.]json'
-import { Route as RInitDotjsonRouteImport } from './routes/r/init[.]json'
+import { Route as RInitRouteImport } from './routes/r/init'
+import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
@@ -50,15 +50,14 @@ const ViewBlockRoute = ViewBlockRouteImport.update({
   path: '/view/$block',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RChar123nameChar125DotjsonRoute =
-  RChar123nameChar125DotjsonRouteImport.update({
-    id: '/r/{$name}.json',
-    path: '/r/{$name}.json',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const RInitDotjsonRoute = RInitDotjsonRouteImport.update({
-  id: '/r/init.json',
-  path: '/r/init.json',
+const RInitRoute = RInitRouteImport.update({
+  id: '/r/init',
+  path: '/r/init',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RNameRoute = RNameRouteImport.update({
+  id: '/r/$name',
+  path: '/r/$name',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PreviewSlugRoute = PreviewSlugRouteImport.update({
@@ -119,8 +118,8 @@ export interface FileRoutesByFullPath {
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
-  '/r/init.json': typeof RInitDotjsonRoute
-  '/r/{$name}.json': typeof RChar123nameChar125DotjsonRoute
+  '/r/$name': typeof RNameRoute
+  '/r/init': typeof RInitRoute
   '/view/$block': typeof ViewBlockRoute
   '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/docs/$': typeof AppDocsSplatRoute
@@ -135,8 +134,8 @@ export interface FileRoutesByTo {
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
-  '/r/init.json': typeof RInitDotjsonRoute
-  '/r/{$name}.json': typeof RChar123nameChar125DotjsonRoute
+  '/r/$name': typeof RNameRoute
+  '/r/init': typeof RInitRoute
   '/view/$block': typeof ViewBlockRoute
   '/': typeof AppIndexRoute
   '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
@@ -154,8 +153,8 @@ export interface FileRoutesById {
   '/_app/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
-  '/r/init.json': typeof RInitDotjsonRoute
-  '/r/{$name}.json': typeof RChar123nameChar125DotjsonRoute
+  '/r/$name': typeof RNameRoute
+  '/r/init': typeof RInitRoute
   '/view/$block': typeof ViewBlockRoute
   '/_app/': typeof AppIndexRoute
   '/_app/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
@@ -174,8 +173,8 @@ export interface FileRouteTypes {
     | '/create'
     | '/demos/$slug'
     | '/preview/$slug'
-    | '/r/init.json'
-    | '/r/{$name}.json'
+    | '/r/$name'
+    | '/r/init'
     | '/view/$block'
     | '/blocks/{-$category}'
     | '/docs/$'
@@ -190,8 +189,8 @@ export interface FileRouteTypes {
     | '/create'
     | '/demos/$slug'
     | '/preview/$slug'
-    | '/r/init.json'
-    | '/r/{$name}.json'
+    | '/r/$name'
+    | '/r/init'
     | '/view/$block'
     | '/'
     | '/blocks/{-$category}'
@@ -208,8 +207,8 @@ export interface FileRouteTypes {
     | '/_app/create'
     | '/demos/$slug'
     | '/preview/$slug'
-    | '/r/init.json'
-    | '/r/{$name}.json'
+    | '/r/$name'
+    | '/r/init'
     | '/view/$block'
     | '/_app/'
     | '/_app/blocks/{-$category}'
@@ -223,8 +222,8 @@ export interface RootRouteChildren {
   PlaygroundRoute: typeof PlaygroundRoute
   DemosSlugRoute: typeof DemosSlugRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
-  RInitDotjsonRoute: typeof RInitDotjsonRoute
-  RChar123nameChar125DotjsonRoute: typeof RChar123nameChar125DotjsonRoute
+  RNameRoute: typeof RNameRoute
+  RInitRoute: typeof RInitRoute
   ViewBlockRoute: typeof ViewBlockRoute
 }
 
@@ -265,18 +264,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ViewBlockRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/r/{$name}.json': {
-      id: '/r/{$name}.json'
-      path: '/r/{$name}.json'
-      fullPath: '/r/{$name}.json'
-      preLoaderRoute: typeof RChar123nameChar125DotjsonRouteImport
+    '/r/init': {
+      id: '/r/init'
+      path: '/r/init'
+      fullPath: '/r/init'
+      preLoaderRoute: typeof RInitRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/r/init.json': {
-      id: '/r/init.json'
-      path: '/r/init.json'
-      fullPath: '/r/init.json'
-      preLoaderRoute: typeof RInitDotjsonRouteImport
+    '/r/$name': {
+      id: '/r/$name'
+      path: '/r/$name'
+      fullPath: '/r/$name'
+      preLoaderRoute: typeof RNameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/preview/$slug': {
@@ -397,8 +396,8 @@ const rootRouteChildren: RootRouteChildren = {
   PlaygroundRoute: PlaygroundRoute,
   DemosSlugRoute: DemosSlugRoute,
   PreviewSlugRoute: PreviewSlugRoute,
-  RInitDotjsonRoute: RInitDotjsonRoute,
-  RChar123nameChar125DotjsonRoute: RChar123nameChar125DotjsonRoute,
+  RNameRoute: RNameRoute,
+  RInitRoute: RInitRoute,
   ViewBlockRoute: ViewBlockRoute,
 }
 export const routeTree = rootRouteImport

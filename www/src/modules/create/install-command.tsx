@@ -38,11 +38,11 @@ export function InstallCommand() {
 
 	const command = useMemo(() => {
 		const encoded = encodePreset(designSystem);
-		const url = encoded ? `${host}/r/init.json?preset=${encoded}` : `${host}/r/init.json`;
-		// `shadcn add <url>` (not `init`) is the working invocation:
+		const url = encoded ? `${host}/r/init?preset=${encoded}` : `${host}/r/init`;
+		// `shadcn add <url>` (not `init`) is the working install invocation:
 		//  - it works on any project that already has a components.json (from a
 		//    prior `npx shadcn init`),
-		//  - it installs `src/styles/dotui-base.css` and `src/lib/utils.ts`,
+		//  - it merges dotUI theme fields into the project's CSS and installs `src/lib/utils.ts`,
 		//  - per-component `add` follows transitive deps as absolute URLs.
 		return `npx shadcn add ${url}`;
 	}, [designSystem, host]);

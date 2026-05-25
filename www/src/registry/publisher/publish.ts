@@ -66,7 +66,7 @@ export function setKnownDotuiNames(names: Iterable<string>): void {
  * Configure how transitive dotui-component deps are emitted. When called with
  * an origin (e.g. `https://dotui.com`) and an optional query string, the
  * publisher rewrites bare dep names (`"loader"`) to absolute URLs
- * (`https://dotui.com/r/loader.json?preset=…`) so `shadcn add` can follow
+ * (`https://dotui.com/r/loader?preset=…`) so `shadcn add` can follow
  * the transitive deps without needing a registry mapping in components.json.
  *
  * Called once per request from the route handler.
@@ -95,7 +95,7 @@ function rewriteDeps(deps: readonly string[] | undefined): string[] | undefined 
 		}
 		// Known dotui component + we have an origin → emit as absolute URL.
 		if (known?.has(dep) && dotuiOrigin) {
-			out.push(`${dotuiOrigin}/r/${dep}.json${dotuiDepQuery}`);
+			out.push(`${dotuiOrigin}/r/${dep}${dotuiDepQuery}`);
 			continue;
 		}
 		// Otherwise pass through — let shadcn resolve via the default registry.
@@ -151,6 +151,8 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
 		...(meta.registryDependencies
 			? { registryDependencies: rewriteDeps(meta.registryDependencies) ?? meta.registryDependencies }
 			: {}),
+		...(meta.css ? { css: meta.css } : {}),
+		...(meta.cssVars ? { cssVars: meta.cssVars } : {}),
 		files,
 	};
 	const item = itemShape as unknown as RegistryItem;

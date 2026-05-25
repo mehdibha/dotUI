@@ -1,15 +1,15 @@
 /**
- * GET /r/init.json[?preset=…]
+ * GET /r/init[?preset=…]
  *
  * Returns the `registry:base` item that `npx shadcn init <this-url>` consumes.
  * The preset query param (compressed base64url) bakes into the consumer's
  * `components.json` so `shadcn add @dotui/<name>` requests hit the matching
- * /r/$name.json endpoint with the same preset attached.
+ * /r/$name endpoint with the same preset attached.
  */
 
 import { createFileRoute } from "@tanstack/react-router";
 
-import { baseCss } from "@/registry/__generated__/base-css";
+import { baseRegistryCss } from "@/registry/__generated__/base-css";
 import { emitInitItem } from "@/registry/publisher/emit-theme";
 
 import type { PublishPreset } from "@/registry/publisher/types";
@@ -19,7 +19,7 @@ const JSON_HEADERS = {
 	"Cache-Control": "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
 };
 
-export const Route = createFileRoute("/r/init.json")({
+export const Route = createFileRoute("/r/init")({
 	server: {
 		handlers: {
 			GET: async ({ request }) => {
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/r/init.json")({
 				const preset = encodedPreset ? await decodePresetForRoute(encodedPreset) : defaultPreset();
 
 				const item = emitInitItem({
-					bundledBaseCss: baseCss,
+					baseRegistryCss,
 					preset,
 					encodedPreset,
 					registryRoot: `${url.protocol}//${url.host}`,

@@ -1,5 +1,5 @@
 /**
- * GET /r/$name.json[?preset=…]
+ * GET /r/$name[?preset=…]
  *
  * Returns the resolved shadcn registry item for one dotui component. The
  * preset query param drives:
@@ -29,7 +29,7 @@ const JSON_HEADERS = {
 	"Cache-Control": "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
 };
 
-export const Route = createFileRoute("/r/{$name}.json")({
+export const Route = createFileRoute("/r/$name")({
 	server: {
 		handlers: {
 			GET: async ({ request, params }) => {

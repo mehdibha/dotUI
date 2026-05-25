@@ -8,16 +8,21 @@
  *                scalar param ("radius") whose var ref must be rewritten
  */
 
-import { describe, expect, test } from "vitest";
+import { afterEach, describe, expect, test } from "vitest";
 
 import { alertPublishable } from "./__fixtures__/alert-publishable";
 import { buttonPublishable } from "./__fixtures__/button-publishable";
 import { flatten } from "./flatten";
-import { publish, TV_CONFIG_PLACEHOLDER } from "./publish";
+import { publish, setDotuiDepResolver, setKnownDotuiNames, TV_CONFIG_PLACEHOLDER } from "./publish";
 import { buildScalarVarMap, resolveClasses, rewriteClassString } from "./resolve-classes";
 import { serializeTvConfig } from "./serialize";
 
 import type { ClassValue, TvLayer } from "./types";
+
+afterEach(() => {
+	setKnownDotuiNames([]);
+	setDotuiDepResolver("");
+});
 
 /* ============================================================ */
 /* flatten                                                       */
@@ -199,6 +204,18 @@ describe("publish", () => {
 		expect(file?.content).toBe(rawContent);
 	});
 
+	test("button: rewrites known dotui deps to extensionless endpoint URLs", () => {
+		setKnownDotuiNames(["loader"]);
+		setDotuiDepResolver("https://dotui.com", "?preset=abc");
+
+		const { item } = publish({
+			publishable: buttonPublishable,
+			preset: { density: "default", componentParams: {} },
+		});
+
+		expect(item.registryDependencies).toEqual(["https://dotui.com/r/loader?preset=abc"]);
+	});
+
 	test("alert: rewrites scalar-param var when preset selects 'md' radius", () => {
 		const { rawContent } = publish({
 			publishable: alertPublishable,
@@ -228,5 +245,29 @@ describe("publish", () => {
 		// `params` and `group` are dev-time concerns only.
 		expect((item as Record<string, unknown>).params).toBeUndefined();
 		expect((item as Record<string, unknown>).group).toBeUndefined();
+	});
+
+	test("includes component-level registry css fields", () => {
+		const css = {
+			"@utility skeleton": {
+				position: "relative",
+			},
+		};
+
+		const { item } = publish({
+			publishable: {
+				template: TV_CONFIG_PLACEHOLDER,
+				stylesConfig: { base: {} },
+				meta: {
+					name: "skeleton",
+					type: "registry:ui",
+					css,
+					files: [{ type: "registry:ui", path: "ui/skeleton/base.tsx", target: "ui/skeleton.tsx" }],
+				},
+			},
+			preset: { density: "default", componentParams: {} },
+		});
+
+		expect(item.css).toEqual(css);
 	});
 });
