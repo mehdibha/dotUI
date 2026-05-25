@@ -16,6 +16,8 @@ import { rimraf } from "rimraf";
 
 import { registryBlocks } from "../src/registry/blocks/registry";
 import { iconLibraries, registryIcons } from "../src/registry/icons/registry";
+import { buildPublishables } from "../src/registry/publisher/build-time/build-publishables";
+import { registryUi } from "../src/registry/ui/registry";
 
 // Directories — relative to www/ (process.cwd())
 const REGISTRY_DIR = path.join(process.cwd(), "src/registry");
@@ -314,6 +316,22 @@ ${groupEntries.join("\n")}
 // Main
 // ============================================================================
 
+async function buildShadcnPublishables() {
+	const { written, skipped } = await buildPublishables({
+		registryDir: REGISTRY_DIR,
+		items: registryUi,
+	});
+	for (const filePath of written) {
+		console.log(`  ✓ ${path.relative(REGISTRY_DIR, filePath)}`);
+	}
+	if (skipped.length > 0) {
+		console.log(`\n  ${skipped.length} component(s) skipped:`);
+		for (const { name, reason } of skipped) {
+			console.log(`    - ${name}: ${reason}`);
+		}
+	}
+}
+
 async function main() {
 	console.log("🔨 Building registry...\n");
 
@@ -325,6 +343,9 @@ async function main() {
 		await buildInternalDemos();
 		await buildInternalIcons();
 		await buildInternalExamples();
+
+		console.log("\nGenerating shadcn publishables");
+		await buildShadcnPublishables();
 
 		console.log("\n✅ Registry built successfully!");
 	} catch (error) {

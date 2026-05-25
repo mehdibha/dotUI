@@ -14,6 +14,8 @@ import { Route as OgRouteImport } from './routes/og'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as ViewBlockRouteImport } from './routes/view/$block'
+import { Route as RInitRouteImport } from './routes/r/init'
+import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
@@ -46,6 +48,16 @@ const AppIndexRoute = AppIndexRouteImport.update({
 const ViewBlockRoute = ViewBlockRouteImport.update({
   id: '/view/$block',
   path: '/view/$block',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RInitRoute = RInitRouteImport.update({
+  id: '/r/init',
+  path: '/r/init',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RNameRoute = RNameRouteImport.update({
+  id: '/r/$name',
+  path: '/r/$name',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PreviewSlugRoute = PreviewSlugRouteImport.update({
@@ -106,6 +118,8 @@ export interface FileRoutesByFullPath {
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
+  '/r/$name': typeof RNameRoute
+  '/r/init': typeof RInitRoute
   '/view/$block': typeof ViewBlockRoute
   '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/docs/$': typeof AppDocsSplatRoute
@@ -120,6 +134,8 @@ export interface FileRoutesByTo {
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
+  '/r/$name': typeof RNameRoute
+  '/r/init': typeof RInitRoute
   '/view/$block': typeof ViewBlockRoute
   '/': typeof AppIndexRoute
   '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
@@ -137,6 +153,8 @@ export interface FileRoutesById {
   '/_app/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
+  '/r/$name': typeof RNameRoute
+  '/r/init': typeof RInitRoute
   '/view/$block': typeof ViewBlockRoute
   '/_app/': typeof AppIndexRoute
   '/_app/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
@@ -155,6 +173,8 @@ export interface FileRouteTypes {
     | '/create'
     | '/demos/$slug'
     | '/preview/$slug'
+    | '/r/$name'
+    | '/r/init'
     | '/view/$block'
     | '/blocks/{-$category}'
     | '/docs/$'
@@ -169,6 +189,8 @@ export interface FileRouteTypes {
     | '/create'
     | '/demos/$slug'
     | '/preview/$slug'
+    | '/r/$name'
+    | '/r/init'
     | '/view/$block'
     | '/'
     | '/blocks/{-$category}'
@@ -185,6 +207,8 @@ export interface FileRouteTypes {
     | '/_app/create'
     | '/demos/$slug'
     | '/preview/$slug'
+    | '/r/$name'
+    | '/r/init'
     | '/view/$block'
     | '/_app/'
     | '/_app/blocks/{-$category}'
@@ -198,6 +222,8 @@ export interface RootRouteChildren {
   PlaygroundRoute: typeof PlaygroundRoute
   DemosSlugRoute: typeof DemosSlugRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
+  RNameRoute: typeof RNameRoute
+  RInitRoute: typeof RInitRoute
   ViewBlockRoute: typeof ViewBlockRoute
 }
 
@@ -236,6 +262,20 @@ declare module '@tanstack/react-router' {
       path: '/view/$block'
       fullPath: '/view/$block'
       preLoaderRoute: typeof ViewBlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/r/init': {
+      id: '/r/init'
+      path: '/r/init'
+      fullPath: '/r/init'
+      preLoaderRoute: typeof RInitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/r/$name': {
+      id: '/r/$name'
+      path: '/r/$name'
+      fullPath: '/r/$name'
+      preLoaderRoute: typeof RNameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/preview/$slug': {
@@ -356,6 +396,8 @@ const rootRouteChildren: RootRouteChildren = {
   PlaygroundRoute: PlaygroundRoute,
   DemosSlugRoute: DemosSlugRoute,
   PreviewSlugRoute: PreviewSlugRoute,
+  RNameRoute: RNameRoute,
+  RInitRoute: RInitRoute,
   ViewBlockRoute: ViewBlockRoute,
 }
 export const routeTree = rootRouteImport
