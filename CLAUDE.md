@@ -1,29 +1,13 @@
-# Project Overview
+## Agent skills
 
-**dotui** is a comprehensive UI library and design system platform that enables developers to create custom design systems and export production-ready component libraries.
+### Issue tracker
 
-# Core Principles
+Issues and PRDs are tracked in GitHub Issues for `mehdibha/dotUI`. See `docs/agents/issue-tracker.md`.
 
-## Verification Before Action
+### Triage labels
 
-- **Never assume** - Always verify context by reading relevant files before making changes
-- **Ask clarifying questions** when requirements are ambiguous or incomplete
-- **Confirm understanding** of the current implementation before suggesting modifications
-- **Check existing patterns** in the codebase before introducing new ones
+Use the default five-label triage vocabulary. See `docs/agents/triage-labels.md`.
 
-## Approach Validation
+### Domain docs
 
-Before implementing any solution:
-
-1. Evaluate if the requested approach is optimal for the use case
-2. If a better approach exists, present it with clear reasoning:
-   - Performance implications
-   - Maintainability considerations
-   - Scalability factors
-   - Industry best practices alignment
-3. Let the user decide which path to take
-4. Document trade-offs explicitly
-
-# Communication Style
-
-- Be direct and concise
+Single-context repo: read root `CONTEXT.md` and `docs/adr/` when present. See `docs/agents/domain.md`.
