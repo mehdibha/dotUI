@@ -2,7 +2,9 @@ import { z } from "zod";
 
 // === Building blocks ===
 
-const ratiosSchema = z.array(z.number().positive()).length(11);
+// Configurable scale shape: the number of ratios defines the number of steps.
+// At least 2 (endpoints) are required; the default scale is 11 (SCALE_STEPS).
+const ratiosSchema = z.array(z.number().positive()).min(2);
 
 const paletteDefinitionSchema = z.string().min(1);
 

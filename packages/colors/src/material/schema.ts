@@ -2,7 +2,9 @@ import { z } from "zod";
 
 // === Building blocks ===
 
-export const tonesSchema = z.array(z.number().min(0).max(100)).length(11);
+// Configurable scale shape: the number of tones defines the number of steps.
+// At least 2 are required; the default scale is 11 (SCALE_STEPS).
+export const tonesSchema = z.array(z.number().min(0).max(100)).min(2);
 
 export const paletteDefinitionSchema = z.string().min(1);
 
