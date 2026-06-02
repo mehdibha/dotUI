@@ -75,7 +75,12 @@ export function createContrastTheme(options: CreateContrastThemeOptions): Theme 
 	const globalRatios = options.ratios;
 	const formula: ContrastFormula = options.formula === "wcag3" ? "apca" : "wcag2";
 	const chroma = (options.saturation ?? 100) / 100;
-	const steps = [...SCALE_STEPS];
+	// Global ratios drive the scale shape: their count defines the number of steps.
+	// 11 ratios keep the familiar 50–950 names; any other count uses numeric step labels.
+	const steps =
+		globalRatios && globalRatios.length !== SCALE_STEPS.length
+			? Array.from({ length: globalRatios.length }, (_, i) => String(i + 1))
+			: [...SCALE_STEPS];
 	const producer = getProducer("contrast");
 
 	const theme: Theme = {};
@@ -92,7 +97,7 @@ export function createContrastTheme(options: CreateContrastThemeOptions): Theme 
 			const out = producer.produce(
 				{
 					seed: override?.color ?? baseSeed,
-					ratios: override?.ratios ?? globalRatios ?? defaultRatios(steps.length),
+					ratios: override?.ratios ?? globalRatios ?? defaultRatios(steps.length, formula),
 					formula,
 					chroma,
 					neutral: name === "neutral",

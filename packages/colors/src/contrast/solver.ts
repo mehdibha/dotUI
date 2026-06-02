@@ -16,23 +16,32 @@ import type { ModeCtx } from "../producer";
 import type { ContrastFormula } from "../shared/on-color";
 import type { ColorScale } from "../shared/types";
 
-/** Anchor contrast curve for an 11-step ramp (the historical dotUI default). */
-const RATIO_ANCHORS = [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15] as const;
+/**
+ * Anchor curves for an 11-step ramp. WCAG2 = contrast ratios (1–21); APCA = Lc
+ * values (0–~108) kept above the ~Lc 8 "platform" floor below which APCA reports
+ * a flat 0 — so the lower ramp doesn't collapse into that dead zone.
+ */
+const WCAG2_ANCHORS = [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15] as const;
+const APCA_ANCHORS = [10, 15, 22, 30, 42, 55, 68, 80, 90, 100, 106] as const;
 
-/** Default per-step WCAG2 target ratios for any N (linear resample of the anchor curve). */
-export function defaultRatios(n: number): number[] {
-	if (n <= 1) return [RATIO_ANCHORS[RATIO_ANCHORS.length - 1]!];
-	if (n === RATIO_ANCHORS.length) return [...RATIO_ANCHORS];
+function resample(anchors: readonly number[], n: number): number[] {
+	if (n <= 1) return [anchors[anchors.length - 1]!];
+	if (n === anchors.length) return [...anchors];
 	const out: number[] = [];
-	const last = RATIO_ANCHORS.length - 1;
+	const last = anchors.length - 1;
 	for (let i = 0; i < n; i++) {
 		const t = (i / (n - 1)) * last;
 		const lo = Math.floor(t);
 		const hi = Math.min(lo + 1, last);
 		const f = t - lo;
-		out.push(RATIO_ANCHORS[lo]! * (1 - f) + RATIO_ANCHORS[hi]! * f);
+		out.push(anchors[lo]! * (1 - f) + anchors[hi]! * f);
 	}
 	return out;
+}
+
+/** Default per-step targets for any N, resampled from the formula's anchor curve. */
+export function defaultRatios(n: number, formula: ContrastFormula = "wcag2"): number[] {
+	return resample(formula === "apca" ? APCA_ANCHORS : WCAG2_ANCHORS, n);
 }
 
 /** Chroma multiplier per step: tapers toward the light/dark extremes so tints/shades aren't muddy. */
@@ -90,6 +99,19 @@ function solveStep(
 ): Oklch {
 	let lo = ctx.isDark ? bgL : 0;
 	let hi = ctx.isDark ? 1 : bgL;
+	if (hi - lo < 1e-3) {
+		// Degenerate background (e.g. a light mode whose bg is near-black): keep a usable window.
+		if (ctx.isDark) lo = Math.max(0, hi - 1e-3);
+		else hi = Math.min(1, lo + 1e-3);
+	}
+	// High-contrast extreme (pure dark in light mode, pure light in dark mode).
+	const extreme = ctx.isDark ? hi : lo;
+	if (contrastAt(extreme, chroma, hue, ctx.background, formula) <= target) {
+		// Target unreachable (ratio higher than the background allows, or an APCA
+		// Lc below the platform floor) — clamp to the max-contrast extreme rather
+		// than walking onto a flat / discontinuous region.
+		return gamutMap({ l: extreme, c: chroma, h: hue });
+	}
 	for (let iter = 0; iter < 20; iter++) {
 		const mid = (lo + hi) / 2;
 		const needsMoreContrast = contrastAt(mid, chroma, hue, ctx.background, formula) < target;
