@@ -9,9 +9,11 @@
  */
 export type ColorScale = Record<string, string>;
 
-/** A single mode's output */
+/** A single mode's output: primitive ramps plus their paired on-* foregrounds. */
 export type ThemeMode = {
 	scales: Record<string, ColorScale>;
+	/** Readable foreground per palette, keyed identically to `scales`. Optional until every algorithm emits it. */
+	on?: Record<string, ColorScale>;
 };
 
 /** Complete theme output with multiple modes */
