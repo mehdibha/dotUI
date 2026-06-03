@@ -69,3 +69,28 @@ jobs:
       - uses: ./.github/actions/setup
 
       - run: pnpm test
+
+  registry-drift:
+    runs-on: ubuntu-latest
+    name: Check generated registry artifacts are up to date
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - name: Regenerate committed registry artifacts
+        run: pnpm build:registry
+
+      - name: Fail if any committed generated artifact is stale
+        run: |
+          git diff --exit-code -- \
+            www/src/registry/__generated__/blocks.tsx \
+            www/src/registry/__generated__/demos.tsx \
+            www/src/registry/__generated__/icons.tsx \
+            www/src/registry/__generated__/examples.tsx \
+            www/src/registry/__generated__/base-css.ts \
+            www/src/registry/__generated__/__tabler__.ts \
+            www/src/registry/__generated__/__hugeicons__.ts \
+            www/src/registry/__generated__/__remix__.ts \
+          || { echo '::error::Committed generated registry artifacts are out of date. Run `pnpm build:registry` and commit the result.'; exit 1; }

@@ -1,6 +1,6 @@
-import { DiscordIcon } from "@/registry/components/icons/discord";
-import { GitHubIcon } from "@/registry/components/icons/github";
-import { TwitterIcon } from "@/registry/components/icons/twitter";
+import { DiscordIcon } from "@/components/icons/discord";
+import { GitHubIcon } from "@/components/icons/github";
+import { TwitterIcon } from "@/components/icons/twitter";
 import { Button } from "@/registry/ui/button";
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
 import { Popover } from "@/registry/ui/popover";

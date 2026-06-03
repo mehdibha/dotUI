@@ -268,7 +268,7 @@ async function renderPublishableSource({ meta, stylesConfig, templates }: Render
 	//   - `publishableByPath`: a map keyed by source file path, for enum-with-files components
 	//
 	// The runtime route picks the right entry based on the preset's selection of
-	// the enum param that drives file swapping (handled by resolve-files.ts).
+	// the enum param that drives file swapping.
 
 	const defaultFile = (meta.files ?? []).find((f) => isBaseFile(f, meta.name)) ?? templates[0]?.file;
 	const defaultTemplate = templates.find((t) => t.file.path === defaultFile?.path) ?? templates[0];

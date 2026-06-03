@@ -13,7 +13,6 @@ import * as VirtualizerPrimitives from "react-aria-components/Virtualizer";
 import type { GridNode } from "react-stately/private/grid/GridCollection";
 import type { LayoutNode } from "react-stately/useVirtualizerState";
 
-import { DesignSystemContext } from "@/modules/core/styles";
 import { cn } from "@/registry/lib/utils";
 import { Checkbox } from "@/registry/ui/checkbox";
 import { Loader } from "@/registry/ui/loader";
@@ -55,8 +54,7 @@ const TableVirtualizer = <T extends object>({
 	rowHeight,
 	...props
 }: TableVirtualizerProps<T>) => {
-	const { density } = React.useContext(DesignSystemContext);
-	const densityHeight = TABLE_VIRTUALIZER_HEIGHTS[density] ?? TABLE_VIRTUALIZER_HEIGHTS.default;
+	const densityHeight = TABLE_VIRTUALIZER_HEIGHTS.default;
 	const tableLayoutOptions = layoutOptions as { rowHeight?: number; headingHeight?: number } | undefined;
 
 	return (
