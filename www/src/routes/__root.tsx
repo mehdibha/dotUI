@@ -1,9 +1,11 @@
 /// <reference types="vite/client" />
 
+import { useEffect } from "react";
+
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { ThemeProvider } from "starter-themes";
+import { ThemeProvider, useTheme } from "starter-themes";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
@@ -57,9 +59,32 @@ export const Route = createRootRoute({
 // 	}
 // }
 
+// Favicons can't read the in-app `.dark` class and most browsers never
+// re-evaluate a `prefers-color-scheme` media query embedded inside an SVG
+// favicon. So we swap the icon href as the resolved theme changes (covers both
+// the manual toggle and live OS appearance changes), the same way GitHub does.
+function FaviconSwitcher() {
+	const { resolvedTheme } = useTheme();
+
+	useEffect(() => {
+		const href = resolvedTheme === "dark" ? "/favicon-dark.svg" : "/favicon.svg";
+		let link = document.querySelector<HTMLLinkElement>('link[rel="icon"][type="image/svg+xml"]');
+		if (!link) {
+			link = document.createElement("link");
+			link.rel = "icon";
+			link.type = "image/svg+xml";
+			document.head.appendChild(link);
+		}
+		link.setAttribute("href", href);
+	}, [resolvedTheme]);
+
+	return null;
+}
+
 function RootComponent() {
 	return (
 		<ThemeProvider>
+			<FaviconSwitcher />
 			{/* <DrawerProvider> */}
 			<RootDocument>
 				{/* <DrawerIndentBackground /> */}
