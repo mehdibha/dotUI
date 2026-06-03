@@ -15,11 +15,23 @@ const cardsMeta: RegistryItem = {
 			type: "registry:component",
 		},
 		{
+			path: "blocks/showcase/cards/components/cookie-preferences.tsx",
+			type: "registry:component",
+		},
+		{
 			path: "blocks/showcase/cards/components/booking.tsx",
 			type: "registry:component",
 		},
 		{
 			path: "blocks/showcase/cards/components/color-editor.tsx",
+			type: "registry:component",
+		},
+		{
+			path: "blocks/showcase/cards/components/faq.tsx",
+			type: "registry:component",
+		},
+		{
+			path: "blocks/showcase/cards/components/feedback.tsx",
 			type: "registry:component",
 		},
 		{
@@ -39,11 +51,31 @@ const cardsMeta: RegistryItem = {
 			type: "registry:component",
 		},
 		{
-			path: "blocks/showcase/cards/components/pricing.tsx",
+			path: "blocks/showcase/cards/components/payment.tsx",
+			type: "registry:component",
+		},
+		{
+			path: "blocks/showcase/cards/components/shortcuts.tsx",
+			type: "registry:component",
+		},
+		{
+			path: "blocks/showcase/cards/components/storage.tsx",
 			type: "registry:component",
 		},
 		{
 			path: "blocks/showcase/cards/components/team-name.tsx",
+			type: "registry:component",
+		},
+		{
+			path: "blocks/showcase/cards/components/transactions.tsx",
+			type: "registry:component",
+		},
+		{
+			path: "blocks/showcase/cards/components/two-factor.tsx",
+			type: "registry:component",
+		},
+		{
+			path: "blocks/showcase/cards/components/upload-avatar.tsx",
 			type: "registry:component",
 		},
 	],
