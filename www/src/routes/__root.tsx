@@ -59,15 +59,15 @@ export const Route = createRootRoute({
 // 	}
 // }
 
-// Favicons can't read the in-app `.dark` class and most browsers never
-// re-evaluate a `prefers-color-scheme` media query embedded inside an SVG
-// favicon. So we swap the icon href as the resolved theme changes (covers both
-// the manual toggle and live OS appearance changes), the same way GitHub does.
+// The favicon follows the system color scheme (not the in-app theme toggle),
+// the same way GitHub does. Most browsers never re-evaluate a
+// `prefers-color-scheme` media query embedded inside an SVG favicon, so we swap
+// the icon href whenever the system preference changes instead.
 function FaviconSwitcher() {
-	const { resolvedTheme } = useTheme();
+	const { systemTheme } = useTheme();
 
 	useEffect(() => {
-		const href = resolvedTheme === "dark" ? "/favicon-dark.svg" : "/favicon.svg";
+		const href = systemTheme === "dark" ? "/favicon-dark.svg" : "/favicon.svg";
 		let link = document.querySelector<HTMLLinkElement>('link[rel="icon"][type="image/svg+xml"]');
 		if (!link) {
 			link = document.createElement("link");
@@ -76,7 +76,7 @@ function FaviconSwitcher() {
 			document.head.appendChild(link);
 		}
 		link.setAttribute("href", href);
-	}, [resolvedTheme]);
+	}, [systemTheme]);
 
 	return null;
 }
