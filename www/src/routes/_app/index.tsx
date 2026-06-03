@@ -9,7 +9,6 @@ import { ShadcnIcon } from "@/registry/components/icons/shadcn";
 import { TailwindWordmark } from "@/registry/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@/registry/components/icons/typescript";
 import { LinkButton } from "@/registry/ui/button";
-import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 export const Route = createFileRoute("/_app/")({
@@ -46,18 +45,7 @@ function HomePage() {
 				</section>
 
 				<section className="container mt-24">
-					<Tabs className="gap-3">
-						<TabList className="gap-2 border-b-0 font-medium **:data-tab:text-base **:data-tab-indicator:hidden">
-							<Tab id="cards">Cards</Tab>
-							<Tab id="dashboard">Dashboard</Tab>
-							<Tab id="tasks">Tasks</Tab>
-							<Tab id="playground">Playground</Tab>
-							<Tab id="authentication">Authentication</Tab>
-						</TabList>
-						<TabPanel id="cards">
-							<Cards />
-						</TabPanel>
-					</Tabs>
+					<Cards />
 				</section>
 
 				{/* Built on modern tools */}
