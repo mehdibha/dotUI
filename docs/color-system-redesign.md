@@ -56,7 +56,7 @@ TIER 3  surfaces          --color-card / .surface{}  (curated surface vars + opt
 
 - **`@dotui/colors` = a pure color _kernel_.** Primitives + ops (`gamutMap`, `onColor`,
   `mix`, parse/format). It must **not** know the semantic-token vocabulary or CSS.
-- **`@dotui/theme` (new pure package, or `www/src/registry/theme/` to start) = the semantic
+- **`@dotui/theme` (DECIDED: an in-`www` module at `www/src/registry/theme/`, not a package — see §13) = the semantic
   layer.** Owns the vocabulary, `DEFAULT_SEMANTICS`, `resolveColorConfig`, `emitCss`, and
   surfaces. It is the **top orchestrator**; the kernel is a sub-step it calls only when
   palettes exist (so the flat shape skips the kernel entirely).
@@ -397,3 +397,62 @@ recipe, never a resolved value), Chakra DOM-depth swap.
   target" (D6).
 - **APCA marketed as a standard** — REJECTED: APCA is unratified (WCAG 3 ~2030); WCAG 2.2 AA is the
   legal target. APCA/Bridge-PCA are perceptual _options_, never the conformance claim.
+
+## 13. Build decisions & sequencing (decided post-engine, after the registry/packaging analysis)
+
+**Q1 — `@dotui/theme` lives IN `www` (`www/src/registry/theme/`), not a package.** Its vocabulary _is_ the
+www registry's token vocabulary (`DEFAULT_SEMANTICS` must reproduce `base/theme.css`'s ~90 `--color-*`
+tokens exactly and generate `theme.css` + `tokens.ts`), it needs `RegistryItem`/`Density`/`ParamDef` from
+`registry/types` + the `createStyles` `vars` contract, and all three "one resolver" consumers (provider,
+preview iframe, publisher) already live in `www`. A package would freeze a still-drifting vocabulary into a
+published API and create a package↔www cycle. **`@dotui/colors` stays the package** (pure kernel), consumed
+by the theme module as a raw-`.ts` workspace dep. Promote `@dotui/theme` to a package only when a concrete
+non-www consumer exists AND the vocabulary has frozen (extraction is mechanical).
+
+**Q2 — Keep the monorepo; do NOT collapse into `www`.** Three published npm libs with independent changeset
+cadence — `starter-themes`, `tailwindcss-autocontrast` (live v0.0.3, a shipped runtime dep that generates
+consumers' `--on-*` vars), `tailwindcss-with` — plus the pure `@dotui/colors` kernel + clean turbo/changeset
+boundaries. The lone pro-collapse argument (dev friction) is empirically void: `www` consumes workspace deps
+as raw `.ts` via Vite with no build tax. No partial collapse.
+
+**Q3 — One targeted PRE-Phase-1 refactor: reconcile the token vocabulary (a DATA fix, NOT a registry/
+createStyles rewrite).** The single genuine blocker: the semantic vocabulary drifts across sources, so
+`DEFAULT_SEMANTICS` has no trustworthy baseline. Empirical drift (`base/theme.css` = de-facto truth, frozen
+into `__generated__/base-css.ts`; `base/tokens.ts` = the customizer source):
+
+- **21 tokens present in `theme.css`, absent from `tokens.ts`:** `color-field`, `color-highlight`,
+  `color-fg-on-highlight`, `color-selected{,-hover,-active}`, `color-fg-on-selected`,
+  `color-{success,danger,warning}-muted-hover`, `color-fg-primary-disabled`, `color-border-active`,
+  `color-border-{success,accent,danger,warning,info}-hover`, `color-tooltip`, `color-fg-on-tooltip`,
+  `color-sidebar`, `color-border-sidebar`.
+- **8 value mismatches:** `fg-{danger,warning,success,info,accent}` are `-800` in theme.css but `-700` in
+  tokens.ts; `{success,warning,danger}-muted` are `-100` vs `-50`. (`info-muted` already agrees at `50`.)
+- Orphan `--color-shine` (referenced by `--shadow-shine`, defined nowhere).
+
+This is **user-visible today** (the picker offers wrong defaults and can't select the 21 missing tokens).
+
+**Sequencing — the gate before any `@dotui/theme` code:**
+
+- **PR-R1** [S] — reconcile `base/tokens.ts` to `base/theme.css`: add the 21 missing tokens (correct
+  categories/scales), fix the 8 value mismatches, define `--color-shine`. Pure data; no architecture/codegen.
+- **PR-R2** [S] — drift-guard test asserting `tokens.ts` `--color-*` keys+values match `theme.css`; unify the
+  radius vocabulary (`RADIUS_TOKENS` == token-map `RADIUS_OPTIONS`).
+- Then **Phase 1** as four sub-PRs:
+  - **1a** scaffold `www/src/registry/theme/` — vocabulary + `DEFAULT_SEMANTICS` (from reconciled
+    `theme.css`), import types from `registry/types`, wire `@dotui/colors` as a raw-`.ts` dep (**the kernel's
+    first consumer** — fix any export-surface gaps here), exact-reproduction test.
+  - **1b** `resolveColorConfig` + `emitCss` (the one resolver); switch to **generating** `theme.css` +
+    `tokens.ts` from the vocabulary (the drift guard now enforces the generator).
+  - **1c** typed `color?: ColorConfig` on `DesignSystem` + codec key `c` (diff/merge + round-trip tests;
+    all-defaults → no `?preset=`); provider injects one multi-mode `<style>`.
+  - **1d** rewire the dead `colors-config.tsx` to `useDesignSystem` + live swatch strip + per-pairing contrast
+    readout + `activeMode`/MoonIcon + forward mode to iframe.
+
+**Phase-1 SCOPE-CREEP exclusions** (look adjacent, are later phases — reviewers reject): the publisher
+emit-_input_ rewrite (Phase 2 — `emit-theme.ts`'s output contract is already correct); threading
+`OverrideLayer.vars` through publish (`publisher/types.ts:38`, Phase 2); re-routing component→primitive leaks
+(`button --color-disabled`, `tag-group bg-(--neutral-300)`, `calendar --accent-500`, Phase 3); the
+module-scoped `createStyles` registries (orthogonal to color — **do not touch**).
+
+**Parity acceptance test:** `emitCss(DEFAULT_SEMANTICS)` must byte-match the reconciled `base/theme.css`; the
+publisher's frozen `__generated__/base-css.ts` is the Phase-2 parity oracle for the same output.
