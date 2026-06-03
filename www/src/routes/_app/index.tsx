@@ -9,7 +9,6 @@ import { ShadcnIcon } from "@/registry/components/icons/shadcn";
 import { TailwindWordmark } from "@/registry/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@/registry/components/icons/typescript";
 import { LinkButton } from "@/registry/ui/button";
-import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 export const Route = createFileRoute("/_app/")({
@@ -22,7 +21,7 @@ function HomePage() {
 			<main>
 				{/* Hero section */}
 				<section className="container flex flex-col pt-6 sm:pt-10 md:pt-18">
-					<div className="flex max-w-5xl flex-col items-start gap-2 md:gap-3">
+					<div className="flex flex-col items-center gap-2 text-center md:gap-3">
 						<Announcement />
 						<h1 className="text-3xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
 							Build your design system with a <span className="font-bold italic">unique</span> look.
@@ -35,10 +34,10 @@ function HomePage() {
 							.
 						</p>
 						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-							<LinkButton href="/docs" variant="primary" size="lg" className="h-10">
+							<LinkButton href="/docs" variant="primary" size="lg">
 								Get started
 							</LinkButton>
-							<LinkButton href="/components" variant="default" size="lg" className="h-10">
+							<LinkButton href="/components" variant="default" size="lg">
 								Explore components
 							</LinkButton>
 						</div>
@@ -46,18 +45,7 @@ function HomePage() {
 				</section>
 
 				<section className="container mt-24">
-					<Tabs className="gap-3">
-						<TabList className="gap-2 border-b-0 font-medium **:data-tab:text-base **:data-tab-indicator:hidden">
-							<Tab id="cards">Cards</Tab>
-							<Tab id="dashboard">Dashboard</Tab>
-							<Tab id="tasks">Tasks</Tab>
-							<Tab id="playground">Playground</Tab>
-							<Tab id="authentication">Authentication</Tab>
-						</TabList>
-						<TabPanel id="cards">
-							<Cards />
-						</TabPanel>
-					</Tabs>
+					<Cards />
 				</section>
 
 				{/* Built on modern tools */}
