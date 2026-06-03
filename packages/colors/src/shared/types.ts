@@ -1,26 +1,20 @@
 /**
- * Shared output types for both Material and Contrast themes
+ * Shared output types for every producer.
  */
 
-/** 11-step color scale (50-950) */
-export type ColorScale = {
-	"50": string;
-	"100": string;
-	"200": string;
-	"300": string;
-	"400": string;
-	"500": string;
-	"600": string;
-	"700": string;
-	"800": string;
-	"900": string;
-	"950": string;
-};
+/**
+ * A color ramp keyed by step name. Step count and naming are configurable
+ * (e.g. "50".."950", Radix-style "1".."12", or Material tones) — the producer
+ * decides the keys via {@link ModeCtx.steps}. `SCALE_STEPS` is only the default.
+ */
+export type ColorScale = Record<string, string>;
 
-/** A single mode's output */
+/** A single mode's output: primitive ramps plus their paired on-* foregrounds. */
 export type ThemeMode = {
 	scales: Record<string, ColorScale>;
+	/** Readable foreground per palette, keyed identically to `scales`. Every producer emits it. */
+	on: Record<string, ColorScale>;
 };
 
-/** Complete theme output with multiple modes */
+/** Complete theme output, one entry per mode. */
 export type Theme = Record<string, ThemeMode>;

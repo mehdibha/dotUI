@@ -4,11 +4,9 @@
 	"version": "0.1.0",
 	"type": "module",
 	"license": "MIT",
+	"sideEffects": false,
 	"exports": {
-		".": "./src/index.ts",
-		"./material": "./src/material/index.ts",
-		"./material/schema": "./src/material/schema.ts",
-		"./contrast": "./src/contrast/index.ts"
+		".": "./src/index.ts"
 	},
 	"scripts": {
 		"clean": "git clean -xdf .cache .turbo dist node_modules",
