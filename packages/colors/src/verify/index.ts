@@ -14,7 +14,7 @@ import type { Theme } from "../shared/types";
 import type { Level, PairingResult, SemanticPairing, SizeClass, VerifyOptions, VerifyReport } from "./types";
 
 export type { Level, PairingResult, SemanticPairing, SizeClass, VerifyOptions, VerifyReport } from "./types";
-export { deltaLClearsAA, targetAAA, targetFor } from "./thresholds";
+export { targetAAA, targetFor } from "./thresholds";
 
 function ratioOf(fg: string, bg: string, formula: ContrastFormula): number {
 	return formula === "apca" ? apca(fg, bg) : wcag2(fg, bg);
@@ -35,17 +35,23 @@ export function nudgeForTarget(fg: string, bg: string, target: number, formula: 
 	const f = toOklch(fg);
 	const at = (l: number): number => ratioOf(oklchCss(gamutMap({ l, c: f.c, h: f.h })), bg, formula);
 	if (at(f.l) >= target) return fg;
-	const up = at(1);
-	const down = at(0);
-	if (Math.max(up, down) < target) return null;
-	let lo = f.l;
-	let hi = up >= down ? 1 : 0;
-	for (let k = 0; k < 24; k++) {
-		const mid = (lo + hi) / 2;
-		if (at(mid) >= target) hi = mid;
-		else lo = mid;
-	}
-	return oklchCss(gamutMap({ l: hi, c: f.c, h: f.h }));
+	const bisect = (extreme: number): number => {
+		let lo = f.l;
+		let hi = extreme;
+		for (let k = 0; k < 24; k++) {
+			const mid = (lo + hi) / 2;
+			if (at(mid) >= target) hi = mid;
+			else lo = mid;
+		}
+		return hi;
+	};
+	// Try both directions; keep the clearing one nearest the original lightness (minimal move).
+	const candidates: number[] = [];
+	if (at(1) >= target) candidates.push(bisect(1));
+	if (at(0) >= target) candidates.push(bisect(0));
+	if (candidates.length === 0) return null;
+	const best = candidates.reduce((a, b) => (Math.abs(b - f.l) < Math.abs(a - f.l) ? b : a));
+	return oklchCss(gamutMap({ l: best, c: f.c, h: f.h }));
 }
 
 function verifyPairing(p: SemanticPairing, formula: ContrastFormula, suggestFix: boolean): PairingResult {

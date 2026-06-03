@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { getProducer, type ModeCtx } from "./producer";
 import { registerBuiltins } from "./producers";
-import { toOklch, wcag2 } from "./shared/color";
+import { apca, toOklch, wcag2 } from "./shared/color";
 import { allValues, inGamut, isMonotonic, rampLs, worstOnContrast } from "./test-utils";
 import { createTheme } from "./theme";
 
@@ -172,5 +172,68 @@ describe("snapshots", () => {
 		expect(
 			createTheme({ algorithm: "material", palettes: { primary: "#6366f1", neutral: "#64748b" } }),
 		).toMatchSnapshot();
+	});
+});
+
+describe("review regressions", () => {
+	it("contrast solver picks the stronger pole on a mid-light background", () => {
+		const ctx: ModeCtx = { name: "x", isDark: false, steps: S11, background: "oklch(0.55 0.02 260)" };
+		const { scale } = getProducer("contrast").produce({ seed: "#3b82f6", formula: "apca" }, ctx);
+		// the darkest step must use the high-contrast (light) pole, not be forfeited to the weak dark pole
+		expect(apca(scale["950"]!, ctx.background)).toBeGreaterThan(55);
+	});
+
+	it("tailwind hueTorsion drifts toward orange/violet at the dark end (anchor-relative)", () => {
+		for (const [seed, anchor] of [
+			["#ef4444", 50],
+			["#eab308", 50],
+			["#3b82f6", 290],
+		] as const) {
+			const ramp = sc(createTheme({ algorithm: "tailwind", palettes: { primary: seed } }), "light", "primary");
+			const steps = Object.keys(ramp);
+			const hLight = toOklch(val(ramp, steps[0]!)).h;
+			const hDark = toOklch(val(ramp, steps.at(-1)!)).h;
+			expect(Math.abs(hDark - anchor)).toBeLessThan(Math.abs(hLight - anchor));
+		}
+	});
+
+	it("hueTorsion is a no-op for out-of-sector hues (green)", () => {
+		const tw = sc(createTheme({ algorithm: "tailwind", palettes: { primary: "#22c55e" } }), "light", "primary");
+		const ok = sc(createTheme({ algorithm: "oklch", palettes: { primary: "#22c55e" } }), "light", "primary");
+		const last = Object.keys(tw).at(-1)!;
+		expect(toOklch(val(tw, last)).h).toBeCloseTo(toOklch(val(ok, last)).h, 1);
+	});
+
+	it("fixed honors arbitrary authored keys with no explicit steps (no data loss)", () => {
+		const radix = Object.fromEntries(
+			Array.from({ length: 12 }, (_, i) => [String(i + 1), `oklch(${(0.95 - i * 0.07).toFixed(3)} 0.05 260)`]),
+		);
+		const theme = createTheme({ algorithm: "fixed", palettes: { primary: radix } });
+		expect(Object.keys(sc(theme, "light", "primary"))).toEqual(Object.keys(radix));
+	});
+
+	it("empty fixed ramp throws (loud, not silent data loss)", () => {
+		expect(() => createTheme({ algorithm: "fixed", palettes: { primary: {} } })).toThrow(/empty scale/);
+	});
+
+	it("per-mode palette seed override diverges modes", () => {
+		const theme = createTheme({
+			algorithm: "oklch",
+			palettes: { primary: "#3b82f6" },
+			modes: { light: { palettes: { primary: { seed: "#e11d48" } } }, dark: true },
+		});
+		const lh = toOklch(val(sc(theme, "light", "primary"), "500")).h;
+		const dh = toOklch(val(sc(theme, "dark", "primary"), "500")).h;
+		expect(Math.abs(lh - dh)).toBeGreaterThan(30);
+	});
+
+	it("per-mode override of an undeclared palette throws", () => {
+		expect(() =>
+			createTheme({
+				algorithm: "oklch",
+				palettes: { primary: "#3b82f6" },
+				modes: { light: { palettes: { ghost: { seed: "#ffffff" } } } },
+			}),
+		).toThrow(/not a declared palette/);
 	});
 });

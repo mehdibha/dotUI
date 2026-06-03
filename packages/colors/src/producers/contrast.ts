@@ -34,20 +34,23 @@ export type ContrastOpts = z.infer<typeof contrastOptsSchema>;
 
 /** Binary-search OKLCH lightness for the target contrast; clamp to the extreme if unreachable. */
 function solveStep(target: number, hue: number, chroma: number, bgL: number, contrastOf: (fg: Oklch) => number): Oklch {
-	const darkBg = bgL <= 0.5;
-	let lo = darkBg ? bgL : 0;
-	let hi = darkBg ? 1 : bgL;
+	const at = (l: number): number => contrastOf(gamutMap({ l, c: chroma, h: hue }));
+	// Search toward whichever extreme actually maximizes contrast, not a fixed bgL cutoff
+	// (the true crossover isn't at 0.5, so a hard cutoff forfeits the stronger pole on mid bg).
+	const lighter = at(1) >= at(0); // is a lighter foreground the higher-contrast direction?
+	let lo = lighter ? bgL : 0;
+	let hi = lighter ? 1 : bgL;
 	if (hi - lo < 1e-3) {
-		if (darkBg) lo = Math.max(0, hi - 1e-3);
+		if (lighter) lo = Math.max(0, hi - 1e-3);
 		else hi = Math.min(1, lo + 1e-3);
 	}
-	const at = (l: number): number => contrastOf(gamutMap({ l, c: chroma, h: hue }));
-	const extreme = darkBg ? hi : lo; // max-contrast end
+	const extreme = lighter ? hi : lo; // max-contrast end
 	if (at(extreme) <= target) return gamutMap({ l: extreme, c: chroma, h: hue });
 	for (let k = 0; k < 20; k++) {
 		const mid = (lo + hi) / 2;
 		const needsMore = at(mid) < target;
-		if (darkBg ? needsMore : !needsMore) lo = mid;
+		// lighter: higher L = more contrast; else: lower L = more contrast.
+		if (lighter ? needsMore : !needsMore) lo = mid;
 		else hi = mid;
 	}
 	return gamutMap({ l: (lo + hi) / 2, c: chroma, h: hue });

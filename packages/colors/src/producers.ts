@@ -4,7 +4,7 @@
  * import-for-side-effect global.
  */
 
-import { registerProducer } from "./producer";
+import { type ColorProducer, hasProducer, registerProducer } from "./producer";
 import { contrastProducer } from "./producers/contrast";
 import { fixedProducer } from "./producers/fixed";
 import { materialProducer } from "./producers/material";
@@ -16,9 +16,13 @@ let done = false;
 export function registerBuiltins(): void {
 	if (done) return;
 	done = true;
-	registerProducer(oklchProducer);
-	registerProducer(contrastProducer);
-	registerProducer(materialProducer);
-	registerProducer(fixedProducer);
-	registerProducer(tailwindProducer);
+	// Only fill ids that are free, so a consumer's pre-registered override wins regardless of call order.
+	const add = <O>(p: ColorProducer<O>): void => {
+		if (!hasProducer(p.id)) registerProducer(p);
+	};
+	add(oklchProducer);
+	add(contrastProducer);
+	add(materialProducer);
+	add(fixedProducer);
+	add(tailwindProducer);
 }

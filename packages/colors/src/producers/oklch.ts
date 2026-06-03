@@ -37,11 +37,14 @@ const NEUTRAL_MAX_C = 0.012;
 const DEFAULT_MIN_PEAK_C = 0.11;
 const MAX_MODE_C = 0.4;
 
-/** Sign-by-sector hue torsion: warm hues drift toward orange, cool toward violet, at the dark end. */
+/** Anchor-relative hue torsion: warm hues drift toward orange (~50°), cool toward violet (~290°), at the dark end. */
 function torsion(hue: number, t: number, amount: number): number {
 	if (amount === 0) return hue;
-	const dir = hue >= 20 && hue <= 110 ? -1 : hue >= 200 && hue <= 290 ? 1 : 0;
-	return hue + dir * amount * t;
+	const target = hue >= 20 && hue <= 110 ? 50 : hue >= 200 && hue <= 290 ? 290 : null;
+	if (target === null) return hue;
+	const delta = target - hue;
+	// Move toward the anchor, never past it.
+	return hue + Math.sign(delta) * Math.min(Math.abs(delta), amount * t);
 }
 
 export const oklchProducer: ColorProducer<OklchOpts> = {

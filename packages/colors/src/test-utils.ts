@@ -24,12 +24,14 @@ export function rampCs(scale: ColorScale): number[] {
 	return Object.values(scale).map((v) => toOklch(v).c);
 }
 
+/** Strictly monotonic (and at least 2 entries) — a flat or empty ramp is not "clean". */
 export function isMonotonic(nums: number[]): boolean {
+	if (nums.length < 2) return false;
 	let inc = true;
 	let dec = true;
 	for (let i = 1; i < nums.length; i++) {
-		if (nums[i]! < nums[i - 1]!) inc = false;
-		if (nums[i]! > nums[i - 1]!) dec = false;
+		if (nums[i]! <= nums[i - 1]!) inc = false;
+		if (nums[i]! >= nums[i - 1]!) dec = false;
 	}
 	return inc || dec;
 }

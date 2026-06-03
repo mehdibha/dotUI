@@ -16,11 +16,12 @@ export type FixedOpts = z.infer<typeof fixedOptsSchema>;
 export const fixedProducer: ColorProducer<FixedOpts> = {
 	id: "fixed",
 	schema: fixedOptsSchema,
-	produce(opts, ctx) {
+	produce(opts) {
+		// Honor every authored key verbatim (don't intersect with ctx.steps — that
+		// would silently drop ramps keyed differently than the default scale).
 		const scale: Record<string, string> = {};
-		for (const step of ctx.steps) {
-			const value = opts.scale[step];
-			if (value != null) scale[step] = oklchCss(gamutMap(toOklch(value)));
+		for (const [step, value] of Object.entries(opts.scale)) {
+			scale[step] = oklchCss(gamutMap(toOklch(value)));
 		}
 		return { scale, on: computeOnColors(scale) };
 	},

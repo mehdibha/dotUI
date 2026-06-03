@@ -66,5 +66,9 @@ export function hasProducer(id: AlgorithmId): boolean {
 /** Validate per-palette opts via the producer's schema, then produce — makes `schema` load-bearing. */
 export function produceValidated(id: AlgorithmId, opts: unknown, ctx: ModeCtx): PaletteOutput {
 	const producer = getProducer(id);
-	return producer.produce(producer.schema.parse(opts), ctx);
+	const out = producer.produce(producer.schema.parse(opts), ctx);
+	if (Object.keys(out.scale).length === 0) {
+		throw new Error(`Producer "${id}" produced an empty scale — no steps matched the palette's keys.`);
+	}
+	return out;
 }

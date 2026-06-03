@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { isMonotonic } from "../test-utils";
 import { apca, gamutMap, oklchCss, toOklch, wcag2 } from "./color";
 import { lightnessForSteps } from "./curve";
 import { onColor } from "./on-color";
@@ -53,5 +54,16 @@ describe("shared/seed-anchor", () => {
 		const out = applyAnchoring(lightnessForSteps(11), S11, 0.62, "500");
 		expect(out[5]).toBeCloseTo(0.62, 5);
 		for (let i = 1; i < out.length; i++) expect(out[i]!).toBeLessThan(out[i - 1]!);
+	});
+});
+
+describe("test-utils/isMonotonic", () => {
+	it("rejects flat/empty/short, accepts strict", () => {
+		expect(isMonotonic([5, 5, 5])).toBe(false);
+		expect(isMonotonic([])).toBe(false);
+		expect(isMonotonic([1])).toBe(false);
+		expect(isMonotonic([1, 1, 2, 3])).toBe(false);
+		expect(isMonotonic([1, 2, 3])).toBe(true);
+		expect(isMonotonic([3, 2, 1])).toBe(true);
 	});
 });

@@ -45,9 +45,12 @@ export function onColor(background: string, formula: ContrastFormula = "wcag2", 
 	const wantLight = bgL < LIGHT_PIVOT;
 
 	const make = (value: Oklch, pole: OnPole): OnColor => {
-		const mapped = gamutMap(value); // a light-tinted pole is out of sRGB at some hues
-		const ratio = score(mapped); // score the color we actually emit
-		return { value: oklchCss(mapped), formula, ratio, meetsFloor: ratio >= min, pole };
+		// Gamut-map (a light-tinted pole is out of sRGB at some hues) and score the
+		// ROUNDED emitted string, so meetsFloor matches what verify() sees — a grazing
+		// tinted pole that rounds below the floor then correctly falls through to a pure pole.
+		const css = oklchCss(gamutMap(value));
+		const ratio = score(toOklch(css));
+		return { value: css, formula, ratio, meetsFloor: ratio >= min, pole };
 	};
 
 	if (tinted) {

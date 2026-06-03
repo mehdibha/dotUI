@@ -113,6 +113,13 @@ export function createTheme(options: CreateThemeOptions): Theme {
 	const theme: Theme = {};
 	for (const [modeName, modeConfig] of Object.entries(modes)) {
 		const resolved = resolveMode(modeName, modeConfig);
+		for (const key of Object.keys(resolved.palettes)) {
+			if (!baseInputs.has(key)) {
+				throw new Error(
+					`mode "${modeName}": palette override "${key}" is not a declared palette (have: ${[...baseInputs.keys()].join(", ")}).`,
+				);
+			}
+		}
 		const neutralSeed = resolved.palettes.neutral?.seed ?? neutralBase;
 		const ctx: ModeCtx = {
 			name: modeName,

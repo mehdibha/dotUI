@@ -17,12 +17,3 @@ export function targetFor(sizeClass: SizeClass, formula: ContrastFormula): numbe
 export function targetAAA(sizeClass: SizeClass, formula: ContrastFormula): number {
 	return (formula === "apca" ? APCA_AAA : WCAG2_AAA)[sizeClass];
 }
-
-/**
- * Cheap OKLCH-lightness pre-check: a |ΔL| this large clears the AA ratio, so the
- * real (more expensive) contrast call can be skipped for obviously-fine pairs.
- */
-export function deltaLClearsAA(fgL: number, bgL: number, sizeClass: SizeClass): boolean {
-	const d = Math.abs(fgL - bgL);
-	return sizeClass === "body" ? d >= 0.5 : d >= 0.4;
-}

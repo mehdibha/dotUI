@@ -44,4 +44,16 @@ describe("verify", () => {
 		// primary + neutral (derived) × light/dark × 11 steps
 		expect(pairingsFromTheme(theme).length).toBe(2 * 2 * 11);
 	});
+
+	it("verifyTheme(apca) reports honest failures (floor unreachable on mid steps)", () => {
+		const report = verifyTheme(createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6" } }), {
+			formula: "apca",
+		});
+		expect(report.passed).toBe(false);
+		expect(report.failures.every((f) => f.formula === "apca" && f.target === 60)).toBe(true);
+	});
+
+	it("nudgeForTarget returns null when the target is unreachable", () => {
+		expect(nudgeForTarget("#888888", "#777777", 21, "wcag2")).toBe(null);
+	});
 });
