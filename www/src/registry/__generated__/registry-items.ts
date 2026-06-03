@@ -1,7 +1,8 @@
 // AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
-import type { RegistryItem } from "@/registry/types";
 
+import LibFocusStyles from "@/registry/lib/focus-styles/meta";
+import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
 import UiAlert from "@/registry/ui/alert/meta";
 import UiAvatar from "@/registry/ui/avatar/meta";
@@ -10,15 +11,15 @@ import UiBreadcrumbs from "@/registry/ui/breadcrumbs/meta";
 import UiButton from "@/registry/ui/button/meta";
 import UiCalendar from "@/registry/ui/calendar/meta";
 import UiCard from "@/registry/ui/card/meta";
-import UiCheckbox from "@/registry/ui/checkbox/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
+import UiCheckbox from "@/registry/ui/checkbox/meta";
 import UiColorArea from "@/registry/ui/color-area/meta";
 import UiColorEditor from "@/registry/ui/color-editor/meta";
 import UiColorField from "@/registry/ui/color-field/meta";
 import UiColorPicker from "@/registry/ui/color-picker/meta";
 import UiColorSlider from "@/registry/ui/color-slider/meta";
-import UiColorSwatch from "@/registry/ui/color-swatch/meta";
 import UiColorSwatchPicker from "@/registry/ui/color-swatch-picker/meta";
+import UiColorSwatch from "@/registry/ui/color-swatch/meta";
 import UiColorThumb from "@/registry/ui/color-thumb/meta";
 import UiCombobox from "@/registry/ui/combobox/meta";
 import UiCommand from "@/registry/ui/command/meta";
@@ -55,16 +56,15 @@ import UiSwitch from "@/registry/ui/switch/meta";
 import UiTable from "@/registry/ui/table/meta";
 import UiTabs from "@/registry/ui/tabs/meta";
 import UiTagGroup from "@/registry/ui/tag-group/meta";
-import UiText from "@/registry/ui/text/meta";
 import UiTextField from "@/registry/ui/text-field/meta";
+import UiText from "@/registry/ui/text/meta";
 import UiTimeField from "@/registry/ui/time-field/meta";
 import UiToast from "@/registry/ui/toast/meta";
-import UiToggleButton from "@/registry/ui/toggle-button/meta";
 import UiToggleButtonGroup from "@/registry/ui/toggle-button-group/meta";
+import UiToggleButton from "@/registry/ui/toggle-button/meta";
 import UiTooltip from "@/registry/ui/tooltip/meta";
 
-import LibFocusStyles from "@/registry/lib/focus-styles/meta";
-import LibUtils from "@/registry/lib/utils/meta";
+import type { RegistryItem } from "@/registry/types";
 
 export const registryUi: RegistryItem[] = [
 	UiAccordion,

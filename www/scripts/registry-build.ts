@@ -346,13 +346,25 @@ async function buildRegistryItemsManifest() {
 	const arrayBlock = (name: string, scope: "ui" | "lib", slugs: string[]) =>
 		`export const ${name}: RegistryItem[] = [\n${slugs.map((s) => `\t${toItemIdent(scope, s)},`).join("\n")}\n];`;
 
+	// Sort value imports by module specifier (NOT identifier) to match oxfmt's
+	// sortImports "value-internal" group — e.g. "ui/checkbox-group" sorts before
+	// "ui/checkbox" ('-' < '/') — so the generated file passes `oxfmt --check` as-is
+	// (writeGeneratedFile's inline format() does not re-sort imports). The type
+	// import follows the value group with no blank line; the header comment is
+	// detached by a blank line so oxfmt leaves it at the top.
+	const valueImports = [
+		...lib.map((s) => ({ spec: `@/registry/lib/${s}/meta`, line: importLine("lib", s) })),
+		...ui.map((s) => ({ spec: `@/registry/ui/${s}/meta`, line: importLine("ui", s) })),
+	]
+		.sort((a, b) => (a.spec < b.spec ? -1 : a.spec > b.spec ? 1 : 0))
+		.map((v) => v.line);
+
 	const content = `// AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
+
+${valueImports.join("\n")}
+
 import type { RegistryItem } from "@/registry/types";
-
-${ui.map((s) => importLine("ui", s)).join("\n")}
-
-${lib.map((s) => importLine("lib", s)).join("\n")}
 
 ${arrayBlock("registryUi", "ui", ui)}
 
