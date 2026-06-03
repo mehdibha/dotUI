@@ -1,13 +1,41 @@
-// Unified API
+/**
+ * @dotui/colors — the color kernel.
+ *
+ * Generates primitive ramps (+ paired on-* foregrounds) from seeds via pluggable
+ * producers, and verifies contrast on resolved pairings. Pure: no CSS, no DOM, no
+ * semantic-token vocabulary (that lives in the semantic layer).
+ */
 
-// Algorithm-specific exports
-export { type CreateContrastThemeOptions, createContrastTheme, createContrastThemeOptionsSchema } from "./contrast";
-export {
-	type CreateThemeOptions as CreateMaterialThemeOptions,
-	createMaterialTheme,
-	createMaterialThemeOptionsSchema,
-} from "./material";
-export { type CreateThemeOptions, createThemeOptionsSchema } from "./schema";
+// Generation
 export { createTheme } from "./theme";
-// Shared types
+export { type CreateThemeOptions, createThemeOptionsSchema } from "./schema";
+
+// Verification
+export {
+	nudgeForTarget,
+	pairingsFromTheme,
+	verify,
+	verifyTheme,
+	type PairingResult,
+	type SemanticPairing,
+	type SizeClass,
+	type VerifyReport,
+} from "./verify";
+
+// Registry (for presets / advanced consumers)
+export {
+	type AlgorithmId,
+	type BuiltinAlgorithmId,
+	type ColorProducer,
+	getProducer,
+	hasProducer,
+	type ModeCtx,
+	type PaletteOutput,
+	registerProducer,
+} from "./producer";
+export { registerBuiltins } from "./producers";
+
+// Shared kernel ops + types
+export { apca, type ContrastFormula, gamutMap, type Oklch, oklchCss, toOklch, wcag2 } from "./shared/color";
+export { onColor } from "./shared/on-color";
 export type { ColorScale, Theme, ThemeMode } from "./shared/types";
