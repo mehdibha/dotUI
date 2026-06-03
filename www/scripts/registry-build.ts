@@ -13,7 +13,8 @@ import path from "node:path";
 import { format } from "oxfmt";
 import { rimraf } from "rimraf";
 
-import { buildPublishables } from "../src/publisher/build-time/build-publishables";
+import { buildPublishables, collectBaseFiles } from "../src/publisher/build-time/build-publishables";
+import { deriveRegistryDeps } from "../src/publisher/build-time/derive-registry-deps";
 import { registryBase } from "../src/registry/base/registry";
 import { registryBlocks } from "../src/registry/blocks/registry";
 import { registryHooks } from "../src/registry/hooks/registry";
@@ -481,6 +482,58 @@ function checkAllowlistReadiness(): void {
 }
 
 /**
+ * Deps that ship in the init bundle (base.css / theme.css / lib/utils), dropped at
+ * publish by publish.ts BUNDLED_INTO_INIT — a base file importing them is not drift.
+ */
+const BUNDLED_INTO_INIT = new Set(["utils", "focus-styles", "theme"]);
+
+/**
+ * Derived dep names whose target is NOT a registered item yet — a known packaging gap
+ * (lib/context + the use-image-loading-status hook are unregistered). Skipped so the
+ * drift check doesn't demand a dep `shadcn add` couldn't resolve. Keyed by DEP-NAME and
+ * covers the hooks scope, so it is deliberately DISTINCT from ORPHAN_ALLOWLIST (folder-
+ * path keyed, ui|lib only) — do not unify them. Drop an entry once its target is a
+ * registered item, and the guard will then require consumers to declare it.
+ */
+const UNREGISTERED_DEP_ALLOWLIST = new Set(["context", "use-image-loading-status"]);
+
+/**
+ * Asserts each registered ui item DECLARES every registry dependency its shipped base
+ * file(s) import. The shipped import graph is a SUBSET of the intended dependency
+ * closure (composition/CSS-only deps are legitimately hand-added and not flagged), so
+ * this catches only UNDER-declaration: a base file imports @/registry/X but meta omits "X".
+ */
+async function checkRegistryDepsDrift(): Promise<string[]> {
+	const registeredNames = new Set<string>(
+		[...registryBase, ...registryUi, ...registryLib, ...registryHooks].map((item) => item.name),
+	);
+	const errors: string[] = [];
+
+	for (const meta of registryUi) {
+		const derived = deriveRegistryDeps({ registryDir: REGISTRY_DIR, baseFiles: collectBaseFiles(meta) });
+		const declared = new Set(meta.registryDependencies ?? []);
+
+		for (const dep of derived) {
+			if (declared.has(dep)) continue;
+			if (BUNDLED_INTO_INIT.has(dep)) continue;
+			if (UNREGISTERED_DEP_ALLOWLIST.has(dep)) continue;
+			if (registeredNames.has(dep)) {
+				errors.push(
+					`registryDependencies drift: "${meta.name}" base file imports "${dep}" but meta omits it. ` +
+						`Add "${dep}" to registryDependencies in ui/${meta.name}/meta.ts.`,
+				);
+			} else {
+				errors.push(
+					`Unresolved @/registry import in "${meta.name}": derived dep "${dep}" is not a registered item, ` +
+						`not bundled, and not in UNREGISTERED_DEP_ALLOWLIST. Register it or add it to the allowlist.`,
+				);
+			}
+		}
+	}
+	return errors;
+}
+
+/**
  * Asserts `meta.name` is globally unique across all REGISTERED items
  * (base + ui + lib + hooks + blocks). Unregistered/allowlisted items are not
  * checked here, so the two unregistered name:"form" folders don't collide.
@@ -517,6 +570,7 @@ async function checkRegistryIntegrity() {
 		...(await checkScopeDrift("ui", registryUi)),
 		...(await checkScopeDrift("lib", registryLib)),
 		...checkAllowlistStale(),
+		...(await checkRegistryDepsDrift()),
 		...checkUniqueRegisteredNames(),
 	];
 

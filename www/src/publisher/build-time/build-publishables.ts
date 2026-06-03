@@ -225,7 +225,7 @@ function mergeCssVars(
  * - Default: the file in `meta.files` whose target ends in `<name>.tsx`.
  * - Enum-with-files: every distinct base path across `params[...].files[...]`.
  */
-function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
+export function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
 	const byKey = new Map<string, RegistryItemFile>();
 
 	for (const file of meta.files ?? []) {

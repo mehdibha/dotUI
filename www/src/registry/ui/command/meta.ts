@@ -11,6 +11,7 @@ const commandMeta = {
 			target: "ui/command.tsx",
 		},
 	],
+	registryDependencies: ["list-box", "search-field"],
 	params: {
 		style: {
 			kind: "enum",
