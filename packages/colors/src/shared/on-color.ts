@@ -1,48 +1,75 @@
 /**
- * In-engine `on-*` foreground generation.
+ * Foreground (`on-*`) picker (§4.3).
  *
- * For every step of a ramp, pick a readable foreground. We score a hue-tinted
- * near-white and a hue-tinted near-black against the step and choose the pole
- * that clears the text-contrast floor (preferring the one that does, else the
- * higher-contrast pole). Same code path for every algorithm — the engine ships
- * no foreground generation today, so this closes a real gap.
+ * For a background, pick the readable foreground: try the hue-tinted pole the bg
+ * calls for (light fg for a dark bg, dark fg for a light bg), then the other
+ * tinted pole, then fall back to a pure pole in the mid-tone contrast valley.
+ * Returns an honest result object — `meetsFloor` can be false for APCA on a
+ * mid-light bg (the floor is genuinely unreachable there), surfaced rather than faked.
  */
 
-import { apca, oklchCss, toOklch, wcag2, type Oklch } from "./color";
+import { type ContrastFormula, gamutMap, makeContrast, type Oklch, oklchCss, toOklch } from "./color";
 
 import type { ColorScale } from "./types";
 
-export type ContrastFormula = "wcag2" | "apca";
+export type { ContrastFormula };
 
 /** WCAG 2 AA normal-text minimum. */
 const WCAG2_TEXT_MIN = 4.5;
-/** APCA Lc target for body text (Bronze ~ Lc 60+). */
+/** APCA Lc body-text target (Bronze). */
 const APCA_TEXT_MIN = 60;
+/** Below this OKLCH lightness a bg is "dark-ish" → prefer a light foreground (Material T60 analogue). */
+const LIGHT_PIVOT = 0.62;
 
-/** Pick a readable foreground for a single background color. */
-export function onColor(background: string, formula: ContrastFormula = "wcag2"): string {
-	const { h } = toOklch(background);
-	const min = formula === "apca" ? APCA_TEXT_MIN : WCAG2_TEXT_MIN;
-	const score = (fg: Oklch): number => (formula === "apca" ? apca(fg, background) : wcag2(fg, background));
+export type OnPole = "tinted-light" | "tinted-dark" | "pure-light" | "pure-dark";
 
-	// Aesthetic, hue-tinted poles first.
-	const tintLight: Oklch = { l: 0.985, c: 0.02, h };
-	const tintDark: Oklch = { l: 0.17, c: 0.03, h };
-	const tinted = score(tintLight) >= score(tintDark) ? tintLight : tintDark;
-	if (score(tinted) >= min) return oklchCss(tinted);
-
-	// Mid-tone "contrast valley": fall back to (near-)pure poles, which maximize
-	// achievable contrast (>= ~4.58 WCAG2 / ~legible APCA for any background).
-	const pureLight: Oklch = { l: 1, c: 0, h: 0 };
-	const pureDark: Oklch = { l: 0, c: 0, h: 0 };
-	return oklchCss(score(pureLight) >= score(pureDark) ? pureLight : pureDark);
+export interface OnColor {
+	value: string;
+	formula: ContrastFormula;
+	ratio: number;
+	meetsFloor: boolean;
+	pole: OnPole;
 }
 
-/** Compute `on-*` foregrounds for every step of a scale (same keys as `scale`). */
+export interface OnColorOptions {
+	/** Use hue-tinted poles (default true); false = pure black/white only. */
+	tinted?: boolean;
+}
+
+/** Pick a readable foreground for a single background color. */
+export function onColor(background: string, formula: ContrastFormula = "wcag2", opts: OnColorOptions = {}): OnColor {
+	const tinted = opts.tinted ?? true;
+	const { l: bgL, h } = toOklch(background);
+	const min = formula === "apca" ? APCA_TEXT_MIN : WCAG2_TEXT_MIN;
+	const score = makeContrast(background, formula);
+	const wantLight = bgL < LIGHT_PIVOT;
+
+	const make = (value: Oklch, pole: OnPole): OnColor => {
+		const mapped = gamutMap(value); // a light-tinted pole is out of sRGB at some hues
+		const ratio = score(mapped); // score the color we actually emit
+		return { value: oklchCss(mapped), formula, ratio, meetsFloor: ratio >= min, pole };
+	};
+
+	if (tinted) {
+		const tintLight: Oklch = { l: 0.985, c: 0.02, h };
+		const tintDark: Oklch = { l: 0.17, c: 0.03, h };
+		const first = wantLight ? make(tintLight, "tinted-light") : make(tintDark, "tinted-dark");
+		if (first.meetsFloor) return first;
+		const second = wantLight ? make(tintDark, "tinted-dark") : make(tintLight, "tinted-light");
+		if (second.meetsFloor) return second;
+	}
+
+	// Mid-tone valley (or tinted disabled): pure poles maximize achievable contrast.
+	const pureLight = make({ l: 1, c: 0, h: 0 }, "pure-light");
+	const pureDark = make({ l: 0, c: 0, h: 0 }, "pure-dark");
+	return pureLight.ratio >= pureDark.ratio ? pureLight : pureDark;
+}
+
+/** `on-*` value per step of a scale (same keys as `scale`). */
 export function computeOnColors(scale: ColorScale, formula: ContrastFormula = "wcag2"): ColorScale {
 	const on: ColorScale = {};
 	for (const [step, value] of Object.entries(scale)) {
-		on[step] = onColor(value, formula);
+		on[step] = onColor(value, formula).value;
 	}
 	return on;
 }

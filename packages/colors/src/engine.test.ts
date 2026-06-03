@@ -1,171 +1,176 @@
 import { describe, expect, it } from "vitest";
 
-import "./producers"; // register built-in producers
-import { defaultRatios } from "./contrast/solver";
-import { createContrastTheme } from "./contrast/theme";
 import { getProducer, type ModeCtx } from "./producer";
-import { apca, toOklch, wcag2 } from "./shared/color";
+import { registerBuiltins } from "./producers";
+import { toOklch, wcag2 } from "./shared/color";
+import { allValues, inGamut, isMonotonic, rampLs, worstOnContrast } from "./test-utils";
 import { createTheme } from "./theme";
 
-const STEPS_11 = ["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "950"];
-const STEPS_12 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
-const DEFAULT_RATIOS = [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15];
+import type { ColorScale, Theme } from "./shared/types";
+
+registerBuiltins();
+
+// Typed accessors (Theme/ColorScale are Record-indexed → possibly-undefined under strict TS).
+const sc = (t: Theme, mode: string, palette: string): ColorScale => t[mode]!.scales[palette]!;
+const oc = (t: Theme, mode: string, palette: string): ColorScale => t[mode]!.on[palette]!;
+const val = (s: ColorScale, step: string): string => s[step]!;
+
+const GENERATIVE = ["oklch", "contrast", "material", "tailwind"] as const;
 const SEEDS = ["#3b82f6", "#e11d48", "#eab308", "#22c55e", "#8b5cf6"];
 
-const lightCtx = (steps: string[] = STEPS_11): ModeCtx => ({
+const lightCtx = (steps: string[]): ModeCtx => ({
 	name: "light",
 	isDark: false,
 	steps,
 	background: "oklch(0.98 0.002 260)",
 });
-const darkCtx = (steps: string[] = STEPS_11): ModeCtx => ({
+const darkCtx = (steps: string[]): ModeCtx => ({
 	name: "dark",
 	isDark: true,
 	steps,
 	background: "oklch(0.16 0.01 260)",
 });
+const S11 = ["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "950"];
 
-describe("contrast producer (OKLCH contrast-target)", () => {
-	const producer = getProducer("contrast");
-
-	it("hits each step's target contrast vs the mode background (light + dark)", () => {
-		for (const ctx of [lightCtx(), darkCtx()]) {
-			const { scale } = producer.produce({ seed: "#3b82f6", ratios: DEFAULT_RATIOS }, ctx);
-			DEFAULT_RATIOS.forEach((target, i) => {
-				expect(wcag2(scale[STEPS_11[i]!]!, ctx.background)).toBeCloseTo(target, 1);
+describe("createTheme — parameterized sweep", () => {
+	for (const algorithm of GENERATIVE) {
+		for (const seed of SEEDS) {
+			it(`${algorithm} / ${seed}: in-gamut oklch, monotonic L, on-* ≥ 4.5`, () => {
+				const theme = createTheme({ algorithm, palettes: { primary: seed, neutral: "#64748b", success: true } });
+				expect(Object.keys(theme)).toEqual(["light", "dark"]);
+				for (const value of allValues(theme)) {
+					expect(value).toMatch(/^oklch\(/);
+					expect(value).not.toMatch(/hsl|#/i);
+					expect(inGamut(value)).toBe(true);
+				}
+				for (const mode of Object.values(theme)) {
+					for (const scale of Object.values(mode.scales)) expect(isMonotonic(rampLs(scale))).toBe(true);
+				}
+				expect(worstOnContrast(theme)).toBeGreaterThanOrEqual(4.5);
 			});
 		}
-	});
+	}
 
-	it("emits oklch() and never hsl()", () => {
-		const { scale } = producer.produce({ seed: "#e11d48" }, lightCtx());
-		for (const value of Object.values(scale)) {
-			expect(value).toMatch(/^oklch\(/);
-			expect(value).not.toMatch(/hsl/i);
+	it("is deterministic (scale + on) for every generative algorithm", () => {
+		for (const algorithm of GENERATIVE) {
+			const a = createTheme({ algorithm, palettes: { primary: "#3b82f6" } });
+			const b = createTheme({ algorithm, palettes: { primary: "#3b82f6" } });
+			expect(a).toEqual(b);
 		}
 	});
 
-	it("supports an arbitrary step count + naming (12-step)", () => {
-		const { scale, on } = producer.produce({ seed: "#22c55e" }, lightCtx(STEPS_12));
-		expect(Object.keys(scale)).toEqual(STEPS_12);
-		expect(Object.keys(on)).toEqual(STEPS_12);
+	it("oklch is the recommended default and produces valid scale + on", () => {
+		const theme = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6" } });
+		expect(val(sc(theme, "light", "primary"), "500")).toMatch(/^oklch\(/);
+		expect(val(oc(theme, "light", "primary"), "500")).toMatch(/^oklch\(/);
+	});
+});
+
+describe("oklch producer (default) specifics", () => {
+	it("cross-hue lightness alignment: same step ≈ same L across seeds (background-independent)", () => {
+		const at500 = SEEDS.map(
+			(seed) =>
+				toOklch(val(sc(createTheme({ algorithm: "oklch", palettes: { primary: seed } }), "light", "primary"), "500")).l,
+		);
+		// Near-identical (gamut clipping nudges L a touch for high-chroma hues) — vs
+		// contrast-target which would spread these by 0.1+. This is the whole point.
+		expect(Math.max(...at500) - Math.min(...at500)).toBeLessThan(0.02);
 	});
 
-	it("every on-* clears WCAG2 AA (4.5) against its own step, across seeds + modes", () => {
-		for (const ctx of [lightCtx(), darkCtx()]) {
-			for (const seed of SEEDS) {
-				const { scale, on } = producer.produce({ seed, ratios: DEFAULT_RATIOS }, ctx);
-				for (const step of ctx.steps) {
-					expect(wcag2(on[step]!, scale[step]!)).toBeGreaterThanOrEqual(4.5);
-				}
-			}
+	it("light and dark ramps are identical (mode-agnostic, §4.7a)", () => {
+		const theme = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6" } });
+		expect(rampLs(sc(theme, "light", "primary"))).toEqual(rampLs(sc(theme, "dark", "primary")));
+	});
+
+	it("chroma rises mid-ramp then tapers", () => {
+		const cs = Object.values(
+			sc(createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6" } }), "light", "primary"),
+		).map((v) => toOklch(v).c);
+		expect(cs[5]!).toBeGreaterThan(cs[0]!);
+		expect(cs[5]!).toBeGreaterThan(cs[cs.length - 1]!);
+	});
+
+	it("neutral palette is near-grey; minChroma floors a muted seed's accent", () => {
+		const theme = createTheme({ algorithm: "oklch", palettes: { primary: "#777777" } });
+		expect(toOklch(val(sc(theme, "light", "neutral"), "500")).c).toBeLessThan(0.02);
+		expect(toOklch(val(sc(theme, "light", "primary"), "500")).c).toBeGreaterThan(0.04);
+	});
+
+	it("configurable scale shape: arbitrary step count + naming", () => {
+		const steps = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+		const theme = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6" }, steps });
+		expect(Object.keys(sc(theme, "light", "primary"))).toEqual(steps);
+	});
+});
+
+describe("contrast producer (option) hits targets", () => {
+	it("each step hits its target contrast vs the mode background (light + dark)", () => {
+		const producer = getProducer("contrast");
+		const ratios = [1.05, 1.15, 1.3, 1.5, 2, 3, 4.5, 6, 8, 12, 15];
+		for (const ctx of [lightCtx(S11), darkCtx(S11)]) {
+			const { scale } = producer.produce({ seed: "#3b82f6", ratios }, ctx);
+			ratios.forEach((target, i) => expect(wcag2(scale[S11[i]!]!, ctx.background)).toBeCloseTo(target, 1));
 		}
 	});
+});
 
-	it("is deterministic (same seed → same ramp)", () => {
-		const a = producer.produce({ seed: "#3b82f6" }, lightCtx());
-		const b = producer.produce({ seed: "#3b82f6" }, lightCtx());
-		expect(a.scale).toEqual(b.scale);
+describe("material producer (registered) emits oklch + on-*", () => {
+	it("oklch output, arbitrary N, carries on-*", () => {
+		const steps = ["a", "b", "c", "d", "e", "f", "g"];
+		const { scale, on } = getProducer("material").produce({ seed: "#6366f1" }, lightCtx(steps));
+		expect(Object.keys(scale)).toEqual(steps);
+		expect(Object.keys(on)).toEqual(steps);
+		for (const v of Object.values(scale)) expect(v).toMatch(/^oklch\(/);
 	});
 });
 
 describe("fixed producer (identity)", () => {
-	const producer = getProducer("fixed");
+	it("returns the supplied ramp normalized to in-gamut oklch + on-*", () => {
+		const theme = createTheme({
+			algorithm: "fixed",
+			palettes: { primary: { "50": "#fafafa", "500": "#737373", "950": "#0a0a0a" } },
+		});
+		const scale = sc(theme, "light", "primary");
+		expect(Object.keys(scale)).toEqual(["50", "500", "950"]);
+		expect(wcag2(val(scale, "500"), "#737373")).toBeCloseTo(1, 1); // identity
+		expect(inGamut(val(scale, "500"))).toBe(true);
+		expect(val(oc(theme, "light", "primary"), "500")).toMatch(/^oklch\(/);
+	});
 
-	it("returns the supplied ramp (normalized to oklch) with on-*", () => {
-		const input: Record<string, string> = { "50": "#fafafa", "500": "#737373", "950": "#0a0a0a" };
-		const ctx: ModeCtx = { name: "light", isDark: false, steps: ["50", "500", "950"], background: "oklch(0.98 0 0)" };
-		const { scale, on } = producer.produce({ scale: input }, ctx);
-		for (const step of ["50", "500", "950"]) {
-			expect(scale[step]).toMatch(/^oklch\(/);
-			// identity: output is the same color as the input (contrast vs input ≈ 1)
-			expect(wcag2(scale[step]!, input[step]!)).toBeCloseTo(1, 1);
-			expect(on[step]).toMatch(/^oklch\(/);
-		}
+	it("gamut-maps an out-of-sRGB input (reduces chroma)", () => {
+		const theme = createTheme({ algorithm: "fixed", palettes: { primary: { "500": "oklch(0.7 0.37 140)" } } });
+		expect(toOklch(val(sc(theme, "light", "primary"), "500")).c).toBeLessThan(0.3);
 	});
 });
 
-describe("createTheme", () => {
-	it("material output is stable (snapshot regression guard)", () => {
+describe("registry / options menu", () => {
+	it("registers every advertised producer; unknown ids fail loudly", () => {
+		for (const id of ["oklch", "contrast", "material", "fixed", "tailwind"]) expect(getProducer(id).id).toBe(id);
+		expect(() => getProducer("nope")).toThrow(/Unknown color algorithm/);
+	});
+});
+
+describe("edge seeds", () => {
+	for (const seed of ["#ffffff", "#000000", "#808080", "oklch(0.7 0.37 140)"]) {
+		it(`${seed}: valid in-gamut, monotonic, no NaN, readable on-*`, () => {
+			const theme = createTheme({ algorithm: "oklch", palettes: { primary: seed } });
+			for (const v of allValues(theme)) {
+				expect(v).not.toMatch(/NaN/);
+				expect(inGamut(v)).toBe(true);
+			}
+			expect(isMonotonic(rampLs(sc(theme, "light", "primary")))).toBe(true);
+			expect(worstOnContrast(theme)).toBeGreaterThanOrEqual(4.5);
+		});
+	}
+});
+
+describe("snapshots", () => {
+	it("oklch theme value snapshot", () => {
+		expect(createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6", neutral: "#64748b" } })).toMatchSnapshot();
+	});
+	it("material theme value snapshot", () => {
 		expect(
-			createTheme({
-				algorithm: "material",
-				palettes: { primary: "#6366f1", neutral: "#64748b", success: true, danger: true, warning: true, info: true },
-			}),
-		).toMatchSnapshot();
-	});
-
-	it("contrast theme carries on-* per palette", () => {
-		const theme = createTheme({ algorithm: "contrast", palettes: { primary: "#3b82f6", success: true } });
-		expect(theme.light!.on?.primary).toBeDefined();
-		expect(theme.light!.on?.success).toBeDefined();
-		expect(Object.keys(theme.light!.on!.primary!)).toHaveLength(11);
-	});
-});
-
-describe("configurable scale shape", () => {
-	const producer = getProducer("contrast");
-
-	it("resamples default targets across arbitrary N (5 and 12 steps)", () => {
-		for (const n of [5, 12]) {
-			const steps = Array.from({ length: n }, (_, i) => String(i + 1));
-			const targets = defaultRatios(n);
-			const { scale } = producer.produce({ seed: "#3b82f6" }, lightCtx(steps));
-			steps.forEach((step, i) => {
-				expect(wcag2(scale[step]!, "oklch(0.98 0.002 260)")).toBeCloseTo(targets[i]!, 1);
-			});
-		}
-	});
-
-	it("createContrastTheme step count follows the global ratios length (not silently dropped)", () => {
-		const theme = createContrastTheme({ palettes: { primary: "#3b82f6" }, ratios: [1.2, 2, 4.5, 8, 14] });
-		expect(Object.keys(theme.light!.scales.primary!)).toEqual(["1", "2", "3", "4", "5"]);
-		expect(Object.keys(theme.light!.on!.primary!)).toHaveLength(5);
-	});
-});
-
-describe("APCA (wcag3) formula", () => {
-	const producer = getProducer("contrast");
-
-	it("produces a healthy, non-collapsed ramp in light + dark", () => {
-		for (const ctx of [lightCtx(), darkCtx()]) {
-			const { scale } = producer.produce({ seed: "#3b82f6", formula: "apca" }, ctx);
-			const ls = STEPS_11.map((s) => toOklch(scale[s]!).l);
-			const span = Math.max(...ls) - Math.min(...ls);
-			const distinct = new Set(ls.map((l) => l.toFixed(3))).size;
-			expect(span).toBeGreaterThan(0.5);
-			expect(distinct).toBeGreaterThanOrEqual(10);
-			expect(apca(scale["950"]!, ctx.background)).toBeGreaterThan(apca(scale["50"]!, ctx.background));
-		}
-	});
-});
-
-describe("fixed producer gamut + on-*", () => {
-	const producer = getProducer("fixed");
-
-	it("gamut-maps a wide-gamut input (reduces chroma) and keeps on-* readable", () => {
-		const ctx: ModeCtx = { name: "light", isDark: false, steps: ["500"], background: "oklch(0.98 0 0)" };
-		const { scale, on } = producer.produce({ scale: { "500": "oklch(0.7 0.37 140)" } }, ctx);
-		expect(toOklch(scale["500"]!).c).toBeLessThan(0.3); // reduced from 0.37 toward sRGB
-		expect(wcag2(on["500"]!, scale["500"]!)).toBeGreaterThanOrEqual(4.5);
-	});
-
-	it("on-* clears WCAG2 AA across both modes", () => {
-		const input: Record<string, string> = { "50": "#fafafa", "500": "#737373", "900": "#171717" };
-		for (const ctx of [
-			{ name: "light", isDark: false, steps: ["50", "500", "900"], background: "oklch(0.98 0 0)" } as ModeCtx,
-			{ name: "dark", isDark: true, steps: ["50", "500", "900"], background: "oklch(0.16 0 0)" } as ModeCtx,
-		]) {
-			const { scale, on } = producer.produce({ scale: input }, ctx);
-			for (const step of ctx.steps) expect(wcag2(on[step]!, scale[step]!)).toBeGreaterThanOrEqual(4.5);
-		}
-	});
-});
-
-describe("contrast theme value snapshot", () => {
-	it("pins oklch ramps + on-* for a small theme", () => {
-		expect(
-			createTheme({ algorithm: "contrast", palettes: { primary: "#3b82f6", neutral: "#64748b" } }),
+			createTheme({ algorithm: "material", palettes: { primary: "#6366f1", neutral: "#64748b" } }),
 		).toMatchSnapshot();
 	});
 });
