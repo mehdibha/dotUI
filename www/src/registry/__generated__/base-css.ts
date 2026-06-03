@@ -9,6 +9,7 @@ export const baseRegistryCss = {
 		'@plugin "tailwindcss-react-aria-components"': {},
 		'@plugin "tailwindcss-autocontrast"': {},
 		'@plugin "tailwindcss-with"': {},
+		"@custom-variant dark (&:is(.dark *))": {},
 		"@utility focus-reset": {
 			"@apply ring-0 ring-transparent outline-none": {},
 		},

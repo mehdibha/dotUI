@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+import { useEffect } from "react";
+
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
@@ -39,8 +41,11 @@ export const Route = createRootRoute({
 			],
 			links: [
 				{ rel: "stylesheet", href: appCss },
-				{ rel: "icon", type: "image/png", href: "/favicon-96x96.png", sizes: "96x96" },
-				{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+				// The SVG favicon is injected by <FaviconSwitcher /> and kept in sync
+				// with the system color scheme. These PNG/ICO entries are the fallback
+				// for SSR, no-JS, and browsers without SVG favicon support (kept as
+				// `alternate icon` so the SVG stays the primary icon, like GitHub).
+				{ rel: "alternate icon", type: "image/png", href: "/favicon-96x96.png", sizes: "96x96" },
 				{ rel: "shortcut icon", href: "/favicon.ico" },
 				{ rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
 				{ rel: "manifest", href: "/site.webmanifest" },
@@ -57,9 +62,51 @@ export const Route = createRootRoute({
 // 	}
 // }
 
+// Keep the favicon in sync with the system color scheme (independent of the
+// in-app theme toggle), the way GitHub does: one persistent SVG <link> whose
+// href we swap between the light and dark files when `prefers-color-scheme`
+// changes. Two things this relies on:
+//   1. The SVG files are static (no internal media query): browsers evaluate a
+//      `prefers-color-scheme` query inside an SVG favicon only once, so the file
+//      itself has to be swapped from JS.
+//   2. We mutate the href of a single, JS-owned <link> (kept out of `head()` so
+//      <HeadContent> never resets it). Replacing the element each time — remove
+//      + re-append — does NOT reliably make Chrome re-render the icon; changing
+//      the href of a stable element does (this is exactly GitHub's approach).
+const FAVICON_ID = "favicon-svg";
+
+function FaviconSwitcher() {
+	useEffect(() => {
+		const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+		// Create the JS-owned <link> once, then only ever mutate its href.
+		let existing = document.getElementById(FAVICON_ID) as HTMLLinkElement | null;
+		if (!existing) {
+			existing = document.createElement("link");
+			existing.id = FAVICON_ID;
+			existing.rel = "icon";
+			existing.type = "image/svg+xml";
+			document.head.appendChild(existing);
+		}
+		const link = existing;
+
+		const apply = (isDark: boolean) => {
+			link.href = isDark ? "/favicon-dark.svg" : "/favicon.svg";
+		};
+
+		apply(media.matches);
+		const onChange = (e: MediaQueryListEvent) => apply(e.matches);
+		media.addEventListener("change", onChange);
+		return () => media.removeEventListener("change", onChange);
+	}, []);
+
+	return null;
+}
+
 function RootComponent() {
 	return (
 		<ThemeProvider>
+			<FaviconSwitcher />
 			{/* <DrawerProvider> */}
 			<RootDocument>
 				{/* <DrawerIndentBackground /> */}
