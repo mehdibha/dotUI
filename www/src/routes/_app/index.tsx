@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { AdobeIcon } from "@/components/icons/adobe";
+import { ReactJsIcon } from "@/components/icons/react-js";
+import { ShadcnIcon } from "@/components/icons/shadcn";
+import { TailwindWordmark } from "@/components/icons/tailwind-wordmark";
+import { TypeScriptIcon } from "@/components/icons/typescript";
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
 import Cards from "@/registry/blocks/showcase/cards/components/cards";
-import { AdobeIcon } from "@/registry/components/icons/adobe";
-import { ReactJsIcon } from "@/registry/components/icons/react-js";
-import { ShadcnIcon } from "@/registry/components/icons/shadcn";
-import { TailwindWordmark } from "@/registry/components/icons/tailwind-wordmark";
-import { TypeScriptIcon } from "@/registry/components/icons/typescript";
 import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
