@@ -15,14 +15,14 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 
 import { format } from "oxfmt";
 
+import { publish, setDotuiDepResolver, setKnownDotuiNames } from "@/publisher/publish";
 import { publishables, PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables";
-import { publish, setDotuiDepResolver, setKnownDotuiNames } from "@/registry/publisher/publish";
 
 // Prime the dep rewriter with every component name we ship. Lives at
 // module scope so it runs once per route bundle load.
 setKnownDotuiNames(PUBLISHABLE_NAMES);
 
-import type { Publishable, PublishPreset } from "@/registry/publisher/types";
+import type { Publishable, PublishPreset } from "@/publisher/types";
 
 const JSON_HEADERS = {
 	"Content-Type": "application/json; charset=utf-8",

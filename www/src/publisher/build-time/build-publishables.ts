@@ -83,7 +83,7 @@ function renderIndex(writtenPaths: string[], outDir: string): string {
 
 	const lines: string[] = [];
 	lines.push(`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`);
-	lines.push(`import type { Publishable } from "@/registry/publisher/types";`);
+	lines.push(`import type { Publishable } from "@/publisher/types";`);
 	lines.push(``);
 	lines.push(
 		`type Loader = () => Promise<{ publishable: Publishable; publishableByPath?: Record<string, Publishable> }>;`,
@@ -284,7 +284,7 @@ async function renderPublishableSource({ meta, stylesConfig, templates }: Render
 	lines.push(`// AUTO-GENERATED — do not edit. Source: ui/${meta.name}/`);
 	lines.push(`// Run \`pnpm build:registry\` to regenerate.`);
 	lines.push(``);
-	lines.push(`import type { Publishable } from "@/registry/publisher/types";`);
+	lines.push(`import type { Publishable } from "@/publisher/types";`);
 	lines.push(``);
 	lines.push(`const stylesConfig = ${stylesConfigLiteral} as const;`);
 	lines.push(``);

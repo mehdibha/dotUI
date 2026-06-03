@@ -13,12 +13,12 @@ import path from "node:path";
 import { format } from "oxfmt";
 import { rimraf } from "rimraf";
 
+import { buildPublishables } from "../src/publisher/build-time/build-publishables";
 import { registryBase } from "../src/registry/base/registry";
 import { registryBlocks } from "../src/registry/blocks/registry";
 import { registryHooks } from "../src/registry/hooks/registry";
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map";
 import { registryLib } from "../src/registry/lib/registry";
-import { buildPublishables } from "../src/registry/publisher/build-time/build-publishables";
 import { registryUi } from "../src/registry/ui/registry";
 
 import type { RegistryItem } from "../src/registry/types";

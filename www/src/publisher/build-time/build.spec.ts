@@ -15,7 +15,7 @@ import { publish, TV_CONFIG_PLACEHOLDER } from "../publish";
 import { extractStylesConfig } from "./extract-config";
 import { transformBase } from "./transform-base";
 
-const REGISTRY_UI = path.resolve(__dirname, "../../ui");
+const REGISTRY_UI = path.resolve(__dirname, "../../registry/ui");
 
 /* ============================================================ */
 /* extract-config                                                */
