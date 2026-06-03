@@ -11,7 +11,7 @@ const searchFieldMeta = {
 			target: "ui/search-field.tsx",
 		},
 	],
-	registryDependencies: ["field", "button"],
+	registryDependencies: ["field", "button", "input"],
 } satisfies RegistryItem;
 
 export default searchFieldMeta;

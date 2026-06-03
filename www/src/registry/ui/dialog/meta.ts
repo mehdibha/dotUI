@@ -11,7 +11,7 @@ const dialogMeta = {
 			target: "ui/dialog.tsx",
 		},
 	],
-	registryDependencies: ["overlay"],
+	registryDependencies: ["overlay", "button", "scroll-fade"],
 } satisfies RegistryItem;
 
 export default dialogMeta;

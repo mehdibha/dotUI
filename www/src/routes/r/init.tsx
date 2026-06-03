@@ -9,10 +9,10 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 
+import { emitInitItem } from "@/publisher/emit-theme";
 import { baseRegistryCss } from "@/registry/__generated__/base-css";
-import { emitInitItem } from "@/registry/publisher/emit-theme";
 
-import type { PublishPreset } from "@/registry/publisher/types";
+import type { PublishPreset } from "@/publisher/types";
 
 const JSON_HEADERS = {
 	"Content-Type": "application/json; charset=utf-8",

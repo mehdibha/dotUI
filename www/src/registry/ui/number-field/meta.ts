@@ -11,7 +11,7 @@ const numberFieldMeta = {
 			target: "ui/number-field.tsx",
 		},
 	],
-	registryDependencies: ["input", "field", "use-is-mobile"],
+	registryDependencies: ["input", "field", "button", "group"],
 } satisfies RegistryItem;
 
 export default numberFieldMeta;
