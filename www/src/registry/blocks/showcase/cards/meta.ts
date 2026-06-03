@@ -15,10 +15,6 @@ const cardsMeta: RegistryItem = {
 			type: "registry:component",
 		},
 		{
-			path: "blocks/showcase/cards/components/backlog.tsx",
-			type: "registry:component",
-		},
-		{
 			path: "blocks/showcase/cards/components/booking.tsx",
 			type: "registry:component",
 		},
@@ -40,6 +36,10 @@ const cardsMeta: RegistryItem = {
 		},
 		{
 			path: "blocks/showcase/cards/components/notifications.tsx",
+			type: "registry:component",
+		},
+		{
+			path: "blocks/showcase/cards/components/pricing.tsx",
 			type: "registry:component",
 		},
 		{

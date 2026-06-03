@@ -18,7 +18,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
 				<CardDescription>Pick a time for your meeting.</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-3">
-				<Calendar className="border-0 bg-transparent p-0" defaultValue={parseDate("2025-09-23")} />
+				<Calendar className="w-full border-0 bg-transparent p-0" defaultValue={parseDate("2025-09-23")} />
 				<div className="grid grid-cols-2 gap-2">
 					<TimeField>
 						<Label>Start time</Label>
