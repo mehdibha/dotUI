@@ -63,26 +63,35 @@ export const Route = createRootRoute({
 // }
 
 // Keep the favicon in sync with the system color scheme (independent of the
-// in-app theme toggle), the way GitHub does. Two gotchas this works around:
-//   1. Browsers evaluate a `prefers-color-scheme` media query inside an SVG
-//      favicon only once, so the file itself has to be swapped from JS.
-//   2. Mutating the href of an existing <link> usually doesn't force a re-render
-//      (and TanStack's <HeadContent> would reset it), so we own a dedicated
-//      <link> and replace the element on every change instead.
+// in-app theme toggle), the way GitHub does: one persistent SVG <link> whose
+// href we swap between the light and dark files when `prefers-color-scheme`
+// changes. Two things this relies on:
+//   1. The SVG files are static (no internal media query): browsers evaluate a
+//      `prefers-color-scheme` query inside an SVG favicon only once, so the file
+//      itself has to be swapped from JS.
+//   2. We mutate the href of a single, JS-owned <link> (kept out of `head()` so
+//      <HeadContent> never resets it). Replacing the element each time — remove
+//      + re-append — does NOT reliably make Chrome re-render the icon; changing
+//      the href of a stable element does (this is exactly GitHub's approach).
 const FAVICON_ID = "favicon-svg";
 
 function FaviconSwitcher() {
 	useEffect(() => {
 		const media = window.matchMedia("(prefers-color-scheme: dark)");
 
+		// Create the JS-owned <link> once, then only ever mutate its href.
+		let existing = document.getElementById(FAVICON_ID) as HTMLLinkElement | null;
+		if (!existing) {
+			existing = document.createElement("link");
+			existing.id = FAVICON_ID;
+			existing.rel = "icon";
+			existing.type = "image/svg+xml";
+			document.head.appendChild(existing);
+		}
+		const link = existing;
+
 		const apply = (isDark: boolean) => {
-			document.getElementById(FAVICON_ID)?.remove();
-			const link = document.createElement("link");
-			link.id = FAVICON_ID;
-			link.rel = "icon";
-			link.type = "image/svg+xml";
 			link.href = isDark ? "/favicon-dark.svg" : "/favicon.svg";
-			document.head.appendChild(link);
 		};
 
 		apply(media.matches);
