@@ -22,7 +22,7 @@ function HomePage() {
 			<main>
 				{/* Hero section */}
 				<section className="container flex flex-col pt-6 sm:pt-10 md:pt-18">
-					<div className="mx-auto flex max-w-3xl flex-col items-center gap-2 text-center md:gap-3">
+					<div className="flex flex-col items-center gap-2 text-center md:gap-3">
 						<Announcement />
 						<h1 className="text-3xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
 							Build your design system with a <span className="font-bold italic">unique</span> look.
@@ -35,10 +35,10 @@ function HomePage() {
 							.
 						</p>
 						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-							<LinkButton href="/docs" variant="primary" size="lg" className="h-10">
+							<LinkButton href="/docs" variant="primary" size="lg">
 								Get started
 							</LinkButton>
-							<LinkButton href="/components" variant="default" size="lg" className="h-10">
+							<LinkButton href="/components" variant="default" size="lg">
 								Explore components
 							</LinkButton>
 						</div>
