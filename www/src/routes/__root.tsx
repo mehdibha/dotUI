@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { ThemeProvider, useTheme } from "starter-themes";
+import { ThemeProvider } from "starter-themes";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
@@ -41,8 +41,11 @@ export const Route = createRootRoute({
 			],
 			links: [
 				{ rel: "stylesheet", href: appCss },
-				{ rel: "icon", type: "image/png", href: "/favicon-96x96.png", sizes: "96x96" },
-				{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+				// The SVG favicon is injected by <FaviconSwitcher /> and kept in sync
+				// with the system color scheme. These PNG/ICO entries are the fallback
+				// for SSR, no-JS, and browsers without SVG favicon support (kept as
+				// `alternate icon` so the SVG stays the primary icon, like GitHub).
+				{ rel: "alternate icon", type: "image/png", href: "/favicon-96x96.png", sizes: "96x96" },
 				{ rel: "shortcut icon", href: "/favicon.ico" },
 				{ rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
 				{ rel: "manifest", href: "/site.webmanifest" },
@@ -59,24 +62,34 @@ export const Route = createRootRoute({
 // 	}
 // }
 
-// The favicon follows the system color scheme (not the in-app theme toggle),
-// the same way GitHub does. Most browsers never re-evaluate a
-// `prefers-color-scheme` media query embedded inside an SVG favicon, so we swap
-// the icon href whenever the system preference changes instead.
-function FaviconSwitcher() {
-	const { systemTheme } = useTheme();
+// Keep the favicon in sync with the system color scheme (independent of the
+// in-app theme toggle), the way GitHub does. Two gotchas this works around:
+//   1. Browsers evaluate a `prefers-color-scheme` media query inside an SVG
+//      favicon only once, so the file itself has to be swapped from JS.
+//   2. Mutating the href of an existing <link> usually doesn't force a re-render
+//      (and TanStack's <HeadContent> would reset it), so we own a dedicated
+//      <link> and replace the element on every change instead.
+const FAVICON_ID = "favicon-svg";
 
+function FaviconSwitcher() {
 	useEffect(() => {
-		const href = systemTheme === "dark" ? "/favicon-dark.svg" : "/favicon.svg";
-		let link = document.querySelector<HTMLLinkElement>('link[rel="icon"][type="image/svg+xml"]');
-		if (!link) {
-			link = document.createElement("link");
+		const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+		const apply = (isDark: boolean) => {
+			document.getElementById(FAVICON_ID)?.remove();
+			const link = document.createElement("link");
+			link.id = FAVICON_ID;
 			link.rel = "icon";
 			link.type = "image/svg+xml";
+			link.href = isDark ? "/favicon-dark.svg" : "/favicon.svg";
 			document.head.appendChild(link);
-		}
-		link.setAttribute("href", href);
-	}, [systemTheme]);
+		};
+
+		apply(media.matches);
+		const onChange = (e: MediaQueryListEvent) => apply(e.matches);
+		media.addEventListener("change", onChange);
+		return () => media.removeEventListener("change", onChange);
+	}, []);
 
 	return null;
 }
