@@ -4,10 +4,13 @@ import { flushSync } from "react-dom";
 import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-react";
 
 import { CodeBlock } from "@/modules/docs/code-block";
+import { renderCode } from "@/modules/docs/codegen/code-template";
 import { DynamicPre } from "@/modules/docs/dynamic-pre";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
+
+import type { CodeTemplate } from "@/modules/docs/codegen/code-template";
 
 import { availableIcons, Controls } from "./controls";
 import { elementToCode, elementToPreviewCode } from "./element-to-code";
@@ -17,6 +20,13 @@ import type { ControlValues, SerializableControl } from "./types";
 /**
  * Interactive demo component.
  * Renders the playground, controls, and live code output.
+ *
+ * Code generation has two engines, selected per demo:
+ *  - SourceFirst (`codeTemplate` present): displayed code is filled from a
+ *    build-time template-with-holes over the real demo source. Preview and code
+ *    derive from one `values` state, so they can never diverge.
+ *  - Legacy (`codeTemplate` absent): the playground is called as a plain function
+ *    and its element tree serialized. Kept until every demo migrates.
  */
 
 interface InteractiveDemoProps {
@@ -24,6 +34,8 @@ interface InteractiveDemoProps {
 	controls: SerializableControl[];
 	className?: string;
 	layout?: "horizontal" | "vertical";
+	/** SourceFirst engine template; absent ⇒ legacy serialization path. */
+	codeTemplate?: CodeTemplate;
 }
 
 export function InteractiveDemo({
@@ -31,6 +43,7 @@ export function InteractiveDemo({
 	controls,
 	className,
 	layout: layoutProp = "horizontal",
+	codeTemplate,
 }: InteractiveDemoProps) {
 	const [layout, setLayout] = useState<"horizontal" | "vertical">(layoutProp);
 	const [isExpanded, setIsExpanded] = useState(false);
@@ -96,24 +109,39 @@ export function InteractiveDemo({
 		return props;
 	}, [values, controls]);
 
-	// Render the playground element for preview (uses ALL props)
+	// Render the playground element for preview (uses ALL props). Real React render —
+	// hooks/context/memo all legal — for BOTH engines.
 	const previewElement = useMemo(() => createElement(Playground, propsWithIcons), [Playground, propsWithIcons]);
 
-	// Call the playground function to get what it actually renders (for code serialization)
-	// This gives us <TextField>...</TextField> instead of <Playground ...>
-	// Uses filtered props to hide default values from code output
+	// --- SourceFirst code generation (formatter-free template fill) ---
+	const sourceCollapsed = useMemo(
+		() => (codeTemplate ? renderCode(codeTemplate, values, { expanded: false }) : null),
+		[codeTemplate, values],
+	);
+	const sourceExpanded = useMemo(
+		() => (codeTemplate ? renderCode(codeTemplate, values, { expanded: true }) : null),
+		[codeTemplate, values],
+	);
+
+	// --- Legacy code generation (only when no template) ---
+	// Call the playground as a plain function to harvest its element tree, then serialize.
 	const renderedElement = useMemo(() => {
-		// All playground components are function components, so we can call them directly
+		if (codeTemplate) return null;
 		const PlaygroundFn = Playground as (props: Record<string, unknown>) => React.ReactElement;
 		return PlaygroundFn(propsForCode);
-	}, [Playground, propsForCode]);
+	}, [Playground, propsForCode, codeTemplate]);
+	const legacyOutput = useMemo(() => (renderedElement ? elementToCode(renderedElement) : null), [renderedElement]);
+	const legacyPreview = useMemo(
+		() => (renderedElement ? elementToPreviewCode(renderedElement) : ""),
+		[renderedElement],
+	);
 
-	// Generate code by serializing the rendered element
-	const codeOutput = useMemo(() => elementToCode(renderedElement), [renderedElement]);
-	const previewCode = useMemo(() => elementToPreviewCode(renderedElement), [renderedElement]);
-
-	// Displayed code depends on expanded state
-	const displayedCode = isExpanded ? codeOutput.full : previewCode;
+	// Displayed code depends on engine + expanded state.
+	const displayedCode = codeTemplate
+		? ((isExpanded ? sourceExpanded : sourceCollapsed) ?? "")
+		: isExpanded
+			? (legacyOutput?.full ?? "")
+			: legacyPreview;
 
 	const handleToggle = () => {
 		if (document.startViewTransition) {
