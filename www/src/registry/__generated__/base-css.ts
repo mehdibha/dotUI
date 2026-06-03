@@ -21,13 +21,6 @@ export const baseRegistryCss = {
 		"@utility no-highlight": {
 			"-webkit-tap-highlight-color": "transparent",
 		},
-		"@utility no-scrollbar": {
-			"-ms-overflow-style": "none",
-			"scrollbar-width": "none",
-			"&::-webkit-scrollbar": {
-				display: "none",
-			},
-		},
 		"@layer base": {
 			"*": {
 				"@apply border-border": {},

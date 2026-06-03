@@ -53,5 +53,9 @@
 		"**/.output/**",
 		"**/.source/**",
 		"www/src/routeTree.gen.ts",
+		// Vendored agent skills (installed from upstream, tracked by skills-lock.json
+		// with content hashes) — must not be reformatted or their hashes break.
+		".agents/**",
+		"skills-lock.json",
 	],
 }

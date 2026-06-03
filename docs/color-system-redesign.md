@@ -23,14 +23,14 @@ and a Leonardo `contrast` port) is the foundation.
 
 ## 1. Locked decisions
 
-| #   | Decision              | Choice                                                                                                                                                                                            |
-| --- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| D1  | **Default algorithm** | **OKLCH-perceptual** ramp — generated **perceptually + background-independently** (fixed hue, perceptual L ladder, tapered chroma, gamut-mapped). Contrast-target is **demoted to an opt-in option**. _(Reversed from v1; see §4.1, §12.)_ |
-| D2  | **Scale shape**       | **Fully configurable** step count + naming (no hardcoded `50-950`); 11/`50-950` is the default.                                                                                                   |
-| D3  | **Palettes**          | `neutral` is the **required backbone**; `primary` + `success/danger/warning/info` are removable defaults; **arbitrary custom-named palettes** allowed.                                            |
-| D4  | **Default theme**     | **Generative** from day one (no hand-authored fallback).                                                                                                                                          |
-| D5  | **Color-system shapes** | Two headline shapes — **(A) flat hardcoded-semantic** (shadcn-style, no palettes, per-mode literals) and **(B) palettes → semantic**. **No component-token tier** (§3, §12).                    |
-| D6  | **Accessibility model** | **Generate → pick foreground → _verify_**. Contrast is a **post-generation test on semantic pairings** (with nudge/warn), never a per-step generation target. WCAG 2 default; APCA opt-in.       |
+| #   | Decision                | Choice                                                                                                                                                                                                                                     |
+| --- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| D1  | **Default algorithm**   | **OKLCH-perceptual** ramp — generated **perceptually + background-independently** (fixed hue, perceptual L ladder, tapered chroma, gamut-mapped). Contrast-target is **demoted to an opt-in option**. _(Reversed from v1; see §4.1, §12.)_ |
+| D2  | **Scale shape**         | **Fully configurable** step count + naming (no hardcoded `50-950`); 11/`50-950` is the default.                                                                                                                                            |
+| D3  | **Palettes**            | `neutral` is the **required backbone**; `primary` + `success/danger/warning/info` are removable defaults; **arbitrary custom-named palettes** allowed.                                                                                     |
+| D4  | **Default theme**       | **Generative** from day one (no hand-authored fallback).                                                                                                                                                                                   |
+| D5  | **Color-system shapes** | Two headline shapes — **(A) flat hardcoded-semantic** (shadcn-style, no palettes, per-mode literals) and **(B) palettes → semantic**. **No component-token tier** (§3, §12).                                                               |
+| D6  | **Accessibility model** | **Generate → pick foreground → _verify_**. Contrast is a **post-generation test on semantic pairings** (with nudge/warn), never a per-step generation target. WCAG 2 default; APCA opt-in.                                                 |
 
 ## 2. Architecture in one idea
 
@@ -104,7 +104,7 @@ Pure, deterministic, background-independent, emits `oklch()`. Reuses everything 
   The gamut clamp **is** the cusp-awareness (no explicit cusp math).
 - **Lightness:** a **fixed perceptual L array**, background-independent (Evil Martians anchors,
   fractions 0..1): `50:0.9778, 100:0.9356, 200:0.8811, 300:0.8267, 400:0.7422, 500:0.6478,
-  600:0.5733, 700:0.4689, 800:0.3944, 900:0.3200, 950:0.2378`. Resample for arbitrary-N
+600:0.5733, 700:0.4689, 800:0.3944, 900:0.3200, 950:0.2378`. Resample for arbitrary-N
   (`solver.ts` `resample`). **Mode-agnostic** (see §4.7 dark-mode sub-decision).
 - **Chroma:** `seedChroma × chromaMult × envelope(i)`, then gamut-clamp. **Envelope = the
   existing `solver.ts` formula** `0.45 + 0.55·sin(π·i/(N-1))` (mid-peak taper). Add a Material-
@@ -159,19 +159,31 @@ muted↔muted-surface.
 
 ```ts
 // packages/colors/src/producer.ts
-export interface ModeCtx { name: string; isDark: boolean; steps: readonly string[]; background: string }
-export interface PaletteOutput { scale: Record<string, string>; on: Record<string, string> } // oklch() strings
-export interface ColorProducer<Opts> { id: AlgorithmId; schema: z.ZodType<Opts>; produce(opts: Opts, ctx: ModeCtx): PaletteOutput }
+export interface ModeCtx {
+	name: string;
+	isDark: boolean;
+	steps: readonly string[];
+	background: string;
+}
+export interface PaletteOutput {
+	scale: Record<string, string>;
+	on: Record<string, string>;
+} // oklch() strings
+export interface ColorProducer<Opts> {
+	id: AlgorithmId;
+	schema: z.ZodType<Opts>;
+	produce(opts: Opts, ctx: ModeCtx): PaletteOutput;
+}
 ```
 
-| Priority | Algorithm                                 | Notes                                                                                                                  |
-| -------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| **must** | **OKLCH Perceptual** (`oklch`) — DEFAULT  | §4.2. Fixed hue + EM L-array + tapered chroma + gamut-map. The reserved slot; implement it.                            |
-| **must** | **Contrast-locked** (`contrast`)          | The **existing** L-bisection solver, **demoted** from default. For teams who must lock per-step contrast vs a bg.      |
-| should   | **Material / HCT** (`material`)           | Existing producer; canonical Material look; structural tone-delta guarantee.                                          |
-| should   | **Tailwind-style**                        | `oklch` preset with hue-torsion ON + eased L anchors — the recognizable Tailwind aesthetic.                           |
-| nice     | **Radix-matched**                         | Vendor the ~30 Radix reference scales (oklch+P3) as a lookup; match seed via ΔEOK; transpose L/C. 12 fixed roles.     |
-| nice     | **Mantine 10-shade** · **tints.dev** · **chroma.js multi-hue** | Migration / brand-fidelity / editorial multi-hue scales.                                          |
+| Priority | Algorithm                                                      | Notes                                                                                                             |
+| -------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **must** | **OKLCH Perceptual** (`oklch`) — DEFAULT                       | §4.2. Fixed hue + EM L-array + tapered chroma + gamut-map. The reserved slot; implement it.                       |
+| **must** | **Contrast-locked** (`contrast`)                               | The **existing** L-bisection solver, **demoted** from default. For teams who must lock per-step contrast vs a bg. |
+| should   | **Material / HCT** (`material`)                                | Existing producer; canonical Material look; structural tone-delta guarantee.                                      |
+| should   | **Tailwind-style**                                             | `oklch` preset with hue-torsion ON + eased L anchors — the recognizable Tailwind aesthetic.                       |
+| nice     | **Radix-matched**                                              | Vendor the ~30 Radix reference scales (oklch+P3) as a lookup; match seed via ΔEOK; transpose L/C. 12 fixed roles. |
+| nice     | **Mantine 10-shade** · **tints.dev** · **chroma.js multi-hue** | Migration / brand-fidelity / editorial multi-hue scales.                                                          |
 
 **Skip:** Leonardo's 3000-swatch impl (idea kept as the contrast option); `apcach` as a dependency
 (`apca-w3` license risk — use colorjs.io's APCA, MIT); Ant Design HSV. The contrast solver +
@@ -201,7 +213,7 @@ export interface ColorProducer<Opts> { id: AlgorithmId; schema: z.ZodType<Opts>;
   prerequisite). Includes the curated component-surface vars (§3).
 - **`SemanticTarget`** = `{ref}` (ramp step → `var(--palette-step)`) | `{value}` (literal) | `{onOf}`
   (paired `on-*`) | `{mix}` (`color-mix`). **Must be per-mode-able** (`SemanticTarget |
-  Record<modeName, SemanticTarget>`) — the flat shape needs per-token-per-mode literals (Primer/
+Record<modeName, SemanticTarget>`) — the flat shape needs per-token-per-mode literals (Primer/
   Atlassian model).
 - **`resolveColorConfig(config)` = the one resolver** (provider + iframe + publisher). Generates
   primitives via the kernel _iff_ palettes exist; resolves each semantic token; assembles per-mode CSS.
@@ -230,46 +242,61 @@ One typed field on `DesignSystem` (not the untyped `tokens` bag).
 export type AlgorithmId = "oklch" | "contrast" | "material" | "fixed"; // + presets (tailwind, radix, …)
 
 export type PaletteConfig =
-  | { strategy: "generative"; algorithm: Exclude<AlgorithmId, "fixed">; seed: string;
-      // algorithm-specific (validated by the producer schema):
-      preserveSeedAt?: string;                 // seed anchoring opt-in (default: off → array-driven)
-      chromaMult?: number; minChroma?: boolean; hueTorsion?: number; chromaMode?: "consistent" | "max"; // oklch
-      ratios?: number[] | Record<string, number>; formula?: "wcag2" | "apca"; // contrast-locked
-      variant?: MaterialVariant; tones?: number[];                            // material
-      stepOverrides?: Record<string, string>;  // hybrid: pin individual steps
-    }
-  | { strategy: "fixed"; scale: Record<string, string> }; // identity producer
+	| {
+			strategy: "generative";
+			algorithm: Exclude<AlgorithmId, "fixed">;
+			seed: string;
+			// algorithm-specific (validated by the producer schema):
+			preserveSeedAt?: string; // seed anchoring opt-in (default: off → array-driven)
+			chromaMult?: number;
+			minChroma?: boolean;
+			hueTorsion?: number;
+			chromaMode?: "consistent" | "max"; // oklch
+			ratios?: number[] | Record<string, number>;
+			formula?: "wcag2" | "apca"; // contrast-locked
+			variant?: MaterialVariant;
+			tones?: number[]; // material
+			stepOverrides?: Record<string, string>; // hybrid: pin individual steps
+	  }
+	| { strategy: "fixed"; scale: Record<string, string> }; // identity producer
 
 export type ModeConfig = {
-  isDark: boolean;
-  appearance?: "light" | "dark";              // which prefers-color-scheme this answers to
-  palettes?: Record<string, { seed?: string; ratios?: number[] | Record<string, number>;
-                              tones?: number[]; scale?: Record<string, string> }>;
+	isDark: boolean;
+	appearance?: "light" | "dark"; // which prefers-color-scheme this answers to
+	palettes?: Record<
+		string,
+		{ seed?: string; ratios?: number[] | Record<string, number>; tones?: number[]; scale?: Record<string, string> }
+	>;
 };
 
 export type SemanticTarget =
-  | { ref: string } | { onOf: string } | { value: string }
-  | { mix: { space: "oklab" | "oklch" | "srgb"; stops: [SemanticTarget, number, SemanticTarget] } };
+	| { ref: string }
+	| { onOf: string }
+	| { value: string }
+	| { mix: { space: "oklab" | "oklch" | "srgb"; stops: [SemanticTarget, number, SemanticTarget] } };
 
-export type SurfaceConfig = { mode: "fixed" | "elevation" | "alpha" | "relative"; step?: number;
-                              tint?: Record<string, { color: string; alpha: string }> };
+export type SurfaceConfig = {
+	mode: "fixed" | "elevation" | "alpha" | "relative";
+	step?: number;
+	tint?: Record<string, { color: string; alpha: string }>;
+};
 
 export type ColorConfig = {
-  steps: string[];                             // D2: scale shape (names define N + naming)
-  palettes: Record<string, PaletteConfig>;     // D3: neutral required (palette shapes); custom allowed
-  modes: Record<string, ModeConfig>;           // "light","dark", + arbitrary
-  activeMode?: string;
-  // semantics: per-token, per-mode-able overrides (defaults in DEFAULT_SEMANTICS):
-  semantics?: Record<string, SemanticTarget | Record<string, SemanticTarget>>;
-  surfaces?: SurfaceConfig;                     // omitted => fixed
-  forcedColors?: boolean;                       // opt-in @media (forced-colors) remap
+	steps: string[]; // D2: scale shape (names define N + naming)
+	palettes: Record<string, PaletteConfig>; // D3: neutral required (palette shapes); custom allowed
+	modes: Record<string, ModeConfig>; // "light","dark", + arbitrary
+	activeMode?: string;
+	// semantics: per-token, per-mode-able overrides (defaults in DEFAULT_SEMANTICS):
+	semantics?: Record<string, SemanticTarget | Record<string, SemanticTarget>>;
+	surfaces?: SurfaceConfig; // omitted => fixed
+	forcedColors?: boolean; // opt-in @media (forced-colors) remap
 };
 
 export type DesignSystem = {
-  componentParams: Record<string, Record<string, string>>;
-  tokens: Record<string, string>;
-  density: Density;
-  color?: ColorConfig;                          // NEW; undefined => DEFAULT_COLOR_CONFIG
+	componentParams: Record<string, Record<string, string>>;
+	tokens: Record<string, string>;
+	density: Density;
+	color?: ColorConfig; // NEW; undefined => DEFAULT_COLOR_CONFIG
 };
 ```
 
@@ -290,13 +317,13 @@ Everything diffs to nothing so the URL stays tiny.
 
 ## 8. Coverage reconciliation (12-system stress-test)
 
-| Must                                                          | Status                                                              |
-| ------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `strategy=fixed` passthrough                                  | ✅ identity producer                                                |
-| Editable semantic role-set                                    | ✅ `SemanticTarget` map replaces static `theme.css`                 |
-| Configurable scale shape                                      | ✅ D2 — `steps[]`                                                   |
-| Contextual surfaces                                           | ✅ surface technique menu (§5)                                      |
-| **Alpha scales** (Radix A1–A12)                               | ⏳ roadmap — per-step alpha companion + overlay/scrim               |
+| Must                            | Status                                                |
+| ------------------------------- | ----------------------------------------------------- |
+| `strategy=fixed` passthrough    | ✅ identity producer                                  |
+| Editable semantic role-set      | ✅ `SemanticTarget` map replaces static `theme.css`   |
+| Configurable scale shape        | ✅ D2 — `steps[]`                                     |
+| Contextual surfaces             | ✅ surface technique menu (§5)                        |
+| **Alpha scales** (Radix A1–A12) | ⏳ roadmap — per-step alpha companion + overlay/scrim |
 
 "Shoulds" (Phase 3+): colorblind hue-remap modes, a dark-derivation strategy hook, import paths,
 build-time `on-*` freeze for arbitrary modes. Skip v1: Apple Materials/Vibrancy (emit a parametric
@@ -304,17 +331,17 @@ recipe, never a resolved value), Chakra DOM-depth swap.
 
 ## 9. Platform-CSS & accessibility triage (external-review filter)
 
-| Item                | Verdict                                                                                                  | When                   |
-| ------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------- |
-| `forced-colors`     | **Adopt, opt-in** (`@media (forced-colors: active)` remap to system keywords — `var()`-piped surfaces/shadows/rings leak otherwise) | with surfaces (Phase 4) |
-| Surface technique menu | **Adopt, opt-in**, default `fixed`; `elevation` (discrete) preferred over `alpha` for contextual      | Phase 4                |
-| Bridge-PCA          | **Consider** for the perceptual contrast mode (WCAG-2-backwards-compatible + W3C license) — **verify maintenance/license** first | Phase 1+ formula choice |
-| Per-pairing contrast readout | **Adopt** — part of the verify layer's UI surface                                               | Phase 1/3              |
-| Okhsl / cusp-aware gamut | **Evaluate** as a vivid-ends refinement (isolated in the kernel)                                    | polish                 |
-| Recipe-friendly AI + import paths | **Keep as the moat** — LLM emits a _recipe_, the deterministic engine renders (cleaner than competitors hallucinating raw palettes); "paste brand hex / from image / reverse-fit a globals.css" | Phase 2–3 |
-| `light-dark()`      | **Defer** — emission ergonomics only (halves output on the light/dark axis of the **flat** shape + themes native controls); a localized `emitCss` change | emitter polish |
-| `@layer` wrapper    | **Skip the extra wrapper** — Tailwind auto-layers `@theme`; keep base _rules_ in `@layer base` (already done) | n/a            |
-| `@property` typing  | **Skip** — Tailwind doesn't type `@theme` colors; only needed to _animate token values_ (niche) + consumer re-registration footgun | n/a (revisit if animated morphing wanted) |
+| Item                              | Verdict                                                                                                                                                                                         | When                                      |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `forced-colors`                   | **Adopt, opt-in** (`@media (forced-colors: active)` remap to system keywords — `var()`-piped surfaces/shadows/rings leak otherwise)                                                             | with surfaces (Phase 4)                   |
+| Surface technique menu            | **Adopt, opt-in**, default `fixed`; `elevation` (discrete) preferred over `alpha` for contextual                                                                                                | Phase 4                                   |
+| Bridge-PCA                        | **Consider** for the perceptual contrast mode (WCAG-2-backwards-compatible + W3C license) — **verify maintenance/license** first                                                                | Phase 1+ formula choice                   |
+| Per-pairing contrast readout      | **Adopt** — part of the verify layer's UI surface                                                                                                                                               | Phase 1/3                                 |
+| Okhsl / cusp-aware gamut          | **Evaluate** as a vivid-ends refinement (isolated in the kernel)                                                                                                                                | polish                                    |
+| Recipe-friendly AI + import paths | **Keep as the moat** — LLM emits a _recipe_, the deterministic engine renders (cleaner than competitors hallucinating raw palettes); "paste brand hex / from image / reverse-fit a globals.css" | Phase 2–3                                 |
+| `light-dark()`                    | **Defer** — emission ergonomics only (halves output on the light/dark axis of the **flat** shape + themes native controls); a localized `emitCss` change                                        | emitter polish                            |
+| `@layer` wrapper                  | **Skip the extra wrapper** — Tailwind auto-layers `@theme`; keep base _rules_ in `@layer base` (already done)                                                                                   | n/a                                       |
+| `@property` typing                | **Skip** — Tailwind doesn't type `@theme` colors; only needed to _animate token values_ (niche) + consumer re-registration footgun                                                              | n/a (revisit if animated morphing wanted) |
 
 ## 10. Phased plan
 
