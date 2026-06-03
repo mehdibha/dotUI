@@ -6,7 +6,10 @@
 			"runtimeExecutable": "pnpm",
 			"runtimeArgs": ["--filter", "www", "dev"],
 			"port": 4444,
-			"autoPort": true
+			"autoPort": false,
+			"env": {
+				"PORTLESS_APP_PORT": "4444"
+			}
 		},
 		{
 			"name": "ios",

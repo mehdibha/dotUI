@@ -8,9 +8,9 @@ type IconModule = Record<string, unknown>;
 type LibraryImporter = () => Promise<IconModule>;
 
 const libraryImporters: Record<string, LibraryImporter> = {
-	hugeicons: () => import("./__hugeicons__"),
-	tabler: () => import("./__tabler__"),
-	remix: () => import("./__remix__"),
+	hugeicons: () => import("../__generated__/__hugeicons__"),
+	tabler: () => import("../__generated__/__tabler__"),
+	remix: () => import("../__generated__/__remix__"),
 };
 
 const iconPromiseCaches = new Map<string, Map<string, Promise<unknown>>>();

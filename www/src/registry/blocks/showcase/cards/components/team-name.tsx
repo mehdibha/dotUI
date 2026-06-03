@@ -11,9 +11,7 @@ export function TeamName({ className, ...props }: React.ComponentProps<"div">) {
 		<Card className={cn("", className)} {...props}>
 			<CardHeader>
 				<CardTitle>Team Name</CardTitle>
-				<CardDescription>
-					This is your team's visible name within the platform. For example, the name of your company or department.
-				</CardDescription>
+				<CardDescription>Your team's visible name across the platform.</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<TextField aria-label="Team Name" defaultValue="My Team">

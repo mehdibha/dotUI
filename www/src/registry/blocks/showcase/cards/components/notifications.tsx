@@ -7,15 +7,25 @@ import { Button } from "@/registry/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/registry/ui/card";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Separator } from "@/registry/ui/separator";
-import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
+import { Tab, TabList, Tabs } from "@/registry/ui/tabs";
+
+type NotificationFilter = "all" | "unread" | "read";
 
 export function Notifications({ className, ...props }: React.ComponentProps<"div">) {
+	const [filter, setFilter] = React.useState<NotificationFilter>("all");
+	const unreadCount = notifications.filter((notification) => !notification.read).length;
+	const visibleNotifications = notifications.filter((notification) => {
+		if (filter === "unread") return !notification.read;
+		if (filter === "read") return notification.read;
+		return true;
+	});
+
 	return (
 		<Card className={cn("gap-2 pb-0", className)} {...props}>
 			<CardHeader className="flex min-w-0 items-center justify-between has-data-[slot=card-action]:grid-cols-[1fr_minmax(0,auto)]">
 				<CardTitle className="flex items-center gap-2">
 					Notifications
-					<Badge className="px-1.5">12</Badge>
+					<Badge className="px-1.5">{unreadCount}</Badge>
 				</CardTitle>
 				<CardAction>
 					<Button size="sm">
@@ -23,62 +33,57 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 					</Button>
 				</CardAction>
 			</CardHeader>
-			<CardContent className="min-h-0 flex-1 px-0">
-				<Tabs className="flex h-full min-h-0 flex-col">
-					<TabList className="shrink-0 pl-6">
+			<CardContent className="flex min-h-0 flex-1 flex-col px-0">
+				<Tabs
+					selectedKey={filter}
+					onSelectionChange={(key) => setFilter(key as NotificationFilter)}
+					className="shrink-0"
+				>
+					<TabList className="pl-6">
 						<Tab id="all">All</Tab>
 						<Tab id="unread">Unread</Tab>
 						<Tab id="read">Read</Tab>
 					</TabList>
-					{["all", "unread", "read"].map((tab) => (
-						<TabPanel key={tab} id={tab} className="mt-0 min-h-0 flex-1 overflow-y-auto">
-							<ListBox
-								aria-label="Notifications"
-								className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_.separator]:my-0"
-							>
-								{notifications
-									.filter((notification) => {
-										if (tab === "all") return true;
-										if (tab === "unread") return !notification.read;
-										if (tab === "read") return notification.read;
-										return false;
-									})
-									.map((notification) => (
-										<React.Fragment key={`${notification.user.name}-${notification.timestamp}-${notification.text}`}>
-											<Separator />
-											<ListBoxItem textValue={notification.text}>
-												<div className="flex items-start gap-3 py-2">
-													<Avatar size="md">
-														<AvatarImage src={notification.user.avatar} alt={notification.user.name} />
-														<AvatarFallback>
-															{notification.user.name
-																.split(" ")
-																.map((n) => n[0])
-																.join("")}
-														</AvatarFallback>
-													</Avatar>
-													<div className="flex-1">
-														<p className="text-sm">
-															<span className="font-medium">{notification.user.name}</span>{" "}
-															{notification.content ? notification.content : <span>{notification.text}</span>}
-														</p>
-														<div className="mt-1 flex items-start justify-between gap-2">
-															<p className="text-xs text-fg-muted">{notification.timestamp}</p>
-															{notification.action && (
-																<div className="mt-2 flex justify-end">
-																	<Button size="sm">{notification.action.label}</Button>
-																</div>
-															)}
-														</div>
-													</div>
-												</div>
-											</ListBoxItem>
-										</React.Fragment>
-									))}
-							</ListBox>
-						</TabPanel>
-					))}
 				</Tabs>
+				<div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
+					<ListBox
+						aria-label="Notifications"
+						className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_.separator]:my-0"
+					>
+						{visibleNotifications.map((notification) => (
+							<React.Fragment key={`${notification.user.name}-${notification.timestamp}-${notification.text}`}>
+								<Separator />
+								<ListBoxItem textValue={notification.text}>
+									<div className="flex items-start gap-3 py-2">
+										<Avatar size="md" className="shrink-0">
+											<AvatarImage src={notification.user.avatar} alt={notification.user.name} />
+											<AvatarFallback>
+												{notification.user.name
+													.split(" ")
+													.map((n) => n[0])
+													.join("")}
+											</AvatarFallback>
+										</Avatar>
+										<div className="min-w-0 flex-1">
+											<p className="text-sm break-words">
+												<span className="font-medium">{notification.user.name}</span>{" "}
+												{notification.content ? notification.content : <span>{notification.text}</span>}
+											</p>
+											<div className="mt-1 flex items-start justify-between gap-2">
+												<p className="text-xs text-fg-muted">{notification.timestamp}</p>
+												{notification.action && (
+													<div className="mt-2 flex justify-end">
+														<Button size="sm">{notification.action.label}</Button>
+													</div>
+												)}
+											</div>
+										</div>
+									</div>
+								</ListBoxItem>
+							</React.Fragment>
+						))}
+					</ListBox>
+				</div>
 			</CardContent>
 		</Card>
 	);

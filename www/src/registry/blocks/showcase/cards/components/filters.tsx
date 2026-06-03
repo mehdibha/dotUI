@@ -39,21 +39,15 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
 					<SliderControl />
 					<Description>Trip price, includes all fees</Description>
 				</Slider>
-				<TagGroup>
+				<TagGroup selectionMode="multiple" defaultSelectedKeys={["wifi", "kitchen"]}>
 					<Label>Amenities</Label>
 					<TagList>
-						<Tag>Wifi</Tag>
-						<Tag>TV</Tag>
-						<Tag>Kitchen</Tag>
-						<Tag>Pool</Tag>
-						<Tag>Washer</Tag>
-						<Tag>Dryer</Tag>
-						<Tag>Heating</Tag>
-						<Tag>Hair dryer</Tag>
-						<Tag>EV charger</Tag>
-						<Tag>Gym</Tag>
-						<Tag>BBQ grill</Tag>
-						<Tag>Breakfast</Tag>
+						<Tag id="wifi">Wifi</Tag>
+						<Tag id="kitchen">Kitchen</Tag>
+						<Tag id="pool">Pool</Tag>
+						<Tag id="washer">Washer</Tag>
+						<Tag id="heating">Heating</Tag>
+						<Tag id="gym">Gym</Tag>
 					</TagList>
 				</TagGroup>
 				<Switch className="text-sm" defaultSelected>

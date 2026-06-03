@@ -49,12 +49,12 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
 			<Separator />
 			<CardContent>
 				<div className="space-y-4">
-					<div className="flex items-center gap-2">
+					<div className="flex items-end gap-2">
 						<TextField className="flex-1">
 							<Label>Email</Label>
-							<Input />
+							<Input placeholder="colleague@example.com" />
 						</TextField>
-						<Select defaultValue="member">
+						<Select defaultValue="member" className="w-32 shrink-0">
 							<Label>Role</Label>
 							<SelectTrigger />
 							<SelectContent>
@@ -64,7 +64,7 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
 							</SelectContent>
 						</Select>
 					</div>
-					<Button>
+					<Button className="w-full">
 						<PlusCircleIcon />
 						Add more
 					</Button>
@@ -83,8 +83,8 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
 											<p className="text-fg-muted">{member.role}</p>
 										</div>
 									</div>
-									<Select aria-label="Role" defaultValue={member.role}>
-										<SelectTrigger />
+									<Select aria-label="Role" defaultValue={member.role} className="w-28 shrink-0">
+										<SelectTrigger size="sm" />
 										<SelectContent>
 											<SelectItem id="owner">Owner</SelectItem>
 											<SelectItem id="member">Member</SelectItem>
