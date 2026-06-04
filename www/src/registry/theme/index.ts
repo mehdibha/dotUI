@@ -8,4 +8,5 @@
 
 export type { ModeName, SemanticCategory, SemanticTarget, SemanticToken, SemanticVocabulary } from "./types";
 export { DEFAULT_SEMANTICS } from "./semantics";
+export { colorTokenNames } from "./params";
 export { emitCss, type EmitCssOptions, resolveTarget } from "./emit-css";
