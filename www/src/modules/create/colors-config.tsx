@@ -17,6 +17,7 @@ import { Select, SelectValue } from "@/registry/ui/select";
 
 import type { AlgorithmId, PaletteSeeds } from "@/registry/theme";
 
+import { ContrastReadout } from "./color-contrast";
 import { ColorKnobsControls } from "./color-knobs";
 import { useDesignSystem } from "./preset";
 
@@ -128,6 +129,8 @@ export function ColorsConfig() {
 				steps={resolved.steps}
 				onChange={setColorKnob}
 			/>
+
+			<ContrastReadout resolved={resolved} />
 
 			<div className="flex flex-col gap-1.5">
 				<span className="pl-1 text-xs font-medium text-fg-muted">Generated ramps</span>
