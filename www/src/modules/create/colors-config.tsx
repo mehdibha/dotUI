@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { ChevronDownIcon } from "lucide-react";
 
-import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme";
+import { DEFAULT_COLOR_CONFIG, PALETTE_ORDER, resolveColorConfig } from "@/registry/theme";
 import { Button } from "@/registry/ui/button";
 import { ColorEditor } from "@/registry/ui/color-editor";
 import { ColorPicker } from "@/registry/ui/color-picker";
@@ -33,8 +33,6 @@ const SEED_FIELDS: ReadonlyArray<{ label: string; key: keyof PaletteSeeds }> = [
 	{ label: "Warning", key: "warning" },
 	{ label: "Danger", key: "danger" },
 ];
-
-const RAMP_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"] as const;
 
 export function ColorsConfig() {
 	const { designSystem, setColorSeed, setColorAlgorithm } = useDesignSystem();
@@ -96,7 +94,7 @@ export function ColorsConfig() {
 
 			<div className="flex flex-col gap-1.5">
 				<span className="pl-1 text-xs font-medium text-fg-muted">Generated ramps</span>
-				{RAMP_ORDER.map((palette) => {
+				{PALETTE_ORDER.map((palette) => {
 					const ramp = resolved.light[palette];
 					if (!ramp) return null;
 					return (

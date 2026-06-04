@@ -10,5 +10,19 @@ export type { ModeName, SemanticCategory, SemanticTarget, SemanticToken, Semanti
 export { DEFAULT_SEMANTICS } from "./semantics";
 export { colorTokenNames } from "./params";
 export { emitCss, type EmitCssOptions, resolveTarget } from "./emit-css";
-export { type AlgorithmId, type ColorConfig, DEFAULT_COLOR_CONFIG, type PaletteSeeds } from "./color-config";
+export {
+	type AlgorithmId,
+	type ColorConfig,
+	DEFAULT_COLOR_CONFIG,
+	GENERATIVE_ALGORITHMS,
+	type PaletteSeeds,
+} from "./color-config";
 export { emitPrimitivesCss, type Ramp, resolveColorConfig, type ResolvedPalettes } from "./primitives";
+export {
+	ACCENT_KERNEL_NAME,
+	fromKernelPaletteName,
+	PALETTE_ORDER,
+	type PaletteName,
+	STATUS_PALETTES,
+	toKernelPaletteName,
+} from "./palettes";

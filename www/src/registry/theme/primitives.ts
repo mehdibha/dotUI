@@ -13,7 +13,8 @@
 
 import { createTheme, type CreateThemeOptions, oklchCss, toOklch } from "@dotui/colors";
 
-import type { ColorConfig } from "./color-config";
+import { GENERATIVE_ALGORITHMS, type ColorConfig } from "./color-config";
+import { ACCENT_KERNEL_NAME, fromKernelPaletteName, PALETTE_ORDER, STATUS_PALETTES } from "./palettes";
 
 export type Ramp = Record<string, string>;
 
@@ -22,9 +23,6 @@ export interface ResolvedPalettes {
 	light: Record<string, Ramp>;
 	dark: Record<string, Ramp>;
 }
-
-/** Emission order (mirrors the legacy colors.css); unknown palettes follow, sorted. */
-const KNOWN_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"];
 
 /** Reverse a ramp's value ladder: step `50` takes `950`'s value, etc. (dark mode). */
 function reverseRamp(scale: Ramp): Ramp {
@@ -69,11 +67,21 @@ const NEUTRAL_L_MAX = 0.985;
 export function resolveColorConfig(config: ColorConfig): ResolvedPalettes {
 	const { seeds, algorithm, steps } = config;
 
+	// Defense-in-depth: the codec sanitizes presets, but `resolveColorConfig` also runs in
+	// the publisher path on decoded request data. Reject a non-generative algorithm with a
+	// clear error instead of throwing deep in the kernel's zod parse (a `fixed` recipe would).
+	if (!(GENERATIVE_ALGORITHMS as readonly string[]).includes(algorithm)) {
+		throw new Error(`resolveColorConfig: "${algorithm}" is not a seed-generative algorithm (needs literal ramps).`);
+	}
+
 	// The kernel requires a `primary` palette (the brand); dotUI names it `accent`.
 	// Always generate every status palette (a missing seed falls back to the kernel's
 	// built-in) so a partial config never leaves a stale base ramp downstream.
-	const palettes: Record<string, string | boolean> = { primary: seeds.accent, neutral: seeds.neutral };
-	for (const name of ["success", "warning", "danger", "info"] as const) {
+	const palettes: Record<string, string | boolean> = {
+		[ACCENT_KERNEL_NAME]: seeds.accent,
+		neutral: seeds.neutral,
+	};
+	for (const name of STATUS_PALETTES) {
 		palettes[name] = seeds[name] ?? true;
 	}
 
@@ -87,7 +95,7 @@ export function resolveColorConfig(config: ColorConfig): ResolvedPalettes {
 	// neutral backbone so dark surfaces (the reversed ramp) reach near-black.
 	const light: Record<string, Ramp> = {};
 	for (const [name, scale] of Object.entries(lightMode.scales)) {
-		const key = name === "primary" ? "accent" : name;
+		const key = fromKernelPaletteName(name);
 		light[key] = key === "neutral" ? stretchLightness(scale, NEUTRAL_L_MIN, NEUTRAL_L_MAX) : scale;
 	}
 
@@ -98,11 +106,11 @@ export function resolveColorConfig(config: ColorConfig): ResolvedPalettes {
 }
 
 function orderedNames(palettes: Record<string, Ramp>): string[] {
-	const known = KNOWN_ORDER.filter((name) => name in palettes);
+	const ordered = PALETTE_ORDER.filter((name) => name in palettes);
 	const extra = Object.keys(palettes)
-		.filter((name) => !KNOWN_ORDER.includes(name))
+		.filter((name) => !(PALETTE_ORDER as readonly string[]).includes(name))
 		.sort();
-	return [...known, ...extra];
+	return [...ordered, ...extra];
 }
 
 function emitBlock(out: string[], palettes: Record<string, Ramp>, names: string[]): void {

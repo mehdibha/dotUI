@@ -1,8 +1,12 @@
 /** Default 11-step scale names. Producers may emit any step set via `ModeCtx.steps`. */
 export const SCALE_STEPS = ["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "950"] as const;
 
-/** Default seed hues for the optional status palettes (used when toggled on with `true`). */
-export const SEMANTIC_COLORS: Record<string, string> = {
+/**
+ * Default seed hues for the optional status palettes (used when toggled on with `true`).
+ * Typed with explicit status keys so `SEMANTIC_COLORS.info` is `string` for direct
+ * consumers, while the index signature keeps dynamic `SEMANTIC_COLORS[name]` lookups working.
+ */
+export const SEMANTIC_COLORS: Record<string, string> & Record<"success" | "danger" | "warning" | "info", string> = {
 	success: "#22c55e",
 	danger: "#ef4444",
 	warning: "#eab308",
