@@ -6,10 +6,41 @@
 
 @source "./registry/**/*.{ts,tsx}";
 
+/*
+ * Metric-adjusted fallback fonts.
+ *
+ * The web fonts load with `font-display: swap`, so before they arrive the
+ * browser paints with a fallback. Without metric adjustment that fallback has
+ * a different x-height / advance width than the real font, so the swap visibly
+ * reflows the text (worst on large headings) — the "font flicker" on load.
+ *
+ * These faces re-shape local Arial to match each web font's metrics so the
+ * pre-swap layout is identical and the swap is imperceptible (zero CLS). This
+ * is the same technique next/font uses; the override values were generated with
+ * Capsize (@capsizecss/core `createFontStack`) from the latin .woff2 files.
+ * Regenerate them if the font files change.
+ */
+@font-face {
+	font-family: "Geist Variable Fallback";
+	src: local("Arial"), local("ArialMT");
+	ascent-override: 95.9379%;
+	descent-override: 28.1609%;
+	line-gap-override: 0%;
+	size-adjust: 104.7553%;
+}
+@font-face {
+	font-family: "Josefin Sans Variable Fallback";
+	src: local("Arial"), local("ArialMT");
+	ascent-override: 81.1531%;
+	descent-override: 27.051%;
+	line-gap-override: 0%;
+	size-adjust: 92.418%;
+}
+
 @theme {
-	--font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+	--font-sans: "Geist Variable", "Geist Variable Fallback", ui-sans-serif, system-ui, sans-serif;
 	--font-mono: "Geist Mono", ui-monospace, monospace;
-	--font-josefin: "Josefin Sans Variable", ui-sans-serif, system-ui, sans-serif;
+	--font-josefin: "Josefin Sans Variable", "Josefin Sans Variable Fallback", ui-sans-serif, system-ui, sans-serif;
 
 	--breakpoint-xs: 30rem;
 	--breakpoint-3xl: 120rem;
