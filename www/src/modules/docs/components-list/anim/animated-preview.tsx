@@ -1,12 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 
 import { animate, useMotionValue, useReducedMotion } from "motion/react";
+import { UNSAFE_PortalProvider } from "react-aria/PortalProvider";
 
 import { cn } from "@/registry/lib/utils";
 
 import { FakeCursor } from "./cursor";
+
+// `contain` mode (overlays/pickers): portal overlays into the card + pin the modal's
+// runtime viewport vars so it sizes to the card, like the static overlay previews.
+const CONTAIN_VARS = { "--page-height": "100%", "--visual-viewport-height": "100%" } as CSSProperties;
+const CONTAIN_CLASS = "[&_:has(>[data-slot=modal-viewport])]:!h-full [&_[data-slot=modal-viewport]]:!h-full";
 
 // Thrown to unwind the animation loop when it is cancelled (hover / offscreen / unmount).
 const ABORT = Symbol("preview-abort");
@@ -57,11 +64,16 @@ interface AnimatedPreviewProps {
 	/** Render the component; `ref(name)` registers an element as a cursor target. */
 	children: (ref: (name: string) => (el: HTMLElement | null) => void) => React.ReactNode;
 	className?: string;
+	/** Overlay/picker demos: portal overlays into the card + render client-only (SSR-safe). */
+	contain?: boolean;
 }
 
-export function AnimatedPreview({ script, reset, children, className }: AnimatedPreviewProps) {
+export function AnimatedPreview({ script, reset, children, className, contain = false }: AnimatedPreviewProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const refs = useRef(new Map<string, HTMLElement>());
+	// `contain` demos render client-only (Select/Combobox/Menu crash React during SSR).
+	const [mounted, setMounted] = useState(!contain);
+	useEffect(() => setMounted(true), []);
 
 	const x = useMotionValue(-100);
 	const y = useMotionValue(-100);
@@ -262,17 +274,31 @@ export function AnimatedPreview({ script, reset, children, className }: Animated
 		};
 	}, [interactive, reduceMotion, start, stop, opacity, scale]);
 
+	const refFor = (name: string) => (el: HTMLElement | null) => {
+		if (el) refs.current.set(name, el);
+		else refs.current.delete(name);
+	};
+	const content = mounted ? children(refFor) : null;
+
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative isolate flex size-full items-center justify-center overflow-hidden", className)}
+			className={cn(
+				"relative isolate flex size-full items-center justify-center overflow-hidden",
+				contain && CONTAIN_CLASS,
+				className,
+			)}
+			style={contain ? CONTAIN_VARS : undefined}
 			onPointerEnter={() => setInteractive(true)}
 			onPointerLeave={() => setInteractive(false)}
 		>
-			{children((name) => (el) => {
-				if (el) refs.current.set(name, el);
-				else refs.current.delete(name);
-			})}
+			{contain ? (
+				<UNSAFE_PortalProvider getContainer={() => containerRef.current ?? document.body}>
+					{content}
+				</UNSAFE_PortalProvider>
+			) : (
+				content
+			)}
 			{!reduceMotion && <FakeCursor x={x} y={y} scale={scale} opacity={opacity} ripple={ripple} />}
 		</div>
 	);
