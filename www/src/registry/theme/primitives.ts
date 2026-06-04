@@ -70,10 +70,11 @@ export function resolveColorConfig(config: ColorConfig): ResolvedPalettes {
 	const { seeds, algorithm, steps } = config;
 
 	// The kernel requires a `primary` palette (the brand); dotUI names it `accent`.
-	const palettes: Record<string, string> = { primary: seeds.accent, neutral: seeds.neutral };
+	// Always generate every status palette (a missing seed falls back to the kernel's
+	// built-in) so a partial config never leaves a stale base ramp downstream.
+	const palettes: Record<string, string | boolean> = { primary: seeds.accent, neutral: seeds.neutral };
 	for (const name of ["success", "warning", "danger", "info"] as const) {
-		const seed = seeds[name];
-		if (seed) palettes[name] = seed;
+		palettes[name] = seeds[name] ?? true;
 	}
 
 	// algorithm is a runtime-validated discriminant the kernel's zod schema checks.
