@@ -9,7 +9,7 @@
 		"dev:clean": "rm -rf node_modules/.vite .cache && portless run vite dev",
 		"build:registry": "tsx scripts/registry-build.ts",
 		"build": "pnpm build:registry && NODE_OPTIONS='--max-old-space-size=8192' vite build && pnpm build:postprocess",
-		"build:postprocess": "[ -n \"$VERCEL\" ] && cp -r .vercel/output/dist/client/__tsr .vercel/output/static/__tsr 2>/dev/null || true",
+		"build:postprocess": "([ -n \"$VERCEL\" ] && cp -r .vercel/output/dist/client/__tsr .vercel/output/static/__tsr 2>/dev/null || true); node scripts/patch-vercel-config.mjs",
 		"preview": "vite preview",
 		"typecheck": "pnpm build:registry && tsc --noEmit",
 		"clean": "git clean -xdf .output .nitro .cache .turbo node_modules",

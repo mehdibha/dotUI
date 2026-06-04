@@ -12,6 +12,10 @@ import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 export const Route = createFileRoute("/_app/")({
+	head: () => ({
+		// Markdown alternate for AI agents (also served via Accept negotiation).
+		links: [{ rel: "alternate", type: "text/markdown", href: "/home.md" }],
+	}),
 	component: HomePage,
 });
 
