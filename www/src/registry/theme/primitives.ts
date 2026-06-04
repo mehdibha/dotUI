@@ -11,7 +11,7 @@
  * the `tailwindcss-autocontrast` plugin at Tailwind-compile.
  */
 
-import { createTheme, type CreateThemeOptions, oklchCss, toOklch } from "@dotui/colors";
+import { createTheme, oklchCss, toOklch } from "@dotui/colors";
 
 import { GENERATIVE_ALGORITHMS, type ColorConfig } from "./color-config";
 import { ACCENT_KERNEL_NAME, fromKernelPaletteName, PALETTE_ORDER, STATUS_PALETTES } from "./palettes";
@@ -85,8 +85,9 @@ export function resolveColorConfig(config: ColorConfig): ResolvedPalettes {
 		palettes[name] = seeds[name] ?? true;
 	}
 
-	// algorithm is a runtime-validated discriminant the kernel's zod schema checks.
-	const theme = createTheme({ algorithm, palettes, steps, modes: { light: true } } as unknown as CreateThemeOptions);
+	// algorithm is a runtime-validated discriminant the kernel's zod schema checks. The object
+	// targets the kernel's `BaseThemeOptions` view, so no cast is needed.
+	const theme = createTheme({ algorithm, palettes, steps, modes: { light: true } });
 
 	const lightMode = theme.light;
 	if (!lightMode) throw new Error("resolveColorConfig: kernel produced no `light` mode");

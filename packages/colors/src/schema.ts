@@ -5,6 +5,9 @@
 
 import { z } from "zod";
 
+import type { AlgorithmId } from "./producer";
+import type { ColorScale } from "./shared/types";
+
 /** Generative palettes: `primary` required (seed); others = seed string or on/off; custom names allowed. */
 const generativePalettes = z.object({ primary: z.string() }).catchall(z.union([z.string(), z.boolean()]));
 
@@ -76,3 +79,29 @@ export const createThemeOptionsSchema = z.discriminatedUnion("algorithm", [
 ]);
 
 export type CreateThemeOptions = z.infer<typeof createThemeOptionsSchema>;
+
+/**
+ * A non-discriminated view of the options `createTheme` actually reads. The public API
+ * validates the strict {@link CreateThemeOptions} union at runtime, but the algorithm-agnostic
+ * orchestrator works against this flat superset so it never narrows on `algorithm` or casts:
+ * each producer's zod schema strips the knobs it ignores. Callers that assemble options
+ * dynamically (e.g. dotUI's semantic layer) can target this directly.
+ */
+export interface BaseThemeOptions {
+	algorithm: AlgorithmId;
+	palettes: Record<string, string | ColorScale | boolean>;
+	modes?: z.infer<typeof modesSchema>;
+	steps?: string[];
+	// oklch / tailwind
+	chromaMult?: number;
+	minChroma?: number;
+	hueTorsion?: number;
+	chromaMode?: "consistent" | "max";
+	preserveSeedAt?: string;
+	// contrast
+	ratios?: number[];
+	formula?: "wcag2" | "apca";
+	saturation?: number;
+	// material
+	tones?: number[];
+}

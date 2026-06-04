@@ -6,6 +6,7 @@ import { apca, toOklch, wcag2 } from "./shared/color";
 import { allValues, inGamut, isMonotonic, rampLs, worstOnContrast } from "./test-utils";
 import { createTheme } from "./theme";
 
+import type { BaseThemeOptions } from "./schema";
 import type { ColorScale, Theme } from "./shared/types";
 
 registerBuiltins();
@@ -63,6 +64,27 @@ describe("createTheme — parameterized sweep", () => {
 		const theme = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6" } });
 		expect(val(sc(theme, "light", "primary"), "500")).toMatch(/^oklch\(/);
 		expect(val(oc(theme, "light", "primary"), "500")).toMatch(/^oklch\(/);
+	});
+
+	it("accepts a BaseThemeOptions bag and strips foreign knobs per producer (no leakage)", () => {
+		const plain = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6", neutral: "#64748b" } });
+		const bag: BaseThemeOptions = {
+			algorithm: "oklch",
+			palettes: { primary: "#3b82f6", neutral: "#64748b" },
+			tones: [10, 50, 90], // material-only
+			ratios: [1, 2, 3], // contrast-only
+			formula: "apca", // contrast-only
+		};
+		// oklch must ignore every foreign knob → identical output to the plain call.
+		expect(createTheme(bag)).toEqual(plain);
+	});
+
+	it("a non-string `neutral` derives from primary (explicit-or-derived), not a crash or a dropped palette", () => {
+		// `neutral: true` is schema-valid (the catchall) but isn't a seed — it should behave exactly
+		// like omitting neutral (derive from primary), rather than throwing or dropping the palette.
+		const derived = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6", neutral: true } });
+		const fromPrimary = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6" } });
+		expect(sc(derived, "light", "neutral")).toEqual(sc(fromPrimary, "light", "neutral"));
 	});
 });
 

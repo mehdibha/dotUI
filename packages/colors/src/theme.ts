@@ -9,13 +9,11 @@
 
 import { type ModeCtx, produceValidated } from "./producer";
 import { registerBuiltins } from "./producers";
-import { type CreateThemeOptions, createThemeOptionsSchema } from "./schema";
+import { type BaseThemeOptions, type CreateThemeOptions, createThemeOptionsSchema } from "./schema";
 import { gamutMap, oklchCss, toOklch } from "./shared/color";
 import { DEFAULT_MODES, SCALE_STEPS, SEMANTIC_COLORS } from "./shared/constants";
 
 import type { ColorScale, Theme } from "./shared/types";
-
-type AnyRecord = Record<string, unknown>;
 
 interface ResolvedMode {
 	isDark: boolean;
@@ -24,15 +22,23 @@ interface ResolvedMode {
 }
 
 /** Resolve the per-palette base inputs: name → seed string (generative) or scale map (fixed). */
-function resolvePalettes(palettes: AnyRecord, isFixed: boolean): Map<string, string | ColorScale> {
+function resolvePalettes(
+	palettes: Record<string, string | ColorScale | boolean>,
+	isFixed: boolean,
+): Map<string, string | ColorScale> {
 	const out = new Map<string, string | ColorScale>();
 	if (isFixed) {
-		for (const [name, scale] of Object.entries(palettes)) out.set(name, scale as ColorScale);
+		for (const [name, scale] of Object.entries(palettes)) {
+			if (typeof scale === "object") out.set(name, scale);
+		}
 		return out;
 	}
-	const primary = palettes.primary as string;
-	out.set("primary", primary);
-	out.set("neutral", (palettes.neutral as string | undefined) ?? primary);
+	const primary = palettes.primary;
+	// `neutral` is explicit-or-derived: a string seed wins, otherwise derive from the primary seed
+	// (a non-string neutral — e.g. the catchall `true` — is not a usable seed, so fall back).
+	const neutral = typeof palettes.neutral === "string" ? palettes.neutral : primary;
+	if (typeof primary === "string") out.set("primary", primary);
+	if (typeof neutral === "string") out.set("neutral", neutral);
 	for (const [name, value] of Object.entries(palettes)) {
 		if (name === "primary" || name === "neutral") continue;
 		if (value === true) {
@@ -66,31 +72,25 @@ function deriveBackground(neutralSeed: string | undefined, bgLightness: number):
 	return oklchCss(gamutMap({ l: bgLightness, c: Math.min(c, 0.01), h }));
 }
 
-/** Build a superset opts object; each producer's schema strips it to its own fields. */
+/** Build the per-palette opts; each producer's zod schema strips the knobs it ignores. */
 function buildPaletteOpts(
 	name: string,
 	input: string | ColorScale,
-	knobs: AnyRecord,
+	opts: BaseThemeOptions,
 	override: ResolvedMode["palettes"][string] | undefined,
-): AnyRecord {
+): Record<string, unknown> {
 	const seed = override?.seed ?? (typeof input === "string" ? input : undefined);
-	const saturation = knobs.saturation as number | undefined;
 	return {
+		// Forward every validated knob; each producer's schema keeps only its own, so adding a
+		// producer knob needs no edit here. Per-palette specifics + mode overrides win below.
+		...opts,
 		seed,
 		neutral: name === "neutral",
 		scale: typeof input === "object" ? input : undefined,
-		// contrast
-		ratios: override?.ratios ?? (knobs.ratios as number[] | undefined),
-		formula: knobs.formula,
-		chroma: saturation != null ? saturation / 100 : undefined,
-		// material
-		tones: override?.tones ?? (knobs.tones as number[] | undefined),
-		// oklch / tailwind
-		chromaMult: knobs.chromaMult,
-		minChroma: knobs.minChroma,
-		hueTorsion: knobs.hueTorsion,
-		chromaMode: knobs.chromaMode,
-		preserveSeedAt: knobs.preserveSeedAt,
+		// the kernel maps contrast `saturation` (0–100) onto the producer's `chroma`
+		chroma: opts.saturation != null ? opts.saturation / 100 : undefined,
+		ratios: override?.ratios ?? opts.ratios,
+		tones: override?.tones ?? opts.tones,
 	};
 }
 
@@ -98,17 +98,17 @@ function buildPaletteOpts(
  * Create a theme. `algorithm` selects the producer (oklch is the recommended default).
  * Output: `Theme` — primitive ramps + paired on-* per palette, per mode.
  */
-export function createTheme(options: CreateThemeOptions): Theme {
+export function createTheme(options: CreateThemeOptions | BaseThemeOptions): Theme {
 	registerBuiltins();
-	const opts = createThemeOptionsSchema.parse(options);
-	const knobs = opts as AnyRecord;
+	const opts: BaseThemeOptions = createThemeOptionsSchema.parse(options);
 	const { algorithm } = opts;
-	const steps = (opts.steps as string[] | undefined) ?? [...SCALE_STEPS];
-	const modes = (opts.modes as Record<string, unknown> | undefined) ?? DEFAULT_MODES;
+	const steps = opts.steps ?? [...SCALE_STEPS];
+	const modes = opts.modes ?? DEFAULT_MODES;
 	const isFixed = algorithm === "fixed";
 
-	const baseInputs = resolvePalettes(opts.palettes as AnyRecord, isFixed);
-	const neutralBase = isFixed ? undefined : (baseInputs.get("neutral") as string | undefined);
+	const baseInputs = resolvePalettes(opts.palettes, isFixed);
+	const neutralRaw = baseInputs.get("neutral");
+	const neutralBase = !isFixed && typeof neutralRaw === "string" ? neutralRaw : undefined;
 
 	const theme: Theme = {};
 	for (const [modeName, modeConfig] of Object.entries(modes)) {
@@ -130,7 +130,7 @@ export function createTheme(options: CreateThemeOptions): Theme {
 		const scales: Record<string, ColorScale> = {};
 		const on: Record<string, ColorScale> = {};
 		for (const [name, input] of baseInputs) {
-			const paletteOpts = buildPaletteOpts(name, input, knobs, resolved.palettes[name]);
+			const paletteOpts = buildPaletteOpts(name, input, opts, resolved.palettes[name]);
 			const out = produceValidated(algorithm, paletteOpts, ctx);
 			scales[name] = out.scale;
 			on[name] = out.on;
