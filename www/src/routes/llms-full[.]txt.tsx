@@ -17,14 +17,17 @@ const HEADER = [
 	"> Full documentation for dotUI — a design system platform and component registry built on React Aria Components, Tailwind CSS 4, and TypeScript 5. Each section below is the complete markdown source of one documentation page.",
 ].join("\n");
 
+// Uses getText("processed") — the bundled markdown (includeProcessedMarkdown in
+// source.config) — NOT getText("raw"), which reads the original file from disk at
+// runtime and 404s in the serverless function (the content/ sources aren't bundled).
 async function renderPages(
-	pages: { url: string; data: { title?: string; getText: (kind: "raw") => Promise<string> } }[],
+	pages: { url: string; data: { title?: string; getText: (kind: "processed") => Promise<string> } }[],
 ) {
 	return Promise.all(
 		pages.map(async (page) => {
 			const title = page.data.title ?? page.url;
-			const raw = (await page.data.getText("raw")).trim();
-			return `# ${title}\n\n${raw}`;
+			const body = (await page.data.getText("processed")).trim();
+			return `# ${title}\n\n${body}`;
 		}),
 	);
 }
