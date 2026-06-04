@@ -168,34 +168,27 @@ export function InteractiveDemo({
 	};
 
 	return (
-		<div className={cn("", className)}>
+		<div className={cn("overflow-hidden rounded-lg border", className)}>
 			<div className={cn("flex flex-col", layout === "horizontal" && "flex-row")}>
-				{/* Preview frame */}
-				<div
-					className={cn(
-						"flex min-h-56 flex-1 items-center justify-center border bg-bg p-10",
-						layout === "horizontal" && "rounded-tl-lg",
-						layout === "vertical" && "rounded-t-lg",
-					)}
-				>
-					{previewElement}
-				</div>
+				{/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
+				<div className="flex min-h-56 flex-1 items-center justify-center p-10">{previewElement}</div>
 
-				{/* Controls panel */}
+				{/* Controls — a column beside the preview (inline column) or a row beneath it (bottom bar) */}
 				<div
 					className={cn(
-						"relative flex flex-col gap-2.5 bg-card p-4 **:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
-						layout === "horizontal" && "min-w-48 rounded-tr-lg border-y border-r",
-						layout === "vertical" && "border-x border-b",
+						"flex **:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
+						layout === "horizontal"
+							? "w-64 shrink-0 flex-col gap-4 p-5"
+							: "flex-row flex-wrap items-start gap-x-6 gap-y-4 border-t p-5",
 					)}
 				>
-					<Controls controls={controls} values={values} onChange={handleChange} />
+					<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
 				</div>
 			</div>
 
-			{/* Code block with toggle */}
+			{/* Code bar — split from the panel above by a single thin divider */}
 			<CodeBlock
-				className="rounded-t-none border-t-0"
+				className="rounded-none border-x-0 border-b-0"
 				actions={
 					<>
 						<Button variant="quiet" size="sm" className="h-7 gap-1 pr-2 pl-1 text-xs" onPress={handleToggle}>
