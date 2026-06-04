@@ -78,6 +78,14 @@ describe("createTheme — parameterized sweep", () => {
 		// oklch must ignore every foreign knob → identical output to the plain call.
 		expect(createTheme(bag)).toEqual(plain);
 	});
+
+	it("a non-string `neutral` derives from primary (explicit-or-derived), not a crash or a dropped palette", () => {
+		// `neutral: true` is schema-valid (the catchall) but isn't a seed — it should behave exactly
+		// like omitting neutral (derive from primary), rather than throwing or dropping the palette.
+		const derived = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6", neutral: true } });
+		const fromPrimary = createTheme({ algorithm: "oklch", palettes: { primary: "#3b82f6" } });
+		expect(sc(derived, "light", "neutral")).toEqual(sc(fromPrimary, "light", "neutral"));
+	});
 });
 
 describe("oklch producer (default) specifics", () => {

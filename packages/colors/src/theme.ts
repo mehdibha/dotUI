@@ -34,7 +34,9 @@ function resolvePalettes(
 		return out;
 	}
 	const primary = palettes.primary;
-	const neutral = palettes.neutral ?? primary;
+	// `neutral` is explicit-or-derived: a string seed wins, otherwise derive from the primary seed
+	// (a non-string neutral — e.g. the catchall `true` — is not a usable seed, so fall back).
+	const neutral = typeof palettes.neutral === "string" ? palettes.neutral : primary;
 	if (typeof primary === "string") out.set("primary", primary);
 	if (typeof neutral === "string") out.set("neutral", neutral);
 	for (const [name, value] of Object.entries(palettes)) {
