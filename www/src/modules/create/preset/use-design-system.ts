@@ -6,7 +6,7 @@ import { getRouteApi } from "@tanstack/react-router";
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
 
-import type { PaletteSeeds } from "@/registry/theme";
+import type { AlgorithmId, PaletteSeeds } from "@/registry/theme";
 
 import { decodePreset, encodePreset } from "./codec";
 import { DEFAULTS } from "./defaults";
@@ -77,5 +77,24 @@ export function useDesignSystem() {
 		[setDesignSystem],
 	);
 
-	return { designSystem, setDesignSystem, setComponentParam, setToken, setDensity, setColorSeed };
+	/** Switch the generation algorithm of the color recipe. */
+	const setColorAlgorithm = useCallback(
+		(algorithm: AlgorithmId) => {
+			setDesignSystem((prev) => {
+				const base = prev.color ?? DEFAULT_COLOR_CONFIG;
+				return { ...prev, color: { ...base, algorithm } };
+			});
+		},
+		[setDesignSystem],
+	);
+
+	return {
+		designSystem,
+		setDesignSystem,
+		setComponentParam,
+		setToken,
+		setDensity,
+		setColorSeed,
+		setColorAlgorithm,
+	};
 }

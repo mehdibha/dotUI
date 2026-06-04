@@ -2,6 +2,8 @@
 
 import { useMemo } from "react";
 
+import { ChevronDownIcon } from "lucide-react";
+
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme";
 import { Button } from "@/registry/ui/button";
 import { ColorEditor } from "@/registry/ui/color-editor";
@@ -9,11 +11,20 @@ import { ColorPicker } from "@/registry/ui/color-picker";
 import { ColorSwatch } from "@/registry/ui/color-swatch";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
+import { Select, SelectValue } from "@/registry/ui/select";
 
-import type { PaletteSeeds } from "@/registry/theme";
+import type { AlgorithmId, PaletteSeeds } from "@/registry/theme";
 
 import { useDesignSystem } from "./preset";
+
+const ALGORITHMS: ReadonlyArray<{ id: AlgorithmId; label: string }> = [
+	{ id: "oklch", label: "OKLCH Perceptual" },
+	{ id: "tailwind", label: "Tailwind-style" },
+	{ id: "material", label: "Material" },
+	{ id: "contrast", label: "Contrast-locked" },
+];
 
 const SEED_FIELDS: ReadonlyArray<{ label: string; key: keyof PaletteSeeds }> = [
 	{ label: "Base", key: "neutral" },
@@ -26,7 +37,7 @@ const SEED_FIELDS: ReadonlyArray<{ label: string; key: keyof PaletteSeeds }> = [
 const RAMP_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"] as const;
 
 export function ColorsConfig() {
-	const { designSystem, setColorSeed } = useDesignSystem();
+	const { designSystem, setColorSeed, setColorAlgorithm } = useDesignSystem();
 	const config = designSystem.color ?? DEFAULT_COLOR_CONFIG;
 	const seeds = config.seeds;
 	const resolved = useMemo(() => resolveColorConfig(config), [config]);
@@ -34,6 +45,27 @@ export function ColorsConfig() {
 	return (
 		<div className="-mt-6 flex flex-col gap-4">
 			<p className="text-xs text-fg-muted">Pick brand + status seeds — the ramps regenerate live.</p>
+
+			<Select
+				className="w-full"
+				selectedKey={config.algorithm}
+				onSelectionChange={(key) => setColorAlgorithm(key as AlgorithmId)}
+			>
+				<Label>Algorithm</Label>
+				<Button size="sm" className="w-full justify-between">
+					<SelectValue className="truncate" />
+					<ChevronDownIcon data-icon-end="" />
+				</Button>
+				<Popover>
+					<ListBox>
+						{ALGORITHMS.map((algorithm) => (
+							<ListBoxItem key={algorithm.id} id={algorithm.id}>
+								{algorithm.label}
+							</ListBoxItem>
+						))}
+					</ListBox>
+				</Popover>
+			</Select>
 
 			<div className="grid grid-cols-2 gap-4">
 				{SEED_FIELDS.map(({ label, key }) => (
