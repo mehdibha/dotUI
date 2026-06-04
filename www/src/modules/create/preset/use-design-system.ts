@@ -6,7 +6,7 @@ import { getRouteApi } from "@tanstack/react-router";
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
 
-import type { AlgorithmId, PaletteSeeds } from "@/registry/theme";
+import type { AlgorithmId, ColorKnobs, PaletteSeeds } from "@/registry/theme";
 
 import { decodePreset, encodePreset } from "./codec";
 import { DEFAULTS } from "./defaults";
@@ -88,6 +88,17 @@ export function useDesignSystem() {
 		[setDesignSystem],
 	);
 
+	/** Set one per-producer tuning knob of the color recipe. */
+	const setColorKnob = useCallback(
+		<K extends keyof ColorKnobs>(key: K, value: ColorKnobs[K]) => {
+			setDesignSystem((prev) => {
+				const base = prev.color ?? DEFAULT_COLOR_CONFIG;
+				return { ...prev, color: { ...base, knobs: { ...base.knobs, [key]: value } } };
+			});
+		},
+		[setDesignSystem],
+	);
+
 	return {
 		designSystem,
 		setDesignSystem,
@@ -96,5 +107,6 @@ export function useDesignSystem() {
 		setDensity,
 		setColorSeed,
 		setColorAlgorithm,
+		setColorKnob,
 	};
 }
