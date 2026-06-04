@@ -5,6 +5,9 @@ import { Link } from "@tanstack/react-router";
 import { cn } from "@/registry/lib/utils";
 
 import { componentDemos } from "./demos";
+import { overlayPreviews } from "./previews";
+
+import type { ComponentPreviewKind } from "./components-data";
 
 function ComponentPreview({ children, className }: { children: React.ReactNode; className?: string }) {
 	return (
@@ -32,21 +35,45 @@ function IframePreview({ slug, scale = 1, className }: { slug: string; scale?: n
 	);
 }
 
+function OverlayPreview({ name, slug, className }: { name: string; slug: string; className?: string }) {
+	const Preview = overlayPreviews[slug];
+	return (
+		<div className={cn("relative h-32 w-full overflow-hidden rounded-lg border bg-bg", className)}>
+			{Preview ? (
+				<Preview />
+			) : (
+				<span className="flex h-full w-full items-center justify-center text-sm text-fg-muted">{name}</span>
+			)}
+		</div>
+	);
+}
+
 interface ComponentCardProps {
 	name: string;
 	slug: string;
 	href: string;
 	scale?: number;
 	iframe?: boolean;
+	preview?: ComponentPreviewKind;
 	previewClassName?: string;
 }
 
-export function ComponentCard({ name, slug, href, scale = 0.8, iframe = false, previewClassName }: ComponentCardProps) {
+export function ComponentCard({
+	name,
+	slug,
+	href,
+	scale = 0.8,
+	iframe = false,
+	preview,
+	previewClassName,
+}: ComponentCardProps) {
 	const Demo = componentDemos[slug];
 
 	return (
 		<div className="flex flex-col items-center">
-			{iframe ? (
+			{preview === "overlay" ? (
+				<OverlayPreview name={name} slug={slug} className={previewClassName} />
+			) : iframe ? (
 				<IframePreview slug={slug} scale={scale} className={previewClassName} />
 			) : (
 				<ComponentPreview className={previewClassName}>

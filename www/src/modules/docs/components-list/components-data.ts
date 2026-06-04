@@ -1,11 +1,16 @@
 export type ComponentStatus = "pending" | "in review" | "done";
 
+/** How a component's card preview is rendered. Defaults to an inline demo. */
+export type ComponentPreviewKind = "overlay";
+
 export interface ComponentInfo {
 	name: string;
 	slug: string;
 	href: string;
 	scale?: number;
 	iframe?: boolean;
+	/** Static "open" preview for overlay components (see ./previews). */
+	preview?: ComponentPreviewKind;
 	status: ComponentStatus;
 }
 
@@ -166,12 +171,15 @@ export const componentsData: ComponentCategory[] = [
 	{
 		title: "Overlays",
 		slug: "overlays",
+		// `preview: "overlay"` renders a static, focus-safe OPEN state (see ./previews) instead of an
+		// iframe — overlays can't render inline open (they portal + trap focus), and an iframe of an
+		// open overlay steals focus on load. No `scale`: previews are authored to fit the card.
 		components: [
-			// { name: "Dialog", slug: "dialog", href: "/docs/components/dialog", iframe: true },
-			{ name: "Modal", slug: "modal", href: "/docs/components/modal", scale: 0.6, iframe: true, status: "done" },
-			{ name: "Popover", slug: "popover", href: "/docs/components/popover", iframe: true, status: "done" },
-			{ name: "Drawer", slug: "drawer", href: "/docs/components/drawer", iframe: true, status: "in review" },
-			{ name: "Tooltip", slug: "tooltip", href: "/docs/components/tooltip", iframe: true, status: "pending" },
+			// { name: "Dialog", slug: "dialog", href: "/docs/components/dialog", preview: "overlay" },
+			{ name: "Modal", slug: "modal", href: "/docs/components/modal", preview: "overlay", status: "done" },
+			{ name: "Popover", slug: "popover", href: "/docs/components/popover", preview: "overlay", status: "done" },
+			{ name: "Drawer", slug: "drawer", href: "/docs/components/drawer", preview: "overlay", status: "in review" },
+			{ name: "Tooltip", slug: "tooltip", href: "/docs/components/tooltip", preview: "overlay", status: "pending" },
 		],
 	},
 ];

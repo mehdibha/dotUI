@@ -19,7 +19,6 @@ import { CommandDemo } from "./command";
 import { DateFieldDemo } from "./date-field";
 import { DatePickerDemo } from "./date-picker";
 import { DialogDemo } from "./dialog";
-import { DrawerDemo } from "./drawer";
 import { EmptyDemo } from "./empty";
 import { FieldDemo } from "./field";
 import { FileTriggerDemo } from "./file-trigger";
@@ -31,10 +30,8 @@ import { LinkDemo } from "./link";
 import { ListBoxDemo } from "./list-box";
 import { LoaderDemo } from "./loader";
 import { MenuDemo } from "./menu";
-import { ModalDemo } from "./modal";
 import { NumberFieldDemo } from "./number-field";
 import { OTPFieldDemo } from "./otp-field";
-import { PopoverDemo } from "./popover";
 import { ProgressBarDemo } from "./progress-bar";
 import { RadioGroupDemo } from "./radio-group";
 import { SearchFieldDemo } from "./search-field";
@@ -52,7 +49,6 @@ import { TimeFieldDemo } from "./time-field";
 import { ToastDemo } from "./toast";
 import { ToggleButtonDemo } from "./toggle-button";
 import { ToggleButtonGroupDemo } from "./toggle-button-group";
-import { TooltipDemo } from "./tooltip";
 
 export const componentDemos: Record<string, ComponentType> = {
 	accordion: AccordionDemo,
@@ -74,7 +70,6 @@ export const componentDemos: Record<string, ComponentType> = {
 	"date-field": DateFieldDemo,
 	"date-picker": DatePickerDemo,
 	dialog: DialogDemo,
-	drawer: DrawerDemo,
 	empty: EmptyDemo,
 	field: FieldDemo,
 	"file-trigger": FileTriggerDemo,
@@ -86,10 +81,8 @@ export const componentDemos: Record<string, ComponentType> = {
 	"list-box": ListBoxDemo,
 	loader: LoaderDemo,
 	menu: MenuDemo,
-	modal: ModalDemo,
 	"number-field": NumberFieldDemo,
 	"otp-field": OTPFieldDemo,
-	popover: PopoverDemo,
 	"progress-bar": ProgressBarDemo,
 	"radio-group": RadioGroupDemo,
 	"search-field": SearchFieldDemo,
@@ -107,5 +100,4 @@ export const componentDemos: Record<string, ComponentType> = {
 	toast: ToastDemo,
 	"toggle-button": ToggleButtonDemo,
 	"toggle-button-group": ToggleButtonGroupDemo,
-	tooltip: TooltipDemo,
 };

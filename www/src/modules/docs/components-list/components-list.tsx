@@ -25,6 +25,7 @@ export function ComponentsList({ data }: ComponentsListProps) {
 								href={component.href}
 								scale={component.scale}
 								iframe={component.iframe}
+								preview={component.preview}
 								previewClassName={cn(
 									category.slug === "pickers" && "h-38",
 									category.slug === "dates" && "h-48",
