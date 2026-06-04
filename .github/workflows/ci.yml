@@ -89,6 +89,7 @@ jobs:
             www/src/registry/__generated__/icons.tsx \
             www/src/registry/__generated__/examples.tsx \
             www/src/registry/__generated__/base-css.ts \
+            www/src/registry/base/colors.css \
             www/src/registry/__generated__/__tabler__.ts \
             www/src/registry/__generated__/__hugeicons__.ts \
             www/src/registry/__generated__/__remix__.ts \
