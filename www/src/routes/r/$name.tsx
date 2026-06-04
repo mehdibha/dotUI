@@ -11,7 +11,7 @@
  * `name` must match a generated publishable. Missing names return 404.
  */
 
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { format } from "oxfmt";
 
@@ -35,7 +35,9 @@ export const Route = createFileRoute("/r/$name")({
 			GET: async ({ request, params }) => {
 				const name = params.name;
 				const loader = publishables[name];
-				if (!loader) throw notFound();
+				if (!loader) {
+					return Response.json({ error: "Not found" }, { status: 404 });
+				}
 
 				const url = new URL(request.url);
 				const encodedPreset = url.searchParams.get("preset") ?? undefined;
