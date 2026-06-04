@@ -4,6 +4,13 @@ import { useEffect } from "react";
 
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 
+// Above-the-fold fonts: Geist (hero/body) and Josefin (header logo). Imported as
+// URLs so we can <link rel="preload"> them — the browser fetches them in parallel
+// with the HTML/CSS instead of only discovering them after the CSS is parsed, so
+// they're ready by first paint and there's no flash of fallback text. Vite emits
+// the same hashed asset the @fontsource CSS references, so this is not a 2nd fetch.
+import geistFontUrl from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
+import josefinFontUrl from "@fontsource-variable/josefin-sans/files/josefin-sans-latin-wght-normal.woff2?url";
 // import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ThemeProvider } from "starter-themes";
 
@@ -40,6 +47,12 @@ export const Route = createRootRoute({
 				{ name: "twitter:creator", content: siteConfig.twitter.creator },
 			],
 			links: [
+				// Preload above-the-fold fonts so they're fetched in parallel with the
+				// document (not discovered late, after CSS parse). `crossorigin` is
+				// required even same-origin — fonts fetch in CORS mode, and without it
+				// the preload wouldn't match the actual request, causing a double fetch.
+				{ rel: "preload", href: geistFontUrl, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+				{ rel: "preload", href: josefinFontUrl, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 				{ rel: "stylesheet", href: appCss },
 				// The SVG favicon is injected by <FaviconSwitcher /> and kept in sync
 				// with the system color scheme. These PNG/ICO entries are the fallback
