@@ -37,27 +37,11 @@
 			"default": "\"default\""
 		},
 		"size": {
-			"type": "\"icon\" | \"icon-lg\" | \"icon-sm\" | \"icon-xs\" | \"lg\" | \"md\" | \"sm\" | \"xs\"",
-			"detailedType": "| 'icon'\n| 'icon-lg'\n| 'icon-sm'\n| 'icon-xs'\n| 'lg'\n| 'md'\n| 'sm'\n| 'xs'\n| undefined",
+			"type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
+			"detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
 			"typeAst": {
 				"type": "union",
 				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "icon"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "icon-lg"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "icon-sm"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "icon-xs"
-					},
 					{
 						"type": "stringLiteral",
 						"value": "lg"
@@ -76,7 +60,7 @@
 					}
 				]
 			},
-			"description": "The size of the button.\nUse `icon-xs`, `icon-sm`, `icon`, or `icon-lg` for icon-only buttons.",
+			"description": "The size of the button.\nFor an icon-only button, set `isIconOnly` rather than a dedicated size.",
 			"default": "\"md\""
 		},
 		"onPress": {

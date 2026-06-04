@@ -206,13 +206,13 @@ interface EnumControlRendererProps {
 }
 
 /**
- * A small enum (few short options, e.g. `size`: sm/md/lg) renders as a segmented
- * control — quicker to scan and toggle than a dropdown, matching the playground
- * design. Larger option sets fall back to a Select to avoid overflow.
+ * A small enum (a few short options, e.g. `size`: xs/sm/md/lg) renders as a
+ * segmented control — quicker to scan and toggle than a dropdown, matching the
+ * playground design. Larger option sets fall back to a Select to avoid overflow.
  */
 function isSegmentedEnum(control: SerializableEnumControl): boolean {
 	return (
-		control.options.length > 1 && control.options.length <= 3 && control.options.every((option) => option.length <= 8)
+		control.options.length > 1 && control.options.length <= 4 && control.options.every((option) => option.length <= 8)
 	);
 }
 

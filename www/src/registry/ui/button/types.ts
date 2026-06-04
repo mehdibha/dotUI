@@ -14,10 +14,10 @@ export interface ButtonProps extends React.ComponentProps<typeof ButtonPrimitive
 
 	/**
 	 * The size of the button.
-	 * Use `icon-xs`, `icon-sm`, `icon`, or `icon-lg` for icon-only buttons.
+	 * For an icon-only button, set `isIconOnly` rather than a dedicated size.
 	 * @default "md"
 	 */
-	size?: "xs" | "sm" | "md" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg";
+	size?: "xs" | "sm" | "md" | "lg";
 }
 
 export interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimitives.Link> {
@@ -29,8 +29,8 @@ export interface LinkButtonProps extends React.ComponentProps<typeof LinkPrimiti
 
 	/**
 	 * The size of the button.
-	 * Use `icon-xs`, `icon-sm`, `icon`, or `icon-lg` for icon-only buttons.
+	 * For an icon-only button, set `isIconOnly` rather than a dedicated size.
 	 * @default "md"
 	 */
-	size?: "xs" | "sm" | "md" | "lg" | "icon-xs" | "icon-sm" | "icon" | "icon-lg";
+	size?: "xs" | "sm" | "md" | "lg";
 }

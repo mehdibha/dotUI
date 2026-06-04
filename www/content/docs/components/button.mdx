@@ -12,7 +12,7 @@ links:
 	controls={[
 		{ name: "children", type: "string", defaultValue: "Button" },
 		"variant",
-		"size",
+		{ name: "size", type: "enum", options: ["xs", "sm", "md", "lg"], defaultValue: "md" },
 		"isDisabled",
 		"isPending",
 	]}
