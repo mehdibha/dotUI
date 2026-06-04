@@ -30,6 +30,8 @@ import { Popover } from "@/registry/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 import { Switch } from "@/registry/ui/switch";
 import { TextField } from "@/registry/ui/text-field";
+import { ToggleButton } from "@/registry/ui/toggle-button";
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group";
 
 import type {
 	ControlValues,
@@ -189,7 +191,22 @@ interface EnumControlRendererProps {
 	onChange: (name: string, value: unknown) => void;
 }
 
+/**
+ * A small enum (few short options, e.g. `size`: sm/md/lg) renders as a segmented
+ * control — quicker to scan and toggle than a dropdown, matching the playground
+ * design. Larger option sets fall back to a Select to avoid overflow.
+ */
+function isSegmentedEnum(control: SerializableEnumControl): boolean {
+	return (
+		control.options.length > 1 && control.options.length <= 3 && control.options.every((option) => option.length <= 8)
+	);
+}
+
 function EnumControlRenderer({ control, value, onChange }: EnumControlRendererProps) {
+	if (isSegmentedEnum(control)) {
+		return <SegmentedEnumControlRenderer control={control} value={value} onChange={onChange} />;
+	}
+
 	return (
 		<Select selectedKey={value} onSelectionChange={(key) => onChange(control.name, key)}>
 			<div className="flex items-center gap-1">
@@ -205,6 +222,35 @@ function EnumControlRenderer({ control, value, onChange }: EnumControlRendererPr
 				))}
 			</SelectContent>
 		</Select>
+	);
+}
+
+function SegmentedEnumControlRenderer({ control, value, onChange }: EnumControlRendererProps) {
+	return (
+		<Field>
+			<div className="flex items-center gap-1">
+				<Label>{control.name}</Label>
+				<ContextualHelp name={control.name} reference={control.reference} />
+			</div>
+			<ToggleButtonGroup
+				aria-label={control.name}
+				size="sm"
+				selectionMode="single"
+				disallowEmptySelection
+				selectedKeys={value ? [value] : []}
+				onSelectionChange={(keys) => {
+					const next = keys.values().next().value;
+					if (next != null) onChange(control.name, next);
+				}}
+				className="w-full"
+			>
+				{control.options.map((option) => (
+					<ToggleButton key={option} id={option} className="flex-1">
+						{option}
+					</ToggleButton>
+				))}
+			</ToggleButtonGroup>
+		</Field>
 	);
 }
 

@@ -170,10 +170,11 @@ export function InteractiveDemo({
 	return (
 		<div className={cn("", className)}>
 			<div className={cn("flex flex-col", layout === "horizontal" && "flex-row")}>
-				{/* Preview frame */}
+				{/* Preview frame — dotted backdrop (theme border token, so it adapts to dark mode) */}
 				<div
 					className={cn(
 						"flex min-h-56 flex-1 items-center justify-center border bg-bg p-10",
+						"[background-image:radial-gradient(var(--color-border)_1px,transparent_1px)] [background-size:18px_18px] [background-position:center]",
 						layout === "horizontal" && "rounded-tl-lg",
 						layout === "vertical" && "rounded-t-lg",
 					)}
