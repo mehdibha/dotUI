@@ -92,7 +92,7 @@ function CreatePage() {
 				key={effectivePreview}
 				src={iframeSrc}
 				title="preview"
-				className="flex-1 rounded-xl border"
+				className="min-w-0 flex-1 rounded-xl border"
 			/>
 		</div>
 	);
