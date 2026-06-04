@@ -1,5 +1,11 @@
 # tailwindcss-autocontrast
 
+## 0.0.4
+
+### Patch Changes
+
+- [#188](https://github.com/mehdibha/dotUI/pull/188) [`a31032a`](https://github.com/mehdibha/dotUI/commit/a31032a0f26813e1e7815feba1a4903503d12b0f) Thanks [@mehdibha](https://github.com/mehdibha)! - Expose `getContrastColor` so consumers can parity-test their runtime foreground pick against the plugin's compile-time output.
+
 ## 0.0.3
 
 ### Patch Changes
