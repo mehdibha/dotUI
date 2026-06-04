@@ -5,7 +5,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { DesignSystemProvider } from "@/modules/core/styles";
-import { DEFAULTS, decodePreset, useIframeMessageListener } from "@/modules/create/preset";
+import {
+	DEFAULTS,
+	decodePreset,
+	useIframeMessageListener,
+	useIframePreviewModeListener,
+} from "@/modules/create/preset";
 import { ExamplesIndex, GroupExamplesIndex } from "@/registry/__generated__/examples";
 
 import type { DesignSystem } from "@/modules/create/preset";
@@ -38,6 +43,7 @@ function PreviewPage() {
 	const [designSystem, setDesignSystem] = useState<DesignSystem>(() => (preset ? decodePreset(preset) : DEFAULTS));
 
 	useIframeMessageListener(useCallback((ds: DesignSystem) => setDesignSystem(ds), []));
+	useIframePreviewModeListener();
 
 	const promise = getExamplesPromise(slug);
 
