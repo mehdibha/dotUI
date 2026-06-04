@@ -42,7 +42,8 @@ function CreatePage() {
 		// oxlint-disable-next-line react/exhaustive-deps -- keep live preset changes on the postMessage channel to avoid iframe reloads
 	}, [effectivePreview]);
 
-	// Send design system to iframe on changes + iframe load
+	// Send the design system to the iframe on change, on load, and when the iframe signals it's
+	// ready — its message listener can mount after the load event, racing the load-fired send.
 	useEffect(() => {
 		const iframe = iframeRef.current;
 		if (!iframe) return;
@@ -52,7 +53,14 @@ function CreatePage() {
 		if (iframe.contentWindow) send();
 
 		iframe.addEventListener("load", send);
-		return () => iframe.removeEventListener("load", send);
+		const onReady = (event: MessageEvent) => {
+			if (event.data?.type === "preview-ready") send();
+		};
+		window.addEventListener("message", onReady);
+		return () => {
+			iframe.removeEventListener("load", send);
+			window.removeEventListener("message", onReady);
+		};
 	}, [designSystem]);
 
 	// Forward the previewed display mode (light / dark) to the iframe — on change,

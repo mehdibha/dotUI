@@ -5,7 +5,7 @@ export {
 	sendPreviewMode,
 	sendToIframe,
 	useIframeMessageListener,
-	useIframePreviewModeListener,
+	usePreviewForcedTheme,
 } from "./iframe-sync";
 export { useDesignSystem } from "./use-design-system";
 export type { Density, DesignSystem, DesignSystemState } from "./types";

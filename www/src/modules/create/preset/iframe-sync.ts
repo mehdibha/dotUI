@@ -56,27 +56,30 @@ export function useIframeMessageListener(onMessage: (data: DesignSystem) => void
 }
 
 /**
- * Inside the preview iframe: apply display-mode messages from the customizer by
- * toggling the `.dark` class (the customizer owns the previewed mode, overriding
- * the iframe's own theme state).
+ * Inside the preview iframe: the display mode (light / dark) the customizer has chosen, or
+ * `undefined` when not in an iframe (the main app owns its own theme). Returned so the root
+ * `ThemeProvider` can take it as `forcedTheme` — which deterministically wins over the iframe's
+ * system/storage theme listeners (they no-op while forced), instead of toggling `.dark`
+ * out-of-band where the provider would revert it on the next OS-pref / storage event.
  */
-export function useIframePreviewModeListener() {
+export function usePreviewForcedTheme(): PreviewMode | undefined {
+	const [mode, setMode] = React.useState<PreviewMode | undefined>(undefined);
+
 	React.useEffect(() => {
 		if (!isInIframe()) return;
 
 		const handleMessage = (event: MessageEvent) => {
 			if (event.data?.type === "preview-mode") {
-				const mode: PreviewMode = event.data.mode === "dark" ? "dark" : "light";
-				const root = document.documentElement;
-				root.classList.toggle("dark", mode === "dark");
-				root.style.colorScheme = mode;
+				setMode(event.data.mode === "dark" ? "dark" : "light");
 			}
 		};
 
 		window.addEventListener("message", handleMessage);
-		// Signal readiness so the parent can push the current mode — its load-event
-		// send can race ahead of this listener mounting.
+		// Signal readiness so the parent (re)sends the current mode — its load-event send can
+		// race ahead of this listener mounting.
 		window.parent.postMessage({ type: "preview-ready" }, "*");
 		return () => window.removeEventListener("message", handleMessage);
 	}, []);
+
+	return mode;
 }
