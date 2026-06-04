@@ -1,14 +1,8 @@
 import { ChevronDownIcon, ChevronRightIcon, SlidersHorizontalIcon } from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
+import { BLUR_OPTIONS, CURSOR_OPTIONS, OPACITY_OPTIONS, RADIUS_OPTIONS, SHADOW_OPTIONS } from "@/publisher/token-map";
 import { COLOR_TOKENS } from "@/registry/base/tokens";
-import {
-	BLUR_OPTIONS,
-	CURSOR_OPTIONS,
-	OPACITY_OPTIONS,
-	RADIUS_OPTIONS,
-	SHADOW_OPTIONS,
-} from "@/registry/publisher/token-map";
 import { Button } from "@/registry/ui/button";
 import { Description, Label } from "@/registry/ui/field";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";

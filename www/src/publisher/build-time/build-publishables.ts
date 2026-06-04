@@ -83,7 +83,7 @@ function renderIndex(writtenPaths: string[], outDir: string): string {
 
 	const lines: string[] = [];
 	lines.push(`// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`);
-	lines.push(`import type { Publishable } from "@/registry/publisher/types";`);
+	lines.push(`import type { Publishable } from "@/publisher/types";`);
 	lines.push(``);
 	lines.push(
 		`type Loader = () => Promise<{ publishable: Publishable; publishableByPath?: Record<string, Publishable> }>;`,
@@ -225,7 +225,7 @@ function mergeCssVars(
  * - Default: the file in `meta.files` whose target ends in `<name>.tsx`.
  * - Enum-with-files: every distinct base path across `params[...].files[...]`.
  */
-function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
+export function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
 	const byKey = new Map<string, RegistryItemFile>();
 
 	for (const file of meta.files ?? []) {
@@ -284,7 +284,7 @@ async function renderPublishableSource({ meta, stylesConfig, templates }: Render
 	lines.push(`// AUTO-GENERATED — do not edit. Source: ui/${meta.name}/`);
 	lines.push(`// Run \`pnpm build:registry\` to regenerate.`);
 	lines.push(``);
-	lines.push(`import type { Publishable } from "@/registry/publisher/types";`);
+	lines.push(`import type { Publishable } from "@/publisher/types";`);
 	lines.push(``);
 	lines.push(`const stylesConfig = ${stylesConfigLiteral} as const;`);
 	lines.push(``);

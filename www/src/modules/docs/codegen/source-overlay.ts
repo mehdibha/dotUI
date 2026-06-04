@@ -26,7 +26,7 @@ import type {
 
 // NOTE: relative (not `@/`) — this module is loaded by the rehype plugin at vite
 // config-load time, before the `@/` alias is registered.
-import { rewriteImportPath } from "../../../registry/publisher/build-time/transform-base";
+import { rewriteImportPath } from "../../../publisher/build-time/transform-base";
 import { INNER } from "./code-template";
 
 import type {

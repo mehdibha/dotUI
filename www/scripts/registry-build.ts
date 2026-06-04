@@ -2,7 +2,7 @@
  * Registry Build Script
  *
  * Generates internal files for lazy loading:
- * - src/registry/__generated__/ (demos, blocks, icons, examples, per-library icon exports)
+ * - src/registry/__generated__/ (demos, icons, examples, per-library icon exports)
  *
  * Usage: tsx scripts/registry-build.ts
  */
@@ -13,12 +13,12 @@ import path from "node:path";
 import { format } from "oxfmt";
 import { rimraf } from "rimraf";
 
+import { buildPublishables, collectBaseFiles } from "../src/publisher/build-time/build-publishables";
+import { deriveRegistryDeps } from "../src/publisher/build-time/derive-registry-deps";
 import { registryBase } from "../src/registry/base/registry";
-import { registryBlocks } from "../src/registry/blocks/registry";
 import { registryHooks } from "../src/registry/hooks/registry";
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map";
 import { registryLib } from "../src/registry/lib/registry";
-import { buildPublishables } from "../src/registry/publisher/build-time/build-publishables";
 import { registryUi } from "../src/registry/ui/registry";
 
 import type { RegistryItem } from "../src/registry/types";
@@ -48,52 +48,6 @@ async function writeGeneratedFile(targetPath: string, content: string) {
 // ============================================================================
 // Phase 1: Internal Generated Files (registry/__generated__)
 // ============================================================================
-
-async function buildInternalBlocks() {
-	const targetPath = path.join(GENERATED_DIR, "blocks.tsx");
-
-	let content = `// AUTO-GENERATED - DO NOT EDIT
-// Run "tsx scripts/registry-build.ts" to regenerate
-import * as React from "react";
-
-export const BlocksIndex: Record<
-  string,
-  {
-    files: string[];
-    component: React.LazyExoticComponent<React.ComponentType<object>>;
-  }
-> = {
-`;
-
-	for (const block of registryBlocks) {
-		const blockFiles =
-			block.files?.map((file: string | { path: string }) => (typeof file === "string" ? file : file.path)) || [];
-
-		let componentPath = `@/registry/blocks/${block.name}`;
-
-		if (block.files && block.files.length > 0) {
-			const files = block.files.map((file: string | { type?: string; path: string }) =>
-				typeof file === "string" ? { type: "registry:page", path: file } : file,
-			);
-			if (files[0]) {
-				const firstFilePath = files[0].path.replace(/\.tsx?$/, "");
-				componentPath = `@/registry/${firstFilePath}`;
-			}
-		}
-
-		content += `  "${block.name}": {
-    files: ${JSON.stringify(blockFiles)},
-    component: React.lazy(() => import("${componentPath}")),
-  },
-`;
-	}
-
-	content += `};
-`;
-
-	await writeGeneratedFile(targetPath, content);
-	console.log("  ✓ __generated__/blocks.tsx");
-}
 
 async function processDirectory(dirPath: string, relativePath: string, entries: string[]): Promise<void> {
 	const dirEntries = await fs.readdir(dirPath, { withFileTypes: true });
@@ -317,30 +271,86 @@ ${groupEntries.join("\n")}
 }
 
 // ============================================================================
-// Build-time Guard: orphan + unique-name detection
+// Generated item manifest: registryUi / registryLib globbed from meta.ts
+// ============================================================================
+
+// PascalCase identifier for a scope+slug, e.g. ("ui","color-area") -> "UiColorArea".
+function toItemIdent(scope: "ui" | "lib", slug: string): string {
+	const pascal = slug
+		.split(/[^a-zA-Z0-9]+/)
+		.filter(Boolean)
+		.map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+		.join("");
+	return `${scope.charAt(0).toUpperCase()}${scope.slice(1)}${pascal}`;
+}
+
+// Emits __generated__/registry-items.ts — the single source of truth for
+// registryUi/registryLib, globbed from on-disk {ui,lib}/*/meta.ts minus the
+// ORPHAN_ALLOWLIST. Committed (load-bearing: ui/registry.ts + lib/registry.ts
+// re-export it, and this script imports those at startup). Deleting it requires
+// rerunning build:registry from a clean checkout before the next build works.
+async function buildRegistryItemsManifest() {
+	const targetPath = path.join(GENERATED_DIR, "registry-items.ts");
+	const ui = await listRegistryFolders("ui");
+	const lib = await listRegistryFolders("lib");
+
+	const importLine = (scope: "ui" | "lib", slug: string) =>
+		`import ${toItemIdent(scope, slug)} from "@/registry/${scope}/${slug}/meta";`;
+	const arrayBlock = (name: string, scope: "ui" | "lib", slugs: string[]) =>
+		`export const ${name}: RegistryItem[] = [\n${slugs.map((s) => `\t${toItemIdent(scope, s)},`).join("\n")}\n];`;
+
+	// Sort value imports by module specifier (NOT identifier) to match oxfmt's
+	// sortImports "value-internal" group — e.g. "ui/checkbox-group" sorts before
+	// "ui/checkbox" ('-' < '/') — so the generated file passes `oxfmt --check` as-is
+	// (writeGeneratedFile's inline format() does not re-sort imports). The type
+	// import follows the value group with no blank line; the header comment is
+	// detached by a blank line so oxfmt leaves it at the top.
+	const valueImports = [
+		...lib.map((s) => ({ spec: `@/registry/lib/${s}/meta`, line: importLine("lib", s) })),
+		...ui.map((s) => ({ spec: `@/registry/ui/${s}/meta`, line: importLine("ui", s) })),
+	]
+		.sort((a, b) => (a.spec < b.spec ? -1 : a.spec > b.spec ? 1 : 0))
+		.map((v) => v.line);
+
+	const content = `// AUTO-GENERATED - DO NOT EDIT
+// Run "tsx scripts/registry-build.ts" to regenerate
+
+${valueImports.join("\n")}
+
+import type { RegistryItem } from "@/registry/types";
+
+${arrayBlock("registryUi", "ui", ui)}
+
+${arrayBlock("registryLib", "lib", lib)}
+`;
+
+	await writeGeneratedFile(targetPath, content);
+	console.log(`  ✓ __generated__/registry-items.ts (${ui.length} ui, ${lib.length} lib)`);
+}
+
+// ============================================================================
+// Build-time Guard: registry-items glob drift + integrity
 // ============================================================================
 
 /**
- * Folders that have a `meta.ts` on disk but are intentionally NOT registered
- * in their `registry.ts`. Keyed by path relative to `src/registry`.
+ * Folders that have a `meta.ts` on disk but are intentionally EXCLUDED from the
+ * generated registry (work-in-progress, not shipped). This single Set is the
+ * source of truth read by BOTH the glob that emits __generated__/registry-items.ts
+ * AND the build-time guards — so emitter and guard can never disagree about the
+ * registered set. Removing an entry makes that folder start shipping on the next
+ * build:registry; adding a slug keeps a WIP item out.
  *
- * Phase-0 policy (SAFE cleanup — we are NOT shipping new items yet): every
- * current unregistered-with-meta folder is allowlisted so the build passes
- * WITHOUT registering anything new. Removing an entry below makes the build
- * FAIL until the item is either registered in its registry.ts or re-added here.
- *
- *   ui/context-menu      WIP — production-ready (base.tsx + 5 demos + examples),
- *                         candidate to register later (registryDeps: menu, popover).
+ *   ui/context-menu      WIP — production-ready (base.tsx + 5 demos + examples);
+ *                         readiness check warns until it's removed from here.
  *   ui/sidebar           WIP — base.tsx + styles.ts but no demos/examples yet.
  *   ui/react-hook-form   WIP — name:"form"; meta points to a base.tsx that does
- *                         not exist yet. Do NOT register until base.tsx lands.
+ *                         not exist yet.
  *   ui/tanstack-form     WIP — name:"form"; stub (index.tsx + meta only).
- *   lib/context          Real runtime dep (used by avatar/tabs/sidebar/toggle-button)
- *                         but currently unregistered in lib/registry.ts.
+ *   lib/context          Real runtime dep (avatar/tabs/toggle-button) but not yet
+ *                         a registered item.
  *
- * NOTE: react-hook-form and tanstack-form both declare name:"form". They do not
- * collide today because neither is registered. Registering both without renaming
- * one would trip the unique-name guard below.
+ * NOTE: react-hook-form and tanstack-form both declare name:"form"; they never
+ * collide because both are excluded here (and bare ui/form has no meta.ts).
  */
 const ORPHAN_ALLOWLIST = new Set<string>([
 	"ui/context-menu",
@@ -351,45 +361,146 @@ const ORPHAN_ALLOWLIST = new Set<string>([
 ]);
 
 /**
- * Reads on-disk folders under `src/registry/<scope>`, dynamically imports each
- * folder's `meta.ts` default export, and asserts every on-disk meta is either
- * (a) present by object identity in `registered`, or (b) allowlisted.
- *
- * Identity (===) is reliable: registry-build.ts already imports the registered
- * arrays (which import every meta), so Node's ESM module cache returns the same
- * object instance for the dynamic import here.
+ * Directories under `src/registry/<scope>` that have a `meta.ts` on disk, minus
+ * the ORPHAN_ALLOWLIST, sorted by slug. The ONE place the glob + exclusion lives
+ * — both the manifest emitter and the drift guard call it, so they can never
+ * disagree about what is registered.
  */
-async function checkScopeOrphans(scope: "ui" | "lib", registered: RegistryItem[]): Promise<string[]> {
+async function listRegistryFolders(scope: "ui" | "lib"): Promise<string[]> {
 	const scopeDir = path.join(REGISTRY_DIR, scope);
 	const dirEntries = await fs.readdir(scopeDir, { withFileTypes: true });
-	const registeredSet = new Set<RegistryItem>(registered);
-	const errors: string[] = [];
-
+	const folders: string[] = [];
 	for (const entry of dirEntries) {
 		if (!entry.isDirectory()) continue;
-		const metaPath = path.join(scopeDir, entry.name, "meta.ts");
-		if (!existsSync(metaPath)) continue;
-
-		const rel = `${scope}/${entry.name}`;
-		// Relative specifier matches the file's existing `../src/registry/...` imports.
-		const mod = (await import(`../src/registry/${scope}/${entry.name}/meta`)) as { default: RegistryItem };
-		const meta = mod.default;
-
-		if (registeredSet.has(meta)) continue; // registered — fine
-		if (ORPHAN_ALLOWLIST.has(rel)) continue; // intentionally unregistered — fine
-
-		errors.push(
-			`Orphan registry item: \`${rel}/meta.ts\` (name: "${meta.name}") has a meta.ts but is not registered in ` +
-				`\`${scope}/registry.ts\`. Either register it, or add "${rel}" to ORPHAN_ALLOWLIST in scripts/registry-build.ts.`,
-		);
+		if (!existsSync(path.join(scopeDir, entry.name, "meta.ts"))) continue;
+		if (ORPHAN_ALLOWLIST.has(`${scope}/${entry.name}`)) continue;
+		folders.push(entry.name);
 	}
+	return folders.sort();
+}
 
+/**
+ * Asserts the committed __generated__/registry-items.ts is in sync with the
+ * on-disk folders: the imported runtime `registered` array must equal the freshly
+ * globbed (non-allowlisted) folder set, by object identity, in both directions.
+ * Catches a stale manifest (a component folder added/removed without rerunning
+ * build:registry).
+ *
+ * Identity (===) is reliable: the dynamic `../src/registry/<scope>/<slug>/meta`
+ * specifier and the manifest's `@/registry/<scope>/<slug>/meta` alias resolve to
+ * the same module instance under tsx's ESM cache.
+ */
+async function checkScopeDrift(scope: "ui" | "lib", registered: RegistryItem[]): Promise<string[]> {
+	const folders = await listRegistryFolders(scope);
+	const registeredSet = new Set<RegistryItem>(registered);
+	const globbed = new Set<RegistryItem>();
+	const errors: string[] = [];
+	const arrayName = scope === "ui" ? "registryUi" : "registryLib";
+
+	for (const slug of folders) {
+		const mod = (await import(`../src/registry/${scope}/${slug}/meta`)) as { default: RegistryItem };
+		globbed.add(mod.default);
+		if (!registeredSet.has(mod.default)) {
+			errors.push(
+				`Stale generated registry: \`${scope}/${slug}/meta.ts\` is on disk and not allowlisted, but ${arrayName} ` +
+					`(from __generated__/registry-items.ts) does not contain it. Run \`pnpm build:registry\`.`,
+			);
+		}
+	}
+	for (const item of registered) {
+		if (!globbed.has(item)) {
+			errors.push(
+				`Stale generated registry: ${arrayName} contains "${item.name}" which is no longer a non-allowlisted ` +
+					`${scope}/* folder with a meta.ts. Run \`pnpm build:registry\`.`,
+			);
+		}
+	}
+	return errors;
+}
+
+/** Fails if an ORPHAN_ALLOWLIST entry no longer has a meta.ts on disk (rotted entry). */
+function checkAllowlistStale(): string[] {
+	const errors: string[] = [];
+	for (const key of ORPHAN_ALLOWLIST) {
+		if (!existsSync(path.join(REGISTRY_DIR, key, "meta.ts"))) {
+			errors.push(
+				`Stale ORPHAN_ALLOWLIST entry "${key}" — ${key}/meta.ts no longer exists. ` +
+					`Remove it from ORPHAN_ALLOWLIST in scripts/registry-build.ts.`,
+			);
+		}
+	}
+	return errors;
+}
+
+/** Non-fatal: warns when an excluded ui/* folder looks production-ready (has demos/examples). */
+function checkAllowlistReadiness(): void {
+	for (const key of ORPHAN_ALLOWLIST) {
+		if (!key.startsWith("ui/")) continue;
+		const dir = path.join(REGISTRY_DIR, key);
+		if (existsSync(path.join(dir, "demos")) || existsSync(path.join(dir, "examples.tsx"))) {
+			console.warn(
+				`  ⚠ ${key} is allowlisted (excluded from the registry) but has demos/examples — ` +
+					`looks production-ready. Consider removing it from ORPHAN_ALLOWLIST so it ships.`,
+			);
+		}
+	}
+}
+
+/**
+ * Deps that ship in the init bundle (base.css / theme.css / lib/utils), dropped at
+ * publish by publish.ts BUNDLED_INTO_INIT — a base file importing them is not drift.
+ */
+const BUNDLED_INTO_INIT = new Set(["utils", "focus-styles", "theme"]);
+
+/**
+ * Derived dep names whose target is NOT a registered item yet — a known packaging gap
+ * (lib/context + the use-image-loading-status hook are unregistered). Skipped so the
+ * drift check doesn't demand a dep `shadcn add` couldn't resolve. Keyed by DEP-NAME and
+ * covers the hooks scope, so it is deliberately DISTINCT from ORPHAN_ALLOWLIST (folder-
+ * path keyed, ui|lib only) — do not unify them. Drop an entry once its target is a
+ * registered item, and the guard will then require consumers to declare it.
+ */
+const UNREGISTERED_DEP_ALLOWLIST = new Set(["context", "use-image-loading-status"]);
+
+/**
+ * Asserts each registered ui item DECLARES every registry dependency its shipped base
+ * file(s) import. The shipped import graph is a SUBSET of the intended dependency
+ * closure (composition/CSS-only deps are legitimately hand-added and not flagged), so
+ * this catches only UNDER-declaration: a base file imports @/registry/X but meta omits "X".
+ */
+async function checkRegistryDepsDrift(): Promise<string[]> {
+	const registeredNames = new Set<string>(
+		[...registryBase, ...registryUi, ...registryLib, ...registryHooks].map((item) => item.name),
+	);
+	const errors: string[] = [];
+
+	for (const meta of registryUi) {
+		const derived = deriveRegistryDeps({ registryDir: REGISTRY_DIR, baseFiles: collectBaseFiles(meta) });
+		const declared = new Set(meta.registryDependencies ?? []);
+
+		for (const dep of derived) {
+			if (declared.has(dep)) continue;
+			if (BUNDLED_INTO_INIT.has(dep)) continue;
+			if (UNREGISTERED_DEP_ALLOWLIST.has(dep)) continue;
+			if (registeredNames.has(dep)) {
+				errors.push(
+					`registryDependencies drift: "${meta.name}" base file imports "${dep}" but meta omits it. ` +
+						`Add "${dep}" to registryDependencies in ui/${meta.name}/meta.ts.`,
+				);
+			} else {
+				errors.push(
+					`Unresolved @/registry import in "${meta.name}": derived dep "${dep}" is not a registered item, ` +
+						`not bundled, and not in UNREGISTERED_DEP_ALLOWLIST. Register it or add it to the allowlist.`,
+				);
+			}
+		}
+	}
 	return errors;
 }
 
 /**
  * Asserts `meta.name` is globally unique across all REGISTERED items
- * (base + ui + lib + hooks + blocks). Unregistered/allowlisted items are not
+ * (base + ui + lib + hooks). Unregistered/allowlisted items are not
  * checked here, so the two unregistered name:"form" folders don't collide.
  */
 function checkUniqueRegisteredNames(): string[] {
@@ -400,7 +511,6 @@ function checkUniqueRegisteredNames(): string[] {
 		["ui", registryUi],
 		["lib", registryLib],
 		["hooks", registryHooks],
-		["blocks", registryBlocks as RegistryItem[]],
 	];
 
 	for (const [scope, items] of groups) {
@@ -419,16 +529,19 @@ function checkUniqueRegisteredNames(): string[] {
 
 /** Runs all build-time integrity checks; throws (aborting the build) on any failure. */
 async function checkRegistryIntegrity() {
+	checkAllowlistReadiness();
 	const errors = [
-		...(await checkScopeOrphans("ui", registryUi)),
-		...(await checkScopeOrphans("lib", registryLib)),
+		...(await checkScopeDrift("ui", registryUi)),
+		...(await checkScopeDrift("lib", registryLib)),
+		...checkAllowlistStale(),
+		...(await checkRegistryDepsDrift()),
 		...checkUniqueRegisteredNames(),
 	];
 
 	if (errors.length > 0) {
 		throw new Error(`Registry integrity check failed:\n  - ${errors.join("\n  - ")}`);
 	}
-	console.log("  ✓ registry integrity (no un-allowlisted orphans, names unique)");
+	console.log("  ✓ registry integrity (generated set in sync, allowlist fresh, names unique)");
 }
 
 // ============================================================================
@@ -460,8 +573,8 @@ async function main() {
 
 		console.log("\nGenerating internal files");
 		await ensureDir(GENERATED_DIR);
+		await buildRegistryItemsManifest();
 		await buildIconLibraryExports();
-		await buildInternalBlocks();
 		await buildInternalDemos();
 		await buildInternalIcons();
 		await buildInternalExamples();

@@ -11,7 +11,7 @@ const checkboxMeta = {
 			target: "ui/checkbox.tsx",
 		},
 	],
-	registryDependencies: ["focus-styles"],
+	registryDependencies: ["focus-styles", "field"],
 	params: {
 		radius: {
 			kind: "scalar",

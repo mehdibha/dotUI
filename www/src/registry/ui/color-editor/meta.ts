@@ -11,7 +11,7 @@ const colorEditorMeta = {
 			target: "ui/color-editor.tsx",
 		},
 	],
-	registryDependencies: ["color-area", "color-slider", "select"],
+	registryDependencies: ["color-area", "color-field", "color-slider", "input", "select"],
 } satisfies RegistryItem;
 
 export default colorEditorMeta;

@@ -7,7 +7,7 @@ import { TailwindWordmark } from "@/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@/components/icons/typescript";
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
-import Cards from "@/registry/blocks/showcase/cards/components/cards";
+import Cards from "@/components/marketing/showcase/cards";
 import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 

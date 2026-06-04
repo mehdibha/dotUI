@@ -11,6 +11,7 @@ const fieldMeta = {
 			target: "ui/field.tsx",
 		},
 	],
+	registryDependencies: ["text"],
 } satisfies RegistryItem;
 
 export default fieldMeta;

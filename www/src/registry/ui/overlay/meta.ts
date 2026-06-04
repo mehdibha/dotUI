@@ -11,7 +11,7 @@ const overlayMeta = {
 			target: "ui/overlay.tsx",
 		},
 	],
-	registryDependencies: ["modal", "popover", "drawer", "use-is-mobile"],
+	registryDependencies: ["modal", "popover", "drawer", "use-mobile"],
 } satisfies RegistryItem;
 
 export default overlayMeta;
