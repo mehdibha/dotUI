@@ -24,8 +24,8 @@ function getExamplesPromise(slug: string) {
 }
 
 export const Route = createFileRoute("/preview/$slug")({
-	ssr: false,
 	validateSearch: z.object({ preset: z.string().optional().catch(undefined) }),
+	ssr: false,
 	beforeLoad: ({ params }) => {
 		getExamplesPromise(params.slug);
 	},
