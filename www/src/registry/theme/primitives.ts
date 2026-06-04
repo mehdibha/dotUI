@@ -11,7 +11,7 @@
  * the `tailwindcss-autocontrast` plugin at Tailwind-compile.
  */
 
-import { createTheme, oklchCss, toOklch } from "@dotui/colors";
+import { createTheme, oklchCss, onBlackWhite, toOklch } from "@dotui/colors";
 
 import { GENERATIVE_ALGORITHMS, type ColorConfig } from "./color-config";
 import { ACCENT_KERNEL_NAME, fromKernelPaletteName, PALETTE_ORDER, STATUS_PALETTES } from "./palettes";
@@ -125,8 +125,29 @@ function emitBlock(out: string[], palettes: Record<string, Ramp>, names: string[
 	});
 }
 
+/** Append `--on-<palette>-<step>: black|white` per ramp step (matches the autocontrast plugin). */
+function emitOnBlock(out: string[], palettes: Record<string, Ramp>, names: string[]): void {
+	for (const name of names) {
+		const ramp = palettes[name];
+		if (!ramp) continue;
+		for (const [step, value] of Object.entries(ramp)) {
+			out.push(`\t--on-${name}-${step}: ${onBlackWhite(value)};`);
+		}
+	}
+}
+
+export interface EmitPrimitivesOptions {
+	/**
+	 * Also emit `--on-<palette>-<step>` foregrounds (black/white). OFF for the generated
+	 * `base/colors.css` — the `tailwindcss-autocontrast` plugin derives `--on-*` at
+	 * Tailwind-compile from the static ramps. ON for the live-preview `<style>`, whose runtime
+	 * ramp overrides would otherwise leave the baked `--on-*` stale (unreadable text-on-color).
+	 */
+	onColors?: boolean;
+}
+
 /** Render resolved ramps as the `base/colors.css` content (`:root` light + `.dark` reversed). */
-export function emitPrimitivesCss(resolved: ResolvedPalettes): string {
+export function emitPrimitivesCss(resolved: ResolvedPalettes, options: EmitPrimitivesOptions = {}): string {
 	const names = orderedNames(resolved.light);
 	const out: string[] = [
 		"/* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */",
@@ -137,8 +158,16 @@ export function emitPrimitivesCss(resolved: ResolvedPalettes): string {
 		"",
 	];
 	emitBlock(out, resolved.light, names);
+	if (options.onColors) {
+		out.push("");
+		emitOnBlock(out, resolved.light, names);
+	}
 	out.push("}", "", ".dark {");
 	emitBlock(out, resolved.dark, names);
+	if (options.onColors) {
+		out.push("");
+		emitOnBlock(out, resolved.dark, names);
+	}
 	out.push("}");
 	return `${out.join("\n")}\n`;
 }
