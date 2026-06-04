@@ -24,11 +24,14 @@ if (!existsSync(CONFIG)) {
 const config = JSON.parse(readFileSync(CONFIG, "utf-8"));
 config.routes ??= [];
 
+// No `continue: true`: the rewritten path (/home.md) must propagate to the
+// filesystem→function phase so Nitro serves the /home.md route. With `continue`,
+// the catch-all `/(.*) -> /__server` re-forwards the original `/` to the page
+// SSR, which rejects non-HTML requests ("Only HTML requests are supported here").
 const route = {
 	src: "/",
 	has: [{ type: "header", key: "accept", value: "(.*)text/markdown(.*)" }],
 	dest: "/home.md",
-	continue: true,
 };
 
 const already = config.routes.some((r) => r && r.src === route.src && r.dest === route.dest && r.has);
