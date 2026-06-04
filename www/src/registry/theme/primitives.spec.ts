@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { DEFAULT_COLOR_CONFIG } from "./color-config";
+import { DEFAULT_COLOR_CONFIG, type ColorConfig } from "./color-config";
 import { emitPrimitivesCss, resolveColorConfig } from "./primitives";
 
 describe("resolveColorConfig", () => {
@@ -41,6 +41,11 @@ describe("resolveColorConfig", () => {
 
 	it("is deterministic", () => {
 		expect(resolveColorConfig(DEFAULT_COLOR_CONFIG)).toEqual(resolved);
+	});
+
+	it("rejects a non-generative algorithm with a clear error (seeds are not ramps)", () => {
+		const bad = { algorithm: "fixed", seeds: DEFAULT_COLOR_CONFIG.seeds } as unknown as ColorConfig;
+		expect(() => resolveColorConfig(bad)).toThrow(/generative/);
 	});
 });
 

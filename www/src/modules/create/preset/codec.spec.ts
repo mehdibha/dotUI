@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
+import { DEFAULT_COLOR_CONFIG, type ColorConfig } from "@/registry/theme";
 
 import { decodePreset, encodePreset } from "./codec";
 import { DEFAULTS } from "./defaults";
@@ -22,6 +22,14 @@ describe("preset codec — color recipe", () => {
 
 	it("decodes to an undefined color when the preset carries none", () => {
 		const encoded = encodePreset({ ...DEFAULTS, density: "comfortable" });
+		expect(decodePreset(encoded ?? "").color).toBeUndefined();
+	});
+
+	it("drops a color recipe whose algorithm is not seed-generative (stale `fixed` preset)", () => {
+		const bad = { ...DEFAULT_COLOR_CONFIG, algorithm: "fixed" } as unknown as ColorConfig;
+		const encoded = encodePreset({ ...DEFAULTS, color: bad });
+		expect(encoded).toBeTypeOf("string");
+		expect(() => decodePreset(encoded ?? "")).not.toThrow();
 		expect(decodePreset(encoded ?? "").color).toBeUndefined();
 	});
 });

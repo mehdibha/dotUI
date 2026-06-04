@@ -1,6 +1,6 @@
 import { deflateRaw, inflateRaw } from "pako";
 
-import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
+import { DEFAULT_COLOR_CONFIG, GENERATIVE_ALGORITHMS, type ColorConfig } from "@/registry/theme";
 
 import { DEFAULTS } from "./defaults";
 import { fromCompact } from "./types";
@@ -96,6 +96,15 @@ export function encodePreset(ds: DesignSystem): string | undefined {
 /* --------------------------------- decode --------------------------------- */
 
 /**
+ * Drop a decoded color recipe whose algorithm isn't seed-generative (e.g. a stale or
+ * crafted `fixed` preset that would otherwise throw inside `resolveColorConfig`).
+ */
+function sanitizeColor(color: ColorConfig | undefined): ColorConfig | undefined {
+	if (!color) return undefined;
+	return (GENERATIVE_ALGORITHMS as readonly string[]).includes(color.algorithm) ? color : undefined;
+}
+
+/**
  * Decode a preset string back into a full DesignSystem.
  * Falls back to defaults on any error.
  */
@@ -109,7 +118,7 @@ export function decodePreset(encoded: string): DesignSystem {
 			componentParams: mergeNested(DEFAULTS.componentParams, ds.componentParams),
 			tokens: { ...DEFAULTS.tokens, ...ds.tokens },
 			density: ds.density,
-			color: ds.color,
+			color: sanitizeColor(ds.color),
 		};
 	} catch {
 		return DEFAULTS;

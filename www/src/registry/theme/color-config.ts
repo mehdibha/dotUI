@@ -6,8 +6,16 @@
  * per-mode `--neutral-*` / `--accent-*` / status ramps emitted into `colors.css`.
  */
 
-/** Producers offered by the `@dotui/colors` kernel. `oklch` is the default. */
-export type AlgorithmId = "oklch" | "tailwind" | "contrast" | "material" | "fixed";
+import { SEMANTIC_COLORS } from "@dotui/colors";
+
+/**
+ * Seed-generative producers offered by the `@dotui/colors` kernel. `oklch` is the
+ * default. The kernel also has a `fixed` producer (hand-authored literal ramps), but
+ * it is intentionally excluded: a `ColorConfig` carries seeds, not ramps, so feeding it
+ * to `fixed` would throw. Keep this list in sync with the customizer's algorithm Select.
+ */
+export const GENERATIVE_ALGORITHMS = ["oklch", "tailwind", "contrast", "material"] as const;
+export type AlgorithmId = (typeof GENERATIVE_ALGORITHMS)[number];
 
 export interface PaletteSeeds {
 	/** The required neutral backbone (surfaces, text, borders). */
@@ -37,9 +45,10 @@ export const DEFAULT_COLOR_CONFIG: ColorConfig = {
 	seeds: {
 		neutral: "#808080",
 		accent: "#438cd6",
-		success: "#22c55e",
-		warning: "#eab308",
-		danger: "#ef4444",
-		info: "#438cd6",
+		// Status seeds come from the kernel's single source so the two never drift.
+		success: SEMANTIC_COLORS.success,
+		warning: SEMANTIC_COLORS.warning,
+		danger: SEMANTIC_COLORS.danger,
+		info: SEMANTIC_COLORS.info,
 	},
 };
