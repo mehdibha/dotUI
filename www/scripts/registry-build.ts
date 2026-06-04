@@ -2,7 +2,7 @@
  * Registry Build Script
  *
  * Generates internal files for lazy loading:
- * - src/registry/__generated__/ (demos, blocks, icons, examples, per-library icon exports)
+ * - src/registry/__generated__/ (demos, icons, examples, per-library icon exports)
  *
  * Usage: tsx scripts/registry-build.ts
  */
@@ -16,7 +16,6 @@ import { rimraf } from "rimraf";
 import { buildPublishables, collectBaseFiles } from "../src/publisher/build-time/build-publishables";
 import { deriveRegistryDeps } from "../src/publisher/build-time/derive-registry-deps";
 import { registryBase } from "../src/registry/base/registry";
-import { registryBlocks } from "../src/registry/blocks/registry";
 import { registryHooks } from "../src/registry/hooks/registry";
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map";
 import { registryLib } from "../src/registry/lib/registry";
@@ -49,52 +48,6 @@ async function writeGeneratedFile(targetPath: string, content: string) {
 // ============================================================================
 // Phase 1: Internal Generated Files (registry/__generated__)
 // ============================================================================
-
-async function buildInternalBlocks() {
-	const targetPath = path.join(GENERATED_DIR, "blocks.tsx");
-
-	let content = `// AUTO-GENERATED - DO NOT EDIT
-// Run "tsx scripts/registry-build.ts" to regenerate
-import * as React from "react";
-
-export const BlocksIndex: Record<
-  string,
-  {
-    files: string[];
-    component: React.LazyExoticComponent<React.ComponentType<object>>;
-  }
-> = {
-`;
-
-	for (const block of registryBlocks) {
-		const blockFiles =
-			block.files?.map((file: string | { path: string }) => (typeof file === "string" ? file : file.path)) || [];
-
-		let componentPath = `@/registry/blocks/${block.name}`;
-
-		if (block.files && block.files.length > 0) {
-			const files = block.files.map((file: string | { type?: string; path: string }) =>
-				typeof file === "string" ? { type: "registry:page", path: file } : file,
-			);
-			if (files[0]) {
-				const firstFilePath = files[0].path.replace(/\.tsx?$/, "");
-				componentPath = `@/registry/${firstFilePath}`;
-			}
-		}
-
-		content += `  "${block.name}": {
-    files: ${JSON.stringify(blockFiles)},
-    component: React.lazy(() => import("${componentPath}")),
-  },
-`;
-	}
-
-	content += `};
-`;
-
-	await writeGeneratedFile(targetPath, content);
-	console.log("  ✓ __generated__/blocks.tsx");
-}
 
 async function processDirectory(dirPath: string, relativePath: string, entries: string[]): Promise<void> {
 	const dirEntries = await fs.readdir(dirPath, { withFileTypes: true });
@@ -547,7 +500,7 @@ async function checkRegistryDepsDrift(): Promise<string[]> {
 
 /**
  * Asserts `meta.name` is globally unique across all REGISTERED items
- * (base + ui + lib + hooks + blocks). Unregistered/allowlisted items are not
+ * (base + ui + lib + hooks). Unregistered/allowlisted items are not
  * checked here, so the two unregistered name:"form" folders don't collide.
  */
 function checkUniqueRegisteredNames(): string[] {
@@ -558,7 +511,6 @@ function checkUniqueRegisteredNames(): string[] {
 		["ui", registryUi],
 		["lib", registryLib],
 		["hooks", registryHooks],
-		["blocks", registryBlocks as RegistryItem[]],
 	];
 
 	for (const [scope, items] of groups) {
@@ -623,7 +575,6 @@ async function main() {
 		await ensureDir(GENERATED_DIR);
 		await buildRegistryItemsManifest();
 		await buildIconLibraryExports();
-		await buildInternalBlocks();
 		await buildInternalDemos();
 		await buildInternalIcons();
 		await buildInternalExamples();
