@@ -4,27 +4,19 @@ import { Description, FieldError, Label } from "@/registry/ui/field";
 import { TextArea } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 
-interface TextAreaPlaygroundProps {
-	label?: string;
-	description?: string;
-	errorMessage?: string;
-	placeholder?: string;
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-	isInvalid?: boolean;
-}
-
-export function TextAreaPlayground({
-	label,
-	description,
-	errorMessage,
+export default function Demo({
+	label = "Description",
 	placeholder = "Enter description...",
-	...props
-}: TextAreaPlaygroundProps) {
+	description = "",
+	errorMessage = "",
+	isDisabled = false,
+	isReadOnly = false,
+	isInvalid = false,
+} = {}) {
 	return (
-		<TextField {...props}>
+		<TextField isDisabled={isDisabled} isReadOnly={isReadOnly} isInvalid={isInvalid}>
 			{label && <Label>{label}</Label>}
-			<TextArea placeholder={placeholder} />
+			<TextArea data-control-target placeholder={placeholder} />
 			{description && <Description>{description}</Description>}
 			{errorMessage && <FieldError>{errorMessage}</FieldError>}
 		</TextField>

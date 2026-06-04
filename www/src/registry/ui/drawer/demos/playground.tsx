@@ -10,17 +10,13 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/registry/ui/dialog";
-import { Drawer } from "@/registry/ui/drawer";
+import { Drawer, type DrawerProps } from "@/registry/ui/drawer";
 
-interface DrawerPlaygroundProps {
-	placement?: "bottom" | "top" | "left" | "right";
-}
-
-export function DrawerPlayground({ placement = "bottom" }: DrawerPlaygroundProps) {
+export default function Demo({ placement = "bottom" }: DrawerProps = {}) {
 	return (
 		<Dialog>
 			<Button>Open Drawer</Button>
-			<Drawer placement={placement}>
+			<Drawer data-control-target placement={placement}>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>Drawer Title</DialogTitle>

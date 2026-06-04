@@ -7,7 +7,17 @@ links:
 wip: true
 ---
 
-<Demo name="modal/demos/basic" />
+<InteractiveDemo
+	name="modal"
+	engine="source"
+	controls={[
+		{
+			type: "boolean",
+			name: "isDismissable",
+			defaultValue: true,
+		},
+	]}
+/>
 
 ## Installation
 
@@ -33,21 +43,6 @@ import { Modal } from "@/components/ui/modal";
 	</Modal>
 </Dialog>
 ```
-
-## Playground
-
-Use the controls below to experiment with different modal props and see the live preview and code update.
-
-<InteractiveDemo
-	name="modal"
-	controls={[
-		{
-			type: "boolean",
-			name: "isDismissable",
-			defaultValue: true,
-		},
-	]}
-/>
 
 ## Examples
 

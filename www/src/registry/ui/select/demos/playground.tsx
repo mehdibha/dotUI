@@ -3,20 +3,14 @@
 import { Label } from "@/registry/ui/field";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/select";
 
-interface SelectPlaygroundProps {
-	label?: string;
-	placeholder?: string;
-	isDisabled?: boolean;
-	isInvalid?: boolean;
-}
-
-export function SelectPlayground({
+export default function Demo({
 	label = "Country",
 	placeholder = "Select a country",
-	...props
-}: SelectPlaygroundProps) {
+	isDisabled = false,
+	isInvalid = false,
+} = {}) {
 	return (
-		<Select placeholder={placeholder} {...props}>
+		<Select placeholder={placeholder} isDisabled={isDisabled} isInvalid={isInvalid}>
 			{label && <Label>{label}</Label>}
 			<SelectTrigger />
 			<SelectContent>

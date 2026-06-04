@@ -6,7 +6,7 @@ import { ColorPicker } from "@/registry/ui/color-picker";
 import { DialogContent } from "@/registry/ui/dialog";
 import { Popover } from "@/registry/ui/popover";
 
-export function ColorPickerPlayground() {
+export default function Demo() {
 	return (
 		<ColorPicker defaultValue="#ff0000">
 			<Button />

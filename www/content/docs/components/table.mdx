@@ -7,7 +7,18 @@ links:
 wip: true
 ---
 
-<Demo name="table/demos/basic" />
+<InteractiveDemo
+	name="table"
+	engine="source"
+	controls={[
+		{
+			type: "enum",
+			name: "selectionMode",
+			options: ["none", "single", "multiple"],
+			defaultValue: "none",
+		},
+	]}
+/>
 
 ## Installation
 
@@ -93,22 +104,6 @@ Use `TableVirtualizer` for large collections. It uses the table layout exported 
 	</TableVirtualizer>
 </TableContainer>
 ```
-
-## Playground
-
-Use the controls below to experiment with different table props and see the live preview and code update.
-
-<InteractiveDemo
-	name="table"
-	controls={[
-		{
-			type: "enum",
-			name: "selectionMode",
-			options: ["none", "single", "multiple"],
-			defaultValue: "none",
-		},
-	]}
-/>
 
 ## Examples
 

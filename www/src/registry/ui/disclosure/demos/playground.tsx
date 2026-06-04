@@ -1,15 +1,10 @@
 "use client";
 
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/registry/ui/disclosure";
+import { Disclosure, DisclosurePanel, DisclosureTrigger, type DisclosureProps } from "@/registry/ui/disclosure";
 
-interface DisclosurePlaygroundProps {
-	isDisabled?: boolean;
-	defaultExpanded?: boolean;
-}
-
-export function DisclosurePlayground({ isDisabled = false, defaultExpanded = false }: DisclosurePlaygroundProps) {
+export default function Demo({ isDisabled = false }: DisclosureProps = {}) {
 	return (
-		<Disclosure isDisabled={isDisabled} defaultExpanded={defaultExpanded}>
+		<Disclosure isDisabled={isDisabled}>
 			<DisclosureTrigger>System requirements</DisclosureTrigger>
 			<DisclosurePanel>
 				Details about system requirements go here. Describes the minimum and recommended hardware and software needed.

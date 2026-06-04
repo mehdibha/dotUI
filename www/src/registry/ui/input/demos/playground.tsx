@@ -1,14 +1,12 @@
 "use client";
 
-import { Input } from "@/registry/ui/input";
+import { Input, type InputProps } from "@/registry/ui/input";
 
-interface InputPlaygroundProps {
-	placeholder?: string;
-	size?: "sm" | "md" | "lg";
-	disabled?: boolean;
-	readOnly?: boolean;
-}
-
-export function InputPlayground({ placeholder = "Enter text...", ...props }: InputPlaygroundProps) {
-	return <Input placeholder={placeholder} {...props} />;
+export default function Demo({
+	placeholder = "Enter text...",
+	size = "md",
+	disabled = false,
+	readOnly = false,
+}: InputProps = {}) {
+	return <Input placeholder={placeholder} size={size} disabled={disabled} readOnly={readOnly}></Input>;
 }

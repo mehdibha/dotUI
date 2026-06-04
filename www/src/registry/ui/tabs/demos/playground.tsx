@@ -1,13 +1,8 @@
 "use client";
 
-import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs";
+import { Tab, TabList, TabPanel, Tabs, type TabsProps } from "@/registry/ui/tabs";
 
-interface TabsPlaygroundProps {
-	orientation?: "horizontal" | "vertical";
-	isDisabled?: boolean;
-}
-
-export function TabsPlayground({ orientation = "horizontal", isDisabled = false }: TabsPlaygroundProps) {
+export default function Demo({ orientation = "horizontal", isDisabled = false }: TabsProps = {}) {
 	return (
 		<Tabs orientation={orientation} isDisabled={isDisabled}>
 			<TabList>

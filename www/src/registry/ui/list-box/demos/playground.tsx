@@ -1,13 +1,14 @@
 "use client";
 
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { ListBox, ListBoxItem, type ListBoxProps } from "@/registry/ui/list-box";
 
-interface ListBoxPlaygroundProps {
-	orientation?: "horizontal" | "vertical";
-	selectionMode?: "none" | "single" | "multiple";
-}
-
-export function ListBoxPlayground({ orientation = "vertical", selectionMode = "single" }: ListBoxPlaygroundProps) {
+export default function Demo({
+	orientation = "vertical",
+	selectionMode = "single",
+}: {
+	orientation?: ListBoxProps<object>["orientation"];
+	selectionMode?: ListBoxProps<object>["selectionMode"];
+} = {}) {
 	return (
 		<ListBox aria-label="Options" orientation={orientation} selectionMode={selectionMode}>
 			<ListBoxItem id="alpha">Alpha</ListBoxItem>

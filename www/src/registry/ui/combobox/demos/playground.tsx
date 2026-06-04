@@ -9,23 +9,17 @@ import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 
-interface ComboboxPlaygroundProps {
-	label?: string;
-	placeholder?: string;
-	isDisabled?: boolean;
-	isInvalid?: boolean;
-}
-
-export function ComboboxPlayground({
+export default function Demo({
 	label = "Country",
 	placeholder = "Search countries...",
-	...props
-}: ComboboxPlaygroundProps) {
+	isDisabled = false,
+	isInvalid = false,
+} = {}) {
 	return (
-		<Combobox {...props}>
+		<Combobox isDisabled={isDisabled} isInvalid={isInvalid}>
 			{label && <Label>{label}</Label>}
 			<InputGroup>
-				<Input placeholder={placeholder} />
+				<Input data-control-target placeholder={placeholder} />
 				<InputGroupAddon>
 					<Button variant="quiet" isIconOnly>
 						<ChevronDownIcon />

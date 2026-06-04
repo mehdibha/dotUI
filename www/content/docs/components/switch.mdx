@@ -7,7 +7,20 @@ links:
 wip: true
 ---
 
-<Demo name="switch/demos/basic" />
+<InteractiveDemo
+	name="switch"
+	engine="source"
+	controls={[
+		{
+			name: "label",
+			type: "string",
+			defaultValue: "Airplane mode",
+		},
+		"size",
+		"isDisabled",
+		"isReadOnly",
+	]}
+/>
 
 ## Installation
 
@@ -30,24 +43,6 @@ import { Switch, SwitchControl } from "@/components/ui/switch";
 	<Label>Focus mode</Label>
 </Switch>
 ```
-
-## Playground
-
-Use the controls below to experiment with different switch props and see the live preview and code update.
-
-<InteractiveDemo
-	name="switch"
-	controls={[
-		{
-			name: "label",
-			type: "string",
-			defaultValue: "Airplane mode",
-		},
-		"size",
-		"isDisabled",
-		"isReadOnly",
-	]}
-/>
 
 ## Examples
 

@@ -10,17 +10,13 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/registry/ui/dialog";
-import { Modal } from "@/registry/ui/modal";
+import { Modal, type ModalProps } from "@/registry/ui/modal";
 
-interface ModalPlaygroundProps {
-	isDismissable?: boolean;
-}
-
-export function ModalPlayground({ isDismissable = true }: ModalPlaygroundProps) {
+export default function Demo({ isDismissable = true }: ModalProps = {}) {
 	return (
 		<Dialog>
 			<Button>Open Modal</Button>
-			<Modal isDismissable={isDismissable}>
+			<Modal data-control-target isDismissable={isDismissable}>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>Modal Title</DialogTitle>

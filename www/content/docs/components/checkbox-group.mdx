@@ -6,7 +6,32 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/CheckboxGroup.html
 ---
 
-<Demo name="checkbox-group/demos/default" />
+<InteractiveDemo
+	name="checkbox-group"
+	engine="source"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Select frameworks",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isReadOnly",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+	]}
+/>
 
 ## Installation
 
@@ -55,42 +80,6 @@ const [frameworks, setFrameworks] = useState<string[]>(["nextjs"]);
 	{/* ... */}
 </CheckboxGroup>;
 ```
-
-## Playground
-
-Use the controls below to experiment with different checkbox group props and see the live preview and code update.
-
-<InteractiveDemo
-	name="checkbox-group"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Select frameworks",
-		},
-		{
-			type: "enum",
-			name: "orientation",
-			options: ["horizontal", "vertical"],
-			defaultValue: "vertical",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isReadOnly",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isInvalid",
-			defaultValue: false,
-		},
-	]}
-/>
 
 ## Examples
 

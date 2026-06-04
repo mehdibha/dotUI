@@ -4,22 +4,16 @@ import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
 import { SearchField } from "@/registry/ui/search-field";
 
-interface SearchFieldPlaygroundProps {
-	label?: string;
-	placeholder?: string;
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-}
-
-export function SearchFieldPlayground({
+export default function Demo({
 	label = "Search",
 	placeholder = "Search...",
-	...props
-}: SearchFieldPlaygroundProps) {
+	isDisabled = false,
+	isReadOnly = false,
+} = {}) {
 	return (
-		<SearchField {...props}>
+		<SearchField isDisabled={isDisabled} isReadOnly={isReadOnly}>
 			{label && <Label>{label}</Label>}
-			<Input placeholder={placeholder} />
+			<Input data-control-target placeholder={placeholder} />
 		</SearchField>
 	);
 }

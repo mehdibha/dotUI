@@ -7,7 +7,17 @@ links:
 wip: true
 ---
 
-<Demo name="skeleton/demos/card" />
+<InteractiveDemo
+	name="skeleton"
+	engine="source"
+	controls={[
+		{
+			type: "boolean",
+			name: "isLoading",
+			defaultValue: true,
+		},
+	]}
+/>
 
 ## Installation
 
@@ -28,21 +38,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 	<Skeleton className="h-4 w-32" />
 </Skeleton>
 ```
-
-## Playground
-
-Use the controls below to experiment with different skeleton props and see the live preview and code update.
-
-<InteractiveDemo
-	name="skeleton"
-	controls={[
-		{
-			type: "boolean",
-			name: "isLoading",
-			defaultValue: true,
-		},
-	]}
-/>
 
 ## Examples
 

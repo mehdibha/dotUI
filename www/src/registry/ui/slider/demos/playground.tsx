@@ -1,17 +1,19 @@
 "use client";
 
 import { Label } from "@/registry/ui/field";
-import { Slider, SliderControl } from "@/registry/ui/slider";
+import { Slider, SliderControl, type SliderProps } from "@/registry/ui/slider";
 
-interface SliderPlaygroundProps {
+export default function Demo({
+	label = "Volume",
+	orientation = "horizontal",
+	isDisabled = false,
+}: {
 	label?: string;
+	orientation?: SliderProps["orientation"];
 	isDisabled?: boolean;
-	orientation?: "horizontal" | "vertical";
-}
-
-export function SliderPlayground({ label = "Volume", ...props }: SliderPlaygroundProps) {
+} = {}) {
 	return (
-		<Slider defaultValue={50} {...props}>
+		<Slider defaultValue={50} orientation={orientation} isDisabled={isDisabled}>
 			{label && <Label>{label}</Label>}
 			<SliderControl />
 		</Slider>

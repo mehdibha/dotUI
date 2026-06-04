@@ -2,17 +2,13 @@
 
 import { Button } from "@/registry/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/registry/ui/dialog";
-import { Popover } from "@/registry/ui/popover";
+import { Popover, type PopoverProps } from "@/registry/ui/popover";
 
-interface PopoverPlaygroundProps {
-	placement?: "bottom" | "top" | "left" | "right";
-}
-
-export function PopoverPlayground({ placement = "bottom" }: PopoverPlaygroundProps) {
+export default function Demo({ placement = "bottom" }: PopoverProps = {}) {
 	return (
 		<Dialog>
 			<Button>Open Popover</Button>
-			<Popover placement={placement}>
+			<Popover data-control-target placement={placement}>
 				<DialogContent className="w-56">
 					<DialogTitle>Popover Title</DialogTitle>
 					<p className="text-sm text-fg-muted">This is a popover with some content. You can put any content here.</p>

@@ -1,23 +1,21 @@
 "use client";
 
 import { Button } from "@/registry/ui/button";
-import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
+import { Tooltip, TooltipContent, type TooltipContentProps } from "@/registry/ui/tooltip";
 
-interface TooltipPlaygroundProps {
-	content?: string;
-	placement?: "top" | "bottom" | "left" | "right";
-	hideArrow?: boolean;
-}
-
-export function TooltipPlayground({
+export default function Demo({
 	content = "Tooltip content",
 	placement = "top",
 	hideArrow = false,
-}: TooltipPlaygroundProps) {
+}: {
+	content?: string;
+	placement?: TooltipContentProps["placement"];
+	hideArrow?: boolean;
+} = {}) {
 	return (
 		<Tooltip>
 			<Button>Hover me</Button>
-			<TooltipContent placement={placement} hideArrow={hideArrow}>
+			<TooltipContent data-control-target placement={placement} hideArrow={hideArrow}>
 				{content}
 			</TooltipContent>
 		</Tooltip>
