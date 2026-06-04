@@ -4,7 +4,7 @@
  * Produces the Tailwind v4 `@theme` block that today lives, hand-authored, in
  * `base/theme.css`. Parsing the output through the publisher's
  * `cssToRegistryFields` must yield the same `cssVars.theme` entries — see
- * `emit-css.test.ts`.
+ * `emit-css.spec.ts`.
  */
 
 import type { ModeName, SemanticTarget, SemanticToken, SemanticVocabulary } from "./types";

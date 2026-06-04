@@ -2,7 +2,7 @@
  * `DEFAULT_SEMANTICS` — the typed source of truth for dotUI's semantic color
  * vocabulary. Mirrors (and replaces) the hand-authored `@theme` color block in
  * `base/theme.css`; `emitCss(DEFAULT_SEMANTICS)` reproduces it (verified in
- * `emit-css.test.ts`).
+ * `emit-css.spec.ts`).
  *
  * Order matches `base/theme.css` so regeneration stays diff-clean. Each `on-*`
  * token is contrast-derived (`onOf`) and carries no `scales` pool.
