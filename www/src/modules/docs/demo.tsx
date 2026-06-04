@@ -51,6 +51,11 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
 	const codeContent = getSlotContent(children, DemoCode);
 	const previewContent = getSlotContent(children, DemoCodePreview);
 
+	// A demo `name` that doesn't resolve to a registered component arrives here as `undefined`.
+	// Rendering `<undefined />` throws "Element type is invalid" and crashes the page; render
+	// nothing instead. (Placed after all hooks so the early return doesn't break hook order.)
+	if (!Component) return null;
+
 	const handleToggle = () => {
 		if (document.startViewTransition) {
 			document.startViewTransition(() => {

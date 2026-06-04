@@ -116,6 +116,7 @@ const menu: MenuItem[] = [
 				<p className="font-medium">Lucide icons</p>
 				<div className="mt-2 flex w-full items-center gap-2 overflow-hidden text-fg-muted [&_svg]:size-4 [&_svg]:shrink-0">
 					{Object.entries(icons)
+						.sort(([a], [b]) => a.localeCompare(b))
 						.slice(0, 20)
 						.map(([name, IconComponent]) => (
 							<IconComponent key={name} />
