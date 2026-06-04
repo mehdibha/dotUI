@@ -133,7 +133,6 @@ const menu: MenuItem[] = [
 ];
 
 export const MENU_IDS = new Set(menu.map((m) => m.id));
-const menuIds = MENU_IDS;
 
 /* -------------------------------- Panel -------------------------------- */
 
@@ -259,7 +258,7 @@ export function CustomizerPanel({
 		}
 
 		// Component detail view (non-menu id)
-		if (!menuIds.has(id)) {
+		if (!MENU_IDS.has(id)) {
 			return (
 				<>
 					<ViewHeader title={getComponentDisplayName(id)} onBack={pop} />
@@ -351,12 +350,6 @@ export function CustomizerPanel({
 								</div>
 							</ButtonPrimitives.Button>
 						))}
-
-						{/* Grouped components — shared style across visually related components */}
-						{/* <div className="mt-2 flex flex-col gap-2">
-							<div className="px-1 text-[10px] text-fg-muted uppercase tracking-widest">Grouped components</div>
-							<GroupedComponentsView onSelect={(group) => push(group)} />
-						</div> */}
 
 						{/* All components directly accessible from home */}
 						<div className="mt-2 flex flex-col gap-2">
