@@ -14,6 +14,11 @@ export interface ExampleProps extends React.ComponentProps<"div"> {
 }
 
 export function Example({ component: Component, title, children, className, ...props }: ExampleProps) {
+	// A demo `name` that doesn't resolve to a registered component arrives here as `undefined`.
+	// Rendering `<undefined />` throws "Element type is invalid" and crashes the whole page, so
+	// render nothing instead.
+	if (!Component) return null;
+
 	// const codeContent = getSlotContent(children, DemoCode);
 	// const previewContent = getSlotContent(children, DemoCodePreview);
 

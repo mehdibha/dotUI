@@ -6,9 +6,9 @@ import { TextField } from "@/registry/ui/text-field";
 
 export default function Demo() {
 	return (
-		<TextField isReadOnly>
+		<TextField isReadOnly defaultValue="This is a readonly comment">
 			<Label>Email</Label>
-			<TextArea defaultValue="This is a readonly comment" />
+			<TextArea />
 		</TextField>
 	);
 }

@@ -28,36 +28,36 @@ export function AccountMenu({ className, ...props }: React.ComponentProps<"div">
 					aria-label="Account Menu"
 					className="h-full max-h-none w-full rounded-none border-0 bg-transparent **:data-[slot='list-box-item']:text-sm"
 				>
-					<ListBoxItem>
+					<ListBoxItem textValue="Profile">
 						<User2Icon />
 						Profile
 					</ListBoxItem>
-					<ListBoxItem>
+					<ListBoxItem textValue="Settings">
 						<SettingsIcon />
 						Settings
 					</ListBoxItem>
-					<ListBoxItem>
+					<ListBoxItem textValue="Documentation">
 						<BookIcon />
 						Documentation
 					</ListBoxItem>
-					<ListBoxItem>
+					<ListBoxItem textValue="Community">
 						<Users2Icon />
 						Community
 					</ListBoxItem>
 					<Separator />
 					<ListBoxSection>
 						<ListBoxSectionHeader>Preferences</ListBoxSectionHeader>
-						<ListBoxItem>
+						<ListBoxItem textValue="Theme">
 							<ContrastIcon />
 							Theme
 						</ListBoxItem>
-						<ListBoxItem>
+						<ListBoxItem textValue="Language">
 							<LanguagesIcon />
 							Language
 						</ListBoxItem>
 					</ListBoxSection>
 					<Separator />
-					<ListBoxItem>
+					<ListBoxItem textValue="Log out">
 						<LogOutIcon />
 						Log out
 					</ListBoxItem>
