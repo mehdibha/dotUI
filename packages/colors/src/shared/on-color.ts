@@ -8,7 +8,7 @@
  * mid-light bg (the floor is genuinely unreachable there), surfaced rather than faked.
  */
 
-import { type ContrastFormula, gamutMap, makeContrast, type Oklch, oklchCss, toOklch } from "./color";
+import { type ContrastFormula, gamutMap, makeContrast, type Oklch, oklchCss, toOklch, toSrgb } from "./color";
 
 import type { ColorScale } from "./types";
 
@@ -75,4 +75,23 @@ export function computeOnColors(scale: ColorScale, formula: ContrastFormula = "w
 		on[step] = onColor(value, formula).value;
 	}
 	return on;
+}
+
+/**
+ * Pure black/white foreground pick — replicates `tailwindcss-autocontrast`'s
+ * `getContrastColor`, the plugin that bakes dotUI's `--on-*` at Tailwind-compile time:
+ * WCAG relative luminance of the sRGB color (rounded to 8-bit, as the plugin does), then
+ * whichever of black/white has the higher contrast. dotUI's live preview emits `--on-*`
+ * with this so the in-browser palette matches what `shadcn add` ships — kept in lockstep by
+ * a parity test. Distinct from {@link onColor}, which returns AA-verified hue-tinted poles.
+ */
+export function onBlackWhite(background: string): "black" | "white" {
+	const { r, g, b } = toSrgb(background);
+	const lin = (channel: number): number => {
+		const s = Math.round(channel * 255) / 255;
+		return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+	};
+	const luminance = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+	// contrast-with-black = (L+0.05)/0.05 ; contrast-with-white = 1.05/(L+0.05)
+	return (luminance + 0.05) / 0.05 > 1.05 / (luminance + 0.05) ? "black" : "white";
 }

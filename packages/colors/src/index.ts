@@ -37,6 +37,6 @@ export { registerBuiltins } from "./producers";
 
 // Shared kernel ops + types
 export { apca, type ContrastFormula, gamutMap, type Oklch, oklchCss, toOklch, wcag2 } from "./shared/color";
-export { onColor } from "./shared/on-color";
+export { onBlackWhite, onColor } from "./shared/on-color";
 export { SEMANTIC_COLORS } from "./shared/constants";
 export type { ColorScale, Theme, ThemeMode } from "./shared/types";

@@ -501,3 +501,5 @@ const autoContrast = plugin.withOptions((options = {}) => {
 });
 
 module.exports = autoContrast;
+// Exposed so dotUI can parity-test its runtime `onBlackWhite` against this baked-at-compile pick.
+module.exports.getContrastColor = getContrastColor;

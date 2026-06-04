@@ -118,7 +118,10 @@ function DesignSystemProvider({
 
 	// Generative palette: inject the resolved per-mode primitive ramps as a <style>
 	// (the flat-token path above only writes :root; this carries :root + .dark).
-	const colorCss = React.useMemo(() => (color ? emitPrimitivesCss(resolveColorConfig(color)) : null), [color]);
+	const colorCss = React.useMemo(
+		() => (color ? emitPrimitivesCss(resolveColorConfig(color), { onColors: true }) : null),
+		[color],
+	);
 
 	React.useLayoutEffect(() => {
 		if (!colorCss) return;
