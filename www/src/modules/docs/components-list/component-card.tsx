@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 
 import { cn } from "@/registry/lib/utils";
 
+import { animatedDemos } from "./anim";
 import { componentDemos } from "./demos";
 import { overlayPreviews } from "./previews";
 
@@ -68,10 +69,15 @@ export function ComponentCard({
 	previewClassName,
 }: ComponentCardProps) {
 	const Demo = componentDemos[slug];
+	const Animated = animatedDemos[slug];
 
 	return (
 		<div className="flex flex-col items-center">
-			{preview === "overlay" ? (
+			{Animated ? (
+				<div className={cn("relative h-32 w-full overflow-hidden rounded-lg border bg-bg", previewClassName)}>
+					<Animated />
+				</div>
+			) : preview === "overlay" ? (
 				<OverlayPreview name={name} slug={slug} className={previewClassName} />
 			) : iframe ? (
 				<IframePreview slug={slug} scale={scale} className={previewClassName} />
