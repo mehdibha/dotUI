@@ -86,8 +86,9 @@ export function resolveColorConfig(config: ColorConfig): ResolvedPalettes {
 	}
 
 	// algorithm is a runtime-validated discriminant the kernel's zod schema checks. The object
-	// targets the kernel's `BaseThemeOptions` view, so no cast is needed.
-	const theme = createTheme({ algorithm, palettes, steps, modes: { light: true } });
+	// targets the kernel's `BaseThemeOptions` view (no cast); knobs are forwarded verbatim and
+	// each producer's schema keeps only the ones it understands.
+	const theme = createTheme({ algorithm, palettes, steps, modes: { light: true }, ...config.knobs });
 
 	const lightMode = theme.light;
 	if (!lightMode) throw new Error("resolveColorConfig: kernel produced no `light` mode");

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { toOklch } from "@dotui/colors";
+
 import { DEFAULT_COLOR_CONFIG, type ColorConfig } from "./color-config";
 import { emitPrimitivesCss, resolveColorConfig } from "./primitives";
 
@@ -46,6 +48,21 @@ describe("resolveColorConfig", () => {
 	it("rejects a non-generative algorithm with a clear error (seeds are not ramps)", () => {
 		const bad = { algorithm: "fixed", seeds: DEFAULT_COLOR_CONFIG.seeds } as unknown as ColorConfig;
 		expect(() => resolveColorConfig(bad)).toThrow(/generative/);
+	});
+
+	it("forwards per-producer knobs to the kernel (hueTorsion shifts hue, chromaMult scales chroma)", () => {
+		const seeds = DEFAULT_COLOR_CONFIG.seeds;
+		const accentAt = (config: ColorConfig, step: string) => {
+			const value = resolveColorConfig(config).light.accent?.[step];
+			expect(value).toBeDefined();
+			return toOklch(value ?? "oklch(0 0 0)");
+		};
+		// the blue accent's dark end drifts toward the violet anchor under torsion
+		const torsionedHue = accentAt({ algorithm: "oklch", seeds, knobs: { hueTorsion: 40 } }, "950").h;
+		expect(torsionedHue).not.toBeCloseTo(accentAt({ algorithm: "oklch", seeds }, "950").h, 0);
+		// chromaMult 0 drops accent chroma to the minChroma floor (below the seed-driven default)
+		const mutedChroma = accentAt({ algorithm: "oklch", seeds, knobs: { chromaMult: 0 } }, "500").c;
+		expect(mutedChroma).toBeLessThan(accentAt({ algorithm: "oklch", seeds }, "500").c);
 	});
 });
 

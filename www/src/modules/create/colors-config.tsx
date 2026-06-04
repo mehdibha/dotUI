@@ -17,6 +17,7 @@ import { Select, SelectValue } from "@/registry/ui/select";
 
 import type { AlgorithmId, PaletteSeeds } from "@/registry/theme";
 
+import { ColorKnobsControls } from "./color-knobs";
 import { useDesignSystem } from "./preset";
 
 const ALGORITHMS: ReadonlyArray<{ id: AlgorithmId; label: string }> = [
@@ -32,17 +33,46 @@ const SEED_FIELDS: ReadonlyArray<{ label: string; key: keyof PaletteSeeds }> = [
 	{ label: "Success", key: "success" },
 	{ label: "Warning", key: "warning" },
 	{ label: "Danger", key: "danger" },
+	{ label: "Info", key: "info" },
 ];
 
+/** Collapsed-card summary of the live color recipe (replaces the old hardcoded mock). */
+export function ColorsSummary() {
+	const { designSystem } = useDesignSystem();
+	const config = designSystem.color ?? DEFAULT_COLOR_CONFIG;
+	const algorithmLabel = ALGORITHMS.find((a) => a.id === config.algorithm)?.label ?? config.algorithm;
+	const rows = [
+		{ name: "Base color", value: config.seeds.neutral },
+		{ name: "Accent", value: config.seeds.accent },
+	];
+	return (
+		<div className="flex flex-col gap-1.5">
+			{rows.map((row) => (
+				<div key={row.name} className="flex items-center justify-between">
+					<div className="flex min-w-0 flex-col items-start gap-1">
+						<span className="text-[10px] tracking-widest text-fg-muted uppercase">{row.name}</span>
+						<p className="truncate font-medium">{row.value}</p>
+					</div>
+					<div className="size-7 shrink-0 rounded-md border" style={{ backgroundColor: row.value }} />
+				</div>
+			))}
+			<div className="flex items-center justify-between">
+				<span className="text-[10px] tracking-widest text-fg-muted uppercase">Algorithm</span>
+				<p className="font-medium">{algorithmLabel}</p>
+			</div>
+		</div>
+	);
+}
+
 export function ColorsConfig() {
-	const { designSystem, setColorSeed, setColorAlgorithm } = useDesignSystem();
+	const { designSystem, setColorSeed, setColorAlgorithm, setColorKnob } = useDesignSystem();
 	const config = designSystem.color ?? DEFAULT_COLOR_CONFIG;
 	const seeds = config.seeds;
 	const resolved = useMemo(() => resolveColorConfig(config), [config]);
 
 	return (
 		<div className="-mt-6 flex flex-col gap-4">
-			<p className="text-xs text-fg-muted">Pick brand + status seeds — the ramps regenerate live.</p>
+			<p className="text-xs text-fg-muted">Pick seeds, switch the algorithm, and fine-tune — ramps regenerate live.</p>
 
 			<Select
 				className="w-full"
@@ -91,6 +121,13 @@ export function ColorsConfig() {
 					</ColorPicker>
 				))}
 			</div>
+
+			<ColorKnobsControls
+				algorithm={config.algorithm}
+				knobs={config.knobs ?? {}}
+				steps={resolved.steps}
+				onChange={setColorKnob}
+			/>
 
 			<div className="flex flex-col gap-1.5">
 				<span className="pl-1 text-xs font-medium text-fg-muted">Generated ramps</span>

@@ -32,4 +32,11 @@ describe("preset codec — color recipe", () => {
 		expect(() => decodePreset(encoded ?? "")).not.toThrow();
 		expect(decodePreset(encoded ?? "").color).toBeUndefined();
 	});
+
+	it("round-trips a config with per-producer knobs", () => {
+		const custom = { ...DEFAULT_COLOR_CONFIG, knobs: { hueTorsion: 30, chromaMode: "max" as const } };
+		const encoded = encodePreset({ ...DEFAULTS, color: custom });
+		expect(encoded).toBeTypeOf("string");
+		expect(decodePreset(encoded ?? "").color).toEqual(custom);
+	});
 });

@@ -13,6 +13,7 @@ export { emitCss, type EmitCssOptions, resolveTarget } from "./emit-css";
 export {
 	type AlgorithmId,
 	type ColorConfig,
+	type ColorKnobs,
 	DEFAULT_COLOR_CONFIG,
 	GENERATIVE_ALGORITHMS,
 	type PaletteSeeds,

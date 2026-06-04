@@ -24,7 +24,7 @@ import { Popover } from "@/registry/ui/popover";
 import { SearchField } from "@/registry/ui/search-field";
 import { Select, SelectValue } from "@/registry/ui/select";
 
-import { ColorsConfig } from "./colors-config";
+import { ColorsConfig, ColorsSummary } from "./colors-config";
 import {
 	AllComponentsView,
 	ComponentDetailView,
@@ -69,30 +69,7 @@ const menu: MenuItem[] = [
 	{
 		id: "colors",
 		title: "Colors",
-		preview: (
-			<div className="flex flex-col gap-1.5">
-				{[
-					{
-						name: "Base color",
-						value: "neutral",
-						className: "bg-neutral",
-					},
-					{
-						name: "Theme",
-						value: "blue",
-						className: "bg-blue-500",
-					},
-				].map((item) => (
-					<div key={item.name} className="flex items-center justify-between">
-						<div className="flex flex-col items-start gap-1">
-							<span className="text-[10px] tracking-widest text-fg-muted uppercase">{item.name}</span>
-							<p className="font-medium">{item.value}</p>
-						</div>
-						<div className={`size-7 rounded-md border ${item.className}`} />
-					</div>
-				))}
-			</div>
-		),
+		preview: <ColorsSummary />,
 		config: <ColorsConfig />,
 	},
 	{

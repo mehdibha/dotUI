@@ -28,11 +28,40 @@ export interface PaletteSeeds {
 	info?: string;
 }
 
+/**
+ * Per-producer tuning knobs, all optional. `resolveColorConfig` spreads them into the
+ * kernel's `createTheme`; each producer's schema keeps only the knobs it understands.
+ * Kept ABSENT from {@link DEFAULT_COLOR_CONFIG} so an untouched palette still encodes to
+ * `undefined` (the codec diffs the whole recipe against the default).
+ */
+export interface ColorKnobs {
+	/** oklch / tailwind: multiplier on the seed's chroma (1 = the seed's own chroma). */
+	chromaMult?: number;
+	/** oklch / tailwind: peak-chroma floor so muted seeds still yield a usable accent. */
+	minChroma?: number;
+	/** oklch / tailwind: degrees of hue drift toward the dark end (0 = constant hue). */
+	hueTorsion?: number;
+	/** oklch / tailwind: envelope-tapered (default) or pushed to the gamut cusp (vivid). */
+	chromaMode?: "consistent" | "max";
+	/** oklch / tailwind: pin the exact seed lightness at this step. */
+	preserveSeedAt?: string;
+	/** contrast: WCAG 2 or APCA contrast targeting. */
+	formula?: "wcag2" | "apca";
+	/** contrast: chroma expressed as 0–100 saturation (the kernel maps it to chroma). */
+	saturation?: number;
+	/** contrast: per-step target contrast ratios. */
+	ratios?: number[];
+	/** material: per-step tones (0–100). */
+	tones?: number[];
+}
+
 export interface ColorConfig {
 	algorithm: AlgorithmId;
 	/** Scale step names; defaults to the kernel's `50`..`950`. */
 	steps?: string[];
 	seeds: PaletteSeeds;
+	/** Optional per-producer tuning; absent for the default palette. */
+	knobs?: ColorKnobs;
 }
 
 /**
