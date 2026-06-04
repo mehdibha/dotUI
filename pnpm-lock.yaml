@@ -150,6 +150,9 @@ importers:
       '@base-ui/react':
         specifier: 1.4.1
         version: 1.4.1(@types/react@19.2.2)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      '@dotui/colors':
+        specifier: workspace:*
+        version: link:../packages/colors
       '@fontsource-variable/geist':
         specifier: ^5.2.8
         version: 5.2.8

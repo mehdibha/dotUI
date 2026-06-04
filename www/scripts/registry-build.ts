@@ -19,6 +19,7 @@ import { registryBase } from "../src/registry/base/registry";
 import { registryHooks } from "../src/registry/hooks/registry";
 import { iconLibraries, registryIcons } from "../src/registry/icons/icon-map";
 import { registryLib } from "../src/registry/lib/registry";
+import { DEFAULT_COLOR_CONFIG, emitPrimitivesCss, resolveColorConfig } from "../src/registry/theme";
 import { registryUi } from "../src/registry/ui/registry";
 
 import type { RegistryItem } from "../src/registry/types";
@@ -564,10 +565,19 @@ async function buildShadcnPublishables() {
 	}
 }
 
+/** Generate base/colors.css from the default ColorConfig (perceptual OKLCH ramps, dark = reversed). */
+async function generateBaseColorsCss() {
+	const css = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG));
+	await fs.writeFile(path.join(REGISTRY_DIR, "base", "colors.css"), css, "utf8");
+}
+
 async function main() {
 	console.log("🔨 Building registry...\n");
 
 	try {
+		console.log("Generating base color ramps");
+		await generateBaseColorsCss();
+
 		console.log("Checking registry integrity");
 		await checkRegistryIntegrity();
 
