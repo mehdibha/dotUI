@@ -9,6 +9,8 @@
  * Pure JS — no `ts-morph`, no React. Safe to import in route handlers.
  */
 
+import { resolveColorConfig } from "@/registry/theme";
+
 import type { Density, RegistryItem } from "@/registry/types";
 
 import type { PublishPreset } from "./types";
@@ -132,12 +134,33 @@ function registryConfigUrl(registryRoot: string, encodedPreset: string | undefin
 	return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ""}`;
 }
 
+/** Flatten resolved per-palette ramps into `--<palette>-<step>` CSS var entries. */
+function rampsToVars(palettes: Record<string, Record<string, string>>): Record<string, string> {
+	const vars: Record<string, string> = {};
+	for (const [palette, scale] of Object.entries(palettes)) {
+		for (const [step, value] of Object.entries(scale)) {
+			vars[`--${palette}-${step}`] = value;
+		}
+	}
+	return vars;
+}
+
 function mergePresetCssFields(base: RegistryCssFields, preset: PublishPreset): RegistryCssFields {
 	const css = cloneRecord(base.css) ?? {};
 	mergeCssVarsIntoCssRule(css, ":root", base.cssVars?.light);
 	mergeCssVarsIntoCssRule(css, ".dark", base.cssVars?.dark);
 
 	const cssVars = cloneThemeCssVars(base.cssVars);
+
+	// A custom color recipe regenerates the primitive ramps, overriding the static
+	// base palette in :root (light) and .dark (reversed). The consumer's
+	// tailwindcss-autocontrast plugin re-derives --on-* from these shipped ramps.
+	if (preset.color) {
+		const resolved = resolveColorConfig(preset.color);
+		css[":root"] = { ...(isPlainCssObject(css[":root"]) ? css[":root"] : {}), ...rampsToVars(resolved.light) };
+		css[".dark"] = { ...(isPlainCssObject(css[".dark"]) ? css[".dark"] : {}), ...rampsToVars(resolved.dark) };
+	}
+
 	const lightVars = emitPresetLightVars(preset);
 	if (Object.keys(lightVars).length > 0) {
 		css[":root"] = { ...(isPlainCssObject(css[":root"]) ? css[":root"] : {}), ...lightVars };
