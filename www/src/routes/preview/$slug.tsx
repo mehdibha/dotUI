@@ -56,6 +56,7 @@ function PreviewPage() {
 			params={designSystem.componentParams}
 			tokens={designSystem.tokens}
 			density={designSystem.density}
+			color={designSystem.color}
 		>
 			<Examples />
 		</DesignSystemProvider>

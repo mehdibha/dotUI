@@ -36,10 +36,10 @@ export const DEFAULT_COLOR_CONFIG: ColorConfig = {
 	algorithm: "oklch",
 	seeds: {
 		neutral: "#808080",
-		accent: "hsl(210 64% 55%)",
+		accent: "#438cd6",
 		success: "#22c55e",
 		warning: "#eab308",
 		danger: "#ef4444",
-		info: "hsl(210 64% 55%)",
+		info: "#438cd6",
 	},
 };
