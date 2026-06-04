@@ -20,6 +20,11 @@ const ABORT = Symbol("preview-abort");
 
 const SPRING = { type: "spring", stiffness: 220, damping: 26, mass: 0.9 } as const;
 
+// Fake-cursor autoplay is OFF for now — cards just show the real component and its real
+// hover/press/interaction (it resets when the pointer leaves). Flip to `true` to bring the
+// cursor-driven self-demoing animations back.
+const CURSOR_ENABLED = false;
+
 type Target = string | { selector: string } | { x: number; y: number } | { el: HTMLElement | null };
 
 /** Imperative driver handed to a preview's `script`. Every method is cancellable. */
@@ -243,7 +248,7 @@ export function AnimatedPreview({ script, reset, children, className, contain = 
 		if (!c) return;
 		let onScreen = false;
 		const evaluate = () => {
-			const should = onScreen && !document.hidden && !interactive && !reduceMotion;
+			const should = CURSOR_ENABLED && onScreen && !document.hidden && !interactive && !reduceMotion;
 			if (should) start();
 			else {
 				stop();
@@ -299,7 +304,7 @@ export function AnimatedPreview({ script, reset, children, className, contain = 
 			) : (
 				content
 			)}
-			{!reduceMotion && <FakeCursor x={x} y={y} scale={scale} opacity={opacity} ripple={ripple} />}
+			{CURSOR_ENABLED && !reduceMotion && <FakeCursor x={x} y={y} scale={scale} opacity={opacity} ripple={ripple} />}
 		</div>
 	);
 }
