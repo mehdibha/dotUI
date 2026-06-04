@@ -6,6 +6,9 @@ import { tv } from "tailwind-variants";
 
 import type { ClassValue, TVReturnType, VariantProps } from "tailwind-variants";
 
+import { emitPrimitivesCss, resolveColorConfig } from "@/registry/theme";
+
+import type { ColorConfig } from "@/registry/theme";
 import type { Density, EnumParamDef, ParamDef, RegistryItem } from "@/registry/types";
 
 /* --------------------------------- Types --------------------------------- */
@@ -51,10 +54,17 @@ interface DesignSystemProviderProps {
 	params?: ParamSelections;
 	tokens?: GlobalTokenSelections;
 	density?: Density;
+	color?: ColorConfig;
 	children: React.ReactNode;
 }
 
-function DesignSystemProvider({ params = {}, tokens = {}, density = "default", children }: DesignSystemProviderProps) {
+function DesignSystemProvider({
+	params = {},
+	tokens = {},
+	density = "default",
+	color,
+	children,
+}: DesignSystemProviderProps) {
 	const value = React.useMemo(() => ({ params, tokens, density }), [params, tokens, density]);
 
 	const cssVars = React.useMemo(() => {
@@ -105,6 +115,21 @@ function DesignSystemProvider({ params = {}, tokens = {}, density = "default", c
 			}
 		};
 	}, [cssVars]);
+
+	// Generative palette: inject the resolved per-mode primitive ramps as a <style>
+	// (the flat-token path above only writes :root; this carries :root + .dark).
+	const colorCss = React.useMemo(() => (color ? emitPrimitivesCss(resolveColorConfig(color)) : null), [color]);
+
+	React.useLayoutEffect(() => {
+		if (!colorCss) return;
+		const styleEl = document.createElement("style");
+		styleEl.setAttribute("data-dotui-color", "");
+		styleEl.textContent = colorCss;
+		document.head.appendChild(styleEl);
+		return () => {
+			styleEl.remove();
+		};
+	}, [colorCss]);
 
 	return <DesignSystemContext.Provider value={value}>{children}</DesignSystemContext.Provider>;
 }

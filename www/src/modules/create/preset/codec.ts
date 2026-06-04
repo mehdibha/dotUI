@@ -1,5 +1,7 @@
 import { deflateRaw, inflateRaw } from "pako";
 
+import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
+
 import { DEFAULTS } from "./defaults";
 import { fromCompact } from "./types";
 
@@ -81,7 +83,10 @@ export function encodePreset(ds: DesignSystem): string | undefined {
 
 	if (ds.density !== DEFAULTS.density) compact.d = ds.density;
 
-	if (!compact.p && !compact.t && !compact.d) return undefined;
+	// Store the whole (small) color recipe only when it differs from the default palette.
+	if (ds.color && JSON.stringify(ds.color) !== JSON.stringify(DEFAULT_COLOR_CONFIG)) compact.c = ds.color;
+
+	if (!compact.p && !compact.t && !compact.d && !compact.c) return undefined;
 
 	const json = JSON.stringify(compact);
 	const compressed = deflateRaw(json, { level: 9 });
@@ -104,6 +109,7 @@ export function decodePreset(encoded: string): DesignSystem {
 			componentParams: mergeNested(DEFAULTS.componentParams, ds.componentParams),
 			tokens: { ...DEFAULTS.tokens, ...ds.tokens },
 			density: ds.density,
+			color: ds.color,
 		};
 	} catch {
 		return DEFAULTS;

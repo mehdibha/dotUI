@@ -4,6 +4,10 @@ import { useCallback, useMemo } from "react";
 
 import { getRouteApi } from "@tanstack/react-router";
 
+import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
+
+import type { PaletteSeeds } from "@/registry/theme";
+
 import { decodePreset, encodePreset } from "./codec";
 import { DEFAULTS } from "./defaults";
 
@@ -62,5 +66,16 @@ export function useDesignSystem() {
 		[setDesignSystem],
 	);
 
-	return { designSystem, setDesignSystem, setComponentParam, setToken, setDensity };
+	/** Update one palette seed of the color recipe (starting from the default palette). */
+	const setColorSeed = useCallback(
+		(seed: keyof PaletteSeeds, value: string) => {
+			setDesignSystem((prev) => {
+				const base = prev.color ?? DEFAULT_COLOR_CONFIG;
+				return { ...prev, color: { ...base, seeds: { ...base.seeds, [seed]: value } } };
+			});
+		},
+		[setDesignSystem],
+	);
+
+	return { designSystem, setDesignSystem, setComponentParam, setToken, setDensity, setColorSeed };
 }

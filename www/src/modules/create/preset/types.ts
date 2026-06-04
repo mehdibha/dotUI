@@ -1,3 +1,4 @@
+import type { ColorConfig } from "@/registry/theme";
 import type { Density } from "@/registry/types";
 
 export type { Density };
@@ -8,11 +9,13 @@ export type { Density };
  *   p = component params (per-component values, e.g. { alert: { style: "sousse", radius: "--radius-md" } })
  *   t = global theme tokens (CSS vars not owned by any component, e.g. { "--radius-factor": "1.25" })
  *   d = density
+ *   c = color config (algorithm + palette seeds); present only when it differs from the default
  */
 export type DesignSystemState = {
 	p?: Record<string, Record<string, string>>;
 	t?: Record<string, string>;
 	d?: Density;
+	c?: ColorConfig;
 };
 
 /**
@@ -24,12 +27,15 @@ export type DesignSystem = {
 	/** Global CSS vars not owned by any component (radius factor, cursor, palette overrides, etc.). */
 	tokens: Record<string, string>;
 	density: Density;
+	/** Generative color recipe; `undefined` means the default generated palette. */
+	color?: ColorConfig;
 };
 
 export function toCompact(ds: DesignSystem): DesignSystemState {
 	const state: DesignSystemState = {};
 	if (Object.keys(ds.componentParams).length > 0) state.p = ds.componentParams;
 	if (Object.keys(ds.tokens).length > 0) state.t = ds.tokens;
+	if (ds.color) state.c = ds.color;
 	return state;
 }
 
@@ -38,5 +44,6 @@ export function fromCompact(state: DesignSystemState): DesignSystem {
 		componentParams: state.p ?? {},
 		tokens: state.t ?? {},
 		density: state.d ?? "compact",
+		color: state.c,
 	};
 }
