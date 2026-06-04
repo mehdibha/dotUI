@@ -88,4 +88,30 @@ describe("emitInitItem", () => {
 		expect(item.css?.[":root"]).toMatchObject({ "--dotui-density": "default" });
 		expect(baseRegistryCss.css[":root"]).not.toHaveProperty("--dotui-density");
 	});
+
+	test("a custom color recipe regenerates the :root + .dark palette ramps", () => {
+		const item = emitInitItem({
+			baseRegistryCss,
+			preset: {
+				density: "compact",
+				componentParams: {},
+				color: {
+					algorithm: "oklch",
+					seeds: { neutral: "#808080", accent: "#ef4444", success: "#22c55e", warning: "#eab308", danger: "#ef4444" },
+				},
+			},
+			registryRoot: "https://dotui.com",
+		});
+
+		const root = (item.css?.[":root"] ?? {}) as Record<string, string>;
+		const dark = (item.css?.[".dark"] ?? {}) as Record<string, string>;
+		expect(root["--accent-500"]).toMatch(/^oklch\(/);
+		expect(root["--neutral-50"]).not.toBe("hsl(0, 0%, 98%)");
+		// #ef4444 is red — hue far from the default blue (~250).
+		const hue = Number(root["--accent-500"]?.match(/oklch\([\d.]+ [\d.]+ ([\d.]+)\)/)?.[1]);
+		expect(hue).toBeGreaterThan(0);
+		expect(hue).toBeLessThan(60);
+		expect(dark["--accent-50"]).toMatch(/^oklch\(/);
+		expect(dark["--neutral-950"]).toMatch(/^oklch\(/);
+	});
 });

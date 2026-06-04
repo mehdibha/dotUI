@@ -49,6 +49,7 @@ async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
 		const { decodePreset } = await import("@/modules/create/preset/codec");
 		const ds = decodePreset(encoded);
 		return {
+			color: ds.color,
 			density: ds.density,
 			componentParams: ds.componentParams,
 		};

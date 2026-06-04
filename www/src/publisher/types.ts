@@ -7,6 +7,7 @@
  * a flat `tv` config, then serialized.
  */
 
+import type { ColorConfig } from "@/registry/theme";
 import type { Density, RegistryItem, RegistryItemFile } from "@/registry/types";
 
 /**
@@ -79,6 +80,8 @@ export interface PublishPreset {
 	density: Density;
 	/** Per-component param selections: { button: { variant: "primary", ... } } */
 	componentParams: Record<string, Record<string, string>>;
+	/** Generative color recipe; when present, its ramps override the static base palette. */
+	color?: ColorConfig;
 }
 
 /** Subset of `RegistryItemFile` we emit. */
