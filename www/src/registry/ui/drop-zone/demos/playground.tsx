@@ -2,15 +2,6 @@
 
 import { DropZone, DropZoneLabel } from "@/registry/ui/drop-zone";
 
-interface DropZonePlaygroundProps {
-	label?: string;
-	isDisabled?: boolean;
-}
-
-export function DropZonePlayground({ label = "Drop files here", isDisabled = false }: DropZonePlaygroundProps) {
-	return (
-		<DropZone isDisabled={isDisabled}>
-			<DropZoneLabel>{label}</DropZoneLabel>
-		</DropZone>
-	);
+export default function Demo({ label = "Drop files here", isDisabled = false } = {}) {
+	return <DropZone isDisabled={isDisabled}>{label && <DropZoneLabel>{label}</DropZoneLabel>}</DropZone>;
 }

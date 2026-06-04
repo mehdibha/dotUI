@@ -6,7 +6,17 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Breadcrumbs.html
 ---
 
-<Demo name="breadcrumbs/demos/basic" />
+<InteractiveDemo
+	name="breadcrumbs"
+	engine="source"
+	controls={[
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
+/>
 
 ## Installation
 
@@ -37,21 +47,6 @@ import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from
 	</BreadcrumbItem>
 </Breadcrumbs>
 ```
-
-## Playground
-
-Use the controls below to experiment with different breadcrumbs props and see the live preview and code update.
-
-<InteractiveDemo
-	name="breadcrumbs"
-	controls={[
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-	]}
-/>
 
 ## Framework Setup
 

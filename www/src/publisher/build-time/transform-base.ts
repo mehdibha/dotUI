@@ -45,14 +45,14 @@ function toCamelCase(slug: string): string {
 
 /* ----------------------- import rewriting ----------------------- */
 
-const REGISTRY_PATH_REWRITES: Array<[RegExp, string]> = [
+export const REGISTRY_PATH_REWRITES: Array<[RegExp, string]> = [
 	[/^@\/registry\/ui\//, "@/components/ui/"],
 	[/^@\/registry\/hooks\//, "@/hooks/"],
 	[/^@\/registry\/lib\//, "@/lib/"],
 	[/^@\/registry\/icons\b/, "@/components/icons"],
 ];
 
-function rewriteImportPath(specifier: string): string | undefined {
+export function rewriteImportPath(specifier: string): string | undefined {
 	for (const [pattern, replacement] of REGISTRY_PATH_REWRITES) {
 		if (pattern.test(specifier)) {
 			return specifier.replace(pattern, replacement);

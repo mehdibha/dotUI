@@ -1,23 +1,15 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage, type AvatarProps } from "@/registry/ui/avatar";
 
-interface AvatarPlaygroundProps {
-	src?: string;
-	alt?: string;
-	fallback?: string;
-	size?: "sm" | "md" | "lg";
-}
-
-export function AvatarPlayground({
+export default function Demo({
 	src = "https://github.com/mehdibha.png",
-	alt = "@mehdibha",
 	fallback = "MB",
 	size = "md",
-}: AvatarPlaygroundProps) {
+}: { src?: string; fallback?: string; size?: AvatarProps["size"] } = {}) {
 	return (
 		<Avatar size={size}>
-			<AvatarImage src={src} alt={alt} />
+			<AvatarImage data-control-target src={src} alt="@mehdibha" />
 			<AvatarFallback>{fallback}</AvatarFallback>
 		</Avatar>
 	);

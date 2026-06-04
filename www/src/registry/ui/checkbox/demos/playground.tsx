@@ -3,19 +3,17 @@
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import { Label } from "@/registry/ui/field";
 
-interface CheckboxPlaygroundProps {
-	label?: string;
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-	isInvalid?: boolean;
-	isIndeterminate?: boolean;
-}
-
-export function CheckboxPlayground({ label = "Accept terms", ...props }: CheckboxPlaygroundProps) {
+export default function Demo({
+	label = "Accept terms",
+	isDisabled = false,
+	isReadOnly = false,
+	isInvalid = false,
+	isIndeterminate = false,
+} = {}) {
 	return (
-		<Checkbox {...props}>
+		<Checkbox isDisabled={isDisabled} isReadOnly={isReadOnly} isInvalid={isInvalid} isIndeterminate={isIndeterminate}>
 			<CheckboxControl />
-			<Label>{label}</Label>
+			{label && <Label>{label}</Label>}
 		</Checkbox>
 	);
 }

@@ -7,7 +7,27 @@ links:
 wip: true
 ---
 
-<Demo name="dialog/demos/basic" />
+<InteractiveDemo
+	name="dialog"
+	engine="source"
+	controls={[
+		{
+			type: "string",
+			name: "title",
+			defaultValue: "Dialog Title",
+		},
+		{
+			type: "string",
+			name: "description",
+			defaultValue: "This is a dialog description.",
+		},
+		{
+			type: "boolean",
+			name: "isDismissable",
+			defaultValue: true,
+		},
+	]}
+/>
 
 ## Installation
 
@@ -50,31 +70,6 @@ import { Overlay } from "@/components/ui/overlay";
 	</Overlay>
 </Dialog>
 ```
-
-## Playground
-
-Use the controls below to experiment with different dialog props and see the live preview and code update.
-
-<InteractiveDemo
-	name="dialog"
-	controls={[
-		{
-			type: "string",
-			name: "title",
-			defaultValue: "Dialog Title",
-		},
-		{
-			type: "string",
-			name: "description",
-			defaultValue: "This is a dialog description.",
-		},
-		{
-			type: "boolean",
-			name: "isDismissable",
-			defaultValue: true,
-		},
-	]}
-/>
 
 ## Examples
 

@@ -2,11 +2,9 @@
 
 import { Skeleton } from "@/registry/ui/skeleton";
 
-interface SkeletonPlaygroundProps {
-	isLoading?: boolean;
-}
+import type { SkeletonProps } from "@/registry/ui/skeleton";
 
-export function SkeletonPlayground({ isLoading = true }: SkeletonPlaygroundProps) {
+export default function Demo({ isLoading = true }: SkeletonProps = {}) {
 	return (
 		<Skeleton isLoading={isLoading}>
 			<div className="flex items-center gap-4">

@@ -7,7 +7,11 @@ links:
 wip: true
 ---
 
-<Demo name="toggle-button/demos/default" />
+<InteractiveDemo
+	name="toggle-button"
+	engine="source"
+	controls={[{ name: "children", type: "string", defaultValue: "Pin" }, "variant", "size", "isIconOnly", "isDisabled"]}
+/>
 
 ## Installation
 
@@ -30,16 +34,6 @@ import { ToggleButton } from "@/components/ui/toggle-button";
 	Pin
 </ToggleButton>
 ```
-
-## Playground
-
-Use the controls below to experiment with different toggle button props and see the live preview and code update.
-
-<InteractiveDemo
-	name="toggle-button"
-	fallback={`<ToggleButton>Pin</ToggleButton>`}
-	controls={[{ name: "children", type: "string", defaultValue: "Pin" }, "variant", "size", "isIconOnly", "isDisabled"]}
-/>
 
 ## Examples
 

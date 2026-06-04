@@ -1,12 +1,9 @@
-"use client";
+import { Badge, type BadgeProps } from "@/registry/ui/badge";
 
-import { Badge } from "@/registry/ui/badge";
-
-interface BadgePlaygroundProps {
-	children?: string;
-	variant?: "neutral" | "accent" | "success" | "warning" | "danger" | "info";
-}
-
-export function BadgePlayground({ children = "Badge", variant }: BadgePlaygroundProps) {
-	return <Badge variant={variant}>{children}</Badge>;
+export default function Demo({ children = "Badge", variant = "neutral", appearance = "solid" }: BadgeProps = {}) {
+	return (
+		<Badge variant={variant} appearance={appearance}>
+			{children}
+		</Badge>
+	);
 }

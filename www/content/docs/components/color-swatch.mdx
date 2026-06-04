@@ -7,7 +7,17 @@ links:
 wip: true
 ---
 
-<Demo name="color-swatch/demos/default" />
+<InteractiveDemo
+	name="color-swatch"
+	engine="source"
+	controls={[
+		{
+			type: "string",
+			name: "color",
+			defaultValue: "#ff0000",
+		},
+	]}
+/>
 
 ## Installation
 
@@ -26,21 +36,6 @@ import { ColorSwatch } from "@/components/ui/color-swatch";
 ```tsx
 <ColorSwatch color="#ff0000" />
 ```
-
-## Playground
-
-Use the controls below to experiment with different color swatch props and see the live preview and code update.
-
-<InteractiveDemo
-	name="color-swatch"
-	controls={[
-		{
-			type: "string",
-			name: "color",
-			defaultValue: "#ff0000",
-		},
-	]}
-/>
 
 ## Examples
 

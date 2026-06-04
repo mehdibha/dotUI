@@ -7,37 +7,9 @@ links:
 wip: true
 ---
 
-<Demo name="time-field/demos/basic" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/time-field
-```
-
-## Usage
-
-Use `TimeField` to allow users to enter and edit time values using a keyboard.
-
-```tsx
-import { TimeField } from "@/components/ui/time-field";
-import { DateInput } from "@/components/ui/input";
-import { Label } from "@/components/ui/field";
-```
-
-```tsx
-<TimeField>
-	<Label>Time</Label>
-	<DateInput />
-</TimeField>
-```
-
-## Playground
-
-Use the controls below to experiment with different time field props and see the live preview and code update.
-
 <InteractiveDemo
 	name="time-field"
+	engine="source"
 	controls={[
 		{
 			type: "string",
@@ -61,6 +33,29 @@ Use the controls below to experiment with different time field props and see the
 		},
 	]}
 />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/time-field
+```
+
+## Usage
+
+Use `TimeField` to allow users to enter and edit time values using a keyboard.
+
+```tsx
+import { TimeField } from "@/components/ui/time-field";
+import { DateInput } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
+
+```tsx
+<TimeField>
+	<Label>Time</Label>
+	<DateInput />
+</TimeField>
+```
 
 ## Examples
 

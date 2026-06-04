@@ -1,30 +1,17 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { Button, type ButtonProps } from "@/registry/ui/button";
 
-import { Button } from "@/registry/ui/button";
-
-/**
- * Button playground component.
- * Renders a Button with optional prefix/suffix icons.
- */
-
-interface ButtonPlaygroundProps {
-	children?: string;
-	variant?: "default" | "primary" | "quiet" | "link" | "warning" | "danger";
-	size?: "sm" | "md" | "lg";
-	isDisabled?: boolean;
-	isPending?: boolean;
-	prefix?: ReactNode;
-	suffix?: ReactNode;
-}
-
-export function ButtonPlayground({ children = "Button", prefix, suffix, ...props }: ButtonPlaygroundProps) {
+export default function Demo({
+	children = "Button",
+	variant = "default",
+	size = "md",
+	isDisabled = false,
+	isPending = false,
+}: ButtonProps = {}) {
 	return (
-		<Button {...props}>
-			{prefix}
+		<Button variant={variant} size={size} isDisabled={isDisabled} isPending={isPending}>
 			{children}
-			{suffix}
 		</Button>
 	);
 }

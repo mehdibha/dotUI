@@ -1,49 +1,21 @@
 "use client";
 
-import type { ReactNode } from "react";
-
 import { Description, FieldError, Label } from "@/registry/ui/field";
-import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input";
+import { Input } from "@/registry/ui/input";
 import { TextField } from "@/registry/ui/text-field";
 
-/**
- * TextField playground component.
- * Renders a TextField with optional Label, Description, FieldError, and icons.
- */
-
-interface TextFieldPlaygroundProps {
-	label?: string;
-	description?: string;
-	errorMessage?: string;
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-	isInvalid?: boolean;
-	startIcon?: ReactNode;
-	endIcon?: ReactNode;
-}
-
-export function TextFieldPlayground({
-	label,
-	description,
-	errorMessage,
-	startIcon,
-	endIcon,
-	...props
-}: TextFieldPlaygroundProps) {
-	const hasIcons = startIcon || endIcon;
-
+export default function Demo({
+	label = "Email",
+	description = "",
+	errorMessage = "",
+	isDisabled = false,
+	isReadOnly = false,
+	isInvalid = false,
+} = {}) {
 	return (
-		<TextField {...props}>
+		<TextField isDisabled={isDisabled} isReadOnly={isReadOnly} isInvalid={isInvalid}>
 			{label && <Label>{label}</Label>}
-			{hasIcons ? (
-				<InputGroup>
-					{startIcon && <InputGroupAddon>{startIcon}</InputGroupAddon>}
-					<Input />
-					{endIcon && <InputGroupAddon>{endIcon}</InputGroupAddon>}
-				</InputGroup>
-			) : (
-				<Input />
-			)}
+			<Input />
 			{description && <Description>{description}</Description>}
 			{errorMessage && <FieldError>{errorMessage}</FieldError>}
 		</TextField>

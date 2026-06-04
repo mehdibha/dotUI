@@ -7,37 +7,9 @@ links:
 wip: true
 ---
 
-<Demo name="search-field/demos/default" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/search-field
-```
-
-## Usage
-
-Use `SearchField` to allow users to enter and clear a search query.
-
-```tsx
-import { SearchField } from "@/components/ui/search-field";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/field";
-```
-
-```tsx
-<SearchField>
-	<Label>Search</Label>
-	<Input />
-</SearchField>
-```
-
-## Playground
-
-Use the controls below to experiment with different search field props and see the live preview and code update.
-
 <InteractiveDemo
 	name="search-field"
+	engine="source"
 	controls={[
 		{
 			type: "string",
@@ -61,6 +33,29 @@ Use the controls below to experiment with different search field props and see t
 		},
 	]}
 />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/search-field
+```
+
+## Usage
+
+Use `SearchField` to allow users to enter and clear a search query.
+
+```tsx
+import { SearchField } from "@/components/ui/search-field";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
+
+```tsx
+<SearchField>
+	<Label>Search</Label>
+	<Input />
+</SearchField>
+```
 
 ## Examples
 

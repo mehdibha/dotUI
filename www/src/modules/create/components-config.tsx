@@ -2,7 +2,7 @@ import { ChevronDownIcon, ChevronRightIcon, SlidersHorizontalIcon } from "lucide
 import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { BLUR_OPTIONS, CURSOR_OPTIONS, OPACITY_OPTIONS, RADIUS_OPTIONS, SHADOW_OPTIONS } from "@/publisher/token-map";
-import { COLOR_TOKENS } from "@/registry/base/tokens";
+import { colorTokenNames } from "@/registry/theme";
 import { Button } from "@/registry/ui/button";
 import { Description, Label } from "@/registry/ui/field";
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
@@ -100,12 +100,10 @@ const cursorOptions = CURSOR_OPTIONS;
 
 const SPACING_REM_PER_UNIT = 0.25;
 
-const colorOptions = Object.entries(COLOR_TOKENS)
-	.filter(([, token]) => token.categories?.includes("background"))
-	.map(([name]) => ({
-		label: toTitleCase(name.replace(/^color-/, "")),
-		value: `--${name}`,
-	}));
+const colorOptions = colorTokenNames("background").map((name) => ({
+	label: toTitleCase(name.replace(/^color-/, "")),
+	value: `--${name}`,
+}));
 
 interface ComponentDetailViewProps {
 	componentName: string;

@@ -2,17 +2,13 @@
 
 import { Button } from "@/registry/ui/button";
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu";
-import { Popover } from "@/registry/ui/popover";
+import { Popover, type PopoverProps } from "@/registry/ui/popover";
 
-interface MenuPlaygroundProps {
-	placement?: "bottom" | "top" | "left" | "right";
-}
-
-export function MenuPlayground({ placement = "bottom" }: MenuPlaygroundProps) {
+export default function Demo({ placement = "bottom" }: PopoverProps = {}) {
 	return (
 		<Menu>
 			<Button>Open Menu</Button>
-			<Popover placement={placement}>
+			<Popover data-control-target placement={placement}>
 				<MenuContent>
 					<MenuItem>Edit</MenuItem>
 					<MenuItem>Duplicate</MenuItem>

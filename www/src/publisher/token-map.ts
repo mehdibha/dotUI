@@ -14,7 +14,7 @@
  * Not in this table:
  *   - `spacing`  — driven by a slider over `calc(var(--spacing) * N)`; the
  *                  publisher emits Tailwind arbitrary values.
- *   - `color`    — derived from `COLOR_TOKENS`; CSS vars are kept in the
+ *   - `color`    — derived from `DEFAULT_SEMANTICS` (registry/theme); CSS vars are kept in the
  *                  base item rather than rewritten inline.
  *   - `font-size` — no scalar params use it yet.
  */

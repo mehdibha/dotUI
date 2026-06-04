@@ -1,33 +1,26 @@
 "use client";
 
-import type { ReactNode } from "react";
-
 import { PinIcon } from "lucide-react";
 
 import { ToggleButton } from "@/registry/ui/toggle-button";
 
-interface ToggleButtonPlaygroundProps {
+export default function Demo({
+	children = "Pin",
+	variant = "default",
+	size = "md",
+	isIconOnly = false,
+	isDisabled = false,
+}: {
 	children?: string;
 	variant?: "default" | "primary" | "quiet";
-	size?: "xs" | "sm" | "md" | "lg";
-	isDisabled?: boolean;
+	size?: "lg" | "md" | "sm" | "xs";
 	isIconOnly?: boolean;
-	prefix?: ReactNode;
-	suffix?: ReactNode;
-}
-
-export function ToggleButtonPlayground({
-	children = "Pin",
-	prefix = <PinIcon data-icon-start="" className="rotate-45" />,
-	suffix,
-	isIconOnly,
-	...props
-}: ToggleButtonPlaygroundProps) {
+	isDisabled?: boolean;
+} = {}) {
 	return (
-		<ToggleButton aria-label={isIconOnly ? "Toggle pin" : undefined} isIconOnly={isIconOnly} {...props}>
-			{prefix}
-			{!isIconOnly && children}
-			{suffix}
+		<ToggleButton variant={variant} size={size} isIconOnly={isIconOnly} isDisabled={isDisabled} aria-label="Toggle pin">
+			<PinIcon data-icon-start="" className="rotate-45" />
+			{children}
 		</ToggleButton>
 	);
 }

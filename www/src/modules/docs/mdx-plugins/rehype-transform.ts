@@ -10,6 +10,7 @@ import type { Plugin } from "unified";
 
 import { loadApiReference } from "../../references/loader";
 import { type TransformedReference, transformReference } from "../../references/transform";
+import { buildSourceOverlay, type ControlSelection } from "../codegen/source-overlay";
 import {
 	buildControlsFromReference,
 	enrichControlsForSerialization,
@@ -17,6 +18,7 @@ import {
 } from "../interactive-demo/process-controls";
 import { transformDemo } from "./transformer";
 
+import type { CodeTemplate } from "../codegen/code-template";
 import type { ControlInput, InteractiveDemoNodeInfo, ProcessedInteractiveDemo } from "../interactive-demo/types";
 
 // ============================================================================
@@ -135,8 +137,10 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (options = {}) 
 			} else if (node.name === "InteractiveDemo") {
 				const name = extractNameAttribute(node);
 				const controls = extractControlsAttribute(node);
+				const engine = (extractStringAttribute(node, "engine") as "source" | null) ?? "legacy";
+				const file = extractStringAttribute(node, "file") ?? undefined;
 				if (name && controls) {
-					interactiveDemoNodes.push({ node, name, controls });
+					interactiveDemoNodes.push({ node, name, controls, engine, file });
 				}
 			}
 		});
@@ -159,7 +163,9 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (options = {}) 
 				? Promise.all(referenceNodes.map((info) => processReferenceNode(info, highlighter)))
 				: Promise.resolve([]),
 			hasInteractiveDemos
-				? Promise.all(interactiveDemoNodes.map((info) => processInteractiveDemoNode(info, highlighter)))
+				? Promise.all(
+						interactiveDemoNodes.map((info) => processInteractiveDemoNode(info, highlighter, registryBasePath)),
+					)
 				: Promise.resolve([]),
 		]);
 
@@ -182,13 +188,14 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (options = {}) 
 			});
 		}
 
-		// InteractiveDemo imports
+		// InteractiveDemo imports. SourceFirst demos are default-exported `Demo`
+		// bound to the playground import name; legacy demos are named exports.
 		for (const interactiveDemo of successfulInteractiveDemos) {
 			allImports.push({
 				importName: interactiveDemo.importName,
 				importPath: interactiveDemo.importPath,
-				isDefault: false,
-				namedExport: interactiveDemo.importName,
+				isDefault: interactiveDemo.isSourceDefault ?? false,
+				namedExport: interactiveDemo.isSourceDefault ? undefined : interactiveDemo.importName,
 			});
 		}
 
@@ -327,109 +334,29 @@ function extractControlsAttribute(node: MdxJsxFlowElementHast): ControlInput[] |
 		return null;
 	}
 
-	// The value is an expression like {["variant", "size", { name: "children", defaultValue: "Button" }]}
+	// The value is an expression like {["variant", { name: "children", defaultValue: "Button" }]}.
+	// The MDX compiler populates `.value` with the raw expression SOURCE string; evaluate it
+	// directly at build time (trusted authored content). This handles negatives, nested objects,
+	// and arrays that the old hand-rolled ESTree walker silently dropped; bad input fails loud.
 	const exprValue = controlsAttr.value as MdxJsxAttributeValueExpression | undefined;
-	if (!exprValue?.data?.estree) {
-		return null;
+	const source = exprValue?.value;
+	if (!source || typeof source !== "string") {
+		throw new Error("[rehype-transform] <InteractiveDemo> controls={…} has no source expression");
 	}
 
+	let value: unknown;
 	try {
-		const estree = exprValue.data.estree as {
-			type: string;
-			body: Array<{
-				type: string;
-				expression?: {
-					type: string;
-					elements?: Array<unknown>;
-				};
-			}>;
-		};
-
-		// Program > ExpressionStatement > ArrayExpression
-		const body = estree.body[0];
-		if (body?.type !== "ExpressionStatement") {
-			return null;
-		}
-
-		const expr = body.expression;
-		if (expr?.type !== "ArrayExpression" || !expr.elements) {
-			return null;
-		}
-
-		const controls: ControlInput[] = [];
-
-		for (const element of expr.elements) {
-			const parsed = parseControlElement(element);
-			if (parsed) {
-				controls.push(parsed);
-			}
-		}
-
-		return controls;
+		// oxlint-disable-next-line no-new-func -- build-time eval of a trusted authored MDX expression
+		value = new Function(`"use strict"; return (${source});`)();
 	} catch (error) {
-		console.error("[rehype-transform] Failed to parse controls attribute:", error);
-		return null;
+		throw new Error(
+			`[rehype-transform] Failed to evaluate controls={…} (${(error as Error).message}). Source: ${source}`,
+		);
 	}
-}
-
-function parseControlElement(element: unknown): ControlInput | null {
-	if (!element || typeof element !== "object") {
-		return null;
+	if (!Array.isArray(value)) {
+		throw new Error(`[rehype-transform] controls must be an array; got ${typeof value}`);
 	}
-
-	const node = element as { type: string; value?: unknown; properties?: unknown[] };
-
-	// String literal: "variant"
-	if (node.type === "Literal" && typeof node.value === "string") {
-		return node.value;
-	}
-
-	// Object expression: { name: "children", defaultValue: "Button" }
-	if (node.type === "ObjectExpression" && Array.isArray(node.properties)) {
-		const obj: Record<string, unknown> = {};
-
-		for (const prop of node.properties) {
-			const propNode = prop as {
-				type: string;
-				key?: { type: string; name?: string; value?: string };
-				value?: { type: string; value?: unknown; elements?: unknown[] };
-			};
-
-			if (propNode.type !== "Property" || !propNode.key || !propNode.value) {
-				continue;
-			}
-
-			// Get property key
-			let key: string | undefined;
-			if (propNode.key.type === "Identifier") {
-				key = propNode.key.name;
-			} else if (propNode.key.type === "Literal") {
-				key = String(propNode.key.value);
-			}
-
-			if (!key) continue;
-
-			// Get property value
-			const valueNode = propNode.value;
-			if (valueNode.type === "Literal") {
-				obj[key] = valueNode.value;
-			} else if (valueNode.type === "ArrayExpression" && valueNode.elements) {
-				// Array of literals (e.g., options: ["a", "b", "c"])
-				obj[key] = valueNode.elements
-					.map((el) => {
-						const elNode = el as { type: string; value?: unknown };
-						return elNode.type === "Literal" ? elNode.value : null;
-					})
-					.filter((v): v is string | number | boolean => v !== null);
-			}
-		}
-
-		if (obj.name && typeof obj.name === "string") {
-			return obj as ControlInput;
-		}
-	}
-
-	return null;
+	return value as ControlInput[];
 }
 
 // ============================================================================
@@ -652,23 +579,48 @@ async function processInteractiveDemoNode(
 	info: InteractiveDemoNodeInfo,
 	// oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
 	highlighter: HighlighterGeneric<any, any>,
+	registryBasePath: string,
 ): Promise<ProcessedInteractiveDemo | null> {
 	try {
-		// 1. Build controls from API reference
-		const controls = await buildControlsFromReference(info.name, info.controls);
+		const isSource = info.engine === "source";
+		const fileSlug = info.file ?? "playground";
+
+		// SourceFirst reads the real demo source: defaults come from its param signature
+		// and the displayed code is generated by overlaying control values onto it.
+		let rawSource: string | undefined;
+		if (isSource) {
+			const demoPath = path.join(process.cwd(), registryBasePath, "ui", info.name, "demos", `${fileSlug}.tsx`);
+			rawSource = await fs.readFile(demoPath, "utf-8");
+		}
+
+		// 1. Build controls from API reference (+ param defaults for SourceFirst)
+		const controls = await buildControlsFromReference(info.name, info.controls, rawSource);
 
 		// 2. Enrich with highlighted types (HTML strings)
 		const enrichedControls = await enrichControlsForSerialization(info.name, controls, highlighter);
 
-		// 3. Generate import info
+		// 3. Import info — SourceFirst imports the default `Demo`; legacy a named export.
 		const importName = `${toPascalCase(info.name)}Playground`;
-		const importPath = `@/registry/ui/${info.name}/demos/playground`;
+		const importPath = `@/registry/ui/${info.name}/demos/${fileSlug}`;
+
+		// 4. SourceFirst: build the code template by overlaying control values onto the source.
+		let codeTemplate: CodeTemplate | undefined;
+		if (isSource && rawSource) {
+			const selections: ControlSelection[] = controls.map((c) => ({
+				name: c.name,
+				kind: c.type,
+				default: c.type === "icon" ? null : (((c as { defaultValue?: unknown }).defaultValue as never) ?? null),
+			}));
+			codeTemplate = await buildSourceOverlay({ source: rawSource, controls: selections, componentName: info.name });
+		}
 
 		return {
 			nodeInfo: info,
 			importName,
 			importPath,
 			controls: enrichedControls,
+			codeTemplate,
+			isSourceDefault: isSource,
 		};
 	} catch (error) {
 		console.error(`[rehype-transform] Failed to process interactive demo "${info.name}":`, error);
@@ -679,12 +631,13 @@ async function processInteractiveDemoNode(
 function transformInteractiveDemoNode(processed: ProcessedInteractiveDemo): void {
 	const { node } = processed.nodeInfo;
 
-	// Remove name and controls attributes (replaced with component and controls props)
+	// Strip now-inert authoring attributes (replaced with runtime props below).
 	node.attributes = node.attributes.filter(
-		(attr) => !(attr.type === "mdxJsxAttribute" && (attr.name === "name" || attr.name === "controls")),
+		(attr) =>
+			!(attr.type === "mdxJsxAttribute" && ["name", "controls", "engine", "file", "fallback"].includes(attr.name)),
 	);
 
-	// Add component attribute: component={ButtonPlayground}
+	// component={ButtonPlayground}
 	const componentAttr: MdxJsxAttribute = {
 		type: "mdxJsxAttribute",
 		name: "component",
@@ -707,11 +660,20 @@ function transformInteractiveDemoNode(processed: ProcessedInteractiveDemo): void
 	};
 	node.attributes.push(componentAttr);
 
-	// Add controls attribute with enriched controls data as JSON
-	const jsonString = JSON.stringify(processed.controls);
-	const controlsAttr: MdxJsxAttribute = {
+	// controls={JSON.parse("…")}
+	node.attributes.push(makeJsonParseAttr("controls", JSON.stringify(processed.controls)));
+
+	// codeTemplate={JSON.parse("…")} — SourceFirst only
+	if (processed.codeTemplate) {
+		node.attributes.push(makeJsonParseAttr("codeTemplate", JSON.stringify(processed.codeTemplate)));
+	}
+}
+
+/** Build a `name={JSON.parse("…")}` MDX attribute that revives JSON at render time. */
+function makeJsonParseAttr(name: string, jsonString: string): MdxJsxAttribute {
+	return {
 		type: "mdxJsxAttribute",
-		name: "controls",
+		name,
 		value: {
 			type: "mdxJsxAttributeValueExpression",
 			value: `JSON.parse(${JSON.stringify(jsonString)})`,
@@ -731,13 +693,7 @@ function transformInteractiveDemoNode(processed: ProcessedInteractiveDemo): void
 									computed: false,
 									optional: false,
 								},
-								arguments: [
-									{
-										type: "Literal",
-										value: jsonString,
-										raw: JSON.stringify(jsonString),
-									},
-								],
+								arguments: [{ type: "Literal", value: jsonString, raw: JSON.stringify(jsonString) }],
 								optional: false,
 							},
 						},
@@ -746,5 +702,4 @@ function transformInteractiveDemoNode(processed: ProcessedInteractiveDemo): void
 			},
 		} as MdxJsxAttributeValueExpression,
 	};
-	node.attributes.push(controlsAttr);
 }

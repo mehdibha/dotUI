@@ -4,16 +4,9 @@ import { DateField } from "@/registry/ui/date-field";
 import { Label } from "@/registry/ui/field";
 import { DateInput } from "@/registry/ui/input";
 
-interface DateFieldPlaygroundProps {
-	label?: string;
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-	isInvalid?: boolean;
-}
-
-export function DateFieldPlayground({ label = "Date", ...props }: DateFieldPlaygroundProps) {
+export default function Demo({ label = "Date", isDisabled = false, isReadOnly = false, isInvalid = false } = {}) {
 	return (
-		<DateField {...props}>
+		<DateField isDisabled={isDisabled} isReadOnly={isReadOnly} isInvalid={isInvalid}>
 			{label && <Label>{label}</Label>}
 			<DateInput />
 		</DateField>

@@ -7,7 +7,29 @@ links:
 wip: true
 ---
 
-<Demo name="color-slider/demos/default" />
+<InteractiveDemo
+	name="color-slider"
+	engine="source"
+	controls={[
+		{
+			type: "enum",
+			name: "channel",
+			options: ["hue", "saturation", "lightness", "alpha"],
+			defaultValue: "hue",
+		},
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "horizontal",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
+/>
 
 ## Installation
 
@@ -30,33 +52,6 @@ import { Label } from "@/components/ui/field";
 	<ColorSliderControl />
 </ColorSlider>
 ```
-
-## Playground
-
-Use the controls below to experiment with different color slider props and see the live preview and code update.
-
-<InteractiveDemo
-	name="color-slider"
-	controls={[
-		{
-			type: "enum",
-			name: "channel",
-			options: ["hue", "saturation", "lightness", "alpha"],
-			defaultValue: "hue",
-		},
-		{
-			type: "enum",
-			name: "orientation",
-			options: ["horizontal", "vertical"],
-			defaultValue: "horizontal",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-	]}
-/>
 
 ## Examples
 

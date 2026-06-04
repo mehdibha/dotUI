@@ -6,7 +6,17 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/TextField.html
 ---
 
-<Demo name="input/demos/default" />
+<InteractiveDemo
+	name="input"
+	engine="source"
+	fallback={`<Input placeholder="Enter text..." />`}
+	controls={[
+		{ name: "placeholder", type: "string", defaultValue: "Enter text..." },
+		{ name: "size", type: "enum", options: ["sm", "md", "lg"], defaultValue: "md" },
+		{ name: "disabled", type: "boolean", defaultValue: false },
+		{ name: "readOnly", type: "boolean", defaultValue: false },
+	]}
+/>
 
 ## Installation
 
@@ -35,21 +45,6 @@ Use the `size` prop to control the input height. Available sizes are `sm`, `md` 
 <Input size="md" />
 <Input size="lg" />
 ```
-
-## Playground
-
-Use the controls below to experiment with different input props and see the live preview and code update.
-
-<InteractiveDemo
-	name="input"
-	fallback={`<Input placeholder="Enter text..." />`}
-	controls={[
-		{ name: "placeholder", type: "string", defaultValue: "Enter text..." },
-		{ name: "size", type: "enum", options: ["sm", "md", "lg"], defaultValue: "md" },
-		{ name: "disabled", type: "boolean", defaultValue: false },
-		{ name: "readOnly", type: "boolean", defaultValue: false },
-	]}
-/>
 
 ## Examples
 

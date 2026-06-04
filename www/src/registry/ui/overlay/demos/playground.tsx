@@ -12,16 +12,13 @@ import {
 } from "@/registry/ui/dialog";
 import { Overlay } from "@/registry/ui/overlay";
 
-interface OverlayPlaygroundProps {
-	type?: "modal" | "popover" | "drawer";
-	mobileType?: "modal" | "drawer";
-}
+import type { OverlayProps } from "@/registry/ui/overlay";
 
-export function OverlayPlayground({ type = "modal", mobileType = "drawer" }: OverlayPlaygroundProps) {
+export default function Demo({ type = "modal", mobileType = "drawer" }: OverlayProps = {}) {
 	return (
 		<Dialog>
 			<Button>Open Overlay</Button>
-			<Overlay type={type} mobileType={mobileType}>
+			<Overlay data-control-target type={type} mobileType={mobileType}>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>Overlay Title</DialogTitle>

@@ -9,14 +9,10 @@ import {
 	CommandSectionHeader,
 } from "@/registry/ui/command";
 
-interface CommandPlaygroundProps {
-	placeholder?: string;
-}
-
-export function CommandPlayground({ placeholder = "Type a command..." }: CommandPlaygroundProps) {
+export default function Demo({ placeholder = "Type a command..." } = {}) {
 	return (
 		<Command className="w-[300px]">
-			<CommandInput placeholder={placeholder} />
+			<CommandInput data-control-target placeholder={placeholder} />
 			<CommandContent>
 				<CommandSection>
 					<CommandSectionHeader>Actions</CommandSectionHeader>

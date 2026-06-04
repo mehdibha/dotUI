@@ -1,15 +1,20 @@
 "use client";
 
-import { Table, TableContainer, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@/registry/ui/table";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableColumn,
+	TableContainer,
+	TableHeader,
+	TableRow,
+	type TableProps,
+} from "@/registry/ui/table";
 
-interface TablePlaygroundProps {
-	selectionMode?: "none" | "single" | "multiple";
-}
-
-export function TablePlayground({ selectionMode = "none" }: TablePlaygroundProps) {
+export default function Demo({ selectionMode = "none" }: TableProps = {}) {
 	return (
 		<TableContainer>
-			<Table aria-label="Files" selectionMode={selectionMode}>
+			<Table aria-label="Files" data-control-target selectionMode={selectionMode}>
 				<TableHeader>
 					<TableColumn isRowHeader>Name</TableColumn>
 					<TableColumn>Type</TableColumn>

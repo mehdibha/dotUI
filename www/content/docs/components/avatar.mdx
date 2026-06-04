@@ -3,7 +3,28 @@ title: Avatar
 description: An avatar is a visual representation of a user or entity.
 ---
 
-<Demo name="avatar/demos/default" />
+<InteractiveDemo
+	name="avatar"
+	engine="source"
+	controls={[
+		{
+			type: "string",
+			name: "src",
+			defaultValue: "https://github.com/mehdibha.png",
+		},
+		{
+			type: "string",
+			name: "fallback",
+			defaultValue: "M",
+		},
+		{
+			type: "enum",
+			name: "size",
+			options: ["sm", "md", "lg"],
+			defaultValue: "md",
+		},
+	]}
+/>
 
 ## Installation
 
@@ -25,32 +46,6 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 	<AvatarFallback>MB</AvatarFallback>
 </Avatar>
 ```
-
-## Playground
-
-Use the controls below to experiment with different avatar props and see the live preview and code update.
-
-<InteractiveDemo
-	name="avatar"
-	controls={[
-		{
-			type: "string",
-			name: "src",
-			defaultValue: "https://github.com/mehdibha.png",
-		},
-		{
-			type: "string",
-			name: "fallback",
-			defaultValue: "M",
-		},
-		{
-			type: "enum",
-			name: "size",
-			options: ["sm", "md", "lg"],
-			defaultValue: "md",
-		},
-	]}
-/>
 
 ## Examples
 

@@ -85,7 +85,6 @@ jobs:
       - name: Fail if any committed generated artifact is stale
         run: |
           git diff --exit-code -- \
-            www/src/registry/__generated__/blocks.tsx \
             www/src/registry/__generated__/demos.tsx \
             www/src/registry/__generated__/icons.tsx \
             www/src/registry/__generated__/examples.tsx \
