@@ -49,8 +49,13 @@ export const Route = createFileRoute("/_app/docs/$")({
 				{ name: "twitter:creator", content: siteConfig.twitter.creator },
 			],
 			links: [
-				// Markdown alternate for AI agents (also served via Accept negotiation).
-				{ rel: "alternate", type: "text/markdown", href: `${siteConfig.url}${url}.md` },
+				// Markdown alternate for AI agents — served by the /docs/{$}.md route.
+				// The docs index (url "/docs") is exposed as /docs/index.md by that route.
+				{
+					rel: "alternate",
+					type: "text/markdown",
+					href: `${siteConfig.url}${url === "/docs" ? "/docs/index" : url}.md`,
+				},
 			],
 		};
 	},

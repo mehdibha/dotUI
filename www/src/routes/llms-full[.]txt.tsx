@@ -5,7 +5,8 @@ import { docsSource, legalSource } from "@/lib/source";
 // Serves /llms-full.txt — the full markdown body of every docs + legal page,
 // concatenated into one file so an agent can ingest the entire documentation in
 // a single fetch. Generated from the same source the site renders, so it can
-// never drift. Prerendered to a static /llms-full.txt at build time.
+// never drift. Served dynamically by the serverless function (cached at the edge
+// via the Cache-Control header below).
 //
 // Spec: https://llmstxt.org/  (llms-full.txt = the full concatenated docs, not a
 // link index). Returned as text/plain; charset=utf-8 for the broadest client
@@ -42,7 +43,10 @@ export const Route = createFileRoute("/llms-full.txt")({
 				const body = [HEADER, ...docSections, ...legalSections].join("\n\n---\n\n") + "\n";
 
 				return new Response(body, {
-					headers: { "Content-Type": "text/plain; charset=utf-8" },
+					headers: {
+						"Content-Type": "text/plain; charset=utf-8",
+						"Cache-Control": "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800",
+					},
 				});
 			},
 		},

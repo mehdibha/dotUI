@@ -26,7 +26,10 @@ if (!existsSync(CONFIG)) {
 	process.exit(0);
 }
 
-// 1) Static markdown homepage (mirrors the /home.md route).
+// 1) Static markdown homepage. On Vercel this static file is what actually
+// serves for GET /home.md and the "/" Accept:text/markdown negotiation (it
+// shadows the src/routes/home[.]md.tsx route). Keep byte-identical to that
+// route's BODY.
 const HOME_MD = `# dotUI
 
 > Build your design system in seconds, so your app looks like your brand, not a preset.

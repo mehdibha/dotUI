@@ -4,7 +4,7 @@ export const siteConfig = {
 	url: "https://dotui.org",
 	name: "dotUI",
 	title: "dotUI",
-	description: "Build your design system in seconds, so your app look like your brand, not a preset.",
+	description: "Build your design system in seconds, so your app looks like your brand, not a preset.",
 	keywords: ["dotUI", "React", "Tailwind CSS", "React components", "React Aria", "Accessible components"],
 	authors: [
 		{
@@ -19,7 +19,7 @@ export const siteConfig = {
 	},
 	og: {
 		title: "Ship unique.",
-		description: "Build your design system in seconds, so your app look like your brand, not a preset.",
+		description: "Build your design system in seconds, so your app looks like your brand, not a preset.",
 	},
 	links: {
 		github: "https://github.com/mehdibha/dotUI",

@@ -7,7 +7,12 @@ export const Route = createFileRoute("/_app/docs/{$}.md")({
 		handlers: {
 			GET: async ({ params }) => {
 				const slugs = params._splat?.split("/") ?? [];
-				const page = docsSource.getPage(slugs);
+				let page = docsSource.getPage(slugs);
+				// The docs index lives at /docs (empty slugs); serve it as /docs/index.md
+				// so the index page can advertise a working markdown alternate.
+				if (!page && slugs.length === 1 && slugs[0] === "index") {
+					page = docsSource.getPage([]) ?? docsSource.getPage(["index"]);
+				}
 
 				if (!page) {
 					return new Response("Not found", { status: 404 });
