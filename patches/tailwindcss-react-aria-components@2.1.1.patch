@@ -1,0 +1,30 @@
+diff --git a/src/index.js b/src/index.js
+index 9c948a49d3391a7c97dfe57864703d96097aa23f..37f1ddbefa403d616d5d633d3c018caee21f78d8 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -94,12 +94,21 @@ let getSelector = (prefix, attributeName, attributeValue) => {
+     : `[data-${attributeName}]`;
+   let nativeSelector = nativeVariantSelectors.get(attributeName);
+   if (prefix === '' && nativeSelector) {
+-    let wrappedNativeSelector = `&:where(:not([data-rac]))${nativeSelector}`;
+-    let nativeSelectorGenerator = wrappedNativeSelector;
++    // Hover keeps its `@media (hover: hover)` wrapper and two-rule shape. It
++    // can't be a single selector, so its `not-hover:` negation stays
++    // unsupported (the same limitation native Tailwind has).
+     if (nativeSelector === ':hover') {
+-      nativeSelectorGenerator = wrap => `@media (hover: hover) { ${wrap(wrappedNativeSelector)} }`;
++      let wrappedNativeSelector = `&:where(:not([data-rac]))${nativeSelector}`;
++      let nativeSelectorGenerator = wrap => `@media (hover: hover) { ${wrap(wrappedNativeSelector)} }`;
++      return [`&:where([data-rac])${baseSelector}`, nativeSelectorGenerator];
+     }
+-    return [`&:where([data-rac])${baseSelector}`, nativeSelectorGenerator];
++    // Combine the RAC data-attribute selector and the native pseudo-class into
++    // a SINGLE `:is()` selector. Emitting them as two sibling rules (the old
++    // behavior) makes Tailwind's `not-*` compound walker bail out and silently
++    // drop utilities like `not-invalid:`, so the focus ring on valid inputs
++    // disappeared. `:where()` keeps specificity at (0,1,0), so the cascade is
++    // unchanged. See adobe/react-spectrum#9974.
++    return `&:is(:where([data-rac])${baseSelector}, :where(:not([data-rac]))${nativeSelector})`;
+   } else if (prefix === '' && nativeMergeSelectors.has(attributeName)) {
+     return [`&${baseSelector}`, `&${nativeMergeSelectors.get(attributeName)}`];
+   } else {
