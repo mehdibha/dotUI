@@ -1,6 +1,8 @@
 "use client";
 
-import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
+import { useMemo } from "react";
+
+import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme";
 import { Button } from "@/registry/ui/button";
 import { ColorEditor } from "@/registry/ui/color-editor";
 import { ColorPicker } from "@/registry/ui/color-picker";
@@ -21,13 +23,18 @@ const SEED_FIELDS: ReadonlyArray<{ label: string; key: keyof PaletteSeeds }> = [
 	{ label: "Danger", key: "danger" },
 ];
 
+const RAMP_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"] as const;
+
 export function ColorsConfig() {
 	const { designSystem, setColorSeed } = useDesignSystem();
-	const seeds = designSystem.color?.seeds ?? DEFAULT_COLOR_CONFIG.seeds;
+	const config = designSystem.color ?? DEFAULT_COLOR_CONFIG;
+	const seeds = config.seeds;
+	const resolved = useMemo(() => resolveColorConfig(config), [config]);
 
 	return (
 		<div className="-mt-6 flex flex-col gap-4">
 			<p className="text-xs text-fg-muted">Pick brand + status seeds — the ramps regenerate live.</p>
+
 			<div className="grid grid-cols-2 gap-4">
 				{SEED_FIELDS.map(({ label, key }) => (
 					<ColorPicker
@@ -53,6 +60,26 @@ export function ColorsConfig() {
 						)}
 					</ColorPicker>
 				))}
+			</div>
+
+			<div className="flex flex-col gap-1.5">
+				<span className="pl-1 text-xs font-medium text-fg-muted">Generated ramps</span>
+				{RAMP_ORDER.map((palette) => {
+					const ramp = resolved.light[palette];
+					if (!ramp) return null;
+					return (
+						<div key={palette} className="flex overflow-hidden rounded-md" title={palette}>
+							{Object.entries(ramp).map(([step, value]) => (
+								<div
+									key={step}
+									className="h-5 flex-1"
+									style={{ backgroundColor: value }}
+									title={`--${palette}-${step}: ${value}`}
+								/>
+							))}
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);
