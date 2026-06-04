@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
+import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Dialog, DialogContent } from "@/registry/ui/dialog";
 import { Field, Label } from "@/registry/ui/field";
@@ -103,16 +104,19 @@ function ContextualHelp({ name, reference }: { name: string; reference?: Seriali
  * Control components for the interactive demo.
  */
 
+type ControlsLayout = "horizontal" | "vertical";
+
 interface ControlRendererProps {
 	control: SerializableControl;
 	value: unknown;
 	onChange: (name: string, value: unknown) => void;
+	layout: ControlsLayout;
 }
 
-export function ControlRenderer({ control, value, onChange }: ControlRendererProps) {
+export function ControlRenderer({ control, value, onChange, layout }: ControlRendererProps) {
 	switch (control.type) {
 		case "boolean":
-			return <BooleanControlRenderer control={control} value={value as boolean} onChange={onChange} />;
+			return <BooleanControlRenderer control={control} value={value as boolean} onChange={onChange} layout={layout} />;
 		case "string":
 			return <StringControlRenderer control={control} value={value as string} onChange={onChange} />;
 		case "number":
@@ -130,11 +134,21 @@ interface BooleanControlRendererProps {
 	control: SerializableBooleanControl;
 	value: boolean;
 	onChange: (name: string, value: unknown) => void;
+	layout: ControlsLayout;
 }
 
-function BooleanControlRenderer({ control, value, onChange }: BooleanControlRendererProps) {
+/**
+ * In the inline-column (horizontal) layout the switch sits on one row with its
+ * label (label left, switch right); in the bottom-bar (vertical) layout it
+ * stacks under the label like the other controls.
+ */
+function BooleanControlRenderer({ control, value, onChange, layout }: BooleanControlRendererProps) {
+	const inline = layout === "horizontal";
 	return (
-		<Field>
+		<Field
+			orientation={inline ? "horizontal" : "vertical"}
+			className={inline ? "items-center justify-between gap-2" : "w-auto"}
+		>
 			<div className="flex items-center gap-1">
 				<Label>{control.name}</Label>
 				<ContextualHelp name={control.name} reference={control.reference} />
@@ -208,7 +222,7 @@ function EnumControlRenderer({ control, value, onChange }: EnumControlRendererPr
 	}
 
 	return (
-		<Select selectedKey={value} onSelectionChange={(key) => onChange(control.name, key)}>
+		<Select selectedKey={value} onSelectionChange={(key) => onChange(control.name, key)} className="w-full">
 			<div className="flex items-center gap-1">
 				<Label>{control.name}</Label>
 				<ContextualHelp name={control.name} reference={control.reference} />
@@ -299,14 +313,22 @@ interface ControlsProps {
 	controls: SerializableControl[];
 	values: ControlValues;
 	onChange: (name: string, value: unknown) => void;
+	layout: ControlsLayout;
 }
 
-export function Controls({ controls, values, onChange }: ControlsProps) {
+export function Controls({ controls, values, onChange, layout }: ControlsProps) {
 	return (
 		<>
-			{controls.map((control) => (
-				<ControlRenderer key={control.name} control={control} value={values[control.name]} onChange={onChange} />
-			))}
+			{controls.map((control) => {
+				// In the bottom-bar (vertical) layout controls sit in a row, so give text/select
+				// controls a fixed width; booleans size to content. In the inline column they fill it.
+				const wrapperWidth = layout === "vertical" ? (control.type === "boolean" ? "w-auto" : "w-44") : "w-full";
+				return (
+					<div key={control.name} className={cn("shrink-0", wrapperWidth)}>
+						<ControlRenderer control={control} value={values[control.name]} onChange={onChange} layout={layout} />
+					</div>
+				);
+			})}
 		</>
 	);
 }
