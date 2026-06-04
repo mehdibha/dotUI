@@ -1,11 +1,12 @@
 "use client";
 
-import { ColorArea } from "@/registry/ui/color-area";
+import { ColorArea, type ColorAreaProps } from "@/registry/ui/color-area";
+import { ColorThumb } from "@/registry/ui/color-thumb";
 
-interface ColorAreaPlaygroundProps {
-	isDisabled?: boolean;
-}
-
-export function ColorAreaPlayground({ isDisabled = false }: ColorAreaPlaygroundProps) {
-	return <ColorArea defaultValue="#ff0000" isDisabled={isDisabled} />;
+export default function Demo({ isDisabled = false }: ColorAreaProps = {}) {
+	return (
+		<ColorArea defaultValue="#ff0000" isDisabled={isDisabled}>
+			<ColorThumb />
+		</ColorArea>
+	);
 }

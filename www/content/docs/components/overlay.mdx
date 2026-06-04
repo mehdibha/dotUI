@@ -7,7 +7,24 @@ links:
 wip: true
 ---
 
-<Demo name="overlay/demos/basic" />
+<InteractiveDemo
+	name="overlay"
+	engine="source"
+	controls={[
+		{
+			type: "enum",
+			name: "type",
+			options: ["modal", "popover", "drawer"],
+			defaultValue: "modal",
+		},
+		{
+			type: "enum",
+			name: "mobileType",
+			options: ["modal", "drawer"],
+			defaultValue: "drawer",
+		},
+	]}
+/>
 
 ## Installation
 
@@ -33,28 +50,6 @@ import { Overlay } from "@/components/ui/overlay";
 	</Overlay>
 </Dialog>
 ```
-
-## Playground
-
-Use the controls below to experiment with different overlay props and see the live preview and code update.
-
-<InteractiveDemo
-	name="overlay"
-	controls={[
-		{
-			type: "enum",
-			name: "type",
-			options: ["modal", "popover", "drawer"],
-			defaultValue: "modal",
-		},
-		{
-			type: "enum",
-			name: "mobileType",
-			options: ["modal", "drawer"],
-			defaultValue: "drawer",
-		},
-	]}
-/>
 
 ## Examples
 

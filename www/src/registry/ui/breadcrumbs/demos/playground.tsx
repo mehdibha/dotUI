@@ -2,11 +2,7 @@
 
 import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from "@/registry/ui/breadcrumbs";
 
-interface BreadcrumbsPlaygroundProps {
-	isDisabled?: boolean;
-}
-
-export function BreadcrumbsPlayground({ isDisabled = false }: BreadcrumbsPlaygroundProps) {
+export default function Demo({ isDisabled = false } = {}) {
 	return (
 		<Breadcrumbs isDisabled={isDisabled}>
 			<BreadcrumbItem>

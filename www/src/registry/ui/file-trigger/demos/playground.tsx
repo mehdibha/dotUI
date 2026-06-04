@@ -1,13 +1,9 @@
 "use client";
 
 import { Button } from "@/registry/ui/button";
-import { FileTrigger } from "@/registry/ui/file-trigger";
+import { FileTrigger, type FileTriggerProps } from "@/registry/ui/file-trigger";
 
-interface FileTriggerPlaygroundProps {
-	allowsMultiple?: boolean;
-}
-
-export function FileTriggerPlayground({ allowsMultiple = false }: FileTriggerPlaygroundProps) {
+export default function Demo({ allowsMultiple = false }: FileTriggerProps = {}) {
 	return (
 		<FileTrigger allowsMultiple={allowsMultiple}>
 			<Button>Upload File</Button>

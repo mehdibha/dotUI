@@ -4,17 +4,14 @@ import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox";
 import { CheckboxGroup } from "@/registry/ui/checkbox-group";
 import { FieldGroup, Label } from "@/registry/ui/field";
 
-interface CheckboxGroupPlaygroundProps {
-	label?: string;
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-	isInvalid?: boolean;
-	orientation?: "horizontal" | "vertical";
-}
-
-export function CheckboxGroupPlayground({ label = "Select frameworks", ...props }: CheckboxGroupPlaygroundProps) {
+export default function Demo({
+	label = "Select frameworks",
+	isDisabled = false,
+	isReadOnly = false,
+	isInvalid = false,
+} = {}) {
 	return (
-		<CheckboxGroup defaultValue={["react"]} {...props}>
+		<CheckboxGroup defaultValue={["react"]} isDisabled={isDisabled} isReadOnly={isReadOnly} isInvalid={isInvalid}>
 			{label && <Label>{label}</Label>}
 			<FieldGroup>
 				<Checkbox value="react">

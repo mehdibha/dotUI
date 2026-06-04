@@ -1,20 +1,23 @@
 "use client";
 
 import { Label } from "@/registry/ui/field";
-import { Switch, SwitchControl } from "@/registry/ui/switch";
+import { Switch, SwitchControl, type SwitchProps } from "@/registry/ui/switch";
 
-interface SwitchPlaygroundProps {
+export default function Demo({
+	label = "Airplane mode",
+	size = "md",
+	isDisabled = false,
+	isReadOnly = false,
+}: {
 	label?: string;
-	size?: "sm" | "md" | "lg";
+	size?: SwitchProps["size"];
 	isDisabled?: boolean;
 	isReadOnly?: boolean;
-}
-
-export function SwitchPlayground({ label = "Airplane mode", ...props }: SwitchPlaygroundProps) {
+} = {}) {
 	return (
-		<Switch {...props}>
+		<Switch size={size} isDisabled={isDisabled} isReadOnly={isReadOnly}>
 			<SwitchControl />
-			<Label>{label}</Label>
+			{label && <Label>{label}</Label>}
 		</Switch>
 	);
 }

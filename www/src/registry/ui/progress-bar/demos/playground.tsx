@@ -3,19 +3,9 @@
 import { Label } from "@/registry/ui/field";
 import { ProgressBar, ProgressBarControl } from "@/registry/ui/progress-bar";
 
-interface ProgressBarPlaygroundProps {
-	label?: string;
-	value?: number;
-	isIndeterminate?: boolean;
-}
-
-export function ProgressBarPlayground({
-	label = "Loading...",
-	value = 60,
-	isIndeterminate = false,
-}: ProgressBarPlaygroundProps) {
+export default function Demo({ label = "Loading...", value = 60, isIndeterminate = false } = {}) {
 	return (
-		<ProgressBar value={isIndeterminate ? undefined : value} isIndeterminate={isIndeterminate}>
+		<ProgressBar value={value} isIndeterminate={isIndeterminate}>
 			{label && <Label>{label}</Label>}
 			<ProgressBarControl />
 		</ProgressBar>

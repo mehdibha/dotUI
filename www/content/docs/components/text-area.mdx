@@ -7,37 +7,9 @@ links:
 wip: true
 ---
 
-<Demo name="text-area/demos/default" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/text-area
-```
-
-## Usage
-
-Use `TextArea` to allow users to enter multi-line text content.
-
-```tsx
-import { TextField } from "@/components/ui/text-field";
-import { TextArea, InputGroup, InputGroupAddon } from "@/components/ui/input";
-import { Label } from "@/components/ui/field";
-```
-
-```tsx
-<TextField>
-	<Label>Description</Label>
-	<TextArea />
-</TextField>
-```
-
-## Playground
-
-Use the controls below to experiment with different text area props and see the live preview and code update.
-
 <InteractiveDemo
 	name="text-area"
+	engine="source"
 	controls={[
 		{
 			type: "string",
@@ -76,6 +48,29 @@ Use the controls below to experiment with different text area props and see the 
 		},
 	]}
 />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/text-area
+```
+
+## Usage
+
+Use `TextArea` to allow users to enter multi-line text content.
+
+```tsx
+import { TextField } from "@/components/ui/text-field";
+import { TextArea, InputGroup, InputGroupAddon } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
+
+```tsx
+<TextField>
+	<Label>Description</Label>
+	<TextArea />
+</TextField>
+```
 
 ## Examples
 

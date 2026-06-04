@@ -7,37 +7,9 @@ links:
 wip: true
 ---
 
-<Demo name="date-field/demos/basic" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/date-field
-```
-
-## Usage
-
-Use `DateField` to allow users to enter and edit date values using a keyboard.
-
-```tsx
-import { DateField } from "@/components/ui/date-field";
-import { DateInput } from "@/components/ui/input";
-import { Label } from "@/components/ui/field";
-```
-
-```tsx
-<DateField>
-	<Label>Date</Label>
-	<DateInput />
-</DateField>
-```
-
-## Playground
-
-Use the controls below to experiment with different date field props and see the live preview and code update.
-
 <InteractiveDemo
 	name="date-field"
+	engine="source"
 	controls={[
 		{
 			type: "string",
@@ -61,6 +33,29 @@ Use the controls below to experiment with different date field props and see the
 		},
 	]}
 />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/date-field
+```
+
+## Usage
+
+Use `DateField` to allow users to enter and edit date values using a keyboard.
+
+```tsx
+import { DateField } from "@/components/ui/date-field";
+import { DateInput } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
+
+```tsx
+<DateField>
+	<Label>Date</Label>
+	<DateInput />
+</DateField>
+```
 
 ## Examples
 

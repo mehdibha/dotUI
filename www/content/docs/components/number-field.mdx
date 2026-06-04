@@ -7,37 +7,9 @@ links:
 wip: true
 ---
 
-<Demo name="number-field/demos/basic" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/number-field
-```
-
-## Usage
-
-Use `NumberField` to allow users to enter a numeric value with keyboard or increment/decrement buttons.
-
-```tsx
-import { NumberField } from "@/components/ui/number-field";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/field";
-```
-
-```tsx
-<NumberField>
-	<Label>Quantity</Label>
-	<Input />
-</NumberField>
-```
-
-## Playground
-
-Use the controls below to experiment with different number field props and see the live preview and code update.
-
 <InteractiveDemo
 	name="number-field"
+	engine="source"
 	controls={[
 		{
 			type: "string",
@@ -61,6 +33,29 @@ Use the controls below to experiment with different number field props and see t
 		},
 	]}
 />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/number-field
+```
+
+## Usage
+
+Use `NumberField` to allow users to enter a numeric value with keyboard or increment/decrement buttons.
+
+```tsx
+import { NumberField } from "@/components/ui/number-field";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/field";
+```
+
+```tsx
+<NumberField>
+	<Label>Quantity</Label>
+	<Input />
+</NumberField>
+```
 
 ## Examples
 

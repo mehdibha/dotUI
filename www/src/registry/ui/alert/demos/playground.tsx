@@ -1,15 +1,20 @@
+"use client";
+
 import type { ReactNode } from "react";
 
-import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert";
+import { Alert, AlertDescription, AlertTitle, type AlertProps } from "@/registry/ui/alert";
 
-interface AlertPlaygroundProps {
+export default function Demo({
+	title = "Alert Title",
+	description = "This is an alert description.",
+	variant = "neutral",
+	icon,
+}: {
 	title?: string;
 	description?: string;
-	variant?: "neutral" | "success" | "warning" | "danger" | "info";
+	variant?: AlertProps["variant"];
 	icon?: ReactNode;
-}
-
-export function AlertPlayground({ title, description, variant, icon }: AlertPlaygroundProps) {
+} = {}) {
 	return (
 		<Alert variant={variant}>
 			{icon}

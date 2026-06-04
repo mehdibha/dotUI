@@ -7,7 +7,23 @@ links:
 wip: true
 ---
 
-<Demo name="tabs/demos/basic" />
+<InteractiveDemo
+	name="tabs"
+	engine="source"
+	controls={[
+		{
+			type: "enum",
+			name: "orientation",
+			options: ["horizontal", "vertical"],
+			defaultValue: "horizontal",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+	]}
+/>
 
 ## Installation
 
@@ -35,27 +51,6 @@ import { Tab, TabList, TabPanel, Tabs } from "@/components/ui/tabs";
 	<TabPanel id="settings">Settings content</TabPanel>
 </Tabs>
 ```
-
-## Playground
-
-Use the controls below to experiment with different tabs props and see the live preview and code update.
-
-<InteractiveDemo
-	name="tabs"
-	controls={[
-		{
-			type: "enum",
-			name: "orientation",
-			options: ["horizontal", "vertical"],
-			defaultValue: "horizontal",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-	]}
-/>
 
 ## Examples
 

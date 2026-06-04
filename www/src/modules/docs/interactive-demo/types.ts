@@ -5,6 +5,8 @@
 
 import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx";
 
+import type { CodeTemplate } from "../codegen/code-template";
+
 // ============================================================================
 // Base Control Types (used for building controls)
 // ============================================================================
@@ -133,6 +135,10 @@ export interface InteractiveDemoNodeInfo {
 	node: MdxJsxFlowElementHast;
 	name: string;
 	controls: ControlInput[];
+	/** "source" opts into the SourceFirst engine; absent/"legacy" keeps the old path. */
+	engine?: "legacy" | "source";
+	/** Demo file slug under demos/ (default "playground"). */
+	file?: string;
 }
 
 /**
@@ -146,4 +152,8 @@ export interface ProcessedInteractiveDemo {
 	importPath: string;
 	/** Enriched controls with serializable reference data */
 	controls: SerializableControl[];
+	/** SourceFirst code template (only when engine === "source"). */
+	codeTemplate?: CodeTemplate;
+	/** True when the demo is imported as a default export (SourceFirst). */
+	isSourceDefault?: boolean;
 }

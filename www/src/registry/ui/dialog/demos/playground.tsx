@@ -12,21 +12,19 @@ import {
 } from "@/registry/ui/dialog";
 import { Overlay } from "@/registry/ui/overlay";
 
-interface DialogPlaygroundProps {
+export default function Demo({
+	title = "Dialog Title",
+	description = "This is a dialog description.",
+	isDismissable = true,
+}: {
 	title?: string;
 	description?: string;
 	isDismissable?: boolean;
-}
-
-export function DialogPlayground({
-	title = "Dialog Title",
-	description = "This is a dialog description.",
-	...props
-}: DialogPlaygroundProps) {
+} = {}) {
 	return (
 		<Dialog>
 			<Button>Open Dialog</Button>
-			<Overlay isDismissable={props.isDismissable}>
+			<Overlay data-control-target isDismissable={isDismissable}>
 				<DialogContent>
 					<DialogHeader>
 						{title && <DialogTitle>{title}</DialogTitle>}

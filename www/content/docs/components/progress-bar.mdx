@@ -7,34 +7,9 @@ links:
 wip: true
 ---
 
-<Demo name="progress-bar/demos/animated" />
-
-## Installation
-
-```npm
-npx shadcn@latest add @dotui/progress-bar
-```
-
-## Usage
-
-Use progress bars to show the progression of a system operation or task.
-
-```tsx
-import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
-```
-
-```tsx
-<ProgressBar value={60}>
-	<ProgressBarControl />
-</ProgressBar>
-```
-
-## Playground
-
-Use the controls below to experiment with different progress bar props and see the live preview and code update.
-
 <InteractiveDemo
 	name="progress-bar"
+	engine="source"
 	controls={[
 		{
 			type: "string",
@@ -55,6 +30,26 @@ Use the controls below to experiment with different progress bar props and see t
 		},
 	]}
 />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/progress-bar
+```
+
+## Usage
+
+Use progress bars to show the progression of a system operation or task.
+
+```tsx
+import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
+```
+
+```tsx
+<ProgressBar value={60}>
+	<ProgressBarControl />
+</ProgressBar>
+```
 
 ## Examples
 

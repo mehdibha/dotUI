@@ -1,15 +1,7 @@
 "use client";
 
-import { Separator } from "@/registry/ui/separator";
+import { Separator, type SeparatorProps } from "@/registry/ui/separator";
 
-interface SeparatorPlaygroundProps {
-	orientation?: "horizontal" | "vertical";
-}
-
-export function SeparatorPlayground({ orientation = "horizontal" }: SeparatorPlaygroundProps) {
-	return (
-		<div className={orientation === "vertical" ? "flex h-20 items-center" : "w-full"}>
-			<Separator orientation={orientation} />
-		</div>
-	);
+export default function Demo({ orientation = "horizontal" }: SeparatorProps = {}) {
+	return <Separator orientation={orientation}></Separator>;
 }

@@ -1,19 +1,23 @@
 "use client";
 
 import { FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
+import { Radio, RadioControl, RadioGroup, type RadioGroupProps } from "@/registry/ui/radio-group";
 
-interface RadioGroupPlaygroundProps {
-	label?: string;
-	isDisabled?: boolean;
-	isReadOnly?: boolean;
-	isInvalid?: boolean;
-	orientation?: "horizontal" | "vertical";
-}
-
-export function RadioGroupPlayground({ label = "Select frameworks", ...props }: RadioGroupPlaygroundProps) {
+export default function Demo({
+	label = "Select frameworks",
+	orientation = "vertical",
+	isDisabled = false,
+	isReadOnly = false,
+	isInvalid = false,
+}: RadioGroupProps & { label?: string } = {}) {
 	return (
-		<RadioGroup defaultValue="react" {...props}>
+		<RadioGroup
+			defaultValue="react"
+			orientation={orientation}
+			isDisabled={isDisabled}
+			isReadOnly={isReadOnly}
+			isInvalid={isInvalid}
+		>
 			{label && <Label>{label}</Label>}
 			<FieldGroup>
 				<Radio value="react">

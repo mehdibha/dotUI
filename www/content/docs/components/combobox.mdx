@@ -7,7 +7,32 @@ links:
 wip: true
 ---
 
-<Demo name="combobox/demos/basic" />
+<InteractiveDemo
+	name="combobox"
+	engine="source"
+	controls={[
+		{
+			type: "string",
+			name: "label",
+			defaultValue: "Country",
+		},
+		{
+			type: "string",
+			name: "placeholder",
+			defaultValue: "Search countries...",
+		},
+		{
+			type: "boolean",
+			name: "isDisabled",
+			defaultValue: false,
+		},
+		{
+			type: "boolean",
+			name: "isInvalid",
+			defaultValue: false,
+		},
+	]}
+/>
 
 ## Installation
 
@@ -32,36 +57,6 @@ import { Combobox, ComboboxContent, ComboboxInput, ComboboxItem } from "@/compon
 	</ComboboxContent>
 </Combobox>
 ```
-
-## Playground
-
-Use the controls below to experiment with different combobox props and see the live preview and code update.
-
-<InteractiveDemo
-	name="combobox"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Country",
-		},
-		{
-			type: "string",
-			name: "placeholder",
-			defaultValue: "Search countries...",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isInvalid",
-			defaultValue: false,
-		},
-	]}
-/>
 
 ## Examples
 

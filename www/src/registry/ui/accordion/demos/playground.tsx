@@ -3,11 +3,6 @@
 import { Accordion } from "@/registry/ui/accordion";
 import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/registry/ui/disclosure";
 
-interface AccordionPlaygroundProps {
-	allowsMultipleExpanded?: boolean;
-	isDisabled?: boolean;
-}
-
 const items = [
 	{
 		id: "getting-started",
@@ -29,7 +24,7 @@ const items = [
 	},
 ];
 
-export function AccordionPlayground({ allowsMultipleExpanded = false, isDisabled = false }: AccordionPlaygroundProps) {
+export default function Demo({ allowsMultipleExpanded = false, isDisabled = false } = {}) {
 	return (
 		<Accordion allowsMultipleExpanded={allowsMultipleExpanded} isDisabled={isDisabled} className="max-w-2xl">
 			{items.map((item) => (

@@ -3,6 +3,8 @@
  * Builds and enriches controls from API reference at build time.
  */
 
+import { Node, Project, ScriptKind } from "ts-morph";
+
 import type { HighlighterGeneric } from "shiki";
 
 import { loadApiReference } from "../../references/loader";
@@ -26,7 +28,11 @@ import type {
  * Build controls from simplified inputs + API reference.
  * Infers type, options, and defaults from the API reference.
  */
-export async function buildControlsFromReference(name: string, controlInputs: ControlInput[]): Promise<Control[]> {
+export async function buildControlsFromReference(
+	name: string,
+	controlInputs: ControlInput[],
+	demoSource?: string,
+): Promise<Control[]> {
 	const reference = await loadApiReference(name);
 
 	if (!reference) {
@@ -53,7 +59,66 @@ export async function buildControlsFromReference(name: string, controlInputs: Co
 		controls.push(inferredControl);
 	}
 
+	// SourceFirst: the default the user SEES in the demo's param signature is the
+	// authoritative control default (Problem #4 fix) — it overrides the reference
+	// default, which can be alphabetized/absent. Legacy callers pass no source.
+	if (demoSource) {
+		applyParamDefaults(controls, readParamDefaults(demoSource));
+	}
+
 	return controls;
+}
+
+// ============================================================================
+// Param-signature defaults (SourceFirst)
+// ============================================================================
+
+const ctrlProject = new Project({ useInMemoryFileSystem: true });
+let ctrlCounter = 0;
+
+/** Read destructured param defaults from the demo's exported function signature. */
+export function readParamDefaults(source: string): Record<string, string> {
+	const sf = ctrlProject.createSourceFile(`ctl-${ctrlCounter++}.tsx`, source, {
+		scriptKind: ScriptKind.TSX,
+		overwrite: true,
+	});
+	try {
+		const fn = sf.getFunctions().find((f) => f.isDefaultExport() || f.hasExportKeyword());
+		const out: Record<string, string> = {};
+		const nameNode = fn?.getParameters()[0]?.getNameNode();
+		if (nameNode && Node.isObjectBindingPattern(nameNode)) {
+			for (const el of nameNode.getElements()) {
+				const init = el.getInitializer();
+				if (init) out[el.getName()] = init.getText(); // literal source: '"md"' / 'false' / '60'
+			}
+		}
+		return out;
+	} finally {
+		ctrlProject.removeSourceFile(sf);
+	}
+}
+
+function applyParamDefaults(controls: Control[], paramDefaults: Record<string, string>): void {
+	for (const c of controls) {
+		if (c.type === "icon") continue;
+		const pd = paramDefaults[c.name];
+		if (pd === undefined) continue;
+		const parsed = parseParamDefault(pd, c.type);
+		if (parsed !== undefined) (c as { defaultValue?: unknown }).defaultValue = parsed;
+	}
+}
+
+function parseParamDefault(src: string, type: Control["type"]): unknown {
+	let v: unknown;
+	try {
+		// oxlint-disable-next-line no-new-func -- build-time eval of a trusted authored literal
+		v = new Function(`"use strict"; return (${src});`)();
+	} catch {
+		return undefined;
+	}
+	if (type === "number") return typeof v === "number" ? v : undefined;
+	if (type === "boolean") return typeof v === "boolean" ? v : undefined;
+	return typeof v === "string" ? v : undefined;
 }
 
 /**

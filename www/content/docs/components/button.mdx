@@ -6,7 +6,17 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Button.html
 ---
 
-<Demo name="button/demos/default" />
+<InteractiveDemo
+	name="button"
+	engine="source"
+	controls={[
+		{ name: "children", type: "string", defaultValue: "Button" },
+		"variant",
+		"size",
+		"isDisabled",
+		"isPending",
+	]}
+/>
 
 ## Installation
 
@@ -26,22 +36,6 @@ import { Button } from "@dotui/registry/ui/button";
 ```tsx
 <Button>Button</Button>
 ```
-
-## Playground
-
-Use the controls below to experiment with different button props and see the live preview and code update.
-
-<InteractiveDemo
-	name="button"
-	fallback={`<Button>Button</Button>`}
-	controls={[
-		{ name: "children", type: "string", defaultValue: "Button" },
-		"variant",
-		"size",
-		"isDisabled",
-		"isPending",
-	]}
-/>
 
 ## Examples
 
