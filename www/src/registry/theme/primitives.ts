@@ -11,7 +11,7 @@
  * the `tailwindcss-autocontrast` plugin at Tailwind-compile.
  */
 
-import { createTheme, type CreateThemeOptions } from "@dotui/colors";
+import { createTheme, type CreateThemeOptions, oklchCss, toOklch } from "@dotui/colors";
 
 import type { ColorConfig } from "./color-config";
 
@@ -38,6 +38,34 @@ function reverseRamp(scale: Ramp): Ramp {
 	return out;
 }
 
+/**
+ * Widen a ramp's lightness range. The kernel's perceptual anchors bottom out
+ * near L 0.24 (great for colored ramps), but dotUI's neutral surfaces want the
+ * full near-white → near-black span so the (reversed) dark background reads as
+ * near-black rather than grey.
+ */
+function stretchLightness(scale: Ramp, min: number, max: number): Ramp {
+	const lightnesses = Object.values(scale).map((value) => toOklch(value).l);
+	const lo = Math.min(...lightnesses);
+	const hi = Math.max(...lightnesses);
+	const span = hi - lo || 1;
+	const out: Ramp = {};
+	for (const [step, value] of Object.entries(scale)) {
+		const { l, c, h } = toOklch(value);
+		const t = (l - lo) / span;
+		// Smoothstep S-curve: cluster the lightest + darkest steps so surface tokens
+		// (bg / card / muted) sit close together at each end — tight, near-black dark
+		// surfaces and near-white light surfaces — while mid steps stay spread.
+		const eased = t * t * (3 - 2 * t);
+		out[step] = oklchCss({ l: min + eased * (max - min), c, h });
+	}
+	return out;
+}
+
+/** Near-black dark surface ↔ near-white light surface for the neutral backbone. */
+const NEUTRAL_L_MIN = 0.13;
+const NEUTRAL_L_MAX = 0.985;
+
 export function resolveColorConfig(config: ColorConfig): ResolvedPalettes {
 	const { seeds, algorithm, steps } = config;
 
@@ -54,10 +82,12 @@ export function resolveColorConfig(config: ColorConfig): ResolvedPalettes {
 	const lightMode = theme.light;
 	if (!lightMode) throw new Error("resolveColorConfig: kernel produced no `light` mode");
 
-	// Rename the kernel's `primary` ramp back to dotUI's `accent`.
+	// Rename the kernel's `primary` ramp back to dotUI's `accent`; widen the
+	// neutral backbone so dark surfaces (the reversed ramp) reach near-black.
 	const light: Record<string, Ramp> = {};
 	for (const [name, scale] of Object.entries(lightMode.scales)) {
-		light[name === "primary" ? "accent" : name] = scale;
+		const key = name === "primary" ? "accent" : name;
+		light[key] = key === "neutral" ? stretchLightness(scale, NEUTRAL_L_MIN, NEUTRAL_L_MAX) : scale;
 	}
 
 	const dark: Record<string, Ramp> = {};
