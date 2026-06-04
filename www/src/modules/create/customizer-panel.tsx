@@ -2,7 +2,15 @@ import { type ReactNode, useMemo } from "react";
 
 import { getRouteApi } from "@tanstack/react-router";
 
-import { ChevronDownIcon, ChevronLeftIcon, MoonIcon, MousePointer2Icon, ShuffleIcon, Undo2Icon } from "lucide-react";
+import {
+	ChevronDownIcon,
+	ChevronLeftIcon,
+	MoonIcon,
+	MousePointer2Icon,
+	ShuffleIcon,
+	SunIcon,
+	Undo2Icon,
+} from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
@@ -37,6 +45,8 @@ import { InstallCommand } from "./install-command";
 import { DEFAULT_RADIUS_FACTOR, DensityConfig, RADIUS_FACTOR_VAR, RadiusConfig } from "./layout-config";
 import { useDesignSystem } from "./preset";
 import { TypographyConfig } from "./typography-config";
+
+import type { PreviewMode } from "./preset";
 
 /* -------------------------------- Types -------------------------------- */
 
@@ -152,7 +162,13 @@ const menuIds = MENU_IDS;
 
 const routeApi = getRouteApi("/_app/create");
 
-export function CustomizerPanel() {
+export function CustomizerPanel({
+	previewMode = "light",
+	onTogglePreviewMode,
+}: {
+	previewMode?: PreviewMode;
+	onTogglePreviewMode?: () => void;
+}) {
 	const { panel, preview } = routeApi.useSearch();
 	const navigate = routeApi.useNavigate();
 	const { designSystem, setComponentParam, setToken, setDensity } = useDesignSystem();
@@ -327,8 +343,8 @@ export function CustomizerPanel() {
 					<Button size="sm" isIconOnly>
 						<ShuffleIcon />
 					</Button>
-					<Button size="sm" isIconOnly>
-						<MoonIcon />
+					<Button size="sm" isIconOnly onPress={onTogglePreviewMode} aria-label="Toggle preview mode">
+						{previewMode === "dark" ? <SunIcon /> : <MoonIcon />}
 					</Button>
 					<Button size="sm" isIconOnly>
 						<Undo2Icon />

@@ -1,11 +1,13 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router";
 
 import { z } from "zod";
 
 import { CustomizerPanel } from "@/modules/create/customizer-panel";
-import { sendToIframe, useDesignSystem } from "@/modules/create/preset";
+import { sendPreviewMode, sendToIframe, useDesignSystem } from "@/modules/create/preset";
+
+import type { PreviewMode } from "@/modules/create/preset";
 
 export const createSearchSchema = z.object({
 	panel: z.string().optional().catch(undefined),
@@ -27,6 +29,7 @@ function CreatePage() {
 	const { preview, preset } = Route.useSearch();
 	const { designSystem } = useDesignSystem();
 	const iframeRef = useRef<HTMLIFrameElement>(null);
+	const [previewMode, setPreviewMode] = useState<PreviewMode>("light");
 
 	const effectivePreview = preview;
 
@@ -52,9 +55,30 @@ function CreatePage() {
 		return () => iframe.removeEventListener("load", send);
 	}, [designSystem]);
 
+	// Forward the previewed display mode (light / dark) to the iframe — on change,
+	// on load, and when the iframe signals it's ready (its listener can mount after load).
+	useEffect(() => {
+		const iframe = iframeRef.current;
+		if (!iframe) return;
+		const send = () => sendPreviewMode(iframe, previewMode);
+		if (iframe.contentWindow) send();
+		iframe.addEventListener("load", send);
+		const onReady = (event: MessageEvent) => {
+			if (event.data?.type === "preview-ready") send();
+		};
+		window.addEventListener("message", onReady);
+		return () => {
+			iframe.removeEventListener("load", send);
+			window.removeEventListener("message", onReady);
+		};
+	}, [previewMode]);
+
 	return (
 		<div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-row gap-6 p-6 pt-2">
-			<CustomizerPanel />
+			<CustomizerPanel
+				previewMode={previewMode}
+				onTogglePreviewMode={() => setPreviewMode((m) => (m === "dark" ? "light" : "dark"))}
+			/>
 			<iframe
 				ref={iframeRef}
 				key={effectivePreview}
