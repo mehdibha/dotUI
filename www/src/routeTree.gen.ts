@@ -13,7 +13,6 @@ import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as OgRouteImport } from './routes/og'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
-import { Route as ViewBlockRouteImport } from './routes/view/$block'
 import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
@@ -21,10 +20,8 @@ import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
-import { Route as AppBlocksRouteRouteImport } from './routes/_app/blocks/route'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
-import { Route as AppBlocksChar123CategoryChar125RouteImport } from './routes/_app/blocks/{-$category}'
 
 const PlaygroundRoute = PlaygroundRouteImport.update({
   id: '/playground',
@@ -44,11 +41,6 @@ const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppRouteRoute,
-} as any)
-const ViewBlockRoute = ViewBlockRouteImport.update({
-  id: '/view/$block',
-  path: '/view/$block',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const RInitRoute = RInitRouteImport.update({
   id: '/r/init',
@@ -85,11 +77,6 @@ const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
   path: '/docs',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const AppBlocksRouteRoute = AppBlocksRouteRouteImport.update({
-  id: '/blocks',
-  path: '/blocks',
-  getParentRoute: () => AppRouteRoute,
-} as any)
 const AppDocsChar123Char125DotmdRoute =
   AppDocsChar123Char125DotmdRouteImport.update({
     id: '/{$}.md',
@@ -101,18 +88,11 @@ const AppDocsSplatRoute = AppDocsSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => AppDocsRouteRoute,
 } as any)
-const AppBlocksChar123CategoryChar125Route =
-  AppBlocksChar123CategoryChar125RouteImport.update({
-    id: '/{-$category}',
-    path: '/{-$category}',
-    getParentRoute: () => AppBlocksRouteRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/og': typeof OgRoute
   '/playground': typeof PlaygroundRoute
-  '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
@@ -120,15 +100,12 @@ export interface FileRoutesByFullPath {
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
-  '/view/$block': typeof ViewBlockRoute
-  '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
 }
 export interface FileRoutesByTo {
   '/og': typeof OgRoute
   '/playground': typeof PlaygroundRoute
-  '/blocks': typeof AppBlocksRouteRouteWithChildren
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
@@ -136,9 +113,7 @@ export interface FileRoutesByTo {
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
-  '/view/$block': typeof ViewBlockRoute
   '/': typeof AppIndexRoute
-  '/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
 }
@@ -147,7 +122,6 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteRouteWithChildren
   '/og': typeof OgRoute
   '/playground': typeof PlaygroundRoute
-  '/_app/blocks': typeof AppBlocksRouteRouteWithChildren
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
   '/_app/components': typeof AppComponentsRoute
   '/_app/create': typeof AppCreateRoute
@@ -155,9 +129,7 @@ export interface FileRoutesById {
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
-  '/view/$block': typeof ViewBlockRoute
   '/_app/': typeof AppIndexRoute
-  '/_app/blocks/{-$category}': typeof AppBlocksChar123CategoryChar125Route
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
 }
@@ -167,7 +139,6 @@ export interface FileRouteTypes {
     | '/'
     | '/og'
     | '/playground'
-    | '/blocks'
     | '/docs'
     | '/components'
     | '/create'
@@ -175,15 +146,12 @@ export interface FileRouteTypes {
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
-    | '/view/$block'
-    | '/blocks/{-$category}'
     | '/docs/$'
     | '/docs/{$}.md'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/og'
     | '/playground'
-    | '/blocks'
     | '/docs'
     | '/components'
     | '/create'
@@ -191,9 +159,7 @@ export interface FileRouteTypes {
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
-    | '/view/$block'
     | '/'
-    | '/blocks/{-$category}'
     | '/docs/$'
     | '/docs/{$}.md'
   id:
@@ -201,7 +167,6 @@ export interface FileRouteTypes {
     | '/_app'
     | '/og'
     | '/playground'
-    | '/_app/blocks'
     | '/_app/docs'
     | '/_app/components'
     | '/_app/create'
@@ -209,9 +174,7 @@ export interface FileRouteTypes {
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
-    | '/view/$block'
     | '/_app/'
-    | '/_app/blocks/{-$category}'
     | '/_app/docs/$'
     | '/_app/docs/{$}.md'
   fileRoutesById: FileRoutesById
@@ -224,7 +187,6 @@ export interface RootRouteChildren {
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
   RInitRoute: typeof RInitRoute
-  ViewBlockRoute: typeof ViewBlockRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -256,13 +218,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
-    }
-    '/view/$block': {
-      id: '/view/$block'
-      path: '/view/$block'
-      fullPath: '/view/$block'
-      preLoaderRoute: typeof ViewBlockRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/r/init': {
       id: '/r/init'
@@ -313,13 +268,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocsRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/_app/blocks': {
-      id: '/_app/blocks'
-      path: '/blocks'
-      fullPath: '/blocks'
-      preLoaderRoute: typeof AppBlocksRouteRouteImport
-      parentRoute: typeof AppRouteRoute
-    }
     '/_app/docs/{$}.md': {
       id: '/_app/docs/{$}.md'
       path: '/{$}.md'
@@ -334,27 +282,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocsSplatRouteImport
       parentRoute: typeof AppDocsRouteRoute
     }
-    '/_app/blocks/{-$category}': {
-      id: '/_app/blocks/{-$category}'
-      path: '/{-$category}'
-      fullPath: '/blocks/{-$category}'
-      preLoaderRoute: typeof AppBlocksChar123CategoryChar125RouteImport
-      parentRoute: typeof AppBlocksRouteRoute
-    }
   }
 }
-
-interface AppBlocksRouteRouteChildren {
-  AppBlocksChar123CategoryChar125Route: typeof AppBlocksChar123CategoryChar125Route
-}
-
-const AppBlocksRouteRouteChildren: AppBlocksRouteRouteChildren = {
-  AppBlocksChar123CategoryChar125Route: AppBlocksChar123CategoryChar125Route,
-}
-
-const AppBlocksRouteRouteWithChildren = AppBlocksRouteRoute._addFileChildren(
-  AppBlocksRouteRouteChildren,
-)
 
 interface AppDocsRouteRouteChildren {
   AppDocsSplatRoute: typeof AppDocsSplatRoute
@@ -371,7 +300,6 @@ const AppDocsRouteRouteWithChildren = AppDocsRouteRoute._addFileChildren(
 )
 
 interface AppRouteRouteChildren {
-  AppBlocksRouteRoute: typeof AppBlocksRouteRouteWithChildren
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
   AppComponentsRoute: typeof AppComponentsRoute
   AppCreateRoute: typeof AppCreateRoute
@@ -379,7 +307,6 @@ interface AppRouteRouteChildren {
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
-  AppBlocksRouteRoute: AppBlocksRouteRouteWithChildren,
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
   AppComponentsRoute: AppComponentsRoute,
   AppCreateRoute: AppCreateRoute,
@@ -398,7 +325,6 @@ const rootRouteChildren: RootRouteChildren = {
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,
   RInitRoute: RInitRoute,
-  ViewBlockRoute: ViewBlockRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
