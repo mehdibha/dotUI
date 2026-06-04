@@ -9,6 +9,7 @@ import { ThemeProvider } from "starter-themes";
 
 import { siteConfig } from "@/config/site";
 import { truncateOnWord } from "@/lib/text";
+import { usePreviewForcedTheme } from "@/modules/create/preset";
 import { ToastProvider } from "@/registry/ui/toast";
 import appCss from "@/styles.css?url";
 
@@ -104,8 +105,11 @@ function FaviconSwitcher() {
 }
 
 function RootComponent() {
+	// In the /create preview iframe, the customizer owns the displayed mode — force it so the
+	// provider's own system / storage listeners can't revert it. `undefined` everywhere else.
+	const forcedTheme = usePreviewForcedTheme();
 	return (
-		<ThemeProvider>
+		<ThemeProvider forcedTheme={forcedTheme}>
 			<FaviconSwitcher />
 			{/* <DrawerProvider> */}
 			<RootDocument>
