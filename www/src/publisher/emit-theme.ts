@@ -38,11 +38,6 @@ const DEFAULT_DEPENDENCIES = [
 	"tailwindcss-autocontrast",
 ];
 
-// shadcn's `utils` (the `cn` helper) lives in a 4xx-gated path on the default
-// registry under v4 Tailwind, so we ship our own copy inside this item's
-// `files[]` instead of declaring it as a `registryDependencies` entry.
-const DEFAULT_REGISTRY_DEPENDENCIES: string[] = [];
-
 const CN_UTILS_TS = `import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -113,7 +108,9 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
 		type: "registry:base",
 		extends: "none",
 		dependencies: DEFAULT_DEPENDENCIES,
-		registryDependencies: DEFAULT_REGISTRY_DEPENDENCIES,
+		// shadcn's `cn` utils sit in a 4xx-gated path under v4 Tailwind, so we ship our own copy
+		// in `files[]` rather than declaring a registry dependency.
+		registryDependencies: [],
 		...(css ? { css } : {}),
 		...(cssVars ? { cssVars } : {}),
 		files: [
