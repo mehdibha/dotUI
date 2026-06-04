@@ -6,9 +6,8 @@ import { ShadcnIcon } from "@/components/icons/shadcn";
 import { TailwindWordmark } from "@/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@/components/icons/typescript";
 import { Footer } from "@/components/layout/footer";
-import { Announcement } from "@/components/marketing/announcement";
+import { HeroLab } from "@/components/marketing/hero-lab";
 import Cards from "@/registry/blocks/showcase/cards/components/cards";
-import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 export const Route = createFileRoute("/_app/")({
@@ -19,30 +18,8 @@ function HomePage() {
 	return (
 		<div className="min-h-[calc(100vh-var(--header-height))]">
 			<main>
-				{/* Hero section */}
-				<section className="container flex flex-col pt-6 sm:pt-10 md:pt-18">
-					<div className="flex flex-col items-center gap-2 text-center md:gap-3">
-						<Announcement />
-						<h1 className="text-3xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
-							Build your design system with a <span className="font-bold italic">unique</span> look.
-						</h1>
-						<p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
-							Beautiful components, accessibility out of the box, composition, and more, all powered by{" "}
-							<AdobeIcon className="inline-flex size-4" />{" "}
-							<span className="font-medium text-fg">react-aria-components</span> and{" "}
-							<ShadcnIcon className="inline-flex size-5" /> <span className="font-medium text-fg">shadcn&nbsp;CLI</span>
-							.
-						</p>
-						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-							<LinkButton href="/docs" variant="primary" size="lg">
-								Get started
-							</LinkButton>
-							<LinkButton href="/components" variant="default" size="lg">
-								Explore components
-							</LinkButton>
-						</div>
-					</div>
-				</section>
+				{/* Hero section — variant lab (temporary; pick the winner, then inline it). */}
+				<HeroLab />
 
 				<section className="container mt-24">
 					<Cards />
