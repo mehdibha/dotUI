@@ -17,6 +17,9 @@ import { TOC, TOCProvider } from "@/modules/docs/toc";
 
 export const Route = createFileRoute("/_app/docs/$")({
 	component: DocsPage,
+	// Docs content is immutable until the next build/deploy (prerendered via
+	// staticFunctionMiddleware), so never background-revalidate it on re-match.
+	staleTime: Infinity,
 	loader: async ({ params }) => {
 		const slugs = params._splat?.split("/") ?? [];
 		const data = await serverLoader({ data: slugs });
@@ -69,7 +72,6 @@ const serverLoader = createServerFn({ method: "GET" })
 			url: page.url,
 			title: page.data.title,
 			description: page.data.description,
-			pageTree: await docsSource.serializePageTree(pageTree),
 			rawContent,
 			neighbours: {
 				previous: previous ? { name: String(previous.name), path: previous.url.replace(/^\/docs\/?/, "") } : undefined,

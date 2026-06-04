@@ -21,6 +21,9 @@ export const Route = createFileRoute("/_app")({
 		const pageTree = await getPageTree();
 		return { pageTree };
 	},
+	// The page tree is immutable until the next build/deploy (baked at build time
+	// via staticFunctionMiddleware), so never background-revalidate it on re-match.
+	staleTime: Infinity,
 });
 
 function AppLayout() {
