@@ -31,14 +31,6 @@ export type DesignSystem = {
 	color?: ColorConfig;
 };
 
-export function toCompact(ds: DesignSystem): DesignSystemState {
-	const state: DesignSystemState = {};
-	if (Object.keys(ds.componentParams).length > 0) state.p = ds.componentParams;
-	if (Object.keys(ds.tokens).length > 0) state.t = ds.tokens;
-	if (ds.color) state.c = ds.color;
-	return state;
-}
-
 export function fromCompact(state: DesignSystemState): DesignSystem {
 	return {
 		componentParams: state.p ?? {},
