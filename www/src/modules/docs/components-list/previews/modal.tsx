@@ -1,24 +1,21 @@
 "use client";
 
 import { Button } from "@/registry/ui/button";
-import { DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
+import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
 import { Label } from "@/registry/ui/field";
 import { Input } from "@/registry/ui/input";
-import { useStyles as useModalStyles } from "@/registry/ui/modal/styles";
+import { Modal } from "@/registry/ui/modal";
 import { TextField } from "@/registry/ui/text-field";
 
-import { InertPreview } from "./inert-preview";
+import { LivePreview } from "./live-preview";
 
-/** Static "open" Modal preview — backdrop + centered panel, no overlay wrapper. */
+/** Interactive Modal preview — click "Open modal" to open it inside the card. */
 export function ModalPreview() {
-	const { backdrop, viewport, modal } = useModalStyles()();
 	return (
-		<InertPreview>
-			<div className={backdrop({ className: "opacity-100" })} />
-			<div data-slot="modal-viewport" className={viewport()}>
-				{/* data-modal="" applies the dialog's `in-data-modal:` density styles.
-				    w-[86%] keeps the dimmed backdrop visible around the panel. */}
-				<div data-modal="" className={modal({ className: "w-[86%]" })}>
+		<LivePreview>
+			<Dialog>
+				<Button>Open modal</Button>
+				<Modal>
 					<DialogContent>
 						<DialogHeader>
 							<DialogTitle>Edit username</DialogTitle>
@@ -30,14 +27,16 @@ export function ModalPreview() {
 							</TextField>
 						</DialogBody>
 						<DialogFooter className="flex-row! justify-end">
-							<Button size="sm">Cancel</Button>
-							<Button size="sm" variant="primary">
+							<Button slot="close" size="sm">
+								Cancel
+							</Button>
+							<Button slot="close" size="sm" variant="primary">
 								Apply
 							</Button>
 						</DialogFooter>
 					</DialogContent>
-				</div>
-			</div>
-		</InertPreview>
+				</Modal>
+			</Dialog>
+		</LivePreview>
 	);
 }

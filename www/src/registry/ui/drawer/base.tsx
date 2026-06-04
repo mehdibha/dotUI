@@ -67,12 +67,15 @@ interface DrawerProps {
 	swipeToDismiss?: boolean;
 	className?: DrawerPrimitive.Popup.Props["className"];
 	style?: DrawerPrimitive.Popup.Props["style"];
+	/** Portal container for the drawer (defaults to `document.body`). */
+	container?: DrawerPrimitive.Portal.Props["container"];
 	children?: React.ReactNode;
 }
 
 function Drawer({
 	children,
 	className,
+	container,
 	defaultOpen,
 	isDismissable = true,
 	isKeyboardDismissDisabled = false,
@@ -122,7 +125,7 @@ function Drawer({
 				}}
 				swipeDirection={swipeDirectionMap[placement]}
 			>
-				<DrawerPrimitive.Portal>
+				<DrawerPrimitive.Portal container={container}>
 					<ClearPressResponder>
 						<div className={overlay()}>
 							<DrawerPrimitive.Backdrop className={backdrop()} />

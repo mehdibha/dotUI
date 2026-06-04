@@ -9,8 +9,10 @@ export interface ComponentInfo {
 	href: string;
 	scale?: number;
 	iframe?: boolean;
-	/** Static "open" preview for overlay components (see ./previews). */
+	/** Interactive contained preview for overlay/picker components (see ./previews). */
 	preview?: ComponentPreviewKind;
+	/** Per-component card height/class override (falls back to the category default). */
+	cardClassName?: string;
 	status: ComponentStatus;
 }
 
@@ -68,16 +70,9 @@ export const componentsData: ComponentCategory[] = [
 		title: "Pickers",
 		slug: "pickers",
 		components: [
-			{ name: "Menu", slug: "menu", href: "/docs/components/menu", scale: 0.65, iframe: true, status: "in review" },
-			{
-				name: "Combobox",
-				slug: "combobox",
-				href: "/docs/components/combobox",
-				scale: 0.7,
-				iframe: true,
-				status: "done",
-			},
-			{ name: "Select", slug: "select", href: "/docs/components/select", scale: 0.7, iframe: true, status: "done" },
+			{ name: "Menu", slug: "menu", href: "/docs/components/menu", preview: "overlay", status: "in review" },
+			{ name: "Combobox", slug: "combobox", href: "/docs/components/combobox", preview: "overlay", status: "done" },
+			{ name: "Select", slug: "select", href: "/docs/components/select", preview: "overlay", status: "done" },
 		],
 	},
 	{
@@ -86,7 +81,14 @@ export const componentsData: ComponentCategory[] = [
 		components: [
 			{ name: "Calendar", slug: "calendar", href: "/docs/components/calendar", scale: 0.5, status: "pending" },
 			{ name: "DateField", slug: "date-field", href: "/docs/components/date-field", scale: 0.7, status: "done" },
-			{ name: "DatePicker", slug: "date-picker", href: "/docs/components/date-picker", scale: 0.4, status: "done" },
+			{
+				name: "DatePicker",
+				slug: "date-picker",
+				href: "/docs/components/date-picker",
+				preview: "overlay",
+				cardClassName: "h-80",
+				status: "done",
+			},
 			{ name: "TimeField", slug: "time-field", href: "/docs/components/time-field", scale: 0.7, status: "in review" },
 		],
 	},
@@ -171,9 +173,8 @@ export const componentsData: ComponentCategory[] = [
 	{
 		title: "Overlays",
 		slug: "overlays",
-		// `preview: "overlay"` renders a static, focus-safe OPEN state (see ./previews) instead of an
-		// iframe — overlays can't render inline open (they portal + trap focus), and an iframe of an
-		// open overlay steals focus on load. No `scale`: previews are authored to fit the card.
+		// `preview: "overlay"` renders the real component (closed) and opens it INTERACTIVELY,
+		// contained inside the card (see ./previews) — no iframe, and opening never covers the page.
 		components: [
 			// { name: "Dialog", slug: "dialog", href: "/docs/components/dialog", preview: "overlay" },
 			{ name: "Modal", slug: "modal", href: "/docs/components/modal", preview: "overlay", status: "done" },

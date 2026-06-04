@@ -27,12 +27,14 @@ export function ComponentsList({ data }: ComponentsListProps) {
 								iframe={component.iframe}
 								preview={component.preview}
 								previewClassName={cn(
-									category.slug === "pickers" && "h-38",
+									category.slug === "pickers" && "h-60",
 									category.slug === "dates" && "h-48",
 									category.slug === "collections" && "h-40",
 									category.slug === "navigation" && "h-40",
 									category.slug === "data-display" && "h-40",
-									category.slug === "overlays" && "h-48",
+									category.slug === "overlays" && "h-56",
+									// per-component override (e.g. the DatePicker calendar needs more room)
+									component.cardClassName,
 								)}
 							/>
 						))}
