@@ -9,8 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PlaygroundRouteImport } from './routes/playground'
 import { Route as OgRouteImport } from './routes/og'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
+import { Route as HomeDotmdRouteImport } from './routes/home[.]md'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as RInitRouteImport } from './routes/r/init'
@@ -19,10 +23,16 @@ import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
+import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlaygroundRoute = PlaygroundRouteImport.update({
   id: '/playground',
   path: '/playground',
@@ -31,6 +41,21 @@ const PlaygroundRoute = PlaygroundRouteImport.update({
 const OgRoute = OgRouteImport.update({
   id: '/og',
   path: '/og',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
+  id: '/llms-full.txt',
+  path: '/llms-full.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeDotmdRoute = HomeDotmdRouteImport.update({
+  id: '/home.md',
+  path: '/home.md',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppRouteRoute = AppRouteRouteImport.update({
@@ -72,6 +97,11 @@ const AppComponentsRoute = AppComponentsRouteImport.update({
   path: '/components',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const DotwellKnownApiCatalogRoute = DotwellKnownApiCatalogRouteImport.update({
+  id: '/.well-known/api-catalog',
+  path: '/.well-known/api-catalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
   id: '/docs',
   path: '/docs',
@@ -91,9 +121,14 @@ const AppDocsSplatRoute = AppDocsSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
+  '/home.md': typeof HomeDotmdRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/og': typeof OgRoute
   '/playground': typeof PlaygroundRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
+  '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
@@ -104,9 +139,14 @@ export interface FileRoutesByFullPath {
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
 }
 export interface FileRoutesByTo {
+  '/home.md': typeof HomeDotmdRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/og': typeof OgRoute
   '/playground': typeof PlaygroundRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
+  '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
@@ -120,9 +160,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteRouteWithChildren
+  '/home.md': typeof HomeDotmdRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
   '/og': typeof OgRoute
   '/playground': typeof PlaygroundRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
+  '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
   '/_app/components': typeof AppComponentsRoute
   '/_app/create': typeof AppCreateRoute
   '/demos/$slug': typeof DemosSlugRoute
@@ -137,9 +182,14 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/home.md'
+    | '/llms-full.txt'
+    | '/llms.txt'
     | '/og'
     | '/playground'
+    | '/sitemap.xml'
     | '/docs'
+    | '/.well-known/api-catalog'
     | '/components'
     | '/create'
     | '/demos/$slug'
@@ -150,9 +200,14 @@ export interface FileRouteTypes {
     | '/docs/{$}.md'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/home.md'
+    | '/llms-full.txt'
+    | '/llms.txt'
     | '/og'
     | '/playground'
+    | '/sitemap.xml'
     | '/docs'
+    | '/.well-known/api-catalog'
     | '/components'
     | '/create'
     | '/demos/$slug'
@@ -165,9 +220,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_app'
+    | '/home.md'
+    | '/llms-full.txt'
+    | '/llms.txt'
     | '/og'
     | '/playground'
+    | '/sitemap.xml'
     | '/_app/docs'
+    | '/.well-known/api-catalog'
     | '/_app/components'
     | '/_app/create'
     | '/demos/$slug'
@@ -181,8 +241,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
+  HomeDotmdRoute: typeof HomeDotmdRoute
+  LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
   OgRoute: typeof OgRoute
   PlaygroundRoute: typeof PlaygroundRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
   DemosSlugRoute: typeof DemosSlugRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
@@ -191,6 +256,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/playground': {
       id: '/playground'
       path: '/playground'
@@ -203,6 +275,27 @@ declare module '@tanstack/react-router' {
       path: '/og'
       fullPath: '/og'
       preLoaderRoute: typeof OgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms-full.txt': {
+      id: '/llms-full.txt'
+      path: '/llms-full.txt'
+      fullPath: '/llms-full.txt'
+      preLoaderRoute: typeof LlmsFullDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home.md': {
+      id: '/home.md'
+      path: '/home.md'
+      fullPath: '/home.md'
+      preLoaderRoute: typeof HomeDotmdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
@@ -260,6 +353,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/components'
       preLoaderRoute: typeof AppComponentsRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/.well-known/api-catalog': {
+      id: '/.well-known/api-catalog'
+      path: '/.well-known/api-catalog'
+      fullPath: '/.well-known/api-catalog'
+      preLoaderRoute: typeof DotwellKnownApiCatalogRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/docs': {
       id: '/_app/docs'
@@ -319,8 +419,13 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
+  HomeDotmdRoute: HomeDotmdRoute,
+  LlmsFullDottxtRoute: LlmsFullDottxtRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
   OgRoute: OgRoute,
   PlaygroundRoute: PlaygroundRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
   DemosSlugRoute: DemosSlugRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,

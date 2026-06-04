@@ -48,6 +48,10 @@ export const Route = createFileRoute("/_app/docs/$")({
 				{ name: "twitter:image", content: ogImageUrl },
 				{ name: "twitter:creator", content: siteConfig.twitter.creator },
 			],
+			links: [
+				// Markdown alternate for AI agents (also served via Accept negotiation).
+				{ rel: "alternate", type: "text/markdown", href: `${siteConfig.url}${url}.md` },
+			],
 		};
 	},
 });

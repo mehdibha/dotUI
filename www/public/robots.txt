@@ -1,3 +1,34 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt — https://dotui.org
+# dotUI is open-source documentation. AI agents and AI search are welcome here.
+# Agent reading list: https://dotui.org/llms.txt
+# Full docs as markdown: https://dotui.org/llms-full.txt
+# API catalog (RFC 9727): https://dotui.org/.well-known/api-catalog
+
+# Content usage preferences — https://contentsignals.org
+#   search=yes    allow indexing for search results (including AI search)
+#   ai-input=yes  allow use as input/context for AI answers and assistants
+#   ai-train=yes  allow use as AI training data (dotUI docs are openly licensed)
 User-agent: *
-Disallow:
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+# Named AI / agent crawlers — all explicitly welcomed.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: Meta-ExternalAgent
+User-agent: cohere-ai
+Allow: /
+
+Sitemap: https://dotui.org/sitemap.xml
