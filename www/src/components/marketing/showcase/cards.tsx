@@ -1,9 +1,10 @@
 import { AccountMenu } from "@/components/marketing/showcase/account-menu";
+import { Agents } from "@/components/marketing/showcase/agents";
+import { AskAi } from "@/components/marketing/showcase/ask-ai";
 import { Booking } from "@/components/marketing/showcase/booking";
 import { ColorEditorCard } from "@/components/marketing/showcase/color-editor";
 import { CookiePreferences } from "@/components/marketing/showcase/cookie-preferences";
 import { Faq } from "@/components/marketing/showcase/faq";
-import { Feedback } from "@/components/marketing/showcase/feedback";
 import { Filters } from "@/components/marketing/showcase/filters";
 import { InviteMembers } from "@/components/marketing/showcase/invite-members";
 import { LoginForm } from "@/components/marketing/showcase/login-form";
@@ -13,7 +14,6 @@ import { Shortcuts } from "@/components/marketing/showcase/shortcuts";
 import { SkeletonRail } from "@/components/marketing/showcase/skeleton-cards";
 import { Storage } from "@/components/marketing/showcase/storage";
 import { TeamName } from "@/components/marketing/showcase/team-name";
-import { Transactions } from "@/components/marketing/showcase/transactions";
 import { TwoFactor } from "@/components/marketing/showcase/two-factor";
 import { UploadAvatar } from "@/components/marketing/showcase/upload-avatar";
 
@@ -35,13 +35,13 @@ function RealCards() {
 			<InviteMembers />
 			<Shortcuts />
 			<Payment />
-			<Transactions />
+			<Agents />
 			<AccountMenu />
 			<Faq />
 			<ColorEditorCard />
 			<UploadAvatar />
 			<TeamName />
-			<Feedback />
+			<AskAi />
 			<LoginForm className="max-w-none" />
 		</div>
 	);
