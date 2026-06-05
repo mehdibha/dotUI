@@ -9,9 +9,9 @@ import { InviteMembers } from "@/components/marketing/showcase/invite-members";
 import { LoginForm } from "@/components/marketing/showcase/login-form";
 import { Notifications } from "@/components/marketing/showcase/notifications";
 import { Payment } from "@/components/marketing/showcase/payment";
-import { Progress } from "@/components/marketing/showcase/progress";
 import { Shortcuts } from "@/components/marketing/showcase/shortcuts";
 import { SkeletonRail } from "@/components/marketing/showcase/skeleton-cards";
+import { Storage } from "@/components/marketing/showcase/storage";
 import { TeamName } from "@/components/marketing/showcase/team-name";
 import { Transactions } from "@/components/marketing/showcase/transactions";
 import { TwoFactor } from "@/components/marketing/showcase/two-factor";
@@ -29,7 +29,7 @@ function RealCards() {
 			<Booking />
 			<TwoFactor />
 			<Filters />
-			<Progress />
+			<Storage />
 			<Notifications className="h-100" />
 			<CookiePreferences />
 			<InviteMembers />
