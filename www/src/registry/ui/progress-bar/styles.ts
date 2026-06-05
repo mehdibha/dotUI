@@ -7,9 +7,12 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
 	base: {
 		slots: {
 			root: fieldStyles().field(),
+			// Fall back to the meta param defaults (track-size, track-radius, fill-color)
+			// so the bar stays visible even when the design system hasn't injected those
+			// CSS vars — otherwise the track collapses to 0 height and the fill is transparent.
 			track:
-				"relative flex h-(--progress-track-size) w-full items-center overflow-x-hidden rounded-(--progress-track-radius) bg-muted",
-			fill: "data-indeterminate:animate-progress-indeterminate h-full w-full origin-left bg-(--progress-fill-color) transition-all",
+				"relative flex h-[var(--progress-track-size,calc(var(--spacing)*1))] w-full items-center overflow-x-hidden rounded-[var(--progress-track-radius,9999px)] bg-muted",
+			fill: "data-indeterminate:animate-progress-indeterminate h-full w-full origin-left bg-[var(--progress-fill-color,var(--color-primary))] transition-all",
 			output: "ml-auto text-fg-muted tabular-nums",
 		},
 		variants: {},
