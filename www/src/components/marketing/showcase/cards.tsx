@@ -54,7 +54,7 @@ export function Cards() {
 		// (a thin peek on small screens, wide rails on large ones). The `gap-4` between
 		// the grid and rails matches the gap between cards. The bottom is masked so the
 		// whole showcase — real cards and skeletons alike — fades into the next section.
-		<div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_240px),transparent_calc(100%_-_110px))] [--grid-max:1500px] [--rail-gap:--spacing(4)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem]">
+		<div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_520px),transparent_calc(100%_-_180px))] [--grid-max:1500px] [--rail-gap:--spacing(4)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem]">
 			<SkeletonRail side="left" />
 			<RealCards />
 			<SkeletonRail side="right" />
