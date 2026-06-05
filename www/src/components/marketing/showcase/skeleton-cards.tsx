@@ -142,18 +142,21 @@ export function SkeletonRail({ side }: { side: "left" | "right" }) {
 	const [colA, colB] =
 		side === "left" ? ([RAIL_COLUMNS[0], RAIL_COLUMNS[1]] as const) : ([RAIL_COLUMNS[2], RAIL_COLUMNS[3]] as const);
 	return (
-		// A flex item that grows to fill the gutter beside the real grid (always
-		// visible, even on small screens). Its fixed-width content overflows and is
-		// clipped, so on small screens only `--rail-peek` shows, while on wide screens
-		// the whole rail does. The content hugs the inner edge (next to the real grid)
-		// via justify-*.
+		// A flex item that grows to fill the gutter beside the real grid on large
+		// screens. Its fixed-width content overflows and is clipped, so it peeks in
+		// from the edge and reveals more as the viewport widens. Hidden below `lg`,
+		// where the real grid bleeds off the edges instead. A horizontal mask fades
+		// each rail toward the outer screen edge so it reads progressively darker. The
+		// content hugs the inner edge (next to the real grid) via justify-*.
 		<Skeleton
 			isLoading
 			aria-hidden="true"
 			className={cn(
-				"flex shrink-0 grow basis-(--rail-peek) overflow-hidden",
+				"hidden shrink-0 grow basis-(--rail-peek) overflow-hidden lg:flex",
 				"[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]",
-				side === "left" ? "justify-end" : "justify-start",
+				side === "left"
+					? "justify-end [mask-image:linear-gradient(to_left,black_25%,transparent)]"
+					: "justify-start [mask-image:linear-gradient(to_right,black_25%,transparent)]",
 			)}
 		>
 			<div className="grid w-(--rail-w) shrink-0 grid-cols-2 gap-(--rail-gap) opacity-45">
