@@ -36,6 +36,8 @@
 import { existsSync, promises as fs, statSync } from "node:fs";
 import path from "node:path";
 
+import { format } from "oxfmt";
+
 // `process.cwd()` is `www/` (the script is run from there via pnpm).
 const SRC = path.join(process.cwd(), "src");
 const GENERATED = path.join(SRC, "registry/__generated__");
@@ -350,7 +352,8 @@ export const SHOWCASE_BUNDLE_COMPONENTS: string[] = ${JSON.stringify(componentNa
 `;
 
 	await fs.mkdir(GENERATED, { recursive: true });
-	await fs.writeFile(OUT_FILE, out, "utf8");
+	const { code } = await format(OUT_FILE, out, { printWidth: 120, useTabs: true });
+	await fs.writeFile(OUT_FILE, code, "utf8");
 
 	console.log(
 		`  ✓ showcase-bundle: ${sourceFilesArr.length} source + ${cssFiles.length} css files, ` +

@@ -57,5 +57,10 @@
 		// with content hashes) — must not be reformatted or their hashes break.
 		".agents/**",
 		"skills-lock.json",
+		// Hand-authored prose docs (tables, fenced code samples). oxfmt reflows
+		// markdown — including code inside fences — and oscillates on a fence that
+		// holds a template literal, so `--check` could never converge. Leave docs
+		// as written.
+		"docs/**",
 	],
 }
