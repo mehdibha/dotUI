@@ -320,35 +320,6 @@ function SpacingParamSlider({ paramName, def, selected, onChange }: ScalarParamE
 	);
 }
 
-/* ---------------------- Grouped components flat view ---------------------- */
-
-interface GroupedComponentsViewProps {
-	onSelect: (groupName: string) => void;
-}
-
-export function GroupedComponentsView({ onSelect }: GroupedComponentsViewProps) {
-	return (
-		<div className="mt-4 flex flex-col gap-3">
-			{allGroups.map((group) => {
-				const componentsInGroup = getComponentsInGroup(group);
-				return (
-					<ButtonPrimitives.Button key={group} onPress={() => onSelect(group)} className={cardClass}>
-						<div className="flex items-center justify-between">
-							<span>{toTitleCase(group)}</span>
-							<ChevronRightIcon className="size-4 text-fg-muted" />
-						</div>
-						<div className="flex items-center gap-2 text-xs text-fg-muted/60">
-							<span>
-								{componentsInGroup.length} {componentsInGroup.length === 1 ? "component" : "components"}
-							</span>
-						</div>
-					</ButtonPrimitives.Button>
-				);
-			})}
-		</div>
-	);
-}
-
 /* -------------------- Group detail view -------------------- */
 
 interface GroupDetailViewProps {

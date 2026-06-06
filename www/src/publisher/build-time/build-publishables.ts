@@ -278,7 +278,7 @@ async function renderPublishableSource({ meta, stylesConfig, templates }: Render
 	}
 
 	const stylesConfigLiteral = JSON.stringify(stylesConfig, null, 2);
-	const metaLiteral = JSON.stringify(metaForRuntime(meta), null, 2);
+	const metaLiteral = JSON.stringify(meta, null, 2);
 
 	const lines: string[] = [];
 	lines.push(`// AUTO-GENERATED — do not edit. Source: ui/${meta.name}/`);
@@ -322,18 +322,6 @@ async function renderPublishableSource({ meta, stylesConfig, templates }: Render
 		// Formatting is cosmetic — never block the build over a formatter hiccup.
 		return raw;
 	}
-}
-
-/**
- * Strip dev-only fields from meta. We keep `params` because the request-time
- * publisher reads scalar param definitions for the class rewriter; everything
- * downstream of `publish()` drops `params` from the emitted shadcn JSON.
- * Drops fields that don't survive JSON round-trip (e.g. `as const` literals
- * are already arrays/objects after extraction).
- */
-function metaForRuntime(meta: RegistryItem): RegistryItem {
-	const { ...rest } = meta;
-	return rest;
 }
 
 function templateLiteral(template: string): string {
