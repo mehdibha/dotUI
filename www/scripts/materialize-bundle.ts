@@ -83,11 +83,12 @@ const INDEX_HTML = `<!doctype html>
 \t</head>
 \t<body>
 \t\t<div id="root"></div>
-\t\t<script type="module" src="/src/main.tsx"></script>
+\t\t<script type="module" src="/main.tsx"></script>
 \t</body>
 </html>
 `;
 
+// Root-relative `@/*` → project root, mirroring v0's scaffold (no `src/`).
 const VITE_CONFIG = `import path from "node:path";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -97,7 +98,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
 \troot: path.resolve(import.meta.dirname),
 \tresolve: {
-\t\talias: [{ find: /^@\\//, replacement: \`\${path.resolve(import.meta.dirname, "src")}/\` }],
+\t\talias: [{ find: /^@\\//, replacement: \`\${path.resolve(import.meta.dirname)}/\` }],
 \t\t// The harness reuses www/node_modules; force a single React copy.
 \t\tdedupe: ["react", "react-dom"],
 \t},
@@ -123,12 +124,12 @@ async function main() {
 
 	// Default-preset theme: ramps + baked `--on-*` foregrounds (matches the route).
 	const colorsCss = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG), { onColors: true });
-	await writeFile("src/registry/base/colors.css", colorsCss);
+	await writeFile("registry/base/colors.css", colorsCss);
 
 	// App shell + Vite scaffold.
-	await writeFile("src/app/globals.css", GLOBALS_CSS);
-	await writeFile("src/app/page.tsx", PAGE_TSX);
-	await writeFile("src/main.tsx", MAIN_TSX);
+	await writeFile("app/globals.css", GLOBALS_CSS);
+	await writeFile("app/page.tsx", PAGE_TSX);
+	await writeFile("main.tsx", MAIN_TSX);
 	await writeFile("index.html", INDEX_HTML);
 	await writeFile("vite.config.ts", VITE_CONFIG);
 

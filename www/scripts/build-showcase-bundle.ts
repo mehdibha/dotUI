@@ -245,14 +245,14 @@ async function buildShowcaseBundle(): Promise<void> {
 	for (const dir of [...componentDirs].sort()) {
 		const stylesRel = `${dir}/styles.css`;
 		if (existsSync(path.join(SRC, stylesRel))) {
-			cssFiles.push({ target: `src/${stylesRel}`, content: await fs.readFile(path.join(SRC, stylesRel), "utf8") });
+			cssFiles.push({ target: stylesRel, content: await fs.readFile(path.join(SRC, stylesRel), "utf8") });
 			componentStyleImports.push(`@import "./${stylesRel.replace("registry/", "")}";`);
 		}
 	}
 	// Any .css reached directly via a JS import (rare) ships verbatim too.
 	for (const srcRel of cssSideEffectFiles) {
-		if (!cssFiles.some((f) => f.target === `src/${srcRel}`)) {
-			cssFiles.push({ target: `src/${srcRel}`, content: await fs.readFile(path.join(SRC, srcRel), "utf8") });
+		if (!cssFiles.some((f) => f.target === srcRel)) {
+			cssFiles.push({ target: srcRel, content: await fs.readFile(path.join(SRC, srcRel), "utf8") });
 		}
 	}
 
@@ -269,7 +269,7 @@ async function buildShowcaseBundle(): Promise<void> {
 				throw new Error("[showcase-bundle] expected to strip the tailwindcss-autocontrast @plugin from base.css");
 			}
 		}
-		cssFiles.unshift({ target: `src/registry/base/${base}`, content });
+		cssFiles.unshift({ target: `registry/base/${base}`, content });
 	}
 
 	/* ----- the registry CSS aggregator (mirrors src/registry/styles.css) ----- */
@@ -283,12 +283,16 @@ async function buildShowcaseBundle(): Promise<void> {
 		...componentStyleImports,
 		"",
 	].join("\n");
-	cssFiles.push({ target: "src/registry/styles.css", content: aggregator });
+	cssFiles.push({ target: "registry/styles.css", content: aggregator });
 
 	/* --------------------------------- emit --------------------------------- */
+	// Targets are project-root-relative (no `src/`): v0 scaffolds a root-`app/`
+	// Next.js project with `@/*` → `./*` (see shadcn's own login-01 example,
+	// which targets `app/login/page.tsx`), so dotUI's `@/registry/*` imports
+	// resolve when the files sit at `registry/*` at the project root.
 	const sourceFilesArr: BundleFile[] = [...sourceFiles.entries()]
 		.sort(([a], [b]) => a.localeCompare(b))
-		.map(([srcRel, content]) => ({ target: `src/${srcRel}`, content }));
+		.map(([srcRel, content]) => ({ target: srcRel, content }));
 
 	const dependencies = [...new Set([...npmDeps, ...CSS_DEPENDENCIES])]
 		.filter((d) => !d.startsWith("@/") && !FRAMEWORK_PROVIDED.has(d))

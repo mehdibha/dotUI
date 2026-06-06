@@ -51,11 +51,12 @@ export const Route = createFileRoute("/r/showcase-bundle")({
 				const preset = encodedPreset ? await decodePresetForRoute(encodedPreset) : defaultPreset();
 
 				const files: ItemFile[] = [
-					// App shell + theme (assembled per request).
-					file("registry:file", "src/app/globals.css", BUNDLE_GLOBALS_CSS),
-					file("registry:file", "src/registry/base/colors.css", emitColorsCss(preset)),
-					file("registry:file", "src/app/layout.tsx", buildLayoutTsx()),
-					file("registry:page", "src/app/page.tsx", buildPageTsx(preset)),
+					// App shell + theme (assembled per request). Root-relative targets:
+					// v0 scaffolds a root-`app/` Next.js project with `@/*` → `./*`.
+					file("registry:file", "app/globals.css", BUNDLE_GLOBALS_CSS),
+					file("registry:file", "registry/base/colors.css", emitColorsCss(preset)),
+					file("registry:file", "app/layout.tsx", buildLayoutTsx()),
+					file("registry:page", "app/page.tsx", buildPageTsx(preset)),
 					// Mirrored theme CSS (base.css, theme.css, fonts.css, per-component styles.css, aggregator).
 					...SHOWCASE_BUNDLE_CSS_FILES.map((f) => file("registry:file", f.target, f.content)),
 					// The transitive source closure (components, lib, hooks, provider, showcase cards).
