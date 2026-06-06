@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { LockIcon } from "lucide-react";
+import { BitcoinIcon, CreditCardIcon, LockIcon } from "lucide-react";
 
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
@@ -12,10 +12,9 @@ import { Input } from "@/registry/ui/input";
 import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
 import { TextField } from "@/registry/ui/text-field";
 
-const providers = [
-	{ id: "visa", label: "Visa", logo: <VisaMark /> },
-	{ id: "mastercard", label: "Mastercard", logo: <MastercardMark /> },
-	{ id: "amex", label: "American Express", logo: <AmexMark /> },
+const methods = [
+	{ id: "card", label: "Card", icon: CreditCardIcon },
+	{ id: "crypto", label: "Crypto", icon: BitcoinIcon },
 ];
 
 const inputClassName = "h-9 min-w-0 flex-1 bg-transparent text-sm text-fg outline-none placeholder:text-fg-muted";
@@ -26,7 +25,7 @@ const segmentClassName =
 	"relative flex items-center px-3 focus-within:z-10 focus-within:rounded-(--input-radius) focus-within:border-transparent focus-within:bg-field focus-within:ring-2 focus-within:ring-border-focus";
 
 export function Payment({ className, ...props }: React.ComponentProps<"div">) {
-	const [provider, setProvider] = useState("visa");
+	const [method, setMethod] = useState("card");
 
 	return (
 		<Card className={cn(className)} {...props}>
@@ -35,17 +34,12 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
 				<CardDescription>Choose a method and enter your card.</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				<RadioGroup
-					aria-label="Payment method"
-					value={provider}
-					onChange={setProvider}
-					className="grid grid-cols-3 gap-2"
-				>
-					{providers.map((p) => (
-						<Radio key={p.id} value={p.id} className="items-stretch">
-							<RadioControl className="h-full flex-col justify-center gap-2 px-2 py-4">
-								{p.logo}
-								<Label className="sr-only">{p.label}</Label>
+				<RadioGroup aria-label="Payment method" value={method} onChange={setMethod} className="grid grid-cols-2 gap-2">
+					{methods.map((m) => (
+						<Radio key={m.id} value={m.id} className="items-stretch">
+							<RadioControl className="h-full items-center justify-center gap-2 px-3 py-3.5">
+								<m.icon className="size-5 shrink-0" />
+								<Label className="text-base">{m.label}</Label>
 							</RadioControl>
 						</Radio>
 					))}
@@ -66,7 +60,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
 								defaultValue="4242 4242 4242 4242"
 								className={inputClassName}
 							/>
-							<CardBrands />
+							<VisaAddon />
 						</label>
 						<div className="grid grid-cols-2">
 							<label className={cn(segmentClassName, "rounded-bl-(--input-radius) border-t border-border-field")}>
@@ -112,63 +106,11 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-function VisaMark() {
-	return <span className="text-base leading-none font-bold tracking-tight text-[#1a59ff] italic">VISA</span>;
-}
-
-function MastercardMark() {
+// Visa logo shown as a trailing addon in the card-number field.
+function VisaAddon() {
 	return (
-		<svg viewBox="0 0 32 20" className="h-5 w-auto" aria-hidden="true">
-			<circle cx="13" cy="10" r="7" fill="#eb001b" />
-			<circle cx="19" cy="10" r="7" fill="#f79e1b" fillOpacity="0.9" />
-		</svg>
-	);
-}
-
-function AmexMark() {
-	return (
-		<span className="rounded-sm bg-[#1f72cd] px-1.5 py-1 text-[10px] leading-none font-bold tracking-wide text-white">
-			AMEX
-		</span>
-	);
-}
-
-// Small card-brand chips shown at the end of the card-number field.
-function BrandChip({ children, className }: { children: React.ReactNode; className?: string }) {
-	return (
-		<span
-			className={cn(
-				"flex h-4 w-[26px] items-center justify-center rounded-[3px] bg-white ring-1 ring-black/5",
-				className,
-			)}
-		>
-			{children}
-		</span>
-	);
-}
-
-function CardBrands() {
-	return (
-		<span className="flex shrink-0 items-center gap-1" aria-hidden="true">
-			<BrandChip>
-				<span className="text-[8px] leading-none font-bold tracking-tight text-[#1434cb] italic">VISA</span>
-			</BrandChip>
-			<BrandChip>
-				<svg viewBox="0 0 24 16" className="h-2.5 w-auto">
-					<circle cx="10" cy="8" r="5" fill="#eb001b" />
-					<circle cx="14" cy="8" r="5" fill="#f79e1b" fillOpacity="0.9" />
-				</svg>
-			</BrandChip>
-			<BrandChip className="bg-[#1f72cd] ring-0">
-				<span className="text-[6px] leading-none font-bold tracking-tight text-white">AMEX</span>
-			</BrandChip>
-			<BrandChip>
-				<span className="text-[8px] leading-none font-bold">
-					<span className="text-[#0e4c96]">J</span>
-					<span className="text-[#d1131a]">C</span>
-					<span className="text-[#007b40]">B</span>
-				</span>
-			</BrandChip>
+		<span aria-hidden="true" className="flex h-4 shrink-0 items-center rounded-[3px] bg-white px-1 ring-1 ring-black/5">
+			<span className="text-[8px] leading-none font-bold tracking-tight text-[#1434cb] italic">VISA</span>
 		</span>
 	);
 }
