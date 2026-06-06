@@ -26,7 +26,7 @@ const variants = [
 
 export default function Demo() {
 	return (
-		<div className="space-y-4">
+		<div className="w-full space-y-4">
 			{variants.map((variant) => (
 				<ProgressBar key={variant.label} value={75}>
 					<Label>{variant.label}</Label>

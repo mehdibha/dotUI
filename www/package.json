@@ -5,8 +5,8 @@
 	"portless": "dotui",
 	"scripts": {
 		"postinstall": "fumadocs-mdx",
-		"dev": "portless run vite dev",
-		"dev:clean": "rm -rf node_modules/.vite .cache && portless run vite dev",
+		"dev": "vite dev",
+		"dev:clean": "rm -rf node_modules/.vite .cache && vite dev",
 		"build:registry": "tsx scripts/registry-build.ts && tsx scripts/build-showcase-bundle.ts",
 		"build": "pnpm build:registry && NODE_OPTIONS='--max-old-space-size=8192' vite build && pnpm build:postprocess",
 		"build:postprocess": "([ -n \"$VERCEL\" ] && cp -r .vercel/output/dist/client/__tsr .vercel/output/static/__tsr 2>/dev/null || true); node scripts/patch-vercel-config.mjs",

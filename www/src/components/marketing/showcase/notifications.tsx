@@ -33,26 +33,26 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 					</Button>
 				</CardAction>
 			</CardHeader>
-			<CardContent className="flex min-h-0 flex-1 flex-col px-0">
+			<CardContent className="flex min-h-0 flex-1 flex-col gap-3 px-0">
 				<Tabs
 					selectedKey={filter}
 					onSelectionChange={(key) => setFilter(key as NotificationFilter)}
-					className="shrink-0"
+					className="shrink-0 px-4"
 				>
-					<TabList className="pl-6">
+					<TabList>
 						<Tab id="all">All</Tab>
 						<Tab id="unread">Unread</Tab>
 						<Tab id="read">Read</Tab>
 					</TabList>
 				</Tabs>
-				<div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto">
+				<div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto border-t">
 					<ListBox
 						aria-label="Notifications"
 						className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_.separator]:my-0"
 					>
-						{visibleNotifications.map((notification) => (
+						{visibleNotifications.map((notification, index) => (
 							<React.Fragment key={`${notification.user.name}-${notification.timestamp}-${notification.text}`}>
-								<Separator />
+								{index > 0 && <Separator />}
 								<ListBoxItem textValue={notification.text}>
 									<div className="flex items-start gap-3 py-2">
 										<Avatar size="md" className="shrink-0">

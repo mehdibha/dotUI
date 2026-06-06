@@ -15,17 +15,8 @@ export function CookiePreferences({ className, ...props }: React.ComponentProps<
 				<CardDescription>Manage how we use cookies on this site.</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<CheckboxGroup aria-label="Cookie preferences" defaultValue={["essential", "analytics"]}>
+				<CheckboxGroup aria-label="Cookie preferences" defaultValue={["performance", "analytics"]}>
 					<FieldGroup>
-						<Checkbox value="essential" isDisabled>
-							<CheckboxControl>
-								<CheckboxIndicator />
-								<FieldContent>
-									<Label>Strictly necessary</Label>
-									<Description>Required for the site to work.</Description>
-								</FieldContent>
-							</CheckboxControl>
-						</Checkbox>
 						<Checkbox value="analytics">
 							<CheckboxControl>
 								<CheckboxIndicator />
@@ -41,6 +32,15 @@ export function CookiePreferences({ className, ...props }: React.ComponentProps<
 								<FieldContent>
 									<Label>Marketing</Label>
 									<Description>Personalized offers and ads.</Description>
+								</FieldContent>
+							</CheckboxControl>
+						</Checkbox>
+						<Checkbox value="performance">
+							<CheckboxControl>
+								<CheckboxIndicator />
+								<FieldContent>
+									<Label>Performance</Label>
+									<Description>Measure and improve site speed.</Description>
 								</FieldContent>
 							</CheckboxControl>
 						</Checkbox>

@@ -16,9 +16,10 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 	return (
 		<Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
 			<Button
-				size="sm"
-				className={cn("md:hidden", "relative flex items-center justify-center")}
 				aria-label="Toggle Menu"
+				size="md"
+				isIconOnly
+				className="relative flex items-center justify-center md:hidden"
 			>
 				<div className="relative h-3.5 w-4 [&>span]:absolute [&>span]:left-0 [&>span]:block [&>span]:h-0.5 [&>span]:w-4 [&>span]:rounded-full [&>span]:bg-fg [&>span]:transition-all [&>span]:duration-150 [&>span]:ease-out">
 					<span className={cn("top-0.25", isOpen && "translate-y-[0.31rem] -rotate-45")} />

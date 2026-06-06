@@ -20,7 +20,7 @@ const sizes = [
 
 export default function Demo() {
 	return (
-		<div className="space-y-4">
+		<div className="w-full space-y-4">
 			{sizes.map((size) => (
 				<ProgressBar key={size.label} aria-label={`Progress size: ${size.label}`} value={75}>
 					<Label>{size.label}</Label>

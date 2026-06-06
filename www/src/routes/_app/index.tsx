@@ -48,12 +48,12 @@ function HomePage() {
 					</div>
 				</section>
 
-				<section className="container mt-24">
+				<section className="mt-24">
 					<Cards />
 				</section>
 
-				{/* Built on modern tools */}
-				<section className="mt-10 py-12 shadow-xs">
+				{/* Built on modern tools — pulled up to sit on top of the cards' bottom fade. */}
+				<section className="relative z-10 -mt-40 py-12 shadow-xs">
 					<div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
 						<h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
 							Built on modern tools
