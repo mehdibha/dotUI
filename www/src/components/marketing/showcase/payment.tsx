@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { CreditCardIcon, LockIcon } from "lucide-react";
+import { LockIcon } from "lucide-react";
 
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
@@ -18,7 +18,12 @@ const providers = [
 	{ id: "amex", label: "American Express", logo: <AmexMark /> },
 ];
 
-const inputClassName = "h-9 w-full bg-transparent text-sm text-fg outline-none placeholder:text-fg-muted";
+const inputClassName = "h-9 min-w-0 flex-1 bg-transparent text-sm text-fg outline-none placeholder:text-fg-muted";
+
+// Each segment of the joined card field: lifts above the dividers and shows its
+// own focus ring on focus, instead of ringing the whole group.
+const segmentClassName =
+	"relative flex items-center px-3 focus-within:z-10 focus-within:rounded-(--input-radius) focus-within:border-transparent focus-within:bg-field focus-within:ring-2 focus-within:ring-border-focus";
 
 export function Payment({ className, ...props }: React.ComponentProps<"div">) {
 	const [provider, setProvider] = useState("visa");
@@ -49,25 +54,36 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
 				<div role="group" aria-label="Card information" className="space-y-1.5">
 					<Label>Card information</Label>
 					{/* Joined field: card number on top, expiry / CVC below, sharing one
-					    border with gap-0 dividers — the Stripe-style combined card input. */}
-					<div className="divide-y divide-border-field overflow-hidden rounded-(--input-radius) border border-border-field bg-field transition-[box-shadow,border-color] focus-within:border-border-focus focus-within:ring-2 focus-within:ring-border-focus-muted">
-						<div className="flex items-center gap-2 px-3">
-							<CreditCardIcon className="size-4 shrink-0 text-fg-muted" />
+					    border with gap-0 dividers — the Stripe-style combined card input.
+					    Each segment rings on its own focus (z-10 lifts it above the dividers)
+					    rather than ringing the whole group. */}
+					<div className="relative rounded-(--input-radius) border border-border-field bg-field text-fg">
+						<label className={cn(segmentClassName, "gap-2 rounded-t-(--input-radius)")}>
 							<input
 								aria-label="Card number"
 								inputMode="numeric"
+								placeholder="1234 1234 1234 1234"
 								defaultValue="4242 4242 4242 4242"
 								className={inputClassName}
 							/>
-						</div>
-						<div className="grid grid-cols-2 divide-x divide-border-field">
-							<input
-								aria-label="Expiry"
-								placeholder="MM / YY"
-								defaultValue="04 / 28"
-								className={cn(inputClassName, "px-3")}
-							/>
-							<div className="flex items-center gap-2 px-3">
+							<CardBrands />
+						</label>
+						<div className="grid grid-cols-2">
+							<label className={cn(segmentClassName, "rounded-bl-(--input-radius) border-t border-border-field")}>
+								<input
+									aria-label="Expiry"
+									inputMode="numeric"
+									placeholder="MM / YY"
+									defaultValue="04 / 28"
+									className={inputClassName}
+								/>
+							</label>
+							<label
+								className={cn(
+									segmentClassName,
+									"gap-2 rounded-br-(--input-radius) border-t border-l border-border-field",
+								)}
+							>
 								<input
 									aria-label="CVC"
 									inputMode="numeric"
@@ -75,8 +91,8 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
 									defaultValue="123"
 									className={inputClassName}
 								/>
-								<LockIcon className="size-4 shrink-0 text-fg-muted" />
-							</div>
+								<CvcIcon />
+							</label>
 						</div>
 					</div>
 				</div>
@@ -114,5 +130,58 @@ function AmexMark() {
 		<span className="rounded-sm bg-[#1f72cd] px-1.5 py-1 text-[10px] leading-none font-bold tracking-wide text-white">
 			AMEX
 		</span>
+	);
+}
+
+// Small card-brand chips shown at the end of the card-number field.
+function BrandChip({ children, className }: { children: React.ReactNode; className?: string }) {
+	return (
+		<span
+			className={cn(
+				"flex h-4 w-[26px] items-center justify-center rounded-[3px] bg-white ring-1 ring-black/5",
+				className,
+			)}
+		>
+			{children}
+		</span>
+	);
+}
+
+function CardBrands() {
+	return (
+		<span className="flex shrink-0 items-center gap-1" aria-hidden="true">
+			<BrandChip>
+				<span className="text-[8px] leading-none font-bold tracking-tight text-[#1434cb] italic">VISA</span>
+			</BrandChip>
+			<BrandChip>
+				<svg viewBox="0 0 24 16" className="h-2.5 w-auto">
+					<circle cx="10" cy="8" r="5" fill="#eb001b" />
+					<circle cx="14" cy="8" r="5" fill="#f79e1b" fillOpacity="0.9" />
+				</svg>
+			</BrandChip>
+			<BrandChip className="bg-[#1f72cd] ring-0">
+				<span className="text-[6px] leading-none font-bold tracking-tight text-white">AMEX</span>
+			</BrandChip>
+			<BrandChip>
+				<span className="text-[8px] leading-none font-bold">
+					<span className="text-[#0e4c96]">J</span>
+					<span className="text-[#d1131a]">C</span>
+					<span className="text-[#007b40]">B</span>
+				</span>
+			</BrandChip>
+		</span>
+	);
+}
+
+// CVC hint: a card showing where the 3-digit code lives.
+function CvcIcon() {
+	return (
+		<svg viewBox="0 0 24 18" aria-hidden="true" className="h-4.5 w-6 shrink-0 text-fg-muted">
+			<rect x="1" y="1" width="22" height="16" rx="2.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+			<rect x="1" y="4.5" width="22" height="3" fill="currentColor" fillOpacity="0.35" />
+			<text x="20.5" y="14.5" textAnchor="end" fontSize="6.5" fontWeight="700" fill="currentColor">
+				123
+			</text>
+		</svg>
 	);
 }
