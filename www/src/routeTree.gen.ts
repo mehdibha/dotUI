@@ -17,6 +17,7 @@ import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as HomeDotmdRouteImport } from './routes/home[.]md'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as RShowcaseBundleRouteImport } from './routes/r/showcase-bundle'
 import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
@@ -66,6 +67,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppRouteRoute,
+} as any)
+const RShowcaseBundleRoute = RShowcaseBundleRouteImport.update({
+  id: '/r/showcase-bundle',
+  path: '/r/showcase-bundle',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const RInitRoute = RInitRouteImport.update({
   id: '/r/init',
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
+  '/r/showcase-bundle': typeof RShowcaseBundleRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
 }
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
+  '/r/showcase-bundle': typeof RShowcaseBundleRoute
   '/': typeof AppIndexRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
+  '/r/showcase-bundle': typeof RShowcaseBundleRoute
   '/_app/': typeof AppIndexRoute
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
@@ -196,6 +205,7 @@ export interface FileRouteTypes {
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
+    | '/r/showcase-bundle'
     | '/docs/$'
     | '/docs/{$}.md'
   fileRoutesByTo: FileRoutesByTo
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
+    | '/r/showcase-bundle'
     | '/'
     | '/docs/$'
     | '/docs/{$}.md'
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
+    | '/r/showcase-bundle'
     | '/_app/'
     | '/_app/docs/$'
     | '/_app/docs/{$}.md'
@@ -252,6 +264,7 @@ export interface RootRouteChildren {
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
   RInitRoute: typeof RInitRoute
+  RShowcaseBundleRoute: typeof RShowcaseBundleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
+    }
+    '/r/showcase-bundle': {
+      id: '/r/showcase-bundle'
+      path: '/r/showcase-bundle'
+      fullPath: '/r/showcase-bundle'
+      preLoaderRoute: typeof RShowcaseBundleRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/r/init': {
       id: '/r/init'
@@ -430,6 +450,7 @@ const rootRouteChildren: RootRouteChildren = {
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,
   RInitRoute: RInitRoute,
+  RShowcaseBundleRoute: RShowcaseBundleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

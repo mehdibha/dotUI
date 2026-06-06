@@ -142,7 +142,7 @@ function rampsToVars(palettes: Record<string, Record<string, string>>): Record<s
 	return vars;
 }
 
-function mergePresetCssFields(base: RegistryCssFields, preset: PublishPreset): RegistryCssFields {
+export function mergePresetCssFields(base: RegistryCssFields, preset: PublishPreset): RegistryCssFields {
 	const css = cloneRecord(base.css) ?? {};
 	mergeCssVarsIntoCssRule(css, ":root", base.cssVars?.light);
 	mergeCssVarsIntoCssRule(css, ".dark", base.cssVars?.dark);
