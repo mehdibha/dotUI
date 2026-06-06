@@ -225,9 +225,14 @@ ${iconExports}
 }
 
 async function buildInternalExamples() {
-	const targetPath = path.join(GENERATED_DIR, "examples.tsx");
+	// Generated under the create module (its sole consumer is routes/preview/$slug.tsx)
+	// rather than registry/__generated__, so the registry tree never imports "up" into
+	// @/modules/create/preview/group-examples — keeping registry/ items-only.
+	const targetDir = path.join(process.cwd(), "src/modules/create/__generated__");
+	const targetPath = path.join(targetDir, "examples.tsx");
 	const uiDir = path.join(REGISTRY_DIR, "ui");
 	const groupExamplesDir = path.join(process.cwd(), "src/modules/create/preview/group-examples");
+	await fs.mkdir(targetDir, { recursive: true });
 
 	const componentFolders = await fs.readdir(uiDir);
 	const entries: string[] = [];
@@ -268,7 +273,7 @@ ${groupEntries.join("\n")}
 `;
 
 	await writeGeneratedFile(targetPath, content);
-	console.log(`  ✓ __generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`);
+	console.log(`  ✓ create/__generated__/examples.tsx (${entries.length} components, ${groupEntries.length} groups)`);
 }
 
 // ============================================================================
