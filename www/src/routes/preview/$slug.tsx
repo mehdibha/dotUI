@@ -5,8 +5,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 import { DesignSystemProvider } from "@/modules/core/styles";
+import { ExamplesIndex, GroupExamplesIndex } from "@/modules/create/__generated__/examples";
 import { DEFAULTS, decodePreset, useIframeMessageListener } from "@/modules/create/preset";
-import { ExamplesIndex, GroupExamplesIndex } from "@/registry/__generated__/examples";
 
 import type { DesignSystem } from "@/modules/create/preset";
 
