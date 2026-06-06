@@ -39,12 +39,15 @@ export function InstallCommand() {
 	const command = useMemo(() => {
 		const encoded = encodePreset(designSystem);
 		const url = encoded ? `${host}/r/init?preset=${encoded}` : `${host}/r/init`;
-		// `shadcn add <url>` (not `init`) is the working install invocation:
-		//  - it works on any project that already has a components.json (from a
-		//    prior `npx shadcn init`),
-		//  - it merges dotUI theme fields into the project's CSS and installs `src/lib/utils.ts`,
-		//  - per-component `add` follows transitive deps as absolute URLs.
-		return `npx shadcn add ${url}`;
+		// `shadcn init <url>` is the right command for our `registry:base` item:
+		//  - `init` is the only command that merges the item's `config.registries`
+		//    into the consumer's components.json, so a later
+		//    `shadcn add @dotui/<name>` resolves with the same preset baked in.
+		//  - it also installs the deps, writes the theme css/cssVars, and ships
+		//    `src/lib/utils.ts` — everything `add` did, plus the registry wiring.
+		//  - `shadcn add <url>` silently drops `config.registries` on a project that
+		//    already has components.json, which breaks per-component installs.
+		return `npx shadcn init ${url}`;
 	}, [designSystem, host]);
 
 	async function copy() {
