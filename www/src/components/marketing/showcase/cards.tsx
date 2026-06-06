@@ -1,8 +1,8 @@
 import { AccountMenu } from "@/components/marketing/showcase/account-menu";
-import { Agents } from "@/components/marketing/showcase/agents";
 import { AskAi } from "@/components/marketing/showcase/ask-ai";
 import { Booking } from "@/components/marketing/showcase/booking";
 import { ColorEditorCard } from "@/components/marketing/showcase/color-editor";
+import { ComputerUse } from "@/components/marketing/showcase/computer-use";
 import { CookiePreferences } from "@/components/marketing/showcase/cookie-preferences";
 import { Faq } from "@/components/marketing/showcase/faq";
 import { Filters } from "@/components/marketing/showcase/filters";
@@ -35,7 +35,7 @@ function RealCards() {
 			<InviteMembers />
 			<Shortcuts />
 			<Payment />
-			<Agents />
+			<ComputerUse />
 			<AccountMenu />
 			<Faq />
 			<ColorEditorCard />
