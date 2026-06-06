@@ -43,6 +43,7 @@ import {
 import { IconographyConfig } from "./iconography-config";
 import { InstallCommand } from "./install-command";
 import { DEFAULT_RADIUS_FACTOR, DensityConfig, RADIUS_FACTOR_VAR, RadiusConfig } from "./layout-config";
+import { OpenInV0 } from "./open-in-v0";
 import { useDesignSystem } from "./preset";
 import { TypographyConfig } from "./typography-config";
 
@@ -383,9 +384,7 @@ export function CustomizerPanel({
 			{/* Footer */}
 			<div className="flex flex-col gap-2 border-t p-3">
 				<InstallCommand />
-				<Button variant="primary" size="sm" className="w-full">
-					Create project
-				</Button>
+				<OpenInV0 />
 			</div>
 		</div>
 	);
