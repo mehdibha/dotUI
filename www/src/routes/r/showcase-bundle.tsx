@@ -121,10 +121,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 function buildPageTsx(preset: PublishPreset): string {
 	const density = JSON.stringify(preset.density ?? "compact");
 	const params = JSON.stringify(preset.componentParams ?? {});
+	// Import the theme from the page too (not just the layout): if v0 keeps its
+	// own root layout, the page still pulls in globals.css so the theme loads.
 	return `"use client";
 
-import Cards from "@/components/marketing/showcase/cards";
-import { DesignSystemProvider } from "@/modules/core/styles";
+import "./globals.css";
+
+import Cards from "../components/marketing/showcase/cards";
+import { DesignSystemProvider } from "../modules/core/styles";
 
 export default function Page() {
 \treturn (

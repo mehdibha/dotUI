@@ -163,6 +163,38 @@ function packageNameOf(spec: string): string {
 	return parts[0] ?? spec;
 }
 
+/**
+ * Rewrite every in-bundle `@/…` import in a file to a RELATIVE path.
+ *
+ * v0 applies shadcn's registry alias transform — it rewrites `@/registry/ui/X`
+ * → `@/components/ui/X`, `@/registry/lib/utils` → `@/lib/utils`, etc. — then
+ * fails to find the files (we ship dotUI's own tree, not the shadcn flat
+ * layout). Relative imports have no alias for v0 to touch, so they resolve to
+ * wherever we place the files, in any project. npm and already-relative imports
+ * pass through untouched.
+ */
+function rewriteImportsToRelative(srcRel: string, content: string): string {
+	let out = content;
+	for (const spec of extractSpecifiers(content)) {
+		if (!spec.startsWith("@/")) continue;
+		const target = resolveFile(spec.slice(2));
+		if (!target) continue;
+		const rel = toRelativeImport(srcRel, target);
+		out = out.split(`"${spec}"`).join(`"${rel}"`).split(`'${spec}'`).join(`'${rel}'`);
+	}
+	return out;
+}
+
+/** A relative specifier (no extension, leading `./` or `../`) from one src-rel file to another. */
+function toRelativeImport(fromSrcRel: string, targetSrcRel: string): string {
+	const moduleTarget = /\.css$/.test(targetSrcRel)
+		? targetSrcRel
+		: targetSrcRel.replace(/\/index\.(tsx?|jsx?)$/, "").replace(/\.(tsx?|jsx?)$/, "");
+	let rel = path.relative(path.dirname(fromSrcRel), moduleTarget).split(path.sep).join("/");
+	if (!rel.startsWith(".")) rel = `./${rel}`;
+	return rel;
+}
+
 /* ------------------------------- import scan ------------------------------- */
 
 const IMPORT_PATTERNS = [
@@ -286,13 +318,12 @@ async function buildShowcaseBundle(): Promise<void> {
 	cssFiles.push({ target: "registry/styles.css", content: aggregator });
 
 	/* --------------------------------- emit --------------------------------- */
-	// Targets are project-root-relative (no `src/`): v0 scaffolds a root-`app/`
-	// Next.js project with `@/*` → `./*` (see shadcn's own login-01 example,
-	// which targets `app/login/page.tsx`), so dotUI's `@/registry/*` imports
-	// resolve when the files sit at `registry/*` at the project root.
+	// Targets are project-root-relative; imports are rewritten to RELATIVE paths
+	// so v0's `@/registry/* → @/components/ui/*` alias transform has nothing to
+	// touch and the files resolve wherever they land.
 	const sourceFilesArr: BundleFile[] = [...sourceFiles.entries()]
 		.sort(([a], [b]) => a.localeCompare(b))
-		.map(([srcRel, content]) => ({ target: srcRel, content }));
+		.map(([srcRel, content]) => ({ target: srcRel, content: rewriteImportsToRelative(srcRel, content) }));
 
 	const dependencies = [...new Set([...npmDeps, ...CSS_DEPENDENCIES])]
 		.filter((d) => !d.startsWith("@/") && !FRAMEWORK_PROVIDED.has(d))

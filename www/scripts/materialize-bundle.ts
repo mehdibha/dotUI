@@ -43,8 +43,8 @@ const GLOBALS_CSS = `@import "tailwindcss";
 
 const PAGE_TSX = `"use client";
 
-import Cards from "@/components/marketing/showcase/cards";
-import { DesignSystemProvider } from "@/modules/core/styles";
+import Cards from "../components/marketing/showcase/cards";
+import { DesignSystemProvider } from "../modules/core/styles";
 
 export default function Page() {
 \treturn (
@@ -88,7 +88,9 @@ const INDEX_HTML = `<!doctype html>
 </html>
 `;
 
-// Root-relative `@/*` → project root, mirroring v0's scaffold (no `src/`).
+// NO `@/` alias — a strict test that the bundle uses only relative + npm
+// imports (v0 rewrites `@/registry/*` aliases, so any residual `@/` would break
+// there). If something still imports `@/…`, the harness fails loudly here.
 const VITE_CONFIG = `import path from "node:path";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -98,7 +100,6 @@ import { defineConfig } from "vite";
 export default defineConfig({
 \troot: path.resolve(import.meta.dirname),
 \tresolve: {
-\t\talias: [{ find: /^@\\//, replacement: \`\${path.resolve(import.meta.dirname)}/\` }],
 \t\t// The harness reuses www/node_modules; force a single React copy.
 \t\tdedupe: ["react", "react-dom"],
 \t},
