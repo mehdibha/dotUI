@@ -12,7 +12,9 @@ export function ColorEditorCard({ className, ...props }: React.ComponentProps<"d
 				<CardDescription>Edit the accent color of the app.</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<ColorEditor />
+				{/* Stretch the editor to fill the card: full-width root, and let the
+				    color area grow to fill its row instead of its fixed `w-48`. */}
+				<ColorEditor className="w-full [&_.aspect-square]:flex-1" />
 			</CardContent>
 		</Card>
 	);

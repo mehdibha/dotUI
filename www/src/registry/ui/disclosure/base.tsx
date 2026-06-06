@@ -46,11 +46,16 @@ function DisclosurePanel({ className, ...props }: DisclosurePanelProps) {
 
 interface DisclosureTriggerProps extends React.ComponentProps<typeof ButtonPrimitives.Button> {}
 
-function DisclosureTrigger(props: DisclosureTriggerProps) {
+function DisclosureTrigger({ className, ...props }: DisclosureTriggerProps) {
 	const { heading, button } = useStyles()();
 	return (
 		<HeadingPrimitives.Heading className={heading()}>
-			<ButtonPrimitives.Button slot="trigger" data-disclosure-trigger="" className={button()} {...props}>
+			<ButtonPrimitives.Button
+				slot="trigger"
+				data-disclosure-trigger=""
+				className={composeRenderProps(className, (c) => button({ className: c }))}
+				{...props}
+			>
 				{composeRenderProps(props.children, (children) => (
 					<>
 						{children}
