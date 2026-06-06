@@ -64,17 +64,6 @@ export interface Publishable {
 	meta: RegistryItem;
 }
 
-/**
- * Variant of `Publishable` for enum-with-files components (loader). Each enum
- * value maps to a different template; the request-time path picks the right one.
- */
-export interface PublishableVariants {
-	/** Maps `<paramName>:<valueName>` → publishable. */
-	variants: Record<string, Publishable>;
-	/** Param name that drives the file swap, e.g. "style" for loader. */
-	switchParam: string;
-}
-
 /** The preset slice the publisher needs. */
 export interface PublishPreset {
 	density: Density;
