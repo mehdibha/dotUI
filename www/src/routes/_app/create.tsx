@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router";
 
+import { useTheme } from "starter-themes";
 import { z } from "zod";
 
 import { CustomizerPanel } from "@/modules/create/customizer-panel";
@@ -28,8 +29,19 @@ export const Route = createFileRoute("/_app/create")({
 function CreatePage() {
 	const { preview, preset } = Route.useSearch();
 	const { designSystem } = useDesignSystem();
+	const { resolvedTheme } = useTheme();
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 	const [previewMode, setPreviewMode] = useState<PreviewMode>("light");
+
+	// Open the preview in the same light / dark mode the site is currently in. Seeded on
+	// mount rather than via the useState initializer: this page is server-rendered and the
+	// server can't know the client's stored theme (it always resolves "light"), so reading
+	// it during render would mismatch the SSR'd toggle icon on hydration. Runs once — the
+	// preview mode is toggled independently of the site theme afterwards.
+	useEffect(() => {
+		setPreviewMode(resolvedTheme);
+		// oxlint-disable-next-line react/exhaustive-deps -- seed once from the site theme at open; preview mode is independent thereafter
+	}, []);
 
 	const effectivePreview = preview;
 
