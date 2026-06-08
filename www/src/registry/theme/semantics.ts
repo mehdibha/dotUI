@@ -32,6 +32,18 @@ const bd = (ref: string, scales?: readonly string[]): SemanticToken => ({
 });
 /** A contrast-derived foreground: `var(--on-<step>)`. */
 const on = (onOf: string): SemanticToken => ({ target: { onOf }, category: "foreground" });
+/**
+ * A foreground mixed `pct`% of the way from a dark step toward a light step — a
+ * ramp-INDEPENDENT muted tone. The neutral ramp clusters its dark steps near black
+ * (the `stretchLightness` smoothstep), so no single step gives a true "muted" text
+ * level without also being a surface/border step in the mirrored mode. Mixing
+ * `neutral-950` → `neutral-50` lands the exact tone and stays mode-aware (both
+ * endpoints flip in dark mode).
+ */
+const fgMix = (from: string, pct: number, to: string): SemanticToken => ({
+	target: { mix: { space: "oklab", stops: [{ ref: from }, pct, { ref: to }] } },
+	category: "foreground",
+});
 
 export const DEFAULT_SEMANTICS = {
 	// ---- surfaces / backgrounds ----
@@ -79,7 +91,7 @@ export const DEFAULT_SEMANTICS = {
 	"color-accent-muted-hover": bg("accent-100", ["accent"]),
 	// ---- foregrounds ----
 	"color-fg": fg("neutral-950", NEUTRAL),
-	"color-fg-muted": fg("neutral-800", NEUTRAL),
+	"color-fg-muted": fgMix("neutral-950", 60, "neutral-50"),
 	"color-fg-inverse": fg("neutral-50", NEUTRAL),
 	"color-fg-disabled": fg("neutral-500", NEUTRAL),
 	"color-fg-primary-disabled": fg("neutral-300", PRIMARY),
