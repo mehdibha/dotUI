@@ -13,7 +13,7 @@ import { Select, SelectValue } from "@/registry/ui/select";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 import { GroupExamplesIndex } from "./__generated__/examples";
-import { getGroupDisplayName } from "./components-config";
+import { getGroupDisplayName, isGroupId } from "./components-config";
 
 import type { PreviewMode } from "./preset";
 
@@ -23,11 +23,16 @@ const previewComponents = componentsData
 	.flatMap((category) => category.components)
 	.sort((a, b) => a.name.localeCompare(b.name));
 
-// Whole-category previews (the preview route resolves these via GroupExamplesIndex).
-// Skip any group slug that collides with a component slug so listbox keys stay unique.
+// GroupExamplesIndex holds whole-category collections (registry groups) AND composed blocks
+// (e.g. "cards"). Skip any slug that collides with a component slug so listbox keys stay unique.
 const componentSlugs = new Set(previewComponents.map((comp) => comp.slug));
-const previewGroups = Object.keys(GroupExamplesIndex)
-	.filter((slug) => !componentSlugs.has(slug))
+const previewExampleSlugs = Object.keys(GroupExamplesIndex).filter((slug) => !componentSlugs.has(slug));
+const previewBlocks = previewExampleSlugs
+	.filter((slug) => !isGroupId(slug))
+	.sort()
+	.map((slug) => ({ slug, label: getGroupDisplayName(slug) }));
+const previewCollections = previewExampleSlugs
+	.filter((slug) => isGroupId(slug))
 	.sort()
 	.map((slug) => ({ slug, label: getGroupDisplayName(slug) }));
 
@@ -65,9 +70,19 @@ export function PreviewToolbar({
 								<Input placeholder="Search components…" />
 							</SearchField>
 							<ListBox>
+								{previewBlocks.length > 0 && (
+									<ListBoxSection>
+										<ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
+										{previewBlocks.map((block) => (
+											<ListBoxItem key={block.slug} id={block.slug} textValue={block.label}>
+												<span className="truncate">{block.label}</span>
+											</ListBoxItem>
+										))}
+									</ListBoxSection>
+								)}
 								<ListBoxSection>
 									<ListBoxSectionHeader>Collections</ListBoxSectionHeader>
-									{previewGroups.map((group) => (
+									{previewCollections.map((group) => (
 										<ListBoxItem key={group.slug} id={group.slug} textValue={`All ${group.label}`}>
 											<span className="truncate">All {group.label}</span>
 										</ListBoxItem>
