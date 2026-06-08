@@ -1,6 +1,27 @@
 import { useMemo } from "react";
 
-import { ChevronDownIcon } from "lucide-react";
+import {
+	BoxIcon,
+	CalendarDaysIcon,
+	ChevronDownIcon,
+	ChevronsDownUpIcon,
+	ChevronsUpDownIcon,
+	CompassIcon,
+	LayoutGridIcon,
+	ListIcon,
+	LoaderCircleIcon,
+	type LucideIcon,
+	MessageSquareIcon,
+	MousePointerClickIcon,
+	PaletteIcon,
+	SlidersHorizontalIcon,
+	SquareCheckIcon,
+	SquareStackIcon,
+	TagsIcon,
+	TextCursorInputIcon,
+	TypeIcon,
+	UploadIcon,
+} from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { BLUR_OPTIONS, CURSOR_OPTIONS, OPACITY_OPTIONS, RADIUS_OPTIONS, SHADOW_OPTIONS } from "@/publisher/token-map";
@@ -82,40 +103,58 @@ function orderedGroups(): string[] {
 	return [...ordered, ...rest];
 }
 
+/** A representative glyph per category, shown as the card illustration. */
+const GROUP_ICONS: Record<string, LucideIcon> = {
+	buttons: MousePointerClickIcon,
+	inputs: TextCursorInputIcon,
+	"selection-controls": SquareCheckIcon,
+	pickers: ChevronsUpDownIcon,
+	sliders: SlidersHorizontalIcon,
+	"menus-lists": ListIcon,
+	navigation: CompassIcon,
+	overlays: SquareStackIcon,
+	disclosure: ChevronsDownUpIcon,
+	containers: LayoutGridIcon,
+	feedback: MessageSquareIcon,
+	progress: LoaderCircleIcon,
+	tags: TagsIcon,
+	"color-swatches": PaletteIcon,
+	calendar: CalendarDaysIcon,
+	"drop-zone": UploadIcon,
+	typography: TypeIcon,
+};
+
 interface GroupCardsProps {
 	onSelectGroup: (groupSlug: string) => void;
 }
 
 /**
- * Grid of clickable category cards (configurable groups only). Clicking one opens a config
- * page with the params for every component in that category — replacing the old flat tree.
+ * Grid of clickable category cards (configurable groups only). Each carries a category glyph
+ * as illustration; clicking one opens a config page with the params for every component in it.
  */
 export function GroupCards({ onSelectGroup }: GroupCardsProps) {
 	const groups = useMemo(
-		() =>
-			orderedGroups()
-				.map((group) => ({
-					group,
-					count: getComponentsInGroup(group).filter((comp) => paramCount(comp) >= 1).length,
-				}))
-				.filter((entry) => entry.count > 0),
+		() => orderedGroups().filter((group) => getComponentsInGroup(group).some((comp) => paramCount(comp) >= 1)),
 		[],
 	);
 
 	return (
 		<div className="grid grid-cols-2 gap-2">
-			{groups.map(({ group, count }) => (
-				<ButtonPrimitives.Button
-					key={group}
-					onPress={() => onSelectGroup(group)}
-					className="flex flex-col items-start gap-0.5 rounded-lg border bg-neutral p-3 text-left transition-colors outline-none hover:bg-neutral-hover focus-visible:ring-2 focus-visible:ring-border-focus"
-				>
-					<span className="text-sm font-medium">{getGroupDisplayName(group)}</span>
-					<span className="text-xs text-fg-muted">
-						{count} {count === 1 ? "component" : "components"}
-					</span>
-				</ButtonPrimitives.Button>
-			))}
+			{groups.map((group) => {
+				const Icon = GROUP_ICONS[group] ?? BoxIcon;
+				return (
+					<ButtonPrimitives.Button
+						key={group}
+						onPress={() => onSelectGroup(group)}
+						className="group/card flex flex-col items-start gap-3 rounded-lg border bg-neutral p-3 text-left transition-colors outline-none hover:bg-neutral-hover focus-visible:ring-2 focus-visible:ring-border-focus"
+					>
+						<span className="flex size-9 items-center justify-center rounded-md border bg-bg text-fg-muted transition-colors group-hover/card:text-fg">
+							<Icon className="size-4.5" />
+						</span>
+						<span className="text-sm font-medium">{getGroupDisplayName(group)}</span>
+					</ButtonPrimitives.Button>
+				);
+			})}
 		</div>
 	);
 }

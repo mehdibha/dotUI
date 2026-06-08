@@ -209,10 +209,10 @@ export function CustomizerPanel() {
 					transition={stackTransition}
 					className="absolute inset-0 scrollbar-none overflow-y-auto"
 				>
-					<div className="flex flex-col gap-5 p-3">
+					<div className="flex flex-col divide-y">
 						{/* Colors — inline accent + base, full recipe behind Customize */}
-						<section className="flex flex-col gap-2.5">
-							<SectionHeader label="Colors" onCustomize={() => push("colors")} />
+						<section className="flex flex-col gap-3 px-3 py-4">
+							<CategoryHeader title="Colors" onCustomize={() => push("colors")} />
 							<div className="grid grid-cols-2 gap-2.5">
 								<InlineField label="Accent">
 									<SeedColorPicker
@@ -232,37 +232,37 @@ export function CustomizerPanel() {
 						</section>
 
 						{/* Typography — inline fonts, fuller panel behind Customize */}
-						<section className="flex flex-col gap-2.5">
-							<SectionHeader label="Typography" onCustomize={() => push("typography")} />
+						<section className="flex flex-col gap-3 px-3 py-4">
+							<CategoryHeader title="Typography" onCustomize={() => push("typography")} />
 							<TypographyControls />
 						</section>
 
 						{/* Icons */}
-						<section className="flex flex-col gap-2">
-							<SectionLabel>Icons</SectionLabel>
+						<section className="flex flex-col gap-3 px-3 py-4">
+							<CategoryHeader title="Icons" />
 							<IconographyControls />
 						</section>
 
-						{/* Radius (self-labeled) */}
-						<RadiusConfig value={radiusFactor} onChange={(v) => setToken(RADIUS_FACTOR_VAR, v)} />
+						{/* Radius (RadiusConfig renders its own title + live value) */}
+						<section className="px-3 py-4">
+							<RadiusConfig value={radiusFactor} onChange={(v) => setToken(RADIUS_FACTOR_VAR, v)} />
+						</section>
 
 						{/* Density */}
-						<section className="flex flex-col gap-2">
-							<SectionLabel>Density</SectionLabel>
+						<section className="flex flex-col gap-3 px-3 py-4">
+							<CategoryHeader title="Density" />
 							<DensityConfig value={designSystem.density} onChange={setDensity} />
 						</section>
 
 						{/* Cursor */}
-						<section className="flex flex-col gap-2">
-							<SectionLabel>Cursor</SectionLabel>
+						<section className="flex flex-col gap-3 px-3 py-4">
+							<CategoryHeader title="Cursor" />
 							<CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setToken} />
 						</section>
 
-						<div className="border-t" />
-
 						{/* Components — clickable category cards */}
-						<section className="flex flex-col gap-2.5">
-							<SectionLabel>Components</SectionLabel>
+						<section className="flex flex-col gap-3 px-3 py-4">
+							<CategoryHeader title="Components" />
 							<GroupCards onSelectGroup={(group) => selectGroup(group)} />
 						</section>
 					</div>
@@ -299,33 +299,31 @@ export function CustomizerPanel() {
 
 /* ------------------------------ Home pieces ----------------------------- */
 
-function SectionLabel({ children }: { children: ReactNode }) {
-	return <span className="text-xs font-medium text-fg-muted">{children}</span>;
-}
-
-function InlineField({ label, children }: { label: string; children: ReactNode }) {
-	return (
-		<div className="flex flex-col gap-1.5">
-			<span className="pl-0.5 text-xs font-medium text-fg-muted">{label}</span>
-			{children}
-		</div>
-	);
-}
-
-function SectionHeader({ label, onCustomize }: { label: string; onCustomize?: () => void }) {
+/** Prominent category title (Colors, Typography, …) with an optional "Customize" link. */
+function CategoryHeader({ title, onCustomize }: { title: string; onCustomize?: () => void }) {
 	return (
 		<div className="flex items-center justify-between">
-			<SectionLabel>{label}</SectionLabel>
+			<h3 className="text-sm font-medium text-fg">{title}</h3>
 			{onCustomize && (
 				<ButtonPrimitives.Button
 					onPress={onCustomize}
-					aria-label={`Customize ${label.toLowerCase()}`}
+					aria-label={`Customize ${title.toLowerCase()}`}
 					className="flex items-center gap-0.5 rounded text-xs text-fg-muted transition-colors outline-none hover:text-fg focus-visible:ring-2 focus-visible:ring-border-focus"
 				>
 					Customize
 					<ChevronRightIcon className="size-3" />
 				</ButtonPrimitives.Button>
 			)}
+		</div>
+	);
+}
+
+/** Uniform field with a muted sub-label (Accent, Base, …). */
+function InlineField({ label, children }: { label: string; children: ReactNode }) {
+	return (
+		<div className="flex flex-col gap-1.5">
+			<span className="text-xs font-medium text-fg-muted">{label}</span>
+			{children}
 		</div>
 	);
 }
