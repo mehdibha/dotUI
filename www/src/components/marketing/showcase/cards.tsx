@@ -104,7 +104,11 @@ export function Cards() {
 		// raggier, so it needs a deeper, taller fade than the shorter 4-column `xl` grid
 		// — hence the `--mask-*` distances-from-bottom shrink at `xl`. `--mask-solid` is
 		// where content is still fully opaque; `--mask-clear` where it's fully gone.
-		<div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] [--grid-max:1500px] [--mask-clear:230px] [--mask-solid:880px] [--rail-gap:--spacing(4)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem] xl:[--mask-clear:200px] xl:[--mask-solid:780px]">
+		// `--mask-clear` is deliberately set *above* where the next section's "Built on
+		// modern tools" row is pulled up to (its `-mt-*` in `index.tsx`), so that row sits
+		// on solid-dark background — no faint card fragments behind it — and the cards only
+		// start fading back in above it.
+		<div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] [--grid-max:1500px] [--mask-clear:420px] [--mask-solid:940px] [--rail-gap:--spacing(4)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem] xl:[--mask-clear:370px] xl:[--mask-solid:840px]">
 			<SkeletonRail side="left" />
 			<RealCards />
 			<SkeletonRail side="right" />
