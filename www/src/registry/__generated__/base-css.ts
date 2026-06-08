@@ -233,7 +233,7 @@ export const baseRegistryCss = {
 			"--color-accent-muted": "var(--accent-50)",
 			"--color-accent-muted-hover": "var(--accent-100)",
 			"--color-fg": "var(--neutral-950)",
-			"--color-fg-muted": "var(--neutral-800)",
+			"--color-fg-muted": "color-mix(in oklab, var(--neutral-950) 60%, var(--neutral-50))",
 			"--color-fg-inverse": "var(--neutral-50)",
 			"--color-fg-disabled": "var(--neutral-500)",
 			"--color-fg-primary-disabled": "var(--neutral-300)",
