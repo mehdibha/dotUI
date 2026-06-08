@@ -183,7 +183,7 @@ export function InteractiveDemo({
 						horizontal && "md:w-64 md:shrink-0",
 					)}
 				>
-					<Card size="sm">
+					<Card size="sm" className="md:h-full">
 						<CardHeader>
 							<CardTitle className="text-xs font-medium text-fg-muted">Props</CardTitle>
 						</CardHeader>
