@@ -1,15 +1,44 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AdobeIcon } from "@/components/icons/adobe";
+import { BoltIcon } from "@/components/icons/bolt";
+import { LovableIcon } from "@/components/icons/lovable";
 import { ReactJsIcon } from "@/components/icons/react-js";
 import { ShadcnIcon } from "@/components/icons/shadcn";
 import { TailwindWordmark } from "@/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@/components/icons/typescript";
+import { V0Icon } from "@/components/icons/v0";
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
+import { RotatingText, type RotatingTextItem } from "@/components/marketing/rotating-text";
 import Cards from "@/components/marketing/showcase/cards";
 import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
+
+// Swappable words in the hero headline — the "ship it ___" slot cycles through the
+// export destinations, each revealed letter by letter. v0 / bolt.new / Lovable
+// carry their logo inline as one animated unit; the v0 mark reads "v0", so that
+// item needs no separate label. Spacing around logos comes from the icon margin,
+// so text segments hold no leading/trailing spaces.
+const EXPORT_TARGETS: RotatingTextItem[] = [
+	{ id: "anywhere", text: "anywhere", segments: [{ text: "anywhere" }] },
+	{
+		id: "v0",
+		text: "to v0",
+		segments: [{ text: "to" }, { icon: <V0Icon className="h-[0.82em] w-auto translate-y-[0.02em]" /> }],
+	},
+	{
+		id: "bolt",
+		text: "to bolt.new",
+		segments: [{ text: "to" }, { icon: <BoltIcon className="size-[0.82em]" /> }, { text: "bolt.new" }],
+	},
+	{
+		id: "lovable",
+		text: "to Lovable",
+		segments: [{ text: "to" }, { icon: <LovableIcon className="size-[0.78em]" /> }, { text: "Lovable" }],
+	},
+	{ id: "codebase", text: "to your codebase", segments: [{ text: "to your codebase" }] },
+];
 
 export const Route = createFileRoute("/_app/")({
 	head: () => ({
@@ -24,25 +53,28 @@ function HomePage() {
 		<div className="min-h-[calc(100vh-var(--header-height))]">
 			<main>
 				{/* Hero section */}
-				<section className="container flex flex-col pt-6 sm:pt-10 md:pt-18">
-					<div className="flex flex-col items-center gap-2 text-center md:gap-3">
+				<section className="container flex flex-col pt-8 sm:pt-12 md:pt-20">
+					<div className="flex flex-col items-center gap-4 text-center md:gap-5">
 						<Announcement />
-						<h1 className="text-3xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
-							Build your design system with a <span className="font-bold italic">unique</span> look.
+						<h1
+							aria-label="Build your design system, ship it anywhere — to v0, bolt.new, Lovable, or your own codebase"
+							className="text-4xl font-medium tracking-tighter sm:text-5xl lg:text-6xl"
+						>
+							<span aria-hidden="true">
+								Build your design system,
+								<br />
+								ship it <RotatingText items={EXPORT_TARGETS} />
+							</span>
 						</h1>
-						<p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
-							Beautiful components, accessibility out of the box, composition, and more, all powered by{" "}
-							<AdobeIcon className="inline-flex size-4" />{" "}
-							<span className="font-medium text-fg">react-aria-components</span> and{" "}
-							<ShadcnIcon className="inline-flex size-5" /> <span className="font-medium text-fg">shadcn&nbsp;CLI</span>
-							.
+						<p className="max-w-2xl text-base text-pretty text-fg-muted sm:text-lg">
+							Shape it in a live editor — accessible by default, unmistakably yours.
 						</p>
-						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-							<LinkButton href="/docs" variant="primary" size="lg">
-								Get started
+						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+							<LinkButton href="/create" variant="primary" size="lg">
+								Start creating
 							</LinkButton>
 							<LinkButton href="/components" variant="default" size="lg">
-								Explore components
+								Browse components
 							</LinkButton>
 						</div>
 					</div>
