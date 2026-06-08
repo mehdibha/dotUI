@@ -1,15 +1,30 @@
 import type { SVGProps } from "react";
 
-// Official Lovable (lovable.dev) mark, via svgl — the geometric heart. Brand uses a
-// pink→orange gradient; rendered here in `currentColor` to tint with the text.
+// Official Lovable (lovable.dev) mark, via svgl — the geometric heart, in its real
+// brand gradient (warm coral → pink → blue). Self-colored, so it ignores currentColor.
 export function LovableIcon(props: SVGProps<SVGSVGElement>) {
 	return (
-		<svg viewBox="0 0 121 122" fill="currentColor" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" {...props}>
+		<svg viewBox="0 0 121 122" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" {...props}>
 			<path
+				fill="url(#lovable-gradient)"
 				fillRule="evenodd"
 				clipRule="evenodd"
-				d="M36.0687 0C55.9888 0 72.1373 16.1551 72.1373 36.0835V49.7975H84.141C104.061 49.7975 120.21 65.9526 120.21 85.8809C120.21 105.809 104.061 121.964 84.141 121.964H0V36.0835C0 16.1551 16.1485 0 36.0687 0Z"
+				d="M36.069 0c19.92 0 36.068 16.155 36.068 36.084v13.713h12.004c19.92 0 36.069 16.156 36.069 36.084 0 19.928-16.149 36.083-36.069 36.083H0v-85.88C0 16.155 16.148 0 36.069 0Z"
 			/>
+			<defs>
+				<linearGradient
+					id="lovable-gradient"
+					x1="40.453"
+					y1="21.433"
+					x2="76.933"
+					y2="121.971"
+					gradientUnits="userSpaceOnUse"
+				>
+					<stop offset="0.025" stopColor="#FF8E63" />
+					<stop offset="0.56" stopColor="#FF7EB0" />
+					<stop offset="0.95" stopColor="#4B73FF" />
+				</linearGradient>
+			</defs>
 		</svg>
 	);
 }

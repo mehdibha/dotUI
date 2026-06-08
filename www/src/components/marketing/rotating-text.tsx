@@ -177,7 +177,9 @@ export function RotatingText({ items, effect = "roll", interval = 2800, classNam
 			<span className="sr-only">{items.map((it) => it.text).join(", ")}</span>
 			<motion.span
 				aria-hidden="true"
-				className="inline-grid items-baseline"
+				// Cap the slot to one line so a taller logo spills out visually (overflow-visible)
+				// instead of growing the headline's line height when an icon word is shown.
+				className="inline-grid h-[1em] items-baseline overflow-visible"
 				animate={width != null ? { width } : undefined}
 				transition={{ width: WIDTH_SPRING }}
 			>
