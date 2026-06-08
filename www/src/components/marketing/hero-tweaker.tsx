@@ -155,11 +155,10 @@ function ensureHeroFonts() {
 /* ------------------------------ Animations ----------------------------- */
 
 export const ROTATING_EFFECTS: { id: RotatingEffect; label: string }[] = [
-	{ id: "letter-rise-blur", label: "Letter cascade (blur)" },
-	{ id: "blur-fade-flip", label: "Blur flip (Aceternity)" },
-	{ id: "word-slide-roll", label: "Slide roll (Text Loop)" },
-	{ id: "odometer-flip", label: "Odometer (ticker)" },
-	{ id: "letter-scramble", label: "Scramble decode" },
+	{ id: "roll", label: "Roll up (center-out)" },
+	{ id: "blur", label: "Blur focus-pull" },
+	{ id: "flip", label: "Flip away (FlipWords)" },
+	{ id: "fade", label: "Soft fade" },
 ];
 
 /* -------------------------------- Copy --------------------------------- */
@@ -213,7 +212,7 @@ export interface HeroTweaks {
 
 const DEFAULT_TWEAKS: HeroTweaks = {
 	typography: "default",
-	effect: "letter-rise-blur",
+	effect: "roll",
 	description: 0,
 	primaryCta: 0,
 	secondaryCta: 0,
