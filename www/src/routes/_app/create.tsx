@@ -7,6 +7,7 @@ import { z } from "zod";
 
 import { CustomizerPanel } from "@/modules/create/customizer-panel";
 import { sendPreviewMode, sendToIframe, useDesignSystem } from "@/modules/create/preset";
+import { PreviewToolbar } from "@/modules/create/preview-toolbar";
 
 import type { PreviewMode } from "@/modules/create/preset";
 
@@ -95,17 +96,20 @@ function CreatePage() {
 
 	return (
 		<div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-row gap-6 p-6 pt-2">
-			<CustomizerPanel
-				previewMode={previewMode}
-				onTogglePreviewMode={() => setPreviewMode((m) => (m === "dark" ? "light" : "dark"))}
-			/>
-			<iframe
-				ref={iframeRef}
-				key={effectivePreview}
-				src={iframeSrc}
-				title="preview"
-				className="min-w-0 flex-1 rounded-xl border"
-			/>
+			<CustomizerPanel />
+			<div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border bg-card">
+				<PreviewToolbar
+					previewMode={previewMode}
+					onTogglePreviewMode={() => setPreviewMode((m) => (m === "dark" ? "light" : "dark"))}
+				/>
+				<iframe
+					ref={iframeRef}
+					key={effectivePreview}
+					src={iframeSrc}
+					title="preview"
+					className="min-h-0 w-full flex-1 border-0"
+				/>
+			</div>
 		</div>
 	);
 }

@@ -3,31 +3,27 @@ import { type ReactNode, useMemo } from "react";
 import { getRouteApi } from "@tanstack/react-router";
 
 import {
-	ChevronDownIcon,
 	ChevronLeftIcon,
-	MoonIcon,
+	ChevronRightIcon,
 	MousePointer2Icon,
+	RotateCcwIcon,
+	ShapesIcon,
 	ShuffleIcon,
-	SunIcon,
-	Undo2Icon,
+	TypeIcon,
 } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
-import { componentsData } from "@/modules/docs/components-list/components-data";
-import * as icons from "@/registry/__generated__/icons";
+import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
 import { Button } from "@/registry/ui/button";
-import { Command } from "@/registry/ui/command";
-import { Input } from "@/registry/ui/input";
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
-import { Popover } from "@/registry/ui/popover";
-import { SearchField } from "@/registry/ui/search-field";
-import { Select, SelectValue } from "@/registry/ui/select";
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
-import { ColorsConfig, ColorsSummary } from "./colors-config";
+import type { ColorConfig } from "@/registry/theme";
+
+import { ColorsConfig } from "./colors-config";
 import {
-	AllComponentsView,
 	ComponentDetailView,
+	ComponentsBrowser,
 	GroupDetailView,
 	getComponentDisplayName,
 	getGroupDisplayName,
@@ -45,18 +41,8 @@ import { InstallCommand } from "./install-command";
 import { DEFAULT_RADIUS_FACTOR, DensityConfig, RADIUS_FACTOR_VAR, RadiusConfig } from "./layout-config";
 import { OpenInV0 } from "./open-in-v0";
 import { useDesignSystem } from "./preset";
+import { SeedColorPicker } from "./seed-color-picker";
 import { TypographyConfig } from "./typography-config";
-
-import type { PreviewMode } from "./preset";
-
-/* -------------------------------- Types -------------------------------- */
-
-interface MenuItem {
-	id: string;
-	title: string;
-	preview: ReactNode | "dynamic";
-	config: ReactNode | "dynamic";
-}
 
 /* ------------------------------ Animation ------------------------------ */
 
@@ -64,92 +50,57 @@ const stackTransition: Transition = {
 	x: { type: "tween", duration: 0.35, ease: [0.32, 0.72, 0, 1] },
 };
 
-/* --------------------------------- Menu -------------------------------- */
+/* ----------------------------- Drill-in views ---------------------------- */
 
-const menu: MenuItem[] = [
-	{
-		id: "colors",
-		title: "Colors",
-		preview: <ColorsSummary />,
-		config: <ColorsConfig />,
-	},
-	{
-		id: "typography",
-		title: "Typography",
-		preview: (
-			<div className="flex flex-col gap-1.5">
-				<div className="flex items-center justify-between">
-					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] tracking-widest text-fg-muted uppercase">Heading</span>
-						<p className="font-medium">Geist</p>
-					</div>
-					<p className="font-heading text-2xl leading-none tracking-tight">Ag</p>
-				</div>
-				<div className="flex items-center justify-between">
-					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] tracking-widest text-fg-muted uppercase">Body</span>
-						<p className="font-medium">Geist</p>
-					</div>
-					<p className="font-body text-base leading-none">Ag</p>
-				</div>
-			</div>
-		),
-		config: <TypographyConfig />,
-	},
-	{
-		id: "iconography",
-		title: "Icon Library",
-		preview: (
-			<div className="-mt-1 flex flex-col items-start gap-1">
-				<p className="font-medium">Lucide icons</p>
-				<div className="mt-2 flex w-full items-center gap-2 overflow-hidden text-fg-muted [&_svg]:size-4 [&_svg]:shrink-0">
-					{Object.entries(icons)
-						.sort(([a], [b]) => a.localeCompare(b))
-						.slice(0, 20)
-						.map(([name, IconComponent]) => (
-							<IconComponent key={name} />
-						))}
-				</div>
-			</div>
-		),
-		config: <IconographyConfig />,
-	},
-	{
-		id: "radius",
-		title: "Radius",
-		preview: "dynamic",
-		config: "dynamic",
-	},
-	{
-		id: "density",
-		title: "Density",
-		preview: "dynamic",
-		config: "dynamic",
-	},
-	{
-		id: "cursor",
-		title: "Cursor",
-		preview: "dynamic",
-		config: "dynamic",
-	},
-];
+/** Advanced config panels reachable from the home rows (and the Colors "Customize" link). */
+const CONFIG_TITLES: Record<string, string> = {
+	colors: "Colors",
+	typography: "Typography",
+	iconography: "Icon Library",
+	cursor: "Cursor",
+};
+const CONFIG_IDS = new Set(Object.keys(CONFIG_TITLES));
 
-export const MENU_IDS = new Set(menu.map((m) => m.id));
+/* ------------------------------ Randomize ------------------------------- */
+
+function hslToHex(h: number, s: number, l: number): string {
+	const c = (1 - Math.abs(2 * l - 1)) * s;
+	const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+	const m = l - c / 2;
+	let r = 0;
+	let g = 0;
+	let b = 0;
+	if (h < 60) [r, g, b] = [c, x, 0];
+	else if (h < 120) [r, g, b] = [x, c, 0];
+	else if (h < 180) [r, g, b] = [0, c, x];
+	else if (h < 240) [r, g, b] = [0, x, c];
+	else if (h < 300) [r, g, b] = [x, 0, c];
+	else [r, g, b] = [c, 0, x];
+	const toHex = (v: number) =>
+		Math.round((v + m) * 255)
+			.toString(16)
+			.padStart(2, "0");
+	return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+/**
+ * A fresh, usable palette: a vivid accent on a near-neutral base. Status hues are left intact;
+ * tuning knobs are dropped — they were calibrated for the previous seed and would skew the new one.
+ */
+function randomizeColors(base: ColorConfig): ColorConfig {
+	const accent = hslToHex(Math.floor(Math.random() * 360), 0.62 + Math.random() * 0.28, 0.5 + Math.random() * 0.08);
+	const neutral = hslToHex(Math.floor(Math.random() * 360), 0.03 + Math.random() * 0.05, 0.5);
+	return { ...base, seeds: { ...base.seeds, accent, neutral }, knobs: undefined };
+}
 
 /* -------------------------------- Panel -------------------------------- */
 
 const routeApi = getRouteApi("/_app/create");
 
-export function CustomizerPanel({
-	previewMode = "light",
-	onTogglePreviewMode,
-}: {
-	previewMode?: PreviewMode;
-	onTogglePreviewMode?: () => void;
-}) {
-	const { panel, preview } = routeApi.useSearch();
+export function CustomizerPanel() {
+	const { panel } = routeApi.useSearch();
 	const navigate = routeApi.useNavigate();
-	const { designSystem, setComponentParam, setToken, setDensity } = useDesignSystem();
+	const { designSystem, setComponentParam, setToken, setDensity, setColorSeed, setDesignSystem } = useDesignSystem();
 
 	const navStack = useMemo(() => (panel ? panel.split(".") : []), [panel]);
 
@@ -162,171 +113,104 @@ export function CustomizerPanel({
 		navigate({ search: (prev) => ({ ...prev, panel: next.length > 0 ? next.join(".") : undefined }) });
 	}
 
+	// Drilling into a component also points the live preview at it, so you edit what you see.
+	function selectComponent(name: string) {
+		navigate({ search: (prev) => ({ ...prev, preview: name, panel: [...navStack, name].join(".") }) });
+	}
+
+	function previewGroup(group: string) {
+		navigate({ search: (prev) => ({ ...prev, preview: group }) });
+	}
+
+	function reset() {
+		// Clear the design system (preset), pop the nav (panel), and return the preview to its
+		// default — otherwise a previously selected component stays pointed at, desyncing the toolbar.
+		navigate({ search: (prev) => ({ ...prev, preset: undefined, panel: undefined, preview: undefined }) });
+	}
+
+	function randomize() {
+		setDesignSystem((prev) => ({ ...prev, color: randomizeColors(prev.color ?? DEFAULT_COLOR_CONFIG) }));
+	}
+
 	// Resolve global theme tokens with fallbacks to their defaults
 	const radiusFactor = designSystem.tokens[RADIUS_FACTOR_VAR] ?? DEFAULT_RADIUS_FACTOR;
 	const cursorInteractive = designSystem.tokens[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE;
 	const cursorDisabled = designSystem.tokens[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED;
+	const colorConfig = designSystem.color ?? DEFAULT_COLOR_CONFIG;
+	const accentSeed = colorConfig.seeds.accent ?? DEFAULT_COLOR_CONFIG.seeds.accent;
+	const neutralSeed = colorConfig.seeds.neutral ?? DEFAULT_COLOR_CONFIG.seeds.neutral;
 
-	const effectivePreview = preview;
-
-	function renderDynamicPreview(id: string): ReactNode {
-		if (id === "radius") {
-			const parsed = Number.parseFloat(radiusFactor);
-			const numeric = Number.isFinite(parsed) ? parsed : 1;
-			return (
-				<div className="-mt-1 flex items-center justify-between">
-					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] tracking-widest text-fg-muted uppercase">Factor</span>
-						<p className="font-medium tabular-nums">{numeric.toFixed(2)}x</p>
-					</div>
-					<div className="size-7 border" style={{ borderRadius: `calc(0.5rem * ${numeric})` }} />
-				</div>
-			);
+	function renderConfig(id: string): ReactNode {
+		switch (id) {
+			case "colors":
+				return <ColorsConfig />;
+			case "typography":
+				return <TypographyConfig />;
+			case "iconography":
+				return <IconographyConfig />;
+			case "cursor":
+				return <CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setToken} />;
+			default:
+				return null;
 		}
-		if (id === "density") {
-			const gapPx = designSystem.density === "compact" ? 2 : designSystem.density === "default" ? 4 : 7;
-			return (
-				<div className="-mt-1 flex items-center justify-between">
-					<div className="flex flex-col items-start gap-1">
-						<span className="text-[10px] tracking-widest text-fg-muted uppercase">Mode</span>
-						<p className="font-medium capitalize">{designSystem.density}</p>
-					</div>
-					<div className="flex flex-col items-end" style={{ gap: `${gapPx}px` }}>
-						<div className="h-[2px] w-7 rounded-full bg-fg-muted" />
-						<div className="h-[2px] w-7 rounded-full bg-fg-muted" />
-						<div className="h-[2px] w-7 rounded-full bg-fg-muted" />
-					</div>
-				</div>
-			);
-		}
-		if (id === "cursor") {
-			return (
-				<div className="flex flex-col gap-1.5 text-left">
-					<div className="flex items-center justify-between">
-						<div className="flex flex-col items-start gap-1">
-							<span className="text-[10px] tracking-widest text-fg-muted uppercase">Interactive</span>
-							<p className="font-medium">{cursorInteractive}</p>
-						</div>
-						<div
-							className="flex size-7 items-center justify-center rounded-md border text-fg-muted"
-							style={{ cursor: cursorInteractive }}
-						>
-							<MousePointer2Icon className="size-3.5" />
-						</div>
-					</div>
-					<div className="flex items-center justify-between">
-						<div className="flex flex-col items-start gap-1">
-							<span className="text-[10px] tracking-widest text-fg-muted uppercase">Disabled</span>
-							<p className="font-medium">{cursorDisabled}</p>
-						</div>
-						<div
-							className="flex size-7 items-center justify-center rounded-md border text-fg-muted"
-							style={{ cursor: cursorDisabled }}
-						>
-							<MousePointer2Icon className="size-3.5" />
-						</div>
-					</div>
-				</div>
-			);
-		}
-		return null;
-	}
-
-	function renderDynamicConfig(id: string): ReactNode {
-		if (id === "radius") {
-			return <RadiusConfig value={radiusFactor} onChange={(v) => setToken(RADIUS_FACTOR_VAR, v)} />;
-		}
-		if (id === "density") {
-			return <DensityConfig value={designSystem.density} onChange={setDensity} />;
-		}
-		if (id === "cursor") {
-			return <CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setToken} />;
-		}
-		return null;
 	}
 
 	function renderStackedView(index: number) {
 		const id = navStack[index];
 		if (!id) return null;
 
-		// Group detail view (group id anywhere in the stack)
+		// Advanced config view. Checked FIRST: a config id ("typography") can collide with a
+		// registry group id (the `text` component is group "typography"), and the config must win.
+		if (CONFIG_IDS.has(id)) {
+			return (
+				<>
+					<ViewHeader title={CONFIG_TITLES[id] ?? ""} onBack={pop} />
+					<div className="mt-4 **:data-label:pl-1 **:data-label:text-fg-muted">{renderConfig(id)}</div>
+				</>
+			);
+		}
+
+		// Group detail view (a group id in the stack — defensive; the browser expands groups inline)
 		if (isGroupId(id)) {
 			return (
 				<>
 					<ViewHeader title={getGroupDisplayName(id)} onBack={pop} />
-					<GroupDetailView groupName={id} onSelectComponent={(comp) => push(comp)} />
+					<GroupDetailView groupName={id} onSelectComponent={(comp) => selectComponent(comp)} />
 				</>
 			);
 		}
 
-		// Component detail view (non-menu id)
-		if (!MENU_IDS.has(id)) {
-			return (
-				<>
-					<ViewHeader title={getComponentDisplayName(id)} onBack={pop} />
-					<ComponentDetailView
-						componentName={id}
-						selectedParams={designSystem.componentParams[id] ?? {}}
-						onParamChange={(paramName, value) => setComponentParam(id, paramName, value)}
-					/>
-				</>
-			);
-		}
-
-		const menuItem = menu.find((m) => m.id === id);
-		if (!menuItem) return null;
-
-		const configNode = menuItem.config === "dynamic" ? renderDynamicConfig(id) : menuItem.config;
-
+		// Component detail view (any remaining id)
 		return (
 			<>
-				<ViewHeader title={menuItem.title} onBack={pop} />
-				<div className="mt-4 **:data-label:pl-1 **:data-label:text-fg-muted">{configNode}</div>
+				<ViewHeader title={getComponentDisplayName(id)} onBack={pop} />
+				<ComponentDetailView
+					componentName={id}
+					selectedParams={designSystem.componentParams[id] ?? {}}
+					onParamChange={(paramName, value) => setComponentParam(id, paramName, value)}
+				/>
 			</>
 		);
 	}
 
 	return (
-		<div className="relative flex w-72 shrink-0 flex-col rounded-xl border bg-card">
-			{/* Header */}
-			<div className="relative overflow-hidden border-b p-2">
-				<div className="flex w-full items-center gap-2">
-					<Select
-						value={effectivePreview}
-						onChange={(v) => navigate({ search: (prev) => ({ ...prev, preview: v as string }) })}
-						className="flex-1"
-					>
-						<Button size="sm" className="w-full">
-							<SelectValue className="truncate" />
-							<ChevronDownIcon data-icon-end="" />
+		<div className="relative flex w-80 shrink-0 flex-col overflow-hidden rounded-xl border bg-card">
+			{/* Header — h-12 to line up with the preview toolbar across the gap */}
+			<div className="flex h-12 shrink-0 items-center justify-between border-b pr-2 pl-3">
+				<span className="text-sm font-medium">Customize</span>
+				<div className="flex items-center gap-0.5">
+					<Tooltip>
+						<Button size="sm" isIconOnly variant="quiet" onPress={randomize} aria-label="Randomize colors">
+							<ShuffleIcon />
 						</Button>
-						<Popover>
-							<Command>
-								<SearchField autoFocus>
-									<Input />
-								</SearchField>
-								<ListBox>
-									{componentsData
-										.flatMap((category) => category.components)
-										.sort((a, b) => a.name.localeCompare(b.name))
-										.map((comp) => (
-											<ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name}>
-												<span className="truncate">{comp.name}</span>
-											</ListBoxItem>
-										))}
-								</ListBox>
-							</Command>
-						</Popover>
-					</Select>
-					<Button size="sm" isIconOnly>
-						<ShuffleIcon />
-					</Button>
-					<Button size="sm" isIconOnly onPress={onTogglePreviewMode} aria-label="Toggle preview mode">
-						{previewMode === "dark" ? <SunIcon /> : <MoonIcon />}
-					</Button>
-					<Button size="sm" isIconOnly>
-						<Undo2Icon />
-					</Button>
+						<TooltipContent>Randomize colors</TooltipContent>
+					</Tooltip>
+					<Tooltip>
+						<Button size="sm" isIconOnly variant="quiet" onPress={reset} aria-label="Reset to defaults">
+							<RotateCcwIcon />
+						</Button>
+						<TooltipContent>Reset to defaults</TooltipContent>
+					</Tooltip>
 				</div>
 			</div>
 
@@ -337,27 +221,71 @@ export function CustomizerPanel({
 					initial={false}
 					animate={{ x: navStack.length > 0 ? "-50%" : 0 }}
 					transition={stackTransition}
-					className="absolute inset-0 overflow-y-auto p-3"
+					className="absolute inset-0 scrollbar-none overflow-y-auto"
 				>
-					<div className="flex flex-col gap-3">
-						{menu.map((item) => (
-							<ButtonPrimitives.Button
-								key={item.id}
-								onPress={() => push(item.id)}
-								className="flex flex-col items-stretch gap-2 rounded-lg border p-3 text-sm transition-colors hover:bg-neutral"
-							>
-								<div className="text-left text-fg-muted">{item.title}</div>
-								<div className="text-left">
-									{item.preview === "dynamic" ? renderDynamicPreview(item.id) : item.preview}
-								</div>
-							</ButtonPrimitives.Button>
-						))}
+					<div className="flex flex-col gap-5 p-3">
+						{/* Colors — inline accent + base, full recipe behind Customize */}
+						<section className="flex flex-col gap-2.5">
+							<div className="flex items-center justify-between">
+								<SectionLabel>Colors</SectionLabel>
+								<ButtonPrimitives.Button
+									onPress={() => push("colors")}
+									aria-label="Customize colors"
+									className="flex items-center gap-0.5 rounded text-xs text-fg-muted transition-colors outline-none hover:text-fg focus-visible:ring-2 focus-visible:ring-border-focus"
+								>
+									Customize
+									<ChevronRightIcon className="size-3" />
+								</ButtonPrimitives.Button>
+							</div>
+							<div className="grid grid-cols-2 gap-2.5">
+								<InlineField label="Accent">
+									<SeedColorPicker
+										aria-label="Accent color"
+										value={accentSeed}
+										onChange={(hex) => setColorSeed("accent", hex)}
+									/>
+								</InlineField>
+								<InlineField label="Base">
+									<SeedColorPicker
+										aria-label="Base color"
+										value={neutralSeed}
+										onChange={(hex) => setColorSeed("neutral", hex)}
+									/>
+								</InlineField>
+							</div>
+						</section>
 
-						{/* All components directly accessible from home */}
-						<div className="mt-2 flex flex-col gap-2">
-							<div className="px-1 text-[10px] tracking-widest text-fg-muted uppercase">Components</div>
-							<AllComponentsView onSelect={(comp) => push(comp)} />
+						{/* Radius (self-labeled) */}
+						<RadiusConfig value={radiusFactor} onChange={(v) => setToken(RADIUS_FACTOR_VAR, v)} />
+
+						{/* Density */}
+						<section className="flex flex-col gap-2">
+							<SectionLabel>Density</SectionLabel>
+							<DensityConfig value={designSystem.density} onChange={setDensity} />
+						</section>
+
+						<div className="border-t" />
+
+						{/* Advanced drill-in rows */}
+						<div className="flex flex-col divide-y overflow-hidden rounded-lg border">
+							<AdvancedRow icon={<TypeIcon />} label="Typography" value="Geist" onPress={() => push("typography")} />
+							<AdvancedRow icon={<ShapesIcon />} label="Icons" value="Lucide" onPress={() => push("iconography")} />
+							<AdvancedRow
+								icon={<MousePointer2Icon />}
+								label="Cursor"
+								value={cursorInteractive}
+								onPress={() => push("cursor")}
+							/>
 						</div>
+
+						{/* Components */}
+						<section className="flex flex-col gap-2.5">
+							<SectionLabel>Components</SectionLabel>
+							<ComponentsBrowser
+								onSelectComponent={(comp) => selectComponent(comp)}
+								onPreviewGroup={(group) => previewGroup(group)}
+							/>
+						</section>
 					</div>
 				</motion.div>
 
@@ -382,11 +310,50 @@ export function CustomizerPanel({
 			</div>
 
 			{/* Footer */}
-			<div className="flex flex-col gap-2 border-t p-3">
+			<div className="flex shrink-0 flex-col gap-2 border-t p-3">
 				<InstallCommand />
 				<OpenInV0 />
 			</div>
 		</div>
+	);
+}
+
+/* ------------------------------ Home pieces ----------------------------- */
+
+function SectionLabel({ children }: { children: ReactNode }) {
+	return <span className="text-xs font-medium text-fg-muted">{children}</span>;
+}
+
+function InlineField({ label, children }: { label: string; children: ReactNode }) {
+	return (
+		<div className="flex flex-col gap-1.5">
+			<span className="pl-0.5 text-xs font-medium text-fg-muted">{label}</span>
+			{children}
+		</div>
+	);
+}
+
+function AdvancedRow({
+	icon,
+	label,
+	value,
+	onPress,
+}: {
+	icon: ReactNode;
+	label: string;
+	value: string;
+	onPress: () => void;
+}) {
+	return (
+		<ButtonPrimitives.Button
+			onPress={onPress}
+			className="flex w-full items-center gap-2.5 px-3 py-2.5 text-left text-sm transition-colors outline-none hover:bg-neutral focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-inset"
+		>
+			<span className="text-fg-muted [&_svg]:size-4">{icon}</span>
+			<span className="flex-1">{label}</span>
+			<span className="max-w-[110px] truncate text-xs text-fg-muted">{value}</span>
+			<ChevronRightIcon className="size-4 shrink-0 text-fg-muted" />
+		</ButtonPrimitives.Button>
 	);
 }
 
