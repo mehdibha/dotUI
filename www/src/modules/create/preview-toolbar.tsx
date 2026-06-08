@@ -1,6 +1,6 @@
 import { getRouteApi } from "@tanstack/react-router";
 
-import { ChevronDownIcon, MoonIcon, MonitorIcon, SunIcon } from "lucide-react";
+import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react";
 
 import { componentsData } from "@/modules/docs/components-list/components-data";
 import { Button } from "@/registry/ui/button";
@@ -49,7 +49,6 @@ export function PreviewToolbar({
 	return (
 		<div className="flex h-12 shrink-0 items-center justify-between gap-2 border-b px-3">
 			<div className="flex items-center gap-2">
-				<MonitorIcon aria-hidden className="size-4 shrink-0 text-fg-muted" />
 				<Select
 					aria-label="Preview component"
 					selectedKey={preview}
@@ -58,7 +57,7 @@ export function PreviewToolbar({
 				>
 					<Button size="sm" variant="quiet" className="w-full">
 						<SelectValue className="truncate" />
-						<ChevronDownIcon data-icon-end="" />
+						<ChevronsUpDownIcon data-icon-end="" />
 					</Button>
 					<Popover>
 						<Command>

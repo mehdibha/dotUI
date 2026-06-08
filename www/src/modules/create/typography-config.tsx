@@ -7,7 +7,8 @@ import { Popover } from "@/registry/ui/popover";
 import { SearchField } from "@/registry/ui/search-field";
 import { Select, SelectTrigger } from "@/registry/ui/select";
 
-export function TypographyConfig() {
+/** Direct font dropdowns — used inline on the customizer home. */
+export function TypographyControls() {
 	return (
 		<div className="flex flex-col gap-3">
 			<FontPicker label="Heading font" />
@@ -16,9 +17,19 @@ export function TypographyConfig() {
 	);
 }
 
+/** Full typography panel reached from the Typography "Customize" link. */
+export function TypographyConfig() {
+	return (
+		<div className="-mt-6 flex flex-col gap-4">
+			<p className="text-xs text-fg-muted">Pick the heading and body typefaces — applied live across the preview.</p>
+			<TypographyControls />
+		</div>
+	);
+}
+
 const FontPicker = ({ label }: { label: string }) => {
 	return (
-		<Select className="w-full" defaultValue="geist">
+		<Select className="w-full" defaultSelectedKey="Geist">
 			<Label>{label}</Label>
 			<SelectTrigger className="w-full" />
 			<Popover>

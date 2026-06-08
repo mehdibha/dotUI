@@ -2,15 +2,7 @@ import { type ReactNode, useMemo } from "react";
 
 import { getRouteApi } from "@tanstack/react-router";
 
-import {
-	ChevronLeftIcon,
-	ChevronRightIcon,
-	MousePointer2Icon,
-	RotateCcwIcon,
-	ShapesIcon,
-	ShuffleIcon,
-	TypeIcon,
-} from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon, RotateCcwIcon, ShuffleIcon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
@@ -23,8 +15,8 @@ import type { ColorConfig } from "@/registry/theme";
 import { ColorsConfig } from "./colors-config";
 import {
 	ComponentDetailView,
-	ComponentsBrowser,
-	GroupDetailView,
+	GroupCards,
+	GroupConfigView,
 	getComponentDisplayName,
 	getGroupDisplayName,
 	isGroupId,
@@ -36,13 +28,13 @@ import {
 	DEFAULT_CURSOR_DISABLED,
 	DEFAULT_CURSOR_INTERACTIVE,
 } from "./cursor-config";
-import { IconographyConfig } from "./iconography-config";
+import { IconographyControls } from "./iconography-config";
 import { InstallCommand } from "./install-command";
 import { DEFAULT_RADIUS_FACTOR, DensityConfig, RADIUS_FACTOR_VAR, RadiusConfig } from "./layout-config";
 import { OpenInV0 } from "./open-in-v0";
 import { useDesignSystem } from "./preset";
 import { SeedColorPicker } from "./seed-color-picker";
-import { TypographyConfig } from "./typography-config";
+import { TypographyConfig, TypographyControls } from "./typography-config";
 
 /* ------------------------------ Animation ------------------------------ */
 
@@ -52,12 +44,10 @@ const stackTransition: Transition = {
 
 /* ----------------------------- Drill-in views ---------------------------- */
 
-/** Advanced config panels reachable from the home rows (and the Colors "Customize" link). */
+/** Config panels reached from a section's "Customize" link. */
 const CONFIG_TITLES: Record<string, string> = {
 	colors: "Colors",
 	typography: "Typography",
-	iconography: "Icon Library",
-	cursor: "Cursor",
 };
 const CONFIG_IDS = new Set(Object.keys(CONFIG_TITLES));
 
@@ -113,13 +103,9 @@ export function CustomizerPanel() {
 		navigate({ search: (prev) => ({ ...prev, panel: next.length > 0 ? next.join(".") : undefined }) });
 	}
 
-	// Drilling into a component also points the live preview at it, so you edit what you see.
-	function selectComponent(name: string) {
-		navigate({ search: (prev) => ({ ...prev, preview: name, panel: [...navStack, name].join(".") }) });
-	}
-
-	function previewGroup(group: string) {
-		navigate({ search: (prev) => ({ ...prev, preview: group }) });
+	// Opening a category's config also points the live preview at the whole group, so you edit what you see.
+	function selectGroup(group: string) {
+		navigate({ search: (prev) => ({ ...prev, preview: group, panel: [...navStack, group].join(".") }) });
 	}
 
 	function reset() {
@@ -146,10 +132,6 @@ export function CustomizerPanel() {
 				return <ColorsConfig />;
 			case "typography":
 				return <TypographyConfig />;
-			case "iconography":
-				return <IconographyConfig />;
-			case "cursor":
-				return <CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setToken} />;
 			default:
 				return null;
 		}
@@ -170,12 +152,16 @@ export function CustomizerPanel() {
 			);
 		}
 
-		// Group detail view (a group id in the stack — defensive; the browser expands groups inline)
+		// Group config view — every configurable component in the category on one page.
 		if (isGroupId(id)) {
 			return (
 				<>
 					<ViewHeader title={getGroupDisplayName(id)} onBack={pop} />
-					<GroupDetailView groupName={id} onSelectComponent={(comp) => selectComponent(comp)} />
+					<GroupConfigView
+						groupName={id}
+						componentParams={designSystem.componentParams}
+						onParamChange={setComponentParam}
+					/>
 				</>
 			);
 		}
@@ -226,17 +212,7 @@ export function CustomizerPanel() {
 					<div className="flex flex-col gap-5 p-3">
 						{/* Colors — inline accent + base, full recipe behind Customize */}
 						<section className="flex flex-col gap-2.5">
-							<div className="flex items-center justify-between">
-								<SectionLabel>Colors</SectionLabel>
-								<ButtonPrimitives.Button
-									onPress={() => push("colors")}
-									aria-label="Customize colors"
-									className="flex items-center gap-0.5 rounded text-xs text-fg-muted transition-colors outline-none hover:text-fg focus-visible:ring-2 focus-visible:ring-border-focus"
-								>
-									Customize
-									<ChevronRightIcon className="size-3" />
-								</ButtonPrimitives.Button>
-							</div>
+							<SectionHeader label="Colors" onCustomize={() => push("colors")} />
 							<div className="grid grid-cols-2 gap-2.5">
 								<InlineField label="Accent">
 									<SeedColorPicker
@@ -255,6 +231,18 @@ export function CustomizerPanel() {
 							</div>
 						</section>
 
+						{/* Typography — inline fonts, fuller panel behind Customize */}
+						<section className="flex flex-col gap-2.5">
+							<SectionHeader label="Typography" onCustomize={() => push("typography")} />
+							<TypographyControls />
+						</section>
+
+						{/* Icons */}
+						<section className="flex flex-col gap-2">
+							<SectionLabel>Icons</SectionLabel>
+							<IconographyControls />
+						</section>
+
 						{/* Radius (self-labeled) */}
 						<RadiusConfig value={radiusFactor} onChange={(v) => setToken(RADIUS_FACTOR_VAR, v)} />
 
@@ -264,27 +252,18 @@ export function CustomizerPanel() {
 							<DensityConfig value={designSystem.density} onChange={setDensity} />
 						</section>
 
+						{/* Cursor */}
+						<section className="flex flex-col gap-2">
+							<SectionLabel>Cursor</SectionLabel>
+							<CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setToken} />
+						</section>
+
 						<div className="border-t" />
 
-						{/* Advanced drill-in rows */}
-						<div className="flex flex-col divide-y overflow-hidden rounded-lg border">
-							<AdvancedRow icon={<TypeIcon />} label="Typography" value="Geist" onPress={() => push("typography")} />
-							<AdvancedRow icon={<ShapesIcon />} label="Icons" value="Lucide" onPress={() => push("iconography")} />
-							<AdvancedRow
-								icon={<MousePointer2Icon />}
-								label="Cursor"
-								value={cursorInteractive}
-								onPress={() => push("cursor")}
-							/>
-						</div>
-
-						{/* Components */}
+						{/* Components — clickable category cards */}
 						<section className="flex flex-col gap-2.5">
 							<SectionLabel>Components</SectionLabel>
-							<ComponentsBrowser
-								onSelectComponent={(comp) => selectComponent(comp)}
-								onPreviewGroup={(group) => previewGroup(group)}
-							/>
+							<GroupCards onSelectGroup={(group) => selectGroup(group)} />
 						</section>
 					</div>
 				</motion.div>
@@ -333,27 +312,21 @@ function InlineField({ label, children }: { label: string; children: ReactNode }
 	);
 }
 
-function AdvancedRow({
-	icon,
-	label,
-	value,
-	onPress,
-}: {
-	icon: ReactNode;
-	label: string;
-	value: string;
-	onPress: () => void;
-}) {
+function SectionHeader({ label, onCustomize }: { label: string; onCustomize?: () => void }) {
 	return (
-		<ButtonPrimitives.Button
-			onPress={onPress}
-			className="flex w-full items-center gap-2.5 px-3 py-2.5 text-left text-sm transition-colors outline-none hover:bg-neutral focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-inset"
-		>
-			<span className="text-fg-muted [&_svg]:size-4">{icon}</span>
-			<span className="flex-1">{label}</span>
-			<span className="max-w-[110px] truncate text-xs text-fg-muted">{value}</span>
-			<ChevronRightIcon className="size-4 shrink-0 text-fg-muted" />
-		</ButtonPrimitives.Button>
+		<div className="flex items-center justify-between">
+			<SectionLabel>{label}</SectionLabel>
+			{onCustomize && (
+				<ButtonPrimitives.Button
+					onPress={onCustomize}
+					aria-label={`Customize ${label.toLowerCase()}`}
+					className="flex items-center gap-0.5 rounded text-xs text-fg-muted transition-colors outline-none hover:text-fg focus-visible:ring-2 focus-visible:ring-border-focus"
+				>
+					Customize
+					<ChevronRightIcon className="size-3" />
+				</ButtonPrimitives.Button>
+			)}
+		</div>
 	);
 }
 

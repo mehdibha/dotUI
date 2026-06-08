@@ -1,28 +1,34 @@
-import { FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
+import { ChevronDownIcon } from "lucide-react";
+
+import { Button } from "@/registry/ui/button";
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { Popover } from "@/registry/ui/popover";
+import { Select, SelectValue } from "@/registry/ui/select";
 
 const iconLibraries = [
-	{ name: "Lucide", value: "lucide", description: "Clean & consistent" },
-	{ name: "Remix Icons", value: "remix", description: "Neutral & versatile" },
-	{ name: "Tabler Icons", value: "tabler", description: "Over 5000 icons" },
-	{ name: "Huge Icons", value: "hugeicons", description: "Modern & bold" },
+	{ value: "lucide", name: "Lucide" },
+	{ value: "remix", name: "Remix Icons" },
+	{ value: "tabler", name: "Tabler Icons" },
+	{ value: "hugeicons", name: "Huge Icons" },
 ];
 
-export function IconographyConfig() {
+/** Direct icon-library dropdown — used inline on the customizer home. */
+export function IconographyControls() {
 	return (
-		<div>
-			<RadioGroup aria-label="icon library" defaultValue="lucide">
-				<FieldGroup className="gap-1">
+		<Select className="w-full" defaultSelectedKey="lucide" aria-label="Icon library">
+			<Button size="sm" className="w-full">
+				<SelectValue />
+				<ChevronDownIcon data-icon-end="" />
+			</Button>
+			<Popover>
+				<ListBox>
 					{iconLibraries.map((lib) => (
-						<Radio key={lib.value} value={lib.value}>
-							<RadioControl className="justify-between rounded-lg border p-4 hover:bg-neutral selected:border-border-control selected:bg-neutral-hover/80 selected:text-fg">
-								<Label className="text-fg!">{lib.name}</Label>
-								<RadioIndicator />
-							</RadioControl>
-						</Radio>
+						<ListBoxItem key={lib.value} id={lib.value}>
+							{lib.name}
+						</ListBoxItem>
 					))}
-				</FieldGroup>
-			</RadioGroup>
-		</div>
+				</ListBox>
+			</Popover>
+		</Select>
 	);
 }
