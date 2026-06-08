@@ -33,7 +33,7 @@ const EXPORT_TARGETS: RotatingTextItem[] = [
 	{
 		id: "v0",
 		text: "to v0",
-		segments: [{ text: "to" }, { icon: <V0Icon className="h-[1.3em] w-auto translate-y-[0.04em]" /> }],
+		segments: [{ text: "to" }, { icon: <V0Icon className="h-[1.2em] w-auto translate-y-[0.26em]" /> }],
 	},
 	{
 		id: "bolt",

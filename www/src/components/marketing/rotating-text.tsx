@@ -96,21 +96,15 @@ function WholeWord({
 	item,
 	variants,
 	transition,
-	clip,
 	wordStyle,
 }: {
 	item: RotatingTextItem;
 	variants: Variants;
 	transition: Transition;
-	clip: boolean;
 	wordStyle?: CSSProperties;
 }) {
 	return (
-		<motion.span
-			layout
-			transition={{ layout: SPRING }}
-			className={cn("inline-flex pb-[0.16em]", clip ? "overflow-hidden" : "overflow-visible")}
-		>
+		<motion.span layout transition={{ layout: SPRING }} className="inline-flex items-baseline overflow-visible">
 			<AnimatePresence mode="popLayout" initial={false}>
 				<motion.span
 					key={item.id}
@@ -120,7 +114,7 @@ function WholeWord({
 					exit="exit"
 					transition={transition}
 					style={wordStyle}
-					className="inline-flex items-center whitespace-nowrap"
+					className="inline-flex items-baseline whitespace-nowrap"
 				>
 					<Segments item={item} />
 				</motion.span>
@@ -141,7 +135,7 @@ function LetterRiseBlur({ item, wordStyle }: { item: RotatingTextItem; wordStyle
 		visible: { opacity: 1, y: "0em", filter: "blur(0px)", transition: { duration: 0.5, ease: EXPO } },
 	};
 	return (
-		<motion.span layout transition={{ layout: SPRING }} className="inline-flex pb-[0.16em]">
+		<motion.span layout transition={{ layout: SPRING }} className="inline-flex items-baseline">
 			<AnimatePresence mode="popLayout" initial={false}>
 				<motion.span
 					key={item.id}
@@ -150,7 +144,7 @@ function LetterRiseBlur({ item, wordStyle }: { item: RotatingTextItem; wordStyle
 					animate="visible"
 					exit="exit"
 					style={wordStyle}
-					className="inline-flex items-center whitespace-nowrap"
+					className="inline-flex items-baseline whitespace-nowrap"
 				>
 					{toUnits(item.segments).map((u) => (
 						<motion.span
@@ -175,7 +169,7 @@ function Odometer({ item, wordStyle }: { item: RotatingTextItem; wordStyle?: CSS
 			layout
 			transition={{ layout: SPRING }}
 			style={wordStyle}
-			className="inline-flex items-center pb-[0.16em] whitespace-nowrap"
+			className="inline-flex items-baseline whitespace-nowrap"
 		>
 			{units.map((u, i) => (
 				<span
@@ -233,7 +227,7 @@ function Scramble({ item, wordStyle }: { item: RotatingTextItem; wordStyle?: CSS
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.15 }}
 			style={wordStyle}
-			className="inline-flex items-center pb-[0.16em] whitespace-nowrap"
+			className="inline-flex items-baseline whitespace-nowrap"
 		>
 			{item.segments.map((seg, i) =>
 				seg.icon ? (
@@ -279,7 +273,7 @@ export function RotatingText({
 	if (reduceMotion) {
 		// Honour reduced-motion with a plain crossfade regardless of effect.
 		body = (
-			<span className="inline-flex pb-[0.16em]">
+			<span className="inline-flex items-baseline">
 				<AnimatePresence mode="popLayout" initial={false}>
 					<motion.span
 						key={active.id}
@@ -288,7 +282,7 @@ export function RotatingText({
 						exit={{ opacity: 0 }}
 						transition={{ duration: 0.2 }}
 						style={wordStyle}
-						className="inline-flex items-center whitespace-nowrap"
+						className="inline-flex items-baseline whitespace-nowrap"
 					>
 						<Segments item={active} />
 					</motion.span>
@@ -299,7 +293,6 @@ export function RotatingText({
 		body = (
 			<WholeWord
 				item={active}
-				clip
 				variants={{
 					initial: { opacity: 0, y: "0.7em" },
 					animate: { opacity: 1, y: "0em" },
@@ -313,7 +306,6 @@ export function RotatingText({
 		body = (
 			<WholeWord
 				item={active}
-				clip={false}
 				variants={{
 					initial: { opacity: 0, y: "0.5em", filter: "blur(10px)" },
 					animate: { opacity: 1, y: "0em", filter: "blur(0px)" },
@@ -332,9 +324,9 @@ export function RotatingText({
 	}
 
 	return (
-		<span className={cn("relative inline-flex align-bottom text-fg-accent", className)}>
+		<span className={cn("relative inline-flex align-baseline text-fg-accent", className)}>
 			<span className="sr-only">{items.map((it) => it.text).join(", ")}</span>
-			<span aria-hidden="true" className="inline-flex">
+			<span aria-hidden="true" className="inline-flex items-baseline">
 				{body}
 			</span>
 		</span>
