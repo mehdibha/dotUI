@@ -15,19 +15,24 @@ import Cards from "@/components/marketing/showcase/cards";
 import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
-// dotUI's brand font (the "dotUI" wordmark uses Josefin Sans), loaded locally.
-const HEADLINE_STYLE = { fontFamily: "var(--font-josefin)", fontWeight: 600, letterSpacing: "-0.025em" };
+// dotUI's brand font (the "dotUI" wordmark uses Josefin Sans), loaded locally. Weight,
+// letter-spacing and size come from the original headline classes on the <h1>.
+const HEADLINE_STYLE = { fontFamily: "var(--font-josefin)" };
 
 // Swappable destinations in the hero headline — "ship it to ___". "to" is a static
 // prefix, so only the destination swaps. v0 / bolt.new / Lovable are their official
 // brand wordmarks (logo-only); the rest are plain text. Everything inherits the
 // headline color (white); the Lovable heart keeps its brand gradient.
 const EXPORT_TARGETS: RotatingTextItem[] = [
-	{ id: "anywhere", text: "anywhere", segments: [{ text: "anywhere" }] },
+	{ id: "anywhere", text: "anywhere", segments: [{ text: "anywhere", className: "font-bold italic" }] },
 	{ id: "v0", text: "v0", segments: [{ icon: <V0Icon className="h-[0.58em] w-auto" /> }] },
-	{ id: "bolt", text: "bolt.new", segments: [{ icon: <BoltIcon className="h-[0.72em] w-auto" /> }] },
+	{
+		id: "bolt",
+		text: "bolt.new",
+		segments: [{ icon: <BoltIcon className="h-[0.72em] w-auto translate-y-[0.09em]" /> }],
+	},
 	{ id: "lovable", text: "Lovable", segments: [{ icon: <LovableIcon className="h-[0.72em] w-auto" /> }] },
-	{ id: "codebase", text: "your codebase", segments: [{ text: "your codebase" }] },
+	{ id: "codebase", text: "your codebase", segments: [{ text: "your codebase", className: "font-bold italic" }] },
 ];
 
 export const Route = createFileRoute("/_app/")({
@@ -47,17 +52,17 @@ function HomePage() {
 					<div className="flex flex-col items-center gap-3 text-center md:gap-4">
 						<Announcement />
 						<h1
-							aria-label="Build your design system, ship it to v0, bolt.new, Lovable, your own codebase, or anywhere"
+							aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your own codebase, or anywhere."
 							style={HEADLINE_STYLE}
-							className="text-4xl tracking-tighter sm:text-5xl lg:text-6xl"
+							className="text-3xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
 						>
 							<span aria-hidden="true">
-								Build your design system,
+								Build your design system.
 								<br />
-								ship it <RotatingText prefix="to" items={EXPORT_TARGETS} wordStyle={HEADLINE_STYLE} />
+								ship it <RotatingText prefix="to" items={EXPORT_TARGETS} wordStyle={HEADLINE_STYLE} />.
 							</span>
 						</h1>
-						<p className="max-w-2xl text-base text-pretty text-fg-muted sm:text-lg">
+						<p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
 							Your palette, your scale, your brand — not a preset clone.
 						</p>
 						<div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">

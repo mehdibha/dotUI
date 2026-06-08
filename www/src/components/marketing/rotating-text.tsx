@@ -17,6 +17,8 @@ import { cn } from "@/registry/lib/utils";
 export interface RotatingTextSegment {
 	/** A run of text. */
 	text?: string;
+	/** Extra classes for a text run (e.g. bold/italic styling). */
+	className?: string;
 	/** An inline logo / wordmark. */
 	icon?: ReactNode;
 }
@@ -53,11 +55,13 @@ function Segments({ item }: { item: RotatingTextItem }) {
 			</span>
 			{item.segments.map((seg, i) =>
 				seg.icon ? (
-					<span key={i} className="mr-[0.18em] inline-flex items-center">
+					<span key={i} className="inline-flex items-center">
 						{seg.icon}
 					</span>
 				) : (
-					<span key={i}>{seg.text}</span>
+					<span key={i} className={seg.className}>
+						{seg.text}
+					</span>
 				),
 			)}
 		</>
