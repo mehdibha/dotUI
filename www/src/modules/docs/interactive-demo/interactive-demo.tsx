@@ -1,14 +1,14 @@
 import React, { type ComponentType, createElement, useCallback, useMemo, useState } from "react";
 import { flushSync } from "react-dom";
 
-import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 import { CodeBlock } from "@/modules/docs/code-block";
 import { renderCode } from "@/modules/docs/codegen/code-template";
 import { DynamicPre } from "@/modules/docs/dynamic-pre";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
-import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
+import { Card, CardContent, CardHeader, CardTitle } from "@/registry/ui/card";
 
 import type { CodeTemplate } from "@/modules/docs/codegen/code-template";
 
@@ -33,6 +33,10 @@ interface InteractiveDemoProps {
 	component: ComponentType<Record<string, unknown>>;
 	controls: SerializableControl[];
 	className?: string;
+	/**
+	 * Where the controls sit on ≥md screens: a column to the right ("horizontal")
+	 * or a row beneath the preview ("vertical"). Small screens are always "vertical".
+	 */
 	layout?: "horizontal" | "vertical";
 	/** SourceFirst engine template; absent ⇒ legacy serialization path. */
 	codeTemplate?: CodeTemplate;
@@ -42,11 +46,20 @@ export function InteractiveDemo({
 	component: Playground,
 	controls,
 	className,
-	layout: layoutProp = "horizontal",
+	layout = "horizontal",
 	codeTemplate,
 }: InteractiveDemoProps) {
-	const [layout, setLayout] = useState<"horizontal" | "vertical">(layoutProp);
 	const [isExpanded, setIsExpanded] = useState(false);
+
+	// "horizontal" puts the controls in a column to the right of the preview at md+; below md
+	// (and for "vertical") they sit in a wrapping row beneath it. The small↔large switch is pure
+	// CSS via md: variants — no JS media query — so SSR and the first client render match exactly
+	// (no hydration mismatch, no flash). A side column wouldn't fit on small screens anyway.
+	const horizontal = layout === "horizontal";
+	const controlListClass = cn(
+		"flex-row flex-wrap items-start gap-x-6 gap-y-4",
+		horizontal && "md:flex-col md:flex-nowrap",
+	);
 
 	// Initialize values from control defaults
 	const initialValues = useMemo(() => {
@@ -155,34 +168,29 @@ export function InteractiveDemo({
 		}
 	};
 
-	const handleLayoutToggle = () => {
-		if (document.startViewTransition) {
-			document.startViewTransition(() => {
-				flushSync(() => {
-					setLayout((prev) => (prev === "horizontal" ? "vertical" : "horizontal"));
-				});
-			});
-		} else {
-			setLayout((prev) => (prev === "horizontal" ? "vertical" : "horizontal"));
-		}
-	};
-
 	return (
 		<div className={cn("overflow-hidden rounded-lg border", className)}>
-			<div className={cn("flex flex-col", layout === "horizontal" && "flex-row")}>
+			<div className={cn("flex flex-col", horizontal && "md:flex-row")}>
 				{/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
 				<div className="flex min-h-56 flex-1 items-center justify-center p-10">{previewElement}</div>
 
-				{/* Controls — a column beside the preview (inline column) or a row beneath it (bottom bar) */}
+				{/* Controls — always grouped in a titled card; a fixed-width column to the right at md+
+				    when horizontal, otherwise a wrapping row beneath the preview (also on small screens). */}
 				<div
 					className={cn(
-						"flex **:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
-						layout === "horizontal"
-							? "w-64 shrink-0 flex-col gap-4 p-5"
-							: "flex-row flex-wrap items-start gap-x-6 gap-y-4 border-t p-5",
+						"**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
+						"p-5",
+						horizontal && "md:w-64 md:shrink-0",
 					)}
 				>
-					<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
+					<Card size="sm" className="md:h-full">
+						<CardHeader>
+							<CardTitle className="text-xs font-medium text-fg-muted">Props</CardTitle>
+						</CardHeader>
+						<CardContent className={cn("flex", controlListClass)}>
+							<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
+						</CardContent>
+					</Card>
 				</div>
 			</div>
 
@@ -202,18 +210,6 @@ export function InteractiveDemo({
 								</>
 							)}
 						</Button>
-						<Tooltip>
-							<Button
-								aria-label="Toggle orientation"
-								onPress={handleLayoutToggle}
-								variant="quiet"
-								size="sm"
-								className="size-7"
-							>
-								{layout === "horizontal" ? <Columns2Icon /> : <Rows2Icon />}
-							</Button>
-							<TooltipContent hideArrow>Toggle layout</TooltipContent>
-						</Tooltip>
 					</>
 				}
 			>

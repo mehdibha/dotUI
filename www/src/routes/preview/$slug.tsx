@@ -15,6 +15,9 @@ const promiseCache = new Map<string, Promise<{ default: React.ComponentType }>>(
 function getExamplesPromise(slug: string) {
 	let promise = promiseCache.get(slug);
 	if (!promise) {
+		// Group/block slugs share one namespace with component slugs and win the
+		// lookup — e.g. the "cards" block resolves here before the "card" component.
+		// A new block must not reuse a component's slug or it will silently shadow it.
 		const load = GroupExamplesIndex[slug] ?? ExamplesIndex[slug];
 		if (!load) return null;
 		promise = load();

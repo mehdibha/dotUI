@@ -79,7 +79,7 @@ function ContextualHelp({ name, reference }: { name: string; reference?: Seriali
 	return (
 		<ButtonPrimitives.ButtonContext value={null}>
 			<Dialog>
-				<Button size="sm" variant="quiet" className="size-6 [&_svg]:size-3" aria-label={`Info about ${name}`}>
+				<Button size="sm" variant="quiet" className="size-6 shrink-0 [&_svg]:size-3" aria-label={`Info about ${name}`}>
 					<InfoIcon />
 				</Button>
 				<Popover placement="top" className="max-w-xs">
@@ -97,6 +97,19 @@ function ContextualHelp({ name, reference }: { name: string; reference?: Seriali
 				</Popover>
 			</Dialog>
 		</ButtonPrimitives.ButtonContext>
+	);
+}
+
+/**
+ * Prop name + its info button. The name truncates so long props (e.g. `allowsMultipleExpanded`)
+ * never overflow the narrow controls panel.
+ */
+function ControlLabel({ name, reference }: { name: string; reference?: SerializablePropReference }) {
+	return (
+		<div className="flex min-w-0 items-center gap-1">
+			<Label className="block min-w-0 truncate">{name}</Label>
+			<ContextualHelp name={name} reference={reference} />
+		</div>
 	);
 }
 
@@ -138,26 +151,25 @@ interface BooleanControlRendererProps {
 }
 
 /**
- * In the inline-column (horizontal) layout the switch sits on one row with its
- * label (label left, switch right); in the bottom-bar (vertical) layout it
- * stacks under the label like the other controls.
+ * Beneath the preview (the default, and on small screens) the switch stacks under its label like
+ * the other controls; in the horizontal layout it sits inline with the label (label left, switch
+ * right) at md+. The orientation switch is pure CSS — a vertical base with md: overrides — so it
+ * needs no JS media query.
  */
 function BooleanControlRenderer({ control, value, onChange, layout }: BooleanControlRendererProps) {
-	const inline = layout === "horizontal";
+	const horizontal = layout === "horizontal";
 	return (
 		<Field
-			orientation={inline ? "horizontal" : "vertical"}
-			className={inline ? "items-center justify-between gap-2" : "w-auto"}
+			orientation="vertical"
+			className={cn("w-auto", horizontal && "md:w-full md:flex-row md:items-center md:justify-between")}
 		>
-			<div className="flex items-center gap-1">
-				<Label>{control.name}</Label>
-				<ContextualHelp name={control.name} reference={control.reference} />
-			</div>
+			<ControlLabel name={control.name} reference={control.reference} />
 			<Switch
 				aria-label={control.name}
 				isSelected={value}
 				onChange={(selected) => onChange(control.name, selected)}
 				size="sm"
+				className="shrink-0"
 			/>
 		</Field>
 	);
@@ -172,10 +184,7 @@ interface StringControlRendererProps {
 function StringControlRenderer({ control, value, onChange }: StringControlRendererProps) {
 	return (
 		<TextField value={value} onChange={(val) => onChange(control.name, val)} className="w-full">
-			<div className="flex items-center gap-1">
-				<Label>{control.name}</Label>
-				<ContextualHelp name={control.name} reference={control.reference} />
-			</div>
+			<ControlLabel name={control.name} reference={control.reference} />
 			<Input placeholder={control.placeholder} size="sm" />
 		</TextField>
 	);
@@ -190,10 +199,7 @@ interface NumberControlRendererProps {
 function NumberControlRenderer({ control, value, onChange }: NumberControlRendererProps) {
 	return (
 		<TextField value={String(value)} onChange={(val) => onChange(control.name, Number(val) || 0)} className="w-full">
-			<div className="flex items-center gap-1">
-				<Label>{control.name}</Label>
-				<ContextualHelp name={control.name} reference={control.reference} />
-			</div>
+			<ControlLabel name={control.name} reference={control.reference} />
 			<Input type="number" min={control.min} max={control.max} step={control.step} size="sm" />
 		</TextField>
 	);
@@ -223,10 +229,7 @@ function EnumControlRenderer({ control, value, onChange }: EnumControlRendererPr
 
 	return (
 		<Select selectedKey={value} onSelectionChange={(key) => onChange(control.name, key)} className="w-full">
-			<div className="flex items-center gap-1">
-				<Label>{control.name}</Label>
-				<ContextualHelp name={control.name} reference={control.reference} />
-			</div>
+			<ControlLabel name={control.name} reference={control.reference} />
 			<SelectTrigger size="sm" />
 			<SelectContent>
 				{control.options.map((option) => (
@@ -242,10 +245,7 @@ function EnumControlRenderer({ control, value, onChange }: EnumControlRendererPr
 function SegmentedEnumControlRenderer({ control, value, onChange }: EnumControlRendererProps) {
 	return (
 		<Field>
-			<div className="flex items-center gap-1">
-				<Label>{control.name}</Label>
-				<ContextualHelp name={control.name} reference={control.reference} />
-			</div>
+			<ControlLabel name={control.name} reference={control.reference} />
 			<ToggleButtonGroup
 				aria-label={control.name}
 				size="sm"
@@ -283,10 +283,7 @@ function IconControlRenderer({ control, value, onChange }: IconControlRendererPr
 			onSelectionChange={(key) => onChange(control.name, key === "__none__" ? null : key)}
 			className="w-full"
 		>
-			<div className="flex items-center gap-1">
-				<Label>{control.name}</Label>
-				<ContextualHelp name={control.name} reference={control.reference} />
-			</div>
+			<ControlLabel name={control.name} reference={control.reference} />
 			<SelectTrigger />
 			<SelectContent>
 				<SelectItem id="__none__" textValue="None">
@@ -317,12 +314,15 @@ interface ControlsProps {
 }
 
 export function Controls({ controls, values, onChange, layout }: ControlsProps) {
+	const horizontal = layout === "horizontal";
 	return (
 		<>
 			{controls.map((control) => {
-				// In the bottom-bar (vertical) layout controls sit in a row, so give text/select
-				// controls a fixed width; booleans size to content. In the inline column they fill it.
-				const wrapperWidth = layout === "vertical" ? (control.type === "boolean" ? "w-auto" : "w-44") : "w-full";
+				// Beneath the preview (the default, and on small screens) controls sit in a wrapping row, so
+				// text/select controls get a fixed width and booleans size to content. The horizontal layout
+				// fills the column instead at md+ — switched purely via a md: variant, no JS.
+				const base = control.type === "boolean" ? "w-auto" : "w-44";
+				const wrapperWidth = horizontal ? cn(base, "md:w-full") : base;
 				return (
 					<div key={control.name} className={cn("shrink-0", wrapperWidth)}>
 						<ControlRenderer control={control} value={values[control.name]} onChange={onChange} layout={layout} />

@@ -8,22 +8,20 @@ import { Popover } from "@/registry/ui/popover";
 
 export function DatePickerDemo() {
 	return (
-		<div className="flex h-100 w-60 items-start justify-start">
-			<DatePicker>
-				<InputGroup>
-					<DateInput />
-					<InputGroupAddon>
-						<Button variant="default" size="sm" isIconOnly>
-							<CalendarIcon />
-						</Button>
-					</InputGroupAddon>
-				</InputGroup>
-				<Popover>
-					<DialogContent className="in-popover:p-0">
-						<Calendar className="mx-auto" />
-					</DialogContent>
-				</Popover>
-			</DatePicker>
-		</div>
+		<DatePicker className="w-56">
+			<InputGroup>
+				<DateInput />
+				<InputGroupAddon>
+					<Button variant="default" size="sm" isIconOnly>
+						<CalendarIcon />
+					</Button>
+				</InputGroupAddon>
+			</InputGroup>
+			<Popover>
+				<DialogContent className="in-popover:p-0">
+					<Calendar className="mx-auto" />
+				</DialogContent>
+			</Popover>
+		</DatePicker>
 	);
 }

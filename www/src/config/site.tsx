@@ -1,5 +1,3 @@
-import type { ToOptions } from "@tanstack/react-router";
-
 export const siteConfig = {
 	url: "https://dotui.org",
 	name: "dotUI",
@@ -29,8 +27,8 @@ export const siteConfig = {
 	},
 } as const;
 
-export const navItems: { name: string; href: ToOptions }[] = [
-	{ name: "Docs", href: { to: "/docs" } },
-	{ name: "Components", href: { to: "/components" } },
-	{ name: "Create", href: { to: "/create" } },
+export const navItems: { name: string; to: string }[] = [
+	{ name: "Docs", to: "/docs" },
+	{ name: "Components", to: "/docs/components" },
+	{ name: "Create", to: "/create" },
 ];

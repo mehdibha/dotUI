@@ -4,6 +4,7 @@ import type { MDXComponents } from "mdx/types";
 
 import { CodeBlock, Pre } from "@/modules/docs/code-block";
 import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from "@/modules/docs/code-block-tabs";
+import { ComponentsGrid } from "@/modules/docs/components-list/components-grid";
 import { Demo, DemoCode, DemoCodePreview, type DemoProps } from "@/modules/docs/demo";
 import { Example } from "@/modules/docs/example";
 import { Examples, type ExamplesProps } from "@/modules/docs/examples";
@@ -89,4 +90,5 @@ export const mdxComponents: MDXComponents = {
 		<InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />
 	),
 	Reference: ({ className, ...props }: ReferenceProps) => <Reference className={cn("mt-4", className)} {...props} />,
+	ComponentsGrid,
 };
