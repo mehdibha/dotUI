@@ -57,7 +57,7 @@ export function CodeBlockTabs({
 
 	return (
 		<Tabs
-			className="mt-4 gap-0"
+			className="mt-4 gap-2"
 			defaultSelectedKey={defaultValue}
 			{...props}
 			{...(groupId
@@ -73,7 +73,7 @@ export function CodeBlockTabs({
 }
 
 export function CodeBlockTabsList(props: TabListProps) {
-	return <TabList className="rounded-t-md border bg-muted" {...props} />;
+	return <TabList className="border bg-muted" {...props} />;
 }
 
 export function CodeBlockTabsTrigger({ value, ...props }: Omit<TabProps, "id"> & { value?: string }) {
@@ -81,11 +81,5 @@ export function CodeBlockTabsTrigger({ value, ...props }: Omit<TabProps, "id"> &
 }
 
 export function CodeBlockTab({ value, ...props }: Omit<TabPanelProps, "id"> & { value?: string }) {
-	return (
-		<TabPanel
-			id={value}
-			className="*:[figure]:mx-0 *:[figure]:mt-0 *:[figure]:rounded-t-none *:[figure]:border-t-0"
-			{...props}
-		/>
-	);
+	return <TabPanel id={value} className="*:[figure]:mx-0 *:[figure]:mt-0" {...props} />;
 }
