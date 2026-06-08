@@ -5,6 +5,7 @@ import { getRouteApi } from "@tanstack/react-router";
 import {
 	ChevronDownIcon,
 	ChevronLeftIcon,
+	LayoutGridIcon,
 	MoonIcon,
 	MousePointer2Icon,
 	ShuffleIcon,
@@ -306,6 +307,13 @@ export function CustomizerPanel({
 									<Input />
 								</SearchField>
 								<ListBox>
+									{/* The full-design-system view: the landing-page cards grid, themed live. */}
+									<ListBoxItem id="showcase" textValue="Showcase">
+										<span className="flex items-center gap-2">
+											<LayoutGridIcon className="size-4 text-fg-muted" />
+											<span className="truncate">Showcase</span>
+										</span>
+									</ListBoxItem>
 									{componentsData
 										.flatMap((category) => category.components)
 										.sort((a, b) => a.name.localeCompare(b.name))

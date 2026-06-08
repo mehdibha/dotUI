@@ -81,6 +81,7 @@ export const GroupExamplesIndex: Record<string, () => Promise<{ default: React.C
 	pickers: () => import("@/modules/create/preview/group-examples/pickers"),
 	progress: () => import("@/modules/create/preview/group-examples/progress"),
 	"selection-controls": () => import("@/modules/create/preview/group-examples/selection-controls"),
+	showcase: () => import("@/modules/create/preview/group-examples/showcase"),
 	sliders: () => import("@/modules/create/preview/group-examples/sliders"),
 	tags: () => import("@/modules/create/preview/group-examples/tags"),
 	typography: () => import("@/modules/create/preview/group-examples/typography"),
