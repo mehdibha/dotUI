@@ -4,7 +4,9 @@ import type { SVGProps } from "react";
 export function V0Icon(props: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
-			viewBox="0 0 16 16"
+			// Cropped to the glyph's exact bounds (no vertical padding) so it occupies only
+			// cap-height inline and never grows the headline's line.
+			viewBox="0 4 16 8"
 			fill="currentColor"
 			strokeLinejoin="round"
 			aria-hidden="true"

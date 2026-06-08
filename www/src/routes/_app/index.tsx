@@ -10,46 +10,24 @@ import { TypeScriptIcon } from "@/components/icons/typescript";
 import { V0Icon } from "@/components/icons/v0";
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
-import {
-	getPreset,
-	HERO_DESCRIPTIONS,
-	HeroTweaker,
-	PRIMARY_CTAS,
-	SECONDARY_CTAS,
-	useHeroTweaks,
-} from "@/components/marketing/hero-tweaker";
 import { RotatingText, type RotatingTextItem } from "@/components/marketing/rotating-text";
 import Cards from "@/components/marketing/showcase/cards";
 import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
-// Swappable words in the hero headline — the "ship it ___" slot cycles through the
-// export destinations, each revealed letter by letter. v0 / bolt.new / Lovable
-// carry their logo inline as one animated unit; the v0 mark reads "v0", so that
-// item needs no separate label. Spacing around logos comes from the icon margin,
-// so text segments hold no leading/trailing spaces.
+// dotUI's brand font (the "dotUI" wordmark uses Josefin Sans), loaded locally.
+const HEADLINE_STYLE = { fontFamily: "var(--font-josefin)", fontWeight: 600, letterSpacing: "-0.025em" };
+
+// Swappable destinations in the hero headline — "ship it to ___". "to" is a static
+// prefix, so only the destination swaps. v0 / bolt.new / Lovable are their official
+// brand wordmarks (logo-only); the rest are plain text. Everything inherits the
+// headline color (white); the Lovable heart keeps its brand gradient.
 const EXPORT_TARGETS: RotatingTextItem[] = [
 	{ id: "anywhere", text: "anywhere", segments: [{ text: "anywhere" }] },
-	{
-		id: "v0",
-		text: "to v0",
-		segments: [{ text: "to" }, { icon: <V0Icon className="h-[1.2em] w-auto translate-y-[0.26em] text-fg" /> }],
-	},
-	{
-		id: "bolt",
-		text: "to bolt.new",
-		segments: [{ text: "to" }, { icon: <BoltIcon className="size-[0.95em] text-fg" /> }, { text: "bolt.new" }],
-	},
-	{
-		id: "lovable",
-		text: "to Lovable",
-		segments: [
-			{ text: "to" },
-			{ icon: <LovableIcon className="size-[0.8em] translate-y-[0.04em]" /> },
-			{ text: "Lovable" },
-		],
-	},
-	{ id: "codebase", text: "to your codebase", segments: [{ text: "to your codebase" }] },
+	{ id: "v0", text: "v0", segments: [{ icon: <V0Icon className="h-[0.58em] w-auto" /> }] },
+	{ id: "bolt", text: "bolt.new", segments: [{ icon: <BoltIcon className="h-[0.72em] w-auto" /> }] },
+	{ id: "lovable", text: "Lovable", segments: [{ icon: <LovableIcon className="h-[0.72em] w-auto" /> }] },
+	{ id: "codebase", text: "your codebase", segments: [{ text: "your codebase" }] },
 ];
 
 export const Route = createFileRoute("/_app/")({
@@ -61,42 +39,39 @@ export const Route = createFileRoute("/_app/")({
 });
 
 function HomePage() {
-	const { tweaks, update } = useHeroTweaks();
-	const preset = getPreset(tweaks.typography);
-
 	return (
 		<div className="min-h-[calc(100vh-var(--header-height))]">
 			<main>
 				{/* Hero section */}
-				<section className="container flex flex-col pt-8 sm:pt-12 md:pt-20">
-					<div className="flex flex-col items-center gap-4 text-center md:gap-5">
+				<section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
+					<div className="flex flex-col items-center gap-3 text-center md:gap-4">
 						<Announcement />
 						<h1
-							aria-label="Build your design system, ship it anywhere — to v0, bolt.new, Lovable, or your own codebase"
-							style={preset.headline}
+							aria-label="Build your design system, ship it to v0, bolt.new, Lovable, your own codebase, or anywhere"
+							style={HEADLINE_STYLE}
 							className="text-4xl tracking-tighter sm:text-5xl lg:text-6xl"
 						>
 							<span aria-hidden="true">
 								Build your design system,
 								<br />
-								ship it <RotatingText items={EXPORT_TARGETS} effect={tweaks.effect} wordStyle={preset.accent} />
+								ship it <RotatingText prefix="to" items={EXPORT_TARGETS} wordStyle={HEADLINE_STYLE} />
 							</span>
 						</h1>
 						<p className="max-w-2xl text-base text-pretty text-fg-muted sm:text-lg">
-							{HERO_DESCRIPTIONS[tweaks.description] ?? HERO_DESCRIPTIONS[0]}
+							Your palette, your scale, your brand — not a preset clone.
 						</p>
-						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+						<div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
 							<LinkButton href="/create" variant="primary" size="lg">
-								{PRIMARY_CTAS[tweaks.primaryCta] ?? PRIMARY_CTAS[0]}
+								Launch the editor
 							</LinkButton>
 							<LinkButton href="/components" variant="default" size="lg">
-								{SECONDARY_CTAS[tweaks.secondaryCta] ?? SECONDARY_CTAS[0]}
+								View components
 							</LinkButton>
 						</div>
 					</div>
 				</section>
 
-				<section className="mt-24">
+				<section className="mt-16">
 					<Cards />
 				</section>
 
@@ -199,7 +174,6 @@ function HomePage() {
 				</section> */}
 			</main>
 			<Footer />
-			<HeroTweaker tweaks={tweaks} update={update} />
 		</div>
 	);
 }
