@@ -1,6 +1,6 @@
-import { Description, FieldContent, FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioControl, RadioGroup, RadioIndicator } from "@/registry/ui/radio-group";
 import { Slider, SliderControl } from "@/registry/ui/slider";
+import { ToggleButton } from "@/registry/ui/toggle-button";
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group";
 
 import type { Density } from "@/modules/create/preset";
 
@@ -11,10 +11,10 @@ export function RadiusConfig({ value, onChange }: { value: string; onChange: (va
 	const parsed = Number.parseFloat(value || DEFAULT_RADIUS_FACTOR);
 	const numeric = Number.isFinite(parsed) ? parsed : 1;
 	return (
-		<div className="flex flex-col gap-3">
+		<div className="flex flex-col gap-1.5">
 			<div className="flex items-center justify-between">
-				<span className="text-xs font-medium text-fg-muted">Radius factor</span>
-				<span className="text-xs font-medium text-fg tabular-nums">{numeric.toFixed(2)}x</span>
+				<span className="text-xs font-medium text-fg-muted">Radius</span>
+				<span className="text-xs font-medium text-fg-muted tabular-nums">{numeric.toFixed(2)}x</span>
 			</div>
 			<Slider
 				aria-label="Radius factor"
@@ -30,28 +30,32 @@ export function RadiusConfig({ value, onChange }: { value: string; onChange: (va
 	);
 }
 
-const densityOptions: { id: Density; label: string; description: string }[] = [
-	{ id: "compact", label: "Compact", description: "Tight spacing for dense UIs" },
-	{ id: "default", label: "Default", description: "Balanced, comfortable spacing" },
-	{ id: "comfortable", label: "Comfortable", description: "Generous breathing room" },
+const densityOptions: { id: Density; label: string }[] = [
+	{ id: "compact", label: "Compact" },
+	{ id: "default", label: "Default" },
+	{ id: "comfortable", label: "Comfortable" },
 ];
 
+/** Compact segmented control for density — sits inline on the customizer home. */
 export function DensityConfig({ value, onChange }: { value: Density; onChange: (density: Density) => void }) {
 	return (
-		<RadioGroup value={value} onChange={(v) => onChange(v as Density)} aria-label="Density">
-			<FieldGroup>
-				{densityOptions.map((opt) => (
-					<Radio key={opt.id} value={opt.id}>
-						<RadioControl>
-							<RadioIndicator />
-							<FieldContent>
-								<Label>{opt.label}</Label>
-								<Description>{opt.description}</Description>
-							</FieldContent>
-						</RadioControl>
-					</Radio>
-				))}
-			</FieldGroup>
-		</RadioGroup>
+		<ToggleButtonGroup
+			aria-label="Density"
+			size="sm"
+			selectionMode="single"
+			disallowEmptySelection
+			selectedKeys={[value]}
+			onSelectionChange={(keys) => {
+				const next = [...keys][0];
+				if (typeof next === "string") onChange(next as Density);
+			}}
+			className="grid w-full grid-cols-3"
+		>
+			{densityOptions.map((opt) => (
+				<ToggleButton key={opt.id} id={opt.id} className="w-full">
+					{opt.label}
+				</ToggleButton>
+			))}
+		</ToggleButtonGroup>
 	);
 }

@@ -1,5 +1,6 @@
-import { ChevronDownIcon, ChevronRightIcon, SlidersHorizontalIcon } from "lucide-react";
-import * as ButtonPrimitives from "react-aria-components/Button";
+import { useMemo } from "react";
+
+import { ChevronDownIcon } from "lucide-react";
 
 import { BLUR_OPTIONS, CURSOR_OPTIONS, OPACITY_OPTIONS, RADIUS_OPTIONS, SHADOW_OPTIONS } from "@/publisher/token-map";
 import { colorTokenNames } from "@/registry/theme";
@@ -13,9 +14,9 @@ import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider";
 
 import type { ParamDef, RegistryItem, ScalarParamDef, TokenType } from "@/registry/types";
 
-/* ----------------------------- Data helpers ----------------------------- */
+import { getGroupPreview } from "./group-previews";
 
-const allComponents = registryUi.filter((item) => item.group).sort((a, b) => a.name.localeCompare(b.name));
+/* ----------------------------- Data helpers ----------------------------- */
 
 const componentMetaMap = new Map<string, RegistryItem>(registryUi.map((item) => [item.name, item]));
 
@@ -23,7 +24,7 @@ const allGroups = Array.from(
 	new Set(registryUi.map((item) => item.group).filter((g): g is NonNullable<typeof g> => !!g)),
 ).sort((a, b) => a.localeCompare(b));
 
-export const GROUP_IDS = new Set<string>(allGroups);
+const GROUP_IDS = new Set<string>(allGroups);
 
 function toTitleCase(slug: string): string {
 	return slug
@@ -52,38 +53,78 @@ function paramCount(item: RegistryItem): number {
 	return item.params ? Object.keys(item.params).length : 0;
 }
 
-/* ----------------------- Card (shared card style) ----------------------- */
+/* ---------------------- Group cards ---------------------- */
 
-const cardClass =
-	"flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover";
+/** Curated group order — common, high-traffic categories first; the rest fall back to A–Z. */
+const GROUP_ORDER = [
+	"buttons",
+	"inputs",
+	"selection-controls",
+	"pickers",
+	"sliders",
+	"menus-lists",
+	"navigation",
+	"overlays",
+	"disclosure",
+	"containers",
+	"feedback",
+	"progress",
+	"tags",
+	"color-swatches",
+	"calendar",
+	"drop-zone",
+	"typography",
+];
 
-/* ---------------------- All components flat view ---------------------- */
-
-interface AllComponentsViewProps {
-	onSelect: (componentName: string) => void;
+function orderedGroups(): string[] {
+	const present = new Set<string>(allGroups);
+	const ordered = GROUP_ORDER.filter((g) => present.has(g));
+	const rest = allGroups.filter((g) => !GROUP_ORDER.includes(g));
+	return [...ordered, ...rest];
 }
 
-export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
-	const visibleComponents = allComponents.filter((comp) => paramCount(comp) >= 1);
+interface GroupCardsProps {
+	onSelectGroup: (groupSlug: string) => void;
+}
+
+/**
+ * Single-column category cards (configurable groups only). Each shows the category label and a
+ * live, inert preview of a representative component; clicking one opens the group's config page.
+ * The card is a div (not a button) so the real interactive demos can nest inside it legally; the
+ * preview is made non-interactive with `inert` + pointer-events-none so clicks reach the card.
+ */
+export function GroupCards({ onSelectGroup }: GroupCardsProps) {
+	const groups = useMemo(
+		() => orderedGroups().filter((group) => getComponentsInGroup(group).some((comp) => paramCount(comp) >= 1)),
+		[],
+	);
+
 	return (
-		<div className="mt-4 flex flex-col gap-3">
-			{visibleComponents.map((comp) => {
-				const count = paramCount(comp);
+		<div className="flex flex-col gap-2">
+			{groups.map((group) => {
+				const preview = getGroupPreview(group);
 				return (
-					<ButtonPrimitives.Button key={comp.name} onPress={() => onSelect(comp.name)} className={cardClass}>
-						<div className="flex items-center justify-between">
-							<span>{toTitleCase(comp.name)}</span>
-							<ChevronRightIcon className="size-4 text-fg-muted" />
-						</div>
-						{count > 0 && (
-							<div className="flex items-center gap-2 text-xs text-fg-muted/60">
-								<span className="flex items-center gap-1">
-									<SlidersHorizontalIcon className="size-3" />
-									{count} {count === 1 ? "param" : "params"}
-								</span>
+					<div
+						key={group}
+						role="button"
+						tabIndex={0}
+						aria-label={`Customize ${getGroupDisplayName(group)}`}
+						onClick={() => onSelectGroup(group)}
+						onKeyDown={(event) => {
+							if (event.key === "Enter" || event.key === " ") {
+								event.preventDefault();
+								onSelectGroup(group);
+							}
+						}}
+						className="flex cursor-pointer flex-col gap-2.5 rounded-lg border bg-neutral p-3 transition-colors outline-none hover:bg-neutral-hover focus-visible:ring-2 focus-visible:ring-border-focus"
+					>
+						<span className="text-sm font-medium">{getGroupDisplayName(group)}</span>
+						{preview && (
+							<div inert className="pointer-events-none max-h-36 overflow-hidden">
+								{preview}
 							</div>
 						)}
-					</ButtonPrimitives.Button>
+					</div>
 				);
 			})}
 		</div>
@@ -117,14 +158,29 @@ export function ComponentDetailView({ componentName, selectedParams, onParamChan
 		return <p className="text-sm text-fg-muted">Component not found.</p>;
 	}
 
-	const params = meta.params ? Object.entries(meta.params) : [];
-
-	if (params.length === 0) {
+	if (!meta.params || Object.keys(meta.params).length === 0) {
 		return <p className="text-sm text-fg-muted">No customization options available for this component.</p>;
 	}
 
 	return (
-		<div className="mt-4 flex flex-col gap-5">
+		<div className="mt-4">
+			<ComponentParamFields
+				componentName={componentName}
+				selectedParams={selectedParams}
+				onParamChange={onParamChange}
+			/>
+		</div>
+	);
+}
+
+/** Just the param editors for a component (no wrapper/fallbacks) — shared by the group config view. */
+function ComponentParamFields({ componentName, selectedParams, onParamChange }: ComponentDetailViewProps) {
+	const meta = componentMetaMap.get(componentName);
+	const params = meta?.params ? Object.entries(meta.params) : [];
+	if (params.length === 0) return null;
+
+	return (
+		<div className="flex flex-col gap-5">
 			{params.map(([paramName, def]) => (
 				<ParamEditor
 					key={paramName}
@@ -320,39 +376,37 @@ function SpacingParamSlider({ paramName, def, selected, onChange }: ScalarParamE
 	);
 }
 
-/* -------------------- Group detail view -------------------- */
+/* -------------------- Group config view -------------------- */
 
-interface GroupDetailViewProps {
+interface GroupConfigViewProps {
 	groupName: string;
-	onSelectComponent: (componentName: string) => void;
+	componentParams: Record<string, Record<string, string>>;
+	onParamChange: (componentName: string, paramName: string, value: string) => void;
 }
 
-export function GroupDetailView({ groupName, onSelectComponent }: GroupDetailViewProps) {
-	const componentsInGroup = getComponentsInGroup(groupName);
+/**
+ * Every configurable component in a group, with all its params, on one page — reached by
+ * clicking a group card on the home. (e.g. "Buttons" → Button, Toggle Button, Toggle Button Group.)
+ */
+export function GroupConfigView({ groupName, componentParams, onParamChange }: GroupConfigViewProps) {
+	const components = getComponentsInGroup(groupName).filter((comp) => paramCount(comp) >= 1);
 
-	if (componentsInGroup.length === 0) {
-		return <p className="text-sm text-fg-muted">No components in this group.</p>;
+	if (components.length === 0) {
+		return <p className="mt-4 text-sm text-fg-muted">No customization options in this group.</p>;
 	}
 
 	return (
-		<div className="mt-4 flex flex-col gap-3">
-			<p className="text-xs text-fg-muted/80">
-				Components in this group share the same visual style. Pick a component below to configure it.
-			</p>
-			<div className="flex flex-col gap-2">
-				{componentsInGroup.map((comp) => {
-					const count = paramCount(comp);
-					return (
-						<ButtonPrimitives.Button key={comp.name} onPress={() => onSelectComponent(comp.name)} className={cardClass}>
-							<div className="flex items-center justify-between">
-								<span>{toTitleCase(comp.name)}</span>
-								<ChevronRightIcon className="size-4 text-fg-muted" />
-							</div>
-							{count > 0 && <span className="text-xs text-fg-muted/60">{count} params</span>}
-						</ButtonPrimitives.Button>
-					);
-				})}
-			</div>
+		<div className="mt-4 flex flex-col gap-6">
+			{components.map((comp) => (
+				<div key={comp.name} className="flex flex-col gap-3">
+					<h3 className="text-xs font-medium tracking-wide text-fg-muted uppercase">{toTitleCase(comp.name)}</h3>
+					<ComponentParamFields
+						componentName={comp.name}
+						selectedParams={componentParams[comp.name] ?? {}}
+						onParamChange={(paramName, value) => onParamChange(comp.name, paramName, value)}
+					/>
+				</div>
+			))}
 		</div>
 	);
 }
