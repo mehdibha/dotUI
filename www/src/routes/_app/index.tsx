@@ -10,6 +10,14 @@ import { TypeScriptIcon } from "@/components/icons/typescript";
 import { V0Icon } from "@/components/icons/v0";
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
+import {
+	getPreset,
+	HERO_DESCRIPTIONS,
+	HeroTweaker,
+	PRIMARY_CTAS,
+	SECONDARY_CTAS,
+	useHeroTweaks,
+} from "@/components/marketing/hero-tweaker";
 import { RotatingText, type RotatingTextItem } from "@/components/marketing/rotating-text";
 import Cards from "@/components/marketing/showcase/cards";
 import { LinkButton } from "@/registry/ui/button";
@@ -25,17 +33,21 @@ const EXPORT_TARGETS: RotatingTextItem[] = [
 	{
 		id: "v0",
 		text: "to v0",
-		segments: [{ text: "to" }, { icon: <V0Icon className="h-[0.82em] w-auto translate-y-[0.02em]" /> }],
+		segments: [{ text: "to" }, { icon: <V0Icon className="h-[1.3em] w-auto translate-y-[0.04em]" /> }],
 	},
 	{
 		id: "bolt",
 		text: "to bolt.new",
-		segments: [{ text: "to" }, { icon: <BoltIcon className="size-[0.82em]" /> }, { text: "bolt.new" }],
+		segments: [{ text: "to" }, { icon: <BoltIcon className="size-[0.95em]" /> }, { text: "bolt.new" }],
 	},
 	{
 		id: "lovable",
 		text: "to Lovable",
-		segments: [{ text: "to" }, { icon: <LovableIcon className="size-[0.78em]" /> }, { text: "Lovable" }],
+		segments: [
+			{ text: "to" },
+			{ icon: <LovableIcon className="size-[0.8em] translate-y-[0.04em]" /> },
+			{ text: "Lovable" },
+		],
 	},
 	{ id: "codebase", text: "to your codebase", segments: [{ text: "to your codebase" }] },
 ];
@@ -49,6 +61,9 @@ export const Route = createFileRoute("/_app/")({
 });
 
 function HomePage() {
+	const { tweaks, update } = useHeroTweaks();
+	const preset = getPreset(tweaks.typography);
+
 	return (
 		<div className="min-h-[calc(100vh-var(--header-height))]">
 			<main>
@@ -58,23 +73,24 @@ function HomePage() {
 						<Announcement />
 						<h1
 							aria-label="Build your design system, ship it anywhere — to v0, bolt.new, Lovable, or your own codebase"
-							className="text-4xl font-medium tracking-tighter sm:text-5xl lg:text-6xl"
+							style={preset.headline}
+							className="text-4xl tracking-tighter sm:text-5xl lg:text-6xl"
 						>
 							<span aria-hidden="true">
 								Build your design system,
 								<br />
-								ship it <RotatingText items={EXPORT_TARGETS} />
+								ship it <RotatingText items={EXPORT_TARGETS} effect={tweaks.effect} wordStyle={preset.accent} />
 							</span>
 						</h1>
 						<p className="max-w-2xl text-base text-pretty text-fg-muted sm:text-lg">
-							Shape it in a live editor — accessible by default, unmistakably yours.
+							{HERO_DESCRIPTIONS[tweaks.description] ?? HERO_DESCRIPTIONS[0]}
 						</p>
 						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
 							<LinkButton href="/create" variant="primary" size="lg">
-								Start creating
+								{PRIMARY_CTAS[tweaks.primaryCta] ?? PRIMARY_CTAS[0]}
 							</LinkButton>
 							<LinkButton href="/components" variant="default" size="lg">
-								Browse components
+								{SECONDARY_CTAS[tweaks.secondaryCta] ?? SECONDARY_CTAS[0]}
 							</LinkButton>
 						</div>
 					</div>
@@ -183,6 +199,7 @@ function HomePage() {
 				</section> */}
 			</main>
 			<Footer />
+			<HeroTweaker tweaks={tweaks} update={update} />
 		</div>
 	);
 }
