@@ -7,29 +7,27 @@ import { TextField } from "@/registry/ui/text-field";
 
 export function ModalDemo() {
 	return (
-		<div className="flex h-60 items-end justify-center">
-			<Dialog>
-				<Button>Open Modal</Button>
-				<Modal>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Edit username</DialogTitle>
-						</DialogHeader>
-						<DialogBody>
-							<TextField defaultValue="@mehdibha" className="w-full">
-								<Label>Username</Label>
-								<Input />
-							</TextField>
-						</DialogBody>
-						<DialogFooter className="flex-row! justify-end">
-							<Button slot="close">Cancel</Button>
-							<Button slot="close" variant="primary">
-								Apply
-							</Button>
-						</DialogFooter>
-					</DialogContent>
-				</Modal>
-			</Dialog>
-		</div>
+		<Dialog>
+			<Button>Open Modal</Button>
+			<Modal>
+				<DialogContent>
+					<DialogHeader>
+						<DialogTitle>Edit username</DialogTitle>
+					</DialogHeader>
+					<DialogBody>
+						<TextField defaultValue="@mehdibha" className="w-full">
+							<Label>Username</Label>
+							<Input />
+						</TextField>
+					</DialogBody>
+					<DialogFooter className="flex-row! justify-end">
+						<Button slot="close">Cancel</Button>
+						<Button slot="close" variant="primary">
+							Apply
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Modal>
+		</Dialog>
 	);
 }

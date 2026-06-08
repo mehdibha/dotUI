@@ -2,16 +2,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from "@/registry/ui/
 
 export function SelectDemo() {
 	return (
-		<div className="flex h-40 items-start">
-			<Select aria-label="Provider">
-				<SelectTrigger />
-				<SelectContent className="h-30">
-					<SelectItem>Perplexity</SelectItem>
-					<SelectItem>Replicate</SelectItem>
-					<SelectItem>Together AI</SelectItem>
-					<SelectItem>ElevenLabs</SelectItem>
-				</SelectContent>
-			</Select>
-		</div>
+		<Select aria-label="Provider" className="w-48">
+			<SelectTrigger />
+			<SelectContent>
+				<SelectItem>Perplexity</SelectItem>
+				<SelectItem>Replicate</SelectItem>
+				<SelectItem>Together AI</SelectItem>
+				<SelectItem>ElevenLabs</SelectItem>
+			</SelectContent>
+		</Select>
 	);
 }

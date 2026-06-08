@@ -6,20 +6,18 @@ import { Popover } from "@/registry/ui/popover";
 
 export function MenuDemo() {
 	return (
-		<div className="flex h-46 w-36 items-start justify-end">
-			<Menu>
-				<Button isIconOnly>
-					<MenuIcon />
-				</Button>
-				<Popover placement="bottom end">
-					<MenuContent>
-						<MenuItem>Account settings</MenuItem>
-						<MenuItem>Create team</MenuItem>
-						<MenuItem>Command menu</MenuItem>
-						<MenuItem>Log out</MenuItem>
-					</MenuContent>
-				</Popover>
-			</Menu>
-		</div>
+		<Menu>
+			<Button isIconOnly>
+				<MenuIcon />
+			</Button>
+			<Popover placement="bottom end">
+				<MenuContent>
+					<MenuItem>Account settings</MenuItem>
+					<MenuItem>Create team</MenuItem>
+					<MenuItem>Command menu</MenuItem>
+					<MenuItem>Log out</MenuItem>
+				</MenuContent>
+			</Popover>
+		</Menu>
 	);
 }

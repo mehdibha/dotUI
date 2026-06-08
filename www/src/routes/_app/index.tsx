@@ -41,7 +41,7 @@ function HomePage() {
 							<LinkButton href="/docs" variant="primary" size="lg">
 								Get started
 							</LinkButton>
-							<LinkButton href="/components" variant="default" size="lg">
+							<LinkButton href="/docs/components" variant="default" size="lg">
 								Explore components
 							</LinkButton>
 						</div>
