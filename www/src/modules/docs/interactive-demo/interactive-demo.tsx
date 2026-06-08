@@ -1,7 +1,7 @@
 import React, { type ComponentType, createElement, useCallback, useMemo, useState } from "react";
 import { flushSync } from "react-dom";
 
-import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 import { CodeBlock } from "@/modules/docs/code-block";
 import { renderCode } from "@/modules/docs/codegen/code-template";
@@ -9,13 +9,14 @@ import { DynamicPre } from "@/modules/docs/dynamic-pre";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Card, CardContent } from "@/registry/ui/card";
-import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 import type { CodeTemplate } from "@/modules/docs/codegen/code-template";
 
 import { availableIcons, Controls } from "./controls";
 import { elementToCode, elementToPreviewCode } from "./element-to-code";
+import { PlaygroundTweaker } from "./playground-tweaker";
 
+import type { PlaygroundLayoutValues } from "./playground-tweaker";
 import type { ControlValues, SerializableControl } from "./types";
 
 /**
@@ -30,18 +31,22 @@ import type { ControlValues, SerializableControl } from "./types";
  *    and its element tree serialized. Kept until every demo migrates.
  */
 
+/** Initial width (px) of the right-hand controls column; tunable via the tweaker. */
+const DEFAULT_CONTROLS_WIDTH = 256;
+
 interface InteractiveDemoProps {
 	component: ComponentType<Record<string, unknown>>;
 	controls: SerializableControl[];
 	className?: string;
 	/**
-	 * Where the controls sit on ≥md screens: a column to the right ("horizontal")
+	 * Initial position of the controls on ≥md screens: a column to the right ("horizontal")
 	 * or a row beneath the preview ("vertical"). Small screens are always "vertical".
+	 * Adjustable at runtime via the floating layout tweaker.
 	 */
 	layout?: "horizontal" | "vertical";
 	/**
-	 * How the controls are presented: bare in the panel ("inline", current) or
-	 * grouped in a titleless card ("card").
+	 * Initial presentation of the controls: bare in the panel ("inline", current) or
+	 * grouped in a titleless card ("card"). Adjustable via the tweaker.
 	 */
 	controlsVariant?: "inline" | "card";
 	/** SourceFirst engine template; absent ⇒ legacy serialization path. */
@@ -56,8 +61,17 @@ export function InteractiveDemo({
 	controlsVariant = "inline",
 	codeTemplate,
 }: InteractiveDemoProps) {
+	// Layout is tuned live from the floating tweaker; props seed the initial values.
 	const [layout, setLayout] = useState<"horizontal" | "vertical">(layoutProp);
+	const [variant, setVariant] = useState<"inline" | "card">(controlsVariant);
+	const [width, setWidth] = useState(DEFAULT_CONTROLS_WIDTH);
 	const [isExpanded, setIsExpanded] = useState(false);
+
+	const handleTweak = useCallback((partial: Partial<PlaygroundLayoutValues>) => {
+		if (partial.layout !== undefined) setLayout(partial.layout);
+		if (partial.variant !== undefined) setVariant(partial.variant);
+		if (partial.width !== undefined) setWidth(partial.width);
+	}, []);
 
 	// "horizontal" puts the controls in a column to the right of the preview at md+; below md
 	// (and for "vertical") they sit in a wrapping row beneath it. The small↔large switch is pure
@@ -176,18 +190,6 @@ export function InteractiveDemo({
 		}
 	};
 
-	const handleLayoutToggle = () => {
-		if (document.startViewTransition) {
-			document.startViewTransition(() => {
-				flushSync(() => {
-					setLayout((prev) => (prev === "horizontal" ? "vertical" : "horizontal"));
-				});
-			});
-		} else {
-			setLayout((prev) => (prev === "horizontal" ? "vertical" : "horizontal"));
-		}
-	};
-
 	return (
 		<div className={cn("overflow-hidden rounded-lg border", className)}>
 			<div className={cn("flex flex-col", horizontal && "md:flex-row")}>
@@ -195,17 +197,18 @@ export function InteractiveDemo({
 				<div className="flex min-h-56 flex-1 items-center justify-center p-10">{previewElement}</div>
 
 				{/* Controls — a wrapping row beneath the preview (also on small screens), or a column to the
-				    right at md+ when horizontal. No divider: the bottom row flows straight off the preview;
-				    the card brings its own border. */}
+				    right at md+ when horizontal. Its width (right only) is tuned from the tweaker via a CSS
+				    var, applied at md+ so the small-screen row stays full-width. No divider: the bottom row
+				    flows straight off the preview; the card brings its own border. */}
 				<div
 					className={cn(
 						"**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
 						"p-5",
-						horizontal && "md:shrink-0",
-						horizontal && (controlsVariant === "card" ? "md:w-60" : "md:w-64"),
+						horizontal && "md:w-(--controls-w) md:shrink-0",
 					)}
+					style={horizontal ? ({ "--controls-w": `${width}px` } as React.CSSProperties) : undefined}
 				>
-					{controlsVariant === "card" ? (
+					{variant === "card" ? (
 						<Card size="sm">
 							<CardContent className={cn("flex", controlListClass)}>
 								<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
@@ -235,24 +238,13 @@ export function InteractiveDemo({
 								</>
 							)}
 						</Button>
-						{/* Layout is forced to bottom on small screens, so the toggle is desktop-only. */}
-						<Tooltip>
-							<Button
-								aria-label="Toggle orientation"
-								onPress={handleLayoutToggle}
-								variant="quiet"
-								size="sm"
-								className="size-7 max-md:hidden"
-							>
-								{layout === "horizontal" ? <Columns2Icon /> : <Rows2Icon />}
-							</Button>
-							<TooltipContent hideArrow>Toggle layout</TooltipContent>
-						</Tooltip>
 					</>
 				}
 			>
 				<DynamicPre lang="tsx">{displayedCode}</DynamicPre>
 			</CodeBlock>
+
+			<PlaygroundTweaker layout={layout} variant={variant} width={width} onChange={handleTweak} />
 		</div>
 	);
 }
