@@ -8,15 +8,13 @@ import { renderCode } from "@/modules/docs/codegen/code-template";
 import { DynamicPre } from "@/modules/docs/dynamic-pre";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
-import { Card, CardContent } from "@/registry/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/registry/ui/card";
 
 import type { CodeTemplate } from "@/modules/docs/codegen/code-template";
 
 import { availableIcons, Controls } from "./controls";
 import { elementToCode, elementToPreviewCode } from "./element-to-code";
-import { PlaygroundTweaker } from "./playground-tweaker";
 
-import type { PlaygroundLayoutValues } from "./playground-tweaker";
 import type { ControlValues, SerializableControl } from "./types";
 
 /**
@@ -31,24 +29,15 @@ import type { ControlValues, SerializableControl } from "./types";
  *    and its element tree serialized. Kept until every demo migrates.
  */
 
-/** Initial width (px) of the right-hand controls column; tunable via the tweaker. */
-const DEFAULT_CONTROLS_WIDTH = 256;
-
 interface InteractiveDemoProps {
 	component: ComponentType<Record<string, unknown>>;
 	controls: SerializableControl[];
 	className?: string;
 	/**
-	 * Initial position of the controls on ≥md screens: a column to the right ("horizontal")
+	 * Where the controls sit on ≥md screens: a column to the right ("horizontal")
 	 * or a row beneath the preview ("vertical"). Small screens are always "vertical".
-	 * Adjustable at runtime via the floating layout tweaker.
 	 */
 	layout?: "horizontal" | "vertical";
-	/**
-	 * Initial presentation of the controls: bare in the panel ("inline", current) or
-	 * grouped in a titleless card ("card"). Adjustable via the tweaker.
-	 */
-	controlsVariant?: "inline" | "card";
 	/** SourceFirst engine template; absent ⇒ legacy serialization path. */
 	codeTemplate?: CodeTemplate;
 }
@@ -57,21 +46,10 @@ export function InteractiveDemo({
 	component: Playground,
 	controls,
 	className,
-	layout: layoutProp = "horizontal",
-	controlsVariant = "inline",
+	layout = "horizontal",
 	codeTemplate,
 }: InteractiveDemoProps) {
-	// Layout is tuned live from the floating tweaker; props seed the initial values.
-	const [layout, setLayout] = useState<"horizontal" | "vertical">(layoutProp);
-	const [variant, setVariant] = useState<"inline" | "card">(controlsVariant);
-	const [width, setWidth] = useState(DEFAULT_CONTROLS_WIDTH);
 	const [isExpanded, setIsExpanded] = useState(false);
-
-	const handleTweak = useCallback((partial: Partial<PlaygroundLayoutValues>) => {
-		if (partial.layout !== undefined) setLayout(partial.layout);
-		if (partial.variant !== undefined) setVariant(partial.variant);
-		if (partial.width !== undefined) setWidth(partial.width);
-	}, []);
 
 	// "horizontal" puts the controls in a column to the right of the preview at md+; below md
 	// (and for "vertical") they sit in a wrapping row beneath it. The small↔large switch is pure
@@ -196,29 +174,23 @@ export function InteractiveDemo({
 				{/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
 				<div className="flex min-h-56 flex-1 items-center justify-center p-10">{previewElement}</div>
 
-				{/* Controls — a wrapping row beneath the preview (also on small screens), or a column to the
-				    right at md+ when horizontal. Its width (right only) is tuned from the tweaker via a CSS
-				    var, applied at md+ so the small-screen row stays full-width. No divider: the bottom row
-				    flows straight off the preview; the card brings its own border. */}
+				{/* Controls — always grouped in a titled card; a fixed-width column to the right at md+
+				    when horizontal, otherwise a wrapping row beneath the preview (also on small screens). */}
 				<div
 					className={cn(
 						"**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
 						"p-5",
-						horizontal && "md:w-(--controls-w) md:shrink-0",
+						horizontal && "md:w-64 md:shrink-0",
 					)}
-					style={horizontal ? ({ "--controls-w": `${width}px` } as React.CSSProperties) : undefined}
 				>
-					{variant === "card" ? (
-						<Card size="sm">
-							<CardContent className={cn("flex", controlListClass)}>
-								<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
-							</CardContent>
-						</Card>
-					) : (
-						<div className={cn("flex", controlListClass)}>
+					<Card size="sm">
+						<CardHeader>
+							<CardTitle className="text-xs font-medium text-fg-muted">Props</CardTitle>
+						</CardHeader>
+						<CardContent className={cn("flex", controlListClass)}>
 							<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
-						</div>
-					)}
+						</CardContent>
+					</Card>
 				</div>
 			</div>
 
@@ -243,8 +215,6 @@ export function InteractiveDemo({
 			>
 				<DynamicPre lang="tsx">{displayedCode}</DynamicPre>
 			</CodeBlock>
-
-			<PlaygroundTweaker layout={layout} variant={variant} width={width} onChange={handleTweak} />
 		</div>
 	);
 }
