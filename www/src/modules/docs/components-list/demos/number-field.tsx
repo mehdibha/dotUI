@@ -1,17 +1,16 @@
-import { Button } from "@/registry/ui/button";
 import { Label } from "@/registry/ui/field";
 import { Group } from "@/registry/ui/group";
 import { Input } from "@/registry/ui/input";
-import { NumberField } from "@/registry/ui/number-field";
+import { NumberField, NumberFieldDecrement, NumberFieldIncrement } from "@/registry/ui/number-field";
 
 export function NumberFieldDemo() {
 	return (
 		<NumberField defaultValue={10}>
 			<Label>Quantity</Label>
 			<Group>
+				<NumberFieldDecrement />
 				<Input className="w-16" />
-				<Button slot="decrement" />
-				<Button slot="increment" />
+				<NumberFieldIncrement />
 			</Group>
 		</NumberField>
 	);

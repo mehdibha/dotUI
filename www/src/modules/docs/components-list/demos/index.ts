@@ -9,6 +9,7 @@ import { ButtonDemo } from "./button";
 import { CalendarDemo } from "./calendar";
 import { CardDemo } from "./card";
 import { CheckboxDemo } from "./checkbox";
+import { CheckboxGroupDemo } from "./checkbox-group";
 import { ColorAreaDemo } from "./color-area";
 import { ColorFieldDemo } from "./color-field";
 import { ColorPickerDemo } from "./color-picker";
@@ -37,6 +38,7 @@ import { OTPFieldDemo } from "./otp-field";
 import { PopoverDemo } from "./popover";
 import { ProgressBarDemo } from "./progress-bar";
 import { RadioGroupDemo } from "./radio-group";
+import { ScrollFadeDemo } from "./scroll-fade";
 import { SearchFieldDemo } from "./search-field";
 import { SelectDemo } from "./select";
 import { SeparatorDemo } from "./separator";
@@ -64,6 +66,7 @@ export const componentDemos: Record<string, ComponentType> = {
 	calendar: CalendarDemo,
 	card: CardDemo,
 	checkbox: CheckboxDemo,
+	"checkbox-group": CheckboxGroupDemo,
 	"color-area": ColorAreaDemo,
 	"color-field": ColorFieldDemo,
 	"color-picker": ColorPickerDemo,
@@ -92,6 +95,7 @@ export const componentDemos: Record<string, ComponentType> = {
 	popover: PopoverDemo,
 	"progress-bar": ProgressBarDemo,
 	"radio-group": RadioGroupDemo,
+	"scroll-fade": ScrollFadeDemo,
 	"search-field": SearchFieldDemo,
 	select: SelectDemo,
 	separator: SeparatorDemo,

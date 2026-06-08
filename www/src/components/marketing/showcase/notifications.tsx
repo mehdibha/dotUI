@@ -22,7 +22,7 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 
 	return (
 		<Card className={cn("gap-2 pb-0", className)} {...props}>
-			<CardHeader className="flex min-w-0 items-center justify-between has-data-[slot=card-action]:grid-cols-[1fr_minmax(0,auto)]">
+			<CardHeader className="flex min-w-0 flex-wrap items-center justify-between gap-2">
 				<CardTitle className="flex items-center gap-2">
 					Notifications
 					<Badge className="px-1.5">{unreadCount}</Badge>
@@ -48,7 +48,7 @@ export function Notifications({ className, ...props }: React.ComponentProps<"div
 				<div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto border-t">
 					<ListBox
 						aria-label="Notifications"
-						className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_.separator]:my-0"
+						className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_.separator]:m-0"
 					>
 						{visibleNotifications.map((notification, index) => (
 							<React.Fragment key={`${notification.user.name}-${notification.timestamp}-${notification.text}`}>

@@ -64,7 +64,7 @@ function HomePage() {
 							<LinkButton href="/create" variant="primary" size="lg">
 								Launch the editor
 							</LinkButton>
-							<LinkButton href="/components" variant="default" size="lg">
+							<LinkButton href="/docs/components" variant="default" size="lg">
 								View components
 							</LinkButton>
 						</div>
