@@ -6,8 +6,10 @@ import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-
 import { CodeBlock } from "@/modules/docs/code-block";
 import { renderCode } from "@/modules/docs/codegen/code-template";
 import { DynamicPre } from "@/modules/docs/dynamic-pre";
+import { useIsMobile } from "@/registry/hooks/use-mobile";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
+import { Card, CardContent } from "@/registry/ui/card";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
 
 import type { CodeTemplate } from "@/modules/docs/codegen/code-template";
@@ -33,7 +35,16 @@ interface InteractiveDemoProps {
 	component: ComponentType<Record<string, unknown>>;
 	controls: SerializableControl[];
 	className?: string;
+	/**
+	 * Where the controls sit on ≥md screens: a column to the right ("horizontal")
+	 * or a row beneath the preview ("vertical"). Small screens are always "vertical".
+	 */
 	layout?: "horizontal" | "vertical";
+	/**
+	 * How the controls are presented: bare in the panel ("inline", current) or
+	 * grouped in a titleless card ("card").
+	 */
+	controlsVariant?: "inline" | "card";
 	/** SourceFirst engine template; absent ⇒ legacy serialization path. */
 	codeTemplate?: CodeTemplate;
 }
@@ -43,10 +54,18 @@ export function InteractiveDemo({
 	controls,
 	className,
 	layout: layoutProp = "horizontal",
+	controlsVariant = "inline",
 	codeTemplate,
 }: InteractiveDemoProps) {
 	const [layout, setLayout] = useState<"horizontal" | "vertical">(layoutProp);
 	const [isExpanded, setIsExpanded] = useState(false);
+
+	// A side column doesn't fit on small screens — there the controls always drop
+	// beneath the preview, regardless of the chosen/toggled layout.
+	const isMobile = useIsMobile();
+	const effectiveLayout = isMobile ? "vertical" : layout;
+	const isRight = effectiveLayout === "horizontal";
+	const controlListClass = isRight ? "flex-col gap-4" : "flex-row flex-wrap items-start gap-x-6 gap-y-4";
 
 	// Initialize values from control defaults
 	const initialValues = useMemo(() => {
@@ -169,20 +188,31 @@ export function InteractiveDemo({
 
 	return (
 		<div className={cn("overflow-hidden rounded-lg border", className)}>
-			<div className={cn("flex flex-col", layout === "horizontal" && "flex-row")}>
+			<div className={cn("flex flex-col", isRight && "flex-row")}>
 				{/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
 				<div className="flex min-h-56 flex-1 items-center justify-center p-10">{previewElement}</div>
 
-				{/* Controls — a column beside the preview (inline column) or a row beneath it (bottom bar) */}
+				{/* Controls — a column beside the preview (right) or a row beneath it (bottom; always so on small screens) */}
 				<div
 					className={cn(
-						"flex **:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
-						layout === "horizontal"
-							? "w-64 shrink-0 flex-col gap-4 p-5"
-							: "flex-row flex-wrap items-start gap-x-6 gap-y-4 border-t p-5",
+						"**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
+						"p-5",
+						isRight && (controlsVariant === "card" ? "w-72 shrink-0" : "w-64 shrink-0"),
+						// Inline controls lean on a divider for separation; a card brings its own border.
+						controlsVariant === "inline" && !isRight && "border-t",
 					)}
 				>
-					<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
+					{controlsVariant === "card" ? (
+						<Card size="sm">
+							<CardContent className={cn("flex", controlListClass)}>
+								<Controls controls={controls} values={values} onChange={handleChange} layout={effectiveLayout} />
+							</CardContent>
+						</Card>
+					) : (
+						<div className={cn("flex", controlListClass)}>
+							<Controls controls={controls} values={values} onChange={handleChange} layout={effectiveLayout} />
+						</div>
+					)}
 				</div>
 			</div>
 
@@ -202,13 +232,14 @@ export function InteractiveDemo({
 								</>
 							)}
 						</Button>
+						{/* Layout is forced to bottom on small screens, so the toggle is desktop-only. */}
 						<Tooltip>
 							<Button
 								aria-label="Toggle orientation"
 								onPress={handleLayoutToggle}
 								variant="quiet"
 								size="sm"
-								className="size-7"
+								className="size-7 max-md:hidden"
 							>
 								{layout === "horizontal" ? <Columns2Icon /> : <Rows2Icon />}
 							</Button>
