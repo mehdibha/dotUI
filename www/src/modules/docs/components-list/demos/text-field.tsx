@@ -4,7 +4,7 @@ import { TextField } from "@/registry/ui/text-field";
 
 export function TextFieldDemo() {
 	return (
-		<TextField className="w-full">
+		<TextField className="w-56">
 			<Label>Email</Label>
 			<Input placeholder="hello@example.com" />
 			<Description>Enter your email.</Description>

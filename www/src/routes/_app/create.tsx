@@ -13,11 +13,11 @@ import type { PreviewMode } from "@/modules/create/preset";
 
 export const createSearchSchema = z.object({
 	panel: z.string().optional().catch(undefined),
-	preview: z.string().default("accordion").catch("accordion"),
+	preview: z.string().default("cards").catch("cards"),
 	preset: z.string().optional().catch(undefined),
 });
 
-const searchDefaults = { preview: "accordion" };
+const searchDefaults = { preview: "cards" };
 
 export const Route = createFileRoute("/_app/create")({
 	validateSearch: createSearchSchema,

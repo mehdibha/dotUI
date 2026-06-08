@@ -67,7 +67,7 @@ export function Pre({ children, className, ...props }: React.ComponentProps<"pre
 	return (
 		<pre
 			className={cn(
-				"w-max min-w-full py-3 **:[.line]:px-4!",
+				"w-max min-w-full py-3 [tab-size:2] **:[.line]:px-4!",
 				// shiki
 				"**:[code]:text-[0.8125rem] **:[code]:**:[span]:text-(--shiki-light) dark:**:[code]:**:[span]:text-(--shiki-dark)",
 				// code

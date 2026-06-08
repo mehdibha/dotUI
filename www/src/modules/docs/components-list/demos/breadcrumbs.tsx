@@ -2,17 +2,17 @@ import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from
 
 export function BreadcrumbsDemo() {
 	return (
-		<Breadcrumbs>
+		<Breadcrumbs className="flex-nowrap">
 			<BreadcrumbItem>
 				<BreadcrumbLink href="#">Home</BreadcrumbLink>
 				<BreadcrumbSeparator />
 			</BreadcrumbItem>
 			<BreadcrumbItem>
-				<BreadcrumbLink href="#">Components</BreadcrumbLink>
+				<BreadcrumbLink href="#">Docs</BreadcrumbLink>
 				<BreadcrumbSeparator />
 			</BreadcrumbItem>
 			<BreadcrumbItem>
-				<BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
+				<BreadcrumbLink>Button</BreadcrumbLink>
 			</BreadcrumbItem>
 		</Breadcrumbs>
 	);
