@@ -187,7 +187,8 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	},
 	{
 		target: "registry/ui/button/index.tsx",
-		content: 'export * from "./base";\nexport { buttonStyles, useStyles as useButtonStyles } from "./styles";\n',
+		content:
+			'import { Link as RouterLink } from "@tanstack/react-router";\nimport type { ToOptions } from "@tanstack/react-router";\n\nimport { LinkButton as LinkButtonPrimitive } from "./base";\n\nimport type { LinkButtonProps as BaseLinkButtonProps } from "./base";\n\nexport { Button } from "./base";\nexport type { ButtonProps } from "./base";\nexport { buttonStyles, useStyles as useButtonStyles } from "./styles";\n\ntype LinkButtonProps = Omit<BaseLinkButtonProps, "href"> & { href?: string | ToOptions };\n\nfunction LinkButton({ href, ...props }: LinkButtonProps) {\n\treturn (\n\t\t<LinkButtonPrimitive\n\t\t\thref={href == null ? undefined : typeof href === "object" ? href.to : href}\n\t\t\trender={(domProps) => {\n\t\t\t\tif (!("href" in domProps)) {\n\t\t\t\t\treturn <span {...domProps} />;\n\t\t\t\t}\n\t\t\t\tif (typeof href === "object") {\n\t\t\t\t\treturn <RouterLink {...href} {...domProps} />;\n\t\t\t\t}\n\t\t\t\treturn <a {...domProps} />;\n\t\t\t}}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nexport type { LinkButtonProps };\nexport { LinkButton };\n',
 	},
 	{
 		target: "registry/ui/button/meta.ts",
@@ -470,7 +471,8 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	},
 	{
 		target: "registry/ui/link/index.tsx",
-		content: 'export * from "./base";\n',
+		content:
+			'import { Link as RouterLink } from "@tanstack/react-router";\nimport type { ToOptions } from "@tanstack/react-router";\n\nimport { Link as LinkPrimitive } from "./base";\n\nimport type { LinkProps as BaseLinkProps } from "./base";\n\ntype LinkProps = Omit<BaseLinkProps, "href"> & { href?: string | ToOptions };\n\nfunction Link({ href, ...props }: LinkProps) {\n\treturn (\n\t\t<LinkPrimitive\n\t\t\thref={href == null ? undefined : typeof href === "object" ? href.to : href}\n\t\t\trender={(domProps) => {\n\t\t\t\tif (!("href" in domProps)) {\n\t\t\t\t\treturn <span {...domProps} />;\n\t\t\t\t}\n\t\t\t\tif (typeof href === "object") {\n\t\t\t\t\treturn <RouterLink {...href} {...domProps} />;\n\t\t\t\t}\n\t\t\t\treturn <a {...domProps} />;\n\t\t\t}}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nexport type { LinkProps };\nexport { Link };\n',
 	},
 	{
 		target: "registry/ui/link/meta.ts",
@@ -489,7 +491,8 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	},
 	{
 		target: "registry/ui/list-box/index.tsx",
-		content: 'export * from "./base";\n',
+		content:
+			'import { Link as RouterLink } from "@tanstack/react-router";\nimport type { ToOptions } from "@tanstack/react-router";\n\nimport { ListBoxItem as ListBoxItemPrimitive } from "./base";\n\nimport type { ListBoxItemProps as BaseListBoxItemProps } from "./base";\n\nexport {\n\tListBox,\n\tListBoxItemDescription,\n\tListBoxItemLabel,\n\tListBoxSection,\n\tListBoxSectionHeader,\n\tListBoxVirtualizer,\n} from "./base";\nexport type {\n\tListBoxItemDescriptionProps,\n\tListBoxItemLabelProps,\n\tListBoxProps,\n\tListBoxSectionHeaderProps,\n\tListBoxSectionProps,\n\tListBoxVirtualizerProps,\n} from "./base";\n\ntype ListBoxItemProps<T> = Omit<BaseListBoxItemProps<T>, "href"> & { href?: string | ToOptions };\n\nfunction ListBoxItem<T extends object>({ href, ...props }: ListBoxItemProps<T>) {\n\treturn (\n\t\t<ListBoxItemPrimitive\n\t\t\thref={href == null ? undefined : typeof href === "object" ? href.to : href}\n\t\t\trender={(domProps) => {\n\t\t\t\tif (!("href" in domProps)) {\n\t\t\t\t\treturn <div {...domProps} />;\n\t\t\t\t}\n\t\t\t\tif (typeof href === "object") {\n\t\t\t\t\treturn <RouterLink {...href} {...domProps} />;\n\t\t\t\t}\n\t\t\t\treturn <a {...domProps} />;\n\t\t\t}}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nexport type { ListBoxItemProps };\nexport { ListBoxItem };\n',
 	},
 	{
 		target: "registry/ui/list-box/meta.ts",
@@ -690,7 +693,8 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	},
 	{
 		target: "registry/ui/tabs/index.tsx",
-		content: 'export * from "./base";\n',
+		content:
+			'import { Link as RouterLink } from "@tanstack/react-router";\nimport type { ToOptions } from "@tanstack/react-router";\n\nimport { Tab as TabPrimitive } from "./base";\n\nimport type { TabProps as BaseTabProps } from "./base";\n\nexport { TabIndicator, TabList, TabPanel, Tabs } from "./base";\nexport type { TabIndicatorProps, TabListProps, TabPanelProps, TabsProps } from "./base";\n\ntype TabProps = Omit<BaseTabProps, "href"> & { href?: string | ToOptions };\n\nfunction Tab({ href, ...props }: TabProps) {\n\treturn (\n\t\t<TabPrimitive\n\t\t\thref={href == null ? undefined : typeof href === "object" ? href.to : href}\n\t\t\trender={(domProps) => {\n\t\t\t\tif (!("href" in domProps)) {\n\t\t\t\t\treturn <div {...domProps} />;\n\t\t\t\t}\n\t\t\t\tif (typeof href === "object") {\n\t\t\t\t\treturn <RouterLink {...href} {...domProps} />;\n\t\t\t\t}\n\t\t\t\treturn <a {...domProps} />;\n\t\t\t}}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nexport type { TabProps };\nexport { Tab };\n',
 	},
 	{
 		target: "registry/ui/tabs/meta.ts",
@@ -883,6 +887,7 @@ export const SHOWCASE_BUNDLE_DEPENDENCIES: string[] = [
 	"@fontsource-variable/geist@^5.2.8",
 	"@fontsource/geist-mono@^5.2.7",
 	"@internationalized/date@^3.12.2",
+	"@tanstack/react-router",
 	"clsx@^2.1.0",
 	"lucide-react@^1.16.0",
 	"react-aria@^3.49.0",
