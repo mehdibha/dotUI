@@ -5,7 +5,6 @@ import { getRouteApi } from "@tanstack/react-router";
 import {
 	ChevronDownIcon,
 	ChevronLeftIcon,
-	LayoutGridIcon,
 	MoonIcon,
 	MousePointer2Icon,
 	ShuffleIcon,
@@ -20,7 +19,7 @@ import * as icons from "@/registry/__generated__/icons";
 import { Button } from "@/registry/ui/button";
 import { Command } from "@/registry/ui/command";
 import { Input } from "@/registry/ui/input";
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box";
+import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/registry/ui/list-box";
 import { Popover } from "@/registry/ui/popover";
 import { SearchField } from "@/registry/ui/search-field";
 import { Select, SelectValue } from "@/registry/ui/select";
@@ -307,21 +306,24 @@ export function CustomizerPanel({
 									<Input />
 								</SearchField>
 								<ListBox>
-									{/* The full-design-system view: the landing-page cards grid, themed live. */}
-									<ListBoxItem id="showcase" textValue="Showcase">
-										<span className="flex items-center gap-2">
-											<LayoutGridIcon className="size-4 text-fg-muted" />
-											<span className="truncate">Showcase</span>
-										</span>
-									</ListBoxItem>
-									{componentsData
-										.flatMap((category) => category.components)
-										.sort((a, b) => a.name.localeCompare(b.name))
-										.map((comp) => (
-											<ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name}>
-												<span className="truncate">{comp.name}</span>
-											</ListBoxItem>
-										))}
+									<ListBoxSection>
+										<ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
+										{/* Composed, real-world UI (the landing cards grid), themed live. */}
+										<ListBoxItem id="cards" textValue="Cards">
+											<span className="truncate">Cards</span>
+										</ListBoxItem>
+									</ListBoxSection>
+									<ListBoxSection>
+										<ListBoxSectionHeader>Components</ListBoxSectionHeader>
+										{componentsData
+											.flatMap((category) => category.components)
+											.sort((a, b) => a.name.localeCompare(b.name))
+											.map((comp) => (
+												<ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name}>
+													<span className="truncate">{comp.name}</span>
+												</ListBoxItem>
+											))}
+									</ListBoxSection>
 								</ListBox>
 							</Command>
 						</Popover>

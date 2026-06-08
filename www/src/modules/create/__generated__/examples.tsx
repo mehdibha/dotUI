@@ -69,6 +69,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 export const GroupExamplesIndex: Record<string, () => Promise<{ default: React.ComponentType }>> = {
 	buttons: () => import("@/modules/create/preview/group-examples/buttons"),
 	calendar: () => import("@/modules/create/preview/group-examples/calendar"),
+	cards: () => import("@/modules/create/preview/group-examples/cards"),
 	"color-swatches": () => import("@/modules/create/preview/group-examples/color-swatches"),
 	containers: () => import("@/modules/create/preview/group-examples/containers"),
 	disclosure: () => import("@/modules/create/preview/group-examples/disclosure"),
@@ -81,7 +82,6 @@ export const GroupExamplesIndex: Record<string, () => Promise<{ default: React.C
 	pickers: () => import("@/modules/create/preview/group-examples/pickers"),
 	progress: () => import("@/modules/create/preview/group-examples/progress"),
 	"selection-controls": () => import("@/modules/create/preview/group-examples/selection-controls"),
-	showcase: () => import("@/modules/create/preview/group-examples/showcase"),
 	sliders: () => import("@/modules/create/preview/group-examples/sliders"),
 	tags: () => import("@/modules/create/preview/group-examples/tags"),
 	typography: () => import("@/modules/create/preview/group-examples/typography"),
