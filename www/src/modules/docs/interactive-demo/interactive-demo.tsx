@@ -6,7 +6,6 @@ import { ChevronDownIcon, ChevronUpIcon, Columns2Icon, Rows2Icon } from "lucide-
 import { CodeBlock } from "@/modules/docs/code-block";
 import { renderCode } from "@/modules/docs/codegen/code-template";
 import { DynamicPre } from "@/modules/docs/dynamic-pre";
-import { useIsMobile } from "@/registry/hooks/use-mobile";
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
 import { Card, CardContent } from "@/registry/ui/card";
@@ -60,12 +59,15 @@ export function InteractiveDemo({
 	const [layout, setLayout] = useState<"horizontal" | "vertical">(layoutProp);
 	const [isExpanded, setIsExpanded] = useState(false);
 
-	// A side column doesn't fit on small screens — there the controls always drop
-	// beneath the preview, regardless of the chosen/toggled layout.
-	const isMobile = useIsMobile();
-	const effectiveLayout = isMobile ? "vertical" : layout;
-	const isRight = effectiveLayout === "horizontal";
-	const controlListClass = isRight ? "flex-col gap-4" : "flex-row flex-wrap items-start gap-x-6 gap-y-4";
+	// "horizontal" puts the controls in a column to the right of the preview at md+; below md
+	// (and for "vertical") they sit in a wrapping row beneath it. The small↔large switch is pure
+	// CSS via md: variants — no JS media query — so SSR and the first client render match exactly
+	// (no hydration mismatch, no flash). A side column wouldn't fit on small screens anyway.
+	const horizontal = layout === "horizontal";
+	const controlListClass = cn(
+		"flex-row flex-wrap items-start gap-x-6 gap-y-4",
+		horizontal && "md:flex-col md:flex-nowrap",
+	);
 
 	// Initialize values from control defaults
 	const initialValues = useMemo(() => {
@@ -188,29 +190,30 @@ export function InteractiveDemo({
 
 	return (
 		<div className={cn("overflow-hidden rounded-lg border", className)}>
-			<div className={cn("flex flex-col", isRight && "flex-row")}>
+			<div className={cn("flex flex-col", horizontal && "md:flex-row")}>
 				{/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
 				<div className="flex min-h-56 flex-1 items-center justify-center p-10">{previewElement}</div>
 
-				{/* Controls — a column beside the preview (right) or a row beneath it (bottom; always so on small screens) */}
+				{/* Controls — a wrapping row beneath the preview (also on small screens), or a column to the
+				    right at md+ when horizontal. No divider: the bottom row flows straight off the preview;
+				    the card brings its own border. */}
 				<div
 					className={cn(
 						"**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
 						"p-5",
-						isRight && (controlsVariant === "card" ? "w-72 shrink-0" : "w-64 shrink-0"),
-						// Inline controls lean on a divider for separation; a card brings its own border.
-						controlsVariant === "inline" && !isRight && "border-t",
+						horizontal && "md:shrink-0",
+						horizontal && (controlsVariant === "card" ? "md:w-60" : "md:w-64"),
 					)}
 				>
 					{controlsVariant === "card" ? (
 						<Card size="sm">
 							<CardContent className={cn("flex", controlListClass)}>
-								<Controls controls={controls} values={values} onChange={handleChange} layout={effectiveLayout} />
+								<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
 							</CardContent>
 						</Card>
 					) : (
 						<div className={cn("flex", controlListClass)}>
-							<Controls controls={controls} values={values} onChange={handleChange} layout={effectiveLayout} />
+							<Controls controls={controls} values={values} onChange={handleChange} layout={layout} />
 						</div>
 					)}
 				</div>
