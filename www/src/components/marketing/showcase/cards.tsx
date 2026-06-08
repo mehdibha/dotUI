@@ -91,8 +91,17 @@ export function Cards() {
 			    grow to fill whatever horizontal space the centered, max-width grid leaves
 			    (a thin peek on small screens, wide rails on large ones). The `gap-4` between
 			    the grid and rails matches the gap between cards. The bottom is masked so the
-			    whole showcase — real cards and skeletons alike — fades into the next section. */}
-			<div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_520px),transparent_calc(100%_-_180px))]">
+			    whole showcase — real cards and skeletons alike — fades into the next section.
+			    The fade has to swallow the ragged column bottoms, whose spread tracks the
+			    column count: the 3-column layout (everything below `xl`) is much taller and
+			    raggier, so it needs a deeper, taller fade than the shorter 4-column `xl` grid
+			    — hence the `--mask-*` distances-from-bottom shrink at `xl`. `--mask-solid` is
+			    where content is still fully opaque; `--mask-clear` where it's fully gone.
+			    `--mask-clear` is deliberately set *above* where the next section's "Built on
+			    modern tools" row is pulled up to (its `-mt-*` in `index.tsx`), so that row sits
+			    on solid-dark background — no faint card fragments behind it — and the cards only
+			    start fading back in above it. */}
+			<div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] [--mask-clear:420px] [--mask-solid:980px] xl:[--mask-clear:370px] xl:[--mask-solid:880px]">
 				<SkeletonRail side="left" />
 				{/* Density is the only context-scoped knob, so the provider wraps just the
 				    real grid; color + radius apply globally regardless of where it sits. */}

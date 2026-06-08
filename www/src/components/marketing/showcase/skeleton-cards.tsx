@@ -121,11 +121,21 @@ function TextCard() {
 	);
 }
 
+// One 5-card ordering per rail column (two columns per rail).
+const COL_1 = [StatCard, ListCard, TextCard, FormCard, ToggleCard];
+const COL_2 = [ToggleCard, FormCard, StatCard, TextCard, ListCard];
+const COL_3 = [ListCard, TextCard, ToggleCard, StatCard, FormCard];
+const COL_4 = [FormCard, StatCard, ListCard, ToggleCard, TextCard];
+
+// Each column repeats its ordering ×3 (~15 cards, ~3000px) so it overflows the
+// *tallest* real grid — the 3-column layout below `xl`, ~2336px — and the rails
+// reach the bottom fade on every screen instead of stopping short partway down. The
+// surplus is clipped by the rail's `overflow-hidden`.
 const RAIL_COLUMNS = [
-	[StatCard, ListCard, TextCard, FormCard, ToggleCard],
-	[ToggleCard, FormCard, StatCard, TextCard, ListCard],
-	[ListCard, TextCard, ToggleCard, StatCard, FormCard],
-	[FormCard, StatCard, ListCard, ToggleCard, TextCard],
+	[...COL_1, ...COL_1, ...COL_1],
+	[...COL_2, ...COL_2, ...COL_2],
+	[...COL_3, ...COL_3, ...COL_3],
+	[...COL_4, ...COL_4, ...COL_4],
 ] as const;
 
 function RailColumn({ cards }: { cards: readonly (() => React.ReactElement)[] }) {
@@ -143,23 +153,30 @@ export function SkeletonRail({ side }: { side: "left" | "right" }) {
 		side === "left" ? ([RAIL_COLUMNS[0], RAIL_COLUMNS[1]] as const) : ([RAIL_COLUMNS[2], RAIL_COLUMNS[3]] as const);
 	return (
 		// A flex item that grows to fill the gutter beside the real grid on large
-		// screens. Its fixed-width content overflows and is clipped, so it peeks in
-		// from the edge and reveals more as the viewport widens. Hidden below `lg`,
-		// where the real grid bleeds off the edges instead. A horizontal mask fades
-		// each rail toward the outer screen edge so it reads progressively darker. The
-		// content hugs the inner edge (next to the real grid) via justify-*.
+		// screens. Hidden below `lg`, where the real grid bleeds off the edges instead.
+		// The card content is absolutely positioned so it can run taller than the real
+		// grid — reaching all the way down to the bottom fade on every screen — *without*
+		// dictating the row's height: that stays driven by the real grid, so the shorter
+		// 4-column `xl` layout keeps its height and the rails are simply clipped lower by
+		// `overflow-hidden`. The content hugs the inner edge (next to the real grid) and
+		// overflows toward the screen edge, where a horizontal mask fades it darker.
 		<Skeleton
 			isLoading
 			aria-hidden="true"
 			className={cn(
-				"hidden shrink-0 grow basis-(--rail-peek) overflow-hidden lg:flex",
+				"relative hidden shrink-0 grow basis-(--rail-peek) overflow-hidden lg:block",
 				"[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]",
 				side === "left"
-					? "justify-end [mask-image:linear-gradient(to_left,black_25%,transparent)]"
-					: "justify-start [mask-image:linear-gradient(to_right,black_25%,transparent)]",
+					? "[mask-image:linear-gradient(to_left,black_25%,transparent)]"
+					: "[mask-image:linear-gradient(to_right,black_25%,transparent)]",
 			)}
 		>
-			<div className="grid w-(--rail-w) shrink-0 grid-cols-2 gap-(--rail-gap) opacity-45">
+			<div
+				className={cn(
+					"absolute top-0 grid w-(--rail-w) grid-cols-2 gap-(--rail-gap) opacity-45",
+					side === "left" ? "right-0" : "left-0",
+				)}
+			>
 				<RailColumn cards={colA} />
 				<RailColumn cards={colB} />
 			</div>
