@@ -16,7 +16,7 @@ export function Cards() {
 			    wider than the viewport (`max(52rem, 120vw)`) and centered, so the middle
 			    column reads normally while the outer two bleed off both edges and get
 			    darkened by the overlay below. */}
-			<CardsGrid className="relative z-20 w-[max(52rem,120vw)] max-w-none shrink-0 lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink" />
+			<CardsGrid className="relative z-20 w-[max(52rem,120vw)] max-w-none shrink-0 lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink xl:columns-4" />
 			<SkeletonRail side="right" />
 			{/* Below `lg` (no rails) the real grid bleeds off both edges; this overlay
 			    fades those bleeding columns into the page background so they read as

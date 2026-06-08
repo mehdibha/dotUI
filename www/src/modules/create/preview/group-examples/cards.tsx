@@ -9,7 +9,7 @@ import { CardsGrid } from "@/components/marketing/showcase/cards-grid";
 export default function CardsExamples() {
 	return (
 		<div className="w-full p-4 sm:p-6">
-			<CardsGrid className="mx-auto max-w-6xl columns-1 sm:columns-2 lg:columns-3 xl:columns-3" />
+			<CardsGrid className="mx-auto max-w-6xl columns-1 sm:columns-2 lg:columns-3" />
 		</div>
 	);
 }

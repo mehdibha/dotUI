@@ -30,14 +30,14 @@ function Cell({ children }: { children: React.ReactNode }) {
 
 // The masonry grid of showcase cards — the single source of truth for which cards
 // render and in what order. Shared by the landing page (`cards.tsx` wraps it with
-// the skeleton rails and edge fade) and the /create preview's "Showcase" view, so
-// both render the exact same cards. Only the column count and width vary by
-// context: they come from `className`, which `cn` merges over the defaults below
-// (the landing's 3-up, 4-up-at-xl masonry). The cells, gap, and card order stay
-// identical everywhere.
+// the skeleton rails and edge fade) and the /create preview's "Cards" view, so
+// both render the exact same cards. The cells, gap, and card order stay identical
+// everywhere; only the responsive column count and width vary by context, so each
+// caller passes those via `className` (the landing bumps to 4-up at xl, the
+// preview narrows to 1–3-up), merged by `cn` over the 3-up default below.
 export function CardsGrid({ className }: { className?: string }) {
 	return (
-		<div className={cn("columns-3 gap-4 xl:columns-4", className)}>
+		<div className={cn("columns-3 gap-4", className)}>
 			<Cell>
 				<Booking />
 			</Cell>
