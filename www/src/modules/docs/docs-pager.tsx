@@ -13,7 +13,6 @@ type Neighbours = {
 
 export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 	const { previous, next } = neighbours;
-	const hrefFor = (path: string) => `/docs/${path}`;
 
 	// When there is no neighbour we render a plain disabled Button rather than a hrefless
 	// LinkButton. A LinkButton without an href renders a non-pressable <span>, and wrapping that
@@ -22,7 +21,12 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
 	const renderNeighbour = (neighbour: Neighbour | undefined, icon: React.ReactNode, label: string) =>
 		neighbour ? (
 			<Tooltip>
-				<LinkButton aria-label={label} size="sm" isIconOnly href={hrefFor(neighbour.path)}>
+				<LinkButton
+					aria-label={label}
+					size="sm"
+					isIconOnly
+					href={{ to: "/docs/$", params: { _splat: neighbour.path } }}
+				>
 					{icon}
 				</LinkButton>
 				<TooltipContent>{neighbour.name}</TooltipContent>
