@@ -50,7 +50,7 @@ export function SearchCommand({ items, keyboardShortcut, children, onAction }: S
 						{(
 							[
 								{ label: "Docs", href: "/docs" },
-								{ label: "Components", href: "/docs/components/button" },
+								{ label: "Components", href: "/docs/components" },
 							] as const
 						).map((item) => (
 							<MenuItem key={item.href} href={item.href} textValue={item.label}>

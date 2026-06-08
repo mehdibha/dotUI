@@ -59,7 +59,7 @@ export function Header({ className, items = [] }: HeaderProps) {
 				<Logo className="max-md:hidden" />
 				<nav className="flex items-center gap-3 text-sm max-md:hidden">
 					{navItems.map((item) => (
-						<RouterLink key={item.name} {...item.href} className="px-0.5 text-fg-muted transition-colors hover:text-fg">
+						<RouterLink key={item.name} to={item.to} className="px-0.5 text-fg-muted transition-colors hover:text-fg">
 							{item.name}
 						</RouterLink>
 					))}

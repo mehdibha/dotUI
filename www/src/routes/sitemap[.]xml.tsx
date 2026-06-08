@@ -16,7 +16,9 @@ import { docsSource, legalSource } from "@/lib/source";
 // emit malformed XML — cheap insurance.
 const escapeXml = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-const STATIC_PATHS = ["/", "/components", "/create", "/playground"];
+// /docs/components and every component page come from the docs source below, so
+// they are not listed here. /components is a permanent redirect, so it is omitted.
+const STATIC_PATHS = ["/", "/create", "/playground"];
 
 export const Route = createFileRoute("/sitemap.xml")({
 	server: {

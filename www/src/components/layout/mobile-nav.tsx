@@ -42,7 +42,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 										Home
 									</MobileLink>
 									{navItems.map((item) => (
-										<MobileLink key={item.name} to={item.href.to ?? "/"} onOpenChange={close}>
+										<MobileLink key={item.name} to={item.to} onOpenChange={close}>
 											{item.name}
 										</MobileLink>
 									))}
