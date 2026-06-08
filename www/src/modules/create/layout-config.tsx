@@ -11,9 +11,9 @@ export function RadiusConfig({ value, onChange }: { value: string; onChange: (va
 	const parsed = Number.parseFloat(value || DEFAULT_RADIUS_FACTOR);
 	const numeric = Number.isFinite(parsed) ? parsed : 1;
 	return (
-		<div className="flex flex-col gap-3">
+		<div className="flex flex-col gap-1.5">
 			<div className="flex items-center justify-between">
-				<h3 className="text-sm font-medium text-fg">Radius</h3>
+				<span className="text-xs font-medium text-fg-muted">Radius</span>
 				<span className="text-xs font-medium text-fg-muted tabular-nums">{numeric.toFixed(2)}x</span>
 			</div>
 			<Slider

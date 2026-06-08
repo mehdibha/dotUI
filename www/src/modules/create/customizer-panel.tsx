@@ -209,9 +209,9 @@ export function CustomizerPanel() {
 					transition={stackTransition}
 					className="absolute inset-0 scrollbar-none overflow-y-auto"
 				>
-					<div className="flex flex-col divide-y">
+					<div className="flex flex-col gap-6 p-3">
 						{/* Colors — inline accent + base, full recipe behind Customize */}
-						<section className="flex flex-col gap-3 px-3 py-4">
+						<section className="flex flex-col gap-2">
 							<CategoryHeader title="Colors" onCustomize={() => push("colors")} />
 							<div className="grid grid-cols-2 gap-2.5">
 								<InlineField label="Accent">
@@ -232,36 +232,30 @@ export function CustomizerPanel() {
 						</section>
 
 						{/* Typography — inline fonts, fuller panel behind Customize */}
-						<section className="flex flex-col gap-3 px-3 py-4">
+						<section className="flex flex-col gap-2">
 							<CategoryHeader title="Typography" onCustomize={() => push("typography")} />
 							<TypographyControls />
 						</section>
 
-						{/* Icons */}
-						<section className="flex flex-col gap-3 px-3 py-4">
-							<CategoryHeader title="Icons" />
+						{/* Single-control knobs — labeled like fields */}
+						<InlineField label="Icon library">
 							<IconographyControls />
-						</section>
+						</InlineField>
 
-						{/* Radius (RadiusConfig renders its own title + live value) */}
-						<section className="px-3 py-4">
-							<RadiusConfig value={radiusFactor} onChange={(v) => setToken(RADIUS_FACTOR_VAR, v)} />
-						</section>
+						<RadiusConfig value={radiusFactor} onChange={(v) => setToken(RADIUS_FACTOR_VAR, v)} />
 
-						{/* Density */}
-						<section className="flex flex-col gap-3 px-3 py-4">
-							<CategoryHeader title="Density" />
+						<InlineField label="Density">
 							<DensityConfig value={designSystem.density} onChange={setDensity} />
-						</section>
+						</InlineField>
 
 						{/* Cursor */}
-						<section className="flex flex-col gap-3 px-3 py-4">
+						<section className="flex flex-col gap-2">
 							<CategoryHeader title="Cursor" />
 							<CursorConfig interactive={cursorInteractive} disabled={cursorDisabled} onChange={setToken} />
 						</section>
 
 						{/* Components — clickable category cards */}
-						<section className="flex flex-col gap-3 px-3 py-4">
+						<section className="flex flex-col gap-2.5">
 							<CategoryHeader title="Components" />
 							<GroupCards onSelectGroup={(group) => selectGroup(group)} />
 						</section>

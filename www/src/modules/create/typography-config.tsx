@@ -31,7 +31,7 @@ const FontPicker = ({ label }: { label: string }) => {
 	return (
 		<Select className="w-full" defaultSelectedKey="Geist">
 			<Label className="text-xs font-medium text-fg-muted">{label}</Label>
-			<SelectTrigger className="w-full" />
+			<SelectTrigger size="sm" className="w-full" />
 			<Popover>
 				<Command>
 					<SearchField autoFocus className="w-full p-2">

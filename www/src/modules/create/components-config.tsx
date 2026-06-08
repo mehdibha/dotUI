@@ -1,28 +1,6 @@
 import { useMemo } from "react";
 
-import {
-	BoxIcon,
-	CalendarDaysIcon,
-	ChevronDownIcon,
-	ChevronsDownUpIcon,
-	ChevronsUpDownIcon,
-	CompassIcon,
-	LayoutGridIcon,
-	ListIcon,
-	LoaderCircleIcon,
-	type LucideIcon,
-	MessageSquareIcon,
-	MousePointerClickIcon,
-	PaletteIcon,
-	SlidersHorizontalIcon,
-	SquareCheckIcon,
-	SquareStackIcon,
-	TagsIcon,
-	TextCursorInputIcon,
-	TypeIcon,
-	UploadIcon,
-} from "lucide-react";
-import * as ButtonPrimitives from "react-aria-components/Button";
+import { ChevronDownIcon } from "lucide-react";
 
 import { BLUR_OPTIONS, CURSOR_OPTIONS, OPACITY_OPTIONS, RADIUS_OPTIONS, SHADOW_OPTIONS } from "@/publisher/token-map";
 import { colorTokenNames } from "@/registry/theme";
@@ -35,6 +13,8 @@ import { Select, SelectValue } from "@/registry/ui/select";
 import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider";
 
 import type { ParamDef, RegistryItem, ScalarParamDef, TokenType } from "@/registry/types";
+
+import { getGroupPreview } from "./group-previews";
 
 /* ----------------------------- Data helpers ----------------------------- */
 
@@ -103,34 +83,15 @@ function orderedGroups(): string[] {
 	return [...ordered, ...rest];
 }
 
-/** A representative glyph per category, shown as the card illustration. */
-const GROUP_ICONS: Record<string, LucideIcon> = {
-	buttons: MousePointerClickIcon,
-	inputs: TextCursorInputIcon,
-	"selection-controls": SquareCheckIcon,
-	pickers: ChevronsUpDownIcon,
-	sliders: SlidersHorizontalIcon,
-	"menus-lists": ListIcon,
-	navigation: CompassIcon,
-	overlays: SquareStackIcon,
-	disclosure: ChevronsDownUpIcon,
-	containers: LayoutGridIcon,
-	feedback: MessageSquareIcon,
-	progress: LoaderCircleIcon,
-	tags: TagsIcon,
-	"color-swatches": PaletteIcon,
-	calendar: CalendarDaysIcon,
-	"drop-zone": UploadIcon,
-	typography: TypeIcon,
-};
-
 interface GroupCardsProps {
 	onSelectGroup: (groupSlug: string) => void;
 }
 
 /**
- * Grid of clickable category cards (configurable groups only). Each carries a category glyph
- * as illustration; clicking one opens a config page with the params for every component in it.
+ * Single-column category cards (configurable groups only). Each shows the category label and a
+ * live, inert preview of a representative component; clicking one opens the group's config page.
+ * The card is a div (not a button) so the real interactive demos can nest inside it legally; the
+ * preview is made non-interactive with `inert` + pointer-events-none so clicks reach the card.
  */
 export function GroupCards({ onSelectGroup }: GroupCardsProps) {
 	const groups = useMemo(
@@ -139,20 +100,31 @@ export function GroupCards({ onSelectGroup }: GroupCardsProps) {
 	);
 
 	return (
-		<div className="grid grid-cols-2 gap-2">
+		<div className="flex flex-col gap-2">
 			{groups.map((group) => {
-				const Icon = GROUP_ICONS[group] ?? BoxIcon;
+				const preview = getGroupPreview(group);
 				return (
-					<ButtonPrimitives.Button
+					<div
 						key={group}
-						onPress={() => onSelectGroup(group)}
-						className="group/card flex flex-col items-start gap-3 rounded-lg border bg-neutral p-3 text-left transition-colors outline-none hover:bg-neutral-hover focus-visible:ring-2 focus-visible:ring-border-focus"
+						role="button"
+						tabIndex={0}
+						aria-label={`Customize ${getGroupDisplayName(group)}`}
+						onClick={() => onSelectGroup(group)}
+						onKeyDown={(event) => {
+							if (event.key === "Enter" || event.key === " ") {
+								event.preventDefault();
+								onSelectGroup(group);
+							}
+						}}
+						className="flex cursor-pointer flex-col gap-2.5 rounded-lg border bg-neutral p-3 transition-colors outline-none hover:bg-neutral-hover focus-visible:ring-2 focus-visible:ring-border-focus"
 					>
-						<span className="flex size-9 items-center justify-center rounded-md border bg-bg text-fg-muted transition-colors group-hover/card:text-fg">
-							<Icon className="size-4.5" />
-						</span>
 						<span className="text-sm font-medium">{getGroupDisplayName(group)}</span>
-					</ButtonPrimitives.Button>
+						{preview && (
+							<div inert className="pointer-events-none max-h-36 overflow-hidden">
+								{preview}
+							</div>
+						)}
+					</div>
 				);
 			})}
 		</div>
