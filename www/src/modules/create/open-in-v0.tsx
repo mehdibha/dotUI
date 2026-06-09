@@ -14,6 +14,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { V0Icon } from "@/components/icons/v0";
+
 import { useDesignSystem } from "./preset";
 import { encodePreset } from "./preset/codec";
 
@@ -26,18 +28,6 @@ function getRegistryHost(): string {
 		return DEFAULT_REGISTRY_HOST;
 	}
 	return origin;
-}
-
-function V0Logo() {
-	return (
-		<svg viewBox="0 0 40 20" fill="currentColor" aria-hidden className="h-3.5 w-auto">
-			<path d="M23.94 9.06v6.51c0 .47.38.85.85.85h.94v3.08h-1.27a3.46 3.46 0 0 1-3.46-3.46c-1.05 1.2-2.6 1.96-4.32 1.96a5.74 5.74 0 1 1 5.74-5.74l-.01.05h.01v-3.2h1.57zm-7.26 9.07a2.66 2.66 0 1 0 0-5.32 2.66 2.66 0 0 0 0 5.32z" />
-			<path
-				d="M8.06 5.73 3.3 14.4h9.52L8.06 5.73zm0-4.6 8.06 14.7H0L8.06 1.13z"
-				transform="translate(0 1.5) scale(.78)"
-			/>
-		</svg>
-	);
 }
 
 export function OpenInV0() {
@@ -61,7 +51,9 @@ export function OpenInV0() {
 			rel="noopener noreferrer"
 			className="flex h-9 w-full items-center justify-center gap-2 rounded-md bg-primary text-sm font-medium text-fg-on-primary transition-colors hover:bg-primary-hover"
 		>
-			Open in <V0Logo />
+			{/* h-3 (not h-3.5): V0Icon's viewBox is cropped to the glyph, so it renders
+			    optically larger than the padded legacy lockup it replaced. */}
+			Open in <V0Icon className="h-3 w-auto" />
 		</a>
 	);
 }

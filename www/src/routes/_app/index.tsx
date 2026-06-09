@@ -1,15 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { AdobeIcon } from "@/components/icons/adobe";
+import { BaseUiIcon } from "@/components/icons/base-ui";
+import { BoltIcon } from "@/components/icons/bolt";
+import { LovableIcon } from "@/components/icons/lovable";
+import { ReactAriaIcon } from "@/components/icons/react-aria";
 import { ReactJsIcon } from "@/components/icons/react-js";
 import { ShadcnIcon } from "@/components/icons/shadcn";
 import { TailwindWordmark } from "@/components/icons/tailwind-wordmark";
 import { TypeScriptIcon } from "@/components/icons/typescript";
+import { V0Icon } from "@/components/icons/v0";
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
+import { AnimatedHeadline, type RotatingTextItem } from "@/components/marketing/rotating-text";
 import Cards from "@/components/marketing/showcase/cards";
 import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
+
+// dotUI's brand font (the "dotUI" wordmark uses Josefin Sans), loaded locally. Weight,
+// letter-spacing and size come from the original headline classes on the <h1>.
+const HEADLINE_STYLE = { fontFamily: "var(--font-josefin)" };
+
+// Swappable destinations in the hero headline — "ship it to ___". "to" is a static
+// prefix, so only the destination swaps. v0 / bolt.new / Lovable are their official
+// brand wordmarks (logo-only); the rest are plain text. Everything inherits the
+// headline color (white); the Lovable heart keeps its brand gradient.
+const EXPORT_TARGETS: RotatingTextItem[] = [
+	{ id: "anywhere", text: "anywhere", segments: [{ text: "anywhere", className: "font-bold italic" }] },
+	{ id: "v0", text: "v0", segments: [{ icon: <V0Icon className="h-[0.58em] w-auto" /> }] },
+	{
+		id: "bolt",
+		text: "bolt.new",
+		segments: [{ icon: <BoltIcon className="h-[0.72em] w-auto translate-y-[0.09em]" /> }],
+	},
+	{ id: "lovable", text: "Lovable", segments: [{ icon: <LovableIcon className="h-[0.72em] w-auto" /> }] },
+	{ id: "codebase", text: "your codebase", segments: [{ text: "your codebase", className: "font-bold italic" }] },
+];
 
 export const Route = createFileRoute("/_app/")({
 	head: () => ({
@@ -24,31 +49,43 @@ function HomePage() {
 		<div className="min-h-[calc(100vh-var(--header-height))]">
 			<main>
 				{/* Hero section */}
-				<section className="container flex flex-col pt-6 sm:pt-10 md:pt-18">
-					<div className="flex flex-col items-center gap-2 text-center md:gap-3">
+				<section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
+					<div className="flex flex-col items-center gap-3 text-center md:gap-4">
 						<Announcement />
-						<h1 className="text-3xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
-							Build your design system with a <span className="font-bold italic">unique</span> look.
+						<h1
+							aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your own codebase, or anywhere."
+							className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
+						>
+							<span aria-hidden="true">
+								<AnimatedHeadline
+									lead="Build your design system. Ship it to"
+									items={EXPORT_TARGETS}
+									trailing="."
+									wordStyle={HEADLINE_STYLE}
+								/>
+							</span>
 						</h1>
 						<p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
-							Beautiful components, accessibility out of the box, composition, and more, all powered by{" "}
-							<AdobeIcon className="inline-flex size-4" />{" "}
-							<span className="font-medium text-fg">react-aria-components</span> and{" "}
-							<ShadcnIcon className="inline-flex size-5" /> <span className="font-medium text-fg">shadcn&nbsp;CLI</span>
-							.
+							Beautiful components, accessibility out of the box, composition, and more.
+							<br />
+							Powered by <ReactAriaIcon className="inline-flex h-[0.85em] w-auto translate-y-[-0.08em]" />{" "}
+							<span className="font-medium text-fg">React Aria</span> and{" "}
+							<BaseUiIcon className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" />{" "}
+							<span className="font-medium text-fg">Base&nbsp;UI</span>.
+							{/* Install with <ShadcnIcon  className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" /> Shadcn CLI */}
 						</p>
-						<div className="flex w-full flex-col gap-2 pt-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-							<LinkButton href="/docs" variant="primary" size="lg">
-								Get started
+						<div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+							<LinkButton href="/create" variant="primary" size="lg">
+								Launch the editor
 							</LinkButton>
 							<LinkButton href="/docs/components" variant="default" size="lg">
-								Explore components
+								View components
 							</LinkButton>
 						</div>
 					</div>
 				</section>
 
-				<section className="mt-24">
+				<section className="mt-16">
 					<Cards />
 				</section>
 
@@ -76,9 +113,14 @@ function HomePage() {
 									href: "https://react.dev",
 								},
 								{
-									label: "react-aria-components",
-									icon: <AdobeIcon className="size-7 sm:size-9" />,
+									label: "React Aria",
+									icon: <ReactAriaIcon className="size-7 sm:size-9" />,
 									href: "https://react-spectrum.adobe.com/react-aria/index.html",
+								},
+								{
+									label: "Base UI",
+									icon: <BaseUiIcon className="h-7 w-auto sm:h-9" />,
+									href: "https://base-ui.com",
 								},
 								{
 									label: "TypeScript 5",
@@ -96,7 +138,7 @@ function HomePage() {
 										target="_blank"
 										rel="noopener noreferrer"
 										aria-label={label}
-										className="flex items-center justify-center opacity-60 grayscale-80 transition-opacity hover:opacity-100 hover:grayscale-0"
+										className="flex items-center justify-center opacity-60 grayscale-100 transition-opacity hover:opacity-100 hover:grayscale-0"
 										href={href}
 									>
 										{icon}

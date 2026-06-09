@@ -20,11 +20,13 @@
  *
  * Two deliberate substitutions keep the bundle self-contained — i.e. installable
  * in a vanilla Next.js + shadcn project with only published npm deps:
- *   - `@/registry/theme` → a tiny stub. The real barrel pulls in the unpublished
- *     `@dotui/colors` workspace package. The only consumer in the closure is the
- *     design-system provider's generative-color path, which the bundle never
- *     uses (colors travel as resolved CSS vars in globals.css). Stubbing it cuts
- *     the `@dotui/colors` cord with zero edits to the provider.
+ *   - `@/registry/theme` → a partial stub. The real barrel pulls in the
+ *     unpublished `@dotui/colors` workspace package. The semantic layer
+ *     (`DEFAULT_SEMANTICS` + `emitCss`) ships REAL — the provider's scoped mode
+ *     calls it at runtime — and the default color recipe is serialized in with
+ *     its `@dotui/colors` seeds resolved; only the generative ramp path stays
+ *     inert (colors travel as resolved CSS vars in globals.css), cutting the
+ *     `@dotui/colors` cord with zero edits to the provider.
  *   - `@/registry/types` → a self-contained loose copy. The real file imports
  *     types from the `shadcn` CLI package; the stub drops that dependency. Types
  *     are erased at runtime, so this only matters if the consumer type-checks.
@@ -37,6 +39,8 @@ import { existsSync, promises as fs, statSync } from "node:fs";
 import path from "node:path";
 
 import { format } from "oxfmt";
+
+import { DEFAULT_COLOR_CONFIG, GENERATIVE_ALGORITHMS } from "../src/registry/theme/color-config";
 
 // `process.cwd()` is `www/` (the script is run from there via pnpm).
 const SRC = path.join(process.cwd(), "src");
@@ -249,8 +253,8 @@ async function buildShowcaseBundle(): Promise<void> {
 		const content = override ?? transformContent(srcRel, raw);
 		sourceFiles.set(srcRel, content);
 
-		if (override) continue; // stubs are leaves
-
+		// Overrides are scanned like any file: the theme stub re-exports the real
+		// ./semantics + ./emit-css, which must enter the closure.
 		for (const spec of extractSpecifiers(content)) {
 			const resolved = resolveSpecifier(spec, srcRel);
 			if (resolved.kind === "npm") {
@@ -366,14 +370,58 @@ export const SHOWCASE_BUNDLE_COMPONENTS: string[] = ${JSON.stringify(componentNa
 function themeStub(): string {
 	return `// Stub of @/registry/theme for the standalone "Open in v0" bundle.
 // The real barrel depends on the unpublished @dotui/colors workspace package.
-// The bundle never uses the generative-color path (colors ship as resolved CSS
-// vars in globals.css), so these are inert — present only to satisfy the import
-// in @/modules/core/styles.
-export type ColorConfig = unknown;
-export function emitPrimitivesCss(): string {
+// What ships real vs inert:
+//   - DEFAULT_SEMANTICS + emitCss are re-exported for REAL (./semantics and
+//     ./emit-css are self-contained): the design-system provider's scoped mode
+//     calls them at runtime to clone the semantic layer onto the preview scope.
+//   - DEFAULT_COLOR_CONFIG is the real recipe, serialized at bundle build time
+//     with its @dotui/colors status seeds resolved to literals.
+//   - The generative ramp path stays inert — colors ship as resolved CSS vars
+//     in globals.css — so emitPrimitivesCss / resolveColorConfig are no-ops and
+//     a scoped accent change keeps the baked palette.
+export { DEFAULT_SEMANTICS } from "./semantics";
+export { emitCss } from "./emit-css";
+
+export const GENERATIVE_ALGORITHMS = ${JSON.stringify(GENERATIVE_ALGORITHMS)} as const;
+export type AlgorithmId = (typeof GENERATIVE_ALGORITHMS)[number];
+
+export interface PaletteSeeds {
+\tneutral: string;
+\taccent: string;
+\tsuccess?: string;
+\twarning?: string;
+\tdanger?: string;
+\tinfo?: string;
+}
+
+export interface ColorKnobs {
+\tchromaMult?: number;
+\tminChroma?: number;
+\thueTorsion?: number;
+\tchromaMode?: "consistent" | "max";
+\tpreserveSeedAt?: string;
+\tformula?: "wcag2" | "apca";
+\tsaturation?: number;
+\tratios?: number[];
+\ttones?: number[];
+}
+
+export interface ColorConfig {
+\talgorithm: AlgorithmId;
+\tsteps?: string[];
+\tseeds: PaletteSeeds;
+\tknobs?: ColorKnobs;
+}
+
+export const DEFAULT_COLOR_CONFIG: ColorConfig = ${JSON.stringify(DEFAULT_COLOR_CONFIG, null, "\t")};
+
+export function emitPrimitivesCss(..._args: unknown[]): string {
 \treturn "";
 }
-export function resolveColorConfig(): { light: Record<string, Record<string, string>>; dark: Record<string, Record<string, string>> } {
+export function resolveColorConfig(..._args: unknown[]): {
+\tlight: Record<string, Record<string, string>>;
+\tdark: Record<string, Record<string, string>>;
+} {
 \treturn { light: {}, dark: {} };
 }
 `;

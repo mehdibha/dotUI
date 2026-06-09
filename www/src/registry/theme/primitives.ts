@@ -145,27 +145,41 @@ export interface EmitPrimitivesOptions {
 	 * ramp overrides would otherwise leave the baked `--on-*` stale (unreadable text-on-color).
 	 */
 	onColors?: boolean;
+	/**
+	 * Selector for the light-mode block (default `:root`). Pass a subtree selector (e.g.
+	 * `[data-dotui-scope="x"]`) to override the primitive ramps on a scope rather than globally
+	 * — see `DesignSystemProvider`'s `scoped` mode. The default `:root` also carries the
+	 * `base/colors.css` banner + `--radius-factor: 1` reset; a custom selector omits both.
+	 */
+	lightSelector?: string;
+	/** Selector for the dark-mode (reversed) block (default `.dark`). */
+	darkSelector?: string;
 }
 
 /** Render resolved ramps as the `base/colors.css` content (`:root` light + `.dark` reversed). */
 export function emitPrimitivesCss(resolved: ResolvedPalettes, options: EmitPrimitivesOptions = {}): string {
+	const { onColors, lightSelector = ":root", darkSelector = ".dark" } = options;
+	const isRoot = lightSelector === ":root";
 	const names = orderedNames(resolved.light);
-	const out: string[] = [
-		"/* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */",
-		"/* Primitive ramps generated from DEFAULT_COLOR_CONFIG (see @/registry/theme). */",
-		"",
-		":root {",
-		"\t--radius-factor: 1;",
-		"",
-	];
+	const out: string[] = [];
+	if (isRoot) {
+		out.push(
+			"/* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */",
+			"/* Primitive ramps generated from DEFAULT_COLOR_CONFIG (see @/registry/theme). */",
+			"",
+		);
+	}
+	out.push(`${lightSelector} {`);
+	// `--radius-factor` belongs to the global reset only; a scope inherits (or overrides) it.
+	if (isRoot) out.push("\t--radius-factor: 1;", "");
 	emitBlock(out, resolved.light, names);
-	if (options.onColors) {
+	if (onColors) {
 		out.push("");
 		emitOnBlock(out, resolved.light, names);
 	}
-	out.push("}", "", ".dark {");
+	out.push("}", "", `${darkSelector} {`);
 	emitBlock(out, resolved.dark, names);
-	if (options.onColors) {
+	if (onColors) {
 		out.push("");
 		emitOnBlock(out, resolved.dark, names);
 	}

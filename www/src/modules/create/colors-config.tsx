@@ -122,7 +122,13 @@ export function ColorsConfig() {
 										    which would shadow the outer value/onChange and make the seed uneditable. */}
 										<div className="flex gap-2">
 											<ColorArea colorSpace="hsb" xChannel="saturation" yChannel="brightness" />
-											<ColorSlider orientation="vertical" colorSpace="hsb" channel="hue" />
+											{/* h-auto self-stretch: match the ColorArea's height at any density/width. */}
+											<ColorSlider
+												orientation="vertical"
+												colorSpace="hsb"
+												channel="hue"
+												className="h-auto self-stretch"
+											/>
 										</div>
 										<ColorField aria-label="Hex" className="w-full">
 											<Input size="sm" className="w-full" />

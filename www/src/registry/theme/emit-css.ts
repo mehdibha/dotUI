@@ -32,17 +32,25 @@ function baseTarget(target: SemanticToken["target"]): SemanticTarget {
 export interface EmitCssOptions {
 	/** Indentation unit (default one tab, matching the repo). */
 	indent?: string;
+	/**
+	 * Wrapping selector for the block (default Tailwind's `@theme`). Pass a concrete selector
+	 * (e.g. `[data-dotui-scope="x"]`) to re-declare the semantic layer on a subtree — the
+	 * authoritative way to scope `--color-*` (mix-based targets can't be reliably read back
+	 * from CSSOM). See `DesignSystemProvider`'s `scoped` mode.
+	 */
+	selector?: string;
 }
 
 /**
- * Emit `vocab` as a single mode-agnostic Tailwind v4 `@theme` block.
+ * Emit `vocab` as a single mode-agnostic declaration block (Tailwind's `@theme` by default).
  *
  * Per-mode targets emit their base (`light`) value here; routing per-mode values
  * into `:root` / `.dark` blocks lands with the resolver (a later phase).
  */
 export function emitCss(vocab: SemanticVocabulary, options: EmitCssOptions = {}): string {
 	const indent = options.indent ?? "\t";
-	const lines: string[] = ["@theme {"];
+	const selector = options.selector ?? "@theme";
+	const lines: string[] = [`${selector} {`];
 	for (const [name, token] of Object.entries(vocab)) {
 		lines.push(`${indent}--${name}: ${resolveTarget(baseTarget(token.target))};`);
 	}

@@ -38,8 +38,12 @@ const ColorEditor = ({
 			<ColorPickerPrimitives.ColorPicker value={value} defaultValue={defaultValue} onChange={onChange}>
 				<div className="flex gap-2">
 					<ColorArea colorSpace="hsb" xChannel="saturation" yChannel="brightness" />
-					<ColorSlider orientation="vertical" colorSpace="hsb" channel="hue" />
-					{showAlphaChannel && <ColorSlider orientation="vertical" colorSpace="hsb" channel="alpha" />}
+					{/* h-auto self-stretch: track the ColorArea's height (aspect-square, density-sized)
+					    rather than the slider's fixed default, so the two stay equal at any density/width. */}
+					<ColorSlider orientation="vertical" colorSpace="hsb" channel="hue" className="h-auto self-stretch" />
+					{showAlphaChannel && (
+						<ColorSlider orientation="vertical" colorSpace="hsb" channel="alpha" className="h-auto self-stretch" />
+					)}
 				</div>
 				<div className={cn("flex flex-col gap-2", colorFormat === "hex" && "flex-row")}>
 					{showFormatSelector && (

@@ -1,12 +1,14 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 
+import { UNSAFE_PortalProvider } from "react-aria/PortalProvider";
 import { tv } from "tailwind-variants";
 
 import type { ClassValue, TVReturnType, VariantProps } from "tailwind-variants";
 
-import { emitPrimitivesCss, resolveColorConfig } from "@/registry/theme";
+import { DEFAULT_SEMANTICS, emitCss, emitPrimitivesCss, resolveColorConfig } from "@/registry/theme";
 
 import type { ColorConfig } from "@/registry/theme";
 import type { Density, EnumParamDef, ParamDef, RegistryItem } from "@/registry/types";
@@ -50,11 +52,137 @@ function resolveCssValue(value: string): string {
 	return value.startsWith("--") ? `var(${value})` : value;
 }
 
+/* ----------------------------- Scoped theming ----------------------------- */
+
+/*
+ * Why scoping needs more than overriding `--radius-factor` / the primitive ramps on a wrapper:
+ * the design system declares its whole token closure at `:root` — primitive ramps, the
+ * semantic `--color-*` vocabulary, AND every component surface var (`--card-radius:
+ * var(--radius-lg)`, `--btn-radius`, …). Because those are computed *on `:root`*, they bake in
+ * `:root`'s `--radius-factor` / primitives and inherit down frozen; re-pointing them on a
+ * descendant does nothing (dark mode escapes this only because `.dark` lives on the same
+ * `<html>` element as `:root`). The robust, self-maintaining fix is to clone that closure onto
+ * the scope: re-emit `:root`'s *authored* (var-preserving) declarations under the scope
+ * selector, then layer the scoped primitive overrides on top. Every var — including ones from
+ * components added later — then recomputes from the scope's own tokens.
+ */
+
+// Simple selectors whose declarations make up the document's theme closure. `.dark` is the
+// palette's dark override (it targets `<html>`, the same element as `:root`).
+const ROOT_SELECTOR_TOKENS = new Set([":root", ":host", "html", ":where(:root)"]);
+const DARK_SELECTOR_TOKENS = new Set([".dark", ":root.dark", "html.dark", ":where(.dark)"]);
+
+/** A grouped selector (`:root, :host`) counts if any of its simple parts is in `tokens`. */
+function selectorIn(selectorText: string, tokens: Set<string>): boolean {
+	return selectorText.split(",").some((part) => tokens.has(part.trim()));
+}
+
+interface RootClosure {
+	light: string;
+	dark: string;
+}
+let rootClosureCache: RootClosure | null = null;
+
+// The semantic vocabulary's exact prop names. Excluded from the harvest by KEY, not by the
+// `--color-` prefix: component surface vars share the prefix (`--color-area-radius`,
+// `--color-swatch-picker-item-radius`) and must be harvested like any other token, or they
+// stay frozen at `:root` values inside the scope.
+const SEMANTIC_COLOR_PROPS = new Set(Object.keys(DEFAULT_SEMANTICS).map((name) => `--${name}`));
+
+/**
+ * Harvest, as raw CSS text, the authored custom-property declarations the document defines at
+ * `:root` (light) and `.dark`. Reading from `cssRules` (not `getComputedStyle`) preserves the
+ * `var()` / `calc()` references, so re-emitting the result under a scope selector lets each
+ * token recompute from that scope's primitives + `--radius-factor`. Cached — the closure is
+ * static (scoped mode never writes `:root`); cross-origin sheets are skipped.
+ *
+ * The semantic `--color-*` vocabulary is deliberately EXCLUDED here and emitted from
+ * `DEFAULT_SEMANTICS` instead (see `buildScopedThemeCss`): it's the typed source of truth, and
+ * its targets may be authored as `color-mix()` (the vocabulary supports it), whose CSSOM
+ * read-back is unreliable.
+ */
+function harvestRootClosure(): RootClosure {
+	if (rootClosureCache) return rootClosureCache;
+	if (typeof document === "undefined") return { light: "", dark: "" };
+
+	const light = new Map<string, string>();
+	const dark = new Map<string, string>();
+	const collect = (rule: CSSStyleRule, into: Map<string, string>) => {
+		const { style } = rule;
+		for (let i = 0; i < style.length; i++) {
+			const prop = style.item(i);
+			// Skip: non-custom props; `--radius-factor` (rides inline on the scope element so the
+			// cloned radius scale recomputes there); and the semantic vocabulary (emitted from
+			// DEFAULT_SEMANTICS — see SEMANTIC_COLOR_PROPS for why it's an exact-key match).
+			if (!prop.startsWith("--") || prop === "--radius-factor" || SEMANTIC_COLOR_PROPS.has(prop)) continue;
+			into.set(prop, style.getPropertyValue(prop).trim());
+		}
+	};
+	const walk = (rules: CSSRuleList) => {
+		for (const rule of rules) {
+			const nested = (rule as CSSGroupingRule).cssRules;
+			if (nested?.length) walk(nested); // descend @layer / @media
+			const styleRule = rule as CSSStyleRule;
+			if (!styleRule.selectorText || !styleRule.style?.length) continue;
+			if (selectorIn(styleRule.selectorText, ROOT_SELECTOR_TOKENS)) collect(styleRule, light);
+			else if (selectorIn(styleRule.selectorText, DARK_SELECTOR_TOKENS)) collect(styleRule, dark);
+		}
+	};
+	for (const sheet of document.styleSheets) {
+		try {
+			walk(sheet.cssRules);
+		} catch {
+			// Cross-origin stylesheet — `cssRules` throws; nothing of ours lives there.
+		}
+	}
+
+	const toText = (map: Map<string, string>) => [...map].map(([prop, value]) => `\t${prop}: ${value};`).join("\n");
+	rootClosureCache = { light: toText(light), dark: toText(dark) };
+	return rootClosureCache;
+}
+
+/**
+ * Build the `<style>` text that themes only `selector`'s subtree: clone `:root`'s token closure
+ * onto the scope (primitives + component vars, so they recompute there), add the semantic
+ * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `harvestRootClosure`),
+ * then, when a `color` is given, override the primitive ramps with the scoped palette.
+ * `--radius-factor` + param vars ride inline on the scope element.
+ */
+function buildScopedThemeCss(selector: string, color: ColorConfig | undefined): string {
+	const { light, dark } = harvestRootClosure();
+	const blocks = [
+		`${selector} {\n${light}\n}`,
+		`.dark ${selector} {\n${dark}\n}`,
+		// Mode-agnostic `--color-*` (they reference primitives that flip via the `.dark` block above).
+		emitCss(DEFAULT_SEMANTICS, { selector }),
+	];
+	if (color) {
+		blocks.push(
+			emitPrimitivesCss(resolveColorConfig(color), {
+				onColors: true,
+				lightSelector: selector,
+				darkSelector: `.dark ${selector}`,
+			}),
+		);
+	}
+	return blocks.join("\n");
+}
+
 interface DesignSystemProviderProps {
 	params?: ParamSelections;
 	tokens?: GlobalTokenSelections;
 	density?: Density;
 	color?: ColorConfig;
+	/**
+	 * Scope the theme to this provider's children instead of the whole page. Off by default:
+	 * color + radius land on `:root` (and a global `<style>`), re-theming the entire document —
+	 * the only place semantic tokens re-resolve. On, the provider wraps children in a
+	 * `display: contents` element and clones `:root`'s token closure onto it, so only the
+	 * subtree re-themes and surrounding UI (e.g. the controls driving it) stays put. Overlays
+	 * the children render (which portal to `document.body`) are redirected via
+	 * `UNSAFE_PortalProvider` into a scope-marked container so they're themed too.
+	 */
+	scoped?: boolean;
 	children: React.ReactNode;
 }
 
@@ -63,6 +191,7 @@ function DesignSystemProvider({
 	tokens = {},
 	density = "default",
 	color,
+	scoped = false,
 	children,
 }: DesignSystemProviderProps) {
 	const value = React.useMemo(() => ({ params, tokens, density }), [params, tokens, density]);
@@ -99,11 +228,17 @@ function DesignSystemProvider({
 		return vars;
 	}, [tokens, params]);
 
-	// Apply CSS custom properties to :root so values that reference each
-	// other via calc() + var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor)))
-	// recompute correctly. Setting on a wrapper <div> would freeze them at
-	// declaration time at :root.
+	// A stable, unique scope selector (only used in `scoped` mode). useId is SSR-safe and
+	// constant across renders, so the injected <style> and the wrapper element always agree.
+	const scopeId = React.useId();
+	const scopeSelector = `[data-dotui-scope="${scopeId}"]`;
+
+	// Apply the global token vars to :root so values that reference each other via calc() +
+	// var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
+	// setting them on a wrapper <div> would leave the :root-declared tokens frozen. In `scoped`
+	// mode they ride inline on the wrapper instead, over the cloned closure (see buildScopedThemeCss).
 	React.useLayoutEffect(() => {
+		if (scoped) return;
 		const root = document.documentElement;
 		const applied = Object.entries(cssVars);
 		for (const [key, value] of applied) {
@@ -114,27 +249,68 @@ function DesignSystemProvider({
 				root.style.removeProperty(key);
 			}
 		};
-	}, [cssVars]);
+	}, [cssVars, scoped]);
 
-	// Generative palette: inject the resolved per-mode primitive ramps as a <style>
-	// (the flat-token path above only writes :root; this carries :root + .dark).
-	const colorCss = React.useMemo(
-		() => (color ? emitPrimitivesCss(resolveColorConfig(color), { onColors: true }) : null),
-		[color],
-	);
+	// Warm the closure cache off the critical path: built lazily, the first divergence would pay
+	// the full-document CSSOM walk synchronously inside the render of the user's first drag tick.
+	React.useEffect(() => {
+		if (scoped) harvestRootClosure();
+	}, [scoped]);
+
+	// Generative palette as an injected <style>. Global mode writes :root + .dark (the flat-token
+	// path above only writes :root). Scoped mode clones :root's token closure onto the wrapper
+	// (so semantic + component vars recompute from the scope) and overrides the ramps there — but
+	// only once something actually diverges (a color, or a token like --radius-factor); an
+	// untouched preview injects nothing and just inherits the page defaults.
+	//
+	// `cssVars` themselves ride inline on the scope element and never enter the CSS text, so the
+	// memo depends on whether any override EXISTS (a boolean) rather than the object's identity —
+	// otherwise every radius-slider tick would rebuild a byte-identical stylesheet.
+	const hasTokenOverrides = Object.keys(cssVars).length > 0;
+	const themeCss = React.useMemo(() => {
+		if (scoped) {
+			const diverges = Boolean(color) || hasTokenOverrides;
+			return diverges ? buildScopedThemeCss(scopeSelector, color) : null;
+		}
+		return color ? emitPrimitivesCss(resolveColorConfig(color), { onColors: true }) : null;
+	}, [scoped, scopeSelector, color, hasTokenOverrides]);
 
 	React.useLayoutEffect(() => {
-		if (!colorCss) return;
+		if (!themeCss) return;
 		const styleEl = document.createElement("style");
 		styleEl.setAttribute("data-dotui-color", "");
-		styleEl.textContent = colorCss;
+		styleEl.textContent = themeCss;
 		document.head.appendChild(styleEl);
 		return () => {
 			styleEl.remove();
 		};
-	}, [colorCss]);
+	}, [themeCss]);
 
-	return <DesignSystemContext.Provider value={value}>{children}</DesignSystemContext.Provider>;
+	const tree = <DesignSystemContext.Provider value={value}>{children}</DesignSystemContext.Provider>;
+
+	if (!scoped) return tree;
+
+	const scopeStyle = { ...cssVars } as React.CSSProperties;
+	// `useId` ids contain ':' etc.; strip to a valid, stable DOM id for the portal target.
+	const portalDomId = `dotui-portal-${scopeId.replace(/[^a-zA-Z0-9]/g, "")}`;
+
+	// `display: contents` keeps the wrapper out of layout (the children stay direct flow/flex
+	// items of the real parent) while still carrying the scope marker + inline token vars.
+	//
+	// Card overlays (Select / popovers / tooltips) portal to `document.body` by default — outside
+	// this subtree — so they'd escape the scope and render with the page's default theme.
+	// `UNSAFE_PortalProvider` redirects every overlay rendered by the children into `#portalDomId`:
+	// a body-level node that also carries `data-dotui-scope` (so the injected closure `<style>`
+	// themes it) but lives outside the showcase's `overflow-hidden`/masked container, so overlays
+	// inherit the scoped theme without being clipped.
+	return (
+		<div data-dotui-scope={scopeId} style={{ display: "contents", ...scopeStyle }}>
+			<UNSAFE_PortalProvider getContainer={() => document.getElementById(portalDomId)}>{tree}</UNSAFE_PortalProvider>
+			{typeof document === "undefined"
+				? null
+				: createPortal(<div id={portalDomId} data-dotui-scope={scopeId} style={scopeStyle} />, document.body)}
+		</div>
+	);
 }
 
 function useComponentParams(componentName: string): Record<string, string> {
