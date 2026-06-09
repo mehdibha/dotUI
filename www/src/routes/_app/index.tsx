@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AdobeIcon } from "@/components/icons/adobe";
+import { BaseUiIcon } from "@/components/icons/base-ui";
 import { BoltIcon } from "@/components/icons/bolt";
 import { LovableIcon } from "@/components/icons/lovable";
 import { ReactJsIcon } from "@/components/icons/react-js";
@@ -53,17 +54,18 @@ function HomePage() {
 						<Announcement />
 						<h1
 							aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your own codebase, or anywhere."
-							style={HEADLINE_STYLE}
-							className="text-3xl tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
+							className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
 						>
 							<span aria-hidden="true">
-								Build your design system.
-								<br />
-								ship it <RotatingText prefix="to" items={EXPORT_TARGETS} wordStyle={HEADLINE_STYLE} />.
+								Build your design system. Ship it to <RotatingText items={EXPORT_TARGETS} wordStyle={HEADLINE_STYLE} />.
 							</span>
 						</h1>
 						<p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
-							Your palette, your scale, your brand — not a preset clone.
+							Beautiful components, accessibility out of the box, composition, and more, all powered by{" "}
+							<AdobeIcon className="inline-flex size-4" />{" "}
+							<span className="font-medium text-fg">react-aria-components</span> and{" "}
+							<BaseUiIcon className="inline-flex h-[1.1em] w-auto" />{" "}
+							<span className="font-medium text-fg">Base&nbsp;UI</span>.
 						</p>
 						<div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
 							<LinkButton href="/create" variant="primary" size="lg">

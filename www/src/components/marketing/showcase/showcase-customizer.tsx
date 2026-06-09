@@ -82,10 +82,9 @@ export function ShowcaseCustomizer({
 			aria-label="Customize the design system"
 			className={cn("flex w-full items-center justify-between gap-4", className)}
 		>
-			{/* Controls, grouped on the left. Each control's name floats above it,
-			    absolutely positioned so it never adds to the bar's height. */}
-			<div className="flex shrink-0 items-center gap-2.5">
-				<ControlField label="Accent">
+			{/* Controls, grouped on the left, separated by a wide gap (no dividers/labels). */}
+			<div className="flex shrink-0 items-center gap-7">
+				<ControlField>
 					{/* inline swatches ≥ 440px, color picker below (collapses last) */}
 					<ColorSwatchPicker
 						aria-label="Accent color"
@@ -105,22 +104,16 @@ export function ShowcaseCustomizer({
 					<AccentPicker className="shrink-0 min-[440px]:hidden" accent={accent} onAccentChange={onAccentChange} />
 				</ControlField>
 
-				<Divider />
-
-				<ControlField label="Radius">
+				<ControlField>
 					{/* inline slider ≥ 560px, popover below */}
 					<div className="hidden shrink-0 items-center gap-2 min-[560px]:flex">
+						<span className="text-xs whitespace-nowrap text-fg-muted">Radius</span>
 						<RadiusSlider radius={radius} onRadiusChange={onRadiusChange} className="w-20" />
-						<span className="w-7 text-right text-[10px] font-medium text-fg-muted tabular-nums">
-							{radius.toFixed(1)}×
-						</span>
 					</div>
 					<RadiusPopover className="shrink-0 min-[560px]:hidden" radius={radius} onRadiusChange={onRadiusChange} />
 				</ControlField>
 
-				<Divider />
-
-				<ControlField label="Density">
+				<ControlField>
 					{/* inline toggle ≥ 700px, select below (collapses first) */}
 					<ToggleButtonGroup
 						aria-label="Density"
@@ -278,19 +271,7 @@ function AccentPicker({
 	);
 }
 
-function Divider() {
-	return <div aria-hidden="true" className="h-6 w-px shrink-0 bg-border" />;
-}
-
-// Wraps a control and floats its name just above it. The label is absolutely
-// positioned, so it never changes the control's size or the bar's height.
-function ControlField({ label, children }: { label: string; children: React.ReactNode }) {
-	return (
-		<div className="relative flex items-center self-stretch">
-			<span className="pointer-events-none absolute bottom-full left-0 mb-1 text-xs whitespace-nowrap text-fg-muted">
-				{label}
-			</span>
-			{children}
-		</div>
-	);
+// Wraps a control for consistent vertical alignment within the bar.
+function ControlField({ children }: { children: React.ReactNode }) {
+	return <div className="flex items-center self-stretch">{children}</div>;
 }
