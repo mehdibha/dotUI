@@ -28,7 +28,8 @@ export interface RotatingTextSegment {
 export interface RotatingTextItem {
 	/** Stable key for the animation. */
 	id: string;
-	/** Plain-text reading, joined into the accessible label. */
+	/** Plain-text reading of the word — the rotation is decorative (the slot renders
+	    aria-hidden by the caller), so keep the caller's accessible label in sync with these. */
 	text: string;
 	/** Visual content (text and/or a logo). */
 	segments: RotatingTextSegment[];
@@ -40,6 +41,18 @@ const SWAP_EASE = [0.16, 1, 0.3, 1] as const;
 const SWAP_SHIFT = "0.32em"; // ≈ x.ai's 14px rise, made font-relative
 /** Slot width spring so the surrounding text never snaps on a word change. */
 const WIDTH_SPRING: Transition = { type: "spring", stiffness: 260, damping: 30 };
+
+const SWAP_VARIANTS = {
+	initial: { opacity: 0, y: SWAP_SHIFT, filter: "blur(4px)" },
+	animate: { opacity: 1, y: "0em", filter: "blur(0px)" },
+	exit: { opacity: 0, y: `-${SWAP_SHIFT}`, filter: "blur(4px)" },
+};
+/** Crossfade only — no movement or blur — under prefers-reduced-motion. */
+const REDUCED_SWAP_VARIANTS = {
+	initial: { opacity: 0 },
+	animate: { opacity: 1 },
+	exit: { opacity: 0 },
+};
 
 function Segments({ item }: { item: RotatingTextItem }) {
 	return (
@@ -70,12 +83,16 @@ interface RotatingWordProps {
 	interval?: number;
 	/** Typography applied to the swapped word. */
 	wordStyle?: CSSProperties;
-	reduce: boolean;
 }
 
-/** The cycling trailing word — measured-width slot + whole-word blur-slide swap. */
-function RotatingWord({ items, interval = 4200, wordStyle, reduce }: RotatingWordProps) {
+/**
+ * The cycling trailing word — measured-width slot + whole-word blur-slide swap.
+ * Purely decorative: the caller owns the accessible reading (e.g. an `aria-label`
+ * on the heading with the subtree `aria-hidden`).
+ */
+function RotatingWord({ items, interval = 4200, wordStyle }: RotatingWordProps) {
 	const [index, setIndex] = useState(0);
+	const reduce = useReducedMotion() ?? false;
 
 	useEffect(() => {
 		if (items.length <= 1) return;
@@ -85,36 +102,39 @@ function RotatingWord({ items, interval = 4200, wordStyle, reduce }: RotatingWor
 
 	// Measure the incoming word's natural width from the invisible sizer, then animate
 	// the slot to it — animating the real `width` (not a transform) keeps the surrounding
-	// text from snapping. `wordStyle` is a dep so a font change re-measures.
+	// text from snapping. The ResizeObserver re-measures when the word's natural width
+	// changes without an index change: the webfont swapping in over the fallback, or the
+	// responsive headline font-size crossing a breakpoint mid-interval.
 	const sizerRef = useRef<HTMLSpanElement | null>(null);
 	const [width, setWidth] = useState<number | undefined>(undefined);
 	useEffect(() => {
 		const el = sizerRef.current;
 		if (!el) return;
-		const next = Math.round(el.scrollWidth);
-		setWidth((prev) => (prev === next ? prev : next));
+		const measure = () => {
+			const next = Math.round(el.scrollWidth);
+			setWidth((prev) => (prev === next ? prev : next));
+		};
+		measure();
+		const observer = new ResizeObserver(measure);
+		observer.observe(el);
+		return () => observer.disconnect();
 	}, [index, wordStyle]);
 
 	const active = items[index] ?? items[0];
 	if (!active) return null;
 
-	const swapVariants = reduce
-		? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
-		: {
-				initial: { opacity: 0, y: SWAP_SHIFT, filter: "blur(4px)" },
-				animate: { opacity: 1, y: "0em", filter: "blur(0px)" },
-				exit: { opacity: 0, y: `-${SWAP_SHIFT}`, filter: "blur(4px)" },
-			};
+	const swapVariants = reduce ? REDUCED_SWAP_VARIANTS : SWAP_VARIANTS;
 
 	return (
 		<span className="relative inline-flex items-baseline align-baseline text-fg">
-			<span className="sr-only">{items.map((it) => it.text).join(", ")}</span>
 			<motion.span
 				// Cap the slot to one line so a taller logo spills out visually (overflow-visible)
 				// rather than growing the headline's line height on an icon word.
 				className="inline-grid h-[1em] items-baseline overflow-visible"
 				animate={width != null ? { width } : undefined}
-				transition={{ width: WIDTH_SPRING }}
+				// Snap (don't spring) the slot under prefers-reduced-motion: the width change is
+				// the one piece of layout motion the variants above don't cover.
+				transition={{ width: reduce ? { duration: 0 } : WIDTH_SPRING }}
 			>
 				{/* Sizer: invisibly holds the current word so the slot keeps a baseline + a
 				    measurable width through the swap, and never collapses between words. */}
@@ -162,11 +182,9 @@ interface AnimatedHeadlineProps {
 }
 
 export function AnimatedHeadline({ lead, items, trailing, wordStyle, interval, className }: AnimatedHeadlineProps) {
-	const reduce = useReducedMotion() ?? false;
-
 	return (
 		<span className={cn("inline", className)}>
-			{lead} <RotatingWord items={items} interval={interval} wordStyle={wordStyle} reduce={reduce} />
+			{lead} <RotatingWord items={items} interval={interval} wordStyle={wordStyle} />
 			{trailing}
 		</span>
 	);
