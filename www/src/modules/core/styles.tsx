@@ -83,6 +83,12 @@ interface RootClosure {
 }
 let rootClosureCache: RootClosure | null = null;
 
+// The semantic vocabulary's exact prop names. Excluded from the harvest by KEY, not by the
+// `--color-` prefix: component surface vars share the prefix (`--color-area-radius`,
+// `--color-swatch-picker-item-radius`) and must be harvested like any other token, or they
+// stay frozen at `:root` values inside the scope.
+const SEMANTIC_COLOR_PROPS = new Set(Object.keys(DEFAULT_SEMANTICS).map((name) => `--${name}`));
+
 /**
  * Harvest, as raw CSS text, the authored custom-property declarations the document defines at
  * `:root` (light) and `.dark`. Reading from `cssRules` (not `getComputedStyle`) preserves the
@@ -90,10 +96,10 @@ let rootClosureCache: RootClosure | null = null;
  * token recompute from that scope's primitives + `--radius-factor`. Cached — the closure is
  * static (scoped mode never writes `:root`); cross-origin sheets are skipped.
  *
- * The semantic `--color-*` layer is deliberately EXCLUDED here and emitted from
- * `DEFAULT_SEMANTICS` instead (see `buildScopedThemeCss`): some of those tokens are authored as
- * `color-mix()` (e.g. `--color-fg-muted`) and the document can carry a stale simplified copy in
- * a `:root` rule that the cascade overrides elsewhere — so a CSSOM read of them is unreliable.
+ * The semantic `--color-*` vocabulary is deliberately EXCLUDED here and emitted from
+ * `DEFAULT_SEMANTICS` instead (see `buildScopedThemeCss`): it's the typed source of truth, and
+ * its targets may be authored as `color-mix()` (the vocabulary supports it), whose CSSOM
+ * read-back is unreliable.
  */
 function harvestRootClosure(): RootClosure {
 	if (rootClosureCache) return rootClosureCache;
@@ -106,8 +112,9 @@ function harvestRootClosure(): RootClosure {
 		for (let i = 0; i < style.length; i++) {
 			const prop = style.item(i);
 			// Skip: non-custom props; `--radius-factor` (rides inline on the scope element so the
-			// cloned radius scale recomputes there); and `--color-*` (emitted from DEFAULT_SEMANTICS).
-			if (!prop.startsWith("--") || prop === "--radius-factor" || prop.startsWith("--color-")) continue;
+			// cloned radius scale recomputes there); and the semantic vocabulary (emitted from
+			// DEFAULT_SEMANTICS — see SEMANTIC_COLOR_PROPS for why it's an exact-key match).
+			if (!prop.startsWith("--") || prop === "--radius-factor" || SEMANTIC_COLOR_PROPS.has(prop)) continue;
 			into.set(prop, style.getPropertyValue(prop).trim());
 		}
 	};
@@ -244,18 +251,29 @@ function DesignSystemProvider({
 		};
 	}, [cssVars, scoped]);
 
+	// Warm the closure cache off the critical path: built lazily, the first divergence would pay
+	// the full-document CSSOM walk synchronously inside the render of the user's first drag tick.
+	React.useEffect(() => {
+		if (scoped) harvestRootClosure();
+	}, [scoped]);
+
 	// Generative palette as an injected <style>. Global mode writes :root + .dark (the flat-token
 	// path above only writes :root). Scoped mode clones :root's token closure onto the wrapper
 	// (so semantic + component vars recompute from the scope) and overrides the ramps there — but
 	// only once something actually diverges (a color, or a token like --radius-factor); an
 	// untouched preview injects nothing and just inherits the page defaults.
+	//
+	// `cssVars` themselves ride inline on the scope element and never enter the CSS text, so the
+	// memo depends on whether any override EXISTS (a boolean) rather than the object's identity —
+	// otherwise every radius-slider tick would rebuild a byte-identical stylesheet.
+	const hasTokenOverrides = Object.keys(cssVars).length > 0;
 	const themeCss = React.useMemo(() => {
 		if (scoped) {
-			const diverges = Boolean(color) || Object.keys(cssVars).length > 0;
+			const diverges = Boolean(color) || hasTokenOverrides;
 			return diverges ? buildScopedThemeCss(scopeSelector, color) : null;
 		}
 		return color ? emitPrimitivesCss(resolveColorConfig(color), { onColors: true }) : null;
-	}, [scoped, scopeSelector, color, cssVars]);
+	}, [scoped, scopeSelector, color, hasTokenOverrides]);
 
 	React.useLayoutEffect(() => {
 		if (!themeCss) return;

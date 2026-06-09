@@ -35,8 +35,8 @@ export interface EmitCssOptions {
 	/**
 	 * Wrapping selector for the block (default Tailwind's `@theme`). Pass a concrete selector
 	 * (e.g. `[data-dotui-scope="x"]`) to re-declare the semantic layer on a subtree — the
-	 * authoritative way to scope `--color-*` (its `color-mix` foregrounds can't be reliably
-	 * read back from CSSOM). See `DesignSystemProvider`'s `scoped` mode.
+	 * authoritative way to scope `--color-*` (mix-based targets can't be reliably read back
+	 * from CSSOM). See `DesignSystemProvider`'s `scoped` mode.
 	 */
 	selector?: string;
 }
