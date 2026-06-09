@@ -8,7 +8,7 @@ import { tv } from "tailwind-variants";
 
 import type { ClassValue, TVReturnType, VariantProps } from "tailwind-variants";
 
-import { emitPrimitivesCss, resolveColorConfig } from "@/registry/theme";
+import { DEFAULT_SEMANTICS, emitCss, emitPrimitivesCss, resolveColorConfig } from "@/registry/theme";
 
 import type { ColorConfig } from "@/registry/theme";
 import type { Density, EnumParamDef, ParamDef, RegistryItem } from "@/registry/types";
@@ -89,6 +89,11 @@ let rootClosureCache: RootClosure | null = null;
  * `var()` / `calc()` references, so re-emitting the result under a scope selector lets each
  * token recompute from that scope's primitives + `--radius-factor`. Cached — the closure is
  * static (scoped mode never writes `:root`); cross-origin sheets are skipped.
+ *
+ * The semantic `--color-*` layer is deliberately EXCLUDED here and emitted from
+ * `DEFAULT_SEMANTICS` instead (see `buildScopedThemeCss`): some of those tokens are authored as
+ * `color-mix()` (e.g. `--color-fg-muted`) and the document can carry a stale simplified copy in
+ * a `:root` rule that the cascade overrides elsewhere — so a CSSOM read of them is unreliable.
  */
 function harvestRootClosure(): RootClosure {
 	if (rootClosureCache) return rootClosureCache;
@@ -100,9 +105,9 @@ function harvestRootClosure(): RootClosure {
 		const { style } = rule;
 		for (let i = 0; i < style.length; i++) {
 			const prop = style.item(i);
-			// `--radius-factor` is intentionally left out: it rides inline on the scope element
-			// (or inherits `:root`'s 1), so the cloned radius scale recomputes from the scope.
-			if (!prop.startsWith("--") || prop === "--radius-factor") continue;
+			// Skip: non-custom props; `--radius-factor` (rides inline on the scope element so the
+			// cloned radius scale recomputes there); and `--color-*` (emitted from DEFAULT_SEMANTICS).
+			if (!prop.startsWith("--") || prop === "--radius-factor" || prop.startsWith("--color-")) continue;
 			into.set(prop, style.getPropertyValue(prop).trim());
 		}
 	};
@@ -131,13 +136,19 @@ function harvestRootClosure(): RootClosure {
 
 /**
  * Build the `<style>` text that themes only `selector`'s subtree: clone `:root`'s token closure
- * onto the scope (so component/semantic vars recompute there), then, when a `color` is given,
- * override the primitive ramps with the scoped palette. `--radius-factor` + param vars ride
- * inline on the scope element.
+ * onto the scope (primitives + component vars, so they recompute there), add the semantic
+ * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `harvestRootClosure`),
+ * then, when a `color` is given, override the primitive ramps with the scoped palette.
+ * `--radius-factor` + param vars ride inline on the scope element.
  */
 function buildScopedThemeCss(selector: string, color: ColorConfig | undefined): string {
 	const { light, dark } = harvestRootClosure();
-	const blocks = [`${selector} {\n${light}\n}`, `.dark ${selector} {\n${dark}\n}`];
+	const blocks = [
+		`${selector} {\n${light}\n}`,
+		`.dark ${selector} {\n${dark}\n}`,
+		// Mode-agnostic `--color-*` (they reference primitives that flip via the `.dark` block above).
+		emitCss(DEFAULT_SEMANTICS, { selector }),
+	];
 	if (color) {
 		blocks.push(
 			emitPrimitivesCss(resolveColorConfig(color), {
