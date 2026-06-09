@@ -1,11 +1,13 @@
 "use client";
 
 /**
- * Swappable-words animation. The whole destination swaps as one subtle unit — it
- * eases out (shrinks slightly + blurs) and the next eases in (grows from slightly
- * small while sharpening from a blur). `mode="wait"` keeps the two from overlapping,
- * and the slot springs to the incoming word's measured width so the line never snaps
- * — the old word leaves, the space adapts, then the new word appears.
+ * Rotating headline word, modeled on the x.ai hero swap ("...for everything you
+ * <verb>."). The lead sentence is static; only the trailing word cycles on an
+ * interval. x.ai splits the word into letters; we animate the whole word as one
+ * unit so brand logos (v0 / bolt.new / Lovable), which can't be letter-split,
+ * animate the same way. The swap motion matches theirs — `{y, opacity, blur(4px)}`,
+ * 0.25s, easeOutExpo. The slot springs to the incoming word's measured width so
+ * the surrounding text never snaps.
  */
 
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
@@ -32,17 +34,11 @@ export interface RotatingTextItem {
 	segments: RotatingTextSegment[];
 }
 
-interface RotatingTextProps {
-	items: RotatingTextItem[];
-	/** Time each word stays fully on screen, ms. */
-	interval?: number;
-	className?: string;
-	/** Typography applied to the swapped word. */
-	wordStyle?: CSSProperties;
-	/** Static, non-animated lead-in shown before the swapping word (e.g. "to"). */
-	prefix?: ReactNode;
-}
-
+// ── x.ai-matched swap motion ─────────────────────────────────────────────────
+const SWAP_DURATION = 0.25;
+const SWAP_EASE = [0.16, 1, 0.3, 1] as const;
+const SWAP_SHIFT = "0.32em"; // ≈ x.ai's 14px rise, made font-relative
+/** Slot width spring so the surrounding text never snaps on a word change. */
 const WIDTH_SPRING: Transition = { type: "spring", stiffness: 260, damping: 30 };
 
 function Segments({ item }: { item: RotatingTextItem }) {
@@ -68,9 +64,18 @@ function Segments({ item }: { item: RotatingTextItem }) {
 	);
 }
 
-export function RotatingText({ items, interval = 2800, className, wordStyle, prefix }: RotatingTextProps) {
+interface RotatingWordProps {
+	items: RotatingTextItem[];
+	/** Time each word stays fully on screen, ms. */
+	interval?: number;
+	/** Typography applied to the swapped word. */
+	wordStyle?: CSSProperties;
+	reduce: boolean;
+}
+
+/** The cycling trailing word — measured-width slot + whole-word blur-slide swap. */
+function RotatingWord({ items, interval = 4200, wordStyle, reduce }: RotatingWordProps) {
 	const [index, setIndex] = useState(0);
-	const reduceMotion = useReducedMotion();
 
 	useEffect(() => {
 		if (items.length <= 1) return;
@@ -79,8 +84,8 @@ export function RotatingText({ items, interval = 2800, className, wordStyle, pre
 	}, [items.length, interval]);
 
 	// Measure the incoming word's natural width from the invisible sizer, then animate
-	// the slot to it — animating the real `width` (not a scale transform) keeps the
-	// surrounding text from snapping. `wordStyle` is a dep so a font change re-measures.
+	// the slot to it — animating the real `width` (not a transform) keeps the surrounding
+	// text from snapping. `wordStyle` is a dep so a font change re-measures.
 	const sizerRef = useRef<HTMLSpanElement | null>(null);
 	const [width, setWidth] = useState<number | undefined>(undefined);
 	useEffect(() => {
@@ -93,24 +98,18 @@ export function RotatingText({ items, interval = 2800, className, wordStyle, pre
 	const active = items[index] ?? items[0];
 	if (!active) return null;
 
-	const variants = reduceMotion
+	const swapVariants = reduce
 		? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
 		: {
-				initial: { opacity: 0, scale: 0.96, filter: "blur(5px)" },
-				animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
-				exit: { opacity: 0, scale: 0.96, filter: "blur(5px)" },
+				initial: { opacity: 0, y: SWAP_SHIFT, filter: "blur(4px)" },
+				animate: { opacity: 1, y: "0em", filter: "blur(0px)" },
+				exit: { opacity: 0, y: `-${SWAP_SHIFT}`, filter: "blur(4px)" },
 			};
 
 	return (
-		<span className={cn("relative inline-flex items-baseline align-baseline text-fg", className)}>
+		<span className="relative inline-flex items-baseline align-baseline text-fg">
 			<span className="sr-only">{items.map((it) => it.text).join(", ")}</span>
-			{prefix != null && (
-				<span aria-hidden="true" style={wordStyle} className="pr-[0.22em] whitespace-nowrap">
-					{prefix}
-				</span>
-			)}
 			<motion.span
-				aria-hidden="true"
 				// Cap the slot to one line so a taller logo spills out visually (overflow-visible)
 				// rather than growing the headline's line height on an icon word.
 				className="inline-grid h-[1em] items-baseline overflow-visible"
@@ -126,16 +125,17 @@ export function RotatingText({ items, interval = 2800, className, wordStyle, pre
 				>
 					<Segments item={active} />
 				</span>
-				{/* Visible word: swapped sequentially over the sizer (mode="wait"). */}
+				{/* Visible word: swapped sequentially over the sizer (mode="wait"). `initial={false}`
+				    so the first word shows statically on load — only later swaps animate. */}
 				<span className="col-start-1 row-start-1 inline-flex items-baseline justify-self-start whitespace-nowrap">
 					<AnimatePresence mode="wait" initial={false}>
 						<motion.span
 							key={active.id}
-							initial={variants.initial}
-							animate={variants.animate}
-							exit={variants.exit}
-							transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-							style={{ ...wordStyle, transformOrigin: "0% 60%" }}
+							initial={swapVariants.initial}
+							animate={swapVariants.animate}
+							exit={swapVariants.exit}
+							transition={{ duration: SWAP_DURATION, ease: SWAP_EASE }}
+							style={{ ...wordStyle }}
 							className="inline-flex items-baseline whitespace-nowrap"
 						>
 							<Segments item={active} />
@@ -143,6 +143,31 @@ export function RotatingText({ items, interval = 2800, className, wordStyle, pre
 					</AnimatePresence>
 				</span>
 			</motion.span>
+		</span>
+	);
+}
+
+interface AnimatedHeadlineProps {
+	/** Static lead sentence shown before the rotating word. */
+	lead: string;
+	/** The cycling trailing word. */
+	items: RotatingTextItem[];
+	/** Punctuation appended directly after the rotating word (e.g. "."). */
+	trailing?: string;
+	/** Typography applied to the rotating word. */
+	wordStyle?: CSSProperties;
+	/** Time each rotating word stays on screen, ms. */
+	interval?: number;
+	className?: string;
+}
+
+export function AnimatedHeadline({ lead, items, trailing, wordStyle, interval, className }: AnimatedHeadlineProps) {
+	const reduce = useReducedMotion() ?? false;
+
+	return (
+		<span className={cn("inline", className)}>
+			{lead} <RotatingWord items={items} interval={interval} wordStyle={wordStyle} reduce={reduce} />
+			{trailing}
 		</span>
 	);
 }

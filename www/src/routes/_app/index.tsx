@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { AdobeIcon } from "@/components/icons/adobe";
 import { BaseUiIcon } from "@/components/icons/base-ui";
 import { BoltIcon } from "@/components/icons/bolt";
 import { LovableIcon } from "@/components/icons/lovable";
+import { ReactAriaIcon } from "@/components/icons/react-aria";
 import { ReactJsIcon } from "@/components/icons/react-js";
 import { ShadcnIcon } from "@/components/icons/shadcn";
 import { TailwindWordmark } from "@/components/icons/tailwind-wordmark";
@@ -11,7 +11,7 @@ import { TypeScriptIcon } from "@/components/icons/typescript";
 import { V0Icon } from "@/components/icons/v0";
 import { Footer } from "@/components/layout/footer";
 import { Announcement } from "@/components/marketing/announcement";
-import { RotatingText, type RotatingTextItem } from "@/components/marketing/rotating-text";
+import { AnimatedHeadline, type RotatingTextItem } from "@/components/marketing/rotating-text";
 import Cards from "@/components/marketing/showcase/cards";
 import { LinkButton } from "@/registry/ui/button";
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
@@ -57,15 +57,22 @@ function HomePage() {
 							className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
 						>
 							<span aria-hidden="true">
-								Build your design system. Ship it to <RotatingText items={EXPORT_TARGETS} wordStyle={HEADLINE_STYLE} />.
+								<AnimatedHeadline
+									lead="Build your design system. Ship it to"
+									items={EXPORT_TARGETS}
+									trailing="."
+									wordStyle={HEADLINE_STYLE}
+								/>
 							</span>
 						</h1>
 						<p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
-							Beautiful components, accessibility out of the box, composition, and more, all powered by{" "}
-							<AdobeIcon className="inline-flex size-4" />{" "}
-							<span className="font-medium text-fg">react-aria-components</span> and{" "}
-							<BaseUiIcon className="inline-flex h-[1.1em] w-auto" />{" "}
+							Beautiful components, accessibility out of the box, composition, and more.
+							<br />
+							Powered by <ReactAriaIcon className="inline-flex h-[0.85em] w-auto translate-y-[-0.08em]" />{" "}
+							<span className="font-medium text-fg">React Aria</span> and{" "}
+							<BaseUiIcon className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" />{" "}
 							<span className="font-medium text-fg">Base&nbsp;UI</span>.
+							{/* Install with <ShadcnIcon  className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" /> Shadcn CLI */}
 						</p>
 						<div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
 							<LinkButton href="/create" variant="primary" size="lg">
@@ -101,9 +108,14 @@ function HomePage() {
 									href: "https://react.dev",
 								},
 								{
-									label: "react-aria-components",
-									icon: <AdobeIcon className="size-7 sm:size-9" />,
+									label: "React Aria",
+									icon: <ReactAriaIcon className="size-7 sm:size-9" />,
 									href: "https://react-spectrum.adobe.com/react-aria/index.html",
+								},
+								{
+									label: "Base UI",
+									icon: <BaseUiIcon className="h-7 w-auto sm:h-9" />,
+									href: "https://base-ui.com",
 								},
 								{
 									label: "TypeScript 5",
@@ -121,7 +133,7 @@ function HomePage() {
 										target="_blank"
 										rel="noopener noreferrer"
 										aria-label={label}
-										className="flex items-center justify-center opacity-60 grayscale-80 transition-opacity hover:opacity-100 hover:grayscale-0"
+										className="flex items-center justify-center opacity-60 grayscale-100 transition-opacity hover:opacity-100 hover:grayscale-0"
 										href={href}
 									>
 										{icon}
