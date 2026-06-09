@@ -25,7 +25,8 @@ import type { Density } from "@/registry/types";
 /**
  * A miniature, live version of the `/create` editor — a control bar that sits just
  * before the showcase grid. The controls drive a {@link DesignSystem} the parent applies
- * globally (via `DesignSystemProvider`), re-theming the cards (and the page) in real time.
+ * to the grid alone (via `DesignSystemProvider`'s `scoped` mode), re-theming the cards in
+ * real time while the control bar itself stays on the site's default theme.
  *
  * As the bar narrows it folds its controls into compact popovers/selects one at a time
  * (density → radius → accent, accent last) rather than scrolling — each control renders
@@ -107,7 +108,7 @@ export function ShowcaseCustomizer({
 				<ControlField>
 					{/* inline slider ≥ 560px, popover below */}
 					<div className="hidden shrink-0 items-center gap-2 min-[560px]:flex">
-						<span className="text-xs whitespace-nowrap text-fg-muted">Radius</span>
+						<RadiusCurveIcon aria-hidden className="size-4 shrink-0 text-fg-muted" />
 						<RadiusSlider radius={radius} onRadiusChange={onRadiusChange} className="w-20" />
 					</div>
 					<RadiusPopover className="shrink-0 min-[560px]:hidden" radius={radius} onRadiusChange={onRadiusChange} />
@@ -259,7 +260,8 @@ function AccentPicker({
 					<DialogContent className="flex w-56 flex-col gap-2">
 						<div className="flex gap-2">
 							<ColorArea colorSpace="hsb" xChannel="saturation" yChannel="brightness" className="flex-1" />
-							<ColorSlider orientation="vertical" colorSpace="hsb" channel="hue" />
+							{/* h-auto self-stretch: match the ColorArea's height at any density/width. */}
+							<ColorSlider orientation="vertical" colorSpace="hsb" channel="hue" className="h-auto self-stretch" />
 						</div>
 						<ColorField aria-label="Hex value" className="w-full">
 							<Input size="sm" className="w-full" />
@@ -274,4 +276,23 @@ function AccentPicker({
 // Wraps a control for consistent vertical alignment within the bar.
 function ControlField({ children }: { children: React.ReactNode }) {
 	return <div className="flex items-center self-stretch">{children}</div>;
+}
+
+// A rounded top-left corner — the universal "border radius" glyph design tools use,
+// standing in for the word "Radius" next to the slider.
+function RadiusCurveIcon({ className, ...props }: React.SVGProps<SVGSVGElement>) {
+	return (
+		<svg
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			strokeWidth={2}
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			className={className}
+			{...props}
+		>
+			<path d="M4 20V10a6 6 0 0 1 6-6h10" />
+		</svg>
+	);
 }

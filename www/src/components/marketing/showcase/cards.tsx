@@ -20,11 +20,12 @@ const DEFAULT_RADIUS = 1;
 const DEFAULT_DENSITY: Density = "default";
 
 // A miniature design-system editor sits just before the cards. Its accent / radius /
-// density controls drive a local `DesignSystem`: color + radius land on `:root` (and an
-// injected color `<style>`) and re-theme the whole page — the only place semantic
-// `--color-*` / `--radius-*` tokens re-resolve — while density is React context, scoped
-// to the real grid below. It mounts on the client only (the provider's effects are
-// layout-effects), so the grid renders identically on the server and pre-hydration.
+// density controls drive a local `DesignSystem` scoped (via the provider's `scoped` prop)
+// to the real grid below: color + radius re-theme the grid's wrapper (which clones the
+// page's token closure) and density is React context — so the preview re-themes the cards
+// alone, leaving the controls (and the rest of the page) on the site's default theme. It
+// mounts on the client only (the provider's effects are layout-effects), so the grid renders
+// identically on the server and pre-hydration.
 export function Cards() {
 	const mounted = useMounted();
 	const [accent, setAccent] = useState(DEFAULT_ACCENT);
@@ -94,10 +95,10 @@ export function Cards() {
 			    whole showcase — real cards and skeletons alike — fades into the next section. */}
 			<div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_520px),transparent_calc(100%_-_180px))]">
 				<SkeletonRail side="left" />
-				{/* Density is the only context-scoped knob, so the provider wraps just the
-				    real grid; color + radius apply globally regardless of where it sits. */}
+				{/* `scoped` confines the whole theme — color, radius and density — to this
+				    provider's subtree, so only the real grid re-themes (not the toolbar/page). */}
 				{mounted ? (
-					<DesignSystemProvider density={density} tokens={tokens} color={color}>
+					<DesignSystemProvider scoped density={density} tokens={tokens} color={color}>
 						{realGrid}
 					</DesignSystemProvider>
 				) : (
