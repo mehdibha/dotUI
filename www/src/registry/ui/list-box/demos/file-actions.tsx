@@ -8,23 +8,23 @@ export default function Demo() {
 	return (
 		<div className="rounded-md border bg-card shadow-sm">
 			<ListBox aria-label="File" onAction={() => console.log("action")}>
-				<ListBoxItem id="cut">
+				<ListBoxItem id="cut" textValue="Cut">
 					<ScissorsIcon />
 					Cut
 					<Kbd>⌘X</Kbd>
 				</ListBoxItem>
-				<ListBoxItem id="copy">
+				<ListBoxItem id="copy" textValue="Copy">
 					<CopyIcon />
 					Copy
 					<Kbd>⌘C</Kbd>
 				</ListBoxItem>
-				<ListBoxItem id="paste">
+				<ListBoxItem id="paste" textValue="Paste">
 					<ClipboardIcon />
 					Paste
 					<Kbd>⌘V</Kbd>
 				</ListBoxItem>
 				<Separator />
-				<ListBoxItem id="delete" variant="danger">
+				<ListBoxItem id="delete" variant="danger" textValue="Delete">
 					<Trash2Icon />
 					Delete
 					<Kbd>⌫</Kbd>

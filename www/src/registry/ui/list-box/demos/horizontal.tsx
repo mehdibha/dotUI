@@ -6,15 +6,15 @@ export default function Demo() {
 	return (
 		<div className="rounded-md border bg-card shadow-sm">
 			<ListBox aria-label="View" orientation="horizontal" selectionMode="single" defaultSelectedKeys={["grid"]}>
-				<ListBoxItem id="list">
+				<ListBoxItem id="list" textValue="List">
 					<ListIcon />
 					List
 				</ListBoxItem>
-				<ListBoxItem id="rows">
+				<ListBoxItem id="rows" textValue="Rows">
 					<RowsIcon />
 					Rows
 				</ListBoxItem>
-				<ListBoxItem id="grid">
+				<ListBoxItem id="grid" textValue="Grid">
 					<LayoutGridIcon />
 					Grid
 				</ListBoxItem>

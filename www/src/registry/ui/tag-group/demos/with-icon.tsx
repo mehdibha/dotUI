@@ -8,16 +8,16 @@ export default function Demo() {
 		<TagGroup>
 			<Label>Topics</Label>
 			<TagList>
-				<Tag>
+				<Tag textValue="General">
 					<TagIcon /> General
 				</Tag>
-				<Tag>
+				<Tag textValue="Trending">
 					<FlameIcon /> Trending
 				</Tag>
-				<Tag>
+				<Tag textValue="New">
 					<SparklesIcon /> New
 				</Tag>
-				<Tag>
+				<Tag textValue="Saved">
 					<BookmarkIcon /> Saved
 				</Tag>
 			</TagList>

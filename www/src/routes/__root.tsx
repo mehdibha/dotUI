@@ -21,7 +21,7 @@ import { ToastProvider } from "@/registry/ui/toast";
 import appCss from "@/styles.css?url";
 
 export const Route = createRootRoute({
-	head: () => {
+	head: ({ matches }) => {
 		const title = `${siteConfig.title} - ${siteConfig.description}`;
 		const description = truncateOnWord(siteConfig.description, 148, true);
 		const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(siteConfig.og.title)}&description=${encodeURIComponent(siteConfig.og.description)}`;
@@ -52,8 +52,18 @@ export const Route = createRootRoute({
 				// document (not discovered late, after CSS parse). `crossorigin` is
 				// required even same-origin — fonts fetch in CORS mode, and without it
 				// the preload wouldn't match the actual request, causing a double fetch.
-				{ rel: "preload", href: geistFontUrl, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
-				{ rel: "preload", href: josefinFontUrl, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+				// Skipped on /playground, /create and the /preview/* iframe pages: they
+				// render client-only (no SSR'd text), so the fonts sit unused past
+				// Chrome's preload deadline and the browser logs an unused-preload
+				// warning (the /preview iframes surface it on /create's console).
+				...(matches.some(
+					(m) => m.pathname === "/playground" || m.pathname === "/create" || m.pathname.startsWith("/preview/"),
+				)
+					? []
+					: ([
+							{ rel: "preload", href: geistFontUrl, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+							{ rel: "preload", href: josefinFontUrl, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+						] as const)),
 				{ rel: "stylesheet", href: appCss },
 				// The SVG favicon is injected by <FaviconSwitcher /> and kept in sync
 				// with the system color scheme. These PNG/ICO entries are the fallback

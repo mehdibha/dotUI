@@ -21,7 +21,7 @@ export default function Demo() {
 			</Button>
 			<Popover className="outline-hidden">
 				<Command>
-					<SearchField autoFocus>
+					<SearchField autoFocus aria-label="Search countries">
 						<InputGroup>
 							<InputGroupAddon>
 								<SearchIcon />

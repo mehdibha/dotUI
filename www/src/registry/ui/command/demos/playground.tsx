@@ -12,7 +12,7 @@ import {
 export default function Demo({ placeholder = "Type a command..." } = {}) {
 	return (
 		<Command className="w-[300px]">
-			<CommandInput data-control-target placeholder={placeholder} />
+			<CommandInput data-control-target aria-label="Search commands" placeholder={placeholder} />
 			<CommandContent>
 				<CommandSection>
 					<CommandSectionHeader>Actions</CommandSectionHeader>

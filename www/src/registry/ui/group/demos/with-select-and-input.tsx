@@ -13,7 +13,7 @@ const durationItems = [
 export default function Demo() {
 	return (
 		<Group>
-			<Select defaultSelectedKey="hours">
+			<Select defaultSelectedKey="hours" aria-label="Duration unit">
 				<SelectTrigger />
 				<SelectContent items={durationItems}>
 					{(item) => <SelectItem id={item.id}>{item.label}</SelectItem>}

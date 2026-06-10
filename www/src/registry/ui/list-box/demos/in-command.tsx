@@ -5,7 +5,7 @@ import { Command, CommandContent, CommandInput, CommandItem } from "@/registry/u
 export default function Demo() {
 	return (
 		<Command>
-			<CommandInput placeholder="Search a command…" />
+			<CommandInput aria-label="Search commands" placeholder="Search a command…" />
 			<CommandContent className="min-h-48">
 				<CommandItem id="new-file" textValue="Create new file">
 					Create new file…

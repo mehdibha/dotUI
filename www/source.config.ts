@@ -32,31 +32,6 @@ export const docs = defineDocs({
 	},
 });
 
-export const legal = defineDocs({
-	dir: "content/legal",
-	docs: {
-		async: true,
-		schema: pageSchema.extend({
-			links: z
-				.array(
-					z.object({
-						label: z.string(),
-						href: z.string(),
-					}),
-				)
-				.optional(),
-		}),
-		postprocess: {
-			includeProcessedMarkdown: true,
-		},
-	},
-	meta: {
-		schema: metaSchema.extend({
-			description: z.string().optional(),
-		}),
-	},
-});
-
 export default defineConfig({
 	plugins: [lastModified()],
 	mdxOptions: {

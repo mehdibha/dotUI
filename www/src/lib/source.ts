@@ -2,7 +2,7 @@ import { loader } from "fumadocs-core/source";
 
 import type * as PageTree from "fumadocs-core/page-tree";
 
-import { docs, legal } from "@/.source/server";
+import { docs } from "@/.source/server";
 
 export interface DocsPageItem extends PageTree.Item {
 	wip?: boolean;
@@ -52,11 +52,6 @@ export const docsSource = loader({
 			},
 		],
 	},
-});
-
-export const legalSource = loader({
-	baseUrl: "/",
-	source: legal.toFumadocsSource(),
 });
 
 /** Get serialized page tree with proper types (fumadocs returns generic `object`) */

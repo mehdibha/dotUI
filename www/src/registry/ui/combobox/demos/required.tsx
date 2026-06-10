@@ -8,7 +8,7 @@ import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	return (
-		<Combobox isRequired>
+		<Combobox isRequired aria-label="Country">
 			<InputGroup>
 				<Input />
 				<InputGroupAddon>

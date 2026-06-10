@@ -3,7 +3,7 @@ import { Command, CommandContent, CommandInput, CommandItem } from "@/registry/u
 export function CommandDemo() {
 	return (
 		<Command className="w-60">
-			<CommandInput placeholder="Type a command..." className="w-full" />
+			<CommandInput aria-label="Search commands" placeholder="Type a command..." className="w-full" />
 			<CommandContent className="h-30">
 				<CommandItem textValue="Create new file">Create new file...</CommandItem>
 				<CommandItem textValue="Create new folder">Create new folder...</CommandItem>

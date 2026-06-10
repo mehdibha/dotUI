@@ -12,7 +12,7 @@ export default function Demo() {
 			<Overlay type="popover">
 				<DialogContent>
 					<Command>
-						<CommandInput />
+						<CommandInput aria-label="Search commands" />
 						<CommandContent>
 							<CommandItem textValue="Create new file">Create new file...</CommandItem>
 							<CommandItem textValue="Create new folder">Create new folder...</CommandItem>

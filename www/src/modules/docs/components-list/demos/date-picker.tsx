@@ -8,7 +8,7 @@ import { Popover } from "@/registry/ui/popover";
 
 export function DatePickerDemo() {
 	return (
-		<DatePicker className="w-56">
+		<DatePicker className="w-56" aria-label="Date">
 			<InputGroup>
 				<DateInput />
 				<InputGroupAddon>

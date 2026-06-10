@@ -27,7 +27,7 @@ function TextAreaBasic() {
 function TextAreaInvalid() {
 	return (
 		<Example title="Invalid">
-			<TextField isInvalid>
+			<TextField isInvalid aria-label="Message">
 				<TextArea placeholder="Type your message here." />
 			</TextField>
 		</Example>
