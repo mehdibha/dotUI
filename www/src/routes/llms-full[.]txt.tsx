@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { docsSource, legalSource } from "@/lib/source";
+import { docsSource } from "@/lib/source";
 
-// Serves /llms-full.txt — the full markdown body of every docs + legal page,
+// Serves /llms-full.txt — the full markdown body of every docs page,
 // concatenated into one file so an agent can ingest the entire documentation in
 // a single fetch. Generated from the same source the site renders, so it can
 // never drift. Served dynamically by the serverless function (cached at the edge
@@ -38,9 +38,8 @@ export const Route = createFileRoute("/llms-full.txt")({
 		handlers: {
 			GET: async () => {
 				const docSections = await renderPages(docsSource.getPages());
-				const legalSections = await renderPages(legalSource.getPages());
 
-				const body = [HEADER, ...docSections, ...legalSections].join("\n\n---\n\n") + "\n";
+				const body = [HEADER, ...docSections].join("\n\n---\n\n") + "\n";
 
 				return new Response(body, {
 					headers: {

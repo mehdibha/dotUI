@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { siteConfig } from "@/config/site";
-import { docsSource, legalSource } from "@/lib/source";
+import { docsSource } from "@/lib/source";
 
 // Serves /llms.txt — the llmstxt.org index: an H1, a blockquote summary, then
 // H2 sections of `[name](url): description` links. The component list is
@@ -38,7 +38,6 @@ export const Route = createFileRoute("/llms.txt")({
 				const isComponent = (url: string) => url === "/docs/components" || url.startsWith("/docs/components/");
 				const gettingStarted = docs.filter((page) => !isComponent(page.url));
 				const components = docs.filter((page) => isComponent(page.url));
-				const legal = legalSource.getPages();
 
 				const body =
 					[
@@ -53,10 +52,6 @@ export const Route = createFileRoute("/llms.txt")({
 						"## Components",
 						"",
 						...formatList(components),
-						"",
-						"## Optional",
-						"",
-						...formatList(legal),
 					].join("\n") + "\n";
 
 				return new Response(body, {
