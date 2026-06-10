@@ -46,7 +46,10 @@ export default function Demo() {
 			<p className="text-sm text-fg-muted">
 				selected range:{" "}
 				{value
-					? formatter.formatRange(value.start.toDate(getLocalTimeZone()), value.end.toDate(getLocalTimeZone()))
+					? // Format each end separately: Intl's formatRange output differs between
+						// Node and the browser (thin-space vs space around the dash), which
+						// breaks SSR hydration of this text.
+						`${formatter.format(value.start.toDate(getLocalTimeZone()))} – ${formatter.format(value.end.toDate(getLocalTimeZone()))}`
 					: "--"}
 			</p>
 		</>

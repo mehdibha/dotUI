@@ -19,7 +19,7 @@ export default function Demo() {
 					</InputGroup>
 				</TextField>
 			))}
-			<TextField>
+			<TextField aria-label="With button">
 				<InputGroup>
 					<Input />
 					<InputGroupAddon>
@@ -27,7 +27,7 @@ export default function Demo() {
 					</InputGroupAddon>
 				</InputGroup>
 			</TextField>
-			<TextField>
+			<TextField aria-label="With copy button">
 				<InputGroup>
 					<Input />
 					<InputGroupAddon>
@@ -37,7 +37,7 @@ export default function Demo() {
 					</InputGroupAddon>
 				</InputGroup>
 			</TextField>
-			<TextField>
+			<TextField aria-label="With delete button">
 				<InputGroup>
 					<Input />
 					<InputGroupAddon>

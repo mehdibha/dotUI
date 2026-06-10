@@ -8,7 +8,7 @@ import { Popover } from "@/registry/ui/popover";
 
 export default function Demo() {
 	return (
-		<Combobox>
+		<Combobox aria-label="Animal">
 			<InputGroup>
 				<Input />
 				<InputGroupAddon>

@@ -18,7 +18,7 @@ export default function Demo() {
 		<Field>
 			<Label>Amount</Label>
 			<Group>
-				<Select defaultSelectedKey="$">
+				<Select defaultSelectedKey="$" aria-label="Currency">
 					<SelectTrigger />
 					<SelectContent items={currencyItems}>
 						{(item) => <SelectItem id={item.id}>{item.label}</SelectItem>}

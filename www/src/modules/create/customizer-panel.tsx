@@ -295,6 +295,7 @@ export function CustomizerPanel({
 						value={effectivePreview}
 						onChange={(v) => navigate({ search: (prev) => ({ ...prev, preview: v as string }) })}
 						className="flex-1"
+						aria-label="Preview"
 					>
 						<Button size="sm" className="w-full">
 							<SelectValue className="truncate" />
@@ -302,7 +303,7 @@ export function CustomizerPanel({
 						</Button>
 						<Popover>
 							<Command>
-								<SearchField autoFocus>
+								<SearchField autoFocus aria-label="Search previews">
 									<Input />
 								</SearchField>
 								<ListBox>

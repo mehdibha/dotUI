@@ -19,16 +19,16 @@ export default function Demo() {
 			</div>
 			<Separator />
 			<ListBox aria-label="Account" onAction={() => console.log("action")}>
-				<ListBoxItem id="profile">
+				<ListBoxItem id="profile" textValue="Profile">
 					<UserIcon />
 					Profile
 				</ListBoxItem>
-				<ListBoxItem id="settings">
+				<ListBoxItem id="settings" textValue="Settings">
 					<SettingsIcon />
 					Settings
 				</ListBoxItem>
 				<Separator />
-				<ListBoxItem id="logout" variant="danger">
+				<ListBoxItem id="logout" variant="danger" textValue="Log out">
 					<LogOutIcon />
 					Log out
 				</ListBoxItem>

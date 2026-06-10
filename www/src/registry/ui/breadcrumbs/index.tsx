@@ -1,3 +1,4 @@
+
 import { Link as RouterLink } from "@tanstack/react-router";
 import type { ToOptions } from "@tanstack/react-router";
 
@@ -25,6 +26,12 @@ export function BreadcrumbLink({ href, ...props }: Omit<BreadcrumbLinkProps, "hr
 		<BreadcrumbLinkPrimitive
 			href={hrefString}
 			render={({ ref, ...domProps }) => {
+				// react-aria expects a <span> for disabled links. The isDisabled prop check
+				// above can't see links disabled through context (e.g. `<Breadcrumbs isDisabled>`),
+				// but the computed DOM props carry data-disabled in that case.
+				if ((domProps as Record<string, unknown>)["data-disabled"]) {
+					return <span ref={ref as React.Ref<HTMLSpanElement>} {...domProps} />;
+				}
 				if (typeof href === "object") {
 					return <RouterLink ref={ref as React.Ref<HTMLAnchorElement>} {...href} {...domProps} />;
 				}

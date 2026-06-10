@@ -21,6 +21,7 @@ import {
 	XIcon,
 } from "lucide-react";
 import * as ButtonPrimitives from "react-aria-components/Button";
+import { useIsHidden } from "react-aria/private/collections/Hidden";
 
 import { cn } from "@/registry/lib/utils";
 import { Button } from "@/registry/ui/button";
@@ -72,7 +73,12 @@ export const availableIcons: Record<string, LucideIcon> = {
 };
 
 function ContextualHelp({ name, reference }: { name: string; reference?: SerializablePropReference }) {
-	if (!reference) {
+	// Select-based controls render their children twice: once into a hidden <template> pass
+	// that RAC uses to build the collection. There the DialogTrigger's PressResponder mounts
+	// without a pressable child and logs a dev warning, so skip that pass entirely — same
+	// strategy RAC's own Popover uses via this hook.
+	const isHidden = useIsHidden();
+	if (!reference || isHidden) {
 		return null;
 	}
 
