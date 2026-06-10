@@ -1,4 +1,3 @@
-
 import { Link as RouterLink } from "@tanstack/react-router";
 import type { ToOptions } from "@tanstack/react-router";
 
