@@ -11,10 +11,19 @@ export type { TabIndicatorProps, TabListProps, TabPanelProps, TabsProps } from "
 type TabProps = Omit<BaseTabProps, "href"> & { href?: string | ToOptions };
 
 function Tab({ href, ...props }: TabProps) {
+	// Only pass `href`/`render` for actual links: an explicit `href={undefined}`
+	// still counts as a link prop to react-aria (`'href' in props`), which turns
+	// every plain tab into an <a href="">.
+	const hrefString = typeof href === "object" ? href.to : href;
+	if (!hrefString) {
+		return <TabPrimitive {...props} />;
+	}
 	return (
 		<TabPrimitive
-			href={href == null ? undefined : typeof href === "object" ? href.to : href}
+			href={hrefString}
 			render={(domProps) => {
+				// The `in` check narrows the div|anchor props union; render is only
+				// passed for links, so the div branch is a type-level fallback.
 				if (!("href" in domProps)) {
 					return <div {...domProps} />;
 				}
