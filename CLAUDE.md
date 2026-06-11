@@ -81,7 +81,10 @@ What this means when writing code today:
 ## Conventions & gotchas
 
 - Issues and PRDs are tracked in GitHub Issues for `mehdibha/dotUI`.
-- Commit titles use `type(scope):` style (`feat(www): …`, `fix:`, `chore:`).
+- PR titles become commit titles. Format `type(scope): summary`, aim ≤50
+  chars, no explanatory clauses — detail goes in the PR body.
+  Good: `docs: rewrite CLAUDE.md` · Bad: `docs: rewrite CLAUDE.md with real
+  project context`.
 - Theming: semantic tokens resolve and freeze at `:root` — color/radius
   changes cannot be scoped to a subtree (density is the exception, via React
   context). Previews that re-theme need an iframe or must re-theme the whole
