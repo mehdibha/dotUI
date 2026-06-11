@@ -30,7 +30,7 @@ What this means when writing code today:
 
 - `www/` — the dotui.org app: docs, the /create builder, and the registry endpoints (TanStack Start + Vite, fumadocs-mdx, Tailwind v4, tailwind-variants). Registry source lives in `www/src/registry/` — see Registry below.
 - `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www).
-- Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`, `tailwindcss-with`) are moving to standalone repos, consumed from npm.
+- Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`, `tailwindcss-with`) live in standalone repos, consumed from npm — their source is not here.
 - `docs/research/` — date-prefixed (`YYYY-MM-DD-topic.md`) point-in-time research and assessment reports; multi-file topics get a subfolder (e.g. `open-in/`). Check it before re-researching a topic; findings are snapshots, not kept current. When a report's open question gets decided, append a dated `> Decision:` line to its status header rather than leaving it open.
 - `patches/` — pnpm patches. `tailwindcss-react-aria-components` is patched for an upstream `not-*` variant bug; don't bump it without re-checking the patch.
 
