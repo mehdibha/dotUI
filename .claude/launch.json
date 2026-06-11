@@ -6,33 +6,7 @@
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["--filter", "www", "dev"],
       "port": 4444,
-      "autoPort": false,
-      "env": {
-        "PORTLESS_APP_PORT": "4444"
-      }
-    },
-    {
-      "name": "v0-verify",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": [
-        "--filter",
-        "www",
-        "exec",
-        "vite",
-        "--config",
-        ".v0-verify/vite.config.ts"
-      ],
-      "port": 4455,
       "autoPort": false
-    },
-    {
-      "name": "ios",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve-sim"],
-      "port": 3200,
-      "env": {
-        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
-      }
     }
   ]
 }

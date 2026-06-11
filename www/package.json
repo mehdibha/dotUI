@@ -2,7 +2,6 @@
   "name": "www",
   "private": true,
   "type": "module",
-  "portless": "dotui",
   "scripts": {
     "postinstall": "fumadocs-mdx",
     "dev": "vite dev",
