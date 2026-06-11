@@ -36,8 +36,12 @@ Bolt, Lovable, Figma, Claude design, etc. planned.
 
 What this means when writing code today:
 
-- New visual decisions go through tokens/variants so the builder can own them
-  later — never inline one-off values in registry components.
+- The test for hardcoded values: would two design systems disagree on it?
+  The design system's look (color, radius, typography, shadows,
+  density-affected spacing) goes through tokens/variants — `bg-primary`,
+  not `bg-[#635bff]`. Component mechanics (internal layout, hairlines, hit
+  areas) stay plain values — don't tokenize them. Look with no covering
+  axis? Flag the missing axis; don't invent a token.
 - A style change to one component in a synced group is a change to the whole
   group (Button ⇄ ToggleButton) — land them together.
 - New axes and styles must be switchable at runtime (CSS variables, variant
