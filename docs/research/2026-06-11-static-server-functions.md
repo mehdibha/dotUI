@@ -80,3 +80,25 @@ The MDX body is already a content-hashed static client chunk (fumadocs `createCl
 ## Recommendation
 
 Option B. The user-visible win of A over B is small (first-nav-per-page latency only), and A's price is owning experimental build plumbing that has bitten this repo twice and is currently biting production (stale immutable JSONs). Migration sketch: delete `www/src/lib/github.ts`; drop the middleware from `serverLoader` and `getPageTree` and add success-path cache headers; remove the dep and the `cp` line; update the two `staleTime: Infinity` comments (the staleTime itself stays correct); verify on a Vercel preview that `/_serverFn/` GETs go MISS→HIT, client navs work, and a client nav to a bad docs URL shows NotFound.
+
+## Measured before/after (2026-06-11)
+
+Method: TTFB via curl on a pre-warmed connection (mimics a client-side nav over the page's existing HTTP/2 connection), 8 runs per URL, single vantage point (FRA edge, ~50ms baseline RTT). Before = production dotui.org (static server functions, commit `0da0afa3`); after = the Vercel preview deployment of this PR (`dotui-h3sj4t9fm`). Server-fn requests sent with the client protocol headers (`x-tsr-serverFn: true`, framed accept, `Sec-Fetch-Site: same-origin`). The data request is the only thing that changed: direct visits serve the same prerendered HTML in both architectures.
+
+| Data fetch per client-side docs nav | Before (static JSON file) | After (server fn + s-maxage) |
+| --- | --- | --- |
+| Steady state (CDN HIT) — median over 9 pages | 57–91 ms | 66–114 ms (one noisy outlier at 186 ms) |
+| First request per page per region per deploy | n/a (always static) | 315–466 ms (warm function) |
+| Worst case: fresh deploy, cold function | n/a | 1.7–2.1 s (observed on the first two invocations only) |
+| Payload size (e.g. loader page) | 625 B | 635 B (seroval result envelope, ~+10 B) |
+| Direct visit HTML (sanity) | 63 ms median, CDN HIT | 77 ms median, CDN HIT |
+
+Behavior changes verified on the deployed preview:
+
+- CDN caching works: `x-vercel-cache: MISS` once per URL, then `HIT` with `age` advancing; Vercel consumes `s-maxage` and the browser receives `cache-control: public, max-age=0, must-revalidate` — the year-long `immutable` browser cache (finding 1) is gone, so docs data is fresh immediately after every deploy.
+- notFound responses carry no cache header, are never CDN-cached (MISS on repeat), and serialize `isNotFound` in-band — client-side navs to bad URLs render the NotFound page again instead of the error boundary (finding 2).
+- Response bodies verified byte-equivalent in content (same fields, same rawContent) to the old baked JSONs.
+
+Bottom line: steady-state navigation latency is at parity (CDN HIT both sides); the migration's cost is one ~0.3–0.5 s function invocation per docs page per region per deploy (up to ~2 s if the function is cold), paid by the first visitor only; in exchange the stale-browser-cache bug and the broken not-found path are fixed and the experimental dependency plus its build hacks are gone.
+
+Caveats: single vantage point, n=8 per URL, not a load test; preview measured on `*.vercel.app` while before was the production custom domain (both Vercel edge); cold-start frequency on production depends on traffic (Fluid keeps the function warm under steady load).
