@@ -1,6 +1,6 @@
 # Plan 005: Dependency hygiene — clear high-severity audit findings, drop dead puppeteer, check the RAC patch upstream
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/README.md`.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-repo-audit/README.md`.
 >
 > **Drift check (run first)**: `git diff --stat 0da0afa3..HEAD -- package.json pnpm-workspace.yaml pnpm-lock.yaml www/package.json patches/`
 > If any in-scope file changed since this plan was written, compare the "Current state" facts against the live repo before proceeding; on a mismatch, treat it as a STOP condition.
@@ -108,7 +108,7 @@ No new tests — this plan's safety net is the existing suite plus the full buil
 - [ ] puppeteer absent from `package.json` and `pnpm-workspace.yaml`; lockfile updated; `pnpm install` clean
 - [ ] Patch verdict (Step 4) written into the report and README row
 - [ ] `pnpm check`, `pnpm typecheck`, `pnpm test`, `pnpm build:registry`, `pnpm build:www` all exit 0
-- [ ] `docs/plans/README.md` status row updated
+- [ ] `docs/plans/2026-06-11-repo-audit/README.md` status row updated
 
 ## STOP conditions
 

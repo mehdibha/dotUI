@@ -1,6 +1,6 @@
 # Plan 002: Add a CI production-build job and a publishables schema/completeness sweep test
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/README.md`.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-repo-audit/README.md`.
 >
 > **Drift check (run first)**: `git diff --stat 0da0afa3..HEAD -- .github/workflows/ci.yml www/src/publisher www/src/routes/r www/package.json`
 > If any in-scope file changed since this plan was written, compare the "Current state" excerpts against the live code before proceeding; on a mismatch, treat it as a STOP condition.
@@ -10,7 +10,7 @@
 - **Priority**: P1
 - **Effort**: M
 - **Risk**: LOW
-- **Depends on**: docs/plans/001-publisher-evaluate-styles-fail-loud.md (the completeness assertion expects input/slider/progress-bar/otp-field to be published; if 001 hasn't landed, see Step 4's allowlist note)
+- **Depends on**: docs/plans/2026-06-11-repo-audit/001-publisher-evaluate-styles-fail-loud.md (the completeness assertion expects input/slider/progress-bar/otp-field to be published; if 001 hasn't landed, see Step 4's allowlist note)
 - **Category**: tests
 - **Planned at**: commit `0da0afa3`, 2026-06-11
 
@@ -122,7 +122,7 @@ Before finalizing assertions, read `www/src/registry/types.ts` (`RegistryItem`) 
 
 ### Step 4: Completeness expectations vs plan 001
 
-If plan 001 has NOT landed yet, Test A will fail on `input`, `otp-field`, `progress-bar`, `slider`. In that case add a `KNOWN_UNPUBLISHED = new Set([...those four])` with a comment pointing at `docs/plans/001-*`, assert nothing **outside** that set is missing, and leave a `TODO(001)` to empty the set. If 001 has landed, no allowlist — the missing-set must be empty.
+If plan 001 has NOT landed yet, Test A will fail on `input`, `otp-field`, `progress-bar`, `slider`. In that case add a `KNOWN_UNPUBLISHED = new Set([...those four])` with a comment pointing at `docs/plans/2026-06-11-repo-audit/001-*`, assert nothing **outside** that set is missing, and leave a `TODO(001)` to empty the set. If 001 has landed, no allowlist — the missing-set must be empty.
 
 **Verify**: `pnpm test` → green either way.
 
@@ -137,7 +137,7 @@ The sweep spec IS the test. Model file structure on `www/src/publisher/publish.s
 - [ ] `www/src/publisher/publishables-sweep.spec.ts` exists; `pnpm test` exits 0
 - [ ] Sweep covers every name in `PUBLISHABLE_NAMES` (assert count > 50 inside the spec so an accidentally-empty loop can't pass)
 - [ ] `pnpm check` and `pnpm typecheck` exit 0
-- [ ] `docs/plans/README.md` status row updated
+- [ ] `docs/plans/2026-06-11-repo-audit/README.md` status row updated
 
 ## STOP conditions
 

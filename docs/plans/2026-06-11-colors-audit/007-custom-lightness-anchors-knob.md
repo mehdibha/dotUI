@@ -1,6 +1,6 @@
 # Plan 007: Add a `lightness` anchors knob to the oklch/tailwind producers
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `plans/README.md` — unless a reviewer dispatched you and told you they maintain the index.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-colors-audit/README.md` — unless a reviewer dispatched you and told you they maintain the index.
 >
 > **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src/producers/oklch.ts packages/colors/src/schema.ts packages/colors/src/shared/curve.ts packages/colors/src/engine.test.ts`
 > Plans 003/005/006 are EXPECTED to have landed (they touch `oklch.ts`/`schema.ts`); what must still match are the specific excerpts below. On a mismatch in an excerpt, treat it as a STOP condition.
@@ -10,7 +10,7 @@
 - **Priority**: P2
 - **Effort**: S
 - **Risk**: LOW (additive; default path byte-identical)
-- **Depends on**: recommended after plans/005 and plans/006 (same `oklch.ts` lines). No logical dependency.
+- **Depends on**: recommended after docs/plans/2026-06-11-colors-audit/005 and docs/plans/2026-06-11-colors-audit/006 (same `oklch.ts` lines). No logical dependency.
 - **Category**: direction (approved axis)
 - **Planned at**: commit `05b44151`, 2026-06-11
 
@@ -68,7 +68,7 @@ produce(opts, ctx) {
 - `packages/colors/src/producers/oklch.ts`
 - `packages/colors/src/schema.ts`
 - `packages/colors/src/engine.test.ts`
-- `plans/README.md` (status row)
+- `docs/plans/2026-06-11-colors-audit/README.md` (status row)
 
 **Out of scope** (do NOT touch):
 
@@ -168,7 +168,7 @@ Step 3. Pattern: `engine.test.ts:183-204`. Cases: custom anchors reshape + resam
 - [ ] `pnpm test`, `pnpm typecheck`, `pnpm check` all exit 0; 2 new tests pass.
 - [ ] All snapshot files byte-unchanged.
 - [ ] `grep -n "lightness" packages/colors/src/schema.ts` shows the field on `oklchArm` and in `BaseThemeOptions`.
-- [ ] `plans/README.md` status row updated.
+- [ ] `docs/plans/2026-06-11-colors-audit/README.md` status row updated.
 
 ## STOP conditions
 

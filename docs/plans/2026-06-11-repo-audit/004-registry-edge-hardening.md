@@ -1,6 +1,6 @@
 # Plan 004: Harden the public edge — dep-resolver race, preset size cap, OG fallbacks, security headers
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/README.md`.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-repo-audit/README.md`.
 >
 > **Drift check (run first)**: `git diff --stat 0da0afa3..HEAD -- www/src/publisher/publish.ts www/src/publisher/publish.spec.ts www/src/routes/r/$name.tsx www/src/modules/create/preset/codec.ts www/src/routes/og.tsx www/vercel.ts`
 > If any in-scope file changed since this plan was written, compare the "Current state" excerpts against the live code before proceeding; on a mismatch, treat it as a STOP condition.
@@ -179,7 +179,7 @@ In `www/vercel.ts`, extend the existing `routes.header('/(.*)', [...])` entry (o
 - [ ] og.tsx has fallback + slice caps on both params
 - [ ] `www/vercel.ts` sets the three headers
 - [ ] `pnpm test`, `pnpm typecheck`, `pnpm check`, `pnpm build:registry` all exit 0
-- [ ] `docs/plans/README.md` status row updated
+- [ ] `docs/plans/2026-06-11-repo-audit/README.md` status row updated
 
 ## STOP conditions
 

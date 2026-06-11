@@ -1,6 +1,6 @@
 # Plan 003: Stop recomputing color ramps on every builder knob tick (value-keyed memoization)
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/README.md`.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-repo-audit/README.md`.
 >
 > **Drift check (run first)**: `git diff --stat 0da0afa3..HEAD -- www/src/modules/core/styles.tsx www/src/modules/create/colors-config.tsx www/src/modules/create/color-contrast.tsx www/src/modules/create/preset/use-design-system.ts`
 > If any in-scope file changed since this plan was written, compare the "Current state" excerpts against the live code before proceeding; on a mismatch, treat it as a STOP condition.
@@ -168,7 +168,7 @@ If your environment has the preview tools: `pnpm build:registry && pnpm dev:www`
 - [ ] `solidContrastReport` call in `color-contrast.tsx` is wrapped in `useMemo`
 - [ ] `pnpm test`, `pnpm typecheck`, `pnpm check` all exit 0; new spec has ≥3 passing tests
 - [ ] No changes under `www/src/registry/` or `packages/colors/` (`git status`)
-- [ ] `docs/plans/README.md` status row updated
+- [ ] `docs/plans/2026-06-11-repo-audit/README.md` status row updated
 
 ## STOP conditions
 

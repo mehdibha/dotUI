@@ -1,6 +1,6 @@
 # Plan 001: Recover the color-engine design spec into docs/research
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `plans/README.md` — unless a reviewer dispatched you and told you they maintain the index.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-colors-audit/README.md` — unless a reviewer dispatched you and told you they maintain the index.
 >
 > **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src docs/research`
 > If any in-scope file changed since this plan was written, compare the "Current state" excerpts against the live code before proceeding; on a mismatch, treat it as a STOP condition.
@@ -50,7 +50,7 @@ This plan modifies **documentation only** — zero source-code edits.
 **In scope** (the only files you may create or modify):
 
 - `docs/research/2026-06-11-color-engine-spec.md` (create)
-- `plans/README.md` (status row update)
+- `docs/plans/2026-06-11-colors-audit/README.md` (status row update)
 
 **Out of scope** (do NOT touch):
 
@@ -84,7 +84,7 @@ Structure (match the repo's research-report style — status header first, then 
 
 ### Step 3: Final checks
 
-**Verify**: `pnpm check` → exit 0. `pnpm test` → all pass (nothing should have changed). `git status --porcelain` → only the new doc and `plans/README.md` are modified.
+**Verify**: `pnpm check` → exit 0. `pnpm test` → all pass (nothing should have changed). `git status --porcelain` → only the new doc and `docs/plans/2026-06-11-colors-audit/README.md` are modified.
 
 ## Test plan
 
@@ -96,7 +96,7 @@ No code tests — this is a docs-only plan. The machine-checkable gate is the §
 - [ ] The §-coverage grep loop (Step 2 verify) prints nothing.
 - [ ] No files under `packages/colors/src` modified (`git status --porcelain packages/colors` is empty).
 - [ ] `pnpm check` exits 0.
-- [ ] `plans/README.md` status row updated.
+- [ ] `docs/plans/2026-06-11-colors-audit/README.md` status row updated.
 
 ## STOP conditions
 

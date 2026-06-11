@@ -1,6 +1,6 @@
 # Plan 005: Make the kernel own dark-mode generation (restore contrast/material dark fidelity)
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `plans/README.md` — unless a reviewer dispatched you and told you they maintain the index.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-colors-audit/README.md` — unless a reviewer dispatched you and told you they maintain the index.
 >
 > **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src/producers/oklch.ts packages/colors/src/engine.test.ts www/src/registry/theme/primitives.ts www/src/registry/theme/primitives.spec.ts`
 > Plans 001–004 are EXPECTED to have landed (they touch some of these files); what must still match are the specific excerpts below. On a mismatch in an excerpt, treat it as a STOP condition.
@@ -10,7 +10,7 @@
 - **Priority**: P1
 - **Effort**: L
 - **Risk**: MED-HIGH (changes shipped dark-mode colors for two algorithms — deliberately)
-- **Depends on**: plans/001-recover-color-engine-spec.md (the §4.7a decision gets recorded there), plans/002-characterize-color-generation.md (the snapshot gates this plan relies on)
+- **Depends on**: docs/plans/2026-06-11-colors-audit/001-recover-color-engine-spec.md (the §4.7a decision gets recorded there), docs/plans/2026-06-11-colors-audit/002-characterize-color-generation.md (the snapshot gates this plan relies on)
 - **Category**: bug / tech-debt / direction
 - **Planned at**: commit `05b44151`, 2026-06-11
 
@@ -107,7 +107,7 @@ Mirroring index `i → n-1-i` for all per-step parameters (lightness, chroma-env
 - `www/src/registry/theme/primitives.ts`
 - `www/src/registry/theme/primitives.spec.ts` + `www/src/registry/theme/__snapshots__/primitives.spec.ts.snap`
 - `docs/research/2026-06-11-color-engine-spec.md` (append the §4.7a decision line)
-- `plans/README.md` (status row)
+- `docs/plans/2026-06-11-colors-audit/README.md` (status row)
 
 **Out of scope** (do NOT touch):
 
@@ -229,7 +229,7 @@ Run `pnpm build:registry`, then:
 Append to the §4.7a section of `docs/research/2026-06-11-color-engine-spec.md` (created by plan 001):
 
 ```
-> Decision (2026-06-11): superseded — producers now own mode polarity. oklch/tailwind mirror the ladder when `isDark`; the www wrapper requests both modes and no longer reverses. See plans/005-kernel-owned-dark-mode.md.
+> Decision (2026-06-11): superseded — producers now own mode polarity. oklch/tailwind mirror the ladder when `isDark`; the www wrapper requests both modes and no longer reverses. See docs/plans/2026-06-11-colors-audit/005-kernel-owned-dark-mode.md.
 ```
 
 **Verify**: `grep -n "Decision (2026-06-11): superseded" docs/research/2026-06-11-color-engine-spec.md` → one match.
@@ -249,7 +249,7 @@ Steps 1 and 3 carry the test changes; plan 002's snapshots are the safety net. N
 - [ ] Snapshot diff matrix holds exactly: kernel oklch+tailwind dark changed / kernel contrast+material unchanged / www contrast+material dark changed / www oklch+tailwind dark unchanged / ALL light snapshots unchanged everywhere.
 - [ ] `grep -rn "reverseRamp" www/src packages/colors/src` returns nothing.
 - [ ] §4.7a decision line appended to the spec doc.
-- [ ] `plans/README.md` status row updated.
+- [ ] `docs/plans/2026-06-11-colors-audit/README.md` status row updated.
 
 ## STOP conditions
 

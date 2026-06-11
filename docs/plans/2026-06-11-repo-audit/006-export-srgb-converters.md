@@ -1,6 +1,6 @@
 # Plan 006: Export sRGB converters from @dotui/colors (research "master key" #2)
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/README.md`.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-repo-audit/README.md`.
 >
 > **Drift check (run first)**: `git diff --stat 0da0afa3..HEAD -- packages/colors/src docs/research/open-in/README.md`
 > If any in-scope file changed since this plan was written, compare the "Current state" excerpts against the live code before proceeding; on a mismatch, treat it as a STOP condition.
@@ -132,7 +132,7 @@ In `docs/research/open-in/README.md`, append directly under the two-item master-
 
 ```markdown
 > Decision (2026-06-11): master key #1 shipped — `/r/registry.json` is served by `www/src/routes/r/registry[.]json.tsx`, indexing `PUBLISHABLE_NAMES`.
-> Decision (<today's date>): master key #2 shipped — `toSrgb` and `toHex` are exported from `@dotui/colors` (see docs/plans/006).
+> Decision (<today's date>): master key #2 shipped — `toSrgb` and `toHex` are exported from `@dotui/colors` (see docs/plans/2026-06-11-repo-audit/006).
 ```
 
 Use the actual date you execute this for the second line.
@@ -154,7 +154,7 @@ Step 3's four cases in `shared.test.ts` (model: the file's existing kernel-op te
 - [ ] New tests pass; `pnpm test` exits 0
 - [ ] Two `> Decision:` lines appended to `docs/research/open-in/README.md`
 - [ ] `pnpm check` and `pnpm typecheck` exit 0
-- [ ] `docs/plans/README.md` status row updated
+- [ ] `docs/plans/2026-06-11-repo-audit/README.md` status row updated
 
 ## STOP conditions
 

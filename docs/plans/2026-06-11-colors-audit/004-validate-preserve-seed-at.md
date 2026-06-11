@@ -1,6 +1,6 @@
 # Plan 004: Make an unknown `preserveSeedAt` step a loud error, not a silent no-op
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `plans/README.md` — unless a reviewer dispatched you and told you they maintain the index.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-colors-audit/README.md` — unless a reviewer dispatched you and told you they maintain the index.
 >
 > **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src/shared/seed-anchor.ts packages/colors/src/shared/shared.test.ts packages/colors/src/engine.test.ts`
 > If any in-scope file changed since this plan was written, compare the "Current state" excerpts against the live code before proceeding; on a mismatch, treat it as a STOP condition.
@@ -49,7 +49,7 @@ if (idx < 0 || ls.length < 2) return ls
 - `packages/colors/src/shared/seed-anchor.ts`
 - `packages/colors/src/shared/shared.test.ts`
 - `packages/colors/src/engine.test.ts`
-- `plans/README.md` (status row)
+- `docs/plans/2026-06-11-colors-audit/README.md` (status row)
 
 **Out of scope** (do NOT touch):
 
@@ -133,7 +133,7 @@ Cases: unknown step at the util level; default-scale step name + custom steps at
 - [ ] `grep -n 'idx < 0 || ls.length < 2' packages/colors/src/shared/seed-anchor.ts` returns no matches (the combined silent guard is gone).
 - [ ] Kernel snapshot files byte-unchanged.
 - [ ] `pnpm typecheck` and `pnpm check` exit 0.
-- [ ] `plans/README.md` status row updated.
+- [ ] `docs/plans/2026-06-11-colors-audit/README.md` status row updated.
 
 ## STOP conditions
 

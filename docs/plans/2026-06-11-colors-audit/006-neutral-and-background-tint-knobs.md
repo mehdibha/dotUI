@@ -1,6 +1,6 @@
 # Plan 006: Add `neutralChroma` and `backgroundChroma` knobs (tinted neutrals axis)
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `plans/README.md` — unless a reviewer dispatched you and told you they maintain the index.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-colors-audit/README.md` — unless a reviewer dispatched you and told you they maintain the index.
 >
 > **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src/producers/oklch.ts packages/colors/src/producers/contrast.ts packages/colors/src/shared/constants.ts packages/colors/src/schema.ts packages/colors/src/theme.ts`
 > Plans 003/005 are EXPECTED to have landed (they touch `schema.ts`/`oklch.ts`); what must still match are the specific excerpts below. On a mismatch in an excerpt, treat it as a STOP condition.
@@ -10,7 +10,7 @@
 - **Priority**: P2
 - **Effort**: S-M
 - **Risk**: LOW (purely additive; defaults reproduce today's output exactly)
-- **Depends on**: recommended after plans/003 and plans/005 (same files; avoids rebase churn). No logical dependency.
+- **Depends on**: recommended after docs/plans/2026-06-11-colors-audit/003 and docs/plans/2026-06-11-colors-audit/005 (same files; avoids rebase churn). No logical dependency.
 - **Category**: direction (approved axis)
 - **Planned at**: commit `05b44151`, 2026-06-11
 
@@ -91,7 +91,7 @@ Called from `createTheme`'s mode loop (line ~145-149: `background: deriveBackgro
 - `packages/colors/src/schema.ts`
 - `packages/colors/src/theme.ts`
 - `packages/colors/src/engine.test.ts`
-- `plans/README.md` (status row)
+- `docs/plans/2026-06-11-colors-audit/README.md` (status row)
 
 **Out of scope** (do NOT touch):
 
@@ -237,7 +237,7 @@ Step 6. Pattern: `engine.test.ts:170-181`. Cases: neutralChroma > cap on oklch; 
 - [ ] `pnpm test`, `pnpm typecheck`, `pnpm check` all exit 0; 3 new tests pass.
 - [ ] `grep -rn 'NEUTRAL_MAX_C\b' packages/colors/src` and `grep -rn '0\.012' packages/colors/src/producers` return no matches (the magic numbers are centralized).
 - [ ] All snapshot files byte-unchanged.
-- [ ] `plans/README.md` status row updated.
+- [ ] `docs/plans/2026-06-11-colors-audit/README.md` status row updated.
 
 ## STOP conditions
 

@@ -1,6 +1,6 @@
 # Plan 008: Per-palette knob overrides (palette config objects)
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `plans/README.md` — unless a reviewer dispatched you and told you they maintain the index.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-colors-audit/README.md` — unless a reviewer dispatched you and told you they maintain the index.
 >
 > **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src/schema.ts packages/colors/src/theme.ts packages/colors/src/engine.test.ts`
 > Plans 003/005/006/007 are EXPECTED to have landed (they touch `schema.ts`/`theme.ts`); what must still match are the specific excerpts below — `resolvePalettes` and `buildPaletteOpts` in particular. On a mismatch in those two functions, treat it as a STOP condition.
@@ -10,7 +10,7 @@
 - **Priority**: P2
 - **Effort**: M
 - **Risk**: MED (reworks palette resolution — the orchestrator's core; defaults must stay byte-identical)
-- **Depends on**: plans/003-open-algorithm-registry.md (this plan edits `generativePalettes`, which plan 003's `customThemeOptionsSchema` reuses — land 003 first so there is one edit point)
+- **Depends on**: docs/plans/2026-06-11-colors-audit/003-open-algorithm-registry.md (this plan edits `generativePalettes`, which plan 003's `customThemeOptionsSchema` reuses — land 003 first so there is one edit point)
 - **Category**: direction (approved axis)
 - **Planned at**: commit `05b44151`, 2026-06-11
 
@@ -77,7 +77,7 @@ The mode loop (lines 135-164) iterates `baseInputs` and calls `produceValidated(
 - `packages/colors/src/schema.ts`
 - `packages/colors/src/theme.ts`
 - `packages/colors/src/engine.test.ts`
-- `plans/README.md` (status row)
+- `docs/plans/2026-06-11-colors-audit/README.md` (status row)
 
 **Out of scope** (do NOT touch):
 
@@ -268,7 +268,7 @@ Step 4. Pattern: the existing `review regressions` describe in `engine.test.ts`.
 - [ ] `pnpm test`, `pnpm typecheck`, `pnpm check` all exit 0; 4 new tests pass.
 - [ ] All snapshot files byte-unchanged.
 - [ ] `engine.test.ts:111-125` (`non-string neutral derives from primary`) and `:374-386` (mode-override) pass unmodified.
-- [ ] `plans/README.md` status row updated.
+- [ ] `docs/plans/2026-06-11-colors-audit/README.md` status row updated.
 
 ## STOP conditions
 

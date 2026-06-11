@@ -1,6 +1,6 @@
 # Plan 009: Centralize on-color computation behind a theme-level `onColor` option
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `plans/README.md` — unless a reviewer dispatched you and told you they maintain the index.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-colors-audit/README.md` — unless a reviewer dispatched you and told you they maintain the index.
 >
 > **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src/producer.ts packages/colors/src/theme.ts packages/colors/src/schema.ts packages/colors/src/shared/on-color.ts packages/colors/src/producers`
 > Plans 003/005/006/007/008 are EXPECTED to have landed; what must still match are the specific excerpts below. On a mismatch, treat it as a STOP condition.
@@ -10,7 +10,7 @@
 - **Priority**: P3
 - **Effort**: M
 - **Risk**: MED (changes the producer contract; defaults must stay byte-identical)
-- **Depends on**: plans/002-characterize-color-generation.md (snapshot gates). Land LAST among the kernel plans — it touches the same files as 003/005/008.
+- **Depends on**: docs/plans/2026-06-11-colors-audit/002-characterize-color-generation.md (snapshot gates). Land LAST among the kernel plans — it touches the same files as 003/005/008.
 - **Category**: direction (approved axis) / tech-debt
 - **Planned at**: commit `05b44151`, 2026-06-11
 
@@ -67,7 +67,7 @@ export interface PaletteOutput {
 - `packages/colors/src/shared/on-color.ts`
 - `packages/colors/src/producers/{oklch,contrast,material,fixed}.ts` (delete the `computeOnColors` returns only)
 - `packages/colors/src/engine.test.ts`, `packages/colors/src/registry.test.ts`
-- `plans/README.md` (status row)
+- `docs/plans/2026-06-11-colors-audit/README.md` (status row)
 
 **Out of scope** (do NOT touch):
 
@@ -224,7 +224,7 @@ Step 4. Pattern: `review regressions` in `engine.test.ts`. Cases: pure-pole mode
 - [ ] `pnpm test`, `pnpm typecheck`, `pnpm check` all exit 0.
 - [ ] All snapshot files byte-unchanged.
 - [ ] `grep -rn "computeOnColors" packages/colors/src/producers` returns nothing; `grep -n "computeOnColors" packages/colors/src/theme.ts` returns one import + one call.
-- [ ] `plans/README.md` status row updated.
+- [ ] `docs/plans/2026-06-11-colors-audit/README.md` status row updated.
 
 ## STOP conditions
 

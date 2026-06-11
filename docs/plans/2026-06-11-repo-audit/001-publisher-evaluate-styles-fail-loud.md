@@ -1,6 +1,6 @@
 # Plan 001: Restore the 4 silently-skipped components and make publisher skips fail the build
 
-> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/README.md`.
+> **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-repo-audit/README.md`.
 >
 > **Drift check (run first)**: `git diff --stat 0da0afa3..HEAD -- www/src/publisher www/src/modules/core/styles.tsx www/scripts/registry-build.ts www/src/registry/ui/input www/src/registry/ui/slider www/src/registry/ui/progress-bar www/src/registry/ui/otp-field`
 > If any in-scope file changed since this plan was written, compare the "Current state" excerpts against the live code before proceeding; on a mismatch, treat it as a STOP condition.
@@ -187,7 +187,7 @@ Machine-checkable. ALL must hold:
 - [ ] `pnpm typecheck`, `pnpm test`, `pnpm check` all exit 0
 - [ ] Guard proven: an artificially broken `styles.ts` makes `pnpm build:registry` exit non-zero (Step 6 verify)
 - [ ] Regenerated `__generated__/*` artifacts are committed (CI registry-drift job diffs them)
-- [ ] `docs/plans/README.md` status row updated
+- [ ] `docs/plans/2026-06-11-repo-audit/README.md` status row updated
 
 ## STOP conditions
 
@@ -203,4 +203,4 @@ Stop and report back (do not improvise) if:
 
 - The publisher has a planned rewrite (per CLAUDE.md). This plan deliberately adds the smallest possible surface: capture hook + fallback + guard. The rewrite should subsume `extract-config.ts` and `evaluate-config.ts` into one evaluation path; the fail-loud guard and the sweep test should survive the rewrite.
 - Reviewers should scrutinize: the generated `input.ts` publishable diff (it is large — the input config has many slots/params), and that `createStyles`' capture map cannot collide on `meta.name` (names are unique per the registry integrity check in `registry-build.ts`).
-- Deferred: docs pages exist for `input-group`, `text-area`, `tree`, `pagination`, `header`, `heading` which have ui/ folders but no `meta.ts`/registration at all — that's a separate product decision (see audit notes in `docs/plans/README.md`), not part of this fix.
+- Deferred: docs pages exist for `input-group`, `text-area`, `tree`, `pagination`, `header`, `heading` which have ui/ folders but no `meta.ts`/registration at all — that's a separate product decision (see audit notes in `docs/plans/2026-06-11-repo-audit/README.md`), not part of this fix.
