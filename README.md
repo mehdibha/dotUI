@@ -1,19 +1,47 @@
 # dotUI
 
-Create a **unique** design system in seconds. so your product looks like your brand, not a preset.
+**Create a design system that looks like your brand — not a preset.**
+
+Design your visual language once — colors, icon library, radius, density — and
+export it anywhere: your codebase via the shadcn CLI, or straight into v0,
+Bolt, and Lovable.
+
+<!-- TODO: screenshot/GIF of the /create theme builder -->
+
+## How it works
+
+1. **Design** your system at [dotui.org/create](https://dotui.org/create) —
+   not just a palette swap: pick your colors, icon library, radius and
+   density, and preview every change live on real components.
+2. **Export** it wherever you build:
+
+   ```bash
+   npx shadcn init "https://dotui.org/r/init?preset=<your-preset>"
+   ```
+
+   then add components as you need them:
+
+   ```bash
+   npx shadcn add @dotui/button
+   ```
+
+   Or open your design system directly in **v0**, **Bolt** or **Lovable** and
+   start prompting with your brand already baked in.
+
+3. **Own the code.** Components land in your project as plain React files —
+   no runtime dependency, restyle or rewrite anything.
 
 ## Documentation
 
-To get started, check out the [dotUI documentation](https://dotui.org/docs).
+Visit the [dotUI documentation](https://dotui.org/docs) for guides, component
+APIs, and theming reference.
 
 ## Community
 
-- **Discord** For community support, questions, and tips, join our [Discord](https://discord.gg/DXpj5V2fU8).
-- **X** To stay up-to-date on new releases and announcements follow [@mehdibha](https://x.com/mehdibha).
-
-## Local development
-
-Dev servers run through [portless](https://github.com/vercel-labs/portless): each app gets a stable named URL (e.g. `https://www.localhost:1355`) instead of a numeric port, and each git worktree automatically gets its own `<branch>.www.localhost`. To bypass the proxy and fall back to the default Vite port, run `PORTLESS=0 pnpm dev`.
+- **Discord** — for community support, questions, and tips, join our
+  [Discord](https://discord.gg/DXpj5V2fU8).
+- **X** — to stay up-to-date on new releases and announcements, follow
+  [@mehdibha](https://x.com/mehdibha).
 
 ## Contributing
 
@@ -21,4 +49,4 @@ See the [contribution guide](CONTRIBUTING.md).
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
