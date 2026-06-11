@@ -1,7 +1,6 @@
 packages:
   - www
   - packages/*
-  - config/*
 
 catalog:
   '@tanstack/react-router': ^1.170.1
