@@ -16,6 +16,7 @@ import {
   buildTypeAstFromString,
   type ConversionContext,
   createConversionContext,
+  isWellKnownSymbolMember,
   parseSimpleType,
   typeToAst,
 } from './type-to-ast'
@@ -488,9 +489,9 @@ function resolveTypeByName(
           }
         > = {}
 
-        for (const prop of [...properties].sort((a, b) =>
-          a.name.localeCompare(b.name),
-        )) {
+        for (const prop of properties
+          .filter((p) => !isWellKnownSymbolMember(p.name))
+          .sort((a, b) => a.name.localeCompare(b.name))) {
           const propType = checker.getTypeOfSymbolAtLocation(prop, node)
           // Use a simple type string instead of recursive AST to avoid explosion
           const typeString = checker.typeToString(propType)
@@ -703,6 +704,9 @@ async function getPropsWithTypeChecker(
         for (const prop of properties) {
           // Skip ref
           if (prop.name === 'ref') continue
+
+          // Skip well-known symbol members (non-deterministic internal names)
+          if (isWellKnownSymbolMember(prop.name)) continue
 
           // If extending HTML element, skip props inherited from HTML (not defined in user code)
           if (extendsElement && !isPropFromUserCode(prop)) {

@@ -190,8 +190,7 @@
                   },
                   "typeParameters": [
                     {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "type": "identifier",
                       "name": "HTMLInputElement"
                     }
                   ]
@@ -232,8 +231,7 @@
                   },
                   "typeParameters": [
                     {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "type": "identifier",
                       "name": "HTMLInputElement"
                     }
                   ]
@@ -373,7 +371,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the currently active element when DOM focus is on a composite widget, textbox, group, or application."
+      "description": "Identifies the currently active element when DOM focus is on a composite widget, textbox,\ngroup, or application."
     },
     "aria-autocomplete": {
       "type": "\"both\" | \"inline\" | \"list\" | \"none\"",
@@ -399,7 +397,7 @@
           }
         ]
       },
-      "description": "Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be\npresented if they are made."
+      "description": "Indicates whether inputting text could trigger display of one or more predictions of the user's\nintended value for an input and specifies how predictions would be presented if they are made."
     },
     "aria-controls": {
       "type": "string",
@@ -407,7 +405,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current\nelement."
     },
     "aria-describedby": {
       "type": "string",
@@ -423,7 +421,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
     },
     "aria-errormessage": {
       "type": "string",
@@ -440,77 +438,42 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "dialog"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "grid"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "listbox"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "menu"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tree"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "dialog"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "menu"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "listbox"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "tree"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "grid"
-              }
-            ]
           }
         ]
       },
-      "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element."
+      "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that\ncan be triggered by an element."
     },
     "aria-label": {
       "type": "string",
@@ -527,6 +490,22 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "autoComplete": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Describes the type of autocomplete functionality the input should provide if any. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautocomplete)."
+    },
+    "autoCorrect": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An attribute that takes as its value a space-separated string that describes what, if any, type\nof autocomplete functionality the input should provide. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#autocomplete)."
     },
     "children": {
       "type": "ReactNode | (values: SearchFieldRenderProps) => ReactNode",
@@ -560,7 +539,7 @@
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "className": {
       "type": "string | (values: SearchFieldRenderProps) => string",
@@ -593,7 +572,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-SearchField'"
     },
     "enterKeyHint": {
@@ -632,7 +611,7 @@
           }
         ]
       },
-      "description": "An enumerated attribute that defines what action label or icon to preset for the enter key on virtual keyboards. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint)."
+      "description": "An enumerated attribute that defines what action label or icon to preset for the enter key on\nvirtual keyboards. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/enterkeyhint)."
     },
     "excludeFromTabOrder": {
       "type": "boolean",
@@ -642,13 +621,329 @@
       },
       "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
     },
+    "form": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
+    },
     "id": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "inputMode": {
+      "type": "\"decimal\" | \"email\" | \"none\" | \"numeric\" | \"search\" | \"tel\" | \"text\" | \"url\"",
+      "detailedType": "| 'decimal'\n| 'email'\n| 'none'\n| 'numeric'\n| 'search'\n| 'tel'\n| 'text'\n| 'url'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "decimal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "email"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "numeric"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "search"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tel"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "text"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "url"
+          }
+        ]
+      },
+      "description": "Hints at the type of data that might be entered by the user while editing the element or its\ncontents. See\n[MDN](https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-inputmode-attribute)."
+    },
+    "maxLength": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The maximum number of characters supported by the input. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefmaxlength)."
+    },
+    "minLength": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The minimum number of characters required by the input. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefminlength)."
+    },
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The name of the input element, used when submitting an HTML form. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+    },
+    "onBeforeInput": {
+      "type": "FormEventHandler<HTMLInputElement>",
+      "detailedType": "FormEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "FormEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when the input value is about to be modified. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforeinput_event)."
+    },
+    "onCompositionEnd": {
+      "type": "CompositionEventHandler<HTMLInputElement>",
+      "detailedType": "| CompositionEventHandler<HTMLInputElement>\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "CompositionEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when a text composition system completes or cancels the current text\ncomposition session. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionend_event)."
+    },
+    "onCompositionStart": {
+      "type": "CompositionEventHandler<HTMLInputElement>",
+      "detailedType": "| CompositionEventHandler<HTMLInputElement>\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "CompositionEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when a text composition system starts a new text composition session.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionstart_event)."
+    },
+    "onCompositionUpdate": {
+      "type": "CompositionEventHandler<HTMLInputElement>",
+      "detailedType": "| CompositionEventHandler<HTMLInputElement>\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "CompositionEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when a new character is received in the current text composition\nsession. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionupdate_event)."
+    },
+    "onCopy": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "ClipboardEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when the user copies text. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncopy)."
+    },
+    "onCut": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "ClipboardEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when the user cuts text. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncut)."
+    },
+    "onInput": {
+      "type": "FormEventHandler<HTMLInputElement>",
+      "detailedType": "FormEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "FormEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when the input value is modified. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)."
+    },
+    "onPaste": {
+      "type": "ClipboardEventHandler<HTMLInputElement>",
+      "detailedType": "ClipboardEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "ClipboardEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when the user pastes text. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/onpaste)."
+    },
+    "onSelect": {
+      "type": "ReactEventHandler<HTMLInputElement>",
+      "detailedType": "ReactEventHandler<HTMLInputElement> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "ReactEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "HTMLInputElement"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Handler that is called when text in the input is selected. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/select_event)."
+    },
+    "pattern": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Regex pattern that the value of the input must match to be valid. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefpattern)."
     },
     "render": {
       "type": "DOMRenderFunction<\"div\", SearchFieldRenderProps>",
@@ -667,24 +962,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps",
+                "id": "react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps",
                 "name": "SearchFieldRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "slot": {
       "type": "null | string",
@@ -703,7 +993,15 @@
           }
         ]
       },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
+    },
+    "spellCheck": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "An enumerated attribute that defines whether the element may be checked for spelling errors.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/spellcheck)."
     },
     "style": {
       "type": "CSSProperties | (values: SearchFieldRenderProps) => CSSProperties",
@@ -738,14 +1036,38 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
     "type": {
-      "type": "\"search\" | \"text\" | (string & {}) | \"email\" | \"tel\" | \"url\" | \"password\"",
-      "detailedType": "| 'search'\n| 'text'\n| (string & {})\n| 'email'\n| 'tel'\n| 'url'\n| 'password'\n| undefined",
+      "type": "\"search\" | \"text\" | (string & {}) | \"tel\" | \"url\" | \"email\" | \"password\"",
+      "detailedType": "| 'search'\n| 'text'\n| (string & {})\n| 'tel'\n| 'url'\n| 'email'\n| 'password'\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "email"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "password"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "search"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tel"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "text"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "url"
+          },
           {
             "type": "undefined"
           },
@@ -760,140 +1082,14 @@
                 "name": "{}"
               }
             ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "search"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "text"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "email"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "tel"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "url"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "password"
-              }
-            ]
           }
         ]
       },
-      "description": "The type of input to render. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdeftype).",
+      "description": "The type of input to render. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdeftype).",
       "default": "'search'"
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps",
-      "name": "SearchFieldRenderProps",
-      "extends": [],
-      "properties": {
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the search field is disabled."
-        },
-        "isEmpty": {
-          "type": "property",
-          "name": "isEmpty",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the search field is empty."
-        },
-        "isInvalid": {
-          "type": "property",
-          "name": "isInvalid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the search field is invalid."
-        },
-        "isReadOnly": {
-          "type": "property",
-          "name": "isReadOnly",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the search field is read only."
-        },
-        "isRequired": {
-          "type": "property",
-          "name": "isRequired",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the search field is required."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/searchfield/useSearchFieldState.d.ts:SearchFieldState",
-            "name": "SearchFieldState"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the search field."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
     "SearchFieldRenderProps": {
       "type": "interface",
       "name": "SearchFieldRenderProps",
@@ -960,6 +1156,78 @@
           "description": "State of the search field."
         }
       }
+    },
+    "react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/SearchField.d.ts:SearchFieldRenderProps",
+      "name": "SearchFieldRenderProps",
+      "extends": [],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is disabled."
+        },
+        "isEmpty": {
+          "type": "property",
+          "name": "isEmpty",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is empty."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is invalid."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the search field is required."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "link",
+            "id": "react-stately/dist/types/src/searchfield/useSearchFieldState.d.ts:SearchFieldState",
+            "name": "SearchFieldState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the search field."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

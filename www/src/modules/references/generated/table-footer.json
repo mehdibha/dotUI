@@ -31,7 +31,7 @@
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+            "id": "@types/react/index.d.ts:ReactPortal",
             "name": "ReactPortal"
           },
           {
@@ -62,7 +62,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "id": "typescript/lib/lib.es2015.iterable.d.ts:Iterable",
               "name": "Iterable"
             },
             "typeParameters": [
@@ -76,7 +76,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+              "id": "typescript/lib/lib.es5.d.ts:Promise",
               "name": "Promise"
             },
             "typeParameters": [
@@ -96,7 +96,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement.",
       "default": "'react-aria-TableFooter'"
     },
     "dependencies": {
@@ -131,7 +131,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "id": "typescript/lib/lib.es2015.iterable.d.ts:Iterable",
               "name": "Iterable"
             },
             "typeParameters": [
@@ -156,13 +156,13 @@
         "type": "identifier",
         "name": "CSSProperties"
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement."
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal": {
+    "@types/react/index.d.ts:ReactPortal": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+      "id": "@types/react/index.d.ts:ReactPortal",
       "name": "ReactPortal",
       "extends": [
         {
@@ -301,186 +301,21 @@
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
+    "typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+      "id": "typescript/lib/lib.es2015.iterable.d.ts:Iterable",
       "name": "Iterable",
       "extends": [],
-      "properties": {
-        "__@iterator@37": {
-          "type": "method",
-          "name": "__@iterator@37",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
-                "name": "Iterator"
-              },
-              "typeParameters": [
-                {
-                  "type": "identifier",
-                  "name": "ReactNode"
-                }
-              ]
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": ""
-        }
-      },
+      "properties": {},
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
+    "typescript/lib/lib.es5.d.ts:Promise": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
-      "name": "Iterator",
-      "extends": [],
-      "properties": {
-        "next": {
-          "type": "method",
-          "name": "next",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "__0",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "tuple",
-                      "elements": []
-                    },
-                    {
-                      "type": "tuple",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "any"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": true
-              }
-            ],
-            "return": {
-              "type": "application",
-              "base": {
-                "type": "identifier",
-                "name": "IteratorResult"
-              },
-              "typeParameters": [
-                {
-                  "type": "identifier",
-                  "name": "ReactNode"
-                }
-              ]
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": ""
-        },
-        "return": {
-          "type": "property",
-          "name": "return",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "value",
-                    "value": {
-                      "type": "identifier",
-                      "name": "any"
-                    },
-                    "optional": true,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "IteratorResult<ReactNode, any>"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "throw": {
-          "type": "property",
-          "name": "throw",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "e",
-                    "value": {
-                      "type": "identifier",
-                      "name": "any"
-                    },
-                    "optional": true,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "IteratorResult<ReactNode, any>"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+      "id": "typescript/lib/lib.es5.d.ts:Promise",
       "name": "Promise",
       "extends": [],
       "properties": {
-        "__@toStringTag@642": {
-          "type": "property",
-          "name": "__@toStringTag@642",
-          "value": {
-            "type": "string"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
         "catch": {
           "type": "method",
           "name": "catch",
@@ -537,7 +372,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+                "id": "typescript/lib/lib.es5.d.ts:Promise",
                 "name": "Promise"
               },
               "typeParameters": [
@@ -568,14 +403,14 @@
                     },
                     {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+                      "id": "@types/react/index.d.ts:ReactPortal",
                       "name": "ReactPortal"
                     },
                     {
                       "type": "application",
                       "base": {
                         "type": "link",
-                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+                        "id": "typescript/lib/lib.es2015.iterable.d.ts:Iterable",
                         "name": "Iterable"
                       },
                       "typeParameters": [
@@ -648,7 +483,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+                "id": "typescript/lib/lib.es5.d.ts:Promise",
                 "name": "Promise"
               },
               "typeParameters": [
@@ -765,7 +600,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+                "id": "typescript/lib/lib.es5.d.ts:Promise",
                 "name": "Promise"
               },
               "typeParameters": [

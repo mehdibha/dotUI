@@ -19,37 +19,22 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "drawer"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "modal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "popover"
+          },
+          {
             "type": "null"
           },
           {
             "type": "undefined"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "popover"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "modal"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "drawer"
-              }
-            ]
           }
         ]
       },
@@ -74,74 +59,39 @@
             "typeParameters": [
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/popover/base.tsx:PopoverProps",
+                "id": "src/registry/ui/popover/base.tsx:PopoverProps",
                 "name": "PopoverProps"
               },
               {
                 "type": "union",
                 "elements": [
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "children"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "children"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isOpen"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "defaultOpen"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "defaultOpen"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isDismissable"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "onOpenChange"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isKeyboardDismissDisabled"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isKeyboardDismissDisabled"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isOpen"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "shouldCloseOnInteractOutside"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "onOpenChange"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isDismissable"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "shouldCloseOnInteractOutside"
                   }
                 ]
               }
@@ -169,74 +119,39 @@
             "typeParameters": [
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/modal/base.tsx:ModalProps",
+                "id": "src/registry/ui/modal/base.tsx:ModalProps",
                 "name": "ModalProps"
               },
               {
                 "type": "union",
                 "elements": [
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "children"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "children"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isOpen"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "defaultOpen"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "defaultOpen"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isDismissable"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "onOpenChange"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isKeyboardDismissDisabled"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isKeyboardDismissDisabled"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isOpen"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "shouldCloseOnInteractOutside"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "onOpenChange"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isDismissable"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "shouldCloseOnInteractOutside"
                   }
                 ]
               }
@@ -264,74 +179,39 @@
             "typeParameters": [
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/drawer/base.tsx:DrawerProps",
+                "id": "src/registry/ui/drawer/base.tsx:DrawerProps",
                 "name": "DrawerProps"
               },
               {
                 "type": "union",
                 "elements": [
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "children"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "children"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isOpen"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "defaultOpen"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "defaultOpen"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isDismissable"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "onOpenChange"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isKeyboardDismissDisabled"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isKeyboardDismissDisabled"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "isOpen"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "shouldCloseOnInteractOutside"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "onOpenChange"
                   },
                   {
-                    "type": "union",
-                    "elements": [
-                      {
-                        "type": "stringLiteral",
-                        "value": "isDismissable"
-                      }
-                    ]
+                    "type": "stringLiteral",
+                    "value": "shouldCloseOnInteractOutside"
                   }
                 ]
               }
@@ -427,9 +307,9 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/drawer/base.tsx:DrawerProps": {
+    "src/registry/ui/drawer/base.tsx:DrawerProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/drawer/base.tsx:DrawerProps",
+      "id": "src/registry/ui/drawer/base.tsx:DrawerProps",
       "name": "DrawerProps",
       "extends": [],
       "properties": {
@@ -596,43 +476,23 @@
             "type": "union",
             "elements": [
               {
+                "type": "stringLiteral",
+                "value": "bottom"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "left"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "right"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "top"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "bottom"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "top"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "left"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "right"
-                  }
-                ]
               }
             ]
           },
@@ -701,14 +561,14 @@
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/modal/base.tsx:ModalProps": {
+    "src/registry/ui/modal/base.tsx:ModalProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/modal/base.tsx:ModalProps",
+      "id": "src/registry/ui/modal/base.tsx:ModalProps",
       "name": "ModalProps",
       "extends": [
         {
           "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/modal/base.tsx:ModalOverlayProps",
+          "id": "src/registry/ui/modal/base.tsx:ModalOverlayProps",
           "name": "ModalOverlayProps"
         }
       ],
@@ -725,14 +585,14 @@
             "typeParameters": [
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Modal.d.ts:ModalRenderProps",
+                "id": "react-aria-components/dist/types/src/Modal.d.ts:ModalRenderProps",
                 "name": "ModalRenderProps"
               }
             ]
           },
           "optional": true,
           "readonly": false,
-          "description": "The children of the component. A function may be provided to alter the children based on component state."
+          "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
         },
         "className": {
           "type": "property",
@@ -770,7 +630,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+          "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
         },
         "defaultOpen": {
           "type": "property",
@@ -2887,7 +2747,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+          "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
         },
         "shouldCloseOnInteractOutside": {
           "type": "property",
@@ -2943,7 +2803,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+          "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
         },
         "style": {
           "type": "property",
@@ -2982,7 +2842,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+          "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
         },
         "translate": {
           "type": "property",
@@ -2991,25 +2851,15 @@
             "type": "union",
             "elements": [
               {
+                "type": "stringLiteral",
+                "value": "no"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "yes"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "yes"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "no"
-                  }
-                ]
               }
             ]
           },
@@ -3034,15 +2884,15 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to."
+          "description": "The container element in which the overlay portal will be placed. This may have unknown\nbehavior depending on where it is portalled to."
         }
       },
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/popover/base.tsx:PopoverProps": {
+    "src/registry/ui/popover/base.tsx:PopoverProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/www/src/registry/ui/popover/base.tsx:PopoverProps",
+      "id": "src/registry/ui/popover/base.tsx:PopoverProps",
       "name": "PopoverProps",
       "extends": [
         {
@@ -3050,14 +2900,14 @@
           "types": [
             {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Popover.d.ts:PopoverProps",
+              "id": "react-aria-components/dist/types/src/Popover.d.ts:PopoverProps",
               "name": "PopoverProps"
             },
             {
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:RefAttributes",
+                "id": "@types/react/index.d.ts:RefAttributes",
                 "name": "RefAttributes"
               },
               "typeParameters": [
@@ -3105,7 +2955,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+          "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
         },
         "aria-label": {
           "type": "property",
@@ -3220,14 +3070,14 @@
             "typeParameters": [
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Popover.d.ts:PopoverRenderProps",
+                "id": "react-aria-components/dist/types/src/Popover.d.ts:PopoverRenderProps",
                 "name": "PopoverRenderProps"
               }
             ]
           },
           "optional": true,
           "readonly": false,
-          "description": "The children of the component. A function may be provided to alter the children based on component state."
+          "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
         },
         "className": {
           "type": "property",
@@ -3265,7 +3115,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+          "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
         },
         "containerPadding": {
           "type": "property",
@@ -5380,205 +5230,95 @@
             "type": "union",
             "elements": [
               {
+                "type": "stringLiteral",
+                "value": "bottom"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "bottom end"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "bottom left"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "bottom right"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "bottom start"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "end"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "end bottom"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "end top"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "left"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "left bottom"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "left top"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "right"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "right bottom"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "right top"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "start"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "start bottom"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "start top"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "top"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "top end"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "top left"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "top right"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "top start"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "bottom"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "bottom left"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "bottom right"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "bottom start"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "bottom end"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "top"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "top left"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "top right"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "top start"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "top end"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "left"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "left top"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "left bottom"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "start"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "start top"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "start bottom"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "right"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "right top"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "right bottom"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "end"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "end top"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "end bottom"
-                  }
-                ]
               }
             ]
           },
@@ -5667,7 +5407,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+          "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
         },
         "scrollRef": {
           "type": "property",
@@ -5805,7 +5545,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+          "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
         },
         "style": {
           "type": "property",
@@ -5844,7 +5584,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+          "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
         },
         "translate": {
           "type": "property",
@@ -5853,25 +5593,15 @@
             "type": "union",
             "elements": [
               {
+                "type": "stringLiteral",
+                "value": "no"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "yes"
+              },
+              {
                 "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "yes"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "no"
-                  }
-                ]
               }
             ]
           },
@@ -5942,7 +5672,7 @@
           },
           "optional": true,
           "readonly": false,
-          "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to."
+          "description": "The container element in which the overlay portal will be placed. This may have unknown\nbehavior depending on where it is portalled to."
         }
       },
       "typeParameters": [],

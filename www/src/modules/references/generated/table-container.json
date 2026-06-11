@@ -24,7 +24,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement.",
       "default": "'react-aria-ResizableTableContainer'"
     },
     "id": {
@@ -33,7 +33,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "onResize": {
       "type": "((widths: Map<Key, ColumnSize>) => void)",
@@ -54,7 +54,7 @@
                   "type": "application",
                   "base": {
                     "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+                    "id": "typescript/lib/lib.es2015.collection.d.ts:Map",
                     "name": "Map"
                   },
                   "typeParameters": [
@@ -100,7 +100,7 @@
                   "type": "application",
                   "base": {
                     "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+                    "id": "typescript/lib/lib.es2015.collection.d.ts:Map",
                     "name": "Map"
                   },
                   "typeParameters": [
@@ -146,7 +146,7 @@
                   "type": "application",
                   "base": {
                     "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+                    "id": "typescript/lib/lib.es2015.collection.d.ts:Map",
                     "name": "Map"
                   },
                   "typeParameters": [
@@ -190,13 +190,8 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "undefined"
@@ -205,7 +200,7 @@
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "style": {
       "type": "CSSProperties",
@@ -214,60 +209,16 @@
         "type": "identifier",
         "name": "CSSProperties"
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement."
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map": {
+    "typescript/lib/lib.es2015.collection.d.ts:Map": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+      "id": "typescript/lib/lib.es2015.collection.d.ts:Map",
       "name": "Map",
       "extends": [],
       "properties": {
-        "__@iterator@37": {
-          "type": "method",
-          "name": "__@iterator@37",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
-                "name": "MapIterator"
-              },
-              "typeParameters": [
-                {
-                  "type": "tuple",
-                  "elements": [
-                    {
-                      "type": "identifier",
-                      "name": "Key"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "ColumnSize"
-                    }
-                  ]
-                }
-              ]
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": "Returns an iterable of entries in the map."
-        },
-        "__@toStringTag@642": {
-          "type": "property",
-          "name": "__@toStringTag@642",
-          "value": {
-            "type": "string"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
         "clear": {
           "type": "method",
           "name": "clear",
@@ -317,7 +268,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+                "id": "typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
                 "name": "MapIterator"
               },
               "typeParameters": [
@@ -380,7 +331,7 @@
                         "type": "application",
                         "base": {
                           "type": "link",
-                          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+                          "id": "typescript/lib/lib.es2015.collection.d.ts:Map",
                           "name": "Map"
                         },
                         "typeParameters": [
@@ -456,15 +407,6 @@
                     {
                       "type": "identifier",
                       "name": "number"
-                    }
-                  ]
-                },
-                {
-                  "type": "template",
-                  "elements": [
-                    {
-                      "type": "identifier",
-                      "name": "number"
                     },
                     {
                       "type": "stringLiteral",
@@ -482,6 +424,15 @@
                     {
                       "type": "stringLiteral",
                       "value": "fr"
+                    }
+                  ]
+                },
+                {
+                  "type": "template",
+                  "elements": [
+                    {
+                      "type": "identifier",
+                      "name": "number"
                     }
                   ]
                 }
@@ -527,7 +478,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+                "id": "typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
                 "name": "MapIterator"
               },
               "typeParameters": [
@@ -573,7 +524,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Map",
+                "id": "typescript/lib/lib.es2015.collection.d.ts:Map",
                 "name": "Map"
               },
               "typeParameters": [
@@ -612,7 +563,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+                "id": "typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
                 "name": "MapIterator"
               },
               "typeParameters": [

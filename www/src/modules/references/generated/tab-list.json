@@ -26,7 +26,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
     },
     "aria-label": {
       "type": "string",
@@ -45,7 +45,7 @@
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "children": {
-      "type": "ReactNode | ((item: object) => ReactNode)",
+      "type": "ReactNode | ((item: unknown) => ReactNode)",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -73,7 +73,7 @@
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+            "id": "@types/react/index.d.ts:ReactPortal",
             "name": "ReactPortal"
           },
           {
@@ -83,7 +83,7 @@
                 "type": "parameter",
                 "name": "item",
                 "value": {
-                  "type": "object"
+                  "type": "unknown"
                 },
                 "optional": false,
                 "rest": false
@@ -99,7 +99,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "id": "typescript/lib/lib.es2015.iterable.d.ts:Iterable",
               "name": "Iterable"
             },
             "typeParameters": [
@@ -113,7 +113,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+              "id": "typescript/lib/lib.es5.d.ts:Promise",
               "name": "Promise"
             },
             "typeParameters": [
@@ -158,7 +158,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-TabList'"
     },
     "dependencies": {
@@ -181,8 +181,8 @@
       "description": "Values that should invalidate the item cache when using dynamic collections."
     },
     "items": {
-      "type": "Iterable<object>",
-      "detailedType": "Iterable<object> | undefined",
+      "type": "Iterable<unknown>",
+      "detailedType": "Iterable<unknown> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -193,12 +193,12 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "id": "typescript/lib/lib.es2015.iterable.d.ts:Iterable",
               "name": "Iterable"
             },
             "typeParameters": [
               {
-                "type": "object"
+                "type": "unknown"
               }
             ]
           }
@@ -223,24 +223,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps",
+                "id": "react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps",
                 "name": "TabListRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "style": {
       "type": "CSSProperties | (values: TabListRenderProps) => CSSProperties",
@@ -275,7 +270,7 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
   "renderProps": {
@@ -285,9 +280,9 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal": {
+    "@types/react/index.d.ts:ReactPortal": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+      "id": "@types/react/index.d.ts:ReactPortal",
       "name": "ReactPortal",
       "extends": [
         {
@@ -426,9 +421,37 @@
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps": {
+    "TabListRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps",
+      "name": "TabListRenderProps",
+      "properties": {
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the tab list."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "TabListState<unknown>"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the tab list."
+        }
+      }
+    },
+    "react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/Tabs.d.ts:TabListRenderProps",
       "name": "TabListRenderProps",
       "extends": [],
       "properties": {
@@ -450,7 +473,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/tabs/useTabListState.d.ts:TabListState",
+              "id": "react-stately/dist/types/src/tabs/useTabListState.d.ts:TabListState",
               "name": "TabListState"
             },
             "typeParameters": [
@@ -467,186 +490,21 @@
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
+    "typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+      "id": "typescript/lib/lib.es2015.iterable.d.ts:Iterable",
       "name": "Iterable",
       "extends": [],
-      "properties": {
-        "__@iterator@37": {
-          "type": "method",
-          "name": "__@iterator@37",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
-                "name": "Iterator"
-              },
-              "typeParameters": [
-                {
-                  "type": "identifier",
-                  "name": "ReactNode"
-                }
-              ]
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": ""
-        }
-      },
+      "properties": {},
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
+    "typescript/lib/lib.es5.d.ts:Promise": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
-      "name": "Iterator",
-      "extends": [],
-      "properties": {
-        "next": {
-          "type": "method",
-          "name": "next",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "__0",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "tuple",
-                      "elements": []
-                    },
-                    {
-                      "type": "tuple",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "any"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": true
-              }
-            ],
-            "return": {
-              "type": "application",
-              "base": {
-                "type": "identifier",
-                "name": "IteratorResult"
-              },
-              "typeParameters": [
-                {
-                  "type": "identifier",
-                  "name": "ReactNode"
-                }
-              ]
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": ""
-        },
-        "return": {
-          "type": "property",
-          "name": "return",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "value",
-                    "value": {
-                      "type": "identifier",
-                      "name": "any"
-                    },
-                    "optional": true,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "IteratorResult<ReactNode, any>"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "throw": {
-          "type": "property",
-          "name": "throw",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "e",
-                    "value": {
-                      "type": "identifier",
-                      "name": "any"
-                    },
-                    "optional": true,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "IteratorResult<ReactNode, any>"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+      "id": "typescript/lib/lib.es5.d.ts:Promise",
       "name": "Promise",
       "extends": [],
       "properties": {
-        "__@toStringTag@642": {
-          "type": "property",
-          "name": "__@toStringTag@642",
-          "value": {
-            "type": "string"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": ""
-        },
         "catch": {
           "type": "method",
           "name": "catch",
@@ -703,7 +561,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+                "id": "typescript/lib/lib.es5.d.ts:Promise",
                 "name": "Promise"
               },
               "typeParameters": [
@@ -734,14 +592,14 @@
                     },
                     {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ReactPortal",
+                      "id": "@types/react/index.d.ts:ReactPortal",
                       "name": "ReactPortal"
                     },
                     {
                       "type": "application",
                       "base": {
                         "type": "link",
-                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+                        "id": "typescript/lib/lib.es2015.iterable.d.ts:Iterable",
                         "name": "Iterable"
                       },
                       "typeParameters": [
@@ -814,7 +672,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+                "id": "typescript/lib/lib.es5.d.ts:Promise",
                 "name": "Promise"
               },
               "typeParameters": [
@@ -931,7 +789,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:Promise",
+                "id": "typescript/lib/lib.es5.d.ts:Promise",
                 "name": "Promise"
               },
               "typeParameters": [
@@ -986,34 +844,6 @@
       },
       "typeParameters": [],
       "description": "Represents the completion of an asynchronous operation"
-    },
-    "TabListRenderProps": {
-      "type": "interface",
-      "name": "TabListRenderProps",
-      "properties": {
-        "orientation": {
-          "type": "property",
-          "name": "orientation",
-          "value": {
-            "type": "identifier",
-            "name": "Orientation"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The orientation of the tab list."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "identifier",
-            "name": "TabListState<unknown>"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the tab list."
-        }
-      }
     }
   }
 }

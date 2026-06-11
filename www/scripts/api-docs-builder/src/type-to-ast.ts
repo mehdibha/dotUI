@@ -5,6 +5,7 @@
  * for rich type rendering with popovers and navigation.
  */
 
+import path from 'node:path'
 import ts from 'typescript'
 
 import type {
@@ -384,16 +385,20 @@ export function buildTypeAstFromString(
   // ============================================================================
   if (/^"[^"]*"(\s*\|\s*"[^"]*")*$/.test(typeString)) {
     const literals = (typeString.match(/"[^"]*"/g) || []).sort()
-    return {
-      type: 'union',
-      elements: literals.map(
-        (lit) =>
-          ({
-            type: 'stringLiteral',
-            value: lit.slice(1, -1), // Remove quotes
-          }) as TStringLiteral,
-      ),
-    } as TUnion
+    const elements = literals.map(
+      (lit) =>
+        ({
+          type: 'stringLiteral',
+          value: lit.slice(1, -1), // Remove quotes
+        }) as TStringLiteral,
+    )
+    // A lone literal is not a union — wrapping it would break union sorting
+    // upstream (single-element unions all share one sort key)
+    const firstElement = elements[0]
+    if (elements.length === 1 && firstElement) {
+      return firstElement
+    }
+    return { type: 'union', elements } as TUnion
   }
 
   // ============================================================================
@@ -427,6 +432,29 @@ export function buildTypeAstFromString(
 }
 
 /**
+ * TypeScript names well-known symbol members `__@iterator@<n>` where `<n>` is
+ * a checker-internal counter that varies between runs — exclude them entirely.
+ */
+export function isWellKnownSymbolMember(name: string): boolean {
+  return name.startsWith('__@')
+}
+
+/**
+ * Normalize a declaration file path so type IDs are machine-independent:
+ * package-relative for dependencies (strip through the last `node_modules/`,
+ * which also drops the pnpm store key), cwd-relative for repo files.
+ */
+function normalizeDeclarationPath(fileName: string): string {
+  const posixFileName = fileName.replaceAll('\\', '/')
+  const marker = 'node_modules/'
+  const markerIndex = posixFileName.lastIndexOf(marker)
+  if (markerIndex !== -1) {
+    return posixFileName.slice(markerIndex + marker.length)
+  }
+  return path.relative(process.cwd(), posixFileName).replaceAll('\\', '/')
+}
+
+/**
  * Create a unique ID for a type
  */
 function getTypeId(type: ts.Type, checker: ts.TypeChecker): string {
@@ -436,7 +464,7 @@ function getTypeId(type: ts.Type, checker: ts.TypeChecker): string {
     const decl = declarations?.[0]
     if (decl) {
       const sourceFile = decl.getSourceFile()
-      return `${sourceFile.fileName}:${symbol.getName()}`
+      return `${normalizeDeclarationPath(sourceFile.fileName)}:${symbol.getName()}`
     }
     return symbol.getName()
   }
@@ -669,7 +697,12 @@ export function typeToAst(
         'AriaAttributes',
       ]
 
-      if (builtInTypes.includes(typeName)) {
+      // DOM element interfaces (HTMLInputElement, SVGSVGElement, …) are
+      // documented by MDN — keep them as identifiers instead of dumping the
+      // whole DOM type graph into typeLinks
+      const isDomElementType = /^(HTML|SVG)\w*Element$/.test(typeName)
+
+      if (builtInTypes.includes(typeName) || isDomElementType) {
         if (typeArgs && typeArgs.length > 0) {
           // Filter out trailing default type arguments for cleaner output
           const filteredArgs = filterDefaultTypeArgs(
@@ -924,9 +957,9 @@ function objectTypeToAst(
 
   const propsRecord: Record<string, TProperty | TMethod> = {}
 
-  for (const prop of [...properties].sort((a, b) =>
-    a.getName().localeCompare(b.getName()),
-  )) {
+  for (const prop of properties
+    .filter((p) => !isWellKnownSymbolMember(p.getName()))
+    .sort((a, b) => a.getName().localeCompare(b.getName()))) {
     const propType = checker.getTypeOfSymbol(prop)
     const declaration = prop.valueDeclaration
 
@@ -992,9 +1025,9 @@ function resolveNamedType(
     const properties = type.getProperties()
     const propsRecord: Record<string, TProperty | TMethod> = {}
 
-    for (const prop of [...properties].sort((a, b) =>
-      a.getName().localeCompare(b.getName()),
-    )) {
+    for (const prop of properties
+      .filter((p) => !isWellKnownSymbolMember(p.getName()))
+      .sort((a, b) => a.getName().localeCompare(b.getName()))) {
       const propType = checker.getTypeOfSymbol(prop)
       const callSignatures = propType.getCallSignatures()
       const firstCallSig = callSignatures[0]
@@ -1082,7 +1115,11 @@ function resolveNamedType(
 export function sortUnionElements(elements: TType[]): TType[] {
   return [...elements].sort((a, b) => {
     // Sort by a stable string key derived from the AST node
-    return getTypeSortKey(a).localeCompare(getTypeSortKey(b))
+    const keyOrder = getTypeSortKey(a).localeCompare(getTypeSortKey(b))
+    if (keyOrder !== 0) return keyOrder
+    // Same kind (e.g. two nested unions): fall back to full content so ties
+    // never resolve to the checker's unstable ordering
+    return JSON.stringify(a).localeCompare(JSON.stringify(b))
   })
 }
 

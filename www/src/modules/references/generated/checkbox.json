@@ -166,7 +166,7 @@
           }
         ]
       },
-      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
+      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides\nadditional event details for non-mouse interactions."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
@@ -313,7 +313,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current element."
+      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current\nelement."
     },
     "aria-describedby": {
       "type": "string",
@@ -329,7 +329,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
     },
     "aria-errormessage": {
       "type": "string",
@@ -395,7 +395,7 @@
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "className": {
       "type": "string | (values: CheckboxFieldRenderProps) => string",
@@ -428,7 +428,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-CheckboxField'"
     },
     "defaultSelected": {
@@ -461,7 +461,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "inputRef": {
       "type": "RefObject<HTMLInputElement | null>",
@@ -486,8 +486,7 @@
                     "type": "null"
                   },
                   {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                    "type": "identifier",
                     "name": "HTMLInputElement"
                   }
                 ]
@@ -552,7 +551,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+      "description": "The name of the input element, used when submitting an HTML form. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
     "onChange": {
       "type": "((isSelected: boolean) => void)",
@@ -596,24 +595,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
+                "id": "react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
                 "name": "CheckboxFieldRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "slot": {
       "type": "null | string",
@@ -632,7 +626,7 @@
           }
         ]
       },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
     },
     "style": {
       "type": "CSSProperties | (values: CheckboxFieldRenderProps) => CSSProperties",
@@ -667,7 +661,7 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
     "validate": {
       "type": "((value: boolean) => true | ValidationError | null | undefined)",
@@ -746,7 +740,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The value of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefvalue)."
+      "description": "The value of the input element, used when submitting an HTML form. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefvalue)."
     }
   },
   "renderProps": {
@@ -792,76 +786,6 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
-      "name": "CheckboxFieldRenderProps",
-      "extends": [],
-      "properties": {
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the checkbox is disabled."
-        },
-        "isIndeterminate": {
-          "type": "property",
-          "name": "isIndeterminate",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the checkbox is indeterminate."
-        },
-        "isInvalid": {
-          "type": "property",
-          "name": "isInvalid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the checkbox invalid."
-        },
-        "isReadOnly": {
-          "type": "property",
-          "name": "isReadOnly",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the checkbox is read only."
-        },
-        "isRequired": {
-          "type": "property",
-          "name": "isRequired",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the checkbox is required."
-        },
-        "isSelected": {
-          "type": "property",
-          "name": "isSelected",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the checkbox is selected."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
     "CheckboxFieldRenderProps": {
       "type": "interface",
       "name": "CheckboxFieldRenderProps",
@@ -1048,6 +972,76 @@
           "description": "Y position relative to the target."
         }
       }
+    },
+    "react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/Checkbox.d.ts:CheckboxFieldRenderProps",
+      "name": "CheckboxFieldRenderProps",
+      "extends": [],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox is disabled."
+        },
+        "isIndeterminate": {
+          "type": "property",
+          "name": "isIndeterminate",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox is indeterminate."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox invalid."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox is required."
+        },
+        "isSelected": {
+          "type": "property",
+          "name": "isSelected",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox is selected."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

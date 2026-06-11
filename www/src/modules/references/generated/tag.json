@@ -166,7 +166,7 @@
           }
         ]
       },
-      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
+      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides\nadditional event details for non-mouse interactions."
     },
     "onFocus": {
       "type": "((e: FocusEvent<Element, Element>) => void)",
@@ -364,7 +364,7 @@
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "className": {
       "type": "string | (values: TagRenderProps) => string",
@@ -397,7 +397,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-Tag'"
     },
     "download": {
@@ -417,7 +417,7 @@
           }
         ]
       },
-      "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
+      "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
     },
     "href": {
       "type": "string",
@@ -433,7 +433,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Hints at the human language of the linked URL. See[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
+      "description": "Hints at the human language of the linked URL.\nSee[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
     },
     "id": {
       "type": "Key",
@@ -471,7 +471,7 @@
           }
         ]
       },
-      "description": "Handler that is called when a user performs an action on the item. The exact user event depends on\nthe collection's `selectionBehavior` prop and the interaction modality."
+      "description": "Handler that is called when a user performs an action on the item. The exact user event depends\non the collection's `selectionBehavior` prop and the interaction modality."
     },
     "ping": {
       "type": "string",
@@ -479,7 +479,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "A space-separated list of URLs to ping when the link is followed. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
+      "description": "A space-separated list of URLs to ping when the link is followed. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
     },
     "referrerPolicy": {
       "type": "HTMLAttributeReferrerPolicy",
@@ -488,7 +488,7 @@
         "type": "identifier",
         "name": "HTMLAttributeReferrerPolicy"
       },
-      "description": "How much of the referrer to send when following the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
+      "description": "How much of the referrer to send when following the link. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
     },
     "rel": {
       "type": "string",
@@ -496,7 +496,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The relationship between the linked resource and the current page. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
+      "description": "The relationship between the linked resource and the current page. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
     },
     "render": {
       "type": "DOMRenderFunction<\"div\", TagRenderProps>",
@@ -515,24 +515,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps",
+                "id": "react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps",
                 "name": "TagRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "routerOptions": {
       "type": "undefined",
@@ -574,7 +569,7 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
     "target": {
       "type": "HTMLAttributeAnchorTarget",
@@ -583,7 +578,7 @@
         "type": "identifier",
         "name": "HTMLAttributeAnchorTarget"
       },
-      "description": "The target window for the link. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
+      "description": "The target window for the link. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
     },
     "textValue": {
       "type": "string",
@@ -601,7 +596,7 @@
     },
     "isDisabled": {
       "selector": "[data-disabled]",
-      "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+      "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item\nmay not be focused. Dependent on `disabledKeys` and `disabledBehavior`."
     },
     "isFocused": {
       "selector": "[data-focused]",
@@ -629,140 +624,6 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps",
-      "name": "TagRenderProps",
-      "extends": [
-        {
-          "type": "application",
-          "base": {
-            "type": "identifier",
-            "name": "Omit"
-          },
-          "typeParameters": [
-            {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Collection.d.ts:ItemRenderProps",
-              "name": "ItemRenderProps"
-            },
-            {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "stringLiteral",
-                  "value": "allowsDragging"
-                },
-                {
-                  "type": "stringLiteral",
-                  "value": "isDragging"
-                },
-                {
-                  "type": "stringLiteral",
-                  "value": "isDropTarget"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "properties": {
-        "allowsRemoving": {
-          "type": "property",
-          "name": "allowsRemoving",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the tag group allows items to be removed."
-        },
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
-        },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently focused."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently keyboard focused."
-        },
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently hovered with a mouse."
-        },
-        "isPressed": {
-          "type": "property",
-          "name": "isPressed",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently in a pressed state."
-        },
-        "isSelected": {
-          "type": "property",
-          "name": "isSelected",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the item is currently selected."
-        },
-        "selectionBehavior": {
-          "type": "property",
-          "name": "selectionBehavior",
-          "value": {
-            "type": "identifier",
-            "name": "SelectionBehavior"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The selection behavior for the collection."
-        },
-        "selectionMode": {
-          "type": "property",
-          "name": "selectionMode",
-          "value": {
-            "type": "identifier",
-            "name": "SelectionMode"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The type of selection that is allowed in the collection."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
     "HoverEvent": {
       "type": "interface",
       "name": "HoverEvent",
@@ -945,7 +806,7 @@
           },
           "optional": false,
           "readonly": false,
-          "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item may\nnot be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+          "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item\nmay not be focused. Dependent on `disabledKeys` and `disabledBehavior`."
         },
         "isFocused": {
           "type": "property",
@@ -1020,6 +881,140 @@
           "description": "The type of selection that is allowed in the collection."
         }
       }
+    },
+    "react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/TagGroup.d.ts:TagRenderProps",
+      "name": "TagRenderProps",
+      "extends": [
+        {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "Omit"
+          },
+          "typeParameters": [
+            {
+              "type": "link",
+              "id": "react-aria-components/dist/types/src/Collection.d.ts:ItemRenderProps",
+              "name": "ItemRenderProps"
+            },
+            {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "stringLiteral",
+                  "value": "allowsDragging"
+                },
+                {
+                  "type": "stringLiteral",
+                  "value": "isDragging"
+                },
+                {
+                  "type": "stringLiteral",
+                  "value": "isDropTarget"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "allowsRemoving": {
+          "type": "property",
+          "name": "allowsRemoving",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tag group allows items to be removed."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item\nmay not be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently focused."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently keyboard focused."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently hovered with a mouse."
+        },
+        "isPressed": {
+          "type": "property",
+          "name": "isPressed",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently in a pressed state."
+        },
+        "isSelected": {
+          "type": "property",
+          "name": "isSelected",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the item is currently selected."
+        },
+        "selectionBehavior": {
+          "type": "property",
+          "name": "selectionBehavior",
+          "value": {
+            "type": "identifier",
+            "name": "SelectionBehavior"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The selection behavior for the collection."
+        },
+        "selectionMode": {
+          "type": "property",
+          "name": "selectionMode",
+          "value": {
+            "type": "identifier",
+            "name": "SelectionMode"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of selection that is allowed in the collection."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

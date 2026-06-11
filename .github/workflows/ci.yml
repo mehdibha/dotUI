@@ -68,3 +68,21 @@ jobs:
             www/src/registry/__generated__/__hugeicons__.ts \
             www/src/registry/__generated__/__remix__.ts \
           || { echo '::error::Committed generated registry artifacts are out of date. Run `pnpm build:registry` and commit the result.'; exit 1; }
+
+  references-drift:
+    runs-on: ubuntu-latest
+    name: Check generated API references are up to date
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - name: Regenerate committed API reference files
+        run: pnpm build:references
+
+      - name: Fail if any committed reference file is stale
+        run: |
+          git status --porcelain -- www/src/modules/references/generated/ | grep -q . \
+          && { git status --porcelain -- www/src/modules/references/generated/; echo '::error::Committed API reference files are out of date. Run `pnpm build:references` and commit the result.'; exit 1; } \
+          || true
