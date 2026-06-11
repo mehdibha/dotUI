@@ -27,3 +27,6 @@ overrides:
 
 patchedDependencies:
   tailwindcss-react-aria-components@2.1.1: patches/tailwindcss-react-aria-components@2.1.1.patch
+
+minimumReleaseAgeExclude:
+  - starter-themes@0.0.2

@@ -51,7 +51,7 @@
     "react-hook-form": "^7.54.2",
     "react-stately": "^3.47.0",
     "shiki": "^4.0.2",
-    "starter-themes": "workspace:*",
+    "starter-themes": "^0.0.2",
     "tailwind-merge": "^3.0.2",
     "tailwind-variants": "^3.1.1",
     "tailwindcss": "catalog:",

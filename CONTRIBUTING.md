@@ -44,7 +44,6 @@ pnpm install
 5. Build the component registry (required once before the dev server works)
 
 ```bash
-pnpm --filter starter-themes build
 pnpm build:registry
 ```
 
