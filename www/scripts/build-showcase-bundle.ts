@@ -35,45 +35,47 @@
  * app-only `@/registry/__generated__/icons` barrel; we repoint it at `lucide-react`.
  */
 
-import { existsSync, promises as fs, statSync } from "node:fs";
-import path from "node:path";
+import { existsSync, promises as fs, statSync } from 'node:fs'
+import path from 'node:path'
+import { format } from 'oxfmt'
 
-import { format } from "oxfmt";
-
-import { DEFAULT_COLOR_CONFIG, GENERATIVE_ALGORITHMS } from "../src/registry/theme/color-config";
+import {
+  DEFAULT_COLOR_CONFIG,
+  GENERATIVE_ALGORITHMS,
+} from '../src/registry/theme/color-config'
 
 // `process.cwd()` is `www/` (the script is run from there via pnpm).
-const SRC = path.join(process.cwd(), "src");
-const GENERATED = path.join(SRC, "registry/__generated__");
-const OUT_FILE = path.join(GENERATED, "showcase-bundle.ts");
+const SRC = path.join(process.cwd(), 'src')
+const GENERATED = path.join(SRC, 'registry/__generated__')
+const OUT_FILE = path.join(GENERATED, 'showcase-bundle.ts')
 
 /** Entry point of the closure — the component the showcase renders first. */
-const ENTRY = "components/marketing/showcase/cards.tsx";
+const ENTRY = 'components/marketing/showcase/cards.tsx'
 
 /**
  * Full-file replacements, keyed by src-relative path. A file in this map is
  * shipped with the given content and is NOT scanned for further imports.
  */
 const OVERRIDES: Record<string, string> = {
-	"registry/theme/index.ts": themeStub(),
-	"registry/types.ts": typesStub(),
-};
+  'registry/theme/index.ts': themeStub(),
+  'registry/types.ts': typesStub(),
+}
 
 /** Per-file content rewrites applied after read, before emit and import scan. */
 function transformContent(srcRel: string, content: string): string {
-	if (srcRel === "components/marketing/showcase/invite-members.tsx") {
-		const rewritten = content.replace(
-			/import\s*\{\s*ExternalLinkIcon\s*\}\s*from\s*["']@\/registry\/__generated__\/icons["'];?/,
-			`import { ExternalLink as ExternalLinkIcon } from "lucide-react";`,
-		);
-		if (rewritten === content) {
-			throw new Error(
-				"[showcase-bundle] expected to rewrite the icons import in invite-members.tsx but found no match",
-			);
-		}
-		return rewritten;
-	}
-	return content;
+  if (srcRel === 'components/marketing/showcase/invite-members.tsx') {
+    const rewritten = content.replace(
+      /import\s*\{\s*ExternalLinkIcon\s*\}\s*from\s*["']@\/registry\/__generated__\/icons["'];?/,
+      `import { ExternalLink as ExternalLinkIcon } from "lucide-react";`,
+    )
+    if (rewritten === content) {
+      throw new Error(
+        '[showcase-bundle] expected to rewrite the icons import in invite-members.tsx but found no match',
+      )
+    }
+    return rewritten
+  }
+  return content
 }
 
 /**
@@ -81,19 +83,19 @@ function transformContent(srcRel: string, content: string): string {
  * the JS-import scan, plus the tailwind toolchain the bundle's globals.css needs.
  */
 const CSS_DEPENDENCIES = [
-	"@fontsource-variable/geist",
-	"@fontsource/geist-mono",
-	"tw-animate-css",
-	"tailwindcss",
-	"tailwindcss-react-aria-components",
-	"tailwindcss-with",
-];
+  '@fontsource-variable/geist',
+  '@fontsource/geist-mono',
+  'tw-animate-css',
+  'tailwindcss',
+  'tailwindcss-react-aria-components',
+  'tailwindcss-with',
+]
 
 /**
  * Provided by the target's framework scaffold (Next.js + Tailwind v4) — never
  * pin these from dotUI, or we'd fight the tool's own versions.
  */
-const FRAMEWORK_PROVIDED = new Set(["react", "react-dom", "tailwindcss"]);
+const FRAMEWORK_PROVIDED = new Set(['react', 'react-dom', 'tailwindcss'])
 
 /**
  * Published versions to pin in the bundle's `dependencies`. `workspace:*` deps in
@@ -102,71 +104,74 @@ const FRAMEWORK_PROVIDED = new Set(["react", "react-dom", "tailwindcss"]);
  * a transitive peer ships a new major.
  */
 const DEP_VERSIONS: Record<string, string> = {
-	"@base-ui/react": "^1.4.1",
-	"@fontsource-variable/geist": "^5.2.8",
-	"@fontsource/geist-mono": "^5.2.7",
-	"@internationalized/date": "^3.12.2",
-	clsx: "^2.1.0",
-	"lucide-react": "^1.16.0",
-	"react-aria": "^3.49.0",
-	"react-aria-components": "^1.18.0",
-	"react-stately": "^3.47.0",
-	"tailwind-merge": "^3.0.2",
-	"tailwind-variants": "^3.1.1",
-	"tailwindcss-autocontrast": "^0.0.3",
-	"tailwindcss-react-aria-components": "^2.1.1",
-	"tailwindcss-with": "^0.0.1",
-	"tw-animate-css": "^1.3.5",
-};
+  '@base-ui/react': '^1.4.1',
+  '@fontsource-variable/geist': '^5.2.8',
+  '@fontsource/geist-mono': '^5.2.7',
+  '@internationalized/date': '^3.12.2',
+  clsx: '^2.1.0',
+  'lucide-react': '^1.16.0',
+  'react-aria': '^3.49.0',
+  'react-aria-components': '^1.18.0',
+  'react-stately': '^3.47.0',
+  'tailwind-merge': '^3.0.2',
+  'tailwind-variants': '^3.1.1',
+  'tailwindcss-autocontrast': '^0.0.3',
+  'tailwindcss-react-aria-components': '^2.1.1',
+  'tailwindcss-with': '^0.0.1',
+  'tw-animate-css': '^1.3.5',
+}
 
 interface BundleFile {
-	target: string;
-	content: string;
+  target: string
+  content: string
 }
 
 /* ----------------------------- module resolution ----------------------------- */
 
-const EXT_CANDIDATES = [".tsx", ".ts", "/index.tsx", "/index.ts"];
+const EXT_CANDIDATES = ['.tsx', '.ts', '/index.tsx', '/index.ts']
 
 function isFile(srcRel: string): boolean {
-	const abs = path.join(SRC, srcRel);
-	return existsSync(abs) && statSync(abs).isFile();
+  const abs = path.join(SRC, srcRel)
+  return existsSync(abs) && statSync(abs).isFile()
 }
 
 /** Resolve a src-relative path (no extension) to an existing file, or null. */
 function resolveFile(srcRel: string): string | null {
-	// Explicit extension already present.
-	if (/\.(tsx?|css|js)$/.test(srcRel)) {
-		return isFile(srcRel) ? srcRel : null;
-	}
-	for (const ext of EXT_CANDIDATES) {
-		const candidate = `${srcRel}${ext}`;
-		if (isFile(candidate)) return candidate;
-	}
-	return null;
+  // Explicit extension already present.
+  if (/\.(tsx?|css|js)$/.test(srcRel)) {
+    return isFile(srcRel) ? srcRel : null
+  }
+  for (const ext of EXT_CANDIDATES) {
+    const candidate = `${srcRel}${ext}`
+    if (isFile(candidate)) return candidate
+  }
+  return null
 }
 
-type Resolved = { kind: "src"; srcRel: string } | { kind: "npm"; pkg: string } | { kind: "unresolved" };
+type Resolved =
+  | { kind: 'src'; srcRel: string }
+  | { kind: 'npm'; pkg: string }
+  | { kind: 'unresolved' }
 
 function resolveSpecifier(spec: string, fromSrcRel: string): Resolved {
-	let srcRel: string | null = null;
-	if (spec.startsWith("@/")) {
-		srcRel = resolveFile(spec.slice(2));
-	} else if (spec.startsWith(".")) {
-		const joined = path.normalize(path.join(path.dirname(fromSrcRel), spec));
-		srcRel = resolveFile(joined);
-	} else {
-		return { kind: "npm", pkg: packageNameOf(spec) };
-	}
-	if (srcRel) return { kind: "src", srcRel };
-	return { kind: "unresolved" };
+  let srcRel: string | null = null
+  if (spec.startsWith('@/')) {
+    srcRel = resolveFile(spec.slice(2))
+  } else if (spec.startsWith('.')) {
+    const joined = path.normalize(path.join(path.dirname(fromSrcRel), spec))
+    srcRel = resolveFile(joined)
+  } else {
+    return { kind: 'npm', pkg: packageNameOf(spec) }
+  }
+  if (srcRel) return { kind: 'src', srcRel }
+  return { kind: 'unresolved' }
 }
 
 /** `react-aria-components/Button` → `react-aria-components`; `@internationalized/date` → `@internationalized/date`. */
 function packageNameOf(spec: string): string {
-	const parts = spec.split("/");
-	if (spec.startsWith("@")) return parts.slice(0, 2).join("/");
-	return parts[0] ?? spec;
+  const parts = spec.split('/')
+  if (spec.startsWith('@')) return parts.slice(0, 2).join('/')
+  return parts[0] ?? spec
 }
 
 /**
@@ -180,164 +185,197 @@ function packageNameOf(spec: string): string {
  * pass through untouched.
  */
 function rewriteImportsToRelative(srcRel: string, content: string): string {
-	let out = content;
-	for (const spec of extractSpecifiers(content)) {
-		if (!spec.startsWith("@/")) continue;
-		const target = resolveFile(spec.slice(2));
-		if (!target) continue;
-		const rel = toRelativeImport(srcRel, target);
-		out = out.split(`"${spec}"`).join(`"${rel}"`).split(`'${spec}'`).join(`'${rel}'`);
-	}
-	return out;
+  let out = content
+  for (const spec of extractSpecifiers(content)) {
+    if (!spec.startsWith('@/')) continue
+    const target = resolveFile(spec.slice(2))
+    if (!target) continue
+    const rel = toRelativeImport(srcRel, target)
+    out = out
+      .split(`"${spec}"`)
+      .join(`"${rel}"`)
+      .split(`'${spec}'`)
+      .join(`'${rel}'`)
+  }
+  return out
 }
 
 /** A relative specifier (no extension, leading `./` or `../`) from one src-rel file to another. */
 function toRelativeImport(fromSrcRel: string, targetSrcRel: string): string {
-	const moduleTarget = /\.css$/.test(targetSrcRel)
-		? targetSrcRel
-		: targetSrcRel.replace(/\/index\.(tsx?|jsx?)$/, "").replace(/\.(tsx?|jsx?)$/, "");
-	let rel = path.relative(path.dirname(fromSrcRel), moduleTarget).split(path.sep).join("/");
-	if (!rel.startsWith(".")) rel = `./${rel}`;
-	return rel;
+  const moduleTarget = /\.css$/.test(targetSrcRel)
+    ? targetSrcRel
+    : targetSrcRel
+        .replace(/\/index\.(tsx?|jsx?)$/, '')
+        .replace(/\.(tsx?|jsx?)$/, '')
+  let rel = path
+    .relative(path.dirname(fromSrcRel), moduleTarget)
+    .split(path.sep)
+    .join('/')
+  if (!rel.startsWith('.')) rel = `./${rel}`
+  return rel
 }
 
 /* ------------------------------- import scan ------------------------------- */
 
 const IMPORT_PATTERNS = [
-	/(?:import|export)\s+(?:type\s+)?[^"';]*?\s+from\s*["']([^"']+)["']/g,
-	/import\s*["']([^"']+)["']/g,
-	/import\s*\(\s*["']([^"']+)["']\s*\)/g,
-];
+  /(?:import|export)\s+(?:type\s+)?[^"';]*?\s+from\s*["']([^"']+)["']/g,
+  /import\s*["']([^"']+)["']/g,
+  /import\s*\(\s*["']([^"']+)["']\s*\)/g,
+]
 
 /** Strip comments so commented-out imports aren't scanned. Lookbehind spares `https://`. */
 function stripComments(s: string): string {
-	return s.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(?<!:)\/\/[^\n]*/g, "");
+  return s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(?<!:)\/\/[^\n]*/g, '')
 }
 
 function extractSpecifiers(rawContent: string): string[] {
-	const content = stripComments(rawContent);
-	const specs = new Set<string>();
-	for (const pattern of IMPORT_PATTERNS) {
-		pattern.lastIndex = 0;
-		let match: RegExpExecArray | null;
-		while ((match = pattern.exec(content)) !== null) {
-			if (match[1]) specs.add(match[1]);
-		}
-	}
-	return [...specs];
+  const content = stripComments(rawContent)
+  const specs = new Set<string>()
+  for (const pattern of IMPORT_PATTERNS) {
+    pattern.lastIndex = 0
+    let match: RegExpExecArray | null
+    while ((match = pattern.exec(content)) !== null) {
+      if (match[1]) specs.add(match[1])
+    }
+  }
+  return [...specs]
 }
 
 /* --------------------------------- closure --------------------------------- */
 
 async function buildShowcaseBundle(): Promise<void> {
-	const sourceFiles = new Map<string, string>(); // srcRel -> content
-	const npmDeps = new Set<string>();
-	const unresolved: { from: string; spec: string }[] = [];
-	const cssSideEffectFiles = new Set<string>(); // .css reached via JS import
+  const sourceFiles = new Map<string, string>() // srcRel -> content
+  const npmDeps = new Set<string>()
+  const unresolved: { from: string; spec: string }[] = []
+  const cssSideEffectFiles = new Set<string>() // .css reached via JS import
 
-	const queue: string[] = [ENTRY];
-	const visited = new Set<string>();
+  const queue: string[] = [ENTRY]
+  const visited = new Set<string>()
 
-	while (queue.length > 0) {
-		const srcRel = queue.shift()!;
-		if (visited.has(srcRel)) continue;
-		visited.add(srcRel);
+  while (queue.length > 0) {
+    const srcRel = queue.shift()!
+    if (visited.has(srcRel)) continue
+    visited.add(srcRel)
 
-		if (srcRel.endsWith(".css")) {
-			cssSideEffectFiles.add(srcRel);
-			continue;
-		}
+    if (srcRel.endsWith('.css')) {
+      cssSideEffectFiles.add(srcRel)
+      continue
+    }
 
-		const override = OVERRIDES[srcRel];
-		const raw = override ?? (await fs.readFile(path.join(SRC, srcRel), "utf8"));
-		const content = override ?? transformContent(srcRel, raw);
-		sourceFiles.set(srcRel, content);
+    const override = OVERRIDES[srcRel]
+    const raw = override ?? (await fs.readFile(path.join(SRC, srcRel), 'utf8'))
+    const content = override ?? transformContent(srcRel, raw)
+    sourceFiles.set(srcRel, content)
 
-		// Overrides are scanned like any file: the theme stub re-exports the real
-		// ./semantics + ./emit-css, which must enter the closure.
-		for (const spec of extractSpecifiers(content)) {
-			const resolved = resolveSpecifier(spec, srcRel);
-			if (resolved.kind === "npm") {
-				npmDeps.add(resolved.pkg);
-			} else if (resolved.kind === "src") {
-				if (!visited.has(resolved.srcRel)) queue.push(resolved.srcRel);
-			} else {
-				unresolved.push({ from: srcRel, spec });
-			}
-		}
-	}
+    // Overrides are scanned like any file: the theme stub re-exports the real
+    // ./semantics + ./emit-css, which must enter the closure.
+    for (const spec of extractSpecifiers(content)) {
+      const resolved = resolveSpecifier(spec, srcRel)
+      if (resolved.kind === 'npm') {
+        npmDeps.add(resolved.pkg)
+      } else if (resolved.kind === 'src') {
+        if (!visited.has(resolved.srcRel)) queue.push(resolved.srcRel)
+      } else {
+        unresolved.push({ from: srcRel, spec })
+      }
+    }
+  }
 
-	if (unresolved.length > 0) {
-		for (const u of unresolved) console.error(`  ✗ unresolved import "${u.spec}" in ${u.from}`);
-		throw new Error(`[showcase-bundle] ${unresolved.length} unresolved import(s); see above`);
-	}
+  if (unresolved.length > 0) {
+    for (const u of unresolved)
+      console.error(`  ✗ unresolved import "${u.spec}" in ${u.from}`)
+    throw new Error(
+      `[showcase-bundle] ${unresolved.length} unresolved import(s); see above`,
+    )
+  }
 
-	/* ----- collect per-component styles.css sidecars (wired via CSS @import) ----- */
-	const componentDirs = new Set<string>();
-	for (const srcRel of sourceFiles.keys()) {
-		const m = srcRel.match(/^(registry\/ui\/[^/]+)\//);
-		if (m?.[1]) componentDirs.add(m[1]);
-	}
-	const componentStyleImports: string[] = [];
-	const cssFiles: BundleFile[] = [];
-	for (const dir of [...componentDirs].sort()) {
-		const stylesRel = `${dir}/styles.css`;
-		if (existsSync(path.join(SRC, stylesRel))) {
-			cssFiles.push({ target: stylesRel, content: await fs.readFile(path.join(SRC, stylesRel), "utf8") });
-			componentStyleImports.push(`@import "./${stylesRel.replace("registry/", "")}";`);
-		}
-	}
-	// Any .css reached directly via a JS import (rare) ships verbatim too.
-	for (const srcRel of cssSideEffectFiles) {
-		if (!cssFiles.some((f) => f.target === srcRel)) {
-			cssFiles.push({ target: srcRel, content: await fs.readFile(path.join(SRC, srcRel), "utf8") });
-		}
-	}
+  /* ----- collect per-component styles.css sidecars (wired via CSS @import) ----- */
+  const componentDirs = new Set<string>()
+  for (const srcRel of sourceFiles.keys()) {
+    const m = srcRel.match(/^(registry\/ui\/[^/]+)\//)
+    if (m?.[1]) componentDirs.add(m[1])
+  }
+  const componentStyleImports: string[] = []
+  const cssFiles: BundleFile[] = []
+  for (const dir of [...componentDirs].sort()) {
+    const stylesRel = `${dir}/styles.css`
+    if (existsSync(path.join(SRC, stylesRel))) {
+      cssFiles.push({
+        target: stylesRel,
+        content: await fs.readFile(path.join(SRC, stylesRel), 'utf8'),
+      })
+      componentStyleImports.push(
+        `@import "./${stylesRel.replace('registry/', '')}";`,
+      )
+    }
+  }
+  // Any .css reached directly via a JS import (rare) ships verbatim too.
+  for (const srcRel of cssSideEffectFiles) {
+    if (!cssFiles.some((f) => f.target === srcRel)) {
+      cssFiles.push({
+        target: srcRel,
+        content: await fs.readFile(path.join(SRC, srcRel), 'utf8'),
+      })
+    }
+  }
 
-	/* ----- base CSS (theme scaffolding). colors.css is injected per-request. ----- */
-	for (const base of ["base.css", "theme.css", "fonts.css"]) {
-		let content = await fs.readFile(path.join(SRC, `registry/base/${base}`), "utf8");
-		if (base === "base.css") {
-			// Drop the autocontrast plugin: the bundle bakes `--on-*` foregrounds
-			// into colors.css (emit-bundle-css.ts), so the plugin — and its brittle
-			// `cssfile` path — isn't needed.
-			const before = content;
-			content = content.replace(/@plugin\s+"tailwindcss-autocontrast"\s*\{[\s\S]*?\}\s*/, "");
-			if (content === before) {
-				throw new Error("[showcase-bundle] expected to strip the tailwindcss-autocontrast @plugin from base.css");
-			}
-		}
-		cssFiles.unshift({ target: `registry/base/${base}`, content });
-	}
+  /* ----- base CSS (theme scaffolding). colors.css is injected per-request. ----- */
+  for (const base of ['base.css', 'theme.css', 'fonts.css']) {
+    let content = await fs.readFile(
+      path.join(SRC, `registry/base/${base}`),
+      'utf8',
+    )
+    if (base === 'base.css') {
+      // Drop the autocontrast plugin: the bundle bakes `--on-*` foregrounds
+      // into colors.css (emit-bundle-css.ts), so the plugin — and its brittle
+      // `cssfile` path — isn't needed.
+      const before = content
+      content = content.replace(
+        /@plugin\s+['"]tailwindcss-autocontrast['"]\s*\{[\s\S]*?\}\s*/,
+        '',
+      )
+      if (content === before) {
+        throw new Error(
+          '[showcase-bundle] expected to strip the tailwindcss-autocontrast @plugin from base.css',
+        )
+      }
+    }
+    cssFiles.unshift({ target: `registry/base/${base}`, content })
+  }
 
-	/* ----- the registry CSS aggregator (mirrors src/registry/styles.css) ----- */
-	const aggregator = [
-		`/* AUTO-GENERATED by the showcase bundle. */`,
-		`@import "./base/base.css";`,
-		`@import "./base/colors.css";`,
-		`@import "./base/theme.css";`,
-		`@import "./base/fonts.css";`,
-		"",
-		...componentStyleImports,
-		"",
-	].join("\n");
-	cssFiles.push({ target: "registry/styles.css", content: aggregator });
+  /* ----- the registry CSS aggregator (mirrors src/registry/styles.css) ----- */
+  const aggregator = [
+    `/* AUTO-GENERATED by the showcase bundle. */`,
+    `@import "./base/base.css";`,
+    `@import "./base/colors.css";`,
+    `@import "./base/theme.css";`,
+    `@import "./base/fonts.css";`,
+    '',
+    ...componentStyleImports,
+    '',
+  ].join('\n')
+  cssFiles.push({ target: 'registry/styles.css', content: aggregator })
 
-	/* --------------------------------- emit --------------------------------- */
-	// Targets are project-root-relative; imports are rewritten to RELATIVE paths
-	// so v0's `@/registry/* → @/components/ui/*` alias transform has nothing to
-	// touch and the files resolve wherever they land.
-	const sourceFilesArr: BundleFile[] = [...sourceFiles.entries()]
-		.sort(([a], [b]) => a.localeCompare(b))
-		.map(([srcRel, content]) => ({ target: srcRel, content: rewriteImportsToRelative(srcRel, content) }));
+  /* --------------------------------- emit --------------------------------- */
+  // Targets are project-root-relative; imports are rewritten to RELATIVE paths
+  // so v0's `@/registry/* → @/components/ui/*` alias transform has nothing to
+  // touch and the files resolve wherever they land.
+  const sourceFilesArr: BundleFile[] = [...sourceFiles.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([srcRel, content]) => ({
+      target: srcRel,
+      content: rewriteImportsToRelative(srcRel, content),
+    }))
 
-	const dependencies = [...new Set([...npmDeps, ...CSS_DEPENDENCIES])]
-		.filter((d) => !d.startsWith("@/") && !FRAMEWORK_PROVIDED.has(d))
-		.sort()
-		.map((d) => (DEP_VERSIONS[d] ? `${d}@${DEP_VERSIONS[d]}` : d));
-	const componentNames = [...componentDirs].map((d) => d.replace("registry/ui/", "")).sort();
+  const dependencies = [...new Set([...npmDeps, ...CSS_DEPENDENCIES])]
+    .filter((d) => !d.startsWith('@/') && !FRAMEWORK_PROVIDED.has(d))
+    .sort()
+    .map((d) => (DEP_VERSIONS[d] ? `${d}@${DEP_VERSIONS[d]}` : d))
+  const componentNames = [...componentDirs]
+    .map((d) => d.replace('registry/ui/', ''))
+    .sort()
 
-	const out = `// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.
+  const out = `// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.
 // Transitive source + CSS closure for the "Open in v0" showcase bundle.
 // Generated by scripts/build-showcase-bundle.ts.
 
@@ -353,22 +391,25 @@ export const SHOWCASE_BUNDLE_CSS_FILES: BundleFile[] = ${JSON.stringify(cssFiles
 export const SHOWCASE_BUNDLE_DEPENDENCIES: string[] = ${JSON.stringify(dependencies, null, 2)};
 
 export const SHOWCASE_BUNDLE_COMPONENTS: string[] = ${JSON.stringify(componentNames, null, 2)};
-`;
+`
 
-	await fs.mkdir(GENERATED, { recursive: true });
-	const { code } = await format(OUT_FILE, out, { printWidth: 120, useTabs: true });
-	await fs.writeFile(OUT_FILE, code, "utf8");
+  await fs.mkdir(GENERATED, { recursive: true })
+  const { code } = await format(OUT_FILE, out, {
+    printWidth: 120,
+    useTabs: true,
+  })
+  await fs.writeFile(OUT_FILE, code, 'utf8')
 
-	console.log(
-		`  ✓ showcase-bundle: ${sourceFilesArr.length} source + ${cssFiles.length} css files, ` +
-			`${dependencies.length} deps, ${componentNames.length} components`,
-	);
+  console.log(
+    `  ✓ showcase-bundle: ${sourceFilesArr.length} source + ${cssFiles.length} css files, ` +
+      `${dependencies.length} deps, ${componentNames.length} components`,
+  )
 }
 
 /* --------------------------------- stubs --------------------------------- */
 
 function themeStub(): string {
-	return `// Stub of @/registry/theme for the standalone "Open in v0" bundle.
+  return `// Stub of @/registry/theme for the standalone "Open in v0" bundle.
 // The real barrel depends on the unpublished @dotui/colors workspace package.
 // What ships real vs inert:
 //   - DEFAULT_SEMANTICS + emitCss are re-exported for REAL (./semantics and
@@ -413,7 +454,7 @@ export interface ColorConfig {
 \tknobs?: ColorKnobs;
 }
 
-export const DEFAULT_COLOR_CONFIG: ColorConfig = ${JSON.stringify(DEFAULT_COLOR_CONFIG, null, "\t")};
+export const DEFAULT_COLOR_CONFIG: ColorConfig = ${JSON.stringify(DEFAULT_COLOR_CONFIG, null, '\t')};
 
 export function emitPrimitivesCss(..._args: unknown[]): string {
 \treturn "";
@@ -424,11 +465,11 @@ export function resolveColorConfig(..._args: unknown[]): {
 } {
 \treturn { light: {}, dark: {} };
 }
-`;
+`
 }
 
 function typesStub(): string {
-	return `// Self-contained copy of @/registry/types for the standalone "Open in v0"
+  return `// Self-contained copy of @/registry/types for the standalone "Open in v0"
 // bundle. The real file imports types from the \`shadcn\` CLI package; this drops
 // that dependency. Types are erased at runtime, so behavior is identical.
 export type Density = "compact" | "default" | "comfortable";
@@ -480,10 +521,10 @@ export type Registry = {
 \titems: RegistryItem[];
 \t[key: string]: unknown;
 };
-`;
+`
 }
 
 buildShowcaseBundle().catch((err) => {
-	console.error("\n❌ Error building showcase bundle:", err);
-	process.exit(1);
-});
+  console.error('\n❌ Error building showcase bundle:', err)
+  process.exit(1)
+})
