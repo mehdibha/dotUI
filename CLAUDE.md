@@ -44,6 +44,11 @@ What this means when writing code today:
   consumed by www).
 - Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`,
   `tailwindcss-with`) are moving to standalone repos, consumed from npm.
+- `docs/research/` — date-prefixed (`YYYY-MM-DD-topic.md`) point-in-time
+  research and assessment reports. Check it before re-researching a topic;
+  findings are snapshots as of the filename date. When a report's open
+  question gets decided, append a dated `> Decision:` line to its status
+  header rather than leaving it open.
 - `patches/` — pnpm patches. `tailwindcss-react-aria-components` is patched
   for an upstream `not-*` variant bug; don't bump it without re-checking the
   patch.
