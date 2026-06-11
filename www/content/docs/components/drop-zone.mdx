@@ -8,20 +8,20 @@ wip: true
 ---
 
 <InteractiveDemo
-	engine="source"
-	name="drop-zone"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Drop files here",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-	]}
+  engine="source"
+  name="drop-zone"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Drop files here',
+    },
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -35,24 +35,24 @@ npx shadcn@latest add @dotui/drop-zone
 Use drop zones to allow users to drag and drop files or content into a designated area.
 
 ```tsx
-import { DropZone, DropZoneLabel } from "@/components/ui/drop-zone";
+import { DropZone, DropZoneLabel } from '@/components/ui/drop-zone'
 ```
 
 ```tsx
 <DropZone>
-	<DropZoneLabel>Drop files here</DropZoneLabel>
+  <DropZoneLabel>Drop files here</DropZoneLabel>
 </DropZone>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="drop-zone/demos/basic" />
-	<Example name="drop-zone/demos/label" />
-	<Example name="drop-zone/demos/visual-feedback" />
-	<Example name="drop-zone/demos/file-trigger" />
-	<Example name="drop-zone/demos/events" />
-	<Example name="drop-zone/demos/disabled" />
+  <Example name="drop-zone/demos/basic" />
+  <Example name="drop-zone/demos/label" />
+  <Example name="drop-zone/demos/visual-feedback" />
+  <Example name="drop-zone/demos/file-trigger" />
+  <Example name="drop-zone/demos/events" />
+  <Example name="drop-zone/demos/disabled" />
 </Examples>
 
 ## API Reference

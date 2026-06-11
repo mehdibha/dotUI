@@ -1,4 +1,4 @@
 :root {
-	--radio-radius: 9999px;
-	--radio-card-radius: var(--radius-lg);
+  --radio-radius: 9999px;
+  --radio-card-radius: var(--radius-lg);
 }

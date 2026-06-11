@@ -1,24 +1,24 @@
-import type { RegistryItem } from "@/registry/types";
+import type { RegistryItem } from '@/registry/types'
 
 const commandMeta = {
-	name: "command",
-	type: "registry:ui",
-	group: "menus-lists",
-	files: [
-		{
-			type: "registry:ui",
-			path: "ui/command/base.tsx",
-			target: "ui/command.tsx",
-		},
-	],
-	registryDependencies: ["list-box", "search-field"],
-	params: {
-		style: {
-			kind: "enum",
-			default: "1",
-			values: ["1", "2", "3"],
-		},
-	},
-} satisfies RegistryItem;
+  name: 'command',
+  type: 'registry:ui',
+  group: 'menus-lists',
+  files: [
+    {
+      type: 'registry:ui',
+      path: 'ui/command/base.tsx',
+      target: 'ui/command.tsx',
+    },
+  ],
+  registryDependencies: ['list-box', 'search-field'],
+  params: {
+    style: {
+      kind: 'enum',
+      default: '1',
+      values: ['1', '2', '3'],
+    },
+  },
+} satisfies RegistryItem
 
-export default commandMeta;
+export default commandMeta

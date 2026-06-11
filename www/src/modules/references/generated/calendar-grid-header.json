@@ -1,82 +1,82 @@
 {
-	"name": "CalendarGridHeaderProps",
-	"description": "A calendar grid header displays a row of week day names at the top of a month.",
-	"props": {
-		"children": {
-			"type": "(day: string) => ReactElement<unknown, string | JSXElementConstructor<any>>",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "day",
-						"value": {
-							"type": "string"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "identifier",
-					"name": "ReactElement"
-				},
-				"typeParameters": []
-			},
-			"description": "A function to render a `<CalendarHeaderCell>` for a weekday name.",
-			"required": true
-		},
-		"className": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
-			"default": "'react-aria-CalendarGridHeader'"
-		},
-		"render": {
-			"type": "DOMRenderFunction<\"thead\", undefined>",
-			"detailedType": "DOMRenderFunction<'thead', undefined> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "DOMRenderFunction"
-						},
-						"typeParameters": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "thead"
-									}
-								]
-							},
-							{
-								"type": "undefined"
-							}
-						]
-					}
-				]
-			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
-		},
-		"style": {
-			"type": "CSSProperties",
-			"detailedType": "CSSProperties | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "CSSProperties"
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
-		}
-	}
+  "name": "CalendarGridHeaderProps",
+  "description": "A calendar grid header displays a row of week day names at the top of a month.",
+  "props": {
+    "children": {
+      "type": "(day: string) => ReactElement<unknown, string | JSXElementConstructor<any>>",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "day",
+            "value": {
+              "type": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "identifier",
+          "name": "ReactElement"
+        },
+        "typeParameters": []
+      },
+      "description": "A function to render a `<CalendarHeaderCell>` for a weekday name.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
+      "default": "'react-aria-CalendarGridHeader'"
+    },
+    "render": {
+      "type": "DOMRenderFunction<\"thead\", undefined>",
+      "detailedType": "DOMRenderFunction<'thead', undefined> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "DOMRenderFunction"
+            },
+            "typeParameters": [
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "thead"
+                  }
+                ]
+              },
+              {
+                "type": "undefined"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+    },
+    "style": {
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CSSProperties"
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element."
+    }
+  }
 }

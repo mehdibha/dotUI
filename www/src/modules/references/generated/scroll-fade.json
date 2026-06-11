@@ -1,6 +1,6 @@
 {
-	"name": "ScrollFadeProps",
-	"description": "A native scroll container with edge-aware gradient fade affordances.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "ScrollFadeProps",
+  "description": "A native scroll container with edge-aware gradient fade affordances.",
+  "extendsElement": "div",
+  "props": {}
 }

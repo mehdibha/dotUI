@@ -8,16 +8,16 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="menu"
-	engine="source"
-	controls={[
-		{
-			type: "enum",
-			name: "placement",
-			options: ["bottom", "top", "left", "right"],
-			defaultValue: "bottom",
-		},
-	]}
+  name="menu"
+  engine="source"
+  controls={[
+    {
+      type: 'enum',
+      name: 'placement',
+      options: ['bottom', 'top', 'left', 'right'],
+      defaultValue: 'bottom',
+    },
+  ]}
 />
 
 ## Installation
@@ -31,45 +31,45 @@ npx shadcn@latest add @dotui/menu
 Use menus to display a list of actions or options that a user can choose from.
 
 ```tsx
-import { Button } from "@/components/ui/button";
-import { Menu, MenuContent, MenuItem } from "@/components/ui/menu";
-import { Popover } from "@/components/ui/popover";
+import { Button } from '@/components/ui/button'
+import { Menu, MenuContent, MenuItem } from '@/components/ui/menu'
+import { Popover } from '@/components/ui/popover'
 ```
 
 ```tsx
 <Menu>
-	<Button>Open Menu</Button>
-	<Popover>
-		<MenuContent>
-			<MenuItem>Edit</MenuItem>
-			<MenuItem>Duplicate</MenuItem>
-			<MenuItem>Delete</MenuItem>
-		</MenuContent>
-	</Popover>
+  <Button>Open Menu</Button>
+  <Popover>
+    <MenuContent>
+      <MenuItem>Edit</MenuItem>
+      <MenuItem>Duplicate</MenuItem>
+      <MenuItem>Delete</MenuItem>
+    </MenuContent>
+  </Popover>
 </Menu>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="menu/demos/basic" />
-	<Example name="menu/demos/label-and-description" />
-	<Example name="menu/demos/prefix-and-suffix" />
-	<Example name="menu/demos/shortcut" />
-	<Example name="menu/demos/item-variant" />
-	<Example name="menu/demos/section" />
-	<Example name="menu/demos/separator" />
-	<Example name="menu/demos/submenus" />
-	<Example name="menu/demos/link-items" />
-	<Example name="menu/demos/disabled-items" />
-	<Example name="menu/demos/single-selection" />
-	<Example name="menu/demos/multiple-selection" />
-	<Example name="menu/demos/placement" />
-	<Example name="menu/demos/overlay-type" />
-	<Example name="menu/demos/with-drawer" />
-	<Example name="menu/demos/with-modal" />
-	<Example name="menu/demos/long-press" />
-	<Example name="menu/demos/controlled" />
+  <Example name="menu/demos/basic" />
+  <Example name="menu/demos/label-and-description" />
+  <Example name="menu/demos/prefix-and-suffix" />
+  <Example name="menu/demos/shortcut" />
+  <Example name="menu/demos/item-variant" />
+  <Example name="menu/demos/section" />
+  <Example name="menu/demos/separator" />
+  <Example name="menu/demos/submenus" />
+  <Example name="menu/demos/link-items" />
+  <Example name="menu/demos/disabled-items" />
+  <Example name="menu/demos/single-selection" />
+  <Example name="menu/demos/multiple-selection" />
+  <Example name="menu/demos/placement" />
+  <Example name="menu/demos/overlay-type" />
+  <Example name="menu/demos/with-drawer" />
+  <Example name="menu/demos/with-modal" />
+  <Example name="menu/demos/long-press" />
+  <Example name="menu/demos/controlled" />
 </Examples>
 
 ## API Reference

@@ -8,15 +8,15 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="command"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "placeholder",
-			defaultValue: "Type a command...",
-		},
-	]}
+  name="command"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'placeholder',
+      defaultValue: 'Type a command...',
+    },
+  ]}
 />
 
 ## Installation
@@ -30,24 +30,29 @@ npx shadcn@latest add @dotui/command
 Use command menus to provide users with a searchable list of commands or actions.
 
 ```tsx
-import { Command, CommandContent, CommandInput, CommandItem } from "@/components/ui/command";
+import {
+  Command,
+  CommandContent,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command'
 ```
 
 ```tsx
 <Command>
-	<CommandInput placeholder="Type a command..." />
-	<CommandContent>
-		<CommandItem textValue="Create file">Create new file</CommandItem>
-		<CommandItem textValue="Open file">Open file</CommandItem>
-	</CommandContent>
+  <CommandInput placeholder="Type a command..." />
+  <CommandContent>
+    <CommandItem textValue="Create file">Create new file</CommandItem>
+    <CommandItem textValue="Open file">Open file</CommandItem>
+  </CommandContent>
 </Command>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="command/demos/basic" />
-	<Example name="command/demos/dialog" />
+  <Example name="command/demos/basic" />
+  <Example name="command/demos/dialog" />
 </Examples>
 
 ## API Reference

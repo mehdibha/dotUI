@@ -1,6 +1,6 @@
 {
-	"name": "ProgressBarControlProps",
-	"description": "The visual track for the progress bar.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "ProgressBarControlProps",
+  "description": "The visual track for the progress bar.",
+  "extendsElement": "div",
+  "props": {}
 }

@@ -1,5 +1,5 @@
 :root {
-	--calendar-cell-radius: var(--radius-lg);
-	--calendar-cell-size: --spacing(8);
-	--calendar-range-radius: var(--radius-sm);
+  --calendar-cell-radius: var(--radius-lg);
+  --calendar-cell-size: --spacing(8);
+  --calendar-range-radius: var(--radius-sm);
 }

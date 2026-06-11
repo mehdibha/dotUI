@@ -1,12 +1,16 @@
-"use client";
+'use client'
 
-import * as HeadingPrimitives from "react-aria-components/Heading";
+import * as HeadingPrimitives from 'react-aria-components/Heading'
 
-interface HeadingProps extends React.ComponentProps<typeof HeadingPrimitives.Heading> {}
+interface HeadingProps extends React.ComponentProps<
+  typeof HeadingPrimitives.Heading
+> {}
 
-function Heading(props: React.ComponentProps<typeof HeadingPrimitives.Heading>) {
-	return <HeadingPrimitives.Heading {...props} />;
+function Heading(
+  props: React.ComponentProps<typeof HeadingPrimitives.Heading>,
+) {
+  return <HeadingPrimitives.Heading {...props} />
 }
 
-export type { HeadingProps };
-export { Heading };
+export type { HeadingProps }
+export { Heading }

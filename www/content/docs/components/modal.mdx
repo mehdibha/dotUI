@@ -8,15 +8,15 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="modal"
-	engine="source"
-	controls={[
-		{
-			type: "boolean",
-			name: "isDismissable",
-			defaultValue: true,
-		},
-	]}
+  name="modal"
+  engine="source"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'isDismissable',
+      defaultValue: true,
+    },
+  ]}
 />
 
 ## Installation
@@ -30,24 +30,24 @@ npx shadcn@latest add @dotui/modal
 Use modals to display content in a layer that overlays the page content.
 
 ```tsx
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Modal } from "@/components/ui/modal";
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Modal } from '@/components/ui/modal'
 ```
 
 ```tsx
 <Dialog>
-	<Button>Open Modal</Button>
-	<Modal>
-		<DialogContent>Modal content</DialogContent>
-	</Modal>
+  <Button>Open Modal</Button>
+  <Modal>
+    <DialogContent>Modal content</DialogContent>
+  </Modal>
 </Dialog>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="modal/demos/basic" />
+  <Example name="modal/demos/basic" />
 </Examples>
 
 ## API Reference

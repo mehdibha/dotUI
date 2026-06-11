@@ -1,15 +1,15 @@
-import type { RegistryItem } from "@/registry/types";
+import type { RegistryItem } from '@/registry/types'
 
 const utilsMeta = {
-	name: "utils",
-	type: "registry:lib",
-	files: [
-		{
-			path: "lib/utils/index.ts",
-			type: "registry:lib",
-			target: "lib/utils.ts",
-		},
-	],
-} satisfies RegistryItem;
+  name: 'utils',
+  type: 'registry:lib',
+  files: [
+    {
+      path: 'lib/utils/index.ts',
+      type: 'registry:lib',
+      target: 'lib/utils.ts',
+    },
+  ],
+} satisfies RegistryItem
 
-export default utilsMeta;
+export default utilsMeta

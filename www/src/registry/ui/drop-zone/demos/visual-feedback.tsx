@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import React from "react";
+import React from 'react'
 
-import { DropZone } from "@/registry/ui/drop-zone";
+import { DropZone } from '@/registry/ui/drop-zone'
 
 export default function Demo() {
-	const [dropped, setDropped] = React.useState(false);
-	return (
-		<DropZone
-			getDropOperation={(types) => (types.has("image/png") ? "copy" : "cancel")}
-			onDrop={() => setDropped(true)}
-		>
-			{dropped ? "Successful drop!" : "Drop files here"}
-		</DropZone>
-	);
+  const [dropped, setDropped] = React.useState(false)
+  return (
+    <DropZone
+      getDropOperation={(types) => (types.has('image/png') ? 'copy' : 'cancel')}
+      onDrop={() => setDropped(true)}
+    >
+      {dropped ? 'Successful drop!' : 'Drop files here'}
+    </DropZone>
+  )
 }

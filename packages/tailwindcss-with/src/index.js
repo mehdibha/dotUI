@@ -1,4 +1,4 @@
-const plugin = require("tailwindcss/plugin");
+const plugin = require('tailwindcss/plugin')
 
 /**
  * Tailwind CSS plugin that adds a `with-[value]` variant.
@@ -18,11 +18,11 @@ const plugin = require("tailwindcss/plugin");
  * // This avoids the self-referencing selector problem!
  */
 const withVariant = plugin(({ matchVariant }) => {
-	const selector = (value) =>
-		`:is([class^='${value}-'], [class*=' ${value}-'], [class^='-${value}-'], [class*=' -${value}-'])`;
+  const selector = (value) =>
+    `:is([class^='${value}-'], [class*=' ${value}-'], [class^='-${value}-'], [class*=' -${value}-'])`
 
-	matchVariant("with", (value) => `&${selector(value)}`);
-	matchVariant("not-with", (value) => `&:not(${selector(value)})`);
-});
+  matchVariant('with', (value) => `&${selector(value)}`)
+  matchVariant('not-with', (value) => `&:not(${selector(value)})`)
+})
 
-module.exports = withVariant;
+module.exports = withVariant

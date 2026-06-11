@@ -1,5 +1,5 @@
-import { Loader } from "@/registry/ui/loader";
+import { Loader } from '@/registry/ui/loader'
 
 export function LoaderDemo() {
-	return <Loader />;
+  return <Loader />
 }

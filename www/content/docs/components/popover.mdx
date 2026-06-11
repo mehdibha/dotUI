@@ -8,16 +8,16 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="popover"
-	engine="source"
-	controls={[
-		{
-			type: "enum",
-			name: "placement",
-			options: ["bottom", "top", "left", "right"],
-			defaultValue: "bottom",
-		},
-	]}
+  name="popover"
+  engine="source"
+  controls={[
+    {
+      type: 'enum',
+      name: 'placement',
+      options: ['bottom', 'top', 'left', 'right'],
+      defaultValue: 'bottom',
+    },
+  ]}
 />
 
 ## Installation
@@ -31,27 +31,27 @@ npx shadcn@latest add @dotui/popover
 Use popovers to display rich content in a floating container that appears above other content.
 
 ```tsx
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Popover } from "@/components/ui/popover";
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Popover } from '@/components/ui/popover'
 ```
 
 ```tsx
 <Dialog>
-	<Button>Open Popover</Button>
-	<Popover>
-		<DialogContent>
-			<DialogTitle>Popover Title</DialogTitle>
-			<p>Popover content</p>
-		</DialogContent>
-	</Popover>
+  <Button>Open Popover</Button>
+  <Popover>
+    <DialogContent>
+      <DialogTitle>Popover Title</DialogTitle>
+      <p>Popover content</p>
+    </DialogContent>
+  </Popover>
 </Dialog>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="popover/demos/basic" />
+  <Example name="popover/demos/basic" />
 </Examples>
 
 ## API Reference

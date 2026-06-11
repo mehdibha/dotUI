@@ -7,30 +7,30 @@ links:
 ---
 
 <InteractiveDemo
-	name="checkbox-group"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Select frameworks",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isReadOnly",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isInvalid",
-			defaultValue: false,
-		},
-	]}
+  name="checkbox-group"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Select frameworks',
+    },
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isReadOnly',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isInvalid',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -44,24 +44,24 @@ npx shadcn@latest add @dotui/checkbox-group
 Use `CheckboxGroup` to allow users to select multiple items from a list of options.
 
 ```tsx
-import { CheckboxGroup } from "@/components/ui/checkbox-group";
-import { Checkbox, CheckboxControl } from "@/components/ui/checkbox";
-import { FieldGroup, Label } from "@/components/ui/field";
+import { CheckboxGroup } from '@/components/ui/checkbox-group'
+import { Checkbox, CheckboxControl } from '@/components/ui/checkbox'
+import { FieldGroup, Label } from '@/components/ui/field'
 ```
 
 ```tsx
-<CheckboxGroup defaultValue={["nextjs"]}>
-	<Label>React frameworks</Label>
-	<FieldGroup>
-		<Checkbox value="nextjs">
-			<CheckboxControl />
-			<Label>Next.js</Label>
-		</Checkbox>
-		<Checkbox value="remix">
-			<CheckboxControl />
-			<Label>Remix</Label>
-		</Checkbox>
-	</FieldGroup>
+<CheckboxGroup defaultValue={['nextjs']}>
+  <Label>React frameworks</Label>
+  <FieldGroup>
+    <Checkbox value="nextjs">
+      <CheckboxControl />
+      <Label>Next.js</Label>
+    </Checkbox>
+    <Checkbox value="remix">
+      <CheckboxControl />
+      <Label>Remix</Label>
+    </Checkbox>
+  </FieldGroup>
 </CheckboxGroup>
 ```
 
@@ -70,27 +70,31 @@ import { FieldGroup, Label } from "@/components/ui/field";
 Use `defaultValue` for uncontrolled checkbox groups, or `value` and `onChange` for controlled checkbox groups.
 
 ```tsx
-<CheckboxGroup defaultValue={["nextjs"]}>{/* ... */}</CheckboxGroup>
+<CheckboxGroup defaultValue={['nextjs']}>{/* ... */}</CheckboxGroup>
 ```
 
 ```tsx
-const [frameworks, setFrameworks] = useState<string[]>(["nextjs"]);
+const [frameworks, setFrameworks] = useState<string[]>(['nextjs'])
 
-<CheckboxGroup value={frameworks} onChange={setFrameworks}>
-	{/* ... */}
-</CheckboxGroup>;
+;<CheckboxGroup value={frameworks} onChange={setFrameworks}>
+  {/* ... */}
+</CheckboxGroup>
 ```
 
 ## Examples
 
 <Examples className="lg:grid-cols-3">
-	<Example name="checkbox-group/demos/default" title="Default" />
-	<Example name="checkbox-group/demos/description" title="With Description" />
-	<Example name="checkbox-group/demos/error-message" title="Invalid" />
-	<Example name="checkbox-group/demos/disabled" title="Disabled" />
-	<Example name="checkbox-group/demos/read-only" title="ReadOnly" />
-	<Example name="checkbox-group/demos/required" title="Required" />
-	<Example name="checkbox-group/demos/cards" title="Cards" className="lg:col-span-3" />
+  <Example name="checkbox-group/demos/default" title="Default" />
+  <Example name="checkbox-group/demos/description" title="With Description" />
+  <Example name="checkbox-group/demos/error-message" title="Invalid" />
+  <Example name="checkbox-group/demos/disabled" title="Disabled" />
+  <Example name="checkbox-group/demos/read-only" title="ReadOnly" />
+  <Example name="checkbox-group/demos/required" title="Required" />
+  <Example
+    name="checkbox-group/demos/cards"
+    title="Cards"
+    className="lg:col-span-3"
+  />
 </Examples>
 
 ## API Reference

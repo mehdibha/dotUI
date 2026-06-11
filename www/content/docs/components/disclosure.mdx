@@ -7,7 +7,7 @@ links:
 wip: true
 ---
 
-<InteractiveDemo name="disclosure" engine="source" controls={["isDisabled"]} />
+<InteractiveDemo name="disclosure" engine="source" controls={['isDisabled']} />
 
 ## Installation
 
@@ -18,45 +18,58 @@ npx shadcn@latest add @dotui/disclosure
 ## Anatomy
 
 ```tsx
-import { Disclosure, DisclosureHeading, DisclosurePanel } from "@/components/ui/disclosure";
+import {
+  Disclosure,
+  DisclosureHeading,
+  DisclosurePanel,
+} from '@/components/ui/disclosure'
 ```
 
 ```tsx
 <Disclosure>
-	<DisclosureHeading>What is dotUI?</DisclosureHeading>
-	<DisclosurePanel>dotUI is a design system platform.</DisclosurePanel>
+  <DisclosureHeading>What is dotUI?</DisclosureHeading>
+  <DisclosurePanel>dotUI is a design system platform.</DisclosurePanel>
 </Disclosure>
 ```
 
 for more advanced composition, you can use this structure
 
 ```tsx
-import { Disclosure, DisclosurePanel } from "@/components/ui/disclosure";
-import { Button } from "@/components/ui/button";
-import { Heading } from "@/components/ui/heading";
-import { ChevronDownIcon } from "your-icon-library";
+import { Disclosure, DisclosurePanel } from '@/components/ui/disclosure'
+import { Button } from '@/components/ui/button'
+import { Heading } from '@/components/ui/heading'
+import { ChevronDownIcon } from 'your-icon-library'
 ```
 
 ```tsx
 <Disclosure>
-	<Heading>
-		<Button>
-			What is dotUI?
-			<ChevronDownIcon />
-		</Button>
-	</Heading>
-	<DisclosurePanel>dotUI is a design system platform.</DisclosurePanel>
+  <Heading>
+    <Button>
+      What is dotUI?
+      <ChevronDownIcon />
+    </Button>
+  </Heading>
+  <DisclosurePanel>dotUI is a design system platform.</DisclosurePanel>
 </Disclosure>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="disclosure/demos/basic" description="Basic disclosure" />
-	<Example name="disclosure/demos/default-expanded" description="Default expanded disclosure" />
-	<Example name="disclosure/demos/disabled" description="Disabled disclosure" />
-	<Example name="disclosure/demos/controlled" description="Controlled disclosure" />
-	<Example name="disclosure/demos/advanced-composition" description="Advanced composition" />
+  <Example name="disclosure/demos/basic" description="Basic disclosure" />
+  <Example
+    name="disclosure/demos/default-expanded"
+    description="Default expanded disclosure"
+  />
+  <Example name="disclosure/demos/disabled" description="Disabled disclosure" />
+  <Example
+    name="disclosure/demos/controlled"
+    description="Controlled disclosure"
+  />
+  <Example
+    name="disclosure/demos/advanced-composition"
+    description="Advanced composition"
+  />
 </Examples>
 
 ## API Reference

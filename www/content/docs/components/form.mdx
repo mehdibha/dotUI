@@ -20,30 +20,30 @@ npx shadcn@latest add @dotui/form
 Use forms to wrap groups of form elements and handle form submission with validation.
 
 ```tsx
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { TextField } from "@/components/ui/text-field";
-import { Label } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Form } from '@/components/ui/form'
+import { Button } from '@/components/ui/button'
+import { TextField } from '@/components/ui/text-field'
+import { Label } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
 ```
 
 ```tsx
 <Form onSubmit={handleSubmit}>
-	<TextField name="email" isRequired>
-		<Label>Email</Label>
-		<Input />
-	</TextField>
-	<Button type="submit" variant="primary">
-		Submit
-	</Button>
+  <TextField name="email" isRequired>
+    <Label>Email</Label>
+    <Input />
+  </TextField>
+  <Button type="submit" variant="primary">
+    Submit
+  </Button>
 </Form>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="form/demos/basic" />
-	<Example name="form/demos/react-aria" />
+  <Example name="form/demos/basic" />
+  <Example name="form/demos/react-aria" />
 </Examples>
 
 ## API Reference

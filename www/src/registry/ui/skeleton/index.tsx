@@ -1,9 +1,8 @@
-"use client";
+'use client'
 
-import * as Default from "./base";
+import * as Default from './base'
+import type { SkeletonProps } from './types'
 
-import type { SkeletonProps } from "./types";
+export const Skeleton = Default.Skeleton
 
-export const Skeleton = Default.Skeleton;
-
-export type { SkeletonProps };
+export type { SkeletonProps }

@@ -1,48 +1,48 @@
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
-@plugin "tailwindcss-react-aria-components";
-@plugin "tailwindcss-autocontrast" {
-	cssfile: "./src/styles.css";
+@plugin 'tailwindcss-react-aria-components';
+@plugin 'tailwindcss-autocontrast' {
+  cssfile: './src/styles.css';
 }
-@plugin "tailwindcss-with";
+@plugin 'tailwindcss-with';
 
 @custom-variant dark (&:is(.dark *));
 
 @utility focus-reset {
-	@apply ring-0 ring-transparent outline-none;
+  @apply ring-0 ring-transparent outline-none;
 }
 
 @utility focus-ring {
-	@apply ring-2 ring-border-focus ring-offset-2 ring-offset-bg;
+  @apply ring-2 ring-border-focus ring-offset-2 ring-offset-bg;
 }
 
 @utility focus-input {
-	@apply border-border-focus ring-2 ring-border-focus-muted;
+  @apply border-border-focus ring-2 ring-border-focus-muted;
 }
 
 @utility no-highlight {
-	-webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @layer base {
-	* {
-		@apply border-border;
-	}
-	body {
-		@apply bg-bg font-sans text-fg;
-	}
-	html {
-		@apply font-sans;
-	}
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-bg font-sans text-fg;
+  }
+  html {
+    @apply font-sans;
+  }
 }
 
 ::selection {
-	background-color: var(--accent-800);
-	color: var(--on-accent-800);
+  background-color: var(--accent-800);
+  color: var(--on-accent-800);
 }
 
 @theme {
-	--ease-fluid-out: cubic-bezier(0.32, 0.72, 0, 1);
-	--cursor-interactive: pointer;
-	--cursor-disabled: not-allowed;
+  --ease-fluid-out: cubic-bezier(0.32, 0.72, 0, 1);
+  --cursor-interactive: pointer;
+  --cursor-disabled: not-allowed;
 }

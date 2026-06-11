@@ -20,32 +20,32 @@ npx shadcn@latest add @dotui/context-menu
 Use context menus to display actions when a user right clicks an element.
 
 ```tsx
-import { ContextMenu } from "@/components/ui/context-menu";
-import { MenuContent, MenuItem } from "@/components/ui/menu";
-import { Popover } from "@/components/ui/popover";
+import { ContextMenu } from '@/components/ui/context-menu'
+import { MenuContent, MenuItem } from '@/components/ui/menu'
+import { Popover } from '@/components/ui/popover'
 ```
 
 ```tsx
 <ContextMenu
-	overlay={
-		<Popover>
-			<MenuContent>
-				<MenuItem>Account settings</MenuItem>
-				<MenuItem>Create team</MenuItem>
-				<MenuItem>Command menu</MenuItem>
-				<MenuItem>Log out</MenuItem>
-			</MenuContent>
-		</Popover>
-	}
+  overlay={
+    <Popover>
+      <MenuContent>
+        <MenuItem>Account settings</MenuItem>
+        <MenuItem>Create team</MenuItem>
+        <MenuItem>Command menu</MenuItem>
+        <MenuItem>Log out</MenuItem>
+      </MenuContent>
+    </Popover>
+  }
 >
-	Right click me
+  Right click me
 </ContextMenu>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="context-menu/demos/basic" />
+  <Example name="context-menu/demos/basic" />
 </Examples>
 
 ## API Reference

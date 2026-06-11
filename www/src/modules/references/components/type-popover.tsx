@@ -3,58 +3,57 @@
  * Supports nested navigation with breadcrumbs (like s2-docs)
  */
 
-import * as React from "react";
+import * as React from 'react'
+import { ChevronRightIcon } from 'lucide-react'
+import * as ButtonPrimitives from 'react-aria-components/Button'
+import * as DialogPrimitives from 'react-aria-components/Dialog'
 
-import { ChevronRightIcon } from "lucide-react";
-import * as ButtonPrimitives from "react-aria-components/Button";
-import * as DialogPrimitives from "react-aria-components/Dialog";
+import { cn } from '@/registry/lib/utils'
+import { DialogContent } from '@/registry/ui/dialog'
+import { Popover } from '@/registry/ui/popover'
 
-import { cn } from "@/registry/lib/utils";
-import { DialogContent } from "@/registry/ui/dialog";
-import { Popover } from "@/registry/ui/popover";
-
-import { Type, useTypeLinks } from "./type-renderer";
-
-import type { TType } from "../types/type-ast";
+import type { TType } from '../types/type-ast'
+import { Type, useTypeLinks } from './type-renderer'
 
 /* -----------------------------------------------------------------------------------------------
  * Context for nested type navigation within a popover
  * ---------------------------------------------------------------------------------------------*/
 
 interface TypeNavigationContextValue {
-	push: (name: string, type: TType) => void;
+  push: (name: string, type: TType) => void
 }
 
-const TypeNavigationContext = React.createContext<TypeNavigationContextValue | null>(null);
+const TypeNavigationContext =
+  React.createContext<TypeNavigationContextValue | null>(null)
 
 /* -----------------------------------------------------------------------------------------------
  * TypeLink - Clickable type that opens a popover or navigates within one
  * ---------------------------------------------------------------------------------------------*/
 
 interface TypeLinkProps {
-	id: string;
-	name: string;
-	type: TType;
+  id: string
+  name: string
+  type: TType
 }
 
 export function TypeLink({ name, type }: TypeLinkProps) {
-	const navigationCtx = React.useContext(TypeNavigationContext);
+  const navigationCtx = React.useContext(TypeNavigationContext)
 
-	// If we're already inside a popover, just navigate within it
-	if (navigationCtx) {
-		return (
-			<button
-				type="button"
-				onClick={() => navigationCtx.push(name, type)}
-				className="cursor-pointer font-mono text-fg-accent underline underline-offset-2"
-			>
-				{name}
-			</button>
-		);
-	}
+  // If we're already inside a popover, just navigate within it
+  if (navigationCtx) {
+    return (
+      <button
+        type="button"
+        onClick={() => navigationCtx.push(name, type)}
+        className="cursor-pointer font-mono text-fg-accent underline underline-offset-2"
+      >
+        {name}
+      </button>
+    )
+  }
 
-	// Otherwise, render a new popover
-	return <TypePopover name={name} type={type} />;
+  // Otherwise, render a new popover
+  return <TypePopover name={name} type={type} />
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -62,77 +61,87 @@ export function TypeLink({ name, type }: TypeLinkProps) {
  * ---------------------------------------------------------------------------------------------*/
 
 interface BreadcrumbItem {
-	id: number;
-	name: string;
-	type: TType;
+  id: number
+  name: string
+  type: TType
 }
 
 interface TypePopoverProps {
-	name: string;
-	type: TType;
+  name: string
+  type: TType
 }
 
 function TypePopover({ name, type }: TypePopoverProps) {
-	const [breadcrumbs, setBreadcrumbs] = React.useState<BreadcrumbItem[]>([{ id: 0, name, type }]);
-	const { links } = useTypeLinks();
+  const [breadcrumbs, setBreadcrumbs] = React.useState<BreadcrumbItem[]>([
+    { id: 0, name, type },
+  ])
+  const { links } = useTypeLinks()
 
-	// breadcrumbs always has at least one item (initialized above)
-	const currentItem = breadcrumbs[breadcrumbs.length - 1] ?? { id: 0, name, type };
+  // breadcrumbs always has at least one item (initialized above)
+  const currentItem = breadcrumbs[breadcrumbs.length - 1] ?? {
+    id: 0,
+    name,
+    type,
+  }
 
-	const push = React.useCallback((name: string, type: TType) => {
-		setBreadcrumbs((prev) => [...prev, { id: prev.length, name, type }]);
-	}, []);
+  const push = React.useCallback((name: string, type: TType) => {
+    setBreadcrumbs((prev) => [...prev, { id: prev.length, name, type }])
+  }, [])
 
-	const navigateTo = React.useCallback((index: number) => {
-		setBreadcrumbs((prev) => prev.slice(0, index + 1));
-	}, []);
+  const navigateTo = React.useCallback((index: number) => {
+    setBreadcrumbs((prev) => prev.slice(0, index + 1))
+  }, [])
 
-	// Reset breadcrumbs when popover closes
-	const handleOpenChange = React.useCallback(
-		(isOpen: boolean) => {
-			if (!isOpen) {
-				setBreadcrumbs([{ id: 0, name, type }]);
-			}
-		},
-		[name, type],
-	);
+  // Reset breadcrumbs when popover closes
+  const handleOpenChange = React.useCallback(
+    (isOpen: boolean) => {
+      if (!isOpen) {
+        setBreadcrumbs([{ id: 0, name, type }])
+      }
+    },
+    [name, type],
+  )
 
-	return (
-		<DialogPrimitives.DialogTrigger onOpenChange={handleOpenChange}>
-			<ButtonPrimitives.Button className="cursor-pointer rounded-sm font-mono text-fg-accent underline underline-offset-2 outline-none focus-visible:focus-ring">
-				{name}
-			</ButtonPrimitives.Button>
-			<Popover placement="bottom" showArrow className="max-w-md p-3">
-				<DialogContent className="outline-none">
-					{/* Breadcrumbs */}
-					{breadcrumbs.length > 1 && (
-						<nav className="mb-3 flex items-center gap-1 border-b pb-2 text-xs">
-							{breadcrumbs.map((item, index) => (
-								<React.Fragment key={item.id}>
-									{index > 0 && <ChevronRightIcon className="size-3 text-fg-muted" />}
-									<button
-										type="button"
-										onClick={() => navigateTo(index)}
-										className={cn(
-											"font-mono transition-colors hover:text-fg-accent",
-											index === breadcrumbs.length - 1 ? "font-medium text-fg" : "text-fg-muted",
-										)}
-									>
-										{item.name}
-									</button>
-								</React.Fragment>
-							))}
-						</nav>
-					)}
+  return (
+    <DialogPrimitives.DialogTrigger onOpenChange={handleOpenChange}>
+      <ButtonPrimitives.Button className="cursor-pointer rounded-sm font-mono text-fg-accent underline underline-offset-2 outline-none focus-visible:focus-ring">
+        {name}
+      </ButtonPrimitives.Button>
+      <Popover placement="bottom" showArrow className="max-w-md p-3">
+        <DialogContent className="outline-none">
+          {/* Breadcrumbs */}
+          {breadcrumbs.length > 1 && (
+            <nav className="mb-3 flex items-center gap-1 border-b pb-2 text-xs">
+              {breadcrumbs.map((item, index) => (
+                <React.Fragment key={item.id}>
+                  {index > 0 && (
+                    <ChevronRightIcon className="size-3 text-fg-muted" />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => navigateTo(index)}
+                    className={cn(
+                      'font-mono transition-colors hover:text-fg-accent',
+                      index === breadcrumbs.length - 1
+                        ? 'font-medium text-fg'
+                        : 'text-fg-muted',
+                    )}
+                  >
+                    {item.name}
+                  </button>
+                </React.Fragment>
+              ))}
+            </nav>
+          )}
 
-					{/* Type content */}
-					<TypeNavigationContext.Provider value={{ push }}>
-						<TypePopoverContent type={currentItem.type} links={links} />
-					</TypeNavigationContext.Provider>
-				</DialogContent>
-			</Popover>
-		</DialogPrimitives.DialogTrigger>
-	);
+          {/* Type content */}
+          <TypeNavigationContext.Provider value={{ push }}>
+            <TypePopoverContent type={currentItem.type} links={links} />
+          </TypeNavigationContext.Provider>
+        </DialogContent>
+      </Popover>
+    </DialogPrimitives.DialogTrigger>
+  )
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -140,80 +149,96 @@ function TypePopover({ name, type }: TypePopoverProps) {
  * ---------------------------------------------------------------------------------------------*/
 
 interface TypePopoverContentProps {
-	type: TType;
-	links: Record<string, TType>;
+  type: TType
+  links: Record<string, TType>
 }
 
 function TypePopoverContent({ type }: TypePopoverContentProps) {
-	// Show description if available
-	const description = "description" in type && type.description ? type.description : null;
+  // Show description if available
+  const description =
+    'description' in type && type.description ? type.description : null
 
-	// For interfaces, show a table of properties
-	if (type.type === "interface") {
-		const properties = Object.values(type.properties || {});
+  // For interfaces, show a table of properties
+  if (type.type === 'interface') {
+    const properties = Object.values(type.properties || {})
 
-		return (
-			<div className="space-y-3">
-				{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
+    return (
+      <div className="space-y-3">
+        {description && (
+          <p className="text-sm leading-relaxed text-fg-muted">{description}</p>
+        )}
 
-				{type.extends && type.extends.length > 0 && (
-					<p className="text-xs">
-						<span className="text-fg-muted">Extends: </span>
-						<span className="font-mono">
-							{type.extends.map((ext, idx) => {
-								const key = typeof (ext as { name?: unknown }).name === "string" ? (ext as { name: string }).name : idx;
-								return (
-									<React.Fragment key={key}>
-										{idx > 0 && ", "}
-										<Type type={ext} />
-									</React.Fragment>
-								);
-							})}
-						</span>
-					</p>
-				)}
+        {type.extends && type.extends.length > 0 && (
+          <p className="text-xs">
+            <span className="text-fg-muted">Extends: </span>
+            <span className="font-mono">
+              {type.extends.map((ext, idx) => {
+                const key =
+                  typeof (ext as { name?: unknown }).name === 'string'
+                    ? (ext as { name: string }).name
+                    : idx
+                return (
+                  <React.Fragment key={key}>
+                    {idx > 0 && ', '}
+                    <Type type={ext} />
+                  </React.Fragment>
+                )
+              })}
+            </span>
+          </p>
+        )}
 
-				{properties.length > 0 && (
-					<div className="divide-y divide-border/50">
-						{properties.map((prop) => (
-							<div key={prop.name} className="py-2 first:pt-0 last:pb-0">
-								<div className="flex items-baseline justify-between gap-3">
-									<code className="font-mono text-xs text-fg">
-										{prop.name}
-										{prop.optional && <span className="text-fg-muted">?</span>}
-									</code>
-									<code className="font-mono text-xs text-fg-muted">
-										<Type type={prop.type === "method" ? prop.value : prop.value} />
-									</code>
-								</div>
-								{prop.description && <p className="mt-1 text-xs leading-relaxed text-fg-muted">{prop.description}</p>}
-							</div>
-						))}
-					</div>
-				)}
-			</div>
-		);
-	}
+        {properties.length > 0 && (
+          <div className="divide-y divide-border/50">
+            {properties.map((prop) => (
+              <div key={prop.name} className="py-2 first:pt-0 last:pb-0">
+                <div className="flex items-baseline justify-between gap-3">
+                  <code className="font-mono text-xs text-fg">
+                    {prop.name}
+                    {prop.optional && <span className="text-fg-muted">?</span>}
+                  </code>
+                  <code className="font-mono text-xs text-fg-muted">
+                    <Type
+                      type={prop.type === 'method' ? prop.value : prop.value}
+                    />
+                  </code>
+                </div>
+                {prop.description && (
+                  <p className="mt-1 text-xs leading-relaxed text-fg-muted">
+                    {prop.description}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
 
-	// For type aliases, show the resolved type
-	if (type.type === "alias") {
-		return (
-			<div className="space-y-3">
-				{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
-				<div className="overflow-x-auto">
-					<Type type={type.value} />
-				</div>
-			</div>
-		);
-	}
+  // For type aliases, show the resolved type
+  if (type.type === 'alias') {
+    return (
+      <div className="space-y-3">
+        {description && (
+          <p className="text-sm leading-relaxed text-fg-muted">{description}</p>
+        )}
+        <div className="overflow-x-auto">
+          <Type type={type.value} />
+        </div>
+      </div>
+    )
+  }
 
-	// For other types, just render them
-	return (
-		<div className="space-y-3">
-			{description && <p className="text-sm leading-relaxed text-fg-muted">{description}</p>}
-			<div className="overflow-x-auto">
-				<Type type={type} />
-			</div>
-		</div>
-	);
+  // For other types, just render them
+  return (
+    <div className="space-y-3">
+      {description && (
+        <p className="text-sm leading-relaxed text-fg-muted">{description}</p>
+      )}
+      <div className="overflow-x-auto">
+        <Type type={type} />
+      </div>
+    </div>
+  )
 }

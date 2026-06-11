@@ -1,845 +1,845 @@
 {
-	"name": "RadioProps",
-	"description": "A radio represents an individual option within a radio group.",
-	"props": {
-		"onPress": {
-			"type": "((e: PressEvent) => void)",
-			"detailedType": "((e: PressEvent) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "e",
-						"value": {
-							"type": "link",
-							"id": "PressEvent",
-							"name": "PressEvent"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the press is released over the target."
-		},
-		"onPressStart": {
-			"type": "((e: PressEvent) => void)",
-			"detailedType": "((e: PressEvent) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "e",
-						"value": {
-							"type": "link",
-							"id": "PressEvent",
-							"name": "PressEvent"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when a press interaction starts."
-		},
-		"onPressEnd": {
-			"type": "((e: PressEvent) => void)",
-			"detailedType": "((e: PressEvent) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "e",
-						"value": {
-							"type": "link",
-							"id": "PressEvent",
-							"name": "PressEvent"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
-		},
-		"onPressChange": {
-			"type": "((isPressed: boolean) => void)",
-			"detailedType": "((isPressed: boolean) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "isPressed",
-						"value": {
-							"type": "link",
-							"id": "boolean",
-							"name": "boolean"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the press state changes."
-		},
-		"onPressUp": {
-			"type": "((e: PressEvent) => void)",
-			"detailedType": "((e: PressEvent) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "e",
-						"value": {
-							"type": "link",
-							"id": "PressEvent",
-							"name": "PressEvent"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
-		},
-		"onClick": {
-			"type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
-			"detailedType": "| ((e: MouseEvent<FocusableElement, MouseEvent>) => void)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "e",
-								"value": {
-									"type": "application",
-									"base": {
-										"type": "identifier",
-										"name": "MouseEvent"
-									},
-									"typeParameters": [
-										{
-											"type": "identifier",
-											"name": "FocusableElement"
-										}
-									]
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
-		},
-		"onFocus": {
-			"type": "((e: FocusEvent<Element, Element>) => void)",
-			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "e",
-								"value": {
-									"type": "identifier",
-									"name": "FocusEvent"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "Handler that is called when the element receives focus."
-		},
-		"onBlur": {
-			"type": "((e: FocusEvent<Element, Element>) => void)",
-			"detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "e",
-								"value": {
-									"type": "identifier",
-									"name": "FocusEvent"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "void"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "Handler that is called when the element loses focus."
-		},
-		"onFocusChange": {
-			"type": "((isFocused: boolean) => void)",
-			"detailedType": "((isFocused: boolean) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "isFocused",
-						"value": {
-							"type": "link",
-							"id": "boolean",
-							"name": "boolean"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the element's focus status changes."
-		},
-		"onKeyDown": {
-			"type": "((e: KeyboardEvent) => void)",
-			"detailedType": "((e: KeyboardEvent) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "e",
-						"value": {
-							"type": "link",
-							"id": "KeyboardEvent",
-							"name": "KeyboardEvent"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when a key is pressed."
-		},
-		"onKeyUp": {
-			"type": "((e: KeyboardEvent) => void)",
-			"detailedType": "((e: KeyboardEvent) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "e",
-						"value": {
-							"type": "link",
-							"id": "KeyboardEvent",
-							"name": "KeyboardEvent"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when a key is released."
-		},
-		"aria-describedby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that describes the object."
-		},
-		"aria-details": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
-		},
-		"aria-label": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Defines a string value that labels the current element."
-		},
-		"aria-labelledby": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "Identifies the element (or elements) that labels the current element."
-		},
-		"autoFocus": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the element should receive focus on render."
-		},
-		"children": {
-			"type": "ReactNode | (values: RadioFieldRenderProps) => ReactNode",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "RadioFieldRenderProps",
-									"name": "RadioFieldRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
-		"className": {
-			"type": "string | (values: RadioFieldRenderProps) => string",
-			"detailedType": "string | (values: RadioFieldRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "RadioFieldRenderProps",
-									"name": "RadioFieldRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-RadioField'"
-		},
-		"id": {
-			"type": "string",
-			"detailedType": "string | undefined",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
-		},
-		"inputRef": {
-			"type": "RefObject<HTMLInputElement | null>",
-			"detailedType": "RefObject<HTMLInputElement | null> | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "RefObject"
-						},
-						"typeParameters": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "null"
-									},
-									{
-										"type": "link",
-										"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
-										"name": "HTMLInputElement"
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			"description": "A ref for the HTML input element."
-		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the radio button is disabled or not.\nShows that a selection exists, but is not available in that circumstance."
-		},
-		"render": {
-			"type": "DOMRenderFunction<\"div\", RadioFieldRenderProps>",
-			"detailedType": "| DOMRenderFunction<'div', RadioFieldRenderProps>\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "DOMRenderFunction"
-						},
-						"typeParameters": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "div"
-									}
-								]
-							},
-							{
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioFieldRenderProps",
-								"name": "RadioFieldRenderProps"
-							}
-						]
-					}
-				]
-			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
-		},
-		"slot": {
-			"type": "null | string",
-			"detailedType": "null | string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-		},
-		"style": {
-			"type": "CSSProperties | (values: RadioFieldRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: RadioFieldRenderProps) => CSSProperties | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "RadioFieldRenderProps",
-									"name": "RadioFieldRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-		},
-		"value": {
-			"type": "string",
-			"typeAst": {
-				"type": "string"
-			},
-			"description": "The value of the radio button, used when submitting an HTML form.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#Value).",
-			"required": true
-		}
-	},
-	"renderProps": {
-		"isDisabled": {
-			"selector": "[data-disabled]",
-			"description": "Whether the radio is disabled."
-		},
-		"isFocused": {
-			"selector": "[data-focused]",
-			"description": "Whether the radio is focused, either via a mouse or keyboard."
-		},
-		"isFocusVisible": {
-			"selector": "[data-focus-visible]",
-			"description": "Whether the radio is keyboard focused."
-		},
-		"isHovered": {
-			"selector": "[data-hovered]",
-			"description": "Whether the radio is currently hovered with a mouse."
-		},
-		"isInvalid": {
-			"selector": "[data-invalid]",
-			"description": "Whether the radio is invalid."
-		},
-		"isPressed": {
-			"selector": "[data-pressed]",
-			"description": "Whether the radio is currently in a pressed state."
-		},
-		"isReadOnly": {
-			"selector": "[data-readonly]",
-			"description": "Whether the radio is read only."
-		},
-		"isRequired": {
-			"selector": "[data-required]",
-			"description": "Whether the checkbox is required."
-		},
-		"isSelected": {
-			"selector": "[data-selected]",
-			"description": "Whether the radio is selected."
-		}
-	},
-	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioFieldRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioFieldRenderProps",
-			"name": "RadioFieldRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the radio is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the radio is invalid."
-				},
-				"isReadOnly": {
-					"type": "property",
-					"name": "isReadOnly",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the radio is read only."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is required."
-				},
-				"isSelected": {
-					"type": "property",
-					"name": "isSelected",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the radio is selected."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"PressEvent": {
-			"type": "interface",
-			"name": "PressEvent",
-			"properties": {
-				"altKey": {
-					"type": "property",
-					"name": "altKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the alt keyboard modifier was held during the press event."
-				},
-				"continuePropagation": {
-					"type": "property",
-					"name": "continuePropagation",
-					"value": {
-						"type": "identifier",
-						"name": "() => void"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
-				},
-				"ctrlKey": {
-					"type": "property",
-					"name": "ctrlKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the ctrl keyboard modifier was held during the press event."
-				},
-				"key": {
-					"type": "property",
-					"name": "key",
-					"value": {
-						"type": "identifier",
-						"name": "string | undefined"
-					},
-					"optional": true,
-					"readonly": false,
-					"description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
-				},
-				"metaKey": {
-					"type": "property",
-					"name": "metaKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the meta keyboard modifier was held during the press event."
-				},
-				"pointerType": {
-					"type": "property",
-					"name": "pointerType",
-					"value": {
-						"type": "identifier",
-						"name": "PointerType"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The pointer type that triggered the press event."
-				},
-				"shiftKey": {
-					"type": "property",
-					"name": "shiftKey",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the shift keyboard modifier was held during the press event."
-				},
-				"target": {
-					"type": "property",
-					"name": "target",
-					"value": {
-						"type": "identifier",
-						"name": "Element"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The target element of the press event."
-				},
-				"type": {
-					"type": "property",
-					"name": "type",
-					"value": {
-						"type": "identifier",
-						"name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "The type of press event being fired."
-				},
-				"x": {
-					"type": "property",
-					"name": "x",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "X position relative to the target."
-				},
-				"y": {
-					"type": "property",
-					"name": "y",
-					"value": {
-						"type": "number"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Y position relative to the target."
-				}
-			}
-		},
-		"RadioFieldRenderProps": {
-			"type": "interface",
-			"name": "RadioFieldRenderProps",
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the radio is disabled."
-				},
-				"isInvalid": {
-					"type": "property",
-					"name": "isInvalid",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the radio is invalid."
-				},
-				"isReadOnly": {
-					"type": "property",
-					"name": "isReadOnly",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the radio is read only."
-				},
-				"isRequired": {
-					"type": "property",
-					"name": "isRequired",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the checkbox is required."
-				},
-				"isSelected": {
-					"type": "property",
-					"name": "isSelected",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the radio is selected."
-				}
-			}
-		}
-	}
+  "name": "RadioProps",
+  "description": "A radio represents an individual option within a radio group.",
+  "props": {
+    "onPress": {
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "PressEvent",
+              "name": "PressEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the press is released over the target."
+    },
+    "onPressStart": {
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "PressEvent",
+              "name": "PressEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a press interaction starts."
+    },
+    "onPressEnd": {
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "PressEvent",
+              "name": "PressEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a press interaction ends, either\nover the target or when the pointer leaves the target."
+    },
+    "onPressChange": {
+      "type": "((isPressed: boolean) => void)",
+      "detailedType": "((isPressed: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isPressed",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the press state changes."
+    },
+    "onPressUp": {
+      "type": "((e: PressEvent) => void)",
+      "detailedType": "((e: PressEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "PressEvent",
+              "name": "PressEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a press is released over the target, regardless of\nwhether it started on the target or not."
+    },
+    "onClick": {
+      "type": "((e: MouseEvent<FocusableElement, MouseEvent>) => void)",
+      "detailedType": "| ((e: MouseEvent<FocusableElement, MouseEvent>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "MouseEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "FocusableElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "**Not recommended – use `onPress` instead.** `onClick` is an alias for `onPress`\nprovided for compatibility with other libraries. `onPress` provides \nadditional event details for non-mouse interactions."
+    },
+    "onFocus": {
+      "type": "((e: FocusEvent<Element, Element>) => void)",
+      "detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "identifier",
+                  "name": "FocusEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the element receives focus."
+    },
+    "onBlur": {
+      "type": "((e: FocusEvent<Element, Element>) => void)",
+      "detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "identifier",
+                  "name": "FocusEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the element loses focus."
+    },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
+    "onKeyDown": {
+      "type": "((e: KeyboardEvent) => void)",
+      "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "KeyboardEvent",
+              "name": "KeyboardEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a key is pressed."
+    },
+    "onKeyUp": {
+      "type": "((e: KeyboardEvent) => void)",
+      "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "KeyboardEvent",
+              "name": "KeyboardEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a key is released."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
+    "children": {
+      "type": "ReactNode | (values: RadioFieldRenderProps) => ReactNode",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "RadioFieldRenderProps",
+                  "name": "RadioFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "string | (values: RadioFieldRenderProps) => string",
+      "detailedType": "string | (values: RadioFieldRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "RadioFieldRenderProps",
+                  "name": "RadioFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "default": "'react-aria-RadioField'"
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "inputRef": {
+      "type": "RefObject<HTMLInputElement | null>",
+      "detailedType": "RefObject<HTMLInputElement | null> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "RefObject"
+            },
+            "typeParameters": [
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "link",
+                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                    "name": "HTMLInputElement"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "description": "A ref for the HTML input element."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the radio button is disabled or not.\nShows that a selection exists, but is not available in that circumstance."
+    },
+    "render": {
+      "type": "DOMRenderFunction<\"div\", RadioFieldRenderProps>",
+      "detailedType": "| DOMRenderFunction<'div', RadioFieldRenderProps>\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "DOMRenderFunction"
+            },
+            "typeParameters": [
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "div"
+                  }
+                ]
+              },
+              {
+                "type": "link",
+                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioFieldRenderProps",
+                "name": "RadioFieldRenderProps"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+    },
+    "slot": {
+      "type": "null | string",
+      "detailedType": "null | string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "style": {
+      "type": "CSSProperties | (values: RadioFieldRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: RadioFieldRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "RadioFieldRenderProps",
+                  "name": "RadioFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "value": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The value of the radio button, used when submitting an HTML form.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#Value).",
+      "required": true
+    }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the radio is disabled."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the radio is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the radio is keyboard focused."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the radio is currently hovered with a mouse."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "description": "Whether the radio is invalid."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "description": "Whether the radio is currently in a pressed state."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the radio is read only."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "description": "Whether the checkbox is required."
+    },
+    "isSelected": {
+      "selector": "[data-selected]",
+      "description": "Whether the radio is selected."
+    }
+  },
+  "typeLinks": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioFieldRenderProps": {
+      "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/RadioGroup.d.ts:RadioFieldRenderProps",
+      "name": "RadioFieldRenderProps",
+      "extends": [],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio is invalid."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox is required."
+        },
+        "isSelected": {
+          "type": "property",
+          "name": "isSelected",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio is selected."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    },
+    "PressEvent": {
+      "type": "interface",
+      "name": "PressEvent",
+      "properties": {
+        "altKey": {
+          "type": "property",
+          "name": "altKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the alt keyboard modifier was held during the press event."
+        },
+        "continuePropagation": {
+          "type": "property",
+          "name": "continuePropagation",
+          "value": {
+            "type": "identifier",
+            "name": "() => void"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "By default, press events stop propagation to parent elements.\nIn cases where a handler decides not to handle a specific event,\nit can call `continuePropagation()` to allow a parent to handle it."
+        },
+        "ctrlKey": {
+          "type": "property",
+          "name": "ctrlKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the ctrl keyboard modifier was held during the press event."
+        },
+        "key": {
+          "type": "property",
+          "name": "key",
+          "value": {
+            "type": "identifier",
+            "name": "string | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The key that triggered the press event, if it was triggered by a keyboard interaction.\nThis is useful for differentiating between Space and Enter key presses."
+        },
+        "metaKey": {
+          "type": "property",
+          "name": "metaKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the meta keyboard modifier was held during the press event."
+        },
+        "pointerType": {
+          "type": "property",
+          "name": "pointerType",
+          "value": {
+            "type": "identifier",
+            "name": "PointerType"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The pointer type that triggered the press event."
+        },
+        "shiftKey": {
+          "type": "property",
+          "name": "shiftKey",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the shift keyboard modifier was held during the press event."
+        },
+        "target": {
+          "type": "property",
+          "name": "target",
+          "value": {
+            "type": "identifier",
+            "name": "Element"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The target element of the press event."
+        },
+        "type": {
+          "type": "property",
+          "name": "type",
+          "value": {
+            "type": "identifier",
+            "name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The type of press event being fired."
+        },
+        "x": {
+          "type": "property",
+          "name": "x",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "X position relative to the target."
+        },
+        "y": {
+          "type": "property",
+          "name": "y",
+          "value": {
+            "type": "number"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Y position relative to the target."
+        }
+      }
+    },
+    "RadioFieldRenderProps": {
+      "type": "interface",
+      "name": "RadioFieldRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio is invalid."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the checkbox is required."
+        },
+        "isSelected": {
+          "type": "property",
+          "name": "isSelected",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the radio is selected."
+        }
+      }
+    }
+  }
 }

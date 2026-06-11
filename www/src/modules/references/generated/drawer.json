@@ -1,43 +1,43 @@
 {
-	"name": "DrawerProps",
-	"description": "A React Aria compatible drawer overlay powered by Base UI's Drawer overlay\nprimitives.",
-	"props": {
-		"placement": {
-			"type": "DrawerPlacement",
-			"detailedType": "DrawerPlacement | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "DrawerPlacement"
-			},
-			"description": "The side of the screen where the drawer appears.",
-			"default": "'bottom'"
-		},
-		"swipeToDismiss": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the user can drag the drawer to dismiss it.",
-			"default": "true"
-		},
-		"isDismissable": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether outside interaction closes the drawer.",
-			"default": "true"
-		},
-		"isKeyboardDismissDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether pressing Escape is suppressed.",
-			"default": "false"
-		}
-	}
+  "name": "DrawerProps",
+  "description": "A React Aria compatible drawer overlay powered by Base UI's Drawer overlay\nprimitives.",
+  "props": {
+    "placement": {
+      "type": "DrawerPlacement",
+      "detailedType": "DrawerPlacement | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "DrawerPlacement"
+      },
+      "description": "The side of the screen where the drawer appears.",
+      "default": "'bottom'"
+    },
+    "swipeToDismiss": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the user can drag the drawer to dismiss it.",
+      "default": "true"
+    },
+    "isDismissable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether outside interaction closes the drawer.",
+      "default": "true"
+    },
+    "isKeyboardDismissDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether pressing Escape is suppressed.",
+      "default": "false"
+    }
+  }
 }

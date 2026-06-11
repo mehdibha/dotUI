@@ -8,22 +8,22 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="list-box"
-	engine="source"
-	controls={[
-		{
-			type: "enum",
-			name: "selectionMode",
-			options: ["none", "single", "multiple"],
-			defaultValue: "single",
-		},
-		{
-			type: "enum",
-			name: "orientation",
-			options: ["horizontal", "vertical"],
-			defaultValue: "vertical",
-		},
-	]}
+  name="list-box"
+  engine="source"
+  controls={[
+    {
+      type: 'enum',
+      name: 'selectionMode',
+      options: ['none', 'single', 'multiple'],
+      defaultValue: 'single',
+    },
+    {
+      type: 'enum',
+      name: 'orientation',
+      options: ['horizontal', 'vertical'],
+      defaultValue: 'vertical',
+    },
+  ]}
 />
 
 ## Installation
@@ -37,36 +37,36 @@ npx shadcn@latest add @dotui/list-box
 Use list boxes to display a list of options and allow users to select one or more of them.
 
 ```tsx
-import { ListBox, ListBoxItem } from "@/components/ui/list-box";
+import { ListBox, ListBoxItem } from '@/components/ui/list-box'
 ```
 
 ```tsx
 <ListBox aria-label="Options" selectionMode="single">
-	<ListBoxItem>Option 1</ListBoxItem>
-	<ListBoxItem>Option 2</ListBoxItem>
-	<ListBoxItem>Option 3</ListBoxItem>
+  <ListBoxItem>Option 1</ListBoxItem>
+  <ListBoxItem>Option 2</ListBoxItem>
+  <ListBoxItem>Option 3</ListBoxItem>
 </ListBox>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="list-box/demos/basic" />
-	<Example name="list-box/demos/multiple-selection" />
-	<Example name="list-box/demos/with-description" />
-	<Example name="list-box/demos/with-icons" />
-	<Example name="list-box/demos/danger" />
-	<Example name="list-box/demos/sections" />
-	<Example name="list-box/demos/separator" />
-	<Example name="list-box/demos/user-menu" />
-	<Example name="list-box/demos/disabled" />
-	<Example name="list-box/demos/horizontal" />
-	<Example name="list-box/demos/grid" />
-	<Example name="list-box/demos/async" />
-	<Example name="list-box/demos/empty" />
-	<Example name="list-box/demos/in-select" />
-	<Example name="list-box/demos/in-combobox" />
-	<Example name="list-box/demos/in-command" />
+  <Example name="list-box/demos/basic" />
+  <Example name="list-box/demos/multiple-selection" />
+  <Example name="list-box/demos/with-description" />
+  <Example name="list-box/demos/with-icons" />
+  <Example name="list-box/demos/danger" />
+  <Example name="list-box/demos/sections" />
+  <Example name="list-box/demos/separator" />
+  <Example name="list-box/demos/user-menu" />
+  <Example name="list-box/demos/disabled" />
+  <Example name="list-box/demos/horizontal" />
+  <Example name="list-box/demos/grid" />
+  <Example name="list-box/demos/async" />
+  <Example name="list-box/demos/empty" />
+  <Example name="list-box/demos/in-select" />
+  <Example name="list-box/demos/in-combobox" />
+  <Example name="list-box/demos/in-command" />
 </Examples>
 
 ## API Reference

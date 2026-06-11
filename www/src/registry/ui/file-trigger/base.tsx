@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import * as FileTriggerPrimitives from "react-aria-components/FileTrigger";
+import * as FileTriggerPrimitives from 'react-aria-components/FileTrigger'
 
-type FileTriggerProps = FileTriggerPrimitives.FileTriggerProps;
+type FileTriggerProps = FileTriggerPrimitives.FileTriggerProps
 
-export type { FileTriggerProps };
+export type { FileTriggerProps }
 
-const FileTrigger = FileTriggerPrimitives.FileTrigger;
+const FileTrigger = FileTriggerPrimitives.FileTrigger
 
-export { FileTrigger };
+export { FileTrigger }
