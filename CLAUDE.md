@@ -31,7 +31,13 @@ include (not exhaustive):
 - For consistency, related components form synced groups: Button and
   ToggleButton share the same styles and must stay in sync.
 
-Beyond the visual axes, export keeps widening: CLI + v0 today;
+A second customization layer beyond visuals: `codeOptions` — the style of
+the exported code itself. Separator comments or not, arrow functions vs
+function declarations, tailwind-variants styles as commented arrays vs one
+line per slot/variant, etc. The exported design system should read like the
+user's codebase, not ours.
+
+Beyond that, export keeps widening: CLI + v0 today;
 Bolt, Lovable, Figma, Claude design, etc. planned.
 
 What this means when writing code today:
@@ -50,6 +56,9 @@ What this means when writing code today:
 - Registry items import only from `@/registry/*`, relative paths, and
   published packages — plain React files, shadcn-schema compatible. www-side
   imports (router, fumadocs, `@/components`) must never leak in.
+- Author registry source in one canonical style (current files are the
+  reference) — `codeOptions` will be mechanical publisher transforms over
+  it, and inconsistent source breaks the transforms.
 
 ## Structure
 
