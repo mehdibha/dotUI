@@ -13,11 +13,18 @@ catalog:
   tailwindcss: ^4.3.0
   typescript: ^6.0.3
 
-onlyBuiltDependencies:
-  - "@tailwindcss/oxide"
-  - bufferutil
-  - core-js-pure
-  - esbuild
-  - msw
-  - puppeteer
-  - sharp
+allowBuilds:
+  "@tailwindcss/oxide": true
+  bufferutil: true
+  core-js-pure: true
+  esbuild: true
+  msw: true
+  puppeteer: true
+  sharp: true
+
+overrides:
+  "@types/react": 19.2.2
+  "@types/react-dom": 19.2.1
+
+patchedDependencies:
+  tailwindcss-react-aria-components@2.1.1: patches/tailwindcss-react-aria-components@2.1.1.patch

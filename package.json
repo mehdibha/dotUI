@@ -17,7 +17,7 @@
 	],
 	"engines": {
 		"node": "^24.11.1",
-		"pnpm": "^10.24.0"
+		"pnpm": "^11.5.3"
 	},
 	"scripts": {
 		"build": "turbo run build",
@@ -60,14 +60,5 @@
 		"typescript": "catalog:",
 		"vitest": "^4.0.16"
 	},
-	"packageManager": "pnpm@10.24.0",
-	"pnpm": {
-		"overrides": {
-			"@types/react": "19.2.2",
-			"@types/react-dom": "19.2.1"
-		},
-		"patchedDependencies": {
-			"tailwindcss-react-aria-components@2.1.1": "patches/tailwindcss-react-aria-components@2.1.1.patch"
-		}
-	}
+	"packageManager": "pnpm@11.5.3"
 }
