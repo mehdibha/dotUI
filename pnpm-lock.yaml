@@ -144,9 +144,6 @@ importers:
       '@tanstack/router-plugin':
         specifier: ^1.168.2
         version: 1.168.2(@tanstack/react-router@1.170.1(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(vite@8.0.13(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0))
-      '@tanstack/start-static-server-functions':
-        specifier: ^1.167.1
-        version: 1.167.1(@tanstack/react-start@1.168.2(crossws@0.4.5(srvx@0.11.15))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@8.0.13(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0)))
       '@vercel/og':
         specifier: ^0.11.1
         version: 0.11.1
@@ -2659,18 +2656,6 @@ packages:
   '@tanstack/start-server-core@1.168.1':
     resolution: {integrity: sha512-vMgPyXM/oJWpHR7hd+Ovhfs8tTJfarALtRvCckJnEtn+FhUiR3EC+LgBydgcn8rLfSWu7jTFGD8BG75HVIROoQ==}
     engines: {node: '>=22.12.0'}
-
-  '@tanstack/start-static-server-functions@1.167.1':
-    resolution: {integrity: sha512-juSrsnH9288vq5jT0jH6mKyUSjHQEL60oc429n2SY2OQn1M+b+ph/NVxCISgV/f7wakkaQTqLb9jK20BSyfZhQ==}
-    engines: {node: '>=22.12.0'}
-    peerDependencies:
-      '@tanstack/react-start': ^1.168.1
-      '@tanstack/solid-start': ^1.168.1
-    peerDependenciesMeta:
-      '@tanstack/react-start':
-        optional: true
-      '@tanstack/solid-start':
-        optional: true
 
   '@tanstack/start-storage-context@1.167.1':
     resolution: {integrity: sha512-q9Dkm5PpBSJ9NkB5RUVOM/p5dCF+m1EGpwVdoiaiMFn9ZPO6KHSbmb+3PQ7F7o3DbCy1L7q0qKgClxts9WtK7A==}
@@ -8079,13 +8064,6 @@ snapshots:
       seroval: 1.5.4
     transitivePeerDependencies:
       - crossws
-
-  '@tanstack/start-static-server-functions@1.167.1(@tanstack/react-start@1.168.2(crossws@0.4.5(srvx@0.11.15))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@8.0.13(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0)))':
-    dependencies:
-      '@tanstack/start-client-core': 1.169.1
-      seroval: 1.5.4
-    optionalDependencies:
-      '@tanstack/react-start': 1.168.2(crossws@0.4.5(srvx@0.11.15))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@8.0.13(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0))
 
   '@tanstack/start-storage-context@1.167.1':
     dependencies:

@@ -1,17 +1,23 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
-import { staticFunctionMiddleware } from '@tanstack/start-static-server-functions'
+import { setResponseHeader } from '@tanstack/react-start/server'
 import type * as PageTree from 'fumadocs-core/page-tree'
 
 import type { SerializedPageTree } from '@/lib/source'
 import { Header } from '@/components/layout/header'
 
-const getPageTree = createServerFn({ method: 'GET' })
-  .middleware([staticFunctionMiddleware])
-  .handler(async (): Promise<SerializedPageTree> => {
+const getPageTree = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<SerializedPageTree> => {
     const { getSerializedPageTree } = await import('@/lib/source')
+    // The page tree is baked into the build, so let Vercel's CDN cache it
+    // until the next deploy purge.
+    setResponseHeader(
+      'Cache-Control',
+      'public, max-age=0, must-revalidate, s-maxage=31536000',
+    )
     return getSerializedPageTree()
-  })
+  },
+)
 
 export const Route = createFileRoute('/_app')({
   component: AppLayout,
@@ -19,8 +25,8 @@ export const Route = createFileRoute('/_app')({
     const pageTree = await getPageTree()
     return { pageTree }
   },
-  // The page tree is immutable until the next build/deploy (baked at build time
-  // via staticFunctionMiddleware), so never background-revalidate it on re-match.
+  // The page tree only changes with a build/deploy (Vercel purges the CDN
+  // cache on deploy), so never background-revalidate it on re-match.
   staleTime: Infinity,
 })
 
