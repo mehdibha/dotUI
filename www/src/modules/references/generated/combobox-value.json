@@ -1256,8 +1256,7 @@
           "value": {
             "type": "application",
             "base": {
-              "type": "link",
-              "id": "typescript/lib/lib.es2015.collection.d.ts:Set",
+              "type": "identifier",
               "name": "Set"
             },
             "typeParameters": [

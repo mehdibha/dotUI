@@ -456,6 +456,20 @@ function normalizeDeclarationPath(fileName: string): string {
 }
 
 /**
+ * Types declared in TypeScript's bundled lib files (lib.dom, lib.es2015, …)
+ * are standard-library APIs documented by MDN — render them as identifiers
+ * instead of dumping their members into typeLinks.
+ */
+function isDefaultLibType(symbol: ts.Symbol): boolean {
+  const declarations = symbol.getDeclarations()
+  return !!declarations?.some((decl) =>
+    normalizeDeclarationPath(decl.getSourceFile().fileName).startsWith(
+      'typescript/lib/',
+    ),
+  )
+}
+
+/**
  * Create a unique ID for a type
  */
 function getTypeId(type: ts.Type, checker: ts.TypeChecker): string {
@@ -698,12 +712,7 @@ export function typeToAst(
         'AriaAttributes',
       ]
 
-      // DOM element interfaces (HTMLInputElement, SVGSVGElement, …) are
-      // documented by MDN — keep them as identifiers instead of dumping the
-      // whole DOM type graph into typeLinks
-      const isDomElementType = /^(HTML|SVG)\w*Element$/.test(typeName)
-
-      if (builtInTypes.includes(typeName) || isDomElementType) {
+      if (builtInTypes.includes(typeName) || isDefaultLibType(symbol)) {
         if (typeArgs && typeArgs.length > 0) {
           // Filter out trailing default type arguments for cleaner output
           const filteredArgs = filterDefaultTypeArgs(

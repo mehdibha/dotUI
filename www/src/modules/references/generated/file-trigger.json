@@ -85,8 +85,7 @@
                       "type": "null"
                     },
                     {
-                      "type": "link",
-                      "id": "typescript/lib/lib.dom.d.ts:FileList",
+                      "type": "identifier",
                       "name": "FileList"
                     }
                   ]

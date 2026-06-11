@@ -219,8 +219,7 @@
           "type": "property",
           "name": "validationDetails",
           "value": {
-            "type": "link",
-            "id": "typescript/lib/lib.dom.d.ts:ValidityState",
+            "type": "identifier",
             "name": "ValidityState"
           },
           "optional": false,
