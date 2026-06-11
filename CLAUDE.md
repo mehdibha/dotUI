@@ -91,6 +91,16 @@ Anatomy of an item (`www/src/registry/ui/<component>/`):
 - `types.ts` — prop types; the source for API reference docs.
 - `meta.ts`, `demos/`, `examples.tsx` — item metadata and docs demos.
 
+When working on a component's styles, compare against the shadcn equivalent
+to catch missing classes — especially logical classes, but everything else
+too. Their styles map to our density levels: `style-mira` ≈ compact,
+`style-nova` ≈ default, `style-vega` ≈ comfortable. In shadcn-ui/ui a
+component's classes live in two places — shared rules in
+`apps/v4/registry/styles/style-{name}.css` and per-component classes in the
+registry file itself (`apps/v4/registry/bases/{base,radix}/ui/<component>.tsx`);
+check both, or you'll conclude classes are "missing" that just live in the
+other file.
+
 ## Publisher
 
 `www/src/publisher/` turns registry source into what users install: resolves
@@ -130,6 +140,14 @@ the drift guard can't catch missing named exports there (once broke
 - PR titles become commit titles. Format `type(scope): summary` — describe the change, don't justify it (cut clauses like "with…", "to improve…").
   Aim ~50–60 chars, but never drop information to hit it.
   Good: `docs: rewrite CLAUDE.md` · Bad: `docs: rewrite CLAUDE.md with real project context`.
+- Adding a tweak (new axis, variant, style param, semantic token) is a
+  product decision: propose it and wait for approval before implementing —
+  never slip one into a component PR.
+- Spot something worth a refactor or rewrite? Propose it — in a "Suggested
+  refactors" note in the PR description, or a GitHub issue if bigger — never
+  by expanding the current diff. Bar: recurring or task-impeding, and
+  specific enough to act on; no "this could be cleaner". Skip areas with a
+  planned rewrite (the publisher).
 - Never run `pnpm build:references` to fix one field — generator drift
   rewrites ~121 files. Hand-edit the specific JSON; documented props come
   from `types.ts`, not `base.tsx`.
