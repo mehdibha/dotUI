@@ -1,17 +1,23 @@
-import type { RegistryItem } from "@/registry/types";
+import type { RegistryItem } from '@/registry/types'
 
 const colorEditorMeta = {
-	name: "color-editor",
-	type: "registry:ui",
-	group: "color-swatches",
-	files: [
-		{
-			type: "registry:ui",
-			path: "ui/color-editor/base.tsx",
-			target: "ui/color-editor.tsx",
-		},
-	],
-	registryDependencies: ["color-area", "color-field", "color-slider", "input", "select"],
-} satisfies RegistryItem;
+  name: 'color-editor',
+  type: 'registry:ui',
+  group: 'color-swatches',
+  files: [
+    {
+      type: 'registry:ui',
+      path: 'ui/color-editor/base.tsx',
+      target: 'ui/color-editor.tsx',
+    },
+  ],
+  registryDependencies: [
+    'color-area',
+    'color-field',
+    'color-slider',
+    'input',
+    'select',
+  ],
+} satisfies RegistryItem
 
-export default colorEditorMeta;
+export default colorEditorMeta

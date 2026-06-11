@@ -1,30 +1,30 @@
-import { Example } from "@/modules/create/preview/example";
-import { Examples } from "@/modules/create/preview/examples";
+import { Example } from '@/modules/create/preview/example'
+import { Examples } from '@/modules/create/preview/examples'
 
-import Basic from "./demos/basic";
-import Composition from "./demos/custom-separator";
-import Disabled from "./demos/disabled";
-import Icon from "./demos/icon";
-import MenuDemo from "./demos/menu";
+import Basic from './demos/basic'
+import Composition from './demos/custom-separator'
+import Disabled from './demos/disabled'
+import Icon from './demos/icon'
+import MenuDemo from './demos/menu'
 
 export default function BreadcrumbsExamples() {
-	return (
-		<Examples>
-			<Example title="basic">
-				<Basic />
-			</Example>
-			<Example title="composition">
-				<Composition />
-			</Example>
-			<Example title="disabled">
-				<Disabled />
-			</Example>
-			<Example title="icon">
-				<Icon />
-			</Example>
-			<Example title="menu">
-				<MenuDemo />
-			</Example>
-		</Examples>
-	);
+  return (
+    <Examples>
+      <Example title="basic">
+        <Basic />
+      </Example>
+      <Example title="composition">
+        <Composition />
+      </Example>
+      <Example title="disabled">
+        <Disabled />
+      </Example>
+      <Example title="icon">
+        <Icon />
+      </Example>
+      <Example title="menu">
+        <MenuDemo />
+      </Example>
+    </Examples>
+  )
 }

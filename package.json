@@ -1,60 +1,60 @@
 {
-	"name": "dotui-monorepo",
-	"version": "0.0.0",
-	"private": true,
-	"license": "MIT",
-	"type": "module",
-	"author": {
-		"name": "mehdibha",
-		"url": "https://x.com/mehdibha"
-	},
-	"keywords": [
-		"dotui",
-		"next.js",
-		"react-aria",
-		"tailwind",
-		"typescript"
-	],
-	"engines": {
-		"node": "^24.11.1",
-		"pnpm": "^11.5.3"
-	},
-	"scripts": {
-		"build": "turbo run build",
-		"dev": "turbo run dev",
-		"dev:www": "pnpm --filter=www dev",
-		"dev:www:clean": "pnpm --filter=www dev:clean",
-		"build:www": "pnpm --filter=www build",
-		"build:registry": "pnpm --filter=www build:registry",
-		"preview:www": "pnpm --filter=www preview",
-		"build:references": "pnpm --filter=www build:references",
-		"clean": "git clean -xdf node_modules",
-		"clean:workspaces": "turbo run clean",
-		"check": "oxlint . && oxfmt --check .",
-		"check:fix": "oxlint --fix . && oxfmt .",
-		"check:ci": "oxlint . && oxfmt --check .",
-		"lint:check": "oxlint .",
-		"lint:fix": "oxlint --fix .",
-		"format:check": "oxfmt --check .",
-		"format:fix": "oxfmt .",
-		"typecheck": "turbo run typecheck",
-		"test": "vitest run",
-		"release": "changeset version",
-		"pub:beta": "pnpm --filter=tailwindcss-autocontrast pub:beta",
-		"pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"
-	},
-	"devDependencies": {
-		"@changesets/changelog-github": "^0.7.0",
-		"@changesets/cli": "^2.29.8",
-		"@vitest/coverage-v8": "^4.0.16",
-		"chokidar-cli": "^3.0.0",
-		"oxfmt": "^0.50.0",
-		"oxlint": "^1.65.0",
-		"puppeteer": "^25.0.2",
-		"tsx": "^4.21.0",
-		"turbo": "^2.5.8",
-		"typescript": "catalog:",
-		"vitest": "^4.0.16"
-	},
-	"packageManager": "pnpm@11.5.3"
+  "name": "dotui-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "author": {
+    "name": "mehdibha",
+    "url": "https://x.com/mehdibha"
+  },
+  "keywords": [
+    "dotui",
+    "next.js",
+    "react-aria",
+    "tailwind",
+    "typescript"
+  ],
+  "engines": {
+    "node": "^24.11.1",
+    "pnpm": "^11.5.3"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:www": "pnpm --filter=www dev",
+    "dev:www:clean": "pnpm --filter=www dev:clean",
+    "build:www": "pnpm --filter=www build",
+    "build:registry": "pnpm --filter=www build:registry",
+    "preview:www": "pnpm --filter=www preview",
+    "build:references": "pnpm --filter=www build:references",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo run clean",
+    "check": "oxlint . && oxfmt --check .",
+    "check:fix": "oxlint --fix . && oxfmt .",
+    "check:ci": "oxlint . && oxfmt --check .",
+    "lint:check": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format:check": "oxfmt --check .",
+    "format:fix": "oxfmt .",
+    "typecheck": "turbo run typecheck",
+    "test": "vitest run",
+    "release": "changeset version",
+    "pub:beta": "pnpm --filter=tailwindcss-autocontrast pub:beta",
+    "pub:release": "pnpm --filter=tailwindcss-autocontrast pub:release"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.29.8",
+    "@vitest/coverage-v8": "^4.0.16",
+    "chokidar-cli": "^3.0.0",
+    "oxfmt": "^0.50.0",
+    "oxlint": "^1.65.0",
+    "puppeteer": "^25.0.2",
+    "tsx": "^4.21.0",
+    "turbo": "^2.5.8",
+    "typescript": "catalog:",
+    "vitest": "^4.0.16"
+  },
+  "packageManager": "pnpm@11.5.3"
 }

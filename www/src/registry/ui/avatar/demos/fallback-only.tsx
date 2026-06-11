@@ -1,9 +1,9 @@
-import { Avatar, AvatarFallback } from "@/registry/ui/avatar";
+import { Avatar, AvatarFallback } from '@/registry/ui/avatar'
 
 export default function Demo() {
-	return (
-		<Avatar>
-			<AvatarFallback>MB</AvatarFallback>
-		</Avatar>
-	);
+  return (
+    <Avatar>
+      <AvatarFallback>MB</AvatarFallback>
+    </Avatar>
+  )
 }

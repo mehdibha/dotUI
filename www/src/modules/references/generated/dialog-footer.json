@@ -1,6 +1,6 @@
 {
-	"name": "DialogFooterProps",
-	"description": "Missing description.",
-	"extendsElement": "footer",
-	"props": {}
+  "name": "DialogFooterProps",
+  "description": "Missing description.",
+  "extendsElement": "footer",
+  "props": {}
 }

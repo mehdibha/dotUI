@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import { getLocalTimeZone, today } from "@internationalized/date";
+import { getLocalTimeZone, today } from '@internationalized/date'
 
-import { RangeCalendar } from "@/registry/ui/calendar";
+import { RangeCalendar } from '@/registry/ui/calendar'
 
 export default function Demo() {
-	return (
-		<RangeCalendar
-			aria-label="Trip dates"
-			defaultValue={{
-				start: today(getLocalTimeZone()).subtract({ days: 6 }),
-				end: today(getLocalTimeZone()),
-			}}
-		/>
-	);
+  return (
+    <RangeCalendar
+      aria-label="Trip dates"
+      defaultValue={{
+        start: today(getLocalTimeZone()).subtract({ days: 6 }),
+        end: today(getLocalTimeZone()),
+      }}
+    />
+  )
 }

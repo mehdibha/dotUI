@@ -1,12 +1,12 @@
 {
-	"version": "0.0.1",
-	"configurations": [
-		{
-			"name": "www",
-			"runtimeExecutable": "pnpm",
-			"runtimeArgs": ["--filter", "www", "dev"],
-			"port": 4444,
-			"autoPort": false
-		}
-	]
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "www",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "www", "dev"],
+      "port": 4444,
+      "autoPort": false
+    }
+  ]
 }

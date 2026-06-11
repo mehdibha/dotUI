@@ -7,15 +7,15 @@ links:
 ---
 
 <InteractiveDemo
-	name="breadcrumbs"
-	engine="source"
-	controls={[
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-	]}
+  name="breadcrumbs"
+  engine="source"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -29,22 +29,27 @@ npx shadcn@latest add @dotui/breadcrumbs
 Use breadcrumbs to display a hierarchy of links showing the user's location in a site or application.
 
 ```tsx
-import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from "@/components/ui/breadcrumbs";
+import {
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  Breadcrumbs,
+} from '@/components/ui/breadcrumbs'
 ```
 
 ```tsx
 <Breadcrumbs>
-	<BreadcrumbItem>
-		<BreadcrumbLink href="#">Home</BreadcrumbLink>
-		<BreadcrumbSeparator />
-	</BreadcrumbItem>
-	<BreadcrumbItem>
-		<BreadcrumbLink href="#">Components</BreadcrumbLink>
-		<BreadcrumbSeparator />
-	</BreadcrumbItem>
-	<BreadcrumbItem>
-		<BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
-	</BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Home</BreadcrumbLink>
+    <BreadcrumbSeparator />
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Components</BreadcrumbLink>
+    <BreadcrumbSeparator />
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
+  </BreadcrumbItem>
 </Breadcrumbs>
 ```
 
@@ -87,40 +92,57 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
 
 ```tsx title="ui/breadcrumbs.tsx"
 // [!code highlight:2]
-import { Link as RouterLink } from "@tanstack/react-router";
-import type { ToOptions } from "@tanstack/react-router";
+import { Link as RouterLink } from '@tanstack/react-router'
+import type { ToOptions } from '@tanstack/react-router'
 
 // ..
 
-interface BreadcrumbLinkProps extends Omit<React.ComponentProps<typeof AriaLink>, "href"> {
-	href?: string | ToOptions; // [!code highlight]
+interface BreadcrumbLinkProps extends Omit<
+  React.ComponentProps<typeof AriaLink>,
+  'href'
+> {
+  href?: string | ToOptions // [!code highlight]
 }
 const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
-	return (
-		<AriaLink
-			// [!code highlight:10]
-			href={typeof href === "object" ? href.to : href}
-			render={({ ref, ...domProps }) => {
-				if (typeof href === "object") {
-					return <RouterLink ref={ref as React.Ref<HTMLAnchorElement>} {...href} {...domProps} />;
-				}
-				if (typeof href === "string") {
-					return <a ref={ref as React.Ref<HTMLAnchorElement>} href={href} {...domProps} />;
-				}
-				return <span ref={ref} {...domProps} />;
-			}}
-			className={composeRenderProps(className, (className) => link({ className }))}
-			{...props}
-		/>
-	);
-};
+  return (
+    <AriaLink
+      // [!code highlight:10]
+      href={typeof href === 'object' ? href.to : href}
+      render={({ ref, ...domProps }) => {
+        if (typeof href === 'object') {
+          return (
+            <RouterLink
+              ref={ref as React.Ref<HTMLAnchorElement>}
+              {...href}
+              {...domProps}
+            />
+          )
+        }
+        if (typeof href === 'string') {
+          return (
+            <a
+              ref={ref as React.Ref<HTMLAnchorElement>}
+              href={href}
+              {...domProps}
+            />
+          )
+        }
+        return <span ref={ref} {...domProps} />
+      }}
+      className={composeRenderProps(className, (className) =>
+        link({ className }),
+      )}
+      {...props}
+    />
+  )
+}
 ```
 
 ## Examples
 
 <Examples className="sm:grid-cols-2">
-	<Example title="With Menu" name="breadcrumbs/demos/menu" />
-	<Example title="Custom Separator" name="breadcrumbs/demos/custom-Separator" />
+  <Example title="With Menu" name="breadcrumbs/demos/menu" />
+  <Example title="Custom Separator" name="breadcrumbs/demos/custom-Separator" />
 </Examples>
 
 ## API Reference

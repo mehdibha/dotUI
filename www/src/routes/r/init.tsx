@@ -7,53 +7,57 @@
  * /r/$name endpoint with the same preset attached.
  */
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
-import { emitInitItem } from "@/publisher/emit-theme";
-import { baseRegistryCss } from "@/registry/__generated__/base-css";
-
-import type { PublishPreset } from "@/publisher/types";
+import { baseRegistryCss } from '@/registry/__generated__/base-css'
+import { emitInitItem } from '@/publisher/emit-theme'
+import type { PublishPreset } from '@/publisher/types'
 
 const JSON_HEADERS = {
-	"Content-Type": "application/json; charset=utf-8",
-	"Cache-Control": "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
-};
+  'Content-Type': 'application/json; charset=utf-8',
+  'Cache-Control':
+    'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
+}
 
-export const Route = createFileRoute("/r/init")({
-	server: {
-		handlers: {
-			GET: async ({ request }) => {
-				const url = new URL(request.url);
-				const encodedPreset = url.searchParams.get("preset") ?? undefined;
-				const preset = encodedPreset ? await decodePresetForRoute(encodedPreset) : defaultPreset();
+export const Route = createFileRoute('/r/init')({
+  server: {
+    handlers: {
+      GET: async ({ request }) => {
+        const url = new URL(request.url)
+        const encodedPreset = url.searchParams.get('preset') ?? undefined
+        const preset = encodedPreset
+          ? await decodePresetForRoute(encodedPreset)
+          : defaultPreset()
 
-				const item = emitInitItem({
-					baseRegistryCss,
-					preset,
-					encodedPreset,
-					registryRoot: `${url.protocol}//${url.host}`,
-				});
+        const item = emitInitItem({
+          baseRegistryCss,
+          preset,
+          encodedPreset,
+          registryRoot: `${url.protocol}//${url.host}`,
+        })
 
-				return new Response(JSON.stringify(item, null, 2), { headers: JSON_HEADERS });
-			},
-		},
-	},
-});
+        return new Response(JSON.stringify(item, null, 2), {
+          headers: JSON_HEADERS,
+        })
+      },
+    },
+  },
+})
 
 function defaultPreset(): PublishPreset {
-	return { density: "compact", componentParams: {} };
+  return { density: 'compact', componentParams: {} }
 }
 
 async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
-	try {
-		const { decodePreset } = await import("@/modules/create/preset/codec");
-		const ds = decodePreset(encoded);
-		return {
-			color: ds.color,
-			density: ds.density,
-			componentParams: ds.componentParams,
-		};
-	} catch {
-		return defaultPreset();
-	}
+  try {
+    const { decodePreset } = await import('@/modules/create/preset/codec')
+    const ds = decodePreset(encoded)
+    return {
+      color: ds.color,
+      density: ds.density,
+      componentParams: ds.componentParams,
+    }
+  } catch {
+    return defaultPreset()
+  }
 }

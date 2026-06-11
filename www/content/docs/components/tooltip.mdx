@@ -8,26 +8,26 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="tooltip"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "content",
-			defaultValue: "Tooltip content",
-		},
-		{
-			type: "enum",
-			name: "placement",
-			options: ["top", "bottom", "left", "right"],
-			defaultValue: "top",
-		},
-		{
-			type: "boolean",
-			name: "hideArrow",
-			defaultValue: false,
-		},
-	]}
+  name="tooltip"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'content',
+      defaultValue: 'Tooltip content',
+    },
+    {
+      type: 'enum',
+      name: 'placement',
+      options: ['top', 'bottom', 'left', 'right'],
+      defaultValue: 'top',
+    },
+    {
+      type: 'boolean',
+      name: 'hideArrow',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -41,27 +41,27 @@ npx shadcn@latest add @dotui/tooltip
 Use tooltips to provide contextual information about an element when it receives focus or the user hovers over it.
 
 ```tsx
-import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent } from "@/components/ui/tooltip";
+import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipContent } from '@/components/ui/tooltip'
 ```
 
 ```tsx
 <Tooltip>
-	<Button>Hover me</Button>
-	<TooltipContent>Tooltip content</TooltipContent>
+  <Button>Hover me</Button>
+  <TooltipContent>Tooltip content</TooltipContent>
 </Tooltip>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="tooltip/demos/basic" />
-	<Example name="tooltip/demos/with-icon" />
-	<Example name="tooltip/demos/with-keyboard" />
-	<Example name="tooltip/demos/on-link" />
-	<Example name="tooltip/demos/long-content" />
-	<Example name="tooltip/demos/formatted" />
-	<Example name="tooltip/demos/placement" />
+  <Example name="tooltip/demos/basic" />
+  <Example name="tooltip/demos/with-icon" />
+  <Example name="tooltip/demos/with-keyboard" />
+  <Example name="tooltip/demos/on-link" />
+  <Example name="tooltip/demos/long-content" />
+  <Example name="tooltip/demos/formatted" />
+  <Example name="tooltip/demos/placement" />
 </Examples>
 
 ## API Reference

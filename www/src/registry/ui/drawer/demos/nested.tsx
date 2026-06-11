@@ -1,8 +1,15 @@
-"use client";
+'use client'
 
-import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
-import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
+import { Button } from '@/registry/ui/button'
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/registry/ui/dialog'
+import { Drawer, DrawerHandle } from '@/registry/ui/drawer'
 
 /**
  * Nested drawers — open a drawer from inside another drawer. The parent
@@ -10,53 +17,58 @@ import { Drawer, DrawerHandle } from "@/registry/ui/drawer";
  * indents when the first drawer opens.
  */
 export default function Demo() {
-	return (
-		<Dialog>
-			<Button>Open parent drawer</Button>
-			<Drawer>
-				<DialogContent>
-					<DrawerHandle />
-					<DialogHeader>
-						<DialogTitle>Parent drawer</DialogTitle>
-					</DialogHeader>
-					<DialogBody>
-						<p>Open the child drawer below — this one should scale back.</p>
-					</DialogBody>
-					<DialogFooter>
-						<Dialog>
-							<Button>Open child drawer</Button>
-							<Drawer>
-								<DialogContent>
-									<DrawerHandle />
-									<DialogHeader>
-										<DialogTitle>Child drawer</DialogTitle>
-									</DialogHeader>
-									<DialogBody>
-										<p>Drag me down or click outside to close just this one.</p>
-										<p className="mt-2 text-sm text-fg-muted">The parent stays open underneath.</p>
-									</DialogBody>
-									<DialogFooter>
-										<Dialog>
-											<Button variant="quiet">Open grandchild</Button>
-											<Drawer>
-												<DialogContent>
-													<DrawerHandle />
-													<DialogHeader>
-														<DialogTitle>Grandchild</DialogTitle>
-													</DialogHeader>
-													<DialogBody>
-														<p>Three levels deep. Each parent scales further back.</p>
-													</DialogBody>
-												</DialogContent>
-											</Drawer>
-										</Dialog>
-									</DialogFooter>
-								</DialogContent>
-							</Drawer>
-						</Dialog>
-					</DialogFooter>
-				</DialogContent>
-			</Drawer>
-		</Dialog>
-	);
+  return (
+    <Dialog>
+      <Button>Open parent drawer</Button>
+      <Drawer>
+        <DialogContent>
+          <DrawerHandle />
+          <DialogHeader>
+            <DialogTitle>Parent drawer</DialogTitle>
+          </DialogHeader>
+          <DialogBody>
+            <p>Open the child drawer below — this one should scale back.</p>
+          </DialogBody>
+          <DialogFooter>
+            <Dialog>
+              <Button>Open child drawer</Button>
+              <Drawer>
+                <DialogContent>
+                  <DrawerHandle />
+                  <DialogHeader>
+                    <DialogTitle>Child drawer</DialogTitle>
+                  </DialogHeader>
+                  <DialogBody>
+                    <p>Drag me down or click outside to close just this one.</p>
+                    <p className="mt-2 text-sm text-fg-muted">
+                      The parent stays open underneath.
+                    </p>
+                  </DialogBody>
+                  <DialogFooter>
+                    <Dialog>
+                      <Button variant="quiet">Open grandchild</Button>
+                      <Drawer>
+                        <DialogContent>
+                          <DrawerHandle />
+                          <DialogHeader>
+                            <DialogTitle>Grandchild</DialogTitle>
+                          </DialogHeader>
+                          <DialogBody>
+                            <p>
+                              Three levels deep. Each parent scales further
+                              back.
+                            </p>
+                          </DialogBody>
+                        </DialogContent>
+                      </Drawer>
+                    </Dialog>
+                  </DialogFooter>
+                </DialogContent>
+              </Drawer>
+            </Dialog>
+          </DialogFooter>
+        </DialogContent>
+      </Drawer>
+    </Dialog>
+  )
 }

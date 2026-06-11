@@ -1,4 +1,4 @@
 :root {
-	--checkbox-radius: 4px;
-	--checkbox-card-radius: var(--radius-lg);
+  --checkbox-radius: 4px;
+  --checkbox-card-radius: var(--radius-lg);
 }

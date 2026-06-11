@@ -1,6 +1,6 @@
 {
-	"name": "KbdGroupProps",
-	"description": "Missing description.",
-	"extendsElement": "html",
-	"props": {}
+  "name": "KbdGroupProps",
+  "description": "Missing description.",
+  "extendsElement": "html",
+  "props": {}
 }

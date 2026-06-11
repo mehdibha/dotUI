@@ -1,17 +1,17 @@
-import type { RegistryItem } from "@/registry/types";
+import type { RegistryItem } from '@/registry/types'
 
 const searchFieldMeta = {
-	name: "search-field",
-	type: "registry:ui",
-	group: "inputs",
-	files: [
-		{
-			type: "registry:ui",
-			path: "ui/search-field/base.tsx",
-			target: "ui/search-field.tsx",
-		},
-	],
-	registryDependencies: ["field", "button", "input"],
-} satisfies RegistryItem;
+  name: 'search-field',
+  type: 'registry:ui',
+  group: 'inputs',
+  files: [
+    {
+      type: 'registry:ui',
+      path: 'ui/search-field/base.tsx',
+      target: 'ui/search-field.tsx',
+    },
+  ],
+  registryDependencies: ['field', 'button', 'input'],
+} satisfies RegistryItem
 
-export default searchFieldMeta;
+export default searchFieldMeta

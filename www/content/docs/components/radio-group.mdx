@@ -8,36 +8,36 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="radio-group"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Select frameworks",
-		},
-		{
-			type: "enum",
-			name: "orientation",
-			options: ["horizontal", "vertical"],
-			defaultValue: "vertical",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isReadOnly",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isInvalid",
-			defaultValue: false,
-		},
-	]}
+  name="radio-group"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Select frameworks',
+    },
+    {
+      type: 'enum',
+      name: 'orientation',
+      options: ['horizontal', 'vertical'],
+      defaultValue: 'vertical',
+    },
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isReadOnly',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isInvalid',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -51,36 +51,40 @@ npx shadcn@latest add @dotui/radio-group
 Use radio group to allow users to select a single option from a short list of related options.
 
 ```tsx
-import { Radio, RadioControl, RadioGroup } from "@/components/ui/radio-group";
-import { FieldGroup, Label } from "@/components/ui/field";
+import { Radio, RadioControl, RadioGroup } from '@/components/ui/radio-group'
+import { FieldGroup, Label } from '@/components/ui/field'
 ```
 
 ```tsx
 <RadioGroup defaultValue="nextjs">
-	<Label>React frameworks</Label>
-	<FieldGroup>
-		<Radio value="nextjs">
-			<RadioControl />
-			<Label>Next.js</Label>
-		</Radio>
-		<Radio value="remix">
-			<RadioControl />
-			<Label>Remix</Label>
-		</Radio>
-	</FieldGroup>
+  <Label>React frameworks</Label>
+  <FieldGroup>
+    <Radio value="nextjs">
+      <RadioControl />
+      <Label>Next.js</Label>
+    </Radio>
+    <Radio value="remix">
+      <RadioControl />
+      <Label>Remix</Label>
+    </Radio>
+  </FieldGroup>
 </RadioGroup>
 ```
 
 ## Examples
 
 <Examples className="lg:grid-cols-3">
-	<Example name="radio-group/demos/default" title="Default" />
-	<Example name="radio-group/demos/description" title="With Description" />
-	<Example name="radio-group/demos/error-message" title="Invalid" />
-	<Example name="radio-group/demos/disabled" title="Disabled" />
-	<Example name="radio-group/demos/read-only" title="ReadOnly" />
-	<Example name="radio-group/demos/required" title="Required" />
-	<Example name="radio-group/demos/cards" title="Cards" className="lg:col-span-3" />
+  <Example name="radio-group/demos/default" title="Default" />
+  <Example name="radio-group/demos/description" title="With Description" />
+  <Example name="radio-group/demos/error-message" title="Invalid" />
+  <Example name="radio-group/demos/disabled" title="Disabled" />
+  <Example name="radio-group/demos/read-only" title="ReadOnly" />
+  <Example name="radio-group/demos/required" title="Required" />
+  <Example
+    name="radio-group/demos/cards"
+    title="Cards"
+    className="lg:col-span-3"
+  />
 </Examples>
 
 ## API Reference

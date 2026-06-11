@@ -7,36 +7,44 @@
  */
 
 // Generation
-export { createTheme } from "./theme";
-export { type CreateThemeOptions, createThemeOptionsSchema } from "./schema";
+export { createTheme } from './theme'
+export { type CreateThemeOptions, createThemeOptionsSchema } from './schema'
 
 // Verification
 export {
-	nudgeForTarget,
-	pairingsFromTheme,
-	verify,
-	verifyTheme,
-	type PairingResult,
-	type SemanticPairing,
-	type SizeClass,
-	type VerifyReport,
-} from "./verify";
+  nudgeForTarget,
+  pairingsFromTheme,
+  verify,
+  verifyTheme,
+  type PairingResult,
+  type SemanticPairing,
+  type SizeClass,
+  type VerifyReport,
+} from './verify'
 
 // Registry (for presets / advanced consumers)
 export {
-	type AlgorithmId,
-	type BuiltinAlgorithmId,
-	type ColorProducer,
-	getProducer,
-	hasProducer,
-	type ModeCtx,
-	type PaletteOutput,
-	registerProducer,
-} from "./producer";
-export { registerBuiltins } from "./producers";
+  type AlgorithmId,
+  type BuiltinAlgorithmId,
+  type ColorProducer,
+  getProducer,
+  hasProducer,
+  type ModeCtx,
+  type PaletteOutput,
+  registerProducer,
+} from './producer'
+export { registerBuiltins } from './producers'
 
 // Shared kernel ops + types
-export { apca, type ContrastFormula, gamutMap, type Oklch, oklchCss, toOklch, wcag2 } from "./shared/color";
-export { onBlackWhite, onColor } from "./shared/on-color";
-export { SEMANTIC_COLORS } from "./shared/constants";
-export type { ColorScale, Theme, ThemeMode } from "./shared/types";
+export {
+  apca,
+  type ContrastFormula,
+  gamutMap,
+  type Oklch,
+  oklchCss,
+  toOklch,
+  wcag2,
+} from './shared/color'
+export { onBlackWhite, onColor } from './shared/on-color'
+export { SEMANTIC_COLORS } from './shared/constants'
+export type { ColorScale, Theme, ThemeMode } from './shared/types'

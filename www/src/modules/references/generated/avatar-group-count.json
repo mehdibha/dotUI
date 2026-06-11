@@ -1,6 +1,6 @@
 {
-	"name": "AvatarGroupCountProps",
-	"description": "A count indicator displayed at the end of an avatar group to show remaining items.",
-	"extendsElement": "span",
-	"props": {}
+  "name": "AvatarGroupCountProps",
+  "description": "A count indicator displayed at the end of an avatar group to show remaining items.",
+  "extendsElement": "span",
+  "props": {}
 }

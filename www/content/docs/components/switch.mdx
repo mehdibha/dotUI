@@ -8,18 +8,18 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="switch"
-	engine="source"
-	controls={[
-		{
-			name: "label",
-			type: "string",
-			defaultValue: "Airplane mode",
-		},
-		"size",
-		"isDisabled",
-		"isReadOnly",
-	]}
+  name="switch"
+  engine="source"
+  controls={[
+    {
+      name: 'label',
+      type: 'string',
+      defaultValue: 'Airplane mode',
+    },
+    'size',
+    'isDisabled',
+    'isReadOnly',
+  ]}
 />
 
 ## Installation
@@ -33,28 +33,28 @@ npx shadcn@latest add @dotui/switch
 Use switch for communicating activation (e.g. on/off states), while checkboxes are best used for communicating selection (e.g. multiple table rows).
 
 ```tsx
-import { Label } from "@/components/ui/field";
-import { Switch, SwitchControl } from "@/components/ui/switch";
+import { Label } from '@/components/ui/field'
+import { Switch, SwitchControl } from '@/components/ui/switch'
 ```
 
 ```tsx
 <Switch>
-	<SwitchControl />
-	<Label>Focus mode</Label>
+  <SwitchControl />
+  <Label>Focus mode</Label>
 </Switch>
 ```
 
 ## Examples
 
 <Examples className="lg:grid-cols-2">
-	<Example name="switch/demos/standalone" title="Standalone" />
-	<Example name="switch/demos/basic" title="Basic" />
-	<Example name="switch/demos/description" title="With Description" />
-	<Example name="switch/demos/disabled" title="Disabled" />
-	<Example name="switch/demos/read-only" title="Read Only" />
-	<Example name="switch/demos/sizes" title="Sizes" />
-	<Example name="switch/demos/controlled" title="Controlled" />
-	<Example name="switch/demos/card" title="Card" />
+  <Example name="switch/demos/standalone" title="Standalone" />
+  <Example name="switch/demos/basic" title="Basic" />
+  <Example name="switch/demos/description" title="With Description" />
+  <Example name="switch/demos/disabled" title="Disabled" />
+  <Example name="switch/demos/read-only" title="Read Only" />
+  <Example name="switch/demos/sizes" title="Sizes" />
+  <Example name="switch/demos/controlled" title="Controlled" />
+  <Example name="switch/demos/card" title="Card" />
 </Examples>
 
 ## API Reference

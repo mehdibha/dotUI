@@ -1,337 +1,337 @@
 {
-	"name": "DisclosureProps",
-	"description": "A disclosure is a collapsible section of content. It is composed of a header\nwith a heading and trigger button, and a panel that contains the content.",
-	"props": {
-		"children": {
-			"type": "ReactNode | (values: DisclosureRenderProps) => ReactNode",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "ReactNode"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "DisclosureRenderProps",
-									"name": "DisclosureRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "ReactNode"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The children of the component. A function may be provided to alter the children based on component state."
-		},
-		"className": {
-			"type": "string | (values: DisclosureRenderProps) => string",
-			"detailedType": "string | (values: DisclosureRenderProps) => string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "string"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "DisclosureRenderProps",
-									"name": "DisclosureRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "string"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
-			"default": "'react-aria-Disclosure'"
-		},
-		"defaultExpanded": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the disclosure is expanded by default (uncontrolled)."
-		},
-		"id": {
-			"type": "Key",
-			"detailedType": "Key | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "Key"
-			},
-			"description": "An id for the disclosure when used within a DisclosureGroup, matching the id used in `expandedKeys`."
-		},
-		"isDisabled": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the disclosure is disabled."
-		},
-		"isExpanded": {
-			"type": "boolean",
-			"detailedType": "boolean | undefined",
-			"typeAst": {
-				"type": "boolean"
-			},
-			"description": "Whether the disclosure is expanded (controlled)."
-		},
-		"onExpandedChange": {
-			"type": "((isExpanded: boolean) => void)",
-			"detailedType": "((isExpanded: boolean) => void) | undefined",
-			"typeAst": {
-				"type": "function",
-				"parameters": [
-					{
-						"type": "parameter",
-						"name": "isExpanded",
-						"value": {
-							"type": "link",
-							"id": "boolean",
-							"name": "boolean"
-						},
-						"optional": false,
-						"rest": false
-					}
-				],
-				"return": {
-					"type": "void"
-				},
-				"typeParameters": []
-			},
-			"description": "Handler that is called when the disclosure's expanded state changes."
-		},
-		"render": {
-			"type": "DOMRenderFunction<\"div\", DisclosureRenderProps>",
-			"detailedType": "| DOMRenderFunction<'div', DisclosureRenderProps>\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "application",
-						"base": {
-							"type": "identifier",
-							"name": "DOMRenderFunction"
-						},
-						"typeParameters": [
-							{
-								"type": "union",
-								"elements": [
-									{
-										"type": "stringLiteral",
-										"value": "div"
-									}
-								]
-							},
-							{
-								"type": "link",
-								"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Disclosure.d.ts:DisclosureRenderProps",
-								"name": "DisclosureRenderProps"
-							}
-						]
-					}
-				]
-			},
-			"description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
-		},
-		"slot": {
-			"type": "null | string",
-			"detailedType": "null | string | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "undefined"
-					},
-					{
-						"type": "string"
-					}
-				]
-			},
-			"description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
-		},
-		"style": {
-			"type": "CSSProperties | (values: DisclosureRenderProps) => CSSProperties",
-			"detailedType": "CSSProperties | (values: DisclosureRenderProps) => CSSProperties | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "identifier",
-						"name": "CSSProperties"
-					},
-					{
-						"type": "function",
-						"parameters": [
-							{
-								"type": "parameter",
-								"name": "values",
-								"value": {
-									"type": "link",
-									"id": "DisclosureRenderProps",
-									"name": "DisclosureRenderProps"
-								},
-								"optional": false,
-								"rest": false
-							}
-						],
-						"return": {
-							"type": "identifier",
-							"name": "CSSProperties"
-						},
-						"typeParameters": []
-					}
-				]
-			},
-			"description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
-		}
-	},
-	"renderProps": {
-		"isDisabled": {
-			"selector": "[data-disabled]",
-			"description": "Whether the disclosure is disabled."
-		},
-		"isExpanded": {
-			"selector": "[data-expanded]",
-			"description": "Whether the disclosure is expanded."
-		},
-		"isFocusVisibleWithin": {
-			"selector": "[data-focus-visible-within]",
-			"description": "Whether the disclosure has keyboard focus."
-		}
-	},
-	"typeLinks": {
-		"/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Disclosure.d.ts:DisclosureRenderProps": {
-			"type": "interface",
-			"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Disclosure.d.ts:DisclosureRenderProps",
-			"name": "DisclosureRenderProps",
-			"extends": [],
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the disclosure is disabled."
-				},
-				"isExpanded": {
-					"type": "property",
-					"name": "isExpanded",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the disclosure is expanded."
-				},
-				"isFocusVisibleWithin": {
-					"type": "property",
-					"name": "isFocusVisibleWithin",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the disclosure has keyboard focus."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "link",
-						"id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/disclosure/useDisclosureState.d.ts:Disclosure.State",
-						"name": "Disclosure.State"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the disclosure."
-				}
-			},
-			"typeParameters": [],
-			"description": ""
-		},
-		"DisclosureRenderProps": {
-			"type": "interface",
-			"name": "DisclosureRenderProps",
-			"properties": {
-				"isDisabled": {
-					"type": "property",
-					"name": "isDisabled",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the disclosure is disabled."
-				},
-				"isExpanded": {
-					"type": "property",
-					"name": "isExpanded",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the disclosure is expanded."
-				},
-				"isFocusVisibleWithin": {
-					"type": "property",
-					"name": "isFocusVisibleWithin",
-					"value": {
-						"type": "boolean"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "Whether the disclosure has keyboard focus."
-				},
-				"state": {
-					"type": "property",
-					"name": "state",
-					"value": {
-						"type": "identifier",
-						"name": "Disclosure.State"
-					},
-					"optional": false,
-					"readonly": false,
-					"description": "State of the disclosure."
-				}
-			}
-		}
-	}
+  "name": "DisclosureProps",
+  "description": "A disclosure is a collapsible section of content. It is composed of a header\nwith a heading and trigger button, and a panel that contains the content.",
+  "props": {
+    "children": {
+      "type": "ReactNode | (values: DisclosureRenderProps) => ReactNode",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DisclosureRenderProps",
+                  "name": "DisclosureRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The children of the component. A function may be provided to alter the children based on component state."
+    },
+    "className": {
+      "type": "string | (values: DisclosureRenderProps) => string",
+      "detailedType": "string | (values: DisclosureRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DisclosureRenderProps",
+                  "name": "DisclosureRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "default": "'react-aria-Disclosure'"
+    },
+    "defaultExpanded": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the disclosure is expanded by default (uncontrolled)."
+    },
+    "id": {
+      "type": "Key",
+      "detailedType": "Key | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Key"
+      },
+      "description": "An id for the disclosure when used within a DisclosureGroup, matching the id used in `expandedKeys`."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the disclosure is disabled."
+    },
+    "isExpanded": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the disclosure is expanded (controlled)."
+    },
+    "onExpandedChange": {
+      "type": "((isExpanded: boolean) => void)",
+      "detailedType": "((isExpanded: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isExpanded",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the disclosure's expanded state changes."
+    },
+    "render": {
+      "type": "DOMRenderFunction<\"div\", DisclosureRenderProps>",
+      "detailedType": "| DOMRenderFunction<'div', DisclosureRenderProps>\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "DOMRenderFunction"
+            },
+            "typeParameters": [
+              {
+                "type": "union",
+                "elements": [
+                  {
+                    "type": "stringLiteral",
+                    "value": "div"
+                  }
+                ]
+              },
+              {
+                "type": "link",
+                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Disclosure.d.ts:DisclosureRenderProps",
+                "name": "DisclosureRenderProps"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+    },
+    "slot": {
+      "type": "null | string",
+      "detailedType": "null | string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+    },
+    "style": {
+      "type": "CSSProperties | (values: DisclosureRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: DisclosureRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DisclosureRenderProps",
+                  "name": "DisclosureRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the disclosure is disabled."
+    },
+    "isExpanded": {
+      "selector": "[data-expanded]",
+      "description": "Whether the disclosure is expanded."
+    },
+    "isFocusVisibleWithin": {
+      "selector": "[data-focus-visible-within]",
+      "description": "Whether the disclosure has keyboard focus."
+    }
+  },
+  "typeLinks": {
+    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Disclosure.d.ts:DisclosureRenderProps": {
+      "type": "interface",
+      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Disclosure.d.ts:DisclosureRenderProps",
+      "name": "DisclosureRenderProps",
+      "extends": [],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the disclosure is disabled."
+        },
+        "isExpanded": {
+          "type": "property",
+          "name": "isExpanded",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the disclosure is expanded."
+        },
+        "isFocusVisibleWithin": {
+          "type": "property",
+          "name": "isFocusVisibleWithin",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the disclosure has keyboard focus."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "link",
+            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/disclosure/useDisclosureState.d.ts:Disclosure.State",
+            "name": "Disclosure.State"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the disclosure."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    },
+    "DisclosureRenderProps": {
+      "type": "interface",
+      "name": "DisclosureRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the disclosure is disabled."
+        },
+        "isExpanded": {
+          "type": "property",
+          "name": "isExpanded",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the disclosure is expanded."
+        },
+        "isFocusVisibleWithin": {
+          "type": "property",
+          "name": "isFocusVisibleWithin",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the disclosure has keyboard focus."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "Disclosure.State"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the disclosure."
+        }
+      }
+    }
+  }
 }

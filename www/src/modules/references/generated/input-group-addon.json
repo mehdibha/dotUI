@@ -1,6 +1,6 @@
 {
-	"name": "InputGroupAddonProps",
-	"description": "An addon rendered inside an `InputGroup` alongside the input.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "InputGroupAddonProps",
+  "description": "An addon rendered inside an `InputGroup` alongside the input.",
+  "extendsElement": "div",
+  "props": {}
 }

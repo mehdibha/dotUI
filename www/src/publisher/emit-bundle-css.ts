@@ -11,9 +11,13 @@
  * Pure JS — safe to import in a route handler.
  */
 
-import { DEFAULT_COLOR_CONFIG, emitPrimitivesCss, resolveColorConfig } from "@/registry/theme";
+import {
+  DEFAULT_COLOR_CONFIG,
+  emitPrimitivesCss,
+  resolveColorConfig,
+} from '@/registry/theme'
 
-import type { PublishPreset } from "./types";
+import type { PublishPreset } from './types'
 
 /**
  * The preset-resolved primitive ramps as a standalone `colors.css` — `:root`
@@ -27,8 +31,8 @@ import type { PublishPreset } from "./types";
  * text. Baking the foregrounds in makes the bundle portable and plugin-free.
  */
 export function emitColorsCss(preset: PublishPreset): string {
-	const config = preset.color ?? DEFAULT_COLOR_CONFIG;
-	return emitPrimitivesCss(resolveColorConfig(config), { onColors: true });
+  const config = preset.color ?? DEFAULT_COLOR_CONFIG
+  return emitPrimitivesCss(resolveColorConfig(config), { onColors: true })
 }
 
 /**
@@ -56,4 +60,4 @@ export const BUNDLE_GLOBALS_CSS = `@import "tailwindcss";
 \t--font-geist-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
 \t--font-geist-mono: "Geist Mono", ui-monospace, monospace;
 }
-`;
+`

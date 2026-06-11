@@ -20,37 +20,37 @@ npx shadcn@latest add @dotui/otp-field
 Use `OTPField` with `Group` and the existing `Input` component to compose passcode slots.
 
 ```tsx
-import { OTPField } from "@/components/ui/otp-field";
-import { Label } from "@/components/ui/field";
-import { Group } from "@/components/ui/group";
-import { Input } from "@/components/ui/input";
+import { OTPField } from '@/components/ui/otp-field'
+import { Label } from '@/components/ui/field'
+import { Group } from '@/components/ui/group'
+import { Input } from '@/components/ui/input'
 ```
 
 ```tsx
 <OTPField length={6}>
-	<Label>Verification code</Label>
-	<Group>
-		<Input />
-		<Input aria-label="Digit 2" />
-		<Input aria-label="Digit 3" />
-		<Input aria-label="Digit 4" />
-		<Input aria-label="Digit 5" />
-		<Input aria-label="Digit 6" />
-	</Group>
+  <Label>Verification code</Label>
+  <Group>
+    <Input />
+    <Input aria-label="Digit 2" />
+    <Input aria-label="Digit 3" />
+    <Input aria-label="Digit 4" />
+    <Input aria-label="Digit 5" />
+    <Input aria-label="Digit 6" />
+  </Group>
 </OTPField>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="otp-field/demos/basic" />
-	<Example name="otp-field/demos/separator" />
-	<Example name="otp-field/demos/controlled" />
-	<Example name="otp-field/demos/disabled" />
-	<Example name="otp-field/demos/error-message" />
-	<Example name="otp-field/demos/four-digits" />
-	<Example name="otp-field/demos/alphanumeric" />
-	<Example name="otp-field/demos/form" />
+  <Example name="otp-field/demos/basic" />
+  <Example name="otp-field/demos/separator" />
+  <Example name="otp-field/demos/controlled" />
+  <Example name="otp-field/demos/disabled" />
+  <Example name="otp-field/demos/error-message" />
+  <Example name="otp-field/demos/four-digits" />
+  <Example name="otp-field/demos/alphanumeric" />
+  <Example name="otp-field/demos/form" />
 </Examples>
 
 ## API Reference

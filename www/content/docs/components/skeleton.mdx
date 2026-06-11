@@ -8,15 +8,15 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="skeleton"
-	engine="source"
-	controls={[
-		{
-			type: "boolean",
-			name: "isLoading",
-			defaultValue: true,
-		},
-	]}
+  name="skeleton"
+  engine="source"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'isLoading',
+      defaultValue: true,
+    },
+  ]}
 />
 
 ## Installation
@@ -30,19 +30,19 @@ npx shadcn@latest add @dotui/skeleton
 Use skeleton components as placeholders while content is loading.
 
 ```tsx
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton'
 ```
 
 ```tsx
 <Skeleton isLoading={true}>
-	<Skeleton className="h-4 w-32" />
+  <Skeleton className="h-4 w-32" />
 </Skeleton>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="skeleton/demos/card" />
+  <Example name="skeleton/demos/card" />
 </Examples>
 
 ## API Reference

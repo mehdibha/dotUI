@@ -1,12 +1,11 @@
-"use client";
+'use client'
 
-import type * as React from "react";
+import type * as React from 'react'
+import { composeRenderProps } from 'react-aria-components/composeRenderProps'
+import * as ModalPrimitives from 'react-aria-components/Modal'
+import { useIsHidden } from 'react-aria/private/collections/Hidden'
 
-import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import * as ModalPrimitives from "react-aria-components/Modal";
-import { useIsHidden } from "react-aria/private/collections/Hidden";
-
-import { useStyles } from "./styles";
+import { useStyles } from './styles'
 
 // MARK: modalStyles
 
@@ -15,65 +14,90 @@ import { useStyles } from "./styles";
 interface ModalProps extends ModalOverlayProps {}
 
 const Modal = ({ children, className, ...props }: ModalProps) => {
-	const isHidden = useIsHidden();
+  const isHidden = useIsHidden()
 
-	if (isHidden) {
-		return <>{children}</>;
-	}
+  if (isHidden) {
+    return <>{children}</>
+  }
 
-	return (
-		<ModalOverlay {...props}>
-			<ModalBackdrop />
-			<ModalViewport>
-				<ModalPanel className={className}>{children}</ModalPanel>
-			</ModalViewport>
-		</ModalOverlay>
-	);
-};
-
-// MARK: Separator
-
-interface ModalOverlayProps extends React.ComponentProps<typeof ModalPrimitives.ModalOverlay> {}
-const ModalOverlay = ({ children, className, isDismissable = true, ...props }: ModalOverlayProps) => {
-	const { overlay } = useStyles()();
-	return (
-		<ModalPrimitives.ModalOverlay
-			isDismissable={isDismissable}
-			className={composeRenderProps(className, (className) => overlay({ className }))}
-			{...props}
-		>
-			{children}
-		</ModalPrimitives.ModalOverlay>
-	);
-};
+  return (
+    <ModalOverlay {...props}>
+      <ModalBackdrop />
+      <ModalViewport>
+        <ModalPanel className={className}>{children}</ModalPanel>
+      </ModalViewport>
+    </ModalOverlay>
+  )
+}
 
 // MARK: Separator
 
-interface ModalPanelProps extends React.ComponentProps<typeof ModalPrimitives.Modal> {}
+interface ModalOverlayProps extends React.ComponentProps<
+  typeof ModalPrimitives.ModalOverlay
+> {}
+const ModalOverlay = ({
+  children,
+  className,
+  isDismissable = true,
+  ...props
+}: ModalOverlayProps) => {
+  const { overlay } = useStyles()()
+  return (
+    <ModalPrimitives.ModalOverlay
+      isDismissable={isDismissable}
+      className={composeRenderProps(className, (className) =>
+        overlay({ className }),
+      )}
+      {...props}
+    >
+      {children}
+    </ModalPrimitives.ModalOverlay>
+  )
+}
+
+// MARK: Separator
+
+interface ModalPanelProps extends React.ComponentProps<
+  typeof ModalPrimitives.Modal
+> {}
 const ModalPanel = ({ children, className, ...props }: ModalPanelProps) => {
-	const { modal } = useStyles()();
-	return (
-		<ModalPrimitives.Modal
-			data-modal=""
-			className={composeRenderProps(className, (className) => modal({ className }))}
-			{...props}
-		>
-			{children}
-		</ModalPrimitives.Modal>
-	);
-};
+  const { modal } = useStyles()()
+  return (
+    <ModalPrimitives.Modal
+      data-modal=""
+      className={composeRenderProps(className, (className) =>
+        modal({ className }),
+      )}
+      {...props}
+    >
+      {children}
+    </ModalPrimitives.Modal>
+  )
+}
 
-interface ModalBackdropProps extends React.ComponentProps<"div"> {}
+interface ModalBackdropProps extends React.ComponentProps<'div'> {}
 const ModalBackdrop = ({ className, ...props }: ModalBackdropProps) => {
-	const { backdrop } = useStyles()();
-	return <div className={backdrop({ className })} {...props} />;
-};
+  const { backdrop } = useStyles()()
+  return <div className={backdrop({ className })} {...props} />
+}
 
-interface ModalViewportProps extends React.ComponentProps<"div"> {}
+interface ModalViewportProps extends React.ComponentProps<'div'> {}
 const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
-	const { viewport } = useStyles()();
-	return <div data-slot="modal-viewport" className={viewport({ className })} {...props} />;
-};
+  const { viewport } = useStyles()()
+  return (
+    <div
+      data-slot="modal-viewport"
+      className={viewport({ className })}
+      {...props}
+    />
+  )
+}
 
-export type { ModalBackdropProps, ModalOverlayProps, ModalPanelProps, ModalProps, ModalViewportProps };
-export { Modal, ModalBackdrop, ModalOverlay, ModalPanel, ModalViewport };
+export type {
+  ModalBackdropProps,
+  ModalOverlayProps,
+  ModalPanelProps,
+  ModalProps,
+  ModalViewportProps,
+}
+export { Modal, ModalBackdrop, ModalOverlay, ModalPanel, ModalViewport }

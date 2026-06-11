@@ -19,87 +19,104 @@
  * `@/*` → `./src/*` alias with no rewriting.
  */
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
-import { BUNDLE_GLOBALS_CSS, emitColorsCss } from "@/publisher/emit-bundle-css";
 import {
-	SHOWCASE_BUNDLE_CSS_FILES,
-	SHOWCASE_BUNDLE_DEPENDENCIES,
-	SHOWCASE_BUNDLE_SOURCE_FILES,
-} from "@/registry/__generated__/showcase-bundle";
-
-import type { PublishPreset } from "@/publisher/types";
+  SHOWCASE_BUNDLE_CSS_FILES,
+  SHOWCASE_BUNDLE_DEPENDENCIES,
+  SHOWCASE_BUNDLE_SOURCE_FILES,
+} from '@/registry/__generated__/showcase-bundle'
+import { BUNDLE_GLOBALS_CSS, emitColorsCss } from '@/publisher/emit-bundle-css'
+import type { PublishPreset } from '@/publisher/types'
 
 const JSON_HEADERS = {
-	"Content-Type": "application/json; charset=utf-8",
-	"Cache-Control": "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
-};
-
-interface ItemFile {
-	type: string;
-	path: string;
-	target: string;
-	content: string;
+  'Content-Type': 'application/json; charset=utf-8',
+  'Cache-Control':
+    'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
 }
 
-export const Route = createFileRoute("/r/showcase-bundle")({
-	server: {
-		handlers: {
-			GET: async ({ request }) => {
-				const url = new URL(request.url);
-				const encodedPreset = url.searchParams.get("preset") ?? undefined;
-				const preset = encodedPreset ? await decodePresetForRoute(encodedPreset) : defaultPreset();
+interface ItemFile {
+  type: string
+  path: string
+  target: string
+  content: string
+}
 
-				const files: ItemFile[] = [
-					// App shell + theme (assembled per request). Root-relative targets:
-					// v0 scaffolds a root-`app/` Next.js project with `@/*` → `./*`.
-					file("registry:file", "app/globals.css", BUNDLE_GLOBALS_CSS),
-					file("registry:file", "registry/base/colors.css", emitColorsCss(preset)),
-					file("registry:file", "app/layout.tsx", buildLayoutTsx()),
-					file("registry:page", "app/page.tsx", buildPageTsx(preset)),
-					// Mirrored theme CSS (base.css, theme.css, fonts.css, per-component styles.css, aggregator).
-					...SHOWCASE_BUNDLE_CSS_FILES.map((f) => file("registry:file", f.target, f.content)),
-					// The transitive source closure (components, lib, hooks, provider, showcase cards).
-					...SHOWCASE_BUNDLE_SOURCE_FILES.map((f) => file("registry:file", f.target, f.content)),
-				];
+export const Route = createFileRoute('/r/showcase-bundle')({
+  server: {
+    handlers: {
+      GET: async ({ request }) => {
+        const url = new URL(request.url)
+        const encodedPreset = url.searchParams.get('preset') ?? undefined
+        const preset = encodedPreset
+          ? await decodePresetForRoute(encodedPreset)
+          : defaultPreset()
 
-				const item = {
-					$schema: "https://ui.shadcn.com/schema/registry-item.json",
-					name: "dotui-showcase",
-					type: "registry:block",
-					title: "dotUI Showcase",
-					description: "The dotUI component showcase, themed to your design system preset.",
-					dependencies: SHOWCASE_BUNDLE_DEPENDENCIES,
-					registryDependencies: [],
-					files,
-				};
+        const files: ItemFile[] = [
+          // App shell + theme (assembled per request). Root-relative targets:
+          // v0 scaffolds a root-`app/` Next.js project with `@/*` → `./*`.
+          file('registry:file', 'app/globals.css', BUNDLE_GLOBALS_CSS),
+          file(
+            'registry:file',
+            'registry/base/colors.css',
+            emitColorsCss(preset),
+          ),
+          file('registry:file', 'app/layout.tsx', buildLayoutTsx()),
+          file('registry:page', 'app/page.tsx', buildPageTsx(preset)),
+          // Mirrored theme CSS (base.css, theme.css, fonts.css, per-component styles.css, aggregator).
+          ...SHOWCASE_BUNDLE_CSS_FILES.map((f) =>
+            file('registry:file', f.target, f.content),
+          ),
+          // The transitive source closure (components, lib, hooks, provider, showcase cards).
+          ...SHOWCASE_BUNDLE_SOURCE_FILES.map((f) =>
+            file('registry:file', f.target, f.content),
+          ),
+        ]
 
-				return new Response(JSON.stringify(item, null, 2), { headers: JSON_HEADERS });
-			},
-		},
-	},
-});
+        const item = {
+          $schema: 'https://ui.shadcn.com/schema/registry-item.json',
+          name: 'dotui-showcase',
+          type: 'registry:block',
+          title: 'dotUI Showcase',
+          description:
+            'The dotUI component showcase, themed to your design system preset.',
+          dependencies: SHOWCASE_BUNDLE_DEPENDENCIES,
+          registryDependencies: [],
+          files,
+        }
+
+        return new Response(JSON.stringify(item, null, 2), {
+          headers: JSON_HEADERS,
+        })
+      },
+    },
+  },
+})
 
 function file(type: string, target: string, content: string): ItemFile {
-	return { type, path: target, target, content };
+  return { type, path: target, target, content }
 }
 
 function defaultPreset(): PublishPreset {
-	return { density: "compact", componentParams: {} };
+  return { density: 'compact', componentParams: {} }
 }
 
 async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
-	try {
-		const { decodePreset } = await import("@/modules/create/preset/codec");
-		const ds = decodePreset(encoded);
-		return { color: ds.color, density: ds.density, componentParams: ds.componentParams };
-	} catch {
-		return defaultPreset();
-	}
+  try {
+    const { decodePreset } = await import('@/modules/create/preset/codec')
+    const ds = decodePreset(encoded)
+    return {
+      color: ds.color,
+      density: ds.density,
+      componentParams: ds.componentParams,
+    }
+  } catch {
+    return defaultPreset()
+  }
 }
 
 function buildLayoutTsx(): string {
-	return `import type { ReactNode } from "react";
+  return `import type { ReactNode } from "react";
 
 import "./globals.css";
 
@@ -115,15 +132,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 \t\t</html>
 \t);
 }
-`;
+`
 }
 
 function buildPageTsx(preset: PublishPreset): string {
-	const density = JSON.stringify(preset.density ?? "compact");
-	const params = JSON.stringify(preset.componentParams ?? {});
-	// Import the theme from the page too (not just the layout): if v0 keeps its
-	// own root layout, the page still pulls in globals.css so the theme loads.
-	return `"use client";
+  const density = JSON.stringify(preset.density ?? 'compact')
+  const params = JSON.stringify(preset.componentParams ?? {})
+  // Import the theme from the page too (not just the layout): if v0 keeps its
+  // own root layout, the page still pulls in globals.css so the theme loads.
+  return `"use client";
 
 import "./globals.css";
 
@@ -141,5 +158,5 @@ export default function Page() {
 \t\t</DesignSystemProvider>
 \t);
 }
-`;
+`
 }

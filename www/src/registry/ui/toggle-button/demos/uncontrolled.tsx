@@ -1,10 +1,10 @@
-import { PinIcon } from "@/registry/__generated__/icons";
-import { ToggleButton } from "@/registry/ui/toggle-button";
+import { PinIcon } from '@/registry/__generated__/icons'
+import { ToggleButton } from '@/registry/ui/toggle-button'
 
 export default function Demo() {
-	return (
-		<ToggleButton isIconOnly aria-label="Toggle pin" defaultSelected>
-			<PinIcon className="rotate-45" />
-		</ToggleButton>
-	);
+  return (
+    <ToggleButton isIconOnly aria-label="Toggle pin" defaultSelected>
+      <PinIcon className="rotate-45" />
+    </ToggleButton>
+  )
 }

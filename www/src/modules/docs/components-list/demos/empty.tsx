@@ -1,26 +1,34 @@
-import { IconFolderCode } from "@tabler/icons-react";
+import { IconFolderCode } from '@tabler/icons-react'
 
-import { Button } from "@/registry/ui/button";
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/registry/ui/empty";
+import { Button } from '@/registry/ui/button'
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/registry/ui/empty'
 
 export function EmptyDemo() {
-	return (
-		<Empty>
-			<EmptyHeader>
-				<EmptyMedia variant="icon">
-					<IconFolderCode />
-				</EmptyMedia>
-				<EmptyTitle>No Projects Yet</EmptyTitle>
-				<EmptyDescription>
-					You haven't created any projects yet. Get started by creating your first project.
-				</EmptyDescription>
-			</EmptyHeader>
-			<EmptyContent>
-				<div className="flex gap-2">
-					<Button variant="primary">Create Project</Button>
-					<Button>Import Project</Button>
-				</div>
-			</EmptyContent>
-		</Empty>
-	);
+  return (
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <IconFolderCode />
+        </EmptyMedia>
+        <EmptyTitle>No Projects Yet</EmptyTitle>
+        <EmptyDescription>
+          You haven't created any projects yet. Get started by creating your
+          first project.
+        </EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <div className="flex gap-2">
+          <Button variant="primary">Create Project</Button>
+          <Button>Import Project</Button>
+        </div>
+      </EmptyContent>
+    </Empty>
+  )
 }

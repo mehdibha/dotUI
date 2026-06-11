@@ -8,25 +8,25 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="dialog"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "title",
-			defaultValue: "Dialog Title",
-		},
-		{
-			type: "string",
-			name: "description",
-			defaultValue: "This is a dialog description.",
-		},
-		{
-			type: "boolean",
-			name: "isDismissable",
-			defaultValue: true,
-		},
-	]}
+  name="dialog"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'title',
+      defaultValue: 'Dialog Title',
+    },
+    {
+      type: 'string',
+      name: 'description',
+      defaultValue: 'This is a dialog description.',
+    },
+    {
+      type: 'boolean',
+      name: 'isDismissable',
+      defaultValue: true,
+    },
+  ]}
 />
 
 ## Installation
@@ -40,51 +40,51 @@ npx shadcn@latest add @dotui/dialog
 Use dialog to grab the user's attention for critical tasks, like confirming actions, providing additional details, or capturing input.
 
 ```tsx
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
-	Dialog,
-	DialogBody,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-} from "@/components/ui/dialog";
-import { Overlay } from "@/components/ui/overlay";
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Overlay } from '@/components/ui/overlay'
 ```
 
 ```tsx
 <Dialog>
-	<Button>Open dialog</Button>
-	<Overlay>
-		<DialogContent>
-			<DialogHeader>
-				<DialogTitle>Dialog Title</DialogTitle>
-				<DialogDescription>Dialog description</DialogDescription>
-			</DialogHeader>
-			<DialogBody>Content</DialogBody>
-			<DialogFooter>
-				<Button slot="close">Close</Button>
-			</DialogFooter>
-		</DialogContent>
-	</Overlay>
+  <Button>Open dialog</Button>
+  <Overlay>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Dialog Title</DialogTitle>
+        <DialogDescription>Dialog description</DialogDescription>
+      </DialogHeader>
+      <DialogBody>Content</DialogBody>
+      <DialogFooter>
+        <Button slot="close">Close</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Overlay>
 </Dialog>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="dialog/demos/basic" />
-	<Example name="dialog/demos/title" />
-	<Example name="dialog/demos/description" />
-	<Example name="dialog/demos/types" />
-	<Example name="dialog/demos/dismissable" />
-	<Example name="dialog/demos/alert-dialog" />
-	<Example name="dialog/demos/composition" />
-	<Example name="dialog/demos/controlled" />
-	<Example name="dialog/demos/nested" />
-	<Example name="dialog/demos/inset-content" />
-	<Example name="dialog/demos/async-form-submission" />
+  <Example name="dialog/demos/basic" />
+  <Example name="dialog/demos/title" />
+  <Example name="dialog/demos/description" />
+  <Example name="dialog/demos/types" />
+  <Example name="dialog/demos/dismissable" />
+  <Example name="dialog/demos/alert-dialog" />
+  <Example name="dialog/demos/composition" />
+  <Example name="dialog/demos/controlled" />
+  <Example name="dialog/demos/nested" />
+  <Example name="dialog/demos/inset-content" />
+  <Example name="dialog/demos/async-form-submission" />
 </Examples>
 
 ## API Reference

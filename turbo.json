@@ -1,24 +1,30 @@
 {
-	"$schema": "https://turborepo.org/schema.json",
-	"tasks": {
-		"build": {
-			"dependsOn": ["^build"],
-			"env": ["VERCEL", "VERCEL_ENV"],
-			"outputs": [".output/**", ".vercel/output/**", "dist/**"]
-		},
-		"dev": {
-			"cache": false,
-			"persistent": true
-		},
-		"typecheck": {
-			"dependsOn": ["^build"]
-		},
-		"clean": {
-			"cache": false
-		},
-		"//#clean": {
-			"cache": false
-		}
-	},
-	"globalPassThroughEnv": ["NODE_ENV", "CI", "VERCEL_URL", "npm_lifecycle_event", "PORT"]
+  "$schema": "https://turborepo.org/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "env": ["VERCEL", "VERCEL_ENV"],
+      "outputs": [".output/**", ".vercel/output/**", "dist/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "//#clean": {
+      "cache": false
+    }
+  },
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "CI",
+    "VERCEL_URL",
+    "npm_lifecycle_event",
+    "PORT"
+  ]
 }

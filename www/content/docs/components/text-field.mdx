@@ -8,42 +8,42 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="text-field"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Email",
-		},
-		{
-			type: "string",
-			name: "description",
-			defaultValue: "",
-			placeholder: "Helper text",
-		},
-		{
-			type: "string",
-			name: "errorMessage",
-			defaultValue: "",
-			placeholder: "Error text",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isReadOnly",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isInvalid",
-			defaultValue: false,
-		},
-	]}
+  name="text-field"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Email',
+    },
+    {
+      type: 'string',
+      name: 'description',
+      defaultValue: '',
+      placeholder: 'Helper text',
+    },
+    {
+      type: 'string',
+      name: 'errorMessage',
+      defaultValue: '',
+      placeholder: 'Error text',
+    },
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isReadOnly',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isInvalid',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -57,32 +57,32 @@ npx shadcn@latest add @dotui/text-field
 Use a `TextField` to allow users to input custom text entries with a keyboard.
 
 ```tsx
-import { TextField } from "@/components/ui/text-field";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/field";
+import { TextField } from '@/components/ui/text-field'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/field'
 ```
 
 ```tsx
 <TextField>
-	<Label>Email</Label>
-	<Input placeholder="hello@example.com" />
+  <Label>Email</Label>
+  <Input placeholder="hello@example.com" />
 </TextField>
 ```
 
 ## Examples
 
 <Examples className="md:grid-cols-2">
-	<Example name="text-field/demos/basic" />
-	<Example name="text-field/demos/description" />
-	<Example name="text-field/demos/disabled" />
-	<Example name="text-field/demos/error-message" />
-	<Example name="text-field/demos/label" />
-	<Example name="text-field/demos/prefix-and-suffix" />
-	<Example name="text-field/demos/read-only" />
-	<Example name="text-field/demos/required" />
-	<Example name="text-field/demos/sizes" />
-	<Example name="text-field/demos/uncontrolled" />
-	<Example name="text-field/demos/controlled" />
+  <Example name="text-field/demos/basic" />
+  <Example name="text-field/demos/description" />
+  <Example name="text-field/demos/disabled" />
+  <Example name="text-field/demos/error-message" />
+  <Example name="text-field/demos/label" />
+  <Example name="text-field/demos/prefix-and-suffix" />
+  <Example name="text-field/demos/read-only" />
+  <Example name="text-field/demos/required" />
+  <Example name="text-field/demos/sizes" />
+  <Example name="text-field/demos/uncontrolled" />
+  <Example name="text-field/demos/controlled" />
 </Examples>
 
 ## API Reference

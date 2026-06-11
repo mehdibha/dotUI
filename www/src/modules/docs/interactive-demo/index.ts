@@ -1,1 +1,1 @@
-export { InteractiveDemo } from "./interactive-demo";
+export { InteractiveDemo } from './interactive-demo'

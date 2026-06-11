@@ -1,12 +1,12 @@
 {
-	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"rootDir": "./src/registry",
-		"noEmit": false,
-		"declaration": true,
-		"declarationMap": true,
-		"outDir": "./dist"
-	},
-	"include": ["src/registry/**/*.ts", "src/registry/**/*.tsx"],
-	"exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx", "**/demos/**"]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src/registry",
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist"
+  },
+  "include": ["src/registry/**/*.ts", "src/registry/**/*.tsx"],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx", "**/demos/**"]
 }

@@ -1,62 +1,62 @@
-import { Example } from "@/modules/create/preview/example";
-import { Examples } from "@/modules/create/preview/examples";
+import { Example } from '@/modules/create/preview/example'
+import { Examples } from '@/modules/create/preview/examples'
 
-import AsyncLoading from "./demos/async-loading";
-import Basic from "./demos/basic";
-import Controlled from "./demos/controlled";
-import Description from "./demos/description";
-import Disabled from "./demos/disabled";
-import Label from "./demos/label";
-import Links from "./demos/links";
-import Loading from "./demos/loading";
-import Placeholder from "./demos/placeholder";
-import Required from "./demos/required";
-import Sections from "./demos/sections";
-import Uncontrolled from "./demos/uncontrolled";
-import Validation from "./demos/validation";
+import AsyncLoading from './demos/async-loading'
+import Basic from './demos/basic'
+import Controlled from './demos/controlled'
+import Description from './demos/description'
+import Disabled from './demos/disabled'
+import Label from './demos/label'
+import Links from './demos/links'
+import Loading from './demos/loading'
+import Placeholder from './demos/placeholder'
+import Required from './demos/required'
+import Sections from './demos/sections'
+import Uncontrolled from './demos/uncontrolled'
+import Validation from './demos/validation'
 
 export default function SelectExamples() {
-	return (
-		<Examples className="md:grid-cols-2">
-			<Example title="basic">
-				<Basic />
-			</Example>
-			<Example title="controlled">
-				<Controlled />
-			</Example>
-			<Example title="description">
-				<Description />
-			</Example>
-			<Example title="disabled">
-				<Disabled />
-			</Example>
-			<Example title="label">
-				<Label />
-			</Example>
-			<Example title="links">
-				<Links />
-			</Example>
-			<Example title="loading">
-				<Loading />
-			</Example>
-			<Example title="placeholder">
-				<Placeholder />
-			</Example>
-			<Example title="required">
-				<Required />
-			</Example>
-			<Example title="sections">
-				<Sections />
-			</Example>
-			<Example title="uncontrolled">
-				<Uncontrolled />
-			</Example>
-			<Example title="validation">
-				<Validation />
-			</Example>
-			<Example title="async loading">
-				<AsyncLoading />
-			</Example>
-		</Examples>
-	);
+  return (
+    <Examples className="md:grid-cols-2">
+      <Example title="basic">
+        <Basic />
+      </Example>
+      <Example title="controlled">
+        <Controlled />
+      </Example>
+      <Example title="description">
+        <Description />
+      </Example>
+      <Example title="disabled">
+        <Disabled />
+      </Example>
+      <Example title="label">
+        <Label />
+      </Example>
+      <Example title="links">
+        <Links />
+      </Example>
+      <Example title="loading">
+        <Loading />
+      </Example>
+      <Example title="placeholder">
+        <Placeholder />
+      </Example>
+      <Example title="required">
+        <Required />
+      </Example>
+      <Example title="sections">
+        <Sections />
+      </Example>
+      <Example title="uncontrolled">
+        <Uncontrolled />
+      </Example>
+      <Example title="validation">
+        <Validation />
+      </Example>
+      <Example title="async loading">
+        <AsyncLoading />
+      </Example>
+    </Examples>
+  )
 }

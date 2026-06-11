@@ -1,3 +1,3 @@
 [data-required] [data-label]::after {
-	content: "*" / "";
+  content: '*' / '';
 }

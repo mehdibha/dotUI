@@ -13,27 +13,27 @@ npx shadcn@latest add @dotui/toast
 ## Usage
 
 ```tsx
-import { ToastProvider, toastManager } from "@/components/ui/toast";
+import { ToastProvider, toastManager } from '@/components/ui/toast'
 ```
 
 ```tsx
-<ToastProvider />;
+;<ToastProvider />
 
 toastManager.add({
-	title: "Your message has been sent.",
-});
+  title: 'Your message has been sent.',
+})
 
 toastManager.add({
-	title: "Changes saved",
-	description: "Your update is live.",
-	type: "success",
-});
+  title: 'Changes saved',
+  description: 'Your update is live.',
+  type: 'success',
+})
 ```
 
 ## Examples
 
 <Examples>
-	<p className="text-fg-muted col-span-full">No examples yet.</p>
+  <p className="text-fg-muted col-span-full">No examples yet.</p>
 </Examples>
 
 ## API Reference

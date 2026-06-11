@@ -1,25 +1,27 @@
-"use client";
+'use client'
 
-import React from "react";
+import React from 'react'
 
-import { Label } from "@/registry/ui/field";
-import { TextArea } from "@/registry/ui/input";
-import { TextField } from "@/registry/ui/text-field";
+import { Label } from '@/registry/ui/field'
+import { TextArea } from '@/registry/ui/input'
+import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
-	const [inputValue, setInputValue] = React.useState("Roses are red, violets are blue.");
-	return (
-		<div className="flex flex-col items-center gap-4">
-			<TextField
-				value={inputValue}
-				onChange={(text) => {
-					setInputValue(text);
-				}}
-			>
-				<Label>Essay</Label>
-				<TextArea />
-			</TextField>
-			<p className="text-sm text-fg-muted">mirrored text: {inputValue}</p>
-		</div>
-	);
+  const [inputValue, setInputValue] = React.useState(
+    'Roses are red, violets are blue.',
+  )
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <TextField
+        value={inputValue}
+        onChange={(text) => {
+          setInputValue(text)
+        }}
+      >
+        <Label>Essay</Label>
+        <TextArea />
+      </TextField>
+      <p className="text-sm text-fg-muted">mirrored text: {inputValue}</p>
+    </div>
+  )
 }

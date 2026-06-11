@@ -23,8 +23,8 @@ Or in your Tailwind config (Tailwind v3):
 ```js
 // tailwind.config.js
 module.exports = {
-	plugins: [require("tailwindcss-with")],
-};
+  plugins: [require('tailwindcss-with')],
+}
 ```
 
 ## How it works

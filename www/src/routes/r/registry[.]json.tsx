@@ -23,50 +23,59 @@
  * deployment (prod, preview, local) without hardcoding a domain.
  */
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
-import { PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables";
-import { registryUi } from "@/registry/__generated__/registry-items";
+import { PUBLISHABLE_NAMES } from '@/registry/__generated__/publishables'
+import { registryUi } from '@/registry/__generated__/registry-items'
 
 const JSON_HEADERS = {
-	"Content-Type": "application/json; charset=utf-8",
-	"Cache-Control": "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
-};
+  'Content-Type': 'application/json; charset=utf-8',
+  'Cache-Control':
+    'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
+}
 
-const META_BY_NAME = new Map(registryUi.map((item) => [item.name, item]));
+const META_BY_NAME = new Map(registryUi.map((item) => [item.name, item]))
 
 /** Identity + dependency fields a discovery client needs; everything resolved per-item lives at /r/{name}. */
 function toIndexItem(name: string) {
-	const item = META_BY_NAME.get(name);
-	if (!item) return { name, type: "registry:ui" };
-	return {
-		name: item.name,
-		type: item.type,
-		...(item.title !== undefined ? { title: item.title } : {}),
-		...(item.description !== undefined ? { description: item.description } : {}),
-		...(item.dependencies ? { dependencies: item.dependencies } : {}),
-		...(item.registryDependencies ? { registryDependencies: item.registryDependencies } : {}),
-	};
+  const item = META_BY_NAME.get(name)
+  if (!item) return { name, type: 'registry:ui' }
+  return {
+    name: item.name,
+    type: item.type,
+    ...(item.title !== undefined ? { title: item.title } : {}),
+    ...(item.description !== undefined
+      ? { description: item.description }
+      : {}),
+    ...(item.dependencies ? { dependencies: item.dependencies } : {}),
+    ...(item.registryDependencies
+      ? { registryDependencies: item.registryDependencies }
+      : {}),
+  }
 }
 
-export const Route = createFileRoute("/r/registry.json")({
-	server: {
-		handlers: {
-			GET: ({ request }) => {
-				const url = new URL(request.url);
-				const homepage = `${url.protocol}//${url.host}`;
+export const Route = createFileRoute('/r/registry.json')({
+  server: {
+    handlers: {
+      GET: ({ request }) => {
+        const url = new URL(request.url)
+        const homepage = `${url.protocol}//${url.host}`
 
-				const items = [...PUBLISHABLE_NAMES].sort((a, b) => a.localeCompare(b)).map(toIndexItem);
+        const items = [...PUBLISHABLE_NAMES]
+          .sort((a, b) => a.localeCompare(b))
+          .map(toIndexItem)
 
-				const registry = {
-					$schema: "https://ui.shadcn.com/schema/registry.json",
-					name: "dotui",
-					homepage,
-					items,
-				};
+        const registry = {
+          $schema: 'https://ui.shadcn.com/schema/registry.json',
+          name: 'dotui',
+          homepage,
+          items,
+        }
 
-				return new Response(JSON.stringify(registry, null, 2), { headers: JSON_HEADERS });
-			},
-		},
-	},
-});
+        return new Response(JSON.stringify(registry, null, 2), {
+          headers: JSON_HEADERS,
+        })
+      },
+    },
+  },
+})
