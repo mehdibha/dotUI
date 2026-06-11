@@ -3,47 +3,28 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".output/**", ".vercel/**", "dist/**"]
+      "env": ["VERCEL", "VERCEL_ENV"],
+      "outputs": [".output/**", ".vercel/output/**", "dist/**"]
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
-    "//#check": {},
-    "//#check:fix": {
-      "cache": false
-    },
-    "//#check:ci": {},
     "typecheck": {
       "dependsOn": ["^build"]
-    },
-    "test": {
-      "cache": false,
-      "outputs": []
     },
     "clean": {
       "cache": false
     },
     "//#clean": {
       "cache": false
-    },
-    "push": {
-      "cache": false,
-      "interactive": true
-    },
-    "studio": {
-      "cache": false,
-      "persistent": true
     }
   },
-  "globalEnv": ["PORT"],
   "globalPassThroughEnv": [
     "NODE_ENV",
     "CI",
-    "VERCEL",
-    "VERCEL_ENV",
     "VERCEL_URL",
     "npm_lifecycle_event",
-    "PORTLESS",
-    "PORTLESS_PORT"
+    "PORT"
   ]
 }
