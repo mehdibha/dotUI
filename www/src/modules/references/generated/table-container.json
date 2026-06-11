@@ -219,6 +219,50 @@
       "name": "Map",
       "extends": [],
       "properties": {
+        "[Symbol.iterator]": {
+          "type": "method",
+          "name": "[Symbol.iterator]",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "typescript/lib/lib.es2015.iterable.d.ts:MapIterator",
+                "name": "MapIterator"
+              },
+              "typeParameters": [
+                {
+                  "type": "tuple",
+                  "elements": [
+                    {
+                      "type": "identifier",
+                      "name": "Key"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "ColumnSize"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Returns an iterable of entries in the map."
+        },
+        "[Symbol.toStringTag]": {
+          "type": "property",
+          "name": "[Symbol.toStringTag]",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": ""
+        },
         "clear": {
           "type": "method",
           "name": "clear",

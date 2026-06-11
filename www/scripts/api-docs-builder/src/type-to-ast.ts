@@ -433,10 +433,11 @@ export function buildTypeAstFromString(
 
 /**
  * TypeScript names well-known symbol members `__@iterator@<n>` where `<n>` is
- * a checker-internal counter that varies between runs — exclude them entirely.
+ * a checker-internal counter that varies between runs — emit their display
+ * form (`[Symbol.iterator]`) instead.
  */
-export function isWellKnownSymbolMember(name: string): boolean {
-  return name.startsWith('__@')
+export function formatMemberName(name: string): string {
+  return name.replace(/^__@(\w+)@\d+$/, '[Symbol.$1]')
 }
 
 /**
@@ -957,9 +958,10 @@ function objectTypeToAst(
 
   const propsRecord: Record<string, TProperty | TMethod> = {}
 
-  for (const prop of properties
-    .filter((p) => !isWellKnownSymbolMember(p.getName()))
-    .sort((a, b) => a.getName().localeCompare(b.getName()))) {
+  for (const prop of [...properties].sort((a, b) =>
+    formatMemberName(a.getName()).localeCompare(formatMemberName(b.getName())),
+  )) {
+    const propName = formatMemberName(prop.getName())
     const propType = checker.getTypeOfSymbol(prop)
     const declaration = prop.valueDeclaration
 
@@ -967,9 +969,9 @@ function objectTypeToAst(
     const callSignatures = propType.getCallSignatures()
     const firstSig = callSignatures[0]
     if (firstSig && !propType.getProperties().length) {
-      propsRecord[prop.getName()] = {
+      propsRecord[propName] = {
         type: 'method',
-        name: prop.getName(),
+        name: propName,
         value: functionSignatureToAst(firstSig, context),
         optional: (prop.flags & ts.SymbolFlags.Optional) !== 0,
         description: ts.displayPartsToString(
@@ -977,9 +979,9 @@ function objectTypeToAst(
         ),
       } as TMethod
     } else {
-      propsRecord[prop.getName()] = {
+      propsRecord[propName] = {
         type: 'property',
-        name: prop.getName(),
+        name: propName,
         value:
           typeToAst(propType, {
             ...context,
@@ -1025,17 +1027,20 @@ function resolveNamedType(
     const properties = type.getProperties()
     const propsRecord: Record<string, TProperty | TMethod> = {}
 
-    for (const prop of properties
-      .filter((p) => !isWellKnownSymbolMember(p.getName()))
-      .sort((a, b) => a.getName().localeCompare(b.getName()))) {
+    for (const prop of [...properties].sort((a, b) =>
+      formatMemberName(a.getName()).localeCompare(
+        formatMemberName(b.getName()),
+      ),
+    )) {
+      const propName = formatMemberName(prop.getName())
       const propType = checker.getTypeOfSymbol(prop)
       const callSignatures = propType.getCallSignatures()
       const firstCallSig = callSignatures[0]
 
       if (firstCallSig && !propType.getProperties().length) {
-        propsRecord[prop.getName()] = {
+        propsRecord[propName] = {
           type: 'method',
-          name: prop.getName(),
+          name: propName,
           value: functionSignatureToAst(firstCallSig, context),
           optional: (prop.flags & ts.SymbolFlags.Optional) !== 0,
           description: ts.displayPartsToString(
@@ -1043,9 +1048,9 @@ function resolveNamedType(
           ),
         } as TMethod
       } else {
-        propsRecord[prop.getName()] = {
+        propsRecord[propName] = {
           type: 'property',
-          name: prop.getName(),
+          name: propName,
           value:
             typeToAst(propType, {
               ...context,

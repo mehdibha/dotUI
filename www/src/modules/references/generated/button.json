@@ -1312,6 +1312,40 @@
       "name": "FormData",
       "extends": [],
       "properties": {
+        "[Symbol.iterator]": {
+          "type": "method",
+          "name": "[Symbol.iterator]",
+          "value": {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "typescript/lib/lib.dom.d.ts:FormDataIterator",
+                "name": "FormDataIterator"
+              },
+              "typeParameters": [
+                {
+                  "type": "tuple",
+                  "elements": [
+                    {
+                      "type": "identifier",
+                      "name": "string"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "FormDataEntryValue"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": ""
+        },
         "append": {
           "type": "method",
           "name": "append",
