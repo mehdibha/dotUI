@@ -1,0 +1,6 @@
+# Commits that git blame should skip (mass mechanical changes).
+# GitHub's blame view honors this file automatically. Locally, run once:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# style: reformat repo with oxfmt
+ccd5c0442be89b7bc7b5eb7ef486bb0853db8e49
