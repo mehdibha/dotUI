@@ -4,7 +4,8 @@ This is the dotUI repository — a design-system builder. Users compose a
 complete design system at dotui.org/create — colors, typography, icons,
 density, radius, per-component styles — preview every change live on real
 components, and export it as code they own: into their codebase via the
-shadcn CLI, or straight into v0, Bolt, and Lovable. It's built on React Aria
+shadcn CLI, or straight into v0 — with Bolt, Lovable, Figma and more
+planned. It's built on React Aria
 Components with Tailwind CSS v4 and tailwind-variants, themed by an OKLCH
 color engine, and distributed as a shadcn-compatible registry served from a
 TanStack Start app.
@@ -30,27 +31,28 @@ include (not exhaustive):
 - For consistency, related components form synced groups: Button and
   ToggleButton share the same styles and must stay in sync.
 
-Beyond the visual axes, export keeps widening: CLI + v0/Bolt/Lovable today;
-Figma, Claude design, etc. planned.
+Beyond the visual axes, export keeps widening: CLI + v0 today;
+Bolt, Lovable, Figma, Claude design, etc. planned.
 
 What this means when writing code today:
 
 - New visual decisions go through tokens/variants so the builder can own them
   later — never inline one-off values in registry components.
-- When designing an axis or variant set, pressure-test it against real design
-  systems: could this express Material, Geist, Linear? If not, it's too
-  narrow.
-- Style related components as a group, not individually.
-- Everything must stay live-previewable in the builder.
-- Registry output stays portable: plain React files, shadcn-schema
-  compatible, no www-internal imports leaking into registry items.
+- A style change to one component in a synced group is a change to the whole
+  group (Button ⇄ ToggleButton) — land them together.
+- New axes and styles must be switchable at runtime (CSS variables, variant
+  props, data attributes), never decided at build time — the builder
+  previews live.
+- Registry items import only from `@/registry/*`, relative paths, and
+  published packages — plain React files, shadcn-schema compatible. www-side
+  imports (router, fumadocs, `@/components`) must never leak in.
 
 ## Structure
 
 - `www/` — the dotui.org app: docs, the /create builder, and the registry
   endpoints (TanStack Start + Vite, fumadocs-mdx, Tailwind v4,
-  tailwind-variants). Registry source lives in `www/src/registry/`
-  (`ui/`, `hooks/`, `lib/`, `theme/`, `__generated__/`).
+  tailwind-variants). Registry source lives in `www/src/registry/` — see
+  Registry below.
 - `packages/colors` — `@dotui/colors`, the OKLCH color engine (private,
   consumed by www).
 - Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`,
@@ -64,6 +66,34 @@ What this means when writing code today:
 - `patches/` — pnpm patches. `tailwindcss-react-aria-components` is patched
   for an upstream `not-*` variant bug; don't bump it without re-checking the
   patch.
+
+## Registry
+
+`www/src/registry/` is the product's source of truth and must stay clean:
+registry items, their files, demos, and descriptions only — no tooling
+internals. (Publisher output still sits in `__generated__/publishables`
+today; known-wrong, don't add more.)
+
+Anatomy of an item (`www/src/registry/ui/<component>/`):
+
+- `base.tsx` — what users receive via the shadcn CLI, after the publisher
+  transforms it (styles resolved, icons swapped, etc.).
+- `styles.ts` — the full style definition with every param; not shipped
+  as-is. On publish, styles are resolved and cleaned — e.g. the density
+  param is removed, its values resolved — before landing in the shipped
+  `base.tsx`.
+- `index.tsx` — the www-side wrapper (site-only concerns like router links);
+  never shipped.
+- `types.ts` — prop types; the source for API reference docs.
+- `meta.ts`, `demos/`, `examples.tsx` — item metadata and docs demos.
+
+## Publisher
+
+`www/src/publisher/` turns registry source into what users install: resolves
+`styles.ts`, strips builder-only params, swaps icons, and emits the shipped
+`base.tsx` and registry JSON. It's messy and a rewrite is planned — verify
+behavior by reading the code, don't pattern-match its structure, and don't
+deepen its reach into `www/src/registry/`.
 
 ## Workflow
 
