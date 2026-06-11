@@ -38,12 +38,9 @@
     "format:check": "oxfmt --check .",
     "format:fix": "oxfmt .",
     "typecheck": "turbo run typecheck",
-    "test": "vitest run",
-    "release": "changeset version"
+    "test": "vitest run"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.7.0",
-    "@changesets/cli": "^2.29.8",
     "@vitest/coverage-v8": "^4.0.16",
     "chokidar-cli": "^3.0.0",
     "oxfmt": "^0.50.0",
