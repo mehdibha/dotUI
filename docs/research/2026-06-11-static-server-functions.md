@@ -102,3 +102,15 @@ Behavior changes verified on the deployed preview:
 Bottom line: steady-state navigation latency is at parity (CDN HIT both sides); the migration's cost is one ~0.3–0.5 s function invocation per docs page per region per deploy (up to ~2 s if the function is cold), paid by the first visitor only; in exchange the stale-browser-cache bug and the broken not-found path are fixed and the experimental dependency plus its build hacks are gone.
 
 Caveats: single vantage point, n=8 per URL, not a load test; preview measured on `*.vercel.app` while before was the production custom domain (both Vercel edge); cold-start frequency on production depends on traffic (Fluid keeps the function warm under steady load).
+
+### Reference point: ui.shadcn.com (same method, same vantage, same day)
+
+shadcn's docs are Next.js App Router on Vercel, fully prerendered (HTML and RSC payloads both serve `x-vercel-cache: HIT` with `max-age=0, must-revalidate`). Their client-side-nav data fetch is the RSC payload (`RSC: 1` request to the page URL). Measured across 6 component pages (`/docs/components/radix/{button,select,table,dropdown-menu,tabs,accordion}`):
+
+| Median TTFB (warm conn) / transfer size | dotUI after (this PR) | ui.shadcn.com |
+| --- | --- | --- |
+| Direct visit HTML | 77 ms / ~18 KB | 77–117 ms / 71–90 KB |
+| Client-nav data fetch, steady state | 66–114 ms / 0.6–3.6 KB | 69–80 ms / 48–66 KB |
+| First hit per page per region per deploy | 315–466 ms (function MISS; ~2 s if cold) | none (payloads prerendered) |
+
+Read: steady-state latency is the same league — everyone is CDN-bound. dotUI transfers are an order of magnitude smaller because the MDX body ships once as a content-hashed JS chunk (browser-cached immutable) while the per-nav fetch is a small JSON; RSC re-ships the rendered page tree on every first visit to a page (~50 KB). The axis where shadcn's setup is strictly better — no function invocation ever — is exactly what static server functions tried to give us (option A / the before state); Next.js gets it for free because prerendering RSC payloads is first-class there, with build-id-based cache invalidation instead of our input-addressed-immutable bug.
