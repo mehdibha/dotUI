@@ -32,6 +32,7 @@ What this means when writing code today:
 - `packages/colors` — `@dotui/colors`, the OKLCH color engine (private, consumed by www).
 - Starter themes and the Tailwind plugins (`tailwindcss-autocontrast`, `tailwindcss-with`) live in standalone repos, consumed from npm — their source is not here.
 - `docs/research/` — date-prefixed (`YYYY-MM-DD-topic.md`) point-in-time research and assessment reports; multi-file topics get a subfolder (e.g. `open-in/`). Check it before re-researching a topic; findings are snapshots, not kept current. When a report's open question gets decided, append a dated `> Decision:` line to its status header rather than leaving it open.
+- `docs/plans/` — audit-generated implementation plans, one date-prefixed folder per audit (e.g. `2026-06-11-repo-audit/`), each holding `NNN-slug.md` plans plus a `README.md` index (execution order, status table, vetted + rejected findings); the top-level `README.md` catalogs the audits. Plans are self-contained handoffs for cold-context executors: read the whole plan first, honor its STOP conditions, and update its status row in the audit's index when done. Before auditing or fixing an area, check the relevant index — it records what's already planned and which findings were rejected and why.
 - `patches/` — pnpm patches. `tailwindcss-react-aria-components` is patched for an upstream `not-*` variant bug; don't bump it without re-checking the patch.
 
 ## Registry
