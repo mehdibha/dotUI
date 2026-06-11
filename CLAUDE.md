@@ -12,23 +12,34 @@ TanStack Start app.
 ## Product direction
 
 This is the goal, not the current state — check the code before assuming an
-axis exists. The end state is that **every visual decision is a
-user-configurable axis of the builder**, not a hardcoded choice:
+axis exists.
+
+The north star: the builder should be flexible enough to recreate almost any
+design system. If a user can't reproduce the look of a Material-, Geist-, or
+Linear-style system, an axis is missing. Coverage comes from a complete set
+of well-chosen axes, not infinite options: **every visual decision is a
+user-configurable axis of the builder**, never a hardcoded choice. Axes
+include (not exhaustive):
 
 - Color system: simple or advanced, selectable generation algorithm, semantic
   tokens, optionally context-aware tokens.
 - Typography, icon library, density, radius, interactive/disabled cursors.
 - Grouped tweaks — e.g. translucent menus/popovers as a single switch.
-- Per-component styles: a curated set of named variants per component (the
-  20% of styles that cover 80% of design systems), plus hover effect, radius…
+- Per-component styles: named variants curated per component — the 20% of
+  styles that cover 80% of design systems — plus hover effect, radius…
 - For consistency, related components form synced groups: Button and
   ToggleButton share the same styles and must stay in sync.
-- More export targets beyond CLI + v0/Bolt/Lovable: Figma, Claude design, etc.
+
+Beyond the visual axes, export keeps widening: CLI + v0/Bolt/Lovable today;
+Figma, Claude design, etc. planned.
 
 What this means when writing code today:
 
 - New visual decisions go through tokens/variants so the builder can own them
   later — never inline one-off values in registry components.
+- When designing an axis or variant set, pressure-test it against real design
+  systems: could this express Material, Geist, Linear? If not, it's too
+  narrow.
 - Style related components as a group, not individually.
 - Everything must stay live-previewable in the builder.
 - Registry output stays portable: plain React files, shadcn-schema
