@@ -30,3 +30,5 @@ patchedDependencies:
 
 minimumReleaseAgeExclude:
   - starter-themes@0.0.2
+  - tailwindcss-autocontrast@0.0.4
+  - tailwindcss-with@0.0.2

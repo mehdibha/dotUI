@@ -89,31 +89,6 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
 
-  packages/tailwindcss-autocontrast:
-    dependencies:
-      culori:
-        specifier: ^4.0.2
-        version: 4.0.2
-      fast-glob:
-        specifier: ^3.3.3
-        version: 3.3.3
-    devDependencies:
-      '@tailwindcss/postcss':
-        specifier: ^4.3.0
-        version: 4.3.0
-      postcss:
-        specifier: ^8.0.0
-        version: 8.5.8
-      tailwindcss:
-        specifier: 'catalog:'
-        version: 4.3.0
-
-  packages/tailwindcss-with:
-    devDependencies:
-      tailwindcss:
-        specifier: 'catalog:'
-        version: 4.3.0
-
   packages/ts-config: {}
 
   www:
@@ -239,14 +214,14 @@ importers:
         specifier: 'catalog:'
         version: 4.3.0
       tailwindcss-autocontrast:
-        specifier: workspace:*
-        version: link:../packages/tailwindcss-autocontrast
+        specifier: ^0.0.4
+        version: 0.0.4(@tailwindcss/postcss@4.3.0)(postcss@8.5.14)(tailwindcss@4.3.0)
       tailwindcss-react-aria-components:
         specifier: ^2.1.1
         version: 2.1.1(patch_hash=6cb95f5dd03b6c25e64129ef62ed9c9fad8d1197854d490055d6a8f7e5a68003)(tailwindcss@4.3.0)
       tailwindcss-with:
-        specifier: workspace:*
-        version: link:../packages/tailwindcss-with
+        specifier: ^0.0.2
+        version: 0.0.2(tailwindcss@4.3.0)
       ts-morph:
         specifier: ^28.0.0
         version: 28.0.0
@@ -5838,8 +5813,20 @@ packages:
       tailwind-merge:
         optional: true
 
+  tailwindcss-autocontrast@0.0.4:
+    resolution: {integrity: sha512-hEnQFwa29exk+/lFRIqxH4tbfGHkB4rAuhHZCt8IFZS9miRWmijRRTJsew98i6INxEfvrO3wl/g9g9qOi3PnEA==}
+    peerDependencies:
+      '@tailwindcss/postcss': ^4.0.0
+      postcss: ^8.0.0
+      tailwindcss: ^4.0.0
+
   tailwindcss-react-aria-components@2.1.1:
     resolution: {integrity: sha512-MjJzUShRN52Wj29e1/DQgrocOXsP62cySztEaPbDsdDjYpPfEo2DlLAPOP8GH9YwwqZ+SC7Bpi31QJUOCcROkA==}
+    peerDependencies:
+      tailwindcss: ^4.0.0
+
+  tailwindcss-with@0.0.2:
+    resolution: {integrity: sha512-mCGgeNYrnfEGIkRpHAP/4bnZbYbuEJQZw0vMiTsxRpnDRb1b/jxwjAYsB7VziAzIxLOXIeNLH/aYcHEhOlNZNQ==}
     peerDependencies:
       tailwindcss: ^4.0.0
 
@@ -12087,7 +12074,19 @@ snapshots:
     optionalDependencies:
       tailwind-merge: 3.4.0
 
+  tailwindcss-autocontrast@0.0.4(@tailwindcss/postcss@4.3.0)(postcss@8.5.14)(tailwindcss@4.3.0):
+    dependencies:
+      '@tailwindcss/postcss': 4.3.0
+      culori: 4.0.2
+      fast-glob: 3.3.3
+      postcss: 8.5.14
+      tailwindcss: 4.3.0
+
   tailwindcss-react-aria-components@2.1.1(patch_hash=6cb95f5dd03b6c25e64129ef62ed9c9fad8d1197854d490055d6a8f7e5a68003)(tailwindcss@4.3.0):
+    dependencies:
+      tailwindcss: 4.3.0
+
+  tailwindcss-with@0.0.2(tailwindcss@4.3.0):
     dependencies:
       tailwindcss: 4.3.0
 
