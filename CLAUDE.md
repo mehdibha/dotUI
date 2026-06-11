@@ -81,8 +81,9 @@ What this means when writing code today:
 ## Conventions & gotchas
 
 - Issues and PRDs are tracked in GitHub Issues for `mehdibha/dotUI`.
-- PR titles become commit titles. Format `type(scope): summary`, aim ≤50
-  chars, no explanatory clauses — detail goes in the PR body.
+- PR titles become commit titles. Format `type(scope): summary` — describe
+  the change, don't justify it (cut clauses like "with…", "to improve…").
+  Aim ~50–60 chars, but never drop information to hit it.
   Good: `docs: rewrite CLAUDE.md` · Bad: `docs: rewrite CLAUDE.md with real
   project context`.
 - Theming: semantic tokens resolve and freeze at `:root` — color/radius
