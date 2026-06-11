@@ -1213,7 +1213,7 @@ export const SHOWCASE_BUNDLE_DEPENDENCIES: string[] = [
 	"tailwind-merge@^3.0.2",
 	"tailwind-variants@^3.1.1",
 	"tailwindcss-react-aria-components@^2.1.1",
-	"tailwindcss-with@^0.0.1",
+	"tailwindcss-with@^0.0.2",
 	"tw-animate-css@^1.3.5",
 ];
 
