@@ -1,52 +1,13 @@
 {
-	"files.watcherExclude": {
-		"**/routeTree.gen.ts": true
-	},
-	"search.exclude": {
-		"**/routeTree.gen.ts": true
-	},
-	"files.readonlyInclude": {
-		"**/routeTree.gen.ts": true
-	},
-	"tailwindCSS.experimental.classRegex": [["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]],
-	"oxc.fmt.configPath": ".oxfmtrc.jsonc",
-	"editor.defaultFormatter": "oxc.oxc-vscode",
-	"[javascript]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[typescript]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[javascriptreact]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[typescriptreact]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[json]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[jsonc]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[css]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[graphql]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[markdown]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"[mdx]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
-	},
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"js/ts.experimental.useTsgo": true,
-	"editor.formatOnSave": true,
-	"editor.formatOnPaste": true,
-	"emmet.showExpandedAbbreviation": "never",
-	"editor.codeActionsOnSave": {
-		"source.fixAll.oxc": "explicit"
-	}
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "search.exclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "tailwindCSS.classFunctions": ["cn", "tv", "createStyles"],
+  "typescript.experimental.useTsgo": true
 }
