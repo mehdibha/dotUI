@@ -7,15 +7,20 @@ links:
 ---
 
 <InteractiveDemo
-	name="button"
-	engine="source"
-	controls={[
-		{ name: "children", type: "string", defaultValue: "Button" },
-		"variant",
-		{ name: "size", type: "enum", options: ["xs", "sm", "md", "lg"], defaultValue: "md" },
-		"isDisabled",
-		"isPending",
-	]}
+  name="button"
+  engine="source"
+  controls={[
+    { name: 'children', type: 'string', defaultValue: 'Button' },
+    'variant',
+    {
+      name: 'size',
+      type: 'enum',
+      options: ['xs', 'sm', 'md', 'lg'],
+      defaultValue: 'md',
+    },
+    'isDisabled',
+    'isPending',
+  ]}
 />
 
 ## Installation
@@ -30,7 +35,7 @@ Button allow users to initiate an action or command with mouse, touch or keyboar
 The button's label indicates the purpose of the action to the user. You may also include an icon for additional context.
 
 ```tsx
-import { Button } from "@dotui/registry/ui/button";
+import { Button } from '@dotui/registry/ui/button'
 ```
 
 ```tsx
@@ -40,14 +45,14 @@ import { Button } from "@dotui/registry/ui/button";
 ## Examples
 
 <Examples className="grid-cols-2 md:grid-cols-3">
-	<Example name="button/demos/default" title="Default" />
-	<Example name="button/demos/variants" title="Variants" />
-	<Example name="button/demos/sizes" title="Sizes" />
-	<Example name="button/demos/shapes" title="Shapes" />
-	<Example name="button/demos/prefix-and-suffix" title="Prefix and Suffix" />
-	<Example name="button/demos/loading" title="Loading" />
-	<Example name="button/demos/disabled" title="Disabled" />
-	<Example name="button/demos/link-button" title="Link Button" />
+  <Example name="button/demos/default" title="Default" />
+  <Example name="button/demos/variants" title="Variants" />
+  <Example name="button/demos/sizes" title="Sizes" />
+  <Example name="button/demos/shapes" title="Shapes" />
+  <Example name="button/demos/prefix-and-suffix" title="Prefix and Suffix" />
+  <Example name="button/demos/loading" title="Loading" />
+  <Example name="button/demos/disabled" title="Disabled" />
+  <Example name="button/demos/link-button" title="Link Button" />
 </Examples>
 
 ## API Reference

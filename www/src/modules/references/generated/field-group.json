@@ -1,6 +1,6 @@
 {
-	"name": "FieldGroupProps",
-	"description": "Missing description.",
-	"extendsElement": "div",
-	"props": {}
+  "name": "FieldGroupProps",
+  "description": "Missing description.",
+  "extendsElement": "div",
+  "props": {}
 }

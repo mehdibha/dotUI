@@ -1,14 +1,14 @@
-import { Example } from "@/modules/create/preview/example";
-import { Examples } from "@/modules/create/preview/examples";
+import { Example } from '@/modules/create/preview/example'
+import { Examples } from '@/modules/create/preview/examples'
 
-import Register from "./demos/register";
+import Register from './demos/register'
 
 export default function ReactHookFormExamples() {
-	return (
-		<Examples>
-			<Example title="register">
-				<Register />
-			</Example>
-		</Examples>
-	);
+  return (
+    <Examples>
+      <Example title="register">
+        <Register />
+      </Example>
+    </Examples>
+  )
 }

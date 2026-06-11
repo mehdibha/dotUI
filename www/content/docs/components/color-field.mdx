@@ -8,25 +8,25 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="color-field"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Color",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isReadOnly",
-			defaultValue: false,
-		},
-	]}
+  name="color-field"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Color',
+    },
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isReadOnly',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -40,33 +40,33 @@ npx shadcn@latest add @dotui/color-field
 Use color fields to allow users to edit a color value using a text field.
 
 ```tsx
-import { ColorField } from "@/components/ui/color-field";
-import { Label } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { ColorField } from '@/components/ui/color-field'
+import { Label } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
 ```
 
 ```tsx
 <ColorField defaultValue="#ff0000">
-	<Label>Color</Label>
-	<Input />
+  <Label>Color</Label>
+  <Input />
 </ColorField>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="color-field/demos/basic" />
-	<Example name="color-field/demos/sizes" />
-	<Example name="color-field/demos/label" />
-	<Example name="color-field/demos/description" />
-	<Example name="color-field/demos/invalid" />
-	<Example name="color-field/demos/addons" />
-	<Example name="color-field/demos/color-channel" />
-	<Example name="color-field/demos/disabled" />
-	<Example name="color-field/demos/read-only" />
-	<Example name="color-field/demos/required" />
-	<Example name="color-field/demos/uncontrolled" />
-	<Example name="color-field/demos/controlled" />
+  <Example name="color-field/demos/basic" />
+  <Example name="color-field/demos/sizes" />
+  <Example name="color-field/demos/label" />
+  <Example name="color-field/demos/description" />
+  <Example name="color-field/demos/invalid" />
+  <Example name="color-field/demos/addons" />
+  <Example name="color-field/demos/color-channel" />
+  <Example name="color-field/demos/disabled" />
+  <Example name="color-field/demos/read-only" />
+  <Example name="color-field/demos/required" />
+  <Example name="color-field/demos/uncontrolled" />
+  <Example name="color-field/demos/controlled" />
 </Examples>
 
 ## API Reference

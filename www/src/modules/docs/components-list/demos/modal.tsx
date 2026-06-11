@@ -1,33 +1,40 @@
-import { Button } from "@/registry/ui/button";
-import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
-import { Label } from "@/registry/ui/field";
-import { Input } from "@/registry/ui/input";
-import { Modal } from "@/registry/ui/modal";
-import { TextField } from "@/registry/ui/text-field";
+import { Button } from '@/registry/ui/button'
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/registry/ui/dialog'
+import { Label } from '@/registry/ui/field'
+import { Input } from '@/registry/ui/input'
+import { Modal } from '@/registry/ui/modal'
+import { TextField } from '@/registry/ui/text-field'
 
 export function ModalDemo() {
-	return (
-		<Dialog>
-			<Button>Open Modal</Button>
-			<Modal>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Edit username</DialogTitle>
-					</DialogHeader>
-					<DialogBody>
-						<TextField defaultValue="@mehdibha" className="w-full">
-							<Label>Username</Label>
-							<Input />
-						</TextField>
-					</DialogBody>
-					<DialogFooter className="flex-row! justify-end">
-						<Button slot="close">Cancel</Button>
-						<Button slot="close" variant="primary">
-							Apply
-						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</Modal>
-		</Dialog>
-	);
+  return (
+    <Dialog>
+      <Button>Open Modal</Button>
+      <Modal>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit username</DialogTitle>
+          </DialogHeader>
+          <DialogBody>
+            <TextField defaultValue="@mehdibha" className="w-full">
+              <Label>Username</Label>
+              <Input />
+            </TextField>
+          </DialogBody>
+          <DialogFooter className="flex-row! justify-end">
+            <Button slot="close">Cancel</Button>
+            <Button slot="close" variant="primary">
+              Apply
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Modal>
+    </Dialog>
+  )
 }

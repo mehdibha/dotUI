@@ -7,15 +7,15 @@ links:
 ---
 
 <InteractiveDemo
-	name="color-area"
-	engine="source"
-	controls={[
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-	]}
+  name="color-area"
+  engine="source"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -29,24 +29,24 @@ npx shadcn@latest add @dotui/color-area
 Use color areas to allow users to select a color from a two-dimensional gradient.
 
 ```tsx
-import { ColorArea } from "@/components/ui/color-area";
-import { ColorThumb } from "@/components/ui/color-thumb";
+import { ColorArea } from '@/components/ui/color-area'
+import { ColorThumb } from '@/components/ui/color-thumb'
 ```
 
 ```tsx
 <ColorArea>
-	<ColorThumb />
+  <ColorThumb />
 </ColorArea>
 ```
 
 ## Examples
 
 <Examples className="lg:grid-cols-2">
-	<Example name="color-area/demos/default" title="Default" />
-	<Example name="color-area/demos/channels" title="Channels" />
-	<Example name="color-area/demos/disabled" title="Disabled" />
-	<Example name="color-area/demos/uncontrolled" title="Uncontrolled" />
-	<Example name="color-area/demos/controlled" title="Controlled" />
+  <Example name="color-area/demos/default" title="Default" />
+  <Example name="color-area/demos/channels" title="Channels" />
+  <Example name="color-area/demos/disabled" title="Disabled" />
+  <Example name="color-area/demos/uncontrolled" title="Uncontrolled" />
+  <Example name="color-area/demos/controlled" title="Controlled" />
 </Examples>
 
 ## API Reference

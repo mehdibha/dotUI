@@ -8,27 +8,27 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="progress-bar"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Loading...",
-		},
-		{
-			type: "number",
-			name: "value",
-			defaultValue: 60,
-			min: 0,
-			max: 100,
-		},
-		{
-			type: "boolean",
-			name: "isIndeterminate",
-			defaultValue: false,
-		},
-	]}
+  name="progress-bar"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Loading...',
+    },
+    {
+      type: 'number',
+      name: 'value',
+      defaultValue: 60,
+      min: 0,
+      max: 100,
+    },
+    {
+      type: 'boolean',
+      name: 'isIndeterminate',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -42,29 +42,29 @@ npx shadcn@latest add @dotui/progress-bar
 Use progress bars to show the progression of a system operation or task.
 
 ```tsx
-import { ProgressBar, ProgressBarControl } from "@/components/ui/progress-bar";
+import { ProgressBar, ProgressBarControl } from '@/components/ui/progress-bar'
 ```
 
 ```tsx
 <ProgressBar value={60}>
-	<ProgressBarControl />
+  <ProgressBarControl />
 </ProgressBar>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="progress-bar/demos/animated" />
-	<Example name="progress-bar/demos/sizes" />
-	<Example name="progress-bar/demos/variants" />
-	<Example name="progress-bar/demos/shape" />
-	<Example name="progress-bar/demos/label" />
-	<Example name="progress-bar/demos/value-label" />
-	<Example name="progress-bar/demos/custom-value-label" />
-	<Example name="progress-bar/demos/format-options" />
-	<Example name="progress-bar/demos/min-max-values" />
-	<Example name="progress-bar/demos/indeterminate" />
-	<Example name="progress-bar/demos/duration" />
+  <Example name="progress-bar/demos/animated" />
+  <Example name="progress-bar/demos/sizes" />
+  <Example name="progress-bar/demos/variants" />
+  <Example name="progress-bar/demos/shape" />
+  <Example name="progress-bar/demos/label" />
+  <Example name="progress-bar/demos/value-label" />
+  <Example name="progress-bar/demos/custom-value-label" />
+  <Example name="progress-bar/demos/format-options" />
+  <Example name="progress-bar/demos/min-max-values" />
+  <Example name="progress-bar/demos/indeterminate" />
+  <Example name="progress-bar/demos/duration" />
 </Examples>
 
 ## API Reference

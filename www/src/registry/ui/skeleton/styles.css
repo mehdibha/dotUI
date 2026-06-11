@@ -1,149 +1,149 @@
 @utility skeleton {
-	position: relative;
-	overflow: hidden;
-	background-color: var(--color-muted);
-	background-position: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-muted);
+  background-position: 100%;
 
-	&:where(img, video, canvas, svg) {
-		content-visibility: hidden;
-	}
+  &:where(img, video, canvas, svg) {
+    content-visibility: hidden;
+  }
 }
 
 @utility skeleton--shimmer {
-	&:where(.skeleton),
-	&
-		:where(
-			.skeleton,
-			[data-skeleton],
-			[data-text],
-			[data-label],
-			[data-description],
-			[data-card-title],
-			[data-card-description],
-			[data-menu-item-label],
-			[data-menu-item-description],
-			[data-listbox-item-label],
-			[data-listbox-item-description],
-			[data-button],
-			[data-input-control],
-			[data-badge],
-			[data-tag],
-			[data-kbd],
-			[data-combobox-value],
-			[data-avatar],
-			[data-avatar-group-count],
-			h1,
-			h2,
-			h3,
-			h4,
-			h5,
-			h6,
-			p,
-			small,
-			strong,
-			em,
-			code,
-			kbd,
-			samp,
-			figcaption,
-			legend
-		) {
-		overflow: hidden;
-		background-image: linear-gradient(
-			to right,
-			var(--color-muted) 33%,
-			color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
-			var(--color-muted) 66%
-		);
-		background-size: 300% 100%;
-		background-position: 100%;
-		background-repeat: no-repeat;
-	}
+  &:where(.skeleton),
+  &
+    :where(
+      .skeleton,
+      [data-skeleton],
+      [data-text],
+      [data-label],
+      [data-description],
+      [data-card-title],
+      [data-card-description],
+      [data-menu-item-label],
+      [data-menu-item-description],
+      [data-listbox-item-label],
+      [data-listbox-item-description],
+      [data-button],
+      [data-input-control],
+      [data-badge],
+      [data-tag],
+      [data-kbd],
+      [data-combobox-value],
+      [data-avatar],
+      [data-avatar-group-count],
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      small,
+      strong,
+      em,
+      code,
+      kbd,
+      samp,
+      figcaption,
+      legend
+    ) {
+    overflow: hidden;
+    background-image: linear-gradient(
+      to right,
+      var(--color-muted) 33%,
+      color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
+      var(--color-muted) 66%
+    );
+    background-size: 300% 100%;
+    background-position: 100%;
+    background-repeat: no-repeat;
+  }
 }
 
 @utility skeleton--pulse {
-	&:where(.skeleton),
-	&
-		:where(
-			.skeleton,
-			[data-skeleton],
-			[data-text],
-			[data-label],
-			[data-description],
-			[data-card-title],
-			[data-card-description],
-			[data-menu-item-label],
-			[data-menu-item-description],
-			[data-listbox-item-label],
-			[data-listbox-item-description],
-			[data-button],
-			[data-input-control],
-			[data-badge],
-			[data-tag],
-			[data-kbd],
-			[data-combobox-value],
-			[data-avatar],
-			[data-avatar-group-count],
-			h1,
-			h2,
-			h3,
-			h4,
-			h5,
-			h6,
-			p,
-			small,
-			strong,
-			em,
-			code,
-			kbd,
-			samp,
-			figcaption,
-			legend
-		) {
-		opacity: 1;
-	}
+  &:where(.skeleton),
+  &
+    :where(
+      .skeleton,
+      [data-skeleton],
+      [data-text],
+      [data-label],
+      [data-description],
+      [data-card-title],
+      [data-card-description],
+      [data-menu-item-label],
+      [data-menu-item-description],
+      [data-listbox-item-label],
+      [data-listbox-item-description],
+      [data-button],
+      [data-input-control],
+      [data-badge],
+      [data-tag],
+      [data-kbd],
+      [data-combobox-value],
+      [data-avatar],
+      [data-avatar-group-count],
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      small,
+      strong,
+      em,
+      code,
+      kbd,
+      samp,
+      figcaption,
+      legend
+    ) {
+    opacity: 1;
+  }
 }
 
 @utility skeleton--none {
-	&:where(.skeleton),
-	&
-		:where(
-			.skeleton,
-			[data-skeleton],
-			[data-text],
-			[data-label],
-			[data-description],
-			[data-card-title],
-			[data-card-description],
-			[data-menu-item-label],
-			[data-menu-item-description],
-			[data-listbox-item-label],
-			[data-listbox-item-description],
-			[data-button],
-			[data-input-control],
-			[data-badge],
-			[data-tag],
-			[data-kbd],
-			[data-combobox-value],
-			[data-avatar],
-			[data-avatar-group-count],
-			h1,
-			h2,
-			h3,
-			h4,
-			h5,
-			h6,
-			p,
-			small,
-			strong,
-			em,
-			code,
-			kbd,
-			samp,
-			figcaption,
-			legend
-		) {
-		background-image: none;
-		animation: none;
-	}
+  &:where(.skeleton),
+  &
+    :where(
+      .skeleton,
+      [data-skeleton],
+      [data-text],
+      [data-label],
+      [data-description],
+      [data-card-title],
+      [data-card-description],
+      [data-menu-item-label],
+      [data-menu-item-description],
+      [data-listbox-item-label],
+      [data-listbox-item-description],
+      [data-button],
+      [data-input-control],
+      [data-badge],
+      [data-tag],
+      [data-kbd],
+      [data-combobox-value],
+      [data-avatar],
+      [data-avatar-group-count],
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      small,
+      strong,
+      em,
+      code,
+      kbd,
+      samp,
+      figcaption,
+      legend
+    ) {
+    background-image: none;
+    animation: none;
+  }
 }

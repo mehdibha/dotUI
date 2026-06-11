@@ -1,45 +1,44 @@
-import { useCallback, useState } from "react";
-import type React from "react";
-
-import type * as ButtonPrimitives from "react-aria-components/Button";
+import { useCallback, useState } from 'react'
+import type React from 'react'
+import type * as ButtonPrimitives from 'react-aria-components/Button'
 
 function getUniqueID(prefix: string) {
-	return `${prefix}-${Math.floor(Math.random() * 1000000)}`;
+  return `${prefix}-${Math.floor(Math.random() * 1000000)}`
 }
 
 export interface RippleType {
-	key: React.Key;
-	x: number;
-	y: number;
-	size: number;
+  key: React.Key
+  x: number
+  y: number
+  size: number
 }
 
-export type UseRippleProps = Record<string, never>;
+export type UseRippleProps = Record<string, never>
 
 export function useRipple(props: UseRippleProps = {}) {
-	const [ripples, setRipples] = useState<RippleType[]>([]);
+  const [ripples, setRipples] = useState<RippleType[]>([])
 
-	const onPress = useCallback((event: ButtonPrimitives.PressEvent) => {
-		const trigger = event.target;
+  const onPress = useCallback((event: ButtonPrimitives.PressEvent) => {
+    const trigger = event.target
 
-		const size = Math.max(trigger.clientWidth, trigger.clientHeight);
+    const size = Math.max(trigger.clientWidth, trigger.clientHeight)
 
-		setRipples((prevRipples) => [
-			...prevRipples,
-			{
-				key: getUniqueID(prevRipples.length.toString()),
-				size,
-				x: event.x - size / 2,
-				y: event.y - size / 2,
-			},
-		]);
-	}, []);
+    setRipples((prevRipples) => [
+      ...prevRipples,
+      {
+        key: getUniqueID(prevRipples.length.toString()),
+        size,
+        x: event.x - size / 2,
+        y: event.y - size / 2,
+      },
+    ])
+  }, [])
 
-	const onClear = useCallback((key: React.Key) => {
-		setRipples((prevState) => prevState.filter((ripple) => ripple.key !== key));
-	}, []);
+  const onClear = useCallback((key: React.Key) => {
+    setRipples((prevState) => prevState.filter((ripple) => ripple.key !== key))
+  }, [])
 
-	return { ripples, onClear, onPress, ...props };
+  return { ripples, onClear, onPress, ...props }
 }
 
-export type UseRippleReturn = ReturnType<typeof useRipple>;
+export type UseRippleReturn = ReturnType<typeof useRipple>

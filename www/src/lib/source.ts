@@ -1,62 +1,64 @@
-import { loader } from "fumadocs-core/source";
+import type * as PageTree from 'fumadocs-core/page-tree'
+import { loader } from 'fumadocs-core/source'
 
-import type * as PageTree from "fumadocs-core/page-tree";
-
-import { docs } from "@/.source/server";
+import { docs } from '@/.source/server'
 
 export interface DocsPageItem extends PageTree.Item {
-	wip?: boolean;
+  wip?: boolean
 }
 
 // Serialized page tree types (ReactNode replaced with string for JSON serialization)
 export interface SerializedItem {
-	type: "page";
-	name: string;
-	url: string;
-	wip?: boolean;
+  type: 'page'
+  name: string
+  url: string
+  wip?: boolean
 }
 
 export interface SerializedFolder {
-	type: "folder";
-	name: string;
-	children: SerializedNode[];
+  type: 'folder'
+  name: string
+  children: SerializedNode[]
 }
 
 export interface SerializedSeparator {
-	type: "separator";
-	name: string;
+  type: 'separator'
+  name: string
 }
 
-export type SerializedNode = SerializedItem | SerializedFolder | SerializedSeparator;
+export type SerializedNode =
+  | SerializedItem
+  | SerializedFolder
+  | SerializedSeparator
 
 export interface SerializedPageTree {
-	children: SerializedNode[];
+  children: SerializedNode[]
 }
 
 export const docsSource = loader({
-	baseUrl: "/docs",
-	source: docs.toFumadocsSource(),
-	pageTree: {
-		transformers: [
-			{
-				file(node, filePath) {
-					if (!filePath) return node;
-					const file = this.storage.read(filePath);
-					if (!file || file.format !== "page") return node;
+  baseUrl: '/docs',
+  source: docs.toFumadocsSource(),
+  pageTree: {
+    transformers: [
+      {
+        file(node, filePath) {
+          if (!filePath) return node
+          const file = this.storage.read(filePath)
+          if (!file || file.format !== 'page') return node
 
-					return {
-						...node,
-						wip: file.data.wip,
-					} as DocsPageItem;
-				},
-			},
-		],
-	},
-});
+          return {
+            ...node,
+            wip: file.data.wip,
+          } as DocsPageItem
+        },
+      },
+    ],
+  },
+})
 
 /** Get serialized page tree with proper types (fumadocs returns generic `object`) */
 export async function getSerializedPageTree(): Promise<SerializedPageTree> {
-	const pageTree = docsSource.getPageTree();
-	const serialized = await docsSource.serializePageTree(pageTree);
-	return serialized.data as SerializedPageTree;
+  const pageTree = docsSource.getPageTree()
+  const serialized = await docsSource.serializePageTree(pageTree)
+  return serialized.data as SerializedPageTree
 }

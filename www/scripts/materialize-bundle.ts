@@ -14,14 +14,21 @@
  * Not shipped — a dev-only test rig.
  */
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
 
-import { SHOWCASE_BUNDLE_CSS_FILES, SHOWCASE_BUNDLE_SOURCE_FILES } from "../src/registry/__generated__/showcase-bundle";
-import { DEFAULT_COLOR_CONFIG, emitPrimitivesCss, resolveColorConfig } from "../src/registry/theme";
+import {
+  SHOWCASE_BUNDLE_CSS_FILES,
+  SHOWCASE_BUNDLE_SOURCE_FILES,
+} from '../src/registry/__generated__/showcase-bundle'
+import {
+  DEFAULT_COLOR_CONFIG,
+  emitPrimitivesCss,
+  resolveColorConfig,
+} from '../src/registry/theme'
 
-const WWW = process.cwd();
-const HARNESS = path.join(WWW, ".v0-verify");
+const WWW = process.cwd()
+const HARNESS = path.join(WWW, '.v0-verify')
 
 // Static globals.css — kept in sync with src/publisher/emit-bundle-css.ts.
 const GLOBALS_CSS = `@import "tailwindcss";
@@ -39,7 +46,7 @@ const GLOBALS_CSS = `@import "tailwindcss";
 \t--font-geist-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
 \t--font-geist-mono: "Geist Mono", ui-monospace, monospace;
 }
-`;
+`
 
 const PAGE_TSX = `"use client";
 
@@ -57,7 +64,7 @@ export default function Page() {
 \t\t</DesignSystemProvider>
 \t);
 }
-`;
+`
 
 const MAIN_TSX = `import "./app/globals.css";
 
@@ -72,7 +79,7 @@ createRoot(document.getElementById("root")!).render(
 \t\t<Page />
 \t</StrictMode>,
 );
-`;
+`
 
 const INDEX_HTML = `<!doctype html>
 <html lang="en">
@@ -86,7 +93,7 @@ const INDEX_HTML = `<!doctype html>
 \t\t<script type="module" src="/main.tsx"></script>
 \t</body>
 </html>
-`;
+`
 
 // NO `@/` alias — a strict test that the bundle uses only relative + npm
 // imports (v0 rewrites `@/registry/*` aliases, so any residual `@/` would break
@@ -106,39 +113,45 @@ export default defineConfig({
 \tplugins: [tailwindcss(), react()],
 \tserver: { port: 4455 },
 });
-`;
+`
 
 async function writeFile(rel: string, content: string) {
-	const abs = path.join(HARNESS, rel);
-	await fs.mkdir(path.dirname(abs), { recursive: true });
-	await fs.writeFile(abs, content, "utf8");
+  const abs = path.join(HARNESS, rel)
+  await fs.mkdir(path.dirname(abs), { recursive: true })
+  await fs.writeFile(abs, content, 'utf8')
 }
 
 async function main() {
-	await fs.rm(HARNESS, { recursive: true, force: true });
-	await fs.mkdir(HARNESS, { recursive: true });
+  await fs.rm(HARNESS, { recursive: true, force: true })
+  await fs.mkdir(HARNESS, { recursive: true })
 
-	// Closure: source + mirrored CSS, written at their `src/…` targets.
-	for (const f of [...SHOWCASE_BUNDLE_SOURCE_FILES, ...SHOWCASE_BUNDLE_CSS_FILES]) {
-		await writeFile(f.target, f.content);
-	}
+  // Closure: source + mirrored CSS, written at their `src/…` targets.
+  for (const f of [
+    ...SHOWCASE_BUNDLE_SOURCE_FILES,
+    ...SHOWCASE_BUNDLE_CSS_FILES,
+  ]) {
+    await writeFile(f.target, f.content)
+  }
 
-	// Default-preset theme: ramps + baked `--on-*` foregrounds (matches the route).
-	const colorsCss = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG), { onColors: true });
-	await writeFile("registry/base/colors.css", colorsCss);
+  // Default-preset theme: ramps + baked `--on-*` foregrounds (matches the route).
+  const colorsCss = emitPrimitivesCss(
+    resolveColorConfig(DEFAULT_COLOR_CONFIG),
+    { onColors: true },
+  )
+  await writeFile('registry/base/colors.css', colorsCss)
 
-	// App shell + Vite scaffold.
-	await writeFile("app/globals.css", GLOBALS_CSS);
-	await writeFile("app/page.tsx", PAGE_TSX);
-	await writeFile("main.tsx", MAIN_TSX);
-	await writeFile("index.html", INDEX_HTML);
-	await writeFile("vite.config.ts", VITE_CONFIG);
+  // App shell + Vite scaffold.
+  await writeFile('app/globals.css', GLOBALS_CSS)
+  await writeFile('app/page.tsx', PAGE_TSX)
+  await writeFile('main.tsx', MAIN_TSX)
+  await writeFile('index.html', INDEX_HTML)
+  await writeFile('vite.config.ts', VITE_CONFIG)
 
-	console.log(`✓ materialized harness at ${HARNESS}`);
-	console.log(`  run: pnpm exec vite --config .v0-verify/vite.config.ts`);
+  console.log(`✓ materialized harness at ${HARNESS}`)
+  console.log(`  run: pnpm exec vite --config .v0-verify/vite.config.ts`)
 }
 
 main().catch((err) => {
-	console.error(err);
-	process.exit(1);
-});
+  console.error(err)
+  process.exit(1)
+})

@@ -8,15 +8,15 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="file-trigger"
-	engine="source"
-	controls={[
-		{
-			type: "boolean",
-			name: "allowsMultiple",
-			defaultValue: false,
-		},
-	]}
+  name="file-trigger"
+  engine="source"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'allowsMultiple',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -30,24 +30,24 @@ npx shadcn@latest add @dotui/file-trigger
 Use file triggers to allow users to upload files using any pressable element.
 
 ```tsx
-import { Button } from "@/components/ui/button";
-import { FileTrigger } from "@/components/ui/file-trigger";
+import { Button } from '@/components/ui/button'
+import { FileTrigger } from '@/components/ui/file-trigger'
 ```
 
 ```tsx
 <FileTrigger onSelect={(e) => console.log(e)}>
-	<Button>Upload File</Button>
+  <Button>Upload File</Button>
 </FileTrigger>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="file-trigger/demos/default" />
-	<Example name="file-trigger/demos/multiple-files" />
-	<Example name="file-trigger/demos/file-types" />
-	<Example name="file-trigger/demos/directory-selection" />
-	<Example name="file-trigger/demos/media-capture" />
+  <Example name="file-trigger/demos/default" />
+  <Example name="file-trigger/demos/multiple-files" />
+  <Example name="file-trigger/demos/file-types" />
+  <Example name="file-trigger/demos/directory-selection" />
+  <Example name="file-trigger/demos/media-capture" />
 </Examples>
 
 ## API Reference

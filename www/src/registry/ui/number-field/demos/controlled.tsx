@@ -1,29 +1,33 @@
-"use client";
+'use client'
 
-import React from "react";
+import React from 'react'
 
-import { Group } from "@/registry/ui/group";
-import { Input } from "@/registry/ui/input";
-import { NumberField, NumberFieldDecrement, NumberFieldIncrement } from "@/registry/ui/number-field";
+import { Group } from '@/registry/ui/group'
+import { Input } from '@/registry/ui/input'
+import {
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldIncrement,
+} from '@/registry/ui/number-field'
 
 export default function Demo() {
-	const [inputValue, setInputValue] = React.useState(69);
-	return (
-		<div className="flex flex-col items-center gap-4">
-			<NumberField
-				aria-label="Width"
-				value={inputValue}
-				onChange={(value) => {
-					setInputValue(value);
-				}}
-			>
-				<Group>
-					<NumberFieldDecrement />
-					<Input />
-					<NumberFieldIncrement />
-				</Group>
-			</NumberField>
-			<p className="text-sm text-fg-muted">mirrored number: {inputValue}</p>
-		</div>
-	);
+  const [inputValue, setInputValue] = React.useState(69)
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <NumberField
+        aria-label="Width"
+        value={inputValue}
+        onChange={(value) => {
+          setInputValue(value)
+        }}
+      >
+        <Group>
+          <NumberFieldDecrement />
+          <Input />
+          <NumberFieldIncrement />
+        </Group>
+      </NumberField>
+      <p className="text-sm text-fg-muted">mirrored number: {inputValue}</p>
+    </div>
+  )
 }

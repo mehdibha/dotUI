@@ -1,15 +1,19 @@
-import { Group } from "@/registry/ui/group";
-import { Input } from "@/registry/ui/input";
-import { NumberField, NumberFieldDecrement, NumberFieldIncrement } from "@/registry/ui/number-field";
+import { Group } from '@/registry/ui/group'
+import { Input } from '@/registry/ui/input'
+import {
+  NumberField,
+  NumberFieldDecrement,
+  NumberFieldIncrement,
+} from '@/registry/ui/number-field'
 
 export default function Demo() {
-	return (
-		<NumberField aria-label="Width" isReadOnly value={69}>
-			<Group>
-				<NumberFieldDecrement />
-				<Input />
-				<NumberFieldIncrement />
-			</Group>
-		</NumberField>
-	);
+  return (
+    <NumberField aria-label="Width" isReadOnly value={69}>
+      <Group>
+        <NumberFieldDecrement />
+        <Input />
+        <NumberFieldIncrement />
+      </Group>
+    </NumberField>
+  )
 }

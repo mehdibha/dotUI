@@ -5,10 +5,10 @@ import type { RegistryItem } from "@/registry/types";
 
 export const baseRegistryCss = {
 	css: {
-		'@import "tw-animate-css"': {},
-		'@plugin "tailwindcss-react-aria-components"': {},
-		'@plugin "tailwindcss-autocontrast"': {},
-		'@plugin "tailwindcss-with"': {},
+		"@import 'tw-animate-css'": {},
+		"@plugin 'tailwindcss-react-aria-components'": {},
+		"@plugin 'tailwindcss-autocontrast'": {},
+		"@plugin 'tailwindcss-with'": {},
 		"@custom-variant dark (&:is(.dark *))": {},
 		"@utility focus-reset": {
 			"@apply ring-0 ring-transparent outline-none": {},
@@ -274,7 +274,7 @@ export const baseRegistryCss = {
 			"--color-sidebar": "var(--neutral-100)",
 			"--color-border-sidebar": "var(--neutral-300)",
 			"--shadow-shine":
-				"inset 0px 0px 0px 1px color-mix(in oklab, var(--color-shine) 15%, transparent),\n\t\tinset 0px 1px 0px color-mix(in oklab, var(--color-shine) 30%, transparent)",
+				"inset 0px 0px 0px 1px\n      color-mix(in oklab, var(--color-shine) 15%, transparent),\n    inset 0px 1px 0px color-mix(in oklab, var(--color-shine) 30%, transparent)",
 		},
 	},
 } as const satisfies Pick<RegistryItem, "css" | "cssVars">;

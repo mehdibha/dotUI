@@ -1,12 +1,12 @@
-import type * as ComboBoxPrimitives from "react-aria-components/ComboBox";
+import type * as ComboBoxPrimitives from 'react-aria-components/ComboBox'
 
 /**
  * A combo box combines a text input with a listbox, allowing users to filter
  * a list of options to items matching a query.
  */
 export interface ComboboxProps<
-	T extends object,
-	M extends "single" | "multiple" = "single",
+  T extends object,
+  M extends 'single' | 'multiple' = 'single',
 > extends ComboBoxPrimitives.ComboBoxProps<T, M> {}
 
 /**
@@ -14,4 +14,6 @@ export interface ComboboxProps<
  * Supports a render prop for custom rendering of the selected item(s) — useful for
  * multi-select with tags.
  */
-export interface ComboboxValueProps<T extends object> extends ComboBoxPrimitives.ComboBoxValueProps<T> {}
+export interface ComboboxValueProps<
+  T extends object,
+> extends ComboBoxPrimitives.ComboBoxValueProps<T> {}

@@ -1,5 +1,5 @@
-import { Button } from "@/registry/ui/button";
+import { Button } from '@/registry/ui/button'
 
 export default function Demo() {
-	return <Button isDisabled>Button</Button>;
+  return <Button isDisabled>Button</Button>
 }

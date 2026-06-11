@@ -1,5 +1,5 @@
-import { ColorEditor } from "@/registry/ui/color-editor";
+import { ColorEditor } from '@/registry/ui/color-editor'
 
 export function ColorPickerDemo() {
-	return <ColorEditor defaultValue="#7f007f" />;
+  return <ColorEditor defaultValue="#7f007f" />
 }

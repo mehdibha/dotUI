@@ -12,11 +12,11 @@ In order to not waste your time implementing a change that has already been decl
 
 This project requires:
 
-- [Node.js](https://nodejs.org) v24.11.1 or higher
-- [pnpm](https://pnpm.io) v10.24.0 or higher
+- [Node.js](https://nodejs.org) v24 (v24.11.1 or higher)
+- [pnpm](https://pnpm.io) v11.5.3 or higher
 
 ```bash
-npm install -g pnpm@10.24.0
+npm install -g pnpm@latest
 ```
 
 ### Setup your environment locally
@@ -41,21 +41,22 @@ git checkout -b my-new-branch
 pnpm install
 ```
 
+5. Build the component registry (required once before the dev server works)
+
+```bash
+pnpm --filter starter-themes build
+pnpm build:registry
+```
+
 ### Project structure
 
 This project is a [Turborepo](https://turborepo.org/) monorepo:
 
 - `www/` - Documentation website
 - `packages/` - Shared packages
-  - `api` - API utilities
-  - `auth` - Authentication
   - `colors` - Color utilities
-  - `core` - Core functionality
-  - `db` - Database utilities
-  - `registry` - Component registry
-  - `tailwindcss-autocontrast` - Tailwind CSS plugin for auto contrast
-  - `tailwindcss-with` - Tailwind CSS plugin utilities
   - `types` - Shared TypeScript types
+- `config/` - Shared configuration (TypeScript configs)
 
 ### Useful scripts
 

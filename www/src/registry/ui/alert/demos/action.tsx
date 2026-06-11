@@ -1,19 +1,26 @@
-import { AlertCircleIcon } from "lucide-react";
+import { AlertCircleIcon } from 'lucide-react'
 
-import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/registry/ui/alert";
-import { Button } from "@/registry/ui/button";
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from '@/registry/ui/alert'
+import { Button } from '@/registry/ui/button'
 
 export default function Demo() {
-	return (
-		<Alert>
-			<AlertCircleIcon />
-			<AlertTitle>Upgrade Required</AlertTitle>
-			<AlertDescription>You are currently on the free plan. Upgrade to unlock more features.</AlertDescription>
-			<AlertAction>
-				<Button variant="primary" size="sm">
-					Upgrade
-				</Button>
-			</AlertAction>
-		</Alert>
-	);
+  return (
+    <Alert>
+      <AlertCircleIcon />
+      <AlertTitle>Upgrade Required</AlertTitle>
+      <AlertDescription>
+        You are currently on the free plan. Upgrade to unlock more features.
+      </AlertDescription>
+      <AlertAction>
+        <Button variant="primary" size="sm">
+          Upgrade
+        </Button>
+      </AlertAction>
+    </Alert>
+  )
 }

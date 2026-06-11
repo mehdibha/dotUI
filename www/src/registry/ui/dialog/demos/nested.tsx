@@ -1,47 +1,52 @@
-"use client";
+'use client'
 
-import React from "react";
+import React from 'react'
 
-import { Button } from "@/registry/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/registry/ui/dialog";
-import { FieldGroup, Label } from "@/registry/ui/field";
-import { Overlay } from "@/registry/ui/overlay";
-import { Radio, RadioGroup } from "@/registry/ui/radio-group";
+import { Button } from '@/registry/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/registry/ui/dialog'
+import { FieldGroup, Label } from '@/registry/ui/field'
+import { Overlay } from '@/registry/ui/overlay'
+import { Radio, RadioGroup } from '@/registry/ui/radio-group'
 
-type Type = "modal" | "drawer" | "popover";
+type Type = 'modal' | 'drawer' | 'popover'
 
 export default function Demo() {
-	const [type, setType] = React.useState<Type>("modal");
-	return (
-		<div className="flex w-full items-center gap-8">
-			<Dialog>
-				<Button variant="default">Dialog</Button>
-				<Overlay type={type} mobileType={null}>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Dialog</DialogTitle>
-						</DialogHeader>
-						<Dialog>
-							<Button variant="default">Nested dialog</Button>
-							<Overlay type={type} mobileType={null}>
-								<DialogContent>
-									<DialogHeader>
-										<DialogTitle>Nested dialog</DialogTitle>
-									</DialogHeader>
-								</DialogContent>
-							</Overlay>
-						</Dialog>
-					</DialogContent>
-				</Overlay>
-			</Dialog>
-			<RadioGroup value={type} onChange={(value) => setType(value as Type)}>
-				<Label>Type</Label>
-				<FieldGroup>
-					<Radio value="modal">Modal</Radio>
-					<Radio value="drawer">Drawer</Radio>
-					<Radio value="popover">Popover</Radio>
-				</FieldGroup>
-			</RadioGroup>
-		</div>
-	);
+  const [type, setType] = React.useState<Type>('modal')
+  return (
+    <div className="flex w-full items-center gap-8">
+      <Dialog>
+        <Button variant="default">Dialog</Button>
+        <Overlay type={type} mobileType={null}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Dialog</DialogTitle>
+            </DialogHeader>
+            <Dialog>
+              <Button variant="default">Nested dialog</Button>
+              <Overlay type={type} mobileType={null}>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Nested dialog</DialogTitle>
+                  </DialogHeader>
+                </DialogContent>
+              </Overlay>
+            </Dialog>
+          </DialogContent>
+        </Overlay>
+      </Dialog>
+      <RadioGroup value={type} onChange={(value) => setType(value as Type)}>
+        <Label>Type</Label>
+        <FieldGroup>
+          <Radio value="modal">Modal</Radio>
+          <Radio value="drawer">Drawer</Radio>
+          <Radio value="popover">Popover</Radio>
+        </FieldGroup>
+      </RadioGroup>
+    </div>
+  )
 }

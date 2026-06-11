@@ -1,17 +1,18 @@
-import * as React from "react";
-
-import { mergeProps } from "react-aria";
-import { useSlottedContext } from "react-aria-components/slots";
-
-import type { ContextValue, SlotProps } from "react-aria-components/slots";
+import * as React from 'react'
+import { mergeProps } from 'react-aria'
+import { useSlottedContext } from 'react-aria-components/slots'
+import type { ContextValue, SlotProps } from 'react-aria-components/slots'
 
 export interface CreateContextOptions {
-	strict?: boolean;
-	errorMessage?: string;
-	name?: string;
+  strict?: boolean
+  errorMessage?: string
+  name?: string
 }
 
-export type CreateContextReturn<T> = [React.Context<T>, (consumerName: string) => T];
+export type CreateContextReturn<T> = [
+  React.Context<T>,
+  (consumerName: string) => T,
+]
 
 /**
  * Creates a named context, provider, and hook.
@@ -19,55 +20,63 @@ export type CreateContextReturn<T> = [React.Context<T>, (consumerName: string) =
  * @param options create context options
  */
 export function createContext<ContextType>(options: CreateContextOptions = {}) {
-	const { name, strict = true } = options;
+  const { name, strict = true } = options
 
-	const Context = React.createContext<ContextType | undefined>(undefined);
+  const Context = React.createContext<ContextType | undefined>(undefined)
 
-	Context.displayName = name;
+  Context.displayName = name
 
-	function useContext(consumerName?: string) {
-		const context = React.useContext(Context);
+  function useContext(consumerName?: string) {
+    const context = React.useContext(Context)
 
-		if (!context && strict) {
-			const error = new Error(`\`${consumerName}\` must be used within \`${name}\``);
+    if (!context && strict) {
+      const error = new Error(
+        `\`${consumerName}\` must be used within \`${name}\``,
+      )
 
-			error.name = "ContextError";
-			throw error;
-		}
+      error.name = 'ContextError'
+      throw error
+    }
 
-		return context;
-	}
+    return context
+  }
 
-	return [Context, useContext] as CreateContextReturn<ContextType>;
+  return [Context, useContext] as CreateContextReturn<ContextType>
 }
 
 export function createScopedContext<ContextValueType extends object | null>(
-	rootComponentName: string,
-	defaultContext?: ContextValueType,
+  rootComponentName: string,
+  defaultContext?: ContextValueType,
 ) {
-	const Context = React.createContext<ContextValueType | undefined>(defaultContext);
+  const Context = React.createContext<ContextValueType | undefined>(
+    defaultContext,
+  )
 
-	const Provider: React.FC<ContextValueType & { children: React.ReactNode }> = (props) => {
-		const { children, ...context } = props;
-		const value = React.useMemo(
-			() => context,
-			// oxlint-disable-next-line react/exhaustive-deps -- TODO: fix later
-			Object.values(context),
-		) as ContextValueType;
-		return <Context.Provider value={value}>{children}</Context.Provider>;
-	};
+  const Provider: React.FC<ContextValueType & { children: React.ReactNode }> = (
+    props,
+  ) => {
+    const { children, ...context } = props
+    const value = React.useMemo(
+      () => context,
+      // oxlint-disable-next-line react/exhaustive-deps -- TODO: fix later
+      Object.values(context),
+    ) as ContextValueType
+    return <Context.Provider value={value}>{children}</Context.Provider>
+  }
 
-	Provider.displayName = `${rootComponentName}Provider`;
+  Provider.displayName = `${rootComponentName}Provider`
 
-	function useContext(consumerName: string) {
-		const context = React.useContext(Context);
-		if (context) return context;
-		if (defaultContext !== undefined) return defaultContext;
-		// if a defaultContext wasn't specified, it's a required context.
-		throw new Error(`\`${consumerName}\` must be used within \`${rootComponentName}\``);
-	}
+  function useContext(consumerName: string) {
+    const context = React.useContext(Context)
+    if (context) return context
+    if (defaultContext !== undefined) return defaultContext
+    // if a defaultContext wasn't specified, it's a required context.
+    throw new Error(
+      `\`${consumerName}\` must be used within \`${rootComponentName}\``,
+    )
+  }
 
-	return [Provider, useContext] as const;
+  return [Provider, useContext] as const
 }
 
 /**
@@ -83,55 +92,60 @@ export function createScopedContext<ContextValueType extends object | null>(
  * ```
  */
 export function createVariantsContext<
-	TVariants extends object,
-	TAriaProps extends SlotProps,
-	TAriaElement extends Element = Element,
+  TVariants extends object,
+  TAriaProps extends SlotProps,
+  TAriaElement extends Element = Element,
 >(ariaContext: React.Context<ContextValue<TAriaProps, TAriaElement>>) {
-	// Create a context for our custom variant props
-	const VariantsContext = React.createContext<Partial<TVariants>>({});
+  // Create a context for our custom variant props
+  const VariantsContext = React.createContext<Partial<TVariants>>({})
 
-	// Provider component that wraps both contexts
-	type ProviderProps = Partial<TVariants> &
-		Partial<TAriaProps> & {
-			children: React.ReactNode;
-		};
+  // Provider component that wraps both contexts
+  type ProviderProps = Partial<TVariants> &
+    Partial<TAriaProps> & {
+      children: React.ReactNode
+    }
 
-	const Provider = ({ children, ...props }: ProviderProps) => {
-		// Separate variant props from react-aria props
-		const variantKeys = Object.keys(props).filter((key) => {
-			// This is a simple heuristic - you might want to pass variant keys explicitly
-			// For now, we assume all props that aren't standard HTML/React props are variants
-			return !["children", "value"].includes(key);
-		});
+  const Provider = ({ children, ...props }: ProviderProps) => {
+    // Separate variant props from react-aria props
+    const variantKeys = Object.keys(props).filter((key) => {
+      // This is a simple heuristic - you might want to pass variant keys explicitly
+      // For now, we assume all props that aren't standard HTML/React props are variants
+      return !['children', 'value'].includes(key)
+    })
 
-		const variantProps: Partial<TVariants> = {};
-		const ariaProps: Record<string, unknown> = {};
+    const variantProps: Partial<TVariants> = {}
+    const ariaProps: Record<string, unknown> = {}
 
-		Object.entries(props).forEach(([key, value]) => {
-			if (variantKeys.includes(key)) {
-				variantProps[key as keyof TVariants] = value as TVariants[keyof TVariants];
-			} else {
-				ariaProps[key] = value;
-			}
-		});
+    Object.entries(props).forEach(([key, value]) => {
+      if (variantKeys.includes(key)) {
+        variantProps[key as keyof TVariants] =
+          value as TVariants[keyof TVariants]
+      } else {
+        ariaProps[key] = value
+      }
+    })
 
-		return (
-			<VariantsContext.Provider value={variantProps}>
-				<ariaContext.Provider value={ariaProps as ContextValue<TAriaProps, TAriaElement>}>
-					{children}
-				</ariaContext.Provider>
-			</VariantsContext.Provider>
-		);
-	};
+    return (
+      <VariantsContext.Provider value={variantProps}>
+        <ariaContext.Provider
+          value={ariaProps as ContextValue<TAriaProps, TAriaElement>}
+        >
+          {children}
+        </ariaContext.Provider>
+      </VariantsContext.Provider>
+    )
+  }
 
-	// Hook to merge context variants with local props
-	function useContextProps<TProps extends Partial<TVariants> & SlotProps>(localProps: TProps): TProps {
-		const contextVariants = React.useContext(VariantsContext);
-		const ariaProps = useSlottedContext(ariaContext, localProps.slot) || {};
+  // Hook to merge context variants with local props
+  function useContextProps<TProps extends Partial<TVariants> & SlotProps>(
+    localProps: TProps,
+  ): TProps {
+    const contextVariants = React.useContext(VariantsContext)
+    const ariaProps = useSlottedContext(ariaContext, localProps.slot) || {}
 
-		// Merge context with local props (local props win)
-		return mergeProps(contextVariants, ariaProps, localProps) as TProps;
-	}
+    // Merge context with local props (local props win)
+    return mergeProps(contextVariants, ariaProps, localProps) as TProps
+  }
 
-	return [Provider, useContextProps] as const;
+  return [Provider, useContextProps] as const
 }

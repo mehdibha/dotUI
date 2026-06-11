@@ -8,16 +8,16 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="drawer"
-	engine="source"
-	controls={[
-		{
-			type: "enum",
-			name: "placement",
-			options: ["bottom", "top", "left", "right"],
-			defaultValue: "bottom",
-		},
-	]}
+  name="drawer"
+  engine="source"
+  controls={[
+    {
+      type: 'enum',
+      name: 'placement',
+      options: ['bottom', 'top', 'left', 'right'],
+      defaultValue: 'bottom',
+    },
+  ]}
 />
 
 ## Installation
@@ -31,26 +31,26 @@ npx shadcn@latest add @dotui/drawer
 Use drawers to display content that slides in from the edge of the screen.
 
 ```tsx
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Drawer } from "@/components/ui/drawer";
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Drawer } from '@/components/ui/drawer'
 ```
 
 ```tsx
 <Dialog>
-	<Button>Open Drawer</Button>
-	<Drawer placement="bottom">
-		<DialogContent>Drawer content</DialogContent>
-	</Drawer>
+  <Button>Open Drawer</Button>
+  <Drawer placement="bottom">
+    <DialogContent>Drawer content</DialogContent>
+  </Drawer>
 </Dialog>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="drawer/demos/basic" />
-	<Example name="drawer/demos/dialog-parts" />
-	<Example name="drawer/demos/placement" />
+  <Example name="drawer/demos/basic" />
+  <Example name="drawer/demos/dialog-parts" />
+  <Example name="drawer/demos/placement" />
 </Examples>
 
 ## API Reference

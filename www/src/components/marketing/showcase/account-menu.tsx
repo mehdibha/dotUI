@@ -1,68 +1,84 @@
-"use client";
+'use client'
 
-import { BookIcon, ContrastIcon, LanguagesIcon, LogOutIcon, SettingsIcon, User2Icon, Users2Icon } from "lucide-react";
+import {
+  BookIcon,
+  ContrastIcon,
+  LanguagesIcon,
+  LogOutIcon,
+  SettingsIcon,
+  User2Icon,
+  Users2Icon,
+} from 'lucide-react'
 
-import { cn } from "@/registry/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar";
-import { Card, CardContent, CardHeader } from "@/registry/ui/card";
-import { ListBox, ListBoxItem, ListBoxSection, ListBoxSectionHeader } from "@/registry/ui/list-box";
-import { Separator } from "@/registry/ui/separator";
+import { cn } from '@/registry/lib/utils'
+import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
+import { Card, CardContent, CardHeader } from '@/registry/ui/card'
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+  ListBoxSectionHeader,
+} from '@/registry/ui/list-box'
+import { Separator } from '@/registry/ui/separator'
 
-export function AccountMenu({ className, ...props }: React.ComponentProps<"div">) {
-	return (
-		<Card className={cn("min-w-56 gap-0 py-0", className)} {...props}>
-			<CardHeader className="flex w-full items-center border-b px-4 py-3">
-				<Avatar size="sm">
-					<AvatarImage src="https://github.com/mehdibha.png" alt="mehdibha" />
-					<AvatarFallback>M</AvatarFallback>
-				</Avatar>
-				<div className="w-full text-sm">
-					<p className="font-semibold">mehdibha</p>
-					<p className="text-fg-muted">
-						<span className="truncate">hello@mehdibha.com</span>
-					</p>
-				</div>
-			</CardHeader>
-			<CardContent className="p-0">
-				<ListBox
-					aria-label="Account Menu"
-					className="h-full max-h-none w-full rounded-none border-0 bg-transparent **:data-[slot='list-box-item']:text-sm"
-				>
-					<ListBoxItem textValue="Profile">
-						<User2Icon />
-						Profile
-					</ListBoxItem>
-					<ListBoxItem textValue="Settings">
-						<SettingsIcon />
-						Settings
-					</ListBoxItem>
-					<ListBoxItem textValue="Documentation">
-						<BookIcon />
-						Documentation
-					</ListBoxItem>
-					<ListBoxItem textValue="Community">
-						<Users2Icon />
-						Community
-					</ListBoxItem>
-					<Separator />
-					<ListBoxSection>
-						<ListBoxSectionHeader>Preferences</ListBoxSectionHeader>
-						<ListBoxItem textValue="Theme">
-							<ContrastIcon />
-							Theme
-						</ListBoxItem>
-						<ListBoxItem textValue="Language">
-							<LanguagesIcon />
-							Language
-						</ListBoxItem>
-					</ListBoxSection>
-					<Separator />
-					<ListBoxItem textValue="Log out">
-						<LogOutIcon />
-						Log out
-					</ListBoxItem>
-				</ListBox>
-			</CardContent>
-		</Card>
-	);
+export function AccountMenu({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <Card className={cn('min-w-56 gap-0 py-0', className)} {...props}>
+      <CardHeader className="flex w-full items-center border-b px-4 py-3">
+        <Avatar size="sm">
+          <AvatarImage src="https://github.com/mehdibha.png" alt="mehdibha" />
+          <AvatarFallback>M</AvatarFallback>
+        </Avatar>
+        <div className="w-full text-sm">
+          <p className="font-semibold">mehdibha</p>
+          <p className="text-fg-muted">
+            <span className="truncate">hello@mehdibha.com</span>
+          </p>
+        </div>
+      </CardHeader>
+      <CardContent className="p-0">
+        <ListBox
+          aria-label="Account Menu"
+          className="h-full max-h-none w-full rounded-none border-0 bg-transparent **:data-[slot='list-box-item']:text-sm"
+        >
+          <ListBoxItem textValue="Profile">
+            <User2Icon />
+            Profile
+          </ListBoxItem>
+          <ListBoxItem textValue="Settings">
+            <SettingsIcon />
+            Settings
+          </ListBoxItem>
+          <ListBoxItem textValue="Documentation">
+            <BookIcon />
+            Documentation
+          </ListBoxItem>
+          <ListBoxItem textValue="Community">
+            <Users2Icon />
+            Community
+          </ListBoxItem>
+          <Separator />
+          <ListBoxSection>
+            <ListBoxSectionHeader>Preferences</ListBoxSectionHeader>
+            <ListBoxItem textValue="Theme">
+              <ContrastIcon />
+              Theme
+            </ListBoxItem>
+            <ListBoxItem textValue="Language">
+              <LanguagesIcon />
+              Language
+            </ListBoxItem>
+          </ListBoxSection>
+          <Separator />
+          <ListBoxItem textValue="Log out">
+            <LogOutIcon />
+            Log out
+          </ListBoxItem>
+        </ListBox>
+      </CardContent>
+    </Card>
+  )
 }

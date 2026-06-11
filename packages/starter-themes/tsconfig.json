@@ -1,20 +1,20 @@
 {
-	"compilerOptions": {
-		"target": "ES2020",
-		"lib": ["DOM", "DOM.Iterable", "ES2020"],
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"jsx": "react-jsx",
-		"strict": true,
-		"skipLibCheck": true,
-		"declaration": true,
-		"declarationMap": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"ignoreDeprecations": "6.0",
-		"isolatedModules": true,
-		"outDir": "./dist"
-	},
-	"include": ["src"],
-	"exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "ignoreDeprecations": "6.0",
+    "isolatedModules": true,
+    "outDir": "./dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

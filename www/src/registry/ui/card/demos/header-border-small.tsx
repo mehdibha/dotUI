@@ -1,17 +1,26 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/registry/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/registry/ui/card'
 
 export default function Demo() {
-	return (
-		<Card size="sm" className="w-full max-w-sm">
-			<CardHeader className="border-b">
-				<CardTitle>Header with Border</CardTitle>
-				<CardDescription>This is a small card with a header that has a bottom border.</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<p>
-					The header has a border-b class applied, creating a visual separation between the header and content sections.
-				</p>
-			</CardContent>
-		</Card>
-	);
+  return (
+    <Card size="sm" className="w-full max-w-sm">
+      <CardHeader className="border-b">
+        <CardTitle>Header with Border</CardTitle>
+        <CardDescription>
+          This is a small card with a header that has a bottom border.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>
+          The header has a border-b class applied, creating a visual separation
+          between the header and content sections.
+        </p>
+      </CardContent>
+    </Card>
+  )
 }

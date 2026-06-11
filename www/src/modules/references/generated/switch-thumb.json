@@ -1,6 +1,6 @@
 {
-	"name": "SwitchThumbProps",
-	"description": "The visual thumb of a switch.",
-	"extendsElement": "span",
-	"props": {}
+  "name": "SwitchThumbProps",
+  "description": "The visual thumb of a switch.",
+  "extendsElement": "span",
+  "props": {}
 }

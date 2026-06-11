@@ -4,26 +4,26 @@ description: An avatar is a visual representation of a user or entity.
 ---
 
 <InteractiveDemo
-	name="avatar"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "src",
-			defaultValue: "https://github.com/mehdibha.png",
-		},
-		{
-			type: "string",
-			name: "fallback",
-			defaultValue: "M",
-		},
-		{
-			type: "enum",
-			name: "size",
-			options: ["sm", "md", "lg"],
-			defaultValue: "md",
-		},
-	]}
+  name="avatar"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'src',
+      defaultValue: 'https://github.com/mehdibha.png',
+    },
+    {
+      type: 'string',
+      name: 'fallback',
+      defaultValue: 'M',
+    },
+    {
+      type: 'enum',
+      name: 'size',
+      options: ['sm', 'md', 'lg'],
+      defaultValue: 'md',
+    },
+  ]}
 />
 
 ## Installation
@@ -37,30 +37,33 @@ npx shadcn@latest add @dotui/avatar
 Use avatars to represent users or entities with an image or initials.
 
 ```tsx
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 ```
 
 ```tsx
 <Avatar>
-	<AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
-	<AvatarFallback>MB</AvatarFallback>
+  <AvatarImage src="https://github.com/mehdibha.png" alt="@mehdibha" />
+  <AvatarFallback>MB</AvatarFallback>
 </Avatar>
 ```
 
 ## Examples
 
 <Examples className="grid-cols-2 sm:grid-cols-3">
-	<Example name="avatar/demos/basic" title="Basic" />
-	<Example name="avatar/demos/fallback-only" title="Fallback-only" />
-	<Example name="avatar/demos/sizes" title="Sizes" />
-	<Example name="avatar/demos/radii" title="Radii" />
-	<Example name="avatar/demos/badge" title="Badge" />
-	<Example name="avatar/demos/badge-with-icon" title="Badge with icon" />
-	<Example name="avatar/demos/badge-top-right" title="Status badge" />
-	<Example name="avatar/demos/badge-notification" title="Badge with notification" />
-	<Example name="avatar/demos/icon-fallback" title="Icon fallback" />
-	<Example name="avatar/demos/group" title="Group" />
-	<Example name="avatar/demos/avatar-group-count" title="Group with count" />
+  <Example name="avatar/demos/basic" title="Basic" />
+  <Example name="avatar/demos/fallback-only" title="Fallback-only" />
+  <Example name="avatar/demos/sizes" title="Sizes" />
+  <Example name="avatar/demos/radii" title="Radii" />
+  <Example name="avatar/demos/badge" title="Badge" />
+  <Example name="avatar/demos/badge-with-icon" title="Badge with icon" />
+  <Example name="avatar/demos/badge-top-right" title="Status badge" />
+  <Example
+    name="avatar/demos/badge-notification"
+    title="Badge with notification"
+  />
+  <Example name="avatar/demos/icon-fallback" title="Icon fallback" />
+  <Example name="avatar/demos/group" title="Group" />
+  <Example name="avatar/demos/avatar-group-count" title="Group with count" />
 </Examples>
 
 ## API Reference

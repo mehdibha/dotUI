@@ -8,22 +8,22 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="overlay"
-	engine="source"
-	controls={[
-		{
-			type: "enum",
-			name: "type",
-			options: ["modal", "popover", "drawer"],
-			defaultValue: "modal",
-		},
-		{
-			type: "enum",
-			name: "mobileType",
-			options: ["modal", "drawer"],
-			defaultValue: "drawer",
-		},
-	]}
+  name="overlay"
+  engine="source"
+  controls={[
+    {
+      type: 'enum',
+      name: 'type',
+      options: ['modal', 'popover', 'drawer'],
+      defaultValue: 'modal',
+    },
+    {
+      type: 'enum',
+      name: 'mobileType',
+      options: ['modal', 'drawer'],
+      defaultValue: 'drawer',
+    },
+  ]}
 />
 
 ## Installation
@@ -37,25 +37,25 @@ npx shadcn@latest add @dotui/overlay
 Use Overlay as a responsive wrapper that automatically switches between Modal, Popover, and Drawer based on screen size and configuration.
 
 ```tsx
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Overlay } from "@/components/ui/overlay";
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Overlay } from '@/components/ui/overlay'
 ```
 
 ```tsx
 <Dialog>
-	<Button>Open Overlay</Button>
-	<Overlay type="modal" mobileType="drawer">
-		<DialogContent>Overlay content</DialogContent>
-	</Overlay>
+  <Button>Open Overlay</Button>
+  <Overlay type="modal" mobileType="drawer">
+    <DialogContent>Overlay content</DialogContent>
+  </Overlay>
 </Dialog>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="overlay/demos/basic" />
-	<Example name="overlay/demos/type" />
+  <Example name="overlay/demos/basic" />
+  <Example name="overlay/demos/type" />
 </Examples>
 
 ## API Reference

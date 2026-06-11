@@ -8,31 +8,36 @@
  */
 
 /** A named display mode (`"light"`, `"dark"`, or any custom mode). */
-export type ModeName = string;
+export type ModeName = string
 
 /** How a semantic token resolves to a CSS value. */
 export type SemanticTarget =
-	| { ref: string } // → var(--<ref>): a primitive ramp step or another token
-	| { onOf: string } // → var(--on-<onOf>): the readable foreground of a ramp step
-	| { value: string } // a literal CSS value
-	| { mix: { space: "oklab" | "oklch" | "srgb"; stops: [SemanticTarget, number, SemanticTarget] } };
+  | { ref: string } // → var(--<ref>): a primitive ramp step or another token
+  | { onOf: string } // → var(--on-<onOf>): the readable foreground of a ramp step
+  | { value: string } // a literal CSS value
+  | {
+      mix: {
+        space: 'oklab' | 'oklch' | 'srgb'
+        stops: [SemanticTarget, number, SemanticTarget]
+      }
+    }
 
 /** Customizer grouping for a token. The picker filters on this today. */
-export type SemanticCategory = "background" | "foreground" | "border";
+export type SemanticCategory = 'background' | 'foreground' | 'border'
 
 export interface SemanticToken {
-	/** A mode-agnostic target, or a per-mode map (light / dark / arbitrary). */
-	target: SemanticTarget | Record<ModeName, SemanticTarget>;
-	/** Customizer grouping + filter (the one affordance the picker reads today). */
-	category: SemanticCategory;
-	/**
-	 * Ramp pools the customizer picker may offer for this token; `".."` means
-	 * "any custom palette". Omitted for contrast-derived `on-*` tokens.
-	 */
-	scales?: readonly string[];
-	/** Optional human description for the picker UI. */
-	description?: string;
+  /** A mode-agnostic target, or a per-mode map (light / dark / arbitrary). */
+  target: SemanticTarget | Record<ModeName, SemanticTarget>
+  /** Customizer grouping + filter (the one affordance the picker reads today). */
+  category: SemanticCategory
+  /**
+   * Ramp pools the customizer picker may offer for this token; `".."` means
+   * "any custom palette". Omitted for contrast-derived `on-*` tokens.
+   */
+  scales?: readonly string[]
+  /** Optional human description for the picker UI. */
+  description?: string
 }
 
 /** The semantic vocabulary, keyed by token name WITHOUT the leading `--` (e.g. `"color-bg"`). */
-export type SemanticVocabulary = Record<string, SemanticToken>;
+export type SemanticVocabulary = Record<string, SemanticToken>

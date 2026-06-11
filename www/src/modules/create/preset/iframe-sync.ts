@@ -1,58 +1,72 @@
-"use client";
+'use client'
 
-import * as React from "react";
+import * as React from 'react'
 
-import type { DesignSystem } from "./types";
+import type { DesignSystem } from './types'
 
 /* --------------------------------- Types --------------------------------- */
 
-export type PreviewMode = "light" | "dark";
+export type PreviewMode = 'light' | 'dark'
 
 type ParentToIframeMessage =
-	| { type: "design-system"; data: DesignSystem }
-	| { type: "preview-mode"; mode: PreviewMode };
+  | { type: 'design-system'; data: DesignSystem }
+  | { type: 'preview-mode'; mode: PreviewMode }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
-export function sendToIframe(iframe: HTMLIFrameElement | null, data: DesignSystem) {
-	if (!iframe?.contentWindow) return;
-	iframe.contentWindow.postMessage({ type: "design-system", data } satisfies ParentToIframeMessage, "*");
+export function sendToIframe(
+  iframe: HTMLIFrameElement | null,
+  data: DesignSystem,
+) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: 'design-system', data } satisfies ParentToIframeMessage,
+    '*',
+  )
 }
 
-export function sendPreviewMode(iframe: HTMLIFrameElement | null, mode: PreviewMode) {
-	if (!iframe?.contentWindow) return;
-	iframe.contentWindow.postMessage({ type: "preview-mode", mode } satisfies ParentToIframeMessage, "*");
+export function sendPreviewMode(
+  iframe: HTMLIFrameElement | null,
+  mode: PreviewMode,
+) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: 'preview-mode', mode } satisfies ParentToIframeMessage,
+    '*',
+  )
 }
 
 /* ----------------------------- Listen (iframe) ----------------------------- */
 
 function isInIframe(): boolean {
-	try {
-		return window.self !== window.top;
-	} catch {
-		return true;
-	}
+  try {
+    return window.self !== window.top
+  } catch {
+    return true
+  }
 }
 
-export function useIframeMessageListener(onMessage: (data: DesignSystem) => void) {
-	const onMessageRef = React.useRef(onMessage);
+export function useIframeMessageListener(
+  onMessage: (data: DesignSystem) => void,
+) {
+  const onMessageRef = React.useRef(onMessage)
 
-	React.useEffect(() => {
-		onMessageRef.current = onMessage;
-	}, [onMessage]);
+  React.useEffect(() => {
+    onMessageRef.current = onMessage
+  }, [onMessage])
 
-	React.useEffect(() => {
-		if (!isInIframe()) return;
+  React.useEffect(() => {
+    if (!isInIframe()) return
 
-		const handleMessage = (event: MessageEvent) => {
-			if (event.data?.type === "design-system") {
-				onMessageRef.current(event.data.data);
-			}
-		};
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'design-system') {
+        onMessageRef.current(event.data.data)
+      }
+    }
 
-		window.addEventListener("message", handleMessage);
-		return () => window.removeEventListener("message", handleMessage);
-	}, []);
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
 }
 
 /**
@@ -63,23 +77,23 @@ export function useIframeMessageListener(onMessage: (data: DesignSystem) => void
  * out-of-band where the provider would revert it on the next OS-pref / storage event.
  */
 export function usePreviewForcedTheme(): PreviewMode | undefined {
-	const [mode, setMode] = React.useState<PreviewMode | undefined>(undefined);
+  const [mode, setMode] = React.useState<PreviewMode | undefined>(undefined)
 
-	React.useEffect(() => {
-		if (!isInIframe()) return;
+  React.useEffect(() => {
+    if (!isInIframe()) return
 
-		const handleMessage = (event: MessageEvent) => {
-			if (event.data?.type === "preview-mode") {
-				setMode(event.data.mode === "dark" ? "dark" : "light");
-			}
-		};
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-mode') {
+        setMode(event.data.mode === 'dark' ? 'dark' : 'light')
+      }
+    }
 
-		window.addEventListener("message", handleMessage);
-		// Signal readiness so the parent (re)sends the current mode — its load-event send can
-		// race ahead of this listener mounting.
-		window.parent.postMessage({ type: "preview-ready" }, "*");
-		return () => window.removeEventListener("message", handleMessage);
-	}, []);
+    window.addEventListener('message', handleMessage)
+    // Signal readiness so the parent (re)sends the current mode — its load-event send can
+    // race ahead of this listener mounting.
+    window.parent.postMessage({ type: 'preview-ready' }, '*')
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
 
-	return mode;
+  return mode
 }

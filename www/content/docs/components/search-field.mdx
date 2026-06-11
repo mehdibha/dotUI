@@ -8,30 +8,30 @@ wip: true
 ---
 
 <InteractiveDemo
-	name="search-field"
-	engine="source"
-	controls={[
-		{
-			type: "string",
-			name: "label",
-			defaultValue: "Search",
-		},
-		{
-			type: "string",
-			name: "placeholder",
-			defaultValue: "Search...",
-		},
-		{
-			type: "boolean",
-			name: "isDisabled",
-			defaultValue: false,
-		},
-		{
-			type: "boolean",
-			name: "isReadOnly",
-			defaultValue: false,
-		},
-	]}
+  name="search-field"
+  engine="source"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Search',
+    },
+    {
+      type: 'string',
+      name: 'placeholder',
+      defaultValue: 'Search...',
+    },
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isReadOnly',
+      defaultValue: false,
+    },
+  ]}
 />
 
 ## Installation
@@ -45,31 +45,31 @@ npx shadcn@latest add @dotui/search-field
 Use `SearchField` to allow users to enter and clear a search query.
 
 ```tsx
-import { SearchField } from "@/components/ui/search-field";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/field";
+import { SearchField } from '@/components/ui/search-field'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/field'
 ```
 
 ```tsx
 <SearchField>
-	<Label>Search</Label>
-	<Input />
+  <Label>Search</Label>
+  <Input />
 </SearchField>
 ```
 
 ## Examples
 
 <Examples>
-	<Example name="search-field/demos/default" />
-	<Example name="search-field/demos/sizes" />
-	<Example name="search-field/demos/label" />
-	<Example name="search-field/demos/description" />
-	<Example name="search-field/demos/error-message" />
-	<Example name="search-field/demos/disabled" />
-	<Example name="search-field/demos/read-only" />
-	<Example name="search-field/demos/required" />
-	<Example name="search-field/demos/uncontrolled" />
-	<Example name="search-field/demos/controlled" />
+  <Example name="search-field/demos/default" />
+  <Example name="search-field/demos/sizes" />
+  <Example name="search-field/demos/label" />
+  <Example name="search-field/demos/description" />
+  <Example name="search-field/demos/error-message" />
+  <Example name="search-field/demos/disabled" />
+  <Example name="search-field/demos/read-only" />
+  <Example name="search-field/demos/required" />
+  <Example name="search-field/demos/uncontrolled" />
+  <Example name="search-field/demos/controlled" />
 </Examples>
 
 ## API Reference

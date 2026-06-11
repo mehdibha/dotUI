@@ -1,34 +1,34 @@
-"use client";
+'use client'
 
-import React from "react";
+import React from 'react'
 
-import { UploadIcon } from "@/registry/__generated__/icons";
-import { Button } from "@/registry/ui/button";
-import { FileTrigger } from "@/registry/ui/file-trigger";
+import { UploadIcon } from '@/registry/__generated__/icons'
+import { Button } from '@/registry/ui/button'
+import { FileTrigger } from '@/registry/ui/file-trigger'
 
 export default function Demo() {
-	const [files, setFiles] = React.useState<string[] | null>(null);
-	return (
-		<div className="flex flex-col items-center gap-4">
-			<FileTrigger
-				onSelect={(e) => {
-					if (e) {
-						const files = Array.from(e);
-						const filenames = files.map((file) => file.name);
-						setFiles(filenames);
-					}
-				}}
-				allowsMultiple
-			>
-				<Button>
-					<UploadIcon /> Upload
-				</Button>
-			</FileTrigger>
-			{files && (
-				<p>
-					You selected <span className="font-semibold">{files.join(", ")}</span>
-				</p>
-			)}
-		</div>
-	);
+  const [files, setFiles] = React.useState<string[] | null>(null)
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <FileTrigger
+        onSelect={(e) => {
+          if (e) {
+            const files = Array.from(e)
+            const filenames = files.map((file) => file.name)
+            setFiles(filenames)
+          }
+        }}
+        allowsMultiple
+      >
+        <Button>
+          <UploadIcon /> Upload
+        </Button>
+      </FileTrigger>
+      {files && (
+        <p>
+          You selected <span className="font-semibold">{files.join(', ')}</span>
+        </p>
+      )}
+    </div>
+  )
 }

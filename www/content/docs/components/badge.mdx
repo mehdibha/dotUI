@@ -7,9 +7,13 @@ links:
 ---
 
 <InteractiveDemo
-	name="badge"
-	engine="source"
-	controls={[{ name: "children", type: "string", defaultValue: "Badge" }, "variant", "appearance"]}
+  name="badge"
+  engine="source"
+  controls={[
+    { name: 'children', type: 'string', defaultValue: 'Badge' },
+    'variant',
+    'appearance',
+  ]}
 />
 
 ## Installation
@@ -23,7 +27,7 @@ npx shadcn@latest add @dotui/badge
 Use badges to highlight status, categorize items, or show counts.
 
 ```tsx
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge'
 ```
 
 ```tsx
@@ -33,14 +37,14 @@ import { Badge } from "@/components/ui/badge";
 ## Examples
 
 <Examples className="grid-cols-2 md:grid-cols-3">
-	<Example name="badge/demos/default" title="Default" />
-	<Example name="badge/demos/variants" title="Variants" />
-	<Example name="badge/demos/sizes" title="Sizes" />
-	<Example name="badge/demos/icon" title="Icon" />
-	<Example name="badge/demos/pending" title="Pending" />
-	<Example name="badge/demos/loader" title="Loader" />
-	<Example name="badge/demos/count" title="Count" />
-	<Example name="badge/demos/link" title="Link" />
+  <Example name="badge/demos/default" title="Default" />
+  <Example name="badge/demos/variants" title="Variants" />
+  <Example name="badge/demos/sizes" title="Sizes" />
+  <Example name="badge/demos/icon" title="Icon" />
+  <Example name="badge/demos/pending" title="Pending" />
+  <Example name="badge/demos/loader" title="Loader" />
+  <Example name="badge/demos/count" title="Count" />
+  <Example name="badge/demos/link" title="Link" />
 </Examples>
 
 ## API Reference

@@ -1,30 +1,30 @@
 {
-	"name": "AvatarGroupProps",
-	"description": "A group container that displays multiple avatars together with overlapping layout.",
-	"extendsElement": "div",
-	"props": {
-		"size": {
-			"type": "\"lg\" | \"md\" | \"sm\"",
-			"detailedType": "'lg' | 'md' | 'sm' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "lg"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "md"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "sm"
-					}
-				]
-			},
-			"description": "The size of all avatars in the group.",
-			"default": "'md'"
-		}
-	}
+  "name": "AvatarGroupProps",
+  "description": "A group container that displays multiple avatars together with overlapping layout.",
+  "extendsElement": "div",
+  "props": {
+    "size": {
+      "type": "\"lg\" | \"md\" | \"sm\"",
+      "detailedType": "'lg' | 'md' | 'sm' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "lg"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          }
+        ]
+      },
+      "description": "The size of all avatars in the group.",
+      "default": "'md'"
+    }
+  }
 }

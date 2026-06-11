@@ -1,39 +1,39 @@
-"use client";
+'use client'
 
-import { parseAbsoluteToLocal } from "@internationalized/date";
+import { parseAbsoluteToLocal } from '@internationalized/date'
 
-import { CalendarIcon } from "@/registry/__generated__/icons";
-import { Button } from "@/registry/ui/button";
-import { RangeCalendar } from "@/registry/ui/calendar";
-import { DateRangePicker } from "@/registry/ui/date-picker";
-import { DialogContent } from "@/registry/ui/dialog";
-import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input";
-import { Popover } from "@/registry/ui/popover";
+import { CalendarIcon } from '@/registry/__generated__/icons'
+import { Button } from '@/registry/ui/button'
+import { RangeCalendar } from '@/registry/ui/calendar'
+import { DateRangePicker } from '@/registry/ui/date-picker'
+import { DialogContent } from '@/registry/ui/dialog'
+import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
-	return (
-		<DateRangePicker
-			aria-label="Date picker with time zones"
-			defaultValue={{
-				start: parseAbsoluteToLocal("2021-04-07T18:45:22Z"),
-				end: parseAbsoluteToLocal("2021-04-08T20:00:00Z"),
-			}}
-		>
-			<InputGroup>
-				<DateInput slot="start" />
-				<span>–</span>
-				<DateInput slot="end" />
-				<InputGroupAddon>
-					<Button variant="default" size="sm" isIconOnly>
-						<CalendarIcon />
-					</Button>
-				</InputGroupAddon>
-			</InputGroup>
-			<Popover>
-				<DialogContent>
-					<RangeCalendar />
-				</DialogContent>
-			</Popover>
-		</DateRangePicker>
-	);
+  return (
+    <DateRangePicker
+      aria-label="Date picker with time zones"
+      defaultValue={{
+        start: parseAbsoluteToLocal('2021-04-07T18:45:22Z'),
+        end: parseAbsoluteToLocal('2021-04-08T20:00:00Z'),
+      }}
+    >
+      <InputGroup>
+        <DateInput slot="start" />
+        <span>–</span>
+        <DateInput slot="end" />
+        <InputGroupAddon>
+          <Button variant="default" size="sm" isIconOnly>
+            <CalendarIcon />
+          </Button>
+        </InputGroupAddon>
+      </InputGroup>
+      <Popover>
+        <DialogContent>
+          <RangeCalendar />
+        </DialogContent>
+      </Popover>
+    </DateRangePicker>
+  )
 }

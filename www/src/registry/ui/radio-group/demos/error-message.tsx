@@ -1,25 +1,25 @@
-import { FieldError, FieldGroup, Label } from "@/registry/ui/field";
-import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group";
+import { FieldError, FieldGroup, Label } from '@/registry/ui/field'
+import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
 
 export default function Demo() {
-	return (
-		<RadioGroup defaultValue={null} isInvalid>
-			<Label>React frameworks</Label>
-			<FieldGroup>
-				<Radio value="nextjs">
-					<RadioControl />
-					<Label>Next.js</Label>
-				</Radio>
-				<Radio value="remix">
-					<RadioControl />
-					<Label>Remix</Label>
-				</Radio>
-				<Radio value="gatsby">
-					<RadioControl />
-					<Label>Gatsby</Label>
-				</Radio>
-			</FieldGroup>
-			<FieldError>Please select a framework.</FieldError>
-		</RadioGroup>
-	);
+  return (
+    <RadioGroup defaultValue={null} isInvalid>
+      <Label>React frameworks</Label>
+      <FieldGroup>
+        <Radio value="nextjs">
+          <RadioControl />
+          <Label>Next.js</Label>
+        </Radio>
+        <Radio value="remix">
+          <RadioControl />
+          <Label>Remix</Label>
+        </Radio>
+        <Radio value="gatsby">
+          <RadioControl />
+          <Label>Gatsby</Label>
+        </Radio>
+      </FieldGroup>
+      <FieldError>Please select a framework.</FieldError>
+    </RadioGroup>
+  )
 }

@@ -6,7 +6,11 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Disclosure.html
 ---
 
-<InteractiveDemo name="accordion" engine="source" controls={["allowsMultipleExpanded", "isDisabled"]} />
+<InteractiveDemo
+  name="accordion"
+  engine="source"
+  controls={['allowsMultipleExpanded', 'isDisabled']}
+/>
 
 ## Installation
 
@@ -17,20 +21,24 @@ npx shadcn@latest add @dotui/accordion
 ## Anatomy
 
 ```tsx
-import { Accordion } from "@/components/ui/accordion";
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure";
+import { Accordion } from '@/components/ui/accordion'
+import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger,
+} from '@/components/ui/disclosure'
 ```
 
 ```tsx
 <Accordion>
-	<Disclosure>
-		<DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
-		<DisclosurePanel>Disclosure Panel</DisclosurePanel>
-	</Disclosure>
-	<Disclosure>
-		<DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
-		<DisclosurePanel>Disclosure Panel</DisclosurePanel>
-	</Disclosure>
+  <Disclosure>
+    <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
+    <DisclosurePanel>Disclosure Panel</DisclosurePanel>
+  </Disclosure>
+  <Disclosure>
+    <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
+    <DisclosurePanel>Disclosure Panel</DisclosurePanel>
+  </Disclosure>
 </Accordion>
 ```
 

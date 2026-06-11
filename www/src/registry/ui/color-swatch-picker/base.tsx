@@ -1,52 +1,61 @@
-"use client";
+'use client'
 
-import type React from "react";
+import type React from 'react'
+import * as ColorSwatchPickerPrimitives from 'react-aria-components/ColorSwatchPicker'
+import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 
-import * as ColorSwatchPickerPrimitives from "react-aria-components/ColorSwatchPicker";
-import { composeRenderProps } from "react-aria-components/composeRenderProps";
+import { ColorSwatch } from '@/registry/ui/color-swatch'
 
-import { ColorSwatch } from "@/registry/ui/color-swatch";
+import { useStyles } from './styles'
 
-import { useStyles } from "./styles";
-
-interface ColorSwatchPickerProps extends React.ComponentProps<typeof ColorSwatchPickerPrimitives.ColorSwatchPicker> {}
+interface ColorSwatchPickerProps extends React.ComponentProps<
+  typeof ColorSwatchPickerPrimitives.ColorSwatchPicker
+> {}
 
 const ColorSwatchPicker = ({ className, ...props }: ColorSwatchPickerProps) => {
-	const { root } = useStyles()();
-	return (
-		<ColorSwatchPickerPrimitives.ColorSwatchPicker
-			className={composeRenderProps(className, (className) => root({ className }))}
-			{...props}
-		/>
-	);
-};
+  const { root } = useStyles()()
+  return (
+    <ColorSwatchPickerPrimitives.ColorSwatchPicker
+      className={composeRenderProps(className, (className) =>
+        root({ className }),
+      )}
+      {...props}
+    />
+  )
+}
 
 interface ColorSwatchPickerItemProps extends React.ComponentProps<
-	typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem
+  typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem
 > {}
-const ColorSwatchPickerItem = ({ className, style, ...props }: ColorSwatchPickerItemProps) => {
-	const { item } = useStyles()();
-	return (
-		<ColorSwatchPickerPrimitives.ColorSwatchPickerItem
-			className={composeRenderProps(className, (className) => item({ className }))}
-			style={composeRenderProps(
-				style,
-				(style, { color }) =>
-					({
-						"--color": color.toString(),
-						...style,
-					}) as React.CSSProperties,
-			)}
-			{...props}
-		>
-			<ColorSwatch className="size-full rounded-[inherit]" />
-		</ColorSwatchPickerPrimitives.ColorSwatchPickerItem>
-	);
-};
+const ColorSwatchPickerItem = ({
+  className,
+  style,
+  ...props
+}: ColorSwatchPickerItemProps) => {
+  const { item } = useStyles()()
+  return (
+    <ColorSwatchPickerPrimitives.ColorSwatchPickerItem
+      className={composeRenderProps(className, (className) =>
+        item({ className }),
+      )}
+      style={composeRenderProps(
+        style,
+        (style, { color }) =>
+          ({
+            '--color': color.toString(),
+            ...style,
+          }) as React.CSSProperties,
+      )}
+      {...props}
+    >
+      <ColorSwatch className="size-full rounded-[inherit]" />
+    </ColorSwatchPickerPrimitives.ColorSwatchPickerItem>
+  )
+}
 
 const CompoundColorSwatchPicker = Object.assign(ColorSwatchPicker, {
-	Item: ColorSwatchPickerItem,
-});
+  Item: ColorSwatchPickerItem,
+})
 
-export type { ColorSwatchPickerItemProps, ColorSwatchPickerProps };
-export { ColorSwatchPickerItem, CompoundColorSwatchPicker as ColorSwatchPicker };
+export type { ColorSwatchPickerItemProps, ColorSwatchPickerProps }
+export { ColorSwatchPickerItem, CompoundColorSwatchPicker as ColorSwatchPicker }

@@ -1,40 +1,40 @@
 {
-	"name": "TableVirtualizerProps",
-	"description": "A Virtualizer configured with the table layout used by Table.",
-	"props": {
-		"rowHeight": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The fixed height of a row in pixels.\nDefaults to the current density height: 32 compact, 40 default, 48 comfortable."
-		},
-		"headingHeight": {
-			"type": "number",
-			"detailedType": "number | undefined",
-			"typeAst": {
-				"type": "number"
-			},
-			"description": "The fixed height of the header in pixels.\nDefaults to the current density height: 32 compact, 40 default, 48 comfortable."
-		},
-		"children": {
-			"type": "ReactNode",
-			"typeAst": {
-				"type": "identifier",
-				"name": "ReactNode"
-			},
-			"description": "The child collection to virtualize (e.g. ListBox, GridList, or Table).",
-			"required": true
-		},
-		"layoutOptions": {
-			"type": "T",
-			"detailedType": "T | undefined",
-			"typeAst": {
-				"type": "identifier",
-				"name": "T"
-			},
-			"description": "Options for the layout."
-		}
-	}
+  "name": "TableVirtualizerProps",
+  "description": "A Virtualizer configured with the table layout used by Table.",
+  "props": {
+    "rowHeight": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The fixed height of a row in pixels.\nDefaults to the current density height: 32 compact, 40 default, 48 comfortable."
+    },
+    "headingHeight": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The fixed height of the header in pixels.\nDefaults to the current density height: 32 compact, 40 default, 48 comfortable."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "The child collection to virtualize (e.g. ListBox, GridList, or Table).",
+      "required": true
+    },
+    "layoutOptions": {
+      "type": "T",
+      "detailedType": "T | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "T"
+      },
+      "description": "Options for the layout."
+    }
+  }
 }

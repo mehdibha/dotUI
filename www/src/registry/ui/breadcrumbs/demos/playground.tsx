@@ -1,21 +1,26 @@
-"use client";
+'use client'
 
-import { BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Breadcrumbs } from "@/registry/ui/breadcrumbs";
+import {
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  Breadcrumbs,
+} from '@/registry/ui/breadcrumbs'
 
 export default function Demo({ isDisabled = false } = {}) {
-	return (
-		<Breadcrumbs isDisabled={isDisabled}>
-			<BreadcrumbItem>
-				<BreadcrumbLink href="#">Home</BreadcrumbLink>
-				<BreadcrumbSeparator />
-			</BreadcrumbItem>
-			<BreadcrumbItem>
-				<BreadcrumbLink href="#">Components</BreadcrumbLink>
-				<BreadcrumbSeparator />
-			</BreadcrumbItem>
-			<BreadcrumbItem>
-				<BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
-			</BreadcrumbItem>
-		</Breadcrumbs>
-	);
+  return (
+    <Breadcrumbs isDisabled={isDisabled}>
+      <BreadcrumbItem>
+        <BreadcrumbLink href="#">Home</BreadcrumbLink>
+        <BreadcrumbSeparator />
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbLink href="#">Components</BreadcrumbLink>
+        <BreadcrumbSeparator />
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbLink>Breadcrumbs</BreadcrumbLink>
+      </BreadcrumbItem>
+    </Breadcrumbs>
+  )
 }

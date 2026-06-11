@@ -1,84 +1,84 @@
 {
-	"name": "BadgeProps",
-	"description": "Missing description.",
-	"extendsElement": "span",
-	"props": {
-		"appearance": {
-			"type": "\"solid\" | \"subtle\"",
-			"detailedType": "'solid' | 'subtle' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "solid"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "subtle"
-					}
-				]
-			},
-			"description": "The visual appearance of the badge.",
-			"default": "'solid'"
-		},
-		"variant": {
-			"type": "\"accent\" | \"danger\" | \"info\" | \"neutral\" | \"success\" | \"warning\"",
-			"detailedType": "| 'accent'\n| 'danger'\n| 'info'\n| 'neutral'\n| 'success'\n| 'warning'\n| undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "accent"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "danger"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "info"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "neutral"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "success"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "warning"
-					}
-				]
-			},
-			"description": "The visual style of the badge.",
-			"default": "'neutral'"
-		},
-		"size": {
-			"type": "\"lg\" | \"md\" | \"sm\"",
-			"detailedType": "'lg' | 'md' | 'sm' | undefined",
-			"typeAst": {
-				"type": "union",
-				"elements": [
-					{
-						"type": "stringLiteral",
-						"value": "lg"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "md"
-					},
-					{
-						"type": "stringLiteral",
-						"value": "sm"
-					}
-				]
-			},
-			"description": "The size of the badge.",
-			"default": "'md'"
-		}
-	}
+  "name": "BadgeProps",
+  "description": "Missing description.",
+  "extendsElement": "span",
+  "props": {
+    "appearance": {
+      "type": "\"solid\" | \"subtle\"",
+      "detailedType": "'solid' | 'subtle' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "solid"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "subtle"
+          }
+        ]
+      },
+      "description": "The visual appearance of the badge.",
+      "default": "'solid'"
+    },
+    "variant": {
+      "type": "\"accent\" | \"danger\" | \"info\" | \"neutral\" | \"success\" | \"warning\"",
+      "detailedType": "| 'accent'\n| 'danger'\n| 'info'\n| 'neutral'\n| 'success'\n| 'warning'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "accent"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "danger"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "info"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "neutral"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "success"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "warning"
+          }
+        ]
+      },
+      "description": "The visual style of the badge.",
+      "default": "'neutral'"
+    },
+    "size": {
+      "type": "\"lg\" | \"md\" | \"sm\"",
+      "detailedType": "'lg' | 'md' | 'sm' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "lg"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          }
+        ]
+      },
+      "description": "The size of the badge.",
+      "default": "'md'"
+    }
+  }
 }
