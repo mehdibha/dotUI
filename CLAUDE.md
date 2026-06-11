@@ -34,7 +34,7 @@ What this means when writing code today:
 - Registry output stays portable: plain React files, shadcn-schema
   compatible, no www-internal imports leaking into registry items.
 
-## Layout
+## Structure
 
 - `www/` — the dotui.org app: docs, the /create builder, and the registry
   endpoints (TanStack Start + Vite, fumadocs-mdx, Tailwind v4,
@@ -54,42 +54,38 @@ What this means when writing code today:
   for an upstream `not-*` variant bug; don't bump it without re-checking the
   patch.
 
-## Commands
+## Workflow
 
-- Dev: `pnpm dev:www`. In a fresh clone or worktree, run `pnpm build:registry`
-  first or the dev server 500s (`build` and `typecheck` run it themselves;
-  `dev` does not).
-- Before pushing: `pnpm check` (oxlint + `oxfmt --check` — CI fails on
-  formatting and import order). Fix with `pnpm check:fix`.
-- `pnpm typecheck` · `pnpm test` (vitest, covers `packages/colors`).
+### Commands
 
-## Generated files
+- `pnpm dev:www` — dev server. In a fresh clone or worktree, run
+  `pnpm build:registry` first or it 500s (`build` and `typecheck` run it
+  themselves; `dev` does not).
+- `pnpm check` — oxlint + `oxfmt --check`; `pnpm check:fix` to auto-fix.
+- `pnpm typecheck` · `pnpm test` — vitest, covers `packages/colors`.
 
-- `www/src/registry/__generated__/*` and `www/src/registry/base/colors.css`
-  are committed artifacts of `pnpm build:registry`; CI's registry-drift job
-  diffs exactly these files. After touching registry items, regenerate and
-  commit.
-- `build:registry` also builds the showcase bundle. Its theme stub is a blind
-  spot for the drift guard: if bundled code changes its `@/registry/theme`
-  imports, update `themeStub()` in `www/scripts/build-showcase-bundle.ts` —
-  missing named exports there once broke "Open in v0".
-- API references: never run `pnpm build:references` to fix one field —
-  generator drift rewrites ~121 files. Hand-edit the specific JSON instead.
-  Documented props come from `types.ts`, not `base.tsx`.
-- `www/src/routeTree.gen.ts` is TanStack-generated; never edit it.
+### Registry changes
+
+After modifying `www/src/registry/`, run `pnpm build:registry` and commit the
+regenerated `__generated__/*` + `base/colors.css` — CI's registry-drift job
+diffs exactly these files. If bundled code changes its `@/registry/theme`
+imports, also update `themeStub()` in `www/scripts/build-showcase-bundle.ts`:
+the drift guard can't catch missing named exports there (once broke
+"Open in v0").
+
+### Before committing
+
+- `pnpm check` — CI fails on formatting and import order.
+- `pnpm typecheck`; `pnpm test` if you touched `packages/colors`.
+- Touched the registry? Regenerate first (see Registry changes).
 
 ## Conventions & gotchas
 
 - Issues and PRDs are tracked in GitHub Issues for `mehdibha/dotUI`.
-- PR titles become commit titles. Format `type(scope): summary` — describe
-  the change, don't justify it (cut clauses like "with…", "to improve…").
+- PR titles become commit titles. Format `type(scope): summary` — describe the change, don't justify it (cut clauses like "with…", "to improve…").
   Aim ~50–60 chars, but never drop information to hit it.
-  Good: `docs: rewrite CLAUDE.md` · Bad: `docs: rewrite CLAUDE.md with real
-  project context`.
-- Theming: semantic tokens resolve and freeze at `:root` — color/radius
-  changes cannot be scoped to a subtree (density is the exception, via React
-  context). Previews that re-theme need an iframe or must re-theme the whole
-  page.
-- RAC SSR: ListBox inside Tabs and Combobox both crash SSR
-  (`selectionManager` null) — in demos prefer Select, CheckboxGroup, or a
-  sibling ListBox.
+  Good: `docs: rewrite CLAUDE.md` · Bad: `docs: rewrite CLAUDE.md with real project context`.
+- Never run `pnpm build:references` to fix one field — generator drift
+  rewrites ~121 files. Hand-edit the specific JSON; documented props come
+  from `types.ts`, not `base.tsx`.
+- `www/src/routeTree.gen.ts` is TanStack-generated; never edit it.
