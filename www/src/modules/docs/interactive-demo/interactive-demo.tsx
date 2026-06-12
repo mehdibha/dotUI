@@ -1,9 +1,9 @@
-import React, {
-  type ComponentType,
+import {
   createElement,
   useCallback,
   useMemo,
   useState,
+  type ComponentType,
 } from 'react'
 import { flushSync } from 'react-dom'
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
@@ -16,41 +16,39 @@ import { renderCode } from '@/modules/docs/codegen/code-template'
 import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
 import { DynamicPre } from '@/modules/docs/dynamic-pre'
 
+import { defaultControlValues } from './control-defaults'
 import { availableIcons, Controls } from './controls'
-import { elementToCode, elementToPreviewCode } from './element-to-code'
 import type { ControlValues, SerializableControl } from './types'
 
 /**
  * Interactive demo component.
  * Renders the playground, controls, and live code output.
  *
- * Code generation has two engines, selected per demo:
- *  - SourceFirst (`codeTemplate` present): displayed code is filled from a
- *    build-time template-with-holes over the real demo source. Preview and code
- *    derive from one `values` state, so they can never diverge.
- *  - Legacy (`codeTemplate` absent): the playground is called as a plain function
- *    and its element tree serialized. Kept until every demo migrates.
+ * The displayed code is filled from a build-time template-with-holes over the
+ * real demo source (see codegen/source-overlay.ts). Preview and code derive
+ * from one `values` state, so they can never diverge — and the rendered code
+ * is always byte-identical to what oxfmt would emit
+ * (codegen/playground-fidelity.spec.ts holds that line).
  */
 
 interface InteractiveDemoProps {
   component: ComponentType<Record<string, unknown>>
   controls: SerializableControl[]
+  codeTemplate: CodeTemplate
   className?: string
   /**
    * Where the controls sit on ≥md screens: a column to the right ("horizontal")
    * or a row beneath the preview ("vertical"). Small screens are always "vertical".
    */
   layout?: 'horizontal' | 'vertical'
-  /** SourceFirst engine template; absent ⇒ legacy serialization path. */
-  codeTemplate?: CodeTemplate
 }
 
 export function InteractiveDemo({
   component: Playground,
   controls,
+  codeTemplate,
   className,
   layout = 'horizontal',
-  codeTemplate,
 }: InteractiveDemoProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -64,15 +62,10 @@ export function InteractiveDemo({
     horizontal && 'md:flex-col md:flex-nowrap',
   )
 
-  // Initialize values from control defaults
-  const initialValues = useMemo(() => {
-    const values: ControlValues = {}
-    for (const control of controls) {
-      values[control.name] = getDefaultValue(control)
-    }
-    return values
-  }, [controls])
-
+  const initialValues = useMemo(
+    () => defaultControlValues(controls),
+    [controls],
+  )
   const [values, setValues] = useState<ControlValues>(initialValues)
 
   const handleChange = useCallback((name: string, value: unknown) => {
@@ -99,79 +92,16 @@ export function InteractiveDemo({
     return props
   }, [values, controls])
 
-  // Create props for code generation (excludes default values unless alwaysShow)
-  const propsForCode = useMemo(() => {
-    const props: Record<string, unknown> = {}
-
-    for (const control of controls) {
-      const value = values[control.name]
-      const defaultValue = getDefaultValue(control)
-      const shouldShow = control.alwaysShow || !isEqual(value, defaultValue)
-
-      if (shouldShow) {
-        if (control.type === 'icon') {
-          const iconName = value as string | null
-          if (iconName && availableIcons[iconName]) {
-            props[control.name] = createElement(availableIcons[iconName], {
-              className: 'size-4',
-            })
-          }
-        } else {
-          props[control.name] = value
-        }
-      }
-    }
-
-    return props
-  }, [values, controls])
-
-  // Render the playground element for preview (uses ALL props). Real React render —
-  // hooks/context/memo all legal — for BOTH engines.
+  // Real React render — hooks/context/memo all legal in the playground.
   const previewElement = useMemo(
     () => createElement(Playground, propsWithIcons),
     [Playground, propsWithIcons],
   )
 
-  // --- SourceFirst code generation (formatter-free template fill) ---
-  const sourceCollapsed = useMemo(
-    () =>
-      codeTemplate
-        ? renderCode(codeTemplate, values, { expanded: false })
-        : null,
-    [codeTemplate, values],
+  const displayedCode = useMemo(
+    () => renderCode(codeTemplate, values, { expanded: isExpanded }),
+    [codeTemplate, values, isExpanded],
   )
-  const sourceExpanded = useMemo(
-    () =>
-      codeTemplate
-        ? renderCode(codeTemplate, values, { expanded: true })
-        : null,
-    [codeTemplate, values],
-  )
-
-  // --- Legacy code generation (only when no template) ---
-  // Call the playground as a plain function to harvest its element tree, then serialize.
-  const renderedElement = useMemo(() => {
-    if (codeTemplate) return null
-    const PlaygroundFn = Playground as (
-      props: Record<string, unknown>,
-    ) => React.ReactElement
-    return PlaygroundFn(propsForCode)
-  }, [Playground, propsForCode, codeTemplate])
-  const legacyOutput = useMemo(
-    () => (renderedElement ? elementToCode(renderedElement) : null),
-    [renderedElement],
-  )
-  const legacyPreview = useMemo(
-    () => (renderedElement ? elementToPreviewCode(renderedElement) : ''),
-    [renderedElement],
-  )
-
-  // Displayed code depends on engine + expanded state.
-  const displayedCode = codeTemplate
-    ? ((isExpanded ? sourceExpanded : sourceCollapsed) ?? '')
-    : isExpanded
-      ? (legacyOutput?.full ?? '')
-      : legacyPreview
 
   const handleToggle = () => {
     if (document.startViewTransition) {
@@ -224,53 +154,26 @@ export function InteractiveDemo({
       <CodeBlock
         className="rounded-none border-x-0 border-b-0"
         actions={
-          <>
-            <Button
-              variant="quiet"
-              size="sm"
-              className="h-7 gap-1 pr-2 pl-1 text-xs"
-              onPress={handleToggle}
-            >
-              {isExpanded ? (
-                <>
-                  <ChevronUpIcon /> Collapse
-                </>
-              ) : (
-                <>
-                  <ChevronDownIcon /> Expand
-                </>
-              )}
-            </Button>
-          </>
+          <Button
+            variant="quiet"
+            size="sm"
+            className="h-7 gap-1 pr-2 pl-1 text-xs"
+            onPress={handleToggle}
+          >
+            {isExpanded ? (
+              <>
+                <ChevronUpIcon /> Collapse
+              </>
+            ) : (
+              <>
+                <ChevronDownIcon /> Expand
+              </>
+            )}
+          </Button>
         }
       >
         <DynamicPre lang="tsx">{displayedCode}</DynamicPre>
       </CodeBlock>
     </div>
   )
-}
-
-function getDefaultValue(control: SerializableControl): unknown {
-  switch (control.type) {
-    case 'boolean':
-      return control.defaultValue ?? false
-    case 'string':
-      return control.defaultValue ?? ''
-    case 'number':
-      return control.defaultValue ?? 0
-    case 'enum':
-      return control.defaultValue ?? control.options[0]
-    case 'icon':
-      return null
-    default:
-      return undefined
-  }
-}
-
-function isEqual(a: unknown, b: unknown): boolean {
-  if (a === b) return true
-  // Handle null/undefined equivalence for icons
-  if ((a === null || a === undefined) && (b === null || b === undefined))
-    return true
-  return false
 }

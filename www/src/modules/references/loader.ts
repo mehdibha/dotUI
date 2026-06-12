@@ -5,13 +5,13 @@
 
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import type { ComponentApiReference } from './types'
 
-const GENERATED_DIR = path.join(
-  process.cwd(),
-  'src/modules/references/generated',
-)
+// Resolved from this module (not cwd) so callers outside `www` (vitest at the
+// repo root) hit the same files as the vite build.
+const GENERATED_DIR = fileURLToPath(new URL('generated', import.meta.url))
 
 /**
  * Load API reference data for a component
