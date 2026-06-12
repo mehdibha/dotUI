@@ -1,6 +1,14 @@
 {
   "name": "AlertTitleProps",
-  "description": "Missing description.",
+  "description": "The title of the alert.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

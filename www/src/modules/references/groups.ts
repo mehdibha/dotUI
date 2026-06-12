@@ -111,7 +111,7 @@ export const GROUPS: Record<string, (string | RegExp)[]> = {
     'preventFocusOnPress',
     /^aria-/,
   ],
-  Advanced: ['UNSAFE_className', 'UNSAFE_style', 'slot'],
+  Advanced: ['render', 'UNSAFE_className', 'UNSAFE_style', 'slot'],
 }
 
 /**

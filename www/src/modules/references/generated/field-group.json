@@ -1,6 +1,14 @@
 {
   "name": "FieldGroupProps",
-  "description": "Missing description.",
+  "description": "Contains a stack of fields, applying consistent spacing between them.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

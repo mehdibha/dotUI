@@ -1,6 +1,6 @@
 {
   "name": "MenuProps",
-  "description": "Missing description.",
+  "description": "A menu displays a list of actions or options that a user can choose.\nIt wraps a trigger element and the menu, linking the menu's open state with the trigger's press state.",
   "props": {
     "trigger": {
       "type": "MenuTriggerType",

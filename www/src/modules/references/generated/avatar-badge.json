@@ -2,5 +2,13 @@
   "name": "AvatarBadgeProps",
   "description": "A small indicator displayed on the avatar, typically used to show online status.",
   "extendsElement": "span",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

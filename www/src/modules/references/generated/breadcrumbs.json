@@ -126,8 +126,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement.",
-      "default": "'react-aria-Breadcrumbs'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement."
     },
     "dependencies": {
       "type": "readonly any[]",

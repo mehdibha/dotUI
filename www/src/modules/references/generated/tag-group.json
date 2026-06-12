@@ -48,8 +48,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement.",
-      "default": "'react-aria-TagGroup'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement."
     },
     "defaultSelectedKeys": {
       "type": "Iterable<Key> | \"all\"",

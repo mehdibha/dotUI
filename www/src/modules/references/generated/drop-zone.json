@@ -174,8 +174,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
-      "default": "'react-aria-DropZone'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
     },
     "getDropOperation": {
       "type": "((types: DragTypes, allowedOperations: DropOperation[]) => DropOperation)",

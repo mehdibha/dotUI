@@ -15,14 +15,19 @@ npx shadcn@latest add @dotui/empty
 ## Usage
 
 ```tsx
-import { Empty } from '@/components/ui/empty'
+import {
+  Empty,
+  EmptyDescription,
+  EmptyMedia,
+  EmptyTitle,
+} from '@/components/ui/empty'
 ```
 
 ```tsx
 <Empty>
-  <EmptyIcon>
+  <EmptyMedia variant="icon">
     <FolderIcon />
-  </EmptyIcon>
+  </EmptyMedia>
   <EmptyTitle>No projects</EmptyTitle>
   <EmptyDescription>Get started by creating a new project.</EmptyDescription>
 </Empty>
@@ -36,4 +41,26 @@ import { Empty } from '@/components/ui/empty'
 
 ## API Reference
 
+### Empty
+
 <Reference name="empty" />
+
+### EmptyHeader
+
+<Reference name="empty-header" />
+
+### EmptyMedia
+
+<Reference name="empty-media" />
+
+### EmptyTitle
+
+<Reference name="empty-title" />
+
+### EmptyDescription
+
+<Reference name="empty-description" />
+
+### EmptyContent
+
+<Reference name="empty-content" />

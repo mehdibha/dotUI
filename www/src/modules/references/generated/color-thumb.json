@@ -2,6 +2,13 @@
   "name": "ColorThumbProps",
   "description": "A color thumb appears within a ColorArea, ColorSlider, or ColorWheel\nand allows a user to drag to adjust the color value.",
   "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
     "onHoverStart": {
       "type": "((e: HoverEvent) => void)",
       "detailedType": "((e: HoverEvent) => void) | undefined",

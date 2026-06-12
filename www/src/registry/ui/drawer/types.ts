@@ -13,8 +13,14 @@ export interface DrawerProps {
    * @default 'bottom'
    */
   placement?: DrawerPlacement
+  /** Whether the drawer is open. */
   isOpen?: boolean
+  /**
+   * Whether the drawer is open by default.
+   * @default false
+   */
   defaultOpen?: boolean
+  /** Handler that is called when the drawer's open state changes. */
   onOpenChange?: (open: boolean) => void
   /**
    * Whether the user can drag the drawer to dismiss it.
@@ -28,6 +34,7 @@ export interface DrawerProps {
   className?: DrawerPrimitive.Popup.Props['className']
   style?: DrawerPrimitive.Popup.Props['style']
 
+  /** The content of the drawer. */
   children?: React.ReactNode
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "LoaderProps",
-  "description": "Missing description.",
+  "description": "A loader displays an animated spinner that indicates an operation is in progress.",
   "props": {
     "size": {
       "type": "number",
@@ -188,8 +188,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
-      "default": "'react-aria-ProgressBar'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
     },
     "id": {
       "type": "string",

@@ -915,7 +915,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/skeleton/types.ts",
 		content:
-			"/**\n * Missing description.\n */\nexport interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {\n  /**\n   * Whether to show the skeleton loading state.\n   */\n  isLoading?: boolean\n}\n",
+			"/**\n * A skeleton displays a placeholder preview of content before it loads. It can render as a standalone shape or wrap existing content, showing matching elements as placeholders while loading.\n */\nexport interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {\n  /**\n   * Whether to show the skeleton loading state.\n   */\n  isLoading?: boolean\n}\n",
 	},
 	{
 		target: "registry/ui/slider/base.tsx",

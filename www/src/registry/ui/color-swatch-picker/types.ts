@@ -8,7 +8,7 @@ export interface ColorSwatchPickerProps extends React.ComponentProps<
 > {}
 
 /**
- * Missing description.
+ * A ColorSwatchPickerItem represents an individual color swatch within a ColorSwatchPicker.
  */
 export interface ColorSwatchPickerItemProps extends React.ComponentProps<
   typeof ColorSwatchPickerPrimitives.ColorSwatchPickerItem

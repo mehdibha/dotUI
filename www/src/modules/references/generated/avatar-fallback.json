@@ -2,5 +2,13 @@
   "name": "AvatarFallbackProps",
   "description": "Content displayed when the avatar image fails to load. Typically shows initials or an icon.",
   "extendsElement": "span",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

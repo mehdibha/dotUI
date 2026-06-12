@@ -16,7 +16,7 @@ export interface RangeCalendarProps<
 > extends RangeCalendarPrimitives.RangeCalendarProps<T> {}
 
 /**
- * Missing description.
+ * The header of a calendar, containing the navigation buttons and the heading.
  */
 export interface CalendarHeaderProps extends React.ComponentProps<'header'> {}
 

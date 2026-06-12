@@ -1,6 +1,6 @@
 {
   "name": "DialogBodyProps",
-  "description": "Missing description.",
+  "description": "The main content area of the dialog.",
   "extendsElement": "div",
   "props": {
     "scrollFade": {
@@ -10,6 +10,13 @@
         "type": "boolean"
       },
       "description": "Whether to render the body with scroll edge fade masks."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     }
   }
 }

@@ -2,5 +2,13 @@
   "name": "ScrollFadeProps",
   "description": "A native scroll container with edge-aware gradient fade affordances.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

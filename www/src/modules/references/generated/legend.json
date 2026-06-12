@@ -1,6 +1,14 @@
 {
   "name": "LegendProps",
-  "description": "Missing description.",
+  "description": "The caption of a fieldset, describing its group of fields.",
   "extendsElement": "legend",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

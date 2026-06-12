@@ -25,13 +25,16 @@ import { TypeLink } from './type-popover'
  * Styles
  * ---------------------------------------------------------------------------------------------*/
 
+// Same palette as the shiki github-light/github-dark themes used for the
+// collapsed-row type strings, so both surfaces highlight identically
 const styles = {
-  keyword: 'text-[#0000ff] dark:text-[#569cd6]',
-  string: 'text-[#a31515] dark:text-[#ce9178]',
-  number: 'text-[#098658] dark:text-[#b5cea8]',
-  function: 'text-[#795e26] dark:text-[#dcdcaa]',
-  variable: 'text-[#001080] dark:text-[#9cdcfe]',
-  attribute: 'text-[#e50000] dark:text-[#9cdcfe]',
+  keyword: 'text-[#d73a49] dark:text-[#f97583]',
+  primitive: 'text-[#005cc5] dark:text-[#79b8ff]',
+  string: 'text-[#032f62] dark:text-[#9ecbff]',
+  number: 'text-[#005cc5] dark:text-[#79b8ff]',
+  function: 'text-[#6f42c1] dark:text-[#b392f0]',
+  variable: 'text-[#6f42c1] dark:text-[#b392f0]',
+  attribute: 'text-[#e36209] dark:text-[#ffab70]',
   punctuation: 'text-fg-muted',
 }
 
@@ -220,7 +223,7 @@ function renderType(type: TType): React.ReactNode {
  * ---------------------------------------------------------------------------------------------*/
 
 function Keyword({ type }: { type: string }) {
-  return <span className={styles.keyword}>{type}</span>
+  return <span className={styles.primitive}>{type}</span>
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -237,7 +240,7 @@ function NumberLiteral({ value }: { value: number }) {
 }
 
 function BooleanLiteral({ value }: { value: boolean }) {
-  return <span className={styles.keyword}>{String(value)}</span>
+  return <span className={styles.primitive}>{String(value)}</span>
 }
 
 /* -----------------------------------------------------------------------------------------------
@@ -358,7 +361,7 @@ function UnionType({ elements }: { elements: TType[] }) {
         return (
           <React.Fragment key={key}>
             {i > 0 && (
-              <span className={styles.punctuation}>
+              <span className={styles.keyword}>
                 {shouldWrap ? '\n  | ' : ' | '}
               </span>
             )}

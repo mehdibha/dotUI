@@ -22,6 +22,10 @@ export interface ButtonProps extends React.ComponentProps<
   size?: 'xs' | 'sm' | 'md' | 'lg'
 }
 
+/**
+ * A link styled as a button. Link buttons navigate to another page or resource
+ * when pressed, rather than performing an action.
+ */
 export interface LinkButtonProps extends React.ComponentProps<
   typeof LinkPrimitives.Link
 > {

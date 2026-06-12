@@ -1,6 +1,14 @@
 {
   "name": "EmptyDescriptionProps",
-  "description": "Missing description.",
+  "description": "Supporting text that explains the empty state or how to resolve it.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "SelectContentProps",
-  "description": "Missing description.",
+  "description": "Contains the list of options, displayed in a popover when the select is open.",
   "props": {
     "placement": {
       "type": "Placement",
@@ -448,8 +448,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
-      "default": "'react-aria-ListBox'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
     },
     "defaultOpen": {
       "type": "boolean",

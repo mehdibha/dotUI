@@ -1,6 +1,6 @@
 {
   "name": "SkeletonProps",
-  "description": "Missing description.",
+  "description": "A skeleton displays a placeholder preview of content before it loads. It can render as a standalone shape or wrap existing content, showing matching elements as placeholders while loading.",
   "extendsElement": "div",
   "props": {
     "isLoading": {
@@ -10,6 +10,13 @@
         "type": "boolean"
       },
       "description": "Whether to show the skeleton loading state."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     }
   }
 }

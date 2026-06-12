@@ -158,6 +158,22 @@ function detectHTMLElementExtension(
 }
 
 /**
+ * Check if a property is only declared in @types/react (standard DOM/ARIA
+ * attributes). Props re-declared by react-aria or Base UI keep their own
+ * declarations and are not matched.
+ */
+function isDeclaredOnlyInTypesReact(prop: ts.Symbol): boolean {
+  const declarations = prop.getDeclarations()
+  if (!declarations || declarations.length === 0) return false
+  return declarations.every((decl) =>
+    decl
+      .getSourceFile()
+      .fileName.replaceAll('\\', '/')
+      .includes('node_modules/@types/react/'),
+  )
+}
+
+/**
  * Check if a property is defined in the user's source files (not inherited from HTML)
  */
 function isPropFromUserCode(prop: ts.Symbol): boolean {
@@ -659,6 +675,7 @@ async function getPropsWithTypeChecker(
 ): Promise<Record<string, FormattedProp>> {
   const { program, checker } = context
   const result: Record<string, FormattedProp> = {}
+  let hasClassNameMember = false
 
   // Get declaration order using TypeScript's AST (for local props)
   const declarationOrder = getPropertyDeclarationOrder(
@@ -703,12 +720,20 @@ async function getPropsWithTypeChecker(
         }
 
         for (const prop of properties) {
+          if (prop.name === 'className') hasClassNameMember = true
+
           // Skip ref
           if (prop.name === 'ref') continue
 
           // Skip well-known symbol members ([Symbol.iterator] is never a
           // documented component prop)
           if (prop.name.startsWith('__@')) continue
+
+          // Standard DOM/ARIA attributes declared in @types/react are MDN
+          // territory — without this, components extending element props via a
+          // primitive (ComponentProps<typeof Text>, Base UI parts) flood the
+          // table with every documented aria-* attribute
+          if (isDeclaredOnlyInTypesReact(prop)) continue
 
           // If extending HTML element, skip props inherited from HTML (not defined in user code)
           if (extendsElement && !isPropFromUserCode(prop)) {
@@ -755,9 +780,16 @@ async function getPropsWithTypeChecker(
           // Get default value from JSDoc @default tag
           const jsDocTags = prop.getJsDocTags(checker)
           const defaultTag = jsDocTags.find((tag) => tag.name === 'default')
-          const defaultValue = defaultTag
+          let defaultValue = defaultTag
             ? ts.displayPartsToString(defaultTag.text)
             : undefined
+
+          // react-aria documents "@default 'react-aria-ComponentName'" on
+          // className props — dotUI components set their own classes, so that
+          // default doesn't apply here
+          if (defaultValue?.startsWith("'react-aria-")) {
+            defaultValue = undefined
+          }
 
           // Check if optional
           const isOptional = (prop.flags & ts.SymbolFlags.Optional) !== 0
@@ -845,6 +877,18 @@ async function getPropsWithTypeChecker(
         }
       }
     })
+  }
+
+  // Components that structurally accept className keep a documented row even
+  // when it only comes from element attributes (plain-HTML wrappers and
+  // Base UI-based components document className, nothing else inherited)
+  if (hasClassNameMember && !result.className) {
+    result.className = {
+      type: 'string',
+      typeAst: { type: 'string' } as TType,
+      description:
+        'The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.',
+    }
   }
 
   // Format detailedTypes with Prettier for better readability

@@ -20,6 +20,9 @@ export interface OTPFieldProps extends Omit<
   onChange?: (value: string) => void
 }
 
+/**
+ * A separator visually divides groups of inputs within the OTP field.
+ */
 export interface OTPFieldSeparatorProps extends React.ComponentProps<
   typeof OTPFieldPrimitive.Separator
 > {}

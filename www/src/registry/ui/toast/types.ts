@@ -30,4 +30,7 @@ export interface ToastData {
   >
 }
 
+/**
+ * Options for a toast, passed to the toast manager when adding it to the queue. These include the toast's title, description, type, timeout, and custom data.
+ */
 export interface ToastProps extends ToastManagerAddOptions<ToastData> {}

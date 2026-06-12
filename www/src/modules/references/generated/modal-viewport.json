@@ -1,6 +1,14 @@
 {
   "name": "ModalViewportProps",
-  "description": "Missing description.",
+  "description": "The viewport container that centers the modal within the visible area of the screen.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

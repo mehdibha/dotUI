@@ -1,5 +1,5 @@
 /**
- * Missing description.
+ * A badge displays a short label or status that describes an item.
  */
 export interface BadgeProps extends React.ComponentProps<'span'> {
   /**

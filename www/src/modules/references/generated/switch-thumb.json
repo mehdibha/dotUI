@@ -2,5 +2,13 @@
   "name": "SwitchThumbProps",
   "description": "The visual thumb of a switch.",
   "extendsElement": "span",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

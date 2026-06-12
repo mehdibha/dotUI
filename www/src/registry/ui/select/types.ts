@@ -20,7 +20,7 @@ export interface SelectValueProps<
 > extends SelectPrimitives.SelectValueProps<T> {}
 
 /**
- * Missing description.
+ * Contains the list of options, displayed in a popover when the select is open.
  */
 export interface SelectContentProps<T extends object>
   extends

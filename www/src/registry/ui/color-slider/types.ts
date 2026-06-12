@@ -9,7 +9,7 @@ export interface ColorSliderProps extends React.ComponentProps<
 > {}
 
 /**
- * Missing description.
+ * A color slider control is the interactive track along which the thumb can be dragged.
  */
 export interface ColorSliderControlProps extends React.ComponentProps<
   typeof SliderPrimitives.SliderTrack

@@ -1,6 +1,14 @@
 {
   "name": "CardActionProps",
-  "description": "Missing description.",
+  "description": "An action displayed at the end of the card header, such as a button or link.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

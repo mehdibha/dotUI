@@ -17,19 +17,19 @@ export interface DialogContentProps extends React.ComponentProps<
 > {}
 
 /**
- * Missing description.
+ * The header of the dialog. Contains the title and description.
  */
 export interface DialogHeaderProps extends React.ComponentProps<'header'> {}
 
 /**
- * Missing description.
+ * The heading that labels the dialog.
  */
 export interface DialogTitleProps extends React.ComponentProps<
   typeof HeadingPrimitives.Heading
 > {}
 
 /**
- * Missing description.
+ * Text that describes the purpose of the dialog.
  */
 export interface DialogDescriptionProps extends Omit<
   React.ComponentProps<typeof TextPrimitives.Text>,
@@ -37,7 +37,7 @@ export interface DialogDescriptionProps extends Omit<
 > {}
 
 /**
- * Missing description.
+ * The main content area of the dialog.
  */
 export interface DialogBodyProps extends React.ComponentProps<'div'> {
   /**
@@ -47,6 +47,6 @@ export interface DialogBodyProps extends React.ComponentProps<'div'> {
 }
 
 /**
- * Missing description.
+ * The footer of the dialog. Contains the dialog's actions.
  */
 export interface DialogFooterProps extends React.ComponentProps<'footer'> {}

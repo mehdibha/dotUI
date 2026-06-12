@@ -13,7 +13,8 @@ type CommonProps =
   | 'shouldCloseOnInteractOutside'
 
 /**
- * Missing description.
+ * An overlay renders its content in a modal, popover, or drawer, switching
+ * between types based on screen size.
  */
 export interface OverlayProps extends Pick<ModalProps, CommonProps> {
   children?: React.ReactNode

@@ -13,6 +13,6 @@ export interface ProgressBarProps extends React.ComponentProps<
 export interface ProgressBarControlProps extends React.ComponentProps<'div'> {}
 
 /**
- * Missing description.
+ * A progress bar output displays the current value of the progress bar as text.
  */
 export interface ProgressBarOutputProps extends React.ComponentProps<'span'> {}
