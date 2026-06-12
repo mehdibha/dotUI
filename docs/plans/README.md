@@ -8,10 +8,14 @@ Audit-generated, executor-ready implementation plans. One date-prefixed folder p
 |---|---|---|---|
 | [2026-06-11-repo-audit/](2026-06-11-repo-audit/README.md) | Whole repo — publisher publishables, CI/verification baseline, builder perf, edge hardening, dependency hygiene, colors exports | `0da0afa3` | 6 |
 | [2026-06-11-colors-audit/](2026-06-11-colors-audit/README.md) | `packages/colors` kernel + its `www/src/registry/theme` consumption boundary — spec recovery, characterization, open algorithm registry, kernel dark mode, new color axes | `05b44151` | 9 |
+| [2026-06-12-docs-module-audit/](2026-06-12-docs-module-audit/README.md) | Docs module — `modules/docs` + `modules/references` + `content/docs` + docs/llms routes + api-docs-builder: typeLinks payload/determinism, fail-loud MDX pipeline, fumadocs security bump, legacy engine retirement, shiki deploy weight, content fixes | `e0ca5b16` | 7 |
 
 ## Cross-audit notes
 
 - repo-audit 005 (dependency hygiene) is the "separate task" the colors-audit index points at for the www dependency vulnerabilities it ruled out of scope.
+- docs-audit 003 (fumadocs bump → patched next) executes the fumadocs slice of repo-audit 005's "clear audit highs" step — whichever runs first, update the other's status notes; the rest of 005 (seroval/devtools chain, puppeteer, RAC patch) is untouched by it.
+- docs-audit 001 finally makes `pnpm build:references` safe to run (machine-independent output) — it retires the standing "generator drift rewrites ~121 files" caveat in CLAUDE.md once landed (update CLAUDE.md's warning then).
+- The docs-audit's evidence base includes `docs/research/2026-06-11-docs-build-memory.md` (build-memory + typeLinks measurements), rescued from an uncommitted worktree on 2026-06-12 — ensure it's committed.
 - repo-audit 006 (export `toSrgb`/`toHex`) touches `packages/colors/src/shared/color.ts` and `index.ts` but is purely additive — it changes no generated output, so it is safe before, between, or after the colors-audit sequence (whose plans gate on byte-identical default output).
 - Both audits' rejected-findings sections are binding for future audits: check them before re-investigating an area.
 
