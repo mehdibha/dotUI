@@ -10,19 +10,5 @@
       },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     }
-  },
-  "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the slider is disabled."
-    },
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the slider track is currently hovered with a mouse."
-    },
-    "orientation": {
-      "selector": "[data-orientation=\"horizontal | vertical\"]",
-      "description": "The orientation of the slider."
-    }
   }
 }

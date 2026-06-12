@@ -262,14 +262,17 @@
   "renderProps": {
     "isEmpty": {
       "selector": "[data-empty]",
+      "tailwind": "empty:",
       "description": "Whether the tag list has no items and should display its empty state."
     },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the tag list is currently focused."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the tag list is currently keyboard focused."
     }
   },

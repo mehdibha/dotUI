@@ -704,6 +704,38 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "isEmpty": {
+      "selector": "[data-empty]",
+      "tailwind": "empty:",
+      "description": "Whether the listbox has no items and should display its empty state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the listbox is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the listbox is currently keyboard focused."
+    },
+    "isDropTarget": {
+      "selector": "[data-drop-target]",
+      "tailwind": "drop-target:",
+      "description": "Whether the listbox is currently the active drop target."
+    },
+    "layout": {
+      "selector": "[data-layout=\"stack | grid\"]",
+      "tailwind": "layout-stack: | layout-grid:",
+      "description": "Whether the items are arranged in a stack or grid."
+    },
+    "orientation": {
+      "selector": "[data-orientation=\"vertical | horizontal\"]",
+      "tailwind": "orientation-vertical: | orientation-horizontal:",
+      "description": "The primary orientation of the items."
+    }
+  },
   "typeLinks": {
     "@types/react/index.d.ts:ReactPortal": {
       "type": "interface",

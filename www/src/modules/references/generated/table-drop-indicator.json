@@ -145,6 +145,13 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "isDropTarget": {
+      "selector": "[data-drop-target]",
+      "tailwind": "drop-target:",
+      "description": "Whether the drop indicator is currently the active drop target."
+    }
+  },
   "typeLinks": {
     "DropIndicatorRenderProps": {
       "type": "interface",

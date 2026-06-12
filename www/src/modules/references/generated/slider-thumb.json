@@ -484,25 +484,30 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the thumb is disabled."
-    },
     "isDragging": {
       "selector": "[data-dragging]",
+      "tailwind": "dragging:",
       "description": "Whether this thumb is currently being dragged."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the thumb is currently hovered with a mouse."
     },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the thumb is currently focused."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the thumb is keyboard focused."
     },
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the thumb is currently hovered with a mouse."
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the thumb is disabled."
     }
   },
   "typeLinks": {
