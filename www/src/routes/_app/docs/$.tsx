@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
-import { staticFunctionMiddleware } from '@tanstack/start-static-server-functions'
+import { setResponseHeader } from '@tanstack/react-start/server'
 import { findNeighbour } from 'fumadocs-core/page-tree'
 
 import { siteConfig } from '@/config/site'
@@ -20,8 +20,8 @@ import browserCollections from '@/.source/browser'
 
 export const Route = createFileRoute('/_app/docs/$')({
   component: DocsPage,
-  // Docs content is immutable until the next build/deploy (prerendered via
-  // staticFunctionMiddleware), so never background-revalidate it on re-match.
+  // Docs content only changes with a build/deploy (Vercel purges the CDN cache
+  // on deploy), so never background-revalidate it on re-match.
   staleTime: Infinity,
   loader: async ({ params }) => {
     const slugs = params._splat?.split('/') ?? []
@@ -71,7 +71,6 @@ export const Route = createFileRoute('/_app/docs/$')({
 })
 
 const serverLoader = createServerFn({ method: 'GET' })
-  .middleware([staticFunctionMiddleware])
   .inputValidator((slugs: string[]) => slugs)
   .handler(async ({ data: slugs }) => {
     // Try to get the page, fallback to index for empty slugs
@@ -80,6 +79,13 @@ const serverLoader = createServerFn({ method: 'GET' })
       page = docsSource.getPage(['index'])
     }
     if (!page) throw notFound()
+
+    // Success path only (don't cache not-found responses): content is baked
+    // into the build, so let Vercel's CDN cache it until the next deploy purge.
+    setResponseHeader(
+      'Cache-Control',
+      'public, max-age=0, must-revalidate, s-maxage=31536000',
+    )
 
     const pageTree = docsSource.getPageTree()
     const { previous, next } = findNeighbour(pageTree, page.url)
