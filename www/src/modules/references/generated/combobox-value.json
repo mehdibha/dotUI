@@ -27,7 +27,7 @@
                       "type": "application",
                       "base": {
                         "type": "link",
-                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
+                        "id": "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
                         "name": "ComboBoxValueRenderProps"
                       },
                       "typeParameters": [
@@ -80,7 +80,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-ComboBoxValue'"
     },
     "placeholder": {
@@ -104,7 +104,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
+              "id": "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
               "name": "ComboBoxValueRenderProps"
             },
             "typeParameters": [
@@ -120,7 +120,7 @@
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "style": {
       "type": "CSSProperties | (values: ComboBoxValueRenderProps<T>) => CSSProperties",
@@ -148,7 +148,7 @@
                       "type": "application",
                       "base": {
                         "type": "link",
-                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
+                        "id": "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
                         "name": "ComboBoxValueRenderProps"
                       },
                       "typeParameters": [
@@ -201,7 +201,7 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
     "render": {
       "type": "DOMRenderFunction<\"div\", ComboBoxValueRenderProps<T>>",
@@ -220,19 +220,14 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "application",
                 "base": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
+                  "id": "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
                   "name": "ComboBoxValueRenderProps"
                 },
                 "typeParameters": [
@@ -250,7 +245,7 @@
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "aria-activedescendant": {
       "type": "string",
@@ -318,37 +313,22 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "mixed"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "mixed"
-              }
-            ]
           }
         ]
       },
@@ -401,73 +381,38 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "date"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "location"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "page"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "step"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "time"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "time"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "step"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "page"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "location"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "date"
-              }
-            ]
           }
         ]
       },
@@ -581,73 +526,38 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "dialog"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "grid"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "listbox"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "menu"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tree"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "dialog"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "menu"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "listbox"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "tree"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "grid"
-              }
-            ]
           }
         ]
       },
@@ -669,46 +579,26 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "grammar"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "spelling"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "grammar"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "spelling"
-              }
-            ]
           }
         ]
       },
@@ -844,37 +734,22 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "mixed"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "mixed"
-              }
-            ]
           }
         ]
       },
@@ -1115,9 +990,9 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps": {
+    "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
+      "id": "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxValueRenderProps",
       "name": "ComboBoxValueRenderProps",
       "extends": [],
       "properties": {
@@ -1175,7 +1050,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxState",
+              "id": "react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxState",
               "name": "ComboBoxState"
             },
             "typeParameters": [
@@ -1210,16 +1085,16 @@
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxState": {
+    "react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxState": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxState",
+      "id": "react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxState",
       "name": "ComboBoxState",
       "extends": [
         {
           "type": "application",
           "base": {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/list/useListState.d.ts:ListState",
+            "id": "react-stately/dist/types/src/list/useListState.d.ts:ListState",
             "name": "ListState"
           },
           "typeParameters": [
@@ -1233,12 +1108,12 @@
         },
         {
           "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/overlays/useOverlayTriggerState.d.ts:OverlayTriggerState",
+          "id": "react-stately/dist/types/src/overlays/useOverlayTriggerState.d.ts:OverlayTriggerState",
           "name": "OverlayTriggerState"
         },
         {
           "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/form/useFormValidationState.d.ts:FormValidationState",
+          "id": "react-stately/dist/types/src/form/useFormValidationState.d.ts:FormValidationState",
           "name": "FormValidationState"
         }
       ],
@@ -1264,7 +1139,7 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Collection",
+              "id": "@react-types/shared/src/collections.d.ts:Collection",
               "name": "Collection"
             },
             "typeParameters": [
@@ -1272,7 +1147,7 @@
                 "type": "application",
                 "base": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+                  "id": "@react-types/shared/src/collections.d.ts:Node",
                   "name": "Node"
                 },
                 "typeParameters": [
@@ -1381,8 +1256,7 @@
           "value": {
             "type": "application",
             "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.collection.d.ts:Set",
+              "type": "identifier",
               "name": "Set"
             },
             "typeParameters": [
@@ -1401,7 +1275,7 @@
           "name": "displayValidation",
           "value": {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+            "id": "@react-types/shared/src/inputs.d.ts:ValidationResult",
             "name": "ValidationResult"
           },
           "optional": false,
@@ -1415,25 +1289,15 @@
             "type": "union",
             "elements": [
               {
+                "type": "stringLiteral",
+                "value": "first"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "last"
+              },
+              {
                 "type": "null"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "first"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "last"
-                  }
-                ]
               }
             ]
           },
@@ -1484,28 +1348,18 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "stringLiteral",
+                      "value": "first"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "last"
+                    },
+                    {
                       "type": "null"
                     },
                     {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "first"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "last"
-                        }
-                      ]
                     }
                   ]
                 },
@@ -1519,34 +1373,19 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "stringLiteral",
+                      "value": "focus"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "input"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "manual"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "input"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "focus"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "manual"
-                        }
-                      ]
                     }
                   ]
                 },
@@ -1567,7 +1406,7 @@
           "name": "realtimeValidation",
           "value": {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+            "id": "@react-types/shared/src/inputs.d.ts:ValidationResult",
             "name": "ValidationResult"
           },
           "optional": false,
@@ -1615,7 +1454,7 @@
                 "type": "application",
                 "base": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+                  "id": "@react-types/shared/src/collections.d.ts:Node",
                   "name": "Node"
                 },
                 "typeParameters": [
@@ -1640,7 +1479,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/collections.d.ts:Node",
+                "id": "@react-types/shared/src/collections.d.ts:Node",
                 "name": "Node"
               },
               "typeParameters": [
@@ -1681,7 +1520,7 @@
           "name": "selectionManager",
           "value": {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/selection/SelectionManager.d.ts:SelectionManager",
+            "id": "react-stately/dist/types/src/selection/SelectionManager.d.ts:SelectionManager",
             "name": "SelectionManager"
           },
           "optional": false,
@@ -1850,28 +1689,18 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "stringLiteral",
+                      "value": "first"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "last"
+                    },
+                    {
                       "type": "null"
                     },
                     {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "first"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "last"
-                        }
-                      ]
                     }
                   ]
                 },
@@ -1885,34 +1714,19 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "stringLiteral",
+                      "value": "focus"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "input"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "manual"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "input"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "focus"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "manual"
-                        }
-                      ]
                     }
                   ]
                 },
@@ -1939,7 +1753,7 @@
                 "name": "result",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:ValidationResult",
+                  "id": "@react-types/shared/src/inputs.d.ts:ValidationResult",
                   "name": "ValidationResult"
                 },
                 "optional": false,
@@ -1952,7 +1766,7 @@
             "typeParameters": []
           },
           "optional": false,
-          "description": "Updates the current validation result. Not displayed to the user until `commitValidation` is called."
+          "description": "Updates the current validation result. Not displayed to the user until `commitValidation` is\ncalled."
         },
         "value": {
           "type": "property",

@@ -125,37 +125,22 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "mixed"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "mixed"
-              }
-            ]
           }
         ]
       },
@@ -208,73 +193,38 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "date"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "location"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "page"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "step"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "time"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "time"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "step"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "page"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "location"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "date"
-              }
-            ]
           }
         ]
       },
@@ -388,73 +338,38 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "dialog"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "grid"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "listbox"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "menu"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tree"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "dialog"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "menu"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "listbox"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "tree"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "grid"
-              }
-            ]
           }
         ]
       },
@@ -476,46 +391,26 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "grammar"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "spelling"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "grammar"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "spelling"
-              }
-            ]
           }
         ]
       },
@@ -651,37 +546,22 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "mixed"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "mixed"
-              }
-            ]
           }
         ]
       },
@@ -908,7 +788,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
+                  "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
                   "name": "OTPFieldRootState"
                 },
                 "optional": false,
@@ -1139,7 +1019,7 @@
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
+                "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
                 "name": "OTPFieldRootState"
               }
             ]
@@ -1194,7 +1074,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
+                  "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
                   "name": "OTPFieldRootState"
                 },
                 "optional": false,
@@ -1239,14 +1119,14 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState": {
+    "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
+      "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
       "name": "OTPFieldRootState",
       "extends": [
         {
           "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@base-ui+react@1.4.1_@types+react@19.2.2_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/@base-ui/react/esm/field/root/FieldRoot.d.ts:FieldRootState",
+          "id": "@base-ui/react/esm/field/root/FieldRoot.d.ts:FieldRootState",
           "name": "FieldRootState"
         }
       ],

@@ -18,7 +18,7 @@
         "type": "identifier",
         "name": "Element"
       },
-      "description": "The container element in which the overlay portal will be placed. This may have unknown behavior depending on where it is portalled to.",
+      "description": "The container element in which the overlay portal will be placed. This may have unknown\nbehavior depending on where it is portalled to.",
       "default": "document.body"
     },
     "aria-describedby": {
@@ -35,7 +35,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
     },
     "aria-label": {
       "type": "string",
@@ -94,7 +94,7 @@
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "className": {
       "type": "string | (values: TooltipRenderProps) => string",
@@ -127,7 +127,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-Tooltip'"
     },
     "containerPadding": {
@@ -241,24 +241,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tooltip.d.ts:TooltipRenderProps",
+                "id": "react-aria-components/dist/types/src/Tooltip.d.ts:TooltipRenderProps",
                 "name": "TooltipRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "shouldFlip": {
       "type": "boolean",
@@ -302,7 +297,7 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
     "triggerRef": {
       "type": "RefObject<Element | null>",
@@ -336,112 +331,10 @@
           }
         ]
       },
-      "description": "The ref for the element which the tooltip positions itself with respect to.\n\nWhen used within a TooltipTrigger this is set automatically. It is only required when used standalone."
+      "description": "The ref for the element which the tooltip positions itself with respect to.\n\nWhen used within a TooltipTrigger this is set automatically. It is only required when used\nstandalone."
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tooltip.d.ts:TooltipRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Tooltip.d.ts:TooltipRenderProps",
-      "name": "TooltipRenderProps",
-      "extends": [],
-      "properties": {
-        "isEntering": {
-          "type": "property",
-          "name": "isEntering",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the tooltip is currently entering. Use this to apply animations."
-        },
-        "isExiting": {
-          "type": "property",
-          "name": "isExiting",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the tooltip is currently exiting. Use this to apply animations."
-        },
-        "placement": {
-          "type": "property",
-          "name": "placement",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "center"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "bottom"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "top"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "left"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "right"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The placement of the tooltip relative to the trigger."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/tooltip/useTooltipTriggerState.d.ts:TooltipTriggerState",
-            "name": "TooltipTriggerState"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the tooltip."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
     "TooltipRenderProps": {
       "type": "interface",
       "name": "TooltipRenderProps",
@@ -489,6 +382,83 @@
           "description": "State of the tooltip."
         }
       }
+    },
+    "react-aria-components/dist/types/src/Tooltip.d.ts:TooltipRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/Tooltip.d.ts:TooltipRenderProps",
+      "name": "TooltipRenderProps",
+      "extends": [],
+      "properties": {
+        "isEntering": {
+          "type": "property",
+          "name": "isEntering",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tooltip is currently entering. Use this to apply animations."
+        },
+        "isExiting": {
+          "type": "property",
+          "name": "isExiting",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the tooltip is currently exiting. Use this to apply animations."
+        },
+        "placement": {
+          "type": "property",
+          "name": "placement",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "bottom"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "center"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "left"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "right"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "top"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The placement of the tooltip relative to the trigger."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "link",
+            "id": "react-stately/dist/types/src/tooltip/useTooltipTriggerState.d.ts:TooltipTriggerState",
+            "name": "TooltipTriggerState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the tooltip."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

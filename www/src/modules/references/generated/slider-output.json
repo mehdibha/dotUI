@@ -87,17 +87,12 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "output"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "output"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Slider.d.ts:SliderRenderProps",
+                "id": "react-aria-components/dist/types/src/Slider.d.ts:SliderRenderProps",
                 "name": "SliderRenderProps"
               }
             ]
@@ -143,49 +138,6 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Slider.d.ts:SliderRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Slider.d.ts:SliderRenderProps",
-      "name": "SliderRenderProps",
-      "extends": [],
-      "properties": {
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the slider is disabled."
-        },
-        "orientation": {
-          "type": "property",
-          "name": "orientation",
-          "value": {
-            "type": "identifier",
-            "name": "Orientation"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The orientation of the slider."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/slider/useSliderState.d.ts:Slider.State",
-            "name": "Slider.State"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the slider."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
     "SliderRenderProps": {
       "type": "interface",
       "name": "SliderRenderProps",
@@ -223,6 +175,49 @@
           "description": "State of the slider."
         }
       }
+    },
+    "react-aria-components/dist/types/src/Slider.d.ts:SliderRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/Slider.d.ts:SliderRenderProps",
+      "name": "SliderRenderProps",
+      "extends": [],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the slider is disabled."
+        },
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the slider."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "link",
+            "id": "react-stately/dist/types/src/slider/useSliderState.d.ts:Slider.State",
+            "name": "Slider.State"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the slider."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

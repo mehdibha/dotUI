@@ -68,37 +68,22 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "mixed"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "mixed"
-              }
-            ]
           }
         ]
       },
@@ -151,73 +136,38 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "date"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "location"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "page"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "step"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "time"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "time"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "step"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "page"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "location"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "date"
-              }
-            ]
           }
         ]
       },
@@ -331,73 +281,38 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "dialog"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "grid"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "listbox"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "menu"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tree"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "dialog"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "menu"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "listbox"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "tree"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "grid"
-              }
-            ]
           }
         ]
       },
@@ -419,46 +334,26 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "grammar"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "spelling"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "grammar"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "spelling"
-              }
-            ]
           }
         ]
       },
@@ -594,37 +489,22 @@
         "type": "union",
         "elements": [
           {
+            "type": "stringLiteral",
+            "value": "false"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "mixed"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "true"
+          },
+          {
             "type": "undefined"
           },
           {
             "type": "boolean"
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "true"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "false"
-              }
-            ]
-          },
-          {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "mixed"
-              }
-            ]
           }
         ]
       },
@@ -880,13 +760,8 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "label"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "label"
               },
               {
                 "type": "undefined"
@@ -895,7 +770,7 @@
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     }
   }
 }

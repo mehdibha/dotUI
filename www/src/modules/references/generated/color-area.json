@@ -16,7 +16,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
     },
     "aria-label": {
       "type": "string",
@@ -66,7 +66,7 @@
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "className": {
       "type": "string | (values: ColorAreaRenderProps) => string",
@@ -99,7 +99,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-ColorArea'"
     },
     "colorSpace": {
@@ -109,7 +109,7 @@
         "type": "identifier",
         "name": "ColorSpace"
       },
-      "description": "The color space that the color area operates in. The `xChannel` and `yChannel` must be in this color space.\nIf not provided, this defaults to the color space of the `color` or `defaultColor` value."
+      "description": "The color space that the color area operates in. The `xChannel` and `yChannel` must be in this\ncolor space. If not provided, this defaults to the color space of the `color` or `defaultColor`\nvalue."
     },
     "defaultValue": {
       "type": "Color | string",
@@ -125,7 +125,7 @@
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
+            "id": "react-stately/dist/types/src/color/types.d.ts:Color",
             "name": "Color"
           }
         ]
@@ -146,7 +146,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "isDisabled": {
       "type": "boolean",
@@ -223,24 +223,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps",
+                "id": "react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps",
                 "name": "ColorAreaRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "slot": {
       "type": "null | string",
@@ -259,7 +254,7 @@
           }
         ]
       },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
     },
     "style": {
       "type": "CSSProperties | (values: ColorAreaRenderProps) => CSSProperties",
@@ -294,7 +289,7 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
     "value": {
       "type": "Color | string",
@@ -310,7 +305,7 @@
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
+            "id": "react-stately/dist/types/src/color/types.d.ts:Color",
             "name": "Color"
           }
         ]
@@ -332,7 +327,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The name of the x channel input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+      "description": "The name of the x channel input element, used when submitting an HTML form. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
     "yChannel": {
       "type": "ColorChannel",
@@ -349,7 +344,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The name of the y channel input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+      "description": "The name of the y channel input element, used when submitting an HTML form. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     }
   },
   "renderProps": {
@@ -359,9 +354,36 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps": {
+    "ColorAreaRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps",
+      "name": "ColorAreaRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the color area is disabled."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "identifier",
+            "name": "ColorArea.State"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the color area."
+        }
+      }
+    },
+    "react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/ColorArea.d.ts:ColorAreaRenderProps",
       "name": "ColorAreaRenderProps",
       "extends": [],
       "properties": {
@@ -380,7 +402,7 @@
           "name": "state",
           "value": {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/useColorAreaState.d.ts:ColorArea.State",
+            "id": "react-stately/dist/types/src/color/useColorAreaState.d.ts:ColorArea.State",
             "name": "ColorArea.State"
           },
           "optional": false,
@@ -391,9 +413,9 @@
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color": {
+    "react-stately/dist/types/src/color/types.d.ts:Color": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
+      "id": "react-stately/dist/types/src/color/types.d.ts:Color",
       "name": "Color",
       "extends": [],
       "properties": {
@@ -405,7 +427,7 @@
             "parameters": [],
             "return": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
+              "id": "react-stately/dist/types/src/color/types.d.ts:Color",
               "name": "Color"
             },
             "typeParameters": []
@@ -465,8 +487,7 @@
               }
             ],
             "return": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
+              "type": "identifier",
               "name": "NumberFormatOptions"
             },
             "typeParameters": []
@@ -527,7 +548,7 @@
             ],
             "return": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
+              "id": "react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
               "name": "ColorChannelRange"
             },
             "typeParameters": []
@@ -646,79 +667,39 @@
                         "type": "union",
                         "elements": [
                           {
+                            "type": "stringLiteral",
+                            "value": "alpha"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "blue"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "brightness"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "green"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "hue"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "lightness"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "red"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "saturation"
+                          },
+                          {
                             "type": "undefined"
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "hue"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "saturation"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "brightness"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "lightness"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "red"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "green"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "blue"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "alpha"
-                              }
-                            ]
                           }
                         ]
                       },
@@ -733,79 +714,39 @@
                         "type": "union",
                         "elements": [
                           {
+                            "type": "stringLiteral",
+                            "value": "alpha"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "blue"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "brightness"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "green"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "hue"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "lightness"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "red"
+                          },
+                          {
+                            "type": "stringLiteral",
+                            "value": "saturation"
+                          },
+                          {
                             "type": "undefined"
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "hue"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "saturation"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "brightness"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "lightness"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "red"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "green"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "blue"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "union",
-                            "elements": [
-                              {
-                                "type": "stringLiteral",
-                                "value": "alpha"
-                              }
-                            ]
                           }
                         ]
                       },
@@ -871,7 +812,7 @@
             ],
             "return": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
+              "id": "react-stately/dist/types/src/color/types.d.ts:Color",
               "name": "Color"
             },
             "typeParameters": []
@@ -906,88 +847,43 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "stringLiteral",
+                      "value": "css"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "hex"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "hexa"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "hsb"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "hsba"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "hsl"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "hsla"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "rgb"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "rgba"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hex"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "rgb"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsl"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsb"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hexa"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "rgba"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsla"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "hsba"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "css"
-                        }
-                      ]
                     }
                   ]
                 },
@@ -1031,7 +927,7 @@
             ],
             "return": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:Color",
+              "id": "react-stately/dist/types/src/color/types.d.ts:Color",
               "name": "Color"
             },
             "typeParameters": []
@@ -1043,9 +939,9 @@
       "typeParameters": [],
       "description": "Represents a color value."
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange": {
+    "react-stately/dist/types/src/color/types.d.ts:ColorChannelRange": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
+      "id": "react-stately/dist/types/src/color/types.d.ts:ColorChannelRange",
       "name": "ColorChannelRange",
       "extends": [],
       "properties": {
@@ -1092,550 +988,6 @@
       },
       "typeParameters": [],
       "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es5.d.ts:NumberFormatOptions",
-      "name": "NumberFormatOptions",
-      "extends": [],
-      "properties": {
-        "compactDisplay": {
-          "type": "property",
-          "name": "compactDisplay",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "short"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "long"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "currency": {
-          "type": "property",
-          "name": "currency",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "currencyDisplay": {
-          "type": "property",
-          "name": "currencyDisplay",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "symbol"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "code"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "name"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "narrowSymbol"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "currencySign": {
-          "type": "property",
-          "name": "currencySign",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "standard"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "accounting"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "localeMatcher": {
-          "type": "property",
-          "name": "localeMatcher",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "lookup"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "best fit"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "maximumFractionDigits": {
-          "type": "property",
-          "name": "maximumFractionDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "maximumSignificantDigits": {
-          "type": "property",
-          "name": "maximumSignificantDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "minimumFractionDigits": {
-          "type": "property",
-          "name": "minimumFractionDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "minimumIntegerDigits": {
-          "type": "property",
-          "name": "minimumIntegerDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "minimumSignificantDigits": {
-          "type": "property",
-          "name": "minimumSignificantDigits",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "notation": {
-          "type": "property",
-          "name": "notation",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "compact"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "standard"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "scientific"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "engineering"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "numberingSystem": {
-          "type": "property",
-          "name": "numberingSystem",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "signDisplay": {
-          "type": "property",
-          "name": "signDisplay",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "auto"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "never"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "always"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "exceptZero"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "style": {
-          "type": "property",
-          "name": "style",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "decimal"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "percent"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "currency"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "unit"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "unit": {
-          "type": "property",
-          "name": "unit",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "unitDisplay": {
-          "type": "property",
-          "name": "unitDisplay",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "narrow"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "short"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "long"
-                  }
-                ]
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "useGrouping": {
-          "type": "property",
-          "name": "useGrouping",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "boolean"
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "ColorAreaRenderProps": {
-      "type": "interface",
-      "name": "ColorAreaRenderProps",
-      "properties": {
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the color area is disabled."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "identifier",
-            "name": "ColorArea.State"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the color area."
-        }
-      }
     }
   }
 }

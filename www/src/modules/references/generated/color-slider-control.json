@@ -109,7 +109,7 @@
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "className": {
       "type": "string | (values: SliderTrackRenderProps) => string",
@@ -142,7 +142,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-SliderTrack'"
     },
     "render": {
@@ -162,24 +162,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Slider.d.ts:SliderTrackRenderProps",
+                "id": "react-aria-components/dist/types/src/Slider.d.ts:SliderTrackRenderProps",
                 "name": "SliderTrackRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "style": {
       "type": "CSSProperties | (values: SliderTrackRenderProps) => CSSProperties",
@@ -214,69 +209,10 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Slider.d.ts:SliderTrackRenderProps": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Slider.d.ts:SliderTrackRenderProps",
-      "name": "SliderTrackRenderProps",
-      "extends": [
-        {
-          "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Slider.d.ts:SliderRenderProps",
-          "name": "SliderRenderProps"
-        }
-      ],
-      "properties": {
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the slider is disabled."
-        },
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the slider track is currently hovered with a mouse."
-        },
-        "orientation": {
-          "type": "property",
-          "name": "orientation",
-          "value": {
-            "type": "identifier",
-            "name": "Orientation"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "The orientation of the slider."
-        },
-        "state": {
-          "type": "property",
-          "name": "state",
-          "value": {
-            "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/slider/useSliderState.d.ts:SliderState",
-            "name": "SliderState"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "State of the slider."
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
     "HoverEvent": {
       "type": "interface",
       "name": "HoverEvent",
@@ -363,6 +299,65 @@
           "description": "State of the slider."
         }
       }
+    },
+    "react-aria-components/dist/types/src/Slider.d.ts:SliderTrackRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/Slider.d.ts:SliderTrackRenderProps",
+      "name": "SliderTrackRenderProps",
+      "extends": [
+        {
+          "type": "link",
+          "id": "react-aria-components/dist/types/src/Slider.d.ts:SliderRenderProps",
+          "name": "SliderRenderProps"
+        }
+      ],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the slider is disabled."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the slider track is currently hovered with a mouse."
+        },
+        "orientation": {
+          "type": "property",
+          "name": "orientation",
+          "value": {
+            "type": "identifier",
+            "name": "Orientation"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The orientation of the slider."
+        },
+        "state": {
+          "type": "property",
+          "name": "state",
+          "value": {
+            "type": "link",
+            "id": "react-stately/dist/types/src/slider/useSliderState.d.ts:SliderState",
+            "name": "SliderState"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "State of the slider."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
     }
   }
 }

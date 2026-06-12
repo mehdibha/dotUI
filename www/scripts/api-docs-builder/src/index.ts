@@ -88,21 +88,25 @@ async function run(options: RunOptions) {
   console.log(`\nFound ${propsExports.length} Props interfaces\n`)
 
   let componentCount = 0
+  const writtenFiles = new Set<string>()
 
   // Generate JSON files
   for (const exportNode of propsExports) {
     try {
       const componentRef = await formatComponentData(exportNode, parserContext)
-      const json = `${JSON.stringify(componentRef, null, '\t')}\n`
+      const json = `${JSON.stringify(componentRef, null, 2)}\n`
 
       // Remove "Props" suffix for filename
       const baseName = exportNode.name.replace(/Props$/, '')
-      const outputPath = path.join(OUTPUT_DIR, `${kebabCase(baseName)}.json`)
+      const fileName = `${kebabCase(baseName)}.json`
+      const outputPath = path.join(OUTPUT_DIR, fileName)
 
       fs.writeFileSync(outputPath, json)
-      console.log(`  Written: ${kebabCase(baseName)}.json`)
+      writtenFiles.add(fileName)
+      console.log(`  Written: ${fileName}`)
       componentCount++
     } catch (error) {
+      errorCount += 1
       console.error(
         `  ⛔ Error formatting ${exportNode.name}: ${(error as Error).message}`,
       )
@@ -110,6 +114,25 @@ async function run(options: RunOptions) {
   }
 
   console.log(`\n✅ Generated ${componentCount} reference files`)
+
+  // On a full (unscoped) run, prune files that no longer have a source export.
+  // Skipped when errors occurred so a failed generation can't delete valid docs.
+  if (!options.files?.length) {
+    if (errorCount > 0) {
+      console.log('⚠️  Skipping prune of stale files because of errors above')
+    } else {
+      const staleFiles = fs
+        .readdirSync(OUTPUT_DIR)
+        .filter((file) => file.endsWith('.json') && !writtenFiles.has(file))
+      for (const file of staleFiles) {
+        fs.unlinkSync(path.join(OUTPUT_DIR, file))
+        console.log(`  Pruned: ${file}`)
+      }
+      if (staleFiles.length > 0) {
+        console.log(`🧹 Pruned ${staleFiles.length} stale reference files`)
+      }
+    }
+  }
 
   if (errorCount > 0) {
     console.log(`⚠️  ${errorCount} files had parsing issues (non-fatal)`)
@@ -120,6 +143,9 @@ async function getFilesToProcess(
   options: RunOptions,
   configDir: string,
 ): Promise<string[]> {
+  // Sorted so the checker resolves types in the same order on every machine —
+  // globby returns filesystem order, and union member order in emitted type
+  // strings follows checker resolution order
   if (options.files && options.files.length > 0) {
     const files = await globby(options.files, {
       cwd: configDir,
@@ -132,7 +158,7 @@ async function getFilesToProcess(
       process.exit(1)
     }
 
-    return files
+    return files.sort()
   }
 
   // Default: find all types.ts files in ui folder
@@ -143,7 +169,7 @@ async function getFilesToProcess(
     onlyFiles: true,
   })
 
-  return files
+  return files.sort()
 }
 
 yargs(hideBin(process.argv))

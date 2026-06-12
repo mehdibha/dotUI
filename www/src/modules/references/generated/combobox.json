@@ -14,8 +14,7 @@
           {
             "type": "application",
             "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "type": "identifier",
               "name": "Iterable"
             },
             "typeParameters": [
@@ -45,8 +44,7 @@
           {
             "type": "application",
             "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "type": "identifier",
               "name": "Iterable"
             },
             "typeParameters": [
@@ -92,34 +90,19 @@
                   "type": "union",
                   "elements": [
                     {
+                      "type": "stringLiteral",
+                      "value": "focus"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "input"
+                    },
+                    {
+                      "type": "stringLiteral",
+                      "value": "manual"
+                    },
+                    {
                       "type": "undefined"
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "input"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "focus"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "union",
-                      "elements": [
-                        {
-                          "type": "stringLiteral",
-                          "value": "manual"
-                        }
-                      ]
                     }
                   ]
                 },
@@ -134,7 +117,7 @@
           }
         ]
       },
-      "description": "Method that is called when the open state of the menu changes. Returns the new open state and the action that caused the opening of the menu."
+      "description": "Method that is called when the open state of the menu changes. Returns the new open state and\nthe action that caused the opening of the menu."
     },
     "selectionMode": {
       "type": "M",
@@ -323,7 +306,7 @@
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "disabledKeys": {
       "type": "Iterable<Key>",
@@ -337,8 +320,7 @@
           {
             "type": "application",
             "base": {
-              "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
+              "type": "identifier",
               "name": "Iterable"
             },
             "typeParameters": [
@@ -350,7 +332,7 @@
           }
         ]
       },
-      "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
+      "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise\ninteracted with."
     },
     "isDisabled": {
       "type": "boolean",
@@ -401,13 +383,8 @@
                   ]
                 },
                 "default": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "single"
-                    }
-                  ]
+                  "type": "stringLiteral",
+                  "value": "single"
                 }
               }
             ]
@@ -449,13 +426,8 @@
                   ]
                 },
                 "default": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "stringLiteral",
-                      "value": "single"
-                    }
-                  ]
+                  "type": "stringLiteral",
+                  "value": "single"
                 }
               }
             ]
@@ -503,13 +475,8 @@
                         ]
                       },
                       "default": {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "single"
-                          }
-                        ]
+                        "type": "stringLiteral",
+                        "value": "single"
                       }
                     }
                   ]
@@ -581,7 +548,7 @@
                   "type": "application",
                   "base": {
                     "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
+                    "id": "react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
                     "name": "ComboBoxValidationValue"
                   },
                   "typeParameters": [
@@ -602,13 +569,8 @@
                         ]
                       },
                       "default": {
-                        "type": "union",
-                        "elements": [
-                          {
-                            "type": "stringLiteral",
-                            "value": "single"
-                          }
-                        ]
+                        "type": "stringLiteral",
+                        "value": "single"
                       }
                     }
                   ]
@@ -678,8 +640,7 @@
                   },
                   "typeParameters": [
                     {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "type": "identifier",
                       "name": "HTMLInputElement"
                     }
                   ]
@@ -720,8 +681,7 @@
                   },
                   "typeParameters": [
                     {
-                      "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLInputElement",
+                      "type": "identifier",
                       "name": "HTMLInputElement"
                     }
                   ]
@@ -836,7 +796,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
     },
     "aria-label": {
       "type": "string",
@@ -885,7 +845,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-ComboBox'"
     },
     "defaultFilter": {
@@ -952,7 +912,7 @@
           }
         ]
       },
-      "description": "Whether the text or key of the selected item is submitted as part of an HTML form.\nWhen `allowsCustomValue` is `true`, this option does not apply and the text is always submitted.",
+      "description": "Whether the text or key of the selected item is submitted as part of an HTML form. When\n`allowsCustomValue` is `true`, this option does not apply and the text is always submitted.",
       "default": "'key'"
     },
     "id": {
@@ -961,7 +921,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "name": {
       "type": "string",
@@ -969,7 +929,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The name of the input element, used when submitting an HTML form. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
+      "description": "The name of the input element, used when submitting an HTML form. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
     "render": {
       "type": "DOMRenderFunction<\"div\", ComboBoxRenderProps>",
@@ -988,24 +948,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
+                "id": "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
                 "name": "ComboBoxRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "shouldFocusWrap": {
       "type": "boolean",
@@ -1032,7 +987,7 @@
           }
         ]
       },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
     },
     "style": {
       "type": "CSSProperties | (values: ComboBoxRenderProps) => CSSProperties",
@@ -1067,13 +1022,69 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps": {
+    "ComboBoxRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
+      "name": "ComboBoxRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is disabled."
+        },
+        "isInvalid": {
+          "type": "property",
+          "name": "isInvalid",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is invalid."
+        },
+        "isOpen": {
+          "type": "property",
+          "name": "isOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is currently open."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is read only."
+        },
+        "isRequired": {
+          "type": "property",
+          "name": "isRequired",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the combobox is required."
+        }
+      }
+    },
+    "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps": {
+      "type": "interface",
+      "id": "react-aria-components/dist/types/src/ComboBox.d.ts:ComboBoxRenderProps",
       "name": "ComboBoxRenderProps",
       "extends": [],
       "properties": {
@@ -1131,9 +1142,9 @@
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue": {
+    "react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
+      "id": "react-stately/dist/types/src/combobox/useComboBoxState.d.ts:ComboBoxValidationValue",
       "name": "ComboBoxValidationValue",
       "extends": [],
       "properties": {
@@ -1199,235 +1210,6 @@
       },
       "typeParameters": [],
       "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterable",
-      "name": "Iterable",
-      "extends": [],
-      "properties": {
-        "__@iterator@37": {
-          "type": "method",
-          "name": "__@iterator@37",
-          "value": {
-            "type": "function",
-            "parameters": [],
-            "return": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
-                "name": "Iterator"
-              },
-              "typeParameters": [
-                {
-                  "type": "typeParameter",
-                  "name": "T",
-                  "constraint": {
-                    "type": "object"
-                  },
-                  "default": null
-                }
-              ]
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator": {
-      "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.es2015.iterable.d.ts:Iterator",
-      "name": "Iterator",
-      "extends": [],
-      "properties": {
-        "next": {
-          "type": "method",
-          "name": "next",
-          "value": {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "__0",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "tuple",
-                      "elements": []
-                    },
-                    {
-                      "type": "tuple",
-                      "elements": [
-                        {
-                          "type": "identifier",
-                          "name": "any"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": true
-              }
-            ],
-            "return": {
-              "type": "application",
-              "base": {
-                "type": "identifier",
-                "name": "IteratorResult"
-              },
-              "typeParameters": [
-                {
-                  "type": "typeParameter",
-                  "name": "T",
-                  "constraint": {
-                    "type": "identifier",
-                    "name": "object"
-                  },
-                  "default": null
-                }
-              ]
-            },
-            "typeParameters": []
-          },
-          "optional": false,
-          "description": ""
-        },
-        "return": {
-          "type": "property",
-          "name": "return",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "value",
-                    "value": {
-                      "type": "identifier",
-                      "name": "any"
-                    },
-                    "optional": true,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "IteratorResult<T, any>"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        },
-        "throw": {
-          "type": "property",
-          "name": "throw",
-          "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "undefined"
-              },
-              {
-                "type": "function",
-                "parameters": [
-                  {
-                    "type": "parameter",
-                    "name": "e",
-                    "value": {
-                      "type": "identifier",
-                      "name": "any"
-                    },
-                    "optional": true,
-                    "rest": false
-                  }
-                ],
-                "return": {
-                  "type": "identifier",
-                  "name": "IteratorResult<T, any>"
-                },
-                "typeParameters": []
-              }
-            ]
-          },
-          "optional": true,
-          "readonly": false,
-          "description": ""
-        }
-      },
-      "typeParameters": [],
-      "description": ""
-    },
-    "ComboBoxRenderProps": {
-      "type": "interface",
-      "name": "ComboBoxRenderProps",
-      "properties": {
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the combobox is disabled."
-        },
-        "isInvalid": {
-          "type": "property",
-          "name": "isInvalid",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the combobox is invalid."
-        },
-        "isOpen": {
-          "type": "property",
-          "name": "isOpen",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the combobox is currently open."
-        },
-        "isReadOnly": {
-          "type": "property",
-          "name": "isReadOnly",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the combobox is read only."
-        },
-        "isRequired": {
-          "type": "property",
-          "name": "isRequired",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the combobox is required."
-        }
-      }
     }
   }
 }

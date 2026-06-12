@@ -41,7 +41,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
     },
     "aria-label": {
       "type": "string",
@@ -79,12 +79,12 @@
         "typeParameters": [
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
+            "id": "react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
             "name": "CalendarRenderProps"
           }
         ]
       },
-      "description": "The children of the component. A function may be provided to alter the children based on component state."
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
     },
     "className": {
       "type": "string | (values: CalendarRenderProps<\"single\">) => string",
@@ -109,7 +109,7 @@
                   "types": [
                     {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
+                      "id": "react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
                       "name": "CalendarRenderProps"
                     },
                     {
@@ -150,7 +150,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state.",
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
       "default": "'react-aria-Calendar'"
     },
     "createCalendar": {
@@ -177,7 +177,7 @@
         },
         "typeParameters": []
       },
-      "description": "A function to create a new [Calendar](https://react-spectrum.adobe.com/internationalized/date/Calendar.html)\nobject for a given calendar identifier. If not provided, the `createCalendar` function\nfrom `@internationalized/date` will be used."
+      "description": "A function to create a new\n[Calendar](https://react-spectrum.adobe.com/internationalized/date/Calendar.html) object for a\ngiven calendar identifier. If not provided, the `createCalendar` function from\n`@internationalized/date` will be used."
     },
     "defaultFocusedValue": {
       "type": "DateValue | null",
@@ -193,17 +193,17 @@
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
             "name": "CalendarDate"
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
             "name": "CalendarDateTime"
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
             "name": "ZonedDateTime"
           }
         ]
@@ -287,17 +287,17 @@
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
             "name": "CalendarDate"
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
             "name": "CalendarDateTime"
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
             "name": "ZonedDateTime"
           }
         ]
@@ -310,7 +310,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The element's unique identifier. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+      "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
     "isDateUnavailable": {
       "type": "((date: DateValue) => boolean)",
@@ -335,7 +335,7 @@
         },
         "typeParameters": []
       },
-      "description": "Callback that is called for each date of the calendar. If it returns true, then the date is unavailable."
+      "description": "Callback that is called for each date of the calendar. If it returns true, then the date is\nunavailable."
     },
     "isDisabled": {
       "type": "boolean",
@@ -377,17 +377,17 @@
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
             "name": "CalendarDate"
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
             "name": "CalendarDateTime"
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
             "name": "ZonedDateTime"
           }
         ]
@@ -408,17 +408,17 @@
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
             "name": "CalendarDate"
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
             "name": "CalendarDateTime"
           },
           {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
             "name": "ZonedDateTime"
           }
         ]
@@ -478,7 +478,7 @@
         "type": "identifier",
         "name": "PageBehavior"
       },
-      "description": "Controls the behavior of paging. Pagination either works by advancing the visible page by visibleDuration (default) or one unit of visibleDuration.",
+      "description": "Controls the behavior of paging. Pagination either works by advancing the visible page by\nvisibleDuration (default) or one unit of visibleDuration.",
       "default": "visible"
     },
     "render": {
@@ -498,24 +498,19 @@
             },
             "typeParameters": [
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "div"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "div"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
+                "id": "react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
                 "name": "CalendarRenderProps"
               }
             ]
           }
         ]
       },
-      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n* You must render the expected element type (e.g. if `<button>` is expected, you cannot render an `<a>`).\n* Only a single root DOM element can be rendered (no fragments).\n* You must pass through props and ref to the underlying DOM element, merging with your own prop as appropriate."
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "selectionAlignment": {
       "type": "\"center\" | \"end\" | \"start\"",
@@ -537,23 +532,18 @@
           }
         ]
       },
-      "description": "Determines the alignment of the visible months on initial render based on the current selection or current date if there is no selection.",
+      "description": "Determines the alignment of the visible months on initial render based on the current selection\nor current date if there is no selection.",
       "default": "'center'"
     },
     "selectionMode": {
       "type": "\"single\"",
       "detailedType": "'single' | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "single"
-          }
-        ]
+        "type": "stringLiteral",
+        "value": "single"
       },
       "description": "Whether single or multiple selection is enabled.",
-      "default": "\"single\""
+      "default": "'single'"
     },
     "slot": {
       "type": "null | string",
@@ -572,7 +562,7 @@
           }
         ]
       },
-      "description": "A slot name for the component. Slots allow the component to receive props from a parent component.\nAn explicit `null` value indicates that the local props completely override all props received from a parent."
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
     },
     "style": {
       "type": "CSSProperties | (values: CalendarRenderProps<\"single\">) => CSSProperties",
@@ -598,7 +588,7 @@
                   "types": [
                     {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
+                      "id": "react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
                       "name": "CalendarRenderProps"
                     },
                     {
@@ -639,7 +629,7 @@
           }
         ]
       },
-      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
     "value": {
       "type": "T | null",
@@ -674,7 +664,7 @@
         "name": "DateDuration"
       },
       "description": "The amount of days that will be displayed at once. This affects how pagination works.",
-      "default": "{months: 1}"
+      "default": "{ months: 1 }"
     },
     "weeksInMonth": {
       "type": "number",
@@ -696,9 +686,9 @@
     }
   },
   "typeLinks": {
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps": {
+    "react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-aria-components@file+www+vendor+react-aria-components-1.17.0.tgz_react-dom@19.2.1_react@19.2.1__react@19.2.1/node_modules/react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
+      "id": "react-aria-components/dist/types/src/Calendar.d.ts:CalendarRenderProps",
       "name": "CalendarRenderProps",
       "extends": [],
       "properties": {
@@ -727,7 +717,7 @@
           "name": "state",
           "value": {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/calendar/types.d.ts:Calendar.State",
+            "id": "react-stately/dist/types/src/calendar/types.d.ts:Calendar.State",
             "name": "Calendar.State"
           },
           "optional": false,
@@ -738,14 +728,14 @@
       "typeParameters": [],
       "description": ""
     },
-    "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/calendar/types.d.ts:CalendarState": {
+    "react-stately/dist/types/src/calendar/types.d.ts:CalendarState": {
       "type": "interface",
-      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/calendar/types.d.ts:Calendar.State",
+      "id": "react-stately/dist/types/src/calendar/types.d.ts:Calendar.State",
       "name": "Calendar.State",
       "extends": [
         {
           "type": "link",
-          "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/react-stately@file+www+vendor+react-stately-3.46.0.tgz_react@19.2.1/node_modules/react-stately/dist/types/src/calendar/types.d.ts:CalendarStateBase",
+          "id": "react-stately/dist/types/src/calendar/types.d.ts:CalendarStateBase",
           "name": "CalendarStateBase"
         }
       ],
@@ -755,7 +745,7 @@
           "name": "focusedDate",
           "value": {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+            "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
             "name": "CalendarDate"
           },
           "optional": false,
@@ -922,7 +912,7 @@
             "typeParameters": []
           },
           "optional": false,
-          "description": "Moves focus to the end of the current section of dates, e.g. the end of the current month month."
+          "description": "Moves focus to the end of the current section of dates, e.g. the end of the current month\nmonth."
         },
         "focusSectionStart": {
           "type": "method",
@@ -964,7 +954,7 @@
                     },
                     {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                      "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                       "name": "CalendarDate"
                     }
                   ]
@@ -992,7 +982,7 @@
             "typeParameters": []
           },
           "optional": false,
-          "description": "Returns an array of dates in the week index counted from the provided start date, or the first visible date if not given.\nThe returned array always has 7 elements, but may include null if the date does not exist according to the calendar system."
+          "description": "Returns an array of dates in the week index counted from the provided start date, or the first\nvisible date if not given. The returned array always has 7 elements, but may include null if\nthe date does not exist according to the calendar system."
         },
         "getWeeksInMonth": {
           "type": "method",
@@ -1011,7 +1001,7 @@
                     },
                     {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                      "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                       "name": "CalendarDate"
                     }
                   ]
@@ -1039,7 +1029,7 @@
                 "name": "date",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                  "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                   "name": "CalendarDate"
                 },
                 "optional": false,
@@ -1052,7 +1042,7 @@
             "typeParameters": []
           },
           "optional": false,
-          "description": "Returns whether the given date is disabled according to the `minValue, `maxValue`, and `isDisabled` props."
+          "description": "Returns whether the given date is disabled according to the `minValue, `maxValue`, and\n`isDisabled` props."
         },
         "isCellFocused": {
           "type": "method",
@@ -1065,7 +1055,7 @@
                 "name": "date",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                  "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                   "name": "CalendarDate"
                 },
                 "optional": false,
@@ -1091,7 +1081,7 @@
                 "name": "date",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                  "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                   "name": "CalendarDate"
                 },
                 "optional": false,
@@ -1137,7 +1127,7 @@
                 "name": "date",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                  "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                   "name": "CalendarDate"
                 },
                 "optional": false,
@@ -1164,7 +1154,7 @@
             "typeParameters": []
           },
           "optional": false,
-          "description": "Returns whether the next visible date range is allowed to be selected according to the `maxValue` prop."
+          "description": "Returns whether the next visible date range is allowed to be selected according to the\n`maxValue` prop."
         },
         "isPreviousVisibleRangeInvalid": {
           "type": "method",
@@ -1178,7 +1168,7 @@
             "typeParameters": []
           },
           "optional": false,
-          "description": "Returns whether the previous visible date range is allowed to be selected according to the `minValue` prop."
+          "description": "Returns whether the previous visible date range is allowed to be selected according to the\n`minValue` prop."
         },
         "isReadOnly": {
           "type": "property",
@@ -1201,7 +1191,7 @@
                 "name": "date",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                  "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                   "name": "CalendarDate"
                 },
                 "optional": false,
@@ -1240,17 +1230,17 @@
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                 "name": "CalendarDate"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
+                "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
                 "name": "CalendarDateTime"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
+                "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
                 "name": "ZonedDateTime"
               }
             ]
@@ -1273,17 +1263,17 @@
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                 "name": "CalendarDate"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
+                "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDateTime",
                 "name": "CalendarDateTime"
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
+                "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:ZonedDateTime",
                 "name": "ZonedDateTime"
               }
             ]
@@ -1303,7 +1293,7 @@
                 "name": "date",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                  "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                   "name": "CalendarDate"
                 },
                 "optional": false,
@@ -1336,13 +1326,8 @@
           "type": "property",
           "name": "selectionMode",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "stringLiteral",
-                "value": "single"
-              }
-            ]
+            "type": "stringLiteral",
+            "value": "single"
           },
           "optional": false,
           "readonly": false,
@@ -1383,7 +1368,7 @@
                 "name": "value",
                 "value": {
                   "type": "link",
-                  "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                  "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                   "name": "CalendarDate"
                 },
                 "optional": false,
@@ -1415,7 +1400,7 @@
                     },
                     {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                      "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                       "name": "CalendarDate"
                     }
                   ]
@@ -1449,25 +1434,15 @@
             "type": "union",
             "elements": [
               {
+                "type": "stringLiteral",
+                "value": "invalid"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "valid"
+              },
+              {
                 "type": "null"
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "valid"
-                  }
-                ]
-              },
-              {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "invalid"
-                  }
-                ]
               }
             ]
           },
@@ -1486,7 +1461,7 @@
               },
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                 "name": "CalendarDate"
               }
             ]
@@ -1500,7 +1475,7 @@
           "name": "visibleDuration",
           "value": {
             "type": "link",
-            "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/types.d.ts:DateDuration",
+            "id": "@internationalized/date/dist/types/src/types.d.ts:DateDuration",
             "name": "DateDuration"
           },
           "optional": false,
@@ -1514,13 +1489,13 @@
             "type": "application",
             "base": {
               "type": "link",
-              "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@react-types+shared@3.34.0_react@19.2.1/node_modules/@react-types/shared/src/inputs.d.ts:RangeValue",
+              "id": "@react-types/shared/src/inputs.d.ts:RangeValue",
               "name": "RangeValue"
             },
             "typeParameters": [
               {
                 "type": "link",
-                "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@internationalized+date@3.12.1/node_modules/@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
+                "id": "@internationalized/date/dist/types/src/CalendarDate.d.ts:CalendarDate",
                 "name": "CalendarDate"
               }
             ]

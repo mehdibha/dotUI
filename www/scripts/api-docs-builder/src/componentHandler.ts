@@ -16,6 +16,7 @@ import {
   buildTypeAstFromString,
   type ConversionContext,
   createConversionContext,
+  formatMemberName,
   parseSimpleType,
   typeToAst,
 } from './type-to-ast'
@@ -489,8 +490,9 @@ function resolveTypeByName(
         > = {}
 
         for (const prop of [...properties].sort((a, b) =>
-          a.name.localeCompare(b.name),
+          formatMemberName(a.name).localeCompare(formatMemberName(b.name)),
         )) {
+          const propName = formatMemberName(prop.name)
           const propType = checker.getTypeOfSymbolAtLocation(prop, node)
           // Use a simple type string instead of recursive AST to avoid explosion
           const typeString = checker.typeToString(propType)
@@ -502,9 +504,9 @@ function resolveTypeByName(
           // Create a simple type representation
           const simpleType = parseSimpleType(typeString)
 
-          propsAst[prop.name] = {
+          propsAst[propName] = {
             type: 'property',
-            name: prop.name,
+            name: propName,
             value: simpleType,
             optional: isOptional,
             readonly: false,
@@ -703,6 +705,10 @@ async function getPropsWithTypeChecker(
         for (const prop of properties) {
           // Skip ref
           if (prop.name === 'ref') continue
+
+          // Skip well-known symbol members ([Symbol.iterator] is never a
+          // documented component prop)
+          if (prop.name.startsWith('__@')) continue
 
           // If extending HTML element, skip props inherited from HTML (not defined in user code)
           if (extendsElement && !isPropFromUserCode(prop)) {

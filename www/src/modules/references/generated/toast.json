@@ -36,32 +36,25 @@
                     "type": "application",
                     "base": {
                       "type": "link",
-                      "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/@types+react@19.2.2/node_modules/@types/react/index.d.ts:ButtonHTMLAttributes",
+                      "id": "@types/react/index.d.ts:ButtonHTMLAttributes",
                       "name": "ButtonHTMLAttributes"
                     },
                     "typeParameters": [
                       {
-                        "type": "link",
-                        "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLButtonElement",
+                        "type": "identifier",
                         "name": "HTMLButtonElement"
                       }
                     ]
                   },
                   {
-                    "type": "link",
-                    "id": "/Users/mehdibenhadjali/Desktop/dotUI/node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/lib/lib.dom.d.ts:HTMLButtonElement",
+                    "type": "identifier",
                     "name": "HTMLButtonElement"
                   }
                 ]
               },
               {
-                "type": "union",
-                "elements": [
-                  {
-                    "type": "stringLiteral",
-                    "value": "ref"
-                  }
-                ]
+                "type": "stringLiteral",
+                "value": "ref"
               }
             ]
           }
