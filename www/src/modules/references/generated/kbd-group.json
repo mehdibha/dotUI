@@ -1,6 +1,14 @@
 {
   "name": "KbdGroupProps",
-  "description": "Missing description.",
+  "description": "Groups multiple keyboard keys together to represent a key combination.",
   "extendsElement": "html",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

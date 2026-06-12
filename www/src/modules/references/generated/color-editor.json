@@ -1,6 +1,6 @@
 {
   "name": "ColorEditorProps",
-  "description": "Missing description.",
+  "description": "A color editor allows users to adjust a color value using a color area,\nchannel sliders, and field inputs in multiple color formats.",
   "extendsElement": "div",
   "props": {
     "colorFormat": {
@@ -30,6 +30,13 @@
       },
       "description": "Whether to show the color format selector.",
       "default": "true"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     }
   }
 }

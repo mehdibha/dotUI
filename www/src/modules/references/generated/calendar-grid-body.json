@@ -34,8 +34,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement.",
-      "default": "'react-aria-CalendarGridBody'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement."
     },
     "render": {
       "type": "DOMRenderFunction<\"tbody\", undefined>",

@@ -1,6 +1,6 @@
 {
   "name": "BadgeProps",
-  "description": "Missing description.",
+  "description": "A badge displays a short label or status that describes an item.",
   "extendsElement": "span",
   "props": {
     "appearance": {
@@ -79,6 +79,13 @@
       },
       "description": "The size of the badge.",
       "default": "'md'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     }
   }
 }

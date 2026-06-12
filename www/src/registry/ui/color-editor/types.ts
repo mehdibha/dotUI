@@ -1,7 +1,8 @@
 type ColorFormat = 'hex' | 'rgb' | 'hsl' | 'hsb'
 
 /**
- * Missing description.
+ * A color editor allows users to adjust a color value using a color area,
+ * channel sliders, and field inputs in multiple color formats.
  */
 export interface ColorEditorProps extends React.ComponentProps<'div'> {
   /**

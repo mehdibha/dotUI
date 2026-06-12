@@ -1,6 +1,6 @@
 {
   "name": "OverlayProps",
-  "description": "Missing description.",
+  "description": "An overlay renders its content in a modal, popover, or drawer, switching\nbetween types based on screen size.",
   "props": {
     "type": {
       "type": "Type",

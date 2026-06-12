@@ -1,6 +1,14 @@
 {
   "name": "DialogHeaderProps",
-  "description": "Missing description.",
+  "description": "The header of the dialog. Contains the title and description.",
   "extendsElement": "header",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

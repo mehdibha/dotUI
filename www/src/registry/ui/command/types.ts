@@ -3,12 +3,13 @@ import type { PopoverProps } from '@/registry/ui/popover'
 import type { SearchFieldProps } from '@/registry/ui/search-field'
 
 /**
- * Missing description.
+ * A command palette combines a search input with a list of commands, allowing
+ * a user to filter and run them.
  */
 export interface CommandProps extends React.ComponentProps<'div'> {}
 
 /**
- * Missing description.
+ * The search input used to filter the commands.
  */
 export interface CommandInputProps extends SearchFieldProps {
   /**
@@ -18,7 +19,7 @@ export interface CommandInputProps extends SearchFieldProps {
 }
 
 /**
- * Missing description.
+ * Contains the command items, filtered to match the input's value.
  */
 export interface CommandContentProps<T extends object> extends ListBoxProps<T> {
   placement?: PopoverProps['placement']

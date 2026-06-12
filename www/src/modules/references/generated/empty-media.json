@@ -1,6 +1,6 @@
 {
   "name": "EmptyMediaProps",
-  "description": "Missing description.",
+  "description": "The visual media of the empty state, such as an icon, image, or avatar.",
   "extendsElement": "div",
   "props": {
     "variant": {
@@ -21,6 +21,13 @@
       },
       "description": "The visual style of the media container.",
       "default": "'default'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     }
   }
 }

@@ -1,6 +1,14 @@
 {
   "name": "CardHeaderProps",
-  "description": "Missing description.",
+  "description": "The header of the card. Contains the title, description, and an optional action.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

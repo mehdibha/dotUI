@@ -12,6 +12,48 @@
       "description": "The side of the screen where the drawer appears.",
       "default": "'bottom'"
     },
+    "isOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the drawer is open."
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the drawer is open by default.",
+      "default": "false"
+    },
+    "onOpenChange": {
+      "type": "((open: boolean) => void)",
+      "detailedType": "((open: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "open",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the drawer's open state changes."
+    },
     "swipeToDismiss": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -38,6 +80,21 @@
       },
       "description": "Whether pressing Escape is suppressed.",
       "default": "false"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "The content of the drawer."
     }
   }
 }

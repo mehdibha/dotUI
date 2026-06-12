@@ -1,6 +1,14 @@
 {
   "name": "FieldsetProps",
-  "description": "Missing description.",
+  "description": "Groups a set of related fields under a common legend.",
   "extendsElement": "fieldset",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

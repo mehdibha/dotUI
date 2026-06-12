@@ -56,8 +56,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
-      "default": "'react-aria-DateInput'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
     },
     "render": {
       "type": "DOMRenderFunction<\"div\", DateInputRenderProps>",

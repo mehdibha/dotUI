@@ -1,6 +1,14 @@
 {
   "name": "EmptyContentProps",
-  "description": "Missing description.",
+  "description": "Contains the actions and supplementary content of the empty state, such as buttons or links.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

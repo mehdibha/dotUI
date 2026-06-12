@@ -3,7 +3,8 @@ import type * as MenuPrimitives from 'react-aria-components/Menu'
 import type * as TextPrimitives from 'react-aria-components/Text'
 
 /**
- * Missing description.
+ * A menu displays a list of actions or options that a user can choose.
+ * It wraps a trigger element and the menu, linking the menu's open state with the trigger's press state.
  */
 export interface MenuProps extends MenuPrimitives.MenuTriggerProps {}
 
@@ -50,7 +51,7 @@ export interface MenuSectionProps<
 > extends MenuPrimitives.MenuSectionProps<T> {}
 
 /**
- * Missing description.
+ * A MenuSectionHeader represents the header of a MenuSection, usually containing the section title.
  */
 export interface MenuSectionHeaderProps extends React.ComponentProps<
   typeof HeaderPrimitives.Header

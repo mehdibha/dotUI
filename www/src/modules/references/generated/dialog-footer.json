@@ -1,6 +1,14 @@
 {
   "name": "DialogFooterProps",
-  "description": "Missing description.",
+  "description": "The footer of the dialog. Contains the dialog's actions.",
   "extendsElement": "footer",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

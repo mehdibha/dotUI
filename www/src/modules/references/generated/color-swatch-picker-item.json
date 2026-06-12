@@ -1,6 +1,6 @@
 {
   "name": "ColorSwatchPickerItemProps",
-  "description": "Missing description.",
+  "description": "A ColorSwatchPickerItem represents an individual color swatch within a ColorSwatchPicker.",
   "props": {
     "onPress": {
       "type": "((e: PressEvent) => void)",
@@ -308,8 +308,7 @@
           }
         ]
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state.",
-      "default": "'react-aria-ColorSwatchPickerItem'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
     },
     "color": {
       "type": "Color | string",

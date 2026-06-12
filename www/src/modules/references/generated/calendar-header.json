@@ -1,6 +1,14 @@
 {
   "name": "CalendarHeaderProps",
-  "description": "Missing description.",
+  "description": "The header of a calendar, containing the navigation buttons and the heading.",
   "extendsElement": "header",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

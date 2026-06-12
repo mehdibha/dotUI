@@ -1,6 +1,14 @@
 {
   "name": "FieldContentProps",
-  "description": "Missing description.",
+  "description": "Contains the label and description of a field, displayed alongside its control.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

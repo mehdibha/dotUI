@@ -9,7 +9,7 @@ export interface DropZoneProps extends React.ComponentProps<
 > {}
 
 /**
- * Missing description.
+ * The label of the drop zone, used as its accessible name.
  */
 export interface DropZoneLabelProps extends Omit<
   React.ComponentProps<typeof TextPrimitives.Text>,

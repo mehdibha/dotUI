@@ -24,8 +24,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement.",
-      "default": "'react-aria-ResizableTableContainer'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement."
     },
     "id": {
       "type": "string",

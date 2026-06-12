@@ -1,5 +1,6 @@
 /**
- * Missing description.
+ * An alert displays a short, important message that attracts the user's
+ * attention without interrupting their task.
  */
 export interface AlertProps extends React.ComponentProps<'div'> {
   /**
@@ -10,16 +11,16 @@ export interface AlertProps extends React.ComponentProps<'div'> {
 }
 
 /**
- * Missing description.
+ * The title of the alert.
  */
 export interface AlertTitleProps extends React.ComponentProps<'div'> {}
 
 /**
- * Missing description.
+ * The description of the alert.
  */
 export interface AlertDescriptionProps extends React.ComponentProps<'div'> {}
 
 /**
- * Missing description.
+ * Contains actions such as buttons, displayed at the end of the alert.
  */
 export interface AlertActionProps extends React.ComponentProps<'div'> {}

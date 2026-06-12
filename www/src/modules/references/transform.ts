@@ -52,11 +52,20 @@ export interface TransformedReference {
 /**
  * Get a shortened version of the type for display in the collapsed row
  */
-function getShortType(name: string, type: string | undefined): string {
+function getShortType(
+  name: string,
+  type: string | undefined,
+  typeAst?: TType,
+): string {
   if (!type) return 'unknown'
 
   // Event handlers show as "function"
   if (/^on[A-Z]/.test(name)) return 'function'
+
+  // Function types show as "function": render functions
+  // (DOMRenderFunction<"div", T>) and plain callbacks like validate
+  if (/RenderFunction</.test(type)) return 'function'
+  if (typeAst?.type === 'function') return 'function'
 
   // Render prop patterns
   if (type.includes('=> ReactNode')) return 'ReactNode | function'
@@ -98,6 +107,24 @@ function highlightCode(
 }
 
 /**
+ * Highlight a type string using shiki.
+ * Prefixes `type _ =` on its own line so the grammar tokenizes the string in
+ * type position (`boolean`, `ReactNode`, … get type colors, matching the AST
+ * renderer in the row panel), then drops that first line.
+ */
+function highlightTypeCode(
+  code: string,
+  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
+  highlighter: HighlighterGeneric<any, any>,
+): string {
+  if (!code) return ''
+
+  const html = highlightCode(`type _ =\n${code}`, highlighter)
+  const newlineIndex = html.indexOf('\n')
+  return newlineIndex === -1 ? html : html.slice(newlineIndex + 1)
+}
+
+/**
  * Transform a single prop
  */
 function transformProp(
@@ -106,15 +133,15 @@ function transformProp(
   // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
   highlighter: HighlighterGeneric<any, any>,
 ): TransformedProp {
-  const shortType = getShortType(propName, prop.type)
+  const shortType = getShortType(propName, prop.type, prop.typeAst)
   const fullType = prop.detailedType ?? prop.type
 
   return {
     name: propName,
     type: fullType,
-    typeHighlighted: highlightCode(fullType, highlighter),
+    typeHighlighted: highlightTypeCode(fullType, highlighter),
     shortType,
-    shortTypeHighlighted: highlightCode(shortType, highlighter),
+    shortTypeHighlighted: highlightTypeCode(shortType, highlighter),
     typeAst: prop.typeAst,
     default: prop.default,
     defaultHighlighted: prop.default

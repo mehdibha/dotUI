@@ -1,6 +1,6 @@
 {
   "name": "AlertProps",
-  "description": "Missing description.",
+  "description": "An alert displays a short, important message that attracts the user's\nattention without interrupting their task.",
   "extendsElement": "div",
   "props": {
     "variant": {
@@ -33,6 +33,13 @@
       },
       "description": "The visual style of the alert.",
       "default": "'neutral'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "FieldProps",
-  "description": "Missing description.",
+  "description": "A field wraps a form control with its label, description, and error message.",
   "extendsElement": "div",
   "props": {
     "orientation": {
@@ -21,6 +21,13 @@
       },
       "description": "The orientation of the field layout.",
       "default": "'vertical'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     }
   }
 }

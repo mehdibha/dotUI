@@ -2,7 +2,15 @@
   "name": "SliderTrackProps",
   "description": "A slider track is the visual track that contains the selected fill.",
   "extendsElement": "div",
-  "props": {},
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  },
   "renderProps": {
     "isDisabled": {
       "selector": "[data-disabled]",

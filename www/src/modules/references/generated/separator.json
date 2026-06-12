@@ -1,6 +1,6 @@
 {
   "name": "SeparatorProps",
-  "description": "Missing description.",
+  "description": "A separator is a visual divider between two groups of content, such as\ngroups of menu items or sections of a page.",
   "props": {
     "aria-describedby": {
       "type": "string",
@@ -40,8 +40,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement.",
-      "default": "'react-aria-Separator'"
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement."
     },
     "elementType": {
       "type": "string",

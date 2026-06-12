@@ -1,6 +1,14 @@
 {
   "name": "EmptyProps",
-  "description": "Missing description.",
+  "description": "An empty state displays a placeholder message and optional actions when there is no content to show.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

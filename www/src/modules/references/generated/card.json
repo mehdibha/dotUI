@@ -1,6 +1,14 @@
 {
   "name": "CardProps",
-  "description": "Missing description.",
+  "description": "A card groups related content and actions into a single container.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

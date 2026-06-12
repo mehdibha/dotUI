@@ -1,6 +1,14 @@
 {
   "name": "CommandProps",
-  "description": "Missing description.",
+  "description": "A command palette combines a search input with a list of commands, allowing\na user to filter and run them.",
   "extendsElement": "div",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }

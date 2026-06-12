@@ -1,6 +1,14 @@
 {
   "name": "ProgressBarOutputProps",
-  "description": "Missing description.",
+  "description": "A progress bar output displays the current value of the progress bar as text.",
   "extendsElement": "span",
-  "props": {}
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
 }
