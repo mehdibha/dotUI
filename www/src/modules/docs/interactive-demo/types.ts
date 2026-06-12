@@ -142,8 +142,6 @@ export interface InteractiveDemoNodeInfo {
   node: MdxJsxFlowElementHast
   name: string
   controls: ControlInput[]
-  /** "source" opts into the SourceFirst engine; absent/"legacy" keeps the old path. */
-  engine?: 'legacy' | 'source'
   /** Demo file slug under demos/ (default "playground"). */
   file?: string
 }
@@ -159,8 +157,6 @@ export interface ProcessedInteractiveDemo {
   importPath: string
   /** Enriched controls with serializable reference data */
   controls: SerializableControl[]
-  /** SourceFirst code template (only when engine === "source"). */
-  codeTemplate?: CodeTemplate
-  /** True when the demo is imported as a default export (SourceFirst). */
-  isSourceDefault?: boolean
+  /** Template-with-holes over the demo source; fills the displayed code. */
+  codeTemplate: CodeTemplate
 }

@@ -1,14 +1,18 @@
 /**
  * SourceFirst playground — BUILD-TIME source overlay.
  *
- * Turns one real demo `.tsx` into a `CodeTemplate` (template-with-holes).
+ * Turns one real demo `.tsx` into a `CodeTemplate`: the demo is formatted ONCE
+ * with oxfmt, then the formatted root JSX is lifted into a tree that keeps
+ * verbatim formatted text for everything static and structured nodes for every
+ * position a control can change (attr holes, `{param}` text slots,
+ * `{cond && <El>…</El>}` conditionals). The runtime renderer in
+ * `code-template.ts` owns the layout of the dynamic parts, so no per-value
+ * formatting ever happens — and the output stays byte-identical to oxfmt.
  *
- * Strategy (LOCKED): format the demo ONCE at the WIDEST CONCRETE instance (every
- * controllable attr present with a real value, every conditional region included),
- * then slice the single formatted string around each controllable position. Each
- * hole OWNS its surrounding whitespace (`sep` / `padBefore`) so a runtime drop only
- * removes spans — oxfmt's wrap decision stays valid for every fill. No sentinels,
- * no per-value formatting, no runtime AST.
+ * Hole scoping: attr holes attach to the ROOT element, to elements marked with
+ * a bare `data-control-target` attribute, and to attrs carrying an
+ * `@control:` marker comment (with optional `@drop-when:`). `{ident}` and
+ * `{ident && …}` children match controls anywhere in the tree.
  *
  * Build-time only (imports oxfmt + ts-morph, both `www` deps).
  */
@@ -18,7 +22,6 @@ import type {
   FunctionDeclaration,
   JsxAttribute,
   JsxElement,
-  JsxExpression,
   JsxSelfClosingElement,
   SourceFile,
 } from 'ts-morph'
@@ -26,28 +29,32 @@ import type {
 // NOTE: relative (not `@/`) — this module is loaded by the rehype plugin at vite
 // config-load time, before the `@/` alias is registered.
 import { rewriteImportPath } from '../../../publisher/build-time/transform-base'
-import { INNER } from './code-template'
 import type {
-  AttrHole,
-  ChildHole,
+  AttrPart,
+  ChildPart,
   CodeTemplate,
   ConstDecl,
-  Hole,
   ImportDecl,
   SerializedDefault,
+  TemplateElement,
   ValueKind,
 } from './code-template'
 
-// oxfmt for the GENERATED demo code uses SPACES (Shiki/DynamicPre consume spaces,
-// matching the existing transformer.ts tabs→spaces behaviour). printWidth/tabWidth
-// mirror .oxfmtrc.jsonc. sortImports stays OFF for stable line identity.
-const OXFMT_OPTIONS = { printWidth: 120, tabWidth: 2, useTabs: false } as const
+// The style contract for GENERATED demo code: oxfmt defaults (semicolons,
+// double quotes) at printWidth 120, 2-space indent. SPACES because Shiki/
+// DynamicPre consume spaces; sortImports stays OFF for stable line identity.
+// Exported so the fidelity spec verifies against the exact same options.
+export const OXFMT_OPTIONS = {
+  printWidth: 120,
+  tabWidth: 2,
+  useTabs: false,
+} as const
 const BODY_INDENT = 4
 
 export interface ControlSelection {
   name: string
   kind: ValueKind
-  /** From the demo PARAM signature (Problem #4 fix). */
+  /** From the demo PARAM signature (the default the user sees). */
   default: SerializedDefault
   /** Marker-derived: drop this attr when boolean `dropWhen` control is truthy. */
   dropWhen?: string
@@ -86,58 +93,36 @@ function createSourceFile(source: string): SourceFile {
 export async function buildSourceOverlay(
   input: OverlayInput,
 ): Promise<CodeTemplate> {
-  const byName = new Map(input.controls.map((c) => [c.name, c]))
   const sf = createSourceFile(input.source)
   try {
     stripNonEmitStatements(sf)
     rewriteImports(sf)
 
-    const fn = findExportFunction(sf)
-    if (!fn)
-      throw new OverlayError(`No exported function in demo${named(input)}`)
-    const root = getRootJsxElement(fn)
-    if (!root)
-      throw new OverlayError(
-        `Exported function has no root JSX element${named(input)}`,
-      )
-    const rootTag = root.getOpeningElement().getTagNameNode().getText()
-
-    // selfClose decision MUST be taken BEFORE mutating (mutation forgets descendants).
-    const selfCloseWhenEmpty = onlyHoleChildren(root, byName)
-
-    // Plan all positions, THEN apply widest-concrete rewrites (two-phase so spans
-    // aren't invalidated mid-scan).
-    const plan = planHoles(root, byName, input)
-    applyWidestConcrete(plan, byName)
-
-    // Format the whole templated file ONCE. Strip the `@control` / `@drop-when`
-    // marker comments first so they never leak into shown code (their meaning was
-    // already captured into the plan during planHoles).
     const templated = sf
       .getFullText()
       .replace(/export default function/, 'export function')
-      .replace(/[ \t]*\/\*\s*@(?:control|drop-when):[^*]*\*\/[ \t]*\n?/g, '')
     const formatted = await formatOrThrow(templated, input)
 
-    // Re-parse the FORMATTED string for canonical text, then slice.
+    // Lift the FORMATTED file into the template tree.
     const f2 = createSourceFile(formatted)
     try {
-      const imports = collectImports(f2)
-      const consts = collectConsts(f2)
-      const { bodyText } = formattedRootBody(f2)
-      const { segments, holes } = sliceBody(bodyText, plan)
-      if (segments.length !== holes.length + 1) {
+      const fn = findExportFunction(f2)
+      if (!fn)
+        throw new OverlayError(`No exported function in demo${named(input)}`)
+      const root = getRootJsxElement(fn)
+      if (!root)
         throw new OverlayError(
-          `segment/hole invariant violated (${segments.length} vs ${holes.length})`,
+          `Exported function has no root JSX element${named(input)}`,
         )
-      }
+
+      const builder = new TreeBuilder(input)
+      const rootElement = builder.buildElement(root, { holesAllowed: true })
+      builder.assertAllControlsResolved()
+
       return {
-        segments,
-        holes,
-        consts,
-        imports,
-        rootTag,
-        selfCloseWhenEmpty,
+        root: rootElement,
+        consts: collectConsts(f2),
+        imports: collectImports(f2),
         bodyIndent: BODY_INDENT,
       }
     } finally {
@@ -205,165 +190,175 @@ function getRootJsxElement(fn: FunctionDeclaration): JsxElement | undefined {
 }
 
 // ---------------------------------------------------------------------------
-// Planning (gather positions before mutating)
+// Tree lifting
 // ---------------------------------------------------------------------------
 
-type AttrPlan = {
-  hole: 'attr'
-  key: string
-  attrName: string
-  kind: ValueKind
-  default: SerializedDefault
-  dropWhen?: string
-  node: JsxAttribute
-  marker: 'attr' | 'target' | 'derived'
-}
-type ChildPlan = {
-  hole: 'child'
-  key: string
-  kind: ValueKind
-  default: SerializedDefault
-  node: JsxExpression
-  fragment?: string
-}
-type Plan = AttrPlan | ChildPlan
+type JsxLike = JsxElement | JsxSelfClosingElement
 
-function planHoles(
-  root: JsxElement,
-  byName: Map<string, ControlSelection>,
-  input: OverlayInput,
-): Plan[] {
-  const plans: Plan[] = []
-  const attrKeys = new Set<string>()
+class TreeBuilder {
+  private readonly byName: Map<string, ControlSelection>
+  private readonly input: OverlayInput
+  private readonly resolved = new Set<string>()
 
-  // 1. Root attributes + data-control-target elements + derived markers.
-  collectAttrPlans(root.getOpeningElement(), byName, plans, attrKeys, 'attr')
-  for (const targetEl of findControlTargets(root)) {
-    const opening = Node.isJsxElement(targetEl)
-      ? targetEl.getOpeningElement()
-      : targetEl
-    collectAttrPlans(opening, byName, plans, attrKeys, 'target')
+  constructor(input: OverlayInput) {
+    this.input = input
+    this.byName = new Map(input.controls.map((c) => [c.name, c]))
   }
 
-  // 2. Child idents + conditional slots (snapshot then mutate; slot before ident of same key).
-  type Cand =
-    | { kind: 'ident'; start: number; key: string; node: JsxExpression }
-    | { kind: 'slot'; start: number; key: string; node: JsxExpression }
-  const cands: Cand[] = []
-  for (const ex of root.getDescendantsOfKind(SyntaxKind.JsxExpression)) {
-    const e = ex.getExpression()
-    if (!e) continue
-    if (
-      Node.isIdentifier(e) &&
-      byName.has(e.getText()) &&
-      !attrKeys.has(e.getText())
-    ) {
-      cands.push({
-        kind: 'ident',
-        start: ex.getStart(),
-        key: e.getText(),
-        node: ex,
-      })
-    } else if (
-      Node.isBinaryExpression(e) &&
-      e.getOperatorToken().getText() === '&&'
-    ) {
-      const ctrlName = e.getLeft().getText()
-      if (byName.has(ctrlName) && !attrKeys.has(ctrlName)) {
-        cands.push({
-          kind: 'slot',
-          start: ex.getStart(),
-          key: ctrlName,
-          node: ex,
-        })
+  assertAllControlsResolved(): void {
+    for (const c of this.input.controls) {
+      if (!this.resolved.has(c.name)) {
+        throw new OverlayError(
+          `Control "${c.name}" did not resolve to a hole${named(this.input)}. ` +
+            `Root attr? {param} child? {cond && <El/>}? Add a marker for derived/nested-target.`,
+        )
       }
     }
   }
-  cands.sort(
-    (a, b) =>
-      (a.kind === 'slot' ? 0 : 1) - (b.kind === 'slot' ? 0 : 1) ||
-      a.start - b.start,
-  )
-  const seen = new Set<string>()
-  for (const c of cands) {
-    if (seen.has(c.key) || c.node.wasForgotten()) continue
-    seen.add(c.key)
-    const ctrl = byName.get(c.key)
-    if (!ctrl) continue
-    plans.push({
-      hole: 'child',
-      key: c.key,
-      kind: ctrl.kind,
-      default: ctrl.default,
-      node: c.node,
-      fragment: c.kind === 'slot' ? 'slot' : undefined,
-    })
-  }
 
-  // Fail-loud: every declared control must resolve to >=1 plan.
-  const resolved = new Set(plans.map((p) => p.key))
-  for (const c of input.controls) {
-    if (!resolved.has(c.name)) {
-      throw new OverlayError(
-        `Control "${c.name}" did not resolve to a hole${named(input)}. ` +
-          `Root attr? {param} child? {cond && <El/>}? Add a marker for derived/nested-target.`,
-      )
+  buildElement(
+    node: JsxLike,
+    { holesAllowed }: { holesAllowed: boolean },
+  ): TemplateElement {
+    const opening = Node.isJsxElement(node) ? node.getOpeningElement() : node
+    const tag = opening.getTagNameNode().getText()
+
+    const attrs: AttrPart[] = []
+    for (const attr of opening.getAttributes()) {
+      if (!Node.isJsxAttribute(attr)) {
+        throw new OverlayError(
+          `Spread attribute on dynamic <${tag}> is unsupported${named(this.input)}`,
+        )
+      }
+      const attrName = attr.getNameNode().getText()
+      if (attrName === 'data-control-target') continue
+      const control = this.byName.get(attrName)
+      const derived = readDerivedMarker(attr)
+      if (control && (holesAllowed || derived)) {
+        this.resolved.add(attrName)
+        attrs.push({
+          part: 'attr',
+          control: attrName,
+          attrName,
+          kind: control.kind,
+          default: control.default,
+          ...((derived?.dropWhen ?? control.dropWhen)
+            ? { dropWhen: derived?.dropWhen ?? control.dropWhen }
+            : {}),
+        })
+        continue
+      }
+      const text = attr.getText()
+      if (text.includes('\n')) {
+        throw new OverlayError(
+          `Multiline attribute "${attrName}" on dynamic <${tag}> is unsupported${named(this.input)}`,
+        )
+      }
+      attrs.push({ part: 'static', text })
     }
+
+    const children: ChildPart[] = []
+    if (Node.isJsxElement(node)) {
+      for (const child of node.getJsxChildren()) {
+        const part = this.buildChild(child)
+        if (part) children.push(part)
+      }
+    }
+    return { tag, attrs, children }
   }
-  return plans
+
+  private buildChild(child: Node): ChildPart | null {
+    if (Node.isJsxText(child)) {
+      const text = child.getText().replace(/\s+/g, ' ').trim()
+      return text === '' ? null : { part: 'static-text', text }
+    }
+
+    if (Node.isJsxExpression(child)) {
+      const expr = child.getExpression()
+      if (!expr) return null // {/* comment */}
+
+      if (Node.isIdentifier(expr) && this.byName.has(expr.getText())) {
+        const control = this.byName.get(expr.getText())
+        if (!control) return null
+        this.resolved.add(control.name)
+        return { part: 'text', control: control.name, kind: control.kind }
+      }
+
+      if (
+        Node.isBinaryExpression(expr) &&
+        expr.getOperatorToken().getText() === '&&' &&
+        this.byName.has(expr.getLeft().getText())
+      ) {
+        const control = expr.getLeft().getText()
+        let right: Node = expr.getRight()
+        if (Node.isParenthesizedExpression(right)) right = right.getExpression()
+        if (!Node.isJsxElement(right) && !Node.isJsxSelfClosingElement(right)) {
+          throw new OverlayError(
+            `Conditional "{${control} && …}" must wrap a JSX element${named(this.input)}`,
+          )
+        }
+        this.resolved.add(control)
+        return {
+          part: 'element',
+          el: this.buildElement(right, { holesAllowed: false }),
+          showWhen: control,
+        }
+      }
+
+      return { part: 'static', lines: nodeLines(child) }
+    }
+
+    if (Node.isJsxElement(child) || Node.isJsxSelfClosingElement(child)) {
+      if (this.containsDynamic(child)) {
+        const opening = Node.isJsxElement(child)
+          ? child.getOpeningElement()
+          : child
+        return {
+          part: 'element',
+          el: this.buildElement(child, { holesAllowed: hasMarker(opening) }),
+        }
+      }
+      return { part: 'static', lines: nodeLines(child) }
+    }
+
+    throw new OverlayError(
+      `Unsupported JSX child of kind ${child.getKindName()}${named(this.input)}`,
+    )
+  }
+
+  /** Does this subtree contain anything a control can change? */
+  private containsDynamic(node: JsxLike): boolean {
+    const openings: Node[] = [node, ...node.getDescendants()]
+    for (const n of openings) {
+      if (Node.isJsxAttribute(n)) {
+        if (n.getNameNode().getText() === 'data-control-target') return true
+        if (readDerivedMarker(n)) return true
+      }
+      if (Node.isJsxExpression(n)) {
+        const expr = n.getExpression()
+        if (!expr) continue
+        if (Node.isIdentifier(expr) && this.byName.has(expr.getText()))
+          return true
+        if (
+          Node.isBinaryExpression(expr) &&
+          expr.getOperatorToken().getText() === '&&' &&
+          this.byName.has(expr.getLeft().getText())
+        )
+          return true
+      }
+    }
+    return false
+  }
 }
 
-function collectAttrPlans(
-  opening: { getAttributes(): Node[] },
-  byName: Map<string, ControlSelection>,
-  plans: Plan[],
-  attrKeys: Set<string>,
-  marker: 'attr' | 'target',
-): void {
-  for (const attr of opening.getAttributes()) {
-    if (!Node.isJsxAttribute(attr)) continue // skip {...spread}
-    const attrName = attr.getNameNode().getText()
-    if (attrName === 'data-control-target') continue // stripped later
-    const ctrl = byName.get(attrName)
-    if (!ctrl) continue
-    const derived = readDerivedMarker(attr)
-    plans.push({
-      hole: 'attr',
-      key: attrName,
-      attrName,
-      kind: ctrl.kind,
-      default: ctrl.default,
-      dropWhen: derived?.dropWhen ?? ctrl.dropWhen,
-      node: attr,
-      marker: derived ? 'derived' : marker,
-    })
-    attrKeys.add(attrName)
-  }
-}
-
-/** Find elements carrying a bare `data-control-target` marker attribute. */
-function findControlTargets(
-  root: JsxElement,
-): Array<JsxElement | JsxSelfClosingElement> {
-  const out: Array<JsxElement | JsxSelfClosingElement> = []
-  const hasMarker = (openLike: { getAttributes(): Node[] }) =>
-    openLike
-      .getAttributes()
-      .some(
-        (a) =>
-          Node.isJsxAttribute(a) &&
-          a.getNameNode().getText() === 'data-control-target',
-      )
-  for (const el of root.getDescendantsOfKind(SyntaxKind.JsxElement)) {
-    if (el === root) continue
-    if (hasMarker(el.getOpeningElement())) out.push(el)
-  }
-  for (const el of root.getDescendantsOfKind(
-    SyntaxKind.JsxSelfClosingElement,
-  )) {
-    if (hasMarker(el)) out.push(el)
-  }
-  return out
+function hasMarker(opening: { getAttributes(): Node[] }): boolean {
+  return opening
+    .getAttributes()
+    .some(
+      (a) =>
+        Node.isJsxAttribute(a) &&
+        a.getNameNode().getText() === 'data-control-target',
+    )
 }
 
 /** Read `@control:` + `@drop-when:` leading comments on a derived attr. */
@@ -374,83 +369,15 @@ function readDerivedMarker(attr: JsxAttribute): { dropWhen?: string } | null {
   return { dropWhen: dropMatch?.[1] }
 }
 
-// ---------------------------------------------------------------------------
-// Widest-concrete rewrite (the wrap-stability key)
-// ---------------------------------------------------------------------------
-
-function applyWidestConcrete(
-  plans: Plan[],
-  byName: Map<string, ControlSelection>,
-): void {
-  for (const p of plans) {
-    if (p.hole !== 'attr' || p.node.wasForgotten()) continue
-    const ctrl = byName.get(p.key)
-    if (!ctrl) continue
-    if (p.marker === 'derived') continue // keep the real derived expression
-    widenAttr(p.node, p.attrName, ctrl)
-  }
-  stripMarkerAttrs(plans)
-  // Child holes: widen {ident} to a concrete child; slots stay verbatim.
-  for (const p of plans) {
-    if (p.hole !== 'child' || p.fragment || p.node.wasForgotten()) continue
-    const ctrl = byName.get(p.key)
-    if (!ctrl) continue
-    const wide =
-      ctrl.kind === 'icon'
-        ? '<MailIcon />'
-        : ctrl.kind === 'number'
-          ? `{${ctrl.default ?? 0}}`
-          : `{${JSON.stringify(String(ctrl.default ?? 'x'))}}`
-    p.node.replaceWithText(wide)
-  }
-}
-
-function widenAttr(
-  attr: JsxAttribute,
-  name: string,
-  ctrl: ControlSelection,
-): void {
-  switch (ctrl.kind) {
-    case 'boolean':
-      attr.replaceWithText(name) // shorthand
-      break
-    case 'number':
-      attr.setInitializer(`{${ctrl.default ?? 0}}`)
-      break
-    case 'icon':
-      attr.setInitializer(`{<MailIcon />}`)
-      break
-    default:
-      attr.setInitializer(JSON.stringify(String(ctrl.default ?? 'x')))
-  }
-}
-
-function stripMarkerAttrs(plans: Plan[]): void {
-  const owners = new Set<JsxElement | JsxSelfClosingElement>()
-  for (const p of plans) {
-    if (p.hole === 'attr' && p.marker === 'target' && !p.node.wasForgotten()) {
-      const parent = p.node.getFirstAncestorByKind(SyntaxKind.JsxElement)
-      if (parent) owners.add(parent)
-      const self = p.node.getFirstAncestorByKind(
-        SyntaxKind.JsxSelfClosingElement,
-      )
-      if (self) owners.add(self)
-    }
-  }
-  for (const owner of owners) {
-    const opening = Node.isJsxElement(owner) ? owner.getOpeningElement() : owner
-    for (const a of opening.getAttributes()) {
-      if (
-        Node.isJsxAttribute(a) &&
-        a.getNameNode().getText() === 'data-control-target'
-      )
-        a.remove()
-    }
-  }
+/** A static node's formatted lines, dedented so its first column is 0. */
+function nodeLines(node: Node): string[] {
+  const column = node.getStart() - node.getStartLinePos()
+  const [first = '', ...rest] = node.getText().split('\n')
+  return [first, ...rest.map((l) => (l.trim() === '' ? '' : l.slice(column)))]
 }
 
 // ---------------------------------------------------------------------------
-// Collect (from FORMATTED file)
+// Collect (from the FORMATTED file)
 // ---------------------------------------------------------------------------
 
 function collectImports(sf: SourceFile): ImportDecl[] {
@@ -491,237 +418,6 @@ function collectConsts(sf: SourceFile): ConstDecl[] {
   return out
 }
 
-function formattedRootBody(sf: SourceFile): { bodyText: string } {
-  const fn = findExportFunction(sf)
-  const root = fn && getRootJsxElement(fn)
-  if (!root) throw new OverlayError('formatted file lost its root JSX element')
-  return { bodyText: dedent(root.getText()) }
-}
-
-// ---------------------------------------------------------------------------
-// Slice the formatted body → segments ⋈ holes (sep-owned)
-// ---------------------------------------------------------------------------
-
-function sliceBody(
-  body: string,
-  plans: Plan[],
-): { segments: string[]; holes: Hole[] } {
-  type Located = {
-    plan: Plan
-    dropStart: number
-    dropEnd: number
-    sep?: string
-    padBefore?: string
-    raw: string
-  }
-  const located: Located[] = []
-
-  for (const p of plans) {
-    if (p.hole === 'attr') {
-      const loc = locateAttr(body, p.attrName)
-      if (!loc)
-        throw new OverlayError(
-          `attr "${p.attrName}" not found in formatted body`,
-        )
-      located.push({
-        plan: p,
-        dropStart: loc.start,
-        dropEnd: loc.end,
-        sep: loc.sep,
-        raw: body.slice(loc.start, loc.end),
-      })
-    } else {
-      const loc = locateChild(body, p)
-      if (!loc)
-        throw new OverlayError(`child "${p.key}" not found in formatted body`)
-      located.push({
-        plan: p,
-        dropStart: loc.start,
-        dropEnd: loc.end,
-        padBefore: loc.padBefore,
-        raw: body.slice(loc.start, loc.end),
-      })
-    }
-  }
-  located.sort((a, b) => a.dropStart - b.dropStart)
-
-  const segments: string[] = []
-  const holes: Hole[] = []
-  let cursor = 0
-  for (const L of located) {
-    segments.push(body.slice(cursor, L.dropStart))
-    holes.push(toHole(L.plan, L.sep, L.padBefore, L.raw))
-    cursor = L.dropEnd
-  }
-  segments.push(body.slice(cursor))
-  return { segments, holes }
-}
-
-/** Find an attribute's full span + the separator before it. Handles inline and wrapped. */
-function locateAttr(
-  body: string,
-  attrName: string,
-): { start: number; end: number; sep: string } | null {
-  const re = new RegExp(`(\\s+)${escapeRe(attrName)}(?=[\\s/>=])`, 'g')
-  const m = re.exec(body)
-  if (!m) return null
-  const sep = m[1] ?? ''
-  const nameEnd = m.index + sep.length + attrName.length
-  // Peek (without committing) past inline whitespace for a value `=`. If there is
-  // no value (boolean shorthand), the drop span ends at the name — trailing space
-  // belongs to the NEXT attr's sep / the following literal, never to this hole.
-  let j = nameEnd
-  while (j < body.length && /[^\S\n]/.test(body.charAt(j))) j++
-  let i = nameEnd
-  if (body[j] === '=') {
-    i = j + 1
-    while (i < body.length && /[^\S\n]/.test(body.charAt(i))) i++
-    if (body[i] === '{') {
-      let depth = 0
-      for (; i < body.length; i++) {
-        if (body[i] === '{') depth++
-        else if (body[i] === '}') {
-          depth--
-          if (depth === 0) {
-            i++
-            break
-          }
-        }
-      }
-    } else if (body[i] === '"' || body[i] === "'") {
-      const q = body[i]
-      i++
-      while (i < body.length && body[i] !== q) i++
-      i++
-    }
-  }
-  return { start: m.index, end: i, sep }
-}
-
-/** Find a child region's span + the padding (newline+indent) it owns. */
-function locateChild(
-  body: string,
-  p: ChildPlan,
-): { start: number; end: number; padBefore: string } | null {
-  const at = p.fragment
-    ? findSlotLine(body, p.key)
-    : body.indexOf(childToken(p))
-  if (at < 0) return null
-  const before = body.slice(0, at)
-  const pm = before.match(/(\n[ \t]*)$/)
-  const padBefore = pm?.[1] ?? ''
-  const start = at - padBefore.length
-  const end = at + regionLength(body, at)
-  return { start, end, padBefore }
-}
-
-function childToken(p: ChildPlan): string {
-  if (p.kind === 'icon') return '<MailIcon />'
-  if (p.kind === 'number') return `{${p.default ?? 0}}`
-  return `{${JSON.stringify(String(p.default ?? 'x'))}}`
-}
-
-function regionLength(body: string, at: number): number {
-  if (body[at] !== '{') {
-    const close = body.indexOf('/>', at)
-    return close >= 0 ? close + 2 - at : body.length - at
-  }
-  let depth = 0
-  for (let i = at; i < body.length; i++) {
-    if (body[i] === '{') depth++
-    else if (body[i] === '}') {
-      depth--
-      if (depth === 0) return i + 1 - at
-    }
-  }
-  return body.length - at
-}
-
-function findSlotLine(body: string, key: string): number {
-  const re = new RegExp(`\\{\\s*${escapeRe(key)}\\s*&&`)
-  const m = re.exec(body)
-  return m ? m.index : -1
-}
-
-function toHole(
-  plan: Plan,
-  sep: string | undefined,
-  padBefore: string | undefined,
-  raw: string,
-): Hole {
-  if (plan.hole === 'attr') {
-    const h: AttrHole = {
-      slot: 'attr',
-      control: plan.key,
-      attrName: plan.attrName,
-      kind: plan.kind,
-      default: plan.default,
-      sep: sep ?? ' ',
-    }
-    if (plan.dropWhen) h.dropWhen = plan.dropWhen
-    return h
-  }
-  const h: ChildHole = {
-    slot: 'child',
-    control: plan.key,
-    kind: plan.kind,
-    default: plan.default,
-    padBefore: padBefore ?? '',
-    padAfter: '',
-    droppable: true,
-  }
-  if (plan.fragment) h.fragment = innerizeFragment(raw, plan.key)
-  return h
-}
-
-/** From `{label && <Label>{label}</Label>}` produce `<Label>INNER</Label>`. */
-function innerizeFragment(raw: string, key: string): string {
-  const m = raw.match(/&&\s*([\s\S]*?)\s*\}$/)
-  const el = m?.[1] ?? raw
-  return el.replace(new RegExp(`\\{${escapeRe(key)}\\}`, 'g'), INNER)
-}
-
-// ---------------------------------------------------------------------------
-// selfClose + utils
-// ---------------------------------------------------------------------------
-
-function onlyHoleChildren(
-  root: JsxElement,
-  byName: Map<string, ControlSelection>,
-): boolean {
-  for (const child of root.getJsxChildren()) {
-    if (Node.isJsxText(child)) {
-      if (child.getText().trim() !== '') return false
-      continue
-    }
-    if (Node.isJsxExpression(child)) {
-      const e = child.getExpression()
-      if (!e) continue // {/* comment */}
-      if (Node.isIdentifier(e) && byName.has(e.getText())) continue
-      if (Node.isBinaryExpression(e) && byName.has(e.getLeft().getText()))
-        continue
-      return false // e.g. {items.map(...)}
-    }
-    if (Node.isJsxClosingElement(child) || Node.isJsxOpeningElement(child))
-      continue
-    return false // a real element child
-  }
-  return true
-}
-
-function dedent(code: string): string {
-  const lines = code.split('\n')
-  if (lines.length <= 1) return code
-  const min = lines.slice(1).reduce((m, l) => {
-    if (l.trim() === '') return m
-    return Math.min(m, l.match(/^(\s*)/)?.[1]?.length ?? 0)
-  }, Number.POSITIVE_INFINITY)
-  if (min === 0 || min === Number.POSITIVE_INFINITY) return code
-  return lines
-    .map((l, i) => (i === 0 ? l : l.trim() === '' ? '' : l.slice(min)))
-    .join('\n')
-}
-
 async function formatOrThrow(
   code: string,
   input: OverlayInput,
@@ -735,9 +431,6 @@ async function formatOrThrow(
   return r.code
 }
 
-function escapeRe(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
 function named(i: OverlayInput): string {
   return i.componentName ? ` (${i.componentName})` : ''
 }

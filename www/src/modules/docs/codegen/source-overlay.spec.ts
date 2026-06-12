@@ -78,7 +78,7 @@ export function Demo() {
 }`)
   })
 
-  it('all defaults: only children shown', async () => {
+  it('all defaults: only children shown, joined like oxfmt would', async () => {
     const { collapsed } = await gen(BUTTON_SRC, BUTTON_CONTROLS, {
       children: 'Button',
       variant: 'default',
@@ -86,9 +86,7 @@ export function Demo() {
       isDisabled: false,
       isPending: false,
     })
-    expect(collapsed).toBe(`<Button>
-  Button
-</Button>`)
+    expect(collapsed).toBe(`<Button>Button</Button>`)
   })
 
   it('empty children self-closes', async () => {
@@ -360,11 +358,10 @@ describe('tooltip', () => {
       placement: 'top',
       hideArrow: false,
     })
+    // With no attributes left, oxfmt joins the single text child onto one line.
     expect(collapsed).toBe(`<Tooltip>
   <Button>Hover me</Button>
-  <TooltipContent>
-    Tooltip content
-  </TooltipContent>
+  <TooltipContent>Tooltip content</TooltipContent>
 </Tooltip>`)
   })
 })

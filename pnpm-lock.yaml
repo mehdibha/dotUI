@@ -159,6 +159,9 @@ importers:
       globals-docs:
         specifier: ^2.4.1
         version: 2.4.1
+      hast-util-to-jsx-runtime:
+        specifier: ^2.3.6
+        version: 2.3.6
       lucide-react:
         specifier: ^1.16.0
         version: 1.16.0(react@19.2.1)

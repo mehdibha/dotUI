@@ -8,6 +8,7 @@ import { Node, Project, ScriptKind } from 'ts-morph'
 
 import { loadApiReference } from '../../references/loader'
 import type { PropDefinition, TType } from '../../references/types'
+import type { ControlSelection } from '../codegen/source-overlay'
 import type {
   BooleanControl,
   Control,
@@ -65,6 +66,21 @@ export async function buildControlsFromReference(
   }
 
   return controls
+}
+
+/**
+ * Project controls down to what the source overlay needs to plan holes.
+ * Single definition shared by the rehype build and the fidelity tests.
+ */
+export function toControlSelections(controls: Control[]): ControlSelection[] {
+  return controls.map((c) => ({
+    name: c.name,
+    kind: c.type,
+    default:
+      c.type === 'icon'
+        ? null
+        : (((c as { defaultValue?: unknown }).defaultValue as never) ?? null),
+  }))
 }
 
 // ============================================================================
