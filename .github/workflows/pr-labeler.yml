@@ -6,7 +6,7 @@ name: PR Checks
 
 on:
   pull_request_target:
-    branches: ['*']
+    branches: ['**']
     types: ['opened', 'edited', 'synchronize']
 
 jobs:
