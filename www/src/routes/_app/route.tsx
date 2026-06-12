@@ -10,7 +10,10 @@ const getPageTree = createServerFn({ method: 'GET' }).handler(
   async (): Promise<SerializedPageTree> => {
     const { getSerializedPageTree } = await import('@/lib/source')
     // The page tree is baked into the build, so let Vercel's CDN cache it
-    // until the next deploy purge.
+    // until the next deploy purge. During document SSR this header lands on
+    // the HTML response itself (h3 merges it into 2xx documents only) —
+    // harmless while nothing under _app renders per-request content, but
+    // revisit if auth/per-user SSR ever lands here.
     setResponseHeader(
       'Cache-Control',
       'public, max-age=0, must-revalidate, s-maxage=31536000',

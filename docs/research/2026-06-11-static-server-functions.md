@@ -2,7 +2,7 @@
 
 **Status:** assessment, 2026-06-11. Open question: migrate the docs data loading off `@tanstack/start-static-server-functions`? Recommendation below is to migrate to plain server functions + CDN cache headers.
 
-> Decision (2026-06-11): migrate — option B, implemented in the PR that adds this report. Measured before/after comparison appended at the bottom.
+> Decision (2026-06-11): migrate — option B, implemented in the PR that adds this report. Measured before/after comparison appended at the bottom. The shipped header drops the sketch's `stale-while-revalidate=60`: entries never expire within a deployment (`s-maxage` = 1 year) and a new deploy starts an empty cache, so there is never a stale entry to serve.
 
 ## TL;DR
 
