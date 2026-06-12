@@ -9,6 +9,7 @@ import { DEFAULT_EXPANDED, groupProps } from './groups'
 import type {
   ComponentApiReference,
   PropDefinition,
+  RenderPropsKind,
   TypeLinksRegistry,
 } from './types'
 import type { TType } from './types/type-ast'
@@ -38,6 +39,16 @@ export interface TransformedPropsData {
 }
 
 /**
+ * Transformed render prop (state) ready for rendering
+ */
+export interface TransformedRenderProp {
+  name: string
+  selector?: string
+  tailwind?: string
+  description?: string
+}
+
+/**
  * Fully transformed reference data ready for rendering
  */
 export interface TransformedReference {
@@ -45,6 +56,8 @@ export interface TransformedReference {
   description?: string
   extendsElement?: string
   data: TransformedPropsData
+  renderProps?: TransformedRenderProp[]
+  renderPropsKind?: RenderPropsKind
   typeLinks?: TypeLinksRegistry
   defaultExpandedGroups: string[]
 }
@@ -192,6 +205,13 @@ export function transformReference(
     description: data.description,
     extendsElement: data.extendsElement,
     data: transformedData,
+    renderProps: data.renderProps
+      ? Object.entries(data.renderProps).map(([name, renderProp]) => ({
+          name,
+          ...renderProp,
+        }))
+      : undefined,
+    renderPropsKind: data.renderPropsKind,
     typeLinks: data.typeLinks,
     defaultExpandedGroups: Array.from(DEFAULT_EXPANDED),
   }

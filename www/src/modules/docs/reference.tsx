@@ -9,7 +9,9 @@ import type {
   TransformedProp,
   TransformedPropsData,
   TransformedReference,
+  TransformedRenderProp,
 } from '@/modules/references/transform'
+import type { RenderPropsKind } from '@/modules/references/types'
 
 const GRID_LAYOUT =
   'grid grid-cols-[minmax(120px,1fr)_1fr_2.5rem] md:grid-cols-[5fr_7fr_4.5fr_2.5rem]'
@@ -49,6 +51,13 @@ export function Reference({ data, ...props }: ReferenceProps) {
           componentName={data.name}
           defaultExpandedGroups={data.defaultExpandedGroups}
         />
+        {data.renderProps && data.renderProps.length > 0 && (
+          <StatesTable
+            renderProps={data.renderProps}
+            kind={data.renderPropsKind}
+            componentName={data.name}
+          />
+        )}
       </div>
     </TypeRendererProvider>
   )
@@ -225,6 +234,148 @@ function PropRows({ prop, componentName }: PropRowsProps) {
                       __html: prop.defaultHighlighted ?? prop.default,
                     }}
                   />
+                </DescriptionItem>
+              )}
+            </dl>
+          </td>
+        </tr>
+      )}
+    </React.Fragment>
+  )
+}
+
+interface StatesTableProps {
+  renderProps: TransformedRenderProp[]
+  kind?: RenderPropsKind
+  componentName: string
+}
+
+function StatesTable({ renderProps, kind, componentName }: StatesTableProps) {
+  const nameHeader =
+    kind === 'data-attribute' ? 'Data attribute' : 'Render prop'
+  return (
+    <div className="mt-4 w-full overflow-hidden rounded-md border text-sm">
+      <table className="w-full border-collapse [&>tbody:last-child>tr:last-child]:border-b-0 [&>tbody:last-child>tr:last-child>td]:border-b-0">
+        <thead className="border-b bg-card">
+          <tr className={GRID_LAYOUT}>
+            <th className="px-3 py-2 text-left font-medium text-fg-muted">
+              {nameHeader}
+            </th>
+            <th className="px-3 py-2 text-left font-medium text-fg-muted">
+              CSS selector
+            </th>
+            <th className="hidden px-3 py-2 text-left font-medium text-fg-muted md:table-cell">
+              Tailwind selector
+            </th>
+            <th className="w-10 px-3 py-2" />
+          </tr>
+        </thead>
+        <tbody className="bg-bg">
+          {renderProps.map((renderProp) => (
+            <StateRows
+              key={renderProp.name}
+              renderProp={renderProp}
+              componentName={componentName}
+            />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+interface StateRowsProps {
+  renderProp: TransformedRenderProp
+  componentName: string
+}
+
+function StateRows({ renderProp, componentName }: StateRowsProps) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const id = `${componentName}-state-${renderProp.name}`
+
+  return (
+    <React.Fragment>
+      <tr
+        className={`${GRID_LAYOUT} cursor-pointer border-b transition-colors hover:bg-card`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <td className="overflow-hidden px-3 py-2.5">
+          <button
+            type="button"
+            id={id}
+            className="flex items-baseline gap-1 text-left"
+            aria-expanded={isOpen}
+          >
+            <code className="font-mono text-[0.8125rem] whitespace-nowrap text-fg">
+              {renderProp.name}
+            </code>
+          </button>
+        </td>
+
+        <td className="overflow-hidden px-3 py-2.5">
+          {renderProp.selector ? (
+            <code className="font-mono text-[0.8125rem] whitespace-nowrap text-fg-muted">
+              {renderProp.selector}
+            </code>
+          ) : (
+            <code className="font-mono text-[0.8125rem] text-fg-muted/50">
+              —
+            </code>
+          )}
+        </td>
+
+        <td className="hidden overflow-hidden px-3 py-2.5 md:table-cell">
+          {renderProp.tailwind ? (
+            <code className="font-mono text-[0.8125rem] whitespace-nowrap text-fg-muted">
+              {renderProp.tailwind}
+            </code>
+          ) : (
+            <code className="font-mono text-[0.8125rem] text-fg-muted/50">
+              —
+            </code>
+          )}
+        </td>
+
+        <td className="px-3 py-2.5 text-center">
+          <ChevronDownIcon
+            className={`inline-block size-4 text-fg-muted transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          />
+        </td>
+      </tr>
+
+      {isOpen && (
+        <tr className="border-b bg-card">
+          <td colSpan={4} className="px-3 py-3">
+            <dl className={PANEL_GRID_LAYOUT}>
+              <DescriptionItem label="Name">
+                <a href={`#${id}`} className="hover:underline">
+                  <code className="font-mono text-[0.8125rem] text-fg-accent">
+                    {renderProp.name}
+                  </code>
+                </a>
+              </DescriptionItem>
+
+              {renderProp.description && (
+                <DescriptionItem label="Description" hasSeparator>
+                  <div className="leading-relaxed text-fg-muted">
+                    {renderProp.description}
+                  </div>
+                </DescriptionItem>
+              )}
+
+              {renderProp.selector && (
+                <DescriptionItem label="CSS selector" hasSeparator>
+                  <code className="font-mono text-[0.8125rem] text-fg-muted">
+                    {renderProp.selector}
+                  </code>
+                </DescriptionItem>
+              )}
+
+              {renderProp.tailwind && (
+                <DescriptionItem label="Tailwind selector" hasSeparator>
+                  <code className="font-mono text-[0.8125rem] text-fg-muted">
+                    {renderProp.tailwind}
+                  </code>
                 </DescriptionItem>
               )}
             </dl>

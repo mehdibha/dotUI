@@ -12,6 +12,7 @@ import {
   RESOLVABLE_TYPE_PATTERNS,
   SKIP_RESOLVE_TYPES,
 } from './config'
+import { extractRenderProps } from './render-props'
 import {
   buildTypeAstFromString,
   type ConversionContext,
@@ -554,11 +555,6 @@ interface FormattedProp {
   description?: string
 }
 
-interface RenderPropInfo {
-  selector: string
-  description?: string
-}
-
 const registryDir = path.resolve(process.cwd(), 'src/registry')
 
 /**
@@ -633,8 +629,10 @@ export async function formatComponentData(
     extendsElement,
   )
 
-  // Extract render props (CSS state selectors)
-  const renderProps = extractRenderProps(exportNode.name, context)
+  // Extract the styling-state table (RAC render props or Base UI data attrs)
+  const states = extractRenderProps(exportNode.name, context)
+  const renderProps = states.props
+  const hasRenderProps = Object.keys(renderProps).length > 0
 
   // Collect type links for the component (sorted for deterministic output)
   const linkKeys = Object.keys(astContext.links).sort()
@@ -649,8 +647,13 @@ export async function formatComponentData(
     // Add extendsElement field if component extends an HTML element
     ...(extendsElement && { extendsElement }),
     props, // Keep natural TypeScript declaration order (like react-aria)
-    // Add renderProps field (only if not empty)
-    ...(Object.keys(renderProps).length > 0 && { renderProps }),
+    // Add the styling-state table (only if non-empty); flag Base UI tables so
+    // the docs can label the column "Data attribute" instead of "Render prop".
+    ...(hasRenderProps && { renderProps }),
+    ...(hasRenderProps &&
+      states.kind === 'data-attribute' && {
+        renderPropsKind: states.kind,
+      }),
     // Add type links for popover navigation
     ...(typeLinks && { typeLinks }),
   } as Record<string, unknown>
@@ -903,61 +906,6 @@ async function getPropsWithTypeChecker(
   // Local props come first (in ts-morph declaration order), then React Aria events
   // in their standard order, then remaining props
   return sortByDeclarationOrder(result, declarationOrder, originalOrder)
-}
-
-/**
- * Extract render props from component render props interfaces.
- * Looks for @selector JSDoc tags in properties of render props types
- * (e.g., ButtonRenderProps from ButtonProps).
- */
-function extractRenderProps(
-  propsTypeName: string,
-  context: ParserContext,
-): Record<string, RenderPropInfo> {
-  const { program, checker } = context
-  const result: Record<string, RenderPropInfo> = {}
-
-  // Derive render props type name from props type name
-  // e.g., "ButtonProps" -> "ButtonRenderProps"
-  const renderPropsTypeName = propsTypeName.replace(/Props$/, 'RenderProps')
-
-  // Search for the render props interface in all source files (including declaration files)
-  for (const sourceFile of program.getSourceFiles()) {
-    sourceFile.forEachChild((node) => {
-      if (
-        (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) &&
-        node.name.text === renderPropsTypeName
-      ) {
-        const symbol = checker.getSymbolAtLocation(node.name)
-        if (!symbol) return
-
-        const type = checker.getDeclaredTypeOfSymbol(symbol)
-        const properties = [...checker.getPropertiesOfType(type)].sort((a, b) =>
-          a.name.localeCompare(b.name),
-        )
-
-        for (const prop of properties) {
-          // Get JSDoc tags
-          const jsDocTags = prop.getJsDocTags(checker)
-          const selectorTag = jsDocTags.find((tag) => tag.name === 'selector')
-
-          if (selectorTag) {
-            const selectorValue = ts.displayPartsToString(selectorTag.text)
-            const description = ts.displayPartsToString(
-              prop.getDocumentationComment(checker),
-            )
-
-            result[prop.name] = {
-              selector: selectorValue.trim(),
-              ...(description && { description }),
-            }
-          }
-        }
-      }
-    })
-  }
-
-  return result
 }
 
 /**
