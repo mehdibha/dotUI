@@ -1,11 +1,11 @@
 'use client'
 
-import { Accordion } from '@/registry/ui/accordion'
 import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from '@/registry/ui/accordion'
 
 const items = [
   {
@@ -39,10 +39,10 @@ export default function Demo({
       className="max-w-2xl"
     >
       {items.map((item) => (
-        <Disclosure id={item.id} key={item.id}>
-          <DisclosureTrigger>{item.question}</DisclosureTrigger>
-          <DisclosurePanel>{item.answer}</DisclosurePanel>
-        </Disclosure>
+        <AccordionItem id={item.id} key={item.id}>
+          <AccordionTrigger>{item.question}</AccordionTrigger>
+          <AccordionPanel>{item.answer}</AccordionPanel>
+        </AccordionItem>
       ))}
     </Accordion>
   )

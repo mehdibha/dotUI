@@ -1,7 +1,12 @@
 'use client'
 
 import { cn } from '@/registry/lib/utils'
-import { Accordion } from '@/registry/ui/accordion'
+import {
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from '@/registry/ui/accordion'
 import {
   Card,
   CardContent,
@@ -10,11 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/registry/ui/card'
-import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from '@/registry/ui/disclosure'
 
 const faqs = [
   {
@@ -53,14 +53,14 @@ export function Faq({ className, ...props }: React.ComponentProps<'div'>) {
       <CardContent>
         <Accordion defaultExpandedKeys={['billing']} className="w-full min-w-0">
           {faqs.map((faq) => (
-            <Disclosure key={faq.id} id={faq.id}>
-              <DisclosureTrigger className="text-left text-sm">
+            <AccordionItem key={faq.id} id={faq.id}>
+              <AccordionTrigger className="text-left text-sm">
                 {faq.question}
-              </DisclosureTrigger>
-              <DisclosurePanel className="text-sm text-fg-muted">
+              </AccordionTrigger>
+              <AccordionPanel className="text-sm text-fg-muted">
                 {faq.answer}
-              </DisclosurePanel>
-            </Disclosure>
+              </AccordionPanel>
+            </AccordionItem>
           ))}
         </Accordion>
       </CardContent>

@@ -243,8 +243,7 @@ describe('select', () => {
 
 const ACCORDION_SRC = `"use client";
 
-import { Accordion } from "@/registry/ui/accordion";
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/registry/ui/disclosure";
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/registry/ui/accordion";
 
 const items = [
 	{ id: "a", question: "Q one?", answer: "A one." },
@@ -255,10 +254,10 @@ export default function Demo({ allowsMultipleExpanded = false, isDisabled = fals
 	return (
 		<Accordion allowsMultipleExpanded={allowsMultipleExpanded} isDisabled={isDisabled} className="max-w-2xl">
 			{items.map((item) => (
-				<Disclosure id={item.id} key={item.id}>
-					<DisclosureTrigger>{item.question}</DisclosureTrigger>
-					<DisclosurePanel>{item.answer}</DisclosurePanel>
-				</Disclosure>
+				<AccordionItem id={item.id} key={item.id}>
+					<AccordionTrigger>{item.question}</AccordionTrigger>
+					<AccordionPanel>{item.answer}</AccordionPanel>
+				</AccordionItem>
 			))}
 		</Accordion>
 	);
@@ -285,15 +284,14 @@ describe('accordion', () => {
 
 <Accordion allowsMultipleExpanded className="max-w-2xl">
   {items.map((item) => (
-    <Disclosure id={item.id} key={item.id}>
-      <DisclosureTrigger>{item.question}</DisclosureTrigger>
-      <DisclosurePanel>{item.answer}</DisclosurePanel>
-    </Disclosure>
+    <AccordionItem id={item.id} key={item.id}>
+      <AccordionTrigger>{item.question}</AccordionTrigger>
+      <AccordionPanel>{item.answer}</AccordionPanel>
+    </AccordionItem>
   ))}
 </Accordion>`)
     expect(expanded)
-      .toBe(`import { Accordion } from "@/components/ui/accordion";
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure";
+      .toBe(`import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/components/ui/accordion";
 
 const items = [
   { id: "a", question: "Q one?", answer: "A one." },
@@ -304,10 +302,10 @@ export function Demo() {
   return (
     <Accordion allowsMultipleExpanded className="max-w-2xl">
       {items.map((item) => (
-        <Disclosure id={item.id} key={item.id}>
-          <DisclosureTrigger>{item.question}</DisclosureTrigger>
-          <DisclosurePanel>{item.answer}</DisclosurePanel>
-        </Disclosure>
+        <AccordionItem id={item.id} key={item.id}>
+          <AccordionTrigger>{item.question}</AccordionTrigger>
+          <AccordionPanel>{item.answer}</AccordionPanel>
+        </AccordionItem>
       ))}
     </Accordion>
   );

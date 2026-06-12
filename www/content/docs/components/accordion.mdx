@@ -21,24 +21,24 @@ npx shadcn@latest add @dotui/accordion
 ## Anatomy
 
 ```tsx
-import { Accordion } from '@/components/ui/accordion'
 import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from '@/components/ui/disclosure'
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 ```
 
 ```tsx
 <Accordion>
-  <Disclosure>
-    <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
-    <DisclosurePanel>Disclosure Panel</DisclosurePanel>
-  </Disclosure>
-  <Disclosure>
-    <DisclosureTrigger>Disclosure Heading</DisclosureTrigger>
-    <DisclosurePanel>Disclosure Panel</DisclosurePanel>
-  </Disclosure>
+  <AccordionItem>
+    <AccordionTrigger>Accordion Heading</AccordionTrigger>
+    <AccordionPanel>Accordion Panel</AccordionPanel>
+  </AccordionItem>
+  <AccordionItem>
+    <AccordionTrigger>Accordion Heading</AccordionTrigger>
+    <AccordionPanel>Accordion Panel</AccordionPanel>
+  </AccordionItem>
 </Accordion>
 ```
 
@@ -47,3 +47,15 @@ import {
 ### Accordion
 
 <Reference name="accordion" />
+
+### AccordionItem
+
+<Reference name="accordion-item" />
+
+### AccordionTrigger
+
+<Reference name="accordion-trigger" />
+
+### AccordionPanel
+
+<Reference name="accordion-panel" />
