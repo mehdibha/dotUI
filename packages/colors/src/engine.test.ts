@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { getProducer, type ModeCtx } from './producer'
-import { registerBuiltins } from './producers'
+import { registerBuiltins } from './register-builtins'
 import type { BaseThemeOptions } from './schema'
 import { apca, toOklch, wcag2 } from './shared/color'
 import type { ColorScale, Theme } from './shared/types'

@@ -2,7 +2,7 @@
  * Pluggable color-producer registry.
  *
  * Every generation strategy implements {@link ColorProducer} and is registered
- * by `registerBuiltins()` (see ./producers). `createTheme` resolves a producer by
+ * by `registerBuiltins()` (see ./register-builtins). `createTheme` resolves a producer by
  * id and calls `produce` once per palette per mode. Adding an algorithm is one
  * `registerProducer` call — nothing downstream branches on the algorithm.
  */

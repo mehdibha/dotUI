@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
 
 import { type ColorProducer, hasProducer, registerProducer } from './producer'
-import { registerBuiltins } from './producers'
+import { registerBuiltins } from './register-builtins'
 import { createTheme } from './theme'
 
 // Isolated file: vitest gives each test file its own module instance, so registering
