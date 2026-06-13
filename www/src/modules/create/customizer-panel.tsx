@@ -351,7 +351,7 @@ export function CustomizerPanel({
   }
 
   return (
-    <div className="relative flex w-72 shrink-0 flex-col rounded-xl border bg-card">
+    <div className="relative flex h-full w-full flex-col rounded-xl border bg-card">
       {/* Header */}
       <div className="relative overflow-hidden border-b p-2">
         <div className="flex w-full items-center gap-2">
