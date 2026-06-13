@@ -1,5 +1,10 @@
 'use client'
 
+import { useMemo } from 'react'
+
+import { toHex } from '@dotui/colors'
+
+import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 import { ColorArea } from '@/registry/ui/color-area'
 import { ColorField } from '@/registry/ui/color-field'
@@ -16,45 +21,19 @@ import { useDesignSystem } from './preset'
 /**
  * The categorical chart palette. Each slot derives from a theme hue by default
  * (emitted as `var(--chart-N)` in the registry theme) so charts track the brand;
- * picking a color here writes an explicit `--chart-N` token override. "Match
+ * picking a color here writes an explicit `--chart-N` token override, and "Match
  * theme" restores the derived default.
  *
- * NOTE: the derived defaults are OKLCH, which the color picker can't parse, so
- * the picker seeds from `fallback` (a close hex) while the live swatch always
- * shows the real `var(--chart-N)`. Engine-level accent hue-rotation + a count
- * knob are the planned refinement (docs/plans/2026-06-13-charts/001).
+ * The picker can't parse the OKLCH ramps, so we resolve each slot's current
+ * theme hue to hex (`toHex`) to seed the picker accurately; the live swatch
+ * always reflects the real `var(--chart-N)`.
  */
 const CHART_SLOTS = [
-  {
-    token: '--chart-1',
-    label: 'Chart 1',
-    palette: 'accent',
-    fallback: '#6366f1',
-  },
-  {
-    token: '--chart-2',
-    label: 'Chart 2',
-    palette: 'success',
-    fallback: '#22c55e',
-  },
-  {
-    token: '--chart-3',
-    label: 'Chart 3',
-    palette: 'warning',
-    fallback: '#f59e0b',
-  },
-  {
-    token: '--chart-4',
-    label: 'Chart 4',
-    palette: 'danger',
-    fallback: '#ef4444',
-  },
-  {
-    token: '--chart-5',
-    label: 'Chart 5',
-    palette: 'info',
-    fallback: '#3b82f6',
-  },
+  { token: '--chart-1', label: 'Chart 1', palette: 'accent' },
+  { token: '--chart-2', label: 'Chart 2', palette: 'success' },
+  { token: '--chart-3', label: 'Chart 3', palette: 'warning' },
+  { token: '--chart-4', label: 'Chart 4', palette: 'danger' },
+  { token: '--chart-5', label: 'Chart 5', palette: 'info' },
 ] as const
 
 /** Collapsed-card summary: the five live chart colors as swatches. */
@@ -81,12 +60,28 @@ export function ChartColorsSummary() {
 export function ChartColorsConfig() {
   const { designSystem, setToken } = useDesignSystem()
   const tokens = designSystem.tokens ?? {}
+  const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
+
+  // Resolve each slot's theme hue (its palette's mid step) to hex so the picker
+  // seeds from the color the chart actually shows by default.
+  const derived = useMemo(() => {
+    const resolved = resolveColorConfig(config)
+    const out: Record<string, string> = {}
+    for (const slot of CHART_SLOTS) {
+      const ramp = resolved.light[slot.palette] as
+        | Record<string, string>
+        | undefined
+      const value = ramp?.['500']
+      out[slot.token] = value ? toHex(value) : '#808080'
+    }
+    return out
+  }, [config])
 
   return (
     <div className="-mt-6 flex flex-col gap-4">
       <p className="text-xs text-fg-muted">
-        Charts read this palette via <code>var(--chart-N)</code>. By default
-        each color follows a theme hue; pick a color to override it.
+        Charts read this palette via <code>var(--chart-N)</code>. Each color
+        follows a theme hue by default; pick a color to override it.
       </p>
 
       <div className="grid grid-cols-2 gap-4">
@@ -94,7 +89,7 @@ export function ChartColorsConfig() {
           const override = tokens[slot.token]
           const pickerValue = override?.startsWith('#')
             ? override
-            : slot.fallback
+            : derived[slot.token]
           return (
             <ColorPicker
               key={slot.token}
