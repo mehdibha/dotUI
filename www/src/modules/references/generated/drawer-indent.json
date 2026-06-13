@@ -3,14 +3,11 @@
   "description": "Wraps page content; scales/translates while a drawer is open.",
   "props": {
     "className": {
-      "type": "string | ((state: DrawerIndentState) => string | undefined)",
-      "detailedType": "| string\n| ((state: DrawerIndentState) => string | undefined)\n| undefined",
+      "type": "string | (values: DrawerIndentState) => string",
+      "detailedType": "string | (values: DrawerIndentState) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "undefined"
-          },
           {
             "type": "string"
           },
@@ -19,10 +16,10 @@
             "parameters": [
               {
                 "type": "parameter",
-                "name": "state",
+                "name": "values",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState",
+                  "id": "DrawerIndentState",
                   "name": "DrawerIndentState"
                 },
                 "optional": false,
@@ -30,66 +27,20 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "string"
-                }
-              ]
+              "type": "string"
             },
             "typeParameters": []
           }
         ]
       },
-      "description": "CSS class applied to the element, or a function that\nreturns a class based on the component's state."
-    },
-    "render": {
-      "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DrawerIndentState>",
-      "detailedType": "| ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >\n| ComponentRenderFn<HTMLProps, DrawerIndentState>\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "ReactElement"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "identifier",
-              "name": "ComponentRenderFn"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "HTMLProps"
-              },
-              {
-                "type": "link",
-                "id": "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState",
-                "name": "DrawerIndentState"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Allows you to replace the component's HTML element\nwith a different tag, or compose it with another component.\n\nAccepts a `ReactElement` or a function that returns the element to render."
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "CSSProperties | ((state: DrawerIndentState) => CSSProperties | undefined)",
-      "detailedType": "| CSSProperties\n| ((\n    state: DrawerIndentState,\n  ) => CSSProperties | undefined)\n| undefined",
+      "type": "CSSProperties | (values: DrawerIndentState) => CSSProperties",
+      "detailedType": "CSSProperties | (values: DrawerIndentState) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "undefined"
-          },
           {
             "type": "identifier",
             "name": "CSSProperties"
@@ -99,10 +50,10 @@
             "parameters": [
               {
                 "type": "parameter",
-                "name": "state",
+                "name": "values",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState",
+                  "id": "DrawerIndentState",
                   "name": "DrawerIndentState"
                 },
                 "optional": false,
@@ -110,30 +61,20 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
         ]
       },
-      "description": "Style applied to the element, or a function that\nreturns a style object based on the component's state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState": {
+    "DrawerIndentState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState",
       "name": "DrawerIndentState",
-      "extends": [],
       "properties": {
         "active": {
           "type": "property",
@@ -145,9 +86,7 @@
           "readonly": false,
           "description": "Whether any drawer within the nearest <Drawer.Provider> is open."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }
