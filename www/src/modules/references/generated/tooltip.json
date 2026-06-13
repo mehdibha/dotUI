@@ -97,19 +97,5 @@
       },
       "description": "Handler that is called when the overlay's open state changes."
     }
-  },
-  "renderProps": {
-    "isEntering": {
-      "selector": "[data-entering]",
-      "description": "Whether the tooltip is currently entering. Use this to apply animations."
-    },
-    "isExiting": {
-      "selector": "[data-exiting]",
-      "description": "Whether the tooltip is currently exiting. Use this to apply animations."
-    },
-    "placement": {
-      "selector": "[data-placement=\"left | right | top | bottom\"]",
-      "description": "The placement of the tooltip relative to the trigger."
-    }
   }
 }

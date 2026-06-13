@@ -384,13 +384,15 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the toggle button group is disabled."
-    },
     "orientation": {
       "selector": "[data-orientation=\"horizontal | vertical\"]",
+      "tailwind": "orientation-horizontal: | orientation-vertical:",
       "description": "The orientation of the toggle button group."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the toggle button group is disabled."
     }
   },
   "typeLinks": {

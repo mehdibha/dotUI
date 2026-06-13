@@ -53,11 +53,5 @@
       },
       "description": "Handler that is called when the overlay's open state changes."
     }
-  },
-  "renderProps": {
-    "isEmpty": {
-      "selector": "[data-empty]",
-      "description": "Whether the menu has no items and should display its empty state."
-    }
   }
 }

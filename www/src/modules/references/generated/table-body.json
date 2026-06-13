@@ -302,13 +302,15 @@
     }
   },
   "renderProps": {
-    "isDropTarget": {
-      "selector": "[data-drop-target]",
-      "description": "Whether the Table is currently the active drop target."
-    },
     "isEmpty": {
       "selector": "[data-empty]",
+      "tailwind": "empty:",
       "description": "Whether the table body has no rows and should display its empty state."
+    },
+    "isDropTarget": {
+      "selector": "[data-drop-target]",
+      "tailwind": "drop-target:",
+      "description": "Whether the Table is currently the active drop target."
     }
   },
   "typeLinks": {

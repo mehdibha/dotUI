@@ -815,18 +815,22 @@
   "renderProps": {
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the number field is disabled."
     },
     "isInvalid": {
       "selector": "[data-invalid]",
+      "tailwind": "invalid:",
       "description": "Whether the number field is invalid."
     },
     "isReadOnly": {
       "selector": "[data-readonly]",
+      "tailwind": "read-only:",
       "description": "Whether the number field is read only."
     },
     "isRequired": {
       "selector": "[data-required]",
+      "tailwind": "required:",
       "description": "Whether the number field is required."
     }
   },

@@ -253,6 +253,53 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the switch invalid."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "tailwind": "required:",
+      "description": "Whether the switch is required."
+    },
+    "isSelected": {
+      "selector": "[data-selected]",
+      "tailwind": "selected:",
+      "description": "Whether the switch is selected."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the switch is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "tailwind": "pressed:",
+      "description": "Whether the switch is currently in a pressed state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the switch is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the switch is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the switch is disabled."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "tailwind": "read-only:",
+      "description": "Whether the switch is read only."
+    }
+  },
   "typeLinks": {
     "HoverEvent": {
       "type": "interface",

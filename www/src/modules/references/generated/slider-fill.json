@@ -221,17 +221,20 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the slider is disabled."
-    },
     "isHovered": {
       "selector": "[data-hovered]",
+      "tailwind": "hover:",
       "description": "Whether the slider fill is currently hovered with a mouse."
     },
     "orientation": {
       "selector": "[data-orientation=\"horizontal | vertical\"]",
+      "tailwind": "orientation-horizontal: | orientation-vertical:",
       "description": "The orientation of the slider."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the slider is disabled."
     }
   },
   "typeLinks": {

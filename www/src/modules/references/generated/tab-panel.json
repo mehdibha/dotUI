@@ -187,25 +187,30 @@
     }
   },
   "renderProps": {
-    "isEntering": {
-      "selector": "[data-entering]",
-      "description": "Whether the tab panel is currently entering. Use this to apply animations."
-    },
-    "isExiting": {
-      "selector": "[data-exiting]",
-      "description": "Whether the tab panel is currently exiting. Use this to apply animations."
-    },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the tab panel is currently focused."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the tab panel is currently keyboard focused."
     },
     "isInert": {
       "selector": "[data-inert]",
+      "tailwind": "data-inert:",
       "description": "Whether the tab panel is currently non-interactive. This occurs when the\n`shouldForceMount` prop is true, and the corresponding tab is not selected."
+    },
+    "isEntering": {
+      "selector": "[data-entering]",
+      "tailwind": "entering:",
+      "description": "Whether the tab panel is currently entering. Use this to apply animations."
+    },
+    "isExiting": {
+      "selector": "[data-exiting]",
+      "tailwind": "exiting:",
+      "description": "Whether the tab panel is currently exiting. Use this to apply animations."
     }
   },
   "typeLinks": {

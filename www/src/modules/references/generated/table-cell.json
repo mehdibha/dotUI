@@ -170,6 +170,63 @@
       "description": "A string representation of the cell's contents, used for features like typeahead."
     }
   },
+  "renderProps": {
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "tailwind": "pressed:",
+      "description": "Whether the cell is currently in a pressed state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the cell is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the cell is currently keyboard focused."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the cell is currently hovered with a mouse."
+    },
+    "isSelected": {
+      "selector": "[data-selected]",
+      "tailwind": "selected:",
+      "description": "Whether the parent row is currently selected."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the parent row is non-interactive, i.e. both selection and actions are disabled and the\nitem may not be focused. Dependent on `disabledKeys` and `disabledBehavior`."
+    },
+    "isFocusVisibleWithinRow": {
+      "selector": "[data-focus-visible-within-row]",
+      "tailwind": "data-focus-visible-within-row:",
+      "description": "Whether keyboard focus is visible anywhere within the parent row."
+    },
+    "isTreeColumn": {
+      "selector": "[data-tree-column]",
+      "tailwind": "data-tree-column:",
+      "description": "Whether the column displays hierarchical data."
+    },
+    "isExpanded": {
+      "selector": "[data-expanded]",
+      "tailwind": "expanded:",
+      "description": "Whether the parent row is expanded."
+    },
+    "hasChildItems": {
+      "selector": "[data-has-child-items]",
+      "tailwind": "has-child-items:",
+      "description": "Whether the parent row has child rows."
+    },
+    "level": {
+      "selector": "[data-level]",
+      "tailwind": "data-level:",
+      "description": "What level the parent row has within the table."
+    }
+  },
   "typeLinks": {
     "CellRenderProps": {
       "type": "interface",

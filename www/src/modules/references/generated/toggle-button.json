@@ -836,29 +836,35 @@
     }
   },
   "renderProps": {
+    "isSelected": {
+      "selector": "[data-selected]",
+      "tailwind": "selected:",
+      "description": "Whether the button is currently selected."
+    },
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the button is disabled."
     },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the button is focused, either via a mouse or keyboard."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the button is keyboard focused."
     },
     "isHovered": {
       "selector": "[data-hovered]",
+      "tailwind": "hover:",
       "description": "Whether the button is currently hovered with a mouse."
     },
     "isPressed": {
       "selector": "[data-pressed]",
+      "tailwind": "pressed:",
       "description": "Whether the button is currently in a pressed state."
-    },
-    "isSelected": {
-      "selector": "[data-selected]",
-      "description": "Whether the button is currently selected."
     }
   },
   "typeLinks": {

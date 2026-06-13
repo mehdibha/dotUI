@@ -559,41 +559,30 @@
     }
   },
   "renderProps": {
+    "isSelected": {
+      "selector": "[data-selected]",
+      "tailwind": "selected:",
+      "description": "Whether the radio is selected."
+    },
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the radio is disabled."
-    },
-    "isFocused": {
-      "selector": "[data-focused]",
-      "description": "Whether the radio is focused, either via a mouse or keyboard."
-    },
-    "isFocusVisible": {
-      "selector": "[data-focus-visible]",
-      "description": "Whether the radio is keyboard focused."
-    },
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the radio is currently hovered with a mouse."
-    },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the radio is invalid."
-    },
-    "isPressed": {
-      "selector": "[data-pressed]",
-      "description": "Whether the radio is currently in a pressed state."
     },
     "isReadOnly": {
       "selector": "[data-readonly]",
+      "tailwind": "read-only:",
       "description": "Whether the radio is read only."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the radio is invalid."
     },
     "isRequired": {
       "selector": "[data-required]",
+      "tailwind": "required:",
       "description": "Whether the checkbox is required."
-    },
-    "isSelected": {
-      "selector": "[data-selected]",
-      "description": "Whether the radio is selected."
     }
   },
   "typeLinks": {

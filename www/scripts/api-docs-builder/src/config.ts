@@ -66,6 +66,17 @@ export const ALWAYS_EXPAND_TYPES = new Set([
 ])
 
 /**
+ * Render-props sources that can't be resolved from the `className` prop.
+ * Maps a Props export name to the render-props interface to document
+ * instead, or `null` to suppress the states table for that component.
+ */
+export const RENDER_PROPS_SOURCES: Record<string, string | null> = {
+  // className is narrowed to a plain string, but the underlying React Aria
+  // element still carries the state data attributes.
+  ColorThumbProps: 'ColorThumbRenderProps',
+}
+
+/**
  * Standard order for React Aria event props.
  * This ensures consistent ordering regardless of TypeScript's internal caching.
  * Order matches the declaration order in React Aria's type definitions.

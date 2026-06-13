@@ -547,6 +547,13 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "isEmpty": {
+      "selector": "[data-empty]",
+      "tailwind": "empty:",
+      "description": "Whether the menu has no items and should display its empty state."
+    }
+  },
   "typeLinks": {
     "@types/react/index.d.ts:ReactPortal": {
       "type": "interface",

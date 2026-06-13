@@ -1081,24 +1081,29 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the search field is disabled."
-    },
     "isEmpty": {
       "selector": "[data-empty]",
+      "tailwind": "empty:",
       "description": "Whether the search field is empty."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the search field is disabled."
     },
     "isInvalid": {
       "selector": "[data-invalid]",
+      "tailwind": "invalid:",
       "description": "Whether the search field is invalid."
     },
     "isReadOnly": {
       "selector": "[data-readonly]",
+      "tailwind": "read-only:",
       "description": "Whether the search field is read only."
     },
     "isRequired": {
       "selector": "[data-required]",
+      "tailwind": "required:",
       "description": "Whether the search field is required."
     }
   },

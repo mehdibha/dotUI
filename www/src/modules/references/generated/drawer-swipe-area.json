@@ -146,6 +146,34 @@
       "description": "The swipe direction that opens the drawer.\nDefaults to the opposite of `Drawer.Root` `swipeDirection`."
     }
   },
+  "renderProps": {
+    "open": {
+      "selector": "[data-open]",
+      "tailwind": "data-open:",
+      "description": "Present when the drawer is open."
+    },
+    "closed": {
+      "selector": "[data-closed]",
+      "tailwind": "data-closed:",
+      "description": "Present when the drawer is closed."
+    },
+    "disabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "data-disabled:",
+      "description": "Present when the swipe area is disabled."
+    },
+    "swipeDirection": {
+      "selector": "[data-swipe-direction]",
+      "tailwind": "data-swipe-direction:",
+      "description": "Indicates the swipe direction."
+    },
+    "swiping": {
+      "selector": "[data-swiping]",
+      "tailwind": "data-swiping:",
+      "description": "Present when the drawer is being swiped."
+    }
+  },
+  "renderPropsKind": "data-attribute",
   "typeLinks": {
     "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState": {
       "type": "interface",

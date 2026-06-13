@@ -304,6 +304,7 @@
   "renderProps": {
     "orientation": {
       "selector": "[data-orientation=\"horizontal | vertical\"]",
+      "tailwind": "orientation-horizontal: | orientation-vertical:",
       "description": "The orientation of the tabs."
     }
   },

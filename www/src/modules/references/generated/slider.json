@@ -378,13 +378,15 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the slider is disabled."
-    },
     "orientation": {
       "selector": "[data-orientation=\"horizontal | vertical\"]",
+      "tailwind": "orientation-horizontal: | orientation-vertical:",
       "description": "The orientation of the slider."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the slider is disabled."
     }
   },
   "typeLinks": {

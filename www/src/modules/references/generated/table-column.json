@@ -366,6 +366,43 @@
       "description": "The width of the column. This prop only applies when the `<Table>` is wrapped in a\n`<ResizableTableContainer>`."
     }
   },
+  "renderProps": {
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the column is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "tailwind": "pressed:",
+      "description": "Whether the column is currently in a pressed state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the column is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the column is currently keyboard focused."
+    },
+    "allowsSorting": {
+      "selector": "[data-allows-sorting]",
+      "tailwind": "allows-sorting:",
+      "description": "Whether the column allows sorting."
+    },
+    "sortDirection": {
+      "selector": "[data-sort-direction=\"ascending | descending\"]",
+      "tailwind": "sort-ascending: | sort-descending:",
+      "description": "The current sort direction."
+    },
+    "isResizing": {
+      "selector": "[data-resizing]",
+      "tailwind": "resizing:",
+      "description": "Whether the column is currently being resized."
+    }
+  },
   "typeLinks": {
     "ColumnRenderProps": {
       "type": "interface",

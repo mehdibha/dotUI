@@ -1024,6 +1024,33 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "isOpen": {
+      "selector": "[data-open]",
+      "tailwind": "open:",
+      "description": "Whether the combobox is currently open."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the combobox is disabled."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the combobox is invalid."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "tailwind": "required:",
+      "description": "Whether the combobox is required."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "tailwind": "read-only:",
+      "description": "Whether the combobox is read only."
+    }
+  },
   "typeLinks": {
     "ComboBoxRenderProps": {
       "type": "interface",

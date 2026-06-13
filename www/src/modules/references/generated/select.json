@@ -829,28 +829,34 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the select is disabled."
-    },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the select is focused, either via a mouse or keyboard."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the select is keyboard focused."
     },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the select is invalid."
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the select is disabled."
     },
     "isOpen": {
       "selector": "[data-open]",
+      "tailwind": "open:",
       "description": "Whether the select is currently open."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the select is invalid."
     },
     "isRequired": {
       "selector": "[data-required]",
+      "tailwind": "required:",
       "description": "Whether the select is required."
     }
   },

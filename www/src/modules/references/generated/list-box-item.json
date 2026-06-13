@@ -750,44 +750,39 @@
     }
   },
   "renderProps": {
-    "allowsDragging": {
-      "selector": "[data-allows-dragging]",
-      "description": "Whether the item allows dragging."
-    },
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item\nmay not be focused. Dependent on `disabledKeys` and `disabledBehavior`."
-    },
-    "isDragging": {
-      "selector": "[data-dragging]",
-      "description": "Whether the item is currently being dragged."
-    },
-    "isDropTarget": {
-      "selector": "[data-drop-target]",
-      "description": "Whether the item is currently an active drop target."
-    },
-    "isFocused": {
-      "selector": "[data-focused]",
-      "description": "Whether the item is currently focused."
-    },
-    "isFocusVisible": {
-      "selector": "[data-focus-visible]",
-      "description": "Whether the item is currently keyboard focused."
-    },
     "isHovered": {
       "selector": "[data-hovered]",
+      "tailwind": "hover:",
       "description": "Whether the item is currently hovered with a mouse."
     },
     "isPressed": {
       "selector": "[data-pressed]",
+      "tailwind": "pressed:",
       "description": "Whether the item is currently in a pressed state."
     },
     "isSelected": {
       "selector": "[data-selected]",
+      "tailwind": "selected:",
       "description": "Whether the item is currently selected."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the item is currently focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the item is currently keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the item is non-interactive, i.e. both selection and actions are disabled and the item\nmay not be focused. Dependent on `disabledKeys` and `disabledBehavior`."
     },
     "selectionMode": {
       "selector": "[data-selection-mode=\"single | multiple\"]",
+      "tailwind": "selection-single: | selection-multiple:",
       "description": "The type of selection that is allowed in the collection."
     }
   },

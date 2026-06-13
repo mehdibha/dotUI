@@ -933,31 +933,38 @@
   "renderProps": {
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the date picker is disabled."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "tailwind": "read-only:",
+      "description": "Whether the date picker is read only."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the date picker is invalid."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "tailwind": "required:",
+      "description": "Whether the date picker is required."
+    },
+    "isOpen": {
+      "selector": "[data-open]",
+      "tailwind": "open:",
+      "description": "Whether the date picker's popover is currently open."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether an element within the date picker is keyboard focused."
     },
     "isFocusWithin": {
       "selector": "[data-focus-within]",
+      "tailwind": "focus-within:",
       "description": "Whether an element within the date picker is focused, either via a mouse or keyboard."
-    },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the date picker is invalid."
-    },
-    "isOpen": {
-      "selector": "[data-open]",
-      "description": "Whether the date picker's popover is currently open."
-    },
-    "isReadOnly": {
-      "selector": "[data-readonly]",
-      "description": "Whether the date picker is read only."
-    },
-    "isRequired": {
-      "selector": "[data-required]",
-      "description": "Whether the date picker is required."
     }
   },
   "typeLinks": {

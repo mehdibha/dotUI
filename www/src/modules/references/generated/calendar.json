@@ -677,10 +677,12 @@
   "renderProps": {
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the calendar is disabled."
     },
     "isInvalid": {
       "selector": "[data-invalid]",
+      "tailwind": "invalid:",
       "description": "Whether the calendar is invalid."
     }
   },

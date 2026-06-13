@@ -419,6 +419,59 @@
       "description": "The OTP value."
     }
   },
+  "renderProps": {
+    "complete": {
+      "selector": "[data-complete]",
+      "tailwind": "data-complete:",
+      "description": "Present when all slots are filled."
+    },
+    "disabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "data-disabled:",
+      "description": "Present when the OTP field is disabled."
+    },
+    "readonly": {
+      "selector": "[data-readonly]",
+      "tailwind": "data-readonly:",
+      "description": "Present when the OTP field is readonly."
+    },
+    "required": {
+      "selector": "[data-required]",
+      "tailwind": "data-required:",
+      "description": "Present when the OTP field is required."
+    },
+    "valid": {
+      "selector": "[data-valid]",
+      "tailwind": "data-valid:",
+      "description": "Present when the OTP field is in a valid state (when wrapped in Field.Root)."
+    },
+    "invalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "data-invalid:",
+      "description": "Present when the OTP field is in an invalid state (when wrapped in Field.Root)."
+    },
+    "touched": {
+      "selector": "[data-touched]",
+      "tailwind": "data-touched:",
+      "description": "Present when the OTP field has been touched (when wrapped in Field.Root)."
+    },
+    "dirty": {
+      "selector": "[data-dirty]",
+      "tailwind": "data-dirty:",
+      "description": "Present when the OTP field's value has changed (when wrapped in Field.Root)."
+    },
+    "filled": {
+      "selector": "[data-filled]",
+      "tailwind": "data-filled:",
+      "description": "Present when the OTP field contains at least one character."
+    },
+    "focused": {
+      "selector": "[data-focused]",
+      "tailwind": "data-focused:",
+      "description": "Present when one of the OTP field inputs is focused."
+    }
+  },
+  "renderPropsKind": "data-attribute",
   "typeLinks": {
     "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState": {
       "type": "interface",

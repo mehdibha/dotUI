@@ -214,17 +214,20 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the disclosure is disabled."
-    },
     "isExpanded": {
       "selector": "[data-expanded]",
+      "tailwind": "expanded:",
       "description": "Whether the disclosure is expanded."
     },
     "isFocusVisibleWithin": {
       "selector": "[data-focus-visible-within]",
+      "tailwind": "data-focus-visible-within:",
       "description": "Whether the disclosure has keyboard focus."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the disclosure is disabled."
     }
   },
   "typeLinks": {

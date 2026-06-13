@@ -96,5 +96,58 @@
       },
       "description": "The content of the drawer."
     }
-  }
+  },
+  "renderProps": {
+    "open": {
+      "selector": "[data-open]",
+      "tailwind": "data-open:",
+      "description": "Present when the drawer is open."
+    },
+    "closed": {
+      "selector": "[data-closed]",
+      "tailwind": "data-closed:",
+      "description": "Present when the drawer is closed."
+    },
+    "startingStyle": {
+      "selector": "[data-starting-style]",
+      "tailwind": "data-starting-style:",
+      "description": "Present when the drawer is animating in."
+    },
+    "endingStyle": {
+      "selector": "[data-ending-style]",
+      "tailwind": "data-ending-style:",
+      "description": "Present when the drawer is animating out."
+    },
+    "expanded": {
+      "selector": "[data-expanded]",
+      "tailwind": "data-expanded:",
+      "description": "Present when the drawer is at the expanded (full-height) snap point."
+    },
+    "nestedDrawerOpen": {
+      "selector": "[data-nested-drawer-open]",
+      "tailwind": "data-nested-drawer-open:",
+      "description": "Present when a nested drawer is open."
+    },
+    "nestedDrawerSwiping": {
+      "selector": "[data-nested-drawer-swiping]",
+      "tailwind": "data-nested-drawer-swiping:",
+      "description": "Present when a nested drawer is being swiped."
+    },
+    "swipeDismiss": {
+      "selector": "[data-swipe-dismiss]",
+      "tailwind": "data-swipe-dismiss:",
+      "description": "Present when the drawer is dismissed by swiping."
+    },
+    "swipeDirection": {
+      "selector": "[data-swipe-direction]",
+      "tailwind": "data-swipe-direction:",
+      "description": "Indicates the swipe direction."
+    },
+    "swiping": {
+      "selector": "[data-swiping]",
+      "tailwind": "data-swiping:",
+      "description": "Present when the drawer is being swiped."
+    }
+  },
+  "renderPropsKind": "data-attribute"
 }

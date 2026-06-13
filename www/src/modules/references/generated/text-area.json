@@ -177,6 +177,33 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the input is currently hovered with a mouse."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the input is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the input is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the input is disabled."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the input is invalid."
+    }
+  },
   "typeLinks": {
     "HoverEvent": {
       "type": "interface",

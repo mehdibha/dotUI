@@ -324,6 +324,7 @@
   "renderProps": {
     "isHovered": {
       "selector": "[data-hovered]",
+      "tailwind": "hover:",
       "description": "Whether the table header is currently hovered with a mouse."
     }
   },
