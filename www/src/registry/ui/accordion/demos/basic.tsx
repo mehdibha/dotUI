@@ -1,9 +1,9 @@
-import { Accordion } from '@/registry/ui/accordion'
 import {
-  Disclosure,
-  DisclosurePanel,
-  DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+  Accordion,
+  AccordionItem,
+  AccordionPanel,
+  AccordionTrigger,
+} from '@/registry/ui/accordion'
 
 const items = [
   {
@@ -32,10 +32,10 @@ export default function Demo() {
   return (
     <Accordion className="max-w-md">
       {items.map((item) => (
-        <Disclosure key={item.question}>
-          <DisclosureTrigger>{item.question}</DisclosureTrigger>
-          <DisclosurePanel>{item.answer}</DisclosurePanel>
-        </Disclosure>
+        <AccordionItem key={item.question}>
+          <AccordionTrigger>{item.question}</AccordionTrigger>
+          <AccordionPanel>{item.answer}</AccordionPanel>
+        </AccordionItem>
       ))}
     </Accordion>
   )
