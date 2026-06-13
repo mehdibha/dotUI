@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
 import type * as PageTree from 'fumadocs-core/page-tree'
 
@@ -51,8 +52,26 @@ function DocsSidebarLink({
   item: DocsPageItem
   isActive: boolean
 }) {
+  const ref = useRef<HTMLAnchorElement>(null)
+  // In the long flat Components list the active page can sit far down the
+  // overflow-y-auto nav; pull it into view on load / navigation. Guarded so it
+  // only scrolls when actually out of view. `behavior: 'instant'` is required —
+  // the nav uses `scroll-smooth`, which otherwise swallows this programmatic
+  // scroll on mount.
+  useEffect(() => {
+    if (!isActive) return
+    const el = ref.current
+    const scroller = el?.closest('nav')
+    if (!el || !scroller) return
+    const er = el.getBoundingClientRect()
+    const sr = scroller.getBoundingClientRect()
+    if (er.top < sr.top || er.bottom > sr.bottom) {
+      el.scrollIntoView({ block: 'nearest', behavior: 'instant' })
+    }
+  }, [isActive])
+
   return (
-    <Link to={item.url} className="text-[0.8rem]">
+    <Link ref={ref} to={item.url} className="text-[0.8rem]">
       <span
         className={cn(
           'flex items-center gap-2 rounded-md bg-transparent px-2 py-1 text-fg-muted transition-colors hover:text-fg',
