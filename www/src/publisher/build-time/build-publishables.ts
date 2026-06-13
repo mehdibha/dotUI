@@ -192,14 +192,47 @@ async function buildOne({
     return { file, template }
   })
 
+  // Secondary files (e.g. a `use-x.ts` hook shipped next to `base.tsx`) carry
+  // no styles config — ship them verbatim with only registry import paths
+  // rewritten. Without this they'd inherit the base template's content.
+  const baseFilePaths = new Set(baseFiles.map((file) => file.path))
+  const extraFiles: Record<string, string> = {}
+  for (const file of meta.files ?? []) {
+    if (baseFilePaths.has(file.path)) continue
+    extraFiles[file.path] = await transformExtraFile(
+      path.join(registryDir, file.path),
+      meta.name,
+    )
+  }
+
   const outPath = path.join(outDir, `${meta.name}.ts`)
   const source = await renderPublishableSource({
     meta: runtimeMeta,
     stylesConfig,
     templates,
+    extraFiles,
   })
   await fs.writeFile(outPath, source, 'utf8')
   return outPath
+}
+
+/**
+ * Transform one secondary (non-base) file for shipping. `.ts`/`.tsx` go through
+ * `transformBase` with `hasStylesConfig: false` so registry import paths get
+ * rewritten to consumer aliases; anything else is copied byte-for-byte.
+ */
+async function transformExtraFile(
+  absPath: string,
+  componentName: string,
+): Promise<string> {
+  if (absPath.endsWith('.ts') || absPath.endsWith('.tsx')) {
+    return transformBase({
+      baseTsxPath: absPath,
+      componentName,
+      hasStylesConfig: false,
+    }).template
+  }
+  return fs.readFile(absPath, 'utf8')
 }
 
 async function readComponentCssFields(
@@ -298,12 +331,14 @@ interface RenderInput {
   meta: RegistryItem
   stylesConfig: StylesConfig
   templates: Array<{ file: RegistryItemFile; template: string }>
+  extraFiles: Record<string, string>
 }
 
 async function renderPublishableSource({
   meta,
   stylesConfig,
   templates,
+  extraFiles,
 }: RenderInput): Promise<string> {
   // We emit two top-level exports:
   //   - `publishable`: the default (single-template) Publishable
@@ -326,6 +361,10 @@ async function renderPublishableSource({
 
   const stylesConfigLiteral = JSON.stringify(stylesConfig, null, 2)
   const metaLiteral = JSON.stringify(meta, null, 2)
+  const hasExtraFiles = Object.keys(extraFiles).length > 0
+  const extraFilesProp = hasExtraFiles
+    ? `\textraFiles: ${renderExtraFilesLiteral(extraFiles, 1)},`
+    : undefined
 
   const lines: string[] = []
   lines.push(`// AUTO-GENERATED — do not edit. Source: ui/${meta.name}/`)
@@ -343,6 +382,7 @@ async function renderPublishableSource({
     `\tstylesConfig: stylesConfig as unknown as Publishable["stylesConfig"],`,
   )
   lines.push(`\tmeta: meta as unknown as Publishable["meta"],`)
+  if (extraFilesProp) lines.push(extraFilesProp)
   lines.push(`};`)
 
   if (templates.length > 1) {
@@ -357,6 +397,9 @@ async function renderPublishableSource({
         `\t\tstylesConfig: stylesConfig as unknown as Publishable["stylesConfig"],`,
       )
       lines.push(`\t\tmeta: meta as unknown as Publishable["meta"],`)
+      if (hasExtraFiles) {
+        lines.push(`\t\textraFiles: ${renderExtraFilesLiteral(extraFiles, 2)},`)
+      }
       lines.push(`\t},`)
     }
     lines.push(`};`)
@@ -375,6 +418,19 @@ async function renderPublishableSource({
     // Formatting is cosmetic — never block the build over a formatter hiccup.
     return raw
   }
+}
+
+function renderExtraFilesLiteral(
+  extraFiles: Record<string, string>,
+  depth: number,
+): string {
+  const indent = '\t'.repeat(depth + 1)
+  const closeIndent = '\t'.repeat(depth)
+  const entries = Object.entries(extraFiles).map(
+    ([filePath, content]) =>
+      `${indent}${JSON.stringify(filePath)}: ${templateLiteral(content)},`,
+  )
+  return `{\n${entries.join('\n')}\n${closeIndent}}`
 }
 
 function templateLiteral(template: string): string {
