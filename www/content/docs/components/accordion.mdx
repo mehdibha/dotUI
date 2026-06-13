@@ -42,6 +42,39 @@ import {
 </Accordion>
 ```
 
+For a custom trigger, compose `AccordionItem` with a `Heading` and a
+`Button` carrying `slot="trigger"` instead of `AccordionTrigger`.
+
+```tsx
+import { AccordionItem, AccordionPanel } from '@/components/ui/accordion'
+import { Button } from '@/components/ui/button'
+import { Heading } from '@/components/ui/heading'
+import { ChevronDownIcon } from 'your-icon-library'
+```
+
+```tsx
+<AccordionItem>
+  <Heading>
+    <Button variant="quiet" slot="trigger">
+      Accordion Heading
+      <ChevronDownIcon />
+    </Button>
+  </Heading>
+  <AccordionPanel>Accordion Panel</AccordionPanel>
+</AccordionItem>
+```
+
+## Examples
+
+<Examples>
+  <Example
+    name="accordion/demos/default-expanded"
+    description="Default expanded"
+  />
+  <Example name="accordion/demos/controlled" description="Controlled" />
+  <Example name="accordion/demos/custom-trigger" description="Custom trigger" />
+</Examples>
+
 ## API Reference
 
 ### Accordion
