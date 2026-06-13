@@ -382,8 +382,6 @@ ${arrayBlock('registryLib', 'lib', lib)}
  * registered set. Removing an entry makes that folder start shipping on the next
  * build:registry; adding a slug keeps a WIP item out.
  *
- *   ui/context-menu      WIP — production-ready (base.tsx + 5 demos + examples);
- *                         readiness check warns until it's removed from here.
  *   ui/sidebar           WIP — base.tsx + styles.ts but no demos/examples yet.
  *   ui/react-hook-form   WIP — name:"form"; meta points to a base.tsx that does
  *                         not exist yet.
@@ -395,7 +393,6 @@ ${arrayBlock('registryLib', 'lib', lib)}
  * collide because both are excluded here (and bare ui/form has no meta.ts).
  */
 const ORPHAN_ALLOWLIST = new Set<string>([
-  'ui/context-menu',
   'ui/sidebar',
   'ui/react-hook-form',
   'ui/tanstack-form',

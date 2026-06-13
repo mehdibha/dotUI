@@ -17,7 +17,7 @@ npx shadcn@latest add @dotui/context-menu
 
 ## Usage
 
-Use context menus to display actions when a user right clicks an element.
+Wrap the trigger content and the menu's `Popover` inside `ContextMenu`. The menu opens at the pointer when the trigger is right-clicked, or after a long press on touch devices.
 
 ```tsx
 import { ContextMenu } from '@/components/ui/context-menu'
@@ -26,19 +26,16 @@ import { Popover } from '@/components/ui/popover'
 ```
 
 ```tsx
-<ContextMenu
-  overlay={
-    <Popover>
-      <MenuContent>
-        <MenuItem>Account settings</MenuItem>
-        <MenuItem>Create team</MenuItem>
-        <MenuItem>Command menu</MenuItem>
-        <MenuItem>Log out</MenuItem>
-      </MenuContent>
-    </Popover>
-  }
->
+<ContextMenu>
   Right click me
+  <Popover>
+    <MenuContent>
+      <MenuItem>Account settings</MenuItem>
+      <MenuItem>Create team</MenuItem>
+      <MenuItem>Command menu</MenuItem>
+      <MenuItem>Log out</MenuItem>
+    </MenuContent>
+  </Popover>
 </ContextMenu>
 ```
 
@@ -46,6 +43,11 @@ import { Popover } from '@/components/ui/popover'
 
 <Examples>
   <Example name="context-menu/demos/basic" />
+  <Example name="context-menu/demos/with-icons" />
+  <Example name="context-menu/demos/with-submenu" />
+  <Example name="context-menu/demos/controlled" />
+  <Example name="context-menu/demos/nested" />
+  <Example name="context-menu/demos/disabled" />
 </Examples>
 
 ## API Reference

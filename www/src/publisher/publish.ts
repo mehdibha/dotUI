@@ -118,7 +118,7 @@ export interface PublishInput {
 }
 
 export function publish({ publishable, preset }: PublishInput): PublishedItem {
-  const { template, stylesConfig, meta } = publishable
+  const { template, stylesConfig, meta, extraFiles } = publishable
   const paramSelections = preset.componentParams[meta.name] ?? {}
 
   // 1. Flatten base + density + param layers.
@@ -141,7 +141,12 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
   // discriminant through generic plumbing, so we build a structurally-correct
   // object and cast at the boundary.
-  const files = (meta.files ?? []).map((file) => ({ ...file, content }))
+  // Secondary files (e.g. a `use-x.ts` hook) carry their own pre-transformed
+  // content; only the base file gets the preset-resolved template.
+  const files = (meta.files ?? []).map((file) => ({
+    ...file,
+    content: extraFiles?.[file.path] ?? content,
+  }))
 
   const itemShape = {
     name: meta.name,
