@@ -1,8 +1,9 @@
 @theme inline {
   /* progress-bar */
   --animate-progress-indeterminate:
-    progress-grow var(--progress-duration) 1 both normal,
-    progress-pulse 1s ease var(--progress-duration) infinite normal none running;
+    progress-grow var(--progress-duration, 2s) 1 both normal,
+    progress-pulse 1s ease var(--progress-duration, 2s) infinite normal none
+      running;
 }
 
 @keyframes progress-grow {
@@ -21,5 +22,15 @@
   }
   100% {
     transform: scaleX(1);
+  }
+}
+
+@keyframes progress-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
   }
 }

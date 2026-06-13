@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
       // CSS vars — otherwise the track collapses to 0 height and the fill is transparent.
       track:
         'relative flex h-[var(--progress-track-size,calc(var(--spacing)*1))] w-full items-center overflow-x-hidden rounded-[var(--progress-track-radius,9999px)] bg-muted',
-      fill: 'data-indeterminate:animate-progress-indeterminate h-full w-full origin-left bg-[var(--progress-fill-color,var(--color-primary))] transition-all',
+      fill: 'h-full w-full origin-left bg-[var(--progress-fill-color,var(--color-primary))] transition-all data-indeterminate:animate-progress-indeterminate',
       output: 'ml-auto text-fg-muted tabular-nums',
     },
     variants: {},

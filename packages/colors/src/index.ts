@@ -33,7 +33,7 @@ export {
   type PaletteOutput,
   registerProducer,
 } from './producer'
-export { registerBuiltins } from './producers'
+export { registerBuiltins } from './register-builtins'
 
 // Shared kernel ops + types
 export {

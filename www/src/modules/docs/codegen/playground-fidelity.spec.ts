@@ -276,7 +276,7 @@ describe('playground code generation matches oxfmt', () => {
   })
 
   for (const demo of discovered) {
-    it(demo.name, async () => {
+    it(`${demo.name} playground`, async () => {
       const source = await fs.readFile(
         path.join(REGISTRY_UI_DIR, demo.name, 'demos', `${demo.file}.tsx`),
         'utf-8',

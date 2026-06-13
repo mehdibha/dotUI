@@ -253,7 +253,8 @@ async function buildShowcaseBundle(): Promise<void> {
   const visited = new Set<string>()
 
   while (queue.length > 0) {
-    const srcRel = queue.shift()!
+    const srcRel = queue.shift()
+    if (srcRel === undefined) continue
     if (visited.has(srcRel)) continue
     visited.add(srcRel)
 

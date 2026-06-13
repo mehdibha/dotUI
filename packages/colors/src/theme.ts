@@ -8,7 +8,7 @@
  */
 
 import { type ModeCtx, produceValidated } from './producer'
-import { registerBuiltins } from './producers'
+import { registerBuiltins } from './register-builtins'
 import {
   type BaseThemeOptions,
   type CreateThemeOptions,
