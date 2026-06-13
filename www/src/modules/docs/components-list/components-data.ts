@@ -307,6 +307,13 @@ export const componentsData: ComponentCategory[] = [
         scale: 0.7,
         status: 'done',
       },
+      {
+        name: 'Pagination',
+        slug: 'pagination',
+        href: '/docs/components/pagination',
+        scale: 0.8,
+        status: 'in review',
+      },
     ],
   },
   {
