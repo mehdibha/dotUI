@@ -453,4 +453,52 @@ export const componentsData: ComponentCategory[] = [
       },
     ],
   },
+  {
+    title: 'Charts',
+    slug: 'charts',
+    components: [
+      {
+        name: 'Bar Chart',
+        slug: 'chart-bar',
+        href: '/docs/charts/bar-chart',
+        scale: 1,
+        status: 'in review',
+      },
+      {
+        name: 'Line Chart',
+        slug: 'chart-line',
+        href: '/docs/charts/line-chart',
+        scale: 1,
+        status: 'in review',
+      },
+      {
+        name: 'Area Chart',
+        slug: 'chart-area',
+        href: '/docs/charts/area-chart',
+        scale: 1,
+        status: 'in review',
+      },
+      {
+        name: 'Pie Chart',
+        slug: 'chart-pie',
+        href: '/docs/charts/pie-chart',
+        scale: 1,
+        status: 'in review',
+      },
+      {
+        name: 'Radar Chart',
+        slug: 'chart-radar',
+        href: '/docs/charts/radar-chart',
+        scale: 1,
+        status: 'in review',
+      },
+      {
+        name: 'Radial Chart',
+        slug: 'chart-radial',
+        href: '/docs/charts/radial-chart',
+        scale: 1,
+        status: 'in review',
+      },
+    ],
+  },
 ]

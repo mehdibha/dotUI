@@ -31,6 +31,7 @@ export type ComponentGroup =
   | 'calendar'
   | 'drop-zone'
   | 'typography'
+  | 'charts'
 
 /* ------------------------------- Params ------------------------------- */
 

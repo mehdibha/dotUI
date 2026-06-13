@@ -1,0 +1,62 @@
+{
+  "name": "ChartDataTableProps",
+  "description": "A visually-hidden table that mirrors a chart's series for assistive tech\n(dotUI accessibility layer; not part of shadcn). Columns are derived from\n`config`, rows from `data` — render it alongside any chart with the same\nprops you already pass.",
+  "extendsElement": "table",
+  "props": {
+    "data": {
+      "type": "Record<string, unknown>[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "Record"
+          },
+          "typeParameters": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "unknown"
+            }
+          ]
+        }
+      },
+      "description": "The same data array passed to the chart.",
+      "required": true
+    },
+    "config": {
+      "type": "ChartConfig",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartConfig"
+      },
+      "description": "The same `config` passed to `ChartContainer`.",
+      "required": true
+    },
+    "labelKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Key in each datum used as the row header (e.g. the x-axis category)."
+    },
+    "caption": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Optional caption announced to assistive tech."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

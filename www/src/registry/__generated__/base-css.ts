@@ -105,6 +105,11 @@ export const baseRegistryCss = {
 			"--info-800": "oklch(0.3944 0.1454 259.81)",
 			"--info-900": "oklch(0.32 0.1166 259.81)",
 			"--info-950": "oklch(0.2378 0.0846 259.81)",
+			"--chart-1": "var(--accent-500)",
+			"--chart-2": "var(--success-500)",
+			"--chart-3": "var(--warning-500)",
+			"--chart-4": "var(--danger-500)",
+			"--chart-5": "var(--info-500)",
 		},
 		".dark": {
 			"--neutral-50": "oklch(0.13 0 0)",

@@ -1,0 +1,47 @@
+---
+title: Charts
+description: Beautiful, accessible charts built on Recharts and themed by your design system — copy, paste, and make them yours.
+---
+
+A collection of chart components built on [Recharts](https://recharts.org), wrapped in a thin, fully-owned layer you control. They're themed by your design system's colors out of the box: every series reads from your `--chart-*` palette, adapts to light and dark, and re-themes live in the [builder](/create).
+
+Every chart ships with accessibility built in — a keyboard-navigable data layer and a visually-hidden data table for screen readers — with no extra work on your side.
+
+<ComponentsGrid category="charts" />
+
+## Installation
+
+Install the chart primitives once, then add any chart family:
+
+```npm
+npx shadcn@latest add @dotui/chart
+```
+
+```npm
+npx shadcn@latest add @dotui/chart-bar
+```
+
+## Usage
+
+```tsx
+import { Bar, BarChart } from 'recharts'
+
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@dotui/registry/ui/chart'
+
+const chartConfig = {
+  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
+}
+```
+
+```tsx
+<ChartContainer config={chartConfig}>
+  <BarChart accessibilityLayer data={chartData}>
+    <ChartTooltip content={<ChartTooltipContent />} />
+    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+  </BarChart>
+</ChartContainer>
+```

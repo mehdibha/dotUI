@@ -36,11 +36,17 @@ export const Route = createFileRoute('/llms.txt')({
       GET: () => {
         const docs = docsSource.getPages()
         // The components overview lives at /docs/components (no trailing slash);
-        // individual component pages live beneath it.
-        const isComponent = (url: string) =>
-          url === '/docs/components' || url.startsWith('/docs/components/')
-        const gettingStarted = docs.filter((page) => !isComponent(page.url))
+        // individual component pages live beneath it. Charts mirror that shape
+        // under /docs/charts and get their own section.
+        const inSection = (url: string, base: string) =>
+          url === base || url.startsWith(`${base}/`)
+        const isComponent = (url: string) => inSection(url, '/docs/components')
+        const isChart = (url: string) => inSection(url, '/docs/charts')
+        const gettingStarted = docs.filter(
+          (page) => !isComponent(page.url) && !isChart(page.url),
+        )
         const components = docs.filter((page) => isComponent(page.url))
+        const charts = docs.filter((page) => isChart(page.url))
 
         const body =
           [
@@ -55,6 +61,10 @@ export const Route = createFileRoute('/llms.txt')({
             '## Components',
             '',
             ...formatList(components),
+            '',
+            '## Charts',
+            '',
+            ...formatList(charts),
           ].join('\n') + '\n'
 
         return new Response(body, {

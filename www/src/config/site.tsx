@@ -39,5 +39,6 @@ export const siteConfig = {
 export const navItems: { name: string; to: string }[] = [
   { name: 'Docs', to: '/docs' },
   { name: 'Components', to: '/docs/components' },
+  { name: 'Charts', to: '/docs/charts/overview' },
   { name: 'Create', to: '/create' },
 ]

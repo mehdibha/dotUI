@@ -27,6 +27,7 @@ import { SearchField } from '@/registry/ui/search-field'
 import { Select, SelectValue } from '@/registry/ui/select'
 import { componentsData } from '@/modules/docs/components-list/components-data'
 
+import { ChartColorsConfig, ChartColorsSummary } from './chart-colors-config'
 import { ColorsConfig, ColorsSummary } from './colors-config'
 import {
   AllComponentsView,
@@ -79,6 +80,12 @@ const menu: MenuItem[] = [
     title: 'Colors',
     preview: <ColorsSummary />,
     config: <ColorsConfig />,
+  },
+  {
+    id: 'chart-colors',
+    title: 'Chart colors',
+    preview: <ChartColorsSummary />,
+    config: <ChartColorsConfig />,
   },
   {
     id: 'typography',
