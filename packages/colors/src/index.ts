@@ -43,9 +43,11 @@ export {
   gamutMap,
   type Oklch,
   oklchCss,
+  oklchFromSrgb,
   toOklch,
   wcag2,
 } from './shared/color'
+export { computeAlphaColors } from './shared/alpha'
 export { onBlackWhite, onColor } from './shared/on-color'
 export { SEMANTIC_COLORS } from './shared/constants'
 export type { ColorScale, Theme, ThemeMode } from './shared/types'

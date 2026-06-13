@@ -14,6 +14,12 @@ export type ThemeMode = {
   scales: Record<string, ColorScale>
   /** Readable foreground per palette, keyed identically to `scales`. Every producer emits it. */
   on: Record<string, ColorScale>
+  /**
+   * Translucent `oklch(… / a)` twin of each ramp, keyed identically to `scales` — present
+   * only when the `alpha` option is on. Each step reproduces its solid over the mode
+   * background and adapts over other surfaces (overlays, cards, images).
+   */
+  alpha?: Record<string, ColorScale>
 }
 
 /** Complete theme output, one entry per mode. */

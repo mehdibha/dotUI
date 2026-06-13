@@ -323,6 +323,35 @@ describe('targetGamut (wide-gamut output)', () => {
   })
 })
 
+describe('alpha ramps', () => {
+  it('off by default — no alpha twin (output contract unchanged)', () => {
+    const theme = createTheme({
+      algorithm: 'oklch',
+      palettes: { primary: '#3b82f6' },
+    })
+    expect(theme.light!.alpha).toBeUndefined()
+  })
+
+  it('alpha:true adds a translucent oklch(.../a) twin per palette, keyed like scales', () => {
+    const theme = createTheme({
+      algorithm: 'oklch',
+      palettes: { primary: '#3b82f6', neutral: '#64748b', success: true },
+      alpha: true,
+    })
+    for (const mode of Object.values(theme)) {
+      expect(mode.alpha).toBeDefined()
+      for (const [palette, scale] of Object.entries(mode.scales)) {
+        const twin = mode.alpha![palette]!
+        expect(Object.keys(twin)).toEqual(Object.keys(scale))
+        for (const v of Object.values(twin)) {
+          expect(v).toMatch(/^oklch\(/)
+          expect(v).not.toMatch(/NaN/)
+        }
+      }
+    }
+  })
+})
+
 describe('snapshots', () => {
   it('oklch theme value snapshot', () => {
     expect(
