@@ -302,4 +302,43 @@ describe('publish', () => {
 
     expect(item.css).toEqual(css)
   })
+
+  test('multi-file item: ships each file its own content', () => {
+    const hookContent = 'export function useThing() {\n\treturn null;\n}\n'
+
+    const { item } = publish({
+      publishable: {
+        template: `const x = ${TV_CONFIG_PLACEHOLDER};\nexport function Thing() {}\n`,
+        stylesConfig: { base: {} },
+        meta: {
+          name: 'thing',
+          type: 'registry:ui',
+          files: [
+            {
+              type: 'registry:ui',
+              path: 'ui/thing/base.tsx',
+              target: 'ui/thing.tsx',
+            },
+            {
+              type: 'registry:ui',
+              path: 'ui/thing/use-thing.ts',
+              target: 'ui/use-thing.ts',
+            },
+          ],
+        },
+        extraFiles: { 'ui/thing/use-thing.ts': hookContent },
+      },
+      preset: { density: 'default', componentParams: {} },
+    })
+
+    const base = item.files?.find((f) => f.target === 'ui/thing.tsx')
+    const hook = item.files?.find((f) => f.target === 'ui/use-thing.ts')
+
+    // The base file gets the resolved template; the hook file gets its own
+    // pre-transformed content — never the base template (the multi-file bug).
+    expect(base?.content).toContain('export function Thing()')
+    expect(base?.content).not.toContain(TV_CONFIG_PLACEHOLDER)
+    expect(hook?.content).toBe(hookContent)
+    expect(hook?.content).not.toContain('export function Thing()')
+  })
 })
