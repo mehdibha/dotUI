@@ -3,14 +3,11 @@
   "description": "A separator visually divides groups of inputs within the OTP field.",
   "props": {
     "className": {
-      "type": "string | ((state: SeparatorState) => string | undefined)",
-      "detailedType": "| string\n| ((state: SeparatorState) => string | undefined)\n| undefined",
+      "type": "string | (values: SeparatorState) => string",
+      "detailedType": "string | (values: SeparatorState) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "undefined"
-          },
           {
             "type": "string"
           },
@@ -19,10 +16,10 @@
             "parameters": [
               {
                 "type": "parameter",
-                "name": "state",
+                "name": "values",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState",
+                  "id": "SeparatorState",
                   "name": "SeparatorState"
                 },
                 "optional": false,
@@ -30,21 +27,48 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "string"
-                }
-              ]
+              "type": "string"
             },
             "typeParameters": []
           }
         ]
       },
-      "description": "CSS class applied to the element, or a function that\nreturns a class based on the component's state."
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "CSSProperties | (values: SeparatorState) => CSSProperties",
+      "detailedType": "CSSProperties | (values: SeparatorState) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "SeparatorState",
+                  "name": "SeparatorState"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
     },
     "orientation": {
       "type": "Orientation",
@@ -55,95 +79,12 @@
       },
       "description": "The orientation of the separator.",
       "default": "'horizontal'"
-    },
-    "render": {
-      "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, SeparatorState>",
-      "detailedType": "| ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >\n| ComponentRenderFn<HTMLProps, SeparatorState>\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "ReactElement"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "identifier",
-              "name": "ComponentRenderFn"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "HTMLProps"
-              },
-              {
-                "type": "link",
-                "id": "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState",
-                "name": "SeparatorState"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Allows you to replace the component's HTML element\nwith a different tag, or compose it with another component.\n\nAccepts a `ReactElement` or a function that returns the element to render."
-    },
-    "style": {
-      "type": "CSSProperties | ((state: SeparatorState) => CSSProperties | undefined)",
-      "detailedType": "| CSSProperties\n| ((state: SeparatorState) => CSSProperties | undefined)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "state",
-                "value": {
-                  "type": "link",
-                  "id": "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState",
-                  "name": "SeparatorState"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Style applied to the element, or a function that\nreturns a style object based on the component's state."
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState": {
+    "SeparatorState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState",
       "name": "SeparatorState",
-      "extends": [],
       "properties": {
         "orientation": {
           "type": "property",
@@ -156,9 +97,7 @@
           "readonly": false,
           "description": "The orientation of the separator."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }

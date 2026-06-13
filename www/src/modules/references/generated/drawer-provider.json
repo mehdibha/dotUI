@@ -1,5 +1,14 @@
 {
   "name": "DrawerProviderProps",
   "description": "Optional explicit visual-state scope. Most apps don't need this.",
-  "props": {}
+  "props": {
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "The content scoped to this drawer provider."
+    }
+  }
 }

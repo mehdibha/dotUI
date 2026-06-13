@@ -2,14 +2,6 @@
   "name": "ToastProps",
   "description": "Options for a toast, passed to the toast manager when adding it to the queue. These include the toast's title, description, type, timeout, and custom data.",
   "props": {
-    "id": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The unique identifier for the toast. Adding a toast with an existing ID\nupdates it in place and refreshes its auto-dismiss timer."
-    },
     "actionProps": {
       "type": "Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, \"ref\">",
       "detailedType": "| Omit<\n    DetailedHTMLProps<\n      ButtonHTMLAttributes<HTMLButtonElement>,\n      HTMLButtonElement\n    >,\n    'ref'\n  >\n| undefined",
@@ -79,6 +71,14 @@
         "name": "ReactNode"
       },
       "description": "The description of the toast."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The unique identifier for the toast. Adding a toast with an existing ID\nupdates it in place and refreshes its auto-dismiss timer."
     },
     "onClose": {
       "type": "(() => void)",
@@ -166,24 +166,6 @@
         "name": "ReactNode"
       },
       "description": "The title of the toast."
-    },
-    "transitionStatus": {
-      "type": "\"ending\" | \"starting\"",
-      "detailedType": "'ending' | 'starting' | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "ending"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "starting"
-          }
-        ]
-      },
-      "description": "The transition status of the toast."
     },
     "type": {
       "type": "string",

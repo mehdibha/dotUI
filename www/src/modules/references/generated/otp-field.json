@@ -59,6 +59,74 @@
       },
       "description": "Handler that is called when the OTP value changes."
     },
+    "className": {
+      "type": "string | (values: OTPFieldRootState) => string",
+      "detailedType": "string | (values: OTPFieldRootState) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "OTPFieldRootState",
+                  "name": "OTPFieldRootState"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "CSSProperties | (values: OTPFieldRootState) => CSSProperties",
+      "detailedType": "CSSProperties | (values: OTPFieldRootState) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "OTPFieldRootState",
+                  "name": "OTPFieldRootState"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
     "autoComplete": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -76,50 +144,6 @@
       },
       "description": "Whether to submit the owning form when the OTP becomes complete.",
       "default": "false"
-    },
-    "className": {
-      "type": "string | ((state: OTPFieldRootState) => string | undefined)",
-      "detailedType": "| string\n| ((state: OTPFieldRootState) => string | undefined)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "state",
-                "value": {
-                  "type": "link",
-                  "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
-                  "name": "OTPFieldRootState"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "CSS class applied to the element, or a function that\nreturns a class based on the component's state."
     },
     "defaultValue": {
       "type": "string",
@@ -294,41 +318,6 @@
       },
       "description": "Callback fired when entered text contains characters that are rejected by sanitization,\nbefore the OTP value updates.\n\nThe `value` argument is the attempted user-entered string before sanitization."
     },
-    "render": {
-      "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, OTPFieldRootState>",
-      "detailedType": "| ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >\n| ComponentRenderFn<HTMLProps, OTPFieldRootState>\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "ReactElement"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "identifier",
-              "name": "ComponentRenderFn"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "HTMLProps"
-              },
-              {
-                "type": "link",
-                "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
-                "name": "OTPFieldRootState"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Allows you to replace the component's HTML element\nwith a different tag, or compose it with another component.\n\nAccepts a `ReactElement` or a function that returns the element to render."
-    },
     "sanitizeValue": {
       "type": "((value: string) => string)",
       "detailedType": "((value: string) => string) | undefined",
@@ -354,52 +343,6 @@
       },
       "description": "Function for custom sanitization when `validationType` is set to `'none'`.\nThis function runs before updating the OTP value from user interactions."
     },
-    "style": {
-      "type": "CSSProperties | ((state: OTPFieldRootState) => CSSProperties | undefined)",
-      "detailedType": "| CSSProperties\n| ((\n    state: OTPFieldRootState,\n  ) => CSSProperties | undefined)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "CSSProperties"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "state",
-                "value": {
-                  "type": "link",
-                  "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
-                  "name": "OTPFieldRootState"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Style applied to the element, or a function that\nreturns a style object based on the component's state."
-    },
     "validationType": {
       "type": "OTPValidationType",
       "detailedType": "OTPValidationType | undefined",
@@ -420,17 +363,9 @@
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState": {
+    "OTPFieldRootState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
       "name": "OTPFieldRootState",
-      "extends": [
-        {
-          "type": "link",
-          "id": "@base-ui/react/esm/field/root/FieldRoot.d.ts:FieldRootState",
-          "name": "FieldRootState"
-        }
-      ],
       "properties": {
         "complete": {
           "type": "property",
@@ -526,15 +461,8 @@
           "type": "property",
           "name": "valid",
           "value": {
-            "type": "union",
-            "elements": [
-              {
-                "type": "null"
-              },
-              {
-                "type": "boolean"
-              }
-            ]
+            "type": "identifier",
+            "name": "boolean | null"
           },
           "optional": false,
           "readonly": false,
@@ -550,9 +478,7 @@
           "readonly": false,
           "description": "The OTP value."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }

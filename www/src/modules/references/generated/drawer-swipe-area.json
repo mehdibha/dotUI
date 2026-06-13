@@ -3,14 +3,11 @@
   "description": "An edge region that can open the drawer by swiping.",
   "props": {
     "className": {
-      "type": "string | ((state: DrawerSwipeAreaState) => string | undefined)",
-      "detailedType": "| string\n| ((state: DrawerSwipeAreaState) => string | undefined)\n| undefined",
+      "type": "string | (values: DrawerSwipeAreaState) => string",
+      "detailedType": "string | (values: DrawerSwipeAreaState) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "undefined"
-          },
           {
             "type": "string"
           },
@@ -19,10 +16,10 @@
             "parameters": [
               {
                 "type": "parameter",
-                "name": "state",
+                "name": "values",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+                  "id": "DrawerSwipeAreaState",
                   "name": "DrawerSwipeAreaState"
                 },
                 "optional": false,
@@ -30,75 +27,20 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "string"
-                }
-              ]
+              "type": "string"
             },
             "typeParameters": []
           }
         ]
       },
-      "description": "CSS class applied to the element, or a function that\nreturns a class based on the component's state."
-    },
-    "disabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether the swipe area is disabled.",
-      "default": "false"
-    },
-    "render": {
-      "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, DrawerSwipeAreaState>",
-      "detailedType": "| ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >\n| ComponentRenderFn<HTMLProps, DrawerSwipeAreaState>\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "identifier",
-            "name": "ReactElement"
-          },
-          {
-            "type": "application",
-            "base": {
-              "type": "identifier",
-              "name": "ComponentRenderFn"
-            },
-            "typeParameters": [
-              {
-                "type": "identifier",
-                "name": "HTMLProps"
-              },
-              {
-                "type": "link",
-                "id": "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
-                "name": "DrawerSwipeAreaState"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Allows you to replace the component's HTML element\nwith a different tag, or compose it with another component.\n\nAccepts a `ReactElement` or a function that returns the element to render."
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
     },
     "style": {
-      "type": "CSSProperties | ((state: DrawerSwipeAreaState) => CSSProperties | undefined)",
-      "detailedType": "| CSSProperties\n| ((\n    state: DrawerSwipeAreaState,\n  ) => CSSProperties | undefined)\n| undefined",
+      "type": "CSSProperties | (values: DrawerSwipeAreaState) => CSSProperties",
+      "detailedType": "CSSProperties | (values: DrawerSwipeAreaState) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "undefined"
-          },
           {
             "type": "identifier",
             "name": "CSSProperties"
@@ -108,10 +50,10 @@
             "parameters": [
               {
                 "type": "parameter",
-                "name": "state",
+                "name": "values",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+                  "id": "DrawerSwipeAreaState",
                   "name": "DrawerSwipeAreaState"
                 },
                 "optional": false,
@@ -119,22 +61,23 @@
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "undefined"
-                },
-                {
-                  "type": "identifier",
-                  "name": "CSSProperties"
-                }
-              ]
+              "type": "identifier",
+              "name": "CSSProperties"
             },
             "typeParameters": []
           }
         ]
       },
-      "description": "Style applied to the element, or a function that\nreturns a style object based on the component's state."
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    },
+    "disabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the swipe area is disabled.",
+      "default": "false"
     },
     "swipeDirection": {
       "type": "SwipeDirection",
@@ -147,11 +90,9 @@
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState": {
+    "DrawerSwipeAreaState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
       "name": "DrawerSwipeAreaState",
-      "extends": [],
       "properties": {
         "disabled": {
           "type": "property",
@@ -194,9 +135,7 @@
           "readonly": false,
           "description": "Whether the swipe area is currently being swiped."
         }
-      },
-      "typeParameters": [],
-      "description": ""
+      }
     }
   }
 }

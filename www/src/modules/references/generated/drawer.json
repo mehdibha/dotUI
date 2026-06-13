@@ -81,13 +81,6 @@
       "description": "Whether pressing Escape is suppressed.",
       "default": "false"
     },
-    "className": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
-    },
     "children": {
       "type": "ReactNode",
       "typeAst": {
@@ -95,6 +88,164 @@
         "name": "ReactNode"
       },
       "description": "The content of the drawer."
+    },
+    "className": {
+      "type": "string | (values: DrawerPopupState) => string",
+      "detailedType": "string | (values: DrawerPopupState) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DrawerPopupState",
+                  "name": "DrawerPopupState"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "CSSProperties | (values: DrawerPopupState) => CSSProperties",
+      "detailedType": "CSSProperties | (values: DrawerPopupState) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "DrawerPopupState",
+                  "name": "DrawerPopupState"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the element. A function may be provided to compute the style based on component state."
+    }
+  },
+  "typeLinks": {
+    "DrawerPopupState": {
+      "type": "interface",
+      "name": "DrawerPopupState",
+      "properties": {
+        "expanded": {
+          "type": "property",
+          "name": "expanded",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the active snap point is the full-height expanded state."
+        },
+        "nested": {
+          "type": "property",
+          "name": "nested",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the drawer is nested within a parent drawer."
+        },
+        "nestedDrawerOpen": {
+          "type": "property",
+          "name": "nestedDrawerOpen",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the drawer has nested drawers open."
+        },
+        "nestedDrawerSwiping": {
+          "type": "property",
+          "name": "nestedDrawerSwiping",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether a nested drawer is currently being swiped."
+        },
+        "open": {
+          "type": "property",
+          "name": "open",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the drawer is currently open."
+        },
+        "swipeDirection": {
+          "type": "property",
+          "name": "swipeDirection",
+          "value": {
+            "type": "identifier",
+            "name": "SwipeDirection"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The swipe direction used to dismiss the drawer."
+        },
+        "swiping": {
+          "type": "property",
+          "name": "swiping",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the drawer is being swiped."
+        },
+        "transitionStatus": {
+          "type": "property",
+          "name": "transitionStatus",
+          "value": {
+            "type": "identifier",
+            "name": "TransitionStatus"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The transition status of the component."
+        }
+      }
     }
   }
 }
